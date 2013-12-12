@@ -100,10 +100,10 @@ public:
      * - If you are running 1 Sequence of 7 actions, it will return 1.
      * - If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    int getNumberOfRunningActionsInTarget(const Node *target) const;
+    ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
 
     /** @deprecated use getNumberOfRunningActionsInTarget() instead */
-    CC_DEPRECATED_ATTRIBUTE inline int numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
     */
@@ -124,7 +124,7 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(int index, struct _hashElement *pElement);
+    void removeActionAtIndex(ssize_t index, struct _hashElement *pElement);
     void deleteHashElement(struct _hashElement *pElement);
     void actionAllocWithHashElement(struct _hashElement *pElement);
     void update(float dt);

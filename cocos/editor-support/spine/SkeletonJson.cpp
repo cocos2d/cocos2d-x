@@ -61,7 +61,7 @@ void SkeletonJson_dispose (SkeletonJson* self) {
 
 void _SkeletonJson_setError (SkeletonJson* self, Json* root, const char* value1, const char* value2) {
 	char message[256];
-	int length;
+	size_t length;
 	FREE(self->error);
 	strcpy(message, value1);
 	length = strlen(value1);

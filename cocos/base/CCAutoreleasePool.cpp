@@ -141,7 +141,7 @@ void PoolManager::pop()
         return;
     }
 
-    int count = _releasePoolStack.size();
+    ssize_t count = _releasePoolStack.size();
 
     _curReleasePool->clear();
  

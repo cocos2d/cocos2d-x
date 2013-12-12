@@ -37,34 +37,6 @@ template<class T>
 class CC_DLL Vector
 {
 public:
-    // ------------------------------------------
-    // Iterators
-    // ------------------------------------------
-    typedef typename std::vector<T>::iterator iterator;
-    typedef typename std::vector<T>::const_iterator const_iterator;
-    
-    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
-    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
-    
-    iterator begin() { return _data.begin(); }
-    const_iterator begin() const { return _data.begin(); }
-    
-    iterator end() { return _data.end(); }
-    const_iterator end() const { return _data.end(); }
-    
-    const_iterator cbegin() const { return _data.cbegin(); }
-    const_iterator cend() const { return _data.cend(); }
-    
-    reverse_iterator rbegin() { return _data.rbegin(); }
-    const_reverse_iterator rbegin() const { return _data.rbegin(); }
-    
-    reverse_iterator rend() { return _data.rend(); }
-    const_reverse_iterator rend() const { return _data.rend(); }
-    
-    const_reverse_iterator crbegin() const { return _data.crbegin(); }
-    const_reverse_iterator crend() const { return _data.crend(); }
-    
-    /** Constructor */
     Vector<T>()
     : _data()
     {
@@ -133,7 +105,7 @@ public:
     }
     
     /** Returns capacity of the array */
-    int capacity() const
+    ssize_t capacity() const
     {
         return _data.capacity();
     }
@@ -141,9 +113,9 @@ public:
     // Querying an Array
 
     /** Returns element count of the array */
-    int size() const
+    ssize_t size() const
     {
-        return  static_cast<int>(_data.size());
+        return  _data.size();
     }
     
     bool empty() const
@@ -154,23 +126,18 @@ public:
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
     ssize_t getIndex(T object) const
     {
-        auto iter = std::find(_data.begin(), _data.end(), object);
-        if (iter != _data.end())
-            return iter - _data.begin();
-
+        ssize_t i = 0;
+        for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
+        {
+            if (*it == object)
+            {
+                return i;
+            }
+        }
+        
         return -1;
     }
 
-    const_iterator find(T object) const
-    {
-        return std::find(_data.begin(), _data.end(), object);
-    }
-    
-    iterator find(T object)
-    {
-        return std::find(_data.begin(), _data.end(), object);
-    }
-    
     /** Returns an element with a certain index */
     T at(ssize_t index) const
     {
@@ -194,7 +161,7 @@ public:
     {
         if (!_data.empty())
         {
-            int randIdx = rand() % _data.size();
+            ssize_t randIdx = rand() % _data.size();
             return *(_data.begin() + randIdx);
         }
         return nullptr;
@@ -261,9 +228,9 @@ public:
         _data.pop_back();
         last->release();
     }
-    
+
     /** Remove a certain object */
-    void erase(T object, bool toRelease = true)
+    void removeObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
@@ -274,24 +241,7 @@ public:
     }
 
     /** Removes an element with a certain index */
-    iterator erase(iterator position)
-    {
-        CCASSERT(position >= _data.begin() && position < _data.end(), "Invalid position!");
-        (*position)->release();
-        return _data.erase(position);
-    }
-    
-    iterator erase(const_iterator first, const_iterator last)
-    {
-        for (auto iter = first; iter != last; ++iter)
-        {
-            (*iter)->release();
-        }
-        
-        return _data.erase(first, last);
-    }
-    
-    void erase(int index)
+    void remove(ssize_t index)
     {
         CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
         auto it = std::next( begin(), index );
@@ -401,6 +351,33 @@ public:
             return callback(a, b);
         });
     }
+    
+    // ------------------------------------------
+    // Iterators
+    // ------------------------------------------
+    typedef typename std::vector<T>::iterator iterator;
+    typedef typename std::vector<T>::const_iterator const_iterator;
+
+    typedef typename std::vector<T>::reverse_iterator reverse_iterator;
+    typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
+    
+    iterator begin() { return _data.begin(); }
+    const_iterator begin() const { return _data.begin(); }
+    
+    iterator end() { return _data.end(); }
+    const_iterator end() const { return _data.end(); }
+    
+    const_iterator cbegin() const { return _data.cbegin(); }
+    const_iterator cend() const { return _data.cend(); }
+    
+    reverse_iterator rbegin() { return _data.rbegin(); }
+    const_reverse_iterator rbegin() const { return _data.rbegin(); }
+    
+    reverse_iterator rend() { return _data.rend(); }
+    const_reverse_iterator rend() const { return _data.rend(); }
+    
+    const_reverse_iterator crbegin() const { return _data.crbegin(); }
+    const_reverse_iterator crend() const { return _data.crend(); }
     
 protected:
     
