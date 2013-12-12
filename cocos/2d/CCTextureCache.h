@@ -96,7 +96,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    virtual std::string getDescription() const;
 
 //    Dictionary* snapshotTextures();
 
