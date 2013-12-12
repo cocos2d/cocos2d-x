@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCLayer.h"
 #include "CCRenderTexture.h"
+#include "CCGridNode.h"
 
 
 NS_CC_BEGIN
@@ -1346,10 +1347,12 @@ void TransitionCrossFade::onExit()
 //
 TransitionTurnOffTiles::TransitionTurnOffTiles()
 {
+    _outSceneProxy = nullptr;
 }
 
 TransitionTurnOffTiles::~TransitionTurnOffTiles()
 {
+    CC_SAFE_RELEASE(_outSceneProxy);
 }
 
 TransitionTurnOffTiles* TransitionTurnOffTiles::create(float t, Scene* scene)
@@ -1373,6 +1376,12 @@ void TransitionTurnOffTiles::sceneOrder()
 void TransitionTurnOffTiles::onEnter()
 {
     TransitionScene::onEnter();
+
+    _outSceneProxy = GridNode::create();
+    _outSceneProxy->retain();
+    _outSceneProxy->setGridTarget(_outScene);
+    _outSceneProxy->onEnter();
+
     Size s = Director::getInstance()->getWinSize();
     float aspect = s.width / s.height;
     int x = (int)(12 * aspect);
@@ -1380,7 +1389,7 @@ void TransitionTurnOffTiles::onEnter()
 
     TurnOffTiles* toff = TurnOffTiles::create(_duration, Size(x,y));
     ActionInterval* action = easeActionWithAction(toff);
-    _outScene->runAction
+    _outSceneProxy->runAction
     (
         Sequence::create
         (
@@ -1390,6 +1399,28 @@ void TransitionTurnOffTiles::onEnter()
             NULL
         )
     );
+}
+
+void TransitionTurnOffTiles::onExit()
+{
+    _outSceneProxy->onExit();
+    TransitionScene::onExit();
+}
+
+void TransitionTurnOffTiles::draw()
+{
+    Scene::draw();
+    
+    if( _isInSceneOnTop )
+    {
+        _outSceneProxy->visit();
+        _inScene->visit();
+    } 
+    else
+    {
+        _inScene->visit();
+        _outSceneProxy->visit();
+    }
 }
 
 
@@ -1403,9 +1434,11 @@ ActionInterval* TransitionTurnOffTiles:: easeActionWithAction(ActionInterval* ac
 //
 TransitionSplitCols::TransitionSplitCols()
 {
+    _gridProxy = nullptr;
 }
 TransitionSplitCols::~TransitionSplitCols()
 {
+    CC_SAFE_RELEASE(_gridProxy);
 }
 
 TransitionSplitCols* TransitionSplitCols::create(float t, Scene* scene)
@@ -1423,18 +1456,22 @@ TransitionSplitCols* TransitionSplitCols::create(float t, Scene* scene)
 void TransitionSplitCols::onEnter()
 {
     TransitionScene::onEnter();
-    _inScene->setVisible(false);
+
+    _gridProxy = GridNode::create();
+    _gridProxy->retain();
+    _gridProxy->setGridTarget(_outScene);
+    _gridProxy->onEnter();
 
     ActionInterval* split = action();
     ActionInterval* seq = (ActionInterval*)Sequence::create
     (
         split,
-        CallFunc::create(CC_CALLBACK_0(TransitionScene::hideOutShowIn,this)),
+        CallFunc::create(CC_CALLBACK_0(TransitionSplitCols::switchTargetToInscene,this)),
         split->reverse(),
         NULL
     );
 
-    this->runAction
+    _gridProxy->runAction
     ( 
         Sequence::create
         (
@@ -1444,6 +1481,23 @@ void TransitionSplitCols::onEnter()
             NULL
         )
     );
+}
+
+void TransitionSplitCols::switchTargetToInscene()
+{
+    _gridProxy->setGridTarget(_inScene);
+}
+
+void TransitionSplitCols::draw()
+{
+    Scene::draw();
+    _gridProxy->visit();
+}
+
+void TransitionSplitCols::onExit()
+{
+    _gridProxy->onExit();
+    TransitionScene::onExit();
 }
 
 ActionInterval* TransitionSplitCols:: action()
@@ -1491,9 +1545,11 @@ TransitionSplitRows* TransitionSplitRows::create(float t, Scene* scene)
 //
 TransitionFadeTR::TransitionFadeTR()
 {
+    _outSceneProxy = nullptr;
 }
 TransitionFadeTR::~TransitionFadeTR()
 {
+    CC_SAFE_RELEASE(_outSceneProxy);
 }
 
 TransitionFadeTR* TransitionFadeTR::create(float t, Scene* scene)
@@ -1516,6 +1572,10 @@ void TransitionFadeTR::sceneOrder()
 void TransitionFadeTR::onEnter()
 {
     TransitionScene::onEnter();
+    _outSceneProxy = GridNode::create();
+    _outSceneProxy->retain();
+    _outSceneProxy->setGridTarget(_outScene);
+    _outSceneProxy->onEnter();
 
     Size s = Director::getInstance()->getWinSize();
     float aspect = s.width / s.height;
@@ -1524,7 +1584,7 @@ void TransitionFadeTR::onEnter()
 
     ActionInterval* action  = actionWithSize(Size(x,y));
 
-    _outScene->runAction
+    _outSceneProxy->runAction
     (
         Sequence::create
         (
@@ -1536,6 +1596,27 @@ void TransitionFadeTR::onEnter()
     );
 }
 
+void TransitionFadeTR::onExit()
+{
+    _outSceneProxy->onExit();
+    TransitionScene::onExit();
+}
+
+void TransitionFadeTR::draw()
+{
+    Scene::draw();
+    
+    if( _isInSceneOnTop )
+    {
+        _outSceneProxy->visit();
+        _inScene->visit();
+    } 
+    else
+    {
+        _inScene->visit();
+        _outSceneProxy->visit();
+    }
+}
 
 ActionInterval*  TransitionFadeTR::actionWithSize(const Size& size)
 {
