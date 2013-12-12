@@ -230,7 +230,8 @@ public:
 
 private:
     bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
-    const char* description() const;
+    virtual std::string getDescription() const;
+
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
