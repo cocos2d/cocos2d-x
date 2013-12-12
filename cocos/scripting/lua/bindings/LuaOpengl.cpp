@@ -5322,8 +5322,8 @@ static int tolua_Cocos2d_CCGLProgram_vertexShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertexShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getVertexShaderLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getVertexShaderLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;
@@ -5354,8 +5354,8 @@ static int tolua_Cocos2d_CCGLProgram_fragmentShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fragmentShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getFragmentShaderLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getFragmentShaderLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;
@@ -5386,8 +5386,8 @@ static int tolua_Cocos2d_CCGLProgram_programLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getProgramLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getProgramLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;

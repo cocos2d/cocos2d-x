@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __CCMAP_H__
 #define __CCMAP_H__
 
+#include "ccMacros.h"
+
 #include <vector>
 #include <unordered_map>
 #include <algorithm>    // std::for_each
@@ -40,6 +42,23 @@ template <class K, class V>
 class CC_DLL Map
 {
 public:
+    // ------------------------------------------
+    // Iterators
+    // ------------------------------------------
+    typedef std::unordered_map<K, V> RefMap;
+    
+    typedef typename RefMap::iterator iterator;
+    typedef typename RefMap::const_iterator const_iterator;
+    
+    iterator begin() { return _data.begin(); }
+    const_iterator begin() const { return _data.begin(); }
+    
+    iterator end() { return _data.end(); }
+    const_iterator end() const { return _data.end(); }
+    
+    const_iterator cbegin() const { return _data.cbegin(); }
+    const_iterator cend() const { return _data.cend(); }
+    
     Map<K, V>()
     : _data()
     {
@@ -123,37 +142,62 @@ public:
         return keys;
     }
 
-    V at(const K& key) const
+    const V at(const K& key) const
     {
         auto iter = _data.find(key);
         if (iter != _data.end())
             return iter->second;
-        
         return nullptr;
+    }
+    
+    V at(const K& key)
+    {
+        auto iter = _data.find(key);
+        if (iter != _data.end())
+            return iter->second;
+        return nullptr;
+    }
+    
+    const_iterator find(const K& key) const
+    {
+        return _data.find(key);
+    }
+    
+    iterator find(const K& key)
+    {
+        return _data.find(key);
     }
     
     void insert(const K& key, V object)
     {
         CCASSERT(object != nullptr, "Object is nullptr!");
-        remove(key);
+        erase(key);
         _data.insert(std::make_pair(key, object));
         object->retain();
     }
 
-    void remove(const K& key)
+    iterator erase(const_iterator position)
     {
-        auto iter = _data.find(key);
+        return _data.erase(position);
+    }
+    
+    size_t erase(const K& k)
+    {
+        auto iter = _data.find(k);
         if (iter != _data.end())
         {
             iter->second->release();
             _data.erase(iter);
+            return 1;
         }
+        
+        return 0;
     }
     
-    void remove(const std::vector<K>& keys)
+    void erase(const std::vector<K>& keys)
     {
         std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
-            this->remove(key);
+            this->erase(key);
         });
     }
     
@@ -176,23 +220,6 @@ public:
         }
         return nullptr;
     }
-    
-    // ------------------------------------------
-    // Iterators
-    // ------------------------------------------
-    typedef std::unordered_map<K, V> RefMap;
-    
-    typedef typename RefMap::iterator iterator;
-    typedef typename RefMap::const_iterator const_iterator;
-
-    iterator begin() { return _data.begin(); }
-    const_iterator begin() const { return _data.begin(); }
-    
-    iterator end() { return _data.end(); }
-    const_iterator end() const { return _data.end(); }
-    
-    const_iterator cbegin() const { return _data.cbegin(); }
-    const_iterator cend() const { return _data.cend(); }
     
 // Don't uses operator since we could not decide whether it needs 'retain'/'release'.
 //    V& operator[] ( const K& key )

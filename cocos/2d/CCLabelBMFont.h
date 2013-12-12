@@ -137,7 +137,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char * description() const;
+    std::string description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const std::string& FNTfile);

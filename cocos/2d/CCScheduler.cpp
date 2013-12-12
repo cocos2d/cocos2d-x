@@ -949,7 +949,7 @@ void Scheduler::update(float dt)
             SchedulerScriptHandlerEntry* eachEntry = _scriptHandlerEntries.at(i);
             if (eachEntry->isMarkedForDeletion())
             {
-                _scriptHandlerEntries.remove(i);
+                _scriptHandlerEntries.erase(i);
             }
             else if (!eachEntry->isPaused())
             {

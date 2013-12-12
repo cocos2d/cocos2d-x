@@ -581,9 +581,9 @@ void Node::cleanup()
 }
 
 
-const char* Node::description() const
+std::string Node::description() const
 {
-    return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
+    return StringUtils::format("<Node | Tag = %d", _tag);
 }
 
 // lazy allocs
@@ -770,7 +770,7 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
     // set parent nil at the end
     child->setParent(nullptr);
 
-    _children.remove(childIndex);
+    _children.erase(childIndex);
 }
 
 
