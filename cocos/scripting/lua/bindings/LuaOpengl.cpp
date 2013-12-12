@@ -5322,8 +5322,8 @@ static int tolua_Cocos2d_CCGLProgram_vertexShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertexShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getVertexShaderLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getVertexShaderLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;
@@ -5354,8 +5354,8 @@ static int tolua_Cocos2d_CCGLProgram_fragmentShaderLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fragmentShaderLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getFragmentShaderLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getFragmentShaderLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;
@@ -5386,8 +5386,8 @@ static int tolua_Cocos2d_CCGLProgram_programLog00(lua_State* tolua_S)
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programLog'", NULL);
 #endif
         {
-            const char* tolua_ret = (const char*)  self->getProgramLog();
-            tolua_pushstring(tolua_S,(const char*)tolua_ret);
+            std::string tolua_ret = self->getProgramLog();
+            tolua_pushstring(tolua_S, tolua_ret.c_str());
         }
     }
     return 1;
@@ -6703,6 +6703,72 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
         tolua_function(tolua_S, "viewport", tolua_Cocos2d_glViewport00);
         tolua_function(tolua_S, "glEnableVertexAttribs", tolua_Cocos2d_glEnableVertexAttribs00);
       tolua_endmodule(tolua_S);
+    return 1;
+}
+
+int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err))
+        goto tolua_lerror;
+    else
+#endif
+    {
+        GLNode* glNode = (GLNode*)  tolua_tousertype(tolua_S,1,0);
+        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)glNode, handler, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptDrawHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+
+int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+        !tolua_isnoobj(tolua_S,2,&tolua_err))
+        goto tolua_lerror;
+    else
+#endif
+    {
+        GLNode* glNode = (GLNode*)tolua_tousertype(tolua_S,1,0);
+        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)glNode,ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'unregisterScriptDrawHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int register_glnode_manual(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    lua_pushstring(tolua_S,"GLNode");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"registerScriptDrawHandler");
+        lua_pushcfunction(tolua_S,tolua_Cocos2d_GLNode_registerScriptDrawHandler00);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"unregisterScriptDrawHandler");
+        lua_pushcfunction(tolua_S,tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
     return 1;
 }
 

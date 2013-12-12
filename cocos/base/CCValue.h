@@ -42,6 +42,8 @@ typedef std::unordered_map<int, Value> IntValueMap;
 class Value
 {
 public:
+    static const Value Null;
+    
     Value();
     explicit Value(unsigned char v);
     explicit Value(int v);
@@ -119,10 +121,11 @@ public:
 
     inline Type getType() const { return _type; };
     
-protected:
-    void clear();
+    std::string getDescription();
     
 private:
+    void clear();
+    
     union
     {
         unsigned char byteVal;
