@@ -155,17 +155,17 @@ public:
  *  Dictionary* pDict = Dictionary::create();
  *
  *  // Insert objects to dictionary
- *  __String* pValue1 = __String::create("100");
- *  __String* pValue2 = __String::create("120");
+ *  String* pValue1 = String::create("100");
+ *  String* pValue2 = String::create("120");
  *  Integer* pValue3 = Integer::create(200);
  *  pDict->setObject(pValue1, "key1");
  *  pDict->setObject(pValue2, "key2");
  *  pDict->setObject(pValue3, "key3");
  *
  *  // Get the object for key
- *  __String* pStr1 = (__String*)pDict->objectForKey("key1");
- *  log("{ key1: %s }", pStr1->getC__String());
- *  Integer* pInteger = (Integer*)pDict->objectForKey("key3");
+ *  String* pStr1 = static_cast<String*>(pDict->objectForKey("key1"));
+ *  log("{ key1: %s }", pStr1->getCString());
+ *  Integer* pInteger = static_cast<Integer*>(pDict->objectForKey("key3"));
  *  log("{ key3: %d }", pInteger->getValue());
  *  @endcode
  *
@@ -224,11 +224,11 @@ public:
      *  @param key  The string key for searching.
      *  @return The object matches the key. You need to force convert it to the type you know.
      *  @code
-     *     // Assume that the elements are __String* pointers. Convert it by following code.
-     *     __String* pStr = (__String*)pDict->objectForKey("key1");
+     *     // Assume that the elements are String* pointers. Convert it by following code.
+     *     String* pStr = static_cast<String*>(pDict->objectForKey("key1"));
      *     // Do something about pStr.
      *     // If you don't know the object type, properly you need to use dynamic_cast<SomeType*> to check it.
-     *     __String* pStr2 = dynamic_cast<__String*>(pDict->objectForKey("key1"));
+     *     String* pStr2 = dynamic_cast<String*>(pDict->objectForKey("key1"));
      *     if (pStr2 != NULL) {
      *          // Do something about pStr2
      *     }
@@ -253,7 +253,7 @@ public:
      *
      *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching
-     *  @return An instance of __String.
+     *  @return An instance of String.
      *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
@@ -264,7 +264,7 @@ public:
      *
      *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching.
-     *  @return An instance of __String.
+     *  @return An instance of String.
      *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
@@ -321,7 +321,7 @@ public:
     /**
      *  Remove objects by an array of keys.
      *
-     *  @param pKey__Array  The array contains keys to be removed.
+     *  @param pKeyArray  The array contains keys to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
