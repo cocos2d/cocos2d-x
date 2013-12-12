@@ -212,6 +212,7 @@ static void extendScrollView(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_ScrollView_unregisterScriptHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
@@ -336,6 +337,7 @@ static void extendControl(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_control_unregisterControlEventHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S)
@@ -440,6 +442,7 @@ static void extendEditBox(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_CCBProxy_create(lua_State* tolua_S)
@@ -786,6 +789,7 @@ static void extendCCBReader(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CCBReader_load );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 
@@ -852,6 +856,7 @@ static void extendCCBAnimationManager(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 #define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
@@ -1328,6 +1333,7 @@ static void extendTableView(lua_State* L)
         tolua_function(L, "registerScriptHandler", lua_cocos2d_TableView_registerScriptHandler);
         tolua_function(L, "unregisterScriptHandler", lua_cocos2d_TableView_unregisterScriptHandler);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
@@ -1424,6 +1430,7 @@ static void extendBone(lua_State* L)
         tolua_function(L, "setIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData);
         tolua_function(L, "getIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData);
     }
+    lua_pop(L, 1);
 }
 
 class LuaAssetsManagerDelegateProtocol:public Object, public AssetsManagerDelegateProtocol
@@ -1540,6 +1547,7 @@ static void extendAssetsManager(lua_State* L)
     {
         tolua_function(L, "setDelegate", lua_cocos2dx_AssetsManager_setDelegate);
     }
+    lua_pop(L, 1);
 }
 
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)

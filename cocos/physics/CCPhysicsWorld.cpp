@@ -628,20 +628,22 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
 
 void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayRemoveBodies.getIndex(body) != CC_INVALID_INDEX)
+    auto removeBodyIter = _delayRemoveBodies.find(body);
+    if (removeBodyIter != _delayRemoveBodies.end())
     {
-        _delayRemoveBodies.removeObject(body);
+        _delayRemoveBodies.erase(removeBodyIter);
         return;
     }
     
     if (_info->isLocked())
     {
-        if (_delayAddBodies.getIndex(body) == CC_INVALID_INDEX)
+        if (_delayAddBodies.find(body) == _delayAddBodies.end())
         {
             _delayAddBodies.pushBack(body);
             _delayDirty = true;
         }
-    }else
+    }
+    else
     {
         doAddBody(body);
     }
@@ -712,7 +714,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     body->_joints.clear();
     
     removeBodyOrDelay(body);
-    _bodies.removeObject(body);
+    _bodies.erase(body);
     body->_world = nullptr;
 }
 
@@ -721,7 +723,7 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
     if (_delayAddBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayAddBodies.removeObject(body);
+        _delayAddBodies.erase(body);
         return;
     }
     
@@ -935,7 +937,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     // remove shaps
     for (auto& shape : body->getShapes())
     {
-        removeShape(dynamic_cast<PhysicsShape*>(shape));
+        removeShape(shape);
     }
     
     // remove body
@@ -949,9 +951,8 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::removeAllBodies()
 {
-    for (auto& obj : _bodies)
+    for (auto& child : _bodies)
     {
-        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
         removeBodyOrDelay(child);
         child->_world = nullptr;
     }

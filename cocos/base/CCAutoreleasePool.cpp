@@ -51,7 +51,7 @@ void AutoreleasePool::removeObject(Object* object)
 {
     for (unsigned int i = 0; i < object->_autoReleaseCount; ++i)
     {
-       _managedObjectArray.removeObject(object, false);
+       _managedObjectArray.erase(object, false);
     }
 }
 
@@ -64,7 +64,7 @@ void AutoreleasePool::clear()
         int nIndex = _managedObjectArray.size() - 1;
 #endif
 
-        _managedObjectArray.forEachReverse([](Object* obj){
+        _managedObjectArray.forEachReverse([&](Object* obj){
             --(obj->_autoReleaseCount);
             //(*it)->release();
             //delete (*it);
@@ -111,7 +111,7 @@ PoolManager::~PoolManager()
  
      // we only release the last autorelease pool here 
     _curReleasePool = 0;
-    _releasePoolStack.remove(0);
+    _releasePoolStack.erase(0);
 }
 
 void PoolManager::finalize()
@@ -147,7 +147,7 @@ void PoolManager::pop()
  
     if (count > 1)
     {
-        _releasePoolStack.remove(count-1);
+        _releasePoolStack.erase(count-1);
 
 //         if(nCount > 1)
 //         {

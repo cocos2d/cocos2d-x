@@ -91,8 +91,10 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret)
         size_t len = lua_objlen(L, lo);
         for (int i = 0; i < len; i++)
         {
-            lua_gettable(L, i + 1);
-            if (lua_isnil(L, -1) || lua_isuserdata(L, -1))
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L, lo);
+            
+            if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
