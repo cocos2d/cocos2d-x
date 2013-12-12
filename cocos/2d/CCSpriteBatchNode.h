@@ -163,6 +163,7 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
     virtual void draw(void) override;
+    virtual std::string getDescription() const override;
 
 protected:
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.

@@ -701,4 +701,9 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     return this;
 }
 
+std::string SpriteBatchNode::getDescription() const
+{
+    return StringUtils::format("<SpriteBatchNode | tag = %d>", _tag);
+}
+
 NS_CC_END

@@ -736,5 +736,10 @@ void Label::setCascadeColorEnabled(bool cascadeColorEnabled)
     _cascadeColorEnabled = cascadeColorEnabled;
 }
 
+std::string Label::getDescription() const
+{
+    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String,-1,NULL,NULL));
+}
+
 
 NS_CC_END
