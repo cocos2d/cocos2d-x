@@ -59,12 +59,14 @@ public:
     const_iterator cbegin() const { return _data.cbegin(); }
     const_iterator cend() const { return _data.cend(); }
     
+    /** Default constructor */
     Map<K, V>()
     : _data()
     {
         CCLOGINFO("In the default constructor of Map!");
     }
     
+    /** Contructor with capacity */
     explicit Map<K, V>(int capacity)
     : _data()
     {
@@ -72,6 +74,7 @@ public:
         _data.reserve(capacity);
     }
 
+    /** Copy constructor */
     Map<K, V>(const Map<K, V>& other)
     {
         CCLOGINFO("In the copy constructor of Map!");
@@ -79,40 +82,50 @@ public:
         addRefForAllObjects();
     }
     
+    /** Move constructor */
     Map<K, V>(Map<K, V>&& other)
     {
         CCLOGINFO("In the move constructor of Map!");
         _data = std::move(other._data);
     }
     
+    /** Destructor 
+     *  It will release all objects in map.
+     */
     ~Map<K, V>()
     {
         CCLOGINFO("In the destructor of Map!");
         clear();
     }
 
-    /** Sets capacity of current array */
+    /** Sets capacity of the map */
     void reserve(int capacity)
     {
         _data.reserve(capacity);
     }
     
-    /** Returns capacity of the array */
+    /** Returns capacity of the map */
     size_t capacity() const
     {
         return _data.capacity();
     }
     
+    /** The number of elements in the map. */
     size_t size() const
     {
         return _data.size();
     }
 
+    /** Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
+     *  @note This function does not modify the content of the container in any way.
+     *        To clear the content of an array object, member function unordered_map::clear exists.
+     */
     bool empty() const
     {
         return _data.empty();
     }
     
+    /** Returns all keys in the map */
     std::vector<K> keys() const
     {
         std::vector<K> keys;
@@ -127,6 +140,7 @@ public:
         return keys;
     }
 
+    /** Returns all keys that matches the object */
     std::vector<K> keys(V object) const
     {
         std::vector<K> keys;
@@ -142,6 +156,11 @@ public:
         return keys;
     }
 
+    /** @brief Returns a reference to the mapped value of the element with key k in the map.
+     *  @note If key does not match the key of any element in the container, the function return nullptr.
+     *  @param key Key value of the element whose mapped value is accessed.
+     *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
+     */
     const V at(const K& key) const
     {
         auto iter = _data.find(key);
@@ -158,6 +177,13 @@ public:
         return nullptr;
     }
     
+    /** @brief Searches the container for an element with 'key' as key and returns an iterator to it if found,
+     *         otherwise it returns an iterator to Map<K, V>::end (the element past the end of the container).
+     *  @param key Key to be searched for.
+     *         Member type 'K' is the type of the keys for the elements in the container,
+     *         defined in Map<K, V> as an alias of its first template parameter (Key).
+     *
+     */
     const_iterator find(const K& key) const
     {
         return _data.find(key);
@@ -168,6 +194,11 @@ public:
         return _data.find(key);
     }
     
+    /** @brief Inserts new elements in the map.
+     *  @note If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
+     *  @param key The key to be inserted.
+     *  @param object The object to be inserted.
+     */
     void insert(const K& key, V object)
     {
         CCASSERT(object != nullptr, "Object is nullptr!");
@@ -176,11 +207,22 @@ public:
         object->retain();
     }
 
+    /** @brief Removes an element with an iterator from the Map<K, V> container.
+     *  @param position Iterator pointing to a single element to be removed from the Map<K, V>.
+     *         Member type const_iterator is a forward iterator type.
+     */
     iterator erase(const_iterator position)
     {
+        CCASSERT(position >= _data.begin() && position < _data.end(), "");
+        position->second->release();
         return _data.erase(position);
     }
     
+    /** @brief Removes an element with an iterator from the Map<K, V> container.
+     *  @param k Key of the element to be erased.
+     *         Member type 'K' is the type of the keys for the elements in the container,
+     *         defined in Map<K, V> as an alias of its first template parameter (Key).
+     */
     size_t erase(const K& k)
     {
         auto iter = _data.find(k);
@@ -194,6 +236,9 @@ public:
         return 0;
     }
     
+    /** @brief Removes some elements with a vector which contains keys in the map.
+     *  @param keys Keys of elements to be erased.
+     */
     void erase(const std::vector<K>& keys)
     {
         std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
@@ -201,6 +246,10 @@ public:
         });
     }
     
+    /** All the elements in the Map<K,V> container are dropped:
+     *  their reference count will be decreased, and they are removed from the container,
+     *  leaving it with a size of 0.
+     */
     void clear()
     {
         for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
@@ -211,6 +260,9 @@ public:
         _data.clear();
     }
     
+    /** @brief Gets a random object in the map
+     *  @return Returns the random object if the map isn't empty, otherwise it returns nullptr.
+     */
     V getRandomObject() const
     {
         if (!_data.empty())
@@ -246,6 +298,7 @@ public:
 //        return _data.at(key);
 //    }
     
+    /** Copy assignment operator */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
         CCLOGINFO("In the copy assignment operator of Map!");
@@ -255,6 +308,7 @@ public:
         return *this;
     }
 
+    /** Move assignment operator */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
         CCLOGINFO("In the move assignment operator of Map!");
@@ -264,6 +318,7 @@ public:
     
 protected:
     
+    /** Retains all the objects in the map */
     void addRefForAllObjects()
     {
         for (auto iter = _data.begin(); iter != _data.end(); ++iter)
