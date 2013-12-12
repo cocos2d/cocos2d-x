@@ -185,9 +185,9 @@ const std::string& LabelTTF::getString() const
     return _string;
 }
 
-std::string LabelTTF::description() const
+std::string LabelTTF::getDescription() const
 {
-    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName.c_str(), _fontSize);
+    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %.1f, Label = '%s'>", _fontName.c_str(), _fontSize, _string.c_str());
 }
 
 TextHAlignment LabelTTF::getHorizontalAlignment() const

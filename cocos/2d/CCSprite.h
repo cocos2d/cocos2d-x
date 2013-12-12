@@ -392,6 +392,8 @@ public:
     inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
+    virtual std::string getDescription() const override;
+
     /// @{
     /// @name Functions inherited from Node
     virtual void setScaleX(float scaleX) override;

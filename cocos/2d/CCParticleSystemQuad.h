@@ -120,6 +120,8 @@ public:
      */
     virtual void setTotalParticles(int tp) override;
 
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor

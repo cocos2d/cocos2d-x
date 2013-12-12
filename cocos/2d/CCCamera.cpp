@@ -44,7 +44,7 @@ Camera::~Camera(void)
 {
 }
 
-const char* Camera::description(void) const
+std::string Camera::getDescription() const
 {
     return String::createWithFormat("<Camera | center = (%.2f,%.2f,%.2f)>", _centerX, _centerY, _centerZ)->getCString();
 }
