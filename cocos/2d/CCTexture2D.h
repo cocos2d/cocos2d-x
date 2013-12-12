@@ -200,7 +200,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    virtual std::string getDescription() const;
 
     /** These functions are needed to create mutable textures
      * @js NA

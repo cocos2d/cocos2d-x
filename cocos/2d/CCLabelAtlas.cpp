@@ -225,4 +225,9 @@ void LabelAtlas::draw()
 }
 #endif
 
+std::string LabelAtlas::getDescription() const
+{
+    return StringUtils::format("<LabelAtlas | Tag = %d, Label = '%s'>", _tag, _string.c_str());
+}
+
 NS_CC_END
