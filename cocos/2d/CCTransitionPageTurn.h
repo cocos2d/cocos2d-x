@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+class GridNode;
+
 /**
  * @addtogroup transition
  * @{
@@ -83,11 +85,14 @@ public:
     // Overrides
     //
     virtual void onEnter() override;
+    virtual void onExit() override;
 
 protected:
     virtual void sceneOrder() override;
 
 protected:
+    GridNode* _inSceneProxy;
+    GridNode* _outSceneProxy;
     bool    _back;    
     static float POLYGON_OFFSET_FACTOR;
     static float POLYGON_OFFSET_UNITS;
