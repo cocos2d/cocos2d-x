@@ -232,7 +232,7 @@ void NodeCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    printf("Size of Node: %zu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -280,7 +280,7 @@ void NodeDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Node: %lu\n", sizeof(Node));
+    printf("Size of Node: %zu\n", sizeof(Node));
 
     scheduleUpdate();
 }
@@ -332,7 +332,7 @@ void SpriteCreateEmptyTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    printf("Size of Sprite: %zu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -382,7 +382,7 @@ void SpriteCreateTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of Sprite: %lu\n", sizeof(Sprite));
+    printf("Size of Sprite: %zu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
@@ -432,7 +432,7 @@ void SpriteDeallocTest::initWithQuantityOfNodes(unsigned int nNodes)
 {
     PerformceAllocScene::initWithQuantityOfNodes(nNodes);
 
-    printf("Size of sprite: %lu\n", sizeof(Sprite));
+    printf("Size of Sprite: %zu\n", sizeof(Sprite));
 
     scheduleUpdate();
 }
