@@ -149,7 +149,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
         {
             long typeId = typeid(*obj).hash_code();
             auto iter = g_luaType.find(typeId);
-            if (g_luaType.end() == iter)
+            if (g_luaType.end() != iter)
             {
                 lua_pushnumber(L, (lua_Number)indexTable);
                 int ID = (obj) ? (int)obj->_ID : -1;
