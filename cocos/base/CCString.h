@@ -147,7 +147,7 @@ public:
     virtual bool isEqual(const Object* pObject);
 
     /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
-     *  @return A __String pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
@@ -155,21 +155,21 @@ public:
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
      *  if you want to change it, you should modify the kMax__StringLen macro in __String.cpp file.
-     *  @return A __String pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
     static __String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
     /** create a string with binary data 
-     *  @return A __String pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
     static __String* createWithData(const unsigned char* pData, int nLen);
 
     /** create a string with a file, 
-     *  @return A __String pointer which is an autorelease object pointer,
+     *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
