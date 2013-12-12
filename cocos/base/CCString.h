@@ -216,7 +216,7 @@ public:
         return ss.str();
     }
     
-    static std::string toStringWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2)
+    static std::string format(const char* format, ...) CC_FORMAT_PRINTF(1, 2)
     {
         #define CC_MAX_STRING_LENGTH (1024*100)
         
