@@ -31,6 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GridBase;
+class GridNode;
 
 /**
  * @addtogroup actions
@@ -57,6 +58,10 @@ protected:
     bool initWithDuration(float duration, const Size& gridSize);
 
     Size _gridSize;
+    
+    GridNode* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GridAction);
@@ -264,6 +269,10 @@ public:
 protected:
     StopGrid() {}
     virtual ~StopGrid() {}
+    
+    GridNode* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(StopGrid);
@@ -286,7 +295,11 @@ protected:
     virtual ~ReuseGrid() {}
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
-
+    
+    GridNode* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
+    
     int _times;
 
 private:

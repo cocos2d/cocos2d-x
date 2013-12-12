@@ -1,6 +1,7 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
+#include "CCGridNode.h"
 
 
 using namespace cocos2d;
