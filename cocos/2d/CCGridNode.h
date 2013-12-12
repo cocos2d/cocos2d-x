@@ -27,11 +27,14 @@ public:
 
     virtual bool init();
     virtual void visit();
+
+    void setGridTarget(Node *target);
 protected:
     GridNode();
     virtual ~GridNode();
 
 protected:
+    Node* _gridTarget;
     GridBase* _nodeGrid;
 };
 NS_CC_END
