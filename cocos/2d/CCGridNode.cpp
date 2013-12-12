@@ -107,5 +107,11 @@ void GridNode::visit()
     kmGLPopMatrix();
 }
 
+void GridNode::setNodeGrid(GridBase *grid)
+{
+    CC_SAFE_RELEASE(_nodeGrid);
+    CC_SAFE_RETAIN(grid);
+    _nodeGrid = grid;
+}
 
 NS_CC_END
