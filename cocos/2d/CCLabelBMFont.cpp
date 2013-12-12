@@ -150,7 +150,7 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
 
 std::string CCBMFontConfiguration::description(void) const
 {
-    return StringUtils::toStringWithFormat(
+    return StringUtils::format(
         "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
         (size_t)this,
         HASH_COUNT(_fontDefDictionary),

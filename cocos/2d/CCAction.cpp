@@ -49,7 +49,7 @@ Action::~Action()
 
 std::string Action::description() const
 {
-    return StringUtils::toStringWithFormat("<Action | Tag = %d", _tag);
+    return StringUtils::format("<Action | Tag = %d", _tag);
 }
 
 void Action::startWithTarget(Node *aTarget)
