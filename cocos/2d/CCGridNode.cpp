@@ -23,13 +23,22 @@ GridNode* GridNode::create()
 GridNode::GridNode()
 :Node()
 ,_nodeGrid(nullptr)
+,_gridTarget(nullptr)
 {
 
+}
+
+void GridNode::setGridTarget(Node* target)
+{
+    CC_SAFE_RELEASE(_gridTarget);
+    CC_SAFE_RETAIN(target);
+    _gridTarget = target;
 }
 
 GridNode::~GridNode()
 {
     CC_SAFE_RELEASE(_nodeGrid);
+    CC_SAFE_RELEASE(_gridTarget);
 }
 
 bool GridNode::init()
@@ -53,6 +62,12 @@ void GridNode::visit()
      }
 
     this->transform();
+
+    if(_gridTarget)
+    {
+        _gridTarget->visit();
+    }
+
     int i = 0;
 
     if(!_children.empty())
