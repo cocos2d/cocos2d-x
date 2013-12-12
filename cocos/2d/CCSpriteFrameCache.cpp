@@ -300,7 +300,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         }
     }
 
-    _spriteFrames.remove(toRemoveFrames);
+    _spriteFrames.erase(toRemoveFrames);
     
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( bRemoved )
@@ -321,12 +321,12 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 
     if (!key.empty())
     {
-        _spriteFrames.remove(key);
+        _spriteFrames.erase(key);
         _spriteFramesAliases.erase(key);
     }
     else
     {
-        _spriteFrames.remove(name);
+        _spriteFrames.erase(name);
     }
 
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
@@ -365,7 +365,7 @@ void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
         }
     }
 
-    _spriteFrames.remove(keysToRemove);
+    _spriteFrames.erase(keysToRemove);
 }
 
 void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
@@ -382,7 +382,7 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
         }
     }
 
-    _spriteFrames.remove(keysToRemove);
+    _spriteFrames.erase(keysToRemove);
 }
 
 SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)

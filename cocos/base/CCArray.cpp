@@ -36,7 +36,7 @@ NS_CC_BEGIN
 // std::vector implementation
 //  ----------------------------------------------------------------------------------
 
-__Array::Array()
+__Array::__Array()
 : data(NULL)
 {
     init();
@@ -483,7 +483,7 @@ __Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
     __Array* ret = __Array::createWithCapacity(static_cast<int>(arr.size()));
     
     std::for_each(arr.cbegin(), arr.cend(), [&ret](const Value& value){
-        ret->addObject(String::create(value.asString()));
+        ret->addObject(__String::create(value.asString()));
     });
     
     return ret;

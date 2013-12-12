@@ -312,7 +312,7 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
 
     if(bone->getParentBone())
     {
-        bone->getParentBone()->getChildren().removeObject(bone);
+        bone->getParentBone()->getChildren().erase(bone);
         bone->setParentBone(nullptr);
     }
 
