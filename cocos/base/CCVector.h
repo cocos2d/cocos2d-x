@@ -71,22 +71,20 @@ public:
         
     }
     
-    /** Constructor with a capacity */
-    explicit Vector<T>(int capacity)
+    /** creates an emptry Vector */
+    explicit Vector<T>(ssize_t capacity)
     : _data()
     {
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
 
-    /** Destructor */
     ~Vector<T>()
     {
         CCLOGINFO("In the destructor of Vector.");
         clear();
     }
 
-    /** Copy constructor */
     Vector<T>(const Vector<T>& other)
     {
         CCLOGINFO("In the copy constructor!");
@@ -101,7 +99,6 @@ public:
         _data = std::move(other._data);
     }
     
-    /** Copy assignment operator */
     Vector<T>& operator=(const Vector<T>& other)
     {
         CCLOGINFO("In the copy assignment operator!");
@@ -111,7 +108,6 @@ public:
         return *this;
     }
     
-    /** Move assignment operator */
     Vector<T>& operator=(Vector<T>&& other)
     {
         CCLOGINFO("In the move assignment operator!");
@@ -130,51 +126,33 @@ public:
 //        return _data[index];
 //    }
     
-    /** @brief Request a change in capacity 
-     *  @param capacity Minimum capacity for the vector.
-     *         If n is greater than the current vector capacity, 
-     *         the function causes the container to reallocate its storage increasing its capacity to n (or greater).
-     */
-    void reserve(int n)
+    /** Sets capacity of current array */
+    void reserve(ssize_t capacity)
     {
-        _data.reserve(n);
+        _data.reserve(capacity);
     }
     
-    /** @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
-     *  @note This capacity is not necessarily equal to the vector size. 
-     *        It can be equal or greater, with the extra space allowing to accommodate for growth without the need to reallocate on each insertion.
-     *  @return The size of the currently allocated storage capacity in the vector, measured in terms of the number elements it can hold.
-     */
+    /** Returns capacity of the array */
     int capacity() const
     {
         return _data.capacity();
     }
     
-    /** @brief Returns the number of elements in the vector.
-     *  @note This is the number of actual objects held in the vector, which is not necessarily equal to its storage capacity.
-     *  @return The number of elements in the container.
-     */
+    // Querying an Array
+
+    /** Returns element count of the array */
     int size() const
     {
         return  static_cast<int>(_data.size());
     }
     
-    /** @brief Returns whether the vector is empty (i.e. whether its size is 0).
-     *  @note This function does not modify the container in any way. To clear the content of a vector, see Vector<T>::clear.
-     */
     bool empty() const
     {
         return _data.empty();
     }
     
-    /** Returns the maximum number of elements that the vector can hold. */
-    size_t max_size() const
-    {
-        return _data.max_size();
-    }
-    
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    int getIndex(T object) const
+    ssize_t getIndex(T object) const
     {
         auto iter = std::find(_data.begin(), _data.end(), object);
         if (iter != _data.end())
@@ -183,10 +161,6 @@ public:
         return -1;
     }
 
-    /** @brief Find the object in the vector.
-     *  @return Returns an iterator to the first element in the range [first,last) that compares equal to val. 
-     *          If no such element is found, the function returns last.
-     */
     const_iterator find(T object) const
     {
         return std::find(_data.begin(), _data.end(), object);
@@ -197,26 +171,25 @@ public:
         return std::find(_data.begin(), _data.end(), object);
     }
     
-    /** Returns the element at position 'index' in the vector. */
-    T at(int index) const
+    /** Returns an element with a certain index */
+    T at(ssize_t index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
     }
 
-    /** Returns the first element in the vector. */
     T front() const
     {
         return _data.front();
     }
     
-    /** Returns the last element of the vector. */
+    /** Returns the last element of the array */
     T back() const
     {
         return _data.back();
     }
 
-    /** Returns a random element of the vector. */
+    /** Returns a random element */
     T getRandomObject() const
     {
         if (!_data.empty())
@@ -227,20 +200,20 @@ public:
         return nullptr;
     }
 
-    /** Returns a Boolean value that indicates whether object is present in vector. */
+    /** Returns a Boolean value that indicates whether object is present in array. */
     bool contains(T object) const
     {
         return( std::find(_data.begin(), _data.end(), object) != _data.end() );
     }
 
-    /** Returns true if the two vectors are equal */
+    /** returns true if the the arrays are equal */
     bool equals(const Vector<T> &other)
     {
-        size_t s = this->size();
+        ssize_t s = this->size();
         if (s != other.size())
             return false;
         
-        for (int i = 0; i < s; i++)
+        for (ssize_t i = 0; i < s; i++)
         {
             if (!this->at(i)->isEqual(other.at(i)))
             {
@@ -250,13 +223,9 @@ public:
         return true;
     }
 
-    // Adds objects
-    
-    /** @brief Adds a new element at the end of the vector, after its current last element.
-     *  @note This effectively increases the container size by one,
-     *        which causes an automatic reallocation of the allocated storage space 
-     *        if -and only if- the new vector size surpasses the current vector capacity.
-     */
+    // Adding Objects
+
+    /** Add a certain object */
     void pushBack(T object)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -264,7 +233,7 @@ public:
         object->retain();
     }
     
-    /** Inserts all elements of an existing vector */
+    /** Add all elements of an existing array */
     void insert(const Vector<T>& other)
     {
         for( auto it = other.begin(); it != other.end(); ++it ) {
@@ -273,13 +242,8 @@ public:
         }
     }
 
-    /** @brief Insert a certain object at a certain index 
-     *  @note The vector is extended by inserting new elements before the element at the specified 'index',
-     *        effectively increasing the container size by the number of elements inserted.
-     *        This causes an automatic reallocation of the allocated storage space 
-     *        if -and only if- the new vector size surpasses the current vector capacity.
-     */
-    void insert(int index, T object)
+    /** Insert a certain object at a certain index */
+    void insert(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index <= size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -287,11 +251,9 @@ public:
         object->retain();
     }
     
-    // Removes Objects
+    // Removing Objects
 
-    /** Removes the last element in the vector, 
-     *  effectively reducing the container size by one, decrease the referece count of the deleted object.
-     */
+    /** Remove last object */
     void popBack()
     {
         CCASSERT(!_data.empty(), "no objects added");
@@ -300,10 +262,7 @@ public:
         last->release();
     }
     
-    /** @brief Remove a certain object.
-     *  @param object The object to be removed.
-     *  @param toRelease Whether to decrease the referece count of the deleted object.
-     */
+    /** Remove a certain object */
     void erase(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -314,11 +273,7 @@ public:
             object->release();
     }
 
-    /** @brief Removes from the vector with an iterator. 
-     *  @param position Iterator pointing to a single element to be removed from the vector.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
-     */
+    /** Removes an element with a certain index */
     iterator erase(iterator position)
     {
         CCASSERT(position >= _data.begin() && position < _data.end(), "Invalid position!");
@@ -326,12 +281,6 @@ public:
         return _data.erase(position);
     }
     
-    /** @brief Removes from the vector with a range of elements (  [first, last)  ).
-     *  @param first The beginning of the range
-     *  @param last The end of the range, the 'last' will not used, it's only for indicating the end of range.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
-     */
     iterator erase(const_iterator first, const_iterator last)
     {
         for (auto iter = first; iter != last; ++iter)
@@ -342,22 +291,15 @@ public:
         return _data.erase(first, last);
     }
     
-    /** @brief Removes from the vector with an index.
-     *  @param index The index of the element to be removed from the vector.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
-     */
-    iterator erase(int index)
+    void erase(int index)
     {
         CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
         auto it = std::next( begin(), index );
         (*it)->release();
-        return _data.erase(it);
+        _data.erase(it);
     }
 
-    /** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
-     *  @note All the elements in the vector will be released (referece count will be decreased).
-     */
+    /** Removes all objects */
     void clear()
     {
         for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
@@ -380,7 +322,7 @@ public:
     }
     
     /** Swap two elements with certain indexes */
-    void swap(int index1, int index2)
+    void swap(ssize_t index1, ssize_t index2)
     {
         CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
 
@@ -388,7 +330,7 @@ public:
     }
 
     /** Replace object at index with another object. */
-    void replace(int index, T object)
+    void replace(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -398,19 +340,18 @@ public:
         object->retain();
     }
 
-    /** reverses the vector */
+    /** reverses the array */
     void reverse()
     {
         std::reverse( std::begin(_data), std::end(_data) );
     }
     
-    /** Shrinks the vector so the memory footprint corresponds with the number of items */
+    /** Shrinks the array so the memory footprint corresponds with the number of items */
     void shrinkToFit()
     {
         _data.shrink_to_fit();
     }
     
-    /** Traverses through the vector and applys the callback function for each element */
     void forEach(const std::function<void(T)>& callback)
     {
         if (empty())
@@ -421,7 +362,6 @@ public:
         });
     }
     
-    /** Traverses through the vector and applys the callback function for each element */
     void forEach(const std::function<void(T)>& callback) const
     {
         if (empty())
@@ -432,7 +372,6 @@ public:
         });
     }
   
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
     void forEachReverse(const std::function<void(T)>& callback)
     {
         if (empty())
@@ -443,7 +382,6 @@ public:
         });
     }
     
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
     void forEachReverse(const std::function<void(T)>& callback) const
     {
         if (empty())
@@ -454,11 +392,6 @@ public:
         });
     }
     
-    /** @brief Sorts all elements in the vector according the binary callback function.
-     *  @param callback Binary function that accepts two elements in the vector as arguments,
-     *         and returns a value convertible to bool. 
-     *         The value returned indicates whether the element passed as first argument is considered to go before the second in the specific strict weak ordering it defines.
-     */
     void sort(const std::function<bool(T, T)>& callback)
     {
         if (empty())
@@ -471,7 +404,6 @@ public:
     
 protected:
     
-    /** Retains all the objects in the vector */
     void addRefForAllObjects()
     {
         std::for_each(_data.begin(), _data.end(), [](T obj){
