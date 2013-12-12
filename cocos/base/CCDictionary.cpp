@@ -68,27 +68,27 @@ DictElement::~DictElement()
 }
 
 // -----------------------------------------------------------------------
-// Dictionary
+// __Dictionary
 
-Dictionary::Dictionary()
+__Dictionary::__Dictionary()
 : _elements(NULL)
 , _dictType(kDictUnknown)
 {
 
 }
 
-Dictionary::~Dictionary()
+__Dictionary::~__Dictionary()
 {
-    CCLOGINFO("deallocing Dictionary: %p", this);
+    CCLOGINFO("deallocing __Dictionary: %p", this);
     removeAllObjects();
 }
 
-unsigned int Dictionary::count()
+unsigned int __Dictionary::count()
 {
     return HASH_COUNT(_elements);
 }
 
-__Array* Dictionary::allKeys()
+__Array* __Dictionary::allKeys()
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
@@ -100,7 +100,7 @@ __Array* Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            String* pOneKey = new String(pElement->_strKey);
+            __String* pOneKey = new __String(pElement->_strKey);
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -109,7 +109,7 @@ __Array* Dictionary::allKeys()
     {
         HASH_ITER(hh, _elements, pElement, tmp) 
         {
-            Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+            __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
             array->addObject(pOneKey);
             CC_SAFE_RELEASE(pOneKey);
         }
@@ -118,7 +118,7 @@ __Array* Dictionary::allKeys()
     return array;
 }
 
-__Array* Dictionary::allKeysForObject(Object* object)
+__Array* __Dictionary::allKeysForObject(Object* object)
 {
     int iKeyCount = this->count();
     if (iKeyCount <= 0) return NULL;
@@ -132,7 +132,7 @@ __Array* Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                String* pOneKey = new String(pElement->_strKey);
+                __String* pOneKey = new __String(pElement->_strKey);
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -144,7 +144,7 @@ __Array* Dictionary::allKeysForObject(Object* object)
         {
             if (object == pElement->_object)
             {
-                Integer* pOneKey = new Integer(static_cast<int>(pElement->_intKey));
+                __Integer* pOneKey = new __Integer(static_cast<int>(pElement->_intKey));
                 array->addObject(pOneKey);
                 CC_SAFE_RELEASE(pOneKey);
             }
@@ -153,12 +153,12 @@ __Array* Dictionary::allKeysForObject(Object* object)
     return array;
 }
 
-Object* Dictionary::objectForKey(const std::string& key)
+Object* __Dictionary::objectForKey(const std::string& key)
 {
     // if dictionary wasn't initialized, return NULL directly.
     if (_dictType == kDictUnknown) return NULL;
-    // Dictionary only supports one kind of key, string or integer.
-    // This method uses string as key, therefore we should make sure that the key type of this Dictionary is string.
+    // __Dictionary only supports one kind of key, string or integer.
+    // This method uses string as key, therefore we should make sure that the key type of this __Dictionary is string.
     CCASSERT(_dictType == kDictStr, "this dictionary does not use string as key.");
 
     Object* pRetObject = NULL;
@@ -171,12 +171,12 @@ Object* Dictionary::objectForKey(const std::string& key)
     return pRetObject;
 }
 
-Object* Dictionary::objectForKey(intptr_t key)
+Object* __Dictionary::objectForKey(intptr_t key)
 {
     // if dictionary wasn't initialized, return NULL directly.
     if (_dictType == kDictUnknown) return NULL;
-    // Dictionary only supports one kind of key, string or integer.
-    // This method uses integer as key, therefore we should make sure that the key type of this Dictionary is integer.
+    // __Dictionary only supports one kind of key, string or integer.
+    // This method uses integer as key, therefore we should make sure that the key type of this __Dictionary is integer.
     CCASSERT(_dictType == kDictInt, "this dictionary does not use integer as key.");
 
     Object* pRetObject = NULL;
@@ -189,27 +189,27 @@ Object* Dictionary::objectForKey(intptr_t key)
     return pRetObject;
 }
 
-const String* Dictionary::valueForKey(const std::string& key)
+const __String* __Dictionary::valueForKey(const std::string& key)
 {
-    String* pStr = dynamic_cast<String*>(objectForKey(key));
+    __String* pStr = dynamic_cast<__String*>(objectForKey(key));
     if (pStr == NULL)
     {
-        pStr = String::create("");
+        pStr = __String::create("");
     }
     return pStr;
 }
 
-const String* Dictionary::valueForKey(intptr_t key)
+const __String* __Dictionary::valueForKey(intptr_t key)
 {
-    String* pStr = dynamic_cast<String*>(objectForKey(key));
+    __String* pStr = dynamic_cast<__String*>(objectForKey(key));
     if (pStr == NULL)
     {
-        pStr = String::create("");
+        pStr = __String::create("");
     }
     return pStr;
 }
 
-void Dictionary::setObject(Object* pObject, const std::string& key)
+void __Dictionary::setObject(Object* pObject, const std::string& key)
 {
     CCASSERT(key.length() > 0 && pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
@@ -235,7 +235,7 @@ void Dictionary::setObject(Object* pObject, const std::string& key)
     }
 }
 
-void Dictionary::setObject(Object* pObject, intptr_t key)
+void __Dictionary::setObject(Object* pObject, intptr_t key)
 {
     CCASSERT(pObject != NULL, "Invalid Argument!");
     if (_dictType == kDictUnknown)
@@ -262,7 +262,7 @@ void Dictionary::setObject(Object* pObject, intptr_t key)
 
 }
 
-void Dictionary::removeObjectForKey(const std::string& key)
+void __Dictionary::removeObjectForKey(const std::string& key)
 {
     if (_dictType == kDictUnknown)
     {
@@ -276,7 +276,7 @@ void Dictionary::removeObjectForKey(const std::string& key)
     removeObjectForElememt(pElement);
 }
 
-void Dictionary::removeObjectForKey(intptr_t key)
+void __Dictionary::removeObjectForKey(intptr_t key)
 {
     if (_dictType == kDictUnknown)
     {
@@ -289,31 +289,31 @@ void Dictionary::removeObjectForKey(intptr_t key)
     removeObjectForElememt(pElement);
 }
 
-void Dictionary::setObjectUnSafe(Object* pObject, const std::string& key)
+void __Dictionary::setObjectUnSafe(Object* pObject, const std::string& key)
 {
     pObject->retain();
     DictElement* pElement = new DictElement(key.c_str(), pObject);
     HASH_ADD_STR(_elements, _strKey, pElement);
 }
 
-void Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
+void __Dictionary::setObjectUnSafe(Object* pObject, const intptr_t key)
 {
     pObject->retain();
     DictElement* pElement = new DictElement(key, pObject);
     HASH_ADD_PTR(_elements, _intKey, pElement);
 }
 
-void Dictionary::removeObjectsForKeys(__Array* pKey__Array)
+void __Dictionary::removeObjectsForKeys(__Array* pKey__Array)
 {
     Object* pObj = NULL;
     CCARRAY_FOREACH(pKey__Array, pObj)
     {
-        String* pStr = static_cast<String*>(pObj);
+        __String* pStr = static_cast<__String*>(pObj);
         removeObjectForKey(pStr->getCString());
     }
 }
 
-void Dictionary::removeObjectForElememt(DictElement* pElement)
+void __Dictionary::removeObjectForElememt(DictElement* pElement)
 {
     if (pElement != NULL)
     {
@@ -323,7 +323,7 @@ void Dictionary::removeObjectForElememt(DictElement* pElement)
     }
 }
 
-void Dictionary::removeAllObjects()
+void __Dictionary::removeAllObjects()
 {
     DictElement *pElement, *tmp;
     HASH_ITER(hh, _elements, pElement, tmp) 
@@ -335,7 +335,7 @@ void Dictionary::removeAllObjects()
     }
 }
 
-Object* Dictionary::randomObject()
+Object* __Dictionary::randomObject()
 {
     if (_dictType == kDictUnknown)
     {
@@ -346,11 +346,11 @@ Object* Dictionary::randomObject()
     
     if (_dictType == kDictInt)
     {
-        return objectForKey( static_cast<Integer*>(key)->getValue());
+        return objectForKey( static_cast<__Integer*>(key)->getValue());
     }
     else if (_dictType == kDictStr)
     {
-        return objectForKey( static_cast<String*>(key)->getCString());
+        return objectForKey( static_cast<__String*>(key)->getCString());
     }
     else
     {
@@ -358,9 +358,9 @@ Object* Dictionary::randomObject()
     }
 }
 
-Dictionary* Dictionary::create()
+__Dictionary* __Dictionary::create()
 {
-    Dictionary* ret = new Dictionary();
+    __Dictionary* ret = new __Dictionary();
     if (ret && ret->init() )
     {
         ret->autorelease();
@@ -368,21 +368,21 @@ Dictionary* Dictionary::create()
     return ret;
 }
 
-bool Dictionary::init()
+bool __Dictionary::init()
 {
     return true;
 }
 
-Dictionary* Dictionary::createWithDictionary(Dictionary* srcDict)
+__Dictionary* __Dictionary::createWithDictionary(__Dictionary* srcDict)
 {
     return srcDict->clone();
 }
 
 static __Array* visitArray(const ValueVector& array);
 
-static Dictionary* visitDict(const ValueMap& dict)
+static __Dictionary* visitDict(const ValueMap& dict)
 {
-    Dictionary* ret = new Dictionary();
+    __Dictionary* ret = new __Dictionary();
     ret->init();
     
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
@@ -403,7 +403,7 @@ static Dictionary* visitDict(const ValueMap& dict)
         }
         else
         {
-            auto str = new String(iter->second.asString());
+            auto str = new __String(iter->second.asString());
             ret->setObject(str, iter->first);
             str->release();
         }
@@ -433,7 +433,7 @@ static __Array* visitArray(const ValueVector& array)
         }
         else
         {
-            auto str = new String(value.asString());
+            auto str = new __String(value.asString());
             ret->addObject(str);
             str->release();
         }
@@ -442,17 +442,17 @@ static __Array* visitArray(const ValueVector& array)
     return ret;
 }
 
-Dictionary* Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
+__Dictionary* __Dictionary::createWithContentsOfFileThreadSafe(const char *pFileName)
 {
     return visitDict(FileUtils::getInstance()->getValueMapFromFile(pFileName));
 }
 
-void Dictionary::acceptVisitor(DataVisitor &visitor)
+void __Dictionary::acceptVisitor(DataVisitor &visitor)
 {
     return visitor.visit(this);
 }
 
-Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
+__Dictionary* __Dictionary::createWithContentsOfFile(const char *pFileName)
 {
     auto ret = createWithContentsOfFileThreadSafe(pFileName);
     if (ret != nullptr)
@@ -462,21 +462,21 @@ Dictionary* Dictionary::createWithContentsOfFile(const char *pFileName)
     return ret;
 }
 
-bool Dictionary::writeToFile(const char *fullPath)
+bool __Dictionary::writeToFile(const char *fullPath)
 {
     ValueMap dict;
     DictElement* element = nullptr;
     CCDICT_FOREACH(this, element)
     {
-        dict[element->getStrKey()] = Value(static_cast<String*>(element->getObject())->getCString());
+        dict[element->getStrKey()] = Value(static_cast<__String*>(element->getObject())->getCString());
     }
     
     return FileUtils::getInstance()->writeToFile(dict, fullPath);
 }
 
-Dictionary* Dictionary::clone() const
+__Dictionary* __Dictionary::clone() const
 {
-    Dictionary* newDict = Dictionary::create();
+    __Dictionary* newDict = __Dictionary::create();
     
     DictElement* element = NULL;
     Object* tmpObj = NULL;

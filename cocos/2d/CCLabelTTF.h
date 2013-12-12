@@ -70,7 +70,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description() const;
+    std::string description() const;
     
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1

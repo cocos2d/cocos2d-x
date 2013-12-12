@@ -255,7 +255,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // reorder _children->array
             child->retain();
-            _children.remove(oldIndex);
+            _children.erase(oldIndex);
             _children.insert(newIndex, child);
             child->release();
 
