@@ -26,13 +26,12 @@ THE SOFTWARE.
 #ifndef __CCTILE_MAP_ATLAS__
 #define __CCTILE_MAP_ATLAS__
 
-
 #include "CCAtlasNode.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
 struct sImageTGA;
-class Dictionary;
 
 /**
  * @addtogroup tilemap_parallax_nodes
@@ -98,7 +97,7 @@ protected:
 
 
     //! x,y to atlas dictionary
-    Dictionary* _posToAtlasIndex;
+    ValueMap _posToAtlasIndex;
     //! numbers of tiles to render
     int _itemsToRender;
     /** TileMap info */
