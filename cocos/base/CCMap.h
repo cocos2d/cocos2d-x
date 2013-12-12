@@ -248,7 +248,7 @@ public:
     
     /** All the elements in the Map<K,V> container are dropped:
      *  their reference count will be decreased, and they are removed from the container,
-     *  leaving it with a size of 0. Al
+     *  leaving it with a size of 0.
      */
     void clear()
     {
