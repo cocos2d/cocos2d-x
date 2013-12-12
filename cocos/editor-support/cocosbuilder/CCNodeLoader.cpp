@@ -970,9 +970,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         if (!ownerCallbackNames.empty() && !ownerCallbackNodes.empty())
         {
             CCASSERT(ownerCallbackNames.size() == ownerCallbackNodes.size(), "");
-            int nCount = ownerCallbackNames.size();
+            ssize_t nCount = ownerCallbackNames.size();
             
-            for (int i = 0 ; i < nCount; i++)
+            for (ssize_t i = 0 ; i < nCount; i++)
             {
                 pCCBReader->addOwnerCallbackName(ownerCallbackNames[i].asString());
                 pCCBReader->addOwnerCallbackNode(ownerCallbackNodes.at(i));
@@ -984,9 +984,9 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
         if (!ownerOutletNames.empty() && !ownerOutletNodes.empty())
         {
             CCASSERT(ownerOutletNames.size() == ownerOutletNodes.size(), "");
-            int nCount = ownerOutletNames.size();
+            ssize_t nCount = ownerOutletNames.size();
             
-            for (int i = 0 ; i < nCount; i++)
+            for (ssize_t i = 0 ; i < nCount; i++)
             {
                 pCCBReader->addOwnerOutletName(ownerOutletNames.at(i).asString());
                 pCCBReader->addOwnerOutletNode(ownerOutletNodes.at(i));

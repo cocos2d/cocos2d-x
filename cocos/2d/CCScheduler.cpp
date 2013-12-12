@@ -677,7 +677,7 @@ unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval,
 
 void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
 {
-    for (int i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
+    for (ssize_t i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
     {
         SchedulerScriptHandlerEntry* entry = _scriptHandlerEntries.at(i);
         if (entry->getEntryId() == (int)scheduleScriptEntryID)
