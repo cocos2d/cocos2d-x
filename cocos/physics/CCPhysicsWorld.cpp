@@ -714,7 +714,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     body->_joints.clear();
     
     removeBodyOrDelay(body);
-    _bodies.erase(body);
+    _bodies.eraseObject(body);
     body->_world = nullptr;
 }
 
@@ -723,7 +723,7 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
     if (_delayAddBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayAddBodies.erase(body);
+        _delayAddBodies.eraseObject(body);
         return;
     }
     

@@ -397,7 +397,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     }
 
     _cellsFreed.pushBack(cell);
-    _cellsUsed.erase(cell);
+    _cellsUsed.eraseObject(cell);
     _isUsedCellsDirty = true;
     
     _indices->erase(cell->getIdx());

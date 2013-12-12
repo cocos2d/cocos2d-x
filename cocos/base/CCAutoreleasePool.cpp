@@ -51,7 +51,7 @@ void AutoreleasePool::removeObject(Object* object)
 {
     for (unsigned int i = 0; i < object->_autoReleaseCount; ++i)
     {
-       _managedObjectArray.erase(object, false);
+       _managedObjectArray.eraseObject(object, false);
     }
 }
 
