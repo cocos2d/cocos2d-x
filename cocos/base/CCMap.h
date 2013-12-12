@@ -213,7 +213,7 @@ public:
      */
     iterator erase(const_iterator position)
     {
-        CCASSERT(position >= _data.begin() && position < _data.end(), "");
+        CCASSERT(position != _data.cend(), "Invalid iterator!");
         position->second->release();
         return _data.erase(position);
     }
