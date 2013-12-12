@@ -612,22 +612,12 @@ void Armature::visit()
     }
     kmGLPushMatrix();
 
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-    }
-
     transform();
     sortAllChildren();
     draw();
 
     // reset for next frame
     _orderOfArrival = 0;
-
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
 }

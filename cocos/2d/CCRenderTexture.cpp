@@ -455,22 +455,11 @@ void RenderTexture::visit()
     }
 	
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
     
     transform();
     _sprite->visit();
     draw();
     
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
-	
 	kmGLPopMatrix();
 
     _orderOfArrival = 0;

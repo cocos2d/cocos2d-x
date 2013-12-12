@@ -702,34 +702,7 @@ public:
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
-
-
-
-    /// @{
-    /// @name Grid object for effects
-
-    /**
-     * Returns a grid object that is used when applying effects
-     *
-     * @return A Grid object that is used when applying effects
-     * @js NA
-     */
-    //virtual GridBase* getGrid() { return _grid; }
-    /**
-    * @js NA
-    */
-    //virtual const GridBase* getGrid() const { return _grid; }
-
-    /**
-     * Changes a grid object that is used when applying effects
-     *
-     * @param grid  A Grid object that is used when applying effects
-     */
-    //virtual void setGrid(GridBase *grid);
-
-    /// @} end of Grid
-
-
+    
     /// @{
     /// @name Tag & User data
 
@@ -1434,8 +1407,6 @@ protected:
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
 
     Camera *_camera;                ///< a camera
-
-    GridBase *_grid;                ///< a grid
 
     int _ZOrder;                      ///< z-order value that affects the draw order
     
