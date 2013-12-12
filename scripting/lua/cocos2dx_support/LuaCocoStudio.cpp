@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 12/12/13 11:33:19.
+** Generated automatically by tolua++-1.0.92 on Thu Dec  5 14:37:39 2013.
 */
 
 /****************************************************************************
@@ -162,11 +162,18 @@ static int tolua_collect_GUIReader (lua_State* tolua_S)
     return 0;
 }
 
-
-
-static int tolua_collect_CCBone (lua_State* tolua_S)
+static int tolua_collect_UIButton (lua_State* tolua_S)
 {
- CCBone* self = (CCBone*) tolua_tousertype(tolua_S,1,0);
+ UIButton* self = (UIButton*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+
+
+static int tolua_collect_UILinearLayoutParameter (lua_State* tolua_S)
+{
+ UILinearLayoutParameter* self = (UILinearLayoutParameter*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -180,19 +187,14 @@ static int tolua_collect_CCSkin (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_UICheckBox (lua_State* tolua_S)
+static int tolua_collect_CCArmature (lua_State* tolua_S)
 {
- UICheckBox* self = (UICheckBox*) tolua_tousertype(tolua_S,1,0);
+ CCArmature* self = (CCArmature*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
 
-static int tolua_collect_UILinearLayoutParameter (lua_State* tolua_S)
-{
- UILinearLayoutParameter* self = (UILinearLayoutParameter*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UIImageView (lua_State* tolua_S)
 {
@@ -215,12 +217,7 @@ static int tolua_collect_UIPageView (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCArmatureAnimation (lua_State* tolua_S)
-{
- CCArmatureAnimation* self = (CCArmatureAnimation*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_UITextField (lua_State* tolua_S)
 {
@@ -231,9 +228,19 @@ static int tolua_collect_UITextField (lua_State* tolua_S)
 
 
 
+static int tolua_collect_CCArmatureAnimation (lua_State* tolua_S)
+{
+ CCArmatureAnimation* self = (CCArmatureAnimation*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
 
-
-
+static int tolua_collect_UICheckBox (lua_State* tolua_S)
+{
+ UICheckBox* self = (UICheckBox*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
 
 static int tolua_collect_UILabel (lua_State* tolua_S)
 {
@@ -249,9 +256,9 @@ static int tolua_collect_UILabelBMFont (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_UILayer (lua_State* tolua_S)
+static int tolua_collect_CCBone (lua_State* tolua_S)
 {
- UILayer* self = (UILayer*) tolua_tousertype(tolua_S,1,0);
+ CCBone* self = (CCBone*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -263,9 +270,9 @@ static int tolua_collect_SceneReader (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_CCArmature (lua_State* tolua_S)
+static int tolua_collect_UILayer (lua_State* tolua_S)
 {
- CCArmature* self = (CCArmature*) tolua_tousertype(tolua_S,1,0);
+ UILayer* self = (UILayer*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -284,12 +291,7 @@ static int tolua_collect_CCDisplayManager (lua_State* tolua_S)
     return 0;
 }
 
-static int tolua_collect_UIButton (lua_State* tolua_S)
-{
- UIButton* self = (UIButton*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 #endif
 
 
@@ -308,7 +310,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCComAudio");
  tolua_usertype(tolua_S,"UISlider");
  tolua_usertype(tolua_S,"CCTextureAtlas");
- tolua_usertype(tolua_S,"CCAnimationData");
+ tolua_usertype(tolua_S,"CCDisplayData");
  tolua_usertype(tolua_S,"UICheckBox");
  tolua_usertype(tolua_S,"CCActionManager");
  tolua_usertype(tolua_S,"UIScrollView");
@@ -334,33 +336,33 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCBaseData");
  tolua_usertype(tolua_S,"CCArmatureDataManager");
  tolua_usertype(tolua_S,"UIListView");
- tolua_usertype(tolua_S,"UILinearLayoutParameter");
- tolua_usertype(tolua_S,"CCObject");
+ tolua_usertype(tolua_S,"UILayoutParameter");
+ tolua_usertype(tolua_S,"CCBlendType");
  tolua_usertype(tolua_S,"SEL_TouchEvent");
  tolua_usertype(tolua_S,"DisplayType");
- tolua_usertype(tolua_S,"GUIReader");
- tolua_usertype(tolua_S,"CCColliderFilter");
- tolua_usertype(tolua_S,"ActionManager");
- tolua_usertype(tolua_S,"ActionObject");
- tolua_usertype(tolua_S,"ActionNode");
  tolua_usertype(tolua_S,"SceneReader");
+ tolua_usertype(tolua_S,"ActionObject");
+ tolua_usertype(tolua_S,"ActionManager");
+ tolua_usertype(tolua_S,"GUIReader");
+ tolua_usertype(tolua_S,"ActionNode");
  tolua_usertype(tolua_S,"CCComAttribute");
  tolua_usertype(tolua_S,"CCTexture2D");
- tolua_usertype(tolua_S,"ccColor4B");
+ tolua_usertype(tolua_S,"CCAnimationData");
  tolua_usertype(tolua_S,"UIWidget");
- tolua_usertype(tolua_S,"CCSize");
  tolua_usertype(tolua_S,"UIRelativeAlign");
- tolua_usertype(tolua_S,"CCBone");
+ tolua_usertype(tolua_S,"CCSize");
+ tolua_usertype(tolua_S,"UILabel");
+ tolua_usertype(tolua_S,"ccColor4B");
  tolua_usertype(tolua_S,"CCSkin");
  tolua_usertype(tolua_S,"CCArmature");
  tolua_usertype(tolua_S,"CCArray");
  tolua_usertype(tolua_S,"UIImageView");
- tolua_usertype(tolua_S,"UILabel");
+ tolua_usertype(tolua_S,"UILinearLayoutParameter");
  tolua_usertype(tolua_S,"rapidjson::Value");
  tolua_usertype(tolua_S,"CCArmatureAnimation");
- tolua_usertype(tolua_S,"UILayoutParameter");
- tolua_usertype(tolua_S,"CCAction");
+ tolua_usertype(tolua_S,"CCObject");
  tolua_usertype(tolua_S,"UIScrollInterface");
+ tolua_usertype(tolua_S,"CCAction");
  tolua_usertype(tolua_S,"UIHelper");
  tolua_usertype(tolua_S,"CCTween");
  tolua_usertype(tolua_S,"UILabelBMFont");
@@ -369,7 +371,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCRect");
  tolua_usertype(tolua_S,"CCInputDelegate");
  tolua_usertype(tolua_S,"CCDisplayManager");
- tolua_usertype(tolua_S,"CCDisplayData");
+ tolua_usertype(tolua_S,"CCBone");
 }
 
 /* method: create of class  CCArmature */
@@ -1232,39 +1234,6 @@ static int tolua_CocoStudio_CCArmature_getTexureAtlasWithTexture00(lua_State* to
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getTexureAtlasWithTexture'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setColliderFilter of class  CCArmature */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArmature_setColliderFilter00
-static int tolua_CocoStudio_CCArmature_setColliderFilter00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCArmature",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"CCColliderFilter",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCArmature* self = (CCArmature*)  tolua_tousertype(tolua_S,1,0);
-  CCColliderFilter* filter = ((CCColliderFilter*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setColliderFilter'", NULL);
-#endif
-  {
-   self->setColliderFilter(filter);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setColliderFilter'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4310,6 +4279,81 @@ static int tolua_CocoStudio_CCBone_setIgnoreMovementBoneData00(lua_State* tolua_
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'setIgnoreMovementBoneData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBlendType of class  CCBone */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCBone_getBlendType00
+static int tolua_CocoStudio_CCBone_getBlendType00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const CCBone",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const CCBone* self = (const CCBone*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBlendType'", NULL);
+#endif
+  {
+   CCBlendType tolua_ret = (CCBlendType)  self->getBlendType();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCBlendType)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCBlendType");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCBlendType));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCBlendType");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBlendType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setBlendType of class  CCBone */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCBone_setBlendType00
+static int tolua_CocoStudio_CCBone_setBlendType00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"CCBone",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCBlendType",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  CCBone* self = (CCBone*)  tolua_tousertype(tolua_S,1,0);
+  CCBlendType var = *((CCBlendType*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setBlendType'", NULL);
+#endif
+  {
+   self->setBlendType(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setBlendType'.",&tolua_err);
  return 0;
 #endif
 }
@@ -26255,7 +26299,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setAnimation",tolua_CocoStudio_CCArmature_setAnimation00);
    tolua_function(tolua_S,"getAnimation",tolua_CocoStudio_CCArmature_getAnimation00);
    tolua_function(tolua_S,"getTexureAtlasWithTexture",tolua_CocoStudio_CCArmature_getTexureAtlasWithTexture00);
-   tolua_function(tolua_S,"setColliderFilter",tolua_CocoStudio_CCArmature_setColliderFilter00);
    tolua_function(tolua_S,"getArmatureData",tolua_CocoStudio_CCArmature_getArmatureData00);
    tolua_function(tolua_S,"setArmatureData",tolua_CocoStudio_CCArmature_setArmatureData00);
    tolua_function(tolua_S,"getBatchNode",tolua_CocoStudio_CCArmature_getBatchNode00);
@@ -26373,6 +26416,8 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setDisplayManager",tolua_CocoStudio_CCBone_setDisplayManager00);
    tolua_function(tolua_S,"getIgnoreMovementBoneData",tolua_CocoStudio_CCBone_getIgnoreMovementBoneData00);
    tolua_function(tolua_S,"setIgnoreMovementBoneData",tolua_CocoStudio_CCBone_setIgnoreMovementBoneData00);
+   tolua_function(tolua_S,"getBlendType",tolua_CocoStudio_CCBone_getBlendType00);
+   tolua_function(tolua_S,"setBlendType",tolua_CocoStudio_CCBone_setBlendType00);
    tolua_function(tolua_S,"getName",tolua_CocoStudio_CCBone_getName00);
    tolua_function(tolua_S,"setName",tolua_CocoStudio_CCBone_setName00);
    tolua_function(tolua_S,"getWorldInfo",tolua_CocoStudio_CCBone_getWorldInfo00);
