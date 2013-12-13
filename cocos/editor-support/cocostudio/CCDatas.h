@@ -250,7 +250,7 @@ public:
 public:
     std::string name;                //! the bone's name
     std::string parentName;     //! the bone parent's name
-    cocos2d::Array displayDataList;    //! save DisplayData informations for the Bone
+    cocos2d::Vector<DisplayData*> displayDataList;    //! save DisplayData informations for the Bone
     cocos2d::AffineTransform boneDataTransform;
 };
 
@@ -282,7 +282,7 @@ public:
     BoneData *getBoneData(const char *boneName);
 public:
     std::string name;
-    cocos2d::Dictionary boneDataDic;
+    cocos2d::Map<std::string, BoneData*> boneDataDic;
     float dataVersion;
 };
 
@@ -380,7 +380,7 @@ public:
     float duration;        //! this Bone in this movement will last m_iDuration frames
     std::string name;    //! bone name
 
-    cocos2d::Array frameList;
+    cocos2d::Vector<FrameData*> frameList;
 };
 
 /**
@@ -438,7 +438,7 @@ public:
     * @key	const char *
     * @value	MovementBoneData *
     */
-    cocos2d::Dictionary movBoneDataDic;
+    cocos2d::Map<std::string, MovementBoneData*> movBoneDataDic;
 };
 
 
@@ -469,22 +469,11 @@ public:
     int getMovementCount();
 public:
     std::string name;
-    cocos2d::Dictionary movementDataDic;
+    cocos2d::Map<std::string, MovementData*> movementDataDic;
     std::vector<std::string> movementNames;
 };
 
 
-struct ContourVertex2 : public cocos2d::Object
-{
-    ContourVertex2(float xx, float yy)
-    {
-        this->x = xx;
-        this->y = yy;
-    }
-
-    float x;
-    float y;
-};
 
 /*
 * ContourData include a contour vertex information
@@ -507,9 +496,9 @@ public:
     ~ContourData(void);
 
     virtual bool init();
-    virtual void addVertex(cocos2d::Point *vertex);
+    virtual void addVertex(cocos2d::Point &vertex);
 public:
-    cocos2d::Array vertexList;	//! Save contour vertex info, vertex saved in a Point
+    std::vector<cocos2d::Point> vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -549,7 +538,7 @@ public:
 
     std::string name;	//! The texture's name
 
-    cocos2d::Array contourDataList;
+    cocos2d::Vector<ContourData*> contourDataList;
 };
 
 

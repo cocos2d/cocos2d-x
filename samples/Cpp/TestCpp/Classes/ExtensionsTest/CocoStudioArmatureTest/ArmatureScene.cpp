@@ -1040,24 +1040,24 @@ void TestColliderDetector::update(float delta)
         for (auto object : *bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            Array *vertexList = body->getCalculatedVertexList();
+            const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
             float minx, miny, maxx, maxy = 0;
-            int length = vertexList->count();
+            int length = vertexList.size();
             for (int i = 0; i<length; i++)
             {
-                ContourVertex2 *vertex = static_cast<ContourVertex2*>(vertexList->getObjectAtIndex(i));
+                Point vertex = vertexList.at(i);
                 if (i == 0)
                 {
-                    minx = maxx = vertex->x;
-                    miny = maxy = vertex->y;
+                    minx = maxx = vertex.x;
+                    miny = maxy = vertex.y;
                 }
                 else
                 {
-                    minx = vertex->x < minx ? vertex->x : minx;
-                    miny = vertex->y < miny ? vertex->y : miny;
-                    maxx = vertex->x > maxx ? vertex->x : maxx;
-                    maxy = vertex->y > maxy ? vertex->y : maxy;
+                    minx = vertex.x < minx ? vertex.x : minx;
+                    miny = vertex.y < miny ? vertex.y : miny;
+                    maxx = vertex.x > maxx ? vertex.x : maxx;
+                    maxy = vertex.y > maxy ? vertex.y : maxy;
                 }
             }
             Rect temp = Rect(minx, miny, maxx - minx, maxy - miny);

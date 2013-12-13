@@ -105,7 +105,7 @@ public:
     virtual void setShape(cpShape *shape) { _shape = shape; }
     virtual cpShape *getShape() const { return _shape; }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual cocos2d::Array *getCalculatedVertexList() const { return _calculatedVertexList; }
+    virtual const std::vector<cocos2d::Point> &getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
 
 private:
@@ -117,10 +117,12 @@ private:
     cpShape *_shape;
     ColliderFilter *_filter;
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    cocos2d::Array *_calculatedVertexList;
+    std::vector<cocos2d::Point> _calculatedVertexList;
 #endif
 
     ContourData *_contourData;
+
+    friend class ColliderDetector;
 };
 
 /*
@@ -148,7 +150,7 @@ public:
     virtual bool init(Bone *bone);
 
     void addContourData(ContourData *contourData);
-    void addContourDataList(cocos2d::Array *contourDataList);
+    void addContourDataList(cocos2d::Vector<ContourData*> &contourDataList);
 
     void removeContourData(ContourData *contourData);
     void removeAll();
