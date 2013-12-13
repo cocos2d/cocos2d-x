@@ -32,15 +32,11 @@ ActionFrame::ActionFrame()
 , m_frameIndex(0)
 , m_fTime(0.0f)
 , m_easingType(FrameEaseType::FrameEase_Linear)
-, m_Parameter(NULL)
 {
-	m_Parameter = CCArray::create();
-	m_Parameter->retain();
 }
 ActionFrame::~ActionFrame()
 {
-	m_Parameter->removeAllObjects();
-	m_Parameter->release();
+	
 }
 
 void ActionFrame::setFrameIndex(int index)
@@ -85,13 +81,15 @@ CCActionInterval* ActionFrame::getAction(float fDuration)
 	return NULL;
 }
 
-/**
-* Gets the Easing Action of ActionFrame.
-*
-* @parame action   the duration time of ActionFrame
-*
-* @return CCAction
-*/
+void ActionFrame::setEasingParameter(std::vector<float> parameter)
+{
+	m_Parameter.clear();
+	for (int i = 0; i<parameter.size(); i++)
+	{
+		m_Parameter.push_back(parameter[i]);
+	}
+}
+
 CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 {
 	if (action == NULL)
@@ -101,6 +99,13 @@ CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 
 	switch (m_easingType)
 	{
+	case FrameEase_Custom:
+		{
+			CCEaseBezierAction* cAction = CCEaseBezierAction::create(action);
+			cAction->setBezierParamer(m_Parameter[1],m_Parameter[3],m_Parameter[5],m_Parameter[7]);
+			return cAction;
+		}
+		break;
 	case FrameEase_Linear:
 		return action;
 		break;
@@ -168,13 +173,25 @@ CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 		return CCEaseCircleActionInOut::create(action);
 		break;
 	case FrameEase_Elastic_EaseIn:
-		return CCEaseElasticIn::create(action);
+		{
+			CCEaseElasticIn* cAction = CCEaseElasticIn::create(action);
+			cAction->setPeriod(m_Parameter[0]);
+			return cAction;
+		}
 		break;
 	case FrameEase_Elastic_EaseOut:
-		return CCEaseElasticOut::create(action);
+		{
+			CCEaseElasticOut* cAction = CCEaseElasticOut::create(action);
+			cAction->setPeriod(m_Parameter[0]);
+			return cAction;
+		}
 		break;
 	case FrameEase_Elastic_EaseInOut:
-		return CCEaseElasticInOut::create(action);
+		{
+			CCEaseElasticInOut* cAction = CCEaseElasticInOut::create(action);
+			cAction->setPeriod(m_Parameter[0]);
+			return cAction;
+		}
 		break;
 	case FrameEase_Back_EaseIn:
 		return CCEaseBackIn::create(action);

@@ -45,9 +45,11 @@ public:
 	*/
 	virtual CCObject* copyWithZone(CCZone* pZone);
 
+	virtual void setBezierParamer( float p0, float p1, float p2, float p3);
+
 public:
 	/** creates the action */
-	static CCEaseBezierAction* create(CCActionInterval* pAction, float p0 = 0.0f, float p1 = 1.0f, float p2 = -1.0f, float p3 = 0.0f);
+	static CCEaseBezierAction* create(CCActionInterval* pAction);
 
 private:
 	float m_p0;
