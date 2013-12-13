@@ -36,16 +36,12 @@ CCProcessBase::CCProcessBase(void)
     , m_iRawDuration(0)
     , m_eLoopType(ANIMATION_LOOP_BACK)
     , m_eTweenEasing(Linear)
+    , m_fAnimationInternal(1/60.0f)
     , m_iDurationTween(0)
     , m_fCurrentFrame(0)
     , m_iCurFrameIndex(0)
     , m_bIsLoopBack(false)
 {
-    /*
-     *  set m_fAnimationInternal defualt value to CCDirector::sharedDirector()
-     *  ->getAnimationInterval(), in line with game update speed
-     */
-    m_fAnimationInternal = CCDirector::sharedDirector()->getAnimationInterval();
 }
 
 
