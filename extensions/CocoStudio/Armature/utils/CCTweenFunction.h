@@ -124,9 +124,9 @@ public:
     static float elasticEaseOut(float time, float *easingParam);
     static float elasticEaseInOut(float time, float *easingParam);
 
-    static float backEaseIn(float time, float *easingParam);
-    static float backEaseOut(float time, float *easingParam);
-    static float backEaseInOut(float time, float *easingParam);
+    static float backEaseIn(float time);
+    static float backEaseOut(float time);
+    static float backEaseInOut(float time);
 
     static float bounceEaseIn(float time);
     static float bounceEaseOut(float time);
