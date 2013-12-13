@@ -309,7 +309,7 @@ void LabelMainScene::updateText(float dt)
 
     _accumulativeTime += dt;
     char text[20];
-    sprintf_s(text,"%.2f",_accumulativeTime);
+    sprintf(text,"%.2f",_accumulativeTime);
 
     switch (_s_labelCurCase)
     {
