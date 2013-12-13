@@ -706,7 +706,7 @@ int TMXLayer::getVertexZForPos(const Point& pos)
 
 std::string TMXLayer::getDescription() const
 {
-    return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", (int)_tag,_mapTileSize.width, (int)_mapTileSize.height);
+    return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
 }
 
 
