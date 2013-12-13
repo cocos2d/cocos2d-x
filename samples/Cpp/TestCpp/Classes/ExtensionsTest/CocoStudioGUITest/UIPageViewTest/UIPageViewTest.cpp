@@ -33,7 +33,7 @@ bool UIPageViewTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the black background
         UILabel *alert = UILabel::create();
@@ -42,9 +42,9 @@ bool UIPageViewTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the page view
         UIPageView* pageView = UIPageView::create();
@@ -81,7 +81,7 @@ bool UIPageViewTest::init()
         }
         pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
-        m_pUiLayer->addWidget(pageView);
+        m_pUiLayer->addChild(pageView);
         
         return true;
     }

@@ -33,7 +33,7 @@ bool UITextFieldTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);        
+        m_pUiLayer->addChild(m_pDisplayValueLabel);        
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -42,7 +42,7 @@ bool UITextFieldTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the textfield
         UITextField* textField = UITextField::create();
@@ -52,7 +52,7 @@ bool UITextFieldTest::init()
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
-        m_pUiLayer->addWidget(textField);
+        m_pUiLayer->addChild(textField);
         
         return true;
     }
@@ -119,7 +119,7 @@ bool UITextFieldTest_MaxLength::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -128,7 +128,7 @@ bool UITextFieldTest_MaxLength::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the textfield
         UITextField* textField = UITextField::create();
@@ -140,7 +140,7 @@ bool UITextFieldTest_MaxLength::init()
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
-        m_pUiLayer->addWidget(textField);
+        m_pUiLayer->addChild(textField);
         
         return true;
     }
@@ -213,7 +213,7 @@ bool UITextFieldTest_Password::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -222,7 +222,7 @@ bool UITextFieldTest_Password::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the textfield
         UITextField* textField = UITextField::create();
@@ -234,7 +234,7 @@ bool UITextFieldTest_Password::init()
         textField->setPlaceHolder("input password here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
         textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
-        m_pUiLayer->addWidget(textField);
+        m_pUiLayer->addChild(textField);
         
         return true;
     }

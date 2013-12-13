@@ -33,7 +33,7 @@ bool UIDragPanelTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -42,7 +42,7 @@ bool UIDragPanelTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         UIScrollView* sc = UIScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
@@ -56,7 +56,7 @@ bool UIDragPanelTest::init()
         iv->loadTexture("cocosgui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);
-        m_pUiLayer->addWidget(sc);
+        m_pUiLayer->addChild(sc);
         
         return true;
     }
@@ -87,7 +87,7 @@ bool UIDragPanelTest_Bounce::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);        
+        m_pUiLayer->addChild(m_pDisplayValueLabel);        
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -96,7 +96,7 @@ bool UIDragPanelTest_Bounce::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         UIScrollView* sc = UIScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
@@ -111,7 +111,7 @@ bool UIDragPanelTest_Bounce::init()
         iv->loadTexture("cocosgui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);
-        m_pUiLayer->addWidget(sc);
+        m_pUiLayer->addChild(sc);
         return true;
     }
     

@@ -27,21 +27,24 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
     
+/**
+*   @js NA
+*   @lua NA
+*/    
 class UILabelBMFont : public UIWidget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
     UILabelBMFont();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
     virtual ~UILabelBMFont();
     
@@ -58,9 +61,9 @@ public:
     
     /** get string value for labelbmfont*/
     const char* getStringValue();
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
-    virtual const cocos2d::Size& getContentSize() const override;
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual void setAnchorPoint(const Point &pt) override;
+    virtual const Size& getContentSize() const override;
+    virtual Node* getVirtualRenderer() override;
     /**
      * Returns the "class name" of widget.
      */
@@ -72,12 +75,13 @@ protected:
     virtual UIWidget* createCloneInstance() override;
     virtual void copySpecialProperties(UIWidget* model) override;
 protected:
-    cocos2d::LabelBMFont* _labelBMFontRenderer;
+    LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;
 };
     
 }
+NS_CC_END
 
 #endif /* defined(__UILabelBMFont__) */

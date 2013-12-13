@@ -35,7 +35,7 @@ bool UINodeContainerTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -44,12 +44,12 @@ bool UINodeContainerTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the ui node container
         UIWidget* nodeContainer = UIWidget::create();
         nodeContainer->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(nodeContainer);
+        m_pUiLayer->addChild(nodeContainer);
         
         Sprite* sprite = Sprite::create("cocosgui/ccicon.png");
         sprite->setPosition(Point(0, sprite->getBoundingBox().size.height / 4));

@@ -23,7 +23,7 @@ bool UILabelTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the label
         UILabel* label = UILabel::create();
@@ -31,7 +31,7 @@ bool UILabelTest::init()
         label->setFontName("AmericanTypewriter");
         label->setFontSize(30);
         label->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2 + label->getSize().height / 4));
-        m_pUiLayer->addWidget(label);
+        m_pUiLayer->addChild(label);
         
         return true;
     }

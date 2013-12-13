@@ -32,9 +32,9 @@ bool UIPanelTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout
         UILayout* layout = UILayout::create();
@@ -44,7 +44,7 @@ bool UIPanelTest::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -96,9 +96,9 @@ bool UIPanelTest_Color::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout with color render
         UILayout* layout = UILayout::create();
@@ -110,7 +110,7 @@ bool UIPanelTest_Color::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -161,9 +161,9 @@ bool UIPanelTest_Gradient::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout with gradient render
         UILayout* layout = UILayout::create();
@@ -175,7 +175,7 @@ bool UIPanelTest_Gradient::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -226,9 +226,9 @@ bool UIPanelTest_BackGroundImage::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout with background image
         UILayout* layout = UILayout::create();
@@ -240,7 +240,7 @@ bool UIPanelTest_BackGroundImage::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -291,9 +291,9 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout with background image
         UILayout* layout = UILayout::create();
@@ -305,7 +305,7 @@ bool UIPanelTest_BackGroundImage_Scale9::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -356,9 +356,9 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout
         UILayout* layout = UILayout::create();
@@ -369,7 +369,7 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         
         UIButton* button = UIButton::create();
@@ -407,9 +407,6 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         lp3->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
-        
-        layout->doLayout();
-        
         return true;
     }
     
@@ -439,9 +436,9 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout
         UILayout* layout = UILayout::create();
@@ -453,7 +450,7 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -490,9 +487,6 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         lp3->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
-        
-        layout->doLayout();
-        
         return true;
     }
     
@@ -522,9 +516,9 @@ bool UIPanelTest_Layout_Relative::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        UILayout *background = dynamic_cast<UILayout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the layout
         UILayout* layout = UILayout::create();
@@ -537,7 +531,7 @@ bool UIPanelTest_Layout_Relative::init()
                                 (backgroundSize.width - layout->getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout->getSize().height) / 2));
-        m_pUiLayer->addWidget(layout);
+        m_pUiLayer->addChild(layout);
         
         UIButton* button = UIButton::create();
         button->setTouchEnabled(true);
@@ -571,9 +565,6 @@ bool UIPanelTest_Layout_Relative::init()
         UIRelativeLayoutParameter* rp3 = UIRelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp3);
         rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM);
-        
-        
-        layout->doLayout();
         
         return true;
     }

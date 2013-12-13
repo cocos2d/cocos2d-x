@@ -25,6 +25,8 @@
 #include "gui/UILayoutParameter.h"
 #include "gui/UILayout.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -120,3 +122,5 @@ const char* UIRelativeLayoutParameter::getRelativeName() const
 }
 
 }
+
+NS_CC_END

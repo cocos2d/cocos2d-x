@@ -24,6 +24,8 @@
 
 #include "gui/UILabelBMFont.h"
 
+NS_CC_BEGIN
+
 namespace gui {
     
 UILabelBMFont::UILabelBMFont():
@@ -54,7 +56,7 @@ UILabelBMFont* UILabelBMFont::create()
 void UILabelBMFont::initRenderer()
 {
     UIWidget::initRenderer();
-    _labelBMFontRenderer = cocos2d::LabelBMFont::create();
+    _labelBMFontRenderer = LabelBMFont::create();
     _renderer->addChild(_labelBMFontRenderer);
 }
 
@@ -92,7 +94,7 @@ const char* UILabelBMFont::getStringValue()
     return _stringValue.c_str();
 }
 
-void UILabelBMFont::setAnchorPoint(const cocos2d::Point &pt)
+void UILabelBMFont::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _labelBMFontRenderer->setAnchorPoint(pt);
@@ -103,12 +105,12 @@ void UILabelBMFont::onSizeChanged()
     labelBMFontScaleChangedWithSize();
 }
 
-const cocos2d::Size& UILabelBMFont::getContentSize() const
+const Size& UILabelBMFont::getContentSize() const
 {
     return _labelBMFontRenderer->getContentSize();
 }
 
-cocos2d::Node* UILabelBMFont::getVirtualRenderer()
+Node* UILabelBMFont::getVirtualRenderer()
 {
     return _labelBMFontRenderer;
 }
@@ -122,7 +124,7 @@ void UILabelBMFont::labelBMFontScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _labelBMFontRenderer->getContentSize();
+        Size textureSize = _labelBMFontRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelBMFontRenderer->setScale(1.0f);
@@ -156,3 +158,5 @@ void UILabelBMFont::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

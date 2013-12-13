@@ -24,6 +24,8 @@
 
 #include "CocosGUI.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
@@ -36,11 +38,11 @@ UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
     {
         return root;
     }
-    cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    Vector<Node*> arrayRootChildren = root->getChildren();
+    int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
+        UIWidget* child = (UIWidget*)(arrayRootChildren.at(i));
         UIWidget* res = seekWidgetByTag(child,tag);
         if (res != nullptr)
         {
@@ -60,11 +62,11 @@ UIWidget* UIHelper::seekWidgetByName(UIWidget* root, const char *name)
     {
         return root;
     }
-    cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    Vector<Node*> arrayRootChildren = root->getChildren();
+    int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
+        UIWidget* child = (UIWidget*)(arrayRootChildren.at(i));
         UIWidget* res = seekWidgetByName(child,name);
         if (res != nullptr)
         {
@@ -80,11 +82,11 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
     {
         return nullptr;
     }
-    cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    Vector<Node*> arrayRootChildren = root->getChildren();
+    int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
+        UIWidget* child = (UIWidget*)(arrayRootChildren.at(i));
         UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
         if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
         {
@@ -105,11 +107,11 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 	{
 		return root;
 	}
-    cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    Vector<Node*> arrayRootChildren = root->getChildren();
+    int length = arrayRootChildren.size();
 	for (int i=0;i<length;i++)
 	{
-		UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
+		UIWidget* child = (UIWidget*)(arrayRootChildren.at(i));
 		UIWidget* res = seekActionWidgetByActionTag(child,tag);
 		if (res != nullptr)
 		{
@@ -120,3 +122,5 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 }
 
 }
+
+NS_CC_END

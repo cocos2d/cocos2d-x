@@ -24,6 +24,8 @@
 
 #include "gui/UIPageView.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 UIPageView::UIPageView():
@@ -32,7 +34,7 @@ _pages(nullptr),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
-_movePagePoint(cocos2d::Point::ZERO),
+_movePagePoint(Point::ZERO),
 _leftChild(nullptr),
 _rightChild(nullptr),
 _leftBoundary(0.0f),
@@ -71,7 +73,7 @@ bool UIPageView::init()
 {
     if (UILayout::init())
     {
-        _pages = cocos2d::Array::create();
+        _pages = Array::create();
         _pages->retain();
         setClippingEnabled(true);
         setUpdateEnabled(true);
@@ -136,14 +138,14 @@ void UIPageView::addPage(UILayout* page)
     {
         return;
     }
-    cocos2d::Size pSize = page->getSize();
-    cocos2d::Size pvSize = getSize();
+    Size pSize = page->getSize();
+    Size pvSize = getSize();
     if (!pSize.equals(pvSize))
     {
         CCLOG("page size does not match pageview size, it will be force sized!");
         page->setSize(pvSize);
     }
-    page->setPosition(cocos2d::Point(getPositionXByIndex(_pages->count()), 0));
+    page->setPosition(Point(getPositionXByIndex(_pages->count()), 0));
     _pages->addObject(page);
     addChild(page);
     updateBoundaryPages();
@@ -176,21 +178,21 @@ void UIPageView::insertPage(UILayout* page, int idx)
     else
     {
         _pages->insertObject(page, idx);
-        page->setPosition(cocos2d::Point(getPositionXByIndex(idx), 0));
+        page->setPosition(Point(getPositionXByIndex(idx), 0));
         addChild(page);
-        cocos2d::Size pSize = page->getSize();
-        cocos2d::Size pvSize = getSize();
+        Size pSize = page->getSize();
+        Size pvSize = getSize();
         if (!pSize.equals(pvSize))
         {
             CCLOG("page size does not match pageview size, it will be force sized!");
             page->setSize(pvSize);
         }
-        cocos2d::ccArray* arrayPages = _pages->data;
+        ccArray* arrayPages = _pages->data;
         int length = arrayPages->num;
         for (int i=(idx+1); i<length; i++) {
             UIWidget* behindPage = dynamic_cast<UIWidget*>(arrayPages->arr[i]);
-            cocos2d::Point formerPos = behindPage->getPosition();
-            behindPage->setPosition(cocos2d::Point(formerPos.x+getSize().width, 0));
+            Point formerPos = behindPage->getPosition();
+            behindPage->setPosition(Point(formerPos.x+getSize().width, 0));
         }
         updateBoundaryPages();
     }
@@ -241,19 +243,29 @@ float UIPageView::getPositionXByIndex(int idx)
 {
     return (getSize().width*(idx-_curPageIdx));
 }
-
-bool UIPageView::addChild(UIWidget* widget)
+    
+void UIPageView::addChild(Node *child)
 {
-    return UILayout::addChild(widget);
+    UILayout::addChild(child);
 }
 
-bool UIPageView::removeChild(UIWidget* widget)
+void UIPageView::addChild(Node * child, int zOrder)
 {
-    if (_pages->containsObject(widget))
+    UILayout::addChild(child, zOrder);
+}
+
+void UIPageView::addChild(Node *child, int zOrder, int tag)
+{
+    UILayout::addChild(child, zOrder, tag);
+}
+
+void UIPageView::removeChild(Node *child, bool cleanup)
+{
+    if (_pages->containsObject(child))
     {
-        _pages->removeObject(widget);
+        _pages->removeObject(child);
     }
-    return UILayout::removeChild(widget);
+    UILayout::removeChild(child, cleanup);
 }
 
 void UIPageView::onSizeChanged()
@@ -271,7 +283,7 @@ void UIPageView::updateChildrenSize()
         return;
     }
     
-    cocos2d::Size selfSize = getSize();
+    Size selfSize = getSize();
     for (long i=0; i<_pages->count(); i++)
     {
         UILayout* page = dynamic_cast<UILayout*>(_pages->getObjectAtIndex(i));
@@ -297,11 +309,11 @@ void UIPageView::updateChildrenPosition()
         _curPageIdx = pageCount-1;
     }
     float pageWidth = getSize().width;
-    cocos2d::ccArray* arrayPages = _pages->data;
+    ccArray* arrayPages = _pages->data;
     for (int i=0; i<pageCount; i++)
     {
         UILayout* page = dynamic_cast<UILayout*>(arrayPages->arr[i]);
-        page->setPosition(cocos2d::Point((i-_curPageIdx)*pageWidth, 0));
+        page->setPosition(Point((i-_curPageIdx)*pageWidth, 0));
     }
 }
 
@@ -378,39 +390,48 @@ void UIPageView::update(float dt)
     }
 }
 
-bool UIPageView::onTouchBegan(const cocos2d::Point &touchPoint)
+bool UIPageView::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    bool pass = UILayout::onTouchBegan(touchPoint);
-    handlePressLogic(touchPoint);
+    bool pass = UILayout::onTouchBegan(touch, unused_event);
+    if (_hitted)
+    {
+        handlePressLogic(touch->getLocation());
+    }
     return pass;
 }
 
-void UIPageView::onTouchMoved(const cocos2d::Point &touchPoint)
+void UIPageView::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    _touchMovePos.x = touchPoint.x;
-    _touchMovePos.y = touchPoint.y;
-    handleMoveLogic(touchPoint);
-    if (_widgetParent)
+    _touchMovePos = touch->getLocation();
+    handleMoveLogic(_touchMovePos);
+    UIWidget* widgetParent = getWidgetParent();
+    if (widgetParent)
     {
-        _widgetParent->checkChildInfo(1,this,touchPoint);
+        widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
     moveEvent();
-    if (!hitTest(touchPoint))
+    if (!hitTest(_touchMovePos))
     {
         setFocused(false);
-        onTouchEnded(touchPoint);
+        onTouchEnded(touch, unused_event);
     }
 }
 
-void UIPageView::onTouchEnded(const cocos2d::Point &touchPoint)
+void UIPageView::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchEnded(touchPoint);
-    handleReleaseLogic(touchPoint);
+    UILayout::onTouchEnded(touch, unused_event);
+    handleReleaseLogic(_touchEndPos);
+}
+    
+void UIPageView::onTouchCancelled(Touch *touch, Event *unused_event)
+{
+    UILayout::onTouchCancelled(touch, unused_event);
+    handleReleaseLogic(touch->getLocation());
 }
 
 void UIPageView::movePages(float offset)
 {
-    cocos2d::ccArray* arrayPages = _pages->data;
+    ccArray* arrayPages = _pages->data;
     int length = arrayPages->num;
     for (int i = 0; i < length; i++)
     {
@@ -462,21 +483,16 @@ bool UIPageView::scrollPages(float touchOffset)
     return true;
 }
 
-void UIPageView::onTouchCancelled(const cocos2d::Point &touchPoint)
+void UIPageView::handlePressLogic(const Point &touchPoint)
 {
-    UILayout::onTouchCancelled(touchPoint);
-}
-
-void UIPageView::handlePressLogic(const cocos2d::Point &touchPoint)
-{
-    cocos2d::Point nsp = _renderer->convertToNodeSpace(touchPoint);
+    Point nsp = convertToNodeSpace(touchPoint);
     _touchMoveStartLocation = nsp.x;
     _touchStartLocation = nsp.x;
 }
 
-void UIPageView::handleMoveLogic(const cocos2d::Point &touchPoint)
+void UIPageView::handleMoveLogic(const Point &touchPoint)
 {
-    cocos2d::Point nsp = _renderer->convertToNodeSpace(touchPoint);
+    Point nsp = convertToNodeSpace(touchPoint);
     float offset = 0.0;
     float moveX = nsp.x;
     offset = moveX - _touchMoveStartLocation;
@@ -492,7 +508,7 @@ void UIPageView::handleMoveLogic(const cocos2d::Point &touchPoint)
     scrollPages(offset);
 }
 
-void UIPageView::handleReleaseLogic(const cocos2d::Point &touchPoint)
+void UIPageView::handleReleaseLogic(const Point &touchPoint)
 {
     if (_pages->count() <= 0)
     {
@@ -501,7 +517,7 @@ void UIPageView::handleReleaseLogic(const cocos2d::Point &touchPoint)
     UIWidget* curPage = dynamic_cast<UIWidget*>(_pages->getObjectAtIndex(_curPageIdx));
     if (curPage)
     {
-        cocos2d::Point curPagePos = curPage->getPosition();
+        Point curPagePos = curPage->getPosition();
         int pageCount = _pages->count();
         float curPageLocation = curPagePos.x;
         float pageWidth = getSize().width;
@@ -535,12 +551,12 @@ void UIPageView::handleReleaseLogic(const cocos2d::Point &touchPoint)
     }
 }
 
-void UIPageView::checkChildInfo(int handleState,UIWidget* sender, const cocos2d::Point &touchPoint)
+void UIPageView::checkChildInfo(int handleState,UIWidget* sender, const Point &touchPoint)
 {
     interceptTouchEvent(handleState, sender, touchPoint);
 }
 
-void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const cocos2d::Point &touchPoint)
+void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const Point &touchPoint)
 {
     switch (handleState)
     {
@@ -575,7 +591,7 @@ void UIPageView::pageTurningEvent()
     }
 }
 
-void UIPageView::addEventListenerPageView(cocos2d::Object *target, SEL_PageViewEvent selector)
+void UIPageView::addEventListenerPageView(Object *target, SEL_PageViewEvent selector)
 {
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;
@@ -586,7 +602,7 @@ int UIPageView::getCurPageIndex() const
     return _curPageIdx;
 }
 
-cocos2d::Array* UIPageView::getPages()
+Array* UIPageView::getPages()
 {
     return _pages;
 }
@@ -612,7 +628,7 @@ UIWidget* UIPageView::createCloneInstance()
 
 void UIPageView::copyClonedWidgetChildren(UIWidget* model)
 {
-    cocos2d::ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
+    ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
     int length = arrayPages->num;
     for (int i=0; i<length; i++)
     {
@@ -631,3 +647,5 @@ void UIPageView::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

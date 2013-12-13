@@ -24,6 +24,8 @@
 
 #include "gui/UILabelAtlas.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -55,7 +57,7 @@ void UICCLabelAtlas::setProperty(const std::string& string, const std::string& c
     initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap);
 }
 
-void UICCLabelAtlas::setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+void UICCLabelAtlas::setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
     initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
@@ -67,12 +69,12 @@ void UICCLabelAtlas::draw()
         return;
     }
     
-    cocos2d::AtlasNode::draw();
+    AtlasNode::draw();
 }
 
 void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 {
-    cocos2d::AtlasNode::setOpacity(opacity);
+    AtlasNode::setOpacity(opacity);
 }
 
 
@@ -137,10 +139,10 @@ const std::string& UILabelAtlas::getStringValue() const
     return _laberAtlasRenderer->getString();
 }
 
-void UILabelAtlas::setAnchorPoint(const cocos2d::Point &pt)
+void UILabelAtlas::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
-    _laberAtlasRenderer->setAnchorPoint(cocos2d::Point(pt.x, pt.y));
+    _laberAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
 }
 
 void UILabelAtlas::onSizeChanged()
@@ -148,12 +150,12 @@ void UILabelAtlas::onSizeChanged()
     labelAtlasScaleChangedWithSize();
 }
 
-const cocos2d::Size& UILabelAtlas::getContentSize() const
+const Size& UILabelAtlas::getContentSize() const
 {
     return _laberAtlasRenderer->getContentSize();
 }
 
-cocos2d::Node* UILabelAtlas::getVirtualRenderer()
+Node* UILabelAtlas::getVirtualRenderer()
 {
     return _laberAtlasRenderer;
 }
@@ -167,7 +169,7 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _laberAtlasRenderer->getContentSize();
+        Size textureSize = _laberAtlasRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _laberAtlasRenderer->setScale(1.0f);
@@ -200,3 +202,4 @@ void UILabelAtlas::copySpecialProperties(UIWidget *widget)
 }
     
 }
+NS_CC_END

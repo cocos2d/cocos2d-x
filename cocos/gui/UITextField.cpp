@@ -24,6 +24,8 @@
 
 #include "gui/UITextField.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 UICCTextField::UICCTextField()
@@ -62,17 +64,17 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
 
 void UICCTextField::onEnter()
 {
-    cocos2d::TextFieldTTF::setDelegate(this);
+    TextFieldTTF::setDelegate(this);
 }
 
 
-bool UICCTextField::onTextFieldAttachWithIME(cocos2d::TextFieldTTF *pSender)
+bool UICCTextField::onTextFieldAttachWithIME(TextFieldTTF *pSender)
 {
     setAttachWithIME(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const char *text, int nLen)
+bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *text, int nLen)
 {
     if (nLen == 1 && strcmp(text, "\n") == 0)
     {
@@ -81,7 +83,7 @@ bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const 
     setInsertText(true);
     if (_maxLengthEnabled)
     {
-        if (cocos2d::TextFieldTTF::getCharCount() >= _maxLength)
+        if (TextFieldTTF::getCharCount() >= _maxLength)
         {
             return true;
         }
@@ -90,13 +92,13 @@ bool UICCTextField::onTextFieldInsertText(cocos2d::TextFieldTTF *pSender, const 
     return false;
 }
 
-bool UICCTextField::onTextFieldDeleteBackward(cocos2d::TextFieldTTF *pSender, const char *delText, int nLen)
+bool UICCTextField::onTextFieldDeleteBackward(TextFieldTTF *pSender, const char *delText, int nLen)
 {
     setDeleteBackward(true);
     return false;
 }
 
-bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
+bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 {
     setDetachWithIME(true);
     return false;
@@ -105,7 +107,7 @@ bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    size_t str_len = cocos2d::TextFieldTTF::getString().size();
+    int str_len = TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
@@ -132,12 +134,12 @@ void UICCTextField::insertText(const char * text, int len)
             }
         }
     }
-    cocos2d::TextFieldTTF::insertText(str_text.c_str(), len);
+    TextFieldTTF::insertText(str_text.c_str(), len);
     
     // password
     if (_passwordEnabled)
     {
-        if (cocos2d::TextFieldTTF::getCharCount() > 0)
+        if (TextFieldTTF::getCharCount() > 0)
         {
             setPasswordText(_inputText.c_str());
         }
@@ -146,9 +148,9 @@ void UICCTextField::insertText(const char * text, int len)
 
 void UICCTextField::deleteBackward()
 {
-    cocos2d::TextFieldTTF::deleteBackward();
+    TextFieldTTF::deleteBackward();
     
-    if (cocos2d::TextFieldTTF::getCharCount() > 0)
+    if (TextFieldTTF::getCharCount() > 0)
     {
         // password
         if (_passwordEnabled)
@@ -160,12 +162,12 @@ void UICCTextField::deleteBackward()
 
 void UICCTextField::openIME()
 {
-    cocos2d::TextFieldTTF::attachWithIME();
+    TextFieldTTF::attachWithIME();
 }
 
 void UICCTextField::closeIME()
 {
-    cocos2d::TextFieldTTF::detachWithIME();
+    TextFieldTTF::detachWithIME();
 }
 
 void UICCTextField::setMaxLengthEnabled(bool enable)
@@ -190,7 +192,7 @@ int UICCTextField::getMaxLength()
 
 int UICCTextField::getCharCount()
 {
-    return cocos2d::TextFieldTTF::getCharCount();
+    return TextFieldTTF::getCharCount();
 }
 
 void UICCTextField::setPasswordEnabled(bool enable)
@@ -224,7 +226,7 @@ void UICCTextField::setPasswordText(const char *text)
     {
         tempStr.append(_passwordStyleText);
     }
-    cocos2d::LabelTTF::setString(tempStr.c_str());
+    LabelTTF::setString(tempStr.c_str());
 }
 
 void UICCTextField::setAttachWithIME(bool attach)
@@ -316,7 +318,7 @@ void UITextField::initRenderer()
     _renderer->addChild(_textFieldRenderer);
 }
 
-void UITextField::setTouchSize(const cocos2d::Size &size)
+void UITextField::setTouchSize(const Size &size)
 {
     _useTouchArea = true;
     _touchWidth = size.width;
@@ -360,10 +362,13 @@ const std::string& UITextField::getStringValue()
     return _textFieldRenderer->getString();
 }
 
-bool UITextField::onTouchBegan(const cocos2d::Point &touchPoint)
+bool UITextField::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    bool pass = UIWidget::onTouchBegan(touchPoint);
-    _textFieldRenderer->attachWithIME();
+    bool pass = UIWidget::onTouchBegan(touch, unused_event);
+    if (_hitted)
+    {
+        _textFieldRenderer->attachWithIME();
+    }
     return pass;
 }
 
@@ -502,25 +507,25 @@ void UITextField::deleteBackwardEvent()
     }
 }
 
-void UITextField::addEventListenerTextField(cocos2d::Object *target, SEL_TextFieldEvent selecor)
+void UITextField::addEventListenerTextField(Object *target, SEL_TextFieldEvent selecor)
 {
     _textFieldEventListener = target;
     _textFieldEventSelector = selecor;
 }
 
-void UITextField::setAnchorPoint(const cocos2d::Point &pt)
+void UITextField::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _textFieldRenderer->setAnchorPoint(pt);
 }
 
-void UITextField::setColor(const cocos2d::Color3B &color)
+void UITextField::setColor(const Color3B &color)
 {
     UIWidget::setColor(color);
     _textFieldRenderer->setColor(color);
 }
 
-void UITextField::setOpacity(int opacity)
+void UITextField::setOpacity(GLubyte opacity)
 {
     UIWidget::setOpacity(opacity);
     _textFieldRenderer->setOpacity(opacity);
@@ -540,7 +545,7 @@ void UITextField::textfieldRendererScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = getContentSize();
+        Size textureSize = getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _textFieldRenderer->setScale(1.0f);
@@ -553,12 +558,12 @@ void UITextField::textfieldRendererScaleChangedWithSize()
     }
 }
 
-const cocos2d::Size& UITextField::getContentSize() const
+const Size& UITextField::getContentSize() const
 {
     return _textFieldRenderer->getContentSize();
 }
 
-cocos2d::Node* UITextField::getVirtualRenderer()
+Node* UITextField::getVirtualRenderer()
 {
     return _textFieldRenderer;
 }
@@ -599,3 +604,5 @@ void UITextField::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

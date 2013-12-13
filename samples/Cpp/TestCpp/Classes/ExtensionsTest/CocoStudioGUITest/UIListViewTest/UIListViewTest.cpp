@@ -35,7 +35,7 @@ bool UIListViewTest_Vertical::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         UILabel *alert = UILabel::create();
         alert->setText("ListView");
@@ -43,7 +43,7 @@ bool UIListViewTest_Vertical::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         
         UIListView* lv = UIListView::create();
@@ -61,7 +61,7 @@ bool UIListViewTest_Vertical::init()
         lv->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         lv->setBackGroundColor(Color3B::GREEN);
         lv->setPosition(Point(100, 100));
-        m_pUiLayer->addWidget(lv);
+        m_pUiLayer->addChild(lv);
         
         return true;
     }
@@ -95,7 +95,7 @@ bool UIListViewTest_Horizontal::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         UILabel *alert = UILabel::create();
         alert->setText("ListView");
@@ -103,7 +103,7 @@ bool UIListViewTest_Horizontal::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
 
         UIListView* lv = UIListView::create();
@@ -122,7 +122,7 @@ bool UIListViewTest_Horizontal::init()
         lv->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         lv->setBackGroundColor(Color3B::GREEN);
         lv->setPosition(Point(100, 100));
-        m_pUiLayer->addWidget(lv);
+        m_pUiLayer->addChild(lv);
         return true;
     }
     

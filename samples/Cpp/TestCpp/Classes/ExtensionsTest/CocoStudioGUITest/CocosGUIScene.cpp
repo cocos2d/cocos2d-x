@@ -57,9 +57,7 @@ void CocosGUITestScene::toCocosGUIExampleScene(Object* sender)
     scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
     scrollView->getChildByName("backtotopbutton")->setBright(false);
     scrollView->getChildByName("backtotopbutton")->setTouchEnabled(false);
-    CCLOG("p2 click");
-    ul->removeFromParent();
-    
+    CCLOG("p2 click");    
 }
 
 void CocosGUITestScene::load(Object *pSender, int count)

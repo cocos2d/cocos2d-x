@@ -25,10 +25,12 @@
 #include "gui/UILoadingBar.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_barRenderer)
+#define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_barRenderer)
 
 UILoadingBar::UILoadingBar():
 _barType(LoadingBarTypeLeft),
@@ -36,10 +38,10 @@ _percent(100),
 _totalLength(0),
 _barRenderer(nullptr),
 _renderBarTexType(UI_TEX_TYPE_LOCAL),
-_barRendererTextureSize(cocos2d::Size::ZERO),
+_barRendererTextureSize(Size::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
-_capInsets(cocos2d::Rect::ZERO),
+_capInsets(Rect::ZERO),
 _textureFile("")
 {
 }
@@ -64,9 +66,9 @@ UILoadingBar* UILoadingBar::create()
 void UILoadingBar::initRenderer()
 {
     UIWidget::initRenderer();
-    _barRenderer = cocos2d::Sprite::create();
+    _barRenderer = Sprite::create();
     _renderer->addChild(_barRenderer);
-    _barRenderer->setAnchorPoint(cocos2d::Point(0.0,0.5));
+    _barRenderer->setAnchorPoint(Point(0.0,0.5));
 }
 
 void UILoadingBar::setDirection(LoadingBarType dir)
@@ -80,19 +82,19 @@ void UILoadingBar::setDirection(LoadingBarType dir)
     switch (_barType)
     {
         case LoadingBarTypeLeft:
-            _barRenderer->setAnchorPoint(cocos2d::Point(0.0f,0.5f));
-            _barRenderer->setPosition(cocos2d::Point(-_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
+            _barRenderer->setPosition(Point(-_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setFlippedX(false);
+                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
             }
             break;
         case LoadingBarTypeRight:
-            _barRenderer->setAnchorPoint(cocos2d::Point(1.0f,0.5f));
-            _barRenderer->setPosition(cocos2d::Point(_totalLength*0.5f,0.0f));
+            _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
+            _barRenderer->setPosition(Point(_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setFlippedX(true);
+                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
             }
             break;
     }
@@ -116,23 +118,23 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->initWithFile(texture);
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
+                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithFile(texture);
+                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setTexture(texture);
+                dynamic_cast<Sprite*>(_barRenderer)->setTexture(texture);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
+                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
+                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setSpriteFrame(texture);
+                dynamic_cast<Sprite*>(_barRenderer)->setSpriteFrame(texture);
             }
             break;
         default:
@@ -140,31 +142,31 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
     }
     if (_scale9Enabled)
     {
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
+        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setColor(getColor());
+        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
         
     }
     else
     {
-        dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setOpacity(getOpacity());
+        dynamic_cast<Sprite*>(_barRenderer)->setColor(getColor());
+        dynamic_cast<Sprite*>(_barRenderer)->setOpacity(getOpacity());
     }
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
     {
     case LoadingBarTypeLeft:
-        _barRenderer->setAnchorPoint(cocos2d::Point(0.0f,0.5f));
+        _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setFlippedX(false);
+            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
         }
         break;
     case LoadingBarTypeRight:
-        _barRenderer->setAnchorPoint(cocos2d::Point(1.0f,0.5f));
+        _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setFlippedX(true);
+            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
         }
         break;
     }
@@ -182,11 +184,11 @@ void UILoadingBar::setScale9Enabled(bool enabled)
     _barRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _barRenderer = cocos2d::extension::Scale9Sprite::create();
+        _barRenderer = extension::Scale9Sprite::create();
     }
     else
     {
-        _barRenderer = cocos2d::Sprite::create();
+        _barRenderer = Sprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
     _renderer->addChild(_barRenderer);
@@ -203,14 +205,14 @@ void UILoadingBar::setScale9Enabled(bool enabled)
     setCapInsets(_capInsets);
 }
 
-void UILoadingBar::setCapInsets(const cocos2d::Rect &capInsets)
+void UILoadingBar::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
 void UILoadingBar::setPercent(int percent)
@@ -231,10 +233,10 @@ void UILoadingBar::setPercent(int percent)
     {
         case UI_TEX_TYPE_PLIST:
         {
-            cocos2d::Sprite* barNode = DYNAMIC_CAST_CCSPRITE;
+            Sprite* barNode = DYNAMIC_CAST_CCSPRITE;
             if (barNode)
             {
-                cocos2d::Point to = barNode->getTextureRect().origin;
+                Point to = barNode->getTextureRect().origin;
                 x = to.x;
                 y = to.y;
             }
@@ -249,7 +251,7 @@ void UILoadingBar::setPercent(int percent)
     }
     else
     {
-        dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setTextureRect(cocos2d::Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
+        dynamic_cast<Sprite*>(_barRenderer)->setTextureRect(Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
     }
 }
 
@@ -272,12 +274,12 @@ void UILoadingBar::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-const cocos2d::Size& UILoadingBar::getContentSize() const
+const Size& UILoadingBar::getContentSize() const
 {
     return _barRendererTextureSize;
 }
 
-cocos2d::Node* UILoadingBar::getVirtualRenderer()
+Node* UILoadingBar::getVirtualRenderer()
 {
     return _barRenderer;
 }
@@ -303,7 +305,7 @@ void UILoadingBar::barRendererScaleChangedWithSize()
         else
         {
             
-            cocos2d::Size textureSize = _barRendererTextureSize;
+            Size textureSize = _barRendererTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _barRenderer->setScale(1.0f);
@@ -318,10 +320,10 @@ void UILoadingBar::barRendererScaleChangedWithSize()
     switch (_barType)
     {
         case LoadingBarTypeLeft:
-            _barRenderer->setPosition(cocos2d::Point(-_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Point(-_totalLength * 0.5f, 0.0f));
             break;
         case LoadingBarTypeRight:
-            _barRenderer->setPosition(cocos2d::Point(_totalLength * 0.5f, 0.0f));
+            _barRenderer->setPosition(Point(_totalLength * 0.5f, 0.0f));
             break;
         default:
             break;
@@ -331,7 +333,7 @@ void UILoadingBar::barRendererScaleChangedWithSize()
 void UILoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100 * _totalLength;
-    dynamic_cast<cocos2d::extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(cocos2d::Size(width, _size.height));
+    dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
 const char* UILoadingBar::getDescription() const
@@ -358,3 +360,5 @@ void UILoadingBar::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

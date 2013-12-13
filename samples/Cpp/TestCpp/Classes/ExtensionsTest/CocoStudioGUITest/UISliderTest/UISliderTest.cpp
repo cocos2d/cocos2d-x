@@ -34,7 +34,7 @@ bool UISliderTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -43,7 +43,7 @@ bool UISliderTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the slider
         UISlider* slider = UISlider::create();
@@ -53,7 +53,7 @@ bool UISliderTest::init()
         slider->loadProgressBarTexture("cocosgui/sliderProgress.png");
         slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest::percentChangedEvent));
-        m_pUiLayer->addWidget(slider);
+        m_pUiLayer->addChild(slider);
         
         return true;
     }
@@ -95,7 +95,7 @@ bool UISliderTest_Scale9::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -104,7 +104,7 @@ bool UISliderTest_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the slider
         UISlider* slider = UISlider::create();
@@ -117,7 +117,7 @@ bool UISliderTest_Scale9::init()
         slider->setSize(Size(250, 10));
         slider->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         slider->addEventListenerSlider(this, sliderpercentchangedselector(UISliderTest_Scale9::percentChangedEvent));
-        m_pUiLayer->addWidget(slider);
+        m_pUiLayer->addChild(slider);
         
         return true;
     }

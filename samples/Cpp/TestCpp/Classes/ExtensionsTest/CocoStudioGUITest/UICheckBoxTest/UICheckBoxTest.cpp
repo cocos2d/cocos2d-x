@@ -33,7 +33,7 @@ bool UICheckBoxTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -42,7 +42,7 @@ bool UICheckBoxTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the checkbox
         UICheckBox* checkBox = UICheckBox::create();
@@ -57,7 +57,7 @@ bool UICheckBoxTest::init()
         checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
         
 //        checkBox->addSelectEvent(this, coco_selectselector(UICheckBoxTest::selectedEvent));
-        m_pUiLayer->addWidget(checkBox);
+        m_pUiLayer->addChild(checkBox);
         
         return true;
     }

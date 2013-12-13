@@ -25,21 +25,18 @@
 #include "gui/UIImageView.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_imageRenderer)
-#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)
+#define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_imageRenderer)
+#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<extension::Scale9Sprite*>(_imageRenderer)
 
 UIImageView::UIImageView():
-_clickCount(0),
-_clickTimeInterval(0.0),
-_startCheckDoubleClick(false),
-_touchRelease(false),
-_doubleClickEnabled(false),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
-_capInsets(cocos2d::Rect::ZERO),
+_capInsets(Rect::ZERO),
 _imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(UI_TEX_TYPE_LOCAL),
@@ -68,7 +65,7 @@ UIImageView* UIImageView::create()
 void UIImageView::initRenderer()
 {
     UIWidget::initRenderer();
-    _imageRenderer = cocos2d::Sprite::create();
+    _imageRenderer = Sprite::create();
     _renderer->addChild(_imageRenderer);
 }
 
@@ -120,7 +117,7 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
     imageTextureScaleChangedWithSize();
 }
 
-void UIImageView::setTextureRect(const cocos2d::Rect &rect)
+void UIImageView::setTextureRect(const Rect &rect)
 {
     if (_scale9Enabled)
     {
@@ -128,94 +125,6 @@ void UIImageView::setTextureRect(const cocos2d::Rect &rect)
     else
     {
         DYNAMIC_CAST_CCSPRITE->setTextureRect(rect);
-    }
-}
-
-bool UIImageView::onTouchBegan(const cocos2d::Point &touchPoint)
-{
-    setFocused(true);
-    _touchStartPos.x = touchPoint.x;
-    _touchStartPos.y = touchPoint.y;
-    _widgetParent->checkChildInfo(0,this,touchPoint);
-    pushDownEvent();
-    
-    if (_doubleClickEnabled)
-    {
-        _clickTimeInterval = 0;
-        _startCheckDoubleClick = true;
-        _clickCount++;
-        _touchRelease = false;
-    }
-    return _touchPassedEnabled;
-}
-
-void UIImageView::onTouchEnded(const cocos2d::Point &touchPoint)
-{
-    if (_doubleClickEnabled)
-    {
-        if (_clickCount >= 2)
-        {
-            doubleClickEvent();
-            _clickCount = 0;
-            _startCheckDoubleClick = false;
-        }
-        else
-        {
-            _touchRelease = true;
-        }
-    }
-    else
-    {
-        UIWidget::onTouchEnded(touchPoint);
-    }
-}
-
-void UIImageView::doubleClickEvent()
-{
-    
-}
-
-void UIImageView::checkDoubleClick(float dt)
-{
-    if (_startCheckDoubleClick)
-    {
-        _clickTimeInterval += dt;
-        if (_clickTimeInterval >= 200 && _clickCount > 0)
-        {
-            _clickTimeInterval = 0;
-            _clickCount--;
-            _startCheckDoubleClick = false;
-        }
-    }
-    else
-    {
-        if (_clickCount <= 1)
-        {
-            if (_touchRelease)
-            {
-                releaseUpEvent();
-                _clickTimeInterval = 0;
-                _clickCount = 0;
-                _touchRelease = false;
-            }
-        }
-    }
-}
-
-void UIImageView::setDoubleClickEnabled(bool able)
-{
-    if (able == _doubleClickEnabled)
-    {
-        return;
-    }
-    _doubleClickEnabled = able;
-    if (able)
-    {
-//        COCOUISYSTEM->getUIInputManager()->addCheckedDoubleClickWidget(this);
-    }
-    else
-    {
-        
     }
 }
 
@@ -278,11 +187,11 @@ void UIImageView::setScale9Enabled(bool able)
     _imageRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _imageRenderer = cocos2d::extension::Scale9Sprite::create();
+        _imageRenderer = extension::Scale9Sprite::create();
     }
     else
     {
-        _imageRenderer = cocos2d::Sprite::create();
+        _imageRenderer = Sprite::create();
     }
     loadTexture(_textureFile.c_str(),_imageTexType);
     _renderer->addChild(_imageRenderer);
@@ -308,7 +217,7 @@ void UIImageView::ignoreContentAdaptWithSize(bool ignore)
     }
 }
 
-void UIImageView::setCapInsets(const cocos2d::Rect &capInsets)
+void UIImageView::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
@@ -318,7 +227,7 @@ void UIImageView::setCapInsets(const cocos2d::Rect &capInsets)
     DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
-void UIImageView::setAnchorPoint(const cocos2d::Point &pt)
+void UIImageView::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _imageRenderer->setAnchorPoint(pt);
@@ -329,12 +238,12 @@ void UIImageView::onSizeChanged()
     imageTextureScaleChangedWithSize();
 }
 
-const cocos2d::Size& UIImageView::getContentSize() const
+const Size& UIImageView::getContentSize() const
 {
     return _imageTextureSize;
 }
 
-cocos2d::Node* UIImageView::getVirtualRenderer()
+Node* UIImageView::getVirtualRenderer()
 {
     return _imageRenderer;
 }
@@ -353,11 +262,11 @@ void UIImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
+            dynamic_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
         }
         else
         {
-            cocos2d::Size textureSize = _imageRenderer->getContentSize();
+            Size textureSize = _imageRenderer->getContentSize();
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _imageRenderer->setScale(1.0f);
@@ -394,3 +303,5 @@ void UIImageView::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

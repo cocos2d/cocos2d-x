@@ -1429,6 +1429,20 @@ bool NodeRGBA::init()
     return false;
 }
 
+NodeRGBA * NodeRGBA::create(void)
+{
+	NodeRGBA * pRet = new NodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
 GLubyte NodeRGBA::getOpacity(void) const
 {
 	return _realOpacity;

@@ -24,6 +24,8 @@
 
 #include "gui/UICheckBox.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -80,11 +82,11 @@ bool UICheckBox::init()
 void UICheckBox::initRenderer()
 {
     UIWidget::initRenderer();
-    _backGroundBoxRenderer = cocos2d::Sprite::create();
-    _backGroundSelectedBoxRenderer = cocos2d::Sprite::create();
-    _frontCrossRenderer = cocos2d::Sprite::create();
-    _backGroundBoxDisabledRenderer = cocos2d::Sprite::create();
-    _frontCrossDisabledRenderer = cocos2d::Sprite::create();
+    _backGroundBoxRenderer = Sprite::create();
+    _backGroundSelectedBoxRenderer = Sprite::create();
+    _frontCrossRenderer = Sprite::create();
+    _backGroundBoxDisabledRenderer = Sprite::create();
+    _frontCrossDisabledRenderer = Sprite::create();
     _renderer->addChild(_backGroundBoxRenderer);
     _renderer->addChild(_backGroundSelectedBoxRenderer);
     _renderer->addChild(_frontCrossRenderer);
@@ -221,8 +223,9 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
-void UICheckBox::onTouchEnded(const cocos2d::Point &touchPoint)
+void UICheckBox::onTouchEnded(Touch *touch, Event *unused_event)
 {
+    _touchEndPos = touch->getLocation();
     if (_focus)
     {
         releaseUpEvent();
@@ -237,7 +240,11 @@ void UICheckBox::onTouchEnded(const cocos2d::Point &touchPoint)
         }
     }
     setFocused(false);
-    _widgetParent->checkChildInfo(2,this,touchPoint);
+    UIWidget* widgetParent = getWidgetParent();
+    if (widgetParent)
+    {
+        widgetParent->checkChildInfo(2,this,_touchEndPos);
+    }
 }
 
 void UICheckBox::onPressStateChangedToNormal()
@@ -299,7 +306,7 @@ void UICheckBox::unSelectedEvent()
     }
 }
 
-void UICheckBox::addEventListenerCheckBox(cocos2d::Object *target, SEL_SelectedStateEvent selector)
+void UICheckBox::addEventListenerCheckBox(Object *target, SEL_SelectedStateEvent selector)
 {
     _checkBoxEventListener = target;
     _checkBoxEventSelector = selector;
@@ -333,7 +340,7 @@ bool UICheckBox::isFlipY()
     return _backGroundBoxRenderer->isFlippedY();
 }
 
-void UICheckBox::setAnchorPoint(const cocos2d::Point &pt)
+void UICheckBox::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _backGroundBoxRenderer->setAnchorPoint(pt);
@@ -352,12 +359,12 @@ void UICheckBox::onSizeChanged()
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 
-const cocos2d::Size& UICheckBox::getContentSize() const
+const Size& UICheckBox::getContentSize() const
 {
     return _backGroundBoxRenderer->getContentSize();
 }
 
-cocos2d::Node* UICheckBox::getVirtualRenderer()
+Node* UICheckBox::getVirtualRenderer()
 {
     return _backGroundBoxRenderer;
 }
@@ -371,7 +378,7 @@ void UICheckBox::backGroundTextureScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _backGroundBoxRenderer->getContentSize();
+        Size textureSize = _backGroundBoxRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxRenderer->setScale(1.0f);
@@ -392,7 +399,7 @@ void UICheckBox::backGroundSelectedTextureScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _backGroundSelectedBoxRenderer->getContentSize();
+        Size textureSize = _backGroundSelectedBoxRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundSelectedBoxRenderer->setScale(1.0f);
@@ -413,7 +420,7 @@ void UICheckBox::frontCrossTextureScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _frontCrossRenderer->getContentSize();
+        Size textureSize = _frontCrossRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossRenderer->setScale(1.0f);
@@ -434,7 +441,7 @@ void UICheckBox::backGroundDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _backGroundBoxDisabledRenderer->getContentSize();
+        Size textureSize = _backGroundBoxDisabledRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxDisabledRenderer->setScale(1.0f);
@@ -455,7 +462,7 @@ void UICheckBox::frontCrossDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _frontCrossDisabledRenderer->getContentSize();
+        Size textureSize = _frontCrossDisabledRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossDisabledRenderer->setScale(1.0f);
@@ -493,3 +500,5 @@ void UICheckBox::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

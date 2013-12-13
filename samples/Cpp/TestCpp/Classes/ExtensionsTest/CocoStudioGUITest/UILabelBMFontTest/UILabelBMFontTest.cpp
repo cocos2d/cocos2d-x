@@ -23,14 +23,14 @@ bool UILabelBMFontTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the LabelBMFont
         UILabelBMFont* labelBMFont = UILabelBMFont::create();
         labelBMFont->setFntFile("cocosgui/bitmapFontTest2.fnt");
         labelBMFont->setText("BMFont");
         labelBMFont->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2.0f + labelBMFont->getSize().height / 8.0f));
-        m_pUiLayer->addWidget(labelBMFont);
+        m_pUiLayer->addChild(labelBMFont);
         
         return true;
     }

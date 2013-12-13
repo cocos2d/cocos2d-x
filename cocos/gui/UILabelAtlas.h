@@ -27,13 +27,15 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 /**
  *   @js NA
  *   @lua NA
  */
-class UICCLabelAtlas : public cocos2d::LabelAtlas
+class UICCLabelAtlas : public LabelAtlas
 {
 public:
     /**
@@ -51,7 +53,7 @@ public:
      */
     static UICCLabelAtlas* create();
     void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    void setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    void setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     virtual void updateDisplayedOpacity(GLubyte opacity) override;
     virtual void draw(void) override;
 };
@@ -87,13 +89,13 @@ public:
     const std::string& getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
@@ -116,5 +118,6 @@ protected:
 };
 
 }
+NS_CC_END
 
 #endif /* defined(__CocoGUI__UILabelAtlas__) */

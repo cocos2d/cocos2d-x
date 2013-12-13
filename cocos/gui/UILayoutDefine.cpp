@@ -23,6 +23,8 @@
  ****************************************************************************/
 #include "UILayoutDefine.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -58,3 +60,5 @@ bool UIMargin::equals(const UIMargin &target) const
 }
 
 }
+
+NS_CC_END

@@ -1496,6 +1496,7 @@ private:
 class CC_DLL NodeRGBA : public Node, public RGBAProtocol
 {
 public:
+    static NodeRGBA * create(void);
     // overrides
     virtual GLubyte getOpacity() const override;
     virtual GLubyte getDisplayedOpacity() const  override;

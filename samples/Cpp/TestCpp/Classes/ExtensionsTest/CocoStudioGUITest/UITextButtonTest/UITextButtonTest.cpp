@@ -33,7 +33,7 @@ bool UITextButtonTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -42,7 +42,7 @@ bool UITextButtonTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the text button
         UIButton* textButton = UIButton::create();
@@ -51,7 +51,7 @@ bool UITextButtonTest::init()
         textButton->setTitleText("Text Button");
         textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
-        m_pUiLayer->addWidget(textButton);
+        m_pUiLayer->addChild(textButton);
         
         return true;
     }
@@ -108,7 +108,7 @@ bool UITextButtonTest_Scale9::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -117,7 +117,7 @@ bool UITextButtonTest_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the text button
         UIButton* textButton = UIButton::create();
@@ -128,7 +128,7 @@ bool UITextButtonTest_Scale9::init()
         textButton->setTitleText("Text Button scale9 render");
         textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
-        m_pUiLayer->addWidget(textButton);
+        m_pUiLayer->addChild(textButton);
         
         return true;
     }

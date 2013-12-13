@@ -27,6 +27,8 @@
 
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 /**
 *   @js NA
@@ -90,5 +92,5 @@ typedef enum
 }UIRelativeAlign;
 
 }
-
+NS_CC_END
 #endif /* defined(__UILayoutDefine__) */

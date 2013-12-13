@@ -24,23 +24,25 @@
 
 #include "gui/UIScrollView.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 #define AUTOSCROLLMAXSPEED 1000.0f
 
-const cocos2d::Point SCROLLDIR_UP = cocos2d::Point(0.0f, 1.0f);
-const cocos2d::Point SCROLLDIR_DOWN = cocos2d::Point(0.0f, -1.0f);
-const cocos2d::Point SCROLLDIR_LEFT = cocos2d::Point(-1.0f, 0.0f);
-const cocos2d::Point SCROLLDIR_RIGHT = cocos2d::Point(1.0f, 0.0f);
+const Point SCROLLDIR_UP = Point(0.0f, 1.0f);
+const Point SCROLLDIR_DOWN = Point(0.0f, -1.0f);
+const Point SCROLLDIR_LEFT = Point(-1.0f, 0.0f);
+const Point SCROLLDIR_RIGHT = Point(1.0f, 0.0f);
 
 UIScrollView::UIScrollView():
 _innerContainer(nullptr),
 _direction(SCROLLVIEW_DIR_VERTICAL),
-_touchBeganPoint(cocos2d::Point::ZERO),
-_touchMovedPoint(cocos2d::Point::ZERO),
-_touchEndedPoint(cocos2d::Point::ZERO),
-_touchMovingPoint(cocos2d::Point::ZERO),
-_autoScrollDir(cocos2d::Point::ZERO),
+_touchBeganPoint(Point::ZERO),
+_touchMovedPoint(Point::ZERO),
+_touchEndedPoint(Point::ZERO),
+_touchMovingPoint(Point::ZERO),
+_autoScrollDir(Point::ZERO),
 _topBoundary(0.0f),
 _bottomBoundary(0.0f),
 _leftBoundary(0.0f),
@@ -55,10 +57,10 @@ _autoScrollOriginalSpeed(0.0f),
 _autoScrollAcceleration(-1000.0f),
 _isAutoScrollSpeedAttenuated(false),
 _needCheckAutoScrollDestination(false),
-_autoScrollDestination(cocos2d::Point::ZERO),
+_autoScrollDestination(Point::ZERO),
 _bePressed(false),
 _slidTime(0.0f),
-_moveChildPoint(cocos2d::Point::ZERO),
+_moveChildPoint(Point::ZERO),
 _childFocusCancelOffset(5.0f),
 _leftBounceNeeded(false),
 _topBounceNeeded(false),
@@ -66,7 +68,7 @@ _rightBounceNeeded(false),
 _bottomBounceNeeded(false),
 _bounceEnabled(false),
 _bouncing(false),
-_bounceDir(cocos2d::Point::ZERO),
+_bounceDir(Point::ZERO),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
@@ -109,7 +111,7 @@ void UIScrollView::initRenderer()
 {
     UILayout::initRenderer();
     _innerContainer = UILayout::create();
-    UILayout::addChild(_innerContainer);
+    UILayout::addChild(_innerContainer,1,1);
 }
 
 void UIScrollView::onSizeChanged()
@@ -123,20 +125,20 @@ void UIScrollView::onSizeChanged()
     _bounceBottomBoundary = bounceBoundaryParameterY;
     _bounceLeftBoundary = bounceBoundaryParameterX;
     _bounceRightBoundary = _size.width - bounceBoundaryParameterX;
-    cocos2d::Size innerSize = _innerContainer->getSize();
+    Size innerSize = _innerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
     float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
-    _innerContainer->setSize(cocos2d::Size(innerSizeWidth, innerSizeHeight));
-    _innerContainer->setPosition(cocos2d::Point(0, _size.height - _innerContainer->getSize().height));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setPosition(Point(0, _size.height - _innerContainer->getSize().height));
 }
 
-void UIScrollView::setInnerContainerSize(const cocos2d::Size &size)
+void UIScrollView::setInnerContainerSize(const Size &size)
 {
     float innerSizeWidth = _size.width;
     float innerSizeHeight = _size.height;
-    cocos2d::Size originalInnerSize = _innerContainer->getSize();
+    Size originalInnerSize = _innerContainer->getSize();
     if (size.width < _size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
@@ -153,13 +155,13 @@ void UIScrollView::setInnerContainerSize(const cocos2d::Size &size)
     {
         innerSizeHeight = size.height;
     }
-    _innerContainer->setSize(cocos2d::Size(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setSize(Size(innerSizeWidth, innerSizeHeight));
 
     switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            cocos2d::Size newInnerSize = _innerContainer->getSize();
+            Size newInnerSize = _innerContainer->getSize();
             float offset = originalInnerSize.height - newInnerSize.height;
             scrollChildren(0.0f, offset);
             break;
@@ -168,7 +170,7 @@ void UIScrollView::setInnerContainerSize(const cocos2d::Size &size)
         {
             if (_innerContainer->getRightInParent() <= _size.width)
             {
-                cocos2d::Size newInnerSize = _innerContainer->getSize();
+                Size newInnerSize = _innerContainer->getSize();
                 float offset = originalInnerSize.width - newInnerSize.width;
                 scrollChildren(offset, 0.0f);
             }
@@ -176,7 +178,7 @@ void UIScrollView::setInnerContainerSize(const cocos2d::Size &size)
         }
         case SCROLLVIEW_DIR_BOTH:
         {
-            cocos2d::Size newInnerSize = _innerContainer->getSize();
+            Size newInnerSize = _innerContainer->getSize();
             float offsetY = originalInnerSize.height - newInnerSize.height;
             float offsetX = 0.0f;
             if (_innerContainer->getRightInParent() <= _size.width)
@@ -189,16 +191,42 @@ void UIScrollView::setInnerContainerSize(const cocos2d::Size &size)
         default:
             break;
     }
+    if (_innerContainer->getLeftInParent() > 0.0f)
+    {
+        _innerContainer->setPosition(Point(_innerContainer->getAnchorPoint().x * _innerContainer->getSize().width, _innerContainer->getPosition().y));
+    }
+    if (_innerContainer->getRightInParent() < _size.width)
+    {
+         _innerContainer->setPosition(Point(_size.width - ((1.0f - _innerContainer->getAnchorPoint().x) * _innerContainer->getSize().width), _innerContainer->getPosition().y));
+    }
+    if (_innerContainer->getPosition().y > 0.0f)
+    {
+        _innerContainer->setPosition(Point(_innerContainer->getPosition().x, _innerContainer->getAnchorPoint().y * _innerContainer->getSize().height));
+    }
+    if (_innerContainer->getTopInParent() < _size.height)
+    {
+        _innerContainer->setPosition(Point(_innerContainer->getPosition().x, _size.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getSize().height));
+    }
 }
 
-const cocos2d::Size& UIScrollView::getInnerContainerSize() const
+const Size& UIScrollView::getInnerContainerSize() const
 {
 	return _innerContainer->getSize();
 }
-
-bool UIScrollView::addChild(UIWidget* widget)
+    
+void UIScrollView::addChild(Node *child)
 {
-    return _innerContainer->addChild(widget);
+    UILayout::addChild(child);
+}
+
+void UIScrollView::addChild(Node * child, int zOrder)
+{
+    UILayout::addChild(child, zOrder);
+}
+
+void UIScrollView::addChild(Node *child, int zOrder, int tag)
+{
+    return _innerContainer->addChild(child, zOrder, tag);
 }
 
 void UIScrollView::removeAllChildren()
@@ -206,19 +234,24 @@ void UIScrollView::removeAllChildren()
     _innerContainer->removeAllChildren();
 }
 
-bool UIScrollView::removeChild(UIWidget* child)
+void UIScrollView::removeChild(Node* child, bool cleanup)
 {
-	return _innerContainer->removeChild(child);
+	return _innerContainer->removeChild(child, cleanup);
 }
 
-cocos2d::Array* UIScrollView::getChildren()
+Vector<Node*>& UIScrollView::getChildren()
+{
+    return _innerContainer->getChildren();
+}
+
+const Vector<Node*>& UIScrollView::getChildren() const
 {
     return _innerContainer->getChildren();
 }
 
 void UIScrollView::moveChildren(float offsetX, float offsetY)
 {
-    _moveChildPoint = _innerContainer->getPosition() + cocos2d::Point(offsetX, offsetY);
+    _moveChildPoint = _innerContainer->getPosition() + Point(offsetX, offsetY);
     _innerContainer->setPosition(_moveChildPoint);
 }
 
@@ -295,56 +328,56 @@ bool UIScrollView::checkNeedBounce()
     {
         if (_topBounceNeeded && _leftBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point(0.0f, _size.height) - cocos2d::Point(_innerContainer->getLeftInParent(), _innerContainer->getTopInParent());
+            Point scrollVector = Point(0.0f, _size.height) - Point(_innerContainer->getLeftInParent(), _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_topBounceNeeded && _rightBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point(_size.width, _size.height) - cocos2d::Point(_innerContainer->getRightInParent(), _innerContainer->getTopInParent());
+            Point scrollVector = Point(_size.width, _size.height) - Point(_innerContainer->getRightInParent(), _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded && _leftBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point::ZERO - cocos2d::Point(_innerContainer->getLeftInParent(), _innerContainer->getBottomInParent());
+            Point scrollVector = Point::ZERO - Point(_innerContainer->getLeftInParent(), _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded && _rightBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point(_size.width, 0.0f) - cocos2d::Point(_innerContainer->getRightInParent(), _innerContainer->getBottomInParent());
+            Point scrollVector = Point(_size.width, 0.0f) - Point(_innerContainer->getRightInParent(), _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_topBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point(0.0f, _size.height) - cocos2d::Point(0.0f, _innerContainer->getTopInParent());
+            Point scrollVector = Point(0.0f, _size.height) - Point(0.0f, _innerContainer->getTopInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_bottomBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point::ZERO - cocos2d::Point(0.0f, _innerContainer->getBottomInParent());
+            Point scrollVector = Point::ZERO - Point(0.0f, _innerContainer->getBottomInParent());
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_leftBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point::ZERO - cocos2d::Point(_innerContainer->getLeftInParent(), 0.0f);
+            Point scrollVector = Point::ZERO - Point(_innerContainer->getLeftInParent(), 0.0f);
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
         }
         else if (_rightBounceNeeded)
         {
-            cocos2d::Point scrollVector = cocos2d::Point(_size.width, 0.0f) - cocos2d::Point(_innerContainer->getRightInParent(), 0.0f);
+            Point scrollVector = Point(_size.width, 0.0f) - Point(_innerContainer->getRightInParent(), 0.0f);
             float orSpeed = scrollVector.getLength()/(0.2f);
             _bounceDir = scrollVector.normalize();
             startBounceChildren(orSpeed);
@@ -414,7 +447,7 @@ void UIScrollView::stopBounceChildren()
     _bottomBounceNeeded = false;
 }
 
-void UIScrollView::startAutoScrollChildrenWithOriginalSpeed(const cocos2d::Point& dir, float v, bool attenuated, float acceleration)
+void UIScrollView::startAutoScrollChildrenWithOriginalSpeed(const Point& dir, float v, bool attenuated, float acceleration)
 {
     stopAutoScrollChildren();
     _autoScrollDir = dir;
@@ -424,12 +457,12 @@ void UIScrollView::startAutoScrollChildrenWithOriginalSpeed(const cocos2d::Point
     _autoScrollAcceleration = acceleration;
 }
 
-void UIScrollView::startAutoScrollChildrenWithDestination(const cocos2d::Point& des, float time, bool attenuated)
+void UIScrollView::startAutoScrollChildrenWithDestination(const Point& des, float time, bool attenuated)
 {
     _needCheckAutoScrollDestination = false;
     _autoScrollDestination = des;
-    cocos2d::Point dis = des - _innerContainer->getPosition();
-    cocos2d::Point dir = dis.normalize();
+    Point dis = des - _innerContainer->getPosition();
+    Point dir = dis.normalize();
     float orSpeed = 0.0f;
     float acceleration = -1000.0f;
     if (attenuated)
@@ -445,7 +478,7 @@ void UIScrollView::startAutoScrollChildrenWithDestination(const cocos2d::Point& 
     startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
 }
 
-void UIScrollView::jumpToDestination(const cocos2d::Point &des)
+void UIScrollView::jumpToDestination(const Point &des)
 {
     float finalOffsetX = des.x;
     float finalOffsetY = des.y;
@@ -476,7 +509,7 @@ void UIScrollView::jumpToDestination(const cocos2d::Point &des)
         default:
             break;
     }
-    _innerContainer->setPosition(cocos2d::Point(finalOffsetX, finalOffsetY));
+    _innerContainer->setPosition(Point(finalOffsetX, finalOffsetY));
 }
 
 void UIScrollView::stopAutoScrollChildren()
@@ -1098,22 +1131,22 @@ bool UIScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
 
 void UIScrollView::scrollToBottom(float time, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_innerContainer->getPosition().x, 0.0f), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_innerContainer->getPosition().x, 0.0f), time, attenuated);
 }
 
 void UIScrollView::scrollToTop(float time, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height), time, attenuated);
 }
 
 void UIScrollView::scrollToLeft(float time, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(cocos2d::Point(0.0f, _innerContainer->getPosition().y), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(0.0f, _innerContainer->getPosition().y), time, attenuated);
 }
 
 void UIScrollView::scrollToRight(float time, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y), time, attenuated);
 }
 
 void UIScrollView::scrollToTopLeft(float time, bool attenuated)
@@ -1123,7 +1156,7 @@ void UIScrollView::scrollToTopLeft(float time, bool attenuated)
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(cocos2d::Point(0.0f, _size.height - _innerContainer->getSize().height), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(0.0f, _size.height - _innerContainer->getSize().height), time, attenuated);
 }
 
 void UIScrollView::scrollToTopRight(float time, bool attenuated)
@@ -1133,7 +1166,7 @@ void UIScrollView::scrollToTopRight(float time, bool attenuated)
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height), time, attenuated);
 }
 
 void UIScrollView::scrollToBottomLeft(float time, bool attenuated)
@@ -1143,7 +1176,7 @@ void UIScrollView::scrollToBottomLeft(float time, bool attenuated)
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(cocos2d::Point::ZERO, time, attenuated);
+    startAutoScrollChildrenWithDestination(Point::ZERO, time, attenuated);
 }
 
 void UIScrollView::scrollToBottomRight(float time, bool attenuated)
@@ -1153,23 +1186,23 @@ void UIScrollView::scrollToBottomRight(float time, bool attenuated)
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, 0.0f), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_size.width - _innerContainer->getSize().width, 0.0f), time, attenuated);
 }
 
 void UIScrollView::scrollToPercentVertical(float percent, float time, bool attenuated)
 {
     float minY = _size.height - _innerContainer->getSize().height;
     float h = - minY;
-    startAutoScrollChildrenWithDestination(cocos2d::Point(_innerContainer->getPosition().x, minY + percent * h / 100.0f), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(_innerContainer->getPosition().x, minY + percent * h / 100.0f), time, attenuated);
 }
 
 void UIScrollView::scrollToPercentHorizontal(float percent, float time, bool attenuated)
 {
     float w = _innerContainer->getSize().width - _size.width;
-    startAutoScrollChildrenWithDestination(cocos2d::Point(-(percent * w / 100.0f), _innerContainer->getPosition().y), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(-(percent * w / 100.0f), _innerContainer->getPosition().y), time, attenuated);
 }
 
-void UIScrollView::scrollToPercentBothDirection(const cocos2d::Point& percent, float time, bool attenuated)
+void UIScrollView::scrollToPercentBothDirection(const Point& percent, float time, bool attenuated)
 {
     if (_direction != SCROLLVIEW_DIR_BOTH)
     {
@@ -1178,27 +1211,27 @@ void UIScrollView::scrollToPercentBothDirection(const cocos2d::Point& percent, f
     float minY = _size.height - _innerContainer->getSize().height;
     float h = - minY;
     float w = _innerContainer->getSize().width - _size.width;
-    startAutoScrollChildrenWithDestination(cocos2d::Point(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), time, attenuated);
+    startAutoScrollChildrenWithDestination(Point(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), time, attenuated);
 }
 
 void UIScrollView::jumpToBottom()
 {
-    jumpToDestination(cocos2d::Point(_innerContainer->getPosition().x, 0.0f));
+    jumpToDestination(Point(_innerContainer->getPosition().x, 0.0f));
 }
 
 void UIScrollView::jumpToTop()
 {
-    jumpToDestination(cocos2d::Point(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height));
+    jumpToDestination(Point(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height));
 }
 
 void UIScrollView::jumpToLeft()
 {
-    jumpToDestination(cocos2d::Point(0.0f, _innerContainer->getPosition().y));
+    jumpToDestination(Point(0.0f, _innerContainer->getPosition().y));
 }
 
 void UIScrollView::jumpToRight()
 {
-    jumpToDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y));
+    jumpToDestination(Point(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y));
 }
 
 void UIScrollView::jumpToTopLeft()
@@ -1208,7 +1241,7 @@ void UIScrollView::jumpToTopLeft()
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    jumpToDestination(cocos2d::Point(0.0f, _size.height - _innerContainer->getSize().height));
+    jumpToDestination(Point(0.0f, _size.height - _innerContainer->getSize().height));
 }
 
 void UIScrollView::jumpToTopRight()
@@ -1218,7 +1251,7 @@ void UIScrollView::jumpToTopRight()
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    jumpToDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height));
+    jumpToDestination(Point(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height));
 }
 
 void UIScrollView::jumpToBottomLeft()
@@ -1228,7 +1261,7 @@ void UIScrollView::jumpToBottomLeft()
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    jumpToDestination(cocos2d::Point::ZERO);
+    jumpToDestination(Point::ZERO);
 }
 
 void UIScrollView::jumpToBottomRight()
@@ -1238,23 +1271,23 @@ void UIScrollView::jumpToBottomRight()
         CCLOG("Scroll diretion is not both!");
         return;
     }
-    jumpToDestination(cocos2d::Point(_size.width - _innerContainer->getSize().width, 0.0f));
+    jumpToDestination(Point(_size.width - _innerContainer->getSize().width, 0.0f));
 }
 
 void UIScrollView::jumpToPercentVertical(float percent)
 {
     float minY = _size.height - _innerContainer->getSize().height;
     float h = - minY;
-    jumpToDestination(cocos2d::Point(_innerContainer->getPosition().x, minY + percent * h / 100.0f));
+    jumpToDestination(Point(_innerContainer->getPosition().x, minY + percent * h / 100.0f));
 }
 
 void UIScrollView::jumpToPercentHorizontal(float percent)
 {
     float w = _innerContainer->getSize().width - _size.width;
-    jumpToDestination(cocos2d::Point(-(percent * w / 100.0f), _innerContainer->getPosition().y));
+    jumpToDestination(Point(-(percent * w / 100.0f), _innerContainer->getPosition().y));
 }
 
-void UIScrollView::jumpToPercentBothDirection(const cocos2d::Point& percent)
+void UIScrollView::jumpToPercentBothDirection(const Point& percent)
 {
     if (_direction != SCROLLVIEW_DIR_BOTH)
     {
@@ -1263,7 +1296,7 @@ void UIScrollView::jumpToPercentBothDirection(const cocos2d::Point& percent)
     float minY = _size.height - _innerContainer->getSize().height;
     float h = - minY;
     float w = _innerContainer->getSize().width - _size.width;
-    jumpToDestination(cocos2d::Point(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
+    jumpToDestination(Point(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
 }
 
 void UIScrollView::startRecordSlidAction()
@@ -1288,7 +1321,7 @@ void UIScrollView::endRecordSlidAction()
             return;
         }
         float totalDis = 0.0f;
-        cocos2d::Point dir;
+        Point dir;
         switch (_direction)
         {
             case SCROLLVIEW_DIR_VERTICAL:
@@ -1315,7 +1348,7 @@ void UIScrollView::endRecordSlidAction()
                 break;
             case SCROLLVIEW_DIR_BOTH:
             {
-                cocos2d::Point subVector = _touchEndedPoint - _touchBeganPoint;
+                Point subVector = _touchEndedPoint - _touchBeganPoint;
                 totalDis = subVector.getLength();
                 dir = subVector.normalize();
                 break;
@@ -1329,18 +1362,18 @@ void UIScrollView::endRecordSlidAction()
     }
 }
 
-void UIScrollView::handlePressLogic(const cocos2d::Point &touchPoint)
+void UIScrollView::handlePressLogic(const Point &touchPoint)
 {        
-    _touchBeganPoint = _renderer->convertToNodeSpace(touchPoint);
+    _touchBeganPoint = convertToNodeSpace(touchPoint);
     _touchMovingPoint = _touchBeganPoint;    
     startRecordSlidAction();
     _bePressed = true;
 }
 
-void UIScrollView::handleMoveLogic(const cocos2d::Point &touchPoint)
+void UIScrollView::handleMoveLogic(const Point &touchPoint)
 {
-    _touchMovedPoint = _renderer->convertToNodeSpace(touchPoint);
-    cocos2d::Point delta = _touchMovedPoint - _touchMovingPoint;
+    _touchMovedPoint = convertToNodeSpace(touchPoint);
+    Point delta = _touchMovedPoint - _touchMovingPoint;
     _touchMovingPoint = _touchMovedPoint;
     switch (_direction)
     {
@@ -1364,39 +1397,42 @@ void UIScrollView::handleMoveLogic(const cocos2d::Point &touchPoint)
     }
 }
 
-void UIScrollView::handleReleaseLogic(const cocos2d::Point &touchPoint)
+void UIScrollView::handleReleaseLogic(const Point &touchPoint)
 {
-    _touchEndedPoint = _renderer->convertToNodeSpace(touchPoint);
+    _touchEndedPoint = convertToNodeSpace(touchPoint);
     endRecordSlidAction();
     _bePressed = false;
 }    
 
-bool UIScrollView::onTouchBegan(const cocos2d::Point &touchPoint)
+bool UIScrollView::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    bool pass = UILayout::onTouchBegan(touchPoint);
-    handlePressLogic(touchPoint);
+    bool pass = UILayout::onTouchBegan(touch, unused_event);
+    if (_hitted)
+    {
+        handlePressLogic(_touchStartPos);
+    }
     return pass;
 }
 
-void UIScrollView::onTouchMoved(const cocos2d::Point &touchPoint)
+void UIScrollView::onTouchMoved(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchMoved(touchPoint);
-    handleMoveLogic(touchPoint);
+    UILayout::onTouchMoved(touch, unused_event);
+    handleMoveLogic(_touchMovePos);
 }
 
-void UIScrollView::onTouchEnded(const cocos2d::Point &touchPoint)
+void UIScrollView::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchEnded(touchPoint);
-    handleReleaseLogic(touchPoint);
+    UILayout::onTouchEnded(touch, unused_event);
+    handleReleaseLogic(_touchEndPos);
 }
 
-void UIScrollView::onTouchCancelled(const cocos2d::Point &touchPoint)
+void UIScrollView::onTouchCancelled(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchCancelled(touchPoint);
-    handleReleaseLogic(touchPoint);
+    UILayout::onTouchCancelled(touch, unused_event);
+    handleReleaseLogic(touch->getLocation());
 }
 
-void UIScrollView::onTouchLongClicked(const cocos2d::Point &touchPoint)
+void UIScrollView::onTouchLongClicked(const Point &touchPoint)
 {
     
 }
@@ -1422,7 +1458,7 @@ void UIScrollView::recordSlidTime(float dt)
     }
 }
 
-void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const cocos2d::Point &touchPoint)
+void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const Point &touchPoint)
 {
     switch (handleState)
     {
@@ -1451,7 +1487,7 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
     }
 }
 
-void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint)
+void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const Point &touchPoint)
 {
     interceptTouchEvent(handleState, sender, touchPoint);
 }
@@ -1528,7 +1564,7 @@ void UIScrollView::bounceRightEvent()
     }
 }
 
-void UIScrollView::addEventListenerScrollView(cocos2d::Object *target, SEL_ScrollViewEvent selector)
+void UIScrollView::addEventListenerScrollView(Object *target, SEL_ScrollViewEvent selector)
 {
     _scrollViewEventListener = target;
     _scrollViewEventSelector = selector;
@@ -1581,7 +1617,11 @@ LayoutType UIScrollView::getLayoutType() const
 
 void UIScrollView::doLayout()
 {
-    _innerContainer->doLayout();
+    if (!_doLayoutDirty)
+    {
+        return;
+    }
+    _doLayoutDirty = false;
 }
 
 const char* UIScrollView::getDescription() const
@@ -1613,3 +1653,5 @@ void UIScrollView::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

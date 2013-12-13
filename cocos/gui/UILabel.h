@@ -27,22 +27,24 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
 
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILabel : public UIWidget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
     UILabel();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
     virtual ~UILabel();
     
@@ -141,22 +143,22 @@ public:
     virtual bool isFlipY() override;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
     virtual const char* getDescription() const override;
     
-    void setTextAreaSize(const cocos2d::Size &size);
-    void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
-    void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);    
+    void setTextAreaSize(const Size &size);
+    void setTextHorizontalAlignment(TextHAlignment alignment);
+    void setTextVerticalAlignment(TextVAlignment alignment);    
 protected:
     virtual bool init() override;
     virtual void initRenderer() override;
@@ -175,9 +177,11 @@ protected:
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    cocos2d::LabelTTF* _labelRenderer;
+    LabelTTF* _labelRenderer;
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__Label__) */

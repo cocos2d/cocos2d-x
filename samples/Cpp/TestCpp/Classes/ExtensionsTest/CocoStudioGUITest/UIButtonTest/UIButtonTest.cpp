@@ -32,7 +32,7 @@ bool UIButtonTest::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);        
+        m_pUiLayer->addChild(m_pDisplayValueLabel);        
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -42,7 +42,7 @@ bool UIButtonTest::init()
         alert->setColor(Color3B(159, 168, 176));                
         
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the button
         UIButton *button = UIButton::create();
@@ -50,7 +50,7 @@ bool UIButtonTest::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));        
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
 
         return true;
     }
@@ -108,7 +108,7 @@ bool UIButtonTest_Scale9::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -117,7 +117,7 @@ bool UIButtonTest_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the button
         UIButton *button = UIButton::create();
@@ -128,7 +128,7 @@ bool UIButtonTest_Scale9::init()
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(Size(150, button->getContentSize().height * 1.5f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
         
         return true;
     }
@@ -183,7 +183,7 @@ bool UIButtonTest_PressedAction::init()
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
         UILabel *alert = UILabel::create();
@@ -193,7 +193,7 @@ bool UIButtonTest_PressedAction::init()
         alert->setColor(Color3B(159, 168, 176));
         
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the button
         UIButton *button = UIButton::create();
@@ -202,7 +202,7 @@ bool UIButtonTest_PressedAction::init()
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));        
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
         
         return true;
     }

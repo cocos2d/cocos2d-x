@@ -23,13 +23,13 @@ bool UIImageViewTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the imageview
         UIImageView *imageView = UIImageView::create();
         imageView->loadTexture("cocosgui/ccicon.png");
         imageView->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(imageView);
+        m_pUiLayer->addChild(imageView);
         
         return true;
     }
@@ -51,7 +51,7 @@ bool UIImageViewTest_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the imageview
         UIImageView *imageView = UIImageView::create();
@@ -59,7 +59,7 @@ bool UIImageViewTest_Scale9::init()
         imageView->loadTexture("cocosgui/buttonHighlighted.png");
         imageView->setSize(Size(200, 85));
         imageView->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + imageView->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(imageView);
+        m_pUiLayer->addChild(imageView);
         
         return true;
     }

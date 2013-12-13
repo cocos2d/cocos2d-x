@@ -27,6 +27,8 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 typedef enum
@@ -34,20 +36,20 @@ typedef enum
     LoadingBarTypeLeft,
     LoadingBarTypeRight
 }LoadingBarType;
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class UILoadingBar : public UIWidget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
     UILoadingBar();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
     virtual ~UILoadingBar();
     
@@ -109,16 +111,16 @@ public:
      *
      * @param capInsets    capinsets for loadingbar
      */
-    void setCapInsets(const cocos2d::Rect &capInsets);
+    void setCapInsets(const Rect &capInsets);
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
@@ -135,15 +137,15 @@ protected:
     LoadingBarType _barType;
     int _percent;
     float _totalLength;
-    cocos2d::Node* _barRenderer;
+    Node* _barRenderer;
     TextureResType _renderBarTexType;
-    cocos2d::Size _barRendererTextureSize;
+    Size _barRendererTextureSize;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
-    cocos2d::Rect _capInsets;
+    Rect _capInsets;
     std::string _textureFile;
 };
 
 }
-
+NS_CC_END
 #endif /* defined(__CocoGUI__UILoadingBar__) */

@@ -28,8 +28,8 @@
 #include <fstream>
 #include <iostream>
 
- using namespace gui;
- using namespace cocos2d;
+using namespace cocos2d::gui;
+using namespace cocos2d;
 
 
 namespace cocostudio {
@@ -1032,14 +1032,7 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(JsonDictionary *d
             widget->addChild(child);
         }
         CC_SAFE_DELETE(subData);
-    }
-
-    UILayout* layout = dynamic_cast<UILayout*>(widget);
-    if (layout)
-    {
-        layout->doLayout();
-    }
-    
+    }    
     CC_SAFE_DELETE(uiOptions);
     return widget;
 }

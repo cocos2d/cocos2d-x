@@ -37,7 +37,7 @@ bool UILoadingBarTest_Left::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
         UILoadingBar* loadingBar = UILoadingBar::create();
@@ -46,7 +46,7 @@ bool UILoadingBarTest_Left::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -60,8 +60,7 @@ void UILoadingBarTest_Left::update(float delta)
     {
         m_nCount = 0;
     }
-        
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -120,7 +119,7 @@ bool UILoadingBarTest_Right::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
         UILoadingBar* loadingBar = UILoadingBar::create();
@@ -130,7 +129,7 @@ bool UILoadingBarTest_Right::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -145,7 +144,7 @@ void UILoadingBarTest_Right::update(float delta)
         m_nCount = 0;
     }
     
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -204,7 +203,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
         UILoadingBar* loadingBar = UILoadingBar::create();
@@ -216,7 +215,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -231,7 +230,7 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
         m_nCount = 0;
     }
     
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -290,7 +289,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
         UILoadingBar* loadingBar = UILoadingBar::create();
@@ -303,7 +302,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -317,8 +316,7 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     {
         m_nCount = 0;
     }
-    CCLOG("wocao");
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 

@@ -23,7 +23,7 @@ bool UITextAreaTest::init()
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the text area
         UILabel* textArea = UILabel::create();
@@ -33,7 +33,7 @@ bool UITextAreaTest::init()
         textArea->setFontName("AmericanTypewriter");
         textArea->setFontSize(32);
         textArea->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2 - textArea->getSize().height / 8));
-        m_pUiLayer->addWidget(textArea);        
+        m_pUiLayer->addChild(textArea);        
         
         return true;
     }

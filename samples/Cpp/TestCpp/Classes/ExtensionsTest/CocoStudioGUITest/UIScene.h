@@ -94,7 +94,7 @@ protected:
     void menuCloseCallback(Object* pSender, TouchEventType type);
     
 protected:
-    UILayer *m_pUiLayer;
+    UILayout *m_pUiLayer;
     UILayout *m_pWidget;
 };
 

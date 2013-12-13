@@ -27,21 +27,24 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui{
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIButton : public UIWidget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
     UIButton();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
     virtual ~UIButton();
     
@@ -95,31 +98,31 @@ public:
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsets(const cocos2d::Rect &capInsets);
+    void setCapInsets(const Rect &capInsets);
 
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsNormalRenderer(const cocos2d::Rect &capInsets);
+    void setCapInsetsNormalRenderer(const Rect &capInsets);
     
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsPressedRenderer(const cocos2d::Rect &capInsets);
+    void setCapInsetsPressedRenderer(const Rect &capInsets);
     
     /**
      * Sets capinsets for button, if button is using scale9 renderer.
      *
      * @param capInsets    capinsets for button
      */
-    void setCapInsetsDisabledRenderer(const cocos2d::Rect &capInsets);
+    void setCapInsetsDisabledRenderer(const Rect &capInsets);
     
     //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
+    virtual void setAnchorPoint(const Point &pt) override;
     
     /**
      * Sets if button is using scale9 renderer.
@@ -151,10 +154,10 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Sets color to widget
@@ -163,7 +166,7 @@ public:
      *
      * @param color
      */
-    virtual void setColor(const cocos2d::Color3B &color) override;
+    virtual void setColor(const Color3B &color) override;
     
     /**
      * Returns the "class name" of widget.
@@ -172,8 +175,8 @@ public:
     
     void setTitleText(const std::string& text);
     const std::string& getTitleText() const;
-    void setTitleColor(const cocos2d::Color3B& color);
-    const cocos2d::Color3B& getTitleColor() const;
+    void setTitleColor(const Color3B& color);
+    const Color3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
@@ -193,28 +196,30 @@ protected:
     virtual UIWidget* createCloneInstance() override;
     virtual void copySpecialProperties(UIWidget* model) override;
 protected:
-    cocos2d::Node* _buttonNormalRenderer;
-    cocos2d::Node* _buttonClickedRenderer;
-    cocos2d::Node* _buttonDisableRenderer;
-    cocos2d::LabelTTF* _titleRenderer;
+    Node* _buttonNormalRenderer;
+    Node* _buttonClickedRenderer;
+    Node* _buttonDisableRenderer;
+    LabelTTF* _titleRenderer;
     std::string _normalFileName;
     std::string _clickedFileName;
     std::string _disabledFileName;
     bool _prevIgnoreSize;
     bool _scale9Enabled;
-    cocos2d::Rect _capInsetsNormal;
-    cocos2d::Rect _capInsetsPressed;
-    cocos2d::Rect _capInsetsDisabled;
+    Rect _capInsetsNormal;
+    Rect _capInsetsPressed;
+    Rect _capInsetsDisabled;
     TextureResType _normalTexType;
     TextureResType _pressedTexType;
     TextureResType _disabledTexType;
-    cocos2d::Size _normalTextureSize;
-    cocos2d::Size _pressedTextureSize;
-    cocos2d::Size _disabledTextureSize;
+    Size _normalTextureSize;
+    Size _pressedTextureSize;
+    Size _disabledTextureSize;
     bool _pressedActionEnabled;
-    cocos2d::Color3B _titleColor;
+    Color3B _titleColor;
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__UIButton__) */

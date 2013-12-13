@@ -25,8 +25,14 @@
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
+NS_CC_BEGIN
+
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIHelper
 {
 public:
@@ -69,5 +75,7 @@ public:
     static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
 };
 }
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__UISystem__) */

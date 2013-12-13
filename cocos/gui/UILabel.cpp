@@ -24,6 +24,8 @@
 
 #include "gui/UILabel.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -67,7 +69,7 @@ bool UILabel::init()
 void UILabel::initRenderer()
 {
     UIWidget::initRenderer();
-    _labelRenderer = cocos2d::LabelTTF::create();
+    _labelRenderer = LabelTTF::create();
     _renderer->addChild(_labelRenderer);
 }
 
@@ -104,19 +106,19 @@ void UILabel::setFontName(const std::string& name)
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextAreaSize(const cocos2d::Size &size)
+void UILabel::setTextAreaSize(const Size &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+void UILabel::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextVerticalAlignment(cocos2d::TextVAlignment alignment)
+void UILabel::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
@@ -201,7 +203,7 @@ bool UILabel::isFlipY()
     return _labelRenderer->isFlippedY();
 }
 
-void UILabel::setAnchorPoint(const cocos2d::Point &pt)
+void UILabel::setAnchorPoint(const Point &pt)
 {
     UIWidget::setAnchorPoint(pt);
     _labelRenderer->setAnchorPoint(pt);
@@ -212,12 +214,12 @@ void UILabel::onSizeChanged()
     labelScaleChangedWithSize();
 }
 
-const cocos2d::Size& UILabel::getContentSize() const
+const Size& UILabel::getContentSize() const
 {
     return _labelRenderer->getContentSize();
 }
 
-cocos2d::Node* UILabel::getVirtualRenderer()
+Node* UILabel::getVirtualRenderer()
 {
     return _labelRenderer;
 }
@@ -231,7 +233,7 @@ void UILabel::labelScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _labelRenderer->getContentSize();
+        Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelRenderer->setScale(1.0f);
@@ -268,3 +270,5 @@ void UILabel::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END
