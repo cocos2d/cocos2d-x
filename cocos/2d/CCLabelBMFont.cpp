@@ -1204,6 +1204,10 @@ const std::string& LabelBMFont::getFntFile() const
     return _fntFile;
 }
 
+std::string LabelBMFont::getDescription() const
+{
+    return StringUtils::format("<LabelBMFont | Tag = %d, Label = '%s'>", _tag, _initialStringUTF8.c_str());
+}
 
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW

@@ -90,7 +90,7 @@ void Profiler::displayTimers()
     for (auto iter = _activeTimers.begin(); iter != _activeTimers.end(); ++iter)
     {
         ProfilingTimer* timer = iter->second;
-        log("%s", timer->description());
+        log("%s", timer->getDescription().c_str());
     }
 }
 
@@ -117,7 +117,7 @@ ProfilingTimer::~ProfilingTimer(void)
     
 }
 
-const char* ProfilingTimer::description() const
+std::string ProfilingTimer::getDescription() const
 {
     static char s_desciption[512] = {0};
 
