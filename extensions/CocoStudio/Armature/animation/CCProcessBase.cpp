@@ -36,11 +36,11 @@ CCProcessBase::CCProcessBase(void)
     , m_iRawDuration(0)
     , m_eLoopType(ANIMATION_LOOP_BACK)
     , m_eTweenEasing(Linear)
-    , m_fAnimationInternal(1/60.0f)
     , m_iDurationTween(0)
     , m_fCurrentFrame(0)
     , m_iCurFrameIndex(0)
     , m_bIsLoopBack(false)
+    , m_fAnimationInternal(1/60.0f)
 {
 }
 
