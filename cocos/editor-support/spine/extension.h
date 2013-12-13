@@ -114,7 +114,7 @@ void _free (void* ptr);
 void _setMalloc (void* (*_malloc) (size_t size));
 void _setFree (void (*_free) (void* ptr));
 
-char* _readFile (const char* path, int* length);
+char* _readFile (const char* path, ssize_t* length);
 
 /**/
 

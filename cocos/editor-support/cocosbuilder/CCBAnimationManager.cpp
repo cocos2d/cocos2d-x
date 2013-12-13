@@ -623,7 +623,7 @@ Object* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* chann
     
     Vector<FiniteTimeAction*> actions;
     auto& keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes.size();
+    ssize_t numKeyframes = keyframes.size();
 
     for (long i = 0; i < numKeyframes; ++i)
     {
@@ -712,7 +712,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
     
     Vector<FiniteTimeAction*> actions;
     auto& keyframes = channel->getKeyframes();
-    int numKeyframes = keyframes.size();
+    ssize_t numKeyframes = keyframes.size();
 
     for (int i = 0; i < numKeyframes; ++i)
     {
@@ -753,7 +753,7 @@ Object* CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* channel)
 void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration)
 {
     auto& keyframes = pSeqProp->getKeyframes();
-    int numKeyframes = keyframes.size();
+    ssize_t numKeyframes = keyframes.size();
     
     if (numKeyframes > 1)
     {
@@ -768,7 +768,7 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
             actions.pushBack(DelayTime::create(timeFirst));
         }
         
-        for (int i = 0; i < numKeyframes - 1; ++i)
+        for (ssize_t i = 0; i < numKeyframes - 1; ++i)
         {
             CCBKeyframe *kf0 = keyframes.at(i);
             CCBKeyframe *kf1 = keyframes.at(i+1);
