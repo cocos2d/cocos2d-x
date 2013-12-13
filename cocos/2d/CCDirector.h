@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
-#include "CCArray.h"
+#include "CCVector.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "CCLabelAtlas.h"
@@ -379,7 +379,7 @@ protected:
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-    void getFPSImageData(unsigned char** datapointer, long* length);
+    void getFPSImageData(unsigned char** datapointer, ssize_t* length);
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
@@ -446,7 +446,7 @@ protected:
     bool    _sendCleanupToScene;
 
     /* scheduled scenes */
-    Array* _scenesStack;
+    Vector<Scene*> _scenesStack;
     
     /* last time the main loop was updated */
     struct timeval *_lastUpdate;

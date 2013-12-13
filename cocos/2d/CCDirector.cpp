@@ -110,8 +110,7 @@ bool Director::init(void)
 
     _notificationNode = nullptr;
 
-    _scenesStack = new Array();
-    _scenesStack->initWithCapacity(15);
+    _scenesStack.reserve(15);
 
     // projection delegate if "Custom" projection is used
     _projectionDelegate = nullptr;
@@ -164,7 +163,6 @@ Director::~Director(void)
     
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
-    CC_SAFE_RELEASE(_scenesStack);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_eventDispatcher);
@@ -186,34 +184,34 @@ void Director::setDefaultValues(void)
 	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
-	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
+	double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
 	_oldAnimationInterval = _animationInterval = 1.0 / fps;
 
 	// Display FPS
-	_displayStats = conf->getBool("cocos2d.x.display_fps", false);
+	_displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
 	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
-	if (strcmp(projection, "3d") == 0)
+    std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
+	if (projection == "3d")
 		_projection = Projection::_3D;
-	else if (strcmp(projection, "2d") == 0)
+	else if (projection == "2d")
 		_projection = Projection::_2D;
-	else if (strcmp(projection, "custom") == 0)
+	else if (projection == "custom")
 		_projection = Projection::CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
-	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
-	if (strcmp(pixel_format, "rgba8888") == 0)
+    std::string pixel_format = conf->getValue("cocos2d.x.texture.pixel_format_for_png", Value("rgba8888")).asString();
+	if (pixel_format == "rgba8888")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-	else if(strcmp(pixel_format, "rgba4444") == 0)
+	else if(pixel_format == "rgba4444")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-	else if(strcmp(pixel_format, "rgba5551") == 0)
+	else if(pixel_format == "rgba5551")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
+	bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
 	Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
@@ -597,10 +595,10 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
 
-    unsigned int index = _scenesStack->count();
+    int index = _scenesStack.size();
 
     _sendCleanupToScene = true;
-    _scenesStack->replaceObjectAtIndex(index - 1, scene);
+    _scenesStack.replace(index - 1, scene);
 
     _nextScene = scene;
 }
@@ -611,7 +609,7 @@ void Director::pushScene(Scene *scene)
 
     _sendCleanupToScene = false;
 
-    _scenesStack->addObject(scene);
+    _scenesStack.pushBack(scene);
     _nextScene = scene;
 }
 
@@ -619,8 +617,8 @@ void Director::popScene(void)
 {
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
-    _scenesStack->removeLastObject();
-    unsigned int c = _scenesStack->count();
+    _scenesStack.popBack();
+    int c = _scenesStack.size();
 
     if (c == 0)
     {
@@ -629,7 +627,7 @@ void Director::popScene(void)
     else
     {
         _sendCleanupToScene = true;
-        _nextScene = (Scene*)_scenesStack->getObjectAtIndex(c - 1);
+        _nextScene = _scenesStack.at(c - 1);
     }
 }
 
@@ -641,7 +639,7 @@ void Director::popToRootScene(void)
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
-    int c = static_cast<int>(_scenesStack->count());
+    int c = _scenesStack.size();
 
     // level 0? -> end
     if (level == 0)
@@ -657,7 +655,7 @@ void Director::popToSceneStackLevel(int level)
 	// pop stack until reaching desired level
 	while (c > level)
     {
-        Scene *current = (Scene*)_scenesStack->getLastObject();
+        auto current = _scenesStack.back();
 
 		if (current->isRunning())
         {
@@ -666,11 +664,11 @@ void Director::popToSceneStackLevel(int level)
 		}
 
         current->cleanup();
-        _scenesStack->removeLastObject();
+        _scenesStack.popBack();
 		--c;
 	}
 
-    _nextScene = (Scene*)_scenesStack->getLastObject();
+    _nextScene = _scenesStack.back();
 	_sendCleanupToScene = false;
 }
 
@@ -701,7 +699,7 @@ void Director::purgeDirector()
 
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
-    _scenesStack->removeAllObjects();
+    _scenesStack.clear();
 
     stopAnimation();
 
@@ -857,7 +855,7 @@ void Director::calculateMPF()
 }
 
 // returns the FPS image data pointer and len
-void Director::getFPSImageData(unsigned char** datapointer, long* length)
+void Director::getFPSImageData(unsigned char** datapointer, ssize_t* length)
 {
     // XXX fixed me if it should be used 
     *datapointer = cc_fps_images_png;
@@ -880,7 +878,7 @@ void Director::createStatsLabel()
     Texture2D::PixelFormat currentFormat = Texture2D::getDefaultAlphaPixelFormat();
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
     unsigned char *data = nullptr;
-    long dataLength = 0;
+    ssize_t dataLength = 0;
     getFPSImageData(&data, &dataLength);
 
     Image* image = new Image();
@@ -1026,9 +1024,6 @@ void DisplayLinkDirector::startAnimation()
     }
 
     _invalid = false;
-#ifndef EMSCRIPTEN
-    Application::getInstance()->setAnimationInterval(_animationInterval);
-#endif // EMSCRIPTEN
 }
 
 void DisplayLinkDirector::mainLoop()

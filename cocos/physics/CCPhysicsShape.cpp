@@ -27,22 +27,17 @@
 
 #include <climits>
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
 
 NS_CC_BEGIN
+extern const float PHYSICS_INFINITY;
 
 PhysicsShape::PhysicsShape()
 : _body(nullptr)
@@ -195,7 +190,6 @@ PhysicsShapeEdgeSegment::~PhysicsShapeEdgeSegment()
     
 }
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 void PhysicsShape::setDensity(float density)
 {
     if (density < 0)
@@ -603,7 +597,7 @@ void PhysicsShapePolygon::getPoints(Point* outPoints) const
     PhysicsHelper::cpvs2points(((cpPolyShape*)shape)->verts, outPoints, ((cpPolyShape*)shape)->numVerts);
 }
 
-long PhysicsShapePolygon::getPointsCount() const
+int PhysicsShapePolygon::getPointsCount() const
 {
     return ((cpPolyShape*)_info->getShapes().front())->numVerts;
 }
@@ -718,9 +712,9 @@ Point PhysicsShapeEdgePolygon::getCenter()
     return _center;
 }
 
-long PhysicsShapeEdgePolygon::getPointsCount() const
+int PhysicsShapeEdgePolygon::getPointsCount() const
 {
-    return _info->getShapes().size() + 1;
+    return static_cast<int>(_info->getShapes().size() + 1);
 }
 
 // PhysicsShapeEdgeChain
@@ -779,9 +773,9 @@ Point PhysicsShapeEdgeChain::getCenter()
     return _center;
 }
 
-long PhysicsShapeEdgeChain::getPointsCount() const
+int PhysicsShapeEdgeChain::getPointsCount() const
 {
-    return _info->getShapes().size() + 1;
+    return static_cast<int>(_info->getShapes().size() + 1);
 }
 
 void PhysicsShape::setGroup(int group)
@@ -809,10 +803,6 @@ bool PhysicsShape::containsPoint(const Point& point) const
     
     return false;
 }
-
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-#endif
 
 NS_CC_END
 

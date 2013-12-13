@@ -130,17 +130,17 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
 }
 
 
-unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* mode, long * size)
+unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* mode, ssize_t * size)
 {    
     return doGetFileData(filename, mode, size, false);
 }
 
-unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, long * pSize)
+unsigned char* FileUtilsAndroid::getFileDataForAsync(const char* filename, const char* pszMode, ssize_t * pSize)
 {
     return doGetFileData(filename, pszMode, pSize, true);
 }
 
-unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* mode, long * size, bool forAsync)
+unsigned char* FileUtilsAndroid::doGetFileData(const char* filename, const char* mode, ssize_t * size, bool forAsync)
 {
     unsigned char * data = 0;
     

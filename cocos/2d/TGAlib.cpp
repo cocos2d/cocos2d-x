@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "TGAlib.h"
 #include "platform/CCFileUtils.h"
 
-namespace cocos2d {
+NS_CC_BEGIN
 
 static bool tgaLoadRLEImageData(unsigned char* Buffer, unsigned long bufSize, tImageTGA *psInfo);
 void tgaFlipImage( tImageTGA *info );
@@ -191,23 +191,19 @@ void tgaFlipImage( tImageTGA *psInfo )
     free(row);
     psInfo->flipped = 0;
 }
-
-// this is the function to call when we want to load an image
-tImageTGA * tgaLoad(const char *filename)
+    
+tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
 {
     int mode,total;
-    tImageTGA *info = NULL;
+    tImageTGA *info = nullptr;
     
-    long size = 0;
-    unsigned char* pBuffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-
     do
     {
-        CC_BREAK_IF(! pBuffer);
+        CC_BREAK_IF(! buffer);
         info = (tImageTGA *)malloc(sizeof(tImageTGA));
 
         // get the file header info
-        if (! tgaLoadHeader(pBuffer, size, info))
+        if (! tgaLoadHeader(buffer, size, info))
         {
             info->status = TGA_ERROR_MEMORY;
             break;
@@ -245,11 +241,11 @@ tImageTGA * tgaLoad(const char *filename)
         // finally load the image pixels
         if ( info->type == 10 )
         {
-            bLoadImage = tgaLoadRLEImageData(pBuffer, size, info);
+            bLoadImage = tgaLoadRLEImageData(buffer, size, info);
         }
         else
         {
-            bLoadImage = tgaLoadImageData(pBuffer, size, info);
+            bLoadImage = tgaLoadImageData(buffer, size, info);
         }
 
         // check for errors when reading the pixels
@@ -270,9 +266,24 @@ tImageTGA * tgaLoad(const char *filename)
         }
     } while(0);
 
-    free(pBuffer);
-
     return info;
+}
+
+// this is the function to call when we want to load an image
+tImageTGA * tgaLoad(const char *filename)
+{
+    ssize_t size = 0;
+    unsigned char* buffer = FileUtils::getInstance()->getFileData(filename, "rb", &size);
+
+    if (buffer != nullptr)
+    {
+        tImageTGA* data = tgaLoadBuffer(buffer, size);
+        free(buffer);
+        
+        return data;
+    }
+    
+    return nullptr;
 }
 
 // converts RGB to grayscale
@@ -326,4 +337,4 @@ void tgaDestroy(tImageTGA *psInfo) {
         free(psInfo);
     }
 }
-}//namespace   cocos2d 
+NS_CC_END

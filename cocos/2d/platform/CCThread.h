@@ -25,8 +25,12 @@ THE SOFTWARE.
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
 
+#include <functional>
+#include <list>
+#include <mutex>
 #include "platform/CCCommon.h"
 #include "CCPlatformMacros.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -39,27 +43,22 @@ NS_CC_BEGIN
  * and release it when the thread end.
  */
 
-class CC_DLL Thread
+class CC_DLL ThreadHelper
 {
 public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Thread() : _autoReleasePool(nullptr) {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    ~Thread();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void createAutoreleasePool();
+    friend DisplayLinkDirector;
 
-private:
-    void *_autoReleasePool;
+    /** Create an autorelease pool for objective-c codes.
+     * @js NA
+     * @lua NA
+     */
+    static void* createAutoreleasePool();
+    
+    /**
+     * @js NA
+     * @lua NA
+    */
+    static void releaseAutoreleasePool(void *autoreleasePool);
 };
 
 // end of platform group

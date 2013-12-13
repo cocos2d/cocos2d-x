@@ -27,6 +27,8 @@ public:
 class TestResolutionDirectories : public FileUtilsDemo
 {
 public:
+    CREATE_FUNC(TestResolutionDirectories);
+
     virtual void onEnter();
     virtual void onExit();
     virtual string title();
@@ -39,6 +41,8 @@ private:
 class TestSearchPath : public FileUtilsDemo
 {
 public:
+    CREATE_FUNC(TestSearchPath);
+
     virtual void onEnter();
     virtual void onExit();
     virtual string title();
@@ -51,6 +55,8 @@ private:
 class TestFilenameLookup : public FileUtilsDemo
 {
 public:
+    CREATE_FUNC(TestFilenameLookup);
+
     virtual void onEnter();
     virtual void onExit();
     virtual string title();
@@ -60,6 +66,8 @@ public:
 class TestIsFileExist : public FileUtilsDemo
 {
 public:
+    CREATE_FUNC(TestIsFileExist);
+
     virtual void onEnter();
     virtual void onExit();
     virtual string title();
@@ -69,6 +77,8 @@ public:
 class TextWritePlist : public FileUtilsDemo
 {
 public:
+    CREATE_FUNC(TextWritePlist);
+
     virtual void onEnter();
     virtual void onExit();
     virtual string title();

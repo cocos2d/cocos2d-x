@@ -83,7 +83,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description() const;
+    virtual std::string getDescription() const;
 
     /** sets the dirty value */
     inline void setDirty(bool value) { _dirty = value; }

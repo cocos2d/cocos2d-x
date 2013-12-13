@@ -166,40 +166,7 @@ protected:
     bool uncompress();
     bool createDirectory(const char *path);
     void setSearchPath();
-    void sendErrorMessage(ErrorCode code);
     void downloadAndUncompress();
-    
-private:
-    typedef struct _Message
-    {
-    public:
-        _Message() : what(0), obj(NULL){}
-        unsigned int what; // message type
-        void* obj;
-    } Message;
-    
-    class Helper : public cocos2d::Object
-    {
-    public:
-        /**
-         * @js ctor
-         */
-        Helper();
-        /**
-         * @js NA
-         * @lua NA
-         */
-        ~Helper();
-        
-        virtual void update(float dt);
-        void sendMessage(Message *msg);
-        
-    private:
-        void handleUpdateSucceed(Message *msg);
-        
-        std::list<Message*> *_messageQueue;
-        std::mutex _messageQueueMutex;
-    };
 
 private:
     /** @brief Initializes storage path.
@@ -224,7 +191,6 @@ private:
     
     void *_curl;
 
-    Helper *_schedule;
     unsigned int _connectionTimeout;
     
     AssetsManagerDelegateProtocol *_delegate; 

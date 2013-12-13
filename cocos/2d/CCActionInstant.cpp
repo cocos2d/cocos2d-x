@@ -472,7 +472,7 @@ CallFuncN * CallFuncN::clone() const
     if( _selectorTarget) {
         a->initWithTarget(_selectorTarget, _callFuncN);
     }
-    else if( _function ){
+    else if( _functionN ){
         a->initWithFunction(_functionN);
     }
 

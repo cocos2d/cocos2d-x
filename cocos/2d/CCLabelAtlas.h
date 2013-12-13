@@ -67,7 +67,7 @@ public:
     }
 
     /** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static LabelAtlas * create(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap);
+    static LabelAtlas * create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     
     /** creates the LabelAtlas with a string and a configuration file
      @since v2.0
@@ -75,7 +75,7 @@ public:
     static LabelAtlas* create(const std::string& string, const std::string& fntFile);
 
     /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    bool initWithString(const std::string& string, const std::string& charMapFile, long itemWidth, long itemHeight, long startCharMap);
+    bool initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     
     /** initializes the LabelAtlas with a string and a configuration file
      @since v2.0
@@ -83,14 +83,15 @@ public:
     bool initWithString(const std::string& string, const std::string& fntFile);
     
     /** initializes the LabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
-    bool initWithString(const std::string& string, Texture2D* texture, long itemWidth, long itemHeight, long startCharMap);
+    bool initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     
     // super methods
     virtual void updateAtlasValues();
 
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override;
-    
+    virtual std::string getDescription() const override;
+
 #if CC_LABELATLAS_DEBUG_DRAW
     virtual void draw() override;
 #endif
@@ -99,7 +100,7 @@ protected:
     // string to render
     std::string _string;
     // the first char in the charmap
-    long _mapStartChar;
+    int _mapStartChar;
 };
 
 // end of GUI group

@@ -111,7 +111,7 @@ void UISlider::loadBarTexture(const char* fileName, TextureResType texType)
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->initWithFile(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setTexture(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
@@ -121,7 +121,7 @@ void UISlider::loadBarTexture(const char* fileName, TextureResType texType)
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setSpriteFrame(fileName);
             }
             break;
         default:
@@ -157,7 +157,7 @@ void UISlider::loadProgressBarTexture(const char *fileName, TextureResType texTy
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_progressBarRenderer)->initWithFile(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_progressBarRenderer)->setTexture(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
@@ -167,7 +167,7 @@ void UISlider::loadProgressBarTexture(const char *fileName, TextureResType texTy
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_progressBarRenderer)->setSpriteFrame(fileName);
             }
             break;
         default:
@@ -281,10 +281,10 @@ void UISlider::loadSlidBallTextureNormal(const char* normal,TextureResType texTy
     switch (_ballNTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            _slidBallNormalRenderer->initWithFile(normal);
+            _slidBallNormalRenderer->setTexture(normal);
             break;
         case UI_TEX_TYPE_PLIST:
-            _slidBallNormalRenderer->initWithSpriteFrameName(normal);
+            _slidBallNormalRenderer->setSpriteFrame(normal);
             break;
         default:
             break;
@@ -304,10 +304,10 @@ void UISlider::loadSlidBallTexturePressed(const char* pressed,TextureResType tex
     switch (_ballPTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            _slidBallPressedRenderer->initWithFile(pressed);
+            _slidBallPressedRenderer->setTexture(pressed);
             break;
         case UI_TEX_TYPE_PLIST:
-            _slidBallPressedRenderer->initWithSpriteFrameName(pressed);
+            _slidBallPressedRenderer->setSpriteFrame(pressed);
             break;
         default:
             break;
@@ -327,10 +327,10 @@ void UISlider::loadSlidBallTextureDisabled(const char* disabled,TextureResType t
     switch (_ballDTexType)
     {
         case UI_TEX_TYPE_LOCAL:
-            _slidBallDisabledRenderer->initWithFile(disabled);
+            _slidBallDisabledRenderer->setTexture(disabled);
             break;
         case UI_TEX_TYPE_PLIST:
-            _slidBallDisabledRenderer->initWithSpriteFrameName(disabled);
+            _slidBallDisabledRenderer->setSpriteFrame(disabled);
             break;
         default:
             break;

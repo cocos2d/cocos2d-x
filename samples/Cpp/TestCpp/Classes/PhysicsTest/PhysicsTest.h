@@ -11,10 +11,7 @@
 class PhysicsTestScene : public TestScene
 {
 public:
-    PhysicsTestScene()
-    :TestScene(false, true)
-    , _debugDraw(false)
-    {}
+    PhysicsTestScene();
     
 public:
     virtual void runThisTest();
@@ -25,9 +22,19 @@ private:
     bool _debugDraw;
 };
 
+#ifndef CC_USE_PHYSICS
+class PhysicsDemoDisabled : public BaseTest
+{
+public:
+    virtual void onEnter() override;
+};
+#else
+
 class PhysicsDemo : public BaseTest
 {
 public:
+    CREATE_FUNC(PhysicsDemo);
+
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
@@ -53,12 +60,14 @@ protected:
     PhysicsTestScene* _scene;
     Texture2D* _spriteTexture;    // weak ref
     SpriteBatchNode* _ball;
-    std::map<int, Node*> _mouses;
+    std::unordered_map<int, Node*> _mouses;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoClickAdd);
+
     virtual ~PhysicsDemoClickAdd();
     void onEnter() override;
     std::string subtitle() override;
@@ -70,6 +79,8 @@ public:
 class PhysicsDemoLogoSmash : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoLogoSmash);
+
     void onEnter() override;
     std::string title() override;
 };
@@ -77,6 +88,8 @@ public:
 class PhysicsDemoPyramidStack : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoPyramidStack);
+
     void onEnter() override;
     std::string title() override;
 };
@@ -84,8 +97,10 @@ public:
 class PhysicsDemoRayCast : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoRayCast);
+
     PhysicsDemoRayCast();
-public:
+
     void onEnter() override;
     std::string title() override;
     void update(float delta) override;
@@ -104,6 +119,8 @@ private:
 class PhysicsDemoJoints : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoJoints);
+
     void onEnter() override;
     std::string title() override;
 };
@@ -111,6 +128,8 @@ public:
 class PhysicsDemoActions : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoActions);
+
     void onEnter() override;
     std::string title() override;
 };
@@ -118,6 +137,8 @@ public:
 class PhysicsDemoPump : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoPump);
+
     void onEnter() override;
     void update(float delta) override;
     std::string title() override;
@@ -135,6 +156,8 @@ private:
 class PhysicsDemoOneWayPlatform : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoOneWayPlatform);
+
     void onEnter() override;
     std::string title() override;
     
@@ -144,6 +167,8 @@ public:
 class PhysicsDemoSlice : public PhysicsDemo
 {
 public:
+    CREATE_FUNC(PhysicsDemoSlice);
+
     void onEnter() override;
     std::string title() override;
     std::string subtitle() override;
@@ -157,4 +182,5 @@ private:
     int _sliceTag;
 };
 
+#endif
 #endif

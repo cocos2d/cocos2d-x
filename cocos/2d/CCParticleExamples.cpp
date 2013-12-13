@@ -72,7 +72,7 @@ ParticleFire* ParticleFire::create()
     return pRet;
 }
 
-ParticleFire* ParticleFire::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleFire* ParticleFire::createWithTotalParticles(int numberOfParticles)
 {
     ParticleFire* pRet = new ParticleFire();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -86,7 +86,7 @@ ParticleFire* ParticleFire::createWithTotalParticles(unsigned int numberOfPartic
     return pRet;
 }
 
-bool ParticleFire::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleFire::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -177,7 +177,7 @@ ParticleFireworks* ParticleFireworks::create()
     return pRet;
 }
 
-ParticleFireworks* ParticleFireworks::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleFireworks* ParticleFireworks::createWithTotalParticles(int numberOfParticles)
 {
     ParticleFireworks* pRet = new ParticleFireworks();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -191,7 +191,7 @@ ParticleFireworks* ParticleFireworks::createWithTotalParticles(unsigned int numb
     return pRet;
 }
 
-bool ParticleFireworks::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -278,7 +278,7 @@ ParticleSun* ParticleSun::create()
     return pRet;
 }
 
-ParticleSun* ParticleSun::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleSun* ParticleSun::createWithTotalParticles(int numberOfParticles)
 {
     ParticleSun* pRet = new ParticleSun();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -292,7 +292,7 @@ ParticleSun* ParticleSun::createWithTotalParticles(unsigned int numberOfParticle
     return pRet;
 }
 
-bool ParticleSun::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSun::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -385,7 +385,7 @@ ParticleGalaxy* ParticleGalaxy::create()
     return pRet;
 }
 
-ParticleGalaxy* ParticleGalaxy::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleGalaxy* ParticleGalaxy::createWithTotalParticles(int numberOfParticles)
 {
     ParticleGalaxy* pRet = new ParticleGalaxy();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -399,7 +399,7 @@ ParticleGalaxy* ParticleGalaxy::createWithTotalParticles(unsigned int numberOfPa
     return pRet;
 }
 
-bool ParticleGalaxy::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -494,7 +494,7 @@ ParticleFlower* ParticleFlower::create()
     return pRet;
 }
 
-ParticleFlower* ParticleFlower::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleFlower* ParticleFlower::createWithTotalParticles(int numberOfParticles)
 {
     ParticleFlower* pRet = new ParticleFlower();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -508,7 +508,7 @@ ParticleFlower* ParticleFlower::createWithTotalParticles(unsigned int numberOfPa
     return pRet;
 }
 
-bool ParticleFlower::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -602,7 +602,7 @@ ParticleMeteor * ParticleMeteor::create()
     return pRet;
 }
 
-ParticleMeteor* ParticleMeteor::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleMeteor* ParticleMeteor::createWithTotalParticles(int numberOfParticles)
 {
     ParticleMeteor* pRet = new ParticleMeteor();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -616,7 +616,7 @@ ParticleMeteor* ParticleMeteor::createWithTotalParticles(unsigned int numberOfPa
     return pRet;
 }
 
-bool ParticleMeteor::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -711,7 +711,7 @@ ParticleSpiral* ParticleSpiral::create()
     return pRet;
 }
 
-ParticleSpiral* ParticleSpiral::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleSpiral* ParticleSpiral::createWithTotalParticles(int numberOfParticles)
 {
     ParticleSpiral* pRet = new ParticleSpiral();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -725,7 +725,7 @@ ParticleSpiral* ParticleSpiral::createWithTotalParticles(unsigned int numberOfPa
     return pRet;
 }
 
-bool ParticleSpiral::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
@@ -820,7 +820,7 @@ ParticleExplosion* ParticleExplosion::create()
     return pRet;
 }
 
-ParticleExplosion* ParticleExplosion::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleExplosion* ParticleExplosion::createWithTotalParticles(int numberOfParticles)
 {
     ParticleExplosion* pRet = new ParticleExplosion();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -834,7 +834,7 @@ ParticleExplosion* ParticleExplosion::createWithTotalParticles(unsigned int numb
     return pRet;
 }
 
-bool ParticleExplosion::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
@@ -928,7 +928,7 @@ ParticleSmoke* ParticleSmoke::create()
     return pRet;
 }
 
-ParticleSmoke* ParticleSmoke::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleSmoke* ParticleSmoke::createWithTotalParticles(int numberOfParticles)
 {
     ParticleSmoke* pRet = new ParticleSmoke();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -942,7 +942,7 @@ ParticleSmoke* ParticleSmoke::createWithTotalParticles(unsigned int numberOfPart
     return pRet;
 }
 
-bool ParticleSmoke::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {
@@ -1033,7 +1033,7 @@ ParticleSnow* ParticleSnow::create()
     return pRet;
 }
 
-ParticleSnow* ParticleSnow::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleSnow* ParticleSnow::createWithTotalParticles(int numberOfParticles)
 {
     ParticleSnow* pRet = new ParticleSnow();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -1047,7 +1047,7 @@ ParticleSnow* ParticleSnow::createWithTotalParticles(unsigned int numberOfPartic
     return pRet;
 }
 
-bool ParticleSnow::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) ) 
     {
@@ -1141,7 +1141,7 @@ ParticleRain* ParticleRain::create()
     return pRet;
 }
 
-ParticleRain* ParticleRain::createWithTotalParticles(unsigned int numberOfParticles)
+ParticleRain* ParticleRain::createWithTotalParticles(int numberOfParticles)
 {
     ParticleRain* pRet = new ParticleRain();
     if (pRet && pRet->initWithTotalParticles(numberOfParticles))
@@ -1155,7 +1155,7 @@ ParticleRain* ParticleRain::createWithTotalParticles(unsigned int numberOfPartic
     return pRet;
 }
 
-bool ParticleRain::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleRain::initWithTotalParticles(int numberOfParticles)
 {
     if( ParticleSystemQuad::initWithTotalParticles(numberOfParticles) )
     {

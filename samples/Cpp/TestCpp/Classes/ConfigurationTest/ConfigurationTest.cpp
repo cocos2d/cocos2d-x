@@ -3,18 +3,12 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-TESTLAYER_CREATE_FUNC(ConfigurationLoadConfig);
-TESTLAYER_CREATE_FUNC(ConfigurationQuery);
-TESTLAYER_CREATE_FUNC(ConfigurationInvalid);
-TESTLAYER_CREATE_FUNC(ConfigurationDefault);
-TESTLAYER_CREATE_FUNC(ConfigurationSet);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ConfigurationLoadConfig),
-	CF(ConfigurationQuery),
-	CF(ConfigurationInvalid),
-	CF(ConfigurationDefault),
-	CF(ConfigurationSet)
+static std::function<Layer*()> createFunctions[] = {
+    CL(ConfigurationLoadConfig),
+	CL(ConfigurationQuery),
+	CL(ConfigurationInvalid),
+	CL(ConfigurationDefault),
+	CL(ConfigurationSet)
 };
 
 static int sceneIdx=-1;
@@ -26,9 +20,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -40,18 +31,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
-    auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
+    auto layer = (createFunctions[sceneIdx])();    
     return layer;
 }
 
@@ -136,13 +121,13 @@ void ConfigurationQuery::onEnter()
 {
     ConfigurationBase::onEnter();
 
-	CCLOG("cocos2d version: %s", Configuration::getInstance()->getCString("cocos2d.version") );
-	CCLOG("OpenGL version: %s", Configuration::getInstance()->getCString("gl.version") );
+	CCLOG("cocos2d version: %s", Configuration::getInstance()->getValue("cocos2d.x.version").asString().c_str() );
+	CCLOG("OpenGL version: %s", Configuration::getInstance()->getValue("gl.version").asString().c_str() );
 }
 
 std::string ConfigurationQuery::subtitle()
 {
-    return "Using getCString(). Check the console";
+    return "Check the console";
 }
 
 //------------------------------------------------------------------
@@ -171,19 +156,19 @@ void ConfigurationDefault::onEnter()
 {
     ConfigurationBase::onEnter();
 
-	const char *c_value = Configuration::getInstance()->getCString("invalid.key", "no key");
-	if( strcmp(c_value, "no key") != 0 )
+    std::string c_value = Configuration::getInstance()->getValue("invalid.key", Value("no key")).asString();
+	if( c_value != "no key" )
 		CCLOG("1. Test failed!");
 	else
 		CCLOG("1. Test OK!");
 
-	bool b_value = Configuration::getInstance()->getBool("invalid.key", true);
+	bool b_value = Configuration::getInstance()->getValue("invalid.key", Value(true)).asBool();
 	if( ! b_value )
 		CCLOG("2. Test failed!");
 	else
 		CCLOG("2. Test OK!");
 
-	double d_value = Configuration::getInstance()->getNumber("invalid.key", 42.42);
+	double d_value = Configuration::getInstance()->getValue("invalid.key", Value(42.42)).asDouble();
 	if( d_value != 42.42 )
 		CCLOG("3. Test failed!");
 	else
@@ -207,9 +192,9 @@ void ConfigurationSet::onEnter()
 
 	Configuration *conf = Configuration::getInstance();
 
-	conf->setObject("this.is.an.int.value", Integer::create(10) );
-	conf->setObject("this.is.a.bool.value", Bool::create(true) );
-	conf->setObject("this.is.a.string.value", String::create("hello world") );
+	conf->setValue("this.is.an.int.value", Value(10) );
+	conf->setValue("this.is.a.bool.value", Value(true) );
+	conf->setValue("this.is.a.string.value", Value("hello world") );
 
 	conf->dumpInfo();
 }

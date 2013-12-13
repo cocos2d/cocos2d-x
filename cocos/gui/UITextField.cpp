@@ -105,7 +105,7 @@ bool UICCTextField::onTextFieldDetachWithIME(cocos2d::TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = cocos2d::TextFieldTTF::getString().size();
+    size_t str_len = cocos2d::TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {

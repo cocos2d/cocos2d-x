@@ -58,9 +58,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -72,18 +69,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 

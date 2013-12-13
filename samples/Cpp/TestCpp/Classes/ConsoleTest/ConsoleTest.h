@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,18 +22,68 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysicsBodyInfo_box2d.h"
+#ifndef _CONSOLE_TEST_H_
+#define _CONSOLE_TEST_H_
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-NS_CC_BEGIN
+////----#include "cocos2d.h"
+#include "../testBasic.h"
+#include "../BaseTest.h"
 
-PhysicsBodyInfo::PhysicsBodyInfo()
+USING_NS_CC;
+
+class BaseTestConsole : public BaseTest
 {
-}
+public:
+    BaseTestConsole();
+    ~BaseTestConsole();
 
-PhysicsBodyInfo::~PhysicsBodyInfo()
+    virtual std::string title();
+    virtual void onEnter();
+
+    void restartCallback(Object* sender);
+    void nextCallback(Object* sender);
+    void backCallback(Object* sender);
+};
+
+class ConsoleTCP : public BaseTestConsole
 {
-}
+public:
+    CREATE_FUNC(ConsoleTCP);
 
-NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D
+    void onEnter() override;
+    virtual std::string title() override;
+
+protected:
+    ConsoleTCP();
+    virtual ~ConsoleTCP();
+
+    cocos2d::Console *_console;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleTCP);
+};
+
+class ConsoleCustomCommand : public BaseTestConsole
+{
+public:
+    CREATE_FUNC(ConsoleCustomCommand);
+
+    void onEnter() override;
+    virtual std::string title() override;
+
+protected:
+    ConsoleCustomCommand();
+    virtual ~ConsoleCustomCommand();
+
+    cocos2d::Console *_console;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ConsoleCustomCommand);
+};
+
+class ConsoleTestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
+};
+
+#endif // _CONSOLE_TEST_H_

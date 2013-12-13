@@ -83,7 +83,7 @@ public:
     float getHeight() const   { return _height;   }
     
     void  addGlyph(GlyphDef theGlyph)               { _glyphs.push_back(theGlyph);  }
-    int   getNumGlyph()  const                      { return _glyphs.size();        }
+    int   getNumGlyph()  const                      { return  static_cast<int>(_glyphs.size()); }
     const GlyphDef & getGlyphAt(int index) const    { return _glyphs[index];        }
     
 private:
@@ -115,7 +115,7 @@ public:
     ~TextPageDef();
     
     void addLine(TextLineDef *theLine)      { _lines.push_back(theLine); }
-    int  getNumLines() const                { return _lines.size();      }
+    int  getNumLines() const                { return  static_cast<int>(_lines.size());      }
     TextLineDef * getLineAt(int index) const        { return _lines[index];      }
     int getWidth() const                            { return _width;             }
     int getHeight() const                           { return _height;            }
@@ -156,7 +156,7 @@ public:
    ~TextFontPagesDef();
     
     void addPage(TextPageDef *newPage)         { _pages.push_back(newPage);    }
-    int  getNumPages()  const                  { return _pages.size();         }
+    int  getNumPages()  const                  { return static_cast<int>(_pages.size());         }
     TextPageDef* getPageAt(int index) const    { return _pages[index];         }
     
 private:

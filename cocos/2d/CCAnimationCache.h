@@ -27,8 +27,8 @@ THE SOFTWARE.
 #define __CC_ANIMATION_CACHE_H__
 
 #include "CCObject.h"
-#include "CCDictionary.h"
-
+#include "CCMap.h"
+#include "CCValue.h"
 #include <string>
 
 NS_CC_BEGIN
@@ -104,7 +104,7 @@ public:
      Make sure that the frames were previously loaded in the SpriteFrameCache.
      @since v1.1
      */
-    void addAnimationsWithDictionary(Dictionary* dictionary);
+    void addAnimationsWithDictionary(const ValueMap& dictionary);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -115,11 +115,11 @@ public:
     void addAnimationsWithFile(const std::string& plist);
 
 private:
-    void parseVersion1(Dictionary* animations);
-    void parseVersion2(Dictionary* animations);
+    void parseVersion1(const ValueMap& animations);
+    void parseVersion2(const ValueMap& animations);
 
 private:
-    Dictionary* _animations;
+    Map<std::string, Animation*> _animations;
     static AnimationCache* s_pSharedAnimationCache;
 };
 

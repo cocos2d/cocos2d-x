@@ -71,7 +71,7 @@ typedef enum
 }PositionType;
 
 typedef void (cocos2d::Object::*SEL_TouchEvent)(cocos2d::Object*,TouchEventType);
-#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
+#define toucheventselector(_SELECTOR) (gui::SEL_TouchEvent)(&_SELECTOR)
 
 class UIWidget : public cocos2d::Object
 {

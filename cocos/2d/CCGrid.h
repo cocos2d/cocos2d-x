@@ -95,7 +95,7 @@ public:
 
 protected:
     bool _active;
-    long  _reuseGrid;
+    int  _reuseGrid;
     Size _gridSize;
     Texture2D *_texture;
     Point _step;

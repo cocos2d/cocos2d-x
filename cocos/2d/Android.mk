@@ -39,13 +39,13 @@ CCEventAcceleration.cpp \
 CCEventCustom.cpp \
 CCEventDispatcher.cpp \
 CCEventKeyboard.cpp \
-CCEventMouse.cpp \
-CCEventListenerMouse.cpp \
 CCEventListener.cpp \
 CCEventListenerAcceleration.cpp \
 CCEventListenerCustom.cpp \
 CCEventListenerKeyboard.cpp \
+CCEventListenerMouse.cpp \
 CCEventListenerTouch.cpp \
+CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
 CCFontAtlas.cpp \
@@ -129,8 +129,10 @@ platform/CCThread.cpp \
 ../base/CCObject.cpp \
 ../base/CCSet.cpp \
 ../base/CCString.cpp \
+../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
+../base/CCConsole.cpp \
 ../math/kazmath/src/aabb.c \
 ../math/kazmath/src/mat3.c \
 ../math/kazmath/src/mat4.c \
@@ -149,11 +151,6 @@ platform/CCThread.cpp \
 ../physics/CCPhysicsJoint.cpp \
 ../physics/CCPhysicsShape.cpp \
 ../physics/CCPhysicsWorld.cpp \
-../physics/box2d/CCPhysicsBodyInfo_box2d.cpp \
-../physics/box2d/CCPhysicsContactInfo_box2d.cpp \
-../physics/box2d/CCPhysicsJointInfo_box2d.cpp \
-../physics/box2d/CCPhysicsShapeInfo_box2d.cpp \
-../physics/box2d/CCPhysicsWorldInfo_box2d.cpp \
 ../physics/chipmunk/CCPhysicsBodyInfo_chipmunk.cpp \
 ../physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 ../physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
@@ -199,9 +196,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-literal-suffix
+LOCAL_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix
+LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -8,11 +8,11 @@ namespace CocosDenshion {
 static HINSTANCE s_hInstance;
 static MCIERROR  s_mciError;
 
-static LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 
 MciPlayer::MciPlayer()
 : _wnd(NULL)
-, _dev(NULL)
+, _dev(0L)
 , _soundID(0)
 , _times(0)
 , _playing(false)
@@ -56,7 +56,7 @@ MciPlayer::MciPlayer()
         NULL );
     if (_wnd)
     {
-        SetWindowLong(_wnd, GWL_USERDATA, (LONG)this);
+        SetWindowLongPtr(_wnd, GWLP_USERDATA, (LONG_PTR)this);
     }
 }
 
@@ -85,7 +85,7 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
         mciOpen.lpstrElementName = pFileName;
 
-        mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, (DWORD)&mciOpen);
+        mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
         BREAK_IF(mciError);
 
         _dev = mciOpen.wDeviceID;
@@ -101,8 +101,8 @@ void MciPlayer::Play(UINT uTimes /* = 1 */)
         return;
     }
     MCI_PLAY_PARMS mciPlay = {0};
-    mciPlay.dwCallback = (DWORD_PTR)_wnd;
-    s_mciError = mciSendCommand(_dev,MCI_PLAY, MCI_FROM|MCI_NOTIFY,(DWORD)&mciPlay);
+    mciPlay.dwCallback = reinterpret_cast<DWORD_PTR>(_wnd);
+    s_mciError = mciSendCommand(_dev,MCI_PLAY, MCI_FROM|MCI_NOTIFY,reinterpret_cast<DWORD_PTR>(&mciPlay));
     if (! s_mciError)
     {
         _playing = true;
@@ -149,8 +149,8 @@ void MciPlayer::Rewind()
     mciSendCommand(_dev, MCI_SEEK, MCI_SEEK_TO_START, 0);
 
     MCI_PLAY_PARMS mciPlay = {0};
-    mciPlay.dwCallback = (DWORD)_wnd;
-    _playing = mciSendCommand(_dev, MCI_PLAY, MCI_NOTIFY,(DWORD)&mciPlay) ? false : true;
+    mciPlay.dwCallback = reinterpret_cast<DWORD_PTR>(_wnd);
+    _playing = mciSendCommand(_dev, MCI_PLAY, MCI_NOTIFY,reinterpret_cast<DWORD_PTR>(&mciPlay)) ? false : true;
 }
 
 bool MciPlayer::IsPlaying()
@@ -185,7 +185,7 @@ LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
     MciPlayer * pPlayer = NULL;
     if (MM_MCINOTIFY == Msg 
         && MCI_NOTIFY_SUCCESSFUL == wParam
-        &&(pPlayer = (MciPlayer *)GetWindowLong(hWnd, GWL_USERDATA)))
+        &&(pPlayer = (MciPlayer *)GetWindowLongPtr(hWnd, GWLP_USERDATA)))
     {
         if (pPlayer->_times)
         {
@@ -197,8 +197,8 @@ LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
             mciSendCommand(lParam, MCI_SEEK, MCI_SEEK_TO_START, 0);
 
             MCI_PLAY_PARMS mciPlay = {0};
-            mciPlay.dwCallback = (DWORD)hWnd;
-            mciSendCommand(lParam, MCI_PLAY, MCI_NOTIFY,(DWORD)&mciPlay);
+            mciPlay.dwCallback = reinterpret_cast<DWORD_PTR>(hWnd);
+            mciSendCommand(lParam, MCI_PLAY, MCI_NOTIFY,reinterpret_cast<DWORD_PTR>(&mciPlay));
         }
         else
         {

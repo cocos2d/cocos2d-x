@@ -266,4 +266,9 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_LUA_ENGINE_DEBUG 0
 #endif
 
+/** Use physics integration API */
+#ifndef CC_USE_PHYSICS
+#define CC_USE_PHYSICS
+#endif
+
 #endif // __CCCONFIG_H__

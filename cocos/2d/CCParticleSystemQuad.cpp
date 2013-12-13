@@ -46,7 +46,7 @@ NS_CC_BEGIN
 
 //implementation ParticleSystemQuad
 // overriding the init method
-bool ParticleSystemQuad::initWithTotalParticles(unsigned int numberOfParticles)
+bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 {
     // base initialization
     if( ParticleSystem::initWithTotalParticles(numberOfParticles) ) 
@@ -111,27 +111,27 @@ ParticleSystemQuad::~ParticleSystemQuad()
 
 // implementation ParticleSystemQuad
 
-ParticleSystemQuad * ParticleSystemQuad::create(const char *plistFile)
+ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 {
-    ParticleSystemQuad *pRet = new ParticleSystemQuad();
-    if (pRet && pRet->initWithFile(plistFile))
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithFile(filename))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
-ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(unsigned int numberOfParticles) {
-    ParticleSystemQuad *pRet = new ParticleSystemQuad();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfParticles) {
+    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
 
@@ -625,6 +625,11 @@ ParticleSystemQuad * ParticleSystemQuad::create() {
     }
     CC_SAFE_DELETE(pParticleSystemQuad);
     return NULL;
+}
+
+std::string ParticleSystemQuad::getDescription() const
+{
+    return StringUtils::format("<ParticleSystemQuad | Tag = %d, Total Particles = %d>", _tag, _totalParticles);
 }
 
 NS_CC_END

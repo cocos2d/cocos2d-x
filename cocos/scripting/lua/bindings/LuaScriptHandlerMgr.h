@@ -44,14 +44,20 @@ private:
 class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
-    LuaCallFunc()
+    LuaCallFunc():_functionLua(nullptr)
     {}
     virtual ~LuaCallFunc()
     {}
     
-    static LuaCallFunc * create(int nHandler);
-    virtual void execute();
+    static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
+    bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const;
+    virtual void execute() override;
+protected:
+    /**
+     */
+    std::function<void(void* self,Node*)> _functionLua;
+    
 };
 
 class ScriptHandlerMgr
@@ -127,11 +133,6 @@ private:
 };
 
 NS_CC_END
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-TOLUA_API int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S);
-#endif
 
 TOLUA_API int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S);
 TOLUA_API int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S);

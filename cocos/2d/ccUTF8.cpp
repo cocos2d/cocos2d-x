@@ -129,7 +129,7 @@ static const char *const g_utf8_skip = utf8_skip_data;
  * */
 unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigned short c)
 {
-    int len = str.size();
+    int len = static_cast<int>(str.size());
     
     int i = len - 1;
     for (; i >= 0; --i)
@@ -148,7 +148,7 @@ unsigned int cc_utf8_find_last_not_char(std::vector<unsigned short> str, unsigne
  * */
 static void cc_utf8_trim_from(std::vector<unsigned short>* str, int index)
 {
-    int size = str->size();
+    int size = static_cast<int>(str->size());
     if (index >= size || index < 0)
         return;
     
@@ -171,7 +171,7 @@ bool isspace_unicode(unsigned short ch)
 
 void cc_utf8_trim_ws(std::vector<unsigned short>* str)
 {
-    int len = str->size();
+    int len = static_cast<int>(str->size());
     
     if ( len <= 0 )
         return;
@@ -277,7 +277,7 @@ cc_utf8_get_char (const char * p)
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = NULL */)
 {
-    int len = cc_utf8_strlen(str_old, length);
+    unsigned short len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != NULL) {
         *rUtf16Size = len;
     }
@@ -335,21 +335,23 @@ cc_unichar_to_utf8 (unsigned short c,
         first = 0xc0;
         len = 2;
     }
-    else if (c < 0x10000)
-    {
-        first = 0xe0;
-        len = 3;
-    }
-    else if (c < 0x200000)
-    {
-        first = 0xf0;
-        len = 4;
-    }
-    else if (c < 0x4000000)
-    {
-        first = 0xf8;
-        len = 5;
-    }
+    // XXX FIXME
+    // These conditions are alwasy true.
+//    else if (c < 0x10000)
+//    {
+//        first = 0xe0;
+//        len = 3;
+//    }
+//    else if (c < 0x200000)
+//    {
+//        first = 0xf0;
+//        len = 4;
+//    }
+//    else if (c < 0x4000000)
+//    {
+//        first = 0xf8;
+//        len = 5;
+//    }
     else
     {
         first = 0xfc;
@@ -452,7 +454,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
         }
         
         /********** DIFFERENT for UTF8/UCS4 **********/
-        n_bytes += UTF8_LENGTH (wc);
+        n_bytes += UTF8_LENGTH (static_cast<unsigned int>(wc));
         
     next1:
         in++;

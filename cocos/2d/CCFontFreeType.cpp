@@ -99,7 +99,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    long len = 0;
+    ssize_t len = 0;
     _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", &len);
     if (!_ttfData)
         return false;
@@ -297,7 +297,7 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar) const
         return 0;
     
     // get to the advance for this glyph
-    return (_fontRef->glyph->advance.x >> 6);
+    return (static_cast<int>(_fontRef->glyph->advance.x >> 6));
 }
 
 int FontFreeType::getBearingXForChar(unsigned short theChar) const
@@ -316,7 +316,7 @@ int FontFreeType::getBearingXForChar(unsigned short theChar) const
     if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
         return 0;
     
-    return (_fontRef->glyph->metrics.horiBearingX >>6);
+    return (static_cast<int>(_fontRef->glyph->metrics.horiBearingX >>6));
 }
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
@@ -346,12 +346,12 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     if (FT_Get_Kerning( _fontRef, glyphIndex1, glyphIndex2,  FT_KERNING_DEFAULT,  &kerning))
         return 0;
     
-    return (kerning.x >> 6);
+    return (static_cast<int>(kerning.x >> 6));
 }
 
 int FontFreeType::getFontMaxHeight() const
 {
-    return (_fontRef->size->metrics.height >> 6);
+    return (static_cast<int>(_fontRef->size->metrics.height >> 6));
 }
 
 unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const

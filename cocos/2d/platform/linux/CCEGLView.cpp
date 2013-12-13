@@ -186,7 +186,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = true;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -195,7 +195,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = false;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -231,7 +231,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     {
         if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
         {
-            long id = 0;
+            int id = 0;
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
@@ -290,7 +290,7 @@ EGLView::EGLView()
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     s_pEglView = this;
-    strcpy(_viewName, "Cocos2dxWin32");
+    _viewName = "Cocos2dxWin32";
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
 }
@@ -310,7 +310,7 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     setFrameZoomFactor(frameZoomFactor);
 
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-   _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);

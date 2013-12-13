@@ -53,20 +53,6 @@ public:
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
-    /**
-     * @js ctor
-     */
-    MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~MotionStreak();
-
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     /** color used for the tint */
     void tintWithColor(const Color3B& colors);
@@ -114,9 +100,24 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
+    /**
+     * @js ctor
+     */
+    MotionStreak();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MotionStreak();
+
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
+
     bool _fastMode;
     bool _startingPositionInitialized;
-private:
+
     /** texture used for the motion streak */
     Texture2D* _texture;
     BlendFunc _blendFunc;
@@ -138,6 +139,9 @@ private:
     Vertex2F* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
 };
 
 // end of misc_nodes group
