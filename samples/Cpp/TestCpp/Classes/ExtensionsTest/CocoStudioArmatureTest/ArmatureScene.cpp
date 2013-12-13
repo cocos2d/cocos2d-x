@@ -70,6 +70,9 @@ CCLayer *CreateLayer(int index)
     case TEST_EASING:
         pLayer = new TestEasing();
         break;
+    case TEST_CHANGE_ANIMATION_INTERNAL:
+        pLayer = new TestChangeAnimationInternal();
+        break;
     default:
         break;
     }
@@ -1433,4 +1436,50 @@ void TestEasing::registerWithTouchDispatcher()
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
 }
 
+
+
+
+void TestChangeAnimationInternal::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    setTouchEnabled(true);
+
+    cocos2d::extension::CCArmature *armature = NULL;
+    armature = cocos2d::extension::CCArmature::create("Cowboy");
+    armature->getAnimation()->playByIndex(0);
+    armature->setScale(0.2f);
+
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+void TestChangeAnimationInternal::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    CCDirector::sharedDirector()->setAnimationInterval(1/60.0f);
+}
+std::string TestChangeAnimationInternal::title()
+{
+    return "Test change animation internal";
+}
+std::string TestChangeAnimationInternal::subtitle()
+{
+    return "Touch to change animation internal";
+}
+
+bool TestChangeAnimationInternal::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (CCDirector::sharedDirector()->getAnimationInterval() == 1/30.0f)
+    {
+        CCDirector::sharedDirector()->setAnimationInterval(1/60.0f);
+    }
+    else
+    {
+        CCDirector::sharedDirector()->setAnimationInterval(1/30.0f);
+    }
+    return false;
+}
+void TestChangeAnimationInternal::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
 
