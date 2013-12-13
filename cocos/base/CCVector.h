@@ -72,7 +72,7 @@ public:
     }
     
     /** Constructor with a capacity */
-    explicit Vector<T>(int capacity)
+    explicit Vector<T>(ssize_t capacity)
     : _data()
     {
         CCLOGINFO("In the default constructor with capacity of Vector.");
@@ -135,7 +135,7 @@ public:
      *         If n is greater than the current vector capacity, 
      *         the function causes the container to reallocate its storage increasing its capacity to n (or greater).
      */
-    void reserve(int n)
+    void reserve(ssize_t n)
     {
         _data.reserve(n);
     }
@@ -145,7 +145,7 @@ public:
      *        It can be equal or greater, with the extra space allowing to accommodate for growth without the need to reallocate on each insertion.
      *  @return The size of the currently allocated storage capacity in the vector, measured in terms of the number elements it can hold.
      */
-    int capacity() const
+    ssize_t capacity() const
     {
         return _data.capacity();
     }
@@ -154,9 +154,9 @@ public:
      *  @note This is the number of actual objects held in the vector, which is not necessarily equal to its storage capacity.
      *  @return The number of elements in the container.
      */
-    int size() const
+    ssize_t size() const
     {
-        return  static_cast<int>(_data.size());
+        return  _data.size();
     }
     
     /** @brief Returns whether the vector is empty (i.e. whether its size is 0).
@@ -168,13 +168,13 @@ public:
     }
     
     /** Returns the maximum number of elements that the vector can hold. */
-    size_t max_size() const
+    ssize_t max_size() const
     {
         return _data.max_size();
     }
     
     /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    int getIndex(T object) const
+    ssize_t getIndex(T object) const
     {
         auto iter = std::find(_data.begin(), _data.end(), object);
         if (iter != _data.end())
@@ -198,7 +198,7 @@ public:
     }
     
     /** Returns the element at position 'index' in the vector. */
-    T at(int index) const
+    T at(ssize_t index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
@@ -221,7 +221,7 @@ public:
     {
         if (!_data.empty())
         {
-            int randIdx = rand() % _data.size();
+            ssize_t randIdx = rand() % _data.size();
             return *(_data.begin() + randIdx);
         }
         return nullptr;
@@ -236,11 +236,11 @@ public:
     /** Returns true if the two vectors are equal */
     bool equals(const Vector<T> &other)
     {
-        size_t s = this->size();
+        ssize_t s = this->size();
         if (s != other.size())
             return false;
         
-        for (int i = 0; i < s; i++)
+        for (ssize_t i = 0; i < s; i++)
         {
             if (!this->at(i)->isEqual(other.at(i)))
             {
@@ -279,7 +279,7 @@ public:
      *        This causes an automatic reallocation of the allocated storage space 
      *        if -and only if- the new vector size surpasses the current vector capacity.
      */
-    void insert(int index, T object)
+    void insert(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index <= size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
@@ -304,7 +304,7 @@ public:
      *  @param object The object to be removed.
      *  @param toRelease Whether to decrease the referece count of the deleted object.
      */
-    void erase(T object, bool toRelease = true)
+    void eraseObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
@@ -347,7 +347,7 @@ public:
      *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
      *          This is the container end if the operation erased the last element in the sequence.
      */
-    iterator erase(int index)
+    iterator erase(ssize_t index)
     {
         CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
         auto it = std::next( begin(), index );
@@ -371,8 +371,8 @@ public:
     /** Swap two elements */
     void swap(T object1, T object2)
     {
-        auto idx1 = getIndex(object1);
-        auto idx2 = getIndex(object2);
+        ssize_t idx1 = getIndex(object1);
+        ssize_t idx2 = getIndex(object2);
 
         CCASSERT(idx1>=0 && idx2>=0, "invalid object index");
 
@@ -380,7 +380,7 @@ public:
     }
     
     /** Swap two elements with certain indexes */
-    void swap(int index1, int index2)
+    void swap(ssize_t index1, ssize_t index2)
     {
         CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
 
@@ -388,7 +388,7 @@ public:
     }
 
     /** Replace object at index with another object. */
-    void replace(int index, T object)
+    void replace(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
         CCASSERT(object != nullptr, "The object should not be nullptr");
