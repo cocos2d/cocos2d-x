@@ -192,10 +192,10 @@ private:
  - RGB colors
  @since 2.1
  */
-class CC_DLL CC_DEPRECATED_ATTRIBUTE LayerRGBA : public Layer, public RGBAProtocol
+class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
 public:
-    CREATE_FUNC(LayerRGBA);
+    CREATE_FUNC(__LayerRGBA);
     
     
     //
@@ -219,11 +219,11 @@ public:
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
 protected:
-    LayerRGBA() {}
-    virtual ~LayerRGBA() {}
+    __LayerRGBA() {}
+    virtual ~__LayerRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__LayerRGBA);
 };
 
 //
