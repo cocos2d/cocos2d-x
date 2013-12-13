@@ -42,6 +42,8 @@ enum FrameType
 
 enum FrameEaseType
 {
+	FrameEase_Custom = -1,
+
 	FrameEase_Linear = 0,
 
 	FrameEase_Sine_EaseIn,
@@ -170,6 +172,14 @@ public:
      * @return CCAction
      */
 	virtual CCActionInterval* getAction(float fDuration);
+
+	/**
+	*Set the CCAction easing parameter.
+	*
+	*@parame parameter   the parameter for frame ease
+	*
+	*/
+	virtual void setEasingParameter(std::vector<float> parameter);
 protected:
     /**
      * Gets the Easing Action of ActionFrame.
@@ -184,7 +194,7 @@ protected:
 	int m_frameIndex;
 	float m_fTime;
 	FrameEaseType m_easingType;
-	CCArray* m_Parameter;
+	std::vector<float> m_Parameter;
 };
 /**
 *   @js NA

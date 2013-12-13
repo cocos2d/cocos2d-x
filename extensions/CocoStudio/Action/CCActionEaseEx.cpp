@@ -38,7 +38,7 @@ static inline float bezieratFunction( float a, float b, float c, float d, float 
 // EaseBezier
 //
 
-CCEaseBezierAction* CCEaseBezierAction::create(CCActionInterval* pAction, float p0, float p1, float p2, float p3)
+CCEaseBezierAction* CCEaseBezierAction::create(CCActionInterval* pAction)
 {
 	CCEaseBezierAction *pRet = new CCEaseBezierAction();
 	if (pRet)
@@ -54,6 +54,14 @@ CCEaseBezierAction* CCEaseBezierAction::create(CCActionInterval* pAction, float 
 	}
 
 	return pRet; 
+}
+
+void CCEaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
+{
+	m_p0 = p0;
+	m_p1 = p1;
+	m_p2 = p2;
+	m_p3 = p3;
 }
 
 CCObject* CCEaseBezierAction::copyWithZone(CCZone *pZone)
@@ -84,7 +92,9 @@ void CCEaseBezierAction::update(float time)
 
 CCActionInterval* CCEaseBezierAction::reverse(void)
 {
-	return CCEaseBezierAction::create(m_pInner->reverse(),m_p3,m_p2,m_p1,m_p0);
+	CCEaseBezierAction* reverseAction = CCEaseBezierAction::create(m_pInner->reverse());
+	reverseAction->setBezierParamer(m_p3,m_p2,m_p1,m_p0);
+	return reverseAction;
 }
 
 //
