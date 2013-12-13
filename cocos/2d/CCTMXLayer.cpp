@@ -559,7 +559,7 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
     CCASSERT(_children.contains(sprite), "Tile does not belong to TMXLayer");
 
     ssize_t atlasIndex = sprite->getAtlasIndex();
-    ssize_t zz = (size_t)_atlasIndexArray->arr[atlasIndex];
+    ssize_t zz = (ssize_t)_atlasIndexArray->arr[atlasIndex];
     _tiles[zz] = 0;
     ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
     SpriteBatchNode::removeChild(sprite, cleanup);
