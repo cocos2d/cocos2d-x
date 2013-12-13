@@ -51,7 +51,7 @@ void AutoreleasePool::removeObject(Object* object)
 {
     for (unsigned int i = 0; i < object->_autoReleaseCount; ++i)
     {
-       _managedObjectArray.erase(object, false);
+       _managedObjectArray.eraseObject(object, false);
     }
 }
 
@@ -141,7 +141,7 @@ void PoolManager::pop()
         return;
     }
 
-    int count = _releasePoolStack.size();
+    ssize_t count = _releasePoolStack.size();
 
     _curReleasePool->clear();
  

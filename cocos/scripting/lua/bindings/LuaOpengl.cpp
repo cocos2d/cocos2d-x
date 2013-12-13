@@ -5179,7 +5179,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
     return 1;
 }
 
-int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
+static int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5203,7 +5203,7 @@ tolua_lerror:
 }
 
 
-int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
+static int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
