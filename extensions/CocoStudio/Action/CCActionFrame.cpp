@@ -237,7 +237,7 @@ CCPoint ActionMoveFrame::getPosition()
 }
 CCActionInterval* ActionMoveFrame::getAction(float fDuration)
 {
-	return CCMoveTo::create(fDuration,m_position);
+	return this->getEasingAction(CCMoveTo::create(fDuration,m_position));
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -275,7 +275,7 @@ float ActionScaleFrame::getScaleY()
 
 CCActionInterval* ActionScaleFrame::getAction(float fDuration)
 {
-	return CCScaleTo::create(fDuration,m_scaleX,m_scaleY);
+	return this->getEasingAction(CCScaleTo::create(fDuration,m_scaleX,m_scaleY));
 }
 
 ActionRotationFrame::ActionRotationFrame()
@@ -301,7 +301,7 @@ float ActionRotationFrame::getRotation()
 
 CCActionInterval* ActionRotationFrame::getAction(float fDuration)
 {
-	return CCRotateTo::create(fDuration,m_rotation);
+	return this->getEasingAction(CCRotateTo::create(fDuration,m_rotation));
 }
 
 ActionFadeFrame::ActionFadeFrame()
@@ -327,7 +327,7 @@ int ActionFadeFrame::getOpacity()
 
 CCActionInterval* ActionFadeFrame::getAction(float fDuration)
 {
-	return CCFadeTo::create(fDuration,m_opacity);
+	return this->getEasingAction(CCFadeTo::create(fDuration,m_opacity));
 }
 
 
@@ -354,7 +354,7 @@ ccColor3B ActionTintFrame::getColor()
 
 CCActionInterval* ActionTintFrame::getAction(float fDuration)
 {
-	return CCTintTo::create(fDuration,m_color.r,m_color.g,m_color.b);
+	return this->getEasingAction(CCTintTo::create(fDuration,m_color.r,m_color.g,m_color.b));
 }
 
 
