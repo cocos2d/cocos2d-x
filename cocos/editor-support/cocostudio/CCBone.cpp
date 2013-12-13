@@ -74,7 +74,8 @@ Bone::Bone()
     _ignoreMovementBoneData = false;
     _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     _boneTransformDirty = true;
-    _blendType = BLEND_NORMAL;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendDirty = false;
     _worldInfo = nullptr;
 
     _armatureParentBone = nullptr;
@@ -253,6 +254,15 @@ void Bone::applyParentTransform(Bone *parent)
     _worldInfo->skewY = _worldInfo->skewY + parent->_worldInfo->skewY;
 }
 
+
+void CCBone::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    {
+        _blendFunc = blendFunc;
+        _blendDirty = true;
+    }
+}
 
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
@@ -436,7 +446,7 @@ void Bone::changeDisplayByIndex(int index, bool force)
 }
 
 
-void CCBone::changeDisplayByName(const char *name, bool force)
+void Bone::changeDisplayByName(const char *name, bool force)
 {
     _displayManager->changeDisplayByName(name, force);
 }

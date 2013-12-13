@@ -191,8 +191,18 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 
-    virtual void setBlendType(BlendType type) { _blendType = type; }
-    virtual BlendType getBlendType() const { return _blendType; }
+    
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
+    virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return _blendDirty; }
 
     virtual FrameData *getTweenData() const { return _tweenData; }
 
@@ -223,7 +233,8 @@ protected:
      */
     bool _ignoreMovementBoneData;
 
-    BlendType _blendType;
+    cocos2d::BlendFunc _blendFunc;
+    bool _blendDirty;
 
     Tween *_tween;				//! Calculate tween effect
 
