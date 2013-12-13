@@ -188,7 +188,7 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;
-
+    virtual std::string getDescription() const override;
 
 private:
     Point getPositionForIsoAt(const Point& pos);

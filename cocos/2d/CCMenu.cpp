@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCStdC.h"
 #include "CCInteger.h"
 #include "CCEventListenerTouch.h"
+#include "CCString.h"
 
 #include <vector>
 #include <stdarg.h>
@@ -565,6 +566,11 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
     }
 
     return NULL;
+}
+
+std::string Menu::getDescription() const
+{
+    return StringUtils::format("<Menu | Tag = %d>", _tag);
 }
 
 NS_CC_END

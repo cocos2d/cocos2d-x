@@ -151,11 +151,11 @@ public:
 
     /**
      * Gets the description string. It makes debugging easier.
-     * @return A string terminated with '\0'
+     * @return A string
      * @js NA
      * @lua NA
      */
-    std::string description(void) const;
+    virtual std::string getDescription() const;
 
     /// @} end of initializers
 

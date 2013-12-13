@@ -116,6 +116,8 @@ public:
     virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
+    virtual std::string getDescription() const override;
+
 private:
     /**
      * @js NA

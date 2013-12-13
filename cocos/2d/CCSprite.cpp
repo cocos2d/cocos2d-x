@@ -1137,4 +1137,14 @@ void Sprite::updateBlendFunc(void)
     }
 }
 
+std::string Sprite::getDescription() const
+{
+    int texture_id = -1;
+    if( _batchNode )
+        texture_id = _batchNode->getTextureAtlas()->getTexture()->getName();
+    else
+        texture_id = _texture->getName();
+    return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
+}
+
 NS_CC_END

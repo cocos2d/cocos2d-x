@@ -581,7 +581,7 @@ void Node::cleanup()
 }
 
 
-std::string Node::description() const
+std::string Node::getDescription() const
 {
     return StringUtils::format("<Node | Tag = %d", _tag);
 }
