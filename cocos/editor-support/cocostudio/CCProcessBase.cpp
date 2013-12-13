@@ -38,16 +38,12 @@ ProcessBase::ProcessBase(void)
     , _rawDuration(0)
     , _loopType(ANIMATION_LOOP_BACK)
     , _tweenEasing(Linear)
+    , _animationInternal(1/60.0f)
     , _durationTween(0)
     , _currentFrame(0)
     , _curFrameIndex(0)
     , _isLoopBack(false)
 {
-    /*
-     *  set _animationInternal defualt value to Director::getInstance()
-     *  ->getAnimationInterval(), in line with game update speed
-     */
-    _animationInternal = CCDirector::getInstance()->getAnimationInterval();
 }
 
 
