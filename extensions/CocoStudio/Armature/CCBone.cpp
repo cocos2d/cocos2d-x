@@ -77,6 +77,7 @@ CCBone::CCBone()
     m_fDataVersion = 0;
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
+    m_bBlendDirty = false;
 }
 
 
