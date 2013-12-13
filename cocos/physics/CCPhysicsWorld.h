@@ -73,8 +73,8 @@ typedef struct PhysicsRayCastInfo
  * @return true to continue, false to terminate
  */
 typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
-typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQueryCallbackFunc;
-typedef PhysicsRectQueryCallbackFunc PhysicsPointQueryCallbackFunc;
+typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRectCallbackFunc;
+typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
@@ -101,23 +101,30 @@ public:
     virtual void removeAllBodies();
     
     void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
-    void queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
-    void queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data);
+    void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
+    void queryPoint(PhysicsQueryPointCallbackFunc func, const Point& point, void* data);
     Vector<PhysicsShape*> getShapes(const Point& point) const;
     PhysicsShape* getShape(const Point& point) const;
     const Vector<PhysicsBody*>& getAllBodies() const;
     PhysicsBody* getBody(int tag) const;
-    
-    /** Register a listener to receive contact callbacks*/
-    //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }
-    /** Unregister a listener. */
-    //inline void unregisterContactListener() { _listener = nullptr; }
     
     inline Scene& getScene() const { return *_scene; }
     /** get the gravity value */
     inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
     void setGravity(const Vect& gravity);
+    /** Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0 */
+    inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
+    /** get the speed of physics world */
+    inline float getSpeed() { return _speed; }
+    /** 
+     * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
+     * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
+     * default value is 1.0
+     */
+    inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
+    /** get the update rate */
+    inline int getUpdateRate() { return _updateRate; }
     
     /** set the debug draw */
     void setDebugDrawMask(int mask);
@@ -153,6 +160,9 @@ protected:
 protected:
     Vect _gravity;
     float _speed;
+    int _updateRate;
+    int _updateRateCount;
+    float _updateTime;
     PhysicsWorldInfo* _info;
     
     Vector<PhysicsBody*> _bodies;
