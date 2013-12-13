@@ -127,13 +127,13 @@ float CCTweenFunction::tweenTo(float time, CCTweenType type, float *easingParam)
 
 
     case Back_EaseIn:
-        delta = backEaseIn(time, easingParam);
+        delta = backEaseIn(time);
         break;
     case Back_EaseOut:
-        delta = backEaseOut(time, easingParam);
+        delta = backEaseOut(time);
         break;
     case Back_EaseInOut:
-        delta = backEaseInOut(time, easingParam);
+        delta = backEaseInOut(time);
         break;
 
     case Bounce_EaseIn:
@@ -386,19 +386,19 @@ float CCTweenFunction::elasticEaseInOut(float time, float *easingParam)
 
 
 // Back Ease
-float CCTweenFunction::backEaseIn(float time, float *easingParam)
+float CCTweenFunction::backEaseIn(float time)
 {
     float overshoot = 1.70158f;
     return time * time * ((overshoot + 1) * time - overshoot);
 }
-float CCTweenFunction::backEaseOut(float time, float *easingParam)
+float CCTweenFunction::backEaseOut(float time)
 {
     float overshoot = 1.70158f;
 
     time = time - 1;
     return time * time * ((overshoot + 1) * time + overshoot) + 1;
 }
-float CCTweenFunction::backEaseInOut(float time, float *easingParam)
+float CCTweenFunction::backEaseInOut(float time)
 {
     float overshoot = 1.70158f * 1.525f;
 
