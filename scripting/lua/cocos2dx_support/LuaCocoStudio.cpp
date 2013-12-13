@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 12/12/13 14:52:13.
+** Generated automatically by tolua++-1.0.92 on 12/13/13 17:54:46.
 */
 
 /****************************************************************************
@@ -1895,39 +1895,6 @@ static int tolua_CocoStudio_CCArmatureAnimation_getSpeedScale00(lua_State* tolua
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getSpeedScale'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: setAnimationInternal of class  CCArmatureAnimation */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArmatureAnimation_setAnimationInternal00
-static int tolua_CocoStudio_CCArmatureAnimation_setAnimationInternal00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"CCArmatureAnimation",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  CCArmatureAnimation* self = (CCArmatureAnimation*)  tolua_tousertype(tolua_S,1,0);
-  float animationInternal = ((float)  tolua_tonumber(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAnimationInternal'", NULL);
-#endif
-  {
-   self->setAnimationInternal(animationInternal);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setAnimationInternal'.",&tolua_err);
  return 0;
 #endif
 }
@@ -26250,7 +26217,6 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"init",tolua_CocoStudio_CCArmatureAnimation_init00);
    tolua_function(tolua_S,"setSpeedScale",tolua_CocoStudio_CCArmatureAnimation_setSpeedScale00);
    tolua_function(tolua_S,"getSpeedScale",tolua_CocoStudio_CCArmatureAnimation_getSpeedScale00);
-   tolua_function(tolua_S,"setAnimationInternal",tolua_CocoStudio_CCArmatureAnimation_setAnimationInternal00);
    tolua_function(tolua_S,"play",tolua_CocoStudio_CCArmatureAnimation_play00);
    tolua_function(tolua_S,"play",tolua_CocoStudio_CCArmatureAnimation_play01);
    tolua_function(tolua_S,"playByIndex",tolua_CocoStudio_CCArmatureAnimation_playByIndex00);
