@@ -75,14 +75,14 @@ namespace
     typedef struct RectQueryCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsRectQueryCallbackFunc func;
+        PhysicsQueryRectCallbackFunc func;
         void* data;
     }RectQueryCallbackInfo;
     
     typedef struct PointQueryCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsPointQueryCallbackFunc func;
+        PhysicsQueryPointCallbackFunc func;
         void* data;
     }PointQueryCallbackInfo;
 }
@@ -355,7 +355,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1,
 }
 
 
-void PhysicsWorld::queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data)
+void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -373,7 +373,7 @@ void PhysicsWorld::queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect
     }
 }
 
-void PhysicsWorld::queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data)
+void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Point& point, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -1022,7 +1022,13 @@ void PhysicsWorld::update(float delta)
         body->update(delta);
     }
     
-    _info->step(delta);
+    _updateTime += delta;
+    if (++_updateRateCount >= _updateRate)
+    {
+        _info->step(_updateTime * _speed);
+        _updateRateCount = 0;
+        _updateTime = 0.0f;
+    }
     
     if (_debugDrawMask != DEBUGDRAW_NONE)
     {
@@ -1033,6 +1039,9 @@ void PhysicsWorld::update(float delta)
 PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
+, _updateRate(1)
+, _updateRateCount(0)
+, _updateTime(0.0f)
 , _info(nullptr)
 , _scene(nullptr)
 , _delayDirty(false)
