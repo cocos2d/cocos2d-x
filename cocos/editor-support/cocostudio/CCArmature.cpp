@@ -481,8 +481,8 @@ void Armature::draw()
                 Skin *skin = static_cast<Skin *>(node);
 
                 TextureAtlas *textureAtlas = skin->getTextureAtlas();
-                BlendType blendType = bone->getBlendType();
-                if(_atlas != textureAtlas || blendType != BLEND_NORMAL)
+                bool blendDirty = bone->isBlendDirty();
+                if(_atlas != textureAtlas || blendDirty)
                 {
                     if (_atlas)
                     {
@@ -497,12 +497,16 @@ void Armature::draw()
 
                 skin->updateTransform();
 
-                if (blendType != BLEND_NORMAL)
+                if (blendDirty)
                 {
-                    updateBlendType(blendType);
+                    ccBlendFunc func = bone->getBlendFunc();
+                    ccGLBlendFunc(func.src, func.dst);
+
                     _atlas->drawQuads();
                     _atlas->removeAllQuads();
                     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
+                    bone->setBlendDirty(false);
                 }
             }
             break;
@@ -558,46 +562,6 @@ void Armature::draw()
         _atlas->removeAllQuads();
     }
 }
-
-
-void Armature::updateBlendType(BlendType blendType)
-{
-    BlendFunc blendFunc;
-    switch (blendType)
-    {
-    case BLEND_NORMAL:
-    {
-        blendFunc = _blendFunc;
-    }
-    break;
-    case BLEND_ADD:
-    {
-        blendFunc.src = GL_SRC_ALPHA;
-        blendFunc.dst = GL_ONE;
-    }
-    break;
-    case BLEND_MULTIPLY:
-    {
-        blendFunc.src = GL_DST_COLOR;
-        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
-    break;
-    case BLEND_SCREEN:
-    {
-        blendFunc.src = GL_ONE;
-        blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
-    }
-    break;
-    default:
-    {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
-    }
-    break;
-    }
-    GL::blendFunc(blendFunc.src, blendFunc.dst);
-}
-
 
 
 void Armature::visit()

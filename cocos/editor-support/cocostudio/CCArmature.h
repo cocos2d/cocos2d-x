@@ -250,12 +250,6 @@ protected:
      */
     Bone *createBone(const char *boneName );
 
-    /**! Update blend function
-     *  @js NA
-     *  @lua NA
-     */
-    void updateBlendType(BlendType blendType);
-
 protected:
     ArmatureData *_armatureData;
     BatchNode *_batchNode;

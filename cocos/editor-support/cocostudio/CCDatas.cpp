@@ -251,9 +251,11 @@ FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , easingParamNumber(0)
+    , easingParams(NULL)
     , isTween(true)
     , displayIndex(0)
-    , blendType(BLEND_NORMAL)
+    , blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 
     , strEvent("")
     , strMovement("")
@@ -264,6 +266,7 @@ FrameData::FrameData(void)
 
 FrameData::~FrameData(void)
 {
+    CC_SAFE_DELETE(easingParams);
 }
 
 void FrameData::copy(const BaseData *baseData)
@@ -274,8 +277,21 @@ void FrameData::copy(const BaseData *baseData)
     {
         duration = frameData->duration;
         displayIndex = frameData->displayIndex;
+        
         tweenEasing = frameData->tweenEasing;
-        blendType = frameData->blendType;
+        easingParamNumber = frameData->easingParamNumber;
+        
+        CC_SAFE_DELETE(easingParams);
+        if (easingParamNumber != 0)
+        {
+            easingParams = new float[easingParamNumber];
+            for (int i = 0; i<easingParamNumber; i++)
+            {
+                easingParams[i] = frameData->easingParams[i];
+            }
+        }
+
+        blendFunc = frameData->blendFunc;
     }
 }
 

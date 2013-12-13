@@ -338,7 +338,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         _bone->updateZOrder();
 
         //! Update blend type
-        _bone->setBlendType(keyFrameData->blendType);
+        _bone->setBlendFunc(keyFrameData->blendFunc);
 
         //! Update child armature's movement
         Armature *childAramture = _bone->getChildArmature();
@@ -477,7 +477,7 @@ float Tween::updateFrameData(float currentPercent)
     TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
     if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
-        currentPercent = TweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
+        currentPercent = TweenFunction::tweenTo(currentPercent, tweenType, _from->easingParams);
     }
 
     return currentPercent;
