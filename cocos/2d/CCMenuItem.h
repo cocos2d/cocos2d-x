@@ -94,6 +94,9 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
 
+
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor

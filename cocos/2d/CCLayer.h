@@ -157,7 +157,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
-protected:      
+    // Overrides
+    virtual std::string getDescription() const override;
+
+protected:
     Layer();
     virtual ~Layer();
     virtual bool init();
@@ -277,6 +280,8 @@ public:
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
+    virtual std::string getDescription() const override;
+
 protected:
     LayerColor();
     virtual ~LayerColor();
@@ -375,6 +380,8 @@ public:
     /** Returns the directional vector used for the gradient */
     const Point& getVector() const;
 
+    virtual std::string getDescription() const override;
+
 protected:
     virtual void updateColor() override;
 
@@ -435,6 +442,8 @@ public:
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
     */
     void switchToAndReleaseMe(int n);
+
+    virtual std::string getDescription() const override;
 
 protected:
     

@@ -119,6 +119,8 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) const override { return false;}
 
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor

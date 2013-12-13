@@ -405,6 +405,12 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *unused
     CC_UNUSED_PARAM(unused_event);
 }
 
+std::string Layer::getDescription() const
+{
+    return StringUtils::format("<Layer | Tag = %d>", _tag);
+}
+
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -576,6 +582,10 @@ void LayerColor::draw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
+std::string LayerColor::getDescription() const
+{
+    return StringUtils::format("<LayerColor | Tag = %d>", _tag);
+}
 //
 // LayerGradient
 // 
@@ -763,6 +773,11 @@ void LayerGradient::setCompressedInterpolation(bool compress)
     updateColor();
 }
 
+std::string LayerGradient::getDescription() const
+{
+    return StringUtils::format("<LayerGradient | Tag = %d>", _tag);
+}
+
 /// MultiplexLayer
 
 LayerMultiplex::LayerMultiplex()
@@ -899,6 +914,11 @@ void LayerMultiplex::switchToAndReleaseMe(int n)
     _enabledLayer = n;
 
     this->addChild(_layers.at(n));
+}
+
+std::string LayerMultiplex::getDescription() const
+{
+    return StringUtils::format("<LayerMultiplex | Tag = %d, Layers = %d", _tag, _children.size());
 }
 
 NS_CC_END
