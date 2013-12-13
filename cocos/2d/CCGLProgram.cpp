@@ -54,6 +54,12 @@ const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTe
 const char* GLProgram::SHADER_NAME_POSITION_U_COLOR = "ShaderPosition_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositionLengthTextureColor";
 
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelNormol";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelGlow";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE = "ShaderLabelOutline";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW = "ShaderLabelShadow";
+
+
 // uniform names
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
 const char* GLProgram::UNIFORM_NAME_MV_MATRIX = "CC_MVMatrix";
