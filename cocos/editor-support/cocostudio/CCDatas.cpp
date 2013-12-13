@@ -208,18 +208,17 @@ BoneData::~BoneData(void)
 
 bool BoneData::init()
 {
-    displayDataList.init();
     return true;
 }
 
 void BoneData::addDisplayData(DisplayData *displayData)
 {
-    displayDataList.addObject(displayData);
+    displayDataList.pushBack(displayData);
 }
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return static_cast<DisplayData *>(displayDataList.getObjectAtIndex(index));
+    return static_cast<DisplayData *>(displayDataList.at(index));
 }
 
 
@@ -239,12 +238,12 @@ bool ArmatureData::init()
 
 void ArmatureData::addBoneData(BoneData *boneData)
 {
-    boneDataDic.setObject(boneData, boneData->name);
+    boneDataDic.insert(boneData->name, boneData);
 }
 
 BoneData *ArmatureData::getBoneData(const char *boneName)
 {
-    return static_cast<BoneData*>(boneDataDic.objectForKey(boneName));
+    return static_cast<BoneData*>(boneDataDic.at(boneName));
 }
 
 FrameData::FrameData(void)
@@ -309,17 +308,17 @@ MovementBoneData::~MovementBoneData(void)
 
 bool MovementBoneData::init()
 {
-    return frameList.init();
+    return true;
 }
 
 void MovementBoneData::addFrameData(FrameData *frameData)
 {
-    frameList.addObject(frameData);
+    frameList.pushBack(frameData);
 }
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return static_cast<FrameData*>(frameList.getObjectAtIndex(index));
+    return static_cast<FrameData*>(frameList.at(index));
 }
 
 
@@ -341,12 +340,12 @@ MovementData::~MovementData(void)
 
 void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 {
-    movBoneDataDic.setObject(movBoneData, movBoneData->name);
+    movBoneDataDic.insert(movBoneData->name, movBoneData);
 }
 
 MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
 {
-    return static_cast<MovementBoneData *>(movBoneDataDic.objectForKey(boneName));
+    return static_cast<MovementBoneData *>(movBoneDataDic.at(boneName));
 }
 
 
@@ -361,18 +360,18 @@ AnimationData::~AnimationData(void)
 
 void AnimationData::addMovement(MovementData *movData)
 {
-    movementDataDic.setObject(movData, movData->name);
+    movementDataDic.insert(movData->name, movData);
     movementNames.push_back(movData->name);
 }
 
 MovementData *AnimationData::getMovement(const char *movementName)
 {
-    return static_cast<MovementData *>(movementDataDic.objectForKey(movementName));
+    return static_cast<MovementData *>(movementDataDic.at(movementName));
 }
 
 int AnimationData::getMovementCount()
 {
-    return movementDataDic.count();
+    return movementDataDic.size();
 }
 
 
@@ -387,15 +386,12 @@ ContourData::~ContourData()
 
 bool ContourData::init()
 {
-    return vertexList.init();
+    return true;
 }
 
-void ContourData::addVertex(Point *vertex)
+void ContourData::addVertex(Point &vertex)
 {
-    ContourVertex2 *vertex2 = new ContourVertex2(vertex->x, vertex->y);
-    vertex2->autorelease();
-
-    vertexList.addObject(vertex2);
+    vertexList.push_back(vertex);
 }
 
 TextureData::TextureData()
@@ -413,17 +409,17 @@ TextureData::~TextureData()
 
 bool TextureData::init()
 {
-    return contourDataList.init();
+    return true;
 }
 
 void TextureData::addContourData(ContourData *contourData)
 {
-    contourDataList.addObject(contourData);
+    contourDataList.pushBack(contourData);
 }
 
 ContourData *TextureData::getContourData(int index)
 {
-    return static_cast<ContourData *>(contourDataList.getObjectAtIndex(index));
+    return static_cast<ContourData *>(contourDataList.at(index));
 }
 
 

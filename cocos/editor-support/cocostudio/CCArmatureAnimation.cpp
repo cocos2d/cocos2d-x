@@ -218,10 +218,10 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     CCDICT_FOREACH(dict, element)
     {
         Bone *bone = static_cast<Bone*>(element->getObject());
-        movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.objectForKey(bone->getName()));
+        movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.at(bone->getName()));
 
         Tween *tween = bone->getTween();
-        if(movementBoneData && movementBoneData->frameList.count() > 0)
+        if(movementBoneData && movementBoneData->frameList.size() > 0)
         {
             _tweenList->addObject(tween);
             movementBoneData->duration = _movementData->duration;

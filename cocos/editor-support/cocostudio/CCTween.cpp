@@ -141,7 +141,7 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
         }
         _frameTweenEasing = Linear;
     }
-    else if (_movementBoneData->frameList.count() > 1)
+    else if (_movementBoneData->frameList.size() > 1)
     {
         _durationTween = durationTween * _movementBoneData->scale;
 
@@ -404,25 +404,25 @@ float Tween::updateFrameData(float currentPercent)
          *  Get frame length, if _toIndex >= _length, then set _toIndex to 0, start anew.
          *  _toIndex is next index will play
          */
-        int length = _movementBoneData->frameList.count();
-        FrameData **frames = (FrameData **)_movementBoneData->frameList.data->arr;
+        int length = _movementBoneData->frameList.size();
+        cocos2d::Vector<FrameData *> &frames = _movementBoneData->frameList;
 
         FrameData *from = nullptr;
         FrameData *to = nullptr;
 
-        if (playedTime < frames[0]->frameID)
+        if (playedTime < frames.at(0)->frameID)
         {
-            from = to = frames[0];
+            from = to = frames.at(0);
             setBetween(from, to);
             return _currentPercent;
         }
         
-        if(playedTime >= frames[length - 1]->frameID)
+        if(playedTime >= frames.at(length - 1)->frameID)
         {
             // If _passLastFrame is true and playedTime >= frames[length - 1]->frameID, then do not need to go on. 
             if (_passLastFrame)
             {
-                from = to = frames[length - 1];
+                from = to = frames.at(length - 1);
                 setBetween(from, to);
                 return _currentPercent;
             }
@@ -437,7 +437,7 @@ float Tween::updateFrameData(float currentPercent)
         do
         {
             _fromIndex = _toIndex;
-            from = frames[_fromIndex];
+            from = frames.at(_fromIndex);
             _totalDuration  = from->frameID;
 
             _toIndex = _fromIndex + 1;
@@ -446,7 +446,7 @@ float Tween::updateFrameData(float currentPercent)
                 _toIndex = 0;
             }
 
-            to = frames[_toIndex];
+            to = frames.at(_toIndex);
 
             //! Guaranteed to trigger frame event
             if(from->strEvent.length() != 0 && !_animation->isIgnoreFrameEvent())

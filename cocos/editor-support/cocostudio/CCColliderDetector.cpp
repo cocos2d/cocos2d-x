@@ -96,9 +96,6 @@ ColliderBody::ColliderBody(ContourData *contourData)
     : _contourData(contourData)
 {
     CC_SAFE_RETAIN(_contourData);
-    
-    _calculatedVertexList = Array::create();
-    CC_SAFE_RETAIN(_calculatedVertexList);
 }
 #endif
 
@@ -108,8 +105,6 @@ ColliderBody::~ColliderBody()
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_DELETE(_filter);
-#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    CC_SAFE_RELEASE(_calculatedVertexList);
 #endif
 }
 
@@ -199,23 +194,21 @@ void ColliderDetector::addContourData(ContourData *contourData)
 
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    Array *calculatedVertexList = colliderBody->getCalculatedVertexList();
+    std::vector<Point> &calculatedVertexList = colliderBody->_calculatedVertexList;
     
     int num = contourData->vertexList.size();
     for (int i = 0; i < num; i++)
     {
-        ContourVertex2 *newVertex = new ContourVertex2(0, 0);
-        calculatedVertexList->addObject(newVertex);
-        newVertex->release();
+        calculatedVertexList.push_back(Point());
     }
 #endif
 }
 
-void ColliderDetector::addContourDataList(Array *contourDataList)
+void ColliderDetector::addContourDataList(cocos2d::Vector<ContourData*> &contourDataList)
 {
-    for(auto object : *contourDataList)
+    for(auto object : contourDataList)
     {
-        addContourData((ContourData *)object);
+        addContourData(object);
     }
 }
 
@@ -365,22 +358,22 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         }
 #endif
 
-        int num = contourData->vertexList.count();
-        ContourVertex2 **vs = (ContourVertex2 **)contourData->vertexList.data->arr;
+        int num = contourData->vertexList.size();
+        std::vector<cocos2d::Point> &vs = contourData->vertexList;
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-        ContourVertex2 **cvs = (ContourVertex2 **)colliderBody->getCalculatedVertexList()->data->arr;
+        std::vector<cocos2d::Point> &cvs = colliderBody->_calculatedVertexList;
 #endif
 
         for (int i = 0; i < num; i++)
         {
-            helpPoint.setPoint( vs[i]->x,  vs[i]->y);
+            helpPoint.setPoint( vs.at(i).x,  vs.at(i).y);
             helpPoint = PointApplyAffineTransform(helpPoint, t);
 
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-            cvs[i]->x = helpPoint.x;
-            cvs[i]->y = helpPoint.y;
+            cvs.at(i).x = helpPoint.x;
+            cvs.at(i).y = helpPoint.y;
 #endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

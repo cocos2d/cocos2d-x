@@ -204,12 +204,12 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    if (textureData && textureData->contourDataList.count() > 0)
+    if (textureData && textureData->contourDataList.size() > 0)
     {
 
         //! create ContourSprite
         ColliderDetector *colliderDetector = ColliderDetector::create(bone);
-        colliderDetector->addContourDataList(&textureData->contourDataList);
+        colliderDetector->addContourDataList(textureData->contourDataList);
 
         decoDisplay->setColliderDetector(colliderDetector);
     }

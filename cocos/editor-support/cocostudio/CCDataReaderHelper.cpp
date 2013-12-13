@@ -886,24 +886,24 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
 
-
+    
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-	FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
-	for (int j = movBoneData->frameList.count() - 1; j >= 0; j--)
+	cocos2d::Vector<FrameData*> &frames = movBoneData->frameList;
+	for (int j = movBoneData->frameList.size() - 1; j >= 0; j--)
 	{
 		if (j > 0)
 		{
-			float difSkewX = frames[j]->skewX -  frames[j - 1]->skewX;
-			float difSkewY = frames[j]->skewY -  frames[j - 1]->skewY;
+			float difSkewX = frames.at(j)->skewX -  frames.at(j-1)->skewX;
+			float difSkewY = frames.at(j)->skewY -  frames.at(j-1)->skewY;
 
 			if (difSkewX < -M_PI || difSkewX > M_PI)
 			{
-				frames[j - 1]->skewX = difSkewX < 0 ? frames[j - 1]->skewX - 2 * M_PI : frames[j - 1]->skewX + 2 * M_PI;
+				frames.at(j-1)->skewX = difSkewX < 0 ? frames.at(j-1)->skewX - 2 * M_PI : frames.at(j-1)->skewX + 2 * M_PI;
 			}
 
 			if (difSkewY < -M_PI || difSkewY > M_PI)
 			{
-				frames[j - 1]->skewY = difSkewY < 0 ? frames[j - 1]->skewY - 2 * M_PI : frames[j - 1]->skewY + 2 * M_PI;
+				frames.at(j-1)->skewY = difSkewY < 0 ? frames.at(j-1)->skewY - 2 * M_PI : frames.at(j-1)->skewY + 2 * M_PI;
 			}
 		}
 	}
@@ -911,7 +911,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
     //
     FrameData *frameData = new FrameData();
-    frameData->copy((FrameData *)movBoneData->frameList.getLastObject());
+    frameData->copy((FrameData *)movBoneData->frameList.back());
     frameData->frameID = movBoneData->duration;
     movBoneData->addFrameData(frameData);
     frameData->release();
@@ -1168,14 +1168,13 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
     while (vertexDataXML)
     {
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
-        vertex->release();
+        Point vertex;
 
-        vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
-        vertexDataXML->QueryFloatAttribute(A_Y, &vertex->y);
+        vertexDataXML->QueryFloatAttribute(A_X, &vertex.x);
+        vertexDataXML->QueryFloatAttribute(A_Y, &vertex.y);
 
-        vertex->y = -vertex->y;
-        contourData->vertexList.addObject(vertex);
+        vertex.y = -vertex.y;
+        contourData->vertexList.push_back(vertex);
 
         vertexDataXML = vertexDataXML->NextSiblingElement(CONTOUR_VERTEX);
     }
@@ -1514,22 +1513,22 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 	if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
 	{
 		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-		FrameData **frames = (FrameData **)movementBoneData->frameList.data->arr;
-		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+		cocos2d::Vector<FrameData *> &frames = movementBoneData->frameList;
+		for (int i = frames.size() - 1; i >= 0; i--)
 		{
 			if (i > 0)
 			{
-				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+				float difSkewX = frames.at(i)->skewX -  frames.at(i-1)->skewX;
+				float difSkewY = frames.at(i)->skewY -  frames.at(i-1)->skewY;
 
 				if (difSkewX < -M_PI || difSkewX > M_PI)
 				{
-					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+					frames.at(i-1)->skewX = difSkewX < 0 ? frames.at(i-1)->skewX - 2 * M_PI : frames.at(i-1)->skewX + 2 * M_PI;
 				}
 
 				if (difSkewY < -M_PI || difSkewY > M_PI)
 				{
-					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+					frames.at(i-1)->skewY = difSkewY < 0 ? frames.at(i-1)->skewY - 2 * M_PI : frames.at(i-1)->skewY + 2 * M_PI;
 				}
 			}
 		}
@@ -1537,10 +1536,10 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        if (movementBoneData->frameList.count() > 0)
+        if (movementBoneData->frameList.size() > 0)
         {
             FrameData *frameData = new FrameData();
-            frameData->copy((FrameData *)movementBoneData->frameList.getLastObject());
+            frameData->copy((FrameData *)movementBoneData->frameList.back());
             movementBoneData->addFrameData(frameData);
             frameData->release();
 
@@ -1614,7 +1613,7 @@ TextureData *DataReaderHelper::decodeTexture(JsonDictionary &json)
     {
         JsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
         ContourData *contourData = decodeContour(*dic);
-        textureData->contourDataList.addObject(contourData);
+        textureData->contourDataList.pushBack(contourData);
         contourData->release();
 
         delete dic;
@@ -1633,13 +1632,12 @@ ContourData *DataReaderHelper::decodeContour(JsonDictionary &json)
     {
         JsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
 
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        Point vertex;
 
-        vertex->x = dic->getItemFloatValue(A_X, 0);
-        vertex->y = dic->getItemFloatValue(A_Y, 0);
+        vertex.x = dic->getItemFloatValue(A_X, 0);
+        vertex.y = dic->getItemFloatValue(A_Y, 0);
 
-        contourData->vertexList.addObject(vertex);
-        vertex->release();
+        contourData->vertexList.push_back(vertex);
 
         delete dic;
     }

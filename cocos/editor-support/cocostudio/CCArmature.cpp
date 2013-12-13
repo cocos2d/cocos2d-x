@@ -156,22 +156,18 @@ bool Armature::init(const char *name)
 
             _armatureData = armatureData;
 
-
-            DictElement *_element = nullptr;
-            Dictionary *boneDataDic = &armatureData->boneDataDic;
-            CCDICT_FOREACH(boneDataDic, _element)
+            for (auto element : armatureData->boneDataDic)
             {
-                Bone *bone = createBone(_element->getStrKey());
+                Bone *bone = createBone(element.first.c_str());
 
                 //! init bone's  Tween to 1st movement's 1st frame
                 do
                 {
-
                     MovementData *movData = animationData->getMovement(animationData->movementNames.at(0).c_str());
                     CC_BREAK_IF(!movData);
 
                     MovementBoneData *movBoneData = movData->getMovementBoneData(bone->getName().c_str());
-                    CC_BREAK_IF(!movBoneData || movBoneData->frameList.count() <= 0);
+                    CC_BREAK_IF(!movBoneData || movBoneData->frameList.size() <= 0);
 
                     FrameData *frameData = movBoneData->getFrameData(0);
                     CC_BREAK_IF(!frameData);
@@ -713,15 +709,15 @@ void CCArmature::drawContour()
         for (auto object : *bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            Array *vertexList = body->getCalculatedVertexList();
+            const std::vector<CCPoint> &vertexList = body->getCalculatedVertexList();
 
-            int length = vertexList->count();
+            int length = vertexList.size();
             Point *points = new Point[length];
             for (int i = 0; i<length; i++)
             {
-                ContourVertex2 *vertex = static_cast<ContourVertex2*>(vertexList->getObjectAtIndex(i));
-                points[i].x = vertex->x;
-                points[i].y = vertex->y;
+                CCPoint p = vertexList.at(i);
+                points[i].x = p.x;
+                points[i].y = p.y;
             }
             DrawPrimitives::drawPoly( points, length, true );
 

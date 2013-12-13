@@ -117,7 +117,7 @@ public:
     virtual void addArmature(int number);
     virtual void addArmatureToParent(cocostudio::Armature *armature);
     virtual void removeArmatureFromParent(int tag);
-    virtual void refreshTitile();
+    virtual void refreshTitle();
 
 	int armatureCount;
 
