@@ -248,16 +248,18 @@ public:
 
     void setFntFile(const std::string& fntFile);
     const std::string& getFntFile() const;
+
+    virtual std::string getDescription() const override;
+
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
-private:
+protected:
     char * atlasNameFromFntFile(const std::string& fntFile);
     int kerningAmountForFirst(unsigned short first, unsigned short second);
     float getLetterPosXLeft( Sprite* characterSprite );
     float getLetterPosXRight( Sprite* characterSprite );
     
-protected:
     virtual void setString(unsigned short *newString, bool needUpdateLabel);
     // string to render
     unsigned short* _string;

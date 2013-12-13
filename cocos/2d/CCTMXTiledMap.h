@@ -168,7 +168,9 @@ public:
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
-    
+
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor
