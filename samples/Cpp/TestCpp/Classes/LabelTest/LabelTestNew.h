@@ -10,6 +10,8 @@ class AtlasDemoNew : public BaseTest
 protected:
 
 public:
+    CREATE_FUNC(AtlasDemoNew);
+
     AtlasDemoNew(void);
     ~AtlasDemoNew(void);
 
@@ -25,6 +27,8 @@ public:
 class LabelTTFAlignmentNew : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelTTFAlignmentNew);
+
     LabelTTFAlignmentNew();
     virtual std::string title();
     virtual std::string subtitle();
@@ -34,6 +38,8 @@ class LabelFNTColorAndOpacity : public AtlasDemoNew
 {
     float        _time;
 public:
+    CREATE_FUNC(LabelFNTColorAndOpacity);
+
     LabelFNTColorAndOpacity();
 
     virtual void step(float dt);
@@ -46,6 +52,8 @@ class LabelFNTSpriteActions : public AtlasDemoNew
 {
     float        _time;
 public:
+    CREATE_FUNC(LabelFNTSpriteActions);
+
     LabelFNTSpriteActions();
     virtual void step(float dt);
     virtual void draw();
@@ -57,6 +65,8 @@ public:
 class LabelFNTPadding : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTPadding);
+
     LabelFNTPadding();
     virtual std::string title();
     virtual std::string subtitle();
@@ -66,6 +76,8 @@ public:
 class LabelFNTOffset : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTOffset);
+
     LabelFNTOffset();
     virtual std::string title();
     virtual std::string subtitle();
@@ -74,6 +86,8 @@ public:
 class LabelFNTColor : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTColor);
+
     LabelFNTColor();
     virtual std::string title();
 
@@ -83,6 +97,8 @@ public:
 class LabelFNTHundredLabels : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTHundredLabels);
+
     LabelFNTHundredLabels();
     virtual std::string title();
     virtual std::string subtitle();
@@ -91,6 +107,8 @@ public:
 class LabelFNTMultiLine : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTMultiLine);
+
     LabelFNTMultiLine();
     virtual std::string title();
     virtual std::string subtitle();
@@ -99,6 +117,8 @@ public:
 class LabelFNTandTTFEmpty : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTandTTFEmpty);
+
     LabelFNTandTTFEmpty();
     void updateStrings(float dt);
     virtual std::string title();
@@ -111,6 +131,8 @@ private:
 class LabelFNTRetina : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTRetina);
+
     LabelFNTRetina();
     virtual std::string title();
     virtual std::string subtitle();
@@ -119,6 +141,8 @@ public:
 class LabelFNTGlyphDesigner : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTGlyphDesigner);
+
     LabelFNTGlyphDesigner();
     virtual std::string title();
     virtual std::string subtitle();
@@ -127,12 +151,16 @@ public:
 class AtlasTestSceneNew : public TestScene
 {
 public:
+    CREATE_FUNC(AtlasTestSceneNew);
+
     virtual void runThisTest();
 };
 
 class LabelTTFUnicodeChinese : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelTTFUnicodeChinese);
+
     LabelTTFUnicodeChinese();
     virtual std::string title();
     virtual std::string subtitle();
@@ -141,6 +169,8 @@ public:
 class LabelFNTUnicodeChinese : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTUnicodeChinese);
+
     LabelFNTUnicodeChinese();
     virtual std::string title();
     virtual std::string subtitle();
@@ -149,6 +179,8 @@ public:
 class LabelFNTMultiLineAlignment : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTMultiLineAlignment);
+
     LabelFNTMultiLineAlignment();
     ~LabelFNTMultiLineAlignment();
     void snapArrowsToEdge();
@@ -171,6 +203,8 @@ public:
 class LabelFNTUNICODELanguages : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTUNICODELanguages);
+
     LabelFNTUNICODELanguages();
 
     virtual std::string title();
@@ -180,6 +214,8 @@ public:
 class LabelFNTBounds : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFNTBounds);
+
     LabelFNTBounds();
     
     virtual void draw();
@@ -192,6 +228,7 @@ private:
 class LabelTTFLongLineWrapping : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelTTFLongLineWrapping);
 
     LabelTTFLongLineWrapping();
 
@@ -202,6 +239,7 @@ public:
 class LabelTTFColor : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelTTFColor);
 
     LabelTTFColor();
 
@@ -212,7 +250,8 @@ public:
 class LabelTTFUnicodeNew : public AtlasDemoNew
 {
 public:
-    
+    CREATE_FUNC(LabelTTFUnicodeNew);
+
     LabelTTFUnicodeNew();
     
     virtual std::string title();
@@ -222,7 +261,8 @@ public:
 class LabelTTFDynamicAlignment : public AtlasDemoNew
 {
 public:
-    
+    CREATE_FUNC(LabelTTFDynamicAlignment);
+
     LabelTTFDynamicAlignment();
     virtual std::string title();
     virtual std::string subtitle();
@@ -243,6 +283,7 @@ private:
 class LabelTTFFontsTestNew : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelTTFFontsTestNew);
 
     LabelTTFFontsTestNew();
 
@@ -254,6 +295,7 @@ public:
 class LabelBMFontTestNew : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelBMFontTestNew);
 
     LabelBMFontTestNew();
 
@@ -266,6 +308,7 @@ private:
 class LabelFontDefTestNew : public AtlasDemoNew
 {
 public:
+    CREATE_FUNC(LabelFontDefTestNew);
 
     LabelFontDefTestNew();
 

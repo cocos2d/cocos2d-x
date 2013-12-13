@@ -52,6 +52,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(TexturePNG),
     CL(TextureJPEG),
     CL(TextureTIFF),
+    CL(TextureTGA),
     CL(TextureWEBP),
     CL(TexturePixelFormat),
     CL(TextureBlend),
@@ -85,12 +86,6 @@ static int sceneIdx=-1;
 Layer* createTextureTest(int index)
 {
     auto layer = (createFunctions[index])();;
-
-    if (layer)
-    {
-        layer->autorelease();
-    }
-
     return layer;
 }
 
@@ -145,26 +140,23 @@ TextureDemo::~TextureDemo()
 
 void TextureDemo::restartCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(restartTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 void TextureDemo::nextCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(nextTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 void TextureDemo::backCallback(Object* sender)
 {
-    auto s = new TextureTestScene();
+    auto s = TextureTestScene::create();
     s->addChild(backTextureTest());
     Director::getInstance()->replaceScene(s);
-    s->autorelease();
 }
 
 std::string TextureDemo::title()
@@ -197,6 +189,29 @@ void TextureTIFF::onEnter()
 std::string TextureTIFF::title()
 {
     return "TIFF Test";
+}
+
+
+//------------------------------------------------------------------
+//
+// TextureTGA
+//
+//------------------------------------------------------------------
+
+void TextureTGA::onEnter()
+{
+    TextureDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto img = Sprite::create("TileMaps/levelmap.tga");
+    img->setPosition(Point( s.width/2.0f, s.height/2.0f));
+    this->addChild(img);
+    Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
+}
+
+std::string TextureTGA::title()
+{
+    return "TGA Test";
 }
 
 //------------------------------------------------------------------

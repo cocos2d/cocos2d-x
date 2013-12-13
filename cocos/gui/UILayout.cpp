@@ -214,10 +214,10 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->initWithFile(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setTexture(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->initWithSpriteFrameName(fileName);
+                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
                 break;
             default:
                 break;

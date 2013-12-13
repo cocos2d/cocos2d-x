@@ -678,22 +678,17 @@ void ShaderRetroEffect::update(float dt)
 {
     _accum += dt;
 
-    auto pArray = _label->getChildren();
-
     int i=0;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(pArray, pObj)
-    {
-        auto sprite = static_cast<Sprite*>(pObj);
+    _label->getChildren().forEach([&i, this](Node* sprite){
         i++;
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
-
+        
         // add fabs() to prevent negative scaling
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
-
+        
         sprite->setScaleY(scaleY);
-    }
+    });
 }
 
 std::string ShaderRetroEffect::title()

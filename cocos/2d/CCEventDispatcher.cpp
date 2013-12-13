@@ -190,17 +190,17 @@ EventDispatcher::~EventDispatcher()
 void EventDispatcher::visitTarget(Node* node)
 {    
     int i = 0;
-    Array* children = node->getChildren();
-    int childrenCount = children ? children->count() : 0;
+    auto& children = node->getChildren();
+    
+    auto childrenCount = children.size();
     
     if(childrenCount > 0)
     {
-        
         Node* child = nullptr;
         // visit children zOrder < 0
         for( ; i < childrenCount; i++ )
         {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            child = children.at(i);
             
             if ( child && child->getZOrder() < 0 )
                 visitTarget(child);
@@ -212,7 +212,7 @@ void EventDispatcher::visitTarget(Node* node)
         
         for( ; i < childrenCount; i++ )
         {
-            child = static_cast<Node*>( children->getObjectAtIndex(i) );
+            child = children.at(i);
             if (child)
                 visitTarget(child);
         }
@@ -491,7 +491,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
     auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
     auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
     
-    long i = 0;
+    int i = 0;
     // priority < 0
     if (fixedPriorityListeners)
     {
@@ -527,7 +527,7 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority > 0
-            for (; i < static_cast<long>(fixedPriorityListeners->size()); ++i)
+            for (; i < fixedPriorityListeners->size(); ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
                 
@@ -976,7 +976,7 @@ void EventDispatcher::sortEventListenersOfFixedPriority(EventListener::ListenerI
     });
     
     // FIXME: Should use binary search
-    long index = 0;
+    int index = 0;
     for (auto& listener : *fixedlisteners)
     {
         if (listener->getFixedPriority() >= 0)
@@ -1080,7 +1080,7 @@ void EventDispatcher::removeCustomEventListeners(const std::string& customEventN
 
 void EventDispatcher::removeAllEventListeners()
 {
-    std::vector<int> types(_listeners.size());
+    std::vector<EventListener::ListenerID> types(_listeners.size());
 
     for (auto iter = _listeners.begin(); iter != _listeners.end(); ++iter)
     {

@@ -158,10 +158,6 @@ void DataReaderHelper::loadData()
 
     while (true)
     {
-        // create autorelease pool for iOS
-        Thread thread;
-        thread.createAutoreleasePool();
-
         std::queue<AsyncStruct *> *pQueue = _asyncStructQueue;
         _asyncStructQueueMutex.lock(); // get async struct from queue
         if (pQueue->empty())
@@ -299,7 +295,7 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    long size;
+    ssize_t size;
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
     char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
@@ -399,7 +395,7 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
     std::string str = &filePathStr[startPos];
 
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    long size;
+    ssize_t size;
 
     // XXX fileContent is being leaked
     data->fileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);

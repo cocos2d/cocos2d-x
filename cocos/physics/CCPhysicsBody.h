@@ -25,23 +25,21 @@
 #ifndef __CCPHYSICS_BODY_H__
 #define __CCPHYSICS_BODY_H__
 
-#include "CCPhysicsSetting.h"
+#include "ccConfig.h"
 #ifdef CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"
-#include "CCArray.h"
-
 #include "CCPhysicsShape.h"
-
-#include <vector>
+#include "CCVector.h"
 
 NS_CC_BEGIN
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
-
 class PhysicsBodyInfo;
+
+typedef Point Vect;
 
 
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
@@ -50,7 +48,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * A body affect by physics.
  * it can attach one or more shapes.
  * if you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
- * if you create body with createEdgeXXX, the mass and moment will be INFINITY by default. and it's a static body.
+ * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
 class PhysicsBody : public Object
@@ -102,9 +100,9 @@ public:
     /* remove all shapes */
     void removeAllShapes(bool reduceMassAndMoment = true);
     /* get the body shapes. */
-    inline Array* getShapes() const { return _shapes; }
+    inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
     /* get the first shape of the body shapes. */
-    inline PhysicsShape* getFirstShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    inline PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
     /* get the shape of the body. */
     PhysicsShape* getShape(int tag) const;
     
@@ -304,7 +302,7 @@ protected:
 protected:
     Node*                       _node;
     std::vector<PhysicsJoint*>  _joints;
-    Array*                      _shapes;
+    Vector<PhysicsShape*>       _shapes;
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;

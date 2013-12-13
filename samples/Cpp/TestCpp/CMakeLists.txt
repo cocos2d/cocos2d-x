@@ -125,6 +125,7 @@ set(SAMPLE_SRC
   Classes/SpineTest/SpineTest.cpp
   Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
+  Classes/ConsoleTest/ConsoleTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   Classes/AppDelegate.cpp

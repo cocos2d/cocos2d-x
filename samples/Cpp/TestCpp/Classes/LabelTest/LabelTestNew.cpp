@@ -74,8 +74,6 @@ Layer* nextAtlasActionNew()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -87,16 +85,12 @@ Layer* backAtlasActionNew()
         sceneIdx += total;    
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartAtlasActionNew()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 

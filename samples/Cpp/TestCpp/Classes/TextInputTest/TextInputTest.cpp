@@ -164,13 +164,13 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
     // move all the children node of KeyboardNotificationLayer
-    auto children = getChildren();
+    auto& children = getChildren();
     Node * node = 0;
-    int count = children->count();
+    int count = children.size();
     Point pos;
     for (int i = 0; i < count; ++i)
     {
-        node = (Node*)children->getObjectAtIndex(i);
+        node = children.at(i);
         pos = node->getPosition();
         pos.y += adjustVert;
         node->setPosition(pos);

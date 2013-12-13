@@ -121,7 +121,7 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->initWithFile(texture);
+                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setTexture(texture);
             }
             break;
         case UI_TEX_TYPE_PLIST:
@@ -132,7 +132,7 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
             }
             else
             {
-                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
+                dynamic_cast<cocos2d::Sprite*>(_barRenderer)->setSpriteFrame(texture);
             }
             break;
         default:

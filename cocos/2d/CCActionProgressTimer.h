@@ -44,9 +44,6 @@ public:
     /** Creates and initializes with a duration and a percent */
     static ProgressTo* create(float duration, float fPercent);
 
-    /** Initializes with a duration and a percent */
-    bool initWithDuration(float duration, float fPercent);
-
     //
     // Overrides
     //
@@ -56,8 +53,16 @@ public:
     virtual void update(float time) override;
 
 protected:
+    ProgressTo() {}
+    virtual ~ProgressTo() {}
+    /** Initializes with a duration and a percent */
+    bool initWithDuration(float duration, float fPercent);
+
     float _to;
     float _from;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ProgressTo);
 };
 
 /**
@@ -70,9 +75,6 @@ public:
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
     static ProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
 
-    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
-    bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
-
     //
     // Overrides
     //
@@ -82,8 +84,16 @@ public:
     virtual void update(float time) override;
 
 protected:
+    ProgressFromTo() {}
+    virtual ~ProgressFromTo() {}
+    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
+    bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
+
     float _to;
     float _from;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ProgressFromTo);
 };
 
 // end of actions group

@@ -33,7 +33,6 @@ THE SOFTWARE.
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
-#include "CCPhysicsSetting.h"
 
 #include "CCEventKeyboard.h"
 
@@ -63,28 +62,18 @@ class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
-    static Layer *create(void);
-    /**
-     * @js ctor
-     */
-    Layer();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Layer();
-    virtual bool init();
-    
+    static Layer *create();
+
     // Deprecated touch callbacks.
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -168,19 +157,34 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
-protected:      
+    // Overrides
+    virtual std::string getDescription() const override;
+
+protected:
+    Layer();
+    virtual ~Layer();
+    virtual bool init();
+
+    //add the api for avoid use deprecated api
+    void _addTouchListener();
+
+    CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
+    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
+
     bool _touchEnabled;
     bool _accelerometerEnabled;
     bool _keyboardEnabled;
     EventListener* _touchListener;
     EventListenerKeyboard* _keyboardListener;
     EventListenerAcceleration* _accelerationListener;
-private:   
+
     Touch::DispatchMode _touchMode;
     bool _swallowsTouches;
 
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches);
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Layer);
+
 };
 
 
@@ -195,17 +199,7 @@ class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
 {
 public:
     CREATE_FUNC(LayerRGBA);
-    /**
-     * @js ctor
-     */
-    LayerRGBA();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerRGBA();
-    
-    virtual bool init();
+
 
     //
     // Overrides
@@ -223,13 +217,23 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual bool isCascadeColorEnabled() const override;
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-    
+    virtual std::string getDescription() const override;
+
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const override { return false; }
+
+
 protected:
+    LayerRGBA();
+    virtual ~LayerRGBA();
+    virtual bool init();
+
 	GLubyte		_displayedOpacity, _realOpacity;
 	Color3B	    _displayedColor, _realColor;
 	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
 };
 
 //
@@ -253,27 +257,6 @@ public:
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
     static LayerColor * create(const Color4B& color);
-    /**
-     * @js ctor
-     */
-    LayerColor();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerColor();
-
-    virtual bool init();
-    /** initializes a Layer with color, width and height in Points 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
-    /** initializes a Layer with color. Width and height are the window size. 
-     * @js init
-     * @lua init
-     */
-    bool initWithColor(const Color4B& color);
 
     /** change width in Points*/
     void changeWidth(GLfloat w);
@@ -306,12 +289,24 @@ public:
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
+    virtual std::string getDescription() const override;
+
 protected:
+    LayerColor();
+    virtual ~LayerColor();
+    virtual bool init();
+    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color);
+
     virtual void updateColor();
 
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
+
 };
 
 //
@@ -394,6 +389,8 @@ public:
     /** Returns the directional vector used for the gradient */
     const Point& getVector() const;
 
+    virtual std::string getDescription() const override;
+
 protected:
     virtual void updateColor() override;
 
@@ -424,7 +421,7 @@ public:
      @since v2.1
      * @js NA
      */
-    static LayerMultiplex* createWithArray(Array* arrayOfLayers);
+    static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
     /** creates a LayerMultiplex with one or more layers using a variable argument list. 
      * @code
@@ -442,27 +439,7 @@ public:
      * @lua NA
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
-    /**
-     * @js ctor
-     */
-    LayerMultiplex();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LayerMultiplex();
 
-    virtual bool init();
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list. 
-     * @js NA
-     * @lua NA
-     */
-    bool initWithLayers(Layer* layer, va_list params);
-
-    /** initializes a MultiplexLayer with an array of layers
-     @since v2.1
-     */
-    bool initWithArray(Array* arrayOfLayers);
 
     void addLayer(Layer* layer);
 
@@ -475,9 +452,37 @@ public:
     */
     void switchToAndReleaseMe(int n);
 
+    virtual std::string getDescription() const override;
+
 protected:
+    
+    /**
+     * @js ctor
+     */
+    LayerMultiplex();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~LayerMultiplex();
+    
+    virtual bool init();
+    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
+     * @js NA
+     * @lua NA
+     */
+    bool initWithLayers(Layer* layer, va_list params);
+    
+    /** initializes a MultiplexLayer with an array of layers
+     @since v2.1
+     */
+    bool initWithArray(const Vector<Layer*>& arrayOfLayers);
+    
     unsigned int _enabledLayer;
-    Array*     _layers;
+    Vector<Layer*>    _layers;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(LayerMultiplex);
 };
 
 

@@ -163,14 +163,14 @@ void BatchNode::visit()
 
 void BatchNode::draw()
 {
-    if (_children == nullptr)
+    if (_children.empty())
     {
         return;
     }
 
     CC_NODE_DRAW_SETUP();
 
-    for(auto object : *_children)
+    for(auto object : _children)
     {
         Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)

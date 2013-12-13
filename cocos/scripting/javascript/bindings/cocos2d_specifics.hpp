@@ -191,7 +191,7 @@ public:
 
 private:
     JSObject* _obj;
-    typedef std::map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
+    typedef std::unordered_map<JSObject*, JSTouchDelegate*> TouchDelegateMap;
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
     bool _needUnroot;

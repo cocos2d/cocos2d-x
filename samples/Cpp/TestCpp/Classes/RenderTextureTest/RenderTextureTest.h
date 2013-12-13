@@ -20,6 +20,7 @@ public:
 class RenderTextureSave : public RenderTextureTest
 {
 public:
+    CREATE_FUNC(RenderTextureSave);
     RenderTextureSave();
     ~RenderTextureSave();
     virtual std::string title();
@@ -36,6 +37,7 @@ private:
 class RenderTextureIssue937 : public RenderTextureTest
 {
 public:
+    CREATE_FUNC(RenderTextureIssue937);
     RenderTextureIssue937();
     virtual std::string title();
     virtual std::string subtitle();
@@ -50,6 +52,7 @@ public:
 class RenderTextureZbuffer : public RenderTextureTest
 {
 public:
+    CREATE_FUNC(RenderTextureZbuffer);
     RenderTextureZbuffer();
 
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
@@ -77,6 +80,7 @@ private:
 class RenderTextureTestDepthStencil : public RenderTextureTest
 {
 public:
+    CREATE_FUNC(RenderTextureTestDepthStencil);
     RenderTextureTestDepthStencil();
     virtual std::string title();
     virtual std::string subtitle();
@@ -88,6 +92,7 @@ private:
     cocos2d::Sprite *sprite1, *sprite2;
     cocos2d::RenderTexture *renderTexture;
 public:
+    CREATE_FUNC(RenderTextureTargetNode);
     RenderTextureTargetNode();
     
     virtual void update(float t);
@@ -101,19 +106,20 @@ class SpriteRenderTextureBug : public RenderTextureTest
 {
 public:
     
-class SimpleSprite : public Sprite
-{
+    class SimpleSprite : public Sprite
+    {
     public:
+        static SimpleSprite* create(const char* filename, const Rect &rect);
         SimpleSprite();
         virtual void draw();
         
-        static SimpleSprite* create(const char* filename, const Rect &rect);
-        
+
     public:
-        RenderTexture *rt;
-};
+        RenderTexture *_rt;
+    };
         
 public:
+    CREATE_FUNC(SpriteRenderTextureBug);
     SpriteRenderTextureBug();
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);

@@ -48,31 +48,35 @@ void ScheduleHandlerDelegate::update(float elapse)
 }
 
 
-LuaCallFunc * LuaCallFunc::create(int nHandler)
+LuaCallFunc * LuaCallFunc::create(const std::function<void(void* ,Node*)>& func)
 {
-    LuaCallFunc *ret = new LuaCallFunc();
-    if (NULL != ret )
-    {
+    auto ret = new LuaCallFunc();
+    
+    if (ret && ret->initWithFunction(func) ) {
         ret->autorelease();
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, nHandler, ScriptHandlerMgr::HandlerType::CALLFUNC);
         return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return NULL;
+}
+
+void LuaCallFunc::execute()
+{
+    if (_functionLua)
+    {
+        _functionLua((void*)this,_target);
     }
     else
     {
-        CC_SAFE_DELETE(ret);
-        return NULL;
+        CallFuncN::execute();
     }
 }
-void LuaCallFunc::execute()
+
+bool LuaCallFunc::initWithFunction(const std::function<void (void*, Node*)> &func)
 {
-    int handler =  ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::CALLFUNC);
-    
-    if (0 == handler)
-        return ;
-    
-    BasicScriptData data((void*)this,(void*)_target);
-    ScriptEvent event(kCallFuncEvent,(void*)&data);
-    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    _functionLua = func;
+    return true;
 }
 
 LuaCallFunc* LuaCallFunc::clone() const
@@ -83,13 +87,18 @@ LuaCallFunc* LuaCallFunc::clone() const
         return NULL;
     
     auto ret = new LuaCallFunc();
+    
+    if( _functionLua )
+    {
+        ret->initWithFunction(_functionLua);
+    }
+    
+    ret->autorelease();
 
     int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
     
     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)ret, newscriptHandler, ScriptHandlerMgr::HandlerType::CALLFUNC);
-    
-    ret->autorelease();
-    
+        
     return ret;
 }
 
@@ -203,110 +212,6 @@ void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
 }
 
 NS_CC_END
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,4,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            int handler = (  toluafix_ref_function(tolua_S,2,0));
-            ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)((int)tolua_tonumber(tolua_S,3,0) + (int)ScriptHandlerMgr::HandlerType::WEBSOCKET_OPEN);
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (
-        !tolua_isusertype(tolua_S,1,"WebSocket",0,&tolua_err) ||
-        !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err)
-        )
-        goto tolua_lerror;
-    else
-#endif
-    {
-        LuaWebSocket* self    = (LuaWebSocket*)  tolua_tousertype(tolua_S,1,0);
-        if (NULL != self ) {
-            ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)((int)tolua_tonumber(tolua_S,2,0) + (int)ScriptHandlerMgr::HandlerType::WEBSOCKET_OPEN);
-
-            ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
-        }
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-#endif
-
-int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
-        !tolua_isnoobj(tolua_S,3,&tolua_err))
-        goto tolua_lerror;
-    else
-#endif
-    {
-        GLNode* glNode = (GLNode*)  tolua_tousertype(tolua_S,1,0);
-        LUA_FUNCTION handler = (  toluafix_ref_function(tolua_S,2,0));
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)glNode, handler, ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'registerScriptDrawHandler'.",&tolua_err);
-    return 0;
-#endif
-}
-
-
-int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isnoobj(tolua_S,2,&tolua_err))
-        goto tolua_lerror;
-    else
-#endif
-    {
-        GLNode* glNode = (GLNode*)tolua_tousertype(tolua_S,1,0);
-        ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)glNode,ScriptHandlerMgr::HandlerType::GL_NODE_DRAW);
-    }
-    return 0;
-#ifndef TOLUA_RELEASE
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'unregisterScriptDrawHandler'.",&tolua_err);
-    return 0;
-#endif
-}
 
 
 static void tolua_reg_script_handler_mgr_type(lua_State* tolua_S)

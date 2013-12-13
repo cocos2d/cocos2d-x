@@ -534,22 +534,12 @@ CC_DEPRECATED_ATTRIBUTE static inline AffineTransform CCAffineTransformIdentity(
 // CC prefix compatibility
 CC_DEPRECATED_ATTRIBUTE typedef Object CCObject;
 CC_DEPRECATED_ATTRIBUTE typedef Event CCEvent;
-CC_DEPRECATED_ATTRIBUTE typedef Integer CCInteger;
-CC_DEPRECATED_ATTRIBUTE typedef String CCString;
-CC_DEPRECATED_ATTRIBUTE typedef Bool CCBool;
-CC_DEPRECATED_ATTRIBUTE typedef Float CCFloat;
-CC_DEPRECATED_ATTRIBUTE typedef Double CCDouble;
-CC_DEPRECATED_ATTRIBUTE typedef Data CCData;
-CC_DEPRECATED_ATTRIBUTE typedef Set CCSet;
-CC_DEPRECATED_ATTRIBUTE typedef Array CCArray;
-CC_DEPRECATED_ATTRIBUTE typedef Dictionary CCDictionary;
 CC_DEPRECATED_ATTRIBUTE typedef DataVisitor CCDataVisitor;
 CC_DEPRECATED_ATTRIBUTE typedef PrettyPrinter CCPrettyPrinter;
 CC_DEPRECATED_ATTRIBUTE typedef Acceleration CCAcceleration;
 CC_DEPRECATED_ATTRIBUTE typedef TextureAtlas CCTextureAtlas;
 CC_DEPRECATED_ATTRIBUTE typedef Configuration CCConfiguration;
 CC_DEPRECATED_ATTRIBUTE typedef PointArray CCPointArray;
-CC_DEPRECATED_ATTRIBUTE typedef SetIterator CCSetIterator;
 CC_DEPRECATED_ATTRIBUTE typedef RemoveSelf CCRemoveSelf;
 CC_DEPRECATED_ATTRIBUTE typedef IMEDelegate CCIMEDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef IMEKeyboardNotificationInfo CCIMEKeyboardNotificationInfo;
@@ -568,7 +558,6 @@ CC_DEPRECATED_ATTRIBUTE typedef Speed CCSpeed;
 CC_DEPRECATED_ATTRIBUTE typedef Follow CCFollow;
 CC_DEPRECATED_ATTRIBUTE typedef GLProgram CCGLProgram;
 CC_DEPRECATED_ATTRIBUTE typedef Touch CCTouch;
-CC_DEPRECATED_ATTRIBUTE typedef Set CCSet;
 CC_DEPRECATED_ATTRIBUTE typedef Texture2D CCTexture2D;
 CC_DEPRECATED_ATTRIBUTE typedef Node CCNode;
 CC_DEPRECATED_ATTRIBUTE typedef NodeRGBA CCNodeRGBA;
@@ -1027,6 +1016,29 @@ CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLDeleteTextureN(GLuint textureUnit
 CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLBindVAO(GLuint vaoId) { GL::bindVAO(vaoId); }
 CC_DEPRECATED_ATTRIBUTE inline void CC_DLL ccGLEnable( int flags ) { /* ignore */ };
 CC_DEPRECATED_ATTRIBUTE typedef int ccGLServerState;
+
+CC_DEPRECATED_ATTRIBUTE typedef Data CCData;
+CC_DEPRECATED_ATTRIBUTE typedef __Set CCSet;
+CC_DEPRECATED_ATTRIBUTE typedef __SetIterator CCSetIterator;
+CC_DEPRECATED_ATTRIBUTE typedef __Set Set;
+CC_DEPRECATED_ATTRIBUTE typedef __SetIterator SetIterator;
+
+CC_DEPRECATED_ATTRIBUTE typedef __Array CCArray;
+CC_DEPRECATED_ATTRIBUTE typedef __Array Array;
+
+CC_DEPRECATED_ATTRIBUTE typedef __Dictionary Dictionary;
+CC_DEPRECATED_ATTRIBUTE typedef __Dictionary CCDictionary;
+
+CC_DEPRECATED_ATTRIBUTE typedef __Double Double;
+CC_DEPRECATED_ATTRIBUTE typedef __Double CCDouble;
+CC_DEPRECATED_ATTRIBUTE typedef __Float Float;
+CC_DEPRECATED_ATTRIBUTE typedef __Float CCFloat;
+CC_DEPRECATED_ATTRIBUTE typedef __Integer Integer;
+CC_DEPRECATED_ATTRIBUTE typedef __Integer CCInteger;
+CC_DEPRECATED_ATTRIBUTE typedef __Bool Bool;
+CC_DEPRECATED_ATTRIBUTE typedef __Bool CCBool;
+CC_DEPRECATED_ATTRIBUTE typedef __String CCString;
+//CC_DEPRECATED_ATTRIBUTE typedef __String String;
 
 NS_CC_END
 

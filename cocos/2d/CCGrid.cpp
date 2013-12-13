@@ -113,13 +113,13 @@ bool GridBase::initWithSize(const Size& gridSize)
     Director *pDirector = Director::getInstance();
     Size s = pDirector->getWinSizeInPixels();
     
-    unsigned long POTWide = ccNextPOT((unsigned int)s.width);
-    unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
+    auto POTWide = ccNextPOT((unsigned int)s.width);
+    auto POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
-    long dataLen = POTWide * POTHigh * 4;
+    auto dataLen = POTWide * POTHigh * 4;
     void *data = calloc(dataLen, 1);
     if (! data)
     {

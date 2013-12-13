@@ -32,7 +32,7 @@
 
 #include "platform/CCFileUtils.h"
 
- using namespace cocos2d;
+using namespace cocos2d;
 
 namespace network {
 
@@ -42,7 +42,6 @@ static std::mutex       s_responseQueueMutex;
 static std::mutex		s_SleepMutex;
 static std::condition_variable		s_SleepCondition;
 
-static unsigned long    s_asyncRequestCount = 0;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 typedef int int32_t;
@@ -50,12 +49,12 @@ typedef int int32_t;
 
 static bool s_need_quit = false;
 
-static Array* s_requestQueue = NULL;
-static Array* s_responseQueue = NULL;
+static Vector<HttpRequest*>*  s_requestQueue = nullptr;
+static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
 static HttpClient *s_pHttpClient = NULL; // pointer to singleton
 
-static char s_errorBuffer[CURL_ERROR_SIZE];
+static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 
@@ -96,9 +95,11 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 
 
 // Worker thread
-static void networkThread(void)
+void HttpClient::networkThread()
 {    
     HttpRequest *request = NULL;
+    
+    auto scheduler = Director::getInstance()->getScheduler();
     
     while (true) 
     {
@@ -114,10 +115,10 @@ static void networkThread(void)
         
         //Get request task from queue
         
-        if (0 != s_requestQueue->count())
+        if (!s_requestQueue->empty())
         {
-            request = dynamic_cast<HttpRequest*>(s_requestQueue->getObjectAtIndex(0));
-            s_requestQueue->removeObjectAtIndex(0);
+            request = s_requestQueue->at(0);
+            s_requestQueue->erase(0);
         }
         
         s_requestQueueMutex.unlock();
@@ -202,26 +203,23 @@ static void networkThread(void)
         
         // add response packet into queue
         s_responseQueueMutex.lock();
-        s_responseQueue->addObject(response);
+        s_responseQueue->pushBack(response);
         s_responseQueueMutex.unlock();
         
-        // resume dispatcher selector
-        Director::getInstance()->getScheduler()->resumeTarget(HttpClient::getInstance());
+        scheduler->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
     }
     
     // cleanup: if worker thread received quit signal, clean up un-completed request queue
     s_requestQueueMutex.lock();
-    s_requestQueue->removeAllObjects();
+    s_requestQueue->clear();
     s_requestQueueMutex.unlock();
     
-    s_asyncRequestCount -= s_requestQueue->count();
     
-    if (s_requestQueue != NULL) {
-
-        s_requestQueue->release();
-        s_requestQueue = NULL;
-        s_responseQueue->release();
-        s_responseQueue = NULL;
+    if (s_requestQueue != nullptr) {
+        delete s_requestQueue;
+        s_requestQueue = nullptr;
+        delete s_responseQueue;
+        s_responseQueue = nullptr;
     }
     
 }
@@ -399,7 +397,6 @@ HttpClient* HttpClient::getInstance()
 void HttpClient::destroyInstance()
 {
     CCASSERT(s_pHttpClient, "");
-    Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(HttpClient::dispatchResponseCallbacks), s_pHttpClient);
     s_pHttpClient->release();
 }
 
@@ -416,9 +413,6 @@ HttpClient::HttpClient()
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 {
-    Director::getInstance()->getScheduler()->scheduleSelector(
-                    schedule_selector(HttpClient::dispatchResponseCallbacks), this, 0, false);
-    Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
 HttpClient::~HttpClient()
@@ -439,14 +433,10 @@ bool HttpClient::lazyInitThreadSemphore()
         return true;
     } else {
         
-        s_requestQueue = new Array();
-        s_requestQueue->init();
+        s_requestQueue = new Vector<HttpRequest*>();
+        s_responseQueue = new Vector<HttpResponse*>();
         
-        s_responseQueue = new Array();
-        s_responseQueue->init();
-
-        
-        auto t = std::thread(&networkThread);
+        auto t = std::thread(CC_CALLBACK_0(HttpClient::networkThread, this));
         t.detach();
         
         s_need_quit = false;
@@ -468,12 +458,10 @@ void HttpClient::send(HttpRequest* request)
         return;
     }
         
-    ++s_asyncRequestCount;
-    
     request->retain();
     
     s_requestQueueMutex.lock();
-    s_requestQueue->addObject(request);
+    s_requestQueue->pushBack(request);
     s_requestQueueMutex.unlock();
     
     // Notify thread start to work
@@ -481,7 +469,7 @@ void HttpClient::send(HttpRequest* request)
 }
 
 // Poll and notify main thread if responses exists in queue
-void HttpClient::dispatchResponseCallbacks(float delta)
+void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
     
@@ -489,18 +477,16 @@ void HttpClient::dispatchResponseCallbacks(float delta)
     
     s_responseQueueMutex.lock();
 
-    if (s_responseQueue->count())
+    if (!s_responseQueue->empty())
     {
-        response = dynamic_cast<HttpResponse*>(s_responseQueue->getObjectAtIndex(0));
-        s_responseQueue->removeObjectAtIndex(0);
+        response = s_responseQueue->at(0);
+        s_responseQueue->erase(0);
     }
     
     s_responseQueueMutex.unlock();
     
     if (response)
     {
-        --s_asyncRequestCount;
-        
         HttpRequest *request = response->getHttpRequest();
         Object *pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
@@ -512,12 +498,6 @@ void HttpClient::dispatchResponseCallbacks(float delta)
         
         response->release();
     }
-    
-    if (0 == s_asyncRequestCount) 
-    {
-        Director::getInstance()->getScheduler()->pauseTarget(this);
-    }
-    
 }
 
 }

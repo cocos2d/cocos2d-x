@@ -25,6 +25,11 @@ THE SOFTWARE.
 #ifndef __CC_STD_C_H__
 #define __CC_STD_C_H__
 
+//typedef SSIZE_T ssize_t;
+// ssize_t was redefined as int in libwebsockets.h.
+// Therefore, to avoid conflict, we needs the same definition.
+typedef int ssize_t;
+
 #include "CCPlatformMacros.h"
 #include <float.h>
 
@@ -52,6 +57,12 @@ THE SOFTWARE.
 #include <stdlib.h>
 #include <time.h>
 
+#ifndef M_PI
+  #define M_PI      3.14159265358
+#endif
+#ifndef M_PI_2
+  #define M_PI_2    1.57079632679
+#endif
 // for MIN MAX and sys/time.h on win32 platform
 #ifdef __MINGW32__
 #include <sys/time.h>
@@ -73,7 +84,9 @@ THE SOFTWARE.
 #endif
 
 #define _WINSOCKAPI_
-#define NOMINMAX
+#ifndef NOMINMAX
+  #define NOMINMAX
+#endif
 // Structure timeval has define in winsock.h, include windows.h for it.
 #include <Windows.h>
 

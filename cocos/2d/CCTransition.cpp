@@ -77,7 +77,6 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
         if (_outScene == NULL)
         {
             _outScene = Scene::create();
-            _outScene->init();
         }
         _outScene->retain();
 

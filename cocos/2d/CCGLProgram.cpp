@@ -153,7 +153,7 @@ bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
-const char* GLProgram::description() const
+std::string GLProgram::getDescription() const
 {
     return String::createWithFormat("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
@@ -202,11 +202,11 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         
         if (type == GL_VERTEX_SHADER)
         {
-            CCLOG("cocos2d: %s", getVertexShaderLog());
+            CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
         }
         else
         {
-            CCLOG("cocos2d: %s", getFragmentShaderLog());
+            CCLOG("cocos2d: %s", getFragmentShaderLog().c_str());
         }
         free(src);
 
@@ -288,34 +288,35 @@ void GLProgram::use()
     GL::useProgram(_program);
 }
 
-const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
+std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
 {
+    std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
     infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
-        return 0;
+        return "";
 
     char *logBytes = (char*)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
 
-    String* log = String::create(logBytes);
+    ret = logBytes;
 
     free(logBytes);
-    return log->getCString();
+    return ret;
 }
 
-const char* GLProgram::getVertexShaderLog() const
+std::string GLProgram::getVertexShaderLog() const
 {
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::getFragmentShaderLog() const
+std::string GLProgram::getFragmentShaderLog() const
 {
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::getProgramLog() const
+std::string GLProgram::getProgramLog() const
 {
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }

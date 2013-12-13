@@ -58,21 +58,6 @@ public:
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
-    /**
-     * @js ctor
-     */
-    RenderTexture();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~RenderTexture();
-    
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
-
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
     void begin();
@@ -114,12 +99,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *szFilePath);
+    bool saveToFile(const std::string& filename);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *name, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -167,10 +152,20 @@ public:
     virtual void visit() override;
     virtual void draw() override;
 
-private:
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+public:
+    // XXX should be procted.
+    // but due to a bug in PowerVR + Android,
+    // the constructor is public again
+    RenderTexture();
+    virtual ~RenderTexture();
+    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
 protected:
+    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
@@ -192,6 +187,10 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
+
 };
 
 // end of textures group

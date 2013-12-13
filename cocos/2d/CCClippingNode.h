@@ -49,21 +49,7 @@ public:
      The stencil node will be retained.
      */
     static ClippingNode* create(Node *pStencil);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ClippingNode();
-    
-    /** Initializes a clipping node without a stencil.
-     */
-    virtual bool init();
-    
-    /** Initializes a clipping node with an other node as its stencil.
-     The stencil node will be retained, and its parent will be set to this clipping node.
-     */
-    virtual bool init(Node *pStencil);
-    
+
     /** The Node to use as a stencil to do the clipping.
      The stencil node will be retained.
      This default to nil.
@@ -109,18 +95,34 @@ public:
     virtual void onExit() override;
     virtual void visit() override;
 
-private:
+protected:
+    ClippingNode();
+
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ClippingNode();
+
+    /** Initializes a clipping node without a stencil.
+     */
+    virtual bool init();
+
+    /** Initializes a clipping node with an other node as its stencil.
+     The stencil node will be retained, and its parent will be set to this clipping node.
+     */
+    virtual bool init(Node *pStencil);
+
     /**draw fullscreen quad to clear stencil bits
     */
     void drawFullScreenQuadClearStencil();
 
-protected:
-    ClippingNode();
-
-protected:
     Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);
 };
 
 NS_CC_END

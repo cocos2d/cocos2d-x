@@ -193,10 +193,10 @@ void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
+                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setTexture(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
+                dynamic_cast<cocos2d::Sprite*>(_buttonNormalRenderer)->setSpriteFrame(normal);
                 break;
             default:
                 break;
@@ -239,10 +239,10 @@ void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
+                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setTexture(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
+                dynamic_cast<cocos2d::Sprite*>(_buttonClickedRenderer)->setSpriteFrame(selected);
                 break;
             default:
                 break;
@@ -285,10 +285,10 @@ void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
+                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setTexture(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
+                dynamic_cast<cocos2d::Sprite*>(_buttonDisableRenderer)->setSpriteFrame(disabled);
                 break;
             default:
                 break;

@@ -34,6 +34,7 @@ public:
 class TouchableSpriteTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(TouchableSpriteTest);
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -42,6 +43,7 @@ public:
 class FixedPriorityTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(FixedPriorityTest);
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -50,6 +52,7 @@ public:
 class RemoveListenerWhenDispatching : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(RemoveListenerWhenDispatching);
     virtual void onEnter();
     virtual std::string title();
     virtual std::string subtitle();
@@ -58,6 +61,7 @@ public:
 class CustomEventTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(CustomEventTest);
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() override;
@@ -70,6 +74,7 @@ private:
 class LabelKeyboardEventTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(LabelKeyboardEventTest);
     virtual void onEnter() override;
     virtual std::string title() override;
     virtual std::string subtitle() override;
@@ -78,6 +83,7 @@ public:
 class SpriteAccelerationEventTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(SpriteAccelerationEventTest);
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() override;
@@ -87,6 +93,7 @@ public:
 class RemoveAndRetainNodeTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(RemoveAndRetainNodeTest);
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() override;
@@ -99,6 +106,7 @@ private:
 class RemoveListenerAfterAddingTest : public EventDispatcherTestDemo
 {
 public:
+    CREATE_FUNC(RemoveListenerAfterAddingTest);
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual std::string title() override;

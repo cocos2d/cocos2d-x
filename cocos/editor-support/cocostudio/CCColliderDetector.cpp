@@ -201,7 +201,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     Array *calculatedVertexList = colliderBody->getCalculatedVertexList();
     
-    int num = contourData->vertexList.count();
+    int num = contourData->vertexList.size();
     for (int i = 0; i < num; i++)
     {
         ContourVertex2 *newVertex = new ContourVertex2(0, 0);
@@ -428,7 +428,7 @@ void ColliderDetector::setBody(b2Body *pBody)
         Array *array = &contourData->vertexList;
         Object *object = nullptr;
 
-        b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.count()];
+        b2Vec2 *b2bv = new b2Vec2[contourData->vertexList.size()];
 
         int i = 0;
         for(auto object : *array)
@@ -439,7 +439,7 @@ void ColliderDetector::setBody(b2Body *pBody)
         }
 
         b2PolygonShape polygon;
-        polygon.Set(b2bv, contourData->vertexList.count());
+        polygon.Set(b2bv, contourData->vertexList.size());
 
         CC_SAFE_DELETE(b2bv);
 

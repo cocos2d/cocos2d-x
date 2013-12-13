@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "platform/CCThread.h"
 #include "ccUtils.h"
 #include "CCScheduler.h"
 #include "CCString.h"
@@ -88,22 +87,10 @@ void TextureCache::purgeSharedTextureCache()
 { 
 }
 
-const char* TextureCache::description() const
+std::string TextureCache::getDescription() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
 }
-
-//Dictionary* TextureCache::snapshotTextures()
-//{ 
-//    Dictionary* pRet = new Dictionary();
-//    DictElement* pElement = NULL;
-//    CCDICT_FOREACH(_textures, pElement)
-//    {
-//        pRet->setObject(pElement->getObject(), pElement->getStrKey());
-//    }
-//    pRet->autorelease();
-//    return pRet;
-//}
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
 {
@@ -162,10 +149,6 @@ void TextureCache::loadImage()
 
     while (true)
     {
-        // create autorelease pool for iOS
-        Thread thread;
-        thread.createAutoreleasePool();
-
         std::queue<AsyncStruct*> *pQueue = _asyncStructQueue;
         _asyncStructQueueMutex.lock();
         if (pQueue->empty())
@@ -450,7 +433,7 @@ void TextureCache::dumpCachedTextureInfo() const
         Texture2D* tex = it->second;
         unsigned int bpp = tex->getBitsPerPixelForFormat();
         // Each texture takes up width * height * bytesPerPixel bytes.
-        long bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
+        auto bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
         count++;
         log("cocos2d: \"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB",
@@ -611,7 +594,7 @@ void VolatileTextureMgr::reloadAllTextures()
         case VolatileTexture::kImageFile:
             {
                 Image* image = new Image();
-                long size = 0;
+                ssize_t size = 0;
                 unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &size);
                 
                 if (image && image->initWithImageData(pBuffer, size))

@@ -30,14 +30,14 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 ComponentContainer::ComponentContainer(Node *pNode)
-: _components(NULL)
+: _components(nullptr)
 , _owner(pNode)
 {
 }
 
 ComponentContainer::~ComponentContainer(void)
 {
-    CC_SAFE_RELEASE(_components);
+    CC_SAFE_DELETE(_components);
 }
 
 Component* ComponentContainer::get(const char *pName) const
@@ -47,7 +47,7 @@ Component* ComponentContainer::get(const char *pName) const
     do {
         CC_BREAK_IF(NULL == pName);
         CC_BREAK_IF(NULL == _components);
-        pRet = dynamic_cast<Component*>(_components->objectForKey(pName));
+        pRet = _components->at(pName);
         
     } while (0);
     return pRet;
@@ -60,18 +60,17 @@ bool ComponentContainer::add(Component *pCom)
     CCASSERT(pCom->getOwner() == NULL, "Component already added. It can't be added again");
     do
     {
-        if (_components == NULL)
+        if (_components == nullptr)
         {
-            _components = Dictionary::create();
-            _components->retain();
+            _components = new Map<std::string, Component*>();
             _owner->scheduleUpdate();
         }
-        Component *pComponent = dynamic_cast<Component*>(_components->objectForKey(pCom->getName()));
+        Component *pComponent = _components->at(pCom->getName());
         
         CCASSERT(pComponent == NULL, "Component already added. It can't be added again");
         CC_BREAK_IF(pComponent);
         pCom->setOwner(_owner);
-        _components->setObject(pCom, pCom->getName());
+        _components->insert(pCom->getName(), pCom);
         pCom->onEnter();
         bRet = true;
     } while(0);
@@ -85,20 +84,16 @@ bool ComponentContainer::remove(const char *pName)
     do 
     {        
         CC_BREAK_IF(!_components);
-        Object* pRetObject = NULL;
-        DictElement *pElement = NULL;
-        HASH_FIND_PTR(_components->_elements, pName, pElement);
-        if (pElement != NULL)
-        {
-           pRetObject = pElement->getObject();
-        }
-        Component *com = dynamic_cast<Component*>(pRetObject);
-        CC_BREAK_IF(!com);
+        
+        auto iter = _components->find(pName);
+        CC_BREAK_IF(iter == _components->end());
+        
+        auto com = iter->second;
         com->onExit();
         com->setOwner(NULL);
-        HASH_DEL(_components->_elements, pElement);
-        pElement->getObject()->release();
-        CC_SAFE_DELETE(pElement);
+        
+        _components->erase(iter);
+        
         bRet = true;
     } while(0);
     return bRet;
@@ -106,42 +101,40 @@ bool ComponentContainer::remove(const char *pName)
 
 void ComponentContainer::removeAll()
 {
-    if (_components != NULL)
+    if (_components != nullptr)
     {
-        DictElement *pElement, *tmp;
-        HASH_ITER(hh, _components->_elements, pElement, tmp)
+        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            HASH_DEL(_components->_elements, pElement);
-            ((Component*)pElement->getObject())->onExit();
-            ((Component*)pElement->getObject())->setOwner(NULL);
-            pElement->getObject()->release();
-            CC_SAFE_DELETE(pElement);
+            iter->second->onExit();
+            iter->second->setOwner(NULL);
         }
+        
+        _components->clear();
+        CC_SAFE_DELETE(_components);
+        
         _owner->unscheduleUpdate();
     }
 }
 
 void ComponentContainer::alloc(void)
 {
-    _components = Dictionary::create();
-    _components->retain();
+    _components = new Map<std::string, Component*>();
 }
 
 void ComponentContainer::visit(float fDelta)
 {
-    if (_components != NULL)
+    if (_components != nullptr)
     {
-        DictElement *pElement, *tmp;
-        HASH_ITER(hh, _components->_elements, pElement, tmp)
+        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            ((Component*)pElement->getObject())->update(fDelta);
+            iter->second->update(fDelta);
         }
     }
 }
 
 bool ComponentContainer::isEmpty() const
 {
-    return (bool)(!(_components && _components->count()));
+    return (_components == nullptr || _components->empty());
 }
 
 NS_CC_END

@@ -39,8 +39,8 @@ NS_CC_BEGIN
 
 typedef struct
 {
-    unsigned int height;
-    unsigned int width;
+    int height;
+    int width;
     bool        hasAlpha;
     bool        isPremultipliedAlpha;
     unsigned char*  data;
@@ -138,8 +138,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 			dimensions.height = realDimensions.height;
 		}
 
-		NSUInteger POTWide = (NSUInteger)dimensions.width;
-		NSUInteger POTHigh = (NSUInteger)(MAX(dimensions.height, realDimensions.height));
+		NSInteger POTWide = dimensions.width;
+		NSInteger POTHigh = MAX(dimensions.height, realDimensions.height);
 		unsigned char*			data;
 		//Alignment
 			
@@ -185,8 +185,8 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
 		if (dataNew) {
 			memcpy(dataNew, data, textureSize);
 			// output params
-			pInfo->width = POTWide;
-			pInfo->height = POTHigh;
+			pInfo->width = static_cast<int>(POTWide);
+			pInfo->height = static_cast<int>(POTHigh);
 			pInfo->data = dataNew;
 			pInfo->hasAlpha = true;
 			pInfo->isPremultipliedAlpha = true;

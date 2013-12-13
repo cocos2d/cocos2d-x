@@ -35,41 +35,38 @@ TMXObjectGroup::TMXObjectGroup()
     : _groupName("")
     , _positionOffset(Point::ZERO)
 {
-    _objects = Array::create();
-    _objects->retain();
-    _properties = new Dictionary();
-    _properties->init();
 }
 
 TMXObjectGroup::~TMXObjectGroup()
 {
     CCLOGINFO("deallocing TMXObjectGroup: %p", this);
-    CC_SAFE_RELEASE(_objects);
-    CC_SAFE_RELEASE(_properties);
 }
 
-Dictionary* TMXObjectGroup::getObject(const char *objectName) const
+ValueMap TMXObjectGroup::getObject(const std::string& objectName) const
 {
-    if (_objects && _objects->count() > 0)
+    if (!_objects.empty())
     {
-        Object* pObj = nullptr;
-        CCARRAY_FOREACH(_objects, pObj)
+        for (const auto& v : _objects)
         {
-            Dictionary* pDict = static_cast<Dictionary*>(pObj);
-            String *name = static_cast<String*>(pDict->objectForKey("name"));
-            if (name && name->_string == objectName)
+            const ValueMap& dict = v.asValueMap();
+            if (dict.find("name") != dict.end())
             {
-                return pDict;
+                if (dict.at("name").asString() == objectName)
+                    return dict;
             }
         }
     }
+    
     // object not found
-    return NULL;    
+    return ValueMap();
 }
 
-String* TMXObjectGroup::getProperty(const char* propertyName) const
+Value TMXObjectGroup::getProperty(const std::string& propertyName) const
 {
-    return static_cast<String*>(_properties->objectForKey(propertyName));
+    if (_properties.find(propertyName) != _properties.end())
+        return _properties.at(propertyName);
+
+    return Value();
 }
 
 NS_CC_END

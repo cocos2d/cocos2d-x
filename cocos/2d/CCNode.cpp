@@ -114,7 +114,6 @@ Node::Node(void)
 // lazy alloc
 , _grid(NULL)
 , _ZOrder(0)
-, _children(NULL)
 , _parent(NULL)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
@@ -169,22 +168,14 @@ Node::~Node()
     CC_SAFE_RELEASE(_shaderProgram);
     CC_SAFE_RELEASE(_userObject);
 
-    if(_children && _children->count() > 0)
+    for (auto& child : _children)
     {
-        Object* child;
-        CCARRAY_FOREACH(_children, child)
+        if (child)
         {
-            Node* node = static_cast<Node*>(child);
-            if (node)
-            {
-                node->_parent = NULL;
-            }
+            child->_parent = NULL;
         }
     }
 
-    // children
-    CC_SAFE_RELEASE(_children);
-    
     removeAllComponents();
     
     CC_SAFE_DELETE(_componentContainer);
@@ -404,9 +395,9 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-long Node::getChildrenCount() const
+int Node::getChildrenCount() const
 {
-    return _children ? _children->count() : 0;
+    return _children.size();
 }
 
 /// camera getter: lazy alloc
@@ -584,37 +575,33 @@ void Node::cleanup()
     }
     
     // timers
-    arrayMakeObjectsPerformSelector(_children, cleanup, Node*);
+    _children.forEach([](Node* child){
+        child->cleanup();
+    });
 }
 
 
-const char* Node::description() const
+std::string Node::getDescription() const
 {
-    return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
+    return StringUtils::format("<Node | Tag = %d", _tag);
 }
 
 // lazy allocs
 void Node::childrenAlloc(void)
 {
-    _children = Array::createWithCapacity(4);
-    _children->retain();
+    _children.reserve(4);
 }
 
 Node* Node::getChildByTag(int aTag)
 {
     CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
 
-    if(_children && _children->count() > 0)
+    for (auto& child : _children)
     {
-        Object* child;
-        CCARRAY_FOREACH(_children, child)
-        {
-            Node* pNode = static_cast<Node*>(child);
-            if(pNode && pNode->_tag == aTag)
-                return pNode;
-        }
+        if(child && child->_tag == aTag)
+            return child;
     }
-    return NULL;
+    return nullptr;
 }
 
 /* "add" logic MUST only be on this method
@@ -626,7 +613,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
     CCASSERT( child != NULL, "Argument must be non-nil");
     CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
 
-    if( ! _children )
+    if (_children.empty())
     {
         this->childrenAlloc();
     }
@@ -691,12 +678,12 @@ void Node::removeFromParentAndCleanup(bool cleanup)
 void Node::removeChild(Node* child, bool cleanup /* = true */)
 {
     // explicit nil handling
-    if (_children == NULL)
+    if (_children.empty())
     {
         return;
     }
 
-    long index = _children->getIndexOfObject(child);
+    auto index = _children.getIndex(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -725,38 +712,36 @@ void Node::removeAllChildren()
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    if ( _children && _children->count() > 0 )
+    if (!_children.empty())
     {
-        Object* child;
-        CCARRAY_FOREACH(_children, child)
+        for (auto& child : _children)
         {
-            Node* pNode = static_cast<Node*>(child);
-            if (pNode)
+            if (child)
             {
                 // IMPORTANT:
                 //  -1st do onExit
                 //  -2nd cleanup
                 if(_running)
                 {
-                    pNode->onExitTransitionDidStart();
-                    pNode->onExit();
+                    child->onExitTransitionDidStart();
+                    child->onExit();
                 }
 
                 if (cleanup)
                 {
-                    pNode->cleanup();
+                    child->cleanup();
                 }
                 // set parent nil at the end
-                pNode->setParent(NULL);
+                child->setParent(nullptr);
             }
         }
         
-        _children->removeAllObjects();
+        _children.clear();
     }
     
 }
 
-void Node::detachChild(Node *child, long childIndex, bool doCleanup)
+void Node::detachChild(Node *child, int childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -783,9 +768,9 @@ void Node::detachChild(Node *child, long childIndex, bool doCleanup)
     }
 
     // set parent nil at the end
-    child->setParent(NULL);
+    child->setParent(nullptr);
 
-    _children->removeObjectAtIndex(childIndex);
+    _children.erase(childIndex);
 }
 
 
@@ -793,7 +778,7 @@ void Node::detachChild(Node *child, long childIndex, bool doCleanup)
 void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
-    _children->addObject(child);
+    _children.pushBack(child);
     child->_setZOrder(z);
 }
 
@@ -810,24 +795,24 @@ void Node::sortAllChildren()
 #if 0
     if (_reorderChildDirty)
     {
-        int i,j,length = _children->count();
+        int i,j,length = _children.size();
 
         // insertion sort
         for(i=1; i<length; i++)
         {
             j = i-1;
-            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
+            auto tempI = static_cast<Node*>( _children.at(i) );
+            auto tempJ = static_cast<Node*>( _children.at(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
             while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
             {
-                _children->fastSetObject( tempJ, j+1 );
+                _children.fastSetObject( tempJ, j+1 );
                 j = j-1;
                 if(j>=0)
-                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
+                    tempJ = static_cast<Node*>( _children.at(j) );
             }
-            _children->fastSetObject(tempI, j+1);
+            _children.fastSetObject(tempI, j+1);
         }
 
         //don't need to check children recursively, that's done in visit of each child
@@ -836,7 +821,7 @@ void Node::sortAllChildren()
     }
 #else
     if( _reorderChildDirty ) {
-        std::sort( std::begin(*_children), std::end(*_children), nodeComparisonLess );
+        std::sort( std::begin(_children), std::end(_children), nodeComparisonLess );
         _reorderChildDirty = false;
     }
 #endif
@@ -869,13 +854,13 @@ void Node::visit()
     this->transform();
     int i = 0;
 
-    if(_children && _children->count() > 0)
+    if(!_children.empty())
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for( ; i < _children->count(); i++ )
+        for( ; i < _children.size(); i++ )
         {
-            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
+            auto node = _children.at(i);
 
             if ( node && node->_ZOrder < 0 )
                 node->visit();
@@ -885,12 +870,10 @@ void Node::visit()
         // self draw
         this->draw();
 
-        for( ; i < _children->count(); i++ )
-        {
-            auto node = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            if (node)
-                node->visit();
-        }
+        // Uses std::for_each to improve performance.
+        std::for_each(_children.cbegin()+i, _children.cend(), [](Node* node){
+            node->visit();
+        });
     }
     else
     {
@@ -955,7 +938,9 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    arrayMakeObjectsPerformSelector(_children, onEnter, Node*);
+    _children.forEach([](Node* child){
+        child->onEnter();
+    });
 
     this->resume();
     
@@ -974,8 +959,10 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
-    arrayMakeObjectsPerformSelector(_children, onEnterTransitionDidFinish, Node*);
-
+    _children.forEach([](Node* child){
+        child->onEnterTransitionDidFinish();
+    });
+    
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -987,7 +974,10 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    arrayMakeObjectsPerformSelector(_children, onExitTransitionDidStart, Node*);
+    _children.forEach([](Node* child){
+        child->onExitTransitionDidStart();
+    });
+    
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExitTransitionDidStart;
@@ -1010,7 +1000,9 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    arrayMakeObjectsPerformSelector(_children, onExit, Node*);
+    _children.forEach([](Node* child){
+        child->onExit();
+    });
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1063,7 +1055,7 @@ Action * Node::getActionByTag(int tag)
     return _actionManager->getActionByTag(tag, this);
 }
 
-unsigned int Node::getNumberOfRunningActions() const
+int Node::getNumberOfRunningActions() const
 {
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }
@@ -1341,21 +1333,26 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
 }
 
 #ifdef CC_USE_PHYSICS
-void Node::updatePhysicsTransform()
+bool Node::updatePhysicsTransform()
 {
-    if (_physicsBody)
+    if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
     {
         _position = _physicsBody->getPosition();
         _rotationX = _rotationY = _physicsBody->getRotation();
         _transformDirty = _inverseDirty = true;
+        return true;
     }
+    
+    return false;
 }
 #endif
 
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    arrayMakeObjectsPerformSelector(_children, updateTransform, Node*);
+    _children.forEach([](Node* child){
+        child->updateTransform();
+    });
 }
 
 Component* Node::getComponent(const char *pName)
@@ -1464,15 +1461,13 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 	
     if (_cascadeOpacityEnabled)
     {
-        Object* pObj;
-        CCARRAY_FOREACH(_children, pObj)
-        {
-            RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(pObj);
+        _children.forEach([this](Node* child){
+            RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedOpacity(_displayedOpacity);
             }
-        }
+        });
     }
 }
 
@@ -1521,15 +1516,13 @@ void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        Object *obj = NULL;
-        CCARRAY_FOREACH(_children, obj)
-        {
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
+        _children.forEach([this](Node* child){
+            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedColor(_displayedColor);
             }
-        }
+        });
     }
 }
 

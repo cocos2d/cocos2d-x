@@ -62,18 +62,6 @@ public:
     
     /** Creates a progress timer with the sprite as the shape the timer goes through */
     static ProgressTimer* create(Sprite* sp);
-    /**
-     * @js ctor
-     */
-    ProgressTimer();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ProgressTimer();
-
-    /** Initializes a progress timer with the sprite as the shape the timer goes through */
-    bool initWithSprite(Sprite* sp);
 
     /** Change the percentage to change progress. */
     inline Type getType() const { return _type; }
@@ -129,6 +117,19 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     
 protected:
+    /**
+     * @js ctor
+     */
+    ProgressTimer();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ProgressTimer();
+
+    /** Initializes a progress timer with the sprite as the shape the timer goes through */
+    bool initWithSprite(Sprite* sp);
+
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);
@@ -146,6 +147,9 @@ protected:
     V2F_C4B_T2F *_vertexData;
 
     bool _reverseDirection;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ProgressTimer);
 };
 
 // end of misc_nodes group

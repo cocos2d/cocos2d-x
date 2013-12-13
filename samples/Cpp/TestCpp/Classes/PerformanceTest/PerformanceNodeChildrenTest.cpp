@@ -287,7 +287,7 @@ void IterateSpriteSheetForLoop::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
-    for( const auto &object : *children )
+    for( const auto &object : children )
     {
         auto o = static_cast<Object*>(object);
         auto sprite = static_cast<Sprite*>(o);
@@ -321,15 +321,15 @@ void IterateSpriteSheetCArray::update(float dt)
 {
     // iterate using fast enumeration protocol
     auto children = batchNode->getChildren();
-    Object* object = NULL;
+//    Object* object = NULL;
 
     CC_PROFILER_START(this->profilerName());
 
-    CCARRAY_FOREACH(children, object)
-    {
-        auto sprite = static_cast<Sprite*>(object);
-        sprite->setVisible(false);
-    }
+//FIXME: James    CCARRAY_FOREACH(children, object)
+//    {
+//        auto sprite = static_cast<Sprite*>(object);
+//        sprite->setVisible(false);
+//    }
 
     CC_PROFILER_STOP(this->profilerName());
 }
@@ -362,10 +362,9 @@ void IterateSpriteSheetIterator::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
-    for( auto it=std::begin(*children); it != std::end(*children); ++it)
+    for( auto it=std::begin(children); it != std::end(children); ++it)
     {
-        auto obj = static_cast<Object*>(*it);
-        auto sprite = static_cast<Sprite*>(obj);
+        auto sprite = static_cast<Sprite*>(*it);
         sprite->setVisible(false);
     }
 
@@ -396,17 +395,17 @@ const char*  IterateSpriteSheetIterator::testName()
 void CallFuncsSpriteSheetForEach::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
 #if CC_USE_ARRAY_VECTOR
-    std::for_each(std::begin(*children), std::end(*children), [](const RCPtr<Object>& obj) {
+    std::for_each(std::begin(children), std::end(children), [](const RCPtr<Object>& obj) {
         static_cast<Node*>( static_cast<Object*>(obj) )->getPosition();
     });
 #else
-    std::for_each(std::begin(*children), std::end(*children), [](Object* obj) {
-        static_cast<Node*>(obj)->getPosition();
+    std::for_each(std::begin(children), std::end(children), [](Node* obj) {
+        obj->getPosition();
     });
 #endif
 
@@ -437,11 +436,11 @@ const char*  CallFuncsSpriteSheetForEach::testName()
 void CallFuncsSpriteSheetCMacro::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
-    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
+//FIXME: James    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
 
     CC_PROFILER_STOP(this->profilerName());
 }

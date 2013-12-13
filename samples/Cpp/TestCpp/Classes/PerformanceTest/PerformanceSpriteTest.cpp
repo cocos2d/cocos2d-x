@@ -519,7 +519,7 @@ void SpriteMainScene::onEnter()
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
         
-        sched->scheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this, 0.2, false);
+        sched->scheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this, 0.2f, false);
         
     }
 }

@@ -31,14 +31,14 @@
 NS_CC_BEGIN
 
 class Object;
-class Bool;
-class Integer;
-class Float;
-class Double;
-class String;
-class Array;
-class Dictionary;
-class Set;
+class __Bool;
+class __Integer;
+class __Float;
+class __Double;
+class __String;
+class __Array;
+class __Dictionary;
+class __Set;
 class Data;
 
 /**
@@ -52,7 +52,7 @@ class Data;
  * Use cases:
  *  - data serialization,
  *  - pretty printing of Object *
- *  - safe value reading from Array, Dictionary, Set
+ *  - safe value reading from Array, __Dictionary, Set
  *
  * Usage:
  *  1. subclass DataVisitor
@@ -72,14 +72,14 @@ public:
     /** default method, called from non-overloaded methods and for unrecognized objects */
     virtual void visitObject(const Object *p) = 0;
 
-    virtual void visit(const Bool *p);
-    virtual void visit(const Integer *p);
-    virtual void visit(const Float *p);
-    virtual void visit(const Double *p);
-    virtual void visit(const String *p);
-    virtual void visit(const Array *p);
-    virtual void visit(const Dictionary *p);
-    virtual void visit(const Set *p);
+    virtual void visit(const __Bool *p);
+    virtual void visit(const __Integer *p);
+    virtual void visit(const __Float *p);
+    virtual void visit(const __Double *p);
+    virtual void visit(const __String *p);
+    virtual void visit(const __Array *p);
+    virtual void visit(const __Dictionary *p);
+    virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 };
 
@@ -93,14 +93,14 @@ public:
     virtual std::string getResult();
     
     virtual void visitObject(const Object *p);
-    virtual void visit(const Bool * p);
-    virtual void visit(const Integer *p);
-    virtual void visit(const Float *p);
-    virtual void visit(const Double *p);
-    virtual void visit(const String *p);
-    virtual void visit(const Array *p);
-    virtual void visit(const Dictionary *p);
-    virtual void visit(const Set *p);
+    virtual void visit(const __Bool * p);
+    virtual void visit(const __Integer *p);
+    virtual void visit(const __Float *p);
+    virtual void visit(const __Double *p);
+    virtual void visit(const __String *p);
+    virtual void visit(const __Array *p);
+    virtual void visit(const __Dictionary *p);
+    virtual void visit(const __Set *p);
     virtual void visit(const Data *p);
 private:
     void setIndentLevel(int indentLevel);

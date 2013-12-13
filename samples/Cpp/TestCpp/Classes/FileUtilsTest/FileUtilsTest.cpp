@@ -1,18 +1,11 @@
 #include "FileUtilsTest.h"
 
-
-TESTLAYER_CREATE_FUNC(TestResolutionDirectories);
-TESTLAYER_CREATE_FUNC(TestSearchPath);
-TESTLAYER_CREATE_FUNC(TestFilenameLookup);
-TESTLAYER_CREATE_FUNC(TestIsFileExist);
-TESTLAYER_CREATE_FUNC(TextWritePlist);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(TestResolutionDirectories),
-    CF(TestSearchPath),
-    CF(TestFilenameLookup),
-    CF(TestIsFileExist),
-    CF(TextWritePlist),
+static std::function<Layer*()> createFunctions[] = {
+    CL(TestResolutionDirectories),
+    CL(TestSearchPath),
+    CL(TestFilenameLookup),
+    CL(TestIsFileExist),
+    CL(TextWritePlist),
 };
 
 static int sceneIdx=-1;
@@ -24,9 +17,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -38,18 +28,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -249,12 +233,11 @@ void TestFilenameLookup::onEnter()
 		
     auto sharedFileUtils = FileUtils::getInstance();
 
-    auto dict = Dictionary::create();
-    dict->setObject(String::create("Images/grossini.png"), "grossini.bmp");
-    dict->setObject(String::create("Images/grossini.png"), "grossini.xcf");
+    ValueMap dict;
+    dict["grossini.bmp"] = Value("Images/grossini.png");
+    dict["grossini.xcf"] = Value("Images/grossini.png");
     
     sharedFileUtils->setFilenameLookupDictionary(dict);
-    
     
     // Instead of loading carlitos.xcf, it will load grossini.png
     auto sprite = Sprite::create("grossini.xcf");
@@ -270,7 +253,7 @@ void TestFilenameLookup::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }
@@ -314,7 +297,7 @@ void TestIsFileExist::onExit()
 	FileUtils *sharedFileUtils = FileUtils::getInstance();
 	
 	// reset filename lookup
-    sharedFileUtils->setFilenameLookupDictionary(Dictionary::create());
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
 	
     FileUtilsDemo::onExit();
 }

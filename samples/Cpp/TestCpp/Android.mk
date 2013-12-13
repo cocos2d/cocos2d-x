@@ -38,6 +38,7 @@ Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/ConfigurationTest/ConfigurationTest.cpp \
+Classes/ConsoleTest/ConsoleTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
 Classes/DataVisitorTest/DataVisitorTest.cpp \
