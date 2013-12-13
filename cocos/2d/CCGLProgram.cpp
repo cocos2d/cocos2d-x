@@ -153,7 +153,7 @@ bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }
 
-const char* GLProgram::description() const
+std::string GLProgram::getDescription() const
 {
     return String::createWithFormat("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T

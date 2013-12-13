@@ -163,6 +163,10 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 	_callback = callback;
 }
 
+std::string MenuItem::getDescription() const
+{
+    return StringUtils::format("<MenuItem | tag = %d>", _tag);
+}
 
 //
 //CCMenuItemLabel

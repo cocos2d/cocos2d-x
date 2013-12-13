@@ -194,7 +194,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description() const;
+    virtual std::string getDescription() const;
 
     /** Gets the quantity of quads that are going to be drawn */
     int getTotalQuads() const;
