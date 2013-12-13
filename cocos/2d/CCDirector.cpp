@@ -595,7 +595,7 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
 
-    int index = _scenesStack.size();
+    ssize_t index = _scenesStack.size();
 
     _sendCleanupToScene = true;
     _scenesStack.replace(index - 1, scene);
@@ -618,7 +618,7 @@ void Director::popScene(void)
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
     _scenesStack.popBack();
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     if (c == 0)
     {
@@ -639,7 +639,7 @@ void Director::popToRootScene(void)
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     // level 0? -> end
     if (level == 0)

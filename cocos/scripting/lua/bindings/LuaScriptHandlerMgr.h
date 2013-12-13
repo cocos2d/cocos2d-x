@@ -134,9 +134,6 @@ private:
 
 NS_CC_END
 
-TOLUA_API int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S);
-
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 
 #endif //__LUA_SCRIPT_HANDLER_MGR_H__
