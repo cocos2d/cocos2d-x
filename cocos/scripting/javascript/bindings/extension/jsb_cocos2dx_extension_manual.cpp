@@ -248,7 +248,7 @@ public:
         }
     }
     
-    virtual Size tableCellSizeForIndex(TableView *table, long idx)
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
@@ -268,7 +268,7 @@ public:
         
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx)
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
