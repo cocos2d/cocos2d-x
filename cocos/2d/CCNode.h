@@ -1523,7 +1523,7 @@ private:
  Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
  @since v2.1
  */
-class CC_DLL CC_DEPRECATED_ATTRIBUTE NodeRGBA : public Node, public RGBAProtocol
+class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
 {
 public:
     // overrides
@@ -1545,11 +1545,11 @@ public:
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
 protected:
-    NodeRGBA() {}
-    virtual ~NodeRGBA() {}
+    CC_DEPRECATED_ATTRIBUTE __NodeRGBA() { CCLOG("NodeRGBA deprecated.");}
+    virtual ~__NodeRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
 };
 
 // end of base_node group
