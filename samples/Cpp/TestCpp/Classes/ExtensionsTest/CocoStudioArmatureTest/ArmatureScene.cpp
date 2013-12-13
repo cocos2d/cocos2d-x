@@ -71,6 +71,10 @@ Layer *CreateLayer(int index)
         break;
     case TEST_EASING:
         pLayer = new TestEasing();
+        break;
+    case TEST_CHANGE_ANIMATION_INTERNAL:
+        pLayer = new TestChangeAnimationInternal();
+        break;
     default:
         break;
     }
@@ -1385,6 +1389,10 @@ void TestEasing::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestPlaySeveralMovement::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
     animationID = 0;
 
     armature = Armature::create("testEasing");
@@ -1420,3 +1428,45 @@ void TestEasing::updateSubTitle()
     label->setString(str.c_str());
 }
 
+
+
+
+void TestChangeAnimationInternal::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestPlaySeveralMovement::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    Armature *armature = NULL;
+    armature = Armature::create("Cowboy");
+    armature->getAnimation()->playByIndex(0);
+    armature->setScale(0.2f);
+
+    armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+void TestChangeAnimationInternal::onExit()
+{
+    Director::getInstance()->setAnimationInterval(1/60.0f);
+}
+std::string TestChangeAnimationInternal::title()
+{
+    return "Test change animation internal";
+}
+std::string TestChangeAnimationInternal::subtitle()
+{
+    return "Touch to change animation internal";
+}
+void TestChangeAnimationInternal::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    if (Director::getInstance()->getAnimationInterval() == 1/30.0f)
+    {
+        Director::getInstance()->setAnimationInterval(1/60.0f);
+    }
+    else
+    {
+        Director::getInstance()->setAnimationInterval(1/30.0f);
+    }
+}

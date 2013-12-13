@@ -44,6 +44,7 @@ enum {
     TEST_ARMATURE_NESTING_2,
     TEST_PLAY_SEVERAL_MOVEMENT,
     TEST_EASING,
+    TEST_CHANGE_ANIMATION_INTERNAL,
 
 	TEST_LAYER_COUNT
 };
@@ -370,6 +371,17 @@ public:
 
     int animationID;
     cocostudio::Armature *armature;
+};
+
+class TestChangeAnimationInternal : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
