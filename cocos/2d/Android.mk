@@ -60,6 +60,7 @@ CCGLProgram.cpp \
 ccGLStateCache.cpp \
 CCGrabber.cpp \
 CCGrid.cpp \
+CCGridNode.cpp \
 CCIMEDispatcher.cpp \
 CCLabel.cpp \
 CCLabelAtlas.cpp \
