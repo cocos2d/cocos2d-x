@@ -138,6 +138,7 @@ set(COCOS2D_SRC
   platform/CCThread.cpp
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
+  ../../external/edtaa3func/edtaa3func.cpp
 )
 
 include(../physics/CMakeLists.txt)

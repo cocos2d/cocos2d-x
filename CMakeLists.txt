@@ -152,6 +152,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
   ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
   ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}
