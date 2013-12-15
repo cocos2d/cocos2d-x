@@ -1,26 +1,26 @@
 /****************************************************************************
-Copyright (c) 2012 - 2013 cocos2d-x.org
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
+ Copyright (c) 2012 - 2013 cocos2d-x.org
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef __CCMAP_H__
 #define __CCMAP_H__
@@ -67,13 +67,13 @@ public:
     }
     
     /** Contructor with capacity */
-    explicit Map<K, V>(int capacity)
+    explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
         CCLOGINFO("In the constructor with capacity of Map!");
         _data.reserve(capacity);
     }
-
+    
     /** Copy constructor */
     Map<K, V>(const Map<K, V>& other)
     {
@@ -89,7 +89,7 @@ public:
         _data = std::move(other._data);
     }
     
-    /** Destructor 
+    /** Destructor
      *  It will release all objects in map.
      */
     ~Map<K, V>()
@@ -97,25 +97,25 @@ public:
         CCLOGINFO("In the destructor of Map!");
         clear();
     }
-
+    
     /** Sets capacity of the map */
-    void reserve(int capacity)
+    void reserve(ssize_t capacity)
     {
         _data.reserve(capacity);
     }
     
     /** Returns capacity of the map */
-    size_t capacity() const
+    ssize_t capacity() const
     {
         return _data.capacity();
     }
     
     /** The number of elements in the map. */
-    size_t size() const
+    ssize_t size() const
     {
         return _data.size();
     }
-
+    
     /** Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
      *  @note This function does not modify the content of the container in any way.
      *        To clear the content of an array object, member function unordered_map::clear exists.
@@ -129,7 +129,7 @@ public:
     std::vector<K> keys() const
     {
         std::vector<K> keys;
-
+        
         if (!_data.empty())
         {
             for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
@@ -139,7 +139,7 @@ public:
         }
         return keys;
     }
-
+    
     /** Returns all keys that matches the object */
     std::vector<K> keys(V object) const
     {
@@ -155,7 +155,7 @@ public:
         
         return keys;
     }
-
+    
     /** @brief Returns a reference to the mapped value of the element with key k in the map.
      *  @note If key does not match the key of any element in the container, the function return nullptr.
      *  @param key Key value of the element whose mapped value is accessed.
@@ -206,7 +206,7 @@ public:
         _data.insert(std::make_pair(key, object));
         object->retain();
     }
-
+    
     /** @brief Removes an element with an iterator from the Map<K, V> container.
      *  @param position Iterator pointing to a single element to be removed from the Map<K, V>.
      *         Member type const_iterator is a forward iterator type.
@@ -267,36 +267,36 @@ public:
     {
         if (!_data.empty())
         {
-            int randIdx = rand() % _data.size();
+            ssize_t randIdx = rand() % _data.size();
             return (_data.begin() + randIdx)->second;
         }
         return nullptr;
     }
     
-// Don't uses operator since we could not decide whether it needs 'retain'/'release'.
-//    V& operator[] ( const K& key )
-//    {
-//        CCLOG("copy: [] ref");
-//        return _data[key];
-//    }
-//    
-//    V& operator[] ( K&& key )
-//    {
-//        CCLOG("move [] ref");
-//        return _data[key];
-//    }
+    // Don't uses operator since we could not decide whether it needs 'retain'/'release'.
+    //    V& operator[] ( const K& key )
+    //    {
+    //        CCLOG("copy: [] ref");
+    //        return _data[key];
+    //    }
+    //
+    //    V& operator[] ( K&& key )
+    //    {
+    //        CCLOG("move [] ref");
+    //        return _data[key];
+    //    }
     
-//    const V& operator[] ( const K& key ) const
-//    {
-//        CCLOG("const copy []");
-//        return _data.at(key);
-//    }
-//    
-//    const V& operator[] ( K&& key ) const
-//    {
-//        CCLOG("const move []");
-//        return _data.at(key);
-//    }
+    //    const V& operator[] ( const K& key ) const
+    //    {
+    //        CCLOG("const copy []");
+    //        return _data.at(key);
+    //    }
+    //
+    //    const V& operator[] ( K&& key ) const
+    //    {
+    //        CCLOG("const move []");
+    //        return _data.at(key);
+    //    }
     
     /** Copy assignment operator */
     Map<K, V>& operator= ( const Map<K, V>& other )
@@ -307,7 +307,7 @@ public:
         addRefForAllObjects();
         return *this;
     }
-
+    
     /** Move assignment operator */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
