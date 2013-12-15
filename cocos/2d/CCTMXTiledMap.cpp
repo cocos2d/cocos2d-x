@@ -246,7 +246,7 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
 
 std::string TMXTiledMap::getDescription() const
 {
-    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, _children.size());
+    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %zd", _tag, _children.size());
 }
 
 

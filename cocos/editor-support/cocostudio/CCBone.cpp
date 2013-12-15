@@ -335,7 +335,7 @@ void Bone::removeChildBone(Bone *bone, bool recursion)
 
         bone->getDisplayManager()->setCurrentDecorativeDisplay(nullptr);
 
-        _children.erase(bone);
+        _children.eraseObject(bone);
     }
 }
 

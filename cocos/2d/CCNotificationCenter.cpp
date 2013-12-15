@@ -143,7 +143,7 @@ int NotificationCenter::removeAllObservers(Object *target)
     }
 
     _observers->removeObjectsInArray(toRemove);
-    return toRemove->count();
+    return static_cast<int>(toRemove->count());
 }
 
 void NotificationCenter::registerScriptObserver( Object *target, int handler,const char* name)
