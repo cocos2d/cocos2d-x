@@ -946,10 +946,10 @@ void LayerBug3162B::step(float dt)
 
 std::string LayerBug3162B::title()
 {
-    return "Bug 3162 bottom layer cascade opacity eable/disable";
+    return "Bug 3162 bottom layer cascade color eable/disable";
 }
 
 std::string LayerBug3162B::subtitle()
 {
-    return "u and m layer opacity is effected/diseffected with b layer";
+    return "u and m layer color is effected/diseffected with b layer";
 }
