@@ -35,9 +35,6 @@ THE SOFTWARE.
 #include <string.h>
 #include <jni.h>
 
-// prototype
-void swapAlphaChannel(unsigned int *pImageMemory, unsigned int numPixels);
-
 NS_CC_BEGIN
 
 class BitmapDC
@@ -127,12 +124,6 @@ public:
     bool getBitmapFromJava(const char *text, int nWidth, int nHeight, Image::TextAlign eAlignMask, const char * pFontName, float fontSize)
     {
     	return  getBitmapFromJavaShadowStroke(	text, nWidth, nHeight, eAlignMask, pFontName, fontSize );
-    }
-
-    // ARGB -> RGBA
-    inline unsigned int swapAlpha(unsigned int value)
-    {
-        return ((value << 8 & 0xffffff00) | (value >> 24 & 0x000000ff));
     }
 
 public:
@@ -228,9 +219,6 @@ bool Image::initWithStringShadowStroke(
 		    _renderFormat = Texture2D::PixelFormat::RGBA8888;
             _dataLen = _width * _height * 4;
 
-	        // swap the alpha channel (ARGB to RGBA)
-	        swapAlphaChannel((unsigned int *)_data, (_width * _height) );
-
 	        // ok
 	        bRet = true;
 
@@ -240,19 +228,6 @@ bool Image::initWithStringShadowStroke(
 }
 
 NS_CC_END
-
-// swap the alpha channel in an 32 bit image (from ARGB to RGBA)
-void swapAlphaChannel(unsigned int *pImageMemory, unsigned int numPixels)
-{
-	for(int c = 0; c < numPixels; ++c, ++pImageMemory)
-	{
-		// copy the current pixel
-		unsigned int currenPixel =  (*pImageMemory);
-		// swap channels and store back
-		char *pSource = (char *) 	&currenPixel;
-		*pImageMemory = (pSource[0] << 24) | (pSource[3]<<16) | (pSource[2]<<8) | pSource[1];
-	}
-}
 
 // this method is called by Cocos2dxBitmap
 extern "C"
@@ -268,17 +243,5 @@ extern "C"
         bitmapDC._height = height;
         bitmapDC._data = new unsigned char[size];
         env->GetByteArrayRegion(pixels, 0, size, (jbyte*)bitmapDC._data);
-
-        // swap data
-        unsigned int *tempPtr = (unsigned int*)bitmapDC._data;
-        unsigned int tempdata = 0;
-        for (int i = 0; i < height; ++i)
-        {
-            for (int j = 0; j < width; ++j)
-            {
-                tempdata = *tempPtr;
-                *tempPtr++ = bitmapDC.swapAlpha(tempdata);
-            }
-        }
     }
 };
