@@ -222,7 +222,7 @@ public:
     virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
 protected:
-    __LayerRGBA() {}
+    __LayerRGBA();
     virtual ~__LayerRGBA() {}
 
 private:

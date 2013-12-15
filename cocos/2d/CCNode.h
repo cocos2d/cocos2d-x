@@ -1545,7 +1545,7 @@ public:
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
 protected:
-    CC_DEPRECATED_ATTRIBUTE __NodeRGBA() { CCLOG("NodeRGBA deprecated.");}
+    __NodeRGBA();
     virtual ~__NodeRGBA() {}
 
 private:
