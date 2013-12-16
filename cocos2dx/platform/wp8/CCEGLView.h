@@ -90,8 +90,8 @@ public:
     virtual bool Create(Windows::UI::Core::CoreWindow^ window);
 
     // WP8 XAML app
-    virtual bool Create(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView);
-    virtual bool UpdateDevice(ID3D11Device1* device, ID3D11DeviceContext1* context, ID3D11RenderTargetView* renderTargetView);
+    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height);
+    virtual void UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface);
 
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
@@ -107,7 +107,7 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnOrientationChanged();
-
+    
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
@@ -167,16 +167,12 @@ private:
 	ESContext m_esContext;
 	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
 
-// For WP8 XAML
-	Microsoft::WRL::ComPtr<IWinPhone8XamlD3DWindow> m_eglPhoneWindow;
-	Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext1> m_d3dContext;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTargetView;
-
 	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
     WP8Window^ m_wp8Window;
-
+	EGLDisplay m_eglDisplay;
+	EGLContext m_eglContext;
+	EGLSurface m_eglSurface;
 };
 
 NS_CC_END
