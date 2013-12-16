@@ -99,13 +99,25 @@ bool CCEGLView::Create(CoreWindow^ window)
 	m_bSupportTouch = true;
 
  	esInitContext ( &m_esContext );
-	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
-    esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
-    m_wp8Window = ref new WP8Window(window);
-    m_orientation = DisplayOrientations::None;
-    m_initialized = false;
-    UpdateForWindowSizeChange();
+	HRESULT result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(window), ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3, m_eglWindow.GetAddressOf());
+
+	if (SUCCEEDED(result))
+	{
+		m_esContext.hWnd = m_eglWindow;
+		esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
+
+		m_wp8Window = ref new WP8Window(window);
+		m_orientation = DisplayOrientations::None;
+		m_initialized = false;
+		UpdateForWindowSizeChange();
+		bRet = true;
+	}
+	else
+	{
+		CCLOG("Unable to create Angle EGL Window: %d", result);
+	}
+
 
     return bRet;
 }
@@ -465,14 +477,14 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 	{
 		case DisplayOrientations::Landscape:
 		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
-                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)((m_obViewPortRect.size.width - ((x + w) * m_fScaleX)) + m_obViewPortRect.origin.x),
                        (GLsizei)(h * m_fScaleY),
                        (GLsizei)(w * m_fScaleX));
 			break;
 
         default:
-            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
                        (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
                        (GLsizei)(w * m_fScaleX),
                        (GLsizei)(h * m_fScaleY));

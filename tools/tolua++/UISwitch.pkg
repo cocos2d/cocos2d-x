@@ -1,0 +1,7 @@
+
+class UISwitch : public UIWidget
+{
+    UISwitch();
+    virtual ~UISwitch();
+    static UISwitch* create();
+};

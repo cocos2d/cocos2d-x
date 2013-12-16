@@ -35,7 +35,9 @@ void  _stdcall AudioEngineCallbacks::OnCriticalError(HRESULT Error)
 };
 
 Audio::Audio() :
-    m_backgroundID(0)
+    m_backgroundID(0),
+	m_soundEffctVolume(1.0f),
+	m_backgroundMusicVolume(1.0f)
 {
 }
 
@@ -511,7 +513,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
             &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
-		//m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
+		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
     } else
     {
         XAUDIO2_SEND_DESCRIPTOR descriptors[1];

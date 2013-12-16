@@ -29,9 +29,9 @@
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @js NA
+ *  @lua NA
+ */
 class UICCLabelAtlas : public CCLabelAtlas
 {
 public:

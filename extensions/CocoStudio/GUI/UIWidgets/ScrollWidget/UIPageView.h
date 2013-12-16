@@ -48,17 +48,22 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
+/**
+ *  @lua NA
+ */
 class UIPageView : public UILayout , public UIScrollInterface
 {
     
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIPageView();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UIPageView();
     

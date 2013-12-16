@@ -70,7 +70,7 @@ void MainPage::OnNextPressed(Object^ sender, RoutedEventArgs^ args)
 
 void MainPage::SaveInternalState(IPropertySet^ state)
 {
-	//m_renderer->SaveInternalState(state);
+    CCEGLView::sharedOpenGLView()->OnSuspending();
 }
 
 void MainPage::LoadInternalState(IPropertySet^ state)

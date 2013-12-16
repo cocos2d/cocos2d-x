@@ -23,25 +23,27 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCActionObject.h"
+#include "CCActionNode.h"
 #include "../Json//DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 
-	ActionObject::ActionObject()
-	: m_ActionNodeList(NULL)
-	, m_name("")
-	, m_loop(false)
-	, m_bPause(false)
-	, m_bPlaying(false)
-	, m_fUnitTime(0.1f)
-	, m_CurrentTime(0.0f)
-	, m_pScheduler(NULL)
+ActionObject::ActionObject()
+: m_ActionNodeList(NULL)
+, m_name("")
+, m_loop(false)
+, m_bPause(false)
+, m_bPlaying(false)
+, m_fUnitTime(0.1f)
+, m_CurrentTime(0.0f)
+, m_pScheduler(NULL)
+, m_fTotalTime(0.0f)
 {
 	m_ActionNodeList = CCArray::create();
 	m_ActionNodeList->retain();
 
-	m_pScheduler = new CCScheduler();
-	CCDirector::sharedDirector()->getScheduler()->scheduleUpdateForTarget(m_pScheduler, 0, false);
+	m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+	CC_SAFE_RETAIN(m_pScheduler);
 }
 
 ActionObject::~ActionObject()
@@ -49,7 +51,7 @@ ActionObject::~ActionObject()
 	m_ActionNodeList->removeAllObjects();
 	m_ActionNodeList->release();
 
-	CC_SAFE_DELETE(m_pScheduler);
+	CC_SAFE_RELEASE(m_pScheduler);
 }
 
 void ActionObject::setName(const char* name)
@@ -95,26 +97,38 @@ void ActionObject::setCurrentTime(float fTime)
 	m_CurrentTime = fTime;
 }
 
+float ActionObject::getTotalTime()
+{
+	return m_fTotalTime;
+}
+
 bool ActionObject::isPlaying()
 {
 	return m_bPlaying;
 }
 
-void ActionObject::initWithDictionary(cs::CSJsonDictionary *dic,CCObject* root)
+void ActionObject::initWithDictionary(const rapidjson::Value& dic,CCObject* root)
 {
-	setName(DICTOOL->getStringValue_json(dic, "name"));
-	setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
+    setName(DICTOOL->getStringValue_json(dic, "name"));
+    setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
 	setUnitTime(DICTOOL->getFloatValue_json(dic, "unittime"));
-	int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
-	for (int i=0; i<actionNodeCount; i++) {
-		ActionNode* actionNode = new ActionNode();
+    int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
+
+	int maxLength = 0;
+    for (int i=0; i<actionNodeCount; i++) {
+        ActionNode* actionNode = new ActionNode();
 		actionNode->autorelease();
-		cs::CSJsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
-		actionNode->initWithDictionary(actionNodeDic,root);
+        const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
+        actionNode->initWithDictionary(actionNodeDic,root);
 		actionNode->setUnitTime(getUnitTime());
-		m_ActionNodeList->addObject(actionNode);
-		CC_SAFE_DELETE(actionNodeDic);
-	}
+        m_ActionNodeList->addObject(actionNode);
+
+		int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
+		if(length > maxLength)
+			maxLength = length;
+    }
+
+	m_fTotalTime = maxLength*m_fUnitTime;
 }
 
 void ActionObject::addActionNode(ActionNode* node)
@@ -144,6 +158,22 @@ void ActionObject::play()
 	{
 		ActionNode* actionNode = (ActionNode*)m_ActionNodeList->objectAtIndex(i);
 		actionNode->playAction();
+	}
+	if (m_loop)
+	{
+		m_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kCCRepeatForever, 0.0f, false);
+	}
+}
+
+void ActionObject::play(CCCallFunc* func)
+{
+	stop();
+	this->updateToFrameByTime(0.0f);
+	int frameNum = m_ActionNodeList->count();
+	for ( int i = 0; i < frameNum; i++ )
+	{
+		ActionNode* actionNode = (ActionNode*)m_ActionNodeList->objectAtIndex(i);
+		actionNode->playAction(func);
 	}
 	if (m_loop)
 	{
@@ -206,8 +236,6 @@ void ActionObject::simulationActionUpdate(float dt)
 		{
 			this->play();
 		}
-
-		CCLOG("ActionObject Update");
 	}
 }
 NS_CC_EXT_END

@@ -44,19 +44,20 @@ typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
 /************/
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UISlider : public UIWidget
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UISlider();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UISlider();
     

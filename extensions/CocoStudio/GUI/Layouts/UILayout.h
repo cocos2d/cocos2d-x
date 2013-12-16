@@ -46,7 +46,6 @@ typedef enum
 
 
 /**
- *  @js NA
  *  @lua NA
  */
 class UILayout : public UIWidget
@@ -54,11 +53,13 @@ class UILayout : public UIWidget
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayout();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UILayout();
     

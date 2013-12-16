@@ -1,0 +1,46 @@
+
+typedef enum LISTVIEW_DIR
+{
+    LISTVIEW_DIR_NONE,
+    LISTVIEW_DIR_VERTICAL,
+    LISTVIEW_DIR_HORIZONTAL
+}ListViewDirection;
+
+typedef enum LISTVIEW_MOVE_DIR
+{
+    LISTVIEW_MOVE_DIR_NONE,
+    LISTVIEW_MOVE_DIR_UP,
+    LISTVIEW_MOVE_DIR_DOWN,
+    LISTVIEW_MOVE_DIR_LEFT,
+    LISTVIEW_MOVE_DIR_RIGHT,
+}ListViewMoveDirection;
+
+typedef enum
+{
+    LISTVIEW_EVENT_INIT_CHILD,
+    LISTVIEW_EVENT_UPDATE_CHILD,
+}ListViewEventType;
+
+
+
+class UIListView : public UILayout
+{
+    UIListView();
+    virtual ~UIListView();
+    static UIListView* create();
+    virtual bool addChild(UIWidget* widget);
+    virtual void removeAllChildren();
+    virtual bool removeChild(UIWidget* child);
+    void setDirection(ListViewDirection dir);
+    ListViewDirection getDirection();
+    void initChildWithDataLength(int length);
+    int getDataLength();
+    UIWidget* getUpdateChild();
+    int getUpdateDataIndex();
+    bool getUpdateSuccess();
+    void setUpdateSuccess(bool sucess);
+    virtual void update(float dt);
+    
+    virtual void doLayout();
+    virtual const char* getDescription() const;
+};

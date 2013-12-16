@@ -34,7 +34,6 @@
 NS_CC_EXT_BEGIN
 
 /**
- *  @js NA
  *  @lua NA
  */
 class UILayer : public CCLayer
@@ -43,11 +42,13 @@ class UILayer : public CCLayer
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayer();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~UILayer();
     
@@ -113,6 +114,7 @@ public:
      * UIInputManager is the touch manager of UILayer.
      *
      * @return UIInputManager.
+     * @js NA
      */
     UIInputManager* getInputManager();
     

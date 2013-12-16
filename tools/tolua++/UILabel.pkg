@@ -1,0 +1,32 @@
+
+class UILabel : public UIWidget
+{
+    UILabel();
+    virtual ~UILabel();
+    static UILabel* create();
+    void setText(const char* text);
+    const char* getStringValue();
+    int getStringLength();
+    void setFontSize(int size);
+    void setFontName(const char* name);
+    void setTouchScaleChangeEnabled(bool enabled);
+    bool isTouchScaleChangeEnabled();
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual void setScale(float fScale);
+    virtual void setScaleX(float fScaleX);
+    virtual void setScaleY(float fScaleY);
+    virtual const char* getDescription() const;
+    
+    void setTextAreaSize(const CCSize &size);
+    void setTextHorizontalAlignment(CCTextAlignment alignment);
+    void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+    
+    void setTouchScaleChangeAble(bool able);
+    bool getTouchScaleChangeAble();
+};

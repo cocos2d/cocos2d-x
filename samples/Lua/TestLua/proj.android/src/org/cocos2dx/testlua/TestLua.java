@@ -34,8 +34,10 @@ public class TestLua extends Cocos2dxActivity{
 		super.onCreate(savedInstanceState);
 	}
 	
-	public Cocos2dxGLSurfaceView onCreateGLSurfaceView() {
-    	return new LuaGLSurfaceView(this);
+	public Cocos2dxGLSurfaceView onCreateView() {
+        LuaGLSurfaceView glSurfaceView = new LuaGLSurfaceView(this);
+        glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
+    	return glSurfaceView;
     }
 
     static {

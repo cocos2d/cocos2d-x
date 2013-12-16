@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "../third_party/winrt/angleproject/include/GLES2/gl2.h"
 #include "../third_party/winrt/angleproject/include/GLES2/gl2ext.h"
+#include "../third_party/winrt/angleproject/src/common/winrtangle.h"
 
 #define GL_BGRA						GL_BGRA_EXT
 
