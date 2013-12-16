@@ -102,7 +102,7 @@ CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 	case FrameEase_Custom:
 		{
 			CCEaseBezierAction* cAction = CCEaseBezierAction::create(action);
-			cAction->setBezierParamer(m_Parameter[1],m_Parameter[3],m_Parameter[5],m_Parameter[7]);
+			cAction->setBezierParamer(m_Parameter[0],m_Parameter[1],m_Parameter[2],m_Parameter[3]);
 			return cAction;
 		}
 		break;
