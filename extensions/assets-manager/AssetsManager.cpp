@@ -495,6 +495,45 @@ bool AssetsManager::downLoad()
 {
     // Create a file to save package.
     string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    
+    // Create dir
+    string fileNameStr(outFileName);
+    
+    size_t startIndex=0;
+    
+    size_t index=fileNameStr.find("/",startIndex);
+    
+    while(index!=-1)
+    {
+        string dir=_storagePath+fileNameStr.substr(0,index);
+        
+        FILE *out = fopen(dir.c_str(), "r");
+        
+        if(!out)
+        {
+            if (!createDirectory(dir.c_str()))
+            {
+                CCLOG("can not create directory %s", dir.c_str());
+
+                return false;
+            }
+            else
+            {
+                CCLOG("create directory %s",dir.c_str());
+            }
+        }
+        else
+        {
+            fclose(out);
+        }
+        
+        startIndex=index+1;
+        
+        index=fileNameStr.find("/",startIndex);
+        
+    }
+    
+    
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
