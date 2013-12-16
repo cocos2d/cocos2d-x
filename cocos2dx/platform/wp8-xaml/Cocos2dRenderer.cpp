@@ -1,7 +1,11 @@
 ﻿#include "pch.h"
 #include "Cocos2dRenderer.h"
+#include "cocos2d.h"
 #include "CCApplication.h"
 #include "CCEGLView.h"
+#include "support/CCNotificationCenter.h"
+
+
 #include <ppltasks.h>
 
 using namespace Concurrency;
@@ -23,8 +27,29 @@ void Cocos2dRenderer::CreateDeviceResources()
 
 void Cocos2dRenderer::CreateGLResources()
 {
-
+    if(!mInitialized)
+    {
+        mInitialized = true;
+        CCEGLView* pEGLView = new CCEGLView();
+	    pEGLView->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height);
+ 		//pEGLView->UpdateOrientation(mCurrentOrientation);
+        pEGLView->setViewName("Cocos2d-x");
+        CCApplication::sharedApplication()->run();
+    }
+    else
+    {
+        ccGLInvalidateStateCache();
+        CCShaderCache::sharedShaderCache()->reloadDefaultShaders();
+        ccDrawInit();
+        CCTextureCache::sharedTextureCache()->reloadAllTextures();
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(EVENT_COME_TO_FOREGROUND, NULL);
+        CCDirector::sharedDirector()->setGLDefaultValues(); 
+    }
     m_loadingComplete = true;
+
+
+
+
 }
 
 IAsyncAction^ Cocos2dRenderer::OnSuspending()
@@ -44,20 +69,8 @@ bool Cocos2dRenderer::OnBackPressed()
 
 void Cocos2dRenderer::OnUpdateDevice()
 {
-    if(!mInitialized)
-    {
-        mInitialized = true;
-        CCEGLView* pEGLView = new CCEGLView();
-	    pEGLView->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height);
- 		//pEGLView->UpdateOrientation(mCurrentOrientation);
-        pEGLView->setViewName("Cocos2d-x");
-        CCApplication::sharedApplication()->run();
-    }
-    else
-    {
-        CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
-        pEGLView->UpdateDevice(m_eglDisplay, m_eglContext, m_eglSurface);
-    }
+    CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    pEGLView->UpdateDevice(m_eglDisplay, m_eglContext, m_eglSurface);
 }
 
 void Cocos2dRenderer::CreateWindowSizeDependentResources()

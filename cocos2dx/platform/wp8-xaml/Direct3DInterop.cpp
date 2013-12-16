@@ -70,7 +70,7 @@ bool Direct3DInterop::IsBackKeyHandled()
 void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
     std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));  // p1 owns Foo
+    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mPointerEvents.push(e);
 }
 
@@ -84,7 +84,6 @@ void Direct3DInterop::OnPointerPressed(DrawingSurfaceManipulationHost^ sender, P
 void Direct3DInterop::OnPointerMoved(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
     AddPointerEvent(PointerEventType::PointerMoved, args);
-
 }
 
 void Direct3DInterop::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
