@@ -252,6 +252,7 @@ static CCEAGLView *__view = 0;
 {
     [renderer_ release];
     self.keyboardShowNotification = NULL; // implicit release
+    [[NSNotificationCenter defaultCenter] removeObserver:self]; // remove keyboard notification
     [super dealloc];
 }
 

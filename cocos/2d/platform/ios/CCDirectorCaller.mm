@@ -50,6 +50,8 @@ static id s_sharedDirectorCaller;
 
 +(void) destroy
 {
+    // We should invalidate the MainLoop timer first.
+    [s_sharedDirectorCaller stopMainLoop];
     [s_sharedDirectorCaller release];
     s_sharedDirectorCaller = nil;
 }
@@ -68,19 +70,23 @@ static id s_sharedDirectorCaller;
 -(void) startMainLoop
 {
         // Director::setAnimationInterval() is called, we should invalidate it first
-        [displayLink invalidate];
-        displayLink = nil;
+        [self stopMainLoop];
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
         [displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
+-(void) stopMainLoop
+{
+    [displayLink invalidate];
+    displayLink = nil;
+}
+
 -(void) setAnimationInterval:(double)intervalNew
 {
         // Director::setAnimationInterval() is called, we should invalidate it first
-        [displayLink invalidate];
-        displayLink = nil;
+        [self stopMainLoop];
         
         self.interval = 60.0 * intervalNew;
         
