@@ -340,8 +340,8 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
             tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 
-            unsigned int indexForZ = atlasIndexForExistantZ(z);
-            this->addSpriteWithoutQuad(tile, indexForZ, z);
+            ssize_t indexForZ = atlasIndexForExistantZ(z);
+            this->addSpriteWithoutQuad(tile, static_cast<int>(indexForZ), z);
         }
     }
     
@@ -379,7 +379,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile, pos, gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForNewZ(static_cast<int>(z));
+    ssize_t indexForZ = atlasIndexForNewZ(static_cast<int>(z));
 
     // Optimization: add the quad without adding a child
     this->insertQuadFromSprite(tile, indexForZ);
@@ -393,7 +393,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
         Sprite* sp = static_cast<Sprite*>(child);
         if (child)
         {
-            int ai = sp->getAtlasIndex();
+            ssize_t ai = sp->getAtlasIndex();
             if ( ai >= indexForZ )
             {
                 sp->setAtlasIndex(ai+1);
@@ -416,7 +416,7 @@ Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile ,pos ,gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForExistantZ(z);
+    ssize_t indexForZ = atlasIndexForExistantZ(z);
     tile->setAtlasIndex(indexForZ);
     tile->setDirty(true);
     tile->updateTransform();
@@ -441,7 +441,7 @@ Sprite * TMXLayer::appendTileForGID(unsigned int gid, const Point& pos)
     // optimization:
     // The difference between appendTileForGID and insertTileforGID is that append is faster, since
     // it appends the tile at the end of the texture atlas
-    unsigned int indexForZ = _atlasIndexArray->num;
+    ssize_t indexForZ = _atlasIndexArray->num;
 
     // don't add it using the "standard" way.
     insertQuadFromSprite(tile, indexForZ);
@@ -458,24 +458,24 @@ static inline int compareInts(const void * a, const void * b)
     return ((*(int*)a) - (*(int*)b));
 }
 
-unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
+ssize_t TMXLayer::atlasIndexForExistantZ(unsigned int z)
 {
     int key=z;
     int *item = (int*)bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
 
     CCASSERT(item, "TMX atlas index not found. Shall not happen");
 
-    int index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
+    ssize_t index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
     return index;
 }
 
-unsigned int TMXLayer::atlasIndexForNewZ(int z)
+ssize_t TMXLayer::atlasIndexForNewZ(int z)
 {
     // XXX: This can be improved with a sort of binary search
-    int i=0;
+    ssize_t i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {
-        int val = (size_t) _atlasIndexArray->arr[i];
+        ssize_t val = (size_t) _atlasIndexArray->arr[i];
         if (z < val)
         {
             break;
@@ -558,8 +558,8 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 
     CCASSERT(_children.contains(sprite), "Tile does not belong to TMXLayer");
 
-    unsigned int atlasIndex = sprite->getAtlasIndex();
-    unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];
+    ssize_t atlasIndex = sprite->getAtlasIndex();
+    ssize_t zz = (ssize_t)_atlasIndexArray->arr[atlasIndex];
     _tiles[zz] = 0;
     ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
     SpriteBatchNode::removeChild(sprite, cleanup);
@@ -575,7 +575,7 @@ void TMXLayer::removeTileAt(const Point& pos)
     if (gid) 
     {
         unsigned int z = (unsigned int)(pos.x + pos.y * _layerSize.width);
-        unsigned int atlasIndex = atlasIndexForExistantZ(z);
+        ssize_t atlasIndex = atlasIndexForExistantZ(z);
 
         // remove tile from GID map
         _tiles[z] = 0;
@@ -598,7 +598,7 @@ void TMXLayer::removeTileAt(const Point& pos)
                 Sprite* child = static_cast<Sprite*>(obj);
                 if (child)
                 {
-                    unsigned int ai = child->getAtlasIndex();
+                    ssize_t ai = child->getAtlasIndex();
                     if ( ai >= atlasIndex )
                     {
                         child->setAtlasIndex(ai-1);
@@ -703,6 +703,12 @@ int TMXLayer::getVertexZForPos(const Point& pos)
     
     return ret;
 }
+
+std::string TMXLayer::getDescription() const
+{
+    return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
+}
+
 
 NS_CC_END
 

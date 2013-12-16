@@ -418,6 +418,7 @@ void PhysicsDemoLogoSmash::onEnter()
     PhysicsDemo::onEnter();
     
     _scene->getPhysicsWorld()->setGravity(Point(0, 0));
+    _scene->getPhysicsWorld()->setUpdateRate(5.0f);
     
     _ball = SpriteBatchNode::create("Images/ball.png", sizeof(logo_image)/sizeof(logo_image[0]));
     addChild(_ball);
@@ -445,9 +446,9 @@ void PhysicsDemoLogoSmash::onEnter()
     
     
     auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
-    bullet->getPhysicsBody()->setVelocity(Point(400, 0));
+    bullet->getPhysicsBody()->setVelocity(Point(200, 0));
     
-    bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
+    bullet->setPosition(Point(-500, VisibleRect::getVisibleRect().size.height/2));
     
     _ball->addChild(bullet);
 }

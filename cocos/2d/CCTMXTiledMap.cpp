@@ -243,7 +243,12 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
     
     return Value();
 }
-        
+
+std::string TMXTiledMap::getDescription() const
+{
+    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %zd", _tag, _children.size());
+}
+
 
 NS_CC_END
 

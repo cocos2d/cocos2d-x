@@ -50,7 +50,7 @@ public:
      * @js NA
      * @lua NA
      */
-    std::string description() const;
+    virtual std::string description() const;
 
 	/** returns a clone of action */
 	virtual Action* clone() const = 0;

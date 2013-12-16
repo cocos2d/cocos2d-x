@@ -87,7 +87,7 @@ void ActionManager::actionAllocWithHashElement(tHashElement *element)
 
 }
 
-void ActionManager::removeActionAtIndex(int index, tHashElement *element)
+void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 {
     Action *action = (Action*)element->actions->arr[index];
 
@@ -324,7 +324,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
-int ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
+ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
 {
     tHashElement *element = NULL;
     HASH_FIND_PTR(_targets, &target, element);

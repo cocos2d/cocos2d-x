@@ -188,7 +188,7 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;
-
+    virtual std::string getDescription() const override;
 
 private:
     Point getPositionForIsoAt(const Point& pos);
@@ -209,8 +209,8 @@ private:
     int getVertexZForPos(const Point& pos);
 
     // index
-    unsigned int atlasIndexForExistantZ(unsigned int z);
-    unsigned int atlasIndexForNewZ(int z);
+    ssize_t atlasIndexForExistantZ(unsigned int z);
+    ssize_t atlasIndexForNewZ(int z);
     
 protected:
     //! name of the layer

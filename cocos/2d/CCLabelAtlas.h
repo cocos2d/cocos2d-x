@@ -90,7 +90,8 @@ public:
 
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override;
-    
+    virtual std::string getDescription() const override;
+
 #if CC_LABELATLAS_DEBUG_DRAW
     virtual void draw() override;
 #endif

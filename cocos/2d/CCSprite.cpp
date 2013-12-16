@@ -1052,7 +1052,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
 }
 
-void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex)
+void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
     CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
 
@@ -1135,6 +1135,16 @@ void Sprite::updateBlendFunc(void)
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }
+}
+
+std::string Sprite::getDescription() const
+{
+    int texture_id = -1;
+    if( _batchNode )
+        texture_id = _batchNode->getTextureAtlas()->getTexture()->getName();
+    else
+        texture_id = _texture->getName();
+    return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
 NS_CC_END
