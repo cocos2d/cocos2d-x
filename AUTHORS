@@ -666,6 +666,9 @@ Developers:
     hulefei
         Added gui namespace before SEL_TouchEvent.
         
+    zhiqiangxu
+        Fixed a logic error in ControlUtils::RectUnion.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
