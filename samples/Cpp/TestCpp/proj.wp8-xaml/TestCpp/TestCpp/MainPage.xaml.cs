@@ -17,7 +17,7 @@ namespace PhoneDirect3DXamlAppInterop
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private Direct3DBackground m_d3dBackground = null;
+        private Direct3DInterop m_d3dInterop = null;
 
         // Constructor
         public MainPage()
@@ -25,18 +25,37 @@ namespace PhoneDirect3DXamlAppInterop
             InitializeComponent();
         }
 
-        private void DrawingSurfaceBackground_Loaded(object sender, RoutedEventArgs e)
+        private void DrawingSurface_Loaded(object sender, RoutedEventArgs e)
         {
-            if (m_d3dBackground == null)
+            if (m_d3dInterop == null)
             {
-                m_d3dBackground = new Direct3DBackground();
+                m_d3dInterop = new Direct3DInterop();
 
-                  // Hook-up native component to DrawingSurfaceBackgroundGrid
-                DrawingSurfaceBackground.SetBackgroundContentProvider(m_d3dBackground.CreateContentProvider());
-                DrawingSurfaceBackground.SetBackgroundManipulationHandler(m_d3dBackground);
+                /*
+                                // Set window bounds in dips
+                                m_d3dInterop.WindowBounds = new Windows.Foundation.Size(
+                                    (float)DrawingSurface.ActualWidth,
+                                    (float)DrawingSurface.ActualHeight
+                                    ); 
+                */
+
+                // Set native resolution in pixels
+                m_d3dInterop.NativeResolution = new Windows.Foundation.Size(
+                    (float)Math.Floor(DrawingSurface.ActualWidth * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f),
+                    (float)Math.Floor(DrawingSurface.ActualHeight * Application.Current.Host.Content.ScaleFactor / 100.0f + 0.5f)
+                    );
+
+                // Set render resolution to the full native resolution
+                m_d3dInterop.RenderResolution = m_d3dInterop.NativeResolution;
+
+
+
+                // Hook-up native component to DrawingSurfaceBackgroundGrid
+                DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
+                DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
                 // set the desired screen orientation
-                m_d3dBackground.WindowOrientation = DisplayOrientations.Landscape;
+                //               m_d3dInterop.WindowOrientation = DisplayOrientations.Portrait;
             }
         }
     }
