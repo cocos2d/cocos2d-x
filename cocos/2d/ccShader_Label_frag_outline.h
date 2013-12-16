@@ -12,9 +12,9 @@ void main() \n\
 {	\n\
   float dist = texture2D(CC_Texture0, v_texCoord).a; \n\
   //todo:Implementation 'fwidth' for glsl 1.0 \n\
-  float width = fwidth(dist); \n\
+  //float width = fwidth(dist); \n\
   //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n\
-  //float width = 0.04; \n\
+  float width = 0.04; \n\
   float alpha = smoothstep(0.5-width, 0.5+width, dist); \n\
   //outline \n\
   float mu = smoothstep(0.545-width, 0.545+width, dist); \n\
