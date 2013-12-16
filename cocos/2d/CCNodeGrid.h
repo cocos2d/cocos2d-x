@@ -7,31 +7,31 @@ NS_CC_BEGIN
 
 class GridBase;
 
-class GridNode : public Node
+class NodeGrid : public Node
 {
 public:
-    static GridNode* create();
+    static NodeGrid* create();
 
-    GridBase* getNodeGrid() { return _nodeGrid; }
+    GridBase* getGrid() { return _nodeGrid; }
     /**
     * @js NA
     */
-    const GridBase* getNodeGrid() const { return _nodeGrid; }
+    const GridBase* getGrid() const { return _nodeGrid; }
 
     /**
      * Changes a grid object that is used when applying effects
      *
      * @param grid  A Grid object that is used when applying effects
      */
-    void setNodeGrid(GridBase *grid);
+    void setGrid(GridBase *grid);
 
     virtual bool init();
     virtual void visit();
 
-    void setGridTarget(Node *target);
+    void setTarget(Node *target);
 protected:
-    GridNode();
-    virtual ~GridNode();
+    NodeGrid();
+    virtual ~NodeGrid();
 
 protected:
     Node* _gridTarget;

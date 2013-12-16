@@ -14,7 +14,7 @@ class TextLayer : public BaseTest
 {
 protected:
     //UxString    _title;
-    GridNode* _gridNodeTarget;
+    NodeGrid* _gridNodeTarget;
 public:
     TextLayer(void);
     ~TextLayer(void);

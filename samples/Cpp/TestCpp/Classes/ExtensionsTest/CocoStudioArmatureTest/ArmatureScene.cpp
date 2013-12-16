@@ -1,7 +1,7 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 
 
 using namespace cocos2d;
@@ -574,7 +574,7 @@ void TestAnimationEvent::callback2()
 void TestFrameEvent::onEnter()
 {
     ArmatureTestLayer::onEnter();
-    _gridNode = GridNode::create();
+    _gridNode = NodeGrid::create();
     Armature *armature = Armature::create("HeroAnimation");
     armature->getAnimation()->play("attack");
     armature->getAnimation()->setSpeedScale(0.5);
@@ -611,8 +611,8 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
 }
 void TestFrameEvent::checkAction(float dt)
 {
-    if ( _gridNode->getNumberOfRunningActions() == 0 && _gridNode->getNodeGrid() != nullptr)
-        _gridNode->setNodeGrid(nullptr);
+    if ( _gridNode->getNumberOfRunningActions() == 0 && _gridNode->getGrid() != nullptr)
+        _gridNode->setGrid(nullptr);
 }
 
 
