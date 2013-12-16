@@ -10,10 +10,6 @@ public:
 	Cocos2dRenderer();
 
 	// Direct3DBase methods.
-	virtual void CreateDeviceResources() override;
-	virtual void CreateWindowSizeDependentResources() override;
-
-	void Update(float timeTotal, float timeDelta);
 	virtual void OnOrientationChanged(Windows::Graphics::Display::DisplayOrientations orientation) override;
 	virtual bool OnRender() override;
     virtual void CreateGLResources() override;
@@ -23,7 +19,10 @@ public:
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
     Windows::Foundation::IAsyncAction^ OnSuspending();
     void OnResuming();
-    bool OnBackPressed();
+    bool OnBackKeyPress();
+    void OnFocusChange(bool active);
+    void Connect();
+    void Disconnect();
 
 protected:
     virtual void OnUpdateDevice() override;
