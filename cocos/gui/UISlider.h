@@ -43,23 +43,23 @@ typedef void (Object::*SEL_SlidPercentChangedEvent)(Object*,SliderEventType);
 *   @js NA
 *   @lua NA
 */
-class UISlider : public UIWidget
+class Slider : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UISlider();
+    Slider();
     
     /**
      * Default destructor
      */
-    virtual ~UISlider();
+    virtual ~Slider();
     
     /**
      * Allocates and initializes.
      */
-    static UISlider* create();
+    static Slider* create();
     
     /**
      * Load texture for slider bar.
@@ -195,8 +195,8 @@ protected:
     virtual void onSizeChanged() override;
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     Node*  _barRenderer;
     Node* _progressBarRenderer;
@@ -233,4 +233,4 @@ protected:
 }
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UISlider__) */
+#endif /* defined(__CocoGUI__Slider__) */

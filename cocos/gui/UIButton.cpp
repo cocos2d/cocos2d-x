@@ -34,7 +34,7 @@ namespace gui {
 #define DISABLEDRENDERERZ (0)
 #define TITLERENDERERZ (1)
     
-UIButton::UIButton():
+Button::Button():
 _buttonNormalRenderer(nullptr),
 _buttonClickedRenderer(nullptr),
 _buttonDisableRenderer(nullptr),
@@ -59,13 +59,13 @@ _titleColor(Color3B::WHITE)
     
 }
 
-UIButton::~UIButton()
+Button::~Button()
 {
 }
 
-UIButton* UIButton::create()
+Button* Button::create()
 {
-    UIButton* widget = new UIButton();
+    Button* widget = new Button();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -75,18 +75,18 @@ UIButton* UIButton::create()
     return nullptr;
 }
 
-bool UIButton::init()
+bool Button::init()
 {
-    if (UIWidget::init())
+    if (Widget::init())
     {
         return true;
     }
     return false;
 }
 
-void UIButton::initRenderer()
+void Button::initRenderer()
 {
-    UIWidget::initRenderer();
+    Widget::initRenderer();
     _buttonNormalRenderer = Sprite::create();
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
@@ -97,7 +97,7 @@ void UIButton::initRenderer()
     _renderer->addChild(_titleRenderer,TITLERENDERERZ);
 }
 
-void UIButton::setScale9Enabled(bool able)
+void Button::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)
     {
@@ -149,23 +149,23 @@ void UIButton::setScale9Enabled(bool able)
     setBright(_bright);
 }
 
-void UIButton::ignoreContentAdaptWithSize(bool ignore)
+void Button::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
-        UIWidget::ignoreContentAdaptWithSize(ignore);
+        Widget::ignoreContentAdaptWithSize(ignore);
         _prevIgnoreSize = ignore;
     }
 }
 
-void UIButton::loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType)
+void Button::loadTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType)
 {
     loadTextureNormal(normal,texType);
     loadTexturePressed(selected,texType);
     loadTextureDisabled(disabled,texType);
 }
 
-void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
+void Button::loadTextureNormal(const char* normal,TextureResType texType)
 {
     if (!normal || strcmp(normal, "") == 0)
     {
@@ -211,7 +211,7 @@ void UIButton::loadTextureNormal(const char* normal,TextureResType texType)
     normalTextureScaleChangedWithSize();
 }
 
-void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
+void Button::loadTexturePressed(const char* selected,TextureResType texType)
 {
     if (!selected || strcmp(selected, "") == 0)
     {
@@ -257,7 +257,7 @@ void UIButton::loadTexturePressed(const char* selected,TextureResType texType)
     pressedTextureScaleChangedWithSize();
 }
 
-void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
+void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
 {
     if (!disabled || strcmp(disabled, "") == 0)
     {
@@ -303,14 +303,14 @@ void UIButton::loadTextureDisabled(const char* disabled,TextureResType texType)
     disabledTextureScaleChangedWithSize();
 }
 
-void UIButton::setCapInsets(const Rect &capInsets)
+void Button::setCapInsets(const Rect &capInsets)
 {
     setCapInsetsNormalRenderer(capInsets);
     setCapInsetsPressedRenderer(capInsets);
     setCapInsetsDisabledRenderer(capInsets);
 }
 
-void UIButton::setCapInsetsNormalRenderer(const Rect &capInsets)
+void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
 {
     _capInsetsNormal = capInsets;
     if (!_scale9Enabled)
@@ -320,7 +320,7 @@ void UIButton::setCapInsetsNormalRenderer(const Rect &capInsets)
     dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
 
-void UIButton::setCapInsetsPressedRenderer(const Rect &capInsets)
+void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
 {
     _capInsetsPressed = capInsets;
     if (!_scale9Enabled)
@@ -330,7 +330,7 @@ void UIButton::setCapInsetsPressedRenderer(const Rect &capInsets)
     dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
 
-void UIButton::setCapInsetsDisabledRenderer(const Rect &capInsets)
+void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
 {
     _capInsetsDisabled = capInsets;
     if (!_scale9Enabled)
@@ -340,7 +340,7 @@ void UIButton::setCapInsetsDisabledRenderer(const Rect &capInsets)
     dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
 }
 
-void UIButton::onPressStateChangedToNormal()
+void Button::onPressStateChangedToNormal()
 {
     _buttonNormalRenderer->setVisible(true);
     _buttonClickedRenderer->setVisible(false);
@@ -359,7 +359,7 @@ void UIButton::onPressStateChangedToNormal()
     }
 }
 
-void UIButton::onPressStateChangedToPressed()
+void Button::onPressStateChangedToPressed()
 {
     _buttonNormalRenderer->setVisible(false);
     _buttonClickedRenderer->setVisible(true);
@@ -378,14 +378,14 @@ void UIButton::onPressStateChangedToPressed()
     }
 }
 
-void UIButton::onPressStateChangedToDisabled()
+void Button::onPressStateChangedToDisabled()
 {
     _buttonNormalRenderer->setVisible(false);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(true);
 }
 
-void UIButton::setFlipX(bool flipX)
+void Button::setFlipX(bool flipX)
 {
     _titleRenderer->setFlippedX(flipX);
     if (_scale9Enabled)
@@ -397,7 +397,7 @@ void UIButton::setFlipX(bool flipX)
     dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
 }
 
-void UIButton::setFlipY(bool flipY)
+void Button::setFlipY(bool flipY)
 {
     _titleRenderer->setFlippedY(flipY);
     if (_scale9Enabled)
@@ -409,7 +409,7 @@ void UIButton::setFlipY(bool flipY)
     dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
 }
 
-bool UIButton::isFlipX()
+bool Button::isFlipX()
 {
     if (_scale9Enabled)
     {
@@ -418,7 +418,7 @@ bool UIButton::isFlipX()
     return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
 }
 
-bool UIButton::isFlipY()
+bool Button::isFlipY()
 {
     if (_scale9Enabled)
     {
@@ -427,28 +427,28 @@ bool UIButton::isFlipY()
     return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
 }
 
-void UIButton::setAnchorPoint(const Point &pt)
+void Button::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
     _buttonNormalRenderer->setAnchorPoint(pt);
     _buttonClickedRenderer->setAnchorPoint(pt);
     _buttonDisableRenderer->setAnchorPoint(pt);
     _titleRenderer->setPosition(Point(_size.width*(0.5f-_anchorPoint.x), _size.height*(0.5f-_anchorPoint.y)));
 }
 
-void UIButton::onSizeChanged()
+void Button::onSizeChanged()
 {
     normalTextureScaleChangedWithSize();
     pressedTextureScaleChangedWithSize();
     disabledTextureScaleChangedWithSize();
 }
 
-const Size& UIButton::getContentSize() const
+const Size& Button::getContentSize() const
 {
     return _normalTextureSize;
 }
 
-Node* UIButton::getVirtualRenderer()
+Node* Button::getVirtualRenderer()
 {
     if (_bright)
     {
@@ -468,7 +468,7 @@ Node* UIButton::getVirtualRenderer()
     }
 }
 
-void UIButton::normalTextureScaleChangedWithSize()
+void Button::normalTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -500,7 +500,7 @@ void UIButton::normalTextureScaleChangedWithSize()
     }
 }
 
-void UIButton::pressedTextureScaleChangedWithSize()
+void Button::pressedTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -531,7 +531,7 @@ void UIButton::pressedTextureScaleChangedWithSize()
     }
 }
 
-void UIButton::disabledTextureScaleChangedWithSize()
+void Button::disabledTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -562,71 +562,71 @@ void UIButton::disabledTextureScaleChangedWithSize()
     }
 }
 
-void UIButton::setPressedActionEnabled(bool enabled)
+void Button::setPressedActionEnabled(bool enabled)
 {
     _pressedActionEnabled = enabled;
 }
 
-void UIButton::setTitleText(const std::string& text)
+void Button::setTitleText(const std::string& text)
 {
     _titleRenderer->setString(text);
 }
 
-const std::string& UIButton::getTitleText() const
+const std::string& Button::getTitleText() const
 {
     return _titleRenderer->getString();
 }
 
-void UIButton::setTitleColor(const Color3B& color)
+void Button::setTitleColor(const Color3B& color)
 {
     _titleColor = color;
     _titleRenderer->setColor(color);
 }
 
-const Color3B& UIButton::getTitleColor() const
+const Color3B& Button::getTitleColor() const
 {
     return _titleRenderer->getColor();
 }
 
-void UIButton::setTitleFontSize(float size)
+void Button::setTitleFontSize(float size)
 {
     _titleRenderer->setFontSize(size);
 }
 
-float UIButton::getTitleFontSize() const
+float Button::getTitleFontSize() const
 {
     return _titleRenderer->getFontSize();
 }
 
-void UIButton::setTitleFontName(const char* fontName)
+void Button::setTitleFontName(const char* fontName)
 {
     _titleRenderer->setFontName(fontName);
 }
 
-const char* UIButton::getTitleFontName() const
+const char* Button::getTitleFontName() const
 {
     return _titleRenderer->getFontName().c_str();
 }
 
-void UIButton::setColor(const Color3B &color)
+void Button::setColor(const Color3B &color)
 {
-    UIWidget::setColor(color);
+    Widget::setColor(color);
     setTitleColor(_titleColor);
 }
 
-const char* UIButton::getDescription() const
+const char* Button::getDescription() const
 {
     return "Button";
 }
 
-UIWidget* UIButton::createCloneInstance()
+Widget* Button::createCloneInstance()
 {
-    return UIButton::create();
+    return Button::create();
 }
 
-void UIButton::copySpecialProperties(UIWidget *widget)
+void Button::copySpecialProperties(Widget *widget)
 {
-    UIButton* button = dynamic_cast<UIButton*>(widget);
+    Button* button = dynamic_cast<Button*>(widget);
     if (button)
     {   
         _prevIgnoreSize = button->_prevIgnoreSize;

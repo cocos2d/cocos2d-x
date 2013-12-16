@@ -17,7 +17,7 @@ bool UILabelTest::init()
     {
         Size widgetSize = m_pWidget->getSize();
         
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("Label");
         alert->setFontName(font_UILabelTest);
         alert->setFontSize(30);
@@ -26,7 +26,7 @@ bool UILabelTest::init()
         m_pUiLayer->addChild(alert);        
         
         // Create the label
-        UILabel* label = UILabel::create();
+        cocos2d::gui::Label* label = cocos2d::gui::Label::create();
         label->setText("Label");
         label->setFontName("AmericanTypewriter");
         label->setFontSize(30);

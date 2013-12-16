@@ -40,7 +40,7 @@ protected:
     virtual void handlePressLogic(const Point &touchPoint) = 0;
     virtual void handleMoveLogic(const Point &touchPoint) = 0;
     virtual void handleReleaseLogic(const Point &touchPoint) = 0;
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const Point &touchPoint) = 0;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Point &touchPoint) = 0;
 };
 
 }

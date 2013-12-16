@@ -35,23 +35,23 @@ namespace gui {
 *   @js NA
 *   @lua NA
 */    
-class UILabelBMFont : public UIWidget
+class LabelBMFont : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILabelBMFont();
+    LabelBMFont();
     
     /**
      * Default destructor
      */
-    virtual ~UILabelBMFont();
+    virtual ~LabelBMFont();
     
     /**
      * Allocates and initializes.
      */
-    static UILabelBMFont* create();
+    static LabelBMFont* create();
     
     /** init a bitmap font atlas with an initial string and the FNT file */
     void setFntFile(const char* fileName);
@@ -72,10 +72,10 @@ protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
     void labelBMFontScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    LabelBMFont* _labelBMFontRenderer;
+    cocos2d::LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;
     std::string _fntFileName;
     std::string _stringValue;
@@ -84,4 +84,4 @@ protected:
 }
 NS_CC_END
 
-#endif /* defined(__UILabelBMFont__) */
+#endif /* defined(__LabelBMFont__) */

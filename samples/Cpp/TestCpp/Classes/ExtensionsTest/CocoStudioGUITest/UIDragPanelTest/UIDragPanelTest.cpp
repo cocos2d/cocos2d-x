@@ -27,7 +27,7 @@ bool UIDragPanelTest::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UIDragPanelTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -36,7 +36,7 @@ bool UIDragPanelTest::init()
         m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("DragPanel");
         alert->setFontName(font_UIDragPanelTest);
         alert->setFontSize(30);
@@ -44,7 +44,7 @@ bool UIDragPanelTest::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addChild(alert);
         
-        UIScrollView* sc = UIScrollView::create();
+        cocos2d::gui::ScrollView* sc = cocos2d::gui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         sc->setDirection(SCROLLVIEW_DIR_BOTH);
@@ -52,7 +52,7 @@ bool UIDragPanelTest::init()
         sc->setSize(Size(100,100));
         sc->setPosition(Point(100,100));
         sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
-        UIImageView* iv = UIImageView::create();
+        cocos2d::gui::ImageView* iv = cocos2d::gui::ImageView::create();
         iv->loadTexture("cocosgui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);
@@ -81,7 +81,7 @@ bool UIDragPanelTest_Bounce::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UIDragPanelTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -90,7 +90,7 @@ bool UIDragPanelTest_Bounce::init()
         m_pUiLayer->addChild(m_pDisplayValueLabel);        
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("DragPanel Bounce");
         alert->setFontName(font_UIDragPanelTest);
         alert->setFontSize(30);
@@ -98,7 +98,7 @@ bool UIDragPanelTest_Bounce::init()
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
         m_pUiLayer->addChild(alert);
         
-        UIScrollView* sc = UIScrollView::create();
+        cocos2d::gui::ScrollView* sc = cocos2d::gui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(LAYOUT_COLOR_SOLID);
         sc->setBounceEnabled(true);
@@ -107,7 +107,7 @@ bool UIDragPanelTest_Bounce::init()
         sc->setSize(Size(100,100));
         sc->setPosition(Point(100,100));
         sc->scrollToPercentBothDirection(Point(50, 50), 1, true);
-        UIImageView* iv = UIImageView::create();
+        cocos2d::gui::ImageView* iv = cocos2d::gui::ImageView::create();
         iv->loadTexture("cocosgui/Hello.png");
         iv->setPosition(Point(240, 160));
         sc->addChild(iv);

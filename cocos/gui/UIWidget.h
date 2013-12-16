@@ -78,23 +78,23 @@ typedef void (Object::*SEL_TouchEvent)(Object*,TouchEventType);
 *   @js NA
 *   @lua NA
 */
-class UIWidget : public NodeRGBA
+class Widget : public NodeRGBA
 {
 public:    
     /**
      * Default constructor
      */
-    UIWidget(void);
+    Widget(void);
     
     /**
      * Default destructor
      */
-    virtual ~UIWidget();
+    virtual ~Widget();
     
     /**
      * Allocates and initializes a widget.
      */
-    static UIWidget* create();
+    static Widget* create();
     
     /**
      * Sets whether the widget is enabled
@@ -327,9 +327,9 @@ public:
      *
      * @param name   An key to find the child widget.
      *
-     * @return a UIWidget object whose name equals to the input parameter
+     * @return a Widget object whose name equals to the input parameter
      */
-    UIWidget* getChildByName(const char* name);
+    Widget* getChildByName(const char* name);
     
     /**
      * Gets the renderer of widget
@@ -496,7 +496,7 @@ public:
     /*
      * Sends the touch event to widget's parent
      */
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const Point &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint);
     
     /*
      * Gets the touch began point of widget when widget is selected.
@@ -620,7 +620,7 @@ public:
      *
      * @param type  Relative or Linear
      */
-    void setLayoutParameter(UILayoutParameter* parameter);
+    void setLayoutParameter(LayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
@@ -631,7 +631,7 @@ public:
      *
      * @return LayoutParameter
      */
-    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
@@ -685,7 +685,7 @@ public:
      */
     virtual const char* getDescription() const;
     
-    UIWidget* clone();
+    Widget* clone();
 
     virtual void onEnter();
     virtual void onExit();
@@ -719,11 +719,11 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    void copyProperties(UIWidget* model);
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
-    UIWidget* getWidgetParent();
+    void copyProperties(Widget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
+    Widget* getWidgetParent();
 protected:
     bool _enabled;            ///< Highest control of widget
     bool _bright;             ///< is this widget bright
@@ -765,4 +765,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__UIWidget__) */
+#endif /* defined(__Widget__) */

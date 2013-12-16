@@ -45,24 +45,24 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
-class UIPageView : public UILayout , public UIScrollInterface
+class PageView : public Layout , public UIScrollInterface
 {
     
 public:
     /**
      * Default constructor
      */
-    UIPageView();
+    PageView();
     
     /**
      * Default destructor
      */
-    virtual ~UIPageView();
+    virtual ~PageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIPageView* create();
+    static PageView* create();
     
     /**
      * Add a widget to a page of pageview.
@@ -73,28 +73,28 @@ public:
      *
      * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
      */
-    void addWidgetToPage(UIWidget* widget, int pageIdx, bool forceCreate);
+    void addWidgetToPage(Widget* widget, int pageIdx, bool forceCreate);
     
     /**
      * Push back a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
-    void addPage(UILayout* page);
+    void addPage(Layout* page);
     
     /**
      * Inert a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
-    void insertPage(UILayout* page, int idx);
+    void insertPage(Layout* page, int idx);
     
     /**
      * Remove a page of pageview.
      *
      * @param page    page which will be removed.
      */
-    void removePage(UILayout* page);
+    void removePage(Layout* page);
 
     /**
      * Remove a page at index of pageview.
@@ -121,7 +121,7 @@ public:
     
     Array* getPages();
     
-    UILayout* getPage(int index);
+    Layout* getPage(int index);
     
     // event
     void addEventListenerPageView(Object *target, SEL_PageViewEvent selector);
@@ -165,27 +165,27 @@ protected:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void removeChild(Node* widget, bool cleanup = true) override;
     virtual void removeAllChildren() override;
-    virtual Vector<Node*>& getChildren() override{return UIWidget::getChildren();};
-    virtual const Vector<Node*>& getChildren() const override{return UIWidget::getChildren();};
+    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
+    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
     virtual bool init() override;
-    UILayout* createPage();
+    Layout* createPage();
     float getPositionXByIndex(int idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const Point &touchPoint) override;
     virtual void handleMoveLogic(const Point &touchPoint) override;
     virtual void handleReleaseLogic(const Point &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const Point &touchPoint) override;
-    virtual void checkChildInfo(int handleState, UIWidget* sender, const Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState, Widget* sender, const Point &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged() override;
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
-    virtual void setClippingEnabled(bool enabled) override {UILayout::setClippingEnabled(enabled);};
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
     virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
     int _curPageIdx;
@@ -194,8 +194,8 @@ protected:
     float _touchStartLocation;
     float _touchMoveStartLocation;
     Point _movePagePoint;
-    UIWidget* _leftChild;
-    UIWidget* _rightChild;
+    Widget* _leftChild;
+    Widget* _rightChild;
     float _leftBoundary;
     float _rightBoundary;
     bool _isAutoScrolling;
@@ -211,4 +211,4 @@ protected:
 }
 NS_CC_END
 
-#endif /* defined(__UIPageView__) */
+#endif /* defined(__PageView__) */

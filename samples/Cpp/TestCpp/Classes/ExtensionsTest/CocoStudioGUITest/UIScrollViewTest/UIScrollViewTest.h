@@ -36,7 +36,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Vertical)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 class UIScrollViewTest_Horizontal : public UIScene
@@ -48,7 +48,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Horizontal)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

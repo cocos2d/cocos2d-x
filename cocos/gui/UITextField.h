@@ -97,16 +97,16 @@ typedef enum
 typedef void (Object::*SEL_TextFieldEvent)(Object*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
-/** class UITextField : public UIWidget
+/** class UITextField : public Widget
 *   @js NA
 *   @lua NA
 */
-class UITextField : public UIWidget
+class TextField : public Widget
 {
 public:
-    UITextField();
-    virtual ~UITextField();
-    static UITextField* create();
+    TextField();
+    virtual ~TextField();
+    static TextField* create();
     virtual bool init() override;
     virtual void initRenderer() override;
     void setTouchSize(const Size &size);
@@ -155,8 +155,8 @@ protected:
     void deleteBackwardEvent();
     virtual void onSizeChanged() override;
     void textfieldRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     UICCTextField* _textFieldRenderer;
 
@@ -174,4 +174,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__UITextField__) */
+#endif /* defined(__TextField__) */

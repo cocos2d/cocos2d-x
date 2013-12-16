@@ -321,7 +321,7 @@ namespace cocostudio {
                 }
                 else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
                 {
-                    UIWidget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
+                    Widget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
                     ComRender *pRender = ComRender::create(widget, "GUIComponent");
                     if (pComName != nullptr)
                     {

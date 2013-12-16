@@ -53,7 +53,7 @@ void CocosGUITestScene::MainMenuCallback(Object* pSender)
 
 void CocosGUITestScene::toCocosGUIExampleScene(Object* sender)
 {
-    auto scrollView = static_cast<UIScrollView*>(sender);
+    auto scrollView = static_cast<cocos2d::gui::ScrollView*>(sender);
     scrollView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
     scrollView->getChildByName("backtotopbutton")->setBright(false);
     scrollView->getChildByName("backtotopbutton")->setTouchEnabled(false);

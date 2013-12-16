@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-UIPageView::UIPageView():
+PageView::PageView():
 _curPageIdx(0),
 _pages(nullptr),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
@@ -49,7 +49,7 @@ _pageViewEventSelector(nullptr)
 {
 }
 
-UIPageView::~UIPageView()
+PageView::~PageView()
 {
     _pages->removeAllObjects();
     CC_SAFE_RELEASE(_pages);
@@ -57,9 +57,9 @@ UIPageView::~UIPageView()
     _pageViewEventSelector = nullptr;
 }
 
-UIPageView* UIPageView::create()
+PageView* PageView::create()
 {
-    UIPageView* widget = new UIPageView();
+    PageView* widget = new PageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -69,9 +69,9 @@ UIPageView* UIPageView::create()
     return nullptr;
 }
 
-bool UIPageView::init()
+bool PageView::init()
 {
-    if (UILayout::init())
+    if (Layout::init())
     {
         _pages = Array::create();
         _pages->retain();
@@ -83,7 +83,7 @@ bool UIPageView::init()
     return false;
 }
 
-void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate)
+void PageView::addWidgetToPage(Widget *widget, int pageIdx, bool forceCreate)
 {
     if (!widget)
     {
@@ -102,14 +102,14 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
             {
                 CCLOG("pageIdx is %d, it will be added as page id [%d]",pageIdx,pageCount);
             }
-            UILayout* newPage = createPage();
+            Layout* newPage = createPage();
             newPage->addChild(widget);
             addPage(newPage);
         }
     }
     else
     {
-        UILayout * page = dynamic_cast<UILayout*>(_pages->getObjectAtIndex(pageIdx));
+        Layout * page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(pageIdx));
         if (page)
         {
             page->addChild(widget);
@@ -117,14 +117,14 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
     }
 }
 
-UILayout* UIPageView::createPage()
+Layout* PageView::createPage()
 {
-    UILayout* newPage = UILayout::create();
+    Layout* newPage = Layout::create();
     newPage->setSize(getSize());
     return newPage;
 }
 
-void UIPageView::addPage(UILayout* page)
+void PageView::addPage(Layout* page)
 {
     if (!page)
     {
@@ -151,7 +151,7 @@ void UIPageView::addPage(UILayout* page)
     updateBoundaryPages();
 }
 
-void UIPageView::insertPage(UILayout* page, int idx)
+void PageView::insertPage(Layout* page, int idx)
 {
     if (idx < 0)
     {
@@ -190,7 +190,7 @@ void UIPageView::insertPage(UILayout* page, int idx)
         ccArray* arrayPages = _pages->data;
         int length = arrayPages->num;
         for (int i=(idx+1); i<length; i++) {
-            UIWidget* behindPage = dynamic_cast<UIWidget*>(arrayPages->arr[i]);
+            Widget* behindPage = dynamic_cast<Widget*>(arrayPages->arr[i]);
             Point formerPos = behindPage->getPosition();
             behindPage->setPosition(Point(formerPos.x+getSize().width, 0));
         }
@@ -198,7 +198,7 @@ void UIPageView::insertPage(UILayout* page, int idx)
     }
 }
 
-void UIPageView::removePage(UILayout* page)
+void PageView::removePage(Layout* page)
 {
     if (!page)
     {
@@ -209,25 +209,25 @@ void UIPageView::removePage(UILayout* page)
     updateBoundaryPages();
 }
 
-void UIPageView::removePageAtIndex(int index)
+void PageView::removePageAtIndex(int index)
 {
     if (index < 0 || index >= (int)(_pages->count()))
     {
         return;
     }
-    UILayout* page = dynamic_cast<UILayout*>(_pages->getObjectAtIndex(index));
+    Layout* page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(index));
     if (page)
     {
         removePage(page);
     }
 }
     
-void UIPageView::removeAllPages()
+void PageView::removeAllPages()
 {
     removeAllChildren();
 }
 
-void UIPageView::updateBoundaryPages()
+void PageView::updateBoundaryPages()
 {
     if (_pages->count() <= 0)
     {
@@ -235,48 +235,48 @@ void UIPageView::updateBoundaryPages()
         _rightChild = nullptr;
         return;
     }
-    _leftChild = dynamic_cast<UIWidget*>(_pages->getObjectAtIndex(0));
-    _rightChild = dynamic_cast<UIWidget*>(_pages->getLastObject());
+    _leftChild = dynamic_cast<Widget*>(_pages->getObjectAtIndex(0));
+    _rightChild = dynamic_cast<Widget*>(_pages->getLastObject());
 }
 
-float UIPageView::getPositionXByIndex(int idx)
+float PageView::getPositionXByIndex(int idx)
 {
     return (getSize().width*(idx-_curPageIdx));
 }
     
-void UIPageView::addChild(Node *child)
+void PageView::addChild(Node *child)
 {
-    UILayout::addChild(child);
+    Layout::addChild(child);
 }
 
-void UIPageView::addChild(Node * child, int zOrder)
+void PageView::addChild(Node * child, int zOrder)
 {
-    UILayout::addChild(child, zOrder);
+    Layout::addChild(child, zOrder);
 }
 
-void UIPageView::addChild(Node *child, int zOrder, int tag)
+void PageView::addChild(Node *child, int zOrder, int tag)
 {
-    UILayout::addChild(child, zOrder, tag);
+    Layout::addChild(child, zOrder, tag);
 }
 
-void UIPageView::removeChild(Node *child, bool cleanup)
+void PageView::removeChild(Node *child, bool cleanup)
 {
     if (_pages->containsObject(child))
     {
         _pages->removeObject(child);
     }
-    UILayout::removeChild(child, cleanup);
+    Layout::removeChild(child, cleanup);
 }
 
-void UIPageView::onSizeChanged()
+void PageView::onSizeChanged()
 {
-    UILayout::onSizeChanged();
+    Layout::onSizeChanged();
     _rightBoundary = getSize().width;
     updateChildrenSize();
     updateChildrenPosition();
 }
 
-void UIPageView::updateChildrenSize()
+void PageView::updateChildrenSize()
 {
     if (!_pages)
     {
@@ -286,12 +286,12 @@ void UIPageView::updateChildrenSize()
     Size selfSize = getSize();
     for (long i=0; i<_pages->count(); i++)
     {
-        UILayout* page = dynamic_cast<UILayout*>(_pages->getObjectAtIndex(i));
+        Layout* page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(i));
         page->setSize(selfSize);
     }
 }
 
-void UIPageView::updateChildrenPosition()
+void PageView::updateChildrenPosition()
 {
     if (!_pages)
     {
@@ -312,32 +312,32 @@ void UIPageView::updateChildrenPosition()
     ccArray* arrayPages = _pages->data;
     for (int i=0; i<pageCount; i++)
     {
-        UILayout* page = dynamic_cast<UILayout*>(arrayPages->arr[i]);
+        Layout* page = dynamic_cast<Layout*>(arrayPages->arr[i]);
         page->setPosition(Point((i-_curPageIdx)*pageWidth, 0));
     }
 }
 
-void UIPageView::removeAllChildren()
+void PageView::removeAllChildren()
 {
     _pages->removeAllObjects();
-    UILayout::removeAllChildren();
+    Layout::removeAllChildren();
 }
 
-void UIPageView::scrollToPage(int idx)
+void PageView::scrollToPage(int idx)
 {
     if (idx < 0 || idx >= (int)(_pages->count()))
     {
         return;
     }
     _curPageIdx = idx;
-    UIWidget* curPage = dynamic_cast<UIWidget*>(_pages->getObjectAtIndex(idx));
+    Widget* curPage = dynamic_cast<Widget*>(_pages->getObjectAtIndex(idx));
     _autoScrollDistance = -(curPage->getPosition().x);
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
     _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
     _isAutoScrolling = true;
 }
 
-void UIPageView::update(float dt)
+void PageView::update(float dt)
 {
     if (_isAutoScrolling)
     {
@@ -390,9 +390,9 @@ void UIPageView::update(float dt)
     }
 }
 
-bool UIPageView::onTouchBegan(Touch *touch, Event *unused_event)
+bool PageView::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    bool pass = UILayout::onTouchBegan(touch, unused_event);
+    bool pass = Layout::onTouchBegan(touch, unused_event);
     if (_hitted)
     {
         handlePressLogic(touch->getLocation());
@@ -400,11 +400,11 @@ bool UIPageView::onTouchBegan(Touch *touch, Event *unused_event)
     return pass;
 }
 
-void UIPageView::onTouchMoved(Touch *touch, Event *unused_event)
+void PageView::onTouchMoved(Touch *touch, Event *unused_event)
 {
     _touchMovePos = touch->getLocation();
     handleMoveLogic(_touchMovePos);
-    UIWidget* widgetParent = getWidgetParent();
+    Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(1,this,_touchMovePos);
@@ -417,32 +417,32 @@ void UIPageView::onTouchMoved(Touch *touch, Event *unused_event)
     }
 }
 
-void UIPageView::onTouchEnded(Touch *touch, Event *unused_event)
+void PageView::onTouchEnded(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchEnded(touch, unused_event);
+    Layout::onTouchEnded(touch, unused_event);
     handleReleaseLogic(_touchEndPos);
 }
     
-void UIPageView::onTouchCancelled(Touch *touch, Event *unused_event)
+void PageView::onTouchCancelled(Touch *touch, Event *unused_event)
 {
-    UILayout::onTouchCancelled(touch, unused_event);
+    Layout::onTouchCancelled(touch, unused_event);
     handleReleaseLogic(touch->getLocation());
 }
 
-void UIPageView::movePages(float offset)
+void PageView::movePages(float offset)
 {
     ccArray* arrayPages = _pages->data;
     int length = arrayPages->num;
     for (int i = 0; i < length; i++)
     {
-        UIWidget* child = (UIWidget*)(arrayPages->arr[i]);
+        Widget* child = (Widget*)(arrayPages->arr[i]);
         _movePagePoint.x = child->getPosition().x + offset;
         _movePagePoint.y = child->getPosition().y;
         child->setPosition(_movePagePoint);
     }
 }
 
-bool UIPageView::scrollPages(float touchOffset)
+bool PageView::scrollPages(float touchOffset)
 {
     if (_pages->count() <= 0)
     {
@@ -483,14 +483,14 @@ bool UIPageView::scrollPages(float touchOffset)
     return true;
 }
 
-void UIPageView::handlePressLogic(const Point &touchPoint)
+void PageView::handlePressLogic(const Point &touchPoint)
 {
     Point nsp = convertToNodeSpace(touchPoint);
     _touchMoveStartLocation = nsp.x;
     _touchStartLocation = nsp.x;
 }
 
-void UIPageView::handleMoveLogic(const Point &touchPoint)
+void PageView::handleMoveLogic(const Point &touchPoint)
 {
     Point nsp = convertToNodeSpace(touchPoint);
     float offset = 0.0;
@@ -508,13 +508,13 @@ void UIPageView::handleMoveLogic(const Point &touchPoint)
     scrollPages(offset);
 }
 
-void UIPageView::handleReleaseLogic(const Point &touchPoint)
+void PageView::handleReleaseLogic(const Point &touchPoint)
 {
     if (_pages->count() <= 0)
     {
         return;
     }
-    UIWidget* curPage = dynamic_cast<UIWidget*>(_pages->getObjectAtIndex(_curPageIdx));
+    Widget* curPage = dynamic_cast<Widget*>(_pages->getObjectAtIndex(_curPageIdx));
     if (curPage)
     {
         Point curPagePos = curPage->getPosition();
@@ -551,12 +551,12 @@ void UIPageView::handleReleaseLogic(const Point &touchPoint)
     }
 }
 
-void UIPageView::checkChildInfo(int handleState,UIWidget* sender, const Point &touchPoint)
+void PageView::checkChildInfo(int handleState,Widget* sender, const Point &touchPoint)
 {
     interceptTouchEvent(handleState, sender, touchPoint);
 }
 
-void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const Point &touchPoint)
+void PageView::interceptTouchEvent(int handleState, Widget *sender, const Point &touchPoint)
 {
     switch (handleState)
     {
@@ -583,7 +583,7 @@ void UIPageView::interceptTouchEvent(int handleState, UIWidget *sender, const Po
     }
 }
 
-void UIPageView::pageTurningEvent()
+void PageView::pageTurningEvent()
 {
     if (_pageViewEventListener && _pageViewEventSelector)
     {
@@ -591,58 +591,58 @@ void UIPageView::pageTurningEvent()
     }
 }
 
-void UIPageView::addEventListenerPageView(Object *target, SEL_PageViewEvent selector)
+void PageView::addEventListenerPageView(Object *target, SEL_PageViewEvent selector)
 {
     _pageViewEventListener = target;
     _pageViewEventSelector = selector;
 }
 
-int UIPageView::getCurPageIndex() const
+int PageView::getCurPageIndex() const
 {
     return _curPageIdx;
 }
 
-Array* UIPageView::getPages()
+Array* PageView::getPages()
 {
     return _pages;
 }
     
-UILayout* UIPageView::getPage(int index)
+Layout* PageView::getPage(int index)
 {
     if (index < 0 || index >= (int)(_pages->count()))
     {
         return nullptr;
     }
-    return (UILayout*)_pages->getObjectAtIndex(index);
+    return (Layout*)_pages->getObjectAtIndex(index);
 }
 
-const char* UIPageView::getDescription() const
+const char* PageView::getDescription() const
 {
     return "PageView";
 }
 
-UIWidget* UIPageView::createCloneInstance()
+Widget* PageView::createCloneInstance()
 {
-    return UIPageView::create();
+    return PageView::create();
 }
 
-void UIPageView::copyClonedWidgetChildren(UIWidget* model)
+void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
+    ccArray* arrayPages = dynamic_cast<PageView*>(model)->getPages()->data;
     int length = arrayPages->num;
     for (int i=0; i<length; i++)
     {
-        UILayout* page = (UILayout*)(arrayPages->arr[i]);
-        addPage(dynamic_cast<UILayout*>(page->clone()));
+        Layout* page = (Layout*)(arrayPages->arr[i]);
+        addPage(dynamic_cast<Layout*>(page->clone()));
     }
 }
 
-void UIPageView::copySpecialProperties(UIWidget *widget)
+void PageView::copySpecialProperties(Widget *widget)
 {
-    UIPageView* pageView = dynamic_cast<UIPageView*>(widget);
+    PageView* pageView = dynamic_cast<PageView*>(widget);
     if (pageView)
     {
-        UILayout::copySpecialProperties(widget);
+        Layout::copySpecialProperties(widget);
     }
 }
 

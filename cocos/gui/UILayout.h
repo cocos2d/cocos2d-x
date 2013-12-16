@@ -55,23 +55,23 @@ typedef enum {
  *  @js NA
  *  @lua NA
  */
-class UILayout : public UIWidget
+class Layout : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILayout();
+    Layout();
     
     /**
      * Default destructor
      */
-    virtual ~UILayout();
+    virtual ~Layout();
     
     /**
      * Allocates and initializes a layout.
      */
-    static UILayout* create();
+    static Layout* create();
         
     //background
     /**
@@ -225,10 +225,10 @@ protected:
     //init background image renderer.
     void addBackGroundImage();
     
-    void supplyTheLayoutParameterLackToChild(UIWidget* child);
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    void supplyTheLayoutParameterLackToChild(Widget* child);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
     
     void stencilClippingVisit();
     void scissorClippingVisit();
@@ -260,7 +260,7 @@ protected:
     bool _handleScissor;
     bool _scissorRectDirty;
     Rect _clippingRect;
-    UILayout* _clippingParent;
+    Layout* _clippingParent;
     bool _doLayoutDirty;
 };
     

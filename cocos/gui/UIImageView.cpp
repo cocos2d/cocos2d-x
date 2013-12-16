@@ -33,7 +33,7 @@ namespace gui {
 #define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_imageRenderer)
 #define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<extension::Scale9Sprite*>(_imageRenderer)
 
-UIImageView::UIImageView():
+ImageView::ImageView():
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
@@ -45,14 +45,14 @@ _imageTextureSize(_size)
 
 }
 
-UIImageView::~UIImageView()
+ImageView::~ImageView()
 {
     
 }
 
-UIImageView* UIImageView::create()
+ImageView* ImageView::create()
 {
-    UIImageView* widget = new UIImageView();
+    ImageView* widget = new ImageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -62,14 +62,14 @@ UIImageView* UIImageView::create()
     return nullptr;
 }
 
-void UIImageView::initRenderer()
+void ImageView::initRenderer()
 {
-    UIWidget::initRenderer();
+    Widget::initRenderer();
     _imageRenderer = Sprite::create();
     _renderer->addChild(_imageRenderer);
 }
 
-void UIImageView::loadTexture(const char *fileName, TextureResType texType)
+void ImageView::loadTexture(const char *fileName, TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)
     {
@@ -117,7 +117,7 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
     imageTextureScaleChangedWithSize();
 }
 
-void UIImageView::setTextureRect(const Rect &rect)
+void ImageView::setTextureRect(const Rect &rect)
 {
     if (_scale9Enabled)
     {
@@ -128,7 +128,7 @@ void UIImageView::setTextureRect(const Rect &rect)
     }
 }
 
-void UIImageView::setFlipX(bool flipX)
+void ImageView::setFlipX(bool flipX)
 {
     if (_scale9Enabled)
     {
@@ -139,7 +139,7 @@ void UIImageView::setFlipX(bool flipX)
     }
 }
 
-void UIImageView::setFlipY(bool flipY)
+void ImageView::setFlipY(bool flipY)
 {
     if (_scale9Enabled)
     {
@@ -150,7 +150,7 @@ void UIImageView::setFlipY(bool flipY)
     }
 }
 
-bool UIImageView::isFlipX()
+bool ImageView::isFlipX()
 {
     if (_scale9Enabled)
     {
@@ -162,7 +162,7 @@ bool UIImageView::isFlipX()
     }
 }
 
-bool UIImageView::isFlipY()
+bool ImageView::isFlipY()
 {
     if (_scale9Enabled)
     {
@@ -174,7 +174,7 @@ bool UIImageView::isFlipY()
     }
 }
 
-void UIImageView::setScale9Enabled(bool able)
+void ImageView::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)
     {
@@ -208,16 +208,16 @@ void UIImageView::setScale9Enabled(bool able)
     setCapInsets(_capInsets);
 }
 
-void UIImageView::ignoreContentAdaptWithSize(bool ignore)
+void ImageView::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
-        UIWidget::ignoreContentAdaptWithSize(ignore);
+        Widget::ignoreContentAdaptWithSize(ignore);
         _prevIgnoreSize = ignore;
     }
 }
 
-void UIImageView::setCapInsets(const Rect &capInsets)
+void ImageView::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
@@ -227,28 +227,28 @@ void UIImageView::setCapInsets(const Rect &capInsets)
     DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
-void UIImageView::setAnchorPoint(const Point &pt)
+void ImageView::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
     _imageRenderer->setAnchorPoint(pt);
 }
 
-void UIImageView::onSizeChanged()
+void ImageView::onSizeChanged()
 {
     imageTextureScaleChangedWithSize();
 }
 
-const Size& UIImageView::getContentSize() const
+const Size& ImageView::getContentSize() const
 {
     return _imageTextureSize;
 }
 
-Node* UIImageView::getVirtualRenderer()
+Node* ImageView::getVirtualRenderer()
 {
     return _imageRenderer;
 }
 
-void UIImageView::imageTextureScaleChangedWithSize()
+void ImageView::imageTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -280,19 +280,19 @@ void UIImageView::imageTextureScaleChangedWithSize()
     }
 }
 
-const char* UIImageView::getDescription() const
+const char* ImageView::getDescription() const
 {
     return "ImageView";
 }
 
-UIWidget* UIImageView::createCloneInstance()
+Widget* ImageView::createCloneInstance()
 {
-    return UIImageView::create();
+    return ImageView::create();
 }
 
-void UIImageView::copySpecialProperties(UIWidget *widget)
+void ImageView::copySpecialProperties(Widget *widget)
 {
-    UIImageView* imageView = dynamic_cast<UIImageView*>(widget);
+    ImageView* imageView = dynamic_cast<ImageView*>(widget);
     if (imageView)
     {
         _prevIgnoreSize = imageView->_prevIgnoreSize;

@@ -32,7 +32,7 @@ namespace gui {
 
 #define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_barRenderer)
 
-UILoadingBar::UILoadingBar():
+LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
 _totalLength(0),
@@ -46,14 +46,14 @@ _textureFile("")
 {
 }
 
-UILoadingBar::~UILoadingBar()
+LoadingBar::~LoadingBar()
 {
     
 }
 
-UILoadingBar* UILoadingBar::create()
+LoadingBar* LoadingBar::create()
 {
-    UILoadingBar* widget = new UILoadingBar();
+    LoadingBar* widget = new LoadingBar();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -63,15 +63,15 @@ UILoadingBar* UILoadingBar::create()
     return nullptr;
 }
 
-void UILoadingBar::initRenderer()
+void LoadingBar::initRenderer()
 {
-    UIWidget::initRenderer();
+    Widget::initRenderer();
     _barRenderer = Sprite::create();
     _renderer->addChild(_barRenderer);
     _barRenderer->setAnchorPoint(Point(0.0,0.5));
 }
 
-void UILoadingBar::setDirection(LoadingBarType dir)
+void LoadingBar::setDirection(LoadingBarType dir)
 {
     if (_barType == dir)
     {
@@ -100,12 +100,12 @@ void UILoadingBar::setDirection(LoadingBarType dir)
     }
 }
 
-int UILoadingBar::getDirection()
+int LoadingBar::getDirection()
 {
     return _barType;
 }
 
-void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
+void LoadingBar::loadTexture(const char* texture,TextureResType texType)
 {
     if (!texture || strcmp(texture, "") == 0)
     {
@@ -173,7 +173,7 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
     barRendererScaleChangedWithSize();
 }
 
-void UILoadingBar::setScale9Enabled(bool enabled)
+void LoadingBar::setScale9Enabled(bool enabled)
 {
     if (_scale9Enabled == enabled)
     {
@@ -205,7 +205,7 @@ void UILoadingBar::setScale9Enabled(bool enabled)
     setCapInsets(_capInsets);
 }
 
-void UILoadingBar::setCapInsets(const Rect &capInsets)
+void LoadingBar::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
@@ -215,7 +215,7 @@ void UILoadingBar::setCapInsets(const Rect &capInsets)
     dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
-void UILoadingBar::setPercent(int percent)
+void LoadingBar::setPercent(int percent)
 {
     if ( percent < 0 || percent > 100)
     {
@@ -255,36 +255,36 @@ void UILoadingBar::setPercent(int percent)
     }
 }
 
-int UILoadingBar::getPercent()
+int LoadingBar::getPercent()
 {
     return _percent;
 }
 
-void UILoadingBar::onSizeChanged()
+void LoadingBar::onSizeChanged()
 {
     barRendererScaleChangedWithSize();
 }
 
-void UILoadingBar::ignoreContentAdaptWithSize(bool ignore)
+void LoadingBar::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
-        UIWidget::ignoreContentAdaptWithSize(ignore);
+        Widget::ignoreContentAdaptWithSize(ignore);
         _prevIgnoreSize = ignore;
     }
 }
 
-const Size& UILoadingBar::getContentSize() const
+const Size& LoadingBar::getContentSize() const
 {
     return _barRendererTextureSize;
 }
 
-Node* UILoadingBar::getVirtualRenderer()
+Node* LoadingBar::getVirtualRenderer()
 {
     return _barRenderer;
 }
 
-void UILoadingBar::barRendererScaleChangedWithSize()
+void LoadingBar::barRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -330,25 +330,25 @@ void UILoadingBar::barRendererScaleChangedWithSize()
     }
 }
 
-void UILoadingBar::setScale9Scale()
+void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100 * _totalLength;
     dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
-const char* UILoadingBar::getDescription() const
+const char* LoadingBar::getDescription() const
 {
     return "LoadingBar";
 }
 
-UIWidget* UILoadingBar::createCloneInstance()
+Widget* LoadingBar::createCloneInstance()
 {
-    return UILoadingBar::create();
+    return LoadingBar::create();
 }
 
-void UILoadingBar::copySpecialProperties(UIWidget *widget)
+void LoadingBar::copySpecialProperties(Widget *widget)
 {
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(widget);
+    LoadingBar* loadingBar = dynamic_cast<LoadingBar*>(widget);
     if (loadingBar)
     {
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;

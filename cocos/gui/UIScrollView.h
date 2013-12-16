@@ -57,23 +57,23 @@ typedef void (CCObject::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class UIScrollView : public UILayout , public UIScrollInterface
+class ScrollView : public Layout , public UIScrollInterface
 {
 public:
     /**
      * Default constructor
      */
-    UIScrollView();
+    ScrollView();
     
     /**
      * Default destructor
      */
-    virtual ~UIScrollView();
+    virtual ~ScrollView();
     
     /**
      * Allocates and initializes.
      */
-    static UIScrollView* create();
+    static ScrollView* create();
     
     /**
      * Changes scroll direction of scrollview.
@@ -100,7 +100,7 @@ public:
      *
      * @return inner container.
      */
-    UILayout* getInnerContainer();
+    Layout* getInnerContainer();
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
@@ -328,8 +328,8 @@ protected:
     virtual void handlePressLogic(const Point &touchPoint) override;
     virtual void handleMoveLogic(const Point &touchPoint) override;
     virtual void handleReleaseLogic(const Point &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const Point &touchPoint) override;
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint) override;
     void recordSlidTime(float dt);
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -341,13 +341,13 @@ protected:
     void bounceLeftEvent();
     void bounceRightEvent();
     virtual void onSizeChanged() override;
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
-    virtual void setClippingEnabled(bool able) override{UILayout::setClippingEnabled(able);};
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    virtual void setClippingEnabled(bool able) override{Layout::setClippingEnabled(able);};
     virtual void doLayout() override;
 protected:
-    UILayout* _innerContainer;
+    Layout* _innerContainer;
     
     SCROLLVIEW_DIR _direction;
 
@@ -401,4 +401,4 @@ protected:
 
 }
 NS_CC_END
-#endif /* defined(__CocoGUI__UIScrollView__) */
+#endif /* defined(__CocoGUI__ScrollView__) */

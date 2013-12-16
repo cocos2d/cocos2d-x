@@ -29,7 +29,7 @@ bool UINodeContainerTest::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the UINodeContainer alert will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("NodeContainer Add CCNode");
         m_pDisplayValueLabel->setFontName(font_UINodeContainerTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -38,7 +38,7 @@ bool UINodeContainerTest::init()
         m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("NodeContainer");
         alert->setFontName(font_UINodeContainerTest);
         alert->setFontSize(30);
@@ -47,7 +47,7 @@ bool UINodeContainerTest::init()
         m_pUiLayer->addChild(alert);
         
         // Create the ui node container
-        UIWidget* nodeContainer = UIWidget::create();
+        cocos2d::gui::Widget* nodeContainer = cocos2d::gui::Widget::create();
         nodeContainer->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         m_pUiLayer->addChild(nodeContainer);
         

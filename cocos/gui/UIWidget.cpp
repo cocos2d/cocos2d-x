@@ -30,7 +30,7 @@ NS_CC_BEGIN
 
 namespace gui {
     
-UIWidget::UIWidget():
+Widget::Widget():
 _enabled(true),
 _bright(true),
 _touchEnabled(false),
@@ -62,7 +62,7 @@ _hitted(false)
     
 }
 
-UIWidget::~UIWidget()
+Widget::~Widget()
 {
     //recheck
     _touchEventListener = nullptr;
@@ -72,9 +72,9 @@ UIWidget::~UIWidget()
     CC_SAFE_RELEASE(_layoutParameterDictionary);
 }
 
-UIWidget* UIWidget::create()
+Widget* Widget::create()
 {
-    UIWidget* widget = new UIWidget();
+    Widget* widget = new Widget();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -84,7 +84,7 @@ UIWidget* UIWidget::create()
     return nullptr;
 }
 
-bool UIWidget::init()
+bool Widget::init()
 {
     _layoutParameterDictionary = Dictionary::create();
     CC_SAFE_RETAIN(_layoutParameterDictionary);
@@ -97,18 +97,18 @@ bool UIWidget::init()
     return true;
 }
 
-void UIWidget::onEnter()
+void Widget::onEnter()
 {
     updateSizeAndPosition();
     NodeRGBA::onEnter();
 }
 
-void UIWidget::onExit()
+void Widget::onExit()
 {
     NodeRGBA::onExit();
 }
     
-void UIWidget::visit()
+void Widget::visit()
 {
     if (_enabled)
     {
@@ -116,24 +116,24 @@ void UIWidget::visit()
     }    
 }
 
-void UIWidget::addChild(Node *child)
+void Widget::addChild(Node *child)
 {
     NodeRGBA::addChild(child);
 }
 
-void UIWidget::addChild(Node * child, int zOrder)
+void Widget::addChild(Node * child, int zOrder)
 {
     NodeRGBA::addChild(child, zOrder);
 }
     
-void UIWidget::addChild(Node* child, int zOrder, int tag)
+void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<UIWidget*>(child) != NULL, "UIWidget only supports Widgets as children");
+    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
     NodeRGBA::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
     
-void UIWidget::sortAllChildren()
+void Widget::sortAllChildren()
 {
     _reorderWidgetChildDirty = _reorderChildDirty;
     NodeRGBA::sortAllChildren();
@@ -144,7 +144,7 @@ void UIWidget::sortAllChildren()
     }
 }
     
-Node* UIWidget::getChildByTag(int aTag)
+Node* Widget::getChildByTag(int aTag)
 {
     CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
     
@@ -156,43 +156,43 @@ Node* UIWidget::getChildByTag(int aTag)
     return nullptr;
 }
 
-Vector<Node*>& UIWidget::getChildren()
+Vector<Node*>& Widget::getChildren()
 {
     return _widgetChildren;
 }
     
-const Vector<Node*>& UIWidget::getChildren() const
+const Vector<Node*>& Widget::getChildren() const
 {
     return _widgetChildren;
 }
     
-long UIWidget::getChildrenCount() const
+long Widget::getChildrenCount() const
 {
     return _widgetChildren.size();
 }
 
-UIWidget* UIWidget::getWidgetParent()
+Widget* Widget::getWidgetParent()
 {
-    return dynamic_cast<UIWidget*>(getParent());
+    return dynamic_cast<Widget*>(getParent());
 }
     
-void UIWidget::removeFromParent()
+void Widget::removeFromParent()
 {
     removeFromParentAndCleanup(true);
 }
 
-void UIWidget::removeFromParentAndCleanup(bool cleanup)
+void Widget::removeFromParentAndCleanup(bool cleanup)
 {
     NodeRGBA::removeFromParentAndCleanup(cleanup);
 }
 
-void UIWidget::removeChild(Node *child, bool cleanup)
+void Widget::removeChild(Node *child, bool cleanup)
 {
     NodeRGBA::removeChild(child, cleanup);
     _widgetChildren.removeObject(child);
 }
 
-void UIWidget::removeChildByTag(int tag, bool cleanup)
+void Widget::removeChildByTag(int tag, bool cleanup)
 {
     CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
     
@@ -208,12 +208,12 @@ void UIWidget::removeChildByTag(int tag, bool cleanup)
     }
 }
 
-void UIWidget::removeAllChildren()
+void Widget::removeAllChildren()
 {
     removeAllChildrenWithCleanup(true);
 }
     
-void UIWidget::removeAllChildrenWithCleanup(bool cleanup)
+void Widget::removeAllChildrenWithCleanup(bool cleanup)
 {
     for (auto& child : _widgetChildren)
     {
@@ -225,25 +225,25 @@ void UIWidget::removeAllChildrenWithCleanup(bool cleanup)
     _widgetChildren.clear();
 }
 
-void UIWidget::setEnabled(bool enabled)
+void Widget::setEnabled(bool enabled)
 {
     _enabled = enabled;
     for (auto& child : _widgetChildren)
     {
         if (child)
         {
-            ((UIWidget*)child)->setEnabled(enabled);
+            ((Widget*)child)->setEnabled(enabled);
         }
     }
 }
 
-UIWidget* UIWidget::getChildByName(const char *name)
+Widget* Widget::getChildByName(const char *name)
 {
     for (auto& child : _widgetChildren)
     {
         if (child)
         {
-            UIWidget* widgetChild = (UIWidget*)child;
+            Widget* widgetChild = (Widget*)child;
             if (strcmp(widgetChild->getName(), name) == 0)
             {
                 return widgetChild;
@@ -253,14 +253,14 @@ UIWidget* UIWidget::getChildByName(const char *name)
     return nullptr;
 }
 
-void UIWidget::initRenderer()
+void Widget::initRenderer()
 {
     _renderer = NodeRGBA::create();
     _renderer->retain();
     NodeRGBA::addChild(_renderer, -1, -1);
 }
 
-void UIWidget::setSize(const Size &size)
+void Widget::setSize(const Size &size)
 {
     _customSize = size;
     if (_ignoreSize)
@@ -273,7 +273,7 @@ void UIWidget::setSize(const Size &size)
     }
     if (_running)
     {
-        UIWidget* widgetParent = getWidgetParent();
+        Widget* widgetParent = getWidgetParent();
         Size pSize;
         if (widgetParent)
         {
@@ -298,13 +298,13 @@ void UIWidget::setSize(const Size &size)
     onSizeChanged();
 }
 
-void UIWidget::setSizePercent(const Point &percent)
+void Widget::setSizePercent(const Point &percent)
 {
     _sizePercent = percent;
     Size cSize = _customSize;
     if (_running)
     {
-        UIWidget* widgetParent = getWidgetParent();
+        Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
             cSize = Size(widgetParent->getSize().width * percent.x , widgetParent->getSize().height * percent.y);
@@ -326,7 +326,7 @@ void UIWidget::setSizePercent(const Point &percent)
     onSizeChanged();
 }
 
-void UIWidget::updateSizeAndPosition()
+void Widget::updateSizeAndPosition()
 {
     switch (_sizeType)
     {
@@ -340,7 +340,7 @@ void UIWidget::updateSizeAndPosition()
             {
                 _size = _customSize;
             }
-            UIWidget* widgetParent = getWidgetParent();
+            Widget* widgetParent = getWidgetParent();
             if (widgetParent)
             {
                 Size pSize = widgetParent->getSize();
@@ -375,7 +375,7 @@ void UIWidget::updateSizeAndPosition()
         }
         case SIZE_PERCENT:
         {
-            UIWidget* widgetParent = getWidgetParent();
+            Widget* widgetParent = getWidgetParent();
             if (widgetParent)
             {
                 Size cSize = Size(widgetParent->getSize().width * _sizePercent.x , widgetParent->getSize().height * _sizePercent.y);
@@ -413,7 +413,7 @@ void UIWidget::updateSizeAndPosition()
     {
         case POSITION_ABSOLUTE:
         {
-            UIWidget* widgetParent = getWidgetParent();
+            Widget* widgetParent = getWidgetParent();
             if (widgetParent)
             {
                 Size pSize = widgetParent->getSize();
@@ -442,7 +442,7 @@ void UIWidget::updateSizeAndPosition()
         }
         case POSITION_PERCENT:
         {
-            UIWidget* widgetParent = getWidgetParent();
+            Widget* widgetParent = getWidgetParent();
             if (widgetParent)
             {
                 Size parentSize = widgetParent->getSize();
@@ -461,17 +461,17 @@ void UIWidget::updateSizeAndPosition()
     setPosition(absPos);
 }
 
-void UIWidget::setSizeType(SizeType type)
+void Widget::setSizeType(SizeType type)
 {
     _sizeType = type;
 }
 
-SizeType UIWidget::getSizeType() const
+SizeType Widget::getSizeType() const
 {
     return _sizeType;
 }
 
-void UIWidget::ignoreContentAdaptWithSize(bool ignore)
+void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
     _ignoreSize = ignore;
     if (_ignoreSize)
@@ -486,42 +486,42 @@ void UIWidget::ignoreContentAdaptWithSize(bool ignore)
     onSizeChanged();
 }
 
-bool UIWidget::isIgnoreContentAdaptWithSize() const
+bool Widget::isIgnoreContentAdaptWithSize() const
 {
     return _ignoreSize;
 }
 
-const Size& UIWidget::getSize() const
+const Size& Widget::getSize() const
 {
     return _size;
 }
 
-const Point& UIWidget::getSizePercent() const
+const Point& Widget::getSizePercent() const
 {
     return _sizePercent;
 }
 
-Point UIWidget::getWorldPosition()
+Point Widget::getWorldPosition()
 {
     return _renderer->convertToWorldSpace(Point::ZERO);
 }
 
-Node* UIWidget::getVirtualRenderer()
+Node* Widget::getVirtualRenderer()
 {
     return _renderer;
 }
 
-void UIWidget::onSizeChanged()
+void Widget::onSizeChanged()
 {
 
 }
 
-const Size& UIWidget::getContentSize() const
+const Size& Widget::getContentSize() const
 {
     return _size;
 }
 
-void UIWidget::setTouchEnabled(bool enable)
+void Widget::setTouchEnabled(bool enable)
 {
     if (enable == _touchEnabled)
     {
@@ -532,10 +532,10 @@ void UIWidget::setTouchEnabled(bool enable)
     {
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
-        listener->onTouchBegan = CC_CALLBACK_2(UIWidget::onTouchBegan, this);
-        listener->onTouchMoved = CC_CALLBACK_2(UIWidget::onTouchMoved, this);
-        listener->onTouchEnded = CC_CALLBACK_2(UIWidget::onTouchEnded, this);
-        listener->onTouchCancelled = CC_CALLBACK_2(UIWidget::onTouchCancelled, this);
+        listener->onTouchBegan = CC_CALLBACK_2(Widget::onTouchBegan, this);
+        listener->onTouchMoved = CC_CALLBACK_2(Widget::onTouchMoved, this);
+        listener->onTouchEnded = CC_CALLBACK_2(Widget::onTouchEnded, this);
+        listener->onTouchCancelled = CC_CALLBACK_2(Widget::onTouchCancelled, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     }
     else
@@ -544,12 +544,12 @@ void UIWidget::setTouchEnabled(bool enable)
     }
 }
 
-bool UIWidget::isTouchEnabled() const
+bool Widget::isTouchEnabled() const
 {
     return _touchEnabled;
 }
 
-void UIWidget::setUpdateEnabled(bool enable)
+void Widget::setUpdateEnabled(bool enable)
 {
     if (enable == _updateEnabled)
     {
@@ -572,17 +572,17 @@ void UIWidget::setUpdateEnabled(bool enable)
     }
 }
 
-bool UIWidget::isUpdateEnabled()
+bool Widget::isUpdateEnabled()
 {
     return _updateEnabled;
 }
 
-bool UIWidget::isFocused() const
+bool Widget::isFocused() const
 {
     return _focus;
 }
 
-void UIWidget::setFocused(bool fucos)
+void Widget::setFocused(bool fucos)
 {
     if (fucos == _focus)
     {
@@ -606,7 +606,7 @@ void UIWidget::setFocused(bool fucos)
     }
 }
 
-void UIWidget::setBright(bool bright)
+void Widget::setBright(bool bright)
 {
     _bright = bright;
     if (_bright)
@@ -620,7 +620,7 @@ void UIWidget::setBright(bool bright)
     }
 }
 
-void UIWidget::setBrightStyle(BrightStyle style)
+void Widget::setBrightStyle(BrightStyle style)
 {
     if (_brightStyle == style)
     {
@@ -640,27 +640,27 @@ void UIWidget::setBrightStyle(BrightStyle style)
     }
 }
 
-void UIWidget::onPressStateChangedToNormal()
+void Widget::onPressStateChangedToNormal()
 {
     
 }
 
-void UIWidget::onPressStateChangedToPressed()
+void Widget::onPressStateChangedToPressed()
 {
     
 }
 
-void UIWidget::onPressStateChangedToDisabled()
+void Widget::onPressStateChangedToDisabled()
 {
     
 }
 
-void UIWidget::didNotSelectSelf()
+void Widget::didNotSelectSelf()
 {
     
 }
 
-bool UIWidget::onTouchBegan(Touch *touch, Event *unused_event)
+bool Widget::onTouchBegan(Touch *touch, Event *unused_event)
 {
     
     _touchStartPos = touch->getLocation();
@@ -670,7 +670,7 @@ bool UIWidget::onTouchBegan(Touch *touch, Event *unused_event)
         return false;
     }
     setFocused(true);
-    UIWidget* widgetParent = getWidgetParent();
+    Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(0,this,_touchStartPos);
@@ -679,11 +679,11 @@ bool UIWidget::onTouchBegan(Touch *touch, Event *unused_event)
     return !_touchPassedEnabled;
 }
 
-void UIWidget::onTouchMoved(Touch *touch, Event *unused_event)
+void Widget::onTouchMoved(Touch *touch, Event *unused_event)
 {
     _touchMovePos = touch->getLocation();
     setFocused(hitTest(_touchMovePos));
-    UIWidget* widgetParent = getWidgetParent();
+    Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(1,this,_touchMovePos);
@@ -691,12 +691,12 @@ void UIWidget::onTouchMoved(Touch *touch, Event *unused_event)
     moveEvent();
 }
 
-void UIWidget::onTouchEnded(Touch *touch, Event *unused_event)
+void Widget::onTouchEnded(Touch *touch, Event *unused_event)
 {
     _touchEndPos = touch->getLocation();
     bool focus = _focus;
     setFocused(false);
-    UIWidget* widgetParent = getWidgetParent();
+    Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(2,this,_touchEndPos);
@@ -711,18 +711,18 @@ void UIWidget::onTouchEnded(Touch *touch, Event *unused_event)
     }
 }
 
-void UIWidget::onTouchCancelled(Touch *touch, Event *unused_event)
+void Widget::onTouchCancelled(Touch *touch, Event *unused_event)
 {
     setFocused(false);
     cancelUpEvent();
 }
 
-void UIWidget::onTouchLongClicked(const Point &touchPoint)
+void Widget::onTouchLongClicked(const Point &touchPoint)
 {
     longClickEvent();
 }
 
-void UIWidget::pushDownEvent()
+void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -730,7 +730,7 @@ void UIWidget::pushDownEvent()
     }
 }
 
-void UIWidget::moveEvent()
+void Widget::moveEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -738,7 +738,7 @@ void UIWidget::moveEvent()
     }
 }
 
-void UIWidget::releaseUpEvent()
+void Widget::releaseUpEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -746,7 +746,7 @@ void UIWidget::releaseUpEvent()
     }
 }
 
-void UIWidget::cancelUpEvent()
+void Widget::cancelUpEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -754,33 +754,33 @@ void UIWidget::cancelUpEvent()
     }
 }
 
-void UIWidget::longClickEvent()
+void Widget::longClickEvent()
 {
     
 }
 
-void UIWidget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
 }
 
-Node* UIWidget::getRenderer()
+Node* Widget::getRenderer()
 {
     return _renderer;
 }
 
-void UIWidget::addRenderer(Node* renderer, int zOrder)
+void Widget::addRenderer(Node* renderer, int zOrder)
 {
     _renderer->addChild(renderer, zOrder);
 }
 
-void UIWidget::removeRenderer(Node* renderer, bool cleanup)
+void Widget::removeRenderer(Node* renderer, bool cleanup)
 {
     _renderer->removeChild(renderer,cleanup);
 }
 
-bool UIWidget::hitTest(const Point &pt)
+bool Widget::hitTest(const Point &pt)
 {
     Point nsp = _renderer->convertToNodeSpace(pt);
     Rect bb = Rect(-_size.width * _anchorPoint.x, -_size.height * _anchorPoint.y, _size.width, _size.height);
@@ -791,14 +791,14 @@ bool UIWidget::hitTest(const Point &pt)
     return false;
 }
 
-bool UIWidget::clippingParentAreaContainPoint(const Point &pt)
+bool Widget::clippingParentAreaContainPoint(const Point &pt)
 {
     _affectByClipping = false;
-    UIWidget* parent = getWidgetParent();
-    UIWidget* clippingParent = nullptr;
+    Widget* parent = getWidgetParent();
+    Widget* clippingParent = nullptr;
     while (parent)
     {
-        UILayout* layoutParent = dynamic_cast<UILayout*>(parent);
+        Layout* layoutParent = dynamic_cast<Layout*>(parent);
         if (layoutParent)
         {
             if (layoutParent->isClippingEnabled())
@@ -833,20 +833,20 @@ bool UIWidget::clippingParentAreaContainPoint(const Point &pt)
     return true;
 }
 
-void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const Point &touchPoint)
+void Widget::checkChildInfo(int handleState, Widget *sender, const Point &touchPoint)
 {
-    UIWidget* widgetParent = getWidgetParent();
+    Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
         widgetParent->checkChildInfo(handleState,sender,touchPoint);
     }
 }
 
-void UIWidget::setPosition(const Point &pos)
+void Widget::setPosition(const Point &pos)
 {
     if (_running)
     {
-        UIWidget* widgetParent = getWidgetParent();
+        Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
             Size pSize = widgetParent->getSize();
@@ -863,12 +863,12 @@ void UIWidget::setPosition(const Point &pos)
     NodeRGBA::setPosition(pos);
 }
 
-void UIWidget::setPositionPercent(const Point &percent)
+void Widget::setPositionPercent(const Point &percent)
 {
     _positionPercent = percent;
     if (_running)
     {
-        UIWidget* widgetParent = getWidgetParent();
+        Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
             Size parentSize = widgetParent->getSize();
@@ -878,108 +878,108 @@ void UIWidget::setPositionPercent(const Point &percent)
     }
 }
 
-void UIWidget::setAnchorPoint(const Point &pt)
+void Widget::setAnchorPoint(const Point &pt)
 {
     NodeRGBA::setAnchorPoint(pt);
 }
 
-void UIWidget::updateAnchorPoint()
+void Widget::updateAnchorPoint()
 {
     setAnchorPoint(getAnchorPoint());
 }
 
-const Point& UIWidget::getPositionPercent()
+const Point& Widget::getPositionPercent()
 {
     return _positionPercent;
 }
 
-void UIWidget::setPositionType(PositionType type)
+void Widget::setPositionType(PositionType type)
 {
     _positionType = type;
 }
 
-PositionType UIWidget::getPositionType() const
+PositionType Widget::getPositionType() const
 {
     return _positionType;
 }
 
-const Point& UIWidget::getAnchorPoint() const
+const Point& Widget::getAnchorPoint() const
 {
     return NodeRGBA::getAnchorPoint();
 }
 
-void UIWidget::setVisible(bool visible)
+void Widget::setVisible(bool visible)
 {
     _visible = visible;
     _renderer->setVisible(visible);
 }
 
-bool UIWidget::isVisible() const
+bool Widget::isVisible() const
 {
     return _visible;
 }
 
-bool UIWidget::isBright() const
+bool Widget::isBright() const
 {
     return _bright;
 }
 
-bool UIWidget::isEnabled() const
+bool Widget::isEnabled() const
 {
     return _enabled;
 }
 
-float UIWidget::getLeftInParent()
+float Widget::getLeftInParent()
 {
     return getPosition().x - getAnchorPoint().x * _size.width;;
 }
 
-float UIWidget::getBottomInParent()
+float Widget::getBottomInParent()
 {
     return getPosition().y - getAnchorPoint().y * _size.height;;
 }
 
-float UIWidget::getRightInParent()
+float Widget::getRightInParent()
 {
     return getLeftInParent() + _size.width;
 }
 
-float UIWidget::getTopInParent()
+float Widget::getTopInParent()
 {
     return getBottomInParent() + _size.height;
 }
 
-const Point& UIWidget::getTouchStartPos()
+const Point& Widget::getTouchStartPos()
 {
     return _touchStartPos;
 }
 
-const Point& UIWidget::getTouchMovePos()
+const Point& Widget::getTouchMovePos()
 {
     return _touchMovePos;
 }
 
-const Point& UIWidget::getTouchEndPos()
+const Point& Widget::getTouchEndPos()
 {
     return _touchEndPos;
 }
 
-void UIWidget::setName(const char* name)
+void Widget::setName(const char* name)
 {
     _name = name;
 }
 
-const char* UIWidget::getName() const
+const char* Widget::getName() const
 {
     return _name.c_str();
 }
 
-WidgetType UIWidget::getWidgetType() const
+WidgetType Widget::getWidgetType() const
 {
     return _widgetType;
 }
 
-void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
+void Widget::setLayoutParameter(LayoutParameter *parameter)
 {
     if (!parameter)
     {
@@ -988,45 +988,45 @@ void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
     _layoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
 }
 
-UILayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
+LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
 {
-    return dynamic_cast<UILayoutParameter*>(_layoutParameterDictionary->objectForKey(type));
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary->objectForKey(type));
 }
 
-const char* UIWidget::getDescription() const
+const char* Widget::getDescription() const
 {
     return "Widget";
 }
 
-UIWidget* UIWidget::clone()
+Widget* Widget::clone()
 {
-    UIWidget* clonedWidget = createCloneInstance();
+    Widget* clonedWidget = createCloneInstance();
     clonedWidget->copyProperties(this);
     clonedWidget->copyClonedWidgetChildren(this);
     return clonedWidget;
 }
 
-UIWidget* UIWidget::createCloneInstance()
+Widget* Widget::createCloneInstance()
 {
-    return UIWidget::create();
+    return Widget::create();
 }
 
-void UIWidget::copyClonedWidgetChildren(UIWidget* model)
+void Widget::copyClonedWidgetChildren(Widget* model)
 {
     int length = model->getChildren().size();
     for (int i=0; i<length; i++)
     {
-        UIWidget* child = (UIWidget*)(model->getChildren().at(i));
+        Widget* child = (Widget*)(model->getChildren().at(i));
         addChild(child->clone());
     }
 }
 
-void UIWidget::copySpecialProperties(UIWidget* model)
+void Widget::copySpecialProperties(Widget* model)
 {
     
 }
 
-void UIWidget::copyProperties(UIWidget *widget)
+void Widget::copyProperties(Widget *widget)
 {
     setEnabled(widget->isEnabled());
     setVisible(widget->isVisible());
@@ -1063,12 +1063,12 @@ void UIWidget::copyProperties(UIWidget *widget)
 }
 
 /*temp action*/
-void UIWidget::setActionTag(int tag)
+void Widget::setActionTag(int tag)
 {
 	_actionTag = tag;
 }
 
-int UIWidget::getActionTag()
+int Widget::getActionTag()
 {
 	return _actionTag;
 }

@@ -53,7 +53,7 @@ public:
      */
     static void purgeGUIReader();
     
-    cocos2d::gui::UIWidget* widgetFromJsonFile(const char* fileName);
+    cocos2d::gui::Widget* widgetFromJsonFile(const char* fileName);
     int getVersionInteger(const char* str);
     /**
      *  @js NA
@@ -71,8 +71,8 @@ protected:
 class WidgetPropertiesReader : public cocos2d::Object
 {
 public:
-    virtual cocos2d::gui::UIWidget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName)=0;
-    virtual cocos2d::gui::UIWidget* widgetFromJsonDictionary(JsonDictionary* dic) = 0;
+    virtual cocos2d::gui::Widget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName)=0;
+    virtual cocos2d::gui::Widget* widgetFromJsonDictionary(JsonDictionary* dic) = 0;
 protected:
     std::string m_strFilePath;
 };
@@ -86,23 +86,23 @@ public:
     WidgetPropertiesReader0250(){};
     virtual ~WidgetPropertiesReader0250(){};
     
-    virtual cocos2d::gui::UIWidget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName);
-    virtual cocos2d::gui::UIWidget* widgetFromJsonDictionary(JsonDictionary* dic);
-    virtual void setPropsForWidgetFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
+    virtual cocos2d::gui::Widget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName);
+    virtual cocos2d::gui::Widget* widgetFromJsonDictionary(JsonDictionary* dic);
+    virtual void setPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
     
-    virtual void setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForButtonFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForImageViewFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForSliderFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForTextFieldFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
+    virtual void setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForButtonFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForImageViewFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForSliderFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForTextFieldFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
     
-    virtual void setPropsForLayoutFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
+    virtual void setPropsForLayoutFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
 };
 
 class WidgetPropertiesReader0300 : public WidgetPropertiesReader
@@ -113,25 +113,25 @@ public:
     WidgetPropertiesReader0300(){};
     virtual ~WidgetPropertiesReader0300(){};
     
-    virtual cocos2d::gui::UIWidget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName);
-    virtual cocos2d::gui::UIWidget* widgetFromJsonDictionary(JsonDictionary* dic);
-    virtual void setPropsForWidgetFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
+    virtual cocos2d::gui::Widget* createWidget(JsonDictionary* dic, const char* fullPath, const char* fileName);
+    virtual cocos2d::gui::Widget* widgetFromJsonDictionary(JsonDictionary* dic);
+    virtual void setPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
     
-    virtual void setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForButtonFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForImageViewFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForSliderFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForTextFieldFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
+    virtual void setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForButtonFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForImageViewFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForSliderFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForTextFieldFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
     
-    virtual void setPropsForLayoutFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForPageViewFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::gui::UIWidget*widget,JsonDictionary* options);
-    virtual void setPropsForListViewFromJsonDictionary(cocos2d::gui::UIWidget* widget, JsonDictionary* options);
+    virtual void setPropsForLayoutFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForPageViewFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForScrollViewFromJsonDictionary(cocos2d::gui::Widget*widget,JsonDictionary* options);
+    virtual void setPropsForListViewFromJsonDictionary(cocos2d::gui::Widget* widget, JsonDictionary* options);
 };
 
 

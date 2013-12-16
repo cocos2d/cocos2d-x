@@ -35,23 +35,23 @@ namespace gui {
 *   @js NA
 *   @lua NA
 */
-class UIImageView : public UIWidget
+class ImageView : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UIImageView();
+    ImageView();
     
     /**
      * Default destructor
      */
-    virtual ~UIImageView();
+    virtual ~ImageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIImageView* create();
+    static ImageView* create();
     
     /**
      * Load texture for imageview.
@@ -63,7 +63,7 @@ public:
     void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
-     * Updates the texture rect of the UIImageView in points.
+     * Updates the texture rect of the ImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
     void setTextureRect(const Rect& rect);
@@ -111,8 +111,8 @@ protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
     void imageTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     bool _scale9Enabled;
     bool _prevIgnoreSize;
@@ -127,4 +127,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UIImageView__) */
+#endif /* defined(__CocoGUI__ImageView__) */

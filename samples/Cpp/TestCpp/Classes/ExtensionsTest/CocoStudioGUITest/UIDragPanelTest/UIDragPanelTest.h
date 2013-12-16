@@ -36,7 +36,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest)
-    UILabel *m_pDisplayValueLabel;
+    cocos2d::gui::Label *m_pDisplayValueLabel;
 };
 
 class UIDragPanelTest_Bounce : public UIScene
@@ -48,7 +48,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
-    UILabel *m_pDisplayValueLabel;
+    cocos2d::gui::Label *m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIDragPanelTest__) */

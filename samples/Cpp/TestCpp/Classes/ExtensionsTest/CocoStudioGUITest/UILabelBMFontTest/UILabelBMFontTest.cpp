@@ -17,7 +17,7 @@ bool UILabelBMFontTest::init()
     {
         Size widgetSize = m_pWidget->getSize();
         
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LabelBMFont");
         alert->setFontName(font_UILabelBMFontTest);
         alert->setFontSize(30);
@@ -26,7 +26,7 @@ bool UILabelBMFontTest::init()
         m_pUiLayer->addChild(alert);
         
         // Create the LabelBMFont
-        UILabelBMFont* labelBMFont = UILabelBMFont::create();
+        cocos2d::gui::LabelBMFont* labelBMFont = cocos2d::gui::LabelBMFont::create();
         labelBMFont->setFntFile("cocosgui/bitmapFontTest2.fnt");
         labelBMFont->setText("BMFont");
         labelBMFont->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2.0f + labelBMFont->getSize().height / 8.0f));

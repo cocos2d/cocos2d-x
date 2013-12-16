@@ -35,23 +35,23 @@ namespace gui {
 *   @js NA
 *   @lua NA
 */
-class UILabel : public UIWidget
+class Label : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILabel();
+    Label();
     
     /**
      * Default destructor
      */
-    virtual ~UILabel();
+    virtual ~Label();
     
     /**
      * Allocates and initializes.
      */
-    static UILabel* create();
+    static Label* create();
     
     /**
      * Changes the string value of label.
@@ -168,8 +168,8 @@ protected:
     virtual void onSizeChanged() override;
     void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     bool _touchScaleChangeEnabled;
     float _normalScaleValueX;

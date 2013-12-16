@@ -61,25 +61,25 @@ public:
  *   @js NA
  *   @lua NA
  */
-class UILabelAtlas : public UIWidget
+class LabelAtlas : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILabelAtlas();
+    LabelAtlas();
     
     /**
      * Default destructor
      */
-    virtual ~UILabelAtlas();
+    virtual ~LabelAtlas();
     
     /**
      * Allocates and initializes.
      */
-    static UILabelAtlas* create();
+    static LabelAtlas* create();
     
-    /** initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
     void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
     
     //set string value for labelatlas.
@@ -106,8 +106,8 @@ protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
     void labelAtlasScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     UICCLabelAtlas* _laberAtlasRenderer;
     std::string _stringValue;
@@ -120,4 +120,4 @@ protected:
 }
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UILabelAtlas__) */
+#endif /* defined(__CocoGUI__LabelAtlas__) */

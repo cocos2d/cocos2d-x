@@ -40,23 +40,23 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class UILoadingBar : public UIWidget
+class LoadingBar : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILoadingBar();
+    LoadingBar();
     
     /**
      * Default destructor
      */
-    virtual ~UILoadingBar();
+    virtual ~LoadingBar();
     
     /**
      * Allocates and initializes.
      */
-    static UILoadingBar* create();
+    static LoadingBar* create();
     
     /**
      * Changes the progress direction of loadingbar.
@@ -131,8 +131,8 @@ protected:
     virtual void onSizeChanged() override;
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     LoadingBarType _barType;
     int _percent;
@@ -148,4 +148,4 @@ protected:
 
 }
 NS_CC_END
-#endif /* defined(__CocoGUI__UILoadingBar__) */
+#endif /* defined(__CocoGUI__LoadingBar__) */

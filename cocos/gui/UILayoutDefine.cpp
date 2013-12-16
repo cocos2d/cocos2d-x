@@ -28,25 +28,25 @@ NS_CC_BEGIN
 namespace gui {
 
 
-UIMargin::UIMargin(void) : left(0), top(0), right(0), bottom(0)
+Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
 {
 }
 
-UIMargin::UIMargin(float l, float t, float r, float b) : left(l), top(t), right(r), bottom(b)
+Margin::Margin(float l, float t, float r, float b) : left(l), top(t), right(r), bottom(b)
 {
 }
 
-UIMargin::UIMargin(const UIMargin& other) : left(other.left), top(other.top), right(other.right), bottom(other.bottom)
+Margin::Margin(const Margin& other) : left(other.left), top(other.top), right(other.right), bottom(other.bottom)
 {
 }
 
-UIMargin& UIMargin::operator= (const UIMargin& other)
+Margin& Margin::operator= (const Margin& other)
 {
     setMargin(other.left, other.top, other.right, other.bottom);
     return *this;
 }
 
-void UIMargin::setMargin(float l, float t, float r, float b)
+void Margin::setMargin(float l, float t, float r, float b)
 {
     left = l;
     top = t;
@@ -54,7 +54,7 @@ void UIMargin::setMargin(float l, float t, float r, float b)
     bottom = b;
 }
 
-bool UIMargin::equals(const UIMargin &target) const
+bool Margin::equals(const Margin &target) const
 {
     return (left == target.left && top == target.top && right == target.right && bottom == target.bottom);
 }

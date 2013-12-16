@@ -35,23 +35,23 @@ namespace gui{
 *   @js NA
 *   @lua NA
 */
-class UIButton : public UIWidget
+class Button : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UIButton();
+    Button();
     
     /**
      * Default destructor
      */
-    virtual ~UIButton();
+    virtual ~Button();
     
     /**
      * Allocates and initializes.
      */
-    static UIButton* create();
+    static Button* create();
     
     /**
      * Load textures for button.
@@ -193,8 +193,8 @@ protected:
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     Node* _buttonNormalRenderer;
     Node* _buttonClickedRenderer;
@@ -222,4 +222,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UIButton__) */
+#endif /* defined(__CocoGUI__Button__) */

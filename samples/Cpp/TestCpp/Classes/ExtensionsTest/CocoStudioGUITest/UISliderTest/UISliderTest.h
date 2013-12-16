@@ -37,7 +37,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 class UISliderTest_Scale9 : public UIScene
@@ -50,7 +50,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest_Scale9)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UISliderTest__) */

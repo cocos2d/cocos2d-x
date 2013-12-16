@@ -44,23 +44,23 @@ typedef void (Object::*SEL_SelectedStateEvent)(Object*,CheckBoxEventType);
 *   @js NA
 *   @lua NA
 */
-class UICheckBox : public UIWidget
+class CheckBox : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UICheckBox();
+    CheckBox();
     
     /**
      * Default destructor
      */
-    virtual ~UICheckBox();
+    virtual ~CheckBox();
     
     /**
      * Allocates and initializes.
      */
-    static UICheckBox* create();
+    static CheckBox* create();
     
     /**
      * Load textures for checkbox.
@@ -182,8 +182,8 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     Sprite* _backGroundBoxRenderer;
     Sprite* _backGroundSelectedBoxRenderer;
@@ -212,4 +212,4 @@ protected:
 
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UICheckBox__) */
+#endif /* defined(__CocoGUI__CheckBox__) */

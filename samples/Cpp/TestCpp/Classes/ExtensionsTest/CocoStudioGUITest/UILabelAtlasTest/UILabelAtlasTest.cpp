@@ -18,7 +18,7 @@ bool UILabelAtlasTest::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LabelAtlas");
         alert->setFontName(font_UILabelAtlasTest);
         alert->setFontSize(30);
@@ -27,7 +27,7 @@ bool UILabelAtlasTest::init()
         m_pUiLayer->addChild(alert);
         
         // Create the label atlas
-        UILabelAtlas* labelAtlas = UILabelAtlas::create();
+        cocos2d::gui::LabelAtlas* labelAtlas = cocos2d::gui::LabelAtlas::create();
         labelAtlas->setProperty("1234567890", "cocosgui/labelatlas.png", 17, 22, "0");
         labelAtlas->setPosition(Point((widgetSize.width) / 2, widgetSize.height / 2.0f));        
         

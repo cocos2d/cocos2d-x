@@ -29,7 +29,7 @@ bool UIListViewTest_Vertical::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("Move by vertical direction");
         m_pDisplayValueLabel->setFontName(font_UIListViewTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -37,7 +37,7 @@ bool UIListViewTest_Vertical::init()
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addChild(m_pDisplayValueLabel);
         
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("ListView");
         alert->setFontName(font_UIListViewTest);
         alert->setFontSize(30);
@@ -46,8 +46,8 @@ bool UIListViewTest_Vertical::init()
         m_pUiLayer->addChild(alert);
         
         
-        UIListView* lv = UIListView::create();
-        UIButton* model = UIButton::create();
+        ListView* lv = ListView::create();
+        Button* model = Button::create();
         model->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         lv->setItemModel(model);
         
@@ -89,7 +89,7 @@ bool UIListViewTest_Horizontal::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("Move by vertical direction");
         m_pDisplayValueLabel->setFontName(font_UIListViewTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -97,7 +97,7 @@ bool UIListViewTest_Horizontal::init()
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addChild(m_pDisplayValueLabel);
         
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("ListView");
         alert->setFontName(font_UIListViewTest);
         alert->setFontSize(30);
@@ -106,9 +106,9 @@ bool UIListViewTest_Horizontal::init()
         m_pUiLayer->addChild(alert);
         
 
-        UIListView* lv = UIListView::create();
+        ListView* lv = ListView::create();
         lv->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
-        UIButton* model = UIButton::create();
+        Button* model = Button::create();
         model->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         lv->setItemModel(model);
         

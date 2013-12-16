@@ -27,7 +27,7 @@ bool UICheckBoxTest::init()
         Size widgetSize = m_pWidget->getSize();;
         
         // Add a label in which the checkbox events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UICheckBoxTest);
         m_pDisplayValueLabel->setFontSize(32);
@@ -36,7 +36,7 @@ bool UICheckBoxTest::init()
         m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("CheckBox");
         alert->setFontName(font_UICheckBoxTest);
         alert->setFontSize(30);
@@ -45,7 +45,7 @@ bool UICheckBoxTest::init()
         m_pUiLayer->addChild(alert);        
         
         // Create the checkbox
-        UICheckBox* checkBox = UICheckBox::create();
+        CheckBox* checkBox = cocos2d::gui::CheckBox::create();
         checkBox->setTouchEnabled(true);
         checkBox->loadTextures("cocosgui/check_box_normal.png",
                                "cocosgui/check_box_normal_press.png",
