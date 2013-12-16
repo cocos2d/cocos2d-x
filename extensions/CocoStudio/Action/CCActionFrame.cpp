@@ -31,7 +31,7 @@ ActionFrame::ActionFrame()
 : m_frameType(0)
 , m_frameIndex(0)
 , m_fTime(0.0f)
-, m_easingType(FrameEaseType::FrameEase_Linear)
+, m_easingType(FrameEase_Linear)
 {
 }
 ActionFrame::~ActionFrame()
@@ -84,7 +84,8 @@ CCActionInterval* ActionFrame::getAction(float fDuration)
 void ActionFrame::setEasingParameter(std::vector<float> parameter)
 {
 	m_Parameter.clear();
-	for (int i = 0; i<parameter.size(); i++)
+
+	for ( unsigned int i = 0; i<parameter.size(); i++)
 	{
 		m_Parameter.push_back(parameter[i]);
 	}
