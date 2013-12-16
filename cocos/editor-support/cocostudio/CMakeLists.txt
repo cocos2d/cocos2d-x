@@ -1,4 +1,5 @@
 set(CS_SRC
+  CCActionEaseEx.cpp
   CCActionFrame.cpp
   CCActionFrameEasing.cpp
   CCActionManagerEx.cpp
