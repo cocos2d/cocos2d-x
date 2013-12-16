@@ -160,7 +160,7 @@ public:
     void setActive(bool active);
     bool getActive();
 
-    cocos2d::Array *getColliderBodyList();
+    const cocos2d::Vector<ColliderBody*>& getColliderBodyList();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT 
     virtual void setColliderFilter(ColliderFilter *filter);
@@ -178,7 +178,7 @@ public:
     virtual cpBody *getBody() const;
 #endif
  protected:
-    cocos2d::Array *_colliderBodyList;
+    cocos2d::Vector<ColliderBody*> _colliderBodyList;
 
     Bone *_bone;
 

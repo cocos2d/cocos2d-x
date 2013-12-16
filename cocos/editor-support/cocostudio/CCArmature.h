@@ -143,7 +143,7 @@ public:
      * Get Armature's bone dictionary
      * @return Armature's bone dictionary
      */
-    cocos2d::Dictionary *getBoneDic() const;
+    const cocos2d::Map<std::string, Bone*>& getBoneDic() const;
 
     /**
      * This boundingBox will calculate all bones' boundingBox every time
@@ -184,7 +184,7 @@ public:
     
     virtual bool getArmatureTransformDirty() const;
 
-    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture) const;
+    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
@@ -260,9 +260,9 @@ protected:
 
     mutable bool _armatureTransformDirty;
 
-    cocos2d::Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    cocos2d::Map<std::string, Bone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
-    cocos2d::Array *_topBoneList;
+    cocos2d::Vector<Bone*> _topBoneList;
 
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
@@ -270,7 +270,7 @@ protected:
 
     ArmatureAnimation *_animation;
 
-    cocos2d::Dictionary *_textureAtlasDic;
+    cocos2d::Map<GLuint, cocos2d::TextureAtlas*> _textureAtlasDic;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
     b2Body *_body;

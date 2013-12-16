@@ -444,13 +444,13 @@ void Bone::changeDisplayByName(const char *name, bool force)
     _displayManager->changeDisplayByName(name, force);
 }
 
-Array *Bone::getColliderBodyList()
+ColliderDetector* Bone::getColliderDetector() const
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
-            return detector->getColliderBodyList();
+            return detector;
         }
     }
     return nullptr;

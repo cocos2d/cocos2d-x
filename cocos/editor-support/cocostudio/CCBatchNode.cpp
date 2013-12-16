@@ -83,11 +83,10 @@ void BatchNode::addChild(Node *child, int zOrder, int tag)
     {
         armature->setBatchNode(this);
 
-        const Dictionary *dict = armature->getBoneDic();
-        DictElement *element = nullptr;
-        CCDICT_FOREACH(dict, element)
+        const Map<std::string, Bone*>& map = armature->getBoneDic();
+        for(auto element : map)
         {
-            Bone *bone = static_cast<Bone*>(element->getObject());
+            Bone *bone = element.second;
 
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
             for(auto object : *displayList)
@@ -110,11 +109,10 @@ void BatchNode::removeChild(Node* child, bool cleanup)
     {
         armature->setBatchNode(nullptr);
         
-        const Dictionary *dict = armature->getBoneDic();
-        DictElement *element = nullptr;
-        CCDICT_FOREACH(dict, element)
+        const Map<std::string, Bone*>& map = armature->getBoneDic();
+        for(auto element : map)
         {
-            Bone *bone = static_cast<Bone*>(element->getObject());
+            Bone *bone = element.second;
             
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
             for(auto object : *displayList)

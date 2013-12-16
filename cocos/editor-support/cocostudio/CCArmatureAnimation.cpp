@@ -144,11 +144,10 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
 
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
-    DictElement *element = nullptr;
-    const Dictionary *dict = _armature->getBoneDic();
-    CCDICT_FOREACH(dict, element)
+    const Map<std::string, Bone*>& map = _armature->getBoneDic();
+    for(auto element : map)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
+        Bone *bone = element.second;
 
         bone->getTween()->setProcessScale(_processScale);
         if (bone->getChildArmature())
@@ -212,12 +211,10 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     MovementBoneData *movementBoneData = nullptr;
     _tweenList->removeAllObjects();
 
-    DictElement *element = nullptr;
-    const Dictionary *dict = _armature->getBoneDic();
-
-    CCDICT_FOREACH(dict, element)
+    const Map<std::string, Bone*>& map = _armature->getBoneDic();
+    for(auto element : map)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
+        Bone *bone = element.second;
         movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.at(bone->getName()));
 
         Tween *tween = bone->getTween();
