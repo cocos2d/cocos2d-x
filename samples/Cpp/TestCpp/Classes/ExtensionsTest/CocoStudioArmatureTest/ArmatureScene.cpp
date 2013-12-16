@@ -67,6 +67,12 @@ CCLayer *CreateLayer(int index)
     case TEST_PLAY_SEVERAL_MOVEMENT:
         pLayer = new TestPlaySeveralMovement();
         break;
+    case TEST_EASING:
+        pLayer = new TestEasing();
+        break;
+    case TEST_CHANGE_ANIMATION_INTERNAL:
+        pLayer = new TestChangeAnimationInternal();
+        break;
     default:
         break;
     }
@@ -248,15 +254,7 @@ void TestAsynchronousLoading::onEnter()
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
     CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-
-    //! load data directly
-    // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/knight.png", "armature/knight.plist", "armature/knight.xml");
-    // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml");
-    // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/robot.png", "armature/robot.plist", "armature/robot.xml");
-    // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml");
-    // 	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml");
-    //	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/Cowboy.ExportJson");
-
+    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 }
 
 std::string TestAsynchronousLoading::title()
@@ -1386,3 +1384,102 @@ std::string TestPlaySeveralMovement::subtitle()
 {
     return "Movement is played one by one";
 }
+
+
+void TestEasing::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    setTouchEnabled(true);
+
+    animationID = 0;
+
+    armature = cocos2d::extension::CCArmature::create("testEasing");
+    armature->getAnimation()->playByIndex(0);
+    armature->setScale(0.8);
+
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+
+    updateSubTitle();
+}
+void TestEasing::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    ArmatureTestLayer::onExit();
+}
+std::string TestEasing::title()
+{
+    return "Test easing effect";
+}
+std::string TestEasing::subtitle()
+{
+    return "Current easing : ";
+}
+bool TestEasing::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    animationID++;
+    animationID = animationID % armature->getAnimation()->getMovementCount();
+    armature->getAnimation()->playByIndex(animationID);
+
+    updateSubTitle();
+
+    return false;
+}
+void TestEasing::updateSubTitle()
+{
+    std::string str = subtitle() + armature->getAnimation()->getCurrentMovementID();
+    CCLabelTTF *label = (CCLabelTTF *)getChildByTag(10001);
+    label->setString(str.c_str());
+}
+void TestEasing::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
+
+
+
+
+void TestChangeAnimationInternal::onEnter()
+{
+    ArmatureTestLayer::onEnter();
+    setTouchEnabled(true);
+
+    cocos2d::extension::CCArmature *armature = NULL;
+    armature = cocos2d::extension::CCArmature::create("Cowboy");
+    armature->getAnimation()->playByIndex(0);
+    armature->setScale(0.2f);
+
+    armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y));
+    addChild(armature);
+}
+void TestChangeAnimationInternal::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    CCDirector::sharedDirector()->setAnimationInterval(1/60.0f);
+}
+std::string TestChangeAnimationInternal::title()
+{
+    return "Test change animation internal";
+}
+std::string TestChangeAnimationInternal::subtitle()
+{
+    return "Touch to change animation internal";
+}
+
+bool TestChangeAnimationInternal::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+    if (CCDirector::sharedDirector()->getAnimationInterval() == 1/30.0f)
+    {
+        CCDirector::sharedDirector()->setAnimationInterval(1/60.0f);
+    }
+    else
+    {
+        CCDirector::sharedDirector()->setAnimationInterval(1/30.0f);
+    }
+    return false;
+}
+void TestChangeAnimationInternal::registerWithTouchDispatcher()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority + 1, true);
+}
+

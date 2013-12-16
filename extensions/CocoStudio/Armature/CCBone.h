@@ -152,8 +152,19 @@ public:
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
     virtual inline void setTransformDirty(bool dirty) { m_bBoneTransformDirty = dirty; }
-
     virtual inline bool isTransformDirty() { return m_bBoneTransformDirty; }
+
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const ccBlendFunc& blendFunc);
+    virtual ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { m_bBlendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return m_bBlendDirty; }
 
     virtual CCAffineTransform nodeToArmatureTransform();
     virtual CCAffineTransform nodeToWorldTransform();
@@ -192,7 +203,6 @@ public:
      */
     CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
-    CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
     virtual void applyParentTransform(CCBone *parent);
 
@@ -217,6 +227,9 @@ protected:
 
     //! Data version
     float m_fDataVersion;
+
+    ccBlendFunc m_sBlendFunc; 
+    bool m_bBlendDirty;
 };
 
 NS_CC_EXT_END

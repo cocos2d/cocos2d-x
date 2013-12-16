@@ -73,6 +73,25 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
     CCNode *display = bone->getDisplayRenderNode();
     CS_RETURN_IF(!display);
 
+    switch(bone->getDisplayRenderNodeType())
+    {
+    case CS_DISPLAY_SPRITE:
+        if (dirty)
+        {
+            (static_cast<CCSkin*>(display))->updateArmatureTransform();
+        }
+        break;
+    case CS_DISPLAY_PARTICLE:
+        updateParticleDisplay(bone, display, dt);
+        break;
+    case CS_DISPLAY_ARMATURE:
+        updateArmatureDisplay(bone, display, dt);
+        break;
+    default:
+        display->setAdditionalTransform(bone->nodeToArmatureTransform());
+        break;
+    }
+
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (dirty)
     {
@@ -100,25 +119,6 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
         }
     }
 #endif
-
-    switch(bone->getDisplayRenderNodeType())
-    {
-    case CS_DISPLAY_SPRITE:
-        if (dirty)
-        {
-            ((CCSkin*)display)->updateArmatureTransform();
-        }
-        break;
-    case CS_DISPLAY_PARTICLE:
-        updateParticleDisplay(bone, display, dt);
-        break;
-    case CS_DISPLAY_ARMATURE:
-        updateArmatureDisplay(bone, display, dt);
-        break;
-    default:
-        display->setAdditionalTransform(bone->nodeToArmatureTransform());
-        break;
-    }
 }
 
 

@@ -164,28 +164,6 @@ float CCArmatureAnimation::getSpeedScale() const
     return m_fSpeedScale;
 }
 
-void CCArmatureAnimation::setAnimationInternal(float animationInternal)
-{
-    if(animationInternal == m_fAnimationInternal)
-    {
-        return;
-    }
-
-    m_fAnimationInternal = animationInternal;
-
-    CCDictElement *element = NULL;
-    CCDictionary *dict = m_pArmature->getBoneDic();
-    CCDICT_FOREACH(dict, element)
-    {
-        CCBone *bone = (CCBone *)element->getObject();
-        bone->getTween()->setAnimationInternal(m_fAnimationInternal);
-        if (bone->getChildArmature())
-        {
-            bone->getChildArmature()->getAnimation()->setAnimationInternal(m_fAnimationInternal);
-        }
-    }
-}
-
 
 void CCArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
@@ -251,12 +229,10 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 
             tween->setProcessScale(m_fProcessScale);
-            tween->setAnimationInternal(m_fAnimationInternal);
 
             if (bone->getChildArmature())
             {
                 bone->getChildArmature()->getAnimation()->setProcessScale(m_fProcessScale);
-                bone->getChildArmature()->getAnimation()->setAnimationInternal(m_fAnimationInternal);
             }
         }
         else
