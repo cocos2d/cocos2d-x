@@ -235,7 +235,7 @@ public:
      *
      * @return CCAction
      */
-	virtual CCActionInterval* getAction(float fDuration) override;
+	virtual CCActionInterval* getAction(float fDuration);
 protected:
 	CCPoint m_position;
 };
@@ -292,7 +292,7 @@ public:
      *
      * @return CCAction
      */
-	virtual CCActionInterval* getAction(float fDuration) override;
+	virtual CCActionInterval* getAction(float fDuration);
 protected:
 	float m_scaleX;
 	float m_scaleY;
@@ -336,7 +336,7 @@ public:
      *
      * @return CCAction
      */
-	virtual CCActionInterval* getAction(float fDuration) override;
+	virtual CCActionInterval* getAction(float fDuration);
 protected:
 	float m_rotation;
 };
@@ -379,7 +379,7 @@ public:
      *
      * @return CCAction
      */
-	virtual CCActionInterval* getAction(float fDuration) override;
+	virtual CCActionInterval* getAction(float fDuration);
 protected:
 	float m_opacity;
 };
@@ -423,7 +423,7 @@ public:
      *
      * @return CCAction
      */
-	virtual CCActionInterval* getAction(float fDuration) override;
+	virtual CCActionInterval* getAction(float fDuration);
 protected:
 	ccColor3B m_color;
 };
