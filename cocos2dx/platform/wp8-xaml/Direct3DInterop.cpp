@@ -49,7 +49,7 @@ void Direct3DInterop::UpdateForWindowSizeChange(float width, float height)
 
 void Direct3DInterop::OnFocusChange(bool active)
 {
-   // m_renderer->OnFocusChange(active);
+   m_renderer->OnFocusChange(active);
 }
 
 void Direct3DInterop::OnResuming()
@@ -62,20 +62,12 @@ IAsyncAction^ Direct3DInterop::OnSuspending()
     return m_renderer->OnSuspending();
 }
 
-bool Direct3DInterop::IsBackKeyHandled()
+bool Direct3DInterop::OnBackKeyPress()
 {
-    return m_renderer->OnBackPressed();
+    return m_renderer->OnBackKeyPress();
 }
 
-void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
-{
-    std::lock_guard<std::mutex> guard(mMutex);
-    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
-    mPointerEvents.push(e);
-}
-
-
-// Event Handlers
+// Pointer Event Handlers. We need to queue up pointer events to pass them to the drawing thread
 void Direct3DInterop::OnPointerPressed(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
     AddPointerEvent(PointerEventType::PointerPressed, args);
@@ -89,6 +81,13 @@ void Direct3DInterop::OnPointerMoved(DrawingSurfaceManipulationHost^ sender, Poi
 void Direct3DInterop::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
     AddPointerEvent(PointerEventType::PointerReleased, args);
+}
+
+void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
+    mPointerEvents.push(e);
 }
 
 void Direct3DInterop::ProcessEvents()
@@ -118,10 +117,12 @@ void Direct3DInterop::ProcessEvents()
 // Interface With Direct3DContentProvider
 void Direct3DInterop::Connect()
 {
+    m_renderer->Connect();
 }
 
 void Direct3DInterop::Disconnect()
 {
+    m_renderer->Disconnect();
 }
 
 void Direct3DInterop::PrepareResources(LARGE_INTEGER presentTargetTime)

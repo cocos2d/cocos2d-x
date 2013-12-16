@@ -112,9 +112,6 @@
     <Filter Include="shaders\precompiled\wp8">
       <UniqueIdentifier>{9944a9b0-eb9b-4bb9-9e67-9c3eb6144a72}</UniqueIdentifier>
     </Filter>
-    <Filter Include="platform\wp8-xaml">
-      <UniqueIdentifier>{365db176-31a3-4631-8b2c-98bfcaa9b408}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\actions\CCAction.cpp">
@@ -310,9 +307,6 @@
       <Filter>particle_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\winrt\CCAccelerometer.cpp">
@@ -744,9 +738,6 @@
       <Filter>particle_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\CCEGLView.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCAccelerometer.h">

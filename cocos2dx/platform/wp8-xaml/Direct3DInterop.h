@@ -47,7 +47,7 @@ public:
     void OnFocusChange(bool active);
     void OnResuming();
     Windows::Foundation::IAsyncAction^ OnSuspending();
-    bool IsBackKeyHandled();
+    bool OnBackKeyPress();
 
     property Windows::Graphics::Display::DisplayOrientations WindowOrientation;
 
@@ -79,7 +79,6 @@ private:
 	// The AppDelegate for the Cocos2D app
 	AppDelegate app;
 
-	Microsoft::WRL::ComPtr<ID3D11Device1> m_d3dDevice;
     Windows::Foundation::Size m_renderResolution;
 };
 

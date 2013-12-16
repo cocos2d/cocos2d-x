@@ -14,8 +14,8 @@ Direct3DContentProvider::Direct3DContentProvider(Direct3DInterop^ controller) :
 HRESULT Direct3DContentProvider::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 {
     m_host = host;
-    m_controller->Connect();
     Initialize();
+    m_controller->Connect();
 
     return S_OK;
 }
@@ -25,6 +25,10 @@ void Direct3DContentProvider::Disconnect()
     m_controller->Disconnect();
     m_host = nullptr;
     m_synchronizedTexture = nullptr;
+    m_d3dDevice = nullptr;
+    m_d3dContext = nullptr;
+    m_renderTarget = nullptr;
+    m_renderTargetView = nullptr;
 }
 
 HRESULT Direct3DContentProvider::PrepareResources(_In_ const LARGE_INTEGER* presentTargetTime, _Out_ BOOL* contentDirty)

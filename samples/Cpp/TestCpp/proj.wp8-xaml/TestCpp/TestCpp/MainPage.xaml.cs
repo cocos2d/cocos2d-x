@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -49,6 +50,11 @@ namespace PhoneDirect3DXamlAppInterop
                 DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
             }
+        }
+
+        protected override void OnBackKeyPress(CancelEventArgs e)
+        {
+            e.Cancel = m_d3dInterop.OnBackKeyPress();
         }
     }
 }

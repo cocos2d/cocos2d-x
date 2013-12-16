@@ -154,7 +154,6 @@ void DirectXBase::CloseAngle()
     m_bAngleInitialized = false;
 }
 
-
 bool DirectXBase::InitializeAngle()
 {
 	// setup EGL
