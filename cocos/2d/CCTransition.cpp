@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCLayer.h"
 #include "CCRenderTexture.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 
 
 NS_CC_BEGIN
@@ -1377,9 +1377,9 @@ void TransitionTurnOffTiles::onEnter()
 {
     TransitionScene::onEnter();
 
-    _outSceneProxy = GridNode::create();
+    _outSceneProxy = NodeGrid::create();
     _outSceneProxy->retain();
-    _outSceneProxy->setGridTarget(_outScene);
+    _outSceneProxy->setTarget(_outScene);
     _outSceneProxy->onEnter();
 
     Size s = Director::getInstance()->getWinSize();
@@ -1457,9 +1457,9 @@ void TransitionSplitCols::onEnter()
 {
     TransitionScene::onEnter();
 
-    _gridProxy = GridNode::create();
+    _gridProxy = NodeGrid::create();
     _gridProxy->retain();
-    _gridProxy->setGridTarget(_outScene);
+    _gridProxy->setTarget(_outScene);
     _gridProxy->onEnter();
 
     ActionInterval* split = action();
@@ -1485,7 +1485,7 @@ void TransitionSplitCols::onEnter()
 
 void TransitionSplitCols::switchTargetToInscene()
 {
-    _gridProxy->setGridTarget(_inScene);
+    _gridProxy->setTarget(_inScene);
 }
 
 void TransitionSplitCols::draw()
@@ -1572,9 +1572,9 @@ void TransitionFadeTR::sceneOrder()
 void TransitionFadeTR::onEnter()
 {
     TransitionScene::onEnter();
-    _outSceneProxy = GridNode::create();
+    _outSceneProxy = NodeGrid::create();
     _outSceneProxy->retain();
-    _outSceneProxy->setGridTarget(_outScene);
+    _outSceneProxy->setTarget(_outScene);
     _outSceneProxy->onEnter();
 
     Size s = Director::getInstance()->getWinSize();

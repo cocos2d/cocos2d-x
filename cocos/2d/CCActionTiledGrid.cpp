@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CCGrid.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
@@ -280,7 +280,7 @@ void ShuffleTiles::placeTile(const Point& pos, Tile *t)
 {
     Quad3 coords = getOriginalTile(pos);
 
-    Point step = _gridNodeTarget->getNodeGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
     coords.bl.x += (int)(t->position.x * step.x);
     coords.bl.y += (int)(t->position.y * step.y);
 
@@ -409,7 +409,7 @@ void FadeOutTRTiles::turnOffTile(const Point& pos)
 void FadeOutTRTiles::transformTile(const Point& pos, float distance)
 {
     Quad3 coords = getOriginalTile(pos);
-    Point step = _gridNodeTarget->getNodeGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
 
     coords.bl.x += (step.x / 2) * (1.0f - distance);
     coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -536,7 +536,7 @@ float FadeOutUpTiles::testFunc(const Size& pos, float time)
 void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 {
     Quad3 coords = getOriginalTile(pos);
-    Point step = _gridNodeTarget->getNodeGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
 
     coords.bl.y += (step.y / 2) * (1.0f - distance);
     coords.br.y += (step.y / 2) * (1.0f - distance);

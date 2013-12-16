@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class GridNode;
+class NodeGrid;
 
 /**
  * @addtogroup transition
@@ -91,8 +91,8 @@ protected:
     virtual void sceneOrder() override;
 
 protected:
-    GridNode* _inSceneProxy;
-    GridNode* _outSceneProxy;
+    NodeGrid* _inSceneProxy;
+    NodeGrid* _outSceneProxy;
     bool    _back;    
     static float POLYGON_OFFSET_FACTOR;
     static float POLYGON_OFFSET_UNITS;

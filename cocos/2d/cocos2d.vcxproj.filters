@@ -566,7 +566,7 @@
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="CCGridNode.cpp">
+    <ClCompile Include="CCNodeGrid.cpp">
       <Filter>misc_nodes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1146,7 +1146,7 @@
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="CCGridNode.h">
+    <ClInclude Include="CCNodeGrid.h">
       <Filter>misc_nodes</Filter>
     </ClInclude>
   </ItemGroup>

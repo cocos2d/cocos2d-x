@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "CCActionGrid.h"
 #include "CCDirector.h"
 #include "CCGrid.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 
 NS_CC_BEGIN
 // implementation of GridAction
@@ -49,7 +49,7 @@ void GridAction::startWithTarget(Node *target)
 
     GridBase *newgrid = this->getGrid();
 
-    GridBase *targetGrid = _gridNodeTarget->getNodeGrid();
+    GridBase *targetGrid = _gridNodeTarget->getGrid();
 
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
@@ -70,15 +70,15 @@ void GridAction::startWithTarget(Node *target)
             targetGrid->setActive(false);
         }
 
-        _gridNodeTarget->setNodeGrid(newgrid);
-        _gridNodeTarget->getNodeGrid()->setActive(true);
+        _gridNodeTarget->setGrid(newgrid);
+        _gridNodeTarget->getGrid()->setActive(true);
     }
 }
 
 void GridAction::cacheTargetAsGridNode()
 {
-    _gridNodeTarget = dynamic_cast<GridNode*> (_target);
-    CCASSERT(_gridNodeTarget, "GridActions can only used on GridNode");
+    _gridNodeTarget = dynamic_cast<NodeGrid*> (_target);
+    CCASSERT(_gridNodeTarget, "GridActions can only used on NodeGrid");
 }
 
 GridAction* GridAction::reverse() const
@@ -104,19 +104,19 @@ GridBase* Grid3DAction::getGrid()
 
 Vertex3F Grid3DAction::getVertex(const Point& position) const
 {
-    Grid3D *g = (Grid3D*)_gridNodeTarget->getNodeGrid();
+    Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getVertex(position);
 }
 
 Vertex3F Grid3DAction::getOriginalVertex(const Point& position) const
 {
-    Grid3D *g = (Grid3D*)_gridNodeTarget->getNodeGrid();
+    Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     return g->getOriginalVertex(position);
 }
 
 void Grid3DAction::setVertex(const Point& position, const Vertex3F& vertex)
 {
-    Grid3D *g = (Grid3D*)_gridNodeTarget->getNodeGrid();
+    Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
     g->setVertex(position, vertex);
 }
 
@@ -129,19 +129,19 @@ GridBase* TiledGrid3DAction::getGrid(void)
 
 Quad3 TiledGrid3DAction::getTile(const Point& pos) const
 {
-    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getNodeGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->getTile(pos);
 }
 
 Quad3 TiledGrid3DAction::getOriginalTile(const Point& pos) const
 {
-    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getNodeGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->getOriginalTile(pos);
 }
 
 void TiledGrid3DAction::setTile(const Point& pos, const Quad3& coords)
 {
-    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getNodeGrid();
+    TiledGrid3D *g = (TiledGrid3D*)_gridNodeTarget->getGrid();
     return g->setTile(pos, coords);
 }
 
@@ -353,7 +353,7 @@ void StopGrid::startWithTarget(Node *target)
 {
     ActionInstant::startWithTarget(target);
     cacheTargetAsGridNode();
-    GridBase *grid = _gridNodeTarget->getNodeGrid();
+    GridBase *grid = _gridNodeTarget->getGrid();
     if (grid && grid->isActive())
     {
         grid->setActive(false);
@@ -362,8 +362,8 @@ void StopGrid::startWithTarget(Node *target)
 
 void StopGrid::cacheTargetAsGridNode()
 {
-    _gridNodeTarget = dynamic_cast<GridNode*> (_target);
-    CCASSERT(_gridNodeTarget, "GridActions can only used on GridNode");
+    _gridNodeTarget = dynamic_cast<NodeGrid*> (_target);
+    CCASSERT(_gridNodeTarget, "GridActions can only used on NodeGrid");
 }
 
 StopGrid* StopGrid::create()
@@ -417,16 +417,16 @@ void ReuseGrid::startWithTarget(Node *target)
     ActionInstant::startWithTarget(target);
     cacheTargetAsGridNode();
 
-    if (_gridNodeTarget->getNodeGrid() && _gridNodeTarget->getNodeGrid()->isActive())
+    if (_gridNodeTarget->getGrid() && _gridNodeTarget->getGrid()->isActive())
     {
-        _gridNodeTarget->getNodeGrid()->setReuseGrid(_gridNodeTarget->getNodeGrid()->getReuseGrid() + _times);
+        _gridNodeTarget->getGrid()->setReuseGrid(_gridNodeTarget->getGrid()->getReuseGrid() + _times);
     }
 }
 
 void ReuseGrid::cacheTargetAsGridNode()
 {
-    _gridNodeTarget = dynamic_cast<GridNode*> (_target);
-    CCASSERT(_gridNodeTarget, "GridActions can only used on GridNode");
+    _gridNodeTarget = dynamic_cast<NodeGrid*> (_target);
+    CCASSERT(_gridNodeTarget, "GridActions can only used on NodeGrid");
 }
 
 ReuseGrid* ReuseGrid::clone() const

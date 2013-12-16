@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "CCActionGrid.h"
 #include "CCActionPageTurn3D.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 
 NS_CC_BEGIN
 
@@ -99,15 +99,15 @@ void TransitionPageTurn::draw()
 void TransitionPageTurn::onEnter()
 {
     TransitionScene::onEnter();
-    _inSceneProxy = GridNode::create();
-    _outSceneProxy = GridNode::create();
+    _inSceneProxy = NodeGrid::create();
+    _outSceneProxy = NodeGrid::create();
     
     CCASSERT(_inSceneProxy && _outSceneProxy, "TransitionPageTurn proxy scene can not be nullptr");
     _inSceneProxy->retain();
     _outSceneProxy->retain();
 
-    _inSceneProxy->setGridTarget(_inScene);
-    _outSceneProxy->setGridTarget(_outScene);
+    _inSceneProxy->setTarget(_inScene);
+    _outSceneProxy->setTarget(_outScene);
 
     _inSceneProxy->onEnter();
     _outSceneProxy->onEnter();

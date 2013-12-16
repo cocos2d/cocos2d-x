@@ -256,7 +256,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="ccGLStateCache.cpp" />
     <ClCompile Include="CCGrabber.cpp" />
     <ClCompile Include="CCGrid.cpp" />
-    <ClCompile Include="CCGridNode.cpp" />
+    <ClCompile Include="CCNodeGrid.cpp" />
     <ClCompile Include="CCIMEDispatcher.cpp" />
     <ClCompile Include="CCLabel.cpp" />
     <ClCompile Include="CCLabelAtlas.cpp" />
@@ -428,7 +428,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ccGLStateCache.h" />
     <ClInclude Include="CCGrabber.h" />
     <ClInclude Include="CCGrid.h" />
-    <ClInclude Include="CCGridNode.h" />
+    <ClInclude Include="CCNodeGrid.h" />
     <ClInclude Include="CCIMEDelegate.h" />
     <ClInclude Include="CCIMEDispatcher.h" />
     <ClInclude Include="CCLabel.h" />

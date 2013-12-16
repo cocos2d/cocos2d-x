@@ -43,7 +43,7 @@ NS_CC_BEGIN
 
 class ActionInterval;
 class Node;
-class GridNode;
+class NodeGrid;
 
 /** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
@@ -653,7 +653,7 @@ protected:
     virtual ~TransitionTurnOffTiles();
 
     virtual void sceneOrder() override;
-    GridNode* _outSceneProxy;
+    NodeGrid* _outSceneProxy;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionTurnOffTiles);
@@ -684,7 +684,7 @@ protected:
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
     void switchTargetToInscene();
-    GridNode* _gridProxy;
+    NodeGrid* _gridProxy;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSplitCols);
 };
@@ -737,7 +737,7 @@ protected:
 
     virtual void sceneOrder();
 
-    GridNode* _outSceneProxy;
+    NodeGrid* _outSceneProxy;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFadeTR);

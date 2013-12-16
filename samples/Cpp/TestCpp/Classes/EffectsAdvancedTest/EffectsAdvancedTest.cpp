@@ -1,5 +1,5 @@
 #include "EffectsAdvancedTest.h"
-#include "CCGridNode.h"
+#include "CCNodeGrid.h"
 
 enum 
 {
@@ -155,7 +155,7 @@ private:
 void Effect4::onEnter()
 {
     EffectAdvanceTextLayer::onEnter();
-    //Node* gridNode = GridNode::create();
+    //Node* gridNode = NodeGrid::create();
     
     auto lens = Lens3D::create(10, Size(32,24), Point(100,180), 150);
     auto move = JumpBy::create(5, Point(380,0), 100, 4);
@@ -243,7 +243,7 @@ void Issue631::onEnter()
     layer->addChild(sprite, 10);
     
     // foreground
-    auto layer2BaseGrid = GridNode::create();
+    auto layer2BaseGrid = NodeGrid::create();
     auto layer2 = LayerColor::create(Color4B( 0, 255,0,255 ) );
     auto fog = Sprite::create("Images/Fog.png");
 
@@ -339,7 +339,7 @@ void EffectAdvanceTextLayer::onEnter(void)
 {
     BaseTest::onEnter();
     
-    _bgNode = GridNode::create();
+    _bgNode = NodeGrid::create();
     _bgNode->setAnchorPoint(Point(0.5,0.5));
     addChild(_bgNode);
     //_bgNode->setPosition( VisibleRect::center() );
@@ -349,7 +349,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     //bg->setPosition( VisibleRect::center() );
     _bgNode->addChild(bg);
 
-    _target1 = GridNode::create();
+    _target1 = NodeGrid::create();
     _target1->setAnchorPoint(Point(0.5,0.5));
     auto grossini = Sprite::create("Images/grossinis_sister2.png");
     _target1->addChild(grossini);
@@ -360,7 +360,7 @@ void EffectAdvanceTextLayer::onEnter(void)
     _target1->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
 
-    _target2 = GridNode::create();
+    _target2 = NodeGrid::create();
     _target2->setAnchorPoint(Point(0.5,0.5));
     auto tamara = Sprite::create("Images/grossinis_sister1.png");
     _target2->addChild(tamara);
