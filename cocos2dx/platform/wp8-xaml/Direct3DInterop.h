@@ -53,6 +53,7 @@ public:
 
     property Windows::Foundation::Size NativeResolution;
     property Windows::Foundation::Size RenderResolution;
+    property Windows::Foundation::Size WindowBounds;
 
 protected:
     // Event Handlers
