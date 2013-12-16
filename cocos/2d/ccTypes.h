@@ -388,6 +388,8 @@ public:
 	float  _shadowBlur;
     // shadow opacity
 	float  _shadowOpacity;
+    // shadow color
+    Color3B _shadowColor;
 };
 
 // stroke attributes

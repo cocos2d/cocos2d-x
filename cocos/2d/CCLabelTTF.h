@@ -111,9 +111,9 @@ public:
     FontDefinition getTextDefinition();
     
     
-    
     /** enable or disable shadow for the label */
     void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
+    void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, Color3B shadowColor, bool mustUpdateTexture = true);
     
     /** disable shadow rendering */
     void disableShadow(bool mustUpdateTexture = true);
@@ -188,6 +188,7 @@ protected:
     Size    _shadowOffset;
     float   _shadowOpacity;
     float   _shadowBlur;
+    Color3B _shadowColor;
     
     
     /** font stroke */

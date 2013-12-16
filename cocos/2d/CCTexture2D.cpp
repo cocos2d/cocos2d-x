@@ -1076,6 +1076,9 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     float shadowDY      = 0.0f;
     float shadowBlur    = 0.0f;
     float shadowOpacity = 0.0f;
+    float shadowColorR  = 0.0f;
+    float shadowColorG  = 0.0f;
+    float shadowColorB  = 0.0f;
     
     if ( textDefinition._shadow._shadowEnabled )
     {
@@ -1084,6 +1087,9 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
         shadowDY      = textDefinition._shadow._shadowOffset.height;
         shadowBlur    = textDefinition._shadow._shadowBlur;
         shadowOpacity = textDefinition._shadow._shadowOpacity;
+        shadowColorR  = textDefinition._shadow._shadowColor.r / 255.0f;
+        shadowColorG  = textDefinition._shadow._shadowColor.g / 255.0f;
+        shadowColorB  = textDefinition._shadow._shadowColor.b / 255.0f;
     }
     
     // handle stroke parameters
@@ -1121,6 +1127,9 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
                                                   shadowDY,
                                                   shadowOpacity,
                                                   shadowBlur,
+                                                  shadowColorR,
+                                                  shadowColorG,
+                                                  shadowColorB,
                                                   strokeEnabled,
                                                   strokeColorR,
                                                   strokeColorG,
