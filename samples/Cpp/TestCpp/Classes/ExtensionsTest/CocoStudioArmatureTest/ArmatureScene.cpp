@@ -1027,17 +1027,18 @@ void TestColliderDetector::update(float delta)
 
     // This code is just telling how to get the vertex.
     // For a more accurate collider detection, you need to implemente yourself.
-    DictElement *element = NULL;
-    Dictionary *dict = armature2->getBoneDic();
-    CCDICT_FOREACH(dict, element)
+    const Map<std::string, Bone*>& map = armature2->getBoneDic();
+    for(auto element : map)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        Array *bodyList = bone->getColliderBodyList();
+        Bone *bone = element.second;
+        ColliderDetector *detector = bone->getColliderDetector();
 
-        if (!bodyList)
+        if (!detector)
             continue;
 
-        for (auto object : *bodyList)
+        const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
+
+        for (auto object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();

@@ -146,8 +146,7 @@ ColliderDetector *ColliderDetector::create(Bone *bone)
 }
 
 ColliderDetector::ColliderDetector()
-    : _colliderBodyList(nullptr)
-    , _active(false)
+    :  _active(false)
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     _body = nullptr;
@@ -157,8 +156,7 @@ ColliderDetector::ColliderDetector()
 
 ColliderDetector::~ColliderDetector()
 {
-    _colliderBodyList->removeAllObjects();
-    CC_SAFE_DELETE(_colliderBodyList);
+    _colliderBodyList.clear();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_DELETE(_filter);
@@ -167,9 +165,7 @@ ColliderDetector::~ColliderDetector()
 
 bool ColliderDetector::init()
 {
-    _colliderBodyList = Array::create();
-    CCASSERT(_colliderBodyList, "create _colliderBodyList failed!");
-    _colliderBodyList->retain();
+    _colliderBodyList.clear();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     _filter = new ColliderFilter();
@@ -189,7 +185,7 @@ bool ColliderDetector::init(Bone *bone)
 void ColliderDetector::addContourData(ContourData *contourData)
 {
     ColliderBody *colliderBody = new ColliderBody(contourData);
-    _colliderBodyList->addObject(colliderBody);
+    _colliderBodyList.pushBack(colliderBody);
     colliderBody->release();
 
 
@@ -214,19 +210,19 @@ void ColliderDetector::addContourDataList(cocos2d::Vector<ContourData*> &contour
 
 void ColliderDetector::removeContourData(ContourData *contourData)
 {
-	for(auto object : *_colliderBodyList)
+	for(auto object : _colliderBodyList)
 	{
 		ColliderBody *body = (ColliderBody*)object;
 		if (body && body->getContourData() == contourData)
 		{
-			_colliderBodyList->removeObject(body);
+			_colliderBodyList.erase(body);
 		}
 	}
 }
 
 void ColliderDetector::removeAll()
 {
-    _colliderBodyList->removeAllObjects();
+    _colliderBodyList.clear();
 }
 
 
@@ -294,7 +290,7 @@ bool ColliderDetector::getActive()
     return _active;
 }
 
-Array *ColliderDetector::getColliderBodyList()
+const cocos2d::Vector<ColliderBody*>& ColliderDetector::getColliderBodyList()
 {
     return _colliderBodyList;
 }
@@ -339,7 +335,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         return;
     }
 
-    for(auto object : *_colliderBodyList)
+    for(auto object : _colliderBodyList)
     {
         ColliderBody *colliderBody = (ColliderBody *)object;
         ContourData *contourData = colliderBody->getContourData();

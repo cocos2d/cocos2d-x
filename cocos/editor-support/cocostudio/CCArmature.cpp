@@ -83,28 +83,18 @@ Armature::Armature()
     , _atlas(nullptr)
     , _parentBone(nullptr)
     , _armatureTransformDirty(true)
-    , _boneDic(nullptr)
-    , _topBoneList(nullptr)
     , _animation(nullptr)
-    , _textureAtlasDic(nullptr)
 {
 }
 
 
 Armature::~Armature(void)
 {
-    if(nullptr != _boneDic)
-    {
-        _boneDic->removeAllObjects();
-        CC_SAFE_DELETE(_boneDic);
-    }
-    if (nullptr != _topBoneList)
-    {
-        _topBoneList->removeAllObjects();
-        CC_SAFE_DELETE(_topBoneList);
-    }
+    _boneDic.clear();
+    _topBoneList.clear();
+    _textureAtlasDic.clear();
+
     CC_SAFE_DELETE(_animation);
-    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 
@@ -125,15 +115,9 @@ bool Armature::init(const char *name)
         _animation = new ArmatureAnimation();
         _animation->init(this);
 
-        CC_SAFE_DELETE(_boneDic);
-        _boneDic	= new Dictionary();
-
-        CC_SAFE_DELETE(_topBoneList);
-        _topBoneList = new Array();
-        _topBoneList->init();
-
-        CC_SAFE_DELETE(_textureAtlasDic);
-        _textureAtlasDic = new Dictionary();
+        _boneDic.clear();
+        _topBoneList.clear();
+        _textureAtlasDic.clear();
 
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
@@ -252,28 +236,28 @@ Bone *Armature::createBone(const char *boneName)
 void Armature::addBone(Bone *bone, const char *parentName)
 {
     CCASSERT( bone != nullptr, "Argument must be non-nil");
-    CCASSERT(_boneDic->objectForKey(bone->getName()) == nullptr, "bone already added. It can't be added again");
+    CCASSERT(_boneDic.at(bone->getName()) == nullptr, "bone already added. It can't be added again");
 
     if (nullptr != parentName)
     {
-        Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
+        Bone *boneParent = _boneDic.at(parentName);
         if (boneParent)
         {
             boneParent->addChildBone(bone);
         }
         else
         {
-            _topBoneList->addObject(bone);
+            _topBoneList.pushBack(bone);
         }
     }
     else
     {
-        _topBoneList->addObject(bone);
+        _topBoneList.pushBack(bone);
     }
 
     bone->setArmature(this);
 
-    _boneDic->setObject(bone, bone->getName());
+    _boneDic.insert(bone->getName(), bone);
     addChild(bone);
 }
 
@@ -285,18 +269,18 @@ void Armature::removeBone(Bone *bone, bool recursion)
     bone->setArmature(nullptr);
     bone->removeFromParent(recursion);
 
-    if (_topBoneList->containsObject(bone))
+    if (_topBoneList.contains(bone))
     {
-        _topBoneList->removeObject(bone);
+        _topBoneList.erase(bone);
     }
-    _boneDic->removeObjectForKey(bone->getName());
+    _boneDic.erase(bone->getName());
     removeChild(bone, true);
 }
 
 
 Bone *Armature::getBone(const char *name) const
 {
-    return (Bone *)_boneDic->objectForKey(name);
+    return _boneDic.at(name);
 }
 
 
@@ -312,24 +296,24 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
 
     if (parentName != nullptr)
     {
-        Bone *boneParent = (Bone *)_boneDic->objectForKey(parentName);
+        Bone *boneParent = _boneDic.at(parentName);
 
         if (boneParent)
         {
             boneParent->addChildBone(bone);
-            if (_topBoneList->containsObject(bone))
+            if (_topBoneList.contains(bone))
             {
-                _topBoneList->removeObject(bone);
+                _topBoneList.erase(bone);
             }
         }
         else
         {
-            _topBoneList->addObject(bone);
+            _topBoneList.pushBack(bone);
         }
     }
 }
 
-Dictionary *Armature::getBoneDic() const
+const cocos2d::Map<std::string, Bone*>& Armature::getBoneDic() const
 {
     return _boneDic;
 }
@@ -445,7 +429,7 @@ void Armature::update(float dt)
 {
     _animation->update(dt);
 
-    for (auto object : *_topBoneList)
+    for (auto object : _topBoneList)
     {
         static_cast<Bone*>(object)->update(dt);
     }
@@ -643,7 +627,7 @@ Bone *Armature::getBoneAtPoint(float x, float y) const
     return nullptr;
 }
 
-TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
+TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture)
 {
     int key = texture->getName();
     
@@ -656,11 +640,11 @@ TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
         _batchNode->getTexureAtlasWithTexture(texture);
     }
     
-    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
+    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic.at(key));
     if (atlas == nullptr)
     {
         atlas = TextureAtlas::createWithTexture(texture, 4);
-        _textureAtlasDic->setObject(atlas, key);
+        _textureAtlasDic.insert(key, atlas);
     }
     return atlas;
 }
@@ -668,12 +652,10 @@ TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
 void Armature::setParentBone(Bone *parentBone)
 {
     _parentBone = parentBone;
-    
-    DictElement *element = nullptr;
-    CCDICT_FOREACH(_boneDic, element)
+
+    for (auto element : _boneDic)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        bone->setArmature(this);
+        element.second->setArmature(this);
     }
 }
 
@@ -686,27 +668,26 @@ Bone *Armature::getParentBone() const
 
 void CCArmature::setColliderFilter(ColliderFilter *filter)
 {
-    DictElement *element = nullptr;
-    CCDICT_FOREACH(_boneDic, element)
+    for (auto element : _boneDic)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        bone->setColliderFilter(filter);
+        element.second->setColliderFilter(filter);
     }
 }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 
 void CCArmature::drawContour()
 {
-    DictElement *element = NULL;
-    CCDICT_FOREACH(_boneDic, element)
+    for(auto element : _boneDic)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        Array *bodyList = bone->getColliderBodyList();
-        
-        if(!bodyList)
+        Bone *bone = element.second;
+        ColliderDetector *detector = bone->getColliderDetector();
+
+        if (!detector)
             continue;
 
-        for (auto object : *bodyList)
+        const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
+
+        for (auto object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
             const std::vector<CCPoint> &vertexList = body->getCalculatedVertexList();

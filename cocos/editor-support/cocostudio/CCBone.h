@@ -162,7 +162,7 @@ public:
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      */
-    virtual cocos2d::Array *getColliderBodyList();
+    virtual ColliderDetector* getColliderDetector() const;
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
