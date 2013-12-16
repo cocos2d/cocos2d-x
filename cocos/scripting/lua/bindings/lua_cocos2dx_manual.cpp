@@ -2589,6 +2589,26 @@ static int tolua_cocos2dx_Sprite_setBlendFunc(lua_State* tolua_S)
     return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S,"Sprite");
 }
 
+static int tolua_cocos2dx_SpriteBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<SpriteBatchNode>(tolua_S,"SpriteBatchNode");
+}
+
+static int tolua_cocos2dx_MotionStreak_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<MotionStreak>(tolua_S,"MotionStreak");
+}
+
+static int tolua_cocos2dx_AtlasNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<AtlasNode>(tolua_S,"AtlasNode");
+}
+
+static int tolua_cocos2dx_ParticleBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<ParticleBatchNode>(tolua_S,"ParticleBatchNode");
+}
+
 static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 {
     return tolua_cocos2dx_setBlendFunc<LayerColor>(tolua_S,"LayerColor");
@@ -2597,6 +2617,11 @@ static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 static int tolua_cocos2dx_ParticleSystem_setBlendFunc(lua_State* tolua_S) 
 {
     return tolua_cocos2dx_setBlendFunc<ParticleSystem>(tolua_S,"ParticleSystem");
+}
+
+static int tolua_cocos2dx_DrawNode_setBlendFunc(lua_State* tolua_S) 
+{
+    return tolua_cocos2dx_setBlendFunc<DrawNode>(tolua_S,"DrawNode");
 }
 
 static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
@@ -3507,6 +3532,10 @@ static void extendDrawNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"drawPolygon");
         lua_pushcfunction(tolua_S,tolua_cocos2d_DrawNode_drawPolygon);
         lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3619,6 +3648,46 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"getDescendants");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
         lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+}
+
+static void extendMotionStreak(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "MotionStreak");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_MotionStreak_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+}
+
+static void extendAtlasNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "AtlasNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_AtlasNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+}
+
+static void extendParticleBatchNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ParticleBatchNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleBatchNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3658,5 +3727,8 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendGLProgram(tolua_S);
     extendTexture2D(tolua_S);
     extendSpriteBatchNode(tolua_S);
+    extendMotionStreak(tolua_S);
+    extendAtlasNode(tolua_S);
+    extendParticleBatchNode(tolua_S);
     return 0;
 }

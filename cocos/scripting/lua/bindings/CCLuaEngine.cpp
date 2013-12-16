@@ -526,7 +526,8 @@ int LuaEngine::handleTouchEvent(void* data)
         const Point pt = Director::getInstance()->convertToGL(touch->getLocationInView());
         _stack->pushFloat(pt.x);
         _stack->pushFloat(pt.y);
-        ret = _stack->executeFunctionByHandler(handler, 3);
+        _stack->pushInt(touch->getID());
+        ret = _stack->executeFunctionByHandler(handler, 4);
     }
     _stack->clean();
     return ret;
