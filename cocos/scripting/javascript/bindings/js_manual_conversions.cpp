@@ -1107,7 +1107,7 @@ JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
 
 JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret)
 {
-    return jsval_to_long(cx, vp, static_cast<long*>(ret));
+    return jsval_to_long(cx, vp, reinterpret_cast<long*>(ret));
 }
 
 // native --> jsval
