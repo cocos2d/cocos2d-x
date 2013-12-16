@@ -1,0 +1,8 @@
+class UILinearLayoutParameter : public UILayoutParameter
+{
+    UILinearLayoutParameter();
+    virtual ~UILinearLayoutParameter();
+    static UILinearLayoutParameter* create();
+    void setGravity(UILinearGravity gravity);
+    UILinearGravity getGravity() const;
+};

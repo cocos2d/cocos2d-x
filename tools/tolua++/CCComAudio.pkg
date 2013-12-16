@@ -1,0 +1,39 @@
+
+class CCComAudio : public CCComponent
+{
+   virtual bool init();
+   virtual bool isEnabled() const;
+   virtual void setEnabled(bool b);
+
+   static CCComAudio* create(void);
+
+   void end();
+   void preloadBackgroundMusic(const char* pszFilePath);
+   void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+   void playBackgroundMusic(const char* pszFilePath);
+   void stopBackgroundMusic(bool bReleaseData);
+   void stopBackgroundMusic();
+   void pauseBackgroundMusic();
+   void resumeBackgroundMusic();
+   void rewindBackgroundMusic();
+   bool willPlayBackgroundMusic();
+   bool isBackgroundMusicPlaying();
+   float getBackgroundMusicVolume();
+   void setBackgroundMusicVolume(float volume);
+   float getEffectsVolume();
+   void setEffectsVolume(float volume);
+   unsigned int playEffect(const char* pszFilePath, bool bLoop);
+   unsigned int playEffect(const char* pszFilePath);
+   void pauseEffect(unsigned int nSoundId);
+   void pauseAllEffects();
+   void resumeEffect(unsigned int nSoundId);
+   void resumeAllEffects();
+   void stopEffect(unsigned int nSoundId);
+   void stopAllEffects();
+   void preloadEffect(const char* pszFilePath);
+   void unloadEffect(const char* pszFilePath);
+   void setFile(const char* pszFilePath);
+   const char* getFile();
+   void setLoop(bool bLoop);
+   bool isLoop();
+};

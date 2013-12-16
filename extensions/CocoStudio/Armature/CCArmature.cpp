@@ -480,8 +480,8 @@ void CCArmature::draw()
                 CCSkin *skin = (CCSkin *)node;
 
                 CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-                CCBlendType blendType = bone->getBlendType();
-                if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
+                bool blendDirty = bone->isBlendDirty();
+                if(m_pAtlas != textureAtlas || blendDirty)
                 {
                     if (m_pAtlas)
                     {
@@ -496,12 +496,16 @@ void CCArmature::draw()
 
                 skin->updateTransform();
 
-                if (blendType != BLEND_NORMAL)
+                if (blendDirty)
                 {
-                    updateBlendType(blendType);
+                    ccBlendFunc func = bone->getBlendFunc();
+                    ccGLBlendFunc(func.src, func.dst);
+
                     m_pAtlas->drawQuads();
                     m_pAtlas->removeAllQuads();
+
                     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+                    bone->setBlendDirty(false);
                 }
             }
             break;
@@ -558,47 +562,6 @@ void CCArmature::draw()
         m_pAtlas->removeAllQuads();
     }
 }
-
-
-void CCArmature::updateBlendType(CCBlendType blendType)
-{
-    ccBlendFunc blendFunc;
-    switch (blendType)
-    {
-    case BLEND_NORMAL:
-    {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
-    }
-    break;
-    case BLEND_ADD:
-    {
-        blendFunc.src = GL_SRC_ALPHA;
-        blendFunc.dst = GL_ONE;
-    }
-    break;
-    case BLEND_MULTIPLY:
-    {
-        blendFunc.src = GL_DST_COLOR;
-        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
-    break;
-    case BLEND_SCREEN:
-    {
-        blendFunc.src = GL_ONE;
-        blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
-    }
-    break;
-    default:
-    {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
-    }
-    break;
-    }
-    ccGLBlendFunc(blendFunc.src, blendFunc.dst);
-}
-
 
 
 void CCArmature::visit()
@@ -723,6 +686,8 @@ CCBone *CCArmature::getParentBone()
     return m_pParentBone;
 }
 
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void CCArmature::setColliderFilter(CCColliderFilter *filter)
 {
     CCDictElement *element = NULL;
@@ -732,6 +697,37 @@ void CCArmature::setColliderFilter(CCColliderFilter *filter)
         bone->setColliderFilter(filter);
     }
 }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+
+void CCArmature::drawContour()
+{
+    CCDictElement *element = NULL;
+    CCDICT_FOREACH(m_pBoneDic, element)
+    {
+        CCBone *bone = static_cast<CCBone*>(element->getObject());
+        CCArray *bodyList = bone->getColliderBodyList();
+
+        CCObject *object = NULL;
+        CCARRAY_FOREACH(bodyList, object)
+        {
+            ColliderBody *body = static_cast<ColliderBody*>(object);
+            CCArray *vertexList = body->getCalculatedVertexList();
+
+            int length = vertexList->count();
+            CCPoint *points = new CCPoint[length];
+            for (int i = 0; i<length; i++)
+            {
+                CCContourVertex2 *vertex = static_cast<CCContourVertex2*>(vertexList->objectAtIndex(i));
+                points[i].x = vertex->x;
+                points[i].y = vertex->y;
+            }
+            ccDrawPoly( points, length, true );
+            delete points;
+        }
+    }
+}
+
+#endif
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

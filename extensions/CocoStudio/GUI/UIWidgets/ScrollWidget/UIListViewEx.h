@@ -49,6 +49,10 @@ typedef enum
     LISTVIEW_GRAVITY_CENTER_VERTICAL,
 }ListViewGravity;
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class UIListViewEx : public UIScrollView
 {
     

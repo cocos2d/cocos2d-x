@@ -44,62 +44,75 @@ NS_CC_EXT_BEGIN
 
     cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-        unsigned long size = 0;
-        const char* pData = 0;
 		cocos2d::CCNode *pNode = NULL;
+        rapidjson::Document jsonDict;
         do {
-			  CC_BREAK_IF(pszFileName == NULL);
-			  std::string strFileName(pszFileName);
-              pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pszFileName, "r", &size));
-              CC_BREAK_IF(pData == NULL || strcmp(pData, "") == 0);
-              cs::CSJsonDictionary *jsonDict = new cs::CSJsonDictionary();
-              jsonDict->initWithDescription(pData);
-              pNode = createObject(jsonDict,NULL);
-              CC_SAFE_DELETE(jsonDict);
+			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
+              pNode = createObject(jsonDict, NULL);
         } while (0);
         
         return pNode;
 	}
 
-	CCNode* SceneReader::createObject(cs::CSJsonDictionary * inputFiles, CCNode* parenet)
+    bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
     {
-        const char *className = inputFiles->getItemStringValue("classname"); 
+        bool bRet = false;
+        unsigned long size = 0;
+        unsigned char *pBytes = NULL;
+        do {
+			  CC_BREAK_IF(pszFileName == NULL);
+			  std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
+              pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
+              CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+              CCData *data = new CCData(pBytes, size);
+	          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
+	          CC_SAFE_DELETE(data);
+              doc.Parse<0>(load_str.c_str());
+              CC_BREAK_IF(doc.HasParseError());
+              bRet = true;
+            } while (0);
+        return bRet;
+    }
+
+	CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
+    {
+        const char *className = DICTOOL->getStringValue_json(root, "classname"); //inputFiles->getItemStringValue("classname");
         if(strcmp(className, "CCNode") == 0)
         {
             CCNode* gb = NULL;
-            if(NULL == parenet)
+            if(NULL == parent)
             {
                 gb = CCNode::create();
             }
             else
             {
                 gb = CCNode::create();
-                parenet->addChild(gb);
+                parent->addChild(gb);
             }
             
-            setPropertyFromJsonDict(gb, inputFiles);
+            setPropertyFromJsonDict(root, gb);
     
-            int count = inputFiles->getArrayItemCount("components");
+            int count = DICTOOL->getArrayCount_json(root, "components");
             for (int i = 0; i < count; i++)
             {
-                cs::CSJsonDictionary * subDict = inputFiles->getSubItemFromArray("components", i);
-                if (!subDict)
-				{
-				   CC_SAFE_DELETE(subDict);
-                   break;
-				}
-                const char *comName = subDict->getItemStringValue("classname");
-				const char *pComName = subDict->getItemStringValue("name");
-                
-				cs::CSJsonDictionary *fileData = subDict->getSubDictionary("fileData");
-				std::string pPath;
+                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "components", i);
+                if (!DICTOOL->checkObjectExist_json(subDict))
+                {
+                    break;
+                }
+
+                const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
+				const char *pComName = DICTOOL->getStringValue_json(subDict, "name");
+				const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(subDict, "fileData");
+                std::string pPath;
                 std::string pPlistFile;
 				int nResType = 0;
-				if (fileData != NULL)
+				//if (fileData != NULL)
+                if (DICTOOL->checkObjectExist_json(fileData))
                 {
-					const char *file = fileData->getItemStringValue("path");
-					nResType = fileData->getItemIntValue("resourceType", -1);
-					const char *plistFile = fileData->getItemStringValue("plistFile");
+					const char *file = DICTOOL->getStringValue_json(fileData, "path");
+					nResType = DICTOOL->getIntValue_json(fileData, "resourceType", - 1);
+					const char *plistFile = DICTOOL->getStringValue_json(fileData, "plistFile");
 					if (file != NULL)
 					{
 						pPath.append(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(file));
@@ -109,7 +122,6 @@ NS_CC_EXT_BEGIN
 					{
 						pPlistFile.append(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(plistFile));
 					}
-					CC_SAFE_DELETE(fileData);
                 }
 
                 if (comName != NULL && strcmp(comName, "CCSprite") == 0)
@@ -211,23 +223,27 @@ NS_CC_EXT_BEGIN
                     {
                         file_path = reDir.substr(0, pos+1);
                     }
-                    unsigned long size = 0;
-                    const char *des = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(),"r" , &size));
-			        cs::CSJsonDictionary *jsonDict = new cs::CSJsonDictionary();
-			        jsonDict->initWithDescription(des);
-                    if(NULL == des || strcmp(des, "") == 0)
+                    
+                    rapidjson::Document jsonDict;
+                    if(!readJson(pPath.c_str(), jsonDict))
                     {
                         CCLog("read json file[%s] error!\n", pPath.c_str());
+                        continue;
                     }
                     
+                    
                     int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
-                    cs::CSJsonDictionary* subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
+                    const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
 
                     childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
                     for (int i = 0; i < childrenCount; ++i)
                     {
                         const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
+                        if (plist == NULL)
+                        {
+                            continue;
+                        }
                         std::string plistpath;
                         plistpath += file_path;
                         plistpath.append(plist);
@@ -251,15 +267,11 @@ NS_CC_EXT_BEGIN
                     }
                     gb->addComponent(pRender);
 
-					const char *actionName = subDict->getItemStringValue("selectedactionname");
+					const char *actionName = DICTOOL->getStringValue_json(subDict, "selectedactionname"); 
 					if (actionName != NULL && pAr->getAnimation() != NULL)
 					{
 						pAr->getAnimation()->play(actionName);
 					}
-					
-                    CC_SAFE_DELETE(jsonDict);
-					CC_SAFE_DELETE(subData);
-					CC_SAFE_DELETE_ARRAY(des);
                 }
                 else if(comName != NULL && strcmp(comName, "CCComAudio") == 0)
                 {
@@ -286,7 +298,7 @@ NS_CC_EXT_BEGIN
 						pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(), "r", &size));
 						if(pData != NULL && strcmp(pData, "") != 0)
 						{
-							pAttribute->getDict()->initWithDescription(pData);
+                            pAttribute->parse(pData);
 						}
 					}
 					else
@@ -318,7 +330,7 @@ NS_CC_EXT_BEGIN
 #endif
                     pAudio->preloadBackgroundMusic(pPath.c_str());
 					pAudio->setFile(pPath.c_str());
-					bool bLoop = subDict->getItemIntValue("loop", 0);
+					bool bLoop = (bool)(DICTOOL->getIntValue_json(subDict, "loop"));
 					pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
 					pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
@@ -336,19 +348,17 @@ NS_CC_EXT_BEGIN
 					}
 					gb->addComponent(pRender);
 				}
-                
-                CC_SAFE_DELETE(subDict);
             }
 
-            for (int i = 0; i < inputFiles->getArrayItemCount("gameobjects"); i++)
+            int length = DICTOOL->getArrayCount_json(root, "gameobjects");
+            for (int i = 0; i < length; ++i)
             {
-                cs::CSJsonDictionary * subDict = inputFiles->getSubItemFromArray("gameobjects", i);
-                if (!subDict)
+                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "gameobjects", i);
+                if (!DICTOOL->checkObjectExist_json(subDict))
                 {
                     break;
                 }
                 createObject(subDict, gb);
-                CC_SAFE_DELETE(subDict);
             }
             
             return gb;
@@ -358,29 +368,31 @@ NS_CC_EXT_BEGIN
     }
 
 
-    void SceneReader::setPropertyFromJsonDict(cocos2d::CCNode *node, cs::CSJsonDictionary* dict)
+    void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
     {
-		int x = dict->getItemIntValue("x", 0);
-		int y = dict->getItemIntValue("y", 0);
+		float x = DICTOOL->getFloatValue_json(root, "x");
+		float y = DICTOOL->getFloatValue_json(root, "y");
+        
 		node->setPosition(ccp(x, y));
 		
-		bool bVisible = (bool)(dict->getItemIntValue("visible", 1));
+		bool bVisible = (bool)(DICTOOL->getIntValue_json(root, "visible", 1));
 		node->setVisible(bVisible);
 		
-		int nTag = dict->getItemIntValue("objecttag", -1);
+		int nTag = DICTOOL->getIntValue_json(root, "objecttag", -1);
         node->setTag(nTag);
 		
-		int nZorder = dict->getItemIntValue("zorder", 0);
+		int nZorder = DICTOOL->getIntValue_json(root, "zorder");
 		node->setZOrder(nZorder);
 		
-		float fScaleX = dict->getItemFloatValue("scalex", 1.0);
-		float fScaleY = dict->getItemFloatValue("scaley", 1.0);
+		float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
+		float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);
         node->setScaleX(fScaleX);
         node->setScaleY(fScaleY);
         
-		float fRotationZ = dict->getItemIntValue("rotation", 0);
+		float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); 
         node->setRotation(fRotationZ);
     }
+
 
 	SceneReader* SceneReader::sharedSceneReader()
 	{

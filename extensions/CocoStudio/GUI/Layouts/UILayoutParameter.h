@@ -36,19 +36,20 @@ typedef enum
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UILayoutParameter : public CCObject
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UILayoutParameter() : m_margin(UIMargin()){m_eLayoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
+     * @lua ctor
      */
     virtual ~UILayoutParameter(){};
     
@@ -64,6 +65,7 @@ public:
      * @see UIMargin
      *
      * @param margin
+     * @js NA
      */
     void setMargin(const UIMargin& margin);
     
@@ -73,6 +75,7 @@ public:
      * @see UIMargin
      *
      * @return const UIMargin&
+     * @js NA
      */
     const UIMargin& getMargin() const;
     
@@ -89,9 +92,8 @@ protected:
     LayoutParameterType m_eLayoutParameterType;
 };
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class UILinearLayoutParameter : public UILayoutParameter
 {
 public:
@@ -132,9 +134,8 @@ protected:
     UILinearGravity m_eLinearGravity;
 };
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 
 class UILayout;
 

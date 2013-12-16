@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "shaders/CCGLProgram.h"
 #include "sha1.h"
 
-#if (CC_TARGET_PLATFORM == CCPLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "shaders/precompiled/winrt/precompiledshaders.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
 #include "shaders/precompiled/wp8/precompiledshaders.h"

@@ -94,18 +94,29 @@ ColliderBody::ColliderBody(CCContourData *contourData)
     CC_SAFE_RETAIN(m_pCalculatedVertexList);
 #endif
 }
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+ColliderBody::ColliderBody(CCContourData *contourData)
+    : m_pContourData(contourData)
+{
+    CC_SAFE_RETAIN(m_pContourData);
+
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
+}
 #endif
 
 ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(m_pContourData);
-    CC_SAFE_DELETE(m_pFilter);
 
-#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SAFE_DELETE(m_pFilter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CC_SAFE_RELEASE(m_pCalculatedVertexList);
 #endif
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void ColliderBody::setColliderFilter(CCColliderFilter *filter)
 {
     *m_pFilter = *filter;
@@ -114,6 +125,7 @@ CCColliderFilter *ColliderBody::getColliderFilter()
 {
     return m_pFilter;
 }
+#endif
 
 
 CCColliderDetector *CCColliderDetector::create()
@@ -142,13 +154,14 @@ CCColliderDetector *CCColliderDetector::create(CCBone *bone)
 
 CCColliderDetector::CCColliderDetector()
     : m_pColliderBodyList(NULL)
-    , m_pFilter(NULL)
     , m_bActive(false)
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT
     m_pBody = NULL;
+    m_pFilter = NULL;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pBody = NULL;
+    m_pFilter = NULL;
 #endif
 }
 
@@ -157,7 +170,9 @@ CCColliderDetector::~CCColliderDetector()
     m_pColliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(m_pColliderBodyList);
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_DELETE(m_pFilter);
+#endif
 }
 
 bool CCColliderDetector::init()
@@ -166,7 +181,9 @@ bool CCColliderDetector::init()
     CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
     m_pColliderBodyList->retain();
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pFilter = new CCColliderFilter();
+#endif
 
     return true;
 }
@@ -297,6 +314,7 @@ CCArray *CCColliderDetector::getColliderBodyList()
     return m_pColliderBodyList;
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void CCColliderDetector::setColliderFilter(CCColliderFilter *filter)
 {
     *m_pFilter = *filter;
@@ -325,6 +343,7 @@ CCColliderFilter *CCColliderDetector::getColliderFilter()
 {
     return m_pFilter;
 }
+#endif
 
 CCPoint helpPoint;
 

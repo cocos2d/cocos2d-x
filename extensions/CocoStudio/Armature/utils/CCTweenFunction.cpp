@@ -25,389 +25,454 @@ THE SOFTWARE.
 #include "CCTweenFunction.h"
 #include "CCUtilMath.h"
 
+#ifndef M_PI_X_2
+#define M_PI_X_2 (float)M_PI * 2.0f
+#endif
+
 NS_CC_EXT_BEGIN
 
-float CCTweenFunction::tweenTo(float from, float change, float time, float duration, CCTweenType tweenType)
+float CCTweenFunction::tweenTo(float time, CCTweenType type, float *easingParam)
 {
     float delta = 0;
 
-    switch (tweenType)
+    switch (type)
     {
+    case CUSTOM_EASING:
+        delta = customEase(time, easingParam);
+        break;
+
     case Linear:
-        delta = linear(time, 0, 1, duration);
+        delta = linear(time);
         break;
 
     case Sine_EaseIn:
-        delta = sineEaseIn(time, 0, 1, duration);
+        delta = sineEaseIn(time);
         break;
     case Sine_EaseOut:
-        delta = sineEaseOut(time, 0, 1, duration);
+        delta = sineEaseOut(time);
         break;
     case Sine_EaseInOut:
-        delta = sineEaseInOut(time, 0, 1, duration);
+        delta = sineEaseInOut(time);
         break;
 
     case Quad_EaseIn:
-        delta = quadEaseIn(time, 0, 1, duration);
+        delta = quadEaseIn(time);
         break;
     case Quad_EaseOut:
-        delta = quadEaseOut(time, 0, 1, duration);
+        delta = quadEaseOut(time);
         break;
     case Quad_EaseInOut:
-        delta = quadEaseInOut(time, 0, 1, duration);
+        delta = quadEaseInOut(time);
         break;
 
     case Cubic_EaseIn:
-        delta = cubicEaseIn(time, 0, 1, duration);
+        delta = cubicEaseIn(time);
         break;
     case Cubic_EaseOut:
-        delta = cubicEaseOut(time, 0, 1, duration);
+        delta = cubicEaseOut(time);
         break;
     case Cubic_EaseInOut:
-        delta = cubicEaseInOut(time, 0, 1, duration);
+        delta = cubicEaseInOut(time);
         break;
 
     case Quart_EaseIn:
-        delta = quartEaseIn(time, 0, 1, duration);
+        delta = quartEaseIn(time);
         break;
     case Quart_EaseOut:
-        delta = quartEaseOut(time, 0, 1, duration);
+        delta = quartEaseOut(time);
         break;
     case Quart_EaseInOut:
-        delta = quartEaseInOut(time, 0, 1, duration);
+        delta = quartEaseInOut(time);
         break;
 
     case Quint_EaseIn:
-        delta = quintEaseIn(time, 0, 1, duration);
+        delta = quintEaseIn(time);
         break;
     case Quint_EaseOut:
-        delta = quintEaseOut(time, 0, 1, duration);
+        delta = quintEaseOut(time);
         break;
     case Quint_EaseInOut:
-        delta = quintEaseInOut(time, 0, 1, duration);
+        delta = quintEaseInOut(time);
         break;
 
     case Expo_EaseIn:
-        delta = expoEaseIn(time, 0, 1, duration);
+        delta = expoEaseIn(time);
         break;
     case Expo_EaseOut:
-        delta = expoEaseOut(time, 0, 1, duration);
+        delta = expoEaseOut(time);
         break;
     case Expo_EaseInOut:
-        delta = expoEaseInOut(time, 0, 1, duration);
+        delta = expoEaseInOut(time);
         break;
 
     case Circ_EaseIn:
-        delta = circEaseIn(time, 0, 1, duration);
+        delta = circEaseIn(time);
         break;
     case Circ_EaseOut:
-        delta = circEaseOut(time, 0, 1, duration);
+        delta = circEaseOut(time);
         break;
     case Circ_EaseInOut:
-        delta = circEaseInOut(time, 0, 1, duration);
+        delta = circEaseInOut(time);
         break;
 
     case Elastic_EaseIn:
-        delta = elasticEaseIn(time, 0, 1, duration);
+        delta = elasticEaseIn(time, easingParam);
         break;
     case Elastic_EaseOut:
-        delta = elasticEaseOut(time, 0, 1, duration);
+        delta = elasticEaseOut(time, easingParam);
         break;
     case Elastic_EaseInOut:
-        delta = elasticEaseInOut(time, 0, 1, duration);
+        delta = elasticEaseInOut(time, easingParam);
         break;
 
 
     case Back_EaseIn:
-        delta = backEaseIn(time, 0, 1, duration);
+        delta = backEaseIn(time);
         break;
     case Back_EaseOut:
-        delta = backEaseOut(time, 0, 1, duration);
+        delta = backEaseOut(time);
         break;
     case Back_EaseInOut:
-        delta = backEaseInOut(time, 0, 1, duration);
+        delta = backEaseInOut(time);
         break;
 
     case Bounce_EaseIn:
-        delta = bounceEaseIn(time, 0, 1, duration);
+        delta = bounceEaseIn(time);
         break;
     case Bounce_EaseOut:
-        delta = bounceEaseOut(time, 0, 1, duration);
+        delta = bounceEaseOut(time);
         break;
     case Bounce_EaseInOut:
-        delta = bounceEaseInOut(time, 0, 1, duration);
+        delta = bounceEaseInOut(time);
         break;
 
     default:
-        delta = sineEaseInOut(time, 0, 1, duration);
+        delta = sineEaseInOut(time);
         break;
     }
 
     return delta;
 }
 
-float CCTweenFunction::linear(float t, float b, float c, float d)
+// Linear
+float CCTweenFunction::linear(float time)
 {
-    return c * t / d + b;
+    return time;
 }
 
-float CCTweenFunction::quadEaseIn(float t, float b, float c, float d)
+
+// Sine Ease
+float CCTweenFunction::sineEaseIn(float time)
 {
-    t /= d;
-    return c * t * t + b;
+    return -1 * cosf(time * (float)M_PI_2) + 1;
 }
-float CCTweenFunction::quadEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::sineEaseOut(float time)
 {
-    t /= d;
-    return -c * t * (t - 2) + b;
+    return sinf(time * (float)M_PI_2);
 }
-float CCTweenFunction::quadEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::sineEaseInOut(float time)
 {
-    t = t/d*2;
-    if ((t) < 1)
-        return c / 2 * t * t + b;
-    --t;
-    return -c / 2 * (t * (t - 2) - 1) + b;
+    return -0.5f * (cosf((float)M_PI * time) - 1);
 }
 
-float CCTweenFunction::cubicEaseIn(float t, float b, float c, float d)
+
+// Quad Ease
+float CCTweenFunction::quadEaseIn(float time)
 {
-    t /= d;
-    return c * t * t * t + b;
+    return time * time;
 }
-float CCTweenFunction::cubicEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::quadEaseOut(float time)
 {
-    t = t / d - 1;
-    return c * (t * t * t + 1) + b;
+    return -1 * time * (time - 2);
 }
-float CCTweenFunction::cubicEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::quadEaseInOut(float time)
 {
-    t = t/d*2;
-    if ((t) < 1)
-        return c / 2 * t * t * t + b;
-    t -= 2;
-    return c / 2 * (t * t * t + 2) + b;
+    time = time*2;
+    if (time < 1)
+        return 0.5f * time * time;
+    --time;
+    return -0.5f * (time * (time - 2) - 1);
 }
 
-float CCTweenFunction::quartEaseIn(float t, float b, float c, float d)
+
+
+// Cubic Ease
+float CCTweenFunction::cubicEaseIn(float time)
 {
-    t /= d;
-    return c * t * t * t * t + b;
+    return time * time * time;
 }
-float CCTweenFunction::quartEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::cubicEaseOut(float time)
 {
-    t = t / d - 1;
-    return -c * (t * t * t * t - 1) + b;
+    time -= 1;
+    return (time * time * time + 1);
 }
-float CCTweenFunction::quartEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::cubicEaseInOut(float time)
 {
-    t = t/d*2;
-    if ((t) < 1)
-        return c / 2 * t * t * t * t + b;
-    t -= 2;
-    return -c / 2 * (t * t * t * t - 2) + b;
+    time = time*2;
+    if (time < 1)
+        return 0.5f * time * time * time;
+    time -= 2;
+    return 0.5f * (time * time * time + 2);
 }
 
-float CCTweenFunction::quintEaseIn(float t, float b, float c, float d)
+
+// Quart Ease
+float CCTweenFunction::quartEaseIn(float time)
 {
-    t /= d;
-    return c * t * t * t * t * t + b;
+    return time * time * time * time;
 }
-float CCTweenFunction::quintEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::quartEaseOut(float time)
 {
-    t = t / d - 1;
-    return c * (t * t * t * t * t + 1) + b;
+    time -= 1;
+    return -(time * time * time * time - 1);
 }
-float CCTweenFunction::quintEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::quartEaseInOut(float time)
 {
-    t = t/d*2;
-    if ((t) < 1)
-        return c / 2 * t * t * t * t * t + b;
-    t -= 2;
-    return c / 2 * (t * t * t * t * t + 2) + b;
+    time = time*2;
+    if (time < 1)
+        return 0.5f * time * time * time * time;
+    time -= 2;
+    return -0.5f * (time * time * time * time - 2);
 }
 
-float CCTweenFunction::sineEaseIn(float t, float b, float c, float d)
+
+// Quint Ease
+float CCTweenFunction::quintEaseIn(float time)
 {
-    return -c * cos(t / d * (M_PI / 2)) + c + b;
+    return time * time * time * time * time;
 }
-float CCTweenFunction::sineEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::quintEaseOut(float time)
 {
-    return c * sin(t / d * (M_PI / 2)) + b;
+    time -=1;
+    return (time * time * time * time * time + 1);
 }
-float CCTweenFunction::sineEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::quintEaseInOut(float time)
 {
-    return -c / 2 * (cos(M_PI * t / d) - 1) + b;
+    time = time*2;
+    if (time < 1)
+        return 0.5f * time * time * time * time * time;
+    time -= 2;
+    return 0.5f * (time * time * time * time * time + 2);
 }
 
-float CCTweenFunction::expoEaseIn(float t, float b, float c, float d)
-{
-    return (t == 0) ? b : c * pow(2, 10 * (t / d - 1)) + b;
-}
-float CCTweenFunction::expoEaseOut(float t, float b, float c, float d)
-{
-    return (t == d) ? b + c : c * (-pow(2, -10 * t / d) + 1) + b;
-}
-float CCTweenFunction::expoEaseInOut(float t, float b, float c, float d)
-{
-    if (t == 0)
-        return b;
-    if (t == d)
-        return b + c;
-    if ((t /= d/2) < 1)
-        return c / 2 * pow(2, 10 * (t - 1)) + b;
-    --t;
-    return c / 2 * (-pow(2, -10 * t) + 2) + b;
-}
 
-float CCTweenFunction::circEaseIn(float t, float b, float c, float d)
+// Expo Ease
+float CCTweenFunction::expoEaseIn(float time)
 {
-    t /= d;
-    return -c * (sqrt(1 - t * t) - 1) + b;
+    return time == 0 ? 0 : powf(2, 10 * (time/1 - 1)) - 1 * 0.001f;
 }
-float CCTweenFunction::circEaseOut(float t, float b, float c, float d)
+float CCTweenFunction::expoEaseOut(float time)
 {
-    t = t / d - 1;
-    return c * sqrt(1 - t * t) + b;
+    return time == 1 ? 1 : (-powf(2, -10 * time / 1) + 1);
 }
-float CCTweenFunction::circEaseInOut(float t, float b, float c, float d)
+float CCTweenFunction::expoEaseInOut(float time)
 {
-    t = t / d * 2;
-    if (t < 1)
-        return -c / 2 * (sqrt(1 - t * t) - 1) + b;
-    t -= 2;
-    return c / 2 * (sqrt(1 - t * t) + 1) + b;
-}
-
-float CCTweenFunction::elasticEaseIn(float t, float b, float c, float d, float a, float p)
-{
-    float s = 0;
-    if (t == 0)
-        return b;
-    t /= d;
-    if (t == 1)
-        return b + c;
-    if (!p)
-        p = d * .3;
-    if (!a || a < abs(c))
+    time /= 0.5f;
+    if (time < 1)
     {
-        a = c;
-        s = p / 4;
-    }
-    else
-        s = p / (2 * M_PI) * asin(c / a);
-    t -= 1;
-    return -(a * pow(2, 10 * t) * sin((t * d - s) * (2 * M_PI) / p)) + b;
-}
-float CCTweenFunction::elasticEaseOut(float t, float b, float c, float d, float a, float p)
-{
-    float s = 0;
-    if (t == 0)
-        return b;
-    t /= d;
-    if (t == 1)
-        return b + c;
-    if (!p)
-        p = d * .3;
-    if (!a || a < abs(c))
-    {
-        a = c;
-        s = p / 4;
-    }
-    else
-        s = p / (2 * M_PI) * asin(c / a);
-    return (a * pow(2, -10 * t) * sin((t * d - s) * (2 * M_PI) / p) + c + b);
-}
-float CCTweenFunction::elasticEaseInOut(float t, float b, float c, float d, float a, float p)
-{
-    float s = 0;
-    if (t == 0)
-        return b;
-    t = t / d * 2;
-    if ((t) == 2)
-        return b + c;
-    if (!p)
-        p = d * (.3 * 1.5);
-    if (!a || a < abs(c))
-    {
-        a = c;
-        s = p / 4;
-    }
-    else
-        s = p / (2 * M_PI) * asin(c / a);
-    if (t < 1)
-    {
-        t -= 1;
-        return -.5 * (a * pow(2, 10 * t) * sin((t * d - s) * (2 * M_PI) / p)) + b;
-    }
-    t -= 1;
-    return a * pow(2, -10 * t) * sin((t * d - s) * (2 * M_PI) / p) * .5 + c + b;
-}
-
-float CCTweenFunction::backEaseIn(float t, float b, float c, float d, float s)
-{
-    if (s == 0)
-        s = 1.70158f;
-    t /= d;
-    return c * t * t * ((s + 1) * t - s) + b;
-}
-float CCTweenFunction::backEaseOut(float t, float b, float c, float d, float s)
-{
-    if (s == 0)
-        s = 1.70158f;
-    t = t / d - 1;
-    return c * (t * t * ((s + 1) * t + s) + 1) + b;
-}
-float CCTweenFunction::backEaseInOut(float t, float b, float c, float d, float s)
-{
-    if (s == 0)
-        s = 1.70158f;
-    if ((t /= d / 2) < 1)
-    {
-        s *= (1.525f);
-        return c / 2 * (t * t * ((s + 1) * t - s)) + b;
-    }
-
-    t -= 2;
-    s *= (1.525f);
-    return c / 2 * (t * t * ((s + 1) * t + s) + 2) + b;
-}
-
-float CCTweenFunction::bounceEaseIn(float t, float b, float c, float d)
-{
-    return c - bounceEaseOut(d - t, 0, c, d) + b;
-}
-
-float CCTweenFunction::bounceEaseOut(float t, float b, float c, float d)
-{
-    t /= d;
-    if (t < (1 / 2.75f))
-    {
-        return c * (7.5625f * t * t) + b;
-    }
-    else if (t < (2 / 2.75f))
-    {
-        t -= (1.5f / 2.75f);
-        return c * (7.5625f * t * t + .75f) + b;
-    }
-    else if (t < (2.5f / 2.75f))
-    {
-        t -= (2.25f / 2.75f);
-        return c * (7.5625f * t * t + .9375f) + b;
+        time = 0.5f * powf(2, 10 * (time - 1));
     }
     else
     {
-        t -= (2.625f / 2.75f);
-        return c * (7.5625f * t * t + .984375f) + b;
+        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
+    }
+
+    return time;
+}
+
+
+// Circ Ease
+float CCTweenFunction::circEaseIn(float time)
+{
+    return -1 * (sqrt(1 - time * time) - 1);
+}
+float CCTweenFunction::circEaseOut(float time)
+{
+    time = time - 1;
+    return sqrt(1 - time * time);
+}
+float CCTweenFunction::circEaseInOut(float time)
+{
+    time = time * 2;
+    if (time < 1)
+        return -0.5f * (sqrt(1 - time * time) - 1);
+    time -= 2;
+    return 0.5f * (sqrt(1 - time * time) + 1);
+}
+
+
+// Elastic Ease
+float CCTweenFunction::elasticEaseIn(float time, float *easingParam)
+{
+    float period = 0.3f;
+
+    if (easingParam != NULL)
+    {
+        period = easingParam[0];
+    }
+
+    float newT = 0;
+    if (time == 0 || time == 1)
+    {
+        newT = time;
+    }
+    else
+    {
+        float s = period / 4;
+        time = time - 1;
+        newT = -powf(2, 10 * time) * sinf((time - s) * M_PI_X_2 / period);
+    }
+
+    return newT;
+}
+float CCTweenFunction::elasticEaseOut(float time, float *easingParam)
+{
+    float period = 0.3f;
+
+    if (easingParam != NULL)
+    {
+        period = easingParam[0];
+    }
+
+    float newT = 0;
+    if (time == 0 || time == 1)
+    {
+        newT = time;
+    }
+    else
+    {
+        float s = period / 4;
+        newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / period) + 1;
+    }
+
+    return newT;
+}
+float CCTweenFunction::elasticEaseInOut(float time, float *easingParam)
+{
+    float period = 0.3f;
+
+    if (easingParam != NULL)
+    {
+        period = easingParam[0];
+    }
+
+    float newT = 0;
+    if (time == 0 || time == 1)
+    {
+        newT = time;
+    }
+    else
+    {
+        time = time * 2;
+        if (! period)
+        {
+            period = 0.3f * 1.5f;
+        }
+
+        float s = period / 4;
+
+        time = time - 1;
+        if (time < 0)
+        {
+            newT = -0.5f * powf(2, 10 * time) * sinf((time -s) * M_PI_X_2 / period);
+        }
+        else
+        {
+            newT = powf(2, -10 * time) * sinf((time - s) * M_PI_X_2 / period) * 0.5f + 1;
+        }
+    }
+    return newT;
+}
+
+
+// Back Ease
+float CCTweenFunction::backEaseIn(float time)
+{
+    float overshoot = 1.70158f;
+    return time * time * ((overshoot + 1) * time - overshoot);
+}
+float CCTweenFunction::backEaseOut(float time)
+{
+    float overshoot = 1.70158f;
+
+    time = time - 1;
+    return time * time * ((overshoot + 1) * time + overshoot) + 1;
+}
+float CCTweenFunction::backEaseInOut(float time)
+{
+    float overshoot = 1.70158f * 1.525f;
+
+    time = time * 2;
+    if (time < 1)
+    {
+        return (time * time * ((overshoot + 1) * time - overshoot)) / 2;
+    }
+    else
+    {
+        time = time - 2;
+        return (time * time * ((overshoot + 1) * time + overshoot)) / 2 + 1;
     }
 }
 
-float CCTweenFunction::bounceEaseInOut(float t, float b, float c, float d)
+
+
+// Bounce Ease
+float bounceTime(float time)
 {
-    if (t < d / 2)
-        return bounceEaseIn(t * 2, 0, c, d) * .5 + b;
+    if (time < 1 / 2.75)
+    {
+        return 7.5625f * time * time;
+    } else 
+        if (time < 2 / 2.75)
+        {
+            time -= 1.5f / 2.75f;
+            return 7.5625f * time * time + 0.75f;
+        } else
+            if(time < 2.5 / 2.75)
+            {
+                time -= 2.25f / 2.75f;
+                return 7.5625f * time * time + 0.9375f;
+            }
+
+            time -= 2.625f / 2.75f;
+            return 7.5625f * time * time + 0.984375f;
+}
+float CCTweenFunction::bounceEaseIn(float time)
+{
+    return 1 - bounceTime(1 - time);
+}
+
+float CCTweenFunction::bounceEaseOut(float time)
+{
+    return bounceTime(time);
+}
+
+float CCTweenFunction::bounceEaseInOut(float time)
+{
+    float newT = 0;
+    if (time < 0.5f)
+    {
+        time = time * 2;
+        newT = (1 - bounceTime(1 - time)) * 0.5f;
+    }
     else
-        return bounceEaseOut(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
+    {
+        newT = bounceTime(time * 2 - 1) * 0.5f + 0.5f;
+    }
+
+    return newT;
+}
+
+
+// Custom Ease
+float CCTweenFunction::customEase(float time, float *easingParam)
+{
+    if (easingParam)
+    {
+        float tt = 1-time;
+        return easingParam[1]*tt*tt*tt + 3*easingParam[3]*time*tt*tt + 3*easingParam[5]*time*time*tt + easingParam[7]*time*time*time;
+    }
+    return time;
 }
 
 

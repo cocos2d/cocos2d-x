@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -91,7 +91,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -109,7 +109,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
@@ -233,11 +234,7 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
@@ -282,6 +279,7 @@
     <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
     <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
@@ -367,18 +365,17 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
-    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\reader.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h" />
     <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
     <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
@@ -426,12 +423,6 @@
     <ClInclude Include="..\spine\SlotData.h" />
     <ClInclude Include="..\spine\spine-cocos2dx.h" />
     <ClInclude Include="..\spine\spine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\sconscript" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

@@ -1,0 +1,307 @@
+
+typedef enum
+{
+    BRIGHT_NONE = -1,
+    BRIGHT_NORMAL,
+    BRIGHT_HIGHLIGHT
+}BrightStyle;
+
+typedef enum
+{
+    WidgetTypeWidget, //control
+    WidgetTypeContainer //container
+}WidgetType;
+
+typedef enum
+{
+    UI_TEX_TYPE_LOCAL,
+    UI_TEX_TYPE_PLIST
+}TextureResType;
+
+typedef enum
+{
+    TOUCH_EVENT_BEGAN,
+    TOUCH_EVENT_MOVED,
+    TOUCH_EVENT_ENDED,
+    TOUCH_EVENT_CANCELED
+}TouchEventType;
+
+typedef enum
+{
+    SIZE_ABSOLUTE,
+    SIZE_PERCENT
+}SizeType;
+
+typedef enum
+{
+    POSITION_ABSOLUTE,
+    POSITION_PERCENT
+}PositionType;
+
+class UIWidget : public CCObject
+{
+
+    UIWidget(void);
+    
+    virtual ~UIWidget();
+
+    static UIWidget* create();
+    
+    virtual void setEnabled(bool enabled);
+    
+    bool isEnabled() const;
+    
+    void setVisible(bool visible);
+    
+    bool isVisible() const;
+    
+    void setBright(bool bright);
+    
+    bool isBright() const;
+    
+    virtual void setTouchEnabled(bool enabled);
+    
+    void setBrightStyle(BrightStyle style);
+    
+    bool isTouchEnabled() const;
+    
+    bool isFocused() const;
+
+    void setFocused(bool fucosed);
+    
+    void setZOrder(int z);
+    
+    int getZOrder();
+    
+
+    float getLeftInParent();
+    
+    float getBottomInParent();
+    
+ 
+    float getRightInParent();
+    
+
+    float getTopInParent();
+
+
+    virtual bool addChild(UIWidget* child);
+    
+
+    virtual bool removeChild(UIWidget* child);
+
+    virtual void removeFromParent();
+    
+    virtual void removeAllChildren();
+        
+    virtual void reorderChild(UIWidget* child);
+    
+    UIWidget* getChildByName(const char* name);
+    
+    UIWidget* getChildByTag(int tag);
+    
+    virtual CCArray* getChildren();
+    
+    CCNode* getRenderer();
+    
+    void addRenderer(CCNode* renderer, int zOrder);
+    
+    void removeRenderer(CCNode* renderer, bool cleanup);
+    
+    void setParent(UIWidget* parent);
+    
+    UIWidget* getParent();
+    
+    void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
+    
+    void setPosition(const CCPoint &pos);
+    
+    void setPositionPercent(const CCPoint &percent);
+    
+    const CCPoint& getPosition();
+    
+    const CCPoint& getPositionPercent();
+    
+    void setPositionType(PositionType type);
+
+    PositionType getPositionType() const;
+    
+    virtual void setAnchorPoint(const CCPoint &pt);
+    
+    const CCPoint& getAnchorPoint();
+    
+    virtual void setScale(float fScale);
+    
+    float getScale();
+    
+    virtual void setScaleX(float fScaleX);
+    
+    float getScaleX();
+    
+    virtual void setScaleY(float fScaleY);
+    
+    float getScaleY();
+    
+    void setRotation(float rotation);
+    
+    float getRotation();
+    
+    void setRotationX(float rotationX);
+    
+    float getRotationX();
+    
+    void setRotationY(float rotationY);
+    
+    float getRotationY();
+    
+
+    virtual void setFlipX(bool flipX){};
+    
+    virtual bool isFlipX();
+    
+
+    virtual void setFlipY(bool flipY){};
+    
+
+    virtual bool isFlipY();
+    
+
+    virtual void setColor(const ccColor3B &color);
+    
+
+    virtual const ccColor3B& getColor();
+    
+
+    virtual void setOpacity(int opacity);
+    
+ 
+    virtual int getOpacity();
+    virtual bool isCascadeOpacityEnabled();
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual bool isCascadeColorEnabled();
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    
+    
+    virtual void setActionManager(CCActionManager* actionManager);
+    virtual CCActionManager* getActionManager();
+    CCAction* runAction(CCAction* action);
+    void stopAllActions(void);
+    void stopAction(CCAction* action);
+    void stopActionByTag(int tag);
+    CCAction* getActionByTag(int tag);
+    
+ 
+    void didNotSelectSelf();
+    
+    bool clippingParentAreaContainPoint(const CCPoint &pt);
+    
+    virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
+    
+    const CCPoint& getTouchStartPos();
+    
+    const CCPoint& getTouchMovePos();
+    
+    const CCPoint& getTouchEndPos();
+    
+    void setTag(int tag);
+    
+    int getTag() const;
+    
+    void setName(const char* name);
+    
+    const char* getName() const;
+    
+    WidgetType getWidgetType() const;
+    
+    virtual void setSize(const CCSize &size);
+    
+    virtual void setSizePercent(const CCPoint &percent);
+    
+    void setSizeType(SizeType type);
+
+    SizeType getSizeType() const;
+    
+    const CCSize& getSize() const;
+    
+    const CCPoint& getSizePercent() const;
+    
+    virtual bool hitTest(const CCPoint &pt);
+    
+    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    
+    virtual void onTouchMoved(const CCPoint &touchPoint);
+    
+    virtual void onTouchEnded(const CCPoint &touchPoint);
+    
+    virtual void onTouchCancelled(const CCPoint &touchPoint);
+    
+    virtual void onTouchLongClicked(const CCPoint &touchPoint);
+    
+    void setLayoutParameter(UILayoutParameter* parameter);
+    
+    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
+    
+
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+ 
+    bool isIgnoreContentAdaptWithSize() const;
+    
+
+    CCPoint getWorldPosition();
+    
+ 
+    CCPoint convertToWorldSpace(const CCPoint& pt);
+    
+
+    virtual CCNode* getVirtualRenderer();
+    
+
+    void setUpdateEnabled(bool enable);
+    
+  
+    bool isUpdateEnabled();
+    
+
+    virtual const CCSize& getContentSize() const;
+    
+  
+    virtual const char* getDescription() const;
+    
+    UIWidget* clone();
+
+    virtual void onEnter();
+    virtual void onExit();
+    
+
+    virtual CCObject* getUserObject();
+
+    virtual void setUserObject(CCObject *pUserObject);
+    void setTouchEnable(bool enabled, bool containChildren = false);
+    void disable(bool containChildren = false);
+    void active(bool containChildren = false);
+    bool isActive();
+    void setBright(bool bright, bool containChild);
+    CCRect getRect();
+    CCNode* getValidNode();
+    void setWidgetZOrder(int z);
+    int getWidgetZOrder();
+    float getRelativeLeftPos();
+    float getRelativeBottomPos();
+    float getRelativeRightPos();
+    float getRelativeTopPos();
+    CCNode* getContainerNode();
+    void setWidgetParent(UIWidget* parent);
+    UIWidget* getWidgetParent();
+    void setWidgetTag(int tag);
+    int getWidgetTag();
+    void addCCNode(CCNode* node);
+    bool removeChild(UIWidget* child,bool cleanup);
+    void removeFromParentAndCleanup(bool cleanup);
+    void removeAllChildrenAndCleanUp(bool cleanup);
+    
+    void setActionTag(int tag);
+    int getActionTag();
+    void updateSizeAndPosition();
+};

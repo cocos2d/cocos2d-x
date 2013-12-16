@@ -57,6 +57,13 @@ struct CCFrameEvent
     int currentFrameIndex;
 };
 
+struct CCMovementEvent
+{
+    CCArmature *armature;
+    MovementEventType movementType;
+    const char *movementID;
+};
+
 /**
  *  @lua NA
  */
@@ -69,7 +76,13 @@ public:
      */
     static CCArmatureAnimation *create(CCArmature *armature);
 public:
+    /**
+     *  @js ctor
+     */
     CCArmatureAnimation();
+    /**
+     *  @js NA
+     */
     virtual ~CCArmatureAnimation(void);
 
     /**
@@ -94,7 +107,7 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    virtual void setAnimationInternal(float animationInternal);
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {};
 
     using CCProcessBase::play;
     /**
@@ -125,13 +138,23 @@ public:
      *         2  : fade in and out
      *
      */
-    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
     /**
      * Play animation by index, the other param is the same to play.
      * @param  animationIndex  the animation index you want to play
      */
-    void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
+    /**
+     * Play several animation by names
+     */
+    virtual void play(bool loop, const std::string *movementNames, int movementNumber);
+
+    /**
+     * Play several animation by index
+     */
+    virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
 
     /**
      * Go to specified frame and play current movement.
@@ -194,7 +217,6 @@ public:
      * Returns a user assigned CCObject
      *
      * @return A user assigned CCObject
-     * @js NA
      */
     virtual CCObject* getUserObject();
     /**
@@ -227,6 +249,13 @@ protected:
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    /**
+     * Emit a movement event
+     */
+    void movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID);
+
+    void updateMovementList();
+
     inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
 
     friend class CCTween;
@@ -250,6 +279,13 @@ protected:
     bool m_bIgnoreFrameEvent;
 
     std::queue<CCFrameEvent*> m_sFrameEventQueue;
+    std::queue<CCMovementEvent*> m_sMovementEventQueue;
+
+    std::vector<std::string> m_sMovementList;
+
+    bool m_bOnMovementList;
+    bool m_bMovementListLoop;
+    unsigned int m_uMovementIndex;
 
     CCObject *m_pUserObject;
 protected:

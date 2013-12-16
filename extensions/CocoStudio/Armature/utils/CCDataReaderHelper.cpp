@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "CCTransformHelp.h"
 #include "CCUtilMath.h"
 #include "CCArmatureDefine.h"
+#include "CCBReader/CCData.h"
 #include "../datas/CCDatas.h"
 #include <errno.h>
 #include <stack>
@@ -38,7 +39,9 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
 #else
-#include "CCWinRTUtils.h"
+#include "CCPThreadWinRT.h"
+#include <ppl.h>
+#include <ppltasks.h>
 using namespace concurrency;
 #endif
 
@@ -68,8 +71,6 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-// static const char *A_VERT = "vert";
-// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -82,7 +83,7 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
-//static const char *A_TWEEN_ROTATE = "twR";
+static const char *A_EASING_PARAM = "twEP";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
 static const char *A_MOVEMENT = "mov";
@@ -102,6 +103,9 @@ static const char *A_COCOS2D_PIVOT_X = "cocos2d_pX";
 static const char *A_COCOS2D_PIVOT_Y = "cocos2d_pY";
 
 static const char *A_BLEND_TYPE = "bd";
+static const char *A_BLEND_SRC = "bd_src";
+static const char *A_BLEND_DST = "bd_dst";
+
 
 static const char *A_ALPHA = "a";
 static const char *A_RED = "r";
@@ -113,16 +117,11 @@ static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
 static const char *A_TWEEN_FRAME = "tweenFrame";
-//static const char *A_ROTATION = "rotation";
-//static const char *A_USE_COLOR_INFO = "uci";
 
 
 
 static const char *CONTOUR = "con";
 static const char *CONTOUR_VERTEX = "con_vt";
-
-//static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
-//static const char *SOUND_FRAME = "soundFrame";
 
 
 static const char *FL_NAN = "NaN";
@@ -219,7 +218,9 @@ static void addData(AsyncStruct *pAsyncStruct)
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
     unsigned long size;
     pthread_mutex_lock(&s_GetFileDataMutex);
-    pAsyncStruct->fileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+	CCData data(pBytes, size);
+	pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
     pthread_mutex_unlock(&s_GetFileDataMutex);
 
     // generate data info
@@ -363,20 +364,22 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 
     unsigned long size;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    const char *pFileContent = (char *)CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
+    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);;
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = NULL;
     dataInfo.baseFilePath = basefilePath;
 
+	CCData data(pBytes, size);
+	std::string load_str = std::string((const char*)data.getBytes(), data.getSize());
     if (str.compare(".xml") == 0)
     {
-        CCDataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
+        CCDataReaderHelper::addDataFromCache(load_str.c_str(), &dataInfo);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        CCDataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
+        CCDataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
 }
 
@@ -1022,7 +1025,11 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
         frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
-
+    bool tweenFrame = false;
+    if (frameXML->QueryBoolAttribute(A_TWEEN_FRAME, &tweenFrame) == tinyxml2::XML_SUCCESS)
+    {
+        frameData->isTween = tweenFrame;
+    }
 
     if (dataInfo->flashToolVersion >= VERSION_2_0)
     {
@@ -1081,7 +1088,39 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
     }
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
-        frameData->blendType = (CCBlendType)blendType;
+        switch (blendType)
+        {
+        case BLEND_NORMAL:
+            {
+                frameData->blendFunc.src = CC_BLEND_SRC;
+                frameData->blendFunc.dst = CC_BLEND_DST;
+            }
+            break;
+        case BLEND_ADD:
+            {
+                frameData->blendFunc.src = GL_SRC_ALPHA;
+                frameData->blendFunc.dst = GL_ONE;
+            }
+            break;
+        case BLEND_MULTIPLY:
+            {
+                frameData->blendFunc.src = GL_DST_COLOR;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            }
+            break;
+        case BLEND_SCREEN:
+            {
+                frameData->blendFunc.src = GL_ONE;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+            }
+            break;
+        default:
+            {
+                frameData->blendFunc.src = CC_BLEND_SRC;
+                frameData->blendFunc.dst = CC_BLEND_DST;
+            }
+            break;
+        }
     }
 
     tinyxml2::XMLElement *colorTransformXML = frameXML->FirstChildElement(A_COLOR_TRANSFORM);
@@ -1226,21 +1265,24 @@ CCContourData *CCDataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXM
     return contourData;
 }
 
-
-
 void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo)
 {
-    cs::CSJsonDictionary json;
-    json.initWithDescription(fileContent);
+	rapidjson::Document json;
+	
+	json.Parse<0>(fileContent);
 
-    dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
-
+    if (json.HasParseError()) {
+        CCLOG("GetParseError %s\n",json.GetParseError());
+    }
+	
+	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f); //json[CONTENT_SCALE].IsNull()? 1.0f : json[CONTENT_SCALE].GetDouble();
+	
     // Decode armatures
-    int length = json.getArrayItemCount(ARMATURE_DATA);
-    for (int i = 0; i < length; i++)
+	int length = DICTOOL->getArrayCount_json(json, ARMATURE_DATA); //json[ARMATURE_DATA].IsNull() ? 0 : json[ARMATURE_DATA].Size();
+	for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *armatureDic = json.getSubItemFromArray(ARMATURE_DATA, i);
-        CCArmatureData *armatureData = decodeArmature(*armatureDic, dataInfo);
+		const rapidjson::Value &armatureDic = DICTOOL->getSubDictionary_json(json, ARMATURE_DATA, i); //json[ARMATURE_DATA][i];
+        CCArmatureData *armatureData = decodeArmature(armatureDic, dataInfo);
 
         if (dataInfo->asyncStruct)
         {
@@ -1252,15 +1294,15 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
-        delete armatureDic;
+        //delete armatureDic;
     }
 
     // Decode animations
-    length = json.getArrayItemCount(ANIMATION_DATA);
+	length = DICTOOL->getArrayCount_json(json, ANIMATION_DATA); //json[ANIMATION_DATA].IsNull() ? 0 : json[ANIMATION_DATA].Size();
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *animationDic = json.getSubItemFromArray(ANIMATION_DATA, i);
-        CCAnimationData *animationData = decodeAnimation(*animationDic, dataInfo);
+		const rapidjson::Value &animationDic = DICTOOL->getSubDictionary_json(json, ANIMATION_DATA, i);
+        CCAnimationData *animationData = decodeAnimation(animationDic, dataInfo);
 
         if (dataInfo->asyncStruct)
         {
@@ -1272,15 +1314,14 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
-        delete animationDic;
     }
 
     // Decode textures
-    length = json.getArrayItemCount(TEXTURE_DATA);
+    length = DICTOOL->getArrayCount_json(json, TEXTURE_DATA); // json[TEXTURE_DATA].IsNull() ? 0 : json[TEXTURE_DATA].Size();
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *textureDic = json.getSubItemFromArray(TEXTURE_DATA, i);
-        CCTextureData *textureData = decodeTexture(*textureDic);
+        const rapidjson::Value &textureDic =  DICTOOL->getSubDictionary_json(json, TEXTURE_DATA, i); // json[TEXTURE_DATA][i];
+        CCTextureData *textureData = decodeTexture(textureDic);
 
         if (dataInfo->asyncStruct)
         {
@@ -1292,17 +1333,17 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_unlock(&s_addDataMutex);
         }
-        delete textureDic;
+        //delete textureDic;
     }
 
     // Auto load sprite file
     bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
-        length = json.getArrayItemCount(CONFIG_FILE_PATH);
+        length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); // json[CONFIG_FILE_PATH].IsNull() ? 0 : json[CONFIG_FILE_PATH].Size();
         for (int i = 0; i < length; i++)
         {
-            const char *path = json.getStringValueFromArray(CONFIG_FILE_PATH, i);
+			const char *path = DICTOOL->getStringValueFromArray_json(json, CONFIG_FILE_PATH, i); // json[CONFIG_FILE_PATH][i].IsNull() ? NULL : json[CONFIG_FILE_PATH][i].GetString();
             if (path == NULL)
             {
                 CCLOG("load CONFIG_FILE_PATH error.");
@@ -1327,70 +1368,69 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 }
 
-CCArmatureData *CCDataReaderHelper::decodeArmature(cs::CSJsonDictionary &json, DataInfo *dataInfo)
-{
-    CCArmatureData *armatureData = new CCArmatureData();
-    armatureData->init();
 
-    const char *name = json.getItemStringValue(A_NAME);
+CCArmatureData *CCDataReaderHelper::decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo)
+{
+	CCArmatureData *armatureData = new CCArmatureData();
+    armatureData->init();
+    
+    
+	const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         armatureData->name = name;
     }
 
-    dataInfo->cocoStudioVersion = armatureData->dataVersion = json.getItemFloatValue(VERSION, 0.1f);
+	dataInfo->cocoStudioVersion = armatureData->dataVersion = DICTOOL->getFloatValue_json(json, VERSION, 0.1f);
 
-    int length = json.getArrayItemCount(BONE_DATA);
-    for (int i = 0; i < length; i++)
+	int length = DICTOOL->getArrayCount_json(json, BONE_DATA, 0); 
+	for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(BONE_DATA, i);
-        CCBoneData *boneData = decodeBone(*dic, dataInfo);
-        armatureData->addBoneData(boneData);
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, BONE_DATA, i); //json[BONE_DATA][i];
+        CCBoneData *boneData = decodeBone(dic,dataInfo);
+        armatureData->addBoneData(boneData);  
         boneData->release();
-
-        delete dic;
     }
 
     return armatureData;
 }
 
-CCBoneData *CCDataReaderHelper::decodeBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+CCBoneData *CCDataReaderHelper::decodeBone(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    CCBoneData *boneData = new CCBoneData();
+	CCBoneData *boneData = new CCBoneData();
     boneData->init();
 
     decodeNode(boneData, json, dataInfo);
 
-    const char *str = json.getItemStringValue(A_NAME);
+	const char *str = DICTOOL->getStringValue_json(json, A_NAME);
     if(str != NULL)
     {
         boneData->name = str;
     }
-
-    str = json.getItemStringValue(A_PARENT);
+	
+    str = DICTOOL->getStringValue_json(json, A_PARENT);
     if(str != NULL)
     {
         boneData->parentName = str;
     }
 
-    int length = json.getArrayItemCount(DISPLAY_DATA);
+	int length = DICTOOL->getArrayCount_json(json, DISPLAY_DATA);
 
-    for (int i = 0; i < length; i++)
+	for (int i = 0; i < length; ++i)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(DISPLAY_DATA, i);
-        CCDisplayData *displayData = decodeBoneDisplay(*dic, dataInfo);
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, DISPLAY_DATA, i); 
+        CCDisplayData *displayData = decodeBoneDisplay(dic, dataInfo);
         boneData->addDisplayData(displayData);
         displayData->release();
-
-        delete dic;
     }
 
     return boneData;
 }
 
-CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+
+CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    DisplayType displayType = (DisplayType)json.getItemIntValue(A_DISPLAY_TYPE, CS_DISPLAY_SPRITE);
+	DisplayType displayType =  (DisplayType)(DICTOOL->getIntValue_json(json, A_DISPLAY_TYPE, CS_DISPLAY_SPRITE));
 
     CCDisplayData *displayData = NULL;
 
@@ -1400,27 +1440,30 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
     {
         displayData = new CCSpriteDisplayData();
 
-        const char *name = json.getItemStringValue(A_NAME);
+		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
             ((CCSpriteDisplayData *)displayData)->displayName = name;
         }
+		const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
+		if(!dicArray.IsNull())
+		{
+			rapidjson::SizeType index = 0;
+			const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
+			if (!dic.IsNull())
+			{
+				CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
+				sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
+				sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
+				sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
+				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
+				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
 
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(SKIN_DATA, 0);
-        if (dic != NULL)
-        {
-            CCSpriteDisplayData *sdd = (CCSpriteDisplayData *)displayData;
-            sdd->skinData.x = dic->getItemFloatValue(A_X, 0) * s_PositionReadScale;
-            sdd->skinData.y = dic->getItemFloatValue(A_Y, 0) * s_PositionReadScale;
-            sdd->skinData.scaleX = dic->getItemFloatValue(A_SCALE_X, 1);
-            sdd->skinData.scaleY = dic->getItemFloatValue(A_SCALE_Y, 1);
-            sdd->skinData.skewX = dic->getItemFloatValue(A_SKEW_X, 0);
-            sdd->skinData.skewY = dic->getItemFloatValue(A_SKEW_Y, 0);
-
-            sdd->skinData.x *= dataInfo->contentScale;
-            sdd->skinData.y *= dataInfo->contentScale;
-            delete dic;
-        }
+                sdd->skinData.x *= dataInfo->contentScale;
+                sdd->skinData.y *= dataInfo->contentScale;
+			}
+		}
     }
 
     break;
@@ -1428,7 +1471,7 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
     {
         displayData = new CCArmatureDisplayData();
 
-        const char *name = json.getItemStringValue(A_NAME);
+        const char *name = DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
             ((CCArmatureDisplayData *)displayData)->displayName = name;
@@ -1439,16 +1482,16 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
     {
         displayData = new CCParticleDisplayData();
 
-        const char *plist = json.getItemStringValue(A_PLIST);
+        const char *plist = DICTOOL->getStringValue_json(json, A_PLIST);
         if(plist != NULL)
         {
             if (dataInfo->asyncStruct)
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                ((CCParticleDisplayData *)displayData)->plist = dataInfo->baseFilePath + plist;
+                ((CCParticleDisplayData *)displayData)->displayName = dataInfo->baseFilePath + plist;
             }
         }
     }
@@ -1465,91 +1508,92 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(cs::CSJsonDictionary &json,
     return displayData;
 }
 
-CCAnimationData *CCDataReaderHelper::decodeAnimation(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+CCAnimationData *CCDataReaderHelper::decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    CCAnimationData *aniData = new CCAnimationData();
+	CCAnimationData *aniData = new CCAnimationData();
 
-    const char *name = json.getItemStringValue(A_NAME);
+    const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         aniData->name = name;
     }
+	
+    int length =  DICTOOL->getArrayCount_json(json, MOVEMENT_DATA);
 
-    int length = json.getArrayItemCount(MOVEMENT_DATA);
-
-    for (int i = 0; i < length; i++)
+	for (int i = 0; i < length; ++i)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_DATA, i);
-        CCMovementData *movementData = decodeMovement(*dic, dataInfo);
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_DATA, i);
+        CCMovementData *movementData = decodeMovement(dic,dataInfo);
         aniData->addMovement(movementData);
         movementData->release();
 
-        delete dic;
     }
 
     return aniData;
 }
 
-CCMovementData *CCDataReaderHelper::decodeMovement(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+CCMovementData *CCDataReaderHelper::decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    CCMovementData *movementData = new CCMovementData();
+	CCMovementData *movementData = new CCMovementData();
 
-    movementData->loop = json.getItemBoolvalue(A_LOOP, true);
-    movementData->durationTween = json.getItemIntValue(A_DURATION_TWEEN, 0);
-    movementData->durationTo = json.getItemIntValue(A_DURATION_TO, 0);
-    movementData->duration = json.getItemIntValue(A_DURATION, 0);
-    movementData->scale = json.getItemFloatValue(A_MOVEMENT_SCALE, 1);
-    movementData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
-
-    const char *name = json.getItemStringValue(A_NAME);
+	movementData->loop = DICTOOL->getBooleanValue_json(json, A_LOOP, true);
+	movementData->durationTween = DICTOOL->getIntValue_json(json, A_DURATION_TWEEN, 0);
+    movementData->durationTo = DICTOOL->getIntValue_json(json, A_DURATION_TO, 0);
+    movementData->duration = DICTOOL->getIntValue_json(json, A_DURATION, 0);
+    if (!DICTOOL->checkObjectExist_json(json, A_DURATION))
+    {
+        movementData->scale = 1.0f;
+    }
+    else
+    {
+        movementData->scale = DICTOOL->getFloatValue_json(json, A_MOVEMENT_SCALE, 1.0f);
+    }
+    
+	movementData->tweenEasing =  (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+    const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         movementData->name = name;
     }
 
-    int length = json.getArrayItemCount(MOVEMENT_BONE_DATA);
+	int length = DICTOOL->getArrayCount_json(json, MOVEMENT_BONE_DATA);
     for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(MOVEMENT_BONE_DATA, i);
-        CCMovementBoneData *movementBoneData = decodeMovementBone(*dic, dataInfo);
+		const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, MOVEMENT_BONE_DATA, i);
+        CCMovementBoneData *movementBoneData = decodeMovementBone(dic,dataInfo);
         movementData->addMovementBoneData(movementBoneData);
         movementBoneData->release();
-
-        delete dic;
     }
 
     return movementData;
 }
 
-CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    CCMovementBoneData *movementBoneData = new CCMovementBoneData();
+	CCMovementBoneData *movementBoneData = new CCMovementBoneData();
     movementBoneData->init();
 
-    movementBoneData->delay = json.getItemFloatValue(A_MOVEMENT_DELAY, 0);
-
-    const char *name = json.getItemStringValue(A_NAME);
+	movementBoneData->delay = DICTOOL->getFloatValue_json(json, A_MOVEMENT_DELAY);
+    const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         movementBoneData->name = name;
     }
 
-    int length = json.getArrayItemCount(FRAME_DATA);
-    for (int i = 0; i < length; i++)
+	rapidjson::SizeType length = DICTOOL->getArrayCount_json(json, FRAME_DATA);
+    for (rapidjson::SizeType i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(FRAME_DATA, i);
-        CCFrameData *frameData = decodeFrame(*dic, dataInfo);
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, FRAME_DATA, i);
+        CCFrameData *frameData = decodeFrame(dic,dataInfo);
 
         movementBoneData->addFrameData(frameData);
         frameData->release();
-
+		
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
             frameData->frameID = movementBoneData->duration;
             movementBoneData->duration += frameData->duration;
         }
-
-        delete dic;
     }
 
     if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
@@ -1593,18 +1637,19 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(cs::CSJsonDictionary 
     return movementBoneData;
 }
 
-CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json, DataInfo *dataInfo)
+CCFrameData *CCDataReaderHelper::decodeFrame(const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    CCFrameData *frameData = new CCFrameData();
+	CCFrameData *frameData = new CCFrameData();
 
     decodeNode(frameData, json, dataInfo);
 
-    frameData->tweenEasing = (CCTweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
-    frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
-    frameData->blendType = (CCBlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
-    frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
-
-    const char *event = json.getItemStringValue(A_EVENT);
+	frameData->tweenEasing = (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
+    frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, CC_BLEND_SRC));
+    frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, CC_BLEND_DST));
+	frameData->isTween = DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
+	const char *event =  DICTOOL->getStringValue_json(json, A_EVENT);
+    
     if (event != NULL)
     {
         frameData->strEvent = event;
@@ -1612,107 +1657,115 @@ CCFrameData *CCDataReaderHelper::decodeFrame(cs::CSJsonDictionary &json, DataInf
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        frameData->duration = json.getItemIntValue(A_DURATION, 1);
+		frameData->duration = DICTOOL->getIntValue_json(json, A_DURATION, 1);
     }
     else
     {
-        frameData->frameID = json.getItemIntValue(A_FRAME_INDEX, 0);
+        frameData->frameID = DICTOOL->getIntValue_json(json, A_FRAME_INDEX);
     }
+
+    int length = DICTOOL->getArrayCount_json(json, A_EASING_PARAM);
+    if (length != 0)
+    {
+        frameData->easingParams = new float[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            frameData->easingParams[i] = DICTOOL->getFloatValueFromArray_json(json, A_EASING_PARAM, i);
+        }
+    }
+    
 
     return frameData;
 }
 
-CCTextureData *CCDataReaderHelper::decodeTexture(cs::CSJsonDictionary &json)
+CCTextureData *CCDataReaderHelper::decodeTexture(const rapidjson::Value &json)
 {
-    CCTextureData *textureData = new CCTextureData();
+	CCTextureData *textureData = new CCTextureData();
     textureData->init();
 
-    const char *name = json.getItemStringValue(A_NAME);
+	const char *name = DICTOOL->getStringValue_json(json, A_NAME);
     if(name != NULL)
     {
         textureData->name = name;
     }
 
-    textureData->width = json.getItemFloatValue(A_WIDTH, 0);
-    textureData->height = json.getItemFloatValue(A_HEIGHT, 0);
-    textureData->pivotX = json.getItemFloatValue(A_PIVOT_X, 0);
-    textureData->pivotY = json.getItemFloatValue(A_PIVOT_Y, 0);
+	textureData->width = DICTOOL->getFloatValue_json(json, A_WIDTH);
+    textureData->height = DICTOOL->getFloatValue_json(json, A_HEIGHT);
+    textureData->pivotX = DICTOOL->getFloatValue_json(json, A_PIVOT_X);
+    textureData->pivotY = DICTOOL->getFloatValue_json(json, A_PIVOT_Y);
 
-    int length = json.getArrayItemCount(CONTOUR_DATA);
-    for (int i = 0; i < length; i++)
+	int length = DICTOOL->getArrayCount_json(json, CONTOUR_DATA);
+	for (int i = 0; i < length; i++)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
-        CCContourData *contourData = decodeContour(*dic);
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, CONTOUR_DATA, i);
+        CCContourData *contourData = decodeContour(dic);
         textureData->contourDataList.addObject(contourData);
         contourData->release();
 
-        delete dic;
     }
 
     return textureData;
 }
 
-CCContourData *CCDataReaderHelper::decodeContour(cs::CSJsonDictionary &json)
+CCContourData *CCDataReaderHelper::decodeContour(const rapidjson::Value &json)
 {
-    CCContourData *contourData = new CCContourData();
+	CCContourData *contourData = new CCContourData();
     contourData->init();
 
-    int length = json.getArrayItemCount(VERTEX_POINT);
-    for (int i = length - 1; i >= 0; i--)
+	int length = DICTOOL->getArrayCount_json(json, VERTEX_POINT);
+    
+	for (int i = length - 1; i >= 0; --i)
     {
-        cs::CSJsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
-
+        const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(json, VERTEX_POINT, i);
         CCContourVertex2 *vertex = new CCContourVertex2(0, 0);
-
-        vertex->x = dic->getItemFloatValue(A_X, 0);
-        vertex->y = dic->getItemFloatValue(A_Y, 0);
+		vertex->x = DICTOOL->getFloatValue_json(dic, A_X);
+        vertex->y = DICTOOL->getFloatValue_json(dic, A_Y);
 
         contourData->vertexList.addObject(vertex);
         vertex->release();
-
-        delete dic;
     }
 
     return contourData;
 }
 
-void CCDataReaderHelper::decodeNode(CCBaseData *node, cs::CSJsonDictionary &json, DataInfo *dataInfo)
+void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo)
 {
-    node->x = json.getItemFloatValue(A_X, 0) * s_PositionReadScale;
-    node->y = json.getItemFloatValue(A_Y, 0) * s_PositionReadScale;
+	node->x =  DICTOOL->getFloatValue_json(json, A_X) * dataInfo->contentScale;
+    node->y = DICTOOL->getFloatValue_json(json, A_Y) * dataInfo->contentScale;
+	node->zOrder = DICTOOL->getIntValue_json(json, A_Z);
 
-    node->x *= dataInfo->contentScale;
-    node->y *= dataInfo->contentScale;
+    node->skewX = DICTOOL->getFloatValue_json(json, A_SKEW_X);
+    node->skewY = DICTOOL->getFloatValue_json(json, A_SKEW_Y);
+    node->scaleX = DICTOOL->getFloatValue_json(json, A_SCALE_X, 1.0f);
+    node->scaleY = DICTOOL->getFloatValue_json(json, A_SCALE_Y, 1.0f);
 
-    node->zOrder = json.getItemIntValue(A_Z, 0);
-
-    node->skewX = json.getItemFloatValue(A_SKEW_X, 0);
-    node->skewY = json.getItemFloatValue(A_SKEW_Y, 0);
-    node->scaleX = json.getItemFloatValue(A_SCALE_X, 1);
-    node->scaleY = json.getItemFloatValue(A_SCALE_Y, 1);
-
-    cs::CSJsonDictionary *colorDic = NULL;
     if (dataInfo->cocoStudioVersion < VERSION_COLOR_READING)
     {
-        colorDic = json.getSubItemFromArray(COLOR_INFO, 0);
+        if (DICTOOL->checkObjectExist_json(json, 0))
+        {
+            const rapidjson::Value &colorDic = DICTOOL->getSubDictionary_json(json, 0); 
+            node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
+            node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
+            node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
+            node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
+
+            node->isUseColorInfo = true;
+        }
     }
     else
     {
-        colorDic = json.getSubDictionary(COLOR_INFO);
+        if (DICTOOL->checkObjectExist_json(json, COLOR_INFO))
+        {
+            const rapidjson::Value &colorDic =  DICTOOL->getSubDictionary_json(json, COLOR_INFO); //json.getSubDictionary(COLOR_INFO);
+            node->a = DICTOOL->getIntValue_json(colorDic, A_ALPHA, 255);   
+            node->r = DICTOOL->getIntValue_json(colorDic, A_RED, 255);  
+            node->g = DICTOOL->getIntValue_json(colorDic, A_GREEN, 255); 
+            node->b = DICTOOL->getIntValue_json(colorDic, A_BLUE, 255); 
+
+            node->isUseColorInfo = true;
+        }
     }
-
-    if (colorDic)
-    {
-        node->a = colorDic->getItemIntValue(A_ALPHA, 255);
-        node->r = colorDic->getItemIntValue(A_RED, 255);
-        node->g = colorDic->getItemIntValue(A_GREEN, 255);
-        node->b = colorDic->getItemIntValue(A_BLUE, 255);
-
-        node->isUseColorInfo = true;
-
-        delete colorDic;
-    }
-
 }
 
 NS_CC_EXT_END

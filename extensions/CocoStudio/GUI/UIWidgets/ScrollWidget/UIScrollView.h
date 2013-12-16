@@ -65,17 +65,21 @@ typedef void (CCObject::*SEL_ScrollToRightEvent)(CCObject*);
 #define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
 /************************/
 
-
+/**
+ *  @lua NA
+ */
 class UIScrollView : public UILayout , public UIScrollInterface
 {
 public:
     /**
      * Default constructor
+     * @js ctor
      */
     UIScrollView();
     
     /**
      * Default destructor
+     * @lua NA
      */
     virtual ~UIScrollView();
     

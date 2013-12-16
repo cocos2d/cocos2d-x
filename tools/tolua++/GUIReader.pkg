@@ -1,0 +1,10 @@
+
+class GUIReader : public CCObject
+{
+    GUIReader();
+    ~GUIReader();
+
+    static GUIReader* shareReader();
+    static void purgeGUIReader();
+    UIWidget* widgetFromJsonFile(const char* fileName);
+};

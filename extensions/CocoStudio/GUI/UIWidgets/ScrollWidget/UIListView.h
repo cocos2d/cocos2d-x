@@ -72,10 +72,19 @@ typedef void (cocos2d::CCObject::*SEL_ListViewUpdateChildEvent)(cocos2d::CCObjec
 #define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
 /************************/
 
+/**
+ *  @lua NA
+ */
 class UIListView : public UILayout
 {
 public:
+    /**
+     *  @js ctor
+     */
     UIListView();
+    /**
+     *  @js NA
+     */
     virtual ~UIListView();
     static UIListView* create();
     

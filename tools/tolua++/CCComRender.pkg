@@ -1,0 +1,8 @@
+
+class CCComRender : public CCComponent
+{
+   CCNode* getNode();
+   void setNode(CCNode *pNode);
+
+   static CCComRender* create(CCNode *pNode, const char *comName);
+};

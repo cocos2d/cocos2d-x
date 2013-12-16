@@ -209,24 +209,8 @@
 		1A36F53217EFE19B000D0275 /* UISwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4AB17EFE19B000D0275 /* UISwitch.cpp */; };
 		1A36F53317EFE19B000D0275 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4AD17EFE19B000D0275 /* UITextField.cpp */; };
 		1A36F53417EFE19B000D0275 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4AD17EFE19B000D0275 /* UITextField.cpp */; };
-		1A36F53517EFE19B000D0275 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4B017EFE19B000D0275 /* CSContentJsonDictionary.cpp */; };
-		1A36F53617EFE19B000D0275 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4B017EFE19B000D0275 /* CSContentJsonDictionary.cpp */; };
 		1A36F53717EFE19B000D0275 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4B217EFE19B000D0275 /* DictionaryHelper.cpp */; };
 		1A36F53817EFE19B000D0275 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4B217EFE19B000D0275 /* DictionaryHelper.cpp */; };
-		1A36F53917EFE19B000D0275 /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4BA17EFE19B000D0275 /* json_internalarray.inl */; };
-		1A36F53A17EFE19B000D0275 /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4BA17EFE19B000D0275 /* json_internalarray.inl */; };
-		1A36F53B17EFE19B000D0275 /* json_internalmap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4BB17EFE19B000D0275 /* json_internalmap.inl */; };
-		1A36F53C17EFE19B000D0275 /* json_internalmap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4BB17EFE19B000D0275 /* json_internalmap.inl */; };
-		1A36F53D17EFE19B000D0275 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4BD17EFE19B000D0275 /* json_reader.cpp */; };
-		1A36F53E17EFE19B000D0275 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4BD17EFE19B000D0275 /* json_reader.cpp */; };
-		1A36F53F17EFE19B000D0275 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4BF17EFE19B000D0275 /* json_value.cpp */; };
-		1A36F54017EFE19B000D0275 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4BF17EFE19B000D0275 /* json_value.cpp */; };
-		1A36F54117EFE19B000D0275 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C017EFE19B000D0275 /* json_valueiterator.inl */; };
-		1A36F54217EFE19B000D0275 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C017EFE19B000D0275 /* json_valueiterator.inl */; };
-		1A36F54317EFE19B000D0275 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4C117EFE19B000D0275 /* json_writer.cpp */; };
-		1A36F54417EFE19B000D0275 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F4C117EFE19B000D0275 /* json_writer.cpp */; };
-		1A36F54517EFE19B000D0275 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C317EFE19B000D0275 /* sconscript */; };
-		1A36F54617EFE19B000D0275 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F4C317EFE19B000D0275 /* sconscript */; };
 		1A646F791831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */; };
 		1A646F7A1831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */; };
 		1A646F7B1831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */; };
@@ -688,6 +672,16 @@
 		15A3D5171682F1A4002FB0C5 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		15A3D5181682F1A4002FB0C5 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		15A3D5191682F1A4002FB0C5 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		15DB652E184C2ACC002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		15DB652F184C2ACC002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
+		15DB6531184C2ACC002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		15DB6532184C2ACC002905B6 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		15DB6533184C2ACC002905B6 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		15DB6534184C2ACC002905B6 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		15DB6535184C2ACC002905B6 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		15DB6536184C2ACC002905B6 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		15DB6537184C2ACC002905B6 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		15DB6538184C2ACC002905B6 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1A05B47E174F34B800BFE80B /* jsb_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_helper.h; sourceTree = "<group>"; };
 		1A05B4BC174F6F4C00BFE80B /* jsb_websocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_websocket.h; sourceTree = "<group>"; };
 		1A05B4BD174F6F5400BFE80B /* jsb_websocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_websocket.cpp; sourceTree = "<group>"; };
@@ -804,27 +798,8 @@
 		1A36F4AC17EFE19B000D0275 /* UISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISwitch.h; sourceTree = "<group>"; };
 		1A36F4AD17EFE19B000D0275 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		1A36F4AE17EFE19B000D0275 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
-		1A36F4B017EFE19B000D0275 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
-		1A36F4B117EFE19B000D0275 /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		1A36F4B217EFE19B000D0275 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		1A36F4B317EFE19B000D0275 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
-		1A36F4B517EFE19B000D0275 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
-		1A36F4B617EFE19B000D0275 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		1A36F4B717EFE19B000D0275 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
-		1A36F4B817EFE19B000D0275 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
-		1A36F4B917EFE19B000D0275 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
-		1A36F4BA17EFE19B000D0275 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
-		1A36F4BB17EFE19B000D0275 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
-		1A36F4BC17EFE19B000D0275 /* json_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_lib.h; sourceTree = "<group>"; };
-		1A36F4BD17EFE19B000D0275 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
-		1A36F4BE17EFE19B000D0275 /* json_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
-		1A36F4BF17EFE19B000D0275 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
-		1A36F4C017EFE19B000D0275 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
-		1A36F4C117EFE19B000D0275 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
-		1A36F4C217EFE19B000D0275 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		1A36F4C317EFE19B000D0275 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
-		1A36F4C417EFE19B000D0275 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
-		1A36F4C517EFE19B000D0275 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1A646F761831FA29001578C3 /* jsb_cocos2dx_studio_auto_api.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2dx_studio_auto_api.js; sourceTree = "<group>"; };
 		1A646F771831FA29001578C3 /* jsb_cocos2dx_studio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_auto.cpp; sourceTree = "<group>"; };
 		1A646F781831FA29001578C3 /* jsb_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
@@ -1419,6 +1394,31 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
+		15DB652D184C2ACC002905B6 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				15DB652E184C2ACC002905B6 /* document.h */,
+				15DB652F184C2ACC002905B6 /* filestream.h */,
+				15DB6530184C2ACC002905B6 /* internal */,
+				15DB6534184C2ACC002905B6 /* prettywriter.h */,
+				15DB6535184C2ACC002905B6 /* rapidjson.h */,
+				15DB6536184C2ACC002905B6 /* reader.h */,
+				15DB6537184C2ACC002905B6 /* stringbuffer.h */,
+				15DB6538184C2ACC002905B6 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		15DB6530184C2ACC002905B6 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				15DB6531184C2ACC002905B6 /* pow10.h */,
+				15DB6532184C2ACC002905B6 /* stack.h */,
+				15DB6533184C2ACC002905B6 /* strfunc.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
 		1A36F43117EFE19B000D0275 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
@@ -1666,37 +1666,11 @@
 		1A36F4AF17EFE19B000D0275 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				1A36F4B017EFE19B000D0275 /* CSContentJsonDictionary.cpp */,
-				1A36F4B117EFE19B000D0275 /* CSContentJsonDictionary.h */,
+				15DB652D184C2ACC002905B6 /* rapidjson */,
 				1A36F4B217EFE19B000D0275 /* DictionaryHelper.cpp */,
 				1A36F4B317EFE19B000D0275 /* DictionaryHelper.h */,
-				1A36F4B417EFE19B000D0275 /* lib_json */,
 			);
 			path = Json;
-			sourceTree = "<group>";
-		};
-		1A36F4B417EFE19B000D0275 /* lib_json */ = {
-			isa = PBXGroup;
-			children = (
-				1A36F4B517EFE19B000D0275 /* autolink.h */,
-				1A36F4B617EFE19B000D0275 /* config.h */,
-				1A36F4B717EFE19B000D0275 /* features.h */,
-				1A36F4B817EFE19B000D0275 /* forwards.h */,
-				1A36F4B917EFE19B000D0275 /* json_batchallocator.h */,
-				1A36F4BA17EFE19B000D0275 /* json_internalarray.inl */,
-				1A36F4BB17EFE19B000D0275 /* json_internalmap.inl */,
-				1A36F4BC17EFE19B000D0275 /* json_lib.h */,
-				1A36F4BD17EFE19B000D0275 /* json_reader.cpp */,
-				1A36F4BE17EFE19B000D0275 /* json_tool.h */,
-				1A36F4BF17EFE19B000D0275 /* json_value.cpp */,
-				1A36F4C017EFE19B000D0275 /* json_valueiterator.inl */,
-				1A36F4C117EFE19B000D0275 /* json_writer.cpp */,
-				1A36F4C217EFE19B000D0275 /* reader.h */,
-				1A36F4C317EFE19B000D0275 /* sconscript */,
-				1A36F4C417EFE19B000D0275 /* value.h */,
-				1A36F4C517EFE19B000D0275 /* writer.h */,
-			);
-			path = lib_json;
 			sourceTree = "<group>";
 		};
 		1A36F4C617EFE19B000D0275 /* Reader */ = {
@@ -2058,10 +2032,6 @@
 				A218F7DC1743D97E00F65883 /* XHRTest in Resources */,
 				A22656EF1743DCBB00598A2C /* ClippingNodeTest in Resources */,
 				1A729AC117E1C60B00F37B6A /* MotionStreakTest in Resources */,
-				1A36F53917EFE19B000D0275 /* json_internalarray.inl in Resources */,
-				1A36F53B17EFE19B000D0275 /* json_internalmap.inl in Resources */,
-				1A36F54117EFE19B000D0275 /* json_valueiterator.inl in Resources */,
-				1A36F54517EFE19B000D0275 /* sconscript in Resources */,
 				1AAB66F51831FD6A0091F8AC /* CocoStudioTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2081,10 +2051,6 @@
 				D401B6C316FB637400F2529D /* Icon-72.png in Resources */,
 				D401B6C416FB637400F2529D /* Icon-144.png in Resources */,
 				1A729AC217E1C60B00F37B6A /* MotionStreakTest in Resources */,
-				1A36F53A17EFE19B000D0275 /* json_internalarray.inl in Resources */,
-				1A36F53C17EFE19B000D0275 /* json_internalmap.inl in Resources */,
-				1A36F54217EFE19B000D0275 /* json_valueiterator.inl in Resources */,
-				1A36F54617EFE19B000D0275 /* sconscript in Resources */,
 				1AAB66F61831FD6A0091F8AC /* CocoStudioTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2279,11 +2245,7 @@
 				460E53AE182B745A0040458A /* GUIReader.cpp in Sources */,
 				1A36F53117EFE19B000D0275 /* UISwitch.cpp in Sources */,
 				1A36F53317EFE19B000D0275 /* UITextField.cpp in Sources */,
-				1A36F53517EFE19B000D0275 /* CSContentJsonDictionary.cpp in Sources */,
 				1A36F53717EFE19B000D0275 /* DictionaryHelper.cpp in Sources */,
-				1A36F53D17EFE19B000D0275 /* json_reader.cpp in Sources */,
-				1A36F53F17EFE19B000D0275 /* json_value.cpp in Sources */,
-				1A36F54317EFE19B000D0275 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2458,11 +2420,7 @@
 				1A36F53017EFE19B000D0275 /* UISlider.cpp in Sources */,
 				1A36F53217EFE19B000D0275 /* UISwitch.cpp in Sources */,
 				1A36F53417EFE19B000D0275 /* UITextField.cpp in Sources */,
-				1A36F53617EFE19B000D0275 /* CSContentJsonDictionary.cpp in Sources */,
 				1A36F53817EFE19B000D0275 /* DictionaryHelper.cpp in Sources */,
-				1A36F53E17EFE19B000D0275 /* json_reader.cpp in Sources */,
-				1A36F54017EFE19B000D0275 /* json_value.cpp in Sources */,
-				1A36F54417EFE19B000D0275 /* json_writer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

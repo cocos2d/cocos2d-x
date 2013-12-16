@@ -31,14 +31,19 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 /**
- *  @js NA
  *  @lua NA
  */
 class CCComRender : public cocos2d::CCComponent
 {
 protected:
+    /**
+     *  @js ctor
+     */
     CCComRender(void);
     CCComRender(cocos2d::CCNode *node, const char *comName);
+    /**
+     *  @js NA
+     */
     virtual ~CCComRender(void);
     
 public:

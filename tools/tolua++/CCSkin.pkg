@@ -1,0 +1,23 @@
+class CCSkin : public CCSprite
+{
+    static CCSkin *create();
+    static CCSkin *createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static CCSkin *create(const char *pszFileName);
+    CCSkin();
+
+    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
+    bool initWithFile(const char *pszFilename);
+
+    void updateArmatureTransform();
+    void updateTransform();
+
+    CCAffineTransform nodeToWorldTransform();
+    CCAffineTransform nodeToWorldTransformAR();
+
+    virtual const CCBaseData& getSkinData(void);
+    virtual void setSkinData(const CCBaseData& var);
+
+    virtual CCBone* getBone();
+    virtual void setBone(CCBone* var);
+    std::string getDisplayName() const;
+};
