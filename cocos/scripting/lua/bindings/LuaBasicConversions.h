@@ -32,6 +32,7 @@ extern bool luaval_to_number(lua_State* L,int lo,double* outValue);
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue);
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue);
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue);
+extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue);
 
 extern bool luaval_to_point(lua_State* L,int lo,Point* outValue);
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue);
