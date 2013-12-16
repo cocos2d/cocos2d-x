@@ -377,13 +377,21 @@
     <ClCompile Include="..\..\..\Classes\AccelerometerTest\AccelerometerTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dComponent.cpp" />
     <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dComponent.h" />
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXSample.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Classes">
