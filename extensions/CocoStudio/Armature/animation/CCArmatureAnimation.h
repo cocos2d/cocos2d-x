@@ -107,7 +107,7 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    virtual void setAnimationInternal(float animationInternal);
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {};
 
     using CCProcessBase::play;
     /**
@@ -146,8 +146,14 @@ public:
      */
     virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
+    /**
+     * Play several animation by names
+     */
     virtual void play(bool loop, const std::string *movementNames, int movementNumber);
 
+    /**
+     * Play several animation by index
+     */
     virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
 
     /**
