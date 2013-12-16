@@ -195,7 +195,7 @@ void LabelMainScene::onIncrease(Object* sender)
         for( int i=0;i< kNodesIncrease;i++)
         {
             auto label = LabelTTF::create("LabelTTF", "Marker Felt", 30);
-            label->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height * 0.8f)));
+            label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
             _quantityNodes++;
@@ -205,7 +205,7 @@ void LabelMainScene::onIncrease(Object* sender)
         for( int i=0;i< kNodesIncrease;i++)
         {
             auto label = LabelBMFont::create("LabelBMFont", "fonts/bitmapFontTest3.fnt");
-            label->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height * 0.8f)));
+            label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
             _quantityNodes++;
@@ -215,7 +215,7 @@ void LabelMainScene::onIncrease(Object* sender)
         for( int i=0;i< kNodesIncrease;i++)
         {
             auto label = Label::createWithTTF("Label", "fonts/arial.ttf", 60, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
-            label->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height * 0.8f)));
+            label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
             _quantityNodes++;
@@ -225,7 +225,7 @@ void LabelMainScene::onIncrease(Object* sender)
         for( int i=0;i< kNodesIncrease;i++)
         {
             auto label = LabelBMFont::create(LongSentencesExample, "fonts/bitmapFontTest3.fnt");
-            label->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height * 0.8f)));
+            label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
             _quantityNodes++;
@@ -235,7 +235,7 @@ void LabelMainScene::onIncrease(Object* sender)
         for( int i=0;i< kNodesIncrease;i++)
         {
             auto label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 60, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr);
-            label->setPosition(Point((rand() % (int)size.width), (rand() % (int)size.height * 0.8f)));
+            label->setPosition(Point((rand() % 50), rand()%((int)size.height/3)));
             _labelContainer->addChild(label, 1, _quantityNodes);
 
             _quantityNodes++;
@@ -417,7 +417,7 @@ void  LabelMainScene::finishAutoTest()
         }
     }
     
-    log("Sprite performance test is  finish ");
+    log("Label performance test is  finish ");
 }
 
 void  LabelMainScene::onAutoTest(Object* sender)
