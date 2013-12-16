@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\..\..\external\json\json_reader.cpp" />
     <ClCompile Include="..\..\..\..\external\json\json_value.cpp" />
     <ClCompile Include="..\..\..\..\external\json\json_writer.cpp" />
+    <ClCompile Include="..\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CCActionFrame.cpp" />
     <ClCompile Include="..\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CCActionManagerEx.cpp" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\..\..\..\external\json\reader.h" />
     <ClInclude Include="..\..\..\..\external\json\value.h" />
     <ClInclude Include="..\..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\CCActionEaseEx.h" />
     <ClInclude Include="..\CCActionFrame.h" />
     <ClInclude Include="..\CCActionFrameEasing.h" />
     <ClInclude Include="..\CCActionManagerEx.h" />

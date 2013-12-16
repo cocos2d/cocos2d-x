@@ -144,6 +144,9 @@
     <ClCompile Include="..\..\..\..\external\json\json_writer.cpp">
       <Filter>json\libjson</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCActionEaseEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CCActionFrameEasing.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\json\features.h">
       <Filter>json\libjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionEaseEx.h">
+      <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
