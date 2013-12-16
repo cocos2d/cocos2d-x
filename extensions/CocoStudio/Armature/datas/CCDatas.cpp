@@ -269,7 +269,7 @@ CCFrameData::CCFrameData(void)
 
 CCFrameData::~CCFrameData(void)
 {
-    CC_SAFE_DELETE(easingParams);
+    CC_SAFE_DELETE_ARRAY(easingParams);
 }
 
 void CCFrameData::copy(const CCBaseData *node)
@@ -284,7 +284,7 @@ void CCFrameData::copy(const CCBaseData *node)
         tweenEasing = frameData->tweenEasing;
         easingParamNumber = frameData->easingParamNumber;
 
-        CC_SAFE_DELETE(easingParams);
+        CC_SAFE_DELETE_ARRAY(easingParams);
         if (easingParamNumber != 0)
         {
             easingParams = new float[easingParamNumber];

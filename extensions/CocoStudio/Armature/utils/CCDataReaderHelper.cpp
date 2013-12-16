@@ -71,8 +71,6 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-// static const char *A_VERT = "vert";
-// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -85,9 +83,7 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
-//static const char *A_EASING_PARAM_NUMBER = "twEPN";
 static const char *A_EASING_PARAM = "twEP";
-//static const char *A_TWEEN_ROTATE = "twR";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
 static const char *A_MOVEMENT = "mov";
@@ -121,16 +117,11 @@ static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
 static const char *A_TWEEN_FRAME = "tweenFrame";
-//static const char *A_ROTATION = "rotation";
-//static const char *A_USE_COLOR_INFO = "uci";
 
 
 
 static const char *CONTOUR = "con";
 static const char *CONTOUR_VERTEX = "con_vt";
-
-//static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
-//static const char *SOUND_FRAME = "soundFrame";
 
 
 static const char *FL_NAN = "NaN";

@@ -78,7 +78,7 @@ void CCDisplayFactory::updateDisplay(CCBone *bone, float dt, bool dirty)
     case CS_DISPLAY_SPRITE:
         if (dirty)
         {
-            ((CCSkin*)display)->updateArmatureTransform();
+            (static_cast<CCSkin*>(display))->updateArmatureTransform();
         }
         break;
     case CS_DISPLAY_PARTICLE:
