@@ -50,6 +50,7 @@ ControlButton::ControlButton()
 , _titleLabel(NULL)
 , _backgroundSprite(NULL)
 , _zoomOnTouchDown(false)
+, _scaleRatio(1.0)
 , _titleDispatchTable(NULL)
 , _titleColorDispatchTable(NULL)
 , _titleLabelDispatchTable(NULL)
@@ -97,8 +98,6 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         this->setBackgroundSpriteDispatchTable(Dictionary::create());
 
         _isPushed = false;
-        _zoomOnTouchDown = true;
-
         _currentTitle=NULL;
 
         // Adjust the background image by default
@@ -106,6 +105,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         setPreferredSize(Size::ZERO);
         // Zooming button by default
         _zoomOnTouchDown = true;
+        _scaleRatio = 1.1f;
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
@@ -220,7 +220,7 @@ void ControlButton::setHighlighted(bool enabled)
     needsLayout();
     if( _zoomOnTouchDown )
     {
-        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? 1.1f : 1.0f;
+        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? _scaleRatio : 1.0f;
         Action *zoomAction = ScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);

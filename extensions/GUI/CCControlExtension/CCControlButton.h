@@ -223,6 +223,8 @@ protected:
 
     /** Adjust the button zooming on touchdown. Default value is YES. */
     CC_PROPERTY(bool, _zoomOnTouchDown, ZoomOnTouchDown);
+    /** Scale ratio button on touchdown. Default value 1.1f */
+    CC_SYNTHESIZE(float, _scaleRatio, ScaleRatio);
 
     CC_PROPERTY_PASS_BY_REF(Point, _labelAnchorPoint, LabelAnchorPoint);
 
