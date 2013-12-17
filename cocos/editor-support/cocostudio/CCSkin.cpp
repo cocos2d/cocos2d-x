@@ -135,11 +135,11 @@ const BaseData &Skin::getSkinData() const
 
 void Skin::updateArmatureTransform()
 {
-    _transform = TransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
-    if(_armature && _armature->getBatchNode())
-    {
-        _transform = TransformConcat(_transform, _armature->getNodeToParentTransform());
-    }
+    _transform = TransformConcat(_bone->getNodeToArmatureTransform(), _skinTransform);
+//    if(_armature && _armature->getBatchNode())
+//    {
+//        _transform = TransformConcat(_transform, _armature->getNodeToParentTransform());
+//    }
 }
 
 void Skin::updateTransform()
@@ -219,8 +219,6 @@ void Skin::setBone(Bone *bone)
     if(Armature *armature = _bone->getArmature())
     {
         _armature = armature;
-        TextureAtlas *atlas = armature->getTexureAtlasWithTexture(_texture);
-        setTextureAtlas(atlas);
     }
 }
 
