@@ -113,7 +113,6 @@ void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ t
 }
 
 
-
 void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
     std::lock_guard<std::mutex> guard(mMutex);
