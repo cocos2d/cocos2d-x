@@ -178,8 +178,8 @@ void TextureCache::loadImage()
         {
            _imageInfoMutex.lock();
            ImageInfo *imageInfo;
-           unsigned int pos = 0;
-           unsigned int infoSize = _imageInfoQueue->size();
+           size_t pos = 0;
+           size_t infoSize = _imageInfoQueue->size();
            for (; pos < infoSize; pos++)
            {
                imageInfo = (*_imageInfoQueue)[pos];
