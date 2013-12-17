@@ -1853,8 +1853,6 @@
 		593BDCDF184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */; };
 		593BDCE0184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
 		593BDCE1184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
-		593BDCE2184D0A6E00C21E48 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */; };
-		593BDCE3184D0A6E00C21E48 /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */; };
 		593BDCE4184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
 		593BDCE5184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
 		593BDCE6184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
@@ -5317,12 +5315,14 @@
 		74AC83D91006ABC123943F35 /* renderer */ = {
 			isa = PBXGroup;
 			children = (
-				50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */,
-				50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */,
 				593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */,
 				593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */,
+				50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */,
+				50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */,
 				593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */,
 				593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */,
+				74AC8BBFF8202DFA0628CC61 /* CCNewRenderTexture.cpp */,
+				74AC8FADF4137304F1C5F060 /* CCNewRenderTexture.h */,
 				593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */,
 				593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */,
 				593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */,
@@ -5331,24 +5331,22 @@
 				593BDCD7184D0A6E00C21E48 /* CCNewTextureAtlas.h */,
 				593BDCD8184D0A6E00C21E48 /* CustomCommand.cpp */,
 				593BDCD9184D0A6E00C21E48 /* CustomCommand.h */,
+				74AC80EEB031D67E86B45096 /* Frustum.cpp */,
+				74AC840F2F17ED6D0163669F /* Frustum.h */,
 				593BDCDA184D0A6E00C21E48 /* GroupCommand.cpp */,
 				593BDCDB184D0A6E00C21E48 /* GroupCommand.h */,
+				74AC853F6B597094730AFB36 /* MaterialManager.cpp */,
+				74AC800F4905C8827A44EED3 /* MaterialManager.h */,
 				593BDCDC184D0A6E00C21E48 /* NewClippingNode.cpp */,
 				593BDCDD184D0A6E00C21E48 /* NewClippingNode.h */,
-				74AC840F2F17ED6D0163669F /* Frustum.h */,
-				74AC8DF0EA49A124E1B11681 /* Renderer.h */,
-				74AC80EEB031D67E86B45096 /* Frustum.cpp */,
-				74AC8EB8FE47EED9B30B7106 /* Renderer.cpp */,
-				74AC8C4AE1EB0FCB287E7396 /* QuadCommand.h */,
 				74AC8D28EF93BFF332D3C456 /* QuadCommand.cpp */,
-				74AC8F4F7D9E52FCB522B647 /* RenderCommand.h */,
-				74AC8CC6504014E3A59C55B2 /* RenderMaterial.h */,
-				74AC800F4905C8827A44EED3 /* MaterialManager.h */,
+				74AC8C4AE1EB0FCB287E7396 /* QuadCommand.h */,
 				74AC80F6E92FC29EA536D7F8 /* RenderCommand.cpp */,
+				74AC8F4F7D9E52FCB522B647 /* RenderCommand.h */,
+				74AC8EB8FE47EED9B30B7106 /* Renderer.cpp */,
+				74AC8DF0EA49A124E1B11681 /* Renderer.h */,
 				74AC82DE19B10586E1C39974 /* RenderMaterial.cpp */,
-				74AC853F6B597094730AFB36 /* MaterialManager.cpp */,
-				74AC8BBFF8202DFA0628CC61 /* CCNewRenderTexture.cpp */,
-				74AC8FADF4137304F1C5F060 /* CCNewRenderTexture.h */,
+				74AC8CC6504014E3A59C55B2 /* RenderMaterial.h */,
 			);
 			path = renderer;
 			sourceTree = "<group>";
