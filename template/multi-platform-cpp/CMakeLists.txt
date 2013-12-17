@@ -60,6 +60,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/math/kazmath/include
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
+  ${COCOS2D_ROOT}/external/edtaa3func
   ${COCOS2D_ROOT}/external/jpeg/include/linux
   ${COCOS2D_ROOT}/external/tiff/include/linux
   ${COCOS2D_ROOT}/external/webp/include/linux

@@ -174,7 +174,8 @@ renderer/RenderMaterial.cpp \
 ../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
-../../external/unzip/unzip.cpp
+../../external/unzip/unzip.cpp \
+../../external/edtaa3func/edtaa3func.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
@@ -195,7 +196,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/edtaa3func
 
 
 LOCAL_LDLIBS := -lGLESv2 \

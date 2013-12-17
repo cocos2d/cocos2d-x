@@ -30,14 +30,14 @@ NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
-FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
+FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
 {
-    std::string atlasName = generateFontName(fontFileName, size, glyphs);
+    std::string atlasName = generateFontName(fontFileName, size, glyphs, useDistanceField);
     FontAtlas  *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
-        tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs, customGlyphs);
+        tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs, customGlyphs, useDistanceField);
         if (tempAtlas)
             _atlasMap[atlasName] = tempAtlas;
     }
@@ -51,7 +51,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, 
 
 FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
 {
-    std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM);
+    std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM,false);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
@@ -68,7 +68,7 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
     return tempAtlas;
 }
 
-std::string FontAtlasCache::generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs)
+std::string FontAtlasCache::generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField)
 {
     std::string tempName(fontFileName);
     
@@ -93,7 +93,8 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
         default:
             break;
     }
-    
+    if(useDistanceField)
+        tempName.append("df");
     // std::to_string is not supported on android, using std::stringstream instead.
     std::stringstream ss;
     ss << size;
