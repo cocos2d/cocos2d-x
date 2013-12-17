@@ -1047,6 +1047,8 @@
 		50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
 		50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
 		50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
+		599121E6182C74AC00CE785B /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599121E4182C74AC00CE785B /* NewRendererTest.cpp */; };
+		599121E7182C74AC00CE785B /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599121E4182C74AC00CE785B /* NewRendererTest.cpp */; };
 		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2851,6 +2853,8 @@
 		50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
 		50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
 		50E9E93C182A274000F6FDF1 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
+		599121E4182C74AC00CE785B /* NewRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewRendererTest.cpp; sourceTree = "<group>"; };
+		599121E5182C74AC00CE785B /* NewRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRendererTest.h; sourceTree = "<group>"; };
 		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
 		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4031,6 +4035,7 @@
 		1AAF4FA5180E2C17000584C8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				599121E3182C74AC00CE785B /* NewRendererTest */,
 				1AAF4FA6180E2C17000584C8 /* AccelerometerTest */,
 				1AAF4FA9180E2C17000584C8 /* ActionManagerTest */,
 				1AAF4FAC180E2C17000584C8 /* ActionsEaseTest */,
@@ -5469,6 +5474,15 @@
 			path = UIListViewTest;
 			sourceTree = "<group>";
 		};
+		599121E3182C74AC00CE785B /* NewRendererTest */ = {
+			isa = PBXGroup;
+			children = (
+				599121E4182C74AC00CE785B /* NewRendererTest.cpp */,
+				599121E5182C74AC00CE785B /* NewRendererTest.h */,
+			);
+			path = NewRendererTest;
+			sourceTree = "<group>";
+		};
 		59A79D5A1821E95C00F19697 /* InputTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -6895,6 +6909,7 @@
 				1AAF5220180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5222180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,
 				1AAF5224180E2C1A000584C8 /* PhysicsTest.cpp in Sources */,
+				599121E6182C74AC00CE785B /* NewRendererTest.cpp in Sources */,
 				1AAF5226180E2C1A000584C8 /* RenderTextureTest.cpp in Sources */,
 				1AAF5228180E2C1A000584C8 /* RotateWorldTest.cpp in Sources */,
 				1AAF522A180E2C1A000584C8 /* SceneTest.cpp in Sources */,
@@ -7150,6 +7165,7 @@
 				1AAF51EF180E2C1A000584C8 /* WebSocketTest.cpp in Sources */,
 				1AAF51F1180E2C1A000584C8 /* NotificationCenterTest.cpp in Sources */,
 				1AAF51F3180E2C1A000584C8 /* Scale9SpriteTest.cpp in Sources */,
+				599121E7182C74AC00CE785B /* NewRendererTest.cpp in Sources */,
 				1AAF51F5180E2C1A000584C8 /* CustomTableViewCell.cpp in Sources */,
 				1AAF51F7180E2C1A000584C8 /* TableViewTestScene.cpp in Sources */,
 				1AAF51F9180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,

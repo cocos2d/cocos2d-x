@@ -39,6 +39,7 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -1226,35 +1227,40 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getNodeToParentTransform() const;
+    virtual const kmMat4& getNodeToParentTransform() const;
+    virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getParentToNodeTransform() const;
+    virtual const kmMat4& getParentToNodeTransform() const;
+    virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToWorldTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const;
+    virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getWorldToNodeTransform() const;
+    virtual kmMat4 getWorldToNodeTransform() const;
+    virtual AffineTransform getWorldToNodeAffineTransform() const;
+
 
     /** @deprecated Use worldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 
@@ -1343,6 +1349,7 @@ public:
      @endcode
      */
     void setAdditionalTransform(const AffineTransform& additionalTransform);
+    void setAdditionalTransform(const kmMat4& additionalTransform);
 
     /// @} end of Coordinate Converters
 
@@ -1426,9 +1433,10 @@ protected:
     Size _contentSize;             ///< untransformed size of the node
 
     // "cache" variables are allowed to be mutable
-    mutable AffineTransform _additionalTransform; ///< transform
-    mutable AffineTransform _transform;     ///< transform
-    mutable AffineTransform _inverse;       ///< inverse transform
+    mutable kmMat4 _additionalTransform; ///< transform
+    mutable kmMat4 _transform;     ///< transform
+    mutable kmMat4 _inverse;       ///< inverse transform
+    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
     mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag

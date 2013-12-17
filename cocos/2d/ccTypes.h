@@ -317,6 +317,16 @@ struct BlendFunc
     const static BlendFunc ALPHA_NON_PREMULTIPLIED;
     //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
     const static BlendFunc ADDITIVE;
+
+    bool operator==(const BlendFunc &a) const
+    {
+        return src == a.src && dst == a.dst;
+    }
+
+    bool operator<(const BlendFunc &a) const
+    {
+        return src < a.src || (src < a.src && dst < a.dst);
+    }
 };
 
 // Label::VAlignment

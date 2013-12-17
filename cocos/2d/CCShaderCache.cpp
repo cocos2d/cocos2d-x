@@ -33,6 +33,7 @@ NS_CC_BEGIN
 
 enum {
     kShaderType_PositionTextureColor,
+    kShaderType_PositionTextureColor_noMVP,
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionColor,
     kShaderType_PositionTexture,
@@ -105,6 +106,11 @@ void ShaderCache::loadDefaultShaders()
     GLProgram *p = new GLProgram();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
     _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, p ) );
+
+    // Position Texture Color without MVP shader
+    p = new GLProgram();
+    loadDefaultShader(p, kShaderType_PositionTextureColor_noMVP);
+    _programs.insert( std::make_pair( GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, p ) );
 
     // Position Texture Color alpha test
     p = new GLProgram();
@@ -254,6 +260,15 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
             
             break;
+        case kShaderType_PositionTextureColor_noMVP:
+            p->initWithVertexShaderByteArray(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
+
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+
+            break;
+
         case kShaderType_PositionTextureColorAlphaTest:
             p->initWithVertexShaderByteArray(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             
