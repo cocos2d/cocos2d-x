@@ -621,17 +621,17 @@ void CCArmature::drawContour()
         for (auto object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
-            const std::vector<CCPoint> &vertexList = body->getCalculatedVertexList();
+            const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
-            int length = vertexList.size();
+            unsigned long length = vertexList.size();
             Point *points = new Point[length];
-            for (int i = 0; i<length; i++)
+            for (unsigned long i = 0; i<length; i++)
             {
-                CCPoint p = vertexList.at(i);
+                Point p = vertexList.at(i);
                 points[i].x = p.x;
                 points[i].y = p.y;
             }
-            DrawPrimitives::drawPoly( points, length, true );
+            DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
             delete points;
         }

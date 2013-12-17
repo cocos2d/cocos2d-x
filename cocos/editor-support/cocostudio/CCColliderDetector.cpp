@@ -192,8 +192,8 @@ void ColliderDetector::addContourData(ContourData *contourData)
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     std::vector<Point> &calculatedVertexList = colliderBody->_calculatedVertexList;
     
-    int num = contourData->vertexList.size();
-    for (int i = 0; i < num; i++)
+    unsigned long num = contourData->vertexList.size();
+    for (unsigned long i = 0; i < num; i++)
     {
         calculatedVertexList.push_back(Point());
     }
@@ -354,14 +354,14 @@ void ColliderDetector::updateTransform(kmMat4 &t)
         }
 #endif
 
-        int num = contourData->vertexList.size();
+        unsigned long num = contourData->vertexList.size();
         std::vector<cocos2d::Point> &vs = contourData->vertexList;
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
         std::vector<cocos2d::Point> &cvs = colliderBody->_calculatedVertexList;
 #endif
 
-        for (int i = 0; i < num; i++)
+        for (unsigned long i = 0; i < num; i++)
         {
             helpPoint.setPoint( vs.at(i).x,  vs.at(i).y);
             helpPoint = PointApplyTransform(helpPoint, t);
@@ -391,7 +391,7 @@ void ColliderDetector::updateTransform(kmMat4 &t)
 
 #if ENABLE_PHYSICS_CHIPMUNK_DETECT
         cpConvexHull(num, shape->verts, nullptr, nullptr, 0);
-        for (int i = 0; i < num; i++)
+        for (unsigned long i = 0; i < num; i++)
         {
             cpVect b = shape->verts[(i + 1) % shape->numVerts];
             cpVect n = cpvnormalize(cpvperp(cpvsub(b, shape->verts[i])));

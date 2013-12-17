@@ -54,7 +54,6 @@ ArmatureAnimation::ArmatureAnimation()
     , _armature(nullptr)
     , _movementID("")
     , _toIndex(0)
-    , _tweenList(nullptr)
     , _ignoreFrameEvent(false)
     , _onMovementList(false)
     , _movementListLoop(false)
@@ -70,7 +69,6 @@ ArmatureAnimation::ArmatureAnimation()
 
 ArmatureAnimation::~ArmatureAnimation(void)
 {
-    CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
 
     CC_SAFE_RELEASE_NULL(_userObject);
@@ -83,8 +81,7 @@ bool ArmatureAnimation::init(Armature *armature)
     {
         _armature = armature;
 
-        _tweenList = new Array();
-        _tweenList->init();
+        _tweenList.clear();
 
         bRet = true;
     }
@@ -96,29 +93,29 @@ bool ArmatureAnimation::init(Armature *armature)
 
 void ArmatureAnimation:: pause()
 {
-    for(auto object : *_tweenList)
+    for(auto object : _tweenList)
     {
-		static_cast<Tween*>(object)->pause();
+		object->pause();
     }
     ProcessBase::pause();
 }
 
 void ArmatureAnimation::resume()
 {
-    for(auto object : *_tweenList)
+    for(auto object : _tweenList)
     {
-        static_cast<Tween*>(object)->resume();
+        object->resume();
     }
     ProcessBase::resume();
 }
 
 void ArmatureAnimation::stop()
 {
-    for(auto object : *_tweenList)
+    for(auto object : _tweenList)
     {
-        static_cast<Tween*>(object)->stop();
+        object->stop();
     }
-    _tweenList->removeAllObjects();
+    _tweenList.clear();
     ProcessBase::stop();
 }
 
@@ -209,7 +206,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     }
 
     MovementBoneData *movementBoneData = nullptr;
-    _tweenList->removeAllObjects();
+    _tweenList.clear();
 
     const Map<std::string, Bone*>& map = _armature->getBoneDic();
     for(auto element : map)
@@ -220,7 +217,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         Tween *tween = bone->getTween();
         if(movementBoneData && movementBoneData->frameList.size() > 0)
         {
-            _tweenList->addObject(tween);
+            _tweenList.pushBack(tween);
             movementBoneData->duration = _movementData->duration;
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 
@@ -308,9 +305,9 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _currentPercent = (float)_curFrameIndex / ((float)_movementData->duration-1);
     _currentFrame = _nextFrameIndex * _currentPercent;
 
-    for(auto object : *_tweenList)
+    for(auto object : _tweenList)
     {
-        static_cast<Tween *>(object)->gotoAndPlay(frameIndex);
+        object->gotoAndPlay(frameIndex);
     }
 
     _armature->update(0);
@@ -324,7 +321,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-int ArmatureAnimation::getMovementCount() const
+long ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }
@@ -333,9 +330,9 @@ void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
     
-    for(auto object : *_tweenList)
+    for(auto object : _tweenList)
     {
-		static_cast<Tween *>(object)->update(dt);
+		object->update(dt);
     }
 
     while (_frameEventQueue.size() > 0)

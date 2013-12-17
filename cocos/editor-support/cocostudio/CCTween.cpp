@@ -404,7 +404,7 @@ float Tween::updateFrameData(float currentPercent)
          *  Get frame length, if _toIndex >= _length, then set _toIndex to 0, start anew.
          *  _toIndex is next index will play
          */
-        int length = _movementBoneData->frameList.size();
+        long length = _movementBoneData->frameList.size();
         cocos2d::Vector<FrameData *> &frames = _movementBoneData->frameList;
 
         FrameData *from = nullptr;

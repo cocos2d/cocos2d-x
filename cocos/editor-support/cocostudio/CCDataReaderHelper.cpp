@@ -824,8 +824,8 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
         }
     }
 
-    int length = 0;
-    int index = 0;
+    unsigned long length = 0;
+    unsigned long index = 0;
     int parentTotalDuration = 0;
     int currentDuration = 0;
 
@@ -889,7 +889,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
     
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
 	cocos2d::Vector<FrameData*> &frames = movBoneData->frameList;
-	for (int j = movBoneData->frameList.size() - 1; j >= 0; j--)
+	for (long j = movBoneData->frameList.size() - 1; j >= 0; j--)
 	{
 		if (j > 0)
 		{
@@ -1514,7 +1514,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 	{
 		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
 		cocos2d::Vector<FrameData *> &frames = movementBoneData->frameList;
-		for (int i = frames.size() - 1; i >= 0; i--)
+		for (long i = frames.size() - 1; i >= 0; i--)
 		{
 			if (i > 0)
 			{

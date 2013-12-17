@@ -369,7 +369,7 @@ MovementData *AnimationData::getMovement(const char *movementName)
     return static_cast<MovementData *>(movementDataDic.at(movementName));
 }
 
-int AnimationData::getMovementCount()
+long AnimationData::getMovementCount()
 {
     return movementDataDic.size();
 }
