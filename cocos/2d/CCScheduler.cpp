@@ -677,7 +677,7 @@ unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval,
 
 void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
 {
-    for (int i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
+    for (ssize_t i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
     {
         SchedulerScriptHandlerEntry* entry = _scriptHandlerEntries.at(i);
         if (entry->getEntryId() == (int)scheduleScriptEntryID)
@@ -804,7 +804,7 @@ Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         }
     }
 
-    return std::move(idsWithSelectors);
+    return idsWithSelectors;
 }
 
 void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
@@ -949,7 +949,7 @@ void Scheduler::update(float dt)
             SchedulerScriptHandlerEntry* eachEntry = _scriptHandlerEntries.at(i);
             if (eachEntry->isMarkedForDeletion())
             {
-                _scriptHandlerEntries.remove(i);
+                _scriptHandlerEntries.erase(i);
             }
             else if (!eachEntry->isPaused())
             {

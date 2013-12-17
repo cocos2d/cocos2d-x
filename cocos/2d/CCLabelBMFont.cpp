@@ -40,6 +40,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 #include "CCDirector.h"
 #include "CCTextureCache.h"
 #include "ccUTF8.h"
+#include "CCMap.h"
 
 using namespace std;
 
@@ -60,25 +61,24 @@ static unsigned short* copyUTF16StringN(unsigned short* str)
 //
 //FNTConfig Cache - free functions
 //
-static Dictionary* s_pConfigurations = NULL;
+static Map<std::string, CCBMFontConfiguration*>* s_configurations = nullptr;
 
 CCBMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 {
     CCBMFontConfiguration* ret = NULL;
 
-    if( s_pConfigurations == NULL )
+    if( s_configurations == nullptr )
     {
-        s_pConfigurations = new Dictionary();
-        s_pConfigurations->init();
+        s_configurations = new Map<std::string, CCBMFontConfiguration*>();
     }
 
-    ret = static_cast<CCBMFontConfiguration*>( s_pConfigurations->objectForKey(fntFile) );
+    ret = s_configurations->at(fntFile);
     if( ret == NULL )
     {
         ret = CCBMFontConfiguration::create(fntFile.c_str());
         if (ret)
         {
-            s_pConfigurations->setObject(ret, fntFile);
+            s_configurations->insert(fntFile, ret);
         }        
     }
 
@@ -87,10 +87,10 @@ CCBMFontConfiguration* FNTConfigLoadFile(const std::string& fntFile)
 
 void FNTConfigRemoveCache( void )
 {
-    if (s_pConfigurations)
+    if (s_configurations)
     {
-        s_pConfigurations->removeAllObjects();
-        CC_SAFE_RELEASE_NULL(s_pConfigurations);
+        s_configurations->clear();
+        CC_SAFE_DELETE(s_configurations);
     }
 }
 
@@ -148,15 +148,15 @@ CCBMFontConfiguration::~CCBMFontConfiguration()
     CC_SAFE_DELETE(_characterSet);
 }
 
-const char* CCBMFontConfiguration::description(void) const
+std::string CCBMFontConfiguration::description(void) const
 {
-    return String::createWithFormat(
+    return StringUtils::format(
         "<CCBMFontConfiguration = " CC_FORMAT_PRINTF_SIZE_T " | Glphys:%d Kernings:%d | Image = %s>",
         (size_t)this,
         HASH_COUNT(_fontDefDictionary),
         HASH_COUNT(_kerningDictionary),
         _atlasName.c_str()
-    )->getCString();
+    );
 }
 
 void CCBMFontConfiguration::purgeKerningDictionary()
@@ -183,6 +183,7 @@ void CCBMFontConfiguration::purgeFontDefDictionary()
 std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string& controlFile)
 {    
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(controlFile);
+    
     String *contents = String::createWithContentsOfFile(fullpath.c_str());
 
     CCASSERT(contents, "CCBMFontConfiguration::parseConfigFile | Open file error.");
@@ -1203,6 +1204,10 @@ const std::string& LabelBMFont::getFntFile() const
     return _fntFile;
 }
 
+std::string LabelBMFont::getDescription() const
+{
+    return StringUtils::format("<LabelBMFont | Tag = %d, Label = '%s'>", _tag, _initialStringUTF8.c_str());
+}
 
 //LabelBMFont - Debug draw
 #if CC_LABELBMFONT_DEBUG_DRAW

@@ -52,7 +52,6 @@ class LabelProtocol;
 class Scheduler;
 class ActionManager;
 class Component;
-class Dictionary;
 class ComponentContainer;
 class EventDispatcher;
 #ifdef CC_USE_PHYSICS
@@ -152,11 +151,11 @@ public:
 
     /**
      * Gets the description string. It makes debugging easier.
-     * @return A string terminated with '\0'
+     * @return A string
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    virtual std::string getDescription() const;
 
     /// @} end of initializers
 
@@ -621,7 +620,7 @@ public:
      *
      * @return The amount of children.
      */
-    int getChildrenCount() const;
+    ssize_t getChildrenCount() const;
 
     /**
      * Sets the parent node
@@ -1042,10 +1041,10 @@ public:
      *
      * @return The number of actions that are running plus the ones that are schedule to run
      */
-    int getNumberOfRunningActions() const;
+    ssize_t getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActions() instead */
-    CC_DEPRECATED_ATTRIBUTE int numberOfRunningActions() const { return getNumberOfRunningActions(); };
+    CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
 
@@ -1402,7 +1401,7 @@ protected:
     void insertChild(Node* child, int z);
 
     /// Removes a child, call child->onExit(), do cleanup, remove it from children array.
-    void detachChild(Node *child, int index, bool doCleanup);
+    void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;

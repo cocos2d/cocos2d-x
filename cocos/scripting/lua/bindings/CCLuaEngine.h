@@ -29,11 +29,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
-#include "CCTouch.h"
-#include "CCSet.h"
-#include "CCNode.h"
+#include "cocos2d.h"
 #include "CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
@@ -121,7 +117,6 @@ public:
     
     virtual int sendEvent(ScriptEvent* message);
     virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
-    void extendLuaObject();
 private:
     LuaEngine(void)
     : _stack(NULL)
@@ -144,8 +139,6 @@ private:
     int handleAssetsManagerEvent(void* data);
     int handleCocoStudioEventListener(void* data);
     int handleArmatureWrapper(void* data);
-    void extendWebsocket(lua_State* lua_S);
-    void extendGLNode(lua_State* lua_S);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

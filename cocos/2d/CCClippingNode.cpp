@@ -91,10 +91,10 @@ bool ClippingNode::init()
     return init(NULL);
 }
 
-bool ClippingNode::init(Node *pStencil)
+bool ClippingNode::init(Node *stencil)
 {
     CC_SAFE_RELEASE(_stencil);
-    _stencil = pStencil;
+    _stencil = stencil;
     CC_SAFE_RETAIN(_stencil);
     
     _alphaThreshold = 1;
@@ -117,24 +117,44 @@ bool ClippingNode::init(Node *pStencil)
 void ClippingNode::onEnter()
 {
     Node::onEnter();
-    _stencil->onEnter();
+    
+    if (_stencil != nullptr)
+    {
+        _stencil->onEnter();
+    }
+    else
+    {
+        CCLOG("ClippingNode warning: _stencil is nil.");
+    }
 }
 
 void ClippingNode::onEnterTransitionDidFinish()
 {
     Node::onEnterTransitionDidFinish();
-    _stencil->onEnterTransitionDidFinish();
+    
+    if (_stencil != nullptr)
+    {
+        _stencil->onEnterTransitionDidFinish();
+    }
 }
 
 void ClippingNode::onExitTransitionDidStart()
 {
-    _stencil->onExitTransitionDidStart();
+    if (_stencil != nullptr)
+    {
+        _stencil->onExitTransitionDidStart();
+    }
+   
     Node::onExitTransitionDidStart();
 }
 
 void ClippingNode::onExit()
 {
-    _stencil->onExit();
+    if (_stencil != nullptr)
+    {
+        _stencil->onExit();
+    }
+    
     Node::onExit();
 }
 
@@ -321,7 +341,10 @@ void ClippingNode::visit()
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     transform();
-    _stencil->visit();
+    if (_stencil != nullptr)
+    {
+        _stencil->visit();
+    }
     kmGLPopMatrix();
     
     // restore alpha test state

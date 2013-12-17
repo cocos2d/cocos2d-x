@@ -207,7 +207,7 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
             // Remove the corresponding invocation object
             if (shouldBeRemoved)
             {
-                eventInvocationList.removeObject(invocation, bDeleteObjects);
+                eventInvocationList.eraseObject(invocation, bDeleteObjects);
             }
         });
     }

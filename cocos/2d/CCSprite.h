@@ -257,7 +257,7 @@ public:
      * Changes the display frame with animation name and index.
      * The animation name will be get from the AnimationCache
      */
-    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex);
+    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
 
 
@@ -291,13 +291,13 @@ public:
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline int getAtlasIndex(void) const { return _atlasIndex; }
+    inline ssize_t getAtlasIndex(void) const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
-    inline void setAtlasIndex(int atlasIndex) { _atlasIndex = atlasIndex; }
+    inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
      * Returns the rect of the Sprite in points
@@ -390,6 +390,8 @@ public:
     */
     inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
+
+    virtual std::string getDescription() const override;
 
     /// @{
     /// @name Functions inherited from Node
@@ -535,7 +537,7 @@ protected:
     // Data used when the sprite is rendered using a SpriteSheet
     //
     TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
+    ssize_t             _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
     SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
 
     bool                _dirty;             /// Whether the sprite needs to be updated

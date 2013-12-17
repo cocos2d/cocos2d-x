@@ -51,7 +51,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
 {
     if (ScrollView::initWithViewSize(size,container))
     {
-        _indices        = new std::set<long>();
+        _indices        = new std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
 
@@ -123,7 +123,7 @@ void TableView::reloadData()
     }
 }
 
-TableViewCell *TableView::cellAtIndex(long idx)
+TableViewCell *TableView::cellAtIndex(ssize_t idx)
 {
     if (_indices->find(idx) != _indices->end())
     {
@@ -139,7 +139,7 @@ TableViewCell *TableView::cellAtIndex(long idx)
     return nullptr;
 }
 
-void TableView::updateCellAtIndex(long idx)
+void TableView::updateCellAtIndex(ssize_t idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
@@ -161,7 +161,7 @@ void TableView::updateCellAtIndex(long idx)
     this->_addCellIfNecessary(cell);
 }
 
-void TableView::insertCellAtIndex(long idx)
+void TableView::insertCellAtIndex(ssize_t idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
@@ -197,7 +197,7 @@ void TableView::insertCellAtIndex(long idx)
     this->_updateContentSize();
 }
 
-void TableView::removeCellAtIndex(long idx)
+void TableView::removeCellAtIndex(ssize_t idx)
 {
     if (idx == CC_INVALID_INDEX)
     {
@@ -210,7 +210,7 @@ void TableView::removeCellAtIndex(long idx)
         return;
     }
 
-    unsigned int newIdx = 0;
+    ssize_t newIdx = 0;
 
     TableViewCell* cell = this->cellAtIndex(idx);
     if (!cell)
@@ -226,7 +226,7 @@ void TableView::removeCellAtIndex(long idx)
     _indices->erase(idx);
     this->_updateCellPositions();
 
-    for (int i = _cellsUsed.size()-1; i > newIdx; i--)
+    for (ssize_t i = _cellsUsed.size()-1; i > newIdx; i--)
     {
         cell = _cellsUsed.at(i);
         this->_setIndexForCell(cell->getIdx()-1, cell);
@@ -242,7 +242,7 @@ TableViewCell *TableView::dequeueCell()
     } else {
         cell = _cellsFreed.at(0);
         cell->retain();
-        _cellsFreed.remove(0);
+        _cellsFreed.erase(0);
         cell->autorelease();
     }
     return cell;
@@ -262,7 +262,7 @@ void TableView::_addCellIfNecessary(TableViewCell * cell)
 void TableView::_updateContentSize()
 {
     Size size = Size::ZERO;
-    unsigned int cellsCount = _dataSource->numberOfCellsInTableView(this);
+    ssize_t cellsCount = _dataSource->numberOfCellsInTableView(this);
 
     if (cellsCount > 0)
     {
@@ -296,7 +296,7 @@ void TableView::_updateContentSize()
 
 }
 
-Point TableView::_offsetFromIndex(long index)
+Point TableView::_offsetFromIndex(ssize_t index)
 {
     Point offset = this->__offsetFromIndex(index);
 
@@ -308,7 +308,7 @@ Point TableView::_offsetFromIndex(long index)
     return offset;
 }
 
-Point TableView::__offsetFromIndex(long index)
+Point TableView::__offsetFromIndex(ssize_t index)
 {
     Point offset;
     Size  cellSize;
@@ -397,7 +397,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     }
 
     _cellsFreed.pushBack(cell);
-    _cellsUsed.removeObject(cell);
+    _cellsUsed.eraseObject(cell);
     _isUsedCellsDirty = true;
     
     _indices->erase(cell->getIdx());
@@ -409,7 +409,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
     }
 }
 
-void TableView::_setIndexForCell(long index, TableViewCell *cell)
+void TableView::_setIndexForCell(ssize_t index, TableViewCell *cell)
 {
     cell->setAnchorPoint(Point(0.0f, 0.0f));
     cell->setPosition(this->_offsetFromIndex(index));
@@ -464,7 +464,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
         _tableViewDelegate->scrollViewDidScroll(this);
     }
 
-    long startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
+    ssize_t startIdx = 0, endIdx = 0, idx = 0, maxIdx = 0;
     Point offset = this->getContentOffset() * -1;
     maxIdx = MAX(countOfItems-1, 0);
 

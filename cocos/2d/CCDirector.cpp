@@ -184,34 +184,34 @@ void Director::setDefaultValues(void)
 	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
-	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
+	double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
 	_oldAnimationInterval = _animationInterval = 1.0 / fps;
 
 	// Display FPS
-	_displayStats = conf->getBool("cocos2d.x.display_fps", false);
+	_displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
 	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
-	if (strcmp(projection, "3d") == 0)
+    std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
+	if (projection == "3d")
 		_projection = Projection::_3D;
-	else if (strcmp(projection, "2d") == 0)
+	else if (projection == "2d")
 		_projection = Projection::_2D;
-	else if (strcmp(projection, "custom") == 0)
+	else if (projection == "custom")
 		_projection = Projection::CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
-	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
-	if (strcmp(pixel_format, "rgba8888") == 0)
+    std::string pixel_format = conf->getValue("cocos2d.x.texture.pixel_format_for_png", Value("rgba8888")).asString();
+	if (pixel_format == "rgba8888")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-	else if(strcmp(pixel_format, "rgba4444") == 0)
+	else if(pixel_format == "rgba4444")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-	else if(strcmp(pixel_format, "rgba5551") == 0)
+	else if(pixel_format == "rgba5551")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
+	bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
 	Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
@@ -595,7 +595,7 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
 
-    int index = _scenesStack.size();
+    ssize_t index = _scenesStack.size();
 
     _sendCleanupToScene = true;
     _scenesStack.replace(index - 1, scene);
@@ -618,7 +618,7 @@ void Director::popScene(void)
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
     _scenesStack.popBack();
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     if (c == 0)
     {
@@ -639,7 +639,7 @@ void Director::popToRootScene(void)
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     // level 0? -> end
     if (level == 0)

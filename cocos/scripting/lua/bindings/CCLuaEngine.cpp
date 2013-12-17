@@ -56,7 +56,6 @@ bool LuaEngine::init(void)
 {
     _stack = LuaStack::create();
     _stack->retain();
-    extendLuaObject();
     executeScriptFile("DeprecatedEnum.lua");
     executeScriptFile("DeprecatedClass.lua");
     executeScriptFile("Deprecated.lua");
@@ -668,56 +667,6 @@ int LuaEngine::handlerControlEvent(void* data)
     }
 
     return ret;    
-}
-
-void LuaEngine::extendLuaObject()
-{    
-    if ( NULL == _stack || NULL == _stack->getLuaState())
-        return;
-    
-    lua_State* lua_S = _stack->getLuaState();
-    extendWebsocket(lua_S);
-    extendGLNode(lua_S);
-    
-    _stack->clean();
-}
-
-void LuaEngine::extendWebsocket(lua_State* lua_S)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"WebSocket");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_WebSocket_registerScriptHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S,"unregisterScriptHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_WebSocket_unregisterScriptHandler00);
-        lua_rawset(lua_S,-3);
-    }
-#endif
-}
-
-void LuaEngine::extendGLNode(lua_State* lua_S)
-{
-    if (NULL == lua_S)
-        return;
-    
-    lua_pushstring(lua_S,"GLNode");
-    lua_rawget(lua_S,LUA_REGISTRYINDEX);
-    if (lua_istable(lua_S,-1))
-    {
-        lua_pushstring(lua_S,"registerScriptDrawHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_GLNode_registerScriptDrawHandler00);
-        lua_rawset(lua_S,-3);
-        lua_pushstring(lua_S,"unregisterScriptDrawHandler");
-        lua_pushcfunction(lua_S,tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00);
-        lua_rawset(lua_S,-3);
-    }
 }
 
 int LuaEngine::sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray)

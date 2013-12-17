@@ -50,10 +50,10 @@ void _setFree (void (*free) (void* ptr)) {
 	freeFunc = free;
 }
 
-char* _readFile (const char* path, int* length) {
+char* _readFile (const char* path, ssize_t* length) {
 	char *data;
 	FILE *file = fopen(path, "rb");
-    int readBytes = 0;
+    ssize_t readBytes = 0;
 	if (!file) return 0;
 
 	fseek(file, 0, SEEK_END);
