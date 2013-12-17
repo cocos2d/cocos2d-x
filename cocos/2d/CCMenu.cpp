@@ -291,7 +291,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
 {
     float height = -padding;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             height += child->getContentSize().height * child->getScaleY() + padding;
@@ -300,7 +300,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
 
     float y = height / 2.0f;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
@@ -317,7 +317,7 @@ void Menu::alignItemsHorizontally(void)
 void Menu::alignItemsHorizontallyWithPadding(float padding)
 {
     float width = -padding;
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             width += child->getContentSize().width * child->getScaleX() + padding;
@@ -326,7 +326,7 @@ void Menu::alignItemsHorizontallyWithPadding(float padding)
 
     float x = -width / 2.0f;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
@@ -365,7 +365,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     int columnsOccupied = 0;
     int rowColumns = 0;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             CCASSERT(row < rows.size(), "");
@@ -401,7 +401,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     float x = 0.0;
     float y = (float)(height / 2);
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             if (child)
@@ -469,7 +469,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     int rowsOccupied = 0;
     int columnRows;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             // check if too many menu items for the amount of rows/columns
@@ -511,7 +511,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     float x = (float)(-width / 2);
     float y = 0.0;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             if (columnRows == 0)

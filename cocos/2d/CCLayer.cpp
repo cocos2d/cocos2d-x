@@ -507,7 +507,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -525,7 +525,7 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -952,7 +952,7 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    _layers.forEach([](Layer* layer){
+    std::for_each(_layers.begin(), _layers.end(), [](Layer* layer){
         layer->cleanup();
     });
 }
