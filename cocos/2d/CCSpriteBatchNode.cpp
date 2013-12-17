@@ -51,7 +51,7 @@ NS_CC_BEGIN
 * creation with Texture2D
 */
 
-SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithTexture(tex, capacity);
@@ -64,7 +64,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, int capacity
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -76,7 +76,7 @@ SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, int capacity/* =
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, int capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -110,7 +110,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, int capacity)
+bool SpriteBatchNode::initWithFile(const char* fileImage, ssize_t capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -215,7 +215,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
     Node::removeChild(sprite, cleanup);
 }
 
-void SpriteBatchNode::removeChildAtIndex(int index, bool doCleanup)
+void SpriteBatchNode::removeChildAtIndex(ssize_t index, bool doCleanup)
 {
     CCASSERT(index>=0 && index < _children.size(), "Invalid index");
     removeChild(_children.at(index), doCleanup);
@@ -274,7 +274,7 @@ void SpriteBatchNode::sortAllChildren()
                 child->sortAllChildren();
             });
 
-            int index=0;
+            ssize_t index=0;
 
             //fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
             // and at the same time reorder descendants and the quads to the right index
@@ -288,12 +288,12 @@ void SpriteBatchNode::sortAllChildren()
     }
 }
 
-void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
+void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, ssize_t* curIndex)
 {
     auto& array = sprite->getChildren();
     auto count = array.size();
     
-    int oldIndex = 0;
+    ssize_t oldIndex = 0;
 
     if( count == 0 )
     {
@@ -354,7 +354,7 @@ void SpriteBatchNode::updateAtlasIndex(Sprite* sprite, int* curIndex)
     }
 }
 
-void SpriteBatchNode::swap(int oldIndex, int newIndex)
+void SpriteBatchNode::swap(ssize_t oldIndex, ssize_t newIndex)
 {
     CCASSERT(oldIndex>=0 && oldIndex < (int)_descendants.size() && newIndex >=0 && newIndex < (int)_descendants.size(), "Invalid index");
 
@@ -406,9 +406,9 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // if we're going beyond the current TextureAtlas's capacity,
     // all the previously initialized sprites will need to redo their texture coords
     // this is likely computationally expensive
-    int quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
+    ssize_t quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%zd] to [%zd].",
         _textureAtlas->getCapacity(),
         quantity);
 
@@ -420,7 +420,7 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     }
 }
 
-int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
+ssize_t SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, ssize_t index)
 {
     CCASSERT(index>=0 && index < _children.size(), "Invalid index");
 
@@ -452,7 +452,7 @@ int SpriteBatchNode::rebuildIndexInOrder(Sprite *parent, int index)
     return index;
 }
 
-int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
+ssize_t SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
 {
     auto& children = sprite->getChildren();
 
@@ -466,7 +466,7 @@ int SpriteBatchNode::highestAtlasIndexInChild(Sprite *sprite)
     }
 }
 
-int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
+ssize_t SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
 {
     auto& children = sprite->getChildren();
 
@@ -480,7 +480,7 @@ int SpriteBatchNode::lowestAtlasIndexInChild(Sprite *sprite)
     }
 }
 
-int SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
+ssize_t SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 {
     auto& siblings = sprite->getParent()->getChildren();
     auto childIndex = siblings.getIndex(sprite);
@@ -627,7 +627,7 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 // SpriteSheet Extension
 //implementation SpriteSheet (TMXTiledMapExtension)
 
-void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
+void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
 {
     CCASSERT( sprite != NULL, "Argument must be non-NULL");
     CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
@@ -652,7 +652,7 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, int index)
     sprite->updateTransform();
 }
 
-void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, int index)
+void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, ssize_t index)
 {
     CCASSERT(sprite != NULL, "Argument must be non-nil");
     CCASSERT(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");
@@ -699,6 +699,11 @@ SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int
     reorderBatch(false);
 
     return this;
+}
+
+std::string SpriteBatchNode::getDescription() const
+{
+    return StringUtils::format("<SpriteBatchNode | tag = %d>", _tag);
 }
 
 NS_CC_END

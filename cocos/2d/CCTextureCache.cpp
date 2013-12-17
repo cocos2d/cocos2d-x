@@ -87,7 +87,7 @@ void TextureCache::purgeSharedTextureCache()
 { 
 }
 
-const char* TextureCache::description() const
+std::string TextureCache::getDescription() const
 {
     return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
 }

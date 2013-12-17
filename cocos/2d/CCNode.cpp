@@ -395,7 +395,7 @@ void Node::setPositionY(float y)
     setPosition(Point(_position.x, y));
 }
 
-int Node::getChildrenCount() const
+ssize_t Node::getChildrenCount() const
 {
     return _children.size();
 }
@@ -581,9 +581,9 @@ void Node::cleanup()
 }
 
 
-const char* Node::description() const
+std::string Node::getDescription() const
 {
-    return String::createWithFormat("<Node | Tag = %d>", _tag)->getCString();
+    return StringUtils::format("<Node | Tag = %d", _tag);
 }
 
 // lazy allocs
@@ -683,7 +683,7 @@ void Node::removeChild(Node* child, bool cleanup /* = true */)
         return;
     }
 
-    auto index = _children.getIndex(child);
+    ssize_t index = _children.getIndex(child);
     if( index != CC_INVALID_INDEX )
         this->detachChild( child, index, cleanup );
 }
@@ -741,7 +741,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
     
 }
 
-void Node::detachChild(Node *child, int childIndex, bool doCleanup)
+void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
 {
     // IMPORTANT:
     //  -1st do onExit
@@ -770,7 +770,7 @@ void Node::detachChild(Node *child, int childIndex, bool doCleanup)
     // set parent nil at the end
     child->setParent(nullptr);
 
-    _children.remove(childIndex);
+    _children.erase(childIndex);
 }
 
 
@@ -1055,7 +1055,7 @@ Action * Node::getActionByTag(int tag)
     return _actionManager->getActionByTag(tag, this);
 }
 
-int Node::getNumberOfRunningActions() const
+ssize_t Node::getNumberOfRunningActions() const
 {
     return _actionManager->getNumberOfRunningActionsInTarget(this);
 }

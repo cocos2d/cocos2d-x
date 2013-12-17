@@ -93,18 +93,19 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 {
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
     std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
-    Dictionary *dict = Dictionary::createWithContentsOfFile(pathStr.c_str());
+    
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr.c_str());
 
-    CCASSERT(((String*)dict->objectForKey("version"))->intValue() == 1, "Unsupported version. Upgrade cocos2d version");
+    CCASSERT(dict["version"].asInt() == 1, "Unsupported version. Upgrade cocos2d version");
 
-    std::string texturePathStr = relPathStr + ((String*)dict->objectForKey("textureFilename"))->getCString();
-    String *textureFilename = String::create(texturePathStr);
-    unsigned int width = ((String*)dict->objectForKey("itemWidth"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = ((String*)dict->objectForKey("itemHeight"))->intValue() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int startChar = ((String*)dict->objectForKey("firstChar"))->intValue();
+    std::string textureFilename = relPathStr + dict["textureFilename"].asString();
+
+    unsigned int width = dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int height = dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int startChar = dict["firstChar"].asInt();
 
 
-    this->initWithString(theString, textureFilename->getCString(), width, height, startChar);
+    this->initWithString(theString, textureFilename.c_str(), width, height, startChar);
 
     return true;
 }
@@ -223,5 +224,10 @@ void LabelAtlas::draw()
     ccDrawPoly(vertices, 4, true);
 }
 #endif
+
+std::string LabelAtlas::getDescription() const
+{
+    return StringUtils::format("<LabelAtlas | Tag = %d, Label = '%s'>", _tag, _string.c_str());
+}
 
 NS_CC_END

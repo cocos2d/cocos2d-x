@@ -253,7 +253,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // reorder _children->array
             child->retain();
-            _children.remove(oldIndex);
+            _children.erase(oldIndex);
             _children.insert(newIndex, child);
             child->release();
 
@@ -412,7 +412,7 @@ void ParticleBatchNode::draw(void)
 
 
 
-void ParticleBatchNode::increaseAtlasCapacityTo(int quantity)
+void ParticleBatchNode::increaseAtlasCapacityTo(ssize_t quantity)
 {
     CCLOG("cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
           (long)_textureAtlas->getCapacity(),

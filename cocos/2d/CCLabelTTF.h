@@ -66,12 +66,7 @@ public:
      * @lua NA
      */
     virtual ~LabelTTF();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    const char* description() const;
-    
+
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1
      */
@@ -161,11 +156,16 @@ public:
     
     const std::string& getFontName() const;
     void setFontName(const std::string& fontName);
-    
-private:
-    bool updateTexture();
+
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getDescription() const override;
+
 protected:
-    
+    bool updateTexture();
+
     /** set the text definition for this label */
     void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
     FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
@@ -197,8 +197,6 @@ protected:
         
     /** font tint */
     Color3B   _textFillColor;
-
-    
 };
 
 

@@ -54,6 +54,11 @@
 #ifndef SPINE_EXTENSION_H_
 #define SPINE_EXTENSION_H_
 
+// for import ssize_t on win32 platform
+#if defined(_MSC_VER)
+#include "CCStdC.h"
+#endif
+
 /* All allocation uses these. */
 #define MALLOC(TYPE,COUNT) ((TYPE*)_malloc(sizeof(TYPE) * COUNT))
 #define CALLOC(TYPE,COUNT) ((TYPE*)_calloc(1, sizeof(TYPE) * COUNT))
@@ -109,7 +114,7 @@ void _free (void* ptr);
 void _setMalloc (void* (*_malloc) (size_t size));
 void _setFree (void (*_free) (void* ptr));
 
-char* _readFile (const char* path, int* length);
+char* _readFile (const char* path, ssize_t* length);
 
 /**/
 
