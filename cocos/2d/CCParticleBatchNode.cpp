@@ -42,6 +42,8 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
+#include "QuadCommand.h"
+#include "Renderer.h"
 
 NS_CC_BEGIN
 
@@ -401,18 +403,33 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    _textureAtlas->drawQuads();
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _textureAtlas->drawQuads();
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
+    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
+    Renderer::getInstance()->addCommand(cmd);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 
 
 
-void ParticleBatchNode::increaseAtlasCapacityTo(int quantity)
+void ParticleBatchNode::increaseAtlasCapacityTo(ssize_t quantity)
 {
     CCLOG("cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
           (long)_textureAtlas->getCapacity(),

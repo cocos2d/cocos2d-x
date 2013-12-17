@@ -215,7 +215,7 @@ void ColliderDetector::removeContourData(ContourData *contourData)
 		ColliderBody *body = (ColliderBody*)object;
 		if (body && body->getContourData() == contourData)
 		{
-			_colliderBodyList.erase(body);
+			_colliderBodyList.eraseObject(body);
 		}
 	}
 }
@@ -328,7 +328,7 @@ ColliderFilter *ColliderDetector::getColliderFilter()
 
 Point helpPoint;
 
-void ColliderDetector::updateTransform(AffineTransform &t)
+void ColliderDetector::updateTransform(kmMat4 &t)
 {
     if (!_active)
     {
@@ -364,7 +364,7 @@ void ColliderDetector::updateTransform(AffineTransform &t)
         for (int i = 0; i < num; i++)
         {
             helpPoint.setPoint( vs.at(i).x,  vs.at(i).y);
-            helpPoint = PointApplyAffineTransform(helpPoint, t);
+            helpPoint = PointApplyTransform(helpPoint, t);
 
 
 #if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX

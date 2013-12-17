@@ -77,8 +77,7 @@ void TransitionProgress::onEnter()
     texture->setAnchorPoint(Point(0.5f,0.5f));
 
     // render outScene to its texturebuffer
-    texture->clear(0, 0, 0, 1);
-    texture->begin();
+    texture->beginWithClear(0, 0, 0, 1);
     _sceneToBeModified->visit();
     texture->end();
 

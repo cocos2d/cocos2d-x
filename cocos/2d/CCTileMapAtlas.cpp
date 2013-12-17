@@ -222,7 +222,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, in
     quad->bl.colors = color;
 
     _textureAtlas->setDirty(true);
-    int totalQuads = _textureAtlas->getTotalQuads();
+    ssize_t totalQuads = _textureAtlas->getTotalQuads();
     if (index + 1 > totalQuads) {
         _textureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
     }
