@@ -23,7 +23,7 @@ public:
     ~QuadCommand();
     
 public:
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount,
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
               const kmMat4& mv);
 
     // +----------+----------+-----+-----------------------------------+
@@ -44,7 +44,7 @@ public:
 
     inline V3F_C4B_T2F_Quad* getQuad() { return _quad; }
 
-    inline int getQuadCount() { return _quadCount; }
+    inline ssize_t getQuadCount() { return _quadCount; }
 
     inline GLProgram* getShader() { return _shader; }
 
@@ -70,8 +70,8 @@ protected:
     BlendFunc _blendType;
 
     V3F_C4B_T2F_Quad* _quad;
-    int _quadCount;
-    int _capacity;
+    ssize_t _quadCount;
+    ssize_t _capacity;
 
 public:
     friend class RenderCommandPool<QuadCommand>;
