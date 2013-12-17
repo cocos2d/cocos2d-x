@@ -34,9 +34,9 @@ Layer *CreateLayer(int index)
     case TEST_PERFORMANCE:
         pLayer = new TestPerformance();
         break;
-    case TEST_PERFORMANCE_BATCHNODE:
-        pLayer = new TestPerformanceBatchNode();
-        break;
+//    case TEST_PERFORMANCE_BATCHNODE:
+//        pLayer = new TestPerformanceBatchNode();
+//        break;
     case TEST_CHANGE_ZORDER:
         pLayer = new TestChangeZorder();
         break;
@@ -598,7 +598,6 @@ std::string TestFrameEvent::title()
 void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
-
 
     if (!_gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG) || _gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
     {

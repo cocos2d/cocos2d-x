@@ -48,8 +48,8 @@ public:
     void updateArmatureTransform();
     void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const override;
-    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
+    kmMat4 getNodeToWorldTransform() const override;
+    kmMat4 getNodeToWorldTransformAR() const;
     /**
      *  @js NA
      *  @lua NA
@@ -69,7 +69,7 @@ protected:
     BaseData _skinData;
     Bone *_bone;
     Armature *_armature;
-    cocos2d::AffineTransform _skinTransform;
+    kmMat4 _skinTransform;
     std::string _displayName;
 };
 
