@@ -30,6 +30,11 @@
 #include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
+
+
+typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
+#define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
+
 /**
 *   @js NA
 *   @lua NA
@@ -45,13 +50,16 @@ public:
 	void purgeSceneReader();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
+	void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 private:
     cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 
 private:
-	static SceneReader* s_sharedReader;
+	static SceneReader* _sharedReader;
+	CCObject*       _pListener;
+	SEL_CallFuncOD  _pfnSelector;
 };
 
 
