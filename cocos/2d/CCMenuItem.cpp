@@ -918,7 +918,7 @@ void MenuItemToggle::addSubItem(MenuItem *item)
 
 MenuItemToggle::~MenuItemToggle()
 {
-    _subItems.forEach([](MenuItem* item){
+    std::for_each(_subItems.begin(), _subItems.end(), [](MenuItem* item){
         item->cleanup();
     });
 }
@@ -970,7 +970,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     {
         MenuItem::setEnabled(enabled);
 
-        _subItems.forEach([&enabled](MenuItem* item){
+        std::for_each(_subItems.begin(), _subItems.end(), [&enabled](MenuItem* item){
             item->setEnabled(enabled);
         });
     }
