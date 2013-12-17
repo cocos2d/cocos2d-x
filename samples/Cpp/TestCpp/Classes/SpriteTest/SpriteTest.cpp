@@ -1643,7 +1643,7 @@ void SpriteFrameTest::onEnter()
     }
 
     // append frames from another batch
-    moreFrames.insert(animFrames);
+    moreFrames.pushBack(animFrames);
     auto animMixed = Animation::createWithSpriteFrames(moreFrames, 0.3f);
 
 

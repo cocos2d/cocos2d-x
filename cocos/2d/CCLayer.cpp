@@ -1048,7 +1048,7 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
     if (Layer::init())
     {
         _layers.reserve(arrayOfLayers.size());
-        _layers.insert(arrayOfLayers);
+        _layers.pushBack(arrayOfLayers);
 
         _enabledLayer = 0;
         this->addChild(_layers.at(_enabledLayer));
