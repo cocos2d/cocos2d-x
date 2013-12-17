@@ -283,6 +283,11 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
+{
+    return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
+}
+
 bool luaval_to_long(lua_State* L,int lo, long* outValue)
 {
     if (NULL == L || NULL == outValue)

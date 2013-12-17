@@ -739,7 +739,7 @@ bool PhysicsBody::isResting() const
 void PhysicsBody::update(float delta)
 {
     // damping compute
-    if (_dynamic)
+    if (_dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
