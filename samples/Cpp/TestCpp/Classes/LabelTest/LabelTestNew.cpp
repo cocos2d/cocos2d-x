@@ -63,7 +63,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFFontsTestNew),
     CL(LabelTTFDynamicAlignment),
     CL(LabelTTFUnicodeNew),
-    CL(LabelBMFontTestNew)
+    CL(LabelBMFontTestNew),
+    CL(LabelTTFDistanceField),
+    CL(LabelTTFDistanceFieldEffect)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1134,3 +1136,77 @@ std::string LabelBMFontTestNew::subtitle()
     return "Uses the new Label with .FNT file";
 }
 
+LabelTTFDistanceField::LabelTTFDistanceField()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithTTF("Distance Field", "fonts/arial.ttf", 80, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
+    label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setColor( Color3B::GREEN );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+
+    auto action = Sequence::create(
+        DelayTime::create(1.0f),
+        ScaleTo::create(6.0f,5.0f,5.0f),
+        ScaleTo::create(6.0f,1.0f,1.0f),
+        nullptr);
+    label1->runAction(RepeatForever::create(action));
+
+    auto label2 = Label::createWithTTF("Distance Field", "fonts/arial.ttf", 80, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
+    label2->setPosition( Point(size.width/2, size.height/5) );
+    label2->setColor( Color3B::RED );
+    label2->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label2);
+
+}
+
+std::string LabelTTFDistanceField::title()
+{
+    return "New Label + .TTF";
+}
+
+std::string LabelTTFDistanceField::subtitle()
+{
+    return "Testing rendering base on DistanceField";
+}
+
+LabelTTFDistanceFieldEffect::LabelTTFDistanceFieldEffect()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto bg = LayerColor::create(Color4B(200,191,231,255));
+    this->addChild(bg);
+
+    auto label1 = Label::createWithTTF("Glow", "fonts/arial.ttf", 80, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
+    label1->setPosition( Point(size.width/2, size.height*0.5) );
+    label1->setColor( Color3B::GREEN );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    label1->setLabelEffect(LabelEffect::GLOW,Color3B::YELLOW);
+    addChild(label1);
+
+    auto label2 = Label::createWithTTF("Outline", "fonts/arial.ttf", 80, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
+    label2->setPosition( Point(size.width/2, size.height*0.375) );
+    label2->setColor( Color3B::RED );
+    label2->setAnchorPoint(Point(0.5, 0.5));
+    label2->setLabelEffect(LabelEffect::OUTLINE,Color3B::BLUE);
+    addChild(label2);
+
+    auto label3 = Label::createWithTTF("Shadow", "fonts/arial.ttf", 80, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
+    label3->setPosition( Point(size.width/2, size.height*0.25f) );
+    label3->setColor( Color3B::RED );
+    label3->setAnchorPoint(Point(0.5, 0.5));
+    label3->setLabelEffect(LabelEffect::SHADOW,Color3B::BLACK);
+    addChild(label3);
+
+}
+
+std::string LabelTTFDistanceFieldEffect::title()
+{
+    return "New Label + .TTF";
+}
+
+std::string LabelTTFDistanceFieldEffect::subtitle()
+{
+    return "Testing effect base on DistanceField";
+}
