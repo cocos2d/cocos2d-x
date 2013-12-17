@@ -3,7 +3,7 @@
 //
 
 
-#include "NewRendererTest.h"
+#include "NewRendererTest/NewRendererTest.h"
 #include "renderer/CCNewSprite.h"
 #include "renderer/CCNewSpriteBatchNode.h"
 #include "renderer/NewClippingNode.h"

@@ -2,7 +2,7 @@
 #define __CC_FRUSTUM_H__
 
 #include "CCPlatformMacros.h"
-#include "math/kazmath/include/kazmath/kazmath.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 

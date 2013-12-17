@@ -1,6 +1,7 @@
 #include "Frustum.h"
+#include "platform/CCCommon.h"
+
 #include <stdlib.h>
-#include "CCCommon.h"
 
 NS_CC_BEGIN
 
