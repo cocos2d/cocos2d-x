@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "cocostudio/CCProcessBase.h"
+#include "cocostudio/CCTween.h"
 #include <queue>
 
 namespace cocostudio {
@@ -182,7 +183,7 @@ public:
     /**
      * Get movement count
      */
-    int getMovementCount() const;
+    long getMovementCount() const;
 
     void update(float dt);
 
@@ -291,7 +292,7 @@ protected:
 
     int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    cocos2d::Array *_tweenList;
+    cocos2d::Vector<Tween*> _tweenList;
 
     bool _ignoreFrameEvent;
     
