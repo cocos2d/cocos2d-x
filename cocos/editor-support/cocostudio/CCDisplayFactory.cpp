@@ -86,12 +86,12 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
             {
                 CC_BREAK_IF(!detector->getBody());
 
-                AffineTransform displayTransform = display->getNodeToParentTransform();
+                kmMat4 displayTransform = display->getNodeToParentTransform();
                 Point anchorPoint =  display->getAnchorPointInPoints();
-                anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
-                displayTransform.tx = anchorPoint.x;
-                displayTransform.ty = anchorPoint.y;
-                AffineTransform t = AffineTransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
+                anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
+                displayTransform.mat[12] = anchorPoint.x;
+                displayTransform.mat[13] = anchorPoint.y;
+                kmMat4 t = TransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
                 detector->updateTransform(t);
             }
             while (0);

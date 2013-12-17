@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -403,6 +404,7 @@ public:
     * @lua NA
     */
     virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationX(float rotationX) override;
     virtual void setRotationY(float rotationY) override;
@@ -422,6 +424,7 @@ public:
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
+    virtual void updateQuadVertices();
     virtual void draw(void) override;
     /// @}
 
@@ -544,7 +547,7 @@ protected:
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    AffineTransform     _transformToBatch;
+    kmMat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered

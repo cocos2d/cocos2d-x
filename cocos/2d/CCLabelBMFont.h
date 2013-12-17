@@ -33,7 +33,7 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
-#include "CCSpriteBatchNode.h"
+#include "renderer/CCNewSpriteBatchNode.h"
 #include "uthash.h"
 #include <map>
 #include <sstream>
@@ -190,7 +190,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol
+class CC_DLL LabelBMFont : public NewSpriteBatchNode, public LabelProtocol, public RGBAProtocol
 {
 public:
     /**

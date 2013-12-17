@@ -46,6 +46,7 @@ typedef struct _hashUniformEntry
 } tHashUniformEntry;
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
@@ -240,8 +241,9 @@ void GLProgram::updateUniforms()
 
     _uniforms[UNIFORM_SAMPLER] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER);
 
+    _flags.usesP = _uniforms[UNIFORM_P_MATRIX] != -1;
+	_flags.usesMV = _uniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _uniforms[UNIFORM_MVP_MATRIX] != -1;
-	_flags.usesMV = (_uniforms[UNIFORM_MV_MATRIX] != -1 && _uniforms[UNIFORM_P_MATRIX] != -1 );
 	_flags.usesTime = (
                        _uniforms[UNIFORM_TIME] != -1 ||
                        _uniforms[UNIFORM_SIN_TIME] != -1 ||
@@ -329,7 +331,7 @@ std::string GLProgram::getProgramLog() const
 
 // Uniform cache
 
-bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes)
+bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes)
 {
     if (location < 0)
     {
@@ -492,7 +494,7 @@ void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2,
     }
 }
 
-void GLProgram::setUniformLocationWith2fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
 
@@ -502,7 +504,7 @@ void GLProgram::setUniformLocationWith2fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWith3fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
 
@@ -512,7 +514,7 @@ void GLProgram::setUniformLocationWith3fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
 
@@ -522,7 +524,7 @@ void GLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
     
     if( updated )
@@ -531,7 +533,7 @@ void GLProgram::setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixA
     }
 }
 
-void GLProgram::setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
     
     if( updated )
@@ -541,7 +543,7 @@ void GLProgram::setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixA
 }
 
 
-void GLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices)
+void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
@@ -553,22 +555,28 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixA
 
 void GLProgram::setUniformsForBuiltins()
 {
-    kmMat4 matrixP;
 	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+
+    setUniformsForBuiltins(matrixMV);
+}
+
+void GLProgram::setUniformsForBuiltins(const kmMat4 &matrixMV)
+{
+    kmMat4 matrixP;
 
 	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	
+
+    if(_flags.usesP)
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
+
+    if(_flags.usesMV)
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
 
     if(_flags.usesMVP) {
         kmMat4 matrixMVP;
         kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
         setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.mat, 1);
-    }
-
-    if(_flags.usesMV) {
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
     }
 
 	if(_flags.usesTime) {

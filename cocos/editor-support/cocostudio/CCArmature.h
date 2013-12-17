@@ -161,7 +161,7 @@ public:
     virtual void update(float dt) override;
     virtual void draw() override;
 
-    virtual const cocos2d::AffineTransform& getNodeToParentTransform() const override;
+    virtual const kmMat4& getNodeToParentTransform() const override;
     /**
      *  @js NA
      *  @lua NA
