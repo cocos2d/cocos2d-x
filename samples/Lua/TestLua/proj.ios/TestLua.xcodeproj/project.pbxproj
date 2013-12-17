@@ -185,6 +185,7 @@
 		1AD263D01683506D0089000C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B81683506C0089000C /* Shaders */; };
 		1AD263D11683506D0089000C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B91683506C0089000C /* TileMaps */; };
 		1AD263D21683506D0089000C /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263BA1683506C0089000C /* zwoptex */; };
+		37FFCAED186071240078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAEB186071240078F312 /* CCActionEaseEx.cpp */; };
 		46C1008C16BF786A00F74D54 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */; };
 		46C1008D16BF786A00F74D54 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */; };
 		46C1008E16BF786A00F74D54 /* CCLuaStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007E16BF786A00F74D54 /* CCLuaStack.cpp */; };
@@ -616,6 +617,8 @@
 		1AD263B81683506C0089000C /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		1AD263B91683506C0089000C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		1AD263BA1683506C0089000C /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		37FFCAEB186071240078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
+		37FFCAEC186071240078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
 		46C1007B16BF786A00F74D54 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
 		46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
@@ -1445,6 +1448,8 @@
 		ED53146B18331444008CD8A5 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				37FFCAEB186071240078F312 /* CCActionEaseEx.cpp */,
+				37FFCAEC186071240078F312 /* CCActionEaseEx.h */,
 				ED53146C18331444008CD8A5 /* CCActionFrame.cpp */,
 				ED53146D18331444008CD8A5 /* CCActionFrame.h */,
 				ED53146E18331444008CD8A5 /* CCActionFrameEasing.cpp */,
@@ -2008,6 +2013,7 @@
 				15C154A01683116B00D239F2 /* cpSpaceComponent.c in Sources */,
 				15C154A11683116B00D239F2 /* cpSpaceHash.c in Sources */,
 				15C154A21683116B00D239F2 /* cpSpaceQuery.c in Sources */,
+				37FFCAED186071240078F312 /* CCActionEaseEx.cpp in Sources */,
 				15C154A31683116B00D239F2 /* cpSpaceStep.c in Sources */,
 				ED53151E18331445008CD8A5 /* CCInputDelegate.cpp in Sources */,
 				15C154A41683116B00D239F2 /* cpSpatialIndex.c in Sources */,
