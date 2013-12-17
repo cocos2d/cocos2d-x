@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,12 +13,18 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using PhoneDirect3DXamlAppComponent;
+using System.Threading;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Microsoft.Phone.Shell;
+using Windows.UI.Input;
 
 namespace PhoneDirect3DXamlAppInterop
 {
     public partial class MainPage : PhoneApplicationPage
     {
         private Direct3DInterop m_d3dInterop = null;
+        TextBox m_textBox = null;
 
         // Constructor
         public MainPage()
@@ -49,12 +56,76 @@ namespace PhoneDirect3DXamlAppInterop
                 // Hook-up native component to DrawingSurfaceBackgroundGrid
                 DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
+
+                m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
+
             }
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
         {
             e.Cancel = m_d3dInterop.OnBackKeyPress();
+        }
+
+        public void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            ModifierKeys modifiers = Keyboard.Modifiers;
+
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Escape);
+                    e.Handled = true;
+                    break;
+                case Key.Back:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Back);
+                    e.Handled = true;
+                    break;
+                case Key.Enter:
+                    m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Enter);
+                    e.Handled = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
+            m_textBox.Text = "";
+        }
+
+        public void OnCocos2dEvent(Cocos2dEvent theEvent)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                switch (theEvent)
+                {
+                    case Cocos2dEvent.ShowKeyboard:
+                        if (m_textBox == null)
+                        {
+                            m_textBox = new TextBox();
+                            m_textBox.Opacity = 0.0;
+                            m_textBox.Width = 1;
+                            m_textBox.Height = 1;
+                            m_textBox.MaxLength = 1;
+                            m_textBox.KeyDown += OnKeyDown;
+                            m_textBox.KeyUp += OnKeyUp;
+                            LayoutRoot.Children.Add(m_textBox);
+                        }
+                        m_textBox.Focus();
+                        break;
+
+                    case Cocos2dEvent.HideKeyboard:
+                        if (m_textBox != null)
+                        {
+                            LayoutRoot.Children.Remove(m_textBox);
+                        }
+                        m_textBox = null;
+                        break;
+                }
+            });
         }
     }
 }

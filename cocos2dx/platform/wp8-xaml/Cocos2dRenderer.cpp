@@ -1,25 +1,48 @@
-﻿#include "pch.h"
+﻿/****************************************************************************
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "Cocos2dRenderer.h"
 #include "cocos2d.h"
 #include "CCApplication.h"
 #include "CCEGLView.h"
-#include "support/CCNotificationCenter.h"
-
-
+#include "AppDelegate.h"
 #include <ppltasks.h>
 
 using namespace Concurrency;
-
 using namespace DirectX;
 using namespace Microsoft::WRL;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Core;
+using namespace PhoneDirect3DXamlAppComponent;
+
 USING_NS_CC;
 
-Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false)
+Cocos2dRenderer::Cocos2dRenderer(): mInitialized(false), m_loadingComplete(false), m_delegate(nullptr)
 {
+    mApp = new AppDelegate();
 }
-
 
 // Creates and restores Cocos2d-x after DirectX and Angle contexts are created or updated
 void Cocos2dRenderer::CreateGLResources()
@@ -31,7 +54,8 @@ void Cocos2dRenderer::CreateGLResources()
 	    pEGLView->Create(m_eglDisplay, m_eglContext, m_eglSurface, m_renderTargetSize.Width, m_renderTargetSize.Height);
         pEGLView->setViewName("Cocos2d-x");
         CCApplication::sharedApplication()->run();
-    }
+        pEGLView->SetXamlEventDelegate(m_delegate);
+   }
     else
     {
         ccGLInvalidateStateCache();
@@ -42,12 +66,12 @@ void Cocos2dRenderer::CreateGLResources()
         CCDirector::sharedDirector()->setGLDefaultValues(); 
         CCDirector::sharedDirector()->resume(); 
    }
+
     m_loadingComplete = true;
 }
 
 void Cocos2dRenderer::Connect()
 {
-    // Handled in CreateGLResources()
 }
 
 // purge Cocos2d-x gl GL resourses since the DirectX/Angle Context has been lost 
@@ -67,28 +91,11 @@ IAsyncAction^ Cocos2dRenderer::OnSuspending()
     });
 }
 
-// restore your game state here
-void Cocos2dRenderer::OnResuming()
-{
-
-}
 
 // user pressed the Back Key on the phone
 bool Cocos2dRenderer::OnBackKeyPress()
 {
     return false;
-}
-
-void Cocos2dRenderer::OnFocusChange(bool active)
-{
-   if(active)
-   {
-        CCDirector::sharedDirector()->resume(); 
-   }
-   else
-   {
-        CCDirector::sharedDirector()->pause(); 
-   }
 }
 
 void Cocos2dRenderer::OnUpdateDevice()
@@ -129,6 +136,44 @@ void Cocos2dRenderer::OnPointerReleased(PointerEventArgs^ args)
 {
     CCEGLView::sharedOpenGLView()->OnPointerReleased(args);
 }
+
+void Cocos2dRenderer::OnKeyPressed(Platform::String^ text)
+{
+    char szUtf8[8] = {0};
+    int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)text->Data(), 1, szUtf8, sizeof(szUtf8), NULL, NULL);
+    CCIMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen);
+}
+
+void Cocos2dRenderer::OnCocos2dKeyEvent(Cocos2dKeyEvent event)
+{
+    switch(event)
+    {
+    case Cocos2dKeyEvent::Escape:
+        CCDirector::sharedDirector()->getKeypadDispatcher()->dispatchKeypadMSG(kTypeBackClicked);
+        break;
+	case Cocos2dKeyEvent::Back:
+        CCIMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
+        break;
+    case Cocos2dKeyEvent::Enter:
+		//SetFocus(false);
+        CCIMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
+        break;
+    default:
+        break;
+    }
+
+}
+
+void Cocos2dRenderer::SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate)
+{
+    m_delegate = delegate;
+    CCEGLView* eglView = CCEGLView::sharedOpenGLView();
+    if(eglView)
+    {
+        eglView->SetXamlEventDelegate(delegate);
+    }
+}
+
 
 
 

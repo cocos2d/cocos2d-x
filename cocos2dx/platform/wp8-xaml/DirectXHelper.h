@@ -7,6 +7,7 @@
 
 #pragma once
 
+
 // This header defines helper utilities to make DirectX APIs work with exceptions.
 namespace DX
 {
