@@ -576,7 +576,7 @@ void Node::cleanup()
     }
     
     // timers
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->cleanup();
     });
 }
@@ -939,7 +939,7 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->onEnter();
     });
 
@@ -960,7 +960,7 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->onEnterTransitionDidFinish();
     });
     
@@ -975,7 +975,7 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->onExitTransitionDidStart();
     });
     
@@ -1001,7 +1001,7 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->onExit();
     });
 }
@@ -1413,7 +1413,7 @@ bool Node::updatePhysicsTransform()
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         child->updateTransform();
     });
 }
@@ -1524,7 +1524,7 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 	
     if (_cascadeOpacityEnabled)
     {
-        _children.forEach([this](Node* child){
+        std::for_each(_children.begin(), _children.end(), [this](Node* child){
             RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
@@ -1579,7 +1579,7 @@ void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.forEach([this](Node* child){
+        std::for_each(_children.begin(), _children.end(), [this](Node* child){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {

@@ -168,7 +168,8 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     int idx=0;
 
-    mapInfo->getLayers().forEach([&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
+    auto& layers = mapInfo->getLayers();
+    std::for_each(layers.begin(), layers.end(), [&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
         if (layerInfo && layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
