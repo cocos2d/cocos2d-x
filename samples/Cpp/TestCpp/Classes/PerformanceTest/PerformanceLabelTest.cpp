@@ -311,10 +311,12 @@ void LabelMainScene::updateText(float dt)
     char text[20];
     sprintf(text,"%.2f",_accumulativeTime);
 
+    auto& children = _labelContainer->getChildren();
+    
     switch (_s_labelCurCase)
     {
     case kCaseLabelTTFUpdate:
-        _labelContainer->getChildren().forEach([&text](Node* child){
+        std::for_each(children.begin(), children.end(), [&text](Node* child){
             if (child)
             {
                 LabelTTF* label = (LabelTTF*)child;
@@ -323,7 +325,7 @@ void LabelMainScene::updateText(float dt)
         });
         break;
     case kCaseLabelBMFontUpdate:
-        _labelContainer->getChildren().forEach([&text](Node* child){
+        std::for_each(children.begin(), children.end(), [&text](Node* child){
             if (child)
             {
                 LabelBMFont* label = (LabelBMFont*)child;
@@ -332,7 +334,7 @@ void LabelMainScene::updateText(float dt)
         });
         break;
     case kCaseLabelUpdate:
-        _labelContainer->getChildren().forEach([&text](Node* child){
+        std::for_each(children.begin(), children.end(), [&text](Node* child){
             if (child)
             {
                 Label* label = (Label*)child;

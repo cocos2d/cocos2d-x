@@ -128,9 +128,9 @@ TMXOrthoTest::TMXOrthoTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    auto& pChildrenArray = map->getChildren();
+    auto& children = map->getChildren();
 
-    pChildrenArray.forEach([](Node* obj){
+    std::for_each(children.begin(), children.end(), [](Node* obj){
         auto child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -171,10 +171,10 @@ TMXOrthoTest2::TMXOrthoTest2()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-    auto& pChildrenArray = map->getChildren();
+    auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    pChildrenArray.forEach([&child](Node* obj){
+    std::for_each(children.begin(), children.end(), [&child](Node* obj){
         child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -203,7 +203,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    children.forEach([&child](Node* node){
+    std::for_each(children.begin(), children.end(), [&child](Node* node){
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -231,7 +231,10 @@ TMXOrthoTest4::TMXOrthoTest4()
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
     SpriteBatchNode* child = nullptr;
-    map->getChildren().forEach([&child](Node* node){
+    
+    auto& children = map->getChildren();
+    
+    std::for_each(children.begin(), children.end(), [&child](Node* node){
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -529,7 +532,9 @@ TMXUncompressedTest::TMXUncompressedTest()
     
     // testing release map
     TMXLayer* layer;
-    map->getChildren().forEach([&layer](Node* node){
+    
+    auto& children = map->getChildren();
+    std::for_each(children.begin(), children.end(), [&layer](Node* node){
         layer= static_cast<TMXLayer*>(node);
         layer->releaseMap();
     });
@@ -1097,7 +1102,8 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     Size CC_UNUSED s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    std::for_each(children.begin(), children.end(), [](Node* node){
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -1125,7 +1131,8 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    std::for_each(children.begin(), children.end(), [](Node* node){
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -1202,7 +1209,8 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    std::for_each(children.begin(), children.end(), [](Node* node){
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     });
@@ -1229,7 +1237,8 @@ TMXBug987::TMXBug987()
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
-    map->getChildren().forEach([](Node* child){
+    auto& children = map->getChildren();
+    std::for_each(children.begin(), children.end(), [](Node* child){
         auto node = static_cast<TMXLayer*>(child);
         node->getTexture()->setAntiAliasTexParameters();
     });

@@ -809,7 +809,7 @@ Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 
 void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
 {
-    targetsToResume.forEach([this](Object* obj){
+    std::for_each(targetsToResume.begin(), targetsToResume.end(), [this](Object* obj){
         this->resumeTarget(obj);
     });
 }

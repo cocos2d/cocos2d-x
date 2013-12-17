@@ -64,7 +64,7 @@ void AutoreleasePool::clear()
         int nIndex = _managedObjectArray.size() - 1;
 #endif
 
-        _managedObjectArray.forEachReverse([&](Object* obj){
+        std::for_each(_managedObjectArray.rbegin(), _managedObjectArray.rend(), [&](Object* obj){
             --(obj->_autoReleaseCount);
             //(*it)->release();
             //delete (*it);
@@ -118,7 +118,7 @@ void PoolManager::finalize()
 {
     if (!_releasePoolStack.empty())
     {
-        _releasePoolStack.forEach([](AutoreleasePool* pool){
+        std::for_each(_releasePoolStack.begin(), _releasePoolStack.end(), [](AutoreleasePool* pool){
             pool->clear();
         });
     }

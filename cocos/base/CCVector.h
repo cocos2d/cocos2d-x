@@ -303,8 +303,10 @@ public:
     /** @brief Remove a certain object.
      *  @param object The object to be removed.
      *  @param toRelease Whether to decrease the referece count of the deleted object.
+     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
+     *          This is the container end if the operation erased the last element in the sequence.
      */
-    void eraseObject(T object, bool toRelease = true)
+    iterator eraseObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
@@ -408,65 +410,6 @@ public:
     void shrinkToFit()
     {
         _data.shrink_to_fit();
-    }
-    
-    /** Traverses through the vector and applys the callback function for each element */
-    void forEach(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** Traverses through the vector and applys the callback function for each element */
-    void forEach(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-  
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
-    void forEachReverse(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
-    void forEachReverse(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** @brief Sorts all elements in the vector according the binary callback function.
-     *  @param callback Binary function that accepts two elements in the vector as arguments,
-     *         and returns a value convertible to bool. 
-     *         The value returned indicates whether the element passed as first argument is considered to go before the second in the specific strict weak ordering it defines.
-     */
-    void sort(const std::function<bool(T, T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::sort(_data.begin(), _data.end(), [&callback](T a, T b) -> bool{
-            return callback(a, b);
-        });
     }
     
 protected:
