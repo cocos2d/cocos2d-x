@@ -124,8 +124,14 @@ void ExtensionsMainLayer::onEnter()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseScroll = CC_CALLBACK_1(ExtensionsMainLayer::onMouseScroll, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    
     addChild(_itemMenu);
 }
+
 
 void ExtensionsMainLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
@@ -158,6 +164,30 @@ void ExtensionsMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, Eve
 
     _itemMenu->setPosition(nextPos);
     _beginPos = touchLocation;
+    s_tCurPos   = nextPos;
+}
+
+void ExtensionsMainLayer::onMouseScroll(Event* event)
+{
+    auto mouseEvent = static_cast<EventMouse*>(event);
+    float nMoveY = mouseEvent->getScrollY() * 6;
+    
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(Point::ZERO);
+        return;
+    }
+    
+    if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(Point(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+    
+    _itemMenu->setPosition(nextPos);
     s_tCurPos   = nextPos;
 }
 

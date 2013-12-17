@@ -42,7 +42,6 @@ Control::Control()
 , _selected(false)
 , _highlighted(false)
 , _hasVisibleParents(false)
-, _dispatchTable(NULL)
 , _isOpacityModifyRGB(false)
 , _state(State::NORMAL)
 {
