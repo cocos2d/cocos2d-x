@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 
 #include "CCGL.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -78,6 +79,7 @@ public:
     };
     
     static const char* SHADER_NAME_POSITION_TEXTURE_COLOR;
+    static const char* SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP;
     static const char* SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST;
     static const char* SHADER_NAME_POSITION_COLOR;
     static const char* SHADER_NAME_POSITION_TEXTURE;
@@ -85,6 +87,11 @@ public:
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
     static const char* SHADER_NAME_POSITION_U_COLOR;
     static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
+
+    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
+    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
+    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE;
+    static const char* SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW;
     
     // uniform names
     static const char* UNIFORM_NAME_P_MATRIX;
@@ -190,25 +197,26 @@ public:
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
     /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith2fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith3fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays);
+    void setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
     /** calls glUniformMatrix2fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** calls glUniformMatrix3fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
-    void setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices);
+    void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
     /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
     void setUniformsForBuiltins();
+    void setUniformsForBuiltins(const kmMat4 &modelView);
 
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;
@@ -226,8 +234,9 @@ public:
     inline const GLuint getProgram() const { return _program; }
 
 private:
-    bool updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes);
+    bool updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes);
     virtual std::string getDescription() const;
+
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
     std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
 
@@ -242,6 +251,7 @@ private:
         unsigned int usesTime:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
+        unsigned int usesP:1;
 		unsigned int usesRandom:1;
 
         // handy way to initialize the bitfield

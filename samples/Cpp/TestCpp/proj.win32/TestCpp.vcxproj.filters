@@ -709,6 +709,9 @@
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp">
       <Filter>Classes\ConsoleTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1302,6 +1305,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h">
       <Filter>Classes\ConsoleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

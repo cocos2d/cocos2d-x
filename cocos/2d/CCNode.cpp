@@ -103,9 +103,6 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransform(AffineTransform::IDENTITY)
-, _transform(AffineTransform::IDENTITY)
-, _inverse(AffineTransform::IDENTITY)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
@@ -143,6 +140,10 @@ Node::Node(void)
     
     ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
+
+    kmMat4Identity(&_transform);
+    kmMat4Identity(&_inverse);
+    kmMat4Identity(&_additionalTransform);
 }
 
 Node::~Node()
@@ -532,7 +533,7 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
 Rect Node::getBoundingBox() const
 {
     Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
-    return RectApplyAffineTransform(rect, getNodeToParentTransform());
+    return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
 Node * Node::create(void)
@@ -885,15 +886,15 @@ void Node::transform()
     updatePhysicsTransform();
 #endif
 
-    kmMat4 transfrom4x4;
-
-    // Convert 3x3 into 4x4 matrix
-    CGAffineToGL(this->getNodeToParentTransform(), transfrom4x4.mat);
+    kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = _vertexZ;
 
+
     kmGLMultMatrix( &transfrom4x4 );
+    // saves the MV matrix
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
     //_grid is always null
@@ -909,7 +910,6 @@ void Node::transform()
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
     }
-
 }
 
 
@@ -1161,16 +1161,25 @@ void Node::update(float fDelta)
     }
 }
 
-const AffineTransform& Node::getNodeToParentTransform() const
+AffineTransform Node::getNodeToParentAffineTransform() const
 {
-    if (_transformDirty) 
+    AffineTransform ret;
+    kmMat4 ret4 = getNodeToParentTransform();
+    GLToCGAffine(ret4.mat, &ret);
+
+    return ret;
+}
+
+const kmMat4& Node::getNodeToParentTransform() const
+{
+    if (_transformDirty)
     {
 
         // Translate values
         float x = _position.x;
         float y = _position.y;
 
-        if (_ignoreAnchorPointForPosition) 
+        if (_ignoreAnchorPointForPosition)
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
@@ -1205,80 +1214,133 @@ const AffineTransform& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = AffineTransformMake( cy * _scaleX,  sy * _scaleX,
-            -sx * _scaleY, cx * _scaleY,
-            x, y );
+        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
+                        -sx * _scaleY, cx * _scaleY,    0,  0,
+                        0,  0,  1,  0,
+                        x,  y,  0,  1 };
 
+        kmMat4Fill(&_transform, mat);
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
-        if (needsSkewMatrix) 
+        if (needsSkewMatrix)
         {
-            AffineTransform skewMatrix = AffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-                tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-                0.0f, 0.0f );
-            _transform = AffineTransformConcat(skewMatrix, _transform);
+            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                                    tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
+                                    0,  0, 1, 0,
+                                    0,  0,  0, 1};
+
+            kmMat4Multiply(&_transform, &skewMatrix, &_transform);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+                // XXX: Argh, kmMat needs a "translate" method
+                _transform.mat[12] += -_anchorPointInPoints.x;
+                _transform.mat[13] += -_anchorPointInPoints.y;
             }
         }
-        
+
         if (_additionalTransformDirty)
         {
-            _transform = AffineTransformConcat(_transform, _additionalTransform);
+            kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
             _additionalTransformDirty = false;
         }
-
+        
         _transformDirty = false;
     }
-
+    
     return _transform;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
+{
+    CGAffineToGL(additionalTransform, _additionalTransform.mat);
+    _transformDirty = true;
+    _additionalTransformDirty = true;
+}
+
+void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
     _transformDirty = true;
     _additionalTransformDirty = true;
 }
 
-const AffineTransform& Node::getParentToNodeTransform() const
+
+AffineTransform Node::getParentToNodeAffineTransform() const
+{
+    AffineTransform ret;
+    kmMat4 ret4 = getParentToNodeTransform();
+
+    GLToCGAffine(ret4.mat,&ret);
+    return ret;
+}
+
+const kmMat4& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _inverse = AffineTransformInvert(this->getNodeToParentTransform());
+        kmMat4Inverse(&_inverse, &_transform);
         _inverseDirty = false;
     }
 
     return _inverse;
 }
 
-AffineTransform Node::getNodeToWorldTransform() const
+
+AffineTransform Node::getNodeToWorldAffineTransform() const
 {
-    AffineTransform t = this->getNodeToParentTransform();
+    AffineTransform t = this->getNodeToParentAffineTransform();
 
     for (Node *p = _parent; p != NULL; p = p->getParent())
-        t = AffineTransformConcat(t, p->getNodeToParentTransform());
+        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
 
     return t;
 }
 
-AffineTransform Node::getWorldToNodeTransform() const
+kmMat4 Node::getNodeToWorldTransform() const
 {
-    return AffineTransformInvert(this->getNodeToWorldTransform());
+    kmMat4 t = this->getNodeToParentTransform();
+
+    for (Node *p = _parent; p != NULL; p = p->getParent())
+        kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
+
+    return t;
 }
+
+AffineTransform Node::getWorldToNodeAffineTransform() const
+{
+    return AffineTransformInvert(this->getNodeToWorldAffineTransform());
+}
+
+kmMat4 Node::getWorldToNodeTransform() const
+{
+    kmMat4 tmp, tmp2;
+
+    tmp2 = this->getNodeToWorldTransform();
+    kmMat4Inverse(&tmp, &tmp2);
+    return tmp;
+}
+
 
 Point Node::convertToNodeSpace(const Point& worldPoint) const
 {
-    Point ret = PointApplyAffineTransform(worldPoint, getWorldToNodeTransform());
-    return ret;
+    kmMat4 tmp = getWorldToNodeTransform();
+    kmVec3 vec3 = {worldPoint.x, worldPoint.y, 0};
+    kmVec3 ret;
+    kmVec3Transform(&ret, &vec3, &tmp);
+    Point p = {ret.x, ret.y };
+    return p;
 }
 
 Point Node::convertToWorldSpace(const Point& nodePoint) const
 {
-    Point ret = PointApplyAffineTransform(nodePoint, getNodeToWorldTransform());
-    return ret;
+    kmMat4 tmp = getNodeToWorldTransform();
+    kmVec3 vec3 = {nodePoint.x, nodePoint.y, 0};
+    kmVec3 ret;
+    kmVec3Transform(&ret, &vec3, &tmp);
+    Point p = {ret.x, ret.y };
+    return p;
+
 }
 
 Point Node::convertToNodeSpaceAR(const Point& worldPoint) const

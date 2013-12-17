@@ -99,8 +99,8 @@ Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
-Classes/IntervalTest/IntervalTest.cpp \
 Classes/InputTest/MouseTest.cpp \
+Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeyboardTest/KeyboardTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
 Classes/LabelTest/LabelTest.cpp \
@@ -110,6 +110,7 @@ Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
 Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
+Classes/NewRendererTest/NewRendererTest.cpp \
 Classes/NodeTest/NodeTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
@@ -120,6 +121,7 @@ Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/PerformanceTest/PerformanceLabelTest.cpp \
 Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \

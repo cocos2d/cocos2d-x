@@ -569,6 +569,9 @@
     <ClCompile Include="CCNodeGrid.cpp">
       <Filter>misc_nodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1148,6 +1151,9 @@
     </ClInclude>
     <ClInclude Include="CCNodeGrid.h">
       <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>label_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

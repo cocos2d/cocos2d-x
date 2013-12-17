@@ -118,6 +118,25 @@ THE SOFTWARE.
 #include "CCParticleExamples.h"
 #include "CCParticleSystemQuad.h"
 
+// new renderer
+#include "renderer/CCNewDrawNode.h"
+#include "renderer/CCNewLabelAtlas.h"
+#include "renderer/CCNewParticleSystemQuad.h"
+#include "renderer/CCNewRenderTexture.h"
+#include "renderer/CCNewSprite.h"
+#include "renderer/CCNewSpriteBatchNode.h"
+#include "renderer/CCNewTextureAtlas.h"
+#include "renderer/CustomCommand.h"
+#include "renderer/Frustum.h"
+#include "renderer/GroupCommand.h"
+#include "renderer/MaterialManager.h"
+#include "renderer/NewClippingNode.h"
+#include "renderer/QuadCommand.h"
+#include "renderer/RenderCommand.h"
+#include "renderer/RenderCommandPool.h"
+#include "renderer/RenderMaterial.h"
+#include "renderer/Renderer.h"
+
 // physics
 #include "CCPhysicsBody.h"
 #include "CCPhysicsContact.h"
