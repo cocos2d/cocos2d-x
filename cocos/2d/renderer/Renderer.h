@@ -18,9 +18,8 @@
 #define DEFAULT_RENDER_QUEUE 0
 
 NS_CC_BEGIN
-using namespace std;
 
-typedef vector<RenderCommand*> RenderQueue;
+typedef std::vector<RenderCommand*> RenderQueue;
 
 struct RenderStackElement
 {
@@ -66,10 +65,10 @@ protected:
     void onBackToForeground(Object* obj);
 
 protected:
-    stack<int> _commandGroupStack;
+    std::stack<int> _commandGroupStack;
     
-    stack<RenderStackElement> _renderStack;
-    vector<RenderQueue> _renderGroups;
+    std::stack<RenderStackElement> _renderStack;
+    std::vector<RenderQueue> _renderGroups;
 
     int _lastMaterialID;
 
