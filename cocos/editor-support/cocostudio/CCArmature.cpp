@@ -28,6 +28,9 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
+#include "QuadCommand.h"
+#include "Renderer.h"
+#include "GroupCommand.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -80,13 +83,11 @@ Armature *Armature::create(const char *name, Bone *parentBone)
 Armature::Armature()
     : _armatureData(nullptr)
     , _batchNode(nullptr)
-    , _atlas(nullptr)
     , _parentBone(nullptr)
     , _armatureTransformDirty(true)
     , _boneDic(nullptr)
     , _topBoneList(nullptr)
     , _animation(nullptr)
-    , _textureAtlasDic(nullptr)
 {
 }
 
@@ -104,7 +105,6 @@ Armature::~Armature(void)
         CC_SAFE_DELETE(_topBoneList);
     }
     CC_SAFE_DELETE(_animation);
-    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 
@@ -131,9 +131,6 @@ bool Armature::init(const char *name)
         CC_SAFE_DELETE(_topBoneList);
         _topBoneList = new Array();
         _topBoneList->init();
-
-        CC_SAFE_DELETE(_textureAtlasDic);
-        _textureAtlasDic = new Dictionary();
 
         _blendFunc.src = CC_BLEND_SRC;
         _blendFunc.dst = CC_BLEND_DST;
@@ -468,8 +465,8 @@ void Armature::draw()
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
         CC_NODE_DRAW_SETUP();
-        GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
+
 
     for (auto object : _children)
     {
@@ -485,83 +482,36 @@ void Armature::draw()
             case CS_DISPLAY_SPRITE:
             {
                 Skin *skin = static_cast<Skin *>(node);
-
-                TextureAtlas *textureAtlas = skin->getTextureAtlas();
-                BlendType blendType = bone->getBlendType();
-                if(_atlas != textureAtlas || blendType != BLEND_NORMAL)
-                {
-                    if (_atlas)
-                    {
-                        _atlas->drawQuads();
-                        _atlas->removeAllQuads();
-                    }
-                }
-
-                _atlas = textureAtlas;
-                if (_atlas->getCapacity() == _atlas->getTotalQuads() && !_atlas->resizeCapacity(_atlas->getCapacity() * 2))
-                    return;
-
                 skin->updateTransform();
-
+                
+                BlendType blendType = bone->getBlendType();
+                
                 if (blendType != BLEND_NORMAL)
                 {
                     updateBlendType(blendType);
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
-                    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+                    skin->setBlendFunc(_blendFunc);
                 }
+                skin->draw();
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                Armature *armature = static_cast<Armature *>(node);
-
-                TextureAtlas *textureAtlas = armature->getTextureAtlas();
-                if(_atlas != textureAtlas)
-                {
-                    if (_atlas)
-                    {
-                        _atlas->drawQuads();
-                        _atlas->removeAllQuads();
-                    }
-                }
-                armature->draw();
-                _atlas = armature->getTextureAtlas();
+                node->draw();
             }
             break;
             default:
             {
-                if (_atlas)
-                {
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
-                }
                 node->visit();
-
                 CC_NODE_DRAW_SETUP();
-                GL::blendFunc(_blendFunc.src, _blendFunc.dst);
             }
             break;
             }
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            if (_atlas)
-            {
-                _atlas->drawQuads();
-                _atlas->removeAllQuads();
-            }
             node->visit();
-
             CC_NODE_DRAW_SETUP();
-            GL::blendFunc(_blendFunc.src, _blendFunc.dst);
         }
-    }
-
-    if(_atlas && !_batchNode && _parentBone == nullptr)
-    {
-        _atlas->drawQuads();
-        _atlas->removeAllQuads();
     }
 }
 
@@ -690,27 +640,6 @@ Bone *Armature::getBoneAtPoint(float x, float y) const
     return nullptr;
 }
 
-TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
-{
-    int key = texture->getName();
-    
-    if (_parentBone && _parentBone->getArmature())
-    {
-        return _parentBone->getArmature()->getTexureAtlasWithTexture(texture);
-    }
-    else if (_batchNode)
-    {
-        _batchNode->getTexureAtlasWithTexture(texture);
-    }
-    
-    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
-    if (atlas == nullptr)
-    {
-        atlas = TextureAtlas::createWithTexture(texture, 4);
-        _textureAtlasDic->setObject(atlas, key);
-    }
-    return atlas;
-}
 
 void Armature::setParentBone(Bone *parentBone)
 {
