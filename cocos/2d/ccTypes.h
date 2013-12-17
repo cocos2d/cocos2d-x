@@ -318,12 +318,12 @@ struct BlendFunc
     //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
     const static BlendFunc ADDITIVE;
 
-    bool const operator==(const BlendFunc &a)
+    bool operator==(const BlendFunc &a) const
     {
         return src == a.src && dst == a.dst;
     }
 
-    bool const operator<(const BlendFunc &a)
+    bool operator<(const BlendFunc &a) const
     {
         return src < a.src || (src < a.src && dst < a.dst);
     }
