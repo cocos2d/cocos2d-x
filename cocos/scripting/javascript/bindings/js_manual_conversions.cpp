@@ -1105,6 +1105,11 @@ JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
     return JS_TRUE;
 }
 
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret)
+{
+    return jsval_to_long(cx, vp, reinterpret_cast<long*>(ret));
+}
+
 // native --> jsval
 
 jsval ccarray_to_jsval(JSContext* cx, Array *arr)
@@ -2020,4 +2025,9 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
         ++i;
     }
     return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval ssize_to_jsval(JSContext *cx, ssize_t v)
+{
+    return long_to_jsval(cx, v);
 }
