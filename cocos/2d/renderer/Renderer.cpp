@@ -10,11 +10,14 @@
 #include "QuadCommand.h"
 #include "GroupCommand.h"
 #include "CCConfiguration.h"
+#include "CCNotificationCenter.h"
+#include "CCEventType.h"
+#include <algorithm>    // for std::stable_sort
 
 NS_CC_BEGIN
 using namespace std;
 
-static Renderer* s_instance;
+static Renderer* s_instance = nullptr;
 
 Renderer *Renderer::getInstance()
 {
@@ -83,8 +86,9 @@ void Renderer::initGLView()
     _glViewAssigned = true;
 }
 
-void Renderer::onBackToForeground()
+void Renderer::onBackToForeground(Object* obj)
 {
+    CC_UNUSED_PARAM(obj);
     setupBuffer();
 }
 
@@ -216,7 +220,7 @@ void Renderer::render()
         //1. Sort render commands based on ID
         for (auto it = _renderGroups.begin(); it != _renderGroups.end(); ++it)
         {
-            stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
+            std::stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
         }
         
         while(!_renderStack.empty())

@@ -10,7 +10,7 @@
 #include "RenderCommand.h"
 #include "CCGLProgram.h"
 #include "RenderCommandPool.h"
-#include "kazmath.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 

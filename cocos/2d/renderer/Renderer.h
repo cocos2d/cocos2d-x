@@ -63,7 +63,7 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
 
-    void onBackToForeground();
+    void onBackToForeground(Object* obj);
 
 protected:
     stack<int> _commandGroupStack;

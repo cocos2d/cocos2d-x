@@ -59,8 +59,8 @@ public:
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
 
-    virtual /** starts grabbing */
-    void begin();
+    /** starts grabbing */
+    virtual void begin();
 
     /** starts rendering to the texture while clearing the texture first.
     This is more efficient then calling -clear first and then -begin */
@@ -77,8 +77,8 @@ public:
     /** end is key word of lua, use other name to export to lua. */
     inline void endToLua(){ end();};
 
-    virtual /** ends grabbing*/
-    void end();
+    /** ends grabbing*/
+    virtual void end();
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
