@@ -303,10 +303,8 @@ public:
     /** @brief Remove a certain object.
      *  @param object The object to be removed.
      *  @param toRelease Whether to decrease the referece count of the deleted object.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
      */
-    iterator eraseObject(T object, bool toRelease = true)
+    void eraseObject(T object, bool toRelease = true)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         auto iter = std::find(_data.begin(), _data.end(), object);
