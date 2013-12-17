@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include <agile.h>
 #include <DirectXMath.h>
 #include "kazmath/mat4.h"
+#include "../wp8-xaml/InputEvent.h"
 
 #include "esUtil.h"
 
@@ -80,8 +81,6 @@ public:
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
 
-
-
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
@@ -96,8 +95,6 @@ public:
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
-
-
 	void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerWheelChanged(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
@@ -108,6 +105,8 @@ public:
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnOrientationChanged();
     
+    void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
+
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
@@ -167,12 +166,13 @@ private:
 	ESContext m_esContext;
 	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
 
-	bool m_textInputEnabled;
     WP8Keyboard^ mKeyboard;
     WP8Window^ m_wp8Window;
 	EGLDisplay m_eglDisplay;
 	EGLContext m_eglContext;
 	EGLSurface m_eglSurface;
+
+    PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
 };
 
 NS_CC_END

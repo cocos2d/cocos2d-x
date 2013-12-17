@@ -1,6 +1,8 @@
 ﻿#pragma once
 
-#include "DirectXHelper.h"
+#include <wrl/client.h>
+#include <d3d11_1.h>
+#include <DirectXMath.h>
 
 // Helper class that initializes DirectX APIs for 3D rendering.
 class Direct3DContentProviderBase abstract

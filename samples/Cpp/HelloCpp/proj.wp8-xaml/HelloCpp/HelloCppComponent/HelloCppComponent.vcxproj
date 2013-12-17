@@ -72,7 +72,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -90,7 +90,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -108,7 +108,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -126,7 +126,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <CompileAsWinRT>true</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\cocos2dx\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\wp8;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\winrt;$(ProjectDir)..\..\..\Classes;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\include;$(ProjectDir)..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common;$(ProjectDir)..\..\..\..\..\..\CocosDenshion\include;$(ProjectDir)..\..\..\..\..\..\extensions;$(ProjectDir)..\..\..\..\..\..\external;$(ProjectDir)..\..\..\..\..\..\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\..\..\..\..\cocos2dx\kazmath\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4267;4251;4244;4453;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -150,17 +150,49 @@
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.h" />
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.h" />
     <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXHelper.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.h" />
+    <ClInclude Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEventTypes.h" />
     <ClInclude Include="..\..\..\Classes\AppDelegate.h" />
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\HelloWorldScene.h" />
-    <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Cocos2dRenderer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProvider.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DContentProviderBase.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\Direct3DInterop.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\DirectXBase.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\cocos2dx\platform\wp8-xaml\InputEvent.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\..\..\Classes\AppDelegate.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
@@ -172,9 +204,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

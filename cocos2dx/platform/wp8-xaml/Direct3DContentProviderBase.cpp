@@ -1,5 +1,5 @@
-﻿#include "pch.h"
-#include "Direct3DContentProviderBase.h"
+﻿#include "Direct3DContentProviderBase.h"
+#include "DirectXHelper.h"
 
 using namespace DirectX;
 using namespace Microsoft::WRL;

@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "DirectXBase.h"
 
 using namespace DirectX;

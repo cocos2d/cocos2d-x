@@ -1,6 +1,5 @@
 #pragma once
 
-#include "pch.h"
 #include <wrl/module.h>
 #include <Windows.Phone.Graphics.Interop.h>
 #include <DrawingSurfaceNative.h>

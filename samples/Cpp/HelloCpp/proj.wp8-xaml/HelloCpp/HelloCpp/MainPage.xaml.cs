@@ -17,12 +17,14 @@ using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Phone.Shell;
+using Windows.UI.Input;
 
 namespace PhoneDirect3DXamlAppInterop
 {
     public partial class MainPage : PhoneApplicationPage
     {
         private Direct3DInterop m_d3dInterop = null;
+        TextBox m_textBox = null;
 
         // Constructor
         public MainPage()
@@ -54,6 +56,9 @@ namespace PhoneDirect3DXamlAppInterop
                 // Hook-up native component to DrawingSurfaceBackgroundGrid
                 DrawingSurface.SetContentProvider(m_d3dInterop.CreateContentProvider());
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
+
+                m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
+
             }
         }
 
@@ -62,47 +67,65 @@ namespace PhoneDirect3DXamlAppInterop
             e.Cancel = m_d3dInterop.OnBackKeyPress();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        public void OnKeyDown(object sender, KeyEventArgs e)
         {
-            ((App)Application.Current).RootFrame.Obscured += ObscuredHandler;
-            ((App)Application.Current).RootFrame.Unobscured += UnobscuredHandler;
-            SystemTray.IsVisible = false;
+            ModifierKeys modifiers = Keyboard.Modifiers;
 
-            if (m_d3dInterop != null)
+            switch(e.Key)
             {
-                m_d3dInterop.OnFocusChange(true);
-                m_d3dInterop.OnResuming();
+            case Key.Escape:
+                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Escape);
+		        e.Handled = true;
+                break;
+	        case Key.Back:
+                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Back);
+  		        e.Handled = true;
+              break;
+            case Key.Enter:
+                m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Enter);
+   		        e.Handled = true;
+               break;
+            default:
+                break;
             }
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        public void OnKeyUp(object sender, KeyEventArgs e)
         {
-            ((App)Application.Current).RootFrame.Obscured -= ObscuredHandler;
-            ((App)Application.Current).RootFrame.Unobscured -= UnobscuredHandler;
+            m_d3dInterop.OnCocos2dKeyEvent(Cocos2dKeyEvent.Text, m_textBox.Text);
+            m_textBox.Text = "";
+        }
 
-            AutoResetEvent autoEvent = new AutoResetEvent(false);
-
-            // Block UI thread while native component asynchronously saves the
-            // game state.
-            Thread t = new Thread(async () =>
+        public void OnCocos2dEvent(Cocos2dEvent theEvent)
+        {
+            Dispatcher.BeginInvoke(() =>
             {
-                m_d3dInterop.OnFocusChange(false);
-                await m_d3dInterop.OnSuspending();
-                autoEvent.Set();
-            });
-            t.Start();
-            autoEvent.WaitOne();
-        }
-
-
-        void ObscuredHandler(Object sender, EventArgs e)
-        {
-            m_d3dInterop.OnFocusChange(false);
-        }
-
-        void UnobscuredHandler(Object sender, EventArgs e)
-        {
-            m_d3dInterop.OnFocusChange(true);
+                switch (theEvent)
+                {
+                    case Cocos2dEvent.ShowKeyboard:
+                        if(m_textBox == null)
+                        {
+                            m_textBox = new TextBox();
+                            m_textBox.Opacity = 0.0;
+                            m_textBox.Width = 1;
+                            m_textBox.Height = 1;
+                            m_textBox.MaxLength = 1;
+                            m_textBox.KeyDown += OnKeyDown;
+                            m_textBox.KeyUp += OnKeyUp;
+                            LayoutRoot.Children.Add(m_textBox);
+                        }
+                        m_textBox.Focus();
+                        break;
+                         
+                    case Cocos2dEvent.HideKeyboard:
+                        if(m_textBox != null)
+                        {
+                            LayoutRoot.Children.Remove(m_textBox);
+                        }
+                        m_textBox = null;
+                        break;
+                }
+            });  
         }
     }
 }

@@ -1,5 +1,27 @@
-#include "pch.h"
+/****************************************************************************
+Copyright (c) 2013 cocos2d-x.org
+Copyright (c) Microsoft Open Technologies, Inc.
 
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "Direct3DInterop.h"
 #include "Direct3DContentProvider.h"
 
@@ -16,7 +38,7 @@ namespace PhoneDirect3DXamlAppComponent
 {
 
 Direct3DInterop::Direct3DInterop() 
-    : mCurrentOrientation(DisplayOrientations::Portrait)
+    : mCurrentOrientation(DisplayOrientations::Portrait), m_delegate(nullptr)
 {
     m_renderer = ref new Cocos2dRenderer();
 }
@@ -47,15 +69,6 @@ void Direct3DInterop::UpdateForWindowSizeChange(float width, float height)
     m_renderer->UpdateForWindowSizeChange(width, height);
 }
 
-void Direct3DInterop::OnFocusChange(bool active)
-{
-   m_renderer->OnFocusChange(active);
-}
-
-void Direct3DInterop::OnResuming()
-{
-    m_renderer->OnResuming();
-}
 
 IAsyncAction^ Direct3DInterop::OnSuspending()
 {
@@ -73,6 +86,7 @@ void Direct3DInterop::OnPointerPressed(DrawingSurfaceManipulationHost^ sender, P
     AddPointerEvent(PointerEventType::PointerPressed, args);
 }
 
+
 void Direct3DInterop::OnPointerMoved(DrawingSurfaceManipulationHost^ sender, PointerEventArgs^ args)
 {
     AddPointerEvent(PointerEventType::PointerMoved, args);
@@ -83,40 +97,47 @@ void Direct3DInterop::OnPointerReleased(DrawingSurfaceManipulationHost^ sender, 
     AddPointerEvent(PointerEventType::PointerReleased, args);
 }
 
+void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    std::shared_ptr<KeyboardEvent> e(new KeyboardEvent(key));
+    mInputEvents.push(e);
+}
+
+
+void Direct3DInterop::OnCocos2dKeyEvent(Cocos2dKeyEvent key, Platform::String^ text)
+{
+    std::lock_guard<std::mutex> guard(mMutex);
+    std::shared_ptr<KeyboardEvent> e(new KeyboardEvent(key,text));
+    mInputEvents.push(e);
+}
+
+
+
 void Direct3DInterop::AddPointerEvent(PointerEventType type, PointerEventArgs^ args)
 {
     std::lock_guard<std::mutex> guard(mMutex);
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
-    mPointerEvents.push(e);
+    mInputEvents.push(e);
 }
 
 void Direct3DInterop::ProcessEvents()
 {
     std::lock_guard<std::mutex> guard(mMutex);
 
-    while(!mPointerEvents.empty())
+    while(!mInputEvents.empty())
     {
-        PointerEvent* e = mPointerEvents.front().get();
-        switch(e->m_type)
-        {
-        case PointerEventType::PointerPressed:
-        	m_renderer->OnPointerPressed(e->m_args.Get());
-            break;
-        case PointerEventType::PointerMoved:
-        	m_renderer->OnPointerMoved(e->m_args.Get());
-            break;           
-        case PointerEventType::PointerReleased:
-        	m_renderer->OnPointerReleased(e->m_args.Get());
-            break;
-        }
-
-        mPointerEvents.pop();
+        InputEvent* e = mInputEvents.front().get();
+        e->execute(m_renderer);
+        mInputEvents.pop();
     }
 }
+
 
 // Interface With Direct3DContentProvider
 void Direct3DInterop::Connect()
 {
+
     m_renderer->Connect();
 }
 
@@ -131,6 +152,8 @@ void Direct3DInterop::PrepareResources(LARGE_INTEGER presentTargetTime)
 
 void Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView)
 {
+ 
+
     m_renderer->UpdateDevice(device, context, renderTargetView);
     if(mCurrentOrientation != WindowOrientation)
     {
@@ -140,5 +163,22 @@ void Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1
     ProcessEvents();
     m_renderer->Render();
 }
+
+void Direct3DInterop::SetCocos2dEventDelegate(Cocos2dEventDelegate^ delegate) 
+{ 
+    m_delegate = delegate; 
+    m_renderer->SetXamlEventDelegate(delegate);
+};
+
+bool Direct3DInterop::SendCocos2dEvent(Cocos2dEvent event)
+{
+    if(m_delegate)
+    {
+        m_delegate->Invoke(event);
+        return true;
+    }
+    return false;
+}
+
 
 }

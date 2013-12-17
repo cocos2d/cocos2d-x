@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 #include "WP8Keyboard.h"
+#include "support/CCNotificationCenter.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -52,6 +53,7 @@ using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Phone::UI::Core;
 using namespace Platform;
 using namespace Microsoft::WRL;
+using namespace PhoneDirect3DXamlAppComponent;
 
 
 NS_CC_BEGIN
@@ -76,7 +78,6 @@ CCEGLView::CCEGLView()
 	, m_lastPointValid(false)
 	, m_running(false)
 	, m_initialized(false)
-    , m_textInputEnabled(false)
 	, m_windowClosed(false)
 	, m_windowVisible(true)
     , mKeyboard(nullptr)
@@ -155,11 +156,23 @@ void CCEGLView::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSu
 
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-	m_textInputEnabled = bOpen;
-    if(!mKeyboard)
-        mKeyboard = ref new WP8Keyboard(m_window.Get());
-
-    mKeyboard->SetFocus(m_textInputEnabled);
+    if(m_delegate)
+    {
+        if(bOpen)
+        {
+            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard);
+        }
+        else
+        {
+            m_delegate->Invoke(Cocos2dEvent::HideKeyboard);
+        }
+    }
+    else
+    {
+        if(!mKeyboard)
+            mKeyboard = ref new WP8Keyboard(m_window.Get());
+        mKeyboard->SetFocus(bOpen);
+    }
 }
 
 void CCEGLView::swapBuffers()
