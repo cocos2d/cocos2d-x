@@ -318,6 +318,27 @@ public:
 private:
 };
 
+class LabelTTFDistanceField : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFDistanceField);
+
+    LabelTTFDistanceField();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
+
+class LabelTTFDistanceFieldEffect : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFDistanceFieldEffect);
+
+    LabelTTFDistanceFieldEffect();
+
+    virtual std::string title();
+    virtual std::string subtitle();
+};
 
 
 // we don't support linebreak mode
