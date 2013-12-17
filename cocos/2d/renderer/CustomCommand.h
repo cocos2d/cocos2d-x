@@ -11,7 +11,6 @@
 #include "RenderCommandPool.h"
 
 NS_CC_BEGIN
-using namespace std;
 
 class CustomCommand : public RenderCommand
 {
@@ -35,7 +34,7 @@ public:
     virtual void releaseToCommandPool() override;
 
 public:
-    function<void()> func;
+    std::function<void()> func;
 
 protected:
     int _viewport;

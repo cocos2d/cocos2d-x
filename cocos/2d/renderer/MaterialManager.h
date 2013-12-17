@@ -13,7 +13,6 @@
 #include <map>
 
 NS_CC_BEGIN
-using namespace std;
 
 class MaterialManager : public Object
 {
@@ -40,9 +39,9 @@ protected:
     int getShaderID(GLuint shaderID);
     int getBlendFuncID(GLint blendFunc);
 
-    map<GLuint, int> _textureIDMapping;
-    map<GLuint, int> _shaderIDMapping;
-    map<BlendFunc, int> _blendFuncMapping;
+    std::map<GLuint, int> _textureIDMapping;
+    std::map<GLuint, int> _shaderIDMapping;
+    std::map<BlendFunc, int> _blendFuncMapping;
 };
 
 NS_CC_END

@@ -10,10 +10,9 @@
 #include "CCPlatformMacros.h"
 #include "RenderCommand.h"
 #include "RenderCommandPool.h"
-#include <map>
+#include <unordered_map>
 
 NS_CC_BEGIN
-using namespace std;
 
 class GroupCommandManager : public Object
 {
@@ -29,7 +28,7 @@ public:
 
 protected:
     GroupCommandManager();
-    map<int, bool> _groupMapping;
+    std::unordered_map<int, bool> _groupMapping;
 };
 
 class GroupCommand : public RenderCommand
