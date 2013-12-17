@@ -360,10 +360,15 @@ const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 		y += _anchorPointInPoints.y;
 	}
 
-    _transform = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
-                    (kmScalar)-rot.y * _scaleY, (kmScalar)rot.x * _scaleY,  0,  0,
-                    0,  0,  1,  0,
-        x,	y,  0,  1};
+    
+    kmScalar mat[] = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
+                        (kmScalar)-rot.y * _scaleY, (kmScalar)rot.x * _scaleY,  0,  0,
+                        0,  0,  1,  0,
+                        x,	y,  0,  1};
+
+
+    kmMat4Fill(&_transform, mat);
+    
     return _transform;
 
 

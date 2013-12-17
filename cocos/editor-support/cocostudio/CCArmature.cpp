@@ -388,11 +388,13 @@ const kmMat4& Armature::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = { cy * _scaleX, sy * _scaleX,     0,  0,
-            -sx * _scaleY, cx * _scaleY,    0,  0,
-            0,  0,  1,  0,
-            x,  y,  0,  1 };
+        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
+                           -sx * _scaleY, cx * _scaleY,    0,  0,
+                           0,  0,  1,  0,
+                           x,  y,  0,  1 };
 
+        kmMat4Fill(&_transform, mat);
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)

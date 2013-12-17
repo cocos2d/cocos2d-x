@@ -138,6 +138,22 @@ set(COCOS2D_SRC
   platform/CCThread.cpp
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
+  renderer/CCNewDrawNode.cpp
+  renderer/CCNewLabelAtlas.cpp
+  renderer/CCNewParticleSystemQuad.cpp
+  renderer/CCNewRenderTexture.cpp
+  renderer/CCNewSprite.cpp
+  renderer/CCNewSpriteBatchNode.cpp
+  renderer/CCNewTextureAtlas.cpp
+  renderer/CustomCommand.cpp
+  renderer/Frustum.cpp
+  renderer/GroupCommand.cpp
+  renderer/MaterialManager.cpp
+  renderer/NewClippingNode.cpp
+  renderer/QuadCommand.cpp
+  renderer/RenderCommand.cpp
+  renderer/Renderer.cpp
+  renderer/RenderMaterial.cpp
 )
 
 include(../physics/CMakeLists.txt)
