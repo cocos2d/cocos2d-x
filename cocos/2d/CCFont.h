@@ -40,11 +40,16 @@ class FontAtlas;
 class CC_DLL Font : public Object
 {
 public:
-
+    static const int DistanceMapSpread;
     // create the font
     static   Font* createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
     static   Font* createWithFNT(const std::string& fntFilePath);
     
+    static   unsigned char * makeDistanceMap(unsigned char *img, unsigned int width, unsigned int height);
+    void     setDistanceFieldEnabled(bool distanceFieldEnabled);
+    bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
+    bool     renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
+
     virtual  FontAtlas *createFontAtlas() = 0;
 
     virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
@@ -76,7 +81,8 @@ protected:
     char              * _customGlyphs;
     static const char * _glyphASCII;
     static const char * _glyphNEHE;
-    
+    bool                _distanceFieldEnabled;
+
 };
 
 NS_CC_END

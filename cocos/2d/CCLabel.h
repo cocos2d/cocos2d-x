@@ -40,6 +40,14 @@ enum class GlyphCollection {
     CUSTOM
 };
 
+enum class LabelEffect {
+
+    NORMAL,
+    OUTLINE,
+    SHADOW,
+    GLOW
+};
+
 //fwd
 struct FontLetterDefinition;
 class FontAtlas;
@@ -51,19 +59,24 @@ class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAPr
 public:
     
     // static create
-    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0);
+    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
     
     static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
     
     bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+
+    void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
     virtual void setString(const std::string &stringToRender) override;
+    void setString(const std::string &stringToRender,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale) override;
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
+    virtual float getScaleX() const;
+    virtual float getScaleY() const;
 
     // RGBAProtocol
     virtual bool isOpacityModifyRGB() const override;
@@ -117,19 +130,22 @@ public:
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
+    virtual void draw(void) override;
 
 private:
     /**
      * @js NA
      */
-    Label(FontAtlas *atlas, TextHAlignment alignment);
+    Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField = false,bool useA8Shader = false);
     /**
      * @js NA
      * @lua NA
      */
    ~Label();
     
-    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
+    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0, bool useDistanceField = false,bool useA8Shader = false);
+
+    void setFontSize(int fontSize);
     
     bool init();
     
@@ -147,6 +163,7 @@ private:
     Sprite              *_reusedLetter;
     std::vector<LetterInfo>     _lettersInfo;       
    
+    bool                        _multilineEnable;
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
@@ -162,7 +179,15 @@ private:
     unsigned char               _displayedOpacity;
     unsigned char               _realOpacity;
     bool                        _isOpacityModifyRGB;
-    
+
+    bool                        _useDistanceField;
+    bool                        _useA8Shader;
+    int                         _fontSize;
+
+    LabelEffect                 _currLabelEffect;
+    Color3B                     _effectColor;
+
+    GLuint                      _uniformEffectColor;
     
 };
 
