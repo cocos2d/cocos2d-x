@@ -264,13 +264,13 @@ public:
         object->retain();
     }
     
-    /** Inserts all elements of an existing vector */
-    void insert(const Vector<T>& other)
+    /** Push all elements of an existing vector to the end of current vector. */
+    void pushBack(const Vector<T>& other)
     {
-        for( auto it = other.begin(); it != other.end(); ++it ) {
-            _data.push_back( *it );
-            (*it)->retain();
-        }
+        std::for_each(other.begin(), other.end(), [this](T obj){
+            _data.push_back(obj);
+            obj->retain();
+        });
     }
 
     /** @brief Insert a certain object at a certain index 
