@@ -49,12 +49,12 @@ void ConfigurationTestScene::runThisTest()
 }
 
 
-std::string ConfigurationBase::title()
+std::string ConfigurationBase::title() const
 {
     return "Configuration Test";
 }
 
-std::string ConfigurationBase::subtitle()
+std::string ConfigurationBase::subtitle() const
 {
     return "";
 }
@@ -107,7 +107,7 @@ void ConfigurationLoadConfig::onEnter()
 
 }
 
-std::string ConfigurationLoadConfig::subtitle()
+std::string ConfigurationLoadConfig::subtitle() const
 {
     return "Loading config file manually. See console";
 }
@@ -125,7 +125,7 @@ void ConfigurationQuery::onEnter()
 	CCLOG("OpenGL version: %s", Configuration::getInstance()->getValue("gl.version").asString().c_str() );
 }
 
-std::string ConfigurationQuery::subtitle()
+std::string ConfigurationQuery::subtitle() const
 {
     return "Check the console";
 }
@@ -142,7 +142,7 @@ void ConfigurationInvalid::onEnter()
 	Configuration::getInstance()->loadConfigFile("configs/config-test-invalid.plist");
 }
 
-std::string ConfigurationInvalid::subtitle()
+std::string ConfigurationInvalid::subtitle() const
 {
     return "Loading an invalid config file";
 }
@@ -176,7 +176,7 @@ void ConfigurationDefault::onEnter()
 
 }
 
-std::string ConfigurationDefault::subtitle()
+std::string ConfigurationDefault::subtitle() const
 {
     return "Tests defaults values";
 }
@@ -199,7 +199,7 @@ void ConfigurationSet::onEnter()
 	conf->dumpInfo();
 }
 
-std::string ConfigurationSet::subtitle()
+std::string ConfigurationSet::subtitle() const
 {
     return "Tests setting values manually";
 }

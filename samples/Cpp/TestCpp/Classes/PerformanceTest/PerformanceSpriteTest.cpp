@@ -397,7 +397,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
         onIncrease(this);
 }
 
-std::string SpriteMainScene::title()
+std::string SpriteMainScene::title() const
 {
     return "No title";
 }
@@ -753,7 +753,7 @@ void performanceScale(Sprite* sprite)
 // SpritePerformTest1
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest1::title()
+std::string SpritePerformTest1::title() const
 {
     char str[32] = {0};
     sprintf(str, "A (%d) position", subtestNumber);
@@ -770,7 +770,7 @@ void SpritePerformTest1::doTest(Sprite* sprite)
 // SpritePerformTest2
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest2::title()
+std::string SpritePerformTest2::title() const
 {
     char str[32] = {0};
     sprintf(str, "B (%d) scale", subtestNumber);
@@ -788,7 +788,7 @@ void SpritePerformTest2::doTest(Sprite* sprite)
 // SpritePerformTest3
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest3::title()
+std::string SpritePerformTest3::title() const
 {
     char str[32] = {0};
     sprintf(str, "C (%d) scale + rot", subtestNumber);
@@ -806,7 +806,7 @@ void SpritePerformTest3::doTest(Sprite* sprite)
 // SpritePerformTest4
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest4::title()
+std::string SpritePerformTest4::title() const
 {
     char str[32] = {0};
     sprintf(str, "D (%d) 100%% out", subtestNumber);
@@ -824,7 +824,7 @@ void SpritePerformTest4::doTest(Sprite* sprite)
 // SpritePerformTest5
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest5::title()
+std::string SpritePerformTest5::title() const
 {
     char str[32] = {0};
     sprintf(str, "E (%d) 80%% out", subtestNumber);
@@ -842,7 +842,7 @@ void SpritePerformTest5::doTest(Sprite* sprite)
 // SpritePerformTest6
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest6::title()
+std::string SpritePerformTest6::title() const
 {
     char str[32] = {0};
     sprintf(str, "F (%d) actions", subtestNumber);
@@ -860,7 +860,7 @@ void SpritePerformTest6::doTest(Sprite* sprite)
 // SpritePerformTest7
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest7::title()
+std::string SpritePerformTest7::title() const
 {
     char str[32] = {0};
     sprintf(str, "G (%d) actions 80%% out", subtestNumber);

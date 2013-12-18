@@ -35,14 +35,14 @@ class NewTextureAtlas : public TextureAtlas
 {
 public:
     static NewTextureAtlas* create(const char* file, long capacity);
-
     static NewTextureAtlas* createWithTexture(Texture2D *texture, long capacity);
 
-    NewTextureAtlas();
+    void drawNumberOfQuads(long numberOfQuads, long start);
 
+protected:
+    NewTextureAtlas();
     virtual ~NewTextureAtlas();
 
-    void drawNumberOfQuads(long numberOfQuads, long start);
 };
 
 NS_CC_END
