@@ -57,6 +57,7 @@ ArmatureAnimation::ArmatureAnimation()
     , _ignoreFrameEvent(false)
     , _onMovementList(false)
     , _movementListLoop(false)
+    , _movementListDurationTo(-1)
     , _userObject(nullptr)
 
     , _movementEventCallFunc(nullptr)
@@ -256,33 +257,32 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop
 }
 
 
-void ArmatureAnimation::play(bool loop, const std::string *movementNames, int movementNumber)
+void ArmatureAnimation::play(const std::vector<std::string>& movementNames, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;
+    _movementListDurationTo = durationTo;
     _onMovementList = true;
     _movementIndex = 0;
 
-    for (int i = 0; i<movementNumber; i++)
-    {
-        _movementList.push_back(movementNames[i]);
-    }
+    _movementList = movementNames;
 
     updateMovementList();
 }
 
-void ArmatureAnimation::playByIndex(bool loop, const int *movementIndexes, int movementNumber)
+void ArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;
+    _movementListDurationTo = durationTo;
     _onMovementList = true;
     _movementIndex = 0;
 
     std::vector<std::string> &movName = _animationData->movementNames;
 
-    for (int i = 0; i<movementNumber; i++)
+    for(auto& index : movementIndexes)
     {
-        std::string name = movName.at(movementIndexes[i]);
+        std::string name = movName.at(index);
         _movementList.push_back(name);
     }
 
@@ -511,7 +511,7 @@ void ArmatureAnimation::updateMovementList()
     {
         if (_movementListLoop)
         {
-            play(_movementList.at(_movementIndex).c_str(), -1, 0);
+            play(_movementList.at(_movementIndex).c_str(), _movementListDurationTo, 0);
             _movementIndex++;
 
             if (_movementIndex >= _movementList.size())
@@ -523,7 +523,7 @@ void ArmatureAnimation::updateMovementList()
         {
             if (_movementIndex < _movementList.size())
             {
-                play(_movementList.at(_movementIndex).c_str(), -1, 0);
+                play(_movementList.at(_movementIndex).c_str(), _movementListDurationTo, 0);
                 _movementIndex++;
             }
             else

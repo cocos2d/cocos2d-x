@@ -132,8 +132,8 @@ public:
     virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
 
-    virtual void play(bool loop, const std::string *movementNames, int movementNumber);
-    virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
+    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * Go to specified frame and play current movement.
@@ -293,6 +293,7 @@ protected:
     bool _onMovementList;
     bool _movementListLoop;
     unsigned int _movementIndex;
+    int _movementListDurationTo;
 
     cocos2d::Object *_userObject;
 protected:
