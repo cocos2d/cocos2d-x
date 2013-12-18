@@ -70,7 +70,7 @@ GroupCommand::GroupCommand()
 , _viewport(0)
 , _depth(0)
 {
-    _type = GROUP_COMMAND;
+    _type = RenderCommand::Type::GROUP_COMMAND;
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
 
