@@ -888,7 +888,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
     
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-	cocos2d::Vector<FrameData*> &frames = movBoneData->frameList;
+	auto frames = movBoneData->frameList;
 	for (long j = movBoneData->frameList.size() - 1; j >= 0; j--)
 	{
 		if (j > 0)
@@ -1513,7 +1513,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 	if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
 	{
 		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-		cocos2d::Vector<FrameData *> &frames = movementBoneData->frameList;
+		auto frames = movementBoneData->frameList;
 		for (long i = frames.size() - 1; i >= 0; i--)
 		{
 			if (i > 0)

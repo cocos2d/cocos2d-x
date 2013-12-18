@@ -462,9 +462,9 @@ ColliderDetector* Bone::getColliderDetector() const
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
-    Array *array = _displayManager->getDecorativeDisplayList();
+    auto array = _displayManager->getDecorativeDisplayList();
 
-    for(auto& object : *array)
+    for(auto& object : array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())

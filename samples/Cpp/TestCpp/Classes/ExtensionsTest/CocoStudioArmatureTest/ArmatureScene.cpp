@@ -864,8 +864,7 @@ void TestColliderDetector::update(float delta)
     {
         Contact &contact = *it;
 
-        Bone *ba = (Bone *)contact.fixtureA->GetUserData();
-        Bone *bb = (Bone *)contact.fixtureB->GetUserData();
+        Bone *bb = static_cast<Bone *>(contact.fixtureB->GetUserData);
 
         bb->getArmature()->setVisible(false);
     }
