@@ -625,7 +625,8 @@ static std::string visitVector(const ValueVector& v, int depth)
     return ret.str();
 }
 
-static std::string visitMap(const ValueMap& v, int depth)
+template <class T>
+static std::string visitMap(const T& v, int depth)
 {
     std::stringstream ret;
     
@@ -651,6 +652,7 @@ static std::string visit(const Value& v, int depth)
 
     switch (v.getType())
     {
+        case Value::Type::NONE:
         case Value::Type::BYTE:
         case Value::Type::INTEGER:
         case Value::Type::FLOAT:
@@ -666,8 +668,10 @@ static std::string visit(const Value& v, int depth)
             ret << visitMap(v.asValueMap(), depth);
             break;
         case Value::Type::INT_KEY_MAP:
+            ret << visitMap(v.asIntKeyMap(), depth);
             break;
         default:
+            CCASSERT(false, "Invalid type!");
             break;
     }
     
