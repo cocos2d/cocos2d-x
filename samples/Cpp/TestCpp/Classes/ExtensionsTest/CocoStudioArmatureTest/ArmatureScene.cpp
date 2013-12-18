@@ -188,11 +188,11 @@ void ArmatureTestLayer::onExit()
     Layer::onExit();
 }
 
-std::string ArmatureTestLayer::title()
+std::string ArmatureTestLayer::title() const
 {
     return "Armature Test Bed";
 }
-std::string ArmatureTestLayer::subtitle()
+std::string ArmatureTestLayer::subtitle() const
 {
     return "";
 }
@@ -262,11 +262,11 @@ void TestAsynchronousLoading::onEnter()
 
 }
 
-std::string TestAsynchronousLoading::title()
+std::string TestAsynchronousLoading::title() const
 {
     return "Test Asynchronous Loading";
 }
-std::string TestAsynchronousLoading::subtitle()
+std::string TestAsynchronousLoading::subtitle() const
 {
     return "current percent : ";
 }
@@ -310,7 +310,7 @@ void TestDirectLoading::onEnter()
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 }
-std::string TestDirectLoading::title()
+std::string TestDirectLoading::title() const
 {
     return "Test Direct Loading";
 }
@@ -328,7 +328,7 @@ void TestCSWithSkeleton::onEnter()
     addChild(armature);
 }
 
-std::string TestCSWithSkeleton::title()
+std::string TestCSWithSkeleton::title() const
 {
     return "Test Export From CocoStudio With Skeleton Effect";
 }
@@ -349,7 +349,7 @@ void TestDragonBones20::onEnter()
     addChild(armature);
 }
 
-std::string TestDragonBones20::title()
+std::string TestDragonBones20::title() const
 {
     return "Test Export From DragonBones version 2.0";
 }
@@ -383,11 +383,11 @@ void TestPerformance::onEnter()
     addArmature(100);
 }
 
-std::string TestPerformance::title()
+std::string TestPerformance::title() const
 {
     return "Test Performance";
 }
-std::string TestPerformance::subtitle()
+std::string TestPerformance::subtitle() const
 {
     return "Current Armature Count : ";
 }
@@ -449,7 +449,7 @@ void TestPerformanceBatchNode::onEnter()
 
     TestPerformance::onEnter();
 }
-std::string TestPerformanceBatchNode::title()
+std::string TestPerformanceBatchNode::title() const
 {
     return "Test Performance of using BatchNode";
 }
@@ -495,7 +495,7 @@ void TestChangeZorder::onEnter()
 
     currentTag = 0;
 }
-std::string TestChangeZorder::title()
+std::string TestChangeZorder::title() const
 {
     return "Test Change ZOrder Of Different Armature";
 }
@@ -529,7 +529,7 @@ void TestAnimationEvent::onEnter()
     armature->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(TestAnimationEvent::animationEvent));
     addChild(armature);
 }
-std::string TestAnimationEvent::title()
+std::string TestAnimationEvent::title() const
 {
     return "Test Armature Animation Event";
 }
@@ -588,7 +588,7 @@ void TestFrameEvent::onEnter()
 
     schedule( schedule_selector(TestFrameEvent::checkAction) );
 }
-std::string TestFrameEvent::title()
+std::string TestFrameEvent::title() const
 {
     return "Test Frame Event";
 }
@@ -657,12 +657,12 @@ void TestParticleDisplay::onExit()
     ArmatureTestLayer::onExit();
 }
 
-std::string TestParticleDisplay::title()
+std::string TestParticleDisplay::title() const
 {
     return "Test Particle Display";
 }
 
-std::string TestParticleDisplay::subtitle()
+std::string TestParticleDisplay::subtitle() const
 {
     return "Touch to change animation";
 }
@@ -715,12 +715,12 @@ void TestUseMutiplePicture::onExit()
     ArmatureTestLayer::onExit();
 }
 
-std::string TestUseMutiplePicture::title()
+std::string TestUseMutiplePicture::title() const
 {
     return "Test One Armature Use Different Picture";
 }
 
-std::string TestUseMutiplePicture::subtitle()
+std::string TestUseMutiplePicture::subtitle() const
 {
     return "weapon and armature are in different picture";
 }
@@ -768,7 +768,7 @@ void TestColliderDetector::onEnter()
 
     initWorld();
 }
-std::string TestColliderDetector::title()
+std::string TestColliderDetector::title() const
 {
     return "Test Collider Detector";
 }
@@ -1032,7 +1032,7 @@ void TestBoundingBox::onEnter()
     Sprite *sprite = Sprite::create("Images/background3.png");
     armature->addChild(sprite);
 }
-std::string TestBoundingBox::title()
+std::string TestBoundingBox::title() const
 {
     return "Test BoundingBox";
 }
@@ -1068,7 +1068,7 @@ void TestAnchorPoint::onEnter()
     getChildByTag(4)->setAnchorPoint(Point(0.5, 0.5));
 
 }
-std::string TestAnchorPoint::title()
+std::string TestAnchorPoint::title() const
 {
     return "Test Set AnchorPoint";
 }
@@ -1096,7 +1096,7 @@ void TestArmatureNesting::onExit()
     ArmatureTestLayer::onExit();
 }
 
-std::string TestArmatureNesting::title()
+std::string TestArmatureNesting::title() const
 {
     return "Test Armature Nesting";
 }
@@ -1229,11 +1229,11 @@ void TestArmatureNesting2::onExit()
 {
     ArmatureTestLayer::onExit();
 }
-std::string TestArmatureNesting2::title()
+std::string TestArmatureNesting2::title() const
 {
     return "Test CCArmature Nesting 2";
 }
-std::string TestArmatureNesting2::subtitle()
+std::string TestArmatureNesting2::subtitle() const
 {
     return "Move to a mount and press the ChangeMount Button.";
 }

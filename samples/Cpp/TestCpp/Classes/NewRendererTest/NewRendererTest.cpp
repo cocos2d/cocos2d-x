@@ -88,12 +88,12 @@ MultiSceneTest::~MultiSceneTest()
 
 }
 
-std::string MultiSceneTest::title()
+std::string MultiSceneTest::title() const
 {
     return BaseTest::title();
 }
 
-std::string MultiSceneTest::subtitle()
+std::string MultiSceneTest::subtitle() const
 {
     return BaseTest::subtitle();
 }
@@ -211,12 +211,12 @@ void NewSpriteTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *e
 
 }
 
-std::string NewSpriteTest::title()
+std::string NewSpriteTest::title() const
 {
     return "NewRender";
 }
 
-std::string NewSpriteTest::subtitle()
+std::string NewSpriteTest::subtitle() const
 {
     return "SpriteTest";
 }
@@ -238,12 +238,12 @@ NewSpriteBatchTest::~NewSpriteBatchTest()
 
 }
 
-std::string NewSpriteBatchTest::title()
+std::string NewSpriteBatchTest::title() const
 {
     return "NewRender";
 }
 
-std::string NewSpriteBatchTest::subtitle()
+std::string NewSpriteBatchTest::subtitle() const
 {
     return "SpriteBatchTest";
 }
@@ -342,12 +342,12 @@ NewClippingNodeTest::~NewClippingNodeTest()
 
 }
 
-std::string NewClippingNodeTest::title()
+std::string NewClippingNodeTest::title() const
 {
     return "New Render";
 }
 
-std::string NewClippingNodeTest::subtitle()
+std::string NewClippingNodeTest::subtitle() const
 {
     return "ClipNode";
 }
@@ -408,12 +408,12 @@ NewDrawNodeTest::~NewDrawNodeTest()
 
 }
 
-std::string NewDrawNodeTest::title()
+std::string NewDrawNodeTest::title() const
 {
     return "New Render";
 }
 
-std::string NewDrawNodeTest::subtitle()
+std::string NewDrawNodeTest::subtitle() const
 {
     return "DrawNode";
 }
@@ -475,12 +475,12 @@ NewCullingTest::~NewCullingTest()
     
 }
 
-std::string NewCullingTest::title()
+std::string NewCullingTest::title() const
 {
     return "New Render";
 }
 
-std::string NewCullingTest::subtitle()
+std::string NewCullingTest::subtitle() const
 {
     return "Culling";
 }

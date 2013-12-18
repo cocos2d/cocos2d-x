@@ -23,8 +23,8 @@ class EventDispatcherTestDemo : public BaseTest
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void backCallback(Object* sender);
     void nextCallback(Object* sender);
     void restartCallback(Object* sender);
@@ -36,8 +36,8 @@ class TouchableSpriteTest : public EventDispatcherTestDemo
 public:
     CREATE_FUNC(TouchableSpriteTest);
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class FixedPriorityTest : public EventDispatcherTestDemo
@@ -45,8 +45,8 @@ class FixedPriorityTest : public EventDispatcherTestDemo
 public:
     CREATE_FUNC(FixedPriorityTest);
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class RemoveListenerWhenDispatching : public EventDispatcherTestDemo
@@ -54,8 +54,8 @@ class RemoveListenerWhenDispatching : public EventDispatcherTestDemo
 public:
     CREATE_FUNC(RemoveListenerWhenDispatching);
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class CustomEventTest : public EventDispatcherTestDemo
@@ -64,8 +64,8 @@ public:
     CREATE_FUNC(CustomEventTest);
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     EventListenerCustom* _listener;
     EventListenerCustom* _listener2;
@@ -76,8 +76,8 @@ class LabelKeyboardEventTest : public EventDispatcherTestDemo
 public:
     CREATE_FUNC(LabelKeyboardEventTest);
     virtual void onEnter() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class SpriteAccelerationEventTest : public EventDispatcherTestDemo
@@ -86,8 +86,8 @@ public:
     CREATE_FUNC(SpriteAccelerationEventTest);
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class RemoveAndRetainNodeTest : public EventDispatcherTestDemo
@@ -96,8 +96,8 @@ public:
     CREATE_FUNC(RemoveAndRetainNodeTest);
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     Sprite* _sprite;
     bool _spriteSaved;
@@ -109,8 +109,8 @@ public:
     CREATE_FUNC(RemoveListenerAfterAddingTest);
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */
