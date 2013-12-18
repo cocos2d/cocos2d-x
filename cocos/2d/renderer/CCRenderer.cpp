@@ -69,7 +69,7 @@ Renderer::~Renderer()
 
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if 0//CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
