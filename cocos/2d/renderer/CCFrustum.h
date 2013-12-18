@@ -104,15 +104,15 @@ public:
 private:
     enum FrustumPlane
     {
-        NEAR = 0,
-        FAR = 1,
-        BOTTOM = 2,
-        TOP = 3,
-        LEFT = 4,
-        RIGHT = 5,
-        NUMBER = 6
+        FRUSTUM_NEAR = 0,
+        FRUSTUM_FAR = 1,
+        FRUSTUM_BOTTOM = 2,
+        FRUSTUM_TOP = 3,
+        FRUSTUM_LEFT = 4,
+        FRUSTUM_RIGHT = 5,
+        FRUSTUM_NUMBER = 6
     };
-    kmPlane _frustumPlanes[FrustumPlane::NUMBER];
+    kmPlane _frustumPlanes[FrustumPlane::FRUSTUM_NUMBER];
 };
 
 NS_CC_END 
