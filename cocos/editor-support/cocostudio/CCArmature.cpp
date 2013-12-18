@@ -658,11 +658,11 @@ void Armature::setBody(b2Body *body)
     _body = body;
     _body->SetUserData(this);
 
-    for(auto& object : *_children)
+    for(auto& object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
-            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            auto displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
             for(auto displayObject : displayList)
             {
@@ -708,18 +708,18 @@ void Armature::setBody(cpBody *body)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
-            Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
+            auto displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            for_each(displayList->begin(), displayList->end(), [&_body](DecorativeDisplay* displayObject)
+            for_each(displayList.begin(), displayList.end(), [&body](DecorativeDisplay* displayObject)
             {
                 ColliderDetector *detector = displayObject->getColliderDetector();
                 if (detector != nullptr)
                 {
-                    detector->setBody(_body);
+                    detector->setBody(body);
                 }
             });
         }
-    });
+    }
 }
 
 cpShape *Armature::getShapeList()
