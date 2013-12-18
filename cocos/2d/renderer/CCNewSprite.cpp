@@ -152,11 +152,11 @@ bool NewSprite::culling() const
     kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
     
     AABB aabb(point,point);
-    point = {newRect.getMaxX(), newRect.getMinY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
     aabb.expand(point);
-    point = {newRect.getMinX(), newRect.getMaxY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
     aabb.expand(point);
-    point = {newRect.getMaxX(), newRect.getMaxY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
     aabb.expand(point);
     
     return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
