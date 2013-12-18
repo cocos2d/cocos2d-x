@@ -115,7 +115,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
 
 void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
 {
-    setClearColor({r, g, b, a});
+    setClearColor(Color4F(r, g, b, a));
 
     setClearDepth(depthValue);
 
