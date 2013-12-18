@@ -700,7 +700,8 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     }
     _opacityModifyRGB = var;
     
-    _scale9Image->getChildren().forEach([this](Node* child){
+    auto& children = _scale9Image->getChildren();
+    std::for_each(children.begin(), children.end(), [this](Node* child){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
         if (rgba)
         {
@@ -789,7 +790,8 @@ void Scale9Sprite::setColor(const Color3B& color)
     
     NodeRGBA::setColor(color);
     
-    _scale9Image->getChildren().forEach([&color](Node* child){
+    auto& children = _scale9Image->getChildren();
+    std::for_each(children.begin(), children.end(), [&color](Node* child){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
         if (rgba)
         {
@@ -811,7 +813,8 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     }
     NodeRGBA::setOpacity(opacity);
     
-    _scale9Image->getChildren().forEach([&opacity](Node* child){
+    auto& children = _scale9Image->getChildren();
+    std::for_each(children.begin(), children.end(), [&opacity](Node* child){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
         if (rgba)
         {
@@ -833,7 +836,8 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     }
     NodeRGBA::updateDisplayedColor(parentColor);
     
-    _scale9Image->getChildren().forEach([&parentColor](Node* child){
+    auto& children = _scale9Image->getChildren();
+    std::for_each(children.begin(), children.end(), [&parentColor](Node* child){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
         if (rgba)
         {
@@ -850,7 +854,8 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     }
     NodeRGBA::updateDisplayedOpacity(parentOpacity);
     
-    _scale9Image->getChildren().forEach([&parentOpacity](Node* child){
+    auto& children = _scale9Image->getChildren();
+    std::for_each(children.begin(), children.end(), [&parentOpacity](Node* child){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
         if (rgba)
         {

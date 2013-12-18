@@ -42,8 +42,8 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -385,7 +385,7 @@ void ParticleBatchNode::removeChildAtIndex(int index, bool doCleanup)
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
     });
 
@@ -423,7 +423,7 @@ void ParticleBatchNode::draw(void)
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 
@@ -481,7 +481,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 {
     int index = 0;
     
-    _children.forEach([&index](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&index](Node* child){
         ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
         partiSys->setAtlasIndex(index);
         index += partiSys->getTotalParticles();

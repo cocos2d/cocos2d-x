@@ -1,14 +1,39 @@
-#include "Frustum.h"
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#include "CCFrustum.h"
+#include "platform/CCCommon.h"
+
 #include <stdlib.h>
-#include "CCCommon.h"
 
 NS_CC_BEGIN
 
 ViewTransform::ViewTransform()
 {
-    _position = {0, 0, 0};
-    _focus = {0, 0, -1};
-    _up = {0, 1, 0 };
+    kmVec3Fill(&_position,0,0,0);
+    kmVec3Fill(&_focus,0,0,-1);
+    kmVec3Fill(&_up,0,1,0);
     _dirty = true;
     kmMat4Identity(&_matrix);
 }
@@ -166,7 +191,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         normal = cDir;
         kmVec3Scale(&point, &cDir, near);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::NEAR], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_NEAR], &point, &normal);
     }
     
     //far
@@ -176,7 +201,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         kmVec3Scale(&normal, &cDir, -1);
         kmVec3Scale(&point, &cDir, far);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FAR], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_FAR], &point, &normal);
     }
     
     //left
@@ -186,7 +211,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         normal = cRight;
         kmVec3Scale(&point, &cRight, -width * 0.5);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::LEFT], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_LEFT], &point, &normal);
     }
     
     //right
@@ -196,7 +221,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         kmVec3Scale(&normal, &cRight, -1);
         kmVec3Scale(&point, &cRight, width * 0.5);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::RIGHT], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_RIGHT], &point, &normal);
     }
     
     //bottom
@@ -206,7 +231,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         normal = cUp;
         kmVec3Scale(&point, &cUp, -height * 0.5);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::BOTTOM], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_BOTTOM], &point, &normal);
     }
     
     //top
@@ -216,7 +241,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         kmVec3Scale(&normal, &cUp, -1);
         kmVec3Scale(&point, &cUp, height * 0.5);
         kmVec3Add(&point, &point, &cc);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::TOP], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_TOP], &point, &normal);
     }
 }
 
@@ -242,14 +267,14 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
     
     //near
     {
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::NEAR], &nearCenter, &cDir);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_NEAR], &nearCenter, &cDir);
     }
     
     //far
     {
         kmVec3 normal;
         kmVec3Scale(&normal, &cDir, -1);
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FAR], &farCenter, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_FAR], &farCenter, &normal);
     }
     
     //left
@@ -263,7 +288,7 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
         kmVec3Cross(&normal, &normal, &cUp);
         kmVec3Normalize(&normal, &normal);
         
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::LEFT], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_LEFT], &point, &normal);
     }
     
     //right
@@ -277,7 +302,7 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
         kmVec3Cross(&normal, &cUp, &normal);
         kmVec3Normalize(&normal, &normal);
         
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::RIGHT], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_RIGHT], &point, &normal);
     }
     
     //bottom
@@ -291,7 +316,7 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
         kmVec3Cross(&normal, &cRight, &normal);
         kmVec3Normalize(&normal, &normal);
         
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::BOTTOM], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_BOTTOM], &point, &normal);
     }
     
     //top
@@ -305,7 +330,7 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
         kmVec3Cross(&normal, &normal, &cRight);
         kmVec3Normalize(&normal, &normal);
         
-        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::TOP], &point, &normal);
+        kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_TOP], &point, &normal);
     }
     
 }
@@ -322,18 +347,18 @@ void Frustum::setupFromMatrix(const kmMat4 &view, const kmMat4 &projection)
     kmMat4 mvp;
     kmMat4Multiply(&mvp, &projection, &view);
     
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::NEAR], &mvp, KM_PLANE_NEAR);
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FAR], &mvp, KM_PLANE_FAR);
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::LEFT], &mvp, KM_PLANE_LEFT);
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::RIGHT], &mvp, KM_PLANE_RIGHT);
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::BOTTOM], &mvp, KM_PLANE_BOTTOM);
-    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::TOP], &mvp, KM_PLANE_TOP);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_NEAR], &mvp, KM_PLANE_NEAR);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_FAR], &mvp, KM_PLANE_FAR);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_LEFT], &mvp, KM_PLANE_LEFT);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_RIGHT], &mvp, KM_PLANE_RIGHT);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_BOTTOM], &mvp, KM_PLANE_BOTTOM);
+    kmMat4ExtractPlane(&_frustumPlanes[FrustumPlane::FRUSTUM_TOP], &mvp, KM_PLANE_TOP);
 }
 
 Frustum::IntersectResult Frustum::intersectPoint(const kmVec3 &point) const
 {
-    int indexFirst = static_cast<int>(FrustumPlane::NEAR);
-    int indexNumber = static_cast<int>(FrustumPlane::NUMBER);
+    int indexFirst = static_cast<int>(FrustumPlane::FRUSTUM_NEAR);
+    int indexNumber = static_cast<int>(FrustumPlane::FRUSTUM_NUMBER);
     
     for(int planeIndex = indexFirst; planeIndex < indexNumber; ++planeIndex)
     {
@@ -346,8 +371,8 @@ Frustum::IntersectResult Frustum::intersectPoint(const kmVec3 &point) const
 Frustum::IntersectResult Frustum::intersectAABB(const AABB& aabb) const
 {
     IntersectResult result = IntersectResult::INSIDE;
-    int indexFirst = static_cast<int>(FrustumPlane::NEAR);
-    int indexNumber = static_cast<int>(FrustumPlane::NUMBER);
+    int indexFirst = static_cast<int>(FrustumPlane::FRUSTUM_NEAR);
+    int indexNumber = static_cast<int>(FrustumPlane::FRUSTUM_NUMBER);
     
     for(int planeIndex = indexFirst; planeIndex < indexNumber; ++planeIndex)
     {
@@ -369,8 +394,8 @@ Frustum::IntersectResult Frustum::intersectAABB(const AABB& aabb) const
 Frustum::IntersectResult Frustum::intersectSphere(const kmVec3& center, float radius) const
 {
     IntersectResult result = IntersectResult::INSIDE;
-    int indexFirst = static_cast<int>(FrustumPlane::NEAR);
-    int indexNumber = static_cast<int>(FrustumPlane::NUMBER);
+    int indexFirst = static_cast<int>(FrustumPlane::FRUSTUM_NEAR);
+    int indexNumber = static_cast<int>(FrustumPlane::FRUSTUM_NUMBER);
     
     for(int planeIndex = indexFirst; planeIndex < indexNumber; ++planeIndex)
     {

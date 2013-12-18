@@ -117,10 +117,27 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+renderer/CCNewDrawNode.cpp \
+renderer/CCNewLabelAtlas.cpp \
+renderer/CCNewParticleSystemQuad.cpp \
+renderer/CCNewRenderTexture.cpp \
+renderer/CCNewSprite.cpp \
+renderer/CCNewSpriteBatchNode.cpp \
+renderer/CCNewTextureAtlas.cpp \
+renderer/CCCustomCommand.cpp \
+renderer/CCFrustum.cpp \
+renderer/CCGroupCommand.cpp \
+renderer/CCMaterialManager.cpp \
+renderer/CCNewClippingNode.cpp \
+renderer/CCQuadCommand.cpp \
+renderer/CCRenderCommand.cpp \
+renderer/CCRenderer.cpp \
+renderer/CCRenderMaterial.cpp \
 ../base/atitc.cpp \
 ../base/CCAffineTransform.cpp \
 ../base/CCArray.cpp \
 ../base/CCAutoreleasePool.cpp \
+../base/CCConsole.cpp \
 ../base/CCData.cpp \
 ../base/CCDataVisitor.cpp \
 ../base/CCDictionary.cpp \
@@ -132,7 +149,6 @@ platform/CCThread.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
-../base/CCConsole.cpp \
 ../math/kazmath/src/aabb.c \
 ../math/kazmath/src/mat3.c \
 ../math/kazmath/src/mat4.c \
@@ -158,10 +174,12 @@ platform/CCThread.cpp \
 ../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
-../../external/unzip/unzip.cpp
+../../external/unzip/unzip.cpp \
+../../external/edtaa3func/edtaa3func.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
@@ -171,13 +189,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/edtaa3func
 
 
 LOCAL_LDLIBS := -lGLESv2 \

@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -366,11 +366,13 @@ const kmMat4& Armature::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = { cy * _scaleX, sy * _scaleX,     0,  0,
-            -sx * _scaleY, cx * _scaleY,    0,  0,
-            0,  0,  1,  0,
-            x,  y,  0,  1 };
+        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
+                           -sx * _scaleY, cx * _scaleY,    0,  0,
+                           0,  0,  1,  0,
+                           x,  y,  0,  1 };
 
+        kmMat4Fill(&_transform, mat);
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)

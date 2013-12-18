@@ -38,13 +38,12 @@ THE SOFTWARE.
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CustomCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
+#include "CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
-#include "CustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -446,7 +445,7 @@ void ParticleSystemQuad::draw()
 
         QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
         cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Renderer::getInstance()->addCommand(cmd);
+        Director::getInstance()->getRenderer()->addCommand(cmd);
     }
 
 }
