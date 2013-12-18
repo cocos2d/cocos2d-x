@@ -31,7 +31,7 @@ CCComAudio::CCComAudio(void)
 : m_strFilePath("")
 , m_bLoop(false)
 {
-    m_strName = "Audio";
+    m_strName = "CCComAudio";
 }
 
 CCComAudio::~CCComAudio(void)
