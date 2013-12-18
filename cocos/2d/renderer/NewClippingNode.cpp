@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "CustomCommand.h"
 #include "CCShaderCache.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -79,7 +80,7 @@ void NewClippingNode::visit()
 {
     //Add group command
     
-    Renderer* renderer = Renderer::getInstance();
+    Renderer* renderer = Director::getInstance()->getRenderer();
     
     GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0,_vertexZ);

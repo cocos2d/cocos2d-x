@@ -14,9 +14,6 @@
 #include <vector>
 #include <stack>
 
-#define VBO_SIZE 10500
-#define DEFAULT_RENDER_QUEUE 0
-
 NS_CC_BEGIN
 
 typedef std::vector<RenderCommand*> RenderQueue;
@@ -27,12 +24,14 @@ struct RenderStackElement
     size_t currentIndex;
 };
 
-class Renderer : public Object
+class Renderer
 {
 public:
-    static Renderer* getInstance();
-    static void destroyInstance();
-    
+    static const int vbo_size = 65536 / 6;
+
+    Renderer();
+    ~Renderer();
+
     //TODO manage GLView inside Render itself
     void initGLView();
     
@@ -46,11 +45,7 @@ public:
     void render();
 
 protected:
-    Renderer();
-    ~Renderer();
 
-    bool init();
-    
     void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
@@ -64,7 +59,6 @@ protected:
 
     void onBackToForeground(Object* obj);
 
-protected:
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;
@@ -75,8 +69,8 @@ protected:
     size_t _firstCommand;
     size_t _lastCommand;
 
-    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
-    GLushort _indices[6 * VBO_SIZE];
+    V3F_C4B_T2F_Quad _quads[vbo_size];
+    GLushort _indices[6 * vbo_size];
     GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 
