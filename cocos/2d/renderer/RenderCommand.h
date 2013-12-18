@@ -14,37 +14,36 @@
 
 NS_CC_BEGIN
 
-enum RenderCommandType
-{
-    QUAD_COMMAND,
-    CUSTOM_COMMAND,
-    GROUP_COMMAND,
-    UNKNOWN_COMMAND,
-};
-
 //TODO make RenderCommand inherent from Object
 class RenderCommand
 {
+public:
+
+    enum class Type
+    {
+        QUAD_COMMAND,
+        CUSTOM_COMMAND,
+        GROUP_COMMAND,
+        UNKNOWN_COMMAND,
+    };
+
+    virtual int64_t generateID() = 0;
+
+    /** Get Render Command Id */
+    virtual inline int64_t getID() { return _id; }
+    
+    virtual inline Type getType() { return _type; }
+    virtual void releaseToCommandPool() =0;
+
 protected:
     RenderCommand();
     virtual ~RenderCommand();
-public:
-    virtual int64_t generateID() = 0;
 
-    virtual /**
-    * Get Render Command Id
-    */
-    inline int64_t getID() { return _id; }
-    
-    virtual inline RenderCommandType getType() { return _type; }
-    virtual void releaseToCommandPool() =0;
-protected:
     void printID();
 
-protected:
     //Generated IDs
     int64_t _id; /// used for sorting render commands
-    RenderCommandType  _type;
+    Type _type;
 };
 
 NS_CC_END

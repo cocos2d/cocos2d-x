@@ -215,7 +215,7 @@ void Renderer::render()
                 _renderStack.top().currentIndex = _lastCommand = i;
                 auto command = currRenderQueue[i];
                 
-                if(command->getType() == QUAD_COMMAND)
+                if(command->getType() == RenderCommand::Type::QUAD_COMMAND)
                 {
                     QuadCommand* cmd = static_cast<QuadCommand*>(command);
 
@@ -231,13 +231,13 @@ void Renderer::render()
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
                     _numQuads += cmd->getQuadCount();
                 }
-                else if(command->getType() == CUSTOM_COMMAND)
+                else if(command->getType() == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
-                else if(command->getType() == GROUP_COMMAND)
+                else if(command->getType() == RenderCommand::Type::GROUP_COMMAND)
                 {
                     flush();
                     GroupCommand* cmd = static_cast<GroupCommand*>(command);
@@ -340,7 +340,7 @@ void Renderer::drawBatchedQuads()
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
     {
         RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
-        if (command->getType() == QUAD_COMMAND)
+        if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
         {
             QuadCommand* cmd = static_cast<QuadCommand*>(command);
             if(_lastMaterialID != cmd->getMaterialID())

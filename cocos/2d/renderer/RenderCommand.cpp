@@ -10,7 +10,7 @@ NS_CC_BEGIN
 RenderCommand::RenderCommand()
 {
     _id = 0;
-    _type = UNKNOWN_COMMAND;
+    _type = RenderCommand::Type::UNKNOWN_COMMAND;
 }
 
 RenderCommand::~RenderCommand()
