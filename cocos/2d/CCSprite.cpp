@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -249,7 +251,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader program
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
         
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -494,14 +496,14 @@ void Sprite::setTextureCoords(Rect rect)
 void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
-    
+
 #ifdef CC_USE_PHYSICS
     if (updatePhysicsTransform())
     {
         setDirty(true);
     };
 #endif
-    
+
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
@@ -511,7 +513,7 @@ void Sprite::updateTransform(void)
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
             _shouldBeHidden = true;
         }
-        else 
+        else
         {
             _shouldBeHidden = false;
 
@@ -519,10 +521,12 @@ void Sprite::updateTransform(void)
             {
                 _transformToBatch = getNodeToParentTransform();
             }
-            else 
+            else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
+                kmMat4 nodeToParent = getNodeToParentTransform();
+                kmMat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                kmMat4Multiply(&_transformToBatch, &nodeToParent, &parentTransform);
             }
 
             //
@@ -536,13 +540,13 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            float x = _transformToBatch.tx;
-            float y = _transformToBatch.ty;
+            float x = _transformToBatch.mat[12];
+            float y = _transformToBatch.mat[13];
 
-            float cr = _transformToBatch.a;
-            float sr = _transformToBatch.b;
-            float cr2 = _transformToBatch.d;
-            float sr2 = -_transformToBatch.c;
+            float cr = _transformToBatch.mat[0];
+            float sr = _transformToBatch.mat[1];
+            float cr2 = _transformToBatch.mat[5];
+            float sr2 = -_transformToBatch.mat[4];
             float ax = x1 * cr - y1 * sr2 + x;
             float ay = x1 * sr + y1 * cr2 + y;
 
@@ -566,14 +570,14 @@ void Sprite::updateTransform(void)
 		{
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
-		
+
         _recursiveDirty = false;
         setDirty(false);
     }
 
     // MARMALADE CHANGED
     // recursively iterate over children
-/*    if( _hasChildren ) 
+/*    if( _hasChildren )
     {
         // MARMALADE: CHANGED TO USE Node*
         // NOTE THAT WE HAVE ALSO DEFINED virtual Node::updateTransform()
@@ -595,19 +599,90 @@ void Sprite::updateTransform(void)
 
 // draw
 
+//void Sprite::draw(void)
+//{
+//    CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+//
+//    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
+//
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    GL::bindTexture2D( _texture->getName() );
+//    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+//
+//#define kQuadSize sizeof(_quad.bl)
+//#ifdef EMSCRIPTEN
+//    long offset = 0;
+//    setGLBufferData(&_quad, 4 * kQuadSize, 0);
+//#else
+//    long offset = (long)&_quad;
+//#endif // EMSCRIPTEN
+//
+//    // vertex
+//    int diff = offsetof( V3F_C4B_T2F, vertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+//
+//    // texCoods
+//    diff = offsetof( V3F_C4B_T2F, texCoords);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+//
+//    // color
+//    diff = offsetof( V3F_C4B_T2F, colors);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+//
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//
+//    CHECK_GL_ERROR_DEBUG();
+//
+//
+//#if CC_SPRITE_DEBUG_DRAW == 1
+//    // draw bounding box
+//    Point vertices[4]={
+//        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
+//        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
+//        Point(_quad.br.vertices.x,_quad.br.vertices.y),
+//        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
+//    };
+//    ccDrawPoly(vertices, 4, true);
+//#elif CC_SPRITE_DEBUG_DRAW == 2
+//    // draw texture box
+//    Size s = this->getTextureRect().size;
+//    Point offsetPix = this->getOffsetPosition();
+//    Point vertices[4] = {
+//        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
+//        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
+//    };
+//    ccDrawPoly(vertices, 4, true);
+//#endif // CC_SPRITE_DEBUG_DRAW
+//
+//    CC_INCREMENT_GL_DRAWS(1);
+//
+//    CC_PROFILER_STOP_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+//}
+
 void Sprite::draw(void)
 {
-    CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+//    updateQuadVertices();
 
-    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    CC_NODE_DRAW_SETUP();
-    
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    //TODO implement z order
+    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
+    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+}
 
-    GL::bindTexture2D( _texture->getName() );
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+void Sprite::updateQuadVertices()
+{
 
+//#ifdef CC_USE_PHYSICS
+//    updatePhysicsTransform();
+//    setDirty(true);
+//#endif
 #define kQuadSize sizeof(_quad.bl)
 #ifdef EMSCRIPTEN
     long offset = 0;
@@ -616,47 +691,63 @@ void Sprite::draw(void)
     size_t offset = (size_t)&_quad;
 #endif // EMSCRIPTEN
 
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    //TODO optimize the performance cache affineTransformation
 
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    // recalculate matrix only if it is dirty
+    if(isDirty())
+    {
 
+//        if( ! _parent || _parent == (Node*)_batchNode )
+//        {
+//            _transformToBatch = getNodeToParentTransform();
+//        }
+//        else
+//        {
+//            CCASSERT( dynamic_cast<NewSprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<NewSprite*>(_parent)->_transformToBatch );
+//        }
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        //TODO optimize this transformation, should use parent's transformation instead
+        _transformToBatch = getNodeToWorldTransform();
 
-    CHECK_GL_ERROR_DEBUG();
+        //
+        // calculate the Quad based on the Affine Matrix
+        //
 
+        Size size = _rect.size;
 
-#if CC_SPRITE_DEBUG_DRAW == 1
-    // draw bounding box
-    Point vertices[4]={
-        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
-        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
-        Point(_quad.br.vertices.x,_quad.br.vertices.y),
-        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
-    };
-    ccDrawPoly(vertices, 4, true);
-#elif CC_SPRITE_DEBUG_DRAW == 2
-    // draw texture box
-    Size s = this->getTextureRect().size;
-    Point offsetPix = this->getOffsetPosition();
-    Point vertices[4] = {
-        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
-        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
-    };
-    ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
+        float x1 = _offsetPosition.x;
+        float y1 = _offsetPosition.y;
 
-    CC_INCREMENT_GL_DRAWS(1);
+        float x2 = x1 + size.width;
+        float y2 = y1 + size.height;
+        float x = _transformToBatch.mat[12];
+        float y = _transformToBatch.mat[13];
 
-    CC_PROFILER_STOP_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+        float cr = _transformToBatch.mat[0];
+        float sr = _transformToBatch.mat[1];
+        float cr2 = _transformToBatch.mat[5];
+        float sr2 = -_transformToBatch.mat[4];
+        float ax = x1 * cr - y1 * sr2 + x;
+        float ay = x1 * sr + y1 * cr2 + y;
+
+        float bx = x2 * cr - y1 * sr2 + x;
+        float by = x2 * sr + y1 * cr2 + y;
+
+        float cx = x2 * cr - y2 * sr2 + x;
+        float cy = x2 * sr + y2 * cr2 + y;
+
+        float dx = x1 * cr - y2 * sr2 + x;
+        float dy = x1 * sr + y2 * cr2 + y;
+
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+
+        _recursiveDirty = false;
+        setDirty(false);
+    }
 }
 
 // Node overrides
@@ -726,7 +817,7 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        _children.forEach([this](Node* child){
+        std::for_each(_children.begin(), _children.end(), [this](Node* child){
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
@@ -772,7 +863,7 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            _children.forEach([](Node* child){
+            std::for_each(_children.begin(), _children.end(), [](Node* child){
                 child->sortAllChildren();
             });
         }
@@ -809,7 +900,7 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        _children.forEach([](Node* child){
+        std::for_each(_children.begin(), _children.end(), [](Node* child){
             Sprite* sp = dynamic_cast<Sprite*>(child);
             if (sp)
             {
@@ -821,7 +912,7 @@ void Sprite::setDirtyRecursively(bool bValue)
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (_batchNode && ! _recursiveDirty) {    \
+                    if (! _recursiveDirty) {    \
                         _recursiveDirty = true;                    \
                         setDirty(true);                              \
                         if ( _hasChildren)                        \
@@ -832,6 +923,12 @@ void Sprite::setDirtyRecursively(bool bValue)
 void Sprite::setPosition(const Point& pos)
 {
     Node::setPosition(pos);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void Sprite::setPosition(float x, float y)
+{
+    Node::setPosition(x, y);
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -1113,7 +1210,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
 
         // using batch
-        _transformToBatch = AffineTransformIdentity;
+        kmMat4Identity(&_transformToBatch);
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }

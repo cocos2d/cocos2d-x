@@ -108,6 +108,7 @@ public:
      * @lua NA
      */
     virtual void draw() override;
+
     /**
      * @js NA
      * @lua NA
@@ -149,6 +150,7 @@ protected:
     
     GLuint                _buffersVBO[2]; //0: vertex  1: indices
 
+    kmMat4                _transformMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };

@@ -73,7 +73,6 @@ public:
     const Font* getFont() const;
     
 private:
-    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
 
     void relaseTextures();
     std::unordered_map<int, Texture2D*> _atlasTextures;
@@ -89,6 +88,7 @@ private:
     float _currentPageOrigY;
     float _currentPageLineHeight;
     float _letterPadding;
+    bool  _makeDistanceMap;
 };
 
 

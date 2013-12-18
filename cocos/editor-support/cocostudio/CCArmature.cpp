@@ -28,6 +28,9 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -80,13 +83,11 @@ Armature *Armature::create(const char *name, Bone *parentBone)
 Armature::Armature()
     : _armatureData(nullptr)
     , _batchNode(nullptr)
-    , _atlas(nullptr)
     , _parentBone(nullptr)
     , _armatureTransformDirty(true)
     , _boneDic(nullptr)
     , _topBoneList(nullptr)
     , _animation(nullptr)
-    , _textureAtlasDic(nullptr)
 {
 }
 
@@ -104,7 +105,6 @@ Armature::~Armature(void)
         CC_SAFE_DELETE(_topBoneList);
     }
     CC_SAFE_DELETE(_animation);
-    CC_SAFE_RELEASE_NULL(_textureAtlasDic);
 }
 
 
@@ -131,9 +131,6 @@ bool Armature::init(const char *name)
         CC_SAFE_DELETE(_topBoneList);
         _topBoneList = new Array();
         _topBoneList->init();
-
-        CC_SAFE_DELETE(_textureAtlasDic);
-        _textureAtlasDic = new Dictionary();
 
         _blendFunc.src = CC_BLEND_SRC;
         _blendFunc.dst = CC_BLEND_DST;
@@ -340,7 +337,7 @@ Dictionary *Armature::getBoneDic() const
     return _boneDic;
 }
 
-const AffineTransform& Armature::getNodeToParentTransform() const
+const kmMat4& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
@@ -388,29 +385,35 @@ const AffineTransform& Armature::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = AffineTransformMake( cy * _scaleX,  sy * _scaleX,
-                                              -sx * _scaleY, cx * _scaleY,
-                                              x, y );
+        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
+                           -sx * _scaleY, cx * _scaleY,    0,  0,
+                           0,  0,  1,  0,
+                           x,  y,  0,  1 };
 
+        kmMat4Fill(&_transform, mat);
+        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            AffineTransform skewMatrix = AffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-                                           tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-                                           0.0f, 0.0f );
-            _transform = AffineTransformConcat(skewMatrix, _transform);
+            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
+                0,  0, 1, 0,
+                0,  0,  0, 1};
+            _transform = TransformConcat(skewMatrix, _transform);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+                // XXX: Argh, kmMat needs a "translate" method
+                _transform.mat[12] += -_anchorPointInPoints.x;
+                _transform.mat[13] += -_anchorPointInPoints.y;
             }
         }
 
         if (_additionalTransformDirty)
         {
-            _transform = AffineTransformConcat(_transform, _additionalTransform);
+            _transform = TransformConcat(_transform, _additionalTransform);
             _additionalTransformDirty = false;
         }
 
@@ -464,8 +467,8 @@ void Armature::draw()
     if (_parentBone == nullptr && _batchNode == nullptr)
     {
         CC_NODE_DRAW_SETUP();
-        GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     }
+
 
     for (auto object : _children)
     {
@@ -481,83 +484,36 @@ void Armature::draw()
             case CS_DISPLAY_SPRITE:
             {
                 Skin *skin = static_cast<Skin *>(node);
-
-                TextureAtlas *textureAtlas = skin->getTextureAtlas();
-                BlendType blendType = bone->getBlendType();
-                if(_atlas != textureAtlas || blendType != BLEND_NORMAL)
-                {
-                    if (_atlas)
-                    {
-                        _atlas->drawQuads();
-                        _atlas->removeAllQuads();
-                    }
-                }
-
-                _atlas = textureAtlas;
-                if (_atlas->getCapacity() == _atlas->getTotalQuads() && !_atlas->resizeCapacity(_atlas->getCapacity() * 2))
-                    return;
-
                 skin->updateTransform();
-
+                
+                BlendType blendType = bone->getBlendType();
+                
                 if (blendType != BLEND_NORMAL)
                 {
                     updateBlendType(blendType);
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
-                    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+                    skin->setBlendFunc(_blendFunc);
                 }
+                skin->draw();
             }
             break;
             case CS_DISPLAY_ARMATURE:
             {
-                Armature *armature = static_cast<Armature *>(node);
-
-                TextureAtlas *textureAtlas = armature->getTextureAtlas();
-                if(_atlas != textureAtlas)
-                {
-                    if (_atlas)
-                    {
-                        _atlas->drawQuads();
-                        _atlas->removeAllQuads();
-                    }
-                }
-                armature->draw();
-                _atlas = armature->getTextureAtlas();
+                node->draw();
             }
             break;
             default:
             {
-                if (_atlas)
-                {
-                    _atlas->drawQuads();
-                    _atlas->removeAllQuads();
-                }
                 node->visit();
-
                 CC_NODE_DRAW_SETUP();
-                GL::blendFunc(_blendFunc.src, _blendFunc.dst);
             }
             break;
             }
         }
         else if(Node *node = dynamic_cast<Node *>(object))
         {
-            if (_atlas)
-            {
-                _atlas->drawQuads();
-                _atlas->removeAllQuads();
-            }
             node->visit();
-
             CC_NODE_DRAW_SETUP();
-            GL::blendFunc(_blendFunc.src, _blendFunc.dst);
         }
-    }
-
-    if(_atlas && !_batchNode && _parentBone == nullptr)
-    {
-        _atlas->drawQuads();
-        _atlas->removeAllQuads();
     }
 }
 
@@ -667,7 +623,7 @@ Rect Armature::getBoundingBox() const
         }
     }
 
-    return RectApplyAffineTransform(boundingBox, getNodeToParentTransform());
+    return RectApplyTransform(boundingBox, getNodeToParentTransform());
 }
 
 Bone *Armature::getBoneAtPoint(float x, float y) const 
@@ -686,27 +642,6 @@ Bone *Armature::getBoneAtPoint(float x, float y) const
     return nullptr;
 }
 
-TextureAtlas *Armature::getTexureAtlasWithTexture(Texture2D *texture) const
-{
-    int key = texture->getName();
-    
-    if (_parentBone && _parentBone->getArmature())
-    {
-        return _parentBone->getArmature()->getTexureAtlasWithTexture(texture);
-    }
-    else if (_batchNode)
-    {
-        _batchNode->getTexureAtlasWithTexture(texture);
-    }
-    
-    TextureAtlas *atlas = static_cast<TextureAtlas *>(_textureAtlasDic->objectForKey(key));
-    if (atlas == nullptr)
-    {
-        atlas = TextureAtlas::createWithTexture(texture, 4);
-        _textureAtlasDic->setObject(atlas, key);
-    }
-    return atlas;
-}
 
 void Armature::setParentBone(Bone *parentBone)
 {

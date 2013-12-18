@@ -71,7 +71,8 @@ Bone::Bone()
     _tween = nullptr;
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
-    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+//    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+    kmMat4Identity(&_worldTransform);
     _boneTransformDirty = true;
     _blendType = BLEND_NORMAL;
     _worldInfo = nullptr;
@@ -221,13 +222,13 @@ void Bone::update(float delta)
 
         if (_armatureParentBone)
         {
-            _worldTransform = AffineTransformConcat(_worldTransform, _armature->getNodeToParentTransform());
+            _worldTransform = TransformConcat(_worldTransform, _armature->getNodeToParentTransform());
         }
     }
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    _children.forEach([&delta](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj){
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
@@ -239,8 +240,8 @@ void Bone::applyParentTransform(Bone *parent)
 {
     float x = _worldInfo->x;
     float y = _worldInfo->y;
-    _worldInfo->x = x * parent->_worldTransform.a + y * parent->_worldTransform.c + parent->_worldInfo->x;
-    _worldInfo->y = x * parent->_worldTransform.b + y * parent->_worldTransform.d + parent->_worldInfo->y;
+    _worldInfo->x = x * parent->_worldTransform.mat[0] + y * parent->_worldTransform.mat[4] + parent->_worldInfo->x;
+    _worldInfo->y = x * parent->_worldTransform.mat[1] + y * parent->_worldTransform.mat[5] + parent->_worldInfo->y;
     _worldInfo->scaleX = _worldInfo->scaleX * parent->_worldInfo->scaleX;
     _worldInfo->scaleY = _worldInfo->scaleY * parent->_worldInfo->scaleY;
     _worldInfo->skewX = _worldInfo->skewX + parent->_worldInfo->skewX;
@@ -387,14 +388,14 @@ void Bone::setZOrder(int zOrder)
         Node::setZOrder(zOrder);
 }
 
-AffineTransform Bone::getNodeToArmatureTransform() const
+kmMat4 Bone::getNodeToArmatureTransform() const
 {
     return _worldTransform;
 }
 
-AffineTransform Bone::getNodeToWorldTransform() const
+kmMat4 Bone::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
+    return TransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }
 
 Node *Bone::getDisplayRenderNode()

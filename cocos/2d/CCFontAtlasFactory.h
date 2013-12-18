@@ -36,7 +36,7 @@ class CC_DLL FontAtlasFactory
     
 public:
     
-    static FontAtlas * createAtlasFromTTF(const char* fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs = 0);
+    static FontAtlas * createAtlasFromTTF(const char* fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
     static FontAtlas * createAtlasFromFNT(const char* fntFilePath);
     
 private:

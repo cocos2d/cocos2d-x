@@ -32,6 +32,9 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
+
 // extern
 #include "kazmath/GL/matrix.h"
 
@@ -497,10 +500,8 @@ Point ProgressTimer::boundaryTexCoord(char index)
     return Point::ZERO;
 }
 
-void ProgressTimer::draw(void)
+void ProgressTimer::onDraw()
 {
-    if( ! _vertexData || ! _sprite)
-        return;
 
     CC_NODE_DRAW_SETUP();
 
@@ -547,5 +548,17 @@ void ProgressTimer::draw(void)
     }
     CC_INCREMENT_GL_DRAWS(1);
 }
+
+void ProgressTimer::draw()
+{
+    if( ! _vertexData || ! _sprite)
+        return;
+
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
 
 NS_CC_END

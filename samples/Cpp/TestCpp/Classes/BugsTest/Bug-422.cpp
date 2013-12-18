@@ -47,7 +47,8 @@ void Bug422Layer::reset()
 
 void Bug422Layer::check(Node* t)
 {
-    t->getChildren().forEach([this](Node* child){
+    auto& children = t->getChildren();
+    std::for_each(children.begin(), children.end(), [this](Node* child){
         log("%p, rc: %d", child, child->retainCount());
         check(child);
     });
