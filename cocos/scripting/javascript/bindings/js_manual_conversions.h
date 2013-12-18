@@ -42,10 +42,10 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, cocos2d::Color4B* ret);
 JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, cocos2d::Color4F* ret);
 JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, cocos2d::Color3B* ret);
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, cocos2d::Point **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::Array** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::Dictionary** ret);
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::__Array** ret);
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::__Dictionary** ret);
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, cocos2d::Acceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::Array** ret);
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** ret);
 
 // forward declaration
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
