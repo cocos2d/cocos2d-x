@@ -27,8 +27,6 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include <stack>
 
-using namespace std;
-
 namespace cocostudio {
 
 /**

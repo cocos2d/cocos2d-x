@@ -803,12 +803,12 @@ void TexturePVR2BPPv3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVR2BPPv3::title()
+std::string TexturePVR2BPPv3::title()
 {
     return "PVR TC 2bpp Test";
 }
 
-string TexturePVR2BPPv3::subtitle()
+std::string TexturePVR2BPPv3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -830,12 +830,12 @@ void TexturePVRII2BPPv3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRII2BPPv3::title()
+std::string TexturePVRII2BPPv3::title()
 {
     return "PVR TC II 2bpp Test";
 }
 
-string TexturePVRII2BPPv3::subtitle()
+std::string TexturePVRII2BPPv3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -861,12 +861,12 @@ void TexturePVR4BPPv3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVR4BPPv3::title()
+std::string TexturePVR4BPPv3::title()
 {
     return "PVR TC 4bpp Test";
 }
 
-string TexturePVR4BPPv3::subtitle()
+std::string TexturePVR4BPPv3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -896,12 +896,12 @@ void TexturePVRII4BPPv3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRII4BPPv3::title()
+std::string TexturePVRII4BPPv3::title()
 {
     return "PVR TC II 4bpp Test";
 }
 
-string TexturePVRII4BPPv3::subtitle()
+std::string TexturePVRII4BPPv3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -923,12 +923,12 @@ void TexturePVRRGBA8888v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRRGBA8888v3::title()
+std::string TexturePVRRGBA8888v3::title()
 {
     return "PVR + RGBA  8888 Test";
 }
 
-string TexturePVRRGBA8888v3::subtitle()
+std::string TexturePVRRGBA8888v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -954,12 +954,12 @@ void TexturePVRBGRA8888v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRBGRA8888v3::title()
+std::string TexturePVRBGRA8888v3::title()
 {
     return "PVR + BGRA 8888 Test";
 }
 
-string TexturePVRBGRA8888v3::subtitle()
+std::string TexturePVRBGRA8888v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -981,12 +981,12 @@ void TexturePVRRGBA5551v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRRGBA5551v3::title()
+std::string TexturePVRRGBA5551v3::title()
 {
     return "PVR + RGBA 5551 Test";
 }
 
-string TexturePVRRGBA5551v3::subtitle()
+std::string TexturePVRRGBA5551v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1008,12 +1008,12 @@ void TexturePVRRGBA4444v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRRGBA4444v3::title()
+std::string TexturePVRRGBA4444v3::title()
 {
     return "PVR + RGBA 4444 Test";
 }
 
-string TexturePVRRGBA4444v3::subtitle()
+std::string TexturePVRRGBA4444v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1035,12 +1035,12 @@ void TexturePVRRGB565v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRRGB565v3::title()
+std::string TexturePVRRGB565v3::title()
 {
     return "PVR + RGB 565 Test";
 }
 
-string TexturePVRRGB565v3::subtitle()
+std::string TexturePVRRGB565v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1062,12 +1062,12 @@ void TexturePVRRGB888v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRRGB888v3::title()
+std::string TexturePVRRGB888v3::title()
 {
     return "PVR + RGB 888 Test";
 }
 
-string TexturePVRRGB888v3::subtitle()
+std::string TexturePVRRGB888v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1089,12 +1089,12 @@ void TexturePVRA8v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRA8v3::title()
+std::string TexturePVRA8v3::title()
 {
     return "PVR + A8 Test";
 }
 
-string TexturePVRA8v3::subtitle()
+std::string TexturePVRA8v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1116,12 +1116,12 @@ void TexturePVRI8v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRI8v3::title()
+std::string TexturePVRI8v3::title()
 {
     return "PVR + I8 Test";
 }
 
-string TexturePVRI8v3::subtitle()
+std::string TexturePVRI8v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1143,12 +1143,12 @@ void TexturePVRAI88v3::onEnter()
     Director::getInstance()->getTextureCache()->dumpCachedTextureInfo();
 }
 
-string TexturePVRAI88v3::title()
+std::string TexturePVRAI88v3::title()
 {
     return "PVR + AI88 Test";
 }
 
-string TexturePVRAI88v3::subtitle()
+std::string TexturePVRAI88v3::subtitle()
 {
     return "Testing PVR File Format v3";
 }
@@ -1889,7 +1889,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::Object *sender)
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
 	
     int tag = ((Node*)sender)->getTag();
-	string file;
+	std::string file;
 	switch (tag) 
     {
 		case 0:
@@ -1934,12 +1934,12 @@ void TextureMemoryAlloc::updateImage(cocos2d::Object *sender)
     _background->setPosition(Point(s.width/2, s.height/2));
 }
 
-string TextureMemoryAlloc::title()
+std::string TextureMemoryAlloc::title()
 {
     return "Texture memory";
 }
 
-string TextureMemoryAlloc::subtitle()
+std::string TextureMemoryAlloc::subtitle()
 {
     return "Testing Texture Memory allocation. Use Instruments + VM Tracker";
 }

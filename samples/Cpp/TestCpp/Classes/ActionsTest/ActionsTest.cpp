@@ -316,7 +316,7 @@ void ActionSkew::onEnter()
     _kathia->runAction(Sequence::create(actionBy2, actionBy2->reverse(), NULL));
 }
 
-string ActionSkew::subtitle()
+std::string ActionSkew::subtitle()
 {
     return "SkewTo / SkewBy";
 }
@@ -438,7 +438,7 @@ void ActionSkewRotateScale::onEnter()
     box->runAction(Sequence::create(actionScaleTo, actionScaleToBack, NULL));
 }
 
-string ActionSkewRotateScale::subtitle()
+std::string ActionSkewRotateScale::subtitle()
 {
     return "Skew + Rotate + Scale";
 }
@@ -2040,12 +2040,12 @@ void ActionCatmullRom::draw()
     DrawPrimitives::drawCatmullRom(_array2,50);
 }
 
-string ActionCatmullRom::title()
+std::string ActionCatmullRom::title()
 {
     return "CatmullRomBy / CatmullRomTo";
 }
 
-string ActionCatmullRom::subtitle()
+std::string ActionCatmullRom::subtitle()
 {
     return "Catmull Rom spline paths. Testing reverse too";
 }
@@ -2123,12 +2123,12 @@ void ActionCardinalSpline::draw()
     kmGLPopMatrix();
 }
 
-string ActionCardinalSpline::title()
+std::string ActionCardinalSpline::title()
 {
     return "CardinalSplineBy / CardinalSplineTo";
 }
 
-string ActionCardinalSpline::subtitle()
+std::string ActionCardinalSpline::subtitle()
 {
     return "Cardinal Spline paths. Testing different tensions for one array";
 }
@@ -2160,12 +2160,12 @@ void PauseResumeActions::onEnter()
     this->schedule(schedule_selector(PauseResumeActions::resume), 5, false, 0);
 }
 
-string PauseResumeActions::title()
+std::string PauseResumeActions::title()
 {
     return "PauseResumeActions";
 }
 
-string PauseResumeActions::subtitle()
+std::string PauseResumeActions::subtitle()
 {
     return "All actions pause at 3s and resume at 5s";
 }

@@ -121,12 +121,12 @@ RenderTextureSave::RenderTextureSave()
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
-string RenderTextureSave::title()
+std::string RenderTextureSave::title()
 {
     return "Touch the screen";
 }
 
-string RenderTextureSave::subtitle()
+std::string RenderTextureSave::subtitle()
 {
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
@@ -354,12 +354,12 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setColor(Color3B::YELLOW);
 }
 
-string RenderTextureZbuffer::title()
+std::string RenderTextureZbuffer::title()
 {
     return "Testing Z Buffer in Render Texture";
 }
 
-string RenderTextureZbuffer::subtitle()
+std::string RenderTextureZbuffer::subtitle()
 {
     return "Touch screen. It should be green";
 }
@@ -557,12 +557,12 @@ void RenderTextureTargetNode::update(float dt)
     time += dt;
 }
 
-string RenderTextureTargetNode::title()
+std::string RenderTextureTargetNode::title()
 {
     return "Testing Render Target Node";
 }
 
-string RenderTextureTargetNode::subtitle()
+std::string RenderTextureTargetNode::subtitle()
 {
     return "Sprites should be equal and move with each frame";
 }
