@@ -198,10 +198,10 @@ void ccArrayRemoveAllObjects(ccArray *arr)
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool bReleaseObj/* = true*/)
+void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool releaseObj/* = true*/)
 {
     CCASSERT(arr && arr->num > 0 && index>=0 && index < arr->num, "Invalid index. Out of bounds");
-    if (bReleaseObj)
+    if (releaseObj)
     {
         CC_SAFE_RELEASE(arr->arr[index]);
     }
@@ -236,12 +236,12 @@ void ccArrayFastRemoveObject(ccArray *arr, Object* object)
 
 /** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
-void ccArrayRemoveObject(ccArray *arr, Object* object, bool bReleaseObj/* = true*/)
+void ccArrayRemoveObject(ccArray *arr, Object* object, bool releaseObj/* = true*/)
 {
 	auto index = ccArrayGetIndexOfObject(arr, object);
 	if (index != CC_INVALID_INDEX)
     {
-		ccArrayRemoveObjectAtIndex(arr, index, bReleaseObj);
+		ccArrayRemoveObjectAtIndex(arr, index, releaseObj);
     }
 }
 
