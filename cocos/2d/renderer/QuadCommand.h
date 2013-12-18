@@ -1,8 +1,26 @@
-//
-// Created by NiTe Luo on 11/6/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
 
+ http://www.cocos2d-x.org
 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #ifndef _CC_QUADCOMMAND_H_
 #define _CC_QUADCOMMAND_H_
@@ -19,10 +37,11 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
+    static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }
+
     QuadCommand();
     ~QuadCommand();
-    
-public:
+
     void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
               const kmMat4& mv);
 
@@ -36,19 +55,19 @@ public:
     void useMaterial();
 
     //TODO use material to decide if it is translucent
-    inline bool isTranslucent() { return true; }
+    inline bool isTranslucent() const { return true; }
 
-    inline int32_t getMaterialID() { return _materialID; }
+    inline int32_t getMaterialID() const { return _materialID; }
 
-    inline GLuint getTextureID() { return _textureID; }
+    inline GLuint getTextureID() const { return _textureID; }
 
-    inline V3F_C4B_T2F_Quad* getQuad() { return _quad; }
+    inline V3F_C4B_T2F_Quad* getQuad() const { return _quad; }
 
-    inline ssize_t getQuadCount() { return _quadCount; }
+    inline ssize_t getQuadCount() const { return _quadCount; }
 
-    inline GLProgram* getShader() { return _shader; }
+    inline GLProgram* getShader() const { return _shader; }
 
-    inline BlendFunc getBlendType() { return _blendType; }
+    inline BlendFunc getBlendType() const { return _blendType; }
     
     virtual void releaseToCommandPool() override;
 
@@ -73,10 +92,8 @@ protected:
     ssize_t _quadCount;
     ssize_t _capacity;
 
-public:
     friend class RenderCommandPool<QuadCommand>;
-    static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }
-protected:
+
     static RenderCommandPool<QuadCommand> _commandPool;
 };
 
