@@ -16,8 +16,8 @@ class FileUtilsDemo : public BaseTest
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void backCallback(Object* sender);
     void nextCallback(Object* sender);
     void restartCallback(Object* sender);
@@ -30,8 +30,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     std::vector<std::string> _defaultSearchPathArray;
     std::vector<std::string> _defaultResolutionsOrderArray;
@@ -44,8 +44,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     std::vector<std::string> _defaultSearchPathArray;
     std::vector<std::string> _defaultResolutionsOrderArray;
@@ -58,8 +58,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class TestIsFileExist : public FileUtilsDemo
@@ -69,8 +69,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class TextWritePlist : public FileUtilsDemo
@@ -80,8 +80,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif /* __FILEUTILSTEST_H__ */

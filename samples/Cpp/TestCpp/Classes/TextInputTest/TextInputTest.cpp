@@ -109,7 +109,7 @@ void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * lay
     addChild(layer);
 }
 
-std::string TextInputTest::title()
+std::string TextInputTest::title() const
 {
     return "text input test";
 }
@@ -221,7 +221,7 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 // implement TextFieldTTFDefaultTest
 //////////////////////////////////////////////////////////////////////////
 
-std::string TextFieldTTFDefaultTest::subtitle()
+std::string TextFieldTTFDefaultTest::subtitle() const
 {
     return "TextFieldTTF with default behavior test";
 }
@@ -270,7 +270,7 @@ void TextFieldTTFDefaultTest::onEnter()
 // implement TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
 
-std::string TextFieldTTFActionTest::subtitle()
+std::string TextFieldTTFActionTest::subtitle() const
 {
     return "CCTextFieldTTF with action and char limit test";
 }

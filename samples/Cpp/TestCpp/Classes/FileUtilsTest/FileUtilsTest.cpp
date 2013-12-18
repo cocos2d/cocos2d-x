@@ -82,12 +82,12 @@ void FileUtilsDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-std::string FileUtilsDemo::title()
+std::string FileUtilsDemo::title() const
 {
     return "No title";
 }
 
-std::string FileUtilsDemo::subtitle()
+std::string FileUtilsDemo::subtitle() const
 {
     return "";
 }
@@ -136,12 +136,12 @@ void TestResolutionDirectories::onExit()
     FileUtilsDemo::onExit();
 }
 
-std::string TestResolutionDirectories::title()
+std::string TestResolutionDirectories::title() const
 {
     return "FileUtils: resolutions in directories";
 }
 
-std::string TestResolutionDirectories::subtitle()
+std::string TestResolutionDirectories::subtitle() const
 {
     return "See the console";
 }
@@ -215,12 +215,12 @@ void TestSearchPath::onExit()
     FileUtilsDemo::onExit();
 }
 
-std::string TestSearchPath::title()
+std::string TestSearchPath::title() const
 {
     return "FileUtils: search path";
 }
 
-std::string TestSearchPath::subtitle()
+std::string TestSearchPath::subtitle() const
 {
     return "See the console";
 }
@@ -258,12 +258,12 @@ void TestFilenameLookup::onExit()
     FileUtilsDemo::onExit();
 }
 
-std::string TestFilenameLookup::title()
+std::string TestFilenameLookup::title() const
 {
     return "FileUtils: filename lookup";
 }
 
-std::string TestFilenameLookup::subtitle()
+std::string TestFilenameLookup::subtitle() const
 {
     return "See the console";
 }
@@ -302,12 +302,12 @@ void TestIsFileExist::onExit()
     FileUtilsDemo::onExit();
 }
 
-std::string TestIsFileExist::title()
+std::string TestIsFileExist::title() const
 {
     return "FileUtils: check whether the file exists";
 }
 
-std::string TestIsFileExist::subtitle()
+std::string TestIsFileExist::subtitle() const
 {
     return "";
 }
@@ -361,12 +361,12 @@ void TextWritePlist::onExit()
     FileUtilsDemo::onExit();
 }
 
-std::string TextWritePlist::title()
+std::string TextWritePlist::title() const
 {
     return "FileUtils: Dictionary to plist";
 }
 
-std::string TextWritePlist::subtitle()
+std::string TextWritePlist::subtitle() const
 {
     std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
     return ("See plist file at your writablePath");

@@ -88,12 +88,12 @@ TestCocosNodeDemo::~TestCocosNodeDemo(void)
 {
 }
 
-std::string TestCocosNodeDemo::title()
+std::string TestCocosNodeDemo::title() const
 {
     return "No title";
 }
 
-std::string TestCocosNodeDemo::subtitle()
+std::string TestCocosNodeDemo::subtitle() const
 {
     return "";
 }
@@ -173,7 +173,7 @@ void Test2::onEnter()
     sp2->runAction(action2);
 }
 
-std::string Test2::title()
+std::string Test2::title() const
 {
     return "anchorPoint and children";
 }
@@ -215,7 +215,7 @@ void Test4::delay4(float dt)
     removeChildByTag(3, false);
 }
 
-std::string Test4::title()
+std::string Test4::title() const
 {
     return "tags";
 }
@@ -268,7 +268,7 @@ void Test5::addAndRemove(float dt)
     sp2->release();
 }
 
-std::string Test5::title()
+std::string Test5::title() const
 {
     return "remove and cleanup";
 }
@@ -329,7 +329,7 @@ void Test6::addAndRemove(float dt)
 
 }
 
-std::string Test6::title()
+std::string Test6::title() const
 {
     return "remove/cleanup with children";
 }
@@ -382,7 +382,7 @@ void StressTest1::removeMe(Node* node)
 }
 
 
-std::string StressTest1::title()
+std::string StressTest1::title() const
 {
     return "stress test #1: no crashes";
 }
@@ -429,7 +429,7 @@ void StressTest2::shouldNotLeak(float dt)
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
-std::string StressTest2::title()
+std::string StressTest2::title() const
 {
     return "stress test #2: no leaks";
 }
@@ -460,7 +460,7 @@ void SchedulerTest1::doSomething(float dt)
 
 }
 
-std::string SchedulerTest1::title()
+std::string SchedulerTest1::title() const
 {
     return "cocosnode scheduler test #1";
 }
@@ -499,7 +499,7 @@ NodeToWorld::NodeToWorld()
     back->runAction(fe2);
 }
 
-std::string NodeToWorld::title()
+std::string NodeToWorld::title() const
 {
     return "nodeToParent transform";
 }
@@ -569,7 +569,7 @@ CameraOrbitTest::CameraOrbitTest()
     setScale( 1 );
 }
 
-std::string CameraOrbitTest::title()
+std::string CameraOrbitTest::title() const
 {
     return "Camera Orbit test";
 }
@@ -638,7 +638,7 @@ void CameraZoomTest::update(float dt)
     cam->setEye(0, 0, -_z);    
 }
 
-std::string CameraZoomTest::title()
+std::string CameraZoomTest::title() const
 {
     return "Camera Zoom test";
 }
@@ -706,12 +706,12 @@ CameraCenterTest::CameraCenterTest()
     sprite->runAction(RepeatForever::create( orbit ) );
 }
 
-std::string CameraCenterTest::title()
+std::string CameraCenterTest::title() const
 {
     return "Camera Center test";
 }
 
-std::string CameraCenterTest::subtitle()
+std::string CameraCenterTest::subtitle() const
 {
     return "Sprites should rotate at the same speed";
 }
@@ -780,12 +780,12 @@ void ConvertToNode::onTouchesEnded(const std::vector<Touch*>& touches, Event *ev
     }    
 }
 
-std::string ConvertToNode::title()
+std::string ConvertToNode::title() const
 {
     return "Convert To Node Space";
 }
 
-std::string ConvertToNode::subtitle()
+std::string ConvertToNode::subtitle() const
 {
     return "testing convertToNodeSpace / AR. Touch and see console";
 }
@@ -805,12 +805,12 @@ NodeOpaqueTest::NodeOpaqueTest()
     }
 }
 
-std::string NodeOpaqueTest::title()
+std::string NodeOpaqueTest::title() const
 {
     return "Node Opaque Test";
 }
 
-std::string NodeOpaqueTest::subtitle()
+std::string NodeOpaqueTest::subtitle() const
 {
     return "Node rendered with GL_BLEND disabled";
 }
@@ -830,12 +830,12 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     }
 }
 
-std::string NodeNonOpaqueTest::title()
+std::string NodeNonOpaqueTest::title() const
 {
     return "Node Non Opaque Test";
 }
 
-std::string NodeNonOpaqueTest::subtitle()
+std::string NodeNonOpaqueTest::subtitle() const
 {
     return "Node rendered with GL_BLEND enabled";
 }

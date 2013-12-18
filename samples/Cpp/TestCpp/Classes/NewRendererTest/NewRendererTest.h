@@ -25,8 +25,8 @@ class MultiSceneTest : public BaseTest
 {
 public:
     CREATE_FUNC(MultiSceneTest);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
 
     void restartCallback(Object* sender);
@@ -44,8 +44,8 @@ class NewSpriteTest : public MultiSceneTest
 public:
     CREATE_FUNC(NewSpriteTest);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void createSpriteTest();
     void createNewSpriteTest();
@@ -61,8 +61,8 @@ class NewSpriteBatchTest : public MultiSceneTest
 public:
 
     CREATE_FUNC(NewSpriteBatchTest);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Point p);
@@ -77,8 +77,8 @@ class NewClippingNodeTest : public MultiSceneTest
 public:
 
     CREATE_FUNC(NewClippingNodeTest);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
@@ -97,8 +97,8 @@ class NewDrawNodeTest : public MultiSceneTest
 public:
 
     CREATE_FUNC(NewDrawNodeTest)
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     NewDrawNodeTest();
@@ -110,8 +110,8 @@ class NewCullingTest : public MultiSceneTest
 public:
     
     CREATE_FUNC(NewCullingTest)
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
 protected:
     NewCullingTest();
