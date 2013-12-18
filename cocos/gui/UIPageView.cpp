@@ -30,7 +30,6 @@ namespace gui {
 
 PageView::PageView():
 _curPageIdx(0),
-_pages(nullptr),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
@@ -51,8 +50,7 @@ _pageViewEventSelector(nullptr)
 
 PageView::~PageView()
 {
-    _pages->removeAllObjects();
-    CC_SAFE_RELEASE(_pages);
+    _pages.clear();
     _pageViewEventListener = nullptr;
     _pageViewEventSelector = nullptr;
 }
@@ -73,8 +71,6 @@ bool PageView::init()
 {
     if (Layout::init())
     {
-        _pages = Array::create();
-        _pages->retain();
         setClippingEnabled(true);
         setUpdateEnabled(true);
         setTouchEnabled(true);
@@ -93,7 +89,7 @@ void PageView::addWidgetToPage(Widget *widget, int pageIdx, bool forceCreate)
     {
         return;
     }
-    int pageCount = _pages->count();
+    int pageCount = _pages.size();
     if (pageIdx < 0 || pageIdx >= pageCount)
     {
         if (forceCreate)
@@ -109,7 +105,7 @@ void PageView::addWidgetToPage(Widget *widget, int pageIdx, bool forceCreate)
     }
     else
     {
-        Layout * page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(pageIdx));
+        Layout * page = dynamic_cast<Layout*>(_pages.at(pageIdx));
         if (page)
         {
             page->addChild(widget);
@@ -134,7 +130,7 @@ void PageView::addPage(Layout* page)
     {
         return;
     }
-    if (_pages->containsObject(page))
+    if (_pages.contains(page))
     {
         return;
     }
@@ -145,8 +141,8 @@ void PageView::addPage(Layout* page)
         CCLOG("page size does not match pageview size, it will be force sized!");
         page->setSize(pvSize);
     }
-    page->setPosition(Point(getPositionXByIndex(_pages->count()), 0));
-    _pages->addObject(page);
+    page->setPosition(Point(getPositionXByIndex(_pages.size()), 0));
+    _pages.pushBack(page);
     addChild(page);
     updateBoundaryPages();
 }
@@ -165,19 +161,19 @@ void PageView::insertPage(Layout* page, int idx)
     {
         return;
     }
-    if (_pages->containsObject(page))
+    if (_pages.contains(page))
     {
         return;
     }
     
-    int pageCount = _pages->count();
+    int pageCount = _pages.size();
     if (idx >= pageCount)
     {
         addPage(page);
     }
     else
     {
-        _pages->insertObject(page, idx);
+        _pages.insert(idx, page);
         page->setPosition(Point(getPositionXByIndex(idx), 0));
         addChild(page);
         Size pSize = page->getSize();
@@ -187,10 +183,9 @@ void PageView::insertPage(Layout* page, int idx)
             CCLOG("page size does not match pageview size, it will be force sized!");
             page->setSize(pvSize);
         }
-        ccArray* arrayPages = _pages->data;
-        int length = arrayPages->num;
+        int length = _pages.size();
         for (int i=(idx+1); i<length; i++) {
-            Widget* behindPage = dynamic_cast<Widget*>(arrayPages->arr[i]);
+            Widget* behindPage = dynamic_cast<Widget*>(_pages.at(i));
             Point formerPos = behindPage->getPosition();
             behindPage->setPosition(Point(formerPos.x+getSize().width, 0));
         }
@@ -211,11 +206,11 @@ void PageView::removePage(Layout* page)
 
 void PageView::removePageAtIndex(int index)
 {
-    if (index < 0 || index >= (int)(_pages->count()))
+    if (index < 0 || index >= (int)(_pages.size()))
     {
         return;
     }
-    Layout* page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(index));
+    Layout* page = dynamic_cast<Layout*>(_pages.at(index));
     if (page)
     {
         removePage(page);
@@ -229,14 +224,14 @@ void PageView::removeAllPages()
 
 void PageView::updateBoundaryPages()
 {
-    if (_pages->count() <= 0)
+    if (_pages.size() <= 0)
     {
         _leftChild = nullptr;
         _rightChild = nullptr;
         return;
     }
-    _leftChild = dynamic_cast<Widget*>(_pages->getObjectAtIndex(0));
-    _rightChild = dynamic_cast<Widget*>(_pages->getLastObject());
+    _leftChild = dynamic_cast<Widget*>(_pages.at(0));
+    _rightChild = dynamic_cast<Widget*>(_pages.at(_pages.size()-1));
 }
 
 float PageView::getPositionXByIndex(int idx)
@@ -261,9 +256,9 @@ void PageView::addChild(Node *child, int zOrder, int tag)
 
 void PageView::removeChild(Node *child, bool cleanup)
 {
-    if (_pages->containsObject(child))
+    if (_pages.contains((Widget*)child))
     {
-        _pages->removeObject(child);
+        _pages.eraseObject((Widget*)child);
     }
     Layout::removeChild(child, cleanup);
 }
@@ -278,27 +273,18 @@ void PageView::onSizeChanged()
 
 void PageView::updateChildrenSize()
 {
-    if (!_pages)
-    {
-        return;
-    }
-    
     Size selfSize = getSize();
-    for (long i=0; i<_pages->count(); i++)
+    int length = _pages.size();
+    for (long i=0; i<length; i++)
     {
-        Layout* page = dynamic_cast<Layout*>(_pages->getObjectAtIndex(i));
+        Layout* page = dynamic_cast<Layout*>(_pages.at(i));
         page->setSize(selfSize);
     }
 }
 
 void PageView::updateChildrenPosition()
 {
-    if (!_pages)
-    {
-        return;
-    }
-    
-    int pageCount = _pages->data->num;
+    int pageCount = _pages.size();
     if (pageCount <= 0)
     {
         _curPageIdx = 0;
@@ -309,28 +295,27 @@ void PageView::updateChildrenPosition()
         _curPageIdx = pageCount-1;
     }
     float pageWidth = getSize().width;
-    ccArray* arrayPages = _pages->data;
     for (int i=0; i<pageCount; i++)
     {
-        Layout* page = dynamic_cast<Layout*>(arrayPages->arr[i]);
+        Layout* page = dynamic_cast<Layout*>(_pages.at(i));
         page->setPosition(Point((i-_curPageIdx)*pageWidth, 0));
     }
 }
 
 void PageView::removeAllChildren()
 {
-    _pages->removeAllObjects();
+    _pages.clear();
     Layout::removeAllChildren();
 }
 
 void PageView::scrollToPage(int idx)
 {
-    if (idx < 0 || idx >= (int)(_pages->count()))
+    if (idx < 0 || idx >= (int)(_pages.size()))
     {
         return;
     }
     _curPageIdx = idx;
-    Widget* curPage = dynamic_cast<Widget*>(_pages->getObjectAtIndex(idx));
+    Widget* curPage = dynamic_cast<Widget*>(_pages.at(idx));
     _autoScrollDistance = -(curPage->getPosition().x);
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
     _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
@@ -431,11 +416,10 @@ void PageView::onTouchCancelled(Touch *touch, Event *unused_event)
 
 void PageView::movePages(float offset)
 {
-    ccArray* arrayPages = _pages->data;
-    int length = arrayPages->num;
+    int length = _pages.size();
     for (int i = 0; i < length; i++)
     {
-        Widget* child = (Widget*)(arrayPages->arr[i]);
+        Widget* child = (Widget*)(_pages.at(i));
         _movePagePoint.x = child->getPosition().x + offset;
         _movePagePoint.y = child->getPosition().y;
         child->setPosition(_movePagePoint);
@@ -444,7 +428,7 @@ void PageView::movePages(float offset)
 
 bool PageView::scrollPages(float touchOffset)
 {
-    if (_pages->count() <= 0)
+    if (_pages.size() <= 0)
     {
         return false;
     }
@@ -510,15 +494,15 @@ void PageView::handleMoveLogic(const Point &touchPoint)
 
 void PageView::handleReleaseLogic(const Point &touchPoint)
 {
-    if (_pages->count() <= 0)
+    if (_pages.size() <= 0)
     {
         return;
     }
-    Widget* curPage = dynamic_cast<Widget*>(_pages->getObjectAtIndex(_curPageIdx));
+    Widget* curPage = dynamic_cast<Widget*>(_pages.at(_curPageIdx));
     if (curPage)
     {
         Point curPagePos = curPage->getPosition();
-        int pageCount = _pages->count();
+        int pageCount = _pages.size();
         float curPageLocation = curPagePos.x;
         float pageWidth = getSize().width;
         float boundary = pageWidth/2.0f;
@@ -602,18 +586,18 @@ int PageView::getCurPageIndex() const
     return _curPageIdx;
 }
 
-Array* PageView::getPages()
+Vector<Widget*>& PageView::getPages()
 {
     return _pages;
 }
     
 Layout* PageView::getPage(int index)
 {
-    if (index < 0 || index >= (int)(_pages->count()))
+    if (index < 0 || index >= (int)(_pages.size()))
     {
         return nullptr;
     }
-    return (Layout*)_pages->getObjectAtIndex(index);
+    return (Layout*)_pages.at(index);
 }
 
 std::string PageView::getDescription() const
@@ -628,11 +612,11 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    ccArray* arrayPages = dynamic_cast<PageView*>(model)->getPages()->data;
-    int length = arrayPages->num;
+    Vector<Widget*> modelPages = dynamic_cast<PageView*>(model)->getPages();
+    int length = modelPages.size();
     for (int i=0; i<length; i++)
     {
-        Layout* page = (Layout*)(arrayPages->arr[i]);
+        Layout* page = (Layout*)(modelPages.at(i));
         addPage(dynamic_cast<Layout*>(page->clone()));
     }
 }

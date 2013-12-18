@@ -86,15 +86,19 @@ Widget* Widget::create()
 
 bool Widget::init()
 {
-    _layoutParameterDictionary = Dictionary::create();
-    CC_SAFE_RETAIN(_layoutParameterDictionary);
-    initRenderer();
-    setCascadeColorEnabled(true);
-    setCascadeOpacityEnabled(true);
-    setBright(true);
-    ignoreContentAdaptWithSize(true);
-    setAnchorPoint(Point(0.5f, 0.5f));
-    return true;
+    if (NodeRGBA::init())
+    {
+        _layoutParameterDictionary = Dictionary::create();
+        CC_SAFE_RETAIN(_layoutParameterDictionary);
+        initRenderer();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        setBright(true);
+        ignoreContentAdaptWithSize(true);
+        setAnchorPoint(Point(0.5f, 0.5f));
+        return true;
+    }
+    return false;
 }
 
 void Widget::onEnter()

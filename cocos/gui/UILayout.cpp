@@ -78,17 +78,21 @@ Layout* Layout::create()
 
 bool Layout::init()
 {
-    _layoutParameterDictionary = Dictionary::create();
-    CC_SAFE_RETAIN(_layoutParameterDictionary);
-    initRenderer();
-    _renderer->retain();
-    setCascadeColorEnabled(true);
-    setCascadeOpacityEnabled(true);
-    setBright(true);
-    ignoreContentAdaptWithSize(false);
-    setSize(Size::ZERO);
-    setAnchorPoint(Point::ZERO);
-    return true;
+    if (NodeRGBA::init())
+    {
+        _layoutParameterDictionary = Dictionary::create();
+        CC_SAFE_RETAIN(_layoutParameterDictionary);
+        initRenderer();
+        _renderer->retain();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        setBright(true);
+        ignoreContentAdaptWithSize(false);
+        setSize(Size::ZERO);
+        setAnchorPoint(Point::ZERO);
+        return true;
+    }
+    return false;
 }
     
 void Layout::addChild(Node *child)

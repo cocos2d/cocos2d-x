@@ -42,22 +42,43 @@ void CocosGUITestScene::runThisTest()
         _itemMenu->addChild(item);
     }
     addChild(_itemMenu);
+//    
+////    Layout* l = Layout::create();
+////    l->setSize(Size(100, 100));
+////    l->setBackGroundColor(Color3B::GREEN);
+//////    l->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+////    l->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+////    addChild(l);
+////    l->setBackGroundImage("cocosgui/animationbuttonnormal.png");
+////    l->setBackGroundImageScale9Enabled(true);
+////    
+////    
+////    ImageView* iv = ImageView::create();
+////    iv->loadTexture("cocosgui/animationbuttonnormal.png");
+////    iv->setPosition(Point(100, 100));
+////    iv->setScale9Enabled(true);
+////    iv->setSize(Size(80, 80));
+//////    l->addChild(iv);
+////    addChild(iv);
+//    
+////    LayerColor* lc = LayerColor::create();
+////    lc->setColor(Color3B::GREEN);
+////    lc->setOpacity(255);
+////    lc->setContentSize(Size(50, 50));
+////    addChild(lc);
+////
+//////    Scale9Sprite* sp9 = Scale9Sprite::create("cocosgui/animationbuttonnormal.png");
+//////    sp9->setPreferredSize(Size(100, 100));
+//////    addChild(sp9);
+//////    sp9->setPosition(Point(50, 50));
+////    
+////    Sprite* sp = Sprite::create("cocosgui/animationbuttonnormal.png");
+////    addChild(sp);
+//
+//    DrawNode
+//    ClippingNode* cn = ClippingNode::create();
     
-    Layout* l = Layout::create();
-    l->setSize(Size(100, 100));
-    l->setBackGroundColor(Color3B::GREEN);
-    l->setBackGroundColorType(LAYOUT_COLOR_SOLID);
     
-    
-    l->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
-    
-    ImageView* iv = ImageView::create();
-    iv->loadTexture("cocosgui/animationbuttonnormal.png");
-    
-    addChild(l);
-    
-    l->addChild(iv);
-//     */
 }
 void CocosGUITestScene::MainMenuCallback(Object* pSender)
 {
