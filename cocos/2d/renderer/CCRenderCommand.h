@@ -22,30 +22,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
+
+#ifndef __CCRENDERCOMMAND_H_
+#define __CCRENDERCOMMAND_H_
 
 #include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#include <stdint.h>
+#include "ccTypes.h"
+#include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
 
-class NewSpriteBatchNode : public SpriteBatchNode
+//TODO make RenderCommand inherent from Object
+class RenderCommand
 {
-    static const int DEFAULT_CAPACITY = 29;
 public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+    enum class Type
+    {
+        QUAD_COMMAND,
+        CUSTOM_COMMAND,
+        GROUP_COMMAND,
+        UNKNOWN_COMMAND,
+    };
 
-    bool init();
+    virtual int64_t generateID() = 0;
 
-    void draw(void);
+    /** Get Render Command Id */
+    virtual inline int64_t getID() { return _id; }
+    
+    virtual inline Type getType() { return _type; }
+    virtual void releaseToCommandPool() =0;
+
+protected:
+    RenderCommand();
+    virtual ~RenderCommand();
+
+    void printID();
+
+    //Generated IDs
+    int64_t _id; /// used for sorting render commands
+    Type _type;
 };
 
 NS_CC_END
 
-#endif //__CCNewSpriteBatchNode_H_
+#endif //__CCRENDERCOMMAND_H_

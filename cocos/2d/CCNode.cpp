@@ -1350,8 +1350,7 @@ Point Node::convertToNodeSpace(const Point& worldPoint) const
     kmVec3 vec3 = {worldPoint.x, worldPoint.y, 0};
     kmVec3 ret;
     kmVec3Transform(&ret, &vec3, &tmp);
-    Point p = {ret.x, ret.y };
-    return p;
+    return Point(ret.x, ret.y);
 }
 
 Point Node::convertToWorldSpace(const Point& nodePoint) const
@@ -1360,8 +1359,7 @@ Point Node::convertToWorldSpace(const Point& nodePoint) const
     kmVec3 vec3 = {nodePoint.x, nodePoint.y, 0};
     kmVec3 ret;
     kmVec3Transform(&ret, &vec3, &tmp);
-    Point p = {ret.x, ret.y };
-    return p;
+    return Point(ret.x, ret.y);
 
 }
 

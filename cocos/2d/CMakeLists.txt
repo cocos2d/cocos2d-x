@@ -146,15 +146,15 @@ set(COCOS2D_SRC
   renderer/CCNewSprite.cpp
   renderer/CCNewSpriteBatchNode.cpp
   renderer/CCNewTextureAtlas.cpp
-  renderer/CustomCommand.cpp
-  renderer/Frustum.cpp
-  renderer/GroupCommand.cpp
-  renderer/MaterialManager.cpp
-  renderer/NewClippingNode.cpp
-  renderer/QuadCommand.cpp
-  renderer/RenderCommand.cpp
-  renderer/Renderer.cpp
-  renderer/RenderMaterial.cpp
+  renderer/CCCustomCommand.cpp
+  renderer/CCFrustum.cpp
+  renderer/CCGroupCommand.cpp
+  renderer/CCMaterialManager.cpp
+  renderer/CCNewClippingNode.cpp
+  renderer/CCQuadCommand.cpp
+  renderer/CCRenderCommand.cpp
+  renderer/CCRenderer.cpp
+  renderer/CCRenderMaterial.cpp
 )
 
 include(../physics/CMakeLists.txt)

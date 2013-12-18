@@ -1,14 +1,33 @@
-//
-// Created by NiTe Luo on 10/31/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
 
+ http://www.cocos2d-x.org
 
-#include "Renderer.h"
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+#include "CCRenderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
-#include "CustomCommand.h"
-#include "QuadCommand.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCQuadCommand.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
@@ -17,25 +36,8 @@
 NS_CC_BEGIN
 using namespace std;
 
-static Renderer* s_instance = nullptr;
 
-Renderer *Renderer::getInstance()
-{
-    if(!s_instance)
-    {
-        s_instance = new Renderer();
-        if(!s_instance->init())
-        {
-            CC_SAFE_DELETE(s_instance);
-        }
-    }
-    return s_instance;
-}
-
-void Renderer::destroyInstance()
-{
-    CC_SAFE_RELEASE_NULL(s_instance);
-}
+#define DEFAULT_RENDER_QUEUE 0
 
 Renderer::Renderer()
 :_lastMaterialID(0)
@@ -48,7 +50,8 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(elelment);
 }
 
 Renderer::~Renderer()
@@ -64,14 +67,9 @@ Renderer::~Renderer()
     }
 }
 
-bool Renderer::init()
-{
-    return true;
-}
-
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if 0//CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
@@ -94,7 +92,7 @@ void Renderer::onBackToForeground(Object* obj)
 
 void Renderer::setupIndices()
 {
-    for( int i=0; i < VBO_SIZE; i++)
+    for( int i=0; i < vbo_size; i++)
     {
         _indices[i*6+0] = (GLushort) (i*4+0);
         _indices[i*6+1] = (GLushort) (i*4+1);
@@ -125,7 +123,7 @@ void Renderer::setupVBOAndVAO()
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * vbo_size, _quads, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -140,7 +138,7 @@ void Renderer::setupVBOAndVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * vbo_size * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
     GL::bindVAO(0);
@@ -163,11 +161,11 @@ void Renderer::mapBuffers()
     GL::bindVAO(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * vbo_size, _quads, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * vbo_size * 6, _indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
@@ -236,30 +234,33 @@ void Renderer::render()
             {
                 _renderStack.top().currentIndex = _lastCommand = i;
                 auto command = currRenderQueue[i];
+
+                auto commandType = command->getType();
                 
-                if(command->getType() == QUAD_COMMAND)
+                if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
                     QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
+                    ssize_t cmdQuadCount = cmd->getQuadCount();
+                    
                     //Batch quads
-                    if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
+                    if(_numQuads + cmdQuadCount > vbo_size)
                     {
-                        CCASSERT(cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmdQuadCount < vbo_size, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         drawBatchedQuads();
                     }
 
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    _numQuads += cmd->getQuadCount();
+                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    _numQuads += cmdQuadCount;
                 }
-                else if(command->getType() == CUSTOM_COMMAND)
+                else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
-                else if(command->getType() == GROUP_COMMAND)
+                else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
                     flush();
                     GroupCommand* cmd = static_cast<GroupCommand*>(command);
@@ -267,7 +268,8 @@ void Renderer::render()
                     _renderStack.top().currentIndex = i + 1;
                     
                     //push new renderQueue to renderStack
-                    _renderStack.push({cmd->getRenderQueueID(), 0});
+                    RenderStackElement element = {cmd->getRenderQueueID(), 0};
+                    _renderStack.push(element);
                     
                     //Exit current loop
                     break;
@@ -303,7 +305,8 @@ void Renderer::render()
     {
         _renderStack.pop();
     }
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(element);
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
 }
@@ -362,7 +365,7 @@ void Renderer::drawBatchedQuads()
     for(size_t i = _firstCommand; i <= _lastCommand; i++)
     {
         RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
-        if (command->getType() == QUAD_COMMAND)
+        if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
         {
             QuadCommand* cmd = static_cast<QuadCommand*>(command);
             if(_lastMaterialID != cmd->getMaterialID())

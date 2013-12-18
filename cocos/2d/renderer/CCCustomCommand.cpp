@@ -22,30 +22,53 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
-
-#include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#include "CCCustomCommand.h"
 
 NS_CC_BEGIN
+RenderCommandPool<CustomCommand> CustomCommand::_commandPool;
 
-class NewSpriteBatchNode : public SpriteBatchNode
+CustomCommand::CustomCommand()
+:RenderCommand()
+, _viewport(0)
+, _depth(0)
+, func(nullptr)
 {
-    static const int DEFAULT_CAPACITY = 29;
-public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    _type = RenderCommand::Type::CUSTOM_COMMAND;
+}
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+void CustomCommand::init(int viewport, int32_t depth)
+{
+    _viewport = viewport;
+    _depth = depth;
+}
 
-    bool init();
+CustomCommand::~CustomCommand()
+{
 
-    void draw(void);
-};
+}
+
+int64_t CustomCommand::generateID()
+{
+    _id = 0;
+
+    _id = (int64_t)_viewport << 61
+            | (int64_t)1 << 60 // translucent
+            | (int64_t)_depth << 36;
+
+    return _id;
+}
+
+void CustomCommand::execute()
+{
+    if(func)
+    {
+        func();
+    }
+}
+
+void CustomCommand::releaseToCommandPool()
+{
+    getCommandPool().pushBackCommand(this);
+}
 
 NS_CC_END
-
-#endif //__CCNewSpriteBatchNode_H_

@@ -24,11 +24,11 @@
 
 
 #include "CCNewLabelAtlas.h"
-#include "RenderCommand.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 #include "CCMenuItem.h"
-#include "Frustum.h"
+#include "CCFrustum.h"
 #include "CCDirector.h"
 #include "CCTextureAtlas.h"
 #include "CCShaderCache.h"
@@ -60,7 +60,7 @@ void NewLabelAtlas::draw()
               _textureAtlas->getTotalQuads(),
               mv);
               
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
 }
 

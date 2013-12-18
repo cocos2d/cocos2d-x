@@ -22,30 +22,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
+
+#ifndef _CC_MATERIALMANAGER_H_
+#define _CC_MATERIALMANAGER_H_
 
 #include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#include "CCObject.h"
+#include "ccTypes.h"
+#include <map>
 
 NS_CC_BEGIN
 
-class NewSpriteBatchNode : public SpriteBatchNode
+class MaterialManager : public Object
 {
-    static const int DEFAULT_CAPACITY = 29;
 public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    static MaterialManager* getInstance();
+    static void destroyInstance();
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+
+    void getMaterialID(GLuint textureID, GLuint shaderID, BlendFunc blendFunc);
+
+    void registerTexture(GLuint textureID);
+    void unregisterTexture(GLuint textureID);
+
+    void registerShader(GLuint shaderID);
+    void unregisterShader(GLuint shaderID);
+
+protected:
+    MaterialManager();
+    virtual ~MaterialManager();
 
     bool init();
 
-    void draw(void);
+    int getTextureID(GLuint textureID);
+    int getShaderID(GLuint shaderID);
+    int getBlendFuncID(GLint blendFunc);
+
+    std::map<GLuint, int> _textureIDMapping;
+    std::map<GLuint, int> _shaderIDMapping;
+    std::map<BlendFunc, int> _blendFuncMapping;
 };
 
 NS_CC_END
 
-#endif //__CCNewSpriteBatchNode_H_
+#endif //_CC_MATERIALMANAGER_H_
