@@ -588,19 +588,11 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    ////----CCLOG("----> Iterating over all the group objets");
     auto group = map->getObjectGroup("Object Group 1");
     auto& objects = group->getObjects();
 
-    for (auto& obj : objects)
-    {
-        ValueMap& dict = obj.asValueMap();
-        ////----CCLOG("object: %x", dict);
-    }
-    
-    ////----CCLOG("----> Fetching 1 object by name");
-    // auto platform = group->objectNamed("platform");
-    ////----CCLOG("platform: %x", platform);
+    Value objectsVal = Value(objects);
+    CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
 void TMXOrthoObjectsTest::draw()
@@ -657,15 +649,10 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
     auto group = map->getObjectGroup("Object Group 1");
 
-    //auto objects = group->objects();
     auto& objects = group->getObjects();
-    //UxMutableDictionary<std::string>* dict;
-    for (auto& obj : objects)
-    {
-        ValueMap& dict = obj.asValueMap();
-
-        ////----CCLOG("object: %x", dict);
-    }        
+    
+    Value objectsVal = Value(objects);
+    CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
 void TMXIsoObjectsTest::draw()
