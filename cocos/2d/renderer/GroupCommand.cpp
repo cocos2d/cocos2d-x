@@ -5,6 +5,7 @@
 
 #include "GroupCommand.h"
 #include "Renderer.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 RenderCommandPool<GroupCommand> GroupCommand::_commandPool;
@@ -53,7 +54,7 @@ int GroupCommandManager::getGroupID()
 
     //Create new ID
 //    int newID = _groupMapping.size();
-    int newID = Renderer::getInstance()->createRenderQueue();
+    int newID = Director::getInstance()->getRenderer()->createRenderQueue();
     _groupMapping[newID] = true;
 
     return newID;

@@ -77,7 +77,7 @@ void NewSpriteBatchNode::draw()
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 NS_CC_END

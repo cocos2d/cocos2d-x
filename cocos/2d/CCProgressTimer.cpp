@@ -557,7 +557,7 @@ void ProgressTimer::draw()
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 

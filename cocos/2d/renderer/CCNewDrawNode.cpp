@@ -7,6 +7,7 @@
 #include "QuadCommand.h"
 #include "Renderer.h"
 #include "CustomCommand.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,7 @@ void NewDrawNode::draw()
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(NewDrawNode::onDraw, this);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 void NewDrawNode::onDraw()

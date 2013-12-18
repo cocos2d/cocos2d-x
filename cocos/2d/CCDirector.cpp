@@ -149,7 +149,10 @@ bool Director::init(void)
     _eventDispatcher = new EventDispatcher();
     //init TextureCache
     initTextureCache();
-    
+
+    // Renderer
+    _renderer = new Renderer;
+
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
 
@@ -169,7 +172,9 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_eventDispatcher);
-    
+
+    delete _renderer;
+
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
     PoolManager::purgePoolManager();
@@ -288,7 +293,7 @@ void Director::drawScene()
         showStats();
     }
 
-    Renderer::getInstance()->render();
+    _renderer->render();
 
     kmGLPopMatrix();
 
@@ -368,7 +373,7 @@ void Director::setOpenGLView(EGLView *openGLView)
             setGLDefaultValues();
         }  
         
-        Renderer::getInstance()->initGLView();
+        _renderer->initGLView();
         
         CHECK_GL_ERROR_DEBUG();
 
@@ -1026,6 +1031,12 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         _eventDispatcher = dispatcher;
     }
 }
+
+Renderer* Director::getRenderer() const
+{
+    return _renderer;
+}
+
 
 /***************************************************
 * implementation of DisplayLinkDirector
