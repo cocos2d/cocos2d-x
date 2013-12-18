@@ -29,7 +29,7 @@ NewSprite* NewSprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite* NewSprite::create(const char *filename)
@@ -41,7 +41,7 @@ NewSprite* NewSprite::create(const char *filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite::NewSprite()

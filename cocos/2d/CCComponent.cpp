@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Component::Component(void)
-: _owner(NULL)
+: _owner(nullptr)
 , _enabled(true)
 {
 }
@@ -61,7 +61,7 @@ void Component::serialize(void *ar)
 Component* Component::create(void)
 {
     Component * pRet = new Component();
-    if (pRet != NULL && pRet->init())
+    if (pRet != nullptr && pRet->init())
     {
         pRet->autorelease();
     }

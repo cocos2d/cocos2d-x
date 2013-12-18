@@ -42,11 +42,11 @@ ComponentContainer::~ComponentContainer(void)
 
 Component* ComponentContainer::get(const char *pName) const
 {
-    Component* pRet = NULL;
-    CCASSERT(pName != NULL, "Argument must be non-nil");
+    Component* pRet = nullptr;
+    CCASSERT(pName != nullptr, "Argument must be non-nil");
     do {
-        CC_BREAK_IF(NULL == pName);
-        CC_BREAK_IF(NULL == _components);
+        CC_BREAK_IF(nullptr == pName);
+        CC_BREAK_IF(nullptr == _components);
         pRet = _components->at(pName);
         
     } while (0);
@@ -56,8 +56,8 @@ Component* ComponentContainer::get(const char *pName) const
 bool ComponentContainer::add(Component *pCom)
 {
     bool bRet = false;
-    CCASSERT(pCom != NULL, "Argument must be non-nil");
-    CCASSERT(pCom->getOwner() == NULL, "Component already added. It can't be added again");
+    CCASSERT(pCom != nullptr, "Argument must be non-nil");
+    CCASSERT(pCom->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
         if (_components == nullptr)
@@ -67,7 +67,7 @@ bool ComponentContainer::add(Component *pCom)
         }
         Component *pComponent = _components->at(pCom->getName());
         
-        CCASSERT(pComponent == NULL, "Component already added. It can't be added again");
+        CCASSERT(pComponent == nullptr, "Component already added. It can't be added again");
         CC_BREAK_IF(pComponent);
         pCom->setOwner(_owner);
         _components->insert(pCom->getName(), pCom);
@@ -80,7 +80,7 @@ bool ComponentContainer::add(Component *pCom)
 bool ComponentContainer::remove(const char *pName)
 {
     bool bRet = false;
-    CCASSERT(pName != NULL, "Argument must be non-nil");
+    CCASSERT(pName != nullptr, "Argument must be non-nil");
     do 
     {        
         CC_BREAK_IF(!_components);
@@ -90,7 +90,7 @@ bool ComponentContainer::remove(const char *pName)
         
         auto com = iter->second;
         com->onExit();
-        com->setOwner(NULL);
+        com->setOwner(nullptr);
         
         _components->erase(iter);
         
@@ -106,7 +106,7 @@ void ComponentContainer::removeAll()
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
             iter->second->onExit();
-            iter->second->setOwner(NULL);
+            iter->second->setOwner(nullptr);
         }
         
         _components->clear();

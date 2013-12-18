@@ -44,7 +44,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static SpriteFrameCache *_sharedSpriteFrameCache = NULL;
+static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
 SpriteFrameCache* SpriteFrameCache::getInstance()
 {
@@ -222,7 +222,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 {
-    CCASSERT(pszPlist.size()>0, "plist filename should not be NULL");
+    CCASSERT(pszPlist.size()>0, "plist filename should not be nullptr");
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
@@ -286,7 +286,7 @@ void SpriteFrameCache::removeSpriteFrames()
 
 void SpriteFrameCache::removeUnusedSpriteFrames()
 {
-    bool bRemoved = false;
+    bool removed = false;
     std::vector<std::string> toRemoveFrames;
     
     for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
@@ -296,14 +296,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         {
             toRemoveFrames.push_back(iter->first);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
-            bRemoved = true;
+            removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
     
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-    if( bRemoved )
+    if( removed )
     {
         _loadedFileNames->clear();
     }

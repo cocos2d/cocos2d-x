@@ -78,7 +78,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
         NotificationCenter::getInstance()->addObserver(this,
                                                                       callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
                                                                       EVNET_COME_TO_FOREGROUND,
-                                                                      NULL);
+                                                                      nullptr);
 #endif
 
         return true;
@@ -87,8 +87,8 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
 }
 
 ParticleSystemQuad::ParticleSystemQuad()
-:_quads(NULL)
-,_indices(NULL)
+:_quads(nullptr)
+,_indices(nullptr)
 ,_VAOname(0)
 {
     memset(_buffersVBO, 0, sizeof(_buffersVBO));
@@ -96,7 +96,7 @@ ParticleSystemQuad::ParticleSystemQuad()
 
 ParticleSystemQuad::~ParticleSystemQuad()
 {
-    if (NULL == _batchNode)
+    if (nullptr == _batchNode)
     {
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
@@ -174,7 +174,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
     // Important. Texture in cocos2d are inverted, so the Y component should be inverted
     CC_SWAP( top, bottom, float);
 
-    V3F_C4B_T2F_Quad *quads = NULL;
+    V3F_C4B_T2F_Quad *quads = nullptr;
     unsigned int start = 0, end = 0;
     if (_batchNode)
     {
@@ -340,7 +340,7 @@ void ParticleSystemQuad::postStep()
     //  glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
     
     // Option 3: Orphaning + glMapBuffer
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, NULL, GL_STREAM_DRAW);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, nullptr, GL_STREAM_DRAW);
     // void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     // memcpy(buf, _quads, sizeof(_quads[0])*_totalParticles);
     // glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -663,14 +663,14 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 }
 
 ParticleSystemQuad * ParticleSystemQuad::create() {
-    ParticleSystemQuad *pParticleSystemQuad = new ParticleSystemQuad();
-    if (pParticleSystemQuad && pParticleSystemQuad->init())
+    ParticleSystemQuad *particleSystemQuad = new ParticleSystemQuad();
+    if (particleSystemQuad && particleSystemQuad->init())
     {
-        pParticleSystemQuad->autorelease();
-        return pParticleSystemQuad;
+        particleSystemQuad->autorelease();
+        return particleSystemQuad;
     }
-    CC_SAFE_DELETE(pParticleSystemQuad);
-    return NULL;
+    CC_SAFE_DELETE(particleSystemQuad);
+    return nullptr;
 }
 
 std::string ParticleSystemQuad::getDescription() const
