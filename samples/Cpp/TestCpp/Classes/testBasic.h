@@ -6,8 +6,6 @@
 
 USING_NS_CC;
 
-using namespace std;
-
 class TestScene : public Scene
 {
 public: 

@@ -744,12 +744,12 @@ ShaderFail::ShaderFail()
     p->release();
 }
 
-string ShaderFail::title()
+std::string ShaderFail::title()
 {
     return "Shader: Invalid shader";
 }
 
-string ShaderFail::subtitle()
+std::string ShaderFail::subtitle()
 {
     return "See console for output with useful error log";
 }
