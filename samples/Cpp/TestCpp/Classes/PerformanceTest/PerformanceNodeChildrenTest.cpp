@@ -283,7 +283,7 @@ const char*  IterateSpriteSheet::testName()
 void IterateSpriteSheetForLoop::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
@@ -320,7 +320,7 @@ const char*  IterateSpriteSheetForLoop::testName()
 void IterateSpriteSheetCArray::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 //    Object* object = NULL;
 
     CC_PROFILER_START(this->profilerName());
@@ -358,7 +358,7 @@ const char*  IterateSpriteSheetCArray::testName()
 void IterateSpriteSheetIterator::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
