@@ -599,7 +599,7 @@ std::string LabelTTFUnicodeChinese::title()
     return "New Label + .TTF file Chinese";
 }
 
-string LabelTTFUnicodeChinese::subtitle()
+std::string LabelTTFUnicodeChinese::subtitle()
 {
     return "Testing new Label + TTF with Chinese character";
 }
@@ -613,12 +613,12 @@ LabelFNTUnicodeChinese::LabelFNTUnicodeChinese()
     this->addChild(label);
 }
 
-string LabelFNTUnicodeChinese::title()
+std::string LabelFNTUnicodeChinese::title()
 {
     return "New Label + .FNT file Chinese";
 }
 
-string LabelFNTUnicodeChinese::subtitle()
+std::string LabelFNTUnicodeChinese::subtitle()
 {
     return "Testing new Label + FNT with Chinese character";
 }
@@ -885,12 +885,12 @@ LabelFNTBounds::LabelFNTBounds()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-string LabelFNTBounds::title()
+std::string LabelFNTBounds::title()
 {
     return "New Label + .FNT + Bounds";
 }
 
-string LabelFNTBounds::subtitle()
+std::string LabelFNTBounds::subtitle()
 {
     return "You should see string enclosed by a box";
 }

@@ -3676,7 +3676,7 @@ SpriteOffsetAnchorSkew::~SpriteOffsetAnchorSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteOffsetAnchorSkew::title()
+std::string SpriteOffsetAnchorSkew::title()
 {
     return "Sprite offset + anchor + scale";
 }
@@ -3754,7 +3754,7 @@ SpriteBatchNodeOffsetAnchorSkew::~SpriteBatchNodeOffsetAnchorSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteBatchNodeOffsetAnchorSkew::title()
+std::string SpriteBatchNodeOffsetAnchorSkew::title()
 {
     return "SpriteBatchNode offset + anchor + skew";
 }
@@ -3836,7 +3836,7 @@ SpriteOffsetAnchorSkewScale::~SpriteOffsetAnchorSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteOffsetAnchorSkewScale::title()
+std::string SpriteOffsetAnchorSkewScale::title()
 {
     return "Sprite anchor + skew + scale";
 }
@@ -3918,7 +3918,7 @@ SpriteBatchNodeOffsetAnchorSkewScale::~SpriteBatchNodeOffsetAnchorSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteBatchNodeOffsetAnchorSkewScale::title()
+std::string SpriteBatchNodeOffsetAnchorSkewScale::title()
 {
     return "SpriteBatchNode anchor + skew + scale";
 }
@@ -3991,12 +3991,12 @@ SpriteOffsetAnchorFlip::~SpriteOffsetAnchorFlip()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteOffsetAnchorFlip::title()
+std::string SpriteOffsetAnchorFlip::title()
 {
     return "Sprite offset + anchor + flip";
 }
 
-string SpriteOffsetAnchorFlip::subtitle()
+std::string SpriteOffsetAnchorFlip::subtitle()
 {
     return "issue #1078";
 }
@@ -4073,12 +4073,12 @@ SpriteBatchNodeOffsetAnchorFlip::~SpriteBatchNodeOffsetAnchorFlip()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteBatchNodeOffsetAnchorFlip::title()
+std::string SpriteBatchNodeOffsetAnchorFlip::title()
 {
     return "SpriteBatchNode offset + anchor + flip";
 }
 
-string SpriteBatchNodeOffsetAnchorFlip::subtitle()
+std::string SpriteBatchNodeOffsetAnchorFlip::subtitle()
 {
     return "issue #1078";
 }
@@ -4355,7 +4355,7 @@ SpriteOffsetAnchorRotationalSkew::~SpriteOffsetAnchorRotationalSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteOffsetAnchorRotationalSkew::title()
+std::string SpriteOffsetAnchorRotationalSkew::title()
 {
     return "Sprite offset + anchor + rotational skew";
 }
@@ -4431,7 +4431,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::~SpriteBatchNodeOffsetAnchorRotationa
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteBatchNodeOffsetAnchorRotationalSkew::title()
+std::string SpriteBatchNodeOffsetAnchorRotationalSkew::title()
 {
     return "SpriteBatchNode offset + anchor + rot skew";
 }
@@ -4511,7 +4511,7 @@ SpriteOffsetAnchorRotationalSkewScale::~SpriteOffsetAnchorRotationalSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteOffsetAnchorRotationalSkewScale::title()
+std::string SpriteOffsetAnchorRotationalSkewScale::title()
 {
     return "Sprite anchor + rot skew + scale";
 }
@@ -4594,7 +4594,7 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::~SpriteBatchNodeOffsetAnchorRota
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteBatchNodeOffsetAnchorRotationalSkewScale::title()
+std::string SpriteBatchNodeOffsetAnchorRotationalSkewScale::title()
 {
     return "SpriteBatchNode anchor + rot skew + scale";
 }
@@ -4657,7 +4657,7 @@ SpriteRotationalSkewNegativeScaleChildren::~SpriteRotationalSkewNegativeScaleChi
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-string SpriteRotationalSkewNegativeScaleChildren::title()
+std::string SpriteRotationalSkewNegativeScaleChildren::title()
 {
     return "Sprite rot skew + negative scale with children";
 }
@@ -4718,7 +4718,7 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::~SpriteBatchNodeRotationalSk
     
 }
 
-string SpriteBatchNodeRotationalSkewNegativeScaleChildren::title()
+std::string SpriteBatchNodeRotationalSkewNegativeScaleChildren::title()
 {
     return "SpriteBatchNode + children + rot skew";
 }
