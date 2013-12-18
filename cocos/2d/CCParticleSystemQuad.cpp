@@ -446,7 +446,7 @@ void ParticleSystemQuad::draw()
 
         QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
         cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Renderer::getInstance()->addCommand(cmd);
+        Director::getInstance()->getRenderer()->addCommand(cmd);
     }
 
 }

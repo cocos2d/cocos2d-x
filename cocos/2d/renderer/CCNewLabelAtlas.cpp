@@ -60,7 +60,7 @@ void NewLabelAtlas::draw()
               _textureAtlas->getTotalQuads(),
               mv);
               
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
 }
 

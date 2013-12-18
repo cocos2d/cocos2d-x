@@ -62,7 +62,7 @@ void NewRenderTexture::draw()
         CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
         clearCmd->init(0, _vertexZ);
         clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
-        Renderer::getInstance()->addCommand(clearCmd);
+        Director::getInstance()->getRenderer()->addCommand(clearCmd);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -109,7 +109,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
     CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
     clearCmd->init(0, _vertexZ);
     clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
-    Renderer::getInstance()->addCommand(clearCmd);
+    Director::getInstance()->getRenderer()->addCommand(clearCmd);
 }
 
 void NewRenderTexture::begin()
@@ -125,14 +125,15 @@ void NewRenderTexture::begin()
     GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0, _vertexZ);
 
-    Renderer::getInstance()->addCommand(groupCommand);
-    Renderer::getInstance()->pushGroup(groupCommand->getRenderQueueID());
+    Renderer *renderer =  Director::getInstance()->getRenderer();
+    renderer->addCommand(groupCommand);
+    renderer->pushGroup(groupCommand->getRenderQueueID());
 
     CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
     beginCmd->init(0, _vertexZ);
     beginCmd->func = CC_CALLBACK_0(NewRenderTexture::onBegin, this);
 
-    Renderer::getInstance()->addCommand(beginCmd);
+    Director::getInstance()->getRenderer()->addCommand(beginCmd);
 }
 
 void NewRenderTexture::end()
@@ -141,9 +142,9 @@ void NewRenderTexture::end()
     endCmd->init(0, _vertexZ);
     endCmd->func = CC_CALLBACK_0(NewRenderTexture::onEnd, this);
 
-    Renderer::getInstance()->addCommand(endCmd);
-
-    Renderer::getInstance()->popGroup();
+    Renderer *renderer = Director::getInstance()->getRenderer();
+    renderer->addCommand(endCmd);
+    renderer->popGroup();
 }
 
 void NewRenderTexture::onBegin()
@@ -263,7 +264,7 @@ void NewRenderTexture::clearDepth(float depthValue)
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(NewRenderTexture::onClearDepth, this);
 
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
     this->end();
 }

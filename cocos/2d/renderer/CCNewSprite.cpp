@@ -118,7 +118,7 @@ void NewSprite::draw(void)
         return;
     }
 
-    Renderer::getInstance()->addCommand(renderCommand);
+    Director::getInstance()->getRenderer()->addCommand(renderCommand);
 }
 
 bool NewSprite::culling() const
