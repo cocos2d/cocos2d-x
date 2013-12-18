@@ -25,8 +25,8 @@
 #include "CCNewTextureAtlas.h"
 #include "CCTexture2D.h"
 #include "CCDirector.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 
 NS_CC_BEGIN
 

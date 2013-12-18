@@ -25,9 +25,9 @@
 #ifndef _CC_QUADCOMMAND_H_
 #define _CC_QUADCOMMAND_H_
 
-#include "RenderCommand.h"
+#include "CCRenderCommand.h"
 #include "CCGLProgram.h"
-#include "RenderCommandPool.h"
+#include "CCRenderCommandPool.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN

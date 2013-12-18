@@ -23,51 +23,43 @@
  ****************************************************************************/
 
 
-#ifndef _CC_CUSTOMCOMMAND_H_
-#define _CC_CUSTOMCOMMAND_H_
-
-#include "RenderCommand.h"
-#include "RenderCommandPool.h"
+#include "CCRenderCommand.h"
 
 NS_CC_BEGIN
 
-class CustomCommand : public RenderCommand
+RenderCommand::RenderCommand()
 {
-protected:
-    CustomCommand();
-    ~CustomCommand();
-    
-public:
-    void init(int viewport, int32_t depth);
+    _id = 0;
+    _type = RenderCommand::Type::UNKNOWN_COMMAND;
+}
 
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |                  |
-    // |   3 bits |    1 bit |     |    24 bits     |                  |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID();
+RenderCommand::~RenderCommand()
+{
+}
 
-    void execute();
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
 
-    inline bool isTranslucent() { return true; }
-    virtual void releaseToCommandPool() override;
+    for (i=size-1;i>=0;i--)
+    {
+        for (j=7;j>=0;j--)
+        {
+            byte = b[i] & (1<<j);
+            byte >>= j;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
 
-public:
-    std::function<void()> func;
-
-protected:
-    int _viewport;
-
-    int32_t _depth;
-    
-public:
-    friend class RenderCommandPool<CustomCommand>;
-    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
-protected:
-    static RenderCommandPool<CustomCommand> _commandPool;
-
-};
+void RenderCommand::printID()
+{
+    printf("CommandID: ");
+    printBits(sizeof(_id), &_id);
+    printf("\n");
+}
 
 NS_CC_END
-
-#endif //_CC_CUSTOMCOMMAND_H_

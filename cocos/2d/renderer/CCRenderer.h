@@ -27,7 +27,7 @@
 #define __CC_RENDERER_H_
 
 #include "CCPlatformMacros.h"
-#include "RenderCommand.h"
+#include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>

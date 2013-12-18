@@ -42,8 +42,8 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
