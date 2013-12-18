@@ -1,7 +1,26 @@
-//
-// Created by NiTe Luo on 10/31/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
 
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "Renderer.h"
 #include "CCShaderCache.h"
@@ -214,30 +233,33 @@ void Renderer::render()
             {
                 _renderStack.top().currentIndex = _lastCommand = i;
                 auto command = currRenderQueue[i];
+
+                auto commandType = command->getType();
                 
-                if(command->getType() == RenderCommand::Type::QUAD_COMMAND)
+                if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
                     QuadCommand* cmd = static_cast<QuadCommand*>(command);
-
+                    ssize_t cmdQuadCount = cmd->getQuadCount();
+                    
                     //Batch quads
-                    if(_numQuads + cmd->getQuadCount() > vbo_size)
+                    if(_numQuads + cmdQuadCount > vbo_size)
                     {
-                        CCASSERT(cmd->getQuadCount() < vbo_size, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmdQuadCount < vbo_size, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         drawBatchedQuads();
                     }
 
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    _numQuads += cmd->getQuadCount();
+                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    _numQuads += cmdQuadCount;
                 }
-                else if(command->getType() == RenderCommand::Type::CUSTOM_COMMAND)
+                else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
-                else if(command->getType() == RenderCommand::Type::GROUP_COMMAND)
+                else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
                     flush();
                     GroupCommand* cmd = static_cast<GroupCommand*>(command);
