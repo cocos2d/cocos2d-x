@@ -52,6 +52,7 @@ public:
 
     void onEnter() override;
     virtual std::string title() override;
+    virtual std::string subtitle() override;
 
 protected:
     ConsoleTCP();
@@ -70,6 +71,7 @@ public:
 
     void onEnter() override;
     virtual std::string title() override;
+    virtual std::string subtitle() override;
 
 protected:
     ConsoleCustomCommand();

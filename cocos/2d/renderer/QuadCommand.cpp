@@ -18,7 +18,7 @@ QuadCommand::QuadCommand()
 ,_quadCount(0)
 ,_capacity(0)
 {
-    _type = QUAD_COMMAND;
+    _type = RenderCommand::Type::QUAD_COMMAND;
     _shader = nullptr;
     _quad = nullptr;
 }
