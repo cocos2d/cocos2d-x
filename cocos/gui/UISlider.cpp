@@ -438,6 +438,7 @@ int Slider::getPercent()
 
 void Slider::onSizeChanged()
 {
+    Widget::onSizeChanged();
     barRendererScaleChangedWithSize();
     progressBarRendererScaleChangedWithSize();
 }
@@ -543,7 +544,7 @@ void Slider::onPressStateChangedToDisabled()
     _slidBallDisabledRenderer->setVisible(true);
 }
 
-const char* Slider::getDescription() const
+std::string Slider::getDescription() const
 {
     return "Slider";
 }

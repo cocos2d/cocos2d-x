@@ -352,6 +352,7 @@ void CheckBox::setAnchorPoint(const Point &pt)
 
 void CheckBox::onSizeChanged()
 {
+    Widget::onSizeChanged();
     backGroundTextureScaleChangedWithSize();
     backGroundSelectedTextureScaleChangedWithSize();
     frontCrossTextureScaleChangedWithSize();
@@ -475,7 +476,7 @@ void CheckBox::frontCrossDisabledTextureScaleChangedWithSize()
     }
 }
 
-const char* CheckBox::getDescription() const
+std::string CheckBox::getDescription() const
 {
     return "CheckBox";
 }

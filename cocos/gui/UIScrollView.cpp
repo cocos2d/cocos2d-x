@@ -1624,7 +1624,7 @@ void ScrollView::doLayout()
     _doLayoutDirty = false;
 }
 
-const char* ScrollView::getDescription() const
+std::string ScrollView::getDescription() const
 {
     return "ScrollView";
 }

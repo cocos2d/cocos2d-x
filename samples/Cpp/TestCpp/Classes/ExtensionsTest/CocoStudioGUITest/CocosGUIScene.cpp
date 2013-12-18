@@ -42,6 +42,21 @@ void CocosGUITestScene::runThisTest()
         _itemMenu->addChild(item);
     }
     addChild(_itemMenu);
+    
+    Layout* l = Layout::create();
+    l->setSize(Size(100, 100));
+    l->setBackGroundColor(Color3B::GREEN);
+    l->setBackGroundColorType(LAYOUT_COLOR_SOLID);
+    
+    
+    l->setLayoutType(LAYOUT_LINEAR_HORIZONTAL);
+    
+    ImageView* iv = ImageView::create();
+    iv->loadTexture("cocosgui/animationbuttonnormal.png");
+    
+    addChild(l);
+    
+    l->addChild(iv);
 //     */
 }
 void CocosGUITestScene::MainMenuCallback(Object* pSender)

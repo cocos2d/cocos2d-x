@@ -102,6 +102,7 @@ void LabelBMFont::setAnchorPoint(const Point &pt)
 
 void LabelBMFont::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelBMFontScaleChangedWithSize();
 }
 
@@ -137,7 +138,7 @@ void LabelBMFont::labelBMFontScaleChangedWithSize()
     }
 }
 
-const char* LabelBMFont::getDescription() const
+std::string LabelBMFont::getDescription() const
 {
     return "LabelBMFont";
 }

@@ -211,6 +211,7 @@ void Label::setAnchorPoint(const Point &pt)
 
 void Label::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelScaleChangedWithSize();
 }
 
@@ -247,7 +248,7 @@ void Label::labelScaleChangedWithSize()
     
 }
 
-const char* Label::getDescription() const
+std::string Label::getDescription() const
 {
     return "Label";
 }

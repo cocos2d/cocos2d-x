@@ -533,6 +533,7 @@ void TextField::setOpacity(GLubyte opacity)
 
 void TextField::onSizeChanged()
 {
+    Widget::onSizeChanged();
     textfieldRendererScaleChangedWithSize();
 }
 
@@ -568,7 +569,7 @@ Node* TextField::getVirtualRenderer()
     return _textFieldRenderer;
 }
 
-const char* TextField::getDescription() const
+std::string TextField::getDescription() const
 {
     return "TextField";
 }

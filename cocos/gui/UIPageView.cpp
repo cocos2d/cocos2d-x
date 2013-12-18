@@ -616,7 +616,7 @@ Layout* PageView::getPage(int index)
     return (Layout*)_pages->getObjectAtIndex(index);
 }
 
-const char* PageView::getDescription() const
+std::string PageView::getDescription() const
 {
     return "PageView";
 }

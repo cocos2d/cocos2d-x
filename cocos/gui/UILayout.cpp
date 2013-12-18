@@ -105,6 +105,7 @@ void Layout::addChild(Node *child, int zOrder, int tag)
 {
     supplyTheLayoutParameterLackToChild(dynamic_cast<Widget*>(child));
     Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
 }
     
 void Layout::initRenderer()
@@ -399,14 +400,8 @@ const Rect& Layout::getClippingRect()
 
 void Layout::onSizeChanged()
 {
+    Widget::onSizeChanged();
     setStencilClippingSize(_size);
-    for (auto& child : getChildren())
-    {
-        if (child)
-        {
-            ((Widget*)child)->updateSizeAndPosition();
-        }
-    }
     _doLayoutDirty = true;
     if (_backGroundImage)
     {
@@ -1232,7 +1227,7 @@ void Layout::doLayout()
     _doLayoutDirty = false;
 }
 
-const char* Layout::getDescription() const
+std::string Layout::getDescription() const
 {
     return "Layout";
 }

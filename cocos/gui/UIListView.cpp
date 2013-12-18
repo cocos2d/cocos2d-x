@@ -289,9 +289,8 @@ void ListView::removeItem(int index)
     if (!item)
     {
         return;
-        
     }
-    _items.removeObject(item);
+    _items.eraseObject(item);
     removeChild(item);
     _refreshViewDirty = true;
 }
@@ -429,7 +428,7 @@ void ListView::onSizeChanged()
     _refreshViewDirty = true;
 }
 
-const char* ListView::getDescription() const
+std::string ListView::getDescription() const
 {
     return "ListViewEx";
 }

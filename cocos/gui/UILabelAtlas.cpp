@@ -147,6 +147,7 @@ void LabelAtlas::setAnchorPoint(const Point &pt)
 
 void LabelAtlas::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelAtlasScaleChangedWithSize();
 }
 
@@ -182,7 +183,7 @@ void LabelAtlas::labelAtlasScaleChangedWithSize()
     }
 }
 
-const char* LabelAtlas::getDescription() const
+std::string LabelAtlas::getDescription() const
 {
     return "LabelAtlas";
 }

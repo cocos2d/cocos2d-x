@@ -235,6 +235,7 @@ void ImageView::setAnchorPoint(const Point &pt)
 
 void ImageView::onSizeChanged()
 {
+    Widget::onSizeChanged();
     imageTextureScaleChangedWithSize();
 }
 
@@ -280,7 +281,7 @@ void ImageView::imageTextureScaleChangedWithSize()
     }
 }
 
-const char* ImageView::getDescription() const
+std::string ImageView::getDescription() const
 {
     return "ImageView";
 }

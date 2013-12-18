@@ -157,7 +157,7 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
     
 protected:
     virtual void addChild(Node * child) override;

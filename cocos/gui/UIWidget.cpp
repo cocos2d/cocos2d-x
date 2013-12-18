@@ -189,7 +189,7 @@ void Widget::removeFromParentAndCleanup(bool cleanup)
 void Widget::removeChild(Node *child, bool cleanup)
 {
     NodeRGBA::removeChild(child, cleanup);
-    _widgetChildren.removeObject(child);
+    _widgetChildren.eraseObject(child);
 }
 
 void Widget::removeChildByTag(int tag, bool cleanup)
@@ -513,7 +513,13 @@ Node* Widget::getVirtualRenderer()
 
 void Widget::onSizeChanged()
 {
-
+    for (auto& child : getChildren())
+    {
+        if (child)
+        {
+            ((Widget*)child)->updateSizeAndPosition();
+        }
+    }
 }
 
 const Size& Widget::getContentSize() const
@@ -993,7 +999,7 @@ LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
     return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary->objectForKey(type));
 }
 
-const char* Widget::getDescription() const
+std::string Widget::getDescription() const
 {
     return "Widget";
 }

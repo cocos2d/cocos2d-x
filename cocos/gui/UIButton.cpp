@@ -438,6 +438,7 @@ void Button::setAnchorPoint(const Point &pt)
 
 void Button::onSizeChanged()
 {
+    Widget::onSizeChanged();
     normalTextureScaleChangedWithSize();
     pressedTextureScaleChangedWithSize();
     disabledTextureScaleChangedWithSize();
@@ -614,7 +615,7 @@ void Button::setColor(const Color3B &color)
     setTitleColor(_titleColor);
 }
 
-const char* Button::getDescription() const
+std::string Button::getDescription() const
 {
     return "Button";
 }

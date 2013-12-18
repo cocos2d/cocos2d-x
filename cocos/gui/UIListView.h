@@ -163,7 +163,7 @@ public:
      */
     virtual void setDirection(SCROLLVIEW_DIR dir) override;
     
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
     
 protected:
     virtual void addChild(Node* child) override{ScrollView::addChild(child);};

@@ -262,6 +262,7 @@ int LoadingBar::getPercent()
 
 void LoadingBar::onSizeChanged()
 {
+    Widget::onSizeChanged();
     barRendererScaleChangedWithSize();
 }
 
@@ -336,7 +337,7 @@ void LoadingBar::setScale9Scale()
     dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
-const char* LoadingBar::getDescription() const
+std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
 }

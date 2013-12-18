@@ -103,7 +103,7 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
     
     virtual const Size& getContentSize() const override;
     virtual Node* getVirtualRenderer() override;
