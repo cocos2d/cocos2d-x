@@ -312,6 +312,20 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 
 #pragma mark - Conversion Routines
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *outval )
+{
+    JSBool ok = JS_TRUE;
+    double dp;
+    ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+    *outval = (unsigned short)dp;
+
+    return ok;
+}
+
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {
     JSBool ok = JS_TRUE;
@@ -1347,6 +1361,11 @@ jsval int32_to_jsval( JSContext *cx, int32_t number )
 }
 
 jsval uint32_to_jsval( JSContext *cx, uint32_t number )
+{
+    return UINT_TO_JSVAL(number);
+}
+
+jsval ushort_to_jsval( JSContext *cx, unsigned short number )
 {
     return UINT_TO_JSVAL(number);
 }

@@ -80,6 +80,7 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp
   Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
+  Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
@@ -102,6 +103,7 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceTest.cpp
   Classes/PerformanceTest/PerformanceTextureTest.cpp
   Classes/PerformanceTest/PerformanceTouchesTest.cpp
+  Classes/PerformanceTest/PerformanceLabelTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp
   Classes/RotateWorldTest/RotateWorldTest.cpp

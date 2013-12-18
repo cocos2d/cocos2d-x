@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "Renderer.h"
-#include "CustomCommand.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -557,7 +557,7 @@ void ProgressTimer::draw()
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 

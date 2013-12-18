@@ -42,7 +42,6 @@ Control::Control()
 , _selected(false)
 , _highlighted(false)
 , _hasVisibleParents(false)
-, _dispatchTable(NULL)
 , _isOpacityModifyRGB(false)
 , _state(State::NORMAL)
 {
@@ -112,7 +111,7 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
             // Call invocations
             const auto& invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
             
-            invocationList.forEach([this](Invocation* invocation){
+            std::for_each(invocationList.begin(), invocationList.end(),[this](Invocation* invocation){
                 invocation->invoke(this);
             });
 
@@ -193,8 +192,10 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
     } 
     else
     {
-            //normally we would use a predicate, but this won't work here. Have to do it manually
-        eventInvocationList.forEach([&](Invocation* invocation){
+        std::vector<Invocation*> tobeRemovedInvocations;
+        
+        //normally we would use a predicate, but this won't work here. Have to do it manually
+        std::for_each(eventInvocationList.begin(), eventInvocationList.end(), [&](Invocation* invocation){
             bool shouldBeRemoved=true;
             if (target)
             {
@@ -207,8 +208,12 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
             // Remove the corresponding invocation object
             if (shouldBeRemoved)
             {
-                eventInvocationList.eraseObject(invocation, bDeleteObjects);
+                tobeRemovedInvocations.push_back(invocation);
             }
+        });
+        
+        std::for_each(tobeRemovedInvocations.begin(), tobeRemovedInvocations.end(), [&](Invocation* invocation){
+            eventInvocationList.eraseObject(invocation, bDeleteObjects);
         });
     }
 }
@@ -219,7 +224,7 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
     
-    _children.forEach([&](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&](Node* obj){
         RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(obj);
         if (rgba)
         {

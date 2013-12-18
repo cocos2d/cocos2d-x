@@ -40,7 +40,8 @@ static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
     
-    n->getChildren().forEach([p](Node* child){
+    auto& children = n->getChildren();
+    std::for_each(children.begin(), children.end(), [p](Node* child){
         setProgram(child, p);
     });
 }

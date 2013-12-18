@@ -28,7 +28,7 @@
 
 #include "CCLabelAtlas.h"
 #include "CCPlatformMacros.h"
-#include "QuadCommand.h"
+#include "CCQuadCommand.h"
 
 NS_CC_BEGIN
 

@@ -1530,7 +1530,7 @@ void MultipleParticleSystems::update(float dt)
 
     unsigned int count = 0; 
     
-    getChildren().forEach([&count](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&count](Node* child){
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
@@ -1582,7 +1582,8 @@ void MultipleParticleSystemsBatched::update(float dt)
 
     auto batchNode = getChildByTag(2);
     
-    batchNode->getChildren().forEach([&count](Node* child){
+    auto& children = batchNode->getChildren();
+    std::for_each(children.begin(), children.end(), [&count](Node* child){
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
@@ -1671,7 +1672,8 @@ void AddAndDeleteParticleSystems::update(float dt)
 
     auto batchNode = getChildByTag(2);
     
-    batchNode->getChildren().forEach([&count](Node* child){
+    auto& children = batchNode->getChildren();
+    std::for_each(children.begin(), children.end(), [&count](Node* child){
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
@@ -1807,7 +1809,8 @@ void ReorderParticleSystems::update(float dt)
 
     auto batchNode = getChildByTag(2);
 
-    batchNode->getChildren().forEach([&count](Node* child){
+    auto& children = batchNode->getChildren();
+    std::for_each(children.begin(), children.end(), [&count](Node* child){
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != nullptr)
         {

@@ -229,7 +229,7 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    _children.forEach([&delta](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj){
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
