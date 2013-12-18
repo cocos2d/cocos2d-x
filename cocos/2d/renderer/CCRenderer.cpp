@@ -22,12 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Renderer.h"
+#include "CCRenderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
-#include "CustomCommand.h"
-#include "QuadCommand.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCQuadCommand.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"

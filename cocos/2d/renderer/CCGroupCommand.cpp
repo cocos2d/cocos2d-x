@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#include "GroupCommand.h"
-#include "Renderer.h"
+#include "CCGroupCommand.h"
+#include "CCRenderer.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

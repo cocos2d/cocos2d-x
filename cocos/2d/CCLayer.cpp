@@ -43,8 +43,8 @@ THE SOFTWARE.
 #include "CCEventListenerAcceleration.h"
 #include "platform/CCDevice.h"
 #include "CCScene.h"
-#include "CustomCommand.h"
-#include "Renderer.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 

@@ -27,8 +27,8 @@
 #define _CC_GROUPCOMMAND_H_
 
 #include "CCPlatformMacros.h"
-#include "RenderCommand.h"
-#include "RenderCommandPool.h"
+#include "CCRenderCommand.h"
+#include "CCRenderCommandPool.h"
 #include <unordered_map>
 
 NS_CC_BEGIN

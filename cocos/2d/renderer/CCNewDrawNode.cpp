@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 #include "CCNewDrawNode.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
-#include "CustomCommand.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN

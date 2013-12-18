@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 using namespace cocos2d;
 

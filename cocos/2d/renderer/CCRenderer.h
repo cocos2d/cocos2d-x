@@ -27,7 +27,7 @@
 #define __CC_RENDERER_H_
 
 #include "CCPlatformMacros.h"
-#include "RenderCommand.h"
+#include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>
@@ -43,7 +43,7 @@ struct RenderStackElement
     size_t currentIndex;
 };
 
-class Renderer
+class Renderer : public Object
 {
 public:
     static const int vbo_size = 65536 / 6;

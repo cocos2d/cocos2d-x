@@ -44,8 +44,8 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
