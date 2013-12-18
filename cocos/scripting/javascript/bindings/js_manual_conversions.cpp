@@ -737,7 +737,7 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
 }
 
 
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
 {
     JSObject *jsobj;
     JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
@@ -746,7 +746,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    Array* arr = Array::createWithCapacity(len);
+    __Array* arr = __Array::createWithCapacity(len);
     for (uint32_t i=0; i < len; i++) {
         jsval value;
         if (JS_GetElement(cx, jsobj, i, &value)) {
@@ -764,7 +764,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else if (!JS_IsArrayObject(cx, tmp)){
                     // It's a normal js object.
-                    Dictionary* dictVal = NULL;
+                    __Dictionary* dictVal = NULL;
                     JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                     if (ok) {
                         arr->addObject(dictVal);
@@ -772,7 +772,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else {
                     // It's a js array object.
-                    Array* arrVal = NULL;
+                    __Array* arrVal = NULL;
                     JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                     if (ok) {
                         arr->addObject(arrVal);

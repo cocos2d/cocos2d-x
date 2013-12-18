@@ -594,22 +594,20 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
 // TestNode
 //
 //------------------------------------------------------------------
-void TestNode::initWithString(String* pStr, int priority)
+void TestNode::initWithString(const std::string& str, int priority)
 {
-    _pstring = pStr;
-    _pstring->retain();
+    _string = str;
     scheduleUpdateWithPriority(priority);
 }
 
 TestNode::~TestNode()
 {
-    _pstring->release();
 }
 
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    log("%s", _pstring->getCString());
+    log("%s", _string.c_str());
 }
 
 //------------------------------------------------------------------
@@ -622,44 +620,32 @@ void SchedulerUpdate::onEnter()
     SchedulerTestLayer::onEnter();
 
     auto d = new TestNode();
-    auto pStr = new String("---");
-    d->initWithString(pStr, 50);
-    pStr->release();
+    d->initWithString("---", 50);
     addChild(d);
     d->release();
 
     auto b = new TestNode();
-    pStr = new String("3rd");
-    b->initWithString(pStr, 0);
-    pStr->release();
+    b->initWithString("3rd", 0);
     addChild(b);
     b->release();
 
     auto a = new TestNode();
-    pStr = new String("1st");
-    a->initWithString(pStr, -10);
-    pStr->release();
+    a->initWithString("1st", -10);
     addChild(a);
     a->release();
 
     auto c = new TestNode();
-    pStr = new String("4th");
-    c->initWithString(pStr, 10);
-    pStr->release();
+    c->initWithString("4th", 10);
     addChild(c);
     c->release();
 
     auto e = new TestNode();
-    pStr = new String("5th");
-    e->initWithString(pStr, 20);
-    pStr->release();
+    e->initWithString("5th", 20);
     addChild(e);
     e->release();
 
     auto f = new TestNode();
-    pStr = new String("2nd");
-    f->initWithString(pStr, -5);
-    pStr->release();
+    f->initWithString("2nd", -5);
     addChild(f);
     f->release();
 
