@@ -54,7 +54,7 @@ enum ccScriptType {
 class ScriptHandlerEntry : public Object
 {
 public:
-    static ScriptHandlerEntry* create(int nHandler);
+    static ScriptHandlerEntry* create(int handler);
     /**
      * @js NA
      * @lua NA
@@ -70,8 +70,8 @@ public:
     }
     
 protected:
-    ScriptHandlerEntry(int nHandler)
-    : _handler(nHandler)
+    ScriptHandlerEntry(int handler)
+    : _handler(handler)
     {
         static int newEntryId = 0;
         newEntryId++;
@@ -95,7 +95,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static SchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
+    static SchedulerScriptHandlerEntry* create(int handler, float interval, bool paused);
     /**
      * @js NA
      * @lua NA
@@ -131,14 +131,14 @@ public:
     }
     
 private:
-    SchedulerScriptHandlerEntry(int nHandler)
-    : ScriptHandlerEntry(nHandler)
-    , _timer(NULL)
+    SchedulerScriptHandlerEntry(int handler)
+    : ScriptHandlerEntry(handler)
+    , _timer(nullptr)
     , _paused(false)
     , _markedForDeletion(false)
     {
     }
-    bool init(float fInterval, bool bPaused);
+    bool init(float interval, bool paused);
     
     cocos2d::Timer*   _timer;
     bool                _paused;
@@ -154,7 +154,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static TouchScriptHandlerEntry* create(int nHandler, bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    static TouchScriptHandlerEntry* create(int handler, bool isMultiTouches, int priority, bool swallowsTouches);
     /**
      * @js NA
      * @lua NA
@@ -183,14 +183,14 @@ public:
     }
     
 private:
-    TouchScriptHandlerEntry(int nHandler)
-    : ScriptHandlerEntry(nHandler)
+    TouchScriptHandlerEntry(int handler)
+    : ScriptHandlerEntry(handler)
     , _isMultiTouches(false)
     , _priority(0)
     , _swallowsTouches(false)
     {
     }
-    bool init(bool bIsMultiTouches, int nPriority, bool bSwallowsTouches);
+    bool init(bool isMultiTouches, int priority, bool swallowsTouches);
     
     bool    _isMultiTouches;
     int     _priority;
@@ -228,7 +228,7 @@ struct BasicScriptData
      * @js NA
      * @lua NA
      */
-    BasicScriptData(void* inObject,void* inValue = NULL)
+    BasicScriptData(void* inObject,void* inValue = nullptr)
     : nativeObject(inObject),value(inValue)
     {
     }
@@ -247,7 +247,7 @@ struct SchedulerScriptData
      * @js NA
      * @lua NA
      */
-    SchedulerScriptData(int inHandler,float inElapse,void* inNode = NULL)
+    SchedulerScriptData(int inHandler,float inElapse,void* inNode = nullptr)
     : handler(inHandler),
       elapse(inElapse),
       node(inNode)
@@ -322,13 +322,13 @@ struct CommonScriptData
      * @js NA
      * @lua NA
      */
-    CommonScriptData(int inHandler,const char* inName,Object* inSource = NULL,const char* inClassName = NULL)
+    CommonScriptData(int inHandler,const char* inName,Object* inSource = nullptr,const char* inClassName = nullptr)
     : handler(inHandler),
       eventSource(inSource)
     {
         strncpy(eventName, inName, 64);
         
-        if (NULL == inClassName)
+        if (nullptr == inClassName)
         {
             memset(eventSourceClassName, 0, 64*sizeof(char));
         }
@@ -378,19 +378,19 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void removeScriptObjectByObject(Object* pObj) = 0;
+    virtual void removeScriptObjectByObject(Object* obj) = 0;
     
     /** Remove script function handler, only LuaEngine class need to implement this function. 
      * @js NA
      * @lua NA
      */
-    virtual void removeScriptHandler(int nHandler) {};
+    virtual void removeScriptHandler(int handler) {};
     
     /** Reallocate script function handler, only LuaEngine class need to implement this function. 
      * @js NA
      * @lua NA
      */
-    virtual int reallocateScriptHandler(int nHandler) { return 0;}
+    virtual int reallocateScriptHandler(int handler) { return 0;}
     
     /**
      @brief Execute script code contained in the given string.
@@ -420,7 +420,7 @@ public:
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    /**when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be NULL in lua
+    /**when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be nullptr in lua
      * @js NA
      * @lua NA
      */
@@ -458,7 +458,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setScriptEngine(ScriptEngineProtocol *pScriptEngine);
+    void setScriptEngine(ScriptEngineProtocol *scriptEngine);
     /**
      * @js NA
      * @lua NA
@@ -487,7 +487,7 @@ public:
     
 private:
     ScriptEngineManager(void)
-    : _scriptEngine(NULL)
+    : _scriptEngine(nullptr)
     {
     }
     

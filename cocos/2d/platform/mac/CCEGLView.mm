@@ -431,9 +431,9 @@ void EGLView::setIMEKeyboardState(bool /*bOpen*/)
     
 }
 
-void EGLView::setFrameZoomFactor(float fZoomFactor)
+void EGLView::setFrameZoomFactor(float zoomFactor)
 {
-    _frameZoomFactor = fZoomFactor;
+    _frameZoomFactor = zoomFactor;
     Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 

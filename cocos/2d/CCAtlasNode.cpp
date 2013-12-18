@@ -48,7 +48,7 @@ AtlasNode::AtlasNode()
 , _itemsPerColumn(0)
 , _itemWidth(0)
 , _itemHeight(0)
-, _textureAtlas(NULL)
+, _textureAtlas(nullptr)
 , _isOpacityModifyRGB(false)
 , _quadsToDraw(0)
 , _uniformColor(0)
@@ -63,14 +63,14 @@ AtlasNode::~AtlasNode()
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-	AtlasNode * pRet = new AtlasNode();
-	if (pRet->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
+	AtlasNode * ret = new AtlasNode();
+	if (ret->initWithTileFile(tile, tileWidth, tileHeight, itemsToRender))
 	{
-		pRet->autorelease();
-		return pRet;
+		ret->autorelease();
+		return ret;
 	}
-	CC_SAFE_DELETE(pRet);
-	return NULL;
+	CC_SAFE_DELETE(ret);
+	return nullptr;
 }
 
 bool AtlasNode::initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
@@ -181,10 +181,10 @@ void AtlasNode::setOpacity(GLubyte opacity)
         this->setColor(_colorUnmodified);
 }
 
-void AtlasNode::setOpacityModifyRGB(bool bValue)
+void AtlasNode::setOpacityModifyRGB(bool value)
 {
     Color3B oldColor = this->getColor();
-    _isOpacityModifyRGB = bValue;
+    _isOpacityModifyRGB = value;
     this->setColor(oldColor);
 }
 
@@ -198,9 +198,9 @@ void AtlasNode::updateOpacityModifyRGB()
     _isOpacityModifyRGB = _textureAtlas->getTexture()->hasPremultipliedAlpha();
 }
 
-void AtlasNode::setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor)
+void AtlasNode::setIgnoreContentScaleFactor(bool ignoreContentScaleFactor)
 {
-    _ignoreContentScaleFactor = bIgnoreContentScaleFactor;
+    _ignoreContentScaleFactor = ignoreContentScaleFactor;
 }
 
 // AtlasNode - CocosNodeTexture protocol
@@ -250,9 +250,9 @@ int AtlasNode::getQuadsToDraw() const
     return _quadsToDraw;
 }
 
-void AtlasNode::setQuadsToDraw(int uQuadsToDraw)
+void AtlasNode::setQuadsToDraw(int quadsToDraw)
 {
-    _quadsToDraw = uQuadsToDraw;
+    _quadsToDraw = quadsToDraw;
 }
 
 NS_CC_END

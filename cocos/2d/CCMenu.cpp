@@ -54,7 +54,7 @@ Menu::~Menu()
 
 Menu* Menu::create()
 {
-    return Menu::create(NULL, NULL);
+    return Menu::create(nullptr, nullptr);
 }
 
 Menu * Menu::create(MenuItem* item, ...)
@@ -62,11 +62,11 @@ Menu * Menu::create(MenuItem* item, ...)
     va_list args;
     va_start(args,item);
     
-    Menu *pRet = Menu::createWithItems(item, args);
+    Menu *ret = Menu::createWithItems(item, args);
     
     va_end(args);
     
-    return pRet;
+    return ret;
 }
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
@@ -103,7 +103,7 @@ Menu* Menu::createWithItems(MenuItem* item, va_list args)
 
 Menu* Menu::createWithItem(MenuItem* item)
 {
-    return Menu::create(item, NULL);
+    return Menu::create(item, nullptr);
 }
 
 bool Menu::init()
@@ -133,7 +133,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
             z++;
         }
     
-        _selectedItem = NULL;
+        _selectedItem = nullptr;
         _state = Menu::State::WAITING;
         
         // enable cascade color and opacity on menus
@@ -171,7 +171,7 @@ void Menu::addChild(Node * child, int zOrder)
 
 void Menu::addChild(Node * child, int zOrder, int tag)
 {
-    CCASSERT( dynamic_cast<MenuItem*>(child) != NULL, "Menu only supports MenuItem objects as children");
+    CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     Layer::addChild(child, zOrder, tag);
 }
 
@@ -187,7 +187,7 @@ void Menu::onExit()
         if (_selectedItem)
         {
             _selectedItem->unselected();
-            _selectedItem = NULL;
+            _selectedItem = nullptr;
         }
         
         _state = Menu::State::WAITING;
@@ -198,12 +198,12 @@ void Menu::onExit()
 
 void Menu::removeChild(Node* child, bool cleanup)
 {
-    MenuItem *pMenuItem = dynamic_cast<MenuItem*>(child);
-    CCASSERT(pMenuItem != NULL, "Menu only supports MenuItem objects as children");
+    MenuItem *menuItem = dynamic_cast<MenuItem*>(child);
+    CCASSERT(menuItem != nullptr, "Menu only supports MenuItem objects as children");
     
-    if (_selectedItem == pMenuItem)
+    if (_selectedItem == menuItem)
     {
-        _selectedItem = NULL;
+        _selectedItem = nullptr;
     }
     
     Node::removeChild(child, cleanup);
@@ -218,7 +218,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         return false;
     }
     
-    for (Node *c = this->_parent; c != NULL; c = c->getParent())
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
@@ -565,7 +565,7 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 std::string Menu::getDescription() const

@@ -55,7 +55,7 @@ NS_CC_BEGIN
 namespace DrawPrimitives {
 
 static bool s_initialized = false;
-static GLProgram* s_shader = NULL;
+static GLProgram* s_shader = nullptr;
 static int s_colorLocation = -1;
 static Color4F s_color(1.0f,1.0f,1.0f,1.0f);
 static int s_pointSizeLocation = -1;

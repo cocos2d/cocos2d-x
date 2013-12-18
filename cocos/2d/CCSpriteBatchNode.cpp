@@ -117,7 +117,7 @@ bool SpriteBatchNode::initWithFile(const char* fileImage, ssize_t capacity)
 }
 
 SpriteBatchNode::SpriteBatchNode()
-: _textureAtlas(NULL)
+: _textureAtlas(nullptr)
 {
 }
 
@@ -170,8 +170,8 @@ void SpriteBatchNode::visit(void)
 
 void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
 {
-    CCASSERT(child != NULL, "child should not be null");
-    CCASSERT(dynamic_cast<Sprite*>(child) != NULL, "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT(child != nullptr, "child should not be null");
+    CCASSERT(dynamic_cast<Sprite*>(child) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
     Sprite *sprite = static_cast<Sprite*>(child);
     // check Sprite is using the same texture id
     CCASSERT(sprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
@@ -184,7 +184,7 @@ void SpriteBatchNode::addChild(Node *child, int zOrder, int tag)
 // override reorderChild
 void SpriteBatchNode::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != NULL, "the child should not be null");
+    CCASSERT(child != nullptr, "the child should not be null");
     CCASSERT(_children.contains(child), "Child doesn't belong to Sprite");
 
     if (zOrder == child->getZOrder())
@@ -202,7 +202,7 @@ void SpriteBatchNode::removeChild(Node *child, bool cleanup)
     Sprite *sprite = static_cast<Sprite*>(child);
 
     // explicit null handling
-    if (sprite == NULL)
+    if (sprite == nullptr)
     {
         return;
     }
@@ -487,7 +487,7 @@ ssize_t SpriteBatchNode::atlasIndexForChild(Sprite *sprite, int nZ)
 
     // ignore parent Z if parent is spriteSheet
     bool ignoreParent = (SpriteBatchNode*)(sprite->getParent()) == this;
-    Sprite *prev = NULL;
+    Sprite *prev = nullptr;
     if (childIndex > 0 && childIndex != -1)
     {
         prev = static_cast<Sprite*>(siblings.at(childIndex - 1));
@@ -571,7 +571,7 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
     _textureAtlas->removeQuadAtIndex(sprite->getAtlasIndex());
 
     // Cleanup sprite. It might be reused (issue #569)
-    sprite->setBatchNode(NULL);
+    sprite->setBatchNode(nullptr);
 
     auto it = std::find(_descendants.begin(), _descendants.end(), sprite );
     if( it != _descendants.end() )
@@ -630,7 +630,7 @@ void SpriteBatchNode::setTexture(Texture2D *texture)
 
 void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
 {
-    CCASSERT( sprite != NULL, "Argument must be non-NULL");
+    CCASSERT( sprite != nullptr, "Argument must be non-nullptr");
     CCASSERT( dynamic_cast<Sprite*>(sprite), "CCSpriteBatchNode only supports Sprites as children");
 
     // make needed room
@@ -655,8 +655,8 @@ void SpriteBatchNode::insertQuadFromSprite(Sprite *sprite, ssize_t index)
 
 void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, ssize_t index)
 {
-    CCASSERT(sprite != NULL, "Argument must be non-nil");
-    CCASSERT(dynamic_cast<Sprite*>(sprite) != NULL, "CCSpriteBatchNode only supports Sprites as children");
+    CCASSERT(sprite != nullptr, "Argument must be non-nil");
+    CCASSERT(dynamic_cast<Sprite*>(sprite) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
     
 	// make needed room
 	while (index >= _textureAtlas->getCapacity() || _textureAtlas->getCapacity() == _textureAtlas->getTotalQuads())
@@ -678,7 +678,7 @@ void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, ssize_t index)
 
 SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int aTag)
 {
-    CCASSERT( child != NULL, "Argument must be non-NULL");
+    CCASSERT( child != nullptr, "Argument must be non-nullptr");
     CCASSERT( dynamic_cast<Sprite*>(child), "CCSpriteBatchNode only supports Sprites as children");
 
     // quad index is Z

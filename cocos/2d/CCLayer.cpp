@@ -70,30 +70,30 @@ Layer::~Layer()
 
 bool Layer::init()
 {
-    bool bRet = false;
+    bool ret = false;
     do 
     {        
-        Director * pDirector;
-        CC_BREAK_IF(!(pDirector = Director::getInstance()));
-        this->setContentSize(pDirector->getWinSize());
+        Director * director;
+        CC_BREAK_IF(!(director = Director::getInstance()));
+        this->setContentSize(director->getWinSize());
         // success
-        bRet = true;
+        ret = true;
     } while(0);
-    return bRet;
+    return ret;
 }
 
 Layer *Layer::create()
 {
-    Layer *pRet = new Layer();
-    if (pRet && pRet->init())
+    Layer *ret = new Layer();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
+        CC_SAFE_DELETE(ret);
+        return nullptr;
     }
 }
 
@@ -585,40 +585,40 @@ void LayerColor::setBlendFunc(const BlendFunc &var)
 
 LayerColor* LayerColor::create()
 {
-    LayerColor* pRet = new LayerColor();
-    if (pRet && pRet->init())
+    LayerColor* ret = new LayerColor();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
-    LayerColor * pLayer = new LayerColor();
-    if( pLayer && pLayer->initWithColor(color,width,height))
+    LayerColor * layer = new LayerColor();
+    if( layer && layer->initWithColor(color,width,height))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerColor * LayerColor::create(const Color4B& color)
 {
-    LayerColor * pLayer = new LayerColor();
-    if(pLayer && pLayer->initWithColor(color))
+    LayerColor * layer = new LayerColor();
+    if(layer && layer->initWithColor(color))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 bool LayerColor::init()
@@ -756,40 +756,40 @@ std::string LayerColor::getDescription() const
 // 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
-    LayerGradient * pLayer = new LayerGradient();
-    if( pLayer && pLayer->initWithColor(start, end))
+    LayerGradient * layer = new LayerGradient();
+    if( layer && layer->initWithColor(start, end))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Point& v)
 {
-    LayerGradient * pLayer = new LayerGradient();
-    if( pLayer && pLayer->initWithColor(start, end, v))
+    LayerGradient * layer = new LayerGradient();
+    if( layer && layer->initWithColor(start, end, v))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerGradient* LayerGradient::create()
 {
-    LayerGradient* pRet = new LayerGradient();
-    if (pRet && pRet->init())
+    LayerGradient* ret = new LayerGradient();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool LayerGradient::init()
@@ -962,49 +962,49 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * pMultiplexLayer = new LayerMultiplex();
-    if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
+    LayerMultiplex * multiplexLayer = new LayerMultiplex();
+    if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
-        pMultiplexLayer->autorelease();
+        multiplexLayer->autorelease();
         va_end(args);
-        return pMultiplexLayer;
+        return multiplexLayer;
     }
     va_end(args);
-    CC_SAFE_DELETE(pMultiplexLayer);
-    return NULL;
+    CC_SAFE_DELETE(multiplexLayer);
+    return nullptr;
 }
 
 LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 {
-    return LayerMultiplex::create(layer, NULL);
+    return LayerMultiplex::create(layer, nullptr);
 }
 
 LayerMultiplex* LayerMultiplex::create()
 {
-    LayerMultiplex* pRet = new LayerMultiplex();
-    if (pRet && pRet->init())
+    LayerMultiplex* ret = new LayerMultiplex();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLayers)
 {
-    LayerMultiplex* pRet = new LayerMultiplex();
-    if (pRet && pRet->initWithArray(arrayOfLayers))
+    LayerMultiplex* ret = new LayerMultiplex();
+    if (ret && ret->initWithArray(arrayOfLayers))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 void LayerMultiplex::addLayer(Layer* layer)
