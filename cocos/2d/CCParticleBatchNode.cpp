@@ -42,6 +42,8 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -383,7 +385,7 @@ void ParticleBatchNode::removeChildAtIndex(int index, bool doCleanup)
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    _children.forEach([](Node* child){
+    std::for_each(_children.begin(), _children.end(), [](Node* child){
         static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
     });
 
@@ -401,12 +403,27 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    _textureAtlas->drawQuads();
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _textureAtlas->drawQuads();
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
+    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 
@@ -464,7 +481,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 {
     int index = 0;
     
-    _children.forEach([&index](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&index](Node* child){
         ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
         partiSys->setAtlasIndex(index);
         index += partiSys->getTotalParticles();

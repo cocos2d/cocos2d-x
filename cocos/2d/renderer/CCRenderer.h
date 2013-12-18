@@ -1,0 +1,103 @@
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
+
+#ifndef __CC_RENDERER_H_
+#define __CC_RENDERER_H_
+
+#include "CCPlatformMacros.h"
+#include "CCRenderCommand.h"
+#include "CCGLProgram.h"
+#include "CCGL.h"
+#include <vector>
+#include <stack>
+
+NS_CC_BEGIN
+
+typedef std::vector<RenderCommand*> RenderQueue;
+
+struct RenderStackElement
+{
+    int renderQueueID;
+    size_t currentIndex;
+};
+
+class Renderer : public Object
+{
+public:
+    static const int vbo_size = 65536 / 6;
+
+    Renderer();
+    ~Renderer();
+
+    //TODO manage GLView inside Render itself
+    void initGLView();
+    
+    //TODO support multiple viewport
+    void addCommand(RenderCommand* command);
+    void addCommand(RenderCommand* command, int renderQueue);
+    void pushGroup(int renderQueueID);
+    void popGroup();
+    
+    int createRenderQueue();
+    void render();
+
+protected:
+
+    void setupIndices();
+    //Setup VBO or VAO based on OpenGL extensions
+    void setupBuffer();
+    void setupVBOAndVAO();
+    void setupVBO();
+    void mapBuffers();
+
+    void drawBatchedQuads();
+    //Draw the previews queued quads and flush previous context
+    void flush();
+
+    void onBackToForeground(Object* obj);
+
+    std::stack<int> _commandGroupStack;
+    
+    std::stack<RenderStackElement> _renderStack;
+    std::vector<RenderQueue> _renderGroups;
+
+    int _lastMaterialID;
+
+    size_t _firstCommand;
+    size_t _lastCommand;
+
+    V3F_C4B_T2F_Quad _quads[vbo_size];
+    GLushort _indices[6 * vbo_size];
+    GLuint _quadVAO;
+    GLuint _buffersVBO[2]; //0: vertex  1: indices
+
+    int _numQuads;
+    
+    bool _glViewAssigned;
+};
+
+NS_CC_END
+
+#endif //__CC_RENDERER_H_

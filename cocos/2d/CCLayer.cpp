@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "CCEventListenerAcceleration.h"
 #include "platform/CCDevice.h"
 #include "CCScene.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -505,7 +507,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -523,7 +525,7 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -698,6 +700,14 @@ void LayerColor::updateColor()
 }
 
 void LayerColor::draw()
+{
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(LayerColor::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void LayerColor::onDraw()
 {
     CC_NODE_DRAW_SETUP();
 
@@ -942,7 +952,7 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    _layers.forEach([](Layer* layer){
+    std::for_each(_layers.begin(), _layers.end(), [](Layer* layer){
         layer->cleanup();
     });
 }
@@ -1038,7 +1048,7 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
     if (Layer::init())
     {
         _layers.reserve(arrayOfLayers.size());
-        _layers.insert(arrayOfLayers);
+        _layers.pushBack(arrayOfLayers);
 
         _enabledLayer = 0;
         this->addChild(_layers.at(_enabledLayer));

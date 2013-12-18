@@ -33,9 +33,9 @@ Layer *CreateLayer(int index)
     case TEST_PERFORMANCE:
         pLayer = new TestPerformance();
         break;
-    case TEST_PERFORMANCE_BATCHNODE:
-        pLayer = new TestPerformanceBatchNode();
-        break;
+//    case TEST_PERFORMANCE_BATCHNODE:
+//        pLayer = new TestPerformanceBatchNode();
+//        break;
     case TEST_CHANGE_ZORDER:
         pLayer = new TestChangeZorder();
         break;
@@ -597,14 +597,14 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
 
 
-    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
-    {
-        this->stopAllActions();
-
-        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
-        action->setTag(FRAME_EVENT_ACTION_TAG);
-        this->runAction(action);
-    }
+//    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+//    {
+//        this->stopAllActions();
+//
+//        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
+//        action->setTag(FRAME_EVENT_ACTION_TAG);
+//        this->runAction(action);
+//    }
 }
 void TestFrameEvent::checkAction(float dt)
 {

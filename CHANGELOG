@@ -1,8 +1,9 @@
 cocos2d-x-3.0beta0 ?? 2013
 [All]
      [NEW]          Upgrated Box2D to 2.3.0
-     [NEW]          Added ThreadHelper, ThreadHelper::runOnGLThread() simplify invoking engine codes and OpenGL ES commands in a thread other then gl thread.
+     [NEW]          SChedule::performFunctionInCocosThread()
      [NEW]          Added tga format support again.
+     [FIX]          A Logic error in ControlUtils::RectUnion.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.
