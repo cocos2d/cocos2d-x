@@ -102,7 +102,6 @@ int64_t QuadCommand::generateID()
     //TODO fix texture ID generation
     CCASSERT(_textureID < 1024, "TextureID is greater than 1024");
 
-    //TODO fix blend id generation
     int blendID = 0;
     blendID = MaterialManager::getInstance()->getBlendFuncID(_blendType);
 
