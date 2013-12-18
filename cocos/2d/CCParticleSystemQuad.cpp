@@ -38,13 +38,12 @@ THE SOFTWARE.
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CustomCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
+#include "CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
-#include "CustomCommand.h"
 
 NS_CC_BEGIN
 

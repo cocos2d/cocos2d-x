@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Frustum.h"
+#include "CCFrustum.h"
 #include "platform/CCCommon.h"
 
 #include <stdlib.h>
