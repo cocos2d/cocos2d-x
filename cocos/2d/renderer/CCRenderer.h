@@ -43,7 +43,7 @@ struct RenderStackElement
     size_t currentIndex;
 };
 
-class Renderer
+class Renderer : public Object
 {
 public:
     static const int vbo_size = 65536 / 6;
