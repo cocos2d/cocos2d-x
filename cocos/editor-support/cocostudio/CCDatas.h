@@ -466,7 +466,7 @@ public:
 
     void addMovement(MovementData *movData);
     MovementData *getMovement(const char *movementName);
-    long getMovementCount();
+    ssize_t getMovementCount();
 public:
     std::string name;
     cocos2d::Map<std::string, MovementData*> movementDataDic;

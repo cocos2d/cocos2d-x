@@ -229,7 +229,8 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj)
+    {
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
@@ -463,7 +464,7 @@ void Bone::setColliderFilter(ColliderFilter *filter)
 {
     Array *array = _displayManager->getDecorativeDisplayList();
 
-    for(auto object : *array)
+    for(auto& object : *array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
