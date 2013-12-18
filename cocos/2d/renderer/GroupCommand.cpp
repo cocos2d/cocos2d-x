@@ -66,17 +66,14 @@ void GroupCommandManager::releaseGroupID(int groupID)
 
 GroupCommand::GroupCommand()
 :RenderCommand()
-, _viewport(0)
-, _depth(0)
 {
     _type = GROUP_COMMAND;
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
 
-void GroupCommand::init(int viewport, int32_t depth)
+void GroupCommand::init(int viewport, float depth)
 {
-    _viewport = viewport;
-    _depth = depth;
+    RenderCommand::init(viewport, depth);
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }

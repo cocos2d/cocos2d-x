@@ -11,8 +11,6 @@ RenderCommandPool<QuadCommand> QuadCommand::_commandPool;
 
 QuadCommand::QuadCommand()
 :RenderCommand()
-,_viewport(0)
-,_depth(0)
 ,_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
 ,_quadCount(0)
@@ -23,10 +21,9 @@ QuadCommand::QuadCommand()
     _quad = nullptr;
 }
 
-void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount, const kmMat4 &mv)
+void QuadCommand::init(int viewport, float depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, int quadCount, const kmMat4 &mv)
 {
-    _viewport = viewport;
-    _depth = depth;
+    RenderCommand::init(viewport, depth);
     _textureID = textureID;
     _blendType = blendType;
     _quadCount = quadCount;

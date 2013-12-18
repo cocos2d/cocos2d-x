@@ -20,7 +20,6 @@ protected:
     ~CustomCommand();
     
 public:
-    void init(int viewport, int32_t depth);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -38,9 +37,6 @@ public:
     function<void()> func;
 
 protected:
-    int _viewport;
-
-    int32_t _depth;
     
 public:
     friend class RenderCommandPool<CustomCommand>;

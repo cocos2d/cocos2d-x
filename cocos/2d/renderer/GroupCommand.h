@@ -38,7 +38,7 @@ protected:
     GroupCommand();
     ~GroupCommand();
 public:
-    void init(int viewport, int32_t depth);
+    void init(int viewport, float depth);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -52,8 +52,6 @@ public:
     virtual void releaseToCommandPool() override;
     
 protected:
-    int _viewport;
-    int32_t _depth;
     int _renderQueueID;
     
 public:
