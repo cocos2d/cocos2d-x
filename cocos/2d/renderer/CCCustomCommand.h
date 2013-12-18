@@ -22,30 +22,52 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
 
-#include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#ifndef _CC_CUSTOMCOMMAND_H_
+#define _CC_CUSTOMCOMMAND_H_
+
+#include "CCRenderCommand.h"
+#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-class NewSpriteBatchNode : public SpriteBatchNode
+class CustomCommand : public RenderCommand
 {
-    static const int DEFAULT_CAPACITY = 29;
+protected:
+    CustomCommand();
+    ~CustomCommand();
+    
 public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    void init(int viewport, int32_t depth);
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+    // +----------+----------+-----+-----------------------------------+
+    // |          |          |     |                |                  |
+    // | ViewPort | Transluc |     |      Depth     |                  |
+    // |   3 bits |    1 bit |     |    24 bits     |                  |
+    // +----------+----------+-----+----------------+------------------+
+    virtual int64_t generateID();
 
-    bool init();
+    void execute();
 
-    void draw(void);
+    inline bool isTranslucent() { return true; }
+    virtual void releaseToCommandPool() override;
+
+public:
+    std::function<void()> func;
+
+protected:
+    int _viewport;
+
+    int32_t _depth;
+    
+public:
+    friend class RenderCommandPool<CustomCommand>;
+    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
+protected:
+    static RenderCommandPool<CustomCommand> _commandPool;
+
 };
 
 NS_CC_END
 
-#endif //__CCNewSpriteBatchNode_H_
+#endif //_CC_CUSTOMCOMMAND_H_

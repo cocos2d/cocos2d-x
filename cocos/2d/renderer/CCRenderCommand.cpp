@@ -22,30 +22,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
 
-#include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#include "CCRenderCommand.h"
 
 NS_CC_BEGIN
 
-class NewSpriteBatchNode : public SpriteBatchNode
+RenderCommand::RenderCommand()
 {
-    static const int DEFAULT_CAPACITY = 29;
-public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    _id = 0;
+    _type = RenderCommand::Type::UNKNOWN_COMMAND;
+}
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+RenderCommand::~RenderCommand()
+{
+}
 
-    bool init();
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
 
-    void draw(void);
-};
+    for (i=size-1;i>=0;i--)
+    {
+        for (j=7;j>=0;j--)
+        {
+            byte = b[i] & (1<<j);
+            byte >>= j;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
+
+void RenderCommand::printID()
+{
+    printf("CommandID: ");
+    printBits(sizeof(_id), &_id);
+    printf("\n");
+}
 
 NS_CC_END
-
-#endif //__CCNewSpriteBatchNode_H_

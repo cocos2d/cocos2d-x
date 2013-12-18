@@ -42,8 +42,8 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -423,7 +423,7 @@ void ParticleBatchNode::draw(void)
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

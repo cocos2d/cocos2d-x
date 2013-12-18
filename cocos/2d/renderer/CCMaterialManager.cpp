@@ -22,30 +22,86 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNewSpriteBatchNode_H_
-#define __CCNewSpriteBatchNode_H_
 
-#include "CCPlatformMacros.h"
-#include "CCTexture2D.h"
-#include "CCSpriteBatchNode.h"
+#include "CCMaterialManager.h"
 
 NS_CC_BEGIN
 
-class NewSpriteBatchNode : public SpriteBatchNode
+using namespace std;
+
+static MaterialManager* s_instance = nullptr;
+
+MaterialManager *MaterialManager::getInstance()
 {
-    static const int DEFAULT_CAPACITY = 29;
-public:
-    static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    if(!s_instance)
+    {
+        s_instance = new MaterialManager();
+        if(!s_instance->init())
+        {
+            CC_SAFE_DELETE(s_instance);
+        }
+    }
+    return s_instance;
+}
 
-    NewSpriteBatchNode();
-    virtual ~NewSpriteBatchNode();
+void MaterialManager::destroyInstance()
+{
+    CC_SAFE_RELEASE_NULL(s_instance);
+}
 
-    bool init();
+void MaterialManager::getMaterialID(GLuint textureID, GLuint shaderID, BlendFunc blendFunc)
+{
 
-    void draw(void);
-};
+}
+
+void MaterialManager::registerTexture(GLuint textureID)
+{
+
+}
+
+void MaterialManager::unregisterTexture(GLuint textureID)
+{
+
+}
+
+void MaterialManager::registerShader(GLuint shaderID)
+{
+
+}
+
+void MaterialManager::unregisterShader(GLuint shaderID)
+{
+
+}
+
+MaterialManager::MaterialManager()
+{
+
+}
+
+MaterialManager::~MaterialManager()
+{
+
+}
+
+bool MaterialManager::init()
+{
+    return false;
+}
+
+int MaterialManager::getTextureID(GLuint textureID)
+{
+    return 0;
+}
+
+int MaterialManager::getShaderID(GLuint shaderID)
+{
+    return 0;
+}
+
+int MaterialManager::getBlendFuncID(GLint blendFunc)
+{
+    return 0;
+}
 
 NS_CC_END
-
-#endif //__CCNewSpriteBatchNode_H_
