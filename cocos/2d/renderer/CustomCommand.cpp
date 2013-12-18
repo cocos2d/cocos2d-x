@@ -14,7 +14,7 @@ CustomCommand::CustomCommand()
 , _depth(0)
 , func(nullptr)
 {
-    _type = CUSTOM_COMMAND;
+    _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
 void CustomCommand::init(int viewport, int32_t depth)

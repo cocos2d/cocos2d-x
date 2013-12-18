@@ -153,6 +153,12 @@ std::string ConsoleTCP::title()
     return "Console TCP";
 }
 
+std::string ConsoleTCP::subtitle()
+{
+    return "telnet localhost 5678";
+}
+
+
 //------------------------------------------------------------------
 //
 // ConsoleCustomCommand
@@ -189,4 +195,9 @@ void ConsoleCustomCommand::onEnter()
 std::string ConsoleCustomCommand::title()
 {
     return "Console Custom Commands";
+}
+
+std::string ConsoleCustomCommand::subtitle()
+{
+    return "telnet localhost 5678";
 }
