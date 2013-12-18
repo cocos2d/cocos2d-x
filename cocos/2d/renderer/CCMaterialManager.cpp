@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "MaterialManager.h"
+#include "CCMaterialManager.h"
 
 NS_CC_BEGIN
 

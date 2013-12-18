@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "NewClippingNode.h"
-#include "GroupCommand.h"
-#include "Renderer.h"
-#include "CustomCommand.h"
+#include "CCNewClippingNode.h"
+#include "CCGroupCommand.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
 #include "CCShaderCache.h"
 #include "CCDirector.h"
 

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CustomCommand.h"
+#include "CCCustomCommand.h"
 
 NS_CC_BEGIN
 RenderCommandPool<CustomCommand> CustomCommand::_commandPool;
