@@ -341,18 +341,18 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
         return false;
     }
     
-    doc->LinkEndChild(pDeclaration);
+    doc->LinkEndChild(declaration);
     tinyxml2::XMLElement *docType = doc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
     doc->LinkEndChild(docType);
     
     tinyxml2::XMLElement *rootEle = doc->NewElement("plist");
-    pRootEle->SetAttribute("version", "1.0");
+    rootEle->SetAttribute("version", "1.0");
     if (nullptr == rootEle)
     {
         delete doc;
         return false;
     }
-    pDoc->LinkEndChild(rootEle);
+    doc->LinkEndChild(rootEle);
     
     tinyxml2::XMLElement *innerDict = generateElementForDict(dict, doc);
     if (nullptr == innerDict )
@@ -360,9 +360,9 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
         delete doc;
         return false;
     }
-    pRootEle->LinkEndChild(innerDict);
+    rootEle->LinkEndChild(innerDict);
     
-    bool bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
+    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(fullPath.c_str());
     
     delete doc;
     return ret;
@@ -419,16 +419,16 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
  */
 static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XMLDocument *doc)
 {
-    tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
+    tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
     
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
-        tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
+        tinyxml2::XMLElement* tmpNode = doc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
         tinyxml2::XMLText* content = doc->NewText(iter->first.c_str());
         tmpNode->LinkEndChild(content);
         
-        tinyxml2::XMLElement *element = generateElementForObject(iter->second, pDoc);
+        tinyxml2::XMLElement *element = generateElementForObject(iter->second, doc);
         if (element)
             rootNode->LinkEndChild(element);
     }
