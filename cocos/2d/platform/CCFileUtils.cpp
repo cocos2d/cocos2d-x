@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "CCData.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
@@ -490,6 +491,69 @@ bool FileUtils::init()
 void FileUtils::purgeCachedEntries()
 {
     _fullPathCache.clear();
+}
+
+static Data getData(const std::string& filename, bool forString)
+{
+    CCASSERT(!filename.empty(), "Invalid filename!");
+    
+    Data ret;
+    unsigned char* buffer = nullptr;
+    ssize_t size = 0;
+    const char* mode = nullptr;
+    if (forString)
+        mode = "rt";
+    else
+        mode = "rb";
+    
+    do
+    {
+        // Read the file from hardware
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+        FILE *fp = fopen(fullPath.c_str(), mode);
+        CC_BREAK_IF(!fp);
+        fseek(fp,0,SEEK_END);
+        size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        
+        if (forString)
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
+            buffer[size] = '\0';
+        }
+        else
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+        }
+        
+        size = fread(buffer, sizeof(unsigned char), size, fp);
+        fclose(fp);
+    } while (0);
+    
+    if (nullptr == buffer || 0 == size)
+    {
+        std::string msg = "Get data from file(";
+        msg.append(filename).append(") failed!");
+        CCLOG("%s", msg.c_str());
+    }
+    else
+    {
+        ret.fastSet(buffer, size);
+    }
+    
+    return ret;
+}
+
+std::string FileUtils::getStringFromFile(const std::string& filename)
+{
+    Data data = getData(filename, true);
+    std::string ret((const char*)data.getBytes());
+    return ret;
+}
+
+Data FileUtils::getDataFromFile(const std::string& filename)
+{
+    return getData(filename, false);
 }
 
 unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ssize_t *size)

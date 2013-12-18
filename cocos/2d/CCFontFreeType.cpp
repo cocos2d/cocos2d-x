@@ -102,7 +102,14 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     FT_Face face;
 
     ssize_t len = 0;
-    _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", &len);
+    Data data = FileUtils::getInstance()->getDataFromFile(fontName);
+    _ttfData = data.getBytes();
+    len = data.getSize();
+    
+    // The data needs to be saved in this class,
+    // to prevent the buffer is freed in the destructor of Data, we should reset the buffer pointer by Data::fastSet.
+    data.fastSet(nullptr, 0);
+    
     if (!_ttfData)
         return false;
 
