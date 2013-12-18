@@ -24,9 +24,9 @@
 
 
 #include "CCNewRenderTexture.h"
-#include "CustomCommand.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 

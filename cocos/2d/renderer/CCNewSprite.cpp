@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 #include "CCNewSprite.h"
-#include "Renderer.h"
-#include "Frustum.h"
+#include "CCRenderer.h"
+#include "CCFrustum.h"
 #include "CCDirector.h"
-#include "QuadCommand.h"
+#include "CCQuadCommand.h"
 
 NS_CC_BEGIN
 

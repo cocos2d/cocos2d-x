@@ -61,8 +61,8 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
 #include "CCFontFreeType.h"
-#include "Renderer.h"
-#include "renderer/Frustum.h"
+#include "CCRenderer.h"
+#include "renderer/CCFrustum.h"
 /**
  Position of the FPS
  

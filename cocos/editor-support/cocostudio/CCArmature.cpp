@@ -28,9 +28,9 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
