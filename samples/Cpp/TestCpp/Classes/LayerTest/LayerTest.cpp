@@ -68,7 +68,7 @@ LayerTest::~LayerTest(void)
 {
 }
 
-string LayerTest::subtitle()
+std::string LayerTest::subtitle()
 {
     return "";
 }
@@ -626,7 +626,7 @@ std::string LayerGradientTest::title()
     return "LayerGradientTest";
 }
 
-string LayerGradientTest::subtitle()
+std::string LayerGradientTest::subtitle()
 {
     return "Touch the screen and move your finger";
 }
@@ -649,7 +649,7 @@ std::string LayerGradientTest2::title()
     return "LayerGradientTest 2";
 }
 
-string LayerGradientTest2::subtitle()
+std::string LayerGradientTest2::subtitle()
 {
     return "You should see a gradient";
 }
@@ -671,7 +671,7 @@ std::string LayerGradientTest3::title()
     return "LayerGradientTest 3";
 }
 
-string LayerGradientTest3::subtitle()
+std::string LayerGradientTest3::subtitle()
 {
     return "You should see a gradient";
 }
@@ -858,12 +858,12 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     addChild(layer3);
 }
 
-string LayerExtendedBlendOpacityTest::title()
+std::string LayerExtendedBlendOpacityTest::title()
 {
     return "Extended Blend & Opacity";
 }
 
-string LayerExtendedBlendOpacityTest::subtitle()
+std::string LayerExtendedBlendOpacityTest::subtitle()
 {
     return "You should see 3 layers";
 }

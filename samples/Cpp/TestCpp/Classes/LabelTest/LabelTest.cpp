@@ -1046,12 +1046,12 @@ const char* LabelTTFTest::getCurrentAlignment()
     return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
 }
 
-string LabelTTFTest::title()
+std::string LabelTTFTest::title()
 {
     return "Testing LabelTTF";
 }
 
-string LabelTTFTest::subtitle()
+std::string LabelTTFTest::subtitle()
 {
     return "Select the buttons on the sides to change alignment";
 }
@@ -1072,12 +1072,12 @@ LabelTTFMultiline::LabelTTFMultiline()
     addChild(center);
 }
 
-string LabelTTFMultiline::title()
+std::string LabelTTFMultiline::title()
 {
     return "Testing LabelTTF Word Wrap";
 }
 
-string LabelTTFMultiline::subtitle()
+std::string LabelTTFMultiline::subtitle()
 {
     return "Word wrap using LabelTTF and a custom TTF font";
 }
@@ -1090,7 +1090,7 @@ LabelTTFChinese::LabelTTFChinese()
     this->addChild(label);
 }
 
-string LabelTTFChinese::title()
+std::string LabelTTFChinese::title()
 {
     return "Testing LabelTTF with Chinese character";
 }
@@ -1103,7 +1103,7 @@ LabelBMFontChinese::LabelBMFontChinese()
     this->addChild(label);
 }
 
-string LabelBMFontChinese::title()
+std::string LabelBMFontChinese::title()
 {
     return "Testing LabelBMFont with Chinese character";
 }
@@ -1583,12 +1583,12 @@ LabelBMFontBounds::LabelBMFontBounds()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-string LabelBMFontBounds::title()
+std::string LabelBMFontBounds::title()
 {
     return "Testing LabelBMFont Bounds";
 }
 
-string LabelBMFontBounds::subtitle()
+std::string LabelBMFontBounds::subtitle()
 {
     return "You should see string enclosed by a box";
 }

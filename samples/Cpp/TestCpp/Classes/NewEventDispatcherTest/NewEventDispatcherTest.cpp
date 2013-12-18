@@ -104,12 +104,12 @@ void EventDispatcherTestDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-string EventDispatcherTestDemo::title()
+std::string EventDispatcherTestDemo::title()
 {
     return "No title";
 }
 
-string EventDispatcherTestDemo::subtitle()
+std::string EventDispatcherTestDemo::subtitle()
 {
     return "";
 }

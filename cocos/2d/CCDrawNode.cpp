@@ -26,6 +26,9 @@
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
+#include "CCCustomCommand.h"
+#include "CCDirector.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -238,9 +241,17 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(DrawNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void DrawNode::onDraw()
+{
     CC_NODE_DRAW_SETUP();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
+    
     render();
 }
 
