@@ -253,19 +253,23 @@ CCFrameData::CCFrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , easingParamNumber(0)
+    , easingParams(NULL)
     , isTween(true)
     , displayIndex(0)
-    , blendType(BLEND_NORMAL)
 
     , strEvent("")
     , strMovement("")
     , strSound("")
     , strSoundEffect("")
 {
+    blendFunc.src = CC_BLEND_SRC;
+    blendFunc.dst = CC_BLEND_DST;
 }
 
 CCFrameData::~CCFrameData(void)
 {
+    CC_SAFE_DELETE_ARRAY(easingParams);
 }
 
 void CCFrameData::copy(const CCBaseData *node)
@@ -276,8 +280,21 @@ void CCFrameData::copy(const CCBaseData *node)
 	{
 		duration = frameData->duration;
 		displayIndex = frameData->displayIndex;
-		tweenEasing = frameData->tweenEasing;
-		blendType = frameData->blendType;
+		
+        tweenEasing = frameData->tweenEasing;
+        easingParamNumber = frameData->easingParamNumber;
+
+        CC_SAFE_DELETE_ARRAY(easingParams);
+        if (easingParamNumber != 0)
+        {
+            easingParams = new float[easingParamNumber];
+            for (int i = 0; i<easingParamNumber; i++)
+            {
+                easingParams[i] = frameData->easingParams[i];
+            }
+        }
+		
+        blendFunc = frameData->blendFunc;
 		isTween = frameData->isTween;
 	}
 }

@@ -42,8 +42,6 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
     virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
-    virtual void setColliderFilter(CCColliderFilter *filter);
-
     virtual CCArmatureData* getArmatureData(void) const;
     virtual void setArmatureData(CCArmatureData* var);
 
