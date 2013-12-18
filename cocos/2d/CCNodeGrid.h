@@ -2,6 +2,7 @@
 #define __MISCNODE_CCGRID_NODE_H__
 
 #include "CCNode.h"
+#include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
 
@@ -33,7 +34,11 @@ protected:
     NodeGrid();
     virtual ~NodeGrid();
 
+    void onGridBeginDraw();
+    void onGridEndDraw();
+
 protected:
+    kmMat4 _cachedMVmat;
     Node* _gridTarget;
     GridBase* _nodeGrid;
 };

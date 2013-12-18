@@ -2,7 +2,10 @@
 #include "CCNodeGrid.h"
 #include "CCGrid.h"
 
-#include "kazmath/GL/matrix.h"
+#include "GroupCommand.h"
+#include "Renderer.h"
+#include "CustomCommand.h"
+
 
 NS_CC_BEGIN
 
@@ -46,6 +49,22 @@ bool NodeGrid::init()
     return Node::init();
 }
 
+void NodeGrid::onGridBeginDraw()
+{
+    if (_nodeGrid && _nodeGrid->isActive())
+    {
+        _nodeGrid->beforeDraw();
+    }
+}
+
+void NodeGrid::onGridEndDraw()
+{
+    if(_nodeGrid && _nodeGrid->isActive())
+    {
+        _nodeGrid->afterDraw(this);
+    }
+}
+
 void NodeGrid::visit()
 {
     // quick return if not visible. children won't be drawn.
@@ -54,20 +73,32 @@ void NodeGrid::visit()
         return;
     }
     
+    Renderer* renderer = Renderer::getInstance();
+
+    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
+    groupCommand->init(0,_vertexZ);
+    renderer->addCommand(groupCommand);
+    
+    renderer->pushGroup(groupCommand->getRenderQueueID());
+
     kmGLPushMatrix();
 
-     if (_nodeGrid && _nodeGrid->isActive())
-     {
-         _nodeGrid->beforeDraw();
-     }
 
     this->transform();
+    
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_cachedMVmat);
+    
+    CustomCommand* gridBeginCmd = CustomCommand::getCommandPool().generateCommand();
+    gridBeginCmd->init(0,_vertexZ);
+    gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
+    renderer->addCommand(gridBeginCmd);
+
 
     if(_gridTarget)
     {
         _gridTarget->visit();
     }
-
+    
     int i = 0;
 
     if(!_children.empty())
@@ -83,7 +114,7 @@ void NodeGrid::visit()
             else
                 break;
         }
-        // self draw
+        // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
         this->draw();
 
         // Uses std::for_each to improve performance.
@@ -95,14 +126,16 @@ void NodeGrid::visit()
     {
         this->draw();
     }
-
+    
     // reset for next frame
     _orderOfArrival = 0;
 
-     if (_nodeGrid && _nodeGrid->isActive())
-     {
-         _nodeGrid->afterDraw(this);
-    }
+    CustomCommand* gridEndCmd = CustomCommand::getCommandPool().generateCommand();
+    gridEndCmd->init(0,_vertexZ);
+    gridEndCmd->func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
+    renderer->addCommand(gridEndCmd);
+
+    renderer->popGroup();
  
     kmGLPopMatrix();
 }
