@@ -20,7 +20,7 @@ public:
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
-    virtual std::string title();
+    virtual std::string title() const override;
 
     CREATE_FUNC(FontTest);
 };

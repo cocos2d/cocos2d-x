@@ -69,8 +69,6 @@ static std::function<Layer*()> createFunctions[] =
 {
 	CL(Sprite1),
 	CL(SpriteBatchNode1),
-	CL(SpriteFrameTest),
-	CL(SpriteFrameAliasNameTest),
 	CL(SpriteAnchorPoint),
 	CL(SpriteBatchNodeAnchorPoint),
 	CL(SpriteOffsetAnchorRotation),
@@ -78,20 +76,38 @@ static std::function<Layer*()> createFunctions[] =
 	CL(SpriteOffsetAnchorScale),
 	CL(SpriteBatchNodeOffsetAnchorScale),
 	CL(SpriteOffsetAnchorSkew),
-	CL(SpriteOffsetAnchorRotationalSkew),
 	CL(SpriteBatchNodeOffsetAnchorSkew),
+	CL(SpriteOffsetAnchorRotationalSkew),
 	CL(SpriteBatchNodeOffsetAnchorRotationalSkew),
 	CL(SpriteOffsetAnchorSkewScale),
-	CL(SpriteOffsetAnchorRotationalSkewScale),
 	CL(SpriteBatchNodeOffsetAnchorSkewScale),
+	CL(SpriteOffsetAnchorRotationalSkewScale),
 	CL(SpriteBatchNodeOffsetAnchorRotationalSkewScale),
+	CL(SpriteSkewNegativeScaleChildren),
+	CL(SpriteBatchNodeSkewNegativeScaleChildren),
+	CL(SpriteRotationalSkewNegativeScaleChildren),
+	CL(SpriteBatchNodeRotationalSkewNegativeScaleChildren),
 	CL(SpriteOffsetAnchorFlip),
 	CL(SpriteBatchNodeOffsetAnchorFlip),
-	CL(SpriteAnimationSplit),
+	CL(SpriteChildrenChildren),
+	CL(SpriteBatchNodeChildrenChildren),
+	CL(SpriteChildrenAnchorPoint),
+	CL(SpriteBatchNodeChildrenAnchorPoint),
 	CL(SpriteColorOpacity),
 	CL(SpriteBatchNodeColorOpacity),
 	CL(SpriteZOrder),
 	CL(SpriteBatchNodeZOrder),
+	CL(SpriteZVertex),
+	CL(SpriteBatchNodeZVertex),
+	CL(SpriteAliased),
+	CL(SpriteBatchNodeAliased),
+	CL(SpriteNewTexture),
+	CL(SpriteBatchNodeNewTexture),
+	CL(SpriteFlip),
+	CL(SpriteBatchNodeFlip),
+	CL(SpriteAnimationSplit),
+	CL(SpriteFrameTest),
+	CL(SpriteFrameAliasNameTest),
 	CL(SpriteBatchNodeReorder),
 	CL(SpriteBatchNodeReorderIssue744),
 	CL(SpriteBatchNodeReorderIssue766),
@@ -99,29 +115,13 @@ static std::function<Layer*()> createFunctions[] =
 	CL(SpriteBatchNodeReorderSameIndex),
 	CL(SpriteBatchNodeReorderOneChild),
 	CL(NodeSort),
-	CL(SpriteZVertex),
-	CL(SpriteBatchNodeZVertex),
 	CL(Sprite6),
-	CL(SpriteFlip),
-	CL(SpriteBatchNodeFlip),
-	CL(SpriteAliased),
-	CL(SpriteBatchNodeAliased),
-	CL(SpriteNewTexture),
-	CL(SpriteBatchNodeNewTexture),
 	CL(SpriteHybrid),
 	CL(SpriteBatchNodeChildren),
 	CL(SpriteBatchNodeChildrenZ),
 	CL(SpriteChildrenVisibility),
 	CL(SpriteChildrenVisibilityIssue665),
-	CL(SpriteChildrenAnchorPoint),
-	CL(SpriteBatchNodeChildrenAnchorPoint),
 	CL(SpriteBatchNodeChildrenScale),
-	CL(SpriteChildrenChildren),
-	CL(SpriteBatchNodeChildrenChildren),
-	CL(SpriteSkewNegativeScaleChildren),
-	CL(SpriteRotationalSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeRotationalSkewNegativeScaleChildren),
 	CL(SpriteNilTexture),
 	CL(SpriteSubclass),
 	CL(SpriteDoubleResolution),
@@ -173,12 +173,12 @@ SpriteTestDemo::~SpriteTestDemo(void)
 {
 }
 
-std::string SpriteTestDemo::title()
+std::string SpriteTestDemo::title() const
 {
     return "No title";
 }
 
-std::string SpriteTestDemo::subtitle()
+std::string SpriteTestDemo::subtitle() const
 {
     return "";
 }
@@ -271,9 +271,14 @@ void Sprite1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
     }
 }
 
-std::string Sprite1::title()
+std::string Sprite1::title() const
 {
-    return "Sprite (tap screen)";
+    return "Testing Sprite";
+}
+
+std::string Sprite1::subtitle() const
+{
+    return "Tap screen to add more sprites";
 }
 
 //------------------------------------------------------------------
@@ -340,9 +345,14 @@ void SpriteBatchNode1::onTouchesEnded(const std::vector<Touch*>& touches, Event*
 
 }
 
-std::string SpriteBatchNode1::title()
+std::string SpriteBatchNode1::title() const
 {
-    return "SpriteBatchNode (tap screen)";
+    return "Testing SpriteBatchNode";
+}
+
+std::string SpriteBatchNode1::subtitle() const
+{
+    return "Tap screen to add more sprites";
 }
 
 
@@ -421,9 +431,14 @@ void SpriteColorOpacity::removeAndAddSprite(float dt)
     sprite->release();
 }
 
-std::string SpriteColorOpacity::title()
+std::string SpriteColorOpacity::title() const
 {
-    return "Sprite: Color & Opacity";
+    return "Testing Sprite";
+}
+
+std::string SpriteColorOpacity::subtitle() const
+{
+    return "Color & Opacity";
 }
 
 //------------------------------------------------------------------
@@ -511,10 +526,16 @@ void SpriteBatchNodeColorOpacity::removeAndAddSprite(float dt)
     sprite->release();
 }
 
-std::string SpriteBatchNodeColorOpacity::title()
+std::string SpriteBatchNodeColorOpacity::title() const
 {
-    return "SpriteBatchNode: Color & Opacity";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeColorOpacity::subtitle() const
+{
+    return "Color & Opacity";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -569,9 +590,14 @@ void SpriteZOrder::reorderSprite(float dt)
     
 }
 
-std::string SpriteZOrder::title()
+std::string SpriteZOrder::title() const
 {
-    return "Sprite: Z order";
+    return "Testing Sprite";
+}
+
+std::string SpriteZOrder::subtitle() const
+{
+    return "Z order";
 }
 
 //------------------------------------------------------------------
@@ -632,10 +658,16 @@ void SpriteBatchNodeZOrder::reorderSprite(float dt)
     batch->reorderChild(sprite, z);
 }
 
-std::string SpriteBatchNodeZOrder::title()
+std::string SpriteBatchNodeZOrder::title() const
 {
-    return "SpriteBatchNode: Z order";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeZOrder::subtitle() const
+{
+    return "Z order";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -686,14 +718,14 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     });
 }
 
-std::string SpriteBatchNodeReorder::title()
+std::string SpriteBatchNodeReorder::title() const
 {
-    return "SpriteBatchNode: reorder #1";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeReorder::subtitle()
+std::string SpriteBatchNodeReorder::subtitle() const
 {
-    return "Should not crash";
+    return "reorder #1. Should not crash";
 }
 
 //------------------------------------------------------------------
@@ -718,14 +750,14 @@ SpriteBatchNodeReorderIssue744::SpriteBatchNodeReorderIssue744()
     batch->reorderChild(sprite, 1);
 }
 
-std::string SpriteBatchNodeReorderIssue744::title()
+std::string SpriteBatchNodeReorderIssue744::title() const
 {
-    return "SpriteBatchNode: reorder issue #744";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeReorderIssue744::subtitle()
+std::string SpriteBatchNodeReorderIssue744::subtitle() const
 {
-    return "Should not crash";
+    return "reorder issue #744. Should not crash";
 }
 
 //------------------------------------------------------------------
@@ -775,14 +807,14 @@ SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
     schedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite), 2);
 }
 
-std::string SpriteBatchNodeReorderIssue766::title()
+std::string SpriteBatchNodeReorderIssue766::title() const
 {
-    return "SpriteBatchNode: reorder issue #766";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeReorderIssue766::subtitle()
+std::string SpriteBatchNodeReorderIssue766::subtitle() const
 {
-    return "In 2 seconds 1 sprite will be reordered";
+    return "reorder issue #766. In 2 seconds 1 sprite will be reordered";
 }
 
 //------------------------------------------------------------------
@@ -851,14 +883,14 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     schedule(schedule_selector(SpriteBatchNodeReorderIssue767::reorderSprites), 1);
 }
 
-std::string SpriteBatchNodeReorderIssue767::title()
+std::string SpriteBatchNodeReorderIssue767::title() const
 {
-    return "SpriteBatchNode: reorder issue #767";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeReorderIssue767::subtitle()
+std::string SpriteBatchNodeReorderIssue767::subtitle() const
 {
-    return "Should not crash";
+    return "reorder issue #767. Should not crash";
 }
 
 void SpriteBatchNodeReorderIssue767::reorderSprites(float dt)
@@ -957,9 +989,14 @@ SpriteZVertex::SpriteZVertex()
     node->runAction( OrbitCamera::create(10, 1, 0, 0, 360, 0, 0) );
 }
 
-std::string SpriteZVertex::title()
+std::string SpriteZVertex::title() const
 {
-    return "Sprite: openGL Z vertex";
+    return "Testing Sprite";
+}
+
+std::string SpriteZVertex::subtitle() const
+{
+    return "openGL Z vertex";
 }
 
 //------------------------------------------------------------------
@@ -1038,11 +1075,15 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->runAction(OrbitCamera::create(10, 1, 0, 0, 360, 0, 0) );
 }
 
-std::string SpriteBatchNodeZVertex::title()
+std::string SpriteBatchNodeZVertex::title() const
 {
-    return "SpriteBatchNode: openGL Z vertex";
+    return "Testing SpriteBatchNode";
 }
 
+std::string SpriteBatchNodeZVertex::subtitle() const
+{
+    return "openGL Z vertex";
+}
 
 //------------------------------------------------------------------
 //
@@ -1088,9 +1129,14 @@ SpriteAnchorPoint::SpriteAnchorPoint()
     }        
 }
 
-std::string SpriteAnchorPoint::title()
+std::string SpriteAnchorPoint::title() const
 {
-    return "Sprite: anchor point";
+    return "Testing Sprite";
+}
+
+std::string SpriteAnchorPoint::subtitle() const
+{
+    return "anchor point";
 }
 
 //------------------------------------------------------------------
@@ -1140,10 +1186,16 @@ SpriteBatchNodeAnchorPoint::SpriteBatchNodeAnchorPoint()
     }
 }
 
-std::string SpriteBatchNodeAnchorPoint::title()
+std::string SpriteBatchNodeAnchorPoint::title() const
 {
-    return "SpriteBatchNode: anchor point";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeAnchorPoint::subtitle() const
+{
+    return "anchor point";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1194,7 +1246,7 @@ Sprite6::Sprite6()
     batch->runAction(rotate_forever);
 }
 
-std::string Sprite6::title()
+std::string Sprite6::title() const
 {
     return "SpriteBatchNode transformation";
 }
@@ -1233,10 +1285,16 @@ void SpriteFlip::flipSprites(float dt)
     CCLOG("Post: %f", sprite1->getContentSize().height);
 }
 
-std::string SpriteFlip::title()
+std::string SpriteFlip::title() const
 {
-    return "Sprite Flip X & Y";
+    return "Testing Sprite";
 }
+
+std::string SpriteFlip::subtitle() const
+{
+    return "Flip X & Y";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1276,10 +1334,16 @@ void SpriteBatchNodeFlip::flipSprites(float dt)
     CCLOG("Post: %f", sprite1->getContentSize().height);
 }
 
-std::string SpriteBatchNodeFlip::title()
+std::string SpriteBatchNodeFlip::title() const
 {
-    return "SpriteBatchNode Flip X & Y";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeFlip::subtitle() const
+{
+    return "Flip X & Y";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1332,10 +1396,16 @@ void SpriteAliased::onExit()
     SpriteTestDemo::onExit();
 }
 
-std::string SpriteAliased::title()
+std::string SpriteAliased::title() const
 {
-    return "Sprite Aliased";
+    return "Testing Sprite";
 }
+
+std::string SpriteAliased::subtitle() const
+{
+    return "AliasTexParameters()";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1384,10 +1454,16 @@ void SpriteBatchNodeAliased::onExit()
     SpriteTestDemo::onExit();
 }
 
-std::string SpriteBatchNodeAliased::title()
+std::string SpriteBatchNodeAliased::title() const
 {
-    return "SpriteBatchNode Aliased";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeAliased::subtitle() const
+{
+    return "AliasTexParameters()";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1486,10 +1562,16 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
     }
 }
 
-std::string SpriteNewTexture::title()
+std::string SpriteNewTexture::title() const
 {
-    return "Sprite New texture (tap)";
+    return "Testing Sprite";
 }
+
+std::string SpriteNewTexture::subtitle() const
+{
+    return "setTexture() (tap / touch the screen)";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -1567,9 +1649,14 @@ void SpriteBatchNodeNewTexture::onTouchesEnded(const std::vector<Touch*>& touche
         batch->setTexture(_texture1);    
 }
 
-std::string SpriteBatchNodeNewTexture::title()
+std::string SpriteBatchNodeNewTexture::title() const
 {
-    return "SpriteBatchNode new texture (tap)";
+    return "Testing SpriteBatchNode";
+}
+
+std::string SpriteBatchNodeNewTexture::subtitle() const
+{
+    return "setTexture() (tap / touch the screen)";
 }
 
 
@@ -1667,14 +1754,14 @@ void SpriteFrameTest::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini_blue.plist");
 }
 
-std::string SpriteFrameTest::title()
+std::string SpriteFrameTest::title() const
 {
-    return "Sprite vs. SpriteBatchNode animation";
+    return "Sprite vs. SpriteBatchNode";
 }
 
-std::string SpriteFrameTest::subtitle()
+std::string SpriteFrameTest::subtitle() const
 {
-    return "Testing issue #792";
+    return "Animation. Testing issue #792";
 }
 
 void SpriteFrameTest::startIn05Secs(float dt)
@@ -1779,12 +1866,12 @@ void SpriteFrameAliasNameTest::onExit()
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("animations/grossini-aliases.plist");
 }
 
-std::string SpriteFrameAliasNameTest::title()
+std::string SpriteFrameAliasNameTest::title() const
 {
     return "SpriteFrame Alias Name";
 }
 
-std::string SpriteFrameAliasNameTest::subtitle()
+std::string SpriteFrameAliasNameTest::subtitle() const
 {
     return "SpriteFrames are obtained using the alias name";
 }
@@ -1856,9 +1943,14 @@ void SpriteOffsetAnchorRotation::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorRotation::title()
+std::string SpriteOffsetAnchorRotation::title() const
 {
-    return "Sprite offset + anchor + rot";
+    return "Testing Sprite";
+}
+
+std::string SpriteOffsetAnchorRotation::subtitle() const
+{
+    return "offset + anchor + rotation";
 }
 
 //------------------------------------------------------------------
@@ -1932,11 +2024,15 @@ void SpriteBatchNodeOffsetAnchorRotation::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorRotation::title()
+std::string SpriteBatchNodeOffsetAnchorRotation::title() const
 {
-    return "SpriteBatchNode offset + anchor + rot";
+    return "Testing SpriteBatchNode";
 }
 
+std::string SpriteBatchNodeOffsetAnchorRotation::subtitle() const
+{
+    return "offset + anchor + rotation";
+}
 
 //------------------------------------------------------------------
 //
@@ -2010,9 +2106,14 @@ void SpriteOffsetAnchorScale::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorScale::title()
+std::string SpriteOffsetAnchorScale::title() const
 {
-    return "Sprite offset + anchor + scale";
+    return "Testing Sprite";
+}
+
+std::string SpriteOffsetAnchorScale::subtitle() const
+{
+    return "offset + anchor + scale";
 }
 
 //------------------------------------------------------------------
@@ -2087,10 +2188,16 @@ void SpriteBatchNodeOffsetAnchorScale::onExit()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorScale::title()
+std::string SpriteBatchNodeOffsetAnchorScale::title() const
 {
-    return "SpriteBatchNode offset + anchor + scale";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeOffsetAnchorScale::subtitle() const
+{
+    return "offset + anchor + scale";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -2145,7 +2252,7 @@ void SpriteAnimationSplit::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteAnimationSplit::title()
+std::string SpriteAnimationSplit::title() const
 {
     return "Sprite: Animation + flip";
 }
@@ -2236,9 +2343,9 @@ void SpriteHybrid::onExit()
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("animations/grossini.plist");
 }
 
-std::string SpriteHybrid::title()
+std::string SpriteHybrid::title() const
 {
-    return "HybrSprite* sprite Test";
+    return "HybridSprite* sprite Test";
 }
 
 //------------------------------------------------------------------
@@ -2306,7 +2413,7 @@ void SpriteBatchNodeChildren::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteBatchNodeChildren::title()
+std::string SpriteBatchNodeChildren::title() const
 {
     return "SpriteBatchNode Grand Children";
 }
@@ -2402,7 +2509,7 @@ void SpriteBatchNodeChildrenZ::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteBatchNodeChildrenZ::title()
+std::string SpriteBatchNodeChildrenZ::title() const
 {
     return "SpriteBatchNode Children Z";
 }
@@ -2475,7 +2582,7 @@ void SpriteChildrenVisibility::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteChildrenVisibility::title()
+std::string SpriteChildrenVisibility::title() const
 {
     return "Sprite & SpriteBatchNode Visibility";
 }
@@ -2546,12 +2653,12 @@ SpriteChildrenVisibilityIssue665::~SpriteChildrenVisibilityIssue665()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteChildrenVisibilityIssue665::title()
+std::string SpriteChildrenVisibilityIssue665::title() const
 {
     return "Sprite & SpriteBatchNode Visibility";
 }
 
-std::string SpriteChildrenVisibilityIssue665::subtitle()
+std::string SpriteChildrenVisibilityIssue665::subtitle() const
 {
     return "No sprites should be visible";
 }
@@ -2664,9 +2771,14 @@ void SpriteChildrenAnchorPoint::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteChildrenAnchorPoint::title()
+std::string SpriteChildrenAnchorPoint::title() const
 {
-    return "Sprite: children + anchor";
+    return "Testing Sprite";
+}
+
+std::string SpriteChildrenAnchorPoint::subtitle() const
+{
+    return "children + anchor point";
 }
 
 //------------------------------------------------------------------
@@ -2774,10 +2886,16 @@ void SpriteBatchNodeChildrenAnchorPoint::onExit()
     SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 }
 
-std::string SpriteBatchNodeChildrenAnchorPoint::title()
+std::string SpriteBatchNodeChildrenAnchorPoint::title() const
 {
-    return "SpriteBatchNode: children + anchor";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeChildrenAnchorPoint::subtitle() const
+{
+    return "children + anchor point";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -2875,9 +2993,14 @@ SpriteBatchNodeChildrenScale::SpriteBatchNodeChildrenScale()
     
 }
 
-std::string SpriteBatchNodeChildrenScale::title()
+std::string SpriteBatchNodeChildrenScale::title() const
 {
-    return "Sprite/BatchNode + child + scale + rot";
+    return "Testing Sprite / SpriteBatchNode";
+}
+
+std::string SpriteBatchNodeChildrenScale::subtitle() const
+{
+    return "child + scale + rot";
 }
 
 //------------------------------------------------------------------
@@ -2956,9 +3079,14 @@ SpriteChildrenChildren::SpriteChildrenChildren()
     l2b->addChild(l3b2);
 }
 
-std::string SpriteChildrenChildren::title()
+std::string SpriteChildrenChildren::title() const
 {
-    return "Sprite multiple levels of children";
+    return "Testing Sprite";
+}
+
+std::string SpriteChildrenChildren::subtitle() const
+{
+    return "multiple levels of children";
 }
 
 
@@ -3041,9 +3169,14 @@ SpriteBatchNodeChildrenChildren::SpriteBatchNodeChildrenChildren()
     
 }
 
-std::string SpriteBatchNodeChildrenChildren::title()
+std::string SpriteBatchNodeChildrenChildren::title() const
 {
-    return "SpriteBatchNode multiple levels of children";
+    return "Testing SpriteBatchNode";
+}
+
+std::string SpriteBatchNodeChildrenChildren::subtitle() const
+{
+    return "multiple levels of children";
 }
 
 //------------------------------------------------------------------
@@ -3099,14 +3232,14 @@ SpriteBatchNodeSkewNegativeScaleChildren::~SpriteBatchNodeSkewNegativeScaleChild
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeSkewNegativeScaleChildren::title()
+std::string SpriteBatchNodeSkewNegativeScaleChildren::title() const
 {
-    return "SpriteBatchNode + children + skew";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeSkewNegativeScaleChildren::subtitle()
+std::string SpriteBatchNodeSkewNegativeScaleChildren::subtitle() const
 {
-    return "SpriteBatchNode skew + negative scale with children";
+    return "skew + negative scale with children";
 }
 
 // SpriteSkewNegativeScaleChildren
@@ -3158,14 +3291,14 @@ SpriteSkewNegativeScaleChildren::~SpriteSkewNegativeScaleChildren()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteSkewNegativeScaleChildren::title()
+std::string SpriteSkewNegativeScaleChildren::title() const
 {
-    return "Sprite + children + skew";
+    return "Testing Sprite";
 }
 
-std::string SpriteSkewNegativeScaleChildren::subtitle()
+std::string SpriteSkewNegativeScaleChildren::subtitle() const
 {
-    return "Sprite skew + negative scale with children";
+    return "skew + negative scale with children";
 }
 
 //------------------------------------------------------------------
@@ -3197,12 +3330,12 @@ SpriteNilTexture::SpriteNilTexture()
     addChild(sprite, 100);
 }
 
-std::string SpriteNilTexture::title()
+std::string SpriteNilTexture::title() const
 {
     return "Sprite without texture";
 }
 
-std::string SpriteNilTexture::subtitle()
+std::string SpriteNilTexture::subtitle() const
 {
     return "opacity and color should work";
 }
@@ -3263,12 +3396,12 @@ SpriteSubclass::SpriteSubclass()
     sprite2->setPosition(Point(s.width/4*3, s.height/2));
 }
 
-std::string SpriteSubclass::title()
+std::string SpriteSubclass::title() const
 {
     return "Sprite subclass";
 }
 
-std::string SpriteSubclass::subtitle()
+std::string SpriteSubclass::subtitle() const
 {
     return "Testing initWithTexture:rect method";
 }
@@ -3387,12 +3520,12 @@ SpriteDoubleResolution::SpriteDoubleResolution()
 
 }
 
-std::string SpriteDoubleResolution::title()
+std::string SpriteDoubleResolution::title() const
 {
     return "Sprite Double resolution";
 }
 
-std::string SpriteDoubleResolution::subtitle()
+std::string SpriteDoubleResolution::subtitle() const
 {
     return "Retina Display. SD (left) should be equal to HD (right)";
 }
@@ -3489,12 +3622,12 @@ AnimationCacheTest::AnimationCacheTest()
     grossini->runAction(seq);
 }
 
-std::string AnimationCacheTest::title()
+std::string AnimationCacheTest::title() const
 {
     return "AnimationCache";
 }
 
-std::string AnimationCacheTest::subtitle()
+std::string AnimationCacheTest::subtitle() const
 {
     return "Sprite should be animated";
 }
@@ -3549,12 +3682,12 @@ AnimationCacheFile::AnimationCacheFile()
     grossini->runAction(seq);
 }
 
-std::string AnimationCacheFile::title()
+std::string AnimationCacheFile::title() const
 {
     return "AnimationCache - Load file";
 }
 
-std::string AnimationCacheFile::subtitle()
+std::string AnimationCacheFile::subtitle() const
 {
     return "Sprite should be animated";
 }
@@ -3587,12 +3720,12 @@ SpriteBatchBug1217::SpriteBatchBug1217()
     addChild(bn);
 }
 
-std::string SpriteBatchBug1217::title()
+std::string SpriteBatchBug1217::title() const
 {
     return "SpriteBatch - Bug 1217";
 }
 
-std::string SpriteBatchBug1217::subtitle()
+std::string SpriteBatchBug1217::subtitle() const
 {
     return "Adding big family to spritebatch. You shall see 3 heads";
 }
@@ -3676,9 +3809,14 @@ SpriteOffsetAnchorSkew::~SpriteOffsetAnchorSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorSkew::title()
+std::string SpriteOffsetAnchorSkew::title() const
 {
-    return "Sprite offset + anchor + scale";
+    return "Testing Sprite";
+}
+
+std::string SpriteOffsetAnchorSkew::subtitle() const
+{
+    return "offset + anchor + skew";
 }
 
 //
@@ -3754,9 +3892,14 @@ SpriteBatchNodeOffsetAnchorSkew::~SpriteBatchNodeOffsetAnchorSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorSkew::title()
+std::string SpriteBatchNodeOffsetAnchorSkew::title() const
 {
-    return "SpriteBatchNode offset + anchor + skew";
+    return "Testing SpriteBatchNode";
+}
+
+std::string SpriteBatchNodeOffsetAnchorSkew::subtitle() const
+{
+    return "offset + anchor + skew";
 }
 
 //
@@ -3836,10 +3979,17 @@ SpriteOffsetAnchorSkewScale::~SpriteOffsetAnchorSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorSkewScale::title()
+std::string SpriteOffsetAnchorSkewScale::title() const
 {
-    return "Sprite anchor + skew + scale";
+    return "Testing Sprite";
 }
+
+std::string SpriteOffsetAnchorSkewScale::subtitle() const
+{
+    return "anchor + skew + scale";
+}
+
+///
 
 SpriteBatchNodeOffsetAnchorSkewScale::SpriteBatchNodeOffsetAnchorSkewScale()
 {
@@ -3918,10 +4068,16 @@ SpriteBatchNodeOffsetAnchorSkewScale::~SpriteBatchNodeOffsetAnchorSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorSkewScale::title()
+std::string SpriteBatchNodeOffsetAnchorSkewScale::title() const
 {
-    return "SpriteBatchNode anchor + skew + scale";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeOffsetAnchorSkewScale::subtitle() const
+{
+    return "anchor + skew + scale";
+}
+
 
 //
 // SpriteOffsetAnchorFlip
@@ -3991,14 +4147,14 @@ SpriteOffsetAnchorFlip::~SpriteOffsetAnchorFlip()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorFlip::title()
+std::string SpriteOffsetAnchorFlip::title() const
 {
-    return "Sprite offset + anchor + flip";
+    return "Testing Sprite";
 }
 
-std::string SpriteOffsetAnchorFlip::subtitle()
+std::string SpriteOffsetAnchorFlip::subtitle() const
 {
-    return "issue #1078";
+    return "issue #1078: offset + anchor + flip";
 }
 
 //
@@ -4073,14 +4229,14 @@ SpriteBatchNodeOffsetAnchorFlip::~SpriteBatchNodeOffsetAnchorFlip()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorFlip::title()
+std::string SpriteBatchNodeOffsetAnchorFlip::title() const
 {
-    return "SpriteBatchNode offset + anchor + flip";
+    return "Testing SpriteBatchNode";
 }
 
-std::string SpriteBatchNodeOffsetAnchorFlip::subtitle()
+std::string SpriteBatchNodeOffsetAnchorFlip::subtitle() const
 {
-    return "issue #1078";
+    return "issue #1078: offset + anchor + flip";
 }
 
 
@@ -4114,12 +4270,12 @@ NodeSort::NodeSort()
     schedule(schedule_selector(NodeSort::reorderSprite));
 }
 
-std::string NodeSort::title()
+std::string NodeSort::title() const
 {
     return "node sort same index";
 }
 
-std::string NodeSort::subtitle()
+std::string NodeSort::subtitle() const
 {
     return "tag order in console should be 2,1,3,4,5";
 }
@@ -4176,12 +4332,12 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     scheduleOnce(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite), 2);
 }
 
-std::string SpriteBatchNodeReorderSameIndex::title()
+std::string SpriteBatchNodeReorderSameIndex::title() const
 {
     return "SpriteBatchNodeReorder same index";
 }
 
-std::string SpriteBatchNodeReorderSameIndex::subtitle()
+std::string SpriteBatchNodeReorderSameIndex::subtitle() const
 {
     return "tag order in console should be 2,3,4,5,1";
 }
@@ -4282,12 +4438,14 @@ void SpriteBatchNodeReorderOneChild::reorderSprite(float dt)
     //CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",child.tag);
 }
 
-std::string SpriteBatchNodeReorderOneChild::title()
+std::string SpriteBatchNodeReorderOneChild::title() const
 {
     return "SpriteBatchNode reorder 1 child";
 }
 
+//
 // SpriteOffsetAnchorRotationalSkew
+//
 SpriteOffsetAnchorRotationalSkew::SpriteOffsetAnchorRotationalSkew()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -4355,12 +4513,19 @@ SpriteOffsetAnchorRotationalSkew::~SpriteOffsetAnchorRotationalSkew()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorRotationalSkew::title()
+std::string SpriteOffsetAnchorRotationalSkew::title() const
 {
-    return "Sprite offset + anchor + rotational skew";
+    return "Testing Sprite";
 }
 
+std::string SpriteOffsetAnchorRotationalSkew::subtitle() const
+{
+    return "offset + anchor + rotational skew";
+}
+
+//
 // SpriteBatchNodeOffsetAnchorRotationalSkew
+//
 SpriteBatchNodeOffsetAnchorRotationalSkew::SpriteBatchNodeOffsetAnchorRotationalSkew()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -4431,12 +4596,19 @@ SpriteBatchNodeOffsetAnchorRotationalSkew::~SpriteBatchNodeOffsetAnchorRotationa
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorRotationalSkew::title()
+std::string SpriteBatchNodeOffsetAnchorRotationalSkew::title() const
 {
-    return "SpriteBatchNode offset + anchor + rot skew";
+    return "Testing SpriteBatchNode";
 }
 
+std::string SpriteBatchNodeOffsetAnchorRotationalSkew::subtitle() const
+{
+    return "offset + anchor + rotational skew";
+}
+
+//
 // SpriteOffsetAnchorRotationalSkewScale
+//
 SpriteOffsetAnchorRotationalSkewScale::SpriteOffsetAnchorRotationalSkewScale()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -4511,9 +4683,14 @@ SpriteOffsetAnchorRotationalSkewScale::~SpriteOffsetAnchorRotationalSkewScale()
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteOffsetAnchorRotationalSkewScale::title()
+std::string SpriteOffsetAnchorRotationalSkewScale::title() const
 {
-    return "Sprite anchor + rot skew + scale";
+    return "Testing Sprite";
+}
+
+std::string SpriteOffsetAnchorRotationalSkewScale::subtitle() const
+{
+    return "anchor + rot skew + scale";
 }
 
 // SpriteBatchNodeOffsetAnchorRotationalSkewScale
@@ -4594,12 +4771,19 @@ SpriteBatchNodeOffsetAnchorRotationalSkewScale::~SpriteBatchNodeOffsetAnchorRota
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteBatchNodeOffsetAnchorRotationalSkewScale::title()
+std::string SpriteBatchNodeOffsetAnchorRotationalSkewScale::title() const
 {
-    return "SpriteBatchNode anchor + rot skew + scale";
+    return "Testing SpriteBatchNode";
 }
 
+std::string SpriteBatchNodeOffsetAnchorRotationalSkewScale::subtitle() const
+{
+    return "anchor + rot skew + scale";
+}
+
+//
 // SpriteRotationalSkewNegativeScaleChildren
+//
 SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChildren()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -4613,9 +4797,6 @@ SpriteRotationalSkewNegativeScaleChildren::SpriteRotationalSkewNegativeScaleChil
     
     for(int i=0;i<2;i++)
     {
-        //
-        // Animation using Sprite batch
-        //
         auto sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
         sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
         
@@ -4657,12 +4838,19 @@ SpriteRotationalSkewNegativeScaleChildren::~SpriteRotationalSkewNegativeScaleChi
     cache->removeSpriteFramesFromFile("animations/grossini_gray.plist");
 }
 
-std::string SpriteRotationalSkewNegativeScaleChildren::title()
+std::string SpriteRotationalSkewNegativeScaleChildren::title() const
 {
-    return "Sprite rot skew + negative scale with children";
+    return "Testing Sprite";
 }
 
+std::string SpriteRotationalSkewNegativeScaleChildren::subtitle() const
+{
+    return "rot skew + negative scale with children";
+}
+
+//
 // SpriteBatchNodeRotationalSkewNegativeScaleChildren
+//
 SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSkewNegativeScaleChildren()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -4671,45 +4859,42 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::SpriteBatchNodeRotationalSke
     cache->addSpriteFramesWithFile("animations/grossini.plist");
     cache->addSpriteFramesWithFile("animations/grossini_gray.plist", "animations/grossini_gray.png");
     
-    auto spritebatch = SpriteBatchNode::create("animations/grossini.png");
-    addChild(spritebatch);
+    auto parent = SpriteBatchNode::create("animations/grossini.png");
+    addChild(parent);
     
     for(int i=0;i<2;i++)
     {
-        //
-        // Animation using Sprite batch
-        //
         auto sprite = Sprite::createWithSpriteFrameName("grossini_dance_01.png");
         sprite->setPosition(Point(s.width/4*(i+1), s.height/2));
-        
+
         auto point = Sprite::create("Images/r1.png");
-        
+
         point->setScale(0.25f);
         point->setPosition(sprite->getPosition());
         addChild(point, 200);
-        
+
         // Skew
         auto skewX = RotateBy::create(2, 45, 0);
         auto skewX_back = skewX->reverse();
         auto skewY = RotateBy::create(2, 0, 45);
         auto skewY_back = skewY->reverse();
-        
+
         if (1 == 1)
         {
             sprite->setScale(-1.0f);
         }
-        
+
         auto seq_skew = Sequence::create(skewX, skewX_back, skewY, skewY_back, NULL);
         sprite->runAction(RepeatForever::create(seq_skew));
-        
+
         auto child1 = Sprite::create("Images/grossini_dance_01.png");
         child1->setPosition(Point(sprite->getContentSize().width/2.0f, sprite->getContentSize().height/2.0f));
-        
+
         sprite->addChild(child1);
-        
+
         child1->setScale(0.8f);
-        
-        spritebatch->addChild(sprite, i);
+
+        parent->addChild(sprite, i);
     }
 }
 
@@ -4718,7 +4903,13 @@ SpriteBatchNodeRotationalSkewNegativeScaleChildren::~SpriteBatchNodeRotationalSk
     
 }
 
-std::string SpriteBatchNodeRotationalSkewNegativeScaleChildren::title()
+std::string SpriteBatchNodeRotationalSkewNegativeScaleChildren::title() const
 {
-    return "SpriteBatchNode + children + rot skew";
+    return "Testing SpriteBatchNode";
 }
+
+std::string SpriteBatchNodeRotationalSkewNegativeScaleChildren::subtitle() const
+{
+    return "rot skew + negative scale with children";
+}
+
