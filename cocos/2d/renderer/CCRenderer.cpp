@@ -50,7 +50,8 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(elelment);
 }
 
 Renderer::~Renderer()
@@ -68,7 +69,7 @@ Renderer::~Renderer()
 
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if 0//CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
@@ -267,7 +268,8 @@ void Renderer::render()
                     _renderStack.top().currentIndex = i + 1;
                     
                     //push new renderQueue to renderStack
-                    _renderStack.push({cmd->getRenderQueueID(), 0});
+                    RenderStackElement element = {cmd->getRenderQueueID(), 0};
+                    _renderStack.push(element);
                     
                     //Exit current loop
                     break;
@@ -303,7 +305,8 @@ void Renderer::render()
     {
         _renderStack.pop();
     }
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(element);
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
 }

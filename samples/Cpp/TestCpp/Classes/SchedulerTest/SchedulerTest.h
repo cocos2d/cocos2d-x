@@ -216,10 +216,10 @@ public:
 
     ~TestNode();
 
-    void initWithString(String* pStr, int priority);
+    void initWithString(const std::string& str, int priority);
     virtual void update(float dt);
 private:
-    String* _pstring;
+    std::string _string;
 };
 
 class RescheduleSelector : public SchedulerTestLayer
