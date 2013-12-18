@@ -688,7 +688,7 @@ void Sprite::updateQuadVertices()
     long offset = 0;
     setGLBufferData(&_quad, 4 * kQuadSize, 0);
 #else
-    size_t offset = (size_t)&_quad;
+//    size_t offset = (size_t)&_quad;
 #endif // EMSCRIPTEN
 
     //TODO optimize the performance cache affineTransformation

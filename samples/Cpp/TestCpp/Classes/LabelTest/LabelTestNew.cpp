@@ -832,12 +832,11 @@ void LabelFNTMultiLineAlignment::snapArrowsToEdge()
 /// BMFontUnicodeNew
 LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
-    const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
-    const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
+    std::string russian  = strings["russian"].asString();
+    std::string spanish  = strings["spanish"].asString();
+    std::string japanese = strings["japanese"].asString();
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -1035,12 +1034,12 @@ std::string LabelTTFDynamicAlignment::subtitle()
 //
 LabelTTFUnicodeNew::LabelTTFUnicodeNew()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
     
-    //const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    //const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
-    //const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
+//    std::string russian  = strings["russian"].asString();
+//    std::string spanish  = strings["spanish"].asString();
+//    std::string japanese = strings["japanese"].asString();
     
     auto size = Director::getInstance()->getWinSize();
     
@@ -1061,7 +1060,7 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     addChild(label2);
     
     // chinese
-    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, chinese);
+    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, chinese.c_str());
     label3->setPosition( Point(size.width/2, vSize - (vStep * 6.5)) );
     label3->setAnchorPoint(Point(0.5, 0.5));
     addChild(label3);
