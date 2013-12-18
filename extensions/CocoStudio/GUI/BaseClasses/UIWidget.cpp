@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "UIWidget.h"
-#include "../System/UILayer.h"
 #include "../Layouts/UILayout.h"
 #include "../System/UIHelper.h"
 
@@ -542,7 +541,13 @@ CCNode* UIWidget::getVirtualRenderer()
 
 void UIWidget::onSizeChanged()
 {
-
+    ccArray* arrayChildren = m_children->data;
+    int length = arrayChildren->num;
+    for (int i=0; i<length; ++i)
+    {
+        UIWidget* child = (UIWidget*)arrayChildren->arr[i];
+        child->updateSizeAndPosition();
+    }
 }
 
 const CCSize& UIWidget::getContentSize() const

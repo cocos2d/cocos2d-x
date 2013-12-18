@@ -1006,12 +1006,6 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
             widget->addChild(child);
         }
     }
-    
-    UILayout* layout = dynamic_cast<UILayout*>(widget);
-    if (layout)
-    {
-        layout->doLayout();
-    }
     return widget;
 }
 

@@ -232,6 +232,8 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
 
 void UICheckBox::onTouchEnded(const CCPoint &touchPoint)
 {
+    m_touchEndPos.x = touchPoint.x;
+    m_touchEndPos.y = touchPoint.y;
     if (m_bFocus)
     {
         releaseUpEvent();
@@ -366,6 +368,7 @@ void UICheckBox::setAnchorPoint(const CCPoint &pt)
 
 void UICheckBox::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     backGroundTextureScaleChangedWithSize();
     backGroundSelectedTextureScaleChangedWithSize();
     frontCrossTextureScaleChangedWithSize();

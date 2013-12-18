@@ -144,6 +144,7 @@ void UILabelAtlas::setAnchorPoint(const CCPoint &pt)
 
 void UILabelAtlas::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     labelAtlasScaleChangedWithSize();
 }
 

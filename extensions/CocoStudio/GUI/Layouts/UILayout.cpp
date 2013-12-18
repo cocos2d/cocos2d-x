@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "UILayout.h"
-#include "../System/UILayer.h"
 #include "../System/UIHelper.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
@@ -47,13 +46,15 @@ m_gEndColor(ccWHITE),
 m_AlongVector(ccp(0.0f, -1.0f)),
 m_nCOpacity(255),
 m_backGroundImageTextureSize(CCSizeZero),
-m_eLayoutType(LAYOUT_ABSOLUTE)
+m_eLayoutType(LAYOUT_ABSOLUTE),
+m_bDoLayoutDirty(true)
 {
     m_WidgetType = WidgetTypeContainer;
 }
 
 UILayout::~UILayout()
 {
+    DYNAMIC_CAST_CLIPPINGLAYER->setVisitEventListener(NULL, NULL);
 }
 
 UILayout* UILayout::create()
@@ -95,10 +96,12 @@ bool UILayout::init()
 void UILayout::initRenderer()
 {
     m_pRenderer = UIRectClippingNode::create();
+    DYNAMIC_CAST_CLIPPINGLAYER->setVisitEventListener(this, visitselector(UILayout::rendererVisitCallBack));
 }
 
 bool UILayout::addChild(cocos2d::extension::UIWidget *child)
 {
+    m_bDoLayoutDirty = true;
     supplyTheLayoutParameterLackToChild(child);
     return UIWidget::addChild(child);
 }
@@ -108,37 +111,22 @@ bool UILayout::isClippingEnabled()
     return m_bClippingEnabled;
 }
 
-bool UILayout::hitTest(const CCPoint &pt)
-{
-    CCPoint nsp = m_pRenderer->convertToNodeSpace(pt);
-    CCRect bb = CCRectMake(0.0f, 0.0f, m_size.width, m_size.height);
-    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-    {
-        return true;
-    }
-    return false;
-}
-
 void UILayout::setClippingEnabled(bool able)
 {
     m_bClippingEnabled = able;
     DYNAMIC_CAST_CLIPPINGLAYER->setClippingEnabled(able);
 }
 
+void UILayout::rendererVisitCallBack()
+{
+    doLayout();
+}
+
 void UILayout::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(m_size);
-    if (strcmp(getDescription(), "Layout") == 0)
-    {
-        ccArray* arrayChildren = m_children->data;
-        int length = arrayChildren->num;
-        for (int i=0; i<length; ++i)
-        {
-            UIWidget* child = (UIWidget*)arrayChildren->arr[i];
-            child->updateSizeAndPosition();
-        }
-        doLayout();
-    }
+    m_bDoLayoutDirty = true;
     
     if (m_pBackGroundImage)
     {
@@ -470,6 +458,7 @@ void UILayout::setLayoutType(LayoutType type)
         UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
         supplyTheLayoutParameterLackToChild(child);
     }
+    m_bDoLayoutDirty = true;
 }
 
 LayoutType UILayout::getLayoutType() const
@@ -479,6 +468,10 @@ LayoutType UILayout::getLayoutType() const
 
 void UILayout::doLayout()
 {
+    if (!m_bDoLayoutDirty)
+    {
+        return;
+    }
     switch (m_eLayoutType)
     {
         case LAYOUT_ABSOLUTE:
@@ -991,6 +984,7 @@ void UILayout::doLayout()
         default:
             break;
     }
+    m_bDoLayoutDirty = false;
 }
 
 const char* UILayout::getDescription() const
@@ -1006,7 +1000,6 @@ UIWidget* UILayout::createCloneInstance()
 void UILayout::copyClonedWidgetChildren(UIWidget* model)
 {
     UIWidget::copyClonedWidgetChildren(model);
-    doLayout();
 }
 
 void UILayout::copySpecialProperties(UIWidget *widget)
@@ -1031,7 +1024,9 @@ UIRectClippingNode::UIRectClippingNode():
 m_pInnerStencil(NULL),
 m_bEnabled(true),
 m_clippingSize(CCSizeMake(50.0f, 50.0f)),
-m_bClippingEnabled(false)
+m_bClippingEnabled(false),
+m_pVisitTarget(NULL),
+m_pfnVistEvent(NULL)
 {
     
 }
@@ -1116,6 +1111,21 @@ void UIRectClippingNode::setEnabled(bool enabled)
 bool UIRectClippingNode::isEnabled() const
 {
     return m_bEnabled;
+}
+
+void UIRectClippingNode::sortAllChildren()
+{
+    CCClippingNode::sortAllChildren();
+    if (m_pVisitTarget && m_pfnVistEvent)
+    {
+        (m_pVisitTarget->*m_pfnVistEvent)();
+    }
+}
+
+void UIRectClippingNode::setVisitEventListener(cocos2d::CCObject *target, SEL_VisitEvent selector)
+{
+    m_pVisitTarget = target;
+    m_pfnVistEvent = selector;
 }
 
 NS_CC_EXT_END

@@ -325,6 +325,7 @@ void UIImageView::setAnchorPoint(const CCPoint &pt)
 
 void UIImageView::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     imageTextureScaleChangedWithSize();
 }
 

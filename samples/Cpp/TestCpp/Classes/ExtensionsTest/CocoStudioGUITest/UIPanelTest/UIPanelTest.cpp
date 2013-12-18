@@ -407,9 +407,6 @@ bool UIPanelTest_Layout_Linear_Vertical::init()
         lp3->setGravity(LINEAR_GRAVITY_CENTER_HORIZONTAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
         
-        
-        layout->doLayout();
-        
         return true;
     }
     
@@ -489,10 +486,6 @@ bool UIPanelTest_Layout_Linear_Horizontal::init()
         button_scale9->setLayoutParameter(lp3);
         lp3->setGravity(LINEAR_GRAVITY_CENTER_VERTICAL);
         lp3->setMargin(UIMargin(0, 10, 0, 10));
-        
-        
-        layout->doLayout();
-        
         return true;
     }
     
@@ -570,11 +563,7 @@ bool UIPanelTest_Layout_Relative::init()
         
         UIRelativeLayoutParameter* rp3 = UIRelativeLayoutParameter::create();
         textButton->setLayoutParameter(rp3);
-        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);
-        
-        
-        layout->doLayout();
-        
+        rp3->setAlign(RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL);        
         return true;
     }
     

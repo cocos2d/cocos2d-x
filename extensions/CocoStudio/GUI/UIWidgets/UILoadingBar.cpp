@@ -259,6 +259,7 @@ int UILoadingBar::getPercent()
 
 void UILoadingBar::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     barRendererScaleChangedWithSize();
 }
 

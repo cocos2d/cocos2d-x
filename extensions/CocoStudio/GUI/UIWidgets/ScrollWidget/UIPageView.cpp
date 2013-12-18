@@ -471,6 +471,7 @@ bool UIPageView::scrollPages(float touchOffset)
 void UIPageView::onTouchCancelled(const CCPoint &touchPoint)
 {
     UILayout::onTouchCancelled(touchPoint);
+    handleReleaseLogic(touchPoint);
 }
 
 void UIPageView::handlePressLogic(const CCPoint &touchPoint)

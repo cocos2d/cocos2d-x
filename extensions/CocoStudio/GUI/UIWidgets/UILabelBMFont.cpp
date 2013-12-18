@@ -100,6 +100,7 @@ void UILabelBMFont::setAnchorPoint(const CCPoint &pt)
 
 void UILabelBMFont::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     labelBMFontScaleChangedWithSize();
 }
 

@@ -35,7 +35,8 @@ m_eGravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
 m_fItemsMargin(0.0f),
 _listViewEventListener(NULL),
 _listViewEventSelector(NULL),
-_curSelectedIndex(0)
+_curSelectedIndex(0),
+_refreshViewDirty(true)
 {
     
 }
@@ -85,15 +86,18 @@ void UIListViewEx::setItemModel(UIWidget *model)
 
 void UIListViewEx::updateInnerContainerSize()
 {
-    if (!m_pModel)
+    switch (m_eDirection)
     {
-        return;
-    }
-    switch (m_eDirection) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            int childrenCount = m_pItems->count();
-            float totalHeight = m_pModel->getSize().height * childrenCount + (childrenCount - 1) * m_fItemsMargin;
+            ccArray* arrayItems = m_pItems->data;
+            int length = arrayItems->num;
+            float totalHeight = (length - 1) * m_fItemsMargin;
+            for (int i=0; i<length; i++)
+            {
+                UIWidget* item = (UIWidget*)arrayItems->arr[i];
+                totalHeight += item->getSize().height;
+            }
             float finalWidth = m_size.width;
             float finalHeight = totalHeight;
             setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
@@ -101,8 +105,15 @@ void UIListViewEx::updateInnerContainerSize()
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            int childrenCount = m_pItems->count();
-            float totalWidth = m_pModel->getSize().width * childrenCount + (childrenCount - 1) * m_fItemsMargin;
+            ccArray* arrayItems = m_pItems->data;
+            int length = arrayItems->num;
+            float totalWidth = (length - 1) * m_fItemsMargin;
+            for (int i=0; i<length; i++)
+            {
+                UIWidget* item = (UIWidget*)arrayItems->arr[i];
+                totalWidth += item->getSize().width;
+            }
+            
             float finalWidth = totalWidth;
             float finalHeight = m_size.height;
             setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
@@ -246,6 +257,7 @@ void UIListViewEx::pushBackDefaultItem()
     m_pItems->addObject(newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::insertDefaultItem(int index)
@@ -262,6 +274,7 @@ void UIListViewEx::insertDefaultItem(int index)
     m_pItems->insertObject(newItem, index);
     remedyLayoutParameter(newItem);
     addChild(newItem);
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::pushBackCustomItem(UIWidget* item)
@@ -269,6 +282,7 @@ void UIListViewEx::pushBackCustomItem(UIWidget* item)
     m_pItems->addObject(item);
     remedyLayoutParameter(item);
     addChild(item);
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::insertCustomItem(UIWidget* item, int index)
@@ -276,6 +290,7 @@ void UIListViewEx::insertCustomItem(UIWidget* item, int index)
     m_pItems->insertObject(item, index);
     remedyLayoutParameter(item);
     addChild(item);
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::removeItem(int index)
@@ -292,6 +307,7 @@ void UIListViewEx::removeItem(int index)
     }
     m_pItems->removeObject(item);
     removeChild(item);
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::removeLastItem()
@@ -333,7 +349,8 @@ void UIListViewEx::setGravity(ListViewGravity gravity)
         return;
     }
     m_eGravity = gravity;
-    refreshView();
+//    refreshView();
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::setItemsMargin(float margin)
@@ -343,7 +360,8 @@ void UIListViewEx::setItemsMargin(float margin)
         return;
     }
     m_fItemsMargin = margin;
-    refreshView();
+//    refreshView();
+    _refreshViewDirty = true;
 }
 
 void UIListViewEx::setDirection(SCROLLVIEW_DIR dir)
@@ -404,6 +422,15 @@ int UIListViewEx::getCurSelectedIndex() const
     return _curSelectedIndex;
 }
 
+void UIListViewEx::rendererVisitCallBack()
+{
+    UIScrollView::rendererVisitCallBack();
+    if (_refreshViewDirty)
+    {
+        refreshView();
+        _refreshViewDirty = false;
+    }
+}
 
 void UIListViewEx::refreshView()
 {
@@ -425,7 +452,8 @@ void UIListViewEx::refreshView()
 void UIListViewEx::onSizeChanged()
 {
     UIScrollView::onSizeChanged();
-    refreshView();
+//    refreshView();
+    _refreshViewDirty = true;
 }
 
 const char* UIListViewEx::getDescription() const

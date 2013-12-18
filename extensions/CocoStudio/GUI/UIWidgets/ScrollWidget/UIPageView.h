@@ -154,9 +154,6 @@ public:
     
     //override "update" method of widget.
     virtual void update(float dt);
-    
-    virtual void doLayout(){};
-    
     /**
      * Sets LayoutType.
      *
@@ -210,6 +207,7 @@ protected:
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
     virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void doLayout(){if (!m_bDoLayoutDirty){return;}m_bDoLayoutDirty = false;};
     /*compatible*/
     /**
      * These methods will be removed

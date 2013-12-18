@@ -211,6 +211,7 @@ void UILabel::setAnchorPoint(const CCPoint &pt)
 
 void UILabel::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     labelScaleChangedWithSize();
 }
 

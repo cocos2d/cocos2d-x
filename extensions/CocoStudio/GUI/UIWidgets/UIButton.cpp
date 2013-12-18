@@ -436,6 +436,7 @@ void UIButton::setAnchorPoint(const CCPoint &pt)
 
 void UIButton::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     normalTextureScaleChangedWithSize();
     pressedTextureScaleChangedWithSize();
     disabledTextureScaleChangedWithSize();

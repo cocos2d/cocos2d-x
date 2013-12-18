@@ -150,6 +150,8 @@ public:
      */
     void setItemsMargin(float margin);
     
+    virtual void rendererVisitCallBack();
+    
     /**
      * Refresh the view of list.
      *
@@ -195,6 +197,7 @@ protected:
     cocos2d::CCObject*       _listViewEventListener;
     SEL_ListViewExEvent    _listViewEventSelector;
     int _curSelectedIndex;
+    bool _refreshViewDirty;
 };
 
 NS_CC_EXT_END

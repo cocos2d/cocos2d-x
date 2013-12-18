@@ -68,9 +68,6 @@ public:
      */
     static UILayout* create();
     
-    //override "hitTest" method of widget.
-    virtual bool hitTest(const CCPoint &pt);
-    
     //background
     /**
      * Sets a background image for layout
@@ -197,7 +194,7 @@ public:
      */
     virtual LayoutType getLayoutType() const;
     
-    virtual void doLayout();
+    
     
     /**
      * Adds a child to the container.
@@ -205,6 +202,8 @@ public:
      * @param child A child widget
      */
     virtual bool addChild(UIWidget* child);
+    
+    virtual void rendererVisitCallBack();
     
     /*Compatible*/
     /**
@@ -231,6 +230,7 @@ protected:
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
     virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void doLayout();
 protected:
     bool m_bClippingEnabled;
     
@@ -250,11 +250,15 @@ protected:
     int m_nCOpacity;
     CCSize m_backGroundImageTextureSize;
     LayoutType m_eLayoutType;
+    bool m_bDoLayoutDirty;
 };
 /**
  *  @js NA
  *  @lua NA
  */
+typedef void (CCObject::*SEL_VisitEvent)();
+#define visitselector(_SELECTOR) (SEL_VisitEvent)(&_SELECTOR)
+
 class UIRectClippingNode : public CCClippingNode
 {
 public:
@@ -266,6 +270,8 @@ public:
     virtual void visit();
     void setEnabled(bool enabled);
     bool isEnabled() const;
+    virtual void sortAllChildren();
+    void setVisitEventListener(CCObject* target, SEL_VisitEvent selector);
 protected:
     CCDrawNode* m_pInnerStencil;
     bool m_bEnabled;
@@ -274,6 +280,8 @@ private:
     CCPoint rect[4];
     CCSize m_clippingSize;
     bool m_bClippingEnabled;
+    CCObject* m_pVisitTarget;
+    SEL_VisitEvent m_pfnVistEvent;
 };
 
 NS_CC_EXT_END

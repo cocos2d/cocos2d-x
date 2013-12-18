@@ -398,6 +398,8 @@ bool UISlider::onTouchBegan(const CCPoint &touchPoint)
 
 void UISlider::onTouchMoved(const CCPoint &touchPoint)
 {
+    m_touchMovePos.x = touchPoint.x;
+    m_touchMovePos.y = touchPoint.y;
     CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
     m_pSlidBallRenderer->setPosition(ccp(nsp.x,0));
     setPercent(getPercentWithBallPos(nsp.x));
@@ -446,6 +448,7 @@ int UISlider::getPercent()
 
 void UISlider::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     barRendererScaleChangedWithSize();
     progressBarRendererScaleChangedWithSize();
 }

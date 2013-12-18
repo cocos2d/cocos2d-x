@@ -163,9 +163,7 @@ public:
      */
     /**/
     virtual void update(float dt);
-    
-    virtual void doLayout(){};
-    
+
     /**
      * Returns the "class name" of widget.
      */
@@ -219,6 +217,7 @@ protected:
     virtual UIWidget* createCloneInstance();
     virtual void copySpecialProperties(UIWidget* model);
     virtual void copyClonedWidgetChildren(UIWidget* model);
+    virtual void doLayout(){if (!m_bDoLayoutDirty){return;}m_bDoLayoutDirty = false;};
     
     /*compatible*/
     /**

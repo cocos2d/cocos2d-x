@@ -598,6 +598,7 @@ void UITextField::setOpacity(int opacity)
 
 void UITextField::onSizeChanged()
 {
+    UIWidget::onSizeChanged();
     textfieldRendererScaleChangedWithSize();
 }
 
