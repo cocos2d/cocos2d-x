@@ -471,6 +471,9 @@
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp">
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h">
@@ -846,6 +849,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h">
       <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
+      <Filter>CocoStudio\Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

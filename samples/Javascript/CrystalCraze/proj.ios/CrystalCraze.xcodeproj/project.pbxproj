@@ -154,15 +154,7 @@
 		1A36F77A17EFE7A8000D0275 /* UISlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F72617EFE7A8000D0275 /* UISlider.cpp */; };
 		1A36F77B17EFE7A8000D0275 /* UISwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F72817EFE7A8000D0275 /* UISwitch.cpp */; };
 		1A36F77C17EFE7A8000D0275 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F72A17EFE7A8000D0275 /* UITextField.cpp */; };
-		1A36F77D17EFE7A8000D0275 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F72D17EFE7A8000D0275 /* CSContentJsonDictionary.cpp */; };
 		1A36F77E17EFE7A8000D0275 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F72F17EFE7A8000D0275 /* DictionaryHelper.cpp */; };
-		1A36F77F17EFE7A8000D0275 /* json_internalarray.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F73717EFE7A8000D0275 /* json_internalarray.inl */; };
-		1A36F78017EFE7A8000D0275 /* json_internalmap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F73817EFE7A8000D0275 /* json_internalmap.inl */; };
-		1A36F78117EFE7A8000D0275 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F73A17EFE7A8000D0275 /* json_reader.cpp */; };
-		1A36F78217EFE7A8000D0275 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F73C17EFE7A8000D0275 /* json_value.cpp */; };
-		1A36F78317EFE7A8000D0275 /* json_valueiterator.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F73D17EFE7A8000D0275 /* json_valueiterator.inl */; };
-		1A36F78417EFE7A8000D0275 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A36F73E17EFE7A8000D0275 /* json_writer.cpp */; };
-		1A36F78517EFE7A8000D0275 /* sconscript in Resources */ = {isa = PBXBuildFile; fileRef = 1A36F74017EFE7A8000D0275 /* sconscript */; };
 		1A3F882B170A7E3C000159E1 /* jsb_chipmunk_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */; };
 		1A3F882C170A7E3C000159E1 /* jsb_cocos2d_extension.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */; };
 		1A3F882D170A7E3C000159E1 /* jsb_opengl_constants.js in Sources */ = {isa = PBXBuildFile; fileRef = 1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */; };
@@ -192,6 +184,7 @@
 		1AF284F917F00DED00642436 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284F617F00DED00642436 /* CCPhysicsSprite.cpp */; };
 		1AF2873417F0142800642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2873317F0142800642436 /* jsb_deprecated.js */; };
 		1AF2873517F0143300642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2873317F0142800642436 /* jsb_deprecated.js */; };
+		37FFCAB518606ECE0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAB318606ECE0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B921833583700F2C4D6 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B901833583700F2C4D6 /* UIListViewEx.cpp */; };
 		3EC20B941833588F00F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */; };
 		3EC20B95183358A300F2C4D6 /* jsb_cocos2d_studio.js in Resources */ = {isa = PBXBuildFile; fileRef = 3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */; };
@@ -528,27 +521,8 @@
 		1A36F72917EFE7A8000D0275 /* UISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISwitch.h; sourceTree = "<group>"; };
 		1A36F72A17EFE7A8000D0275 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		1A36F72B17EFE7A8000D0275 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
-		1A36F72D17EFE7A8000D0275 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
-		1A36F72E17EFE7A8000D0275 /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		1A36F72F17EFE7A8000D0275 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		1A36F73017EFE7A8000D0275 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
-		1A36F73217EFE7A8000D0275 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
-		1A36F73317EFE7A8000D0275 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		1A36F73417EFE7A8000D0275 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
-		1A36F73517EFE7A8000D0275 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
-		1A36F73617EFE7A8000D0275 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
-		1A36F73717EFE7A8000D0275 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
-		1A36F73817EFE7A8000D0275 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
-		1A36F73917EFE7A8000D0275 /* json_lib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_lib.h; sourceTree = "<group>"; };
-		1A36F73A17EFE7A8000D0275 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
-		1A36F73B17EFE7A8000D0275 /* json_tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_tool.h; sourceTree = "<group>"; };
-		1A36F73C17EFE7A8000D0275 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
-		1A36F73D17EFE7A8000D0275 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
-		1A36F73E17EFE7A8000D0275 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
-		1A36F73F17EFE7A8000D0275 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		1A36F74017EFE7A8000D0275 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
-		1A36F74117EFE7A8000D0275 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
-		1A36F74217EFE7A8000D0275 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1A3F8828170A7E3C000159E1 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_constants.js; sourceTree = "<group>"; };
 		1A3F8829170A7E3C000159E1 /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_extension.js; sourceTree = "<group>"; };
 		1A3F882A170A7E3C000159E1 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_constants.js; sourceTree = "<group>"; };
@@ -591,6 +565,18 @@
 		1AF284F617F00DED00642436 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		1AF284F717F00DED00642436 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		1AF2873317F0142800642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		37FFCAB318606ECE0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
+		37FFCAB418606ECE0078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
+		37FFCAB718606EDF0078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		37FFCAB818606EDF0078F312 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
+		37FFCABA18606EDF0078F312 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		37FFCABB18606EDF0078F312 /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		37FFCABC18606EDF0078F312 /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		37FFCABD18606EDF0078F312 /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		37FFCABE18606EDF0078F312 /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		37FFCABF18606EDF0078F312 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		37FFCAC018606EDF0078F312 /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		37FFCAC118606EDF0078F312 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		3EC20B901833583700F2C4D6 /* UIListViewEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewEx.cpp; sourceTree = "<group>"; };
 		3EC20B911833583700F2C4D6 /* UIListViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewEx.h; sourceTree = "<group>"; };
 		3EC20B931833588F00F2C4D6 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d_studio.js; sourceTree = "<group>"; };
@@ -1056,6 +1042,8 @@
 		1A36F6AF17EFE7A7000D0275 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				37FFCAB318606ECE0078F312 /* CCActionEaseEx.cpp */,
+				37FFCAB418606ECE0078F312 /* CCActionEaseEx.h */,
 				1A36F6B017EFE7A7000D0275 /* CCActionFrame.cpp */,
 				1A36F6B117EFE7A7000D0275 /* CCActionFrame.h */,
 				1A36F6B217EFE7A7000D0275 /* CCActionFrameEasing.cpp */,
@@ -1287,37 +1275,11 @@
 		1A36F72C17EFE7A8000D0275 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				1A36F72D17EFE7A8000D0275 /* CSContentJsonDictionary.cpp */,
-				1A36F72E17EFE7A8000D0275 /* CSContentJsonDictionary.h */,
+				37FFCAB618606EDF0078F312 /* rapidjson */,
 				1A36F72F17EFE7A8000D0275 /* DictionaryHelper.cpp */,
 				1A36F73017EFE7A8000D0275 /* DictionaryHelper.h */,
-				1A36F73117EFE7A8000D0275 /* lib_json */,
 			);
 			path = Json;
-			sourceTree = "<group>";
-		};
-		1A36F73117EFE7A8000D0275 /* lib_json */ = {
-			isa = PBXGroup;
-			children = (
-				1A36F73217EFE7A8000D0275 /* autolink.h */,
-				1A36F73317EFE7A8000D0275 /* config.h */,
-				1A36F73417EFE7A8000D0275 /* features.h */,
-				1A36F73517EFE7A8000D0275 /* forwards.h */,
-				1A36F73617EFE7A8000D0275 /* json_batchallocator.h */,
-				1A36F73717EFE7A8000D0275 /* json_internalarray.inl */,
-				1A36F73817EFE7A8000D0275 /* json_internalmap.inl */,
-				1A36F73917EFE7A8000D0275 /* json_lib.h */,
-				1A36F73A17EFE7A8000D0275 /* json_reader.cpp */,
-				1A36F73B17EFE7A8000D0275 /* json_tool.h */,
-				1A36F73C17EFE7A8000D0275 /* json_value.cpp */,
-				1A36F73D17EFE7A8000D0275 /* json_valueiterator.inl */,
-				1A36F73E17EFE7A8000D0275 /* json_writer.cpp */,
-				1A36F73F17EFE7A8000D0275 /* reader.h */,
-				1A36F74017EFE7A8000D0275 /* sconscript */,
-				1A36F74117EFE7A8000D0275 /* value.h */,
-				1A36F74217EFE7A8000D0275 /* writer.h */,
-			);
-			path = lib_json;
 			sourceTree = "<group>";
 		};
 		1A36F74317EFE7A8000D0275 /* Reader */ = {
@@ -1350,6 +1312,31 @@
 				1AF284F717F00DED00642436 /* CCPhysicsSprite.h */,
 			);
 			path = physics_nodes;
+			sourceTree = "<group>";
+		};
+		37FFCAB618606EDF0078F312 /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				37FFCAB718606EDF0078F312 /* document.h */,
+				37FFCAB818606EDF0078F312 /* filestream.h */,
+				37FFCAB918606EDF0078F312 /* internal */,
+				37FFCABD18606EDF0078F312 /* prettywriter.h */,
+				37FFCABE18606EDF0078F312 /* rapidjson.h */,
+				37FFCABF18606EDF0078F312 /* reader.h */,
+				37FFCAC018606EDF0078F312 /* stringbuffer.h */,
+				37FFCAC118606EDF0078F312 /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		37FFCAB918606EDF0078F312 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				37FFCABA18606EDF0078F312 /* pow10.h */,
+				37FFCABB18606EDF0078F312 /* stack.h */,
+				37FFCABC18606EDF0078F312 /* strfunc.h */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 		A92275321517C094001B78AA = {
@@ -1508,10 +1495,6 @@
 				15A3CE661682C205002FB0C5 /* CMakeLists.txt in Resources */,
 				15A3D0A31682E721002FB0C5 /* README in Resources */,
 				1A21ED5216B02EE100A2E30E /* Published-iOS in Resources */,
-				1A36F77F17EFE7A8000D0275 /* json_internalarray.inl in Resources */,
-				1A36F78017EFE7A8000D0275 /* json_internalmap.inl in Resources */,
-				1A36F78317EFE7A8000D0275 /* json_valueiterator.inl in Resources */,
-				1A36F78517EFE7A8000D0275 /* sconscript in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1527,6 +1510,7 @@
 				D45446D5156DE74F00887EB5 /* RootViewController.mm in Sources */,
 				D4545227156E28EF00887EB5 /* AppDelegate.cpp in Sources */,
 				15A3CE651682C205002FB0C5 /* chipmunk.c in Sources */,
+				37FFCAB518606ECE0078F312 /* CCActionEaseEx.cpp in Sources */,
 				460E5394182B72620040458A /* GUIReader.cpp in Sources */,
 				15A3CE671682C205002FB0C5 /* cpConstraint.c in Sources */,
 				15A3CE681682C205002FB0C5 /* cpDampedRotarySpring.c in Sources */,
@@ -1686,11 +1670,7 @@
 				1A36F77A17EFE7A8000D0275 /* UISlider.cpp in Sources */,
 				1A36F77B17EFE7A8000D0275 /* UISwitch.cpp in Sources */,
 				1A36F77C17EFE7A8000D0275 /* UITextField.cpp in Sources */,
-				1A36F77D17EFE7A8000D0275 /* CSContentJsonDictionary.cpp in Sources */,
 				1A36F77E17EFE7A8000D0275 /* DictionaryHelper.cpp in Sources */,
-				1A36F78117EFE7A8000D0275 /* json_reader.cpp in Sources */,
-				1A36F78217EFE7A8000D0275 /* json_value.cpp in Sources */,
-				1A36F78417EFE7A8000D0275 /* json_writer.cpp in Sources */,
 				1AF284ED17F00D9100642436 /* js_bindings_chipmunk_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
