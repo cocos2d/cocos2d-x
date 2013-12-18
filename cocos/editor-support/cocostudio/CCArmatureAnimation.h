@@ -117,33 +117,19 @@ public:
      *         It's meaning is changing to this animation need how many frames
      *
      *         -1 : use the value from MovementData get from flash design panel
-     * @param  durationTween  The frame count you want to play in the game.
-     *         if  _durationTween is 80, then the animation will played 80 frames in a loop
-     *
-     *         -1 : use the value from MovementData get from flash design panel
-     *
      * @param  loop   Whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
-     *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
-     *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
-     *         -1 : fade out
-     *         0  : line
-     *         1  : fade in
-     *         2  : fade in and out
-     *
      */
-    virtual void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1,  int loop = -1);
 
     /**
      * Play animation by index, the other param is the same to play.
      * @param  animationIndex  the animation index you want to play
      */
-    virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
 
     virtual void play(bool loop, const std::string *movementNames, int movementNumber);

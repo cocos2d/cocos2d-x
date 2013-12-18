@@ -163,7 +163,7 @@ float ArmatureAnimation::getSpeedScale() const
 }
 
 
-void ArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::play(const char *animationName, int durationTo,  int loop)
 {
     CCASSERT(_animationData, "_animationData can not be null");
 
@@ -180,10 +180,9 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     //! Further processing parameters
     durationTo = (durationTo == -1) ? _movementData->durationTo : durationTo;
 
-    durationTween = (durationTween == -1) ? _movementData->durationTween : durationTween;
-    durationTween = (durationTween == 0) ? _movementData->duration : durationTween;
+    int durationTween = _movementData->durationTween == 0 ? _rawDuration : _movementData->durationTween;
 
-    tweenEasing	= (tweenEasing == TWEEN_EASING_MAX) ? _movementData->tweenEasing : tweenEasing;
+    TweenType tweenEasing = _movementData->tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
     _onMovementList = false;
@@ -247,13 +246,13 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
 }
 
 
-void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop)
 {
     std::vector<std::string> &movName = _animationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
 
     std::string animationName = movName.at(animationIndex);
-    play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
+    play(animationName.c_str(), durationTo, loop);
 }
 
 
@@ -512,7 +511,7 @@ void ArmatureAnimation::updateMovementList()
     {
         if (_movementListLoop)
         {
-            play(_movementList.at(_movementIndex).c_str(), -1, -1, 0);
+            play(_movementList.at(_movementIndex).c_str(), -1, 0);
             _movementIndex++;
 
             if (_movementIndex >= _movementList.size())
@@ -524,7 +523,7 @@ void ArmatureAnimation::updateMovementList()
         {
             if (_movementIndex < _movementList.size())
             {
-                play(_movementList.at(_movementIndex).c_str(), -1, -1, 0);
+                play(_movementList.at(_movementIndex).c_str(), -1, 0);
                 _movementIndex++;
             }
             else
