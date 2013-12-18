@@ -199,10 +199,10 @@ static CCAccelerometerSimulation *sharedAccelerometer = NULL;
      
      ctx.info = self;
      ctx.version = 0;
-     ctx.retain = nullptr;
-     ctx.release = nullptr;
-     ctx.copyDescription = nullptr;
-     udpSocket = CFSocketCreate(nullptr, PF_INET, SOCK_DGRAM, IPPROTO_UDP, kCFSocketDataCallBack | 0xF, mySocketCallBack, nullptr);
+     ctx.retain = NULL;
+     ctx.release = NULL;
+     ctx.copyDescription = NULL;
+     udpSocket = CFSocketCreate(NULL, PF_INET, SOCK_DGRAM, IPPROTO_UDP, kCFSocketDataCallBack | 0xF, mySocketCallBack, NULL);
      
      CFRunLoopSourceRef source;
      CFDataRef addr;
@@ -213,12 +213,12 @@ static CCAccelerometerSimulation *sharedAccelerometer = NULL;
      sin.sin_len = sizeof(struct sockaddr_in);
      sin.sin_family = AF_INET;
      sin.sin_port = htons(10552);
-     addr = CFDataCreate(nullptr, (unsigned char *)&sin, sizeof(sin));
+     addr = CFDataCreate(NULL, (unsigned char *)&sin, sizeof(sin));
      theErr = CFSocketConnectToAddress(udpSocket, addr, 0);
      switch (theErr) {
      case kCFSocketSuccess:
      NSLog(@"UDP Logged in");
-     source = CFSocketCreateRunLoopSource(nullptr, udpSocket, 0);
+     source = CFSocketCreateRunLoopSource(NULL, udpSocket, 0);
      CFRunLoopAddSource(CFRunLoopGetMain(), source, 
      kCFRunLoopDefaultMode);
      break;
