@@ -346,7 +346,7 @@ void DisplayManager::initDisplayList(BoneData *boneData)
 
     CS_RETURN_IF(!boneData);
 
-    for(auto object : boneData->displayDataList)
+    for(auto& object : boneData->displayDataList)
     {
         DisplayData *displayData = static_cast<DisplayData *>(object);
 

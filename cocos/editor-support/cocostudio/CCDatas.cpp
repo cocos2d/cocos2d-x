@@ -218,7 +218,7 @@ void BoneData::addDisplayData(DisplayData *displayData)
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return static_cast<DisplayData *>(displayDataList.at(index));
+    return displayDataList.at(index);
 }
 
 
@@ -318,7 +318,7 @@ void MovementBoneData::addFrameData(FrameData *frameData)
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return static_cast<FrameData*>(frameList.at(index));
+    return frameList.at(index);
 }
 
 
@@ -345,7 +345,7 @@ void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 
 MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
 {
-    return static_cast<MovementBoneData *>(movBoneDataDic.at(boneName));
+    return movBoneDataDic.at(boneName);
 }
 
 
@@ -366,10 +366,10 @@ void AnimationData::addMovement(MovementData *movData)
 
 MovementData *AnimationData::getMovement(const char *movementName)
 {
-    return static_cast<MovementData *>(movementDataDic.at(movementName));
+    return movementDataDic.at(movementName);
 }
 
-long AnimationData::getMovementCount()
+ssize_t AnimationData::getMovementCount()
 {
     return movementDataDic.size();
 }
@@ -419,7 +419,7 @@ void TextureData::addContourData(ContourData *contourData)
 
 ContourData *TextureData::getContourData(int index)
 {
-    return static_cast<ContourData *>(contourDataList.at(index));
+    return contourDataList.at(index);
 }
 
 

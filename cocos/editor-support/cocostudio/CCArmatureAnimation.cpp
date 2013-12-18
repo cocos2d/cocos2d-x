@@ -63,6 +63,9 @@ ArmatureAnimation::ArmatureAnimation()
     , _frameEventCallFunc(nullptr)
     , _movementEventTarget(nullptr)
     , _frameEventTarget(nullptr)
+    
+    , _movementEventListener(nullptr)
+    , _frameEventListener(nullptr)
 {
 
 }
@@ -91,30 +94,30 @@ bool ArmatureAnimation::init(Armature *armature)
 }
 
 
-void ArmatureAnimation:: pause()
+void ArmatureAnimation::pause()
 {
-    for(auto object : _tweenList)
+    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
     {
-		object->pause();
-    }
+        tween->pause();
+    });
     ProcessBase::pause();
 }
 
 void ArmatureAnimation::resume()
 {
-    for(auto object : _tweenList)
+    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
     {
-        object->resume();
-    }
+        tween->resume();
+    });
     ProcessBase::resume();
 }
 
 void ArmatureAnimation::stop()
 {
-    for(auto object : _tweenList)
+    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
     {
-        object->stop();
-    }
+        tween->stop();
+    });
     _tweenList.clear();
     ProcessBase::stop();
 }
@@ -142,7 +145,7 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
     const Map<std::string, Bone*>& map = _armature->getBoneDic();
-    for(auto element : map)
+    for(auto& element : map)
     {
         Bone *bone = element.second;
 
@@ -209,7 +212,7 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     _tweenList.clear();
 
     const Map<std::string, Bone*>& map = _armature->getBoneDic();
-    for(auto element : map)
+    for(auto& element : map)
     {
         Bone *bone = element.second;
         movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.at(bone->getName()));
@@ -305,10 +308,11 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _currentPercent = (float)_curFrameIndex / ((float)_movementData->duration-1);
     _currentFrame = _nextFrameIndex * _currentPercent;
 
-    for(auto object : _tweenList)
+    
+    for_each(_tweenList.begin(), _tweenList.end(), [&frameIndex](Tween* tween)
     {
-        object->gotoAndPlay(frameIndex);
-    }
+        tween->gotoAndPlay(frameIndex);
+    });
 
     _armature->update(0);
 
@@ -330,10 +334,10 @@ void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
     
-    for(auto object : _tweenList)
+    for_each(_tweenList.begin(), _tweenList.end(), [&dt](Tween* tween)
     {
-		object->update(dt);
-    }
+        tween->update(dt);
+    });
 
     while (_frameEventQueue.size() > 0)
     {
@@ -341,7 +345,18 @@ void ArmatureAnimation::update(float dt)
         _frameEventQueue.pop();
 
         _ignoreFrameEvent = true;
-        (_frameEventTarget->*_frameEventCallFunc)(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        
+        if(_frameEventTarget)
+        {
+            (_frameEventTarget->*_frameEventCallFunc)(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        }
+        
+        if (_frameEventListener)
+        {
+            _frameEventListener(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        }
+        
+        
         _ignoreFrameEvent = false;
 
         CC_SAFE_DELETE(event);
@@ -352,7 +367,15 @@ void ArmatureAnimation::update(float dt)
         MovementEvent *event = _movementEventQueue.front();
         _movementEventQueue.pop();
         
-        (_movementEventTarget->*_movementEventCallFunc)(event->armature, event->movementType, event->movementID);
+        if(_movementEventTarget)
+        {
+            (_movementEventTarget->*_movementEventCallFunc)(event->armature, event->movementType, event->movementID);
+        }
+        
+        if (_movementEventListener)
+        {
+            _movementEventListener(event->armature, event->movementType, event->movementID);
+        }
         
         CC_SAFE_DELETE(event);
     }
@@ -377,10 +400,7 @@ void ArmatureAnimation::updateHandler()
             {
                 _nextFrameIndex = _durationTween;
 
-                if (_movementEventTarget && _movementEventCallFunc)
-                {
-                    movementEvent(_armature, START, _movementID.c_str());
-                }
+                movementEvent(_armature, START, _movementID.c_str());
 
                 break;
             }
@@ -393,10 +413,7 @@ void ArmatureAnimation::updateHandler()
             _isComplete = true;
             _isPlaying = false;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                movementEvent(_armature, COMPLETE, _movementID.c_str());
-            }
+            movementEvent(_armature, COMPLETE, _movementID.c_str());
 
             updateMovementList();
         }
@@ -408,10 +425,7 @@ void ArmatureAnimation::updateHandler()
             _currentFrame = _nextFrameIndex == 0 ? 0 : fmodf(_currentFrame, _nextFrameIndex);
             _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                movementEvent(_armature, START, _movementID.c_str());
-            }
+            movementEvent(_armature, START, _movementID.c_str());
         }
         break;
         default:
@@ -420,10 +434,7 @@ void ArmatureAnimation::updateHandler()
             _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
             _toIndex = 0;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                movementEvent(_armature, LOOP_COMPLETE, _movementID.c_str());
-            }
+            movementEvent(_armature, LOOP_COMPLETE, _movementID.c_str());
         }
         break;
         }
@@ -451,6 +462,15 @@ void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCall
     _frameEventCallFunc = callFunc;
 }
 
+void ArmatureAnimation::setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> listener)
+{
+    _movementEventListener = listener;
+}
+void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> listener)
+{
+    _frameEventListener = listener;
+}
+
 void ArmatureAnimation::setUserObject(Object *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
@@ -460,7 +480,7 @@ void ArmatureAnimation::setUserObject(Object *pUserObject)
 
 void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
 {
-    if (_frameEventTarget && _frameEventCallFunc)
+    if ((_frameEventTarget && _frameEventCallFunc) || _frameEventListener)
     {
         FrameEvent *frameEvent = new FrameEvent();
         frameEvent->bone = bone;
@@ -475,7 +495,7 @@ void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int o
 
 void ArmatureAnimation::movementEvent(Armature *armature, MovementEventType movementType, const char *movementID)
 {
-    if (_movementEventTarget && _movementEventCallFunc)
+    if ((_movementEventTarget && _movementEventCallFunc) || _movementEventListener)
     {
         MovementEvent *movementEvent = new MovementEvent();
         movementEvent->armature = armature;

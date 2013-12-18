@@ -527,7 +527,7 @@ void TestAnimationEvent::onEnter()
     * Set armature's movement event callback function
     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
     */
-    armature->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(TestAnimationEvent::animationEvent));
+    armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(TestAnimationEvent::animationEvent, this, placeholders::_1, placeholders::_2, placeholders::_3));
     addChild(armature);
 }
 std::string TestAnimationEvent::title()
@@ -581,10 +581,9 @@ void TestFrameEvent::onEnter()
 
     /*
      * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
+     * To disconnect this event, just setFrameEventCallFunc(nullptr);
      */
-    armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestFrameEvent::onFrameEvent));
-
+    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestFrameEvent::onFrameEvent, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
     addChild(armature);
 
     schedule( schedule_selector(TestFrameEvent::checkAction) );
@@ -751,10 +750,9 @@ void TestColliderDetector::onEnter()
 
     /*
     * Set armature's frame event callback function
-    * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
+    * To disconnect this event, just setFrameEventCallFunc(nullptr);
     */
-    armature->getAnimation()->setFrameEventCallFunc(this, frameEvent_selector(TestColliderDetector::onFrameEvent));
-
+    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestColliderDetector::onFrameEvent, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
     addChild(armature);
 
     armature2 = Armature::create("Cowboy");

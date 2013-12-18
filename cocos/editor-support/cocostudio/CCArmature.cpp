@@ -140,7 +140,7 @@ bool Armature::init(const char *name)
 
             _armatureData = armatureData;
 
-            for (auto element : armatureData->boneDataDic)
+            for (auto& element : armatureData->boneDataDic)
             {
                 Bone *bone = createBone(element.first.c_str());
 
@@ -435,10 +435,9 @@ void Armature::update(float dt)
 {
     _animation->update(dt);
 
-    for (auto object : _topBoneList)
-    {
-        static_cast<Bone*>(object)->update(dt);
-    }
+    std::for_each(_topBoneList.begin(), _topBoneList.end(), [&dt](Bone* bone){
+        bone->update(dt);
+    });
 
     _armatureTransformDirty = false;
 }
@@ -451,7 +450,7 @@ void Armature::draw()
     }
 
 
-    for (auto object : _children)
+    for (auto& object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -535,7 +534,7 @@ Rect Armature::getBoundingBox() const
 
     Rect boundingBox = Rect(0, 0, 0, 0);
 
-    for(auto object : _children)
+    for_each(_children.begin(), _children.end(), [&minx, &miny, &maxx, &maxy, &first, &boundingBox](Node *object)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -560,7 +559,8 @@ Rect Armature::getBoundingBox() const
 
             boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
         }
-    }
+
+    });
 
     return RectApplyTransform(boundingBox, getNodeToParentTransform());
 }
@@ -586,7 +586,7 @@ void Armature::setParentBone(Bone *parentBone)
 {
     _parentBone = parentBone;
 
-    for (auto element : _boneDic)
+    for (auto& element : _boneDic)
     {
         element.second->setArmature(this);
     }
@@ -601,7 +601,7 @@ Bone *Armature::getParentBone() const
 
 void CCArmature::setColliderFilter(ColliderFilter *filter)
 {
-    for (auto element : _boneDic)
+    for (auto& element : _boneDic)
     {
         element.second->setColliderFilter(filter);
     }
@@ -610,7 +610,7 @@ void CCArmature::setColliderFilter(ColliderFilter *filter)
 
 void CCArmature::drawContour()
 {
-    for(auto element : _boneDic)
+    for(auto& element : _boneDic)
     {
         Bone *bone = element.second;
         ColliderDetector *detector = bone->getColliderDetector();
@@ -620,7 +620,7 @@ void CCArmature::drawContour()
 
         const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
 
-        for (auto object : bodyList)
+        for (auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();
@@ -658,7 +658,7 @@ void Armature::setBody(b2Body *body)
     _body = body;
     _body->SetUserData(this);
 
-    for(auto object : *_children)
+    for(auto& object : *_children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -704,22 +704,22 @@ void Armature::setBody(cpBody *body)
     _body = body;
     _body->data = this;
 
-    for(auto object: _children)
+    for (auto& object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             Array *displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            for(auto displayObject: *displayList)
+            for_each(displayList->begin(), displayList->end(), [&_body](DecorativeDisplay* displayObject)
             {
-                ColliderDetector *detector = static_cast<DecorativeDisplay *>(displayObject)->getColliderDetector();
+                ColliderDetector *detector = displayObject->getColliderDetector();
                 if (detector != nullptr)
                 {
                     detector->setBody(_body);
                 }
-            }
+            });
         }
-    }
+    });
 }
 
 cpShape *Armature::getShapeList()

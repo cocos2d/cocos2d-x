@@ -197,13 +197,16 @@ public:
      * Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
-    void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
-    void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
+    
+    void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> listener);
+    void setFrameEventCallFunc(std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
 
     virtual void setAnimationData(AnimationData *data) 
     {
@@ -327,6 +330,10 @@ protected:
 
     cocos2d::Object *_movementEventTarget;
     cocos2d::Object *_frameEventTarget;
+    
+    
+    std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> _movementEventListener;
+    std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> _frameEventListener;
 };
 
 }
