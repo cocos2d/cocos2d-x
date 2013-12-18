@@ -29,7 +29,9 @@ public:
 
     void registerShader(GLuint shaderID);
     void unregisterShader(GLuint shaderID);
-
+    
+    int getBlendFuncID(BlendFunc blendFunc);
+    
 protected:
     MaterialManager();
     virtual ~MaterialManager();
@@ -38,11 +40,10 @@ protected:
 
     int getTextureID(GLuint textureID);
     int getShaderID(GLuint shaderID);
-    int getBlendFuncID(GLint blendFunc);
 
     map<GLuint, int> _textureIDMapping;
     map<GLuint, int> _shaderIDMapping;
-    map<BlendFunc, int> _blendFuncMapping;
+    map<int32_t, int> _blendFuncMapping;
 };
 
 NS_CC_END

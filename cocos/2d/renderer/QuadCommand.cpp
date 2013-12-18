@@ -5,6 +5,7 @@
 
 #include "QuadCommand.h"
 #include "ccGLStateCache.h"
+#include "MaterialManager.h"
 
 NS_CC_BEGIN
 RenderCommandPool<QuadCommand> QuadCommand::_commandPool;
@@ -40,14 +41,14 @@ void QuadCommand::init(int viewport, float depth, GLuint textureID, GLProgram* s
     kmGLGetMatrix(KM_GL_PROJECTION, &p);
 
     kmMat4Multiply(&mvp, &p, &mv);
-
-
+    
     _quadCount = quadCount;
     memcpy(_quad, quad, sizeof(V3F_C4B_T2F_Quad) * quadCount);
 
     for(int i=0; i<quadCount; ++i) {
         V3F_C4B_T2F_Quad *q = &_quad[i];
 
+        //TODO: extend kazmath or create helper functions that accepts Vertex3F
         kmVec3 vec1, out1;
         vec1.x = q->bl.vertices.x;
         vec1.y = q->bl.vertices.y;
@@ -103,26 +104,7 @@ int64_t QuadCommand::generateID()
 
     //TODO fix blend id generation
     int blendID = 0;
-    if(_blendType == BlendFunc::DISABLE)
-    {
-        blendID = 0;
-    }
-    else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        blendID = 1;
-    }
-    else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        blendID = 2;
-    }
-    else if(_blendType == BlendFunc::ADDITIVE)
-    {
-        blendID = 3;
-    }
-    else
-    {
-        blendID = 4;
-    }
+    blendID = MaterialManager::getInstance()->getBlendFuncID(_blendType);
 
     _materialID = (int32_t)_shader->getProgram() << 28
             | (int32_t)blendID << 24
