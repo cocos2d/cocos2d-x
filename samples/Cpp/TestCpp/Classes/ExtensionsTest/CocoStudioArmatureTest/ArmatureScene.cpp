@@ -1360,13 +1360,15 @@ void TestPlaySeveralMovement::onEnter()
     listener->onTouchesEnded = CC_CALLBACK_2(TestPlaySeveralMovement::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    std::string names[] = {"Walk", "FireMax", "Fire"};
-    //int indexes[] = {0, 1, 2};
+    std::string name[] = {"Walk", "FireMax", "Fire"};
+    std::vector<std::string> names(name, name+3);
+//    int index[] = {0, 1, 2};
+//    std::vector<int> indexes(index, index+3);
 
     Armature *armature = NULL;
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->play(true, names, 3);
-    //armature->getAnimation()->playByIndex(true, indexes, 3);
+    armature->getAnimation()->play(names);
+//    armature->getAnimation()->playByIndex(indexes);
     armature->setScale(0.2f);
 
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
