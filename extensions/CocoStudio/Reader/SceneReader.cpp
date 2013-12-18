@@ -51,6 +51,7 @@ NS_CC_EXT_BEGIN
         do {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               pNode = createObject(jsonDict, NULL);
+			  TriggerMng::sharedTriggerMng()->parse(jsonDict);
         } while (0);
         
         return pNode;
