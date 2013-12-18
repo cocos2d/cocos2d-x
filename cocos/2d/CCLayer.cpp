@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "CCEventListenerAcceleration.h"
 #include "platform/CCDevice.h"
 #include "CCScene.h"
+#include "CustomCommand.h"
+#include "Renderer.h"
 
 NS_CC_BEGIN
 
@@ -405,6 +407,12 @@ void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *unused
     CC_UNUSED_PARAM(unused_event);
 }
 
+std::string Layer::getDescription() const
+{
+    return StringUtils::format("<Layer | Tag = %d>", _tag);
+}
+
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -499,7 +507,7 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -517,7 +525,7 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.forEach([this](Node* obj){
+        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
             if (item)
             {
@@ -545,6 +553,11 @@ bool LayerRGBA::isCascadeColorEnabled() const
 void LayerRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
     _cascadeColorEnabled = cascadeColorEnabled;
+}
+
+std::string LayerRGBA::getDescription() const
+{
+    return StringUtils::format("<LayerRGBA | Tag = %d>", _tag);
 }
 
 /// LayerColor
@@ -688,6 +701,14 @@ void LayerColor::updateColor()
 
 void LayerColor::draw()
 {
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(LayerColor::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void LayerColor::onDraw()
+{
     CC_NODE_DRAW_SETUP();
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
@@ -723,6 +744,11 @@ void LayerColor::setOpacity(GLubyte opacity)
 {
     LayerRGBA::setOpacity(opacity);
     updateColor();
+}
+
+std::string LayerColor::getDescription() const
+{
+    return StringUtils::format("<LayerColor | Tag = %d>", _tag);
 }
 
 //
@@ -912,6 +938,11 @@ void LayerGradient::setCompressedInterpolation(bool compress)
     updateColor();
 }
 
+std::string LayerGradient::getDescription() const
+{
+    return StringUtils::format("<LayerGradient | Tag = %d>", _tag);
+}
+
 /// MultiplexLayer
 
 LayerMultiplex::LayerMultiplex()
@@ -921,7 +952,7 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    _layers.forEach([](Layer* layer){
+    std::for_each(_layers.begin(), _layers.end(), [](Layer* layer){
         layer->cleanup();
     });
 }
@@ -1017,7 +1048,7 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
     if (Layer::init())
     {
         _layers.reserve(arrayOfLayers.size());
-        _layers.insert(arrayOfLayers);
+        _layers.pushBack(arrayOfLayers);
 
         _enabledLayer = 0;
         this->addChild(_layers.at(_enabledLayer));
@@ -1048,6 +1079,11 @@ void LayerMultiplex::switchToAndReleaseMe(int n)
     _enabledLayer = n;
 
     this->addChild(_layers.at(n));
+}
+
+std::string LayerMultiplex::getDescription() const
+{
+    return StringUtils::format("<LayerMultiplex | Tag = %d, Layers = %zd", _tag, _children.size());
 }
 
 NS_CC_END

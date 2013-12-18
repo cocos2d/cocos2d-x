@@ -163,6 +163,10 @@ void MenuItem::setCallback(const ccMenuCallback& callback)
 	_callback = callback;
 }
 
+std::string MenuItem::getDescription() const
+{
+    return StringUtils::format("<MenuItem | tag = %d>", _tag);
+}
 
 //
 //CCMenuItemLabel
@@ -914,7 +918,7 @@ void MenuItemToggle::addSubItem(MenuItem *item)
 
 MenuItemToggle::~MenuItemToggle()
 {
-    _subItems.forEach([](MenuItem* item){
+    std::for_each(_subItems.begin(), _subItems.end(), [](MenuItem* item){
         item->cleanup();
     });
 }
@@ -966,7 +970,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     {
         MenuItem::setEnabled(enabled);
 
-        _subItems.forEach([&enabled](MenuItem* item){
+        std::for_each(_subItems.begin(), _subItems.end(), [&enabled](MenuItem* item){
             item->setEnabled(enabled);
         });
     }

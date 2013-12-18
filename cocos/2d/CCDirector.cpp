@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "CCLabelBMFont.h"
-#include "CCLabelAtlas.h"
+#include "CCNewLabelAtlas.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
@@ -61,7 +61,8 @@ THE SOFTWARE.
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
 #include "CCFontFreeType.h"
-
+#include "Renderer.h"
+#include "renderer/Frustum.h"
 /**
  Position of the FPS
  
@@ -134,7 +135,9 @@ bool Director::init(void)
     _winSizeInPoints = Size::ZERO;    
 
     _openGLView = nullptr;
-
+    
+    _cullingFrustum = new Frustum();
+    
     _contentScaleFactor = 1.0f;
 
     // scheduler
@@ -146,7 +149,10 @@ bool Director::init(void)
     _eventDispatcher = new EventDispatcher();
     //init TextureCache
     initTextureCache();
-    
+
+    // Renderer
+    _renderer = new Renderer;
+
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
 
@@ -166,7 +172,9 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_eventDispatcher);
-    
+
+    delete _renderer;
+
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
     PoolManager::purgePoolManager();
@@ -184,34 +192,34 @@ void Director::setDefaultValues(void)
 	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
-	double fps = conf->getNumber("cocos2d.x.fps", kDefaultFPS);
+	double fps = conf->getValue("cocos2d.x.fps", Value(kDefaultFPS)).asDouble();
 	_oldAnimationInterval = _animationInterval = 1.0 / fps;
 
 	// Display FPS
-	_displayStats = conf->getBool("cocos2d.x.display_fps", false);
+	_displayStats = conf->getValue("cocos2d.x.display_fps", Value(false)).asBool();
 
 	// GL projection
-	const char *projection = conf->getCString("cocos2d.x.gl.projection", "3d");
-	if (strcmp(projection, "3d") == 0)
+    std::string projection = conf->getValue("cocos2d.x.gl.projection", Value("3d")).asString();
+	if (projection == "3d")
 		_projection = Projection::_3D;
-	else if (strcmp(projection, "2d") == 0)
+	else if (projection == "2d")
 		_projection = Projection::_2D;
-	else if (strcmp(projection, "custom") == 0)
+	else if (projection == "custom")
 		_projection = Projection::CUSTOM;
 	else
 		CCASSERT(false, "Invalid projection value");
 
 	// Default pixel format for PNG images with alpha
-	const char *pixel_format = conf->getCString("cocos2d.x.texture.pixel_format_for_png", "rgba8888");
-	if (strcmp(pixel_format, "rgba8888") == 0)
+    std::string pixel_format = conf->getValue("cocos2d.x.texture.pixel_format_for_png", Value("rgba8888")).asString();
+	if (pixel_format == "rgba8888")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-	else if(strcmp(pixel_format, "rgba4444") == 0)
+	else if(pixel_format == "rgba4444")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-	else if(strcmp(pixel_format, "rgba5551") == 0)
+	else if(pixel_format == "rgba5551")
 		Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGB5A1);
 
 	// PVR v2 has alpha premultiplied ?
-	bool pvr_alpha_premultipled = conf->getBool("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", false);
+	bool pvr_alpha_premultipled = conf->getValue("cocos2d.x.texture.pvrv2_has_alpha_premultiplied", Value(false)).asBool();
 	Texture2D::PVRImagesHavePremultipliedAlpha(pvr_alpha_premultipled);
 }
 
@@ -257,7 +265,17 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-
+    
+    //construct the frustum
+    {
+        kmMat4 view;
+        kmMat4 projection;
+        kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+        kmGLGetMatrix(KM_GL_MODELVIEW, &view);
+        
+        _cullingFrustum->setupFromMatrix(view, projection);
+    }
+    
     // draw the scene
     if (_runningScene)
     {
@@ -274,6 +292,8 @@ void Director::drawScene()
     {
         showStats();
     }
+
+    _renderer->render();
 
     kmGLPopMatrix();
 
@@ -352,6 +372,8 @@ void Director::setOpenGLView(EGLView *openGLView)
         {
             setGLDefaultValues();
         }  
+        
+        _renderer->initGLView();
         
         CHECK_GL_ERROR_DEBUG();
 
@@ -595,7 +617,7 @@ void Director::replaceScene(Scene *scene)
     CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
     CCASSERT(scene != nullptr, "the scene should not be null");
 
-    int index = _scenesStack.size();
+    ssize_t index = _scenesStack.size();
 
     _sendCleanupToScene = true;
     _scenesStack.replace(index - 1, scene);
@@ -618,7 +640,7 @@ void Director::popScene(void)
     CCASSERT(_runningScene != nullptr, "running scene should not null");
 
     _scenesStack.popBack();
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     if (c == 0)
     {
@@ -639,7 +661,7 @@ void Director::popToRootScene(void)
 void Director::popToSceneStackLevel(int level)
 {
     CCASSERT(_runningScene != nullptr, "A running Scene is needed");
-    int c = _scenesStack.size();
+    ssize_t c = _scenesStack.size();
 
     // level 0? -> end
     if (level == 0)
@@ -706,6 +728,7 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_SPFLabel);
     CC_SAFE_RELEASE_NULL(_drawsLabel);
+    CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
     LabelBMFont::purgeCachedData();
@@ -906,17 +929,17 @@ void Director::createStatsLabel()
      */
     float factor = EGLView::getInstance()->getDesignResolutionSize().height / 320.0f;
 
-    _FPSLabel = new LabelAtlas();
+    _FPSLabel = new NewLabelAtlas;
     _FPSLabel->setIgnoreContentScaleFactor(true);
     _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
     _FPSLabel->setScale(factor);
 
-    _SPFLabel = new LabelAtlas();
+    _SPFLabel = new NewLabelAtlas;
     _SPFLabel->setIgnoreContentScaleFactor(true);
     _SPFLabel->initWithString("0.000", texture, 12, 32, '.');
     _SPFLabel->setScale(factor);
 
-    _drawsLabel = new LabelAtlas();
+    _drawsLabel = new NewLabelAtlas;
     _drawsLabel->setIgnoreContentScaleFactor(true);
     _drawsLabel->initWithString("000", texture, 12, 32, '.');
     _drawsLabel->setScale(factor);
@@ -1008,6 +1031,12 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         _eventDispatcher = dispatcher;
     }
 }
+
+Renderer* Director::getRenderer() const
+{
+    return _renderer;
+}
+
 
 /***************************************************
 * implementation of DisplayLinkDirector

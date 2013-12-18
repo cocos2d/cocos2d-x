@@ -117,10 +117,27 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+renderer/CCNewDrawNode.cpp \
+renderer/CCNewLabelAtlas.cpp \
+renderer/CCNewParticleSystemQuad.cpp \
+renderer/CCNewRenderTexture.cpp \
+renderer/CCNewSprite.cpp \
+renderer/CCNewSpriteBatchNode.cpp \
+renderer/CCNewTextureAtlas.cpp \
+renderer/CustomCommand.cpp \
+renderer/Frustum.cpp \
+renderer/GroupCommand.cpp \
+renderer/MaterialManager.cpp \
+renderer/NewClippingNode.cpp \
+renderer/QuadCommand.cpp \
+renderer/RenderCommand.cpp \
+renderer/Renderer.cpp \
+renderer/RenderMaterial.cpp \
 ../base/atitc.cpp \
 ../base/CCAffineTransform.cpp \
 ../base/CCArray.cpp \
 ../base/CCAutoreleasePool.cpp \
+../base/CCConsole.cpp \
 ../base/CCData.cpp \
 ../base/CCDataVisitor.cpp \
 ../base/CCDictionary.cpp \
@@ -132,7 +149,6 @@ platform/CCThread.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
-../base/CCConsole.cpp \
 ../math/kazmath/src/aabb.c \
 ../math/kazmath/src/mat3.c \
 ../math/kazmath/src/mat4.c \
@@ -158,10 +174,12 @@ platform/CCThread.cpp \
 ../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
-../../external/unzip/unzip.cpp
+../../external/unzip/unzip.cpp \
+../../external/edtaa3func/edtaa3func.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
@@ -171,13 +189,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/edtaa3func
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -196,9 +216,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-literal-suffix
+LOCAL_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix
+LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

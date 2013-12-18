@@ -27,6 +27,8 @@
 
 NS_CC_BEGIN
 
+const Value Value::Null;
+
 Value::Value()
 : _vectorData(new ValueVector())
 , _mapData(new ValueMap())
@@ -580,12 +582,103 @@ std::string Value::asString() const
             ret << _baseData.doubleVal;
             break;
         case Type::BOOLEAN:
-            ret << _baseData.boolVal;
+            ret << (_baseData.boolVal ? "true" : "false");
             break;
         default:
             break;
     }
     return ret.str();
+}
+
+static std::string getTabs(int depth)
+{
+    std::string tabWidth;
+    
+    for (int i = 0; i < depth; ++i)
+    {
+        tabWidth += "\t";
+    }
+    
+    return tabWidth;
+}
+
+static std::string visit(const Value& v, int depth);
+
+static std::string visitVector(const ValueVector& v, int depth)
+{
+    std::stringstream ret;
+    
+    if (depth > 0)
+        ret << "\n";
+    
+    ret << getTabs(depth) << "[\n";
+    
+    int i = 0;
+    for (const auto& child : v)
+    {
+        ret << getTabs(depth+1) << i << ": " << visit(child, depth + 1);
+        ++i;
+    }
+    
+    ret << getTabs(depth) << "]\n";
+    
+    return ret.str();
+}
+
+static std::string visitMap(const ValueMap& v, int depth)
+{
+    std::stringstream ret;
+    
+    if (depth > 0)
+        ret << "\n";
+    
+    ret << getTabs(depth) << "{\n";
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        ret << getTabs(depth + 1) << iter->first << ": ";
+        ret << visit(iter->second, depth + 1);
+    }
+    
+    ret << getTabs(depth) << "}\n";
+    
+    return ret.str();
+}
+
+static std::string visit(const Value& v, int depth)
+{
+    std::stringstream ret;
+
+    switch (v.getType())
+    {
+        case Value::Type::BYTE:
+        case Value::Type::INTEGER:
+        case Value::Type::FLOAT:
+        case Value::Type::DOUBLE:
+        case Value::Type::BOOLEAN:
+        case Value::Type::STRING:
+            ret << v.asString() << "\n";
+            break;
+        case Value::Type::VECTOR:
+            ret << visitVector(v.asValueVector(), depth);
+            break;
+        case Value::Type::MAP:
+            ret << visitMap(v.asValueMap(), depth);
+            break;
+        case Value::Type::INT_KEY_MAP:
+            break;
+        default:
+            break;
+    }
+    
+    return ret.str();
+}
+
+std::string Value::getDescription()
+{
+    std::string ret("\n");
+    ret += visit(*this, 0);
+    return ret;
 }
 
 void Value::clear()

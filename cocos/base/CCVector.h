@@ -37,327 +37,12 @@ template<class T>
 class CC_DLL Vector
 {
 public:
-    Vector<T>()
-    : _data()
-    {
-        
-    }
-    
-    /** creates an emptry Vector */
-    explicit Vector<T>(int capacity)
-    : _data()
-    {
-        CCLOGINFO("In the default constructor with capacity of Vector.");
-        reserve(capacity);
-    }
-
-    virtual ~Vector<T>()
-    {
-        CCLOGINFO("In the destructor of Vector.");
-        clear();
-    }
-
-    Vector<T>(const Vector<T>& other)
-    {
-        CCLOGINFO("In the copy constructor!");
-        _data = other._data;
-        addRefForAllObjects();
-    }
-    
-    /** Move constructor */
-    Vector<T>(Vector<T>&& other)
-    {
-        CCLOGINFO("In the move constructor of Vector!");
-        _data = std::move(other._data);
-    }
-    
-    Vector<T>& operator=(const Vector<T>& other)
-    {
-        CCLOGINFO("In the copy assignment operator!");
-        clear();
-        _data = other._data;
-        addRefForAllObjects();
-        return *this;
-    }
-    
-    Vector<T>& operator=(Vector<T>&& other)
-    {
-        CCLOGINFO("In the move assignment operator!");
-        _data = std::move(other._data);
-        return *this;
-    }
-    
-// Don't uses operator since we could not decide whether it needs 'retain'/'release'.
-//    T& operator[](int index)
-//    {
-//        return _data[index];
-//    }
-//    
-//    const T& operator[](int index) const
-//    {
-//        return _data[index];
-//    }
-    
-    /** Sets capacity of current array */
-    void reserve(int capacity)
-    {
-        _data.reserve(capacity);
-    }
-    
-    /** Returns capacity of the array */
-    int capacity() const
-    {
-        return _data.capacity();
-    }
-    
-    // Querying an Array
-
-    /** Returns element count of the array */
-    int size() const
-    {
-        return  static_cast<int>(_data.size());
-    }
-    
-    bool empty() const
-    {
-        return _data.empty();
-    }
-    
-    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
-    int getIndex(T object) const
-    {
-        int i = 0;
-        for (auto it = _data.begin(); it != _data.end(); ++it, ++i)
-        {
-            if (*it == object)
-            {
-                return i;
-            }
-        }
-        
-        return -1;
-    }
-
-    /** Returns an element with a certain index */
-    T at(int index) const
-    {
-        CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
-        return _data[index];
-    }
-
-    T front() const
-    {
-        return _data.front();
-    }
-    
-    /** Returns the last element of the array */
-    T back() const
-    {
-        return _data.back();
-    }
-
-    /** Returns a random element */
-    T getRandomObject() const
-    {
-        if (!_data.empty())
-        {
-            int randIdx = rand() % _data.size();
-            return *(_data.begin() + randIdx);
-        }
-        return nullptr;
-    }
-
-    /** Returns a Boolean value that indicates whether object is present in array. */
-    bool contains(T object) const
-    {
-        return( std::find(_data.begin(), _data.end(), object) != _data.end() );
-    }
-
-    /** returns true if the the arrays are equal */
-    bool equals(const Vector<T> &other)
-    {
-        size_t s = this->size();
-        if (s != other.size())
-            return false;
-        
-        for (int i = 0; i < s; i++)
-        {
-            if (!this->at(i)->isEqual(other.at(i)))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Adding Objects
-
-    /** Add a certain object */
-    void pushBack(T object)
-    {
-        CCASSERT(object != nullptr, "The object should not be nullptr");
-        _data.push_back( object );
-        object->retain();
-    }
-    
-    /** Add all elements of an existing array */
-    void insert(const Vector<T>& other)
-    {
-        for( auto it = other.begin(); it != other.end(); ++it ) {
-            _data.push_back( *it );
-            (*it)->retain();
-        }
-    }
-
-    /** Insert a certain object at a certain index */
-    void insert(int index, T object)
-    {
-        CCASSERT(index >= 0 && index <= size(), "Invalid index!");
-        CCASSERT(object != nullptr, "The object should not be nullptr");
-        _data.insert((std::begin(_data) + index), object);
-        object->retain();
-    }
-    
-    // Removing Objects
-
-    /** Remove last object */
-    void popBack()
-    {
-        CCASSERT(!_data.empty(), "no objects added");
-        auto last = _data.back();
-        _data.pop_back();
-        last->release();
-    }
-
-    /** Remove a certain object */
-    void removeObject(T object, bool toRelease = true)
-    {
-        CCASSERT(object != nullptr, "The object should not be nullptr");
-        auto iter = std::find(_data.begin(), _data.end(), object);
-        if (iter != _data.end())
-            _data.erase(iter);
-        if (toRelease)
-            object->release();
-    }
-
-    /** Removes an element with a certain index */
-    void remove(int index)
-    {
-        CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
-        auto it = std::next( begin(), index );
-        (*it)->release();
-        _data.erase(it);
-    }
-
-    /** Removes all objects */
-    void clear()
-    {
-        for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
-            (*it)->release();
-        }
-        _data.clear();
-    }
-
-    // Rearranging Content
-
-    /** Swap two elements */
-    void swap(T object1, T object2)
-    {
-        auto idx1 = getIndex(object1);
-        auto idx2 = getIndex(object2);
-
-        CCASSERT(idx1>=0 && idx2>=0, "invalid object index");
-
-        std::swap( _data[idx1], _data[idx2] );
-    }
-    
-    /** Swap two elements with certain indexes */
-    void swap(int index1, int index2)
-    {
-        CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
-
-        std::swap( _data[index1], _data[index2] );
-    }
-
-    /** Replace object at index with another object. */
-    void replace(int index, T object)
-    {
-        CCASSERT(index >= 0 && index < size(), "Invalid index!");
-        CCASSERT(object != nullptr, "The object should not be nullptr");
-        
-        _data[index]->release();
-        _data[index] = object;
-        object->retain();
-    }
-
-    /** reverses the array */
-    void reverse()
-    {
-        std::reverse( std::begin(_data), std::end(_data) );
-    }
-    
-    /** Shrinks the array so the memory footprint corresponds with the number of items */
-    void shrinkToFit()
-    {
-        _data.shrink_to_fit();
-    }
-    
-    void forEach(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    void forEach(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-  
-    void forEachReverse(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    void forEachReverse(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    void sort(const std::function<bool(T, T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::sort(_data.begin(), _data.end(), [&callback](T a, T b) -> bool{
-            return callback(a, b);
-        });
-    }
-    
     // ------------------------------------------
     // Iterators
     // ------------------------------------------
     typedef typename std::vector<T>::iterator iterator;
     typedef typename std::vector<T>::const_iterator const_iterator;
-
+    
     typedef typename std::vector<T>::reverse_iterator reverse_iterator;
     typedef typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
     
@@ -379,8 +64,355 @@ public:
     const_reverse_iterator crbegin() const { return _data.crbegin(); }
     const_reverse_iterator crend() const { return _data.crend(); }
     
+    /** Constructor */
+    Vector<T>()
+    : _data()
+    {
+        
+    }
+    
+    /** Constructor with a capacity */
+    explicit Vector<T>(ssize_t capacity)
+    : _data()
+    {
+        CCLOGINFO("In the default constructor with capacity of Vector.");
+        reserve(capacity);
+    }
+
+    /** Destructor */
+    ~Vector<T>()
+    {
+        CCLOGINFO("In the destructor of Vector.");
+        clear();
+    }
+
+    /** Copy constructor */
+    Vector<T>(const Vector<T>& other)
+    {
+        CCLOGINFO("In the copy constructor!");
+        _data = other._data;
+        addRefForAllObjects();
+    }
+    
+    /** Move constructor */
+    Vector<T>(Vector<T>&& other)
+    {
+        CCLOGINFO("In the move constructor of Vector!");
+        _data = std::move(other._data);
+    }
+    
+    /** Copy assignment operator */
+    Vector<T>& operator=(const Vector<T>& other)
+    {
+        CCLOGINFO("In the copy assignment operator!");
+        clear();
+        _data = other._data;
+        addRefForAllObjects();
+        return *this;
+    }
+    
+    /** Move assignment operator */
+    Vector<T>& operator=(Vector<T>&& other)
+    {
+        CCLOGINFO("In the move assignment operator!");
+        _data = std::move(other._data);
+        return *this;
+    }
+    
+// Don't uses operator since we could not decide whether it needs 'retain'/'release'.
+//    T& operator[](int index)
+//    {
+//        return _data[index];
+//    }
+//    
+//    const T& operator[](int index) const
+//    {
+//        return _data[index];
+//    }
+    
+    /** @brief Request a change in capacity 
+     *  @param capacity Minimum capacity for the vector.
+     *         If n is greater than the current vector capacity, 
+     *         the function causes the container to reallocate its storage increasing its capacity to n (or greater).
+     */
+    void reserve(ssize_t n)
+    {
+        _data.reserve(n);
+    }
+    
+    /** @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
+     *  @note This capacity is not necessarily equal to the vector size. 
+     *        It can be equal or greater, with the extra space allowing to accommodate for growth without the need to reallocate on each insertion.
+     *  @return The size of the currently allocated storage capacity in the vector, measured in terms of the number elements it can hold.
+     */
+    ssize_t capacity() const
+    {
+        return _data.capacity();
+    }
+    
+    /** @brief Returns the number of elements in the vector.
+     *  @note This is the number of actual objects held in the vector, which is not necessarily equal to its storage capacity.
+     *  @return The number of elements in the container.
+     */
+    ssize_t size() const
+    {
+        return  _data.size();
+    }
+    
+    /** @brief Returns whether the vector is empty (i.e. whether its size is 0).
+     *  @note This function does not modify the container in any way. To clear the content of a vector, see Vector<T>::clear.
+     */
+    bool empty() const
+    {
+        return _data.empty();
+    }
+    
+    /** Returns the maximum number of elements that the vector can hold. */
+    ssize_t max_size() const
+    {
+        return _data.max_size();
+    }
+    
+    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
+    ssize_t getIndex(T object) const
+    {
+        auto iter = std::find(_data.begin(), _data.end(), object);
+        if (iter != _data.end())
+            return iter - _data.begin();
+
+        return -1;
+    }
+
+    /** @brief Find the object in the vector.
+     *  @return Returns an iterator to the first element in the range [first,last) that compares equal to val. 
+     *          If no such element is found, the function returns last.
+     */
+    const_iterator find(T object) const
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
+    iterator find(T object)
+    {
+        return std::find(_data.begin(), _data.end(), object);
+    }
+    
+    /** Returns the element at position 'index' in the vector. */
+    T at(ssize_t index) const
+    {
+        CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
+        return _data[index];
+    }
+
+    /** Returns the first element in the vector. */
+    T front() const
+    {
+        return _data.front();
+    }
+    
+    /** Returns the last element of the vector. */
+    T back() const
+    {
+        return _data.back();
+    }
+
+    /** Returns a random element of the vector. */
+    T getRandomObject() const
+    {
+        if (!_data.empty())
+        {
+            ssize_t randIdx = rand() % _data.size();
+            return *(_data.begin() + randIdx);
+        }
+        return nullptr;
+    }
+
+    /** Returns a Boolean value that indicates whether object is present in vector. */
+    bool contains(T object) const
+    {
+        return( std::find(_data.begin(), _data.end(), object) != _data.end() );
+    }
+
+    /** Returns true if the two vectors are equal */
+    bool equals(const Vector<T> &other)
+    {
+        ssize_t s = this->size();
+        if (s != other.size())
+            return false;
+        
+        for (ssize_t i = 0; i < s; i++)
+        {
+            if (!this->at(i)->isEqual(other.at(i)))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Adds objects
+    
+    /** @brief Adds a new element at the end of the vector, after its current last element.
+     *  @note This effectively increases the container size by one,
+     *        which causes an automatic reallocation of the allocated storage space 
+     *        if -and only if- the new vector size surpasses the current vector capacity.
+     */
+    void pushBack(T object)
+    {
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        _data.push_back( object );
+        object->retain();
+    }
+    
+    /** Push all elements of an existing vector to the end of current vector. */
+    void pushBack(const Vector<T>& other)
+    {
+        std::for_each(other.begin(), other.end(), [this](T obj){
+            _data.push_back(obj);
+            obj->retain();
+        });
+    }
+
+    /** @brief Insert a certain object at a certain index 
+     *  @note The vector is extended by inserting new elements before the element at the specified 'index',
+     *        effectively increasing the container size by the number of elements inserted.
+     *        This causes an automatic reallocation of the allocated storage space 
+     *        if -and only if- the new vector size surpasses the current vector capacity.
+     */
+    void insert(ssize_t index, T object)
+    {
+        CCASSERT(index >= 0 && index <= size(), "Invalid index!");
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        _data.insert((std::begin(_data) + index), object);
+        object->retain();
+    }
+    
+    // Removes Objects
+
+    /** Removes the last element in the vector, 
+     *  effectively reducing the container size by one, decrease the referece count of the deleted object.
+     */
+    void popBack()
+    {
+        CCASSERT(!_data.empty(), "no objects added");
+        auto last = _data.back();
+        _data.pop_back();
+        last->release();
+    }
+    
+    /** @brief Remove a certain object.
+     *  @param object The object to be removed.
+     *  @param toRelease Whether to decrease the referece count of the deleted object.
+     */
+    void eraseObject(T object, bool toRelease = true)
+    {
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        auto iter = std::find(_data.begin(), _data.end(), object);
+        if (iter != _data.end())
+            _data.erase(iter);
+        if (toRelease)
+            object->release();
+    }
+
+    /** @brief Removes from the vector with an iterator. 
+     *  @param position Iterator pointing to a single element to be removed from the vector.
+     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
+     *          This is the container end if the operation erased the last element in the sequence.
+     */
+    iterator erase(iterator position)
+    {
+        CCASSERT(position >= _data.begin() && position < _data.end(), "Invalid position!");
+        (*position)->release();
+        return _data.erase(position);
+    }
+    
+    /** @brief Removes from the vector with a range of elements (  [first, last)  ).
+     *  @param first The beginning of the range
+     *  @param last The end of the range, the 'last' will not used, it's only for indicating the end of range.
+     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
+     *          This is the container end if the operation erased the last element in the sequence.
+     */
+    iterator erase(const_iterator first, const_iterator last)
+    {
+        for (auto iter = first; iter != last; ++iter)
+        {
+            (*iter)->release();
+        }
+        
+        return _data.erase(first, last);
+    }
+    
+    /** @brief Removes from the vector with an index.
+     *  @param index The index of the element to be removed from the vector.
+     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
+     *          This is the container end if the operation erased the last element in the sequence.
+     */
+    iterator erase(ssize_t index)
+    {
+        CCASSERT(!_data.empty() && index >=0 && index < size(), "Invalid index!");
+        auto it = std::next( begin(), index );
+        (*it)->release();
+        return _data.erase(it);
+    }
+
+    /** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
+     *  @note All the elements in the vector will be released (referece count will be decreased).
+     */
+    void clear()
+    {
+        for( auto it = std::begin(_data); it != std::end(_data); ++it ) {
+            (*it)->release();
+        }
+        _data.clear();
+    }
+
+    // Rearranging Content
+
+    /** Swap two elements */
+    void swap(T object1, T object2)
+    {
+        ssize_t idx1 = getIndex(object1);
+        ssize_t idx2 = getIndex(object2);
+
+        CCASSERT(idx1>=0 && idx2>=0, "invalid object index");
+
+        std::swap( _data[idx1], _data[idx2] );
+    }
+    
+    /** Swap two elements with certain indexes */
+    void swap(ssize_t index1, ssize_t index2)
+    {
+        CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
+
+        std::swap( _data[index1], _data[index2] );
+    }
+
+    /** Replace object at index with another object. */
+    void replace(ssize_t index, T object)
+    {
+        CCASSERT(index >= 0 && index < size(), "Invalid index!");
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        
+        _data[index]->release();
+        _data[index] = object;
+        object->retain();
+    }
+
+    /** reverses the vector */
+    void reverse()
+    {
+        std::reverse( std::begin(_data), std::end(_data) );
+    }
+    
+    /** Shrinks the vector so the memory footprint corresponds with the number of items */
+    void shrinkToFit()
+    {
+        _data.shrink_to_fit();
+    }
+    
 protected:
     
+    /** Retains all the objects in the vector */
     void addRefForAllObjects()
     {
         std::for_each(_data.begin(), _data.end(), [](T obj){

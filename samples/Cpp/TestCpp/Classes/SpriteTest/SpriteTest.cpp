@@ -667,7 +667,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     auto& children = asmtest->getChildren();
 
-    children.forEach([&prev](Node* obj){
+    std::for_each(children.begin(), children.end(), [&prev](Node* obj){
         auto child = static_cast<Sprite*>(obj);
 
         int currentIndex = child->getAtlasIndex();
@@ -1468,7 +1468,7 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
 
     if( _usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
-        children.forEach([&sprite, this](Node* obj){
+        std::for_each(children.begin(), children.end(), [&sprite, this](Node* obj){
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture2);
         });
@@ -1477,7 +1477,7 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
     } 
     else 
     {
-        children.forEach([&sprite, this](Node* obj){
+        std::for_each(children.begin(), children.end(), [&sprite, this](Node* obj){
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture1);
         });
@@ -1643,7 +1643,7 @@ void SpriteFrameTest::onEnter()
     }
 
     // append frames from another batch
-    moreFrames.insert(animFrames);
+    moreFrames.pushBack(animFrames);
     auto animMixed = Animation::createWithSpriteFrames(moreFrames, 0.3f);
 
 
@@ -2214,14 +2214,15 @@ void SpriteHybrid::reparentSprite(float dt)
 
     ////----CCLOG("New parent is: %x", p2);
     
-    p1->getChildren().forEach([&retArray](Node* node){
+    auto& p1Children = p1->getChildren();
+    std::for_each(p1Children.begin(), p1Children.end(), [&retArray](Node* node){
         retArray.pushBack(node);
     });
 
     int i=0;
     p1->removeAllChildrenWithCleanup(false);
 
-    retArray.forEach([&i, &p2](Node* node){
+    std::for_each(retArray.begin(), retArray.end(), [&i, &p2](Node* node){
         p2->addChild(node, i, i);
         i++;
     });
@@ -4129,7 +4130,9 @@ void NodeSort::reorderSprite(float dt)
 
     log("Before reorder--");
     
-    _node->getChildren().forEach([](Node* child){
+    auto& children = _node->getChildren();
+    
+    std::for_each(children.begin(), children.end(), [](Node* child){
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     });
     //z-4
@@ -4138,7 +4141,7 @@ void NodeSort::reorderSprite(float dt)
     _node->sortAllChildren();
     
     log("After reorder--");
-    _node->getChildren().forEach([](Node* child){
+    std::for_each(children.begin(), children.end(), [](Node* child){
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
     });
 }

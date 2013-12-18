@@ -88,8 +88,8 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     if (!_pageTexture)
         return false;
     
-    int  dataLenght     = (_width * _height * 4);
-    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::RGBA8888, _width, _height, imageSize);
+    int  dataLenght     = (_width * _height * 1);
+    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::A8, _width, _height, imageSize);
     
     // release the page data if requested
     if (releasePageData && textureCreated)
@@ -421,7 +421,7 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
     int pageHeight = thePage->getHeight();
     
     // prepare memory and clean to 0
-    int sizeInBytes     = (pageWidth * pageHeight * 4);
+    int sizeInBytes     = (pageWidth * pageHeight * 1);
     unsigned char* data = new unsigned char[sizeInBytes];
     
     if (!data)
@@ -443,7 +443,7 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
         for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
         {
             GlyphDef currGlyph      = currentLine->getGlyphAt(cglyph);
-            renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
+            _font->renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
             origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
         }
     }
@@ -460,47 +460,6 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
     
     // we are done here
     return data;
-}
-
-bool TextImage::renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize)
-{
-    if (!_font)
-        return false;
-    
-    unsigned char *sourceBitmap = 0;
-    int sourceWidth  = 0;
-    int sourceHeight = 0;
-    
-    // get the glyph's bitmap
-    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
-    
-    if (!sourceBitmap)
-        return false;
-    
-    int iX = posX;
-    int iY = posY;
-    
-    for (int y = 0; y < sourceHeight; ++y)
-    {
-        int bitmap_y = y * sourceWidth;
-        
-        for (int x = 0; x < sourceWidth; ++x)
-        {
-            unsigned char cTemp = sourceBitmap[bitmap_y + x];
-            
-            // the final pixel
-            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-            *(int*) &destMemory[(iX + ( iY * destSize ) ) * 4] = iTemp;
-            
-            iX += 1;
-        }
-        
-        iX  = posX;
-        iY += 1;
-    }
-    
-    //everything good
-    return true;
 }
 
 NS_CC_END

@@ -36,7 +36,7 @@ static NotificationCenter *s_sharedNotifCenter = NULL;
 NotificationCenter::NotificationCenter()
 : _scriptHandler(0)
 {
-    _observers = Array::createWithCapacity(3);
+    _observers = __Array::createWithCapacity(3);
     _observers->retain();
 }
 
@@ -128,7 +128,7 @@ void NotificationCenter::removeObserver(Object *target,const char *name)
 int NotificationCenter::removeAllObservers(Object *target)
 {
     Object *obj = NULL;
-    Array *toRemove = Array::create();
+    __Array *toRemove = __Array::create();
 
     CCARRAY_FOREACH(_observers, obj)
     {
@@ -143,7 +143,7 @@ int NotificationCenter::removeAllObservers(Object *target)
     }
 
     _observers->removeObjectsInArray(toRemove);
-    return toRemove->count();
+    return static_cast<int>(toRemove->count());
 }
 
 void NotificationCenter::registerScriptObserver( Object *target, int handler,const char* name)
@@ -179,7 +179,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const char* nam
 
 void NotificationCenter::postNotification(const char *name, Object *sender)
 {
-    Array* ObserversCopy = Array::createWithCapacity(_observers->count());
+    __Array* ObserversCopy = __Array::createWithCapacity(_observers->count());
     ObserversCopy->addObjectsFromArray(_observers);
     Object* obj = NULL;
     CCARRAY_FOREACH(ObserversCopy, obj)

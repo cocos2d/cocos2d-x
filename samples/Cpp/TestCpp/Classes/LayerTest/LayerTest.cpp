@@ -119,7 +119,8 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
         rgba->setCascadeOpacityEnabled(enable);
     }
     
-    node->getChildren().forEach([enable](Node* child){
+    auto& children = node->getChildren();
+    std::for_each(children.begin(), children.end(), [enable](Node* child){
         setEnableRecursiveCascading(child, enable);
     });
 }

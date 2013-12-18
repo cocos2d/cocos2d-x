@@ -27,6 +27,7 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 // some utility functions
 // to native
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *ret );
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
 JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
 JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
@@ -113,10 +114,12 @@ JSBool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret);
 JSBool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret);
 JSBool jsval_to_ccintvaluemap(JSContext* cx, jsval v, cocos2d::IntValueMap* ret);
 JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
 
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
+jsval ushort_to_jsval( JSContext *cx, unsigned short number );
 jsval long_to_jsval( JSContext *cx, long number );
 jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
@@ -172,6 +175,7 @@ jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v);
 jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
 jsval ccintvaluemap_to_jsval(JSContext* cx, const cocos2d::IntValueMap& v);
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
+jsval ssize_to_jsval(JSContext *cx, ssize_t v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 

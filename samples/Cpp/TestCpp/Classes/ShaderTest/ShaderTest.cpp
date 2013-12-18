@@ -679,7 +679,8 @@ void ShaderRetroEffect::update(float dt)
     _accum += dt;
 
     int i=0;
-    _label->getChildren().forEach([&i, this](Node* sprite){
+    auto& children = _label->getChildren();
+    std::for_each(children.begin(), children.end(), [&i, this](Node* sprite){
         i++;
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));

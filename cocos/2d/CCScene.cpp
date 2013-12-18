@@ -78,6 +78,11 @@ Scene *Scene::create()
     }
 }
 
+std::string Scene::getDescription() const
+{
+    return StringUtils::format("<Scene | tag = %d>", _tag);
+}
+
 #ifdef CC_USE_PHYSICS
 Scene *Scene::createWithPhysics()
 {
@@ -140,7 +145,8 @@ void Scene::addChildToPhysicsWorld(Node* child)
                 _physicsWorld->addBody(node->getPhysicsBody());
             }
             
-            node->getChildren().forEach([addToPhysicsWorldFunc](Node* n){
+            auto& children = node->getChildren();
+            std::for_each(children.begin(), children.end(), [addToPhysicsWorldFunc](Node* n){
                 addToPhysicsWorldFunc(n);
             });
         };

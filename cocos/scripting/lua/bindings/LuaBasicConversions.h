@@ -32,6 +32,7 @@ extern bool luaval_to_number(lua_State* L,int lo,double* outValue);
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue);
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue);
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue);
+extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue);
 
 extern bool luaval_to_point(lua_State* L,int lo,Point* outValue);
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue);
@@ -91,8 +92,10 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret)
         size_t len = lua_objlen(L, lo);
         for (int i = 0; i < len; i++)
         {
-            lua_gettable(L, i + 1);
-            if (lua_isnil(L, -1) || lua_isuserdata(L, -1))
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L, lo);
+            
+            if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
             {
                 lua_pop(L, 1);
                 continue;
@@ -147,7 +150,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
         {
             long typeId = typeid(*obj).hash_code();
             auto iter = g_luaType.find(typeId);
-            if (g_luaType.end() == iter)
+            if (g_luaType.end() != iter)
             {
                 lua_pushnumber(L, (lua_Number)indexTable);
                 int ID = (obj) ? (int)obj->_ID : -1;

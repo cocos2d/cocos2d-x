@@ -131,8 +131,8 @@ bool LabelTTF::initWithString(const std::string& string, const std::string& font
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
-        
+//        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
+
         _dimensions = Size(dimensions.width, dimensions.height);
         _alignment = hAlignment;
         _vAlignment = vAlignment;
@@ -185,9 +185,9 @@ const std::string& LabelTTF::getString() const
     return _string;
 }
 
-const char* LabelTTF::description() const
+std::string LabelTTF::getDescription() const
 {
-    return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName.c_str(), _fontSize)->getCString();
+    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %.1f, Label = '%s'>", _fontName.c_str(), _fontSize, _string.c_str());
 }
 
 TextHAlignment LabelTTF::getHorizontalAlignment() const

@@ -60,34 +60,34 @@ public:
     static RenderTexture * create(int w, int h);
 
     /** starts grabbing */
-    void begin();
+    virtual void begin();
 
     /** starts rendering to the texture while clearing the texture first.
     This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a);
+    virtual void beginWithClear(float r, float g, float b, float a);
 
     /** starts rendering to the texture while clearing the texture first.
      This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
     /** starts rendering to the texture while clearing the texture first.
      This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
     /** end is key word of lua, use other name to export to lua. */
     inline void endToLua(){ end();};
 
     /** ends grabbing*/
-    void end();
+    virtual void end();
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
 
     /** clears the texture with a specified depth value */
-    void clearDepth(float depthValue);
+    virtual void clearDepth(float depthValue);
 
     /** clears the texture with a specified stencil value */
-    void clearStencil(int stencilValue);
+    virtual void clearStencil(int stencilValue);
     /* creates a new Image from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
@@ -164,7 +164,7 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
 protected:
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;

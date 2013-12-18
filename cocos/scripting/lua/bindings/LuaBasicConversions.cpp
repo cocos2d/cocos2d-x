@@ -283,6 +283,11 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
+{
+    return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
+}
+
 bool luaval_to_long(lua_State* L,int lo, long* outValue)
 {
     if (NULL == L || NULL == outValue)
@@ -1093,7 +1098,7 @@ bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret)
     if (tolua_istable(L, lo, 0, &tolua_err))
     {
         lua_pushnumber(L,1);
-        lua_gettable(L,-2);
+        lua_gettable(L,lo);
         
         if (lua_isnil(L, -1) )                          /** if table[1] = nil,we don't think it is a pure array */
         {

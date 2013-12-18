@@ -1,6 +1,7 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
+#include "renderer/CCNewRenderTexture.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -92,7 +93,7 @@ RenderTextureSave::RenderTextureSave()
     auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+    _target = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Point(s.width / 2, s.height / 2));
 
@@ -240,7 +241,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     
     
     /* A2 & B2 setup */
-    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = NewRenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
     if (NULL == rend)
     {
@@ -409,7 +410,7 @@ void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    auto texture = RenderTexture::create(512, 512);
+    auto texture = NewRenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -443,7 +444,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     auto sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    auto rend = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -505,7 +506,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -590,7 +591,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
