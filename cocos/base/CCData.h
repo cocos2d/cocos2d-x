@@ -26,41 +26,24 @@
 #define __CCDATA_H__
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include <stdint.h> // for ssize_t
 
 NS_CC_BEGIN
 
-class CC_DLL Data : public Object
+class CC_DLL Data
 {
 public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Data(unsigned char *pBytes, const ssize_t nSize);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Data(Data *pData);
-    /**
-     * @js NA
-     * @lua NA
-     */
+    static const Data Null;
+    
+    Data();
+    Data(const Data& other);
+    Data(Data&& other);
     ~Data();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    static Data* create(unsigned char *pBytes, const ssize_t nSize)
-    {
-        Data* pRet = new Data(pBytes, nSize);
-        if (pRet)
-        {
-            pRet->autorelease();
-        }
-        return pRet;
-    }    
+    
+    // Assignment operator
+    Data& operator= (const Data& other);
+    Data& operator= (Data&& other);
+    
     /**
      * @js NA
      * @lua NA
@@ -72,12 +55,28 @@ public:
      */
     ssize_t getSize() const;
     
-    /** override functions
-     * @js NA
-     * @lua NA
+    /** Copies the buffer pointer and its size.
+     *  @note This method will copy the whole buffer.
+     *        Developer should free the pointer after invoking this method.
+     *  @see Data::fastSet
      */
-    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
-
+    void copy(unsigned char* bytes, const ssize_t size);
+    
+    /** Fast set the buffer pointer and its size.
+     *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
+     *         since in the destructor of Data, the buffer will be deleted by 'free'.
+     *  @note This method will move the ownship of 'bytes'pointer to Data,
+     *        The pointer should not be used outside after it was passed to this method.
+     *  @see Data::copy
+     */
+    void fastSet(unsigned char* bytes, const ssize_t size);
+    
+    /** Check whether the data is null. */
+    bool isNull() const;
+    
+private:
+    void move(Data& other);
+    
 private:
     unsigned char* _bytes;
     ssize_t _size;

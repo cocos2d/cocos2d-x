@@ -342,12 +342,12 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
     return getStringForKeyJNI(pKey, defaultValue.c_str());
 }
 
-Data* UserDefault::getDataForKey(const char* pKey)
+Data UserDefault::getDataForKey(const char* pKey)
 {
-    return getDataForKey(pKey, NULL);
+    return getDataForKey(pKey, Data::Null);
 }
 
-Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
+Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -362,12 +362,12 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
             int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
             
             if (decodedData) {
-                Data *ret = Data::create(decodedData, decodedDataLen);
+                Data ret;
+                ret.fastSet(decodedData, decodedDataLen);
                 
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
                 
-                free(decodedData);
                 flush();
                 
                 // delete xmle node
@@ -385,7 +385,7 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
 #endif
     
     char * encodedDefaultData = NULL;
-    unsigned int encodedDefaultDataLen = defaultValue ? base64Encode(defaultValue->getBytes(), defaultValue->getSize(), &encodedDefaultData) : 0;
+    unsigned int encodedDefaultDataLen = !defaultValue.isNull() ? base64Encode(defaultValue.getBytes(), defaultValue.getSize(), &encodedDefaultData) : 0;
     
     string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
 
@@ -393,23 +393,19 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
         free(encodedDefaultData);
 
     CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
-    
-    Data *ret = defaultValue;
-    
+      
     unsigned char * decodedData = NULL;
     int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
 
-    CCLOG("AFTER DECoDE. ret %p defaultValue %p", ret, defaultValue);
-    CCLOG("DECoDED DATA: %s %d", decodedData, decodedDataLen);
+    CCLOG("DECODED DATA: %s %d", decodedData, decodedDataLen);
     
     if (decodedData && decodedDataLen) {
-        ret = Data::create(decodedData, decodedDataLen);
-        free(decodedData);
+        Data ret;
+        ret.fastSet(decodedData, decodedDataLen);
+        return ret;
     }
 
-    CCLOG("RETURNED %p!", ret);
-    
-    return ret;
+    return defaultValue;
 }
 
 

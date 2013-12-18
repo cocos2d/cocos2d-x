@@ -111,16 +111,15 @@ bool SAXParser::parse(const char* pXMLData, size_t uDataLength)
 	return tinyDoc.Accept( &printer );	
 }
 
-bool SAXParser::parse(const char *pszFile)
+bool SAXParser::parse(const char *filename)
 {
     bool ret = false;
-    ssize_t size = 0;
-    char* pBuffer = (char*)FileUtils::getInstance()->getFileData(pszFile, "rt", &size);
-    if (pBuffer != NULL && size > 0)
+    Data data = FileUtils::getInstance()->getDataFromFile(filename);
+    if (!data.isNull())
     {
-        ret = parse(pBuffer, size);
+        ret = parse((const char*)data.getBytes(), data.getSize());
     }
-    free(pBuffer);
+
     return ret;
 }
 
