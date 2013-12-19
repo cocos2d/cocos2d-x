@@ -3,6 +3,8 @@
 
 #include "CCStdC.h"
 #include <mmsystem.h>
+#include "oae.h"
+#include <string>
 
 namespace CocosDenshion {
 
@@ -48,22 +50,21 @@ public:
     */
     bool IsPlaying();
 
+
     /**
     @brief 获取当前播放的音效 ID
     @return 当前播放的音效ID
     */
     UINT GetSoundID();
+public:
+	static oae::Renderer* dev;
+	static HMODULE lib;
 
-private:
-    friend LRESULT WINAPI _SoundPlayProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+	std::string m_strFileName;
+	oae::Screamer* m_scr;
 
-    void _SendGenericCommand(int nCommand);
-
-    HWND        _wnd;
-    MCIDEVICEID _dev;
-    UINT        _soundID;
-    UINT        _times;
-    bool        _playing;
+	UINT        m_nSoundID;
+    UINT        m_uTimes;
 };
 
 } // end of namespace CocosDenshion
