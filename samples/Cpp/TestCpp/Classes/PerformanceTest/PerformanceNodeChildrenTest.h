@@ -83,10 +83,10 @@ public:
     virtual const char* testName();
 };
 
-class IterateSpriteSheetCArray : public IterateSpriteSheet
+class IterateSpriteSheetForEach : public IterateSpriteSheet
 {
 public:
-    CREATE_FUNC(IterateSpriteSheetCArray);
+    CREATE_FUNC(IterateSpriteSheetForEach);
 
     virtual void update(float dt);
 
@@ -94,6 +94,7 @@ public:
     virtual std::string subtitle() const override;
     virtual const char* testName();
 };
+
 
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
@@ -118,18 +119,6 @@ class CallFuncsSpriteSheetForEach : public IterateSpriteSheet
 {
 public:
     CREATE_FUNC(CallFuncsSpriteSheetForEach);
-
-    virtual void update(float dt);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual const char* testName();
-};
-
-class CallFuncsSpriteSheetCMacro : public IterateSpriteSheet
-{
-public:
-    CREATE_FUNC(CallFuncsSpriteSheetCMacro);
 
     virtual void update(float dt);
 
