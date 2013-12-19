@@ -80,7 +80,6 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
 
 void NewSprite::updateQuadVertices()
 {
-
 #ifdef CC_USE_PHYSICS
     updatePhysicsTransform();
     setDirty(true);

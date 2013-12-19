@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCRenderer.h"
 #include "CCGroupCommand.h"
 
+#include "kazmath/vec4.h"
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
@@ -366,13 +367,11 @@ const kmMat4& Armature::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
+        _transform = { cy * _scaleX, sy * _scaleX,     0,  0,
                            -sx * _scaleY, cx * _scaleY,    0,  0,
                            0,  0,  1,  0,
                            x,  y,  0,  1 };
 
-        kmMat4Fill(&_transform, mat);
-        
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
@@ -387,8 +386,12 @@ const kmMat4& Armature::getNodeToParentTransform() const
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 // XXX: Argh, kmMat needs a "translate" method
-                _transform.mat[12] += -_anchorPointInPoints.x;
-                _transform.mat[13] += -_anchorPointInPoints.y;
+                kmVec4 v = {-_anchorPointInPoints.x, -_anchorPointInPoints.y, 0, 1};
+                kmVec4Transform(&v, &v, &_transform);
+                _transform.mat[12] = v.x;
+                _transform.mat[13] = v.y;
+                _transform.mat[14] = v.z;
+                _transform.mat[15] = v.w;
             }
         }
 
