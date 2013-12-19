@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 using namespace cocos2d;
 
@@ -136,7 +136,7 @@ void BatchNode::draw()
         }
         else
         {
-            Renderer::getInstance()->popGroup();
+            Director::getInstance()->getRenderer()->popGroup();
             _popGroupCommand = true;
             
             ((Node *)object)->visit();
@@ -146,7 +146,7 @@ void BatchNode::draw()
 
 void BatchNode::generateGroupCommand()
 {
-    Renderer* renderer = Renderer::getInstance();
+    Renderer* renderer = Director::getInstance()->getRenderer();
     GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0,_vertexZ);
     renderer->addCommand(groupCommand);

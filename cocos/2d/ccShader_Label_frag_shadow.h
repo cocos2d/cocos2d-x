@@ -12,7 +12,7 @@ uniform vec2 v_shadowOffset; \n\
 void main() \n\
 {	\n\
   float dist = texture2D(CC_Texture0, v_texCoord).a; \n\
-  //todo:support for assign offset,but the shadow is limited by renderable area\n\ \n\
+  //todo:support for assign offset,but the shadow is limited by renderable area \n\
   vec2 offset = vec2(-0.0015,-0.0015); \n\
   float dist2 = texture2D(CC_Texture0, v_texCoord+offset).a; \n\
   //todo:Implementation 'fwidth' for glsl 1.0 \n\

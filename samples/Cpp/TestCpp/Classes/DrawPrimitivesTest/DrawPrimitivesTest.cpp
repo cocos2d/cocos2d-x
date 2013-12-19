@@ -96,12 +96,12 @@ void BaseLayer::backCallback(cocos2d::Object *pSender)
     s->release();
 }
 
-string BaseLayer::title()
+string BaseLayer::title() const
 {
     return "No title";
 }
 
-string BaseLayer::subtitle()
+string BaseLayer::subtitle() const
 {
     return "";
 }
@@ -223,12 +223,12 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
 }
 
-string DrawPrimitivesTest::title()
+string DrawPrimitivesTest::title() const
 {
     return "draw primitives";
 }
 
-string DrawPrimitivesTest::subtitle()
+string DrawPrimitivesTest::subtitle() const
 {
     return "Drawing Primitives. Use DrawNode instead";
 }
@@ -288,12 +288,12 @@ DrawNodeTest::DrawNodeTest()
     draw->drawSegment(Point(10,s.height/2), Point(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
 }
 
-string DrawNodeTest::title()
+string DrawNodeTest::title() const
 {
     return "Test DrawNode";
 }
 
-string DrawNodeTest::subtitle()
+string DrawNodeTest::subtitle() const
 {
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }

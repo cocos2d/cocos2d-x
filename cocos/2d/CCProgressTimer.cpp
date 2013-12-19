@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "Renderer.h"
-#include "CustomCommand.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -52,32 +52,32 @@ ProgressTimer::ProgressTimer()
 ,_midpoint(0,0)
 ,_barChangeRate(0,0)
 ,_percentage(0.0f)
-,_sprite(NULL)
+,_sprite(nullptr)
 ,_vertexDataCount(0)
-,_vertexData(NULL)
+,_vertexData(nullptr)
 ,_reverseDirection(false)
 {}
 
 ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
-    ProgressTimer *pProgressTimer = new ProgressTimer();
-    if (pProgressTimer->initWithSprite(sp))
+    ProgressTimer *progressTimer = new ProgressTimer();
+    if (progressTimer->initWithSprite(sp))
     {
-        pProgressTimer->autorelease();
+        progressTimer->autorelease();
     }
     else
     {
-        delete pProgressTimer;
-        pProgressTimer = NULL;
+        delete progressTimer;
+        progressTimer = nullptr;
     }        
 
-    return pProgressTimer;
+    return progressTimer;
 }
 
 bool ProgressTimer::initWithSprite(Sprite* sp)
 {
     setPercentage(0.0f);
-    _vertexData = NULL;
+    _vertexData = nullptr;
     _vertexDataCount = 0;
 
     setAnchorPoint(Point(0.5f,0.5f));
@@ -97,22 +97,22 @@ ProgressTimer::~ProgressTimer(void)
     CC_SAFE_RELEASE(_sprite);
 }
 
-void ProgressTimer::setPercentage(float fPercentage)
+void ProgressTimer::setPercentage(float percentage)
 {
-    if (_percentage != fPercentage)
+    if (_percentage != percentage)
     {
-        _percentage = clampf(fPercentage, 0, 100);
+        _percentage = clampf(percentage, 0, 100);
         updateProgress();
     }
 }
 
-void ProgressTimer::setSprite(Sprite *pSprite)
+void ProgressTimer::setSprite(Sprite *sprite)
 {
-    if (_sprite != pSprite)
+    if (_sprite != sprite)
     {
-        CC_SAFE_RETAIN(pSprite);
+        CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);
-        _sprite = pSprite;
+        _sprite = sprite;
         setContentSize(_sprite->getContentSize());
 
         //    Every time we set a new sprite, we free the current vertex data
@@ -132,7 +132,7 @@ void ProgressTimer::setType(Type type)
         if (_vertexData)
         {
             CC_SAFE_FREE(_vertexData);
-            _vertexData = NULL;
+            _vertexData = nullptr;
             _vertexDataCount = 0;
         }
 
@@ -557,7 +557,7 @@ void ProgressTimer::draw()
     CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 

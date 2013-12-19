@@ -1,12 +1,32 @@
-//
-// Created by NiTe Luo on 12/2/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 
 #include "CCNewRenderTexture.h"
-#include "CustomCommand.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 
@@ -22,7 +42,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
@@ -35,7 +55,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h)
@@ -48,7 +68,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 void NewRenderTexture::draw()
@@ -62,7 +82,7 @@ void NewRenderTexture::draw()
         CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
         clearCmd->init(0, _vertexZ);
         clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
-        Renderer::getInstance()->addCommand(clearCmd);
+        Director::getInstance()->getRenderer()->addCommand(clearCmd);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -95,7 +115,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
 
 void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
 {
-    setClearColor({r, g, b, a});
+    setClearColor(Color4F(r, g, b, a));
 
     setClearDepth(depthValue);
 
@@ -109,7 +129,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
     CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
     clearCmd->init(0, _vertexZ);
     clearCmd->func = CC_CALLBACK_0(NewRenderTexture::onClear, this);
-    Renderer::getInstance()->addCommand(clearCmd);
+    Director::getInstance()->getRenderer()->addCommand(clearCmd);
 }
 
 void NewRenderTexture::begin()
@@ -125,14 +145,15 @@ void NewRenderTexture::begin()
     GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0, _vertexZ);
 
-    Renderer::getInstance()->addCommand(groupCommand);
-    Renderer::getInstance()->pushGroup(groupCommand->getRenderQueueID());
+    Renderer *renderer =  Director::getInstance()->getRenderer();
+    renderer->addCommand(groupCommand);
+    renderer->pushGroup(groupCommand->getRenderQueueID());
 
     CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
     beginCmd->init(0, _vertexZ);
     beginCmd->func = CC_CALLBACK_0(NewRenderTexture::onBegin, this);
 
-    Renderer::getInstance()->addCommand(beginCmd);
+    Director::getInstance()->getRenderer()->addCommand(beginCmd);
 }
 
 void NewRenderTexture::end()
@@ -141,9 +162,9 @@ void NewRenderTexture::end()
     endCmd->init(0, _vertexZ);
     endCmd->func = CC_CALLBACK_0(NewRenderTexture::onEnd, this);
 
-    Renderer::getInstance()->addCommand(endCmd);
-
-    Renderer::getInstance()->popGroup();
+    Renderer *renderer = Director::getInstance()->getRenderer();
+    renderer->addCommand(endCmd);
+    renderer->popGroup();
 }
 
 void NewRenderTexture::onBegin()
@@ -263,7 +284,7 @@ void NewRenderTexture::clearDepth(float depthValue)
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(NewRenderTexture::onClearDepth, this);
 
-    Renderer::getInstance()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
     this->end();
 }

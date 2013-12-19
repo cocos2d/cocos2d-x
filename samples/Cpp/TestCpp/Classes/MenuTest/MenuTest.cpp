@@ -88,7 +88,9 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto s = Director::getInstance()->getWinSize();
     
     int i=0;
-    menu->getChildren().forEach([&i, &s](Node* child){
+    auto& children = menu->getChildren();
+    
+    std::for_each(children.begin(), children.end(), [&i, &s](Node* child){
         auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)

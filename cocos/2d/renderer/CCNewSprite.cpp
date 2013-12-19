@@ -1,16 +1,32 @@
-//
-//  CCNewSprite.cpp
-//  cocos2d_libs
-//
-//  Created by NiTe Luo on 10/31/13.
-//
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCNewSprite.h"
-#include "Renderer.h"
-#include "Frustum.h"
+#include "CCRenderer.h"
+#include "CCFrustum.h"
 #include "CCDirector.h"
-#include "QuadCommand.h"
+#include "CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -29,7 +45,7 @@ NewSprite* NewSprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite* NewSprite::create(const char *filename)
@@ -41,7 +57,7 @@ NewSprite* NewSprite::create(const char *filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite::NewSprite()
@@ -64,7 +80,6 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
 
 void NewSprite::updateQuadVertices()
 {
-
 #ifdef CC_USE_PHYSICS
     updatePhysicsTransform();
     setDirty(true);
@@ -118,7 +133,7 @@ void NewSprite::draw(void)
         return;
     }
 
-    Renderer::getInstance()->addCommand(renderCommand);
+    Director::getInstance()->getRenderer()->addCommand(renderCommand);
 }
 
 bool NewSprite::culling() const
@@ -136,11 +151,11 @@ bool NewSprite::culling() const
     kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
     
     AABB aabb(point,point);
-    point = {newRect.getMaxX(), newRect.getMinY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
     aabb.expand(point);
-    point = {newRect.getMinX(), newRect.getMaxY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
     aabb.expand(point);
-    point = {newRect.getMaxX(), newRect.getMaxY(), _vertexZ};
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
     aabb.expand(point);
     
     return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);

@@ -51,10 +51,10 @@ TransitionPageTurn::~TransitionPageTurn()
 /** creates a base transition with duration and incoming scene */
 TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool backwards)
 {
-    TransitionPageTurn * pTransition = new TransitionPageTurn();
-    pTransition->initWithDuration(t,scene,backwards);
-    pTransition->autorelease();
-    return pTransition;
+    TransitionPageTurn * transition = new TransitionPageTurn();
+    transition->initWithDuration(t,scene,backwards);
+    transition->autorelease();
+    return transition;
 }
 
 /** initializes a transition with duration and incoming scene */
@@ -136,7 +136,7 @@ void TransitionPageTurn::onEnter()
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }
@@ -152,7 +152,7 @@ void TransitionPageTurn::onEnter()
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }

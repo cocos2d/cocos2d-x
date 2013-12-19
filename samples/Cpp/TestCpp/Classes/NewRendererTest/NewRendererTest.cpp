@@ -1,13 +1,29 @@
-//
-// Created by NiTe Luo on 11/1/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 
 #include "NewRendererTest.h"
-#include "renderer/CCNewSprite.h"
-#include "renderer/CCNewSpriteBatchNode.h"
-#include "renderer/NewClippingNode.h"
-#include "renderer/CCNewDrawNode.h"
 
 static int sceneIdx = -1;
 
@@ -72,12 +88,12 @@ MultiSceneTest::~MultiSceneTest()
 
 }
 
-string MultiSceneTest::title()
+std::string MultiSceneTest::title() const
 {
     return BaseTest::title();
 }
 
-string MultiSceneTest::subtitle()
+std::string MultiSceneTest::subtitle() const
 {
     return BaseTest::subtitle();
 }
@@ -195,13 +211,12 @@ void NewSpriteTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *e
 
 }
 
-
-string NewSpriteTest::title()
+std::string NewSpriteTest::title() const
 {
     return "NewRender";
 }
 
-string NewSpriteTest::subtitle()
+std::string NewSpriteTest::subtitle() const
 {
     return "SpriteTest";
 }
@@ -223,17 +238,17 @@ NewSpriteBatchTest::~NewSpriteBatchTest()
 
 }
 
-string NewSpriteBatchTest::title()
+std::string NewSpriteBatchTest::title() const
 {
     return "NewRender";
 }
 
-string NewSpriteBatchTest::subtitle()
+std::string NewSpriteBatchTest::subtitle() const
 {
     return "SpriteBatchTest";
 }
 
-void NewSpriteBatchTest::onTouchesEnded(const vector<Touch *> &touches, Event *event)
+void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
 {
     for (auto &touch : touches)
     {
@@ -327,12 +342,12 @@ NewClippingNodeTest::~NewClippingNodeTest()
 
 }
 
-string NewClippingNodeTest::title()
+std::string NewClippingNodeTest::title() const
 {
     return "New Render";
 }
 
-string NewClippingNodeTest::subtitle()
+std::string NewClippingNodeTest::subtitle() const
 {
     return "ClipNode";
 }
@@ -376,7 +391,7 @@ NewDrawNodeTest::NewDrawNodeTest()
     parent->setPosition(s.width/2, s.height/2);
     addChild(parent);
 
-    auto rectNode = NewDrawNode::create();
+    auto rectNode = DrawNode::create();
     Point rectangle[4];
     rectangle[0] = Point(-50, -50);
     rectangle[1] = Point(50, -50);
@@ -393,12 +408,12 @@ NewDrawNodeTest::~NewDrawNodeTest()
 
 }
 
-string NewDrawNodeTest::title()
+std::string NewDrawNodeTest::title() const
 {
     return "New Render";
 }
 
-string NewDrawNodeTest::subtitle()
+std::string NewDrawNodeTest::subtitle() const
 {
     return "DrawNode";
 }
@@ -407,7 +422,7 @@ NewCullingTest::NewCullingTest()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    std::vector<string> images;
+    std::vector<std::string> images;
     images.push_back("Images/grossini_dance_01.png");
     images.push_back("Images/grossini_dance_02.png");
     images.push_back("Images/grossini_dance_03.png");
@@ -460,12 +475,12 @@ NewCullingTest::~NewCullingTest()
     
 }
 
-string NewCullingTest::title()
+std::string NewCullingTest::title() const
 {
     return "New Render";
 }
 
-string NewCullingTest::subtitle()
+std::string NewCullingTest::subtitle() const
 {
     return "Culling";
 }
