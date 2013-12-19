@@ -1346,7 +1346,6 @@ void TransitionCrossFade::onExit()
 // TurnOffTilesTransition
 //
 TransitionTurnOffTiles::TransitionTurnOffTiles()
-: _outSceneProxy(nullptr)
 {
     _outSceneProxy = NodeGrid::create();
     _outSceneProxy->retain();
@@ -1434,7 +1433,8 @@ ActionInterval* TransitionTurnOffTiles:: easeActionWithAction(ActionInterval* ac
 //
 TransitionSplitCols::TransitionSplitCols()
 {
-    _gridProxy = nullptr;
+    _gridProxy = NodeGrid::create();
+    _gridProxy->retain();
 }
 TransitionSplitCols::~TransitionSplitCols()
 {
@@ -1457,8 +1457,6 @@ void TransitionSplitCols::onEnter()
 {
     TransitionScene::onEnter();
 
-    _gridProxy = NodeGrid::create();
-    _gridProxy->retain();
     _gridProxy->setTarget(_outScene);
     _gridProxy->onEnter();
 
@@ -1496,6 +1494,7 @@ void TransitionSplitCols::draw()
 
 void TransitionSplitCols::onExit()
 {
+    _gridProxy->setTarget(nullptr);
     _gridProxy->onExit();
     TransitionScene::onExit();
 }
@@ -1545,7 +1544,8 @@ TransitionSplitRows* TransitionSplitRows::create(float t, Scene* scene)
 //
 TransitionFadeTR::TransitionFadeTR()
 {
-    _outSceneProxy = nullptr;
+    _outSceneProxy = NodeGrid::create();
+    _outSceneProxy->retain();
 }
 TransitionFadeTR::~TransitionFadeTR()
 {
@@ -1572,8 +1572,7 @@ void TransitionFadeTR::sceneOrder()
 void TransitionFadeTR::onEnter()
 {
     TransitionScene::onEnter();
-    _outSceneProxy = NodeGrid::create();
-    _outSceneProxy->retain();
+
     _outSceneProxy->setTarget(_outScene);
     _outSceneProxy->onEnter();
 
@@ -1598,6 +1597,7 @@ void TransitionFadeTR::onEnter()
 
 void TransitionFadeTR::onExit()
 {
+    _outSceneProxy->setTarget(nullptr);
     _outSceneProxy->onExit();
     TransitionScene::onExit();
 }
