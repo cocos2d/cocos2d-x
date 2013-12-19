@@ -55,6 +55,8 @@ class Scheduler;
 class ActionManager;
 class EventDispatcher;
 class TextureCache;
+class Frustum;
+class Renderer;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -330,8 +332,13 @@ public:
     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor() const;
+    
+    /**
+     Get the Culling Frustum
+     */
+    
+    Frustum* getFrustum() const { return _cullingFrustum; }
 
-public:
     /** Gets the Scheduler associated with this director
      @since v2.0
      */
@@ -361,7 +368,12 @@ public:
      @since v3.0
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
-    
+
+    /** Returns the Renderer
+     @since v3.0
+     */
+    Renderer* getRenderer() const;
+
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
     
@@ -388,16 +400,15 @@ protected:
     void initTextureCache();
     void destroyTextureCache();
 
-protected:
     /** Scheduler associated with this director
      @since v2.0
      */
-    Scheduler* _scheduler;
+    Scheduler *_scheduler;
     
     /** ActionManager associated with this director
      @since v2.0
      */
-    ActionManager* _actionManager;
+    ActionManager *_actionManager;
     
     /** EventDispatcher associated with this director
      @since v3.0
@@ -408,7 +419,7 @@ protected:
 	float _deltaTime;
     
     /* The EGLView, where everything is rendered */
-    EGLView    *_openGLView;
+    EGLView *_openGLView;
 
     //texture cache belongs to this director
     TextureCache *_textureCache;
@@ -434,6 +445,8 @@ protected:
     unsigned int _totalFrames;
     unsigned int _frames;
     float _secondsPerFrame;
+    
+    Frustum *_cullingFrustum;
      
     /* The running scene */
     Scene *_runningScene;
@@ -443,7 +456,7 @@ protected:
     Scene *_nextScene;
     
     /* If true, then "old" scene will receive the cleanup message */
-    bool    _sendCleanupToScene;
+    bool _sendCleanupToScene;
 
     /* scheduled scenes */
     Vector<Scene*> _scenesStack;
@@ -458,10 +471,10 @@ protected:
     Projection _projection;
 
     /* window size in points */
-    Size    _winSizeInPoints;
+    Size _winSizeInPoints;
     
     /* content scale factor */
-    float    _contentScaleFactor;
+    float _contentScaleFactor;
 
     /* store the fps string */
     char *_FPS;
@@ -471,6 +484,8 @@ protected:
 
     /* Projection protocol delegate */
     DirectorDelegate *_projectionDelegate;
+
+    Renderer *_renderer;
     
     // EGLViewProtocol will recreate stats labels to fit visible rect
     friend class EGLViewProtocol;

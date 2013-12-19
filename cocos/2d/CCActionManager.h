@@ -72,7 +72,7 @@ public:
      If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
      When the target is paused, the queued actions won't be 'ticked'.
      */
-    void addAction(Action *pAction, Node *target, bool paused);
+    void addAction(Action *action, Node *target, bool paused);
 
     /** Removes all actions from all the targets.
     */
@@ -85,7 +85,7 @@ public:
 
     /** Removes an action given an action reference.
     */
-    void removeAction(Action *pAction);
+    void removeAction(Action *action);
 
     /** Removes an action given its tag and the target */
     void removeActionByTag(int tag, Node *target);
@@ -124,9 +124,9 @@ public:
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(ssize_t index, struct _hashElement *pElement);
-    void deleteHashElement(struct _hashElement *pElement);
-    void actionAllocWithHashElement(struct _hashElement *pElement);
+    void removeActionAtIndex(ssize_t index, struct _hashElement *element);
+    void deleteHashElement(struct _hashElement *element);
+    void actionAllocWithHashElement(struct _hashElement *element);
     void update(float dt);
 
 protected:

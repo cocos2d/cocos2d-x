@@ -39,7 +39,7 @@ public:
     virtual ~Box2DView(void);
 
     bool initWithEntryID(int entryId);
-    std::string title();
+    std::string title() const;
     void tick(float dt);
     void draw();
 

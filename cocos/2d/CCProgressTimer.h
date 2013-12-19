@@ -72,8 +72,8 @@ public:
     /** The image to show the progress percentage, retain */
     inline Sprite* getSprite() const { return _sprite; }
 
-    void setPercentage(float fPercentage);
-    void setSprite(Sprite *pSprite);
+    void setPercentage(float percentage);
+    void setSprite(Sprite *sprite);
     void setType(Type type);
     /**
      * @js setReverseDirection
@@ -126,6 +126,8 @@ protected:
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
 
+    void onDraw();
+    
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);

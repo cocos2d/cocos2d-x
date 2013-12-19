@@ -700,9 +700,9 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     }
     _opacityModifyRGB = var;
     
-    _scale9Image->getChildren().forEach([this](Node* child){
+    for(auto child : _scale9Image->getChildren()){
         child->setOpacityModifyRGB(_opacityModifyRGB);
-    });
+    }
 }
 
 bool Scale9Sprite::isOpacityModifyRGB() const
@@ -785,9 +785,9 @@ void Scale9Sprite::setColor(const Color3B& color)
     
     Node::setColor(color);
     
-    _scale9Image->getChildren().forEach([&color](Node* child){
+    for(auto child : _scale9Image->getChildren()){
         child->setColor(color);
-    });
+    }
 }
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
@@ -798,9 +798,9 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     }
     Node::setOpacity(opacity);
     
-    _scale9Image->getChildren().forEach([&opacity](Node* child){
+    for(auto child : _scale9Image->getChildren()){
         child->setOpacity(opacity);
-    });
+    }
 }
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
@@ -810,10 +810,10 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
         return;
     }
     Node::updateDisplayedColor(parentColor);
-    
-    _scale9Image->getChildren().forEach([&parentColor](Node* child){
+
+    for(auto child : _scale9Image->getChildren()){
         child->updateDisplayedColor(parentColor);
-    });
+    }
 }
 
 void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -824,9 +824,9 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     }
     Node::updateDisplayedOpacity(parentOpacity);
     
-    _scale9Image->getChildren().forEach([&parentOpacity](Node* child){
+    for(auto child : _scale9Image->getChildren()){
         child->updateDisplayedOpacity(parentOpacity);
-    });
+    }
 }
 
 NS_CC_EXT_END

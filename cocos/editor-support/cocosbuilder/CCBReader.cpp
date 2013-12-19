@@ -293,7 +293,8 @@ void CCBReader::cleanUpNodeGraph(Node *node)
 {
     node->setUserObject(nullptr);
     
-    node->getChildren().forEach([this](Node* obj){
+    auto& children = node->getChildren();
+    std::for_each(children.begin(), children.end(), [this](Node* obj){
         cleanUpNodeGraph(obj);
     });
 }

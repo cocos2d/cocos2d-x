@@ -48,14 +48,14 @@ public:
     /** Creates and initializes a clipping node with an other node as its stencil.
      The stencil node will be retained.
      */
-    static ClippingNode* create(Node *pStencil);
+    static ClippingNode* create(Node *stencil);
 
     /** The Node to use as a stencil to do the clipping.
      The stencil node will be retained.
      This default to nil.
      */
     Node* getStencil() const;
-    void setStencil(Node *pStencil);
+    void setStencil(Node *stencil);
     
     /** The alpha threshold.
      The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.
@@ -63,14 +63,14 @@ public:
      This default to 1 (so alpha test is disabled).
      */
     GLfloat getAlphaThreshold() const;
-    void setAlphaThreshold(GLfloat fAlphaThreshold);
+    void setAlphaThreshold(GLfloat alphaThreshold);
     
     /** Inverted. If this is set to true,
      the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
      This default to false.
      */
     bool isInverted() const;
-    void setInverted(bool bInverted);
+    void setInverted(bool inverted);
 
     // Overrides
     /**
@@ -111,7 +111,7 @@ protected:
     /** Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.
      */
-    virtual bool init(Node *pStencil);
+    virtual bool init(Node *stencil);
 
     /**draw fullscreen quad to clear stencil bits
     */

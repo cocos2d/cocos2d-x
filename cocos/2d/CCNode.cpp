@@ -103,24 +103,21 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransform(AffineTransform::IDENTITY)
-, _transform(AffineTransform::IDENTITY)
-, _inverse(AffineTransform::IDENTITY)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
-, _camera(NULL)
+, _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
-, _grid(NULL)
+, _grid(nullptr)
 , _ZOrder(0)
-, _parent(NULL)
+, _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
 // userData is always inited as nil
-, _userData(NULL)
-, _userObject(NULL)
-, _shaderProgram(NULL)
+, _userData(nullptr)
+, _userObject(nullptr)
+, _shaderProgram(nullptr)
 , _orderOfArrival(0)
 , _running(false)
 , _visible(true)
@@ -128,7 +125,7 @@ Node::Node(void)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
-, _componentContainer(NULL)
+, _componentContainer(nullptr)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
@@ -148,8 +145,12 @@ Node::Node(void)
     _eventDispatcher = director->getEventDispatcher();
     _eventDispatcher->retain();
     
-    ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
+    ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
+    _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+
+    kmMat4Identity(&_transform);
+    kmMat4Identity(&_inverse);
+    kmMat4Identity(&_additionalTransform);
 }
 
 Node::~Node()
@@ -176,10 +177,7 @@ Node::~Node()
 
     for (auto& child : _children)
     {
-        if (child)
-        {
-            child->_parent = NULL;
-        }
+        child->_parent = nullptr;
     }
 
     removeAllComponents();
@@ -296,9 +294,9 @@ float Node::getRotationY() const
     return _rotationY;
 }
 
-void Node::setRotationY(float fRotationY)
+void Node::setRotationY(float rotationY)
 {
-    _rotationY = fRotationY;
+    _rotationY = rotationY;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -418,11 +416,11 @@ Camera* Node::getCamera()
 }
 
 /// grid setter
-void Node::setGrid(GridBase* pGrid)
+void Node::setGrid(GridBase* grid)
 {
-    CC_SAFE_RETAIN(pGrid);
+    CC_SAFE_RETAIN(grid);
     CC_SAFE_RELEASE(_grid);
-    _grid = pGrid;
+    _grid = grid;
 }
 
 
@@ -549,21 +547,21 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
 Rect Node::getBoundingBox() const
 {
     Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
-    return RectApplyAffineTransform(rect, getNodeToParentTransform());
+    return RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
 }
 
 Node * Node::create(void)
 {
-	Node * pRet = new Node();
-    if (pRet && pRet->init())
+	Node * ret = new Node();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-	return pRet;
+	return ret;
 }
 
 void Node::cleanup()
@@ -581,9 +579,8 @@ void Node::cleanup()
     }
     
     // timers
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->cleanup();
-    });
 }
 
 
@@ -598,13 +595,13 @@ void Node::childrenAlloc(void)
     _children.reserve(4);
 }
 
-Node* Node::getChildByTag(int aTag)
+Node* Node::getChildByTag(int tag)
 {
-    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
     for (auto& child : _children)
     {
-        if(child && child->_tag == aTag)
+        if(child && child->_tag == tag)
             return child;
     }
     return nullptr;
@@ -616,8 +613,8 @@ Node* Node::getChildByTag(int aTag)
 */
 void Node::addChild(Node *child, int zOrder, int tag)
 {    
-    CCASSERT( child != NULL, "Argument must be non-nil");
-    CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
+    CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
     if (_children.empty())
     {
@@ -664,13 +661,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 
 void Node::addChild(Node *child, int zOrder)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, zOrder, child->_tag);
 }
 
 void Node::addChild(Node *child)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->_ZOrder, child->_tag);
 }
 
@@ -681,7 +678,7 @@ void Node::removeFromParent()
 
 void Node::removeFromParentAndCleanup(bool cleanup)
 {
-    if (_parent != NULL)
+    if (_parent != nullptr)
     {
         _parent->removeChild(this,cleanup);
     } 
@@ -710,7 +707,7 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 
     Node *child = this->getChildByTag(tag);
 
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -728,33 +725,26 @@ void Node::removeAllChildren()
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    if (!_children.empty())
+    for (auto& child : _children)
     {
-        for (auto& child : _children)
+        // IMPORTANT:
+        //  -1st do onExit
+        //  -2nd cleanup
+        if(_running)
         {
-            if (child)
-            {
-                // IMPORTANT:
-                //  -1st do onExit
-                //  -2nd cleanup
-                if(_running)
-                {
-                    child->onExitTransitionDidStart();
-                    child->onExit();
-                }
-
-                if (cleanup)
-                {
-                    child->cleanup();
-                }
-                // set parent nil at the end
-                child->setParent(nullptr);
-            }
+            child->onExitTransitionDidStart();
+            child->onExit();
         }
-        
-        _children.clear();
+
+        if (cleanup)
+        {
+            child->cleanup();
+        }
+        // set parent nil at the end
+        child->setParent(nullptr);
     }
     
+    _children.clear();
 }
 
 void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
@@ -800,7 +790,7 @@ void Node::insertChild(Node* child, int z)
 
 void Node::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT( child != NULL, "Child must be non-nil");
+    CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->_setZOrder(zOrder);
@@ -808,39 +798,10 @@ void Node::reorderChild(Node *child, int zOrder)
 
 void Node::sortAllChildren()
 {
-#if 0
-    if (_reorderChildDirty)
-    {
-        int i,j,length = _children.size();
-
-        // insertion sort
-        for(i=1; i<length; i++)
-        {
-            j = i-1;
-            auto tempI = static_cast<Node*>( _children.at(i) );
-            auto tempJ = static_cast<Node*>( _children.at(j) );
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
-            {
-                _children.fastSetObject( tempJ, j+1 );
-                j = j-1;
-                if(j>=0)
-                    tempJ = static_cast<Node*>( _children.at(j) );
-            }
-            _children.fastSetObject(tempI, j+1);
-        }
-
-        //don't need to check children recursively, that's done in visit of each child
-
-        _reorderChildDirty = false;
-    }
-#else
     if( _reorderChildDirty ) {
         std::sort( std::begin(_children), std::end(_children), nodeComparisonLess );
         _reorderChildDirty = false;
     }
-#endif
 }
 
 
@@ -886,10 +847,8 @@ void Node::visit()
         // self draw
         this->draw();
 
-        // Uses std::for_each to improve performance.
-        std::for_each(_children.cbegin()+i, _children.cend(), [](Node* node){
-            node->visit();
-        });
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit();
     }
     else
     {
@@ -909,7 +868,7 @@ void Node::visit()
 
 void Node::transformAncestors()
 {
-    if( _parent != NULL  )
+    if( _parent != nullptr  )
     {
         _parent->transformAncestors();
         _parent->transform();
@@ -922,19 +881,20 @@ void Node::transform()
     updatePhysicsTransform();
 #endif
 
-    kmMat4 transfrom4x4;
-
-    // Convert 3x3 into 4x4 matrix
-    CGAffineToGL(this->getNodeToParentTransform(), transfrom4x4.mat);
+    kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = _vertexZ;
 
+
     kmGLMultMatrix( &transfrom4x4 );
+
+    // saves the MV matrix
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    if ( _camera != NULL && !(_grid != NULL && _grid->isActive()) )
+    if ( _camera != nullptr && !(_grid != nullptr && _grid->isActive()) )
     {
         bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
 
@@ -946,7 +906,6 @@ void Node::transform()
         if( translate )
             kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
     }
-
 }
 
 
@@ -954,9 +913,8 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->onEnter();
-    });
 
     this->resume();
     
@@ -975,10 +933,9 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
-    });
-    
+
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -990,9 +947,8 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    });
     
     if (_scriptType != kScriptTypeNone)
     {
@@ -1016,9 +972,8 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->onExit();
-    });
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1044,7 +999,7 @@ void Node::setActionManager(ActionManager* actionManager)
 
 Action * Node::runAction(Action* action)
 {
-    CCASSERT( action != NULL, "Argument must be non-nil");
+    CCASSERT( action != nullptr, "Argument must be non-nil");
     _actionManager->addAction(action, this, !_running);
     return action;
 }
@@ -1198,16 +1153,24 @@ void Node::update(float fDelta)
     }
 }
 
-const AffineTransform& Node::getNodeToParentTransform() const
+AffineTransform Node::getNodeToParentAffineTransform() const
 {
-    if (_transformDirty) 
-    {
+    AffineTransform ret;
+    kmMat4 ret4 = getNodeToParentTransform();
+    GLToCGAffine(ret4.mat, &ret);
 
+    return ret;
+}
+
+const kmMat4& Node::getNodeToParentTransform() const
+{
+    if (_transformDirty)
+    {
         // Translate values
         float x = _position.x;
         float y = _position.y;
 
-        if (_ignoreAnchorPointForPosition) 
+        if (_ignoreAnchorPointForPosition)
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
@@ -1242,80 +1205,131 @@ const AffineTransform& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = AffineTransformMake( cy * _scaleX,  sy * _scaleX,
-            -sx * _scaleY, cx * _scaleY,
-            x, y );
+        _transform = { cy * _scaleX, sy * _scaleX, 0,  0,
+                      -sx * _scaleY, cx * _scaleY, 0,  0,
+                        0,  0,  1,  0,
+                        x,  y,  0,  1 };
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
-        if (needsSkewMatrix) 
+        if (needsSkewMatrix)
         {
-            AffineTransform skewMatrix = AffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-                tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-                0.0f, 0.0f );
-            _transform = AffineTransformConcat(skewMatrix, _transform);
+            kmMat4 skewMatrix = { 1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                                  tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
+                                  0,  0,  1, 0,
+                                  0,  0,  0, 1};
+
+            kmMat4Multiply(&_transform, &_transform, &skewMatrix);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                _transform = AffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+                // XXX: Argh, kmMat needs a "translate" method.
+                // XXX: Although this is faster than multiplying a vec4 * mat4
+                _transform.mat[12] += _transform.mat[0] * -_anchorPointInPoints.x + _transform.mat[4] * -_anchorPointInPoints.y;
+                _transform.mat[13] += _transform.mat[1] * -_anchorPointInPoints.x + _transform.mat[5] * -_anchorPointInPoints.y;
             }
         }
-        
+
         if (_additionalTransformDirty)
         {
-            _transform = AffineTransformConcat(_transform, _additionalTransform);
+            kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
             _additionalTransformDirty = false;
         }
-
+        
         _transformDirty = false;
     }
-
+    
     return _transform;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
+{
+    CGAffineToGL(additionalTransform, _additionalTransform.mat);
+    _transformDirty = true;
+    _additionalTransformDirty = true;
+}
+
+void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
     _transformDirty = true;
     _additionalTransformDirty = true;
 }
 
-const AffineTransform& Node::getParentToNodeTransform() const
+
+AffineTransform Node::getParentToNodeAffineTransform() const
+{
+    AffineTransform ret;
+    kmMat4 ret4 = getParentToNodeTransform();
+
+    GLToCGAffine(ret4.mat,&ret);
+    return ret;
+}
+
+const kmMat4& Node::getParentToNodeTransform() const
 {
     if ( _inverseDirty ) {
-        _inverse = AffineTransformInvert(this->getNodeToParentTransform());
+        kmMat4Inverse(&_inverse, &_transform);
         _inverseDirty = false;
     }
 
     return _inverse;
 }
 
-AffineTransform Node::getNodeToWorldTransform() const
-{
-    AffineTransform t = this->getNodeToParentTransform();
 
-    for (Node *p = _parent; p != NULL; p = p->getParent())
-        t = AffineTransformConcat(t, p->getNodeToParentTransform());
+AffineTransform Node::getNodeToWorldAffineTransform() const
+{
+    AffineTransform t = this->getNodeToParentAffineTransform();
+
+    for (Node *p = _parent; p != nullptr; p = p->getParent())
+        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
 
     return t;
 }
 
-AffineTransform Node::getWorldToNodeTransform() const
+kmMat4 Node::getNodeToWorldTransform() const
 {
-    return AffineTransformInvert(this->getNodeToWorldTransform());
+    kmMat4 t = this->getNodeToParentTransform();
+
+    for (Node *p = _parent; p != nullptr; p = p->getParent())
+        kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
+
+    return t;
 }
+
+AffineTransform Node::getWorldToNodeAffineTransform() const
+{
+    return AffineTransformInvert(this->getNodeToWorldAffineTransform());
+}
+
+kmMat4 Node::getWorldToNodeTransform() const
+{
+    kmMat4 tmp, tmp2;
+
+    tmp2 = this->getNodeToWorldTransform();
+    kmMat4Inverse(&tmp, &tmp2);
+    return tmp;
+}
+
 
 Point Node::convertToNodeSpace(const Point& worldPoint) const
 {
-    Point ret = PointApplyAffineTransform(worldPoint, getWorldToNodeTransform());
-    return ret;
+    kmMat4 tmp = getWorldToNodeTransform();
+    kmVec3 vec3 = {worldPoint.x, worldPoint.y, 0};
+    kmVec3 ret;
+    kmVec3Transform(&ret, &vec3, &tmp);
+    return Point(ret.x, ret.y);
 }
 
 Point Node::convertToWorldSpace(const Point& nodePoint) const
 {
-    Point ret = PointApplyAffineTransform(nodePoint, getNodeToWorldTransform());
-    return ret;
+    kmMat4 tmp = getNodeToWorldTransform();
+    kmVec3 vec3 = {nodePoint.x, nodePoint.y, 0};
+    kmVec3 ret;
+    kmVec3Transform(&ret, &vec3, &tmp);
+    return Point(ret.x, ret.y);
+
 }
 
 Point Node::convertToNodeSpaceAR(const Point& worldPoint) const
@@ -1366,9 +1380,8 @@ bool Node::updatePhysicsTransform()
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    _children.forEach([](Node* child){
+    for( const auto &child: _children)
         child->updateTransform();
-    });
 }
 
 Component* Node::getComponent(const char *pName)
@@ -1445,9 +1458,9 @@ void Node::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        _children.forEach([this](Node* child){
+        for(auto child : _children){
             child->updateDisplayedOpacity(_displayedOpacity);
-        });
+        }
     }
 }
 
@@ -1491,9 +1504,9 @@ void Node::disableCascadeOpacity()
 {
     _displayedOpacity = _realOpacity;
     
-    _children.forEach([this](Node* child){
+    for(auto child : _children){
         child->updateDisplayedOpacity(255);
-    });
+    }
 }
 
 const Color3B& Node::getColor(void) const
@@ -1522,9 +1535,9 @@ void Node::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        _children.forEach([this](Node* child){
+        for(const auto &child : _children){
             child->updateDisplayedColor(_displayedColor);
-        });
+        }
     }
 }
 
@@ -1565,9 +1578,9 @@ void Node::updateCascadeColor()
 
 void Node::disableCascadeColor()
 {
-    _children.forEach([this](Node* child){
+    for(auto child : _children){
         child->updateDisplayedColor(Color3B::WHITE);
-    });
+    }
 }
 
 __NodeRGBA::__NodeRGBA()

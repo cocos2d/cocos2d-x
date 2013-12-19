@@ -37,7 +37,7 @@ bool kProfilerCategoryBatchSprite = false;
 bool kProfilerCategoryParticles = false;
 
 
-static Profiler* g_sSharedProfiler = NULL;
+static Profiler* g_sSharedProfiler = nullptr;
 
 Profiler* Profiler::getInstance()
 {

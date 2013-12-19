@@ -14,8 +14,8 @@ public:
     virtual void showCurrentTest();
 
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
     virtual void performTests() = 0;
 };
 
@@ -28,8 +28,8 @@ public:
     }
 
     virtual void performTests();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void performTestsPNG(const char* filename);
 
     static Scene* scene();

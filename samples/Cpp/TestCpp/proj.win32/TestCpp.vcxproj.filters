@@ -307,6 +307,9 @@
     <Filter Include="Classes\ConsoleTest">
       <UniqueIdentifier>{709f8a27-ecc2-4fe2-abd2-f13da4b70fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\NewRendererTest">
+      <UniqueIdentifier>{688e201c-77fe-4665-931e-e508a58141f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -708,6 +711,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp">
       <Filter>Classes\ConsoleTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp">
+      <Filter>Classes\NewRendererTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1302,6 +1311,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h">
       <Filter>Classes\ConsoleTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h">
+      <Filter>Classes\NewRendererTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

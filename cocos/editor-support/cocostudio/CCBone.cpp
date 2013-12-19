@@ -71,9 +71,11 @@ Bone::Bone()
     _tween = nullptr;
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
-    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+//    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+    kmMat4Identity(&_worldTransform);
     _boneTransformDirty = true;
-    _blendType = BLEND_NORMAL;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendDirty = false;
     _worldInfo = nullptr;
 
     _armatureParentBone = nullptr;
@@ -221,13 +223,14 @@ void Bone::update(float delta)
 
         if (_armatureParentBone)
         {
-            _worldTransform = AffineTransformConcat(_worldTransform, _armature->getNodeToParentTransform());
+            _worldTransform = TransformConcat(_worldTransform, _armature->getNodeToParentTransform());
         }
     }
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    _children.forEach([&delta](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj)
+    {
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
@@ -239,14 +242,23 @@ void Bone::applyParentTransform(Bone *parent)
 {
     float x = _worldInfo->x;
     float y = _worldInfo->y;
-    _worldInfo->x = x * parent->_worldTransform.a + y * parent->_worldTransform.c + parent->_worldInfo->x;
-    _worldInfo->y = x * parent->_worldTransform.b + y * parent->_worldTransform.d + parent->_worldInfo->y;
+    _worldInfo->x = x * parent->_worldTransform.mat[0] + y * parent->_worldTransform.mat[4] + parent->_worldInfo->x;
+    _worldInfo->y = x * parent->_worldTransform.mat[1] + y * parent->_worldTransform.mat[5] + parent->_worldInfo->y;
     _worldInfo->scaleX = _worldInfo->scaleX * parent->_worldInfo->scaleX;
     _worldInfo->scaleY = _worldInfo->scaleY * parent->_worldInfo->scaleY;
     _worldInfo->skewX = _worldInfo->skewX + parent->_worldInfo->skewX;
     _worldInfo->skewY = _worldInfo->skewY + parent->_worldInfo->skewY;
 }
 
+
+void CCBone::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    {
+        _blendFunc = blendFunc;
+        _blendDirty = true;
+    }
+}
 
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
@@ -372,14 +384,14 @@ void Bone::setZOrder(int zOrder)
         Node::setZOrder(zOrder);
 }
 
-AffineTransform Bone::getNodeToArmatureTransform() const
+kmMat4 Bone::getNodeToArmatureTransform() const
 {
     return _worldTransform;
 }
 
-AffineTransform Bone::getNodeToWorldTransform() const
+kmMat4 Bone::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
+    return TransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }
 
 Node *Bone::getDisplayRenderNode()
@@ -413,25 +425,31 @@ void Bone::changeDisplayByIndex(int index, bool force)
     _displayManager->changeDisplayByIndex(index, force);
 }
 
-Array *Bone::getColliderBodyList()
+
+void Bone::changeDisplayByName(const char *name, bool force)
+{
+    _displayManager->changeDisplayByName(name, force);
+}
+
+ColliderDetector* Bone::getColliderDetector() const
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
-            return detector->getColliderBodyList();
+            return detector;
         }
     }
     return nullptr;
 }
 
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
-    Array *array = _displayManager->getDecorativeDisplayList();
+    auto array = _displayManager->getDecorativeDisplayList();
 
-    for(auto object : *array)
+    for(auto& object : array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
@@ -451,6 +469,6 @@ ColliderFilter *Bone::getColliderFilter()
     }
     return nullptr;
 }
-
+#endif
 
 }

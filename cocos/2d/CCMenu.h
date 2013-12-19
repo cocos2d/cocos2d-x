@@ -125,7 +125,7 @@ protected:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(NULL) {}
+    Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
     /** initializes an empty Menu */
