@@ -527,7 +527,7 @@ void TestAnimationEvent::onEnter()
     * Set armature's movement event callback function
     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
     */
-    armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(TestAnimationEvent::animationEvent, this, placeholders::_1, placeholders::_2, placeholders::_3));
+    armature->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(TestAnimationEvent::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     addChild(armature);
 }
 std::string TestAnimationEvent::title() const
@@ -583,7 +583,7 @@ void TestFrameEvent::onEnter()
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(nullptr);
      */
-    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestFrameEvent::onFrameEvent, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
+    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestFrameEvent::onFrameEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
     addChild(armature);
 
     schedule( schedule_selector(TestFrameEvent::checkAction) );
@@ -752,7 +752,7 @@ void TestColliderDetector::onEnter()
     * Set armature's frame event callback function
     * To disconnect this event, just setFrameEventCallFunc(nullptr);
     */
-    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestColliderDetector::onFrameEvent, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
+    armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestColliderDetector::onFrameEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
     addChild(armature);
 
     armature2 = Armature::create("Cowboy");
@@ -1374,12 +1374,12 @@ void TestPlaySeveralMovement::onEnter()
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
     addChild(armature);
 }
-std::string TestPlaySeveralMovement::title()
+std::string TestPlaySeveralMovement::title() const
 {
     return "Test play several movement";
 }
 
-std::string TestPlaySeveralMovement::subtitle()
+std::string TestPlaySeveralMovement::subtitle()const
 {
     return "Movement is played one by one";
 }
@@ -1405,11 +1405,11 @@ void TestEasing::onEnter()
     updateSubTitle();
 }
 
-std::string TestEasing::title()
+std::string TestEasing::title() const
 {
     return "Test easing effect";
 }
-std::string TestEasing::subtitle()
+std::string TestEasing::subtitle() const
 {
     return "Current easing : ";
 }

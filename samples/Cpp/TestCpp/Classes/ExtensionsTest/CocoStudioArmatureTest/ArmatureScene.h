@@ -267,7 +267,7 @@ public:
     ~TestColliderDetector();
     
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw();
     
@@ -354,8 +354,8 @@ class TestPlaySeveralMovement : public ArmatureTestLayer
 {      
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -363,8 +363,8 @@ class TestEasing : public ArmatureTestLayer
 {      
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void updateSubTitle();
