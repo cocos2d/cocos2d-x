@@ -70,6 +70,9 @@ public:
     inline BlendFunc getBlendType() const { return _blendType; }
     
     virtual void releaseToCommandPool() override;
+    
+protected:
+    void applyTransformToPoint(Vertex3F* point, const kmMat4* pMatrix);
 
 protected:
     int32_t _materialID;
