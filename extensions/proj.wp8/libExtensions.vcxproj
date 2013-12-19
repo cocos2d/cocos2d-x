@@ -182,6 +182,7 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionManager.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionManager.h" />
