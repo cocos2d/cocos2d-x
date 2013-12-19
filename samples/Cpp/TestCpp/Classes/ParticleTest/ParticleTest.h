@@ -162,7 +162,7 @@ public:
         _title = file;
     }
     virtual void onEnter();
-    virtual std::string title()
+    virtual std::string title() const override
     {
         return _title;
     }

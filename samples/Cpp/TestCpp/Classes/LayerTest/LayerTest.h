@@ -178,9 +178,9 @@ class LayerBug3162A : public LayerTest
 {
 public:
     CREATE_FUNC(LayerBug3162A);
-    virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
     void step(float dt);
     
@@ -192,9 +192,9 @@ class LayerBug3162B : public LayerTest
 {
 public:
     CREATE_FUNC(LayerBug3162B);
-    virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
     void step(float dt);
     

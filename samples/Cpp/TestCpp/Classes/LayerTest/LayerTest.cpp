@@ -899,12 +899,12 @@ void LayerBug3162A::step(float dt)
     _layer[0]->setCascadeOpacityEnabled(!_layer[0]->isCascadeOpacityEnabled());
 }
 
-std::string LayerBug3162A::title()
+std::string LayerBug3162A::title() const
 {
     return "Bug 3162 red layer cascade opacity eable/disable";
 }
 
-std::string LayerBug3162A::subtitle()
+std::string LayerBug3162A::subtitle() const
 {
     return "g and b layer opacity is effected/diseffected with r layer";
 }
@@ -945,12 +945,12 @@ void LayerBug3162B::step(float dt)
     _layer[0]->setCascadeColorEnabled(!_layer[0]->isCascadeColorEnabled());
 }
 
-std::string LayerBug3162B::title()
+std::string LayerBug3162B::title() const
 {
     return "Bug 3162 bottom layer cascade color eable/disable";
 }
 
-std::string LayerBug3162B::subtitle()
+std::string LayerBug3162B::subtitle() const
 {
     return "u and m layer color is effected/diseffected with b layer";
 }

@@ -1428,9 +1428,6 @@ void TestEasing::updateSubTitle()
     label->setString(str.c_str());
 }
 
-
-
-
 void TestChangeAnimationInternal::onEnter()
 {
     ArmatureTestLayer::onEnter();
@@ -1451,11 +1448,11 @@ void TestChangeAnimationInternal::onExit()
 {
     Director::getInstance()->setAnimationInterval(1/60.0f);
 }
-std::string TestChangeAnimationInternal::title()
+std::string TestChangeAnimationInternal::title() const
 {
     return "Test change animation internal";
 }
-std::string TestChangeAnimationInternal::subtitle()
+std::string TestChangeAnimationInternal::subtitle() const
 {
     return "Touch to change animation internal";
 }
