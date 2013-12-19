@@ -760,6 +760,8 @@ protected:
     bool _reorderWidgetChildDirty;
     
     bool _hitted;
+    
+    EventListenerTouchOneByOne* _touchListener;
 };
 }
 

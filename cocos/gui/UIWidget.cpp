@@ -56,7 +56,8 @@ _sizePercent(Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(Point::ZERO),
 _reorderWidgetChildDirty(true),
-_hitted(false)
+_hitted(false),
+_touchListener(nullptr)
 {
     
 }
@@ -67,6 +68,7 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _renderer->release();
+    CC_SAFE_RELEASE(_touchListener);
 }
 
 Widget* Widget::create()
@@ -535,17 +537,19 @@ void Widget::setTouchEnabled(bool enable)
     _touchEnabled = enable;
     if (_touchEnabled)
     {
-        auto listener = EventListenerTouchOneByOne::create();
-        listener->setSwallowTouches(true);
-        listener->onTouchBegan = CC_CALLBACK_2(Widget::onTouchBegan, this);
-        listener->onTouchMoved = CC_CALLBACK_2(Widget::onTouchMoved, this);
-        listener->onTouchEnded = CC_CALLBACK_2(Widget::onTouchEnded, this);
-        listener->onTouchCancelled = CC_CALLBACK_2(Widget::onTouchCancelled, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        _touchListener = EventListenerTouchOneByOne::create();
+        CC_SAFE_RETAIN(_touchListener);
+        _touchListener->setSwallowTouches(true);
+        _touchListener->onTouchBegan = CC_CALLBACK_2(Widget::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(Widget::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(Widget::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(Widget::onTouchCancelled, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
     }
     else
     {
-        _eventDispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
+        _eventDispatcher->removeEventListener(_touchListener);
+        CC_SAFE_RELEASE_NULL(_touchListener);
     }
 }
 
