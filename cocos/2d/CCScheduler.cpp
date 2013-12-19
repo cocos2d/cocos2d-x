@@ -809,9 +809,9 @@ Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 
 void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
 {
-    std::for_each(targetsToResume.begin(), targetsToResume.end(), [this](Object* obj){
+    for(const auto &obj : targetsToResume) {
         this->resumeTarget(obj);
-    });
+    }
 }
 
 void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)

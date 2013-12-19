@@ -441,13 +441,12 @@ static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XM
 static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
-    
-    std::for_each(array.begin(), array.end(), [=](Value& value){
+
+    for(const auto &value : array) {
         tinyxml2::XMLElement *element = generateElementForObject(value, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
-
-    });
+    }
     return rootNode;
 }
 

@@ -146,9 +146,9 @@ void Scene::addChildToPhysicsWorld(Node* child)
             }
             
             auto& children = node->getChildren();
-            std::for_each(children.begin(), children.end(), [addToPhysicsWorldFunc](Node* n){
+            for( const auto &n : children) {
                 addToPhysicsWorldFunc(n);
-            });
+            }
         };
         
         addToPhysicsWorldFunc(child);

@@ -172,7 +172,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // get aliases
             ValueVector& aliases = frameDict["aliases"].asValueVector();
 
-            std::for_each(aliases.cbegin(), aliases.cend(), [this, &spriteFrameName](const Value& value){
+            for(const auto &value : aliases) {
                 std::string oneAlias = value.asString();
                 if (_spriteFramesAliases.find(oneAlias) != _spriteFramesAliases.end())
                 {
@@ -180,7 +180,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 }
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
-            });
+            }
             
             // create frame
             spriteFrame = new SpriteFrame();
