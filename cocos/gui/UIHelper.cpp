@@ -37,7 +37,7 @@ UIWidget* UIHelper::seekWidgetByTag(UIWidget* root, int tag)
         return root;
     }
     cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    ssize_t length = arrayRootChildren->num;
     for (int i=0;i<length;i++)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
@@ -61,7 +61,7 @@ UIWidget* UIHelper::seekWidgetByName(UIWidget* root, const char *name)
         return root;
     }
     cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    ssize_t length = arrayRootChildren->num;
     for (int i=0;i<length;i++)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
@@ -81,7 +81,7 @@ UIWidget* UIHelper::seekWidgetByRelativeName(UIWidget *root, const char *name)
         return nullptr;
     }
     cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    ssize_t length = arrayRootChildren->num;
     for (int i=0;i<length;i++)
     {
         UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
@@ -106,7 +106,7 @@ UIWidget* UIHelper::seekActionWidgetByActionTag(UIWidget* root, int tag)
 		return root;
 	}
     cocos2d::ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
+    ssize_t length = arrayRootChildren->num;
 	for (int i=0;i<length;i++)
 	{
 		UIWidget* child = (UIWidget*)(arrayRootChildren->arr[i]);
