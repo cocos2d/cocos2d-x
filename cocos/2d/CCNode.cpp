@@ -51,7 +51,6 @@ THE SOFTWARE.
 
 // externals
 #include "kazmath/GL/matrix.h"
-#include "kazmath/vec4.h"
 #include "CCComponent.h"
 #include "CCComponentContainer.h"
 
@@ -1151,7 +1150,6 @@ const kmMat4& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
     {
-
         // Translate values
         float x = _position.x;
         float y = _position.y;
@@ -1210,13 +1208,10 @@ const kmMat4& Node::getNodeToParentTransform() const
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
-                // XXX: Argh, kmMat needs a "translate" method
-                kmVec4 v = {-_anchorPointInPoints.x, -_anchorPointInPoints.y, 0, 1};
-                kmVec4Transform(&v, &v, &_transform);
-                _transform.mat[12] = v.x;
-                _transform.mat[13] = v.y;
-                _transform.mat[14] = v.z;
-                _transform.mat[15] = v.w;
+                // XXX: Argh, kmMat needs a "translate" method.
+                // XXX: Although this is faster than multiplying a vec4 * mat4
+                _transform.mat[12] += _transform.mat[0] * -_anchorPointInPoints.x + _transform.mat[4] * -_anchorPointInPoints.y;
+                _transform.mat[13] += _transform.mat[1] * -_anchorPointInPoints.x + _transform.mat[5] * -_anchorPointInPoints.y;
             }
         }
 
