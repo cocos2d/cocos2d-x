@@ -78,12 +78,8 @@ bool UILayout::init()
     initRenderer();
     _renderer->retain();
     _renderer->setZOrder(_widgetZOrder);
-    cocos2d::RGBAProtocol* renderRGBA = dynamic_cast<cocos2d::RGBAProtocol*>(_renderer);
-    if (renderRGBA)
-    {
-        renderRGBA->setCascadeColorEnabled(false);
-        renderRGBA->setCascadeOpacityEnabled(false);
-    }
+    _renderer->setCascadeColorEnabled(false);
+    _renderer->setCascadeOpacityEnabled(false);
     ignoreContentAdaptWithSize(false);
     setSize(cocos2d::Size::ZERO);
     setBright(true);
@@ -428,11 +424,7 @@ void UILayout::setColor(const cocos2d::Color3B &color)
     UIWidget::setColor(color);
     if (_backGroundImage)
     {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setColor(color);
-        }
+        _backGroundImage->setColor(color);
     }
 }
 
@@ -441,11 +433,7 @@ void UILayout::setOpacity(int opacity)
     UIWidget::setOpacity(opacity);
     if (_backGroundImage)
     {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setOpacity(opacity);
-        }
+        _backGroundImage->setOpacity(opacity);
     }
 }
 

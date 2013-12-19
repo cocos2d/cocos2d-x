@@ -190,7 +190,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public NewSpriteBatchNode, public LabelProtocol, public RGBAProtocol
+class CC_DLL LabelBMFont : public NewSpriteBatchNode, public LabelProtocol
 {
 public:
     /**
@@ -245,18 +245,6 @@ public:
     // RGBAProtocol 
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual GLubyte getOpacity() const;
-    virtual GLubyte getDisplayedOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const Color3B& getColor(void) const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
     void setFntFile(const std::string& fntFile);
     const std::string& getFntFile() const;
@@ -298,13 +286,6 @@ protected:
     Sprite *_reusedChar;
     
     // texture RGBA
-    GLubyte _displayedOpacity;
-    GLubyte _realOpacity;
-    Color3B _displayedColor;
-    Color3B _realColor;
-    bool _cascadeColorEnabled;
-    bool _cascadeOpacityEnabled;
-    /** conforms to RGBAProtocol protocol */
     bool _isOpacityModifyRGB;
 
 };

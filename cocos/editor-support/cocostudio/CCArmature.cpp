@@ -338,6 +338,22 @@ void Armature::updateOffsetPoint()
     }
 }
 
+void Armature::setAnchorPoint(const Point& point)
+{
+    if( ! point.equals(_anchorPoint))
+    {
+        _anchorPoint = point;
+        _anchorPointInPoints = Point(_contentSize.width * _anchorPoint.x - _offsetPoint.x, _contentSize.height * _anchorPoint.y - _offsetPoint.y);
+        _realAnchorPointInPoints = Point(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _transformDirty = _inverseDirty = true;
+    }
+}
+
+const Point& Armature::getAnchorPointInPoints() const
+{
+    return _realAnchorPointInPoints;
+}
+
 void Armature::setAnimation(ArmatureAnimation *animation)
 {
     _animation = animation;

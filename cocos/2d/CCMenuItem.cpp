@@ -299,12 +299,12 @@ void MenuItemLabel::setEnabled(bool enabled)
     {
         if(enabled == false)
         {
-            _colorBackup = dynamic_cast<RGBAProtocol*>(_label)->getColor();
-            dynamic_cast<RGBAProtocol*>(_label)->setColor(_disabledColor);
+            _colorBackup = _label->getColor();
+            _label->setColor(_disabledColor);
         }
         else
         {
-            dynamic_cast<RGBAProtocol*>(_label)->setColor(_colorBackup);
+            _label->setColor(_colorBackup);
         }
     }
     MenuItem::setEnabled(enabled);

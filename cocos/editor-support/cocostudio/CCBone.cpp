@@ -263,37 +263,22 @@ void CCBone::setBlendFunc(const BlendFunc& blendFunc)
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
     _realColor = Color3B(255, 255, 255);
-    NodeRGBA::updateDisplayedColor(parentColor);
-    updateColor();
+    Node::updateDisplayedColor(parentColor);
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
-    updateColor();
-}
-
-void Bone::setColor(const Color3B& color)
-{
-    NodeRGBA::setColor(color);
-    updateColor();
-}
-
-void Bone::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-    updateColor();
+    Node::updateDisplayedOpacity(parentOpacity);
 }
 
 void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();
-    RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
-    if(protocol != nullptr)
+    if(display != nullptr)
     {
-        protocol->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
-        protocol->setOpacity(_displayedOpacity * _tweenData->a / 255);
+        display->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
+        display->setOpacity(_displayedOpacity * _tweenData->a / 255);
     }
 }
 

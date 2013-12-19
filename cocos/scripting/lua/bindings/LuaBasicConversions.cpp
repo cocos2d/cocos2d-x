@@ -1423,6 +1423,17 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret)
     return ok;
 }
 
+bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret)
+{
+    // TO BE DONE IN CPP FILE
+    return false;
+}
+
+bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
+{
+    // TO BE DONE IN CPP FILE
+    return false;
+}
 
 void point_to_luaval(lua_State* L,const Point& pt)
 {
