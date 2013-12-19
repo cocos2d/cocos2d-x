@@ -84,6 +84,8 @@ public:
     */
     void listenBackToForeground(Object *obj);
 
+    void onDraw();
+    
     // Overrides
     virtual void draw() override;
 

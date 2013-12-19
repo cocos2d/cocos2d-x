@@ -104,12 +104,12 @@ void EventDispatcherTestDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-string EventDispatcherTestDemo::title()
+std::string EventDispatcherTestDemo::title() const
 {
     return "No title";
 }
 
-string EventDispatcherTestDemo::subtitle()
+std::string EventDispatcherTestDemo::subtitle() const
 {
     return "";
 }
@@ -206,12 +206,12 @@ void TouchableSpriteTest::onEnter()
     addChild(menu);
 }
 
-std::string TouchableSpriteTest::title()
+std::string TouchableSpriteTest::title() const
 {
     return "Touchable Sprite Test";
 }
 
-std::string TouchableSpriteTest::subtitle()
+std::string TouchableSpriteTest::subtitle() const
 {
     return "Please drag the blocks";
 }
@@ -314,12 +314,12 @@ void FixedPriorityTest::onEnter()
 
 }
 
-std::string FixedPriorityTest::title()
+std::string FixedPriorityTest::title() const
 {
     return "Fixed priority test";
 }
 
-std::string FixedPriorityTest::subtitle()
+std::string FixedPriorityTest::subtitle() const
 {
     return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
 }
@@ -391,12 +391,12 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(menu, -1);
 }
 
-std::string RemoveListenerWhenDispatching::title()
+std::string RemoveListenerWhenDispatching::title() const
 {
     return "Add and remove listener\n when dispatching event";
 }
 
-std::string RemoveListenerWhenDispatching::subtitle()
+std::string RemoveListenerWhenDispatching::subtitle() const
 {
     return "";
 }
@@ -476,12 +476,12 @@ void CustomEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string CustomEventTest::title()
+std::string CustomEventTest::title() const
 {
     return "Send custom event";
 }
 
-std::string CustomEventTest::subtitle()
+std::string CustomEventTest::subtitle() const
 {
     return "";
 }
@@ -516,12 +516,12 @@ void LabelKeyboardEventTest::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
 }
 
-std::string LabelKeyboardEventTest::title()
+std::string LabelKeyboardEventTest::title() const
 {
     return "Label Receives Keyboard Event";
 }
 
-std::string LabelKeyboardEventTest::subtitle()
+std::string LabelKeyboardEventTest::subtitle() const
 {
     return "Please click keyboard\n(Only available on Desktop and Android)";
 }
@@ -570,12 +570,12 @@ void SpriteAccelerationEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string SpriteAccelerationEventTest::title()
+std::string SpriteAccelerationEventTest::title() const
 {
     return "Sprite Receives Acceleration Event";
 }
 
-std::string SpriteAccelerationEventTest::subtitle()
+std::string SpriteAccelerationEventTest::subtitle() const
 {
     return "Please move your device\n(Only available on mobile)";
 }
@@ -652,12 +652,12 @@ void RemoveAndRetainNodeTest::onExit()
     }
 }
 
-std::string RemoveAndRetainNodeTest::title()
+std::string RemoveAndRetainNodeTest::title() const
 {
     return "RemoveAndRetainNodeTest";
 }
 
-std::string RemoveAndRetainNodeTest::subtitle()
+std::string RemoveAndRetainNodeTest::subtitle() const
 {
     return "Sprite should be removed after 5s, add to scene again after 5s";
 }
@@ -734,12 +734,12 @@ void RemoveListenerAfterAddingTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string RemoveListenerAfterAddingTest::title()
+std::string RemoveListenerAfterAddingTest::title() const
 {
     return "RemoveListenerAfterAddingTest";
 }
 
-std::string RemoveListenerAfterAddingTest::subtitle()
+std::string RemoveListenerAfterAddingTest::subtitle() const
 {
     return "Should not crash!";
 }

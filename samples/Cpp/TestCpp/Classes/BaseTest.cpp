@@ -54,12 +54,12 @@ void BaseTest::onExit()
 	Layer::onExit();
 }
 
-std::string BaseTest::title()
+std::string BaseTest::title() const
 {
 	return "";
 }
 
-std::string BaseTest::subtitle()
+std::string BaseTest::subtitle() const
 {
 	return "";
 }

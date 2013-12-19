@@ -1849,16 +1849,6 @@
 		50A1FF1918290ED4001840C4 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1FF1618290ED4001840C4 /* UIListView.cpp */; };
 		50A1FF1A18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
 		50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
-		50C5A44718514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */; };
-		50C5A44818514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */; };
-		50C5A44918514D2A0071C21B /* CCNewLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */; };
-		50C5A44A18514D2A0071C21B /* CCNewLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */; };
-		593BDCDE184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */; };
-		593BDCDF184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */; };
-		593BDCE0184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
-		593BDCE1184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */; };
-		593BDCE4184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
-		593BDCE5184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */; };
 		593BDCE6184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
 		593BDCE7184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
 		593BDCE8184D0A6E00C21E48 /* CCNewSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */; };
@@ -3046,12 +3036,6 @@
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50A1FF1618290ED4001840C4 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
 		50A1FF1718290ED4001840C4 /* UIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListView.h; sourceTree = "<group>"; };
-		50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewLabelAtlas.cpp; sourceTree = "<group>"; };
-		50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewLabelAtlas.h; sourceTree = "<group>"; };
-		593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewDrawNode.cpp; sourceTree = "<group>"; };
-		593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewDrawNode.h; sourceTree = "<group>"; };
-		593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewParticleSystemQuad.cpp; sourceTree = "<group>"; };
-		593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewParticleSystemQuad.h; sourceTree = "<group>"; };
 		593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSprite.cpp; sourceTree = "<group>"; };
 		593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSprite.h; sourceTree = "<group>"; };
 		593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSpriteBatchNode.cpp; sourceTree = "<group>"; };
@@ -5336,12 +5320,6 @@
 			isa = PBXGroup;
 			children = (
 				A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */,
-				593BDCCE184D0A6E00C21E48 /* CCNewDrawNode.cpp */,
-				593BDCCF184D0A6E00C21E48 /* CCNewDrawNode.h */,
-				50C5A44518514D2A0071C21B /* CCNewLabelAtlas.cpp */,
-				50C5A44618514D2A0071C21B /* CCNewLabelAtlas.h */,
-				593BDCD0184D0A6E00C21E48 /* CCNewParticleSystemQuad.cpp */,
-				593BDCD1184D0A6E00C21E48 /* CCNewParticleSystemQuad.h */,
 				74AC8BBFF8202DFA0628CC61 /* CCNewRenderTexture.cpp */,
 				74AC8FADF4137304F1C5F060 /* CCNewRenderTexture.h */,
 				593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */,
@@ -5430,7 +5408,6 @@
 				46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */,
 				46A170EE1807CECA005B8026 /* CCPhysicsShape.h in Headers */,
 				46A170AD1807CEA3005B8026 /* kazmath.h in Headers */,
-				593BDCE0184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */,
 				46A170261807CBFC005B8026 /* CCThread.h in Headers */,
 				46A170AE1807CEA3005B8026 /* mat3.h in Headers */,
 				46A170AF1807CEA3005B8026 /* mat4.h in Headers */,
@@ -5475,7 +5452,6 @@
 				1A5700D9180BC6060088DEC7 /* CCData.h in Headers */,
 				1A5700DD180BC6060088DEC7 /* CCDataVisitor.h in Headers */,
 				1A5700E1180BC6060088DEC7 /* CCDictionary.h in Headers */,
-				50C5A44918514D2A0071C21B /* CCNewLabelAtlas.h in Headers */,
 				1A5700E3180BC6060088DEC7 /* CCDouble.h in Headers */,
 				1A5700E5180BC6060088DEC7 /* CCFloat.h in Headers */,
 				1A5700E9180BC6060088DEC7 /* CCGeometry.h in Headers */,
@@ -5745,7 +5721,6 @@
 				74AC8589A38C358F1E472BBD /* CCRenderMaterial.h in Headers */,
 				74AC8E3E7D85FB595242AAEC /* CCMaterialManager.h in Headers */,
 				A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */,
-				593BDCE4184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */,
 				593BDCF0184D0A6E00C21E48 /* CCNewTextureAtlas.h in Headers */,
 				74AC808E53112B4A84A5DBD3 /* CCNewRenderTexture.h in Headers */,
 			);
@@ -6158,7 +6133,6 @@
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
-				593BDCE5184D0A6E00C21E48 /* CCNewParticleSystemQuad.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
@@ -6181,7 +6155,6 @@
 				1AD71DB0180E26E600808F54 /* CCBFileLoader.h in Headers */,
 				1AD71DB4180E26E600808F54 /* CCBKeyframe.h in Headers */,
 				1AD71DB6180E26E600808F54 /* CCBMemberVariableAssigner.h in Headers */,
-				50C5A44A18514D2A0071C21B /* CCNewLabelAtlas.h in Headers */,
 				1AD71DBA180E26E600808F54 /* CCBReader.h in Headers */,
 				1AD71DBC180E26E600808F54 /* CCBSelectorResolver.h in Headers */,
 				1AD71DC0180E26E600808F54 /* CCBSequence.h in Headers */,
@@ -6223,7 +6196,6 @@
 				1AD71ED0180E26E600808F54 /* Skeleton.h in Headers */,
 				1AD71ED4180E26E600808F54 /* SkeletonData.h in Headers */,
 				1AD71ED8180E26E600808F54 /* SkeletonJson.h in Headers */,
-				593BDCE1184D0A6E00C21E48 /* CCNewDrawNode.h in Headers */,
 				1AD71EDC180E26E600808F54 /* Skin.h in Headers */,
 				1A85BA0E1845F31700260FC0 /* CCVector.h in Headers */,
 				1AD71EE0180E26E600808F54 /* Slot.h in Headers */,
@@ -6863,7 +6835,6 @@
 				1A5700FD180BC6060088DEC7 /* CCString.cpp in Sources */,
 				1A570101180BC6060088DEC7 /* etc1.cpp in Sources */,
 				1A570105180BC6060088DEC7 /* s3tc.cpp in Sources */,
-				593BDCDE184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */,
 				1A57010E180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570112180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011B180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
@@ -7054,7 +7025,6 @@
 				1A8C59BB180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
 				1A8C59BF180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C3180E930E00EF57C3 /* CCComController.cpp in Sources */,
-				50C5A44718514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */,
 				1A8C59C7180E930E00EF57C3 /* CCComRender.cpp in Sources */,
 				593BDCFA184D0A6E00C21E48 /* CCNewClippingNode.cpp in Sources */,
 				1A8C59CB180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,
@@ -7386,7 +7356,6 @@
 				1A5700FE180BC6060088DEC7 /* CCString.cpp in Sources */,
 				1A570102180BC6060088DEC7 /* etc1.cpp in Sources */,
 				1A570106180BC6060088DEC7 /* s3tc.cpp in Sources */,
-				593BDCDF184D0A6E00C21E48 /* CCNewDrawNode.cpp in Sources */,
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011C180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
@@ -7577,7 +7546,6 @@
 				1A8C59BC180E930E00EF57C3 /* CCComAttribute.cpp in Sources */,
 				1A8C59C0180E930E00EF57C3 /* CCComAudio.cpp in Sources */,
 				1A8C59C4180E930E00EF57C3 /* CCComController.cpp in Sources */,
-				50C5A44818514D2A0071C21B /* CCNewLabelAtlas.cpp in Sources */,
 				1A8C59C8180E930E00EF57C3 /* CCComRender.cpp in Sources */,
 				593BDCFB184D0A6E00C21E48 /* CCNewClippingNode.cpp in Sources */,
 				1A8C59CC180E930E00EF57C3 /* CCDataReaderHelper.cpp in Sources */,

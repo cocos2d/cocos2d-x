@@ -11,18 +11,19 @@ public:
     {
     }
 
+    virtual std::string title() const;
+
     virtual void showCurrentTest() override;
     virtual void onEnter() override;
-    virtual std::string title();
     virtual void update(float dt) override;
 
 protected:
     LabelBMFont * _plabel;
-    int                numberOfTouchesB;
-    int                numberOfTouchesM;
-    int                numberOfTouchesE;
-    int                numberOfTouchesC;
-    float            elapsedTime;
+    int numberOfTouchesB;
+    int numberOfTouchesM;
+    int numberOfTouchesE;
+    int numberOfTouchesC;
+    float elapsedTime;
 };
 
 class TouchesPerformTest1 : public TouchesMainScene
@@ -34,7 +35,7 @@ public:
     }
 
     virtual void onEnter() override;
-    virtual std::string title() override;
+    virtual std::string title() const override;
 
     bool onTouchBegan(Touch* touch, Event* event) ;
     void onTouchMoved(Touch* touch, Event* event) ;
@@ -51,7 +52,7 @@ public:
     }
 
     virtual void onEnter() override;
-    virtual std::string title() override;
+    virtual std::string title() const override;
 
     void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) ;
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) ;
@@ -68,7 +69,7 @@ public:
     }
     
     virtual void onEnter() override;
-    virtual std::string title();
+    virtual std::string title() const;
     virtual void showCurrentTest() override;
 };
 
