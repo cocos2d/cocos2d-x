@@ -72,17 +72,11 @@ void TriggerMng::parse(const rapidjson::Value &root)
                 const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
                 TriggerObj *obj = TriggerObj::create();
                 obj->serialize(subDict);
-				int length = DICTOOL->getArrayCount_json(subDict, "events");
-				for (int i = 0; i < length; ++i)
+				std::vector<int> &_vInt = obj->getEvents();
+				for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
 				{
-					const rapidjson::Value &sub = DICTOOL->getSubDictionary_json(subDict, "events", i);
-					int event = DICTOOL->getIntValue_json(sub, "id");
-					if (event < 0)
-					{
-						continue;
-					}
-					add((unsigned int)(event), obj);
-				}  
+					add((unsigned int)(*iter), obj);
+				}
 				_triggerObjs->setObject(obj, obj->getId());
           }
         
@@ -103,14 +97,13 @@ CCArray* TriggerMng::get(unsigned int event) const
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 {
-	TriggerObj* pRet = NULL;
-	CCAssert(id >= 0, "Argument must be larger than 0");
-	do {
-		CC_BREAK_IF(NULL == _triggerObjs);
-		pRet = dynamic_cast<TriggerObj*>(_triggerObjs->objectForKey(id));
+	if (_triggerObjs == NULL)
+	{
+		return NULL;
+	}
+	TriggerObj *obj = dynamic_cast<TriggerObj *>(_triggerObjs->objectForKey(id));
 
-	} while (0);
-	return pRet;
+	return obj;
 }
 
 bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
@@ -187,6 +180,48 @@ bool TriggerMng::remove(unsigned int event)
     return bRet;
 }
 
+bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
+{
+	bool bRet = false;
+	CCAssert(event >= 0, "event must be larger than 0");
+	CCAssert(Obj != 0, "TriggerObj must be not 0");
+	do 
+	{        
+		CC_BREAK_IF(!_eventTriggers);
+		CCObject* pRetObject = NULL;
+		pRetObject = _eventTriggers->objectForKey(event);
+		CC_BREAK_IF(!pRetObject);
+		CCArray *array = dynamic_cast<CCArray*>(pRetObject);
+		CC_BREAK_IF(!array);
+		CCObject* pObj = NULL;
+		CCARRAY_FOREACH(array, pObj)
+		{
+			TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
+			if (triobj != NULL && triobj == Obj)
+			{
+				triobj->removeAll();
+			}
+			array->removeObject(triobj);
+			break;
+		}
+		bRet = true;
+	} while(0);
+	return bRet;
+}
+
+bool TriggerMng::removeTriggerObj(unsigned int id)
+{
+	TriggerObj *obj = getTriggerObj(id);
+	if (obj == NULL)
+	{
+		return false;
+	}
+	std::vector<int> &_vInt = obj->getEvents();
+	for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+	{
+		remove(*iter, obj);
+	}
+}
 
 bool TriggerMng::isEmpty(void) const
 {

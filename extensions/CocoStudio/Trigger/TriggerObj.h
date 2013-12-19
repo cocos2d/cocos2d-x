@@ -73,12 +73,14 @@ public:
     virtual void serialize(const rapidjson::Value &val);
 	unsigned int getId();
 	void setEnable(bool bEnable);
+	std::vector<int>& getEvents();
   
 private:
     CCArray *_cons;
     CCArray *_acts;
 	unsigned int _id;
 	bool _bEnable;
+	std::vector<int> _vInt;
 };
 
 NS_CC_EXT_END

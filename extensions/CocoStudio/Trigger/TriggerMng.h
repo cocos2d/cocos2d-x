@@ -51,6 +51,8 @@ public:
 	TriggerObj* getTriggerObj(unsigned int id) const;
     bool add(unsigned int event, TriggerObj *pObj);
     bool remove(unsigned int event);
+	bool remove(unsigned int event, TriggerObj *pObj);
+	bool removeTriggerObj(unsigned int id);
     bool isEmpty(void) const;
     
 private:

@@ -83,10 +83,12 @@ TriggerObj::TriggerObj(void)
 ,_id(UINT_MAX)
 ,_bEnable(true)
 {
+	_vInt.clear();
 }
 
 TriggerObj::~TriggerObj(void)
 {
+	_vInt.clear();
 }
 
 bool TriggerObj::init()
@@ -209,6 +211,17 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		_acts->addObject(act);
 	}
 
+	int length = DICTOOL->getArrayCount_json(val, "events");
+	for (int i = 0; i < length; ++i)
+	{
+		const rapidjson::Value &sub = DICTOOL->getSubDictionary_json(val, "events", i);
+		int event = DICTOOL->getIntValue_json(sub, "id");
+		if (event < 0)
+		{
+			continue;
+		}
+		_vInt.push_back(event);
+	}  
 }
 
 unsigned int TriggerObj::getId()
@@ -221,5 +234,9 @@ void TriggerObj::setEnable(bool bEnable)
 	_bEnable = bEnable;
 }
 
+std::vector<int>& TriggerObj::getEvents()
+{
+	return _vInt;
+}
 
 NS_CC_EXT_END
