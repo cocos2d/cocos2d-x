@@ -507,13 +507,13 @@ void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
+        for(const auto &child : _children) {
+            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedOpacity(_displayedOpacity);
             }
-        });
+        }
     }
 }
 
@@ -525,13 +525,13 @@ void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
+        for(const auto &child : _children) {
+            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedColor(_displayedColor);
             }
-        });
+        }
     }
 }
 
