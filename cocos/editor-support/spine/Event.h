@@ -31,30 +31,34 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_EVENT_H_
+#define SPINE_EVENT_H_
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/EventData.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-	spAttachmentLoader super;
-	spAtlas* atlas;
-} spAtlasAttachmentLoader;
+typedef struct spEvent spEvent;
+struct spEvent {
+	spEventData* const data;
+	int intValue;
+	float floatValue;
+	const char* stringValue;
+};
 
-spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
+spEvent* spEvent_create (spEventData* data);
+void spEvent_dispose (spEvent* self);
 
 #ifdef SPINE_SHORT_NAMES
-typedef spAtlasAttachmentLoader AtlasAttachmentLoader;
-#define AtlasAttachmentLoader_create(...) spAtlasAttachmentLoader_create(__VA_ARGS__)
+typedef spEvent Event;
+#define Event_create(...) spEvent_create(__VA_ARGS__)
+#define Event_dispose(...) spEvent_dispose(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_EVENT_H_ */
