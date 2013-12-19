@@ -67,7 +67,7 @@ CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
 CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
 CC_DEPRECATED_ATTRIBUTE typedef TweenType CCTweenType;
 
-class  Armature : public cocos2d::NodeRGBA, public cocos2d::BlendProtocol
+class  Armature : public cocos2d::Node, public cocos2d::BlendProtocol
 {
 
 public:
