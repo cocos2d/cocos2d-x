@@ -222,7 +222,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    if (NodeRGBA::init())
+    if (Node::init())
     {
         _batchNode = nullptr;
         
@@ -1075,20 +1075,6 @@ void Sprite::updateColor(void)
     // do nothing
 }
 
-void Sprite::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-
-    updateColor();
-}
-
-void Sprite::setColor(const Color3B& color3)
-{
-    NodeRGBA::setColor(color3);
-
-    updateColor();
-}
-
 void Sprite::setOpacityModifyRGB(bool modify)
 {
     if (_opacityModifyRGB != modify)
@@ -1101,20 +1087,6 @@ void Sprite::setOpacityModifyRGB(bool modify)
 bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
-}
-
-void Sprite::updateDisplayedColor(const Color3B& parentColor)
-{
-    NodeRGBA::updateDisplayedColor(parentColor);
-    
-    updateColor();
-}
-
-void Sprite::updateDisplayedOpacity(GLubyte opacity)
-{
-    NodeRGBA::updateDisplayedOpacity(opacity);
-    
-    updateColor();
 }
 
 // Frames

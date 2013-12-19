@@ -174,6 +174,34 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LayerBug3162A : public LayerTest
+{
+public:
+    CREATE_FUNC(LayerBug3162A);
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    void step(float dt);
+    
+private:
+    LayerColor* _layer[3];
+};
+
+class LayerBug3162B : public LayerTest
+{
+public:
+    CREATE_FUNC(LayerBug3162B);
+    virtual void onEnter();
+    virtual std::string title();
+    virtual std::string subtitle();
+    
+    void step(float dt);
+    
+private:
+    LayerColor* _layer[3];
+};
+
 class LayerTestScene : public TestScene
 {
 public:

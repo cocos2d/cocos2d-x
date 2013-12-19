@@ -644,7 +644,7 @@ void S9CascadeOpacityAndColor::onEnter()
     auto winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
-    auto rgba = LayerRGBA::create();
+    auto rgba = Layer::create();
     rgba->setCascadeColorEnabled(true);
     rgba->setCascadeOpacityEnabled(true);
     this->addChild(rgba);
@@ -672,7 +672,7 @@ void S9CascadeOpacityAndColor::onEnter()
 
 std::string S9CascadeOpacityAndColor::title() const
 {
-    return "Scale9Sprite and a LayerRGBA parent with setCascadeOpacityEnable(true) and setCascadeColorEnable(true)";
+    return "Scale9Sprite and a Layer parent with setCascadeOpacityEnable(true) and setCascadeColorEnable(true)";
 }
 
 std::string S9CascadeOpacityAndColor::subtitle() const
