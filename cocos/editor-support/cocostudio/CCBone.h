@@ -92,6 +92,7 @@ public:
     void removeDisplay(int index);
 
     void changeDisplayByIndex(int index, bool force);
+    void changeDisplayByName(const char *name, bool force);
 
     /**
      * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
@@ -161,10 +162,12 @@ public:
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      */
-    virtual cocos2d::Array *getColliderBodyList();
+    virtual ColliderDetector* getColliderDetector() const;
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
+#endif
 
     virtual void setBoneData(BoneData *boneData);
     virtual BoneData *getBoneData() const;
@@ -188,8 +191,18 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 
-    virtual void setBlendType(BlendType type) { _blendType = type; }
-    virtual BlendType getBlendType() const { return _blendType; }
+    
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
+    virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return _blendDirty; }
 
     virtual FrameData *getTweenData() const { return _tweenData; }
 
@@ -220,7 +233,8 @@ protected:
      */
     bool _ignoreMovementBoneData;
 
-    BlendType _blendType;
+    cocos2d::BlendFunc _blendFunc;
+    bool _blendDirty;
 
     Tween *_tween;				//! Calculate tween effect
 
