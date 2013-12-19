@@ -373,6 +373,7 @@
 		37CA1D1817D87AC700A649D0 /* UITextButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF117D87AC700A649D0 /* UITextButtonTest.cpp */; };
 		37CA1D1917D87AC700A649D0 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF417D87AC700A649D0 /* UITextFieldTest.cpp */; };
 		37CA1D1A17D87AC700A649D0 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */; };
+		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50BB392D180BC83200A9BACC /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB392B180BC83200A9BACC /* UIListViewEx.cpp */; };
 		50D6A4CD17E2C91100523A82 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D6A4CB17E2C91100523A82 /* GUIReader.cpp */; };
 		50E9E948182A355B00F6FDF1 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E946182A355B00F6FDF1 /* SceneReader.cpp */; };
@@ -1195,6 +1196,8 @@
 		37CA1CF517D87AC700A649D0 /* UITextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTest.h; sourceTree = "<group>"; };
 		37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorTest.cpp; sourceTree = "<group>"; };
 		37CA1CF817D87AC700A649D0 /* SceneEditorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneEditorTest.h; sourceTree = "<group>"; };
+		50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
+		50181AE0185FEBAE0051CA1C /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		50BB392B180BC83200A9BACC /* UIListViewEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewEx.cpp; sourceTree = "<group>"; };
 		50BB392C180BC83200A9BACC /* UIListViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewEx.h; sourceTree = "<group>"; };
 		50D6A4CB17E2C91100523A82 /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
@@ -2743,6 +2746,8 @@
 		37BB5ADD17E86BF1002746B4 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */,
+				50181AE0185FEBAE0051CA1C /* CCActionEaseEx.h */,
 				37BB5BEA17E89E9B002746B4 /* CCActionFrame.cpp */,
 				37BB5BEB17E89E9B002746B4 /* CCActionFrame.h */,
 				37BB5BEC17E89E9B002746B4 /* CCActionFrameEasing.cpp */,
@@ -3560,6 +3565,7 @@
 				15A3D9251682F7D5002FB0C5 /* b2PrismaticJoint.cpp in Sources */,
 				15A3D9261682F7D5002FB0C5 /* b2PulleyJoint.cpp in Sources */,
 				15A3D9271682F7D5002FB0C5 /* b2RevoluteJoint.cpp in Sources */,
+				50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */,
 				15A3D9281682F7D5002FB0C5 /* b2RopeJoint.cpp in Sources */,
 				15A3D9291682F7D5002FB0C5 /* b2WeldJoint.cpp in Sources */,
 				15A3D92A1682F7D5002FB0C5 /* b2WheelJoint.cpp in Sources */,

@@ -142,8 +142,6 @@ public:
      * Play the action.
      */
 	virtual void playAction();
-    
-	virtual void playAction(CCCallFunc* func);
 
     /**
      * Stop the action.

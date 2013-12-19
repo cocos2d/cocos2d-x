@@ -451,6 +451,9 @@
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp">
       <Filter>CocoStudio\Json</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -875,6 +878,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
       <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
+      <Filter>CocoStudio\Action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
