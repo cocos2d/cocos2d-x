@@ -462,12 +462,12 @@ void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
     DL_APPEND(*list, listElement);
 
     // update hash entry for quicker access
-    tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
-    pHashElement->target = target;
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
+    hashElement->target = target;
     target->retain();
-    pHashElement->list = list;
-    pHashElement->entry = listElement;
-    HASH_ADD_PTR(_hashForUpdates, target, pHashElement);
+    hashElement->list = list;
+    hashElement->entry = listElement;
+    HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
 void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool paused)

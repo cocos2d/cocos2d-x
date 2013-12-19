@@ -81,7 +81,7 @@ GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
 , _fragShader(0)
-, _hashForUniforms(NULL)
+, _hashForUniforms(nullptr)
 , _flags()
 {
     memset(_uniforms, 0, sizeof(_uniforms));
@@ -145,7 +145,7 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
     {
         glAttachShader(_program, _fragShader);
     }
-    _hashForUniforms = NULL;
+    _hashForUniforms = nullptr;
     
     CHECK_GL_ERROR_DEBUG();
 
@@ -193,7 +193,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     };
 
     *shader = glCreateShader(type);
-    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
+    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, nullptr);
     glCompileShader(*shader);
 
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
@@ -204,7 +204,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
 		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
 		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
 		
-		glGetShaderSource(*shader, length, NULL, src);
+		glGetShaderSource(*shader, length, nullptr, src);
 		CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
         
         if (type == GL_VERTEX_SHADER)
@@ -339,7 +339,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
     
     bool updated = true;
-    tHashUniformEntry *element = NULL;
+    tHashUniformEntry *element = nullptr;
     HASH_FIND_INT(_hashForUniforms, &location, element);
 
     if (! element)
@@ -372,7 +372,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
 
 GLint GLProgram::getUniformLocationForName(const char* name) const
 {
-    CCASSERT(name != NULL, "Invalid uniform name" );
+    CCASSERT(name != nullptr, "Invalid uniform name" );
     CCASSERT(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
     return glGetUniformLocation(_program, name);
@@ -615,7 +615,7 @@ void GLProgram::reset()
         free(current_element->value);
         free(current_element);
     }
-    _hashForUniforms = NULL;
+    _hashForUniforms = nullptr;
 }
 
 NS_CC_END

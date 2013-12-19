@@ -106,18 +106,18 @@ Node::Node(void)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
-, _camera(NULL)
+, _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
-, _grid(NULL)
+, _grid(nullptr)
 , _ZOrder(0)
-, _parent(NULL)
+, _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
 // userData is always inited as nil
-, _userData(NULL)
-, _userObject(NULL)
-, _shaderProgram(NULL)
+, _userData(nullptr)
+, _userObject(nullptr)
+, _shaderProgram(nullptr)
 , _orderOfArrival(0)
 , _running(false)
 , _visible(true)
@@ -125,7 +125,7 @@ Node::Node(void)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
-, _componentContainer(NULL)
+, _componentContainer(nullptr)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
@@ -139,8 +139,8 @@ Node::Node(void)
     _eventDispatcher = director->getEventDispatcher();
     _eventDispatcher->retain();
     
-    ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    _scriptType = pEngine != NULL ? pEngine->getScriptType() : kScriptTypeNone;
+    ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
+    _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
@@ -171,7 +171,7 @@ Node::~Node()
 
     for (auto& child : _children)
     {
-        child->_parent = NULL;
+        child->_parent = nullptr;
     }
 
     removeAllComponents();
@@ -288,9 +288,9 @@ float Node::getRotationY() const
     return _rotationY;
 }
 
-void Node::setRotationY(float fRotationY)
+void Node::setRotationY(float rotationY)
 {
-    _rotationY = fRotationY;
+    _rotationY = rotationY;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -410,11 +410,11 @@ Camera* Node::getCamera()
 }
 
 /// grid setter
-void Node::setGrid(GridBase* pGrid)
+void Node::setGrid(GridBase* grid)
 {
-    CC_SAFE_RETAIN(pGrid);
+    CC_SAFE_RETAIN(grid);
     CC_SAFE_RELEASE(_grid);
-    _grid = pGrid;
+    _grid = grid;
 }
 
 
@@ -546,16 +546,16 @@ Rect Node::getBoundingBox() const
 
 Node * Node::create(void)
 {
-	Node * pRet = new Node();
-    if (pRet && pRet->init())
+	Node * ret = new Node();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-	return pRet;
+	return ret;
 }
 
 void Node::cleanup()
@@ -589,13 +589,13 @@ void Node::childrenAlloc(void)
     _children.reserve(4);
 }
 
-Node* Node::getChildByTag(int aTag)
+Node* Node::getChildByTag(int tag)
 {
-    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
 
     for (auto& child : _children)
     {
-        if(child && child->_tag == aTag)
+        if(child && child->_tag == tag)
             return child;
     }
     return nullptr;
@@ -607,8 +607,8 @@ Node* Node::getChildByTag(int aTag)
 */
 void Node::addChild(Node *child, int zOrder, int tag)
 {    
-    CCASSERT( child != NULL, "Argument must be non-nil");
-    CCASSERT( child->_parent == NULL, "child already added. It can't be added again");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
+    CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
     if (_children.empty())
     {
@@ -645,13 +645,13 @@ void Node::addChild(Node *child, int zOrder, int tag)
 
 void Node::addChild(Node *child, int zOrder)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, zOrder, child->_tag);
 }
 
 void Node::addChild(Node *child)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->_ZOrder, child->_tag);
 }
 
@@ -662,7 +662,7 @@ void Node::removeFromParent()
 
 void Node::removeFromParentAndCleanup(bool cleanup)
 {
-    if (_parent != NULL)
+    if (_parent != nullptr)
     {
         _parent->removeChild(this,cleanup);
     } 
@@ -691,7 +691,7 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 
     Node *child = this->getChildByTag(tag);
 
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -774,7 +774,7 @@ void Node::insertChild(Node* child, int z)
 
 void Node::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT( child != NULL, "Child must be non-nil");
+    CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
     child->_setZOrder(zOrder);
@@ -852,7 +852,7 @@ void Node::visit()
 
 void Node::transformAncestors()
 {
-    if( _parent != NULL  )
+    if( _parent != nullptr  )
     {
         _parent->transformAncestors();
         _parent->transform();
@@ -878,7 +878,7 @@ void Node::transform()
 
 
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    if ( _camera != NULL && !(_grid != NULL && _grid->isActive()) )
+    if ( _camera != nullptr && !(_grid != nullptr && _grid->isActive()) )
     {
         bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
 
@@ -983,7 +983,7 @@ void Node::setActionManager(ActionManager* actionManager)
 
 Action * Node::runAction(Action* action)
 {
-    CCASSERT( action != NULL, "Argument must be non-nil");
+    CCASSERT( action != nullptr, "Argument must be non-nil");
     _actionManager->addAction(action, this, !_running);
     return action;
 }
@@ -1266,7 +1266,7 @@ AffineTransform Node::getNodeToWorldAffineTransform() const
 {
     AffineTransform t = this->getNodeToParentAffineTransform();
 
-    for (Node *p = _parent; p != NULL; p = p->getParent())
+    for (Node *p = _parent; p != nullptr; p = p->getParent())
         t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
 
     return t;
@@ -1276,7 +1276,7 @@ kmMat4 Node::getNodeToWorldTransform() const
 {
     kmMat4 t = this->getNodeToParentTransform();
 
-    for (Node *p = _parent; p != NULL; p = p->getParent())
+    for (Node *p = _parent; p != nullptr; p = p->getParent())
         kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
 
     return t;

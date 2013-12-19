@@ -51,7 +51,7 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& cha
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)

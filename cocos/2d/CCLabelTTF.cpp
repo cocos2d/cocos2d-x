@@ -92,7 +92,7 @@ LabelTTF* LabelTTF::create(const std::string& string, const std::string& fontNam
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDefinition &textDefinition)
@@ -104,7 +104,7 @@ LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDef
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 bool LabelTTF::init()
