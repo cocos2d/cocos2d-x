@@ -143,7 +143,7 @@ public:
      * Get Armature's bone dictionary
      * @return Armature's bone dictionary
      */
-    cocos2d::Dictionary *getBoneDic() const;
+    const cocos2d::Map<std::string, Bone*>& getBoneDic() const;
 
     /**
      * This boundingBox will calculate all bones' boundingBox every time
@@ -184,7 +184,12 @@ public:
     
     virtual bool getArmatureTransformDirty() const;
 
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual void drawContour();
+#endif
 
 
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
@@ -242,12 +247,6 @@ protected:
      */
     Bone *createBone(const char *boneName );
 
-    /**! Update blend function
-     *  @js NA
-     *  @lua NA
-     */
-    void updateBlendType(BlendType blendType);
-
 protected:
     ArmatureData *_armatureData;
 
@@ -259,9 +258,9 @@ protected:
 
     mutable bool _armatureTransformDirty;
 
-    cocos2d::Dictionary *_boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    cocos2d::Map<std::string, Bone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
 
-    cocos2d::Array *_topBoneList;
+    cocos2d::Vector<Bone*> _topBoneList;
 
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
