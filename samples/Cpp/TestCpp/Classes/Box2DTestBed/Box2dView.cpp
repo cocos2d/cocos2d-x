@@ -196,7 +196,7 @@ bool Box2DView::initWithEntryID(int entryId)
     return true;
 }
 
-std::string Box2DView::title()
+std::string Box2DView::title() const
 {
     return std::string(m_entry->name);
 }

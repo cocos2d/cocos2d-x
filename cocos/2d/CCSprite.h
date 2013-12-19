@@ -170,7 +170,7 @@ public:
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
      *
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
-     *         NULL if the sprite isn't used batch node.
+     *         nullptr if the sprite isn't used batch node.
      */
     virtual SpriteBatchNode* getBatchNode(void);
     /**
@@ -535,6 +535,8 @@ protected:
     virtual void updateBlendFunc(void);
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
+
+    bool culling() const;
 
     //
     // Data used when the sprite is rendered using a SpriteSheet

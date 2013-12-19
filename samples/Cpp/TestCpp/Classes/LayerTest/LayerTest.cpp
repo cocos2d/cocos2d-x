@@ -68,12 +68,12 @@ LayerTest::~LayerTest(void)
 {
 }
 
-string LayerTest::subtitle()
+std::string LayerTest::subtitle() const
 {
     return "";
 }
 
-std::string LayerTest::title()
+std::string LayerTest::title() const
 {
     return "No title";
 }
@@ -168,7 +168,7 @@ void LayerTestCascadingOpacityA::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityA::title()
+std::string LayerTestCascadingOpacityA::title() const
 {
     return "LayerRGBA: cascading opacity";
 }
@@ -220,7 +220,7 @@ void LayerTestCascadingOpacityB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityB::title()
+std::string LayerTestCascadingOpacityB::title() const
 {
     return "CCLayerColor: cascading opacity";
 }
@@ -270,7 +270,7 @@ void LayerTestCascadingOpacityC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingOpacityC::title()
+std::string LayerTestCascadingOpacityC::title() const
 {
     return "CCLayerColor: non-cascading opacity";
 }
@@ -324,7 +324,7 @@ void LayerTestCascadingColorA::onEnter()
      
 }
 
-std::string LayerTestCascadingColorA::title()
+std::string LayerTestCascadingColorA::title() const
 {
     return "LayerRGBA: cascading color";
 }
@@ -376,7 +376,7 @@ void LayerTestCascadingColorB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingColorB::title()
+std::string LayerTestCascadingColorB::title() const
 {
     return "CCLayerColor: cascading color";
 }
@@ -425,7 +425,7 @@ void LayerTestCascadingColorC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingColorC::title()
+std::string LayerTestCascadingColorC::title() const
 {
     return "CCLayerColor: non-cascading color";
 }
@@ -482,7 +482,7 @@ void LayerTest1::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
     onTouchesMoved(touches, event);
 }
 
-std::string LayerTest1::title()
+std::string LayerTest1::title() const
 {
     return "ColorLayer resize (tap & move)";
 }
@@ -518,7 +518,7 @@ void LayerTest2::onEnter()
     layer2->runAction(seq2);
 }
 
-std::string LayerTest2::title()
+std::string LayerTest2::title() const
 {
     return "ColorLayer: fade and tint";
 }
@@ -570,7 +570,7 @@ void LayerTestBlend::newBlend(float dt)
 }
 
 
-std::string LayerTestBlend::title()
+std::string LayerTestBlend::title() const
 {
     return "ColorLayer: blend";
 }
@@ -621,12 +621,12 @@ void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event
     gradient->setVector(diff);
 }
 
-std::string LayerGradientTest::title()
+std::string LayerGradientTest::title() const
 {
     return "LayerGradientTest";
 }
 
-string LayerGradientTest::subtitle()
+std::string LayerGradientTest::subtitle() const
 {
     return "Touch the screen and move your finger";
 }
@@ -644,12 +644,12 @@ LayerGradientTest2::LayerGradientTest2()
     addChild(layer);
 }
 
-std::string LayerGradientTest2::title()
+std::string LayerGradientTest2::title() const
 {
     return "LayerGradientTest 2";
 }
 
-string LayerGradientTest2::subtitle()
+std::string LayerGradientTest2::subtitle() const
 {
     return "You should see a gradient";
 }
@@ -666,12 +666,12 @@ LayerGradientTest3::LayerGradientTest3()
     addChild(layer1);
 }
 
-std::string LayerGradientTest3::title()
+std::string LayerGradientTest3::title() const
 {
     return "LayerGradientTest 3";
 }
 
-string LayerGradientTest3::subtitle()
+std::string LayerGradientTest3::subtitle() const
 {
     return "You should see a gradient";
 }
@@ -717,12 +717,12 @@ void LayerIgnoreAnchorPointPos::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointPos::title()
+std::string LayerIgnoreAnchorPointPos::title() const
 {
     return "IgnoreAnchorPoint - Position";
 }
 
-std::string LayerIgnoreAnchorPointPos::subtitle()
+std::string LayerIgnoreAnchorPointPos::subtitle() const
 {
     return "Ignoring Anchor Point for position";
 }
@@ -765,12 +765,12 @@ void LayerIgnoreAnchorPointRot::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointRot::title()
+std::string LayerIgnoreAnchorPointRot::title() const
 {
     return "IgnoreAnchorPoint - Rotation";
 }
 
-std::string LayerIgnoreAnchorPointRot::subtitle()
+std::string LayerIgnoreAnchorPointRot::subtitle() const
 {
     return "Ignoring Anchor Point for rotations";
 }
@@ -816,12 +816,12 @@ void LayerIgnoreAnchorPointScale::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointScale::title()
+std::string LayerIgnoreAnchorPointScale::title() const
 {
     return "IgnoreAnchorPoint - Scale";
 }
 
-std::string LayerIgnoreAnchorPointScale::subtitle()
+std::string LayerIgnoreAnchorPointScale::subtitle() const
 {
     return "Ignoring Anchor Point for scale";
 }
@@ -858,12 +858,12 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     addChild(layer3);
 }
 
-string LayerExtendedBlendOpacityTest::title()
+std::string LayerExtendedBlendOpacityTest::title() const
 {
     return "Extended Blend & Opacity";
 }
 
-string LayerExtendedBlendOpacityTest::subtitle()
+std::string LayerExtendedBlendOpacityTest::subtitle() const
 {
     return "You should see 3 layers";
 }

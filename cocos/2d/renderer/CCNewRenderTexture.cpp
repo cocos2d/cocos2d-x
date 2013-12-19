@@ -42,7 +42,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
@@ -55,7 +55,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h)
@@ -68,7 +68,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 void NewRenderTexture::draw()

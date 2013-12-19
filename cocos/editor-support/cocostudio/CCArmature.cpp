@@ -340,87 +340,9 @@ Dictionary *Armature::getBoneDic() const
 const kmMat4& Armature::getNodeToParentTransform() const
 {
     if (_transformDirty)
-    {
         _armatureTransformDirty = true;
 
-        // Translate values
-        float x = _position.x;
-        float y = _position.y;
-
-        if (_ignoreAnchorPointForPosition)
-        {
-            x += _anchorPointInPoints.x;
-            y += _anchorPointInPoints.y;
-        }
-
-        // Rotation values
-        // Change rotation code to handle X and Y
-        // If we skew with the exact same value for both x and y then we're simply just rotating
-        float cx = 1, sx = 0, cy = 1, sy = 0;
-        if (_rotationX || _rotationY)
-        {
-            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationX);
-            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationY);
-            cx = cosf(radiansX);
-            sx = sinf(radiansX);
-            cy = cosf(radiansY);
-            sy = sinf(radiansY);
-        }
-
-        // Add offset point
-        x += cy * _offsetPoint.x * _scaleX + -sx * _offsetPoint.y * _scaleY;
-        y += sy * _offsetPoint.x * _scaleX + cx * _offsetPoint.y * _scaleY;
-
-        bool needsSkewMatrix = ( _skewX || _skewY );
-
-        // optimization:
-        // inline anchor point calculation if skew is not needed
-        // Adjusted transform calculation for rotational skew
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Point::ZERO))
-        {
-            x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-            y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
-        }
-
-
-        // Build Transform Matrix
-        // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
-                           -sx * _scaleY, cx * _scaleY,    0,  0,
-                           0,  0,  1,  0,
-                           x,  y,  0,  1 };
-
-        kmMat4Fill(&_transform, mat);
-        
-        // XXX: Try to inline skew
-        // If skew is needed, apply skew and then anchor point
-        if (needsSkewMatrix)
-        {
-            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
-                tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
-                0,  0, 1, 0,
-                0,  0,  0, 1};
-            _transform = TransformConcat(skewMatrix, _transform);
-
-            // adjust anchor point
-            if (!_anchorPointInPoints.equals(Point::ZERO))
-            {
-                // XXX: Argh, kmMat needs a "translate" method
-                _transform.mat[12] += -_anchorPointInPoints.x;
-                _transform.mat[13] += -_anchorPointInPoints.y;
-            }
-        }
-
-        if (_additionalTransformDirty)
-        {
-            _transform = TransformConcat(_transform, _additionalTransform);
-            _additionalTransformDirty = false;
-        }
-
-        _transformDirty = false;
-    }
-
-    return _transform;
+    return Node::getNodeToParentTransform();
 }
 
 void Armature::updateOffsetPoint()

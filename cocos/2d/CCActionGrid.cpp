@@ -53,7 +53,7 @@ void GridAction::startWithTarget(Node *target)
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
         if (targetGrid->isActive() && targetGrid->getGridSize().width == _gridSize.width
-            && targetGrid->getGridSize().height == _gridSize.height /*&& dynamic_cast<GridBase*>(targetGrid) != NULL*/)
+            && targetGrid->getGridSize().height == _gridSize.height /*&& dynamic_cast<GridBase*>(targetGrid) != nullptr*/)
         {
             targetGrid->reuse();
         }
