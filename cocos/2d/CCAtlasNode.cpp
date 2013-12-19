@@ -173,7 +173,7 @@ const Color3B& AtlasNode::getColor() const
     {
         return _colorUnmodified;
     }
-    return NodeRGBA::getColor();
+    return Node::getColor();
 }
 
 void AtlasNode::setColor(const Color3B& color3)
@@ -187,12 +187,12 @@ void AtlasNode::setColor(const Color3B& color3)
         tmp.g = tmp.g * _displayedOpacity/255;
         tmp.b = tmp.b * _displayedOpacity/255;
     }
-    NodeRGBA::setColor(tmp);
+    Node::setColor(tmp);
 }
 
 void AtlasNode::setOpacity(GLubyte opacity)
 {
-    NodeRGBA::setOpacity(opacity);
+    Node::setOpacity(opacity);
 
     // special opacity for premultiplied textures
     if( _isOpacityModifyRGB )

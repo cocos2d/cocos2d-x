@@ -497,7 +497,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
             else if (propName == "opacity")
             {
                 unsigned char opacity = value.asByte();
-                (dynamic_cast<RGBAProtocol*>(pNode))->setOpacity(opacity);
+                pNode->setOpacity(opacity);
             }
             else if (propName == "displayFrame")
             {
@@ -509,7 +509,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
                 unsigned char r = c["r"].asByte();
                 unsigned char g = c["g"].asByte();
                 unsigned char b = c["b"].asByte();
-                (dynamic_cast<RGBAProtocol*>(pNode))->setColor(Color3B(r, g, b));
+                pNode->setColor(Color3B(r, g, b));
             }
             else if (propName == "visible")
             {

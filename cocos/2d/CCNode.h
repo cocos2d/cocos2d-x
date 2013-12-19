@@ -48,7 +48,6 @@ class GridBase;
 class Point;
 class Touch;
 class Action;
-class RGBAProtocol;
 class LabelProtocol;
 class Scheduler;
 class ActionManager;
@@ -1394,6 +1393,24 @@ public:
     virtual bool updatePhysicsTransform();
 
 #endif
+    
+    // overrides
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled() const;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const { return false; };
 
 protected:
     // Nodes should be created using create();
@@ -1412,6 +1429,12 @@ protected:
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
+    
+    virtual void updateCascadeOpacity();
+    virtual void disableCascadeOpacity();
+    virtual void updateCascadeColor();
+    virtual void disableCascadeColor();
+    virtual void updateColor() {}
 
 
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1484,6 +1507,14 @@ protected:
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
+    
+    // opacity controls
+    GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+    Color3B	    _displayedColor;
+    Color3B     _realColor;
+    bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
@@ -1492,49 +1523,41 @@ private:
 //#pragma mark - NodeRGBA
 
 /** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
-
+ 
  All features from Node are valid, plus the following new features:
  - opacity
  - RGB colors
-
+ 
  Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
  @since v2.1
  */
-class CC_DLL NodeRGBA : public Node, public RGBAProtocol
+class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
 {
 public:
     // overrides
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const  override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const  override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
+    virtual GLubyte getOpacity() const override { return Node::getOpacity(); }
+    virtual GLubyte getDisplayedOpacity() const  override { return Node::getDisplayedOpacity(); }
+    virtual void setOpacity(GLubyte opacity) override { return Node::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Node::updateDisplayedOpacity(parentOpacity); }
+    virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
+    virtual const Color3B& getColor(void) const override { return Node::getColor(); }
+    virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
+    virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }
+    virtual bool isCascadeColorEnabled() const override { return Node::isCascadeColorEnabled(); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabled(cascadeColorEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);};
-    virtual bool isOpacityModifyRGB() const override { return false; };
+    virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
+    virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
 protected:
-    NodeRGBA();
-    virtual ~NodeRGBA();
-    virtual bool init();
-
-	GLubyte		_displayedOpacity;
-    GLubyte     _realOpacity;
-	Color3B	    _displayedColor;
-    Color3B     _realColor;
-	bool		_cascadeColorEnabled;
-    bool        _cascadeOpacityEnabled;
+    __NodeRGBA();
+    virtual ~__NodeRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
 };
 
 // end of base_node group

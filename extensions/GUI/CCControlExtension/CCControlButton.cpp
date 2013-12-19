@@ -74,9 +74,8 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
     {
         CCASSERT(node != nullptr, "Label must not be nil.");
         LabelProtocol* label = dynamic_cast<LabelProtocol*>(node);
-        RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(node);
         CCASSERT(backgroundSprite != nullptr, "Background sprite must not be nil.");
-        CCASSERT(label != nullptr || rgbaLabel!=nullptr || backgroundSprite != nullptr, "");
+        CCASSERT(label != nullptr || backgroundSprite != nullptr, "");
         
         _parentInited = true;
 
@@ -105,7 +104,7 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         // Initialize the dispatch table
         
         setTitleForState(label->getString(), Control::State::NORMAL);
-        setTitleColorForState(rgbaLabel->getColor(), Control::State::NORMAL);
+        setTitleColorForState(node->getColor(), Control::State::NORMAL);
         setTitleLabelForState(node, Control::State::NORMAL);
         setBackgroundSpriteForState(backgroundSprite, Control::State::NORMAL);
         
@@ -507,10 +506,9 @@ void ControlButton::needsLayout()
         label->setString(_currentTitle);
     }
 
-    RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(_titleLabel);
-    if (rgbaLabel)
+    if (_titleLabel)
     {
-        rgbaLabel->setColor(_currentTitleColor);
+        _titleLabel->setColor(_currentTitleColor);
     }
     if (_titleLabel != nullptr)
     {

@@ -1624,10 +1624,9 @@ FadeIn* FadeIn::clone() const
 
 void FadeIn::update(float time)
 {
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        pRGBAProtocol->setOpacity((GLubyte)(255 * time));
+        _target->setOpacity((GLubyte)(255 * time));
     }
     /*_target->setOpacity((GLubyte)(255 * time));*/
 }
@@ -1662,10 +1661,9 @@ FadeOut* FadeOut::clone() const
 
 void FadeOut::update(float time)
 {
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
+        _target->setOpacity(GLubyte(255 * (1 - time)));
     }
     /*_target->setOpacity(GLubyte(255 * (1 - time)));*/    
 }
@@ -1718,20 +1716,18 @@ void FadeTo::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
 
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(target);
-    if (pRGBAProtocol)
+    if (target)
     {
-        _fromOpacity = pRGBAProtocol->getOpacity();
+        _fromOpacity = target->getOpacity();
     }
     /*_fromOpacity = target->getOpacity();*/
 }
 
 void FadeTo::update(float time)
 {
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        pRGBAProtocol->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
     }
     /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }
@@ -1777,20 +1773,18 @@ TintTo* TintTo::reverse() const
 void TintTo::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        _from = pRGBAProtocol->getColor();
+        _from = _target->getColor();
     }
     /*_from = target->getColor();*/
 }
 
 void TintTo::update(float time)
 {
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        pRGBAProtocol->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time), 
+        _target->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time),
             (GLubyte)(_from.g + (_to.g - _from.g) * time),
             (GLubyte)(_from.b + (_to.b - _from.b) * time)));
     }    
@@ -1836,10 +1830,9 @@ void TintBy::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
 
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(target);
-    if (pRGBAProtocol)
+    if (target)
     {
-        Color3B color = pRGBAProtocol->getColor();
+        Color3B color = target->getColor();
         _fromR = color.r;
         _fromG = color.g;
         _fromB = color.b;
@@ -1848,10 +1841,9 @@ void TintBy::startWithTarget(Node *target)
 
 void TintBy::update(float time)
 {
-    RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(_target);
-    if (pRGBAProtocol)
+    if (_target)
     {
-        pRGBAProtocol->setColor(Color3B((GLubyte)(_fromR + _deltaR * time),
+        _target->setColor(Color3B((GLubyte)(_fromR + _deltaR * time),
             (GLubyte)(_fromG + _deltaG * time),
             (GLubyte)(_fromB + _deltaB * time)));
     }    
