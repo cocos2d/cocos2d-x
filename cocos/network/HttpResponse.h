@@ -52,6 +52,8 @@ public:
         _succeed = false;
         _responseData.clear();
         _errorBuffer.clear();
+        _downloadSize = 0;
+        _fileHandle = NULL;
     }
     
     /** Destructor, it will be called in HttpClient internal,
@@ -119,6 +121,11 @@ public:
         return _errorBuffer.c_str();
     }
     
+    inline size_t getDownloadSize()
+    {
+        return _downloadSize;
+    }
+    
     // setters, will be called by HttpClient
     // users should avoid invoking these methods
     
@@ -164,6 +171,21 @@ public:
         _errorBuffer.assign(value);
     };
     
+    inline void setFileHandle(FILE* f)
+    {
+        _fileHandle = f;
+    }
+    
+    inline FILE* getFileHandle()
+    {
+        return _fileHandle;
+    }
+    
+    void setDownloadSize(size_t newSize)
+    {
+        _downloadSize = newSize;
+    }
+    
 protected:
     bool initWithRequest(HttpRequest* request);
     
@@ -174,7 +196,8 @@ protected:
     std::vector<char>   _responseHeader;  /// the returned raw header data. You can also dump it as a string
     long                _responseCode;    /// the status code returned from libcurl, e.g. 200, 404
     std::string         _errorBuffer;   /// if _responseCode != 200, please read _errorBuffer to find the reason 
-    
+    size_t              _downloadSize;
+    FILE*               _fileHandle;
 };
 
 }

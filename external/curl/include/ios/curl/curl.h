@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2012, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -69,7 +69,7 @@
    require it! */
 #if defined(_AIX) || defined(__NOVELL_LIBC__) || defined(__NetBSD__) || \
     defined(__minix) || defined(__SYMBIAN32__) || defined(__INTEGRITY) || \
-    defined(ANDROID) || defined(__ANDROID__) || \
+    defined(ANDROID) || defined(__ANDROID__) || defined(__OpenBSD__) || \
    (defined(__FreeBSD_version) && (__FreeBSD_version < 800000))
 #include <sys/select.h>
 #endif
@@ -93,29 +93,21 @@ extern "C" {
 typedef void CURL;
 
 /*
- * Decorate exportable functions for Win32 and Symbian OS DLL linking.
- * This avoids using a .def file for building libcurl.dll.
+ * libcurl external API function linkage decorations.
  */
-#if (defined(WIN32) || defined(_WIN32) || defined(__SYMBIAN32__)) && \
-     !defined(CURL_STATICLIB)
-#if defined(BUILDING_LIBCURL)
-#define CURL_EXTERN  __declspec(dllexport)
-#else
-#define CURL_EXTERN  __declspec(dllimport)
-#endif
-#else
 
-#ifdef CURL_HIDDEN_SYMBOLS
-/*
- * This definition is used to make external definitions visible in the
- * shared library when symbols are hidden by default.  It makes no
- * difference when compiling applications whether this is set or not,
- * only when compiling the library.
- */
-#define CURL_EXTERN CURL_EXTERN_SYMBOL
+#ifdef CURL_STATICLIB
+#  define CURL_EXTERN
+#elif defined(WIN32) || defined(_WIN32) || defined(__SYMBIAN32__)
+#  if defined(BUILDING_LIBCURL)
+#    define CURL_EXTERN  __declspec(dllexport)
+#  else
+#    define CURL_EXTERN  __declspec(dllimport)
+#  endif
+#elif defined(BUILDING_LIBCURL) && defined(CURL_HIDDEN_SYMBOLS)
+#  define CURL_EXTERN CURL_EXTERN_SYMBOL
 #else
-#define CURL_EXTERN
-#endif
+#  define CURL_EXTERN
 #endif
 
 #ifndef curl_socket_typedef
@@ -164,11 +156,21 @@ struct curl_httppost {
                                        HTTPPOST_CALLBACK posts */
 };
 
+/* This is the CURLOPT_PROGRESSFUNCTION callback proto. It is now considered
+   deprecated but was the only choice up until 7.31.0 */
 typedef int (*curl_progress_callback)(void *clientp,
                                       double dltotal,
                                       double dlnow,
                                       double ultotal,
                                       double ulnow);
+
+/* This is the CURLOPT_XFERINFOFUNCTION callback proto. It was introduced in
+   7.32.0, it avoids floating point and provides more detailed information. */
+typedef int (*curl_xferinfo_callback)(void *clientp,
+                                      curl_off_t dltotal,
+                                      curl_off_t dlnow,
+                                      curl_off_t ultotal,
+                                      curl_off_t ulnow);
 
 #ifndef CURL_MAX_WRITE_SIZE
   /* Tests have proven that 20K is a very bad buffer size for uploads on
@@ -309,8 +311,9 @@ typedef size_t (*curl_read_callback)(char *buffer,
                                       void *instream);
 
 typedef enum  {
-  CURLSOCKTYPE_IPCXN, /* socket created for a specific IP connection */
-  CURLSOCKTYPE_LAST   /* never use */
+  CURLSOCKTYPE_IPCXN,  /* socket created for a specific IP connection */
+  CURLSOCKTYPE_ACCEPT, /* socket created by accept() call */
+  CURLSOCKTYPE_LAST    /* never use */
 } curlsocktype;
 
 /* The return code from the sockopt_callback can signal information back
@@ -514,6 +517,8 @@ typedef enum {
   CURLE_RTSP_SESSION_ERROR,      /* 86 - mismatch of RTSP Session Ids */
   CURLE_FTP_BAD_FILE_LIST,       /* 87 - unable to parse FTP file list */
   CURLE_CHUNK_FAILED,            /* 88 - chunk callback reported error */
+  CURLE_NO_CONNECTION_AVAILABLE, /* 89 - No connection available, the
+                                    session will be queued */
   CURL_LAST /* never use! */
 } CURLcode;
 
@@ -631,6 +636,7 @@ typedef enum {
 #define CURLSSH_AUTH_PASSWORD  (1<<1) /* password */
 #define CURLSSH_AUTH_HOST      (1<<2) /* host key files */
 #define CURLSSH_AUTH_KEYBOARD  (1<<3) /* keyboard interactive */
+#define CURLSSH_AUTH_AGENT     (1<<4) /* agent (ssh-agent, pageant...) */
 #define CURLSSH_AUTH_DEFAULT CURLSSH_AUTH_ANY
 
 #define CURLGSSAPI_DELEGATION_NONE        0      /* no delegation (default) */
@@ -639,16 +645,18 @@ typedef enum {
 
 #define CURL_ERROR_SIZE 256
 
+enum curl_khtype {
+  CURLKHTYPE_UNKNOWN,
+  CURLKHTYPE_RSA1,
+  CURLKHTYPE_RSA,
+  CURLKHTYPE_DSS
+};
+
 struct curl_khkey {
   const char *key; /* points to a zero-terminated string encoded with base64
                       if len is zero, otherwise to the "raw" data */
   size_t len;
-  enum type {
-    CURLKHTYPE_UNKNOWN,
-    CURLKHTYPE_RSA1,
-    CURLKHTYPE_RSA,
-    CURLKHTYPE_DSS
-  } keytype;
+  enum curl_khtype keytype;
 };
 
 /* this is the set of return values expected from the curl_sshkeycallback
@@ -819,10 +827,10 @@ typedef enum {
   /* Name of proxy to use. */
   CINIT(PROXY, OBJECTPOINT, 4),
 
-  /* "name:password" to use when fetching. */
+  /* "user:password;options" to use when fetching. */
   CINIT(USERPWD, OBJECTPOINT, 5),
 
-  /* "name:password" to use with proxy. */
+  /* "user:password" to use with proxy. */
   CINIT(PROXYUSERPWD, OBJECTPOINT, 6),
 
   /* Range to get, specified as an ASCII string. */
@@ -972,13 +980,16 @@ typedef enum {
 
   /* 55 = OBSOLETE */
 
-  /* Function that will be called instead of the internal progress display
+  /* DEPRECATED
+   * Function that will be called instead of the internal progress display
    * function. This function should be defined as the curl_progress_callback
    * prototype defines. */
   CINIT(PROGRESSFUNCTION, FUNCTIONPOINT, 56),
 
-  /* Data passed to the progress callback */
+  /* Data passed to the CURLOPT_PROGRESSFUNCTION and CURLOPT_XFERINFOFUNCTION
+     callbacks */
   CINIT(PROGRESSDATA, OBJECTPOINT, 57),
+#define CURLOPT_XFERINFODATA CURLOPT_PROGRESSDATA
 
   /* We want the referrer field set automatically when following locations */
   CINIT(AUTOREFERER, LONG, 58),
@@ -1045,9 +1056,8 @@ typedef enum {
   /* Set to the Entropy Gathering Daemon socket pathname */
   CINIT(EGDSOCKET, OBJECTPOINT, 77),
 
-  /* Time-out connect operations after this amount of seconds, if connects
-     are OK within this time, then fine... This only aborts the connect
-     phase. [Only works on unix-style/SIGALRM operating systems] */
+  /* Time-out connect operations after this amount of seconds, if connects are
+     OK within this time, then fine... This only aborts the connect phase. */
   CINIT(CONNECTTIMEOUT, LONG, 78),
 
   /* Function that will be called to store headers (instead of fwrite). The
@@ -1221,9 +1231,9 @@ typedef enum {
   CINIT(NETRC_FILE, OBJECTPOINT, 118),
 
   /* Enable SSL/TLS for FTP, pick one of:
-     CURLFTPSSL_TRY     - try using SSL, proceed anyway otherwise
-     CURLFTPSSL_CONTROL - SSL for the control connection or fail
-     CURLFTPSSL_ALL     - SSL for all communication or fail
+     CURLUSESSL_TRY     - try using SSL, proceed anyway otherwise
+     CURLUSESSL_CONTROL - SSL for the control connection or fail
+     CURLUSESSL_ALL     - SSL for all communication or fail
   */
   CINIT(USE_SSL, LONG, 119),
 
@@ -1378,8 +1388,7 @@ typedef enum {
   CINIT(ADDRESS_SCOPE, LONG, 171),
 
   /* Collect certificate chain info and allow it to get retrievable with
-     CURLINFO_CERTINFO after the transfer is complete. (Unfortunately) only
-     working with OpenSSL-powered builds. */
+     CURLINFO_CERTINFO after the transfer is complete. */
   CINIT(CERTINFO, LONG, 172),
 
   /* "name" and "pwd" to use when fetching. */
@@ -1532,8 +1541,35 @@ typedef enum {
   /* Enable/disable specific SSL features with a bitmask, see CURLSSLOPT_* */
   CINIT(SSL_OPTIONS, LONG, 216),
 
-  /* set the SMTP auth originator */
+  /* Set the SMTP auth originator */
   CINIT(MAIL_AUTH, OBJECTPOINT, 217),
+
+  /* Enable/disable SASL initial response */
+  CINIT(SASL_IR, LONG, 218),
+
+  /* Function that will be called instead of the internal progress display
+   * function. This function should be defined as the curl_xferinfo_callback
+   * prototype defines. (Deprecates CURLOPT_PROGRESSFUNCTION) */
+  CINIT(XFERINFOFUNCTION, FUNCTIONPOINT, 219),
+
+  /* The XOAUTH2 bearer token */
+  CINIT(XOAUTH2_BEARER, OBJECTPOINT, 220),
+
+  /* Set the interface string to use as outgoing network
+   * interface for DNS requests.
+   * Only supported by the c-ares DNS backend */
+  CINIT(DNS_INTERFACE, OBJECTPOINT, 221),
+
+  /* Set the local IPv4 address to use for outgoing DNS requests.
+   * Only supported by the c-ares DNS backend */
+  CINIT(DNS_LOCAL_IP4, OBJECTPOINT, 222),
+
+  /* Set the local IPv4 address to use for outgoing DNS requests.
+   * Only supported by the c-ares DNS backend */
+  CINIT(DNS_LOCAL_IP6, OBJECTPOINT, 223),
+
+  /* Set authentication options directly */
+  CINIT(LOGIN_OPTIONS, OBJECTPOINT, 224),
 
   CURLOPT_LASTENTRY /* the last unused */
 } CURLoption;
@@ -1587,6 +1623,7 @@ enum {
                              for us! */
   CURL_HTTP_VERSION_1_0,  /* please use HTTP 1.0 in the request */
   CURL_HTTP_VERSION_1_1,  /* please use HTTP 1.1 in the request */
+  CURL_HTTP_VERSION_2_0,  /* please use HTTP 2.0 in the request */
 
   CURL_HTTP_VERSION_LAST /* *ILLEGAL* http version */
 };
@@ -1624,9 +1661,12 @@ enum CURL_NETRC_OPTION {
 
 enum {
   CURL_SSLVERSION_DEFAULT,
-  CURL_SSLVERSION_TLSv1,
+  CURL_SSLVERSION_TLSv1, /* TLS 1.x */
   CURL_SSLVERSION_SSLv2,
   CURL_SSLVERSION_SSLv3,
+  CURL_SSLVERSION_TLSv1_0,
+  CURL_SSLVERSION_TLSv1_1,
+  CURL_SSLVERSION_TLSv1_2,
 
   CURL_SSLVERSION_LAST /* never use, keep last */
 };
@@ -1945,6 +1985,28 @@ struct curl_certinfo {
                                    format "name: value" */
 };
 
+/* enum for the different supported SSL backends */
+typedef enum {
+  CURLSSLBACKEND_NONE = 0,
+  CURLSSLBACKEND_OPENSSL = 1,
+  CURLSSLBACKEND_GNUTLS = 2,
+  CURLSSLBACKEND_NSS = 3,
+  CURLSSLBACKEND_QSOSSL = 4,
+  CURLSSLBACKEND_GSKIT = 5,
+  CURLSSLBACKEND_POLARSSL = 6,
+  CURLSSLBACKEND_CYASSL = 7,
+  CURLSSLBACKEND_SCHANNEL = 8,
+  CURLSSLBACKEND_DARWINSSL = 9
+} curl_sslbackend;
+
+/* Information about the SSL library used and the respective internal SSL
+   handle, which can be used to obtain further information regarding the
+   connection. Asked for with CURLINFO_TLS_SESSION. */
+struct curl_tlssessioninfo {
+  curl_sslbackend backend;
+  void *internals;
+};
+
 #define CURLINFO_STRING   0x100000
 #define CURLINFO_LONG     0x200000
 #define CURLINFO_DOUBLE   0x300000
@@ -1996,9 +2058,10 @@ typedef enum {
   CURLINFO_PRIMARY_PORT     = CURLINFO_LONG   + 40,
   CURLINFO_LOCAL_IP         = CURLINFO_STRING + 41,
   CURLINFO_LOCAL_PORT       = CURLINFO_LONG   + 42,
+  CURLINFO_TLS_SESSION      = CURLINFO_SLIST  + 43,
   /* Fill in new entries below here! */
 
-  CURLINFO_LASTONE          = 42
+  CURLINFO_LASTONE          = 43
 } CURLINFO;
 
 /* CURLINFO_RESPONSE_CODE is the new name for the option previously known as
@@ -2022,6 +2085,7 @@ typedef enum {
 #define CURL_GLOBAL_ALL (CURL_GLOBAL_SSL|CURL_GLOBAL_WIN32)
 #define CURL_GLOBAL_NOTHING 0
 #define CURL_GLOBAL_DEFAULT CURL_GLOBAL_ALL
+#define CURL_GLOBAL_ACK_EINTR (1<<2)
 
 
 /*****************************************************************************
@@ -2149,6 +2213,7 @@ typedef struct {
 #define CURL_VERSION_CURLDEBUG (1<<13) /* debug memory tracking supported */
 #define CURL_VERSION_TLSAUTH_SRP (1<<14) /* TLS-SRP auth is supported */
 #define CURL_VERSION_NTLM_WB   (1<<15) /* NTLM delegating to winbind helper */
+#define CURL_VERSION_HTTP2     (1<<16) /* HTTP2 support built-in */
 
  /*
  * NAME curl_version_info()
