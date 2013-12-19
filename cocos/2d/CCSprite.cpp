@@ -46,6 +46,8 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCRenderer.h"
 #include "CCQuadCommand.h"
+#include "CCFrustum.h"
+
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -665,31 +667,51 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(void)
 {
-//    updateQuadVertices();
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
     //TODO implement z order
     QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+
+//    if(!culling())
+//    {
+//        renderCommand->releaseToCommandPool();
+//    }
+//    else
+    {
+        Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    }
+}
+
+bool Sprite::culling() const
+{
+    Frustum* frustum = Director::getInstance()->getFrustum();
+    //TODO optimize this transformation, should use parent's transformation instead
+    kmMat4 worldTM = getNodeToWorldTransform();
+    //generate aabb
+
+    //
+    // calculate the Quad based on the Affine Matrix
+    //
+    Rect newRect = RectApplyTransform(_rect, worldTM);
+
+    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
+
+    AABB aabb(point,point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
+
+    return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
 }
 
 void Sprite::updateQuadVertices()
 {
-
-//#ifdef CC_USE_PHYSICS
-//    updatePhysicsTransform();
-//    setDirty(true);
-//#endif
-#define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
-    long offset = 0;
-    setGLBufferData(&_quad, 4 * kQuadSize, 0);
-#else
-    size_t offset = (size_t)&_quad;
-#endif // EMSCRIPTEN
+#ifdef CC_USE_PHYSICS
+    updatePhysicsTransform();
+    setDirty(true);
+#endif
 
     //TODO optimize the performance cache affineTransformation
 
@@ -713,38 +735,13 @@ void Sprite::updateQuadVertices()
         //
         // calculate the Quad based on the Affine Matrix
         //
+        Rect newRect = RectApplyTransform(_rect, _transformToBatch);
 
-        Size size = _rect.size;
-
-        float x1 = _offsetPosition.x;
-        float y1 = _offsetPosition.y;
-
-        float x2 = x1 + size.width;
-        float y2 = y1 + size.height;
-        float x = _transformToBatch.mat[12];
-        float y = _transformToBatch.mat[13];
-
-        float cr = _transformToBatch.mat[0];
-        float sr = _transformToBatch.mat[1];
-        float cr2 = _transformToBatch.mat[5];
-        float sr2 = -_transformToBatch.mat[4];
-        float ax = x1 * cr - y1 * sr2 + x;
-        float ay = x1 * sr + y1 * cr2 + y;
-
-        float bx = x2 * cr - y1 * sr2 + x;
-        float by = x2 * sr + y1 * cr2 + y;
-
-        float cx = x2 * cr - y2 * sr2 + x;
-        float cy = x2 * sr + y2 * cr2 + y;
-
-        float dx = x1 * cr - y2 * sr2 + x;
-        float dy = x1 * sr + y2 * cr2 + y;
-
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
-
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        
         _recursiveDirty = false;
         setDirty(false);
     }

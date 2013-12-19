@@ -23,8 +23,8 @@ class NodeChildrenMainScene : public Scene
 {
 public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
     virtual void updateQuantityOfNodes() = 0;
 
     const char* profilerName();
@@ -65,8 +65,8 @@ public:
     IterateSpriteSheetForLoop() {}
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -78,8 +78,8 @@ public:
     IterateSpriteSheetIterator() {}
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -90,8 +90,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -121,8 +121,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -133,8 +133,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -147,8 +147,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -159,8 +159,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -171,8 +171,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -183,8 +183,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -195,8 +195,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -207,8 +207,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -219,8 +219,8 @@ public:
 
     virtual void update(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName();
 };
 
@@ -233,8 +233,8 @@ public:
 
     virtual void update(float dt) override;
     void updateQuantityOfNodes() override;
-    virtual std::string title() override;
-    virtual std::string subtitle() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual const char* testName() override;
 };
 

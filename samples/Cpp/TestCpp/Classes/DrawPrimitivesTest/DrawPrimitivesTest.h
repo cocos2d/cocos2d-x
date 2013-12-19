@@ -15,8 +15,8 @@ public:
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
 };
 
@@ -25,8 +25,8 @@ class DrawPrimitivesTest : public BaseLayer
 public:
     DrawPrimitivesTest();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void draw();
 };
 
@@ -35,8 +35,8 @@ class DrawNodeTest : public BaseLayer
 public:
     DrawNodeTest();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class DrawPrimitivesTestScene : public TestScene

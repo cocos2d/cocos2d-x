@@ -536,6 +536,8 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
+    bool culling() const;
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
