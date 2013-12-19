@@ -37,13 +37,24 @@ RenderCommand::~RenderCommand()
 {
 }
 
+void RenderCommand::init(int viewport, float depth)
+{
+    _viewport = viewport;
+    
+    //convert depth from float to unsigned int
+    //currently we only support 2 digits after decimal point
+    _depth = depth * 100 + CC_RENDERER_DEPTH_HALF;
+    _depth = MIN(_depth, CC_RENDERER_DEPTH_MAX);
+    _depth = MAX(_depth, CC_RENDERER_DEPTH_MIN);
+}
+
 void printBits(size_t const size, void const * const ptr)
 {
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
     int i, j;
 
-    for (i=size-1;i>=0;i--)
+    for (i=(int)size-1;i>=0;i--)
     {
         for (j=7;j>=0;j--)
         {

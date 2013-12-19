@@ -42,7 +42,7 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
+    void init(int viewport, float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
               const kmMat4& mv);
 
     // +----------+----------+-----+-----------------------------------+
@@ -75,10 +75,6 @@ protected:
     int32_t _materialID;
 
     //Key Data
-    int _viewport;          /// Which view port it belongs to
-
-    //TODO use material to determine if it's translucent
-    int32_t _depth;
 
     //Maternal
     GLuint _textureID;

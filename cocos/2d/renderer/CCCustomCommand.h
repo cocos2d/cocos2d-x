@@ -38,7 +38,6 @@ protected:
     ~CustomCommand();
     
 public:
-    void init(int viewport, int32_t depth);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |

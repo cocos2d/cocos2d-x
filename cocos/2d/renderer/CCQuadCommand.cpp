@@ -25,7 +25,7 @@
 
 #include "CCQuadCommand.h"
 #include "ccGLStateCache.h"
-#include "MaterialManager.h"
+#include "CCMaterialManager.h"
 
 NS_CC_BEGIN
 RenderCommandPool<QuadCommand> QuadCommand::_commandPool;
@@ -42,7 +42,7 @@ QuadCommand::QuadCommand()
     _quad = nullptr;
 }
 
-void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
+void QuadCommand::init(int viewport, float depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
 {
     RenderCommand::init(viewport, depth);
     _textureID = textureID;
