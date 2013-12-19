@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,17 +29,15 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/SlotData.h>
 #include <spine/extension.h>
 
-namespace spine {
-
-SlotData* SlotData_create (const char* name, BoneData* boneData) {
-	SlotData* self = NEW(SlotData);
+spSlotData* spSlotData_create (const char* name, spBoneData* boneData) {
+	spSlotData* self = NEW(spSlotData);
 	MALLOC_STR(self->name, name);
-	CONST_CAST(BoneData*, self->boneData) = boneData;
+	CONST_CAST(spBoneData*, self->boneData) = boneData;
 	self->r = 1;
 	self->g = 1;
 	self->b = 1;
@@ -39,18 +45,16 @@ SlotData* SlotData_create (const char* name, BoneData* boneData) {
 	return self;
 }
 
-void SlotData_dispose (SlotData* self) {
+void spSlotData_dispose (spSlotData* self) {
 	FREE(self->name);
 	FREE(self->attachmentName);
 	FREE(self);
 }
 
-void SlotData_setAttachmentName (SlotData* self, const char* attachmentName) {
+void spSlotData_setAttachmentName (spSlotData* self, const char* attachmentName) {
 	FREE(self->attachmentName);
 	if (attachmentName)
 		MALLOC_STR(self->attachmentName, attachmentName);
 	else
 		CONST_CAST(char*, self->attachmentName) = 0;
 }
-
-} // namespace spine {
