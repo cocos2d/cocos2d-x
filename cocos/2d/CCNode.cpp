@@ -1203,7 +1203,7 @@ const kmMat4& Node::getNodeToParentTransform() const
                                   0,  0,  1, 0,
                                   0,  0,  0, 1};
 
-            kmMat4Multiply(&_transform, &skewMatrix, &_transform);
+            kmMat4Multiply(&_transform, &_transform, &skewMatrix);
 
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Point::ZERO))
