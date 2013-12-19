@@ -77,7 +77,7 @@ protected:
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
-    void setFrameZoomFactor(float fZoomFactor);
+    void setFrameZoomFactor(float zoomFactor);
 private:
     bool _captured;
     bool _supportTouch;

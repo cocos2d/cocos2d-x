@@ -74,7 +74,7 @@ void Renderer::initGLView()
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
                                                            EVNET_COME_TO_FOREGROUND,
-                                                           NULL);
+                                                           nullptr);
 #endif
 
     setupIndices();
@@ -330,7 +330,7 @@ void Renderer::drawBatchedQuads()
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), nullptr, GL_DYNAMIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
         glUnmapBuffer(GL_ARRAY_BUFFER);

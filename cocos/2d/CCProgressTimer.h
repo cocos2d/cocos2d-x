@@ -72,8 +72,8 @@ public:
     /** The image to show the progress percentage, retain */
     inline Sprite* getSprite() const { return _sprite; }
 
-    void setPercentage(float fPercentage);
-    void setSprite(Sprite *pSprite);
+    void setPercentage(float percentage);
+    void setSprite(Sprite *sprite);
     void setType(Type type);
     /**
      * @js setReverseDirection

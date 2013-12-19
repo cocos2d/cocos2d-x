@@ -294,7 +294,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
     return true;
 }
 
-int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
+int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize)
 {
     if (!strUTF8)
         return 0;
@@ -415,7 +415,7 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
         return 0;
     
     if (thePage->getNumLines() == 0)
-        return NULL;
+        return nullptr;
     
     int pageWidth  = thePage->getWidth();
     int pageHeight = thePage->getHeight();

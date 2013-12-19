@@ -120,7 +120,7 @@ private:
 
 private:
     Map<std::string, Animation*> _animations;
-    static AnimationCache* s_pSharedAnimationCache;
+    static AnimationCache* s_sharedAnimationCache;
 };
 
 // end of sprite_nodes group
