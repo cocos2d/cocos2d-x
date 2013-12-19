@@ -32,11 +32,10 @@
 static std::function<NodeChildrenMainScene*()> createFunctions[] =
 {
     CL(IterateSpriteSheetForLoop),
-    CL(IterateSpriteSheetCArray),
     CL(IterateSpriteSheetIterator),
+    CL(IterateSpriteSheetForEach),
 
     CL(CallFuncsSpriteSheetForEach),
-    CL(CallFuncsSpriteSheetCMacro),
 
     CL(AddSprite),
     CL(AddSpriteSheet),
@@ -312,43 +311,6 @@ const char*  IterateSpriteSheetForLoop::testName()
     return "Iterator: C++11 for loop";
 }
 
-////////////////////////////////////////////////////////
-//
-// IterateSpriteSheetCArray
-//
-////////////////////////////////////////////////////////
-void IterateSpriteSheetCArray::update(float dt)
-{
-    // iterate using fast enumeration protocol
-    auto& children = batchNode->getChildren();
-//    Object* object = NULL;
-
-    CC_PROFILER_START(this->profilerName());
-
-//FIXME: James    CCARRAY_FOREACH(children, object)
-//    {
-//        auto sprite = static_cast<Sprite*>(object);
-//        sprite->setVisible(false);
-//    }
-
-    CC_PROFILER_STOP(this->profilerName());
-}
-
-
-std::string IterateSpriteSheetCArray::title() const
-{
-    return "Iterate SpriteSheet";
-}
-
-std::string IterateSpriteSheetCArray::subtitle() const
-{
-    return "Iterate children using C Array API. See console";
-}
-
-const char*  IterateSpriteSheetCArray::testName()
-{
-    return "Iterator: CC_ARRAY_FOREACH";
-}
 
 ////////////////////////////////////////////////////////
 //
@@ -386,6 +348,43 @@ const char*  IterateSpriteSheetIterator::testName()
 {
     return "Iterator: begin(), end()";
 }
+
+////////////////////////////////////////////////////////
+//
+// IterateSpriteSheetForEach
+//
+////////////////////////////////////////////////////////
+void IterateSpriteSheetForEach::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto& children = batchNode->getChildren();
+
+    CC_PROFILER_START(this->profilerName());
+
+    std::for_each(std::begin(children), std::end(children), [](Node *child) {
+        auto sprite = static_cast<Sprite*>(child);
+        sprite->setVisible(false);
+    });
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string IterateSpriteSheetForEach::title() const
+{
+    return "Iterate SpriteSheet";
+}
+
+std::string IterateSpriteSheetForEach::subtitle() const
+{
+    return "Iterate children using std::for_each(). See console";
+}
+
+const char*  IterateSpriteSheetForEach::testName()
+{
+    return "Iterator: std::for_each()";
+}
+
 
 ////////////////////////////////////////////////////////
 //
@@ -428,38 +427,6 @@ const char*  CallFuncsSpriteSheetForEach::testName()
     return "Map: std::for_each";
 }
 
-////////////////////////////////////////////////////////
-//
-// CallFuncsSpriteSheetCMacro
-//
-////////////////////////////////////////////////////////
-void CallFuncsSpriteSheetCMacro::update(float dt)
-{
-    // iterate using fast enumeration protocol
-    auto& children = batchNode->getChildren();
-
-    CC_PROFILER_START(this->profilerName());
-
-//FIXME: James    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
-
-    CC_PROFILER_STOP(this->profilerName());
-}
-
-
-std::string CallFuncsSpriteSheetCMacro::title() const
-{
-    return "'map' functional call";
-}
-
-std::string CallFuncsSpriteSheetCMacro::subtitle() const
-{
-    return "Using 'arrayMakeObjectsPerformSelector'. See console";
-}
-
-const char*  CallFuncsSpriteSheetCMacro::testName()
-{
-    return "Map: arrayMakeObjectsPerformSelector";
-}
 ////////////////////////////////////////////////////////
 //
 // AddRemoveSpriteSheet
