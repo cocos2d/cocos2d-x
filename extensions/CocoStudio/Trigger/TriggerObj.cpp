@@ -80,7 +80,8 @@ void BaseTriggerAction::removeAll()
 TriggerObj::TriggerObj(void)
 :_cons(NULL)
 ,_acts(NULL)
-,_id(-1)
+,_id(UINT_MAX)
+,_bEnable(true)
 {
 }
 
@@ -118,16 +119,11 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::check()
 {
-    bool bRet = true;
-    if (_cons == NULL)
-    {
-        return bRet;
-    }
-    if (_cons->count() == 0)
-    {
-        return bRet;
-    }
-    
+	if (!_bEnable || _cons == NULL || _cons->count() == 0)
+	{
+		return true;
+	}
+    bool bRet = true;  
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(_cons, pObj)
     {
@@ -140,15 +136,11 @@ bool TriggerObj::check()
 
 void TriggerObj::done()
 {
-    if (_acts == NULL)
-    {
-        return;
-    }
-    if (_acts->count() == 0)
-    {
-        return;
-    }
-    
+	if (!_bEnable || _acts == NULL || _acts->count() == 0)
+	{
+		return;
+	}
+
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(_acts, pObj)
     {
@@ -194,8 +186,8 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         }
         BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::sharedFactory()->createObject(classname));
         CCAssert(con != NULL, "class named classname can not implement!");
-        con->init();
         con->serialize(subDict);
+		con->init();
         con->autorelease();
         _cons->addObject(con);
     }
@@ -211,12 +203,22 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		}
 		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::sharedFactory()->createObject(classname));
 		CCAssert(act != NULL, "class named classname can not implement!");
-		act->init();
 		act->serialize(subDict);
+		act->init();
 		act->autorelease();
 		_acts->addObject(act);
 	}
 
+}
+
+unsigned int TriggerObj::getId()
+{
+	return _id;
+}
+
+void TriggerObj::setEnable(bool bEnable)
+{
+	_bEnable = bEnable;
 }
 
 

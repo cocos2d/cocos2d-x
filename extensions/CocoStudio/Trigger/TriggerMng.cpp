@@ -32,6 +32,7 @@ TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
 
 TriggerMng::TriggerMng(void)
 : _eventTriggers(NULL)
+,_triggerObjs(NULL)
 {
     
 }
@@ -39,6 +40,7 @@ TriggerMng::TriggerMng(void)
 TriggerMng::~TriggerMng(void)
 {
     CC_SAFE_RELEASE(_eventTriggers);
+	CC_SAFE_RELEASE(_triggerObjs);
 }
 
 const char* TriggerMng::triggerMngVersion()
@@ -80,7 +82,8 @@ void TriggerMng::parse(const rapidjson::Value &root)
 						continue;
 					}
 					add((unsigned int)(event), obj);
-				}    
+				}  
+				_triggerObjs->setObject(obj, obj->getId());
           }
         
     } while (0);
@@ -96,6 +99,18 @@ CCArray* TriggerMng::get(unsigned int event) const
         
     } while (0);
     return pRet;
+}
+
+TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
+{
+	TriggerObj* pRet = NULL;
+	CCAssert(id >= 0, "Argument must be larger than 0");
+	do {
+		CC_BREAK_IF(NULL == _triggerObjs);
+		pRet = dynamic_cast<TriggerObj*>(_triggerObjs->objectForKey(id));
+
+	} while (0);
+	return pRet;
 }
 
 bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
@@ -182,6 +197,8 @@ void TriggerMng::alloc(void)
 {
     _eventTriggers = CCDictionary::create();
     _eventTriggers->retain();
+	_triggerObjs = CCDictionary::create();
+	_triggerObjs->retain();
 }
 
 

@@ -48,6 +48,7 @@ public:
 	void parse(const rapidjson::Value &root);
 	void removeAll(void);
 	CCArray* get(unsigned int event) const;
+	TriggerObj* getTriggerObj(unsigned int id) const;
     bool add(unsigned int event, TriggerObj *pObj);
     bool remove(unsigned int event);
     bool isEmpty(void) const;
@@ -57,6 +58,7 @@ private:
 private:
     CCDictionary *_eventTriggers;
     static TriggerMng *_sharedTriggerMng;
+	CCDictionary *_triggerObjs;
 };
 
 

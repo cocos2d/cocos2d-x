@@ -32,6 +32,7 @@ NS_CC_EXT_BEGIN
     SceneReader::SceneReader()
 	:_pListener(NULL)
 	,_pfnSelector(NULL)
+	,_pNode(NULL)
     {
 	}
 
@@ -46,15 +47,15 @@ NS_CC_EXT_BEGIN
 
     cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-		cocos2d::CCNode *pNode = NULL;
         rapidjson::Document jsonDict;
         do {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-              pNode = createObject(jsonDict, NULL);
+              _pNode = createObject(jsonDict, NULL);
 			  TriggerMng::sharedTriggerMng()->parse(jsonDict);
+			  
         } while (0);
         
-        return pNode;
+        return _pNode;
 	}
 
     bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
@@ -76,6 +77,39 @@ NS_CC_EXT_BEGIN
             } while (0);
         return bRet;
     }
+
+	CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
+	{		
+		if (pParent == NULL)
+		{
+			return NULL;
+		}
+		CCNode *_pNode = NULL;
+		CCArray *pChildren = pParent->getChildren();
+		if(pChildren && pChildren->count() > 0)
+		{
+			CCObject* child;
+			CCARRAY_FOREACH(pChildren, child)
+			{
+				CCNode* pNode = (CCNode*)child;
+				if(pNode && pNode->getTag() == nTag)
+				{
+					_pNode =  pNode;
+					break;
+				}
+				else
+				{
+					_pNode = g_NodeByTag(pNode, nTag);
+					if (_pNode != NULL)
+					{
+						break;
+					}
+					
+				}
+			}
+		}
+		return _pNode;
+	}
 
 	CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
     {
@@ -407,6 +441,15 @@ NS_CC_EXT_BEGIN
 		_pfnSelector = selector;
 	}
 
+	CCNode* SceneReader::getNodeByTag(int nTag)
+	{
+		if (_pNode == NULL)
+		{
+			return NULL;
+		}
+		return nodeByTag(_pNode, nTag);
+	}
+
     void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
     {
 		float x = DICTOOL->getFloatValue_json(root, "x");
@@ -446,6 +489,7 @@ NS_CC_EXT_BEGIN
     {
 		CC_SAFE_DELETE(_sharedReader);
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+		TriggerMng::sharedTriggerMng()->purgeTriggerMng();
 		_pfnSelector = NULL;
     }
 

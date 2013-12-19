@@ -35,6 +35,33 @@ NS_CC_EXT_BEGIN
 typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 #define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
+static CCNode* g_NodeByTag(CCNode *parent, int nTag)
+{
+	if (parent == NULL)
+	{
+		return NULL;
+	}
+	CCNode *Node = NULL;
+	CCArray *pChildren = parent->getChildren();
+	if(pChildren && pChildren->count() > 0)
+	{
+		CCObject* child;
+		CCARRAY_FOREACH(pChildren, child)
+		{
+			CCNode* pNode = (CCNode*)child;
+			if(pNode && pNode->getTag() == nTag)
+			{
+				return pNode;
+			}
+			else
+			{
+				Node = g_NodeByTag(pNode, nTag);
+			}
+		}
+	}
+	return Node;
+}
+
 /**
 *   @js NA
 *   @lua NA
@@ -51,15 +78,17 @@ public:
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
 	void setTarget(CCObject *rec, SEL_CallFuncOD selector);
+	cocos2d::CCNode* getNodeByTag(int nTag);
 private:
     cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent);
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
-
+	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
 private:
 	static SceneReader* _sharedReader;
 	CCObject*       _pListener;
 	SEL_CallFuncOD  _pfnSelector;
+	cocos2d::CCNode *_pNode;
 };
 
 
