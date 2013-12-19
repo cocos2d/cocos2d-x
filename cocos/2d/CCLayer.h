@@ -361,7 +361,7 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
      */
-    void setCompressedInterpolation(bool bCompressedInterpolation);
+    void setCompressedInterpolation(bool compressedInterpolation);
     bool isCompressedInterpolation() const;
 
     /** Sets the start color of the gradient */

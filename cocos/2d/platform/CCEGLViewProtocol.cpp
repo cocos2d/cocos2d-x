@@ -9,7 +9,7 @@ NS_CC_BEGIN
 
 namespace {
     
-    static Touch* g_touches[EventTouch::MAX_TOUCHES] = { NULL };
+    static Touch* g_touches[EventTouch::MAX_TOUCHES] = { nullptr };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
     static std::map<int, int> g_touchIdReorderMap;
@@ -47,7 +47,7 @@ namespace {
 }
 
 EGLViewProtocol::EGLViewProtocol()
-: _delegate(NULL)
+: _delegate(nullptr)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
@@ -151,9 +151,9 @@ Point EGLViewProtocol::getVisibleOrigin() const
     }
 }
 
-void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * delegate)
 {
-    _delegate = pDelegate;
+    _delegate = delegate;
 }
 
 void EGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
@@ -203,7 +203,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    int nUnusedIndex = 0;
+    int unusedIndex = 0;
     EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
@@ -213,26 +213,26 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
         y = ys[i];
 
         auto iter = g_touchIdReorderMap.find(id);
-        nUnusedIndex = 0;
+        unusedIndex = 0;
 
         // it is a new touch
         if (iter == g_touchIdReorderMap.end())
         {
-            nUnusedIndex = getUnUsedIndex();
+            unusedIndex = getUnUsedIndex();
 
             // The touches is more than MAX_TOUCHES ?
-            if (nUnusedIndex == -1) {
-                CCLOG("The touches is more than MAX_TOUCHES, nUnusedIndex = %d", nUnusedIndex);
+            if (unusedIndex == -1) {
+                CCLOG("The touches is more than MAX_TOUCHES, unusedIndex = %d", unusedIndex);
                 continue;
             }
 
-            Touch* touch = g_touches[nUnusedIndex] = new Touch();
-			touch->setTouchInfo(nUnusedIndex, (x - _viewPortRect.origin.x) / _scaleX, 
+            Touch* touch = g_touches[unusedIndex] = new Touch();
+			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             CCLOGINFO("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
-            g_touchIdReorderMap.insert(std::make_pair(id, nUnusedIndex));
+            g_touchIdReorderMap.insert(std::make_pair(id, unusedIndex));
             touchEvent._touches.push_back(touch);
         }
     }
@@ -326,7 +326,7 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
 
             touchEvent._touches.push_back(touch);
             
-            g_touches[iter->second] = NULL;
+            g_touches[iter->second] = nullptr;
             removeUsedIndexBit(iter->second);
 
             g_touchIdReorderMap.erase(id);

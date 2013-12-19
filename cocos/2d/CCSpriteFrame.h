@@ -108,7 +108,7 @@ public:
     void setRectInPixels(const Rect& rectInPixels);
 
     inline bool isRotated(void) const { return _rotated; }
-    inline void setRotated(bool bRotated) { _rotated = bRotated; }
+    inline void setRotated(bool rotated) { _rotated = rotated; }
 
     /** get rect of the frame */
     inline const Rect& getRect(void) const { return _rect; }
