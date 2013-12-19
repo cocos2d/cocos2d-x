@@ -587,15 +587,6 @@
     <ClCompile Include="renderer\CCNewClippingNode.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="renderer\CCNewDrawNode.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewLabelAtlas.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewParticleSystemQuad.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="renderer\CCNewRenderTexture.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -1213,15 +1204,6 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCNewClippingNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewDrawNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewLabelAtlas.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewParticleSystemQuad.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCNewRenderTexture.h">
