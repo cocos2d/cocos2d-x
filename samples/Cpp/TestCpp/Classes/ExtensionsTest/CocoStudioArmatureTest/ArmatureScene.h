@@ -362,7 +362,7 @@ public:
 class TestEasing : public ArmatureTestLayer
 {      
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -376,10 +376,10 @@ public:
 class TestChangeAnimationInternal : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
-    virtual void onExit();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual void onEnter()override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
