@@ -83,6 +83,7 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
+static const char *A_TWEEN_ROTATION = "twR";
 static const char *A_EASING_PARAM = "twEP";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
@@ -1003,8 +1004,8 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
 CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData, DataInfo *dataInfo)
 {
-    float x, y, scale_x, scale_y, skew_x, skew_y = 0;
-    int duration, displayIndex, zOrder, tweenEasing, blendType = 0;
+    float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y, tweenRotate = 0;
+    int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
 
     CCFrameData *frameData = new CCFrameData();
 
@@ -1086,6 +1087,10 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
     {
         frameData->zOrder = zOrder;
     }
+	if(  frameXML->QueryFloatAttribute(A_TWEEN_ROTATION, &tweenRotate) == tinyxml2::XML_SUCCESS )
+	{
+		frameData->tweenRotate = tweenRotate;
+	}
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
         switch (blendType)

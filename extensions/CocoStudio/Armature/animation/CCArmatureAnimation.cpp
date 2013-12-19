@@ -56,6 +56,7 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_bIgnoreFrameEvent(false)
     , m_bOnMovementList(false)
     , m_bMovementListLoop(false)
+	, m_iMovementListDurationTo(-1)
     , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
@@ -260,31 +261,31 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
     play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
 }
 
-void CCArmatureAnimation::play(bool loop, const std::string *movementNames, int movementNumber)
+
+void CCArmatureAnimation::play(const std::vector<std::string>& movementNames, int durationTo, bool loop)
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
+	m_iMovementListDurationTo = durationTo;
     m_bOnMovementList = true;
     m_uMovementIndex = 0;
 
-    for (int i = 0; i<movementNumber; i++)
-    {
-        m_sMovementList.push_back(movementNames[i]);
-    }
+	m_sMovementList = movementNames;
 
     updateMovementList();
 }
 
-void CCArmatureAnimation::playByIndex(bool loop, const int *movementIndexes, int movementNumber)
+void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, int durationTo, bool loop)
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
+	m_iMovementListDurationTo =durationTo;
     m_bOnMovementList = true;
     m_uMovementIndex = 0;
 
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
 
-    for (int i = 0; i<movementNumber; i++)
+    for (int i = 0; i<movementIndexes.size(); i++)
     {
         std::string name = movName.at(movementIndexes[i]);
         m_sMovementList.push_back(name);
@@ -503,7 +504,7 @@ void CCArmatureAnimation::updateMovementList()
     {
         if (m_bMovementListLoop)
         {
-            play(m_sMovementList.at(m_uMovementIndex).c_str(), -1, -1, 0);
+            play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, 0);
             m_uMovementIndex++;
             if (m_uMovementIndex >= m_sMovementList.size())
             {
@@ -514,7 +515,7 @@ void CCArmatureAnimation::updateMovementList()
         {
             if (m_uMovementIndex < m_sMovementList.size())
             {
-                play(m_sMovementList.at(m_uMovementIndex).c_str(), -1, -1, 0);
+                play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, 0);
                 m_uMovementIndex++;
             }
             else
