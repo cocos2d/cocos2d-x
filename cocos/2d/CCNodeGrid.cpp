@@ -11,22 +11,21 @@ NS_CC_BEGIN
 
 NodeGrid* NodeGrid::create()
 {
-    NodeGrid * pRet = new NodeGrid();
-    if (pRet && pRet->init())
+    NodeGrid * ret = new NodeGrid();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 NodeGrid::NodeGrid()
-:Node()
-,_nodeGrid(nullptr)
-,_gridTarget(nullptr)
+: _nodeGrid(nullptr)
+, _gridTarget(nullptr)
 {
 
 }
