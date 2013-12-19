@@ -382,6 +382,8 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     {
         CCDataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
+
+	CC_SAFE_DELETE_ARRAY(pBytes);
 }
 
 void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector)
