@@ -831,7 +831,7 @@ void Node::visit()
         // self draw
         this->draw();
 
-        for(auto it=_children.cbegin()+i; it<_children.cend(); ++it)
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
             (*it)->visit();
     }
     else
@@ -1474,13 +1474,13 @@ void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 	
     if (_cascadeOpacityEnabled)
     {
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedOpacity(_displayedOpacity);
             }
-        });
+        }
     }
 }
 
@@ -1529,13 +1529,13 @@ void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
             if (item)
             {
                 item->updateDisplayedColor(_displayedColor);
             }
-        });
+        }
     }
 }
 

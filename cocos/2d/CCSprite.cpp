@@ -814,13 +814,13 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
                 _batchNode->removeSpriteFromAtlas(sprite);
             }
-        });
+        }
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
@@ -860,9 +860,8 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            std::for_each(_children.begin(), _children.end(), [](Node* child){
+            for(const auto &child : _children)
                 child->sortAllChildren();
-            });
         }
 
         _reorderChildDirty = false;
@@ -897,13 +896,13 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        std::for_each(_children.begin(), _children.end(), [](Node* child){
+        for(const auto &child: _children) {
             Sprite* sp = dynamic_cast<Sprite*>(child);
             if (sp)
             {
                 sp->setDirtyRecursively(true);
             }
-        });
+        }
     }
 }
 

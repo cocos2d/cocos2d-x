@@ -747,9 +747,8 @@ void LabelBMFont::setString(unsigned short *newString, bool needUpdateLabel)
         CC_SAFE_DELETE_ARRAY(tmp);
     }
     
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for(const auto &child : _children)
         child->setVisible(false);
-    });
 
     this->createFontChars();
     
@@ -823,16 +822,13 @@ void LabelBMFont::setOpacity(GLubyte opacity)
 void LabelBMFont::setOpacityModifyRGB(bool var)
 {
     _isOpacityModifyRGB = var;
-    std::for_each(_children.begin(), _children.end(), [this](Node* child){
-        if (child)
+    for(const auto &child : _children) {
+        RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
+        if (pRGBAProtocol)
         {
-            RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
-            if (pRGBAProtocol)
-            {
-                pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
-            }
+            pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
         }
-    });
+    }
 }
 bool LabelBMFont::isOpacityModifyRGB() const
 {
@@ -843,10 +839,10 @@ void LabelBMFont::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0f;
     
-    std::for_each(_children.begin(), _children.end(),[this](Node* child){
+    for(const auto &child : _children) {
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedOpacity(_displayedOpacity);
-    });
+    }
 }
 
 void LabelBMFont::updateDisplayedColor(const Color3B& parentColor)
@@ -855,10 +851,10 @@ void LabelBMFont::updateDisplayedColor(const Color3B& parentColor)
 	_displayedColor.g = _realColor.g * parentColor.g/255.0f;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0f;
     
-    std::for_each(_children.begin(), _children.end(),[this](Node* child){
+    for(const auto &child : _children) {
         Sprite *item = static_cast<Sprite*>( child );
 		item->updateDisplayedColor(_displayedColor);
-    });
+    }
 }
 
 bool LabelBMFont::isCascadeColorEnabled() const
