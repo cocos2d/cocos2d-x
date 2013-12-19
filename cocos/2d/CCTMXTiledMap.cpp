@@ -169,8 +169,8 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
     int idx=0;
 
     auto& layers = mapInfo->getLayers();
-    std::for_each(layers.begin(), layers.end(), [&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
-        if (layerInfo && layerInfo->_visible)
+    for(const auto &layerInfo : layers) {
+        if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
             addChild((Node*)child, idx, idx);
@@ -184,7 +184,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             
             idx++;
         }
-    });
+    }
 }
 
 // public

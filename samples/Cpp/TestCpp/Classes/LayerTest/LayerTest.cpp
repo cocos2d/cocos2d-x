@@ -118,9 +118,9 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     node->setCascadeOpacityEnabled(enable);
     
     auto& children = node->getChildren();
-    std::for_each(children.begin(), children.end(), [enable](Node* child){
+    for(const auto &child : children) {
         setEnableRecursiveCascading(child, enable);
-    });
+    }
 }
 
 // LayerTestCascadingOpacityA

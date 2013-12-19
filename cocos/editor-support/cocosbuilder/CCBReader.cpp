@@ -294,9 +294,9 @@ void CCBReader::cleanUpNodeGraph(Node *node)
     node->setUserObject(nullptr);
     
     auto& children = node->getChildren();
-    std::for_each(children.begin(), children.end(), [this](Node* obj){
+    for(const auto &obj : children) {
         cleanUpNodeGraph(obj);
-    });
+    }
 }
 
 Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)

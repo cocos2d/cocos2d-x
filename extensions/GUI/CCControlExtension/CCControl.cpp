@@ -110,10 +110,10 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
         {
             // Call invocations
             const auto& invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
-            
-            std::for_each(invocationList.begin(), invocationList.end(),[this](Invocation* invocation){
+
+            for(const auto &invocation : invocationList) {
                 invocation->invoke(this);
-            });
+            }
 
             //Call ScriptFunc
             if (kScriptTypeLua == _scriptType)
@@ -195,7 +195,7 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
         std::vector<Invocation*> tobeRemovedInvocations;
         
         //normally we would use a predicate, but this won't work here. Have to do it manually
-        std::for_each(eventInvocationList.begin(), eventInvocationList.end(), [&](Invocation* invocation){
+        for(const auto &invocation : eventInvocationList) {
             bool shouldBeRemoved=true;
             if (target)
             {
@@ -210,11 +210,11 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
             {
                 tobeRemovedInvocations.push_back(invocation);
             }
-        });
-        
-        std::for_each(tobeRemovedInvocations.begin(), tobeRemovedInvocations.end(), [&](Invocation* invocation){
+        }
+
+        for(const auto &invocation : tobeRemovedInvocations) {
             eventInvocationList.eraseObject(invocation, bDeleteObjects);
-        });
+        }
     }
 }
 

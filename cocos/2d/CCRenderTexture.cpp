@@ -529,12 +529,12 @@ void RenderTexture::draw()
 		//! make sure all children are drawn
         sortAllChildren();
 		
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             if (child != _sprite)
             {
                 child->visit();
             }
-        });
+        }
         
         end();
 	}

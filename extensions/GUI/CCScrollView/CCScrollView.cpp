@@ -154,17 +154,17 @@ void ScrollView::pause(Object* sender)
     _container->pause();
 
     auto& children = _container->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* child){
+    for(const auto &child : children) {
         child->pause();
-    });
+    }
 }
 
 void ScrollView::resume(Object* sender)
 {
     auto& children = _container->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* child){
+    for(const auto &child : children) {
         child->resume();
-    });
+    }
 
     _container->resume();
 }
