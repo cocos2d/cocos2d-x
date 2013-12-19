@@ -8,12 +8,18 @@ set(SPINE_SRC
   AttachmentLoader.cpp
   Bone.cpp
   BoneData.cpp
+  BoundingBoxAttachment.cpp
+  Event.cpp
+  EventData.cpp
   Json.cpp
   RegionAttachment.cpp
   Skeleton.cpp
+  SkeletonBounds.cpp
   SkeletonData.cpp
   SkeletonJson.cpp
   Skin.cpp
+  Slot.cpp
+  SlotData.cpp
   Slot.cpp
   SlotData.cpp
   extension.cpp
