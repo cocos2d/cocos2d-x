@@ -129,8 +129,8 @@ void UICheckBox::loadTextureBackGround(const char *backGround,TextureResType tex
         default:
             break;
     }
-    m_pBackGroundBoxRenderer->setColor(getColor());
-    m_pBackGroundBoxRenderer->setOpacity(getOpacity());
+    m_pBackGroundBoxRenderer->updateDisplayedColor(getColor());
+    m_pBackGroundBoxRenderer->updateDisplayedOpacity(getOpacity());
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -153,8 +153,8 @@ void UICheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Te
         default:
             break;
     }
-    m_pBackGroundSelectedBoxRenderer->setColor(getColor());
-    m_pBackGroundSelectedBoxRenderer->setOpacity(getOpacity());
+    m_pBackGroundSelectedBoxRenderer->updateDisplayedColor(getColor());
+    m_pBackGroundSelectedBoxRenderer->updateDisplayedOpacity(getOpacity());
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -177,8 +177,8 @@ void UICheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    m_pFrontCrossRenderer->setColor(getColor());
-    m_pFrontCrossRenderer->setOpacity(getOpacity());
+    m_pFrontCrossRenderer->updateDisplayedColor(getColor());
+    m_pFrontCrossRenderer->updateDisplayedOpacity(getOpacity());
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -201,8 +201,8 @@ void UICheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Te
         default:
             break;
     }
-    m_pBackGroundBoxDisabledRenderer->setColor(getColor());
-    m_pBackGroundBoxDisabledRenderer->setOpacity(getOpacity());
+    m_pBackGroundBoxDisabledRenderer->updateDisplayedColor(getColor());
+    m_pBackGroundBoxDisabledRenderer->updateDisplayedOpacity(getOpacity());
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -225,8 +225,8 @@ void UICheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Te
         default:
             break;
     }
-    m_pFrontCrossDisabledRenderer->setColor(getColor());
-    m_pFrontCrossRenderer->setOpacity(getOpacity());
+    m_pFrontCrossDisabledRenderer->updateDisplayedColor(getColor());
+    m_pFrontCrossRenderer->updateDisplayedOpacity(getOpacity());
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 

@@ -85,30 +85,30 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
             if (m_bScale9Enabled)
             {
                 DYNAMIC_CAST_SCALE9SPRITE->initWithFile(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
+                DYNAMIC_CAST_SCALE9SPRITE->updateDisplayedColor(getColor());
+                DYNAMIC_CAST_SCALE9SPRITE->updateDisplayedOpacity(getOpacity());
                 DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(m_capInsets);
             }
             else
             {
                 DYNAMIC_CAST_CCSPRITE->initWithFile(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+				DYNAMIC_CAST_CCSPRITE->updateDisplayedColor(getColor());
+                DYNAMIC_CAST_CCSPRITE->updateDisplayedOpacity(getOpacity());
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (m_bScale9Enabled)
             {
                 DYNAMIC_CAST_SCALE9SPRITE->initWithSpriteFrameName(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
+                DYNAMIC_CAST_SCALE9SPRITE->updateDisplayedColor(getColor());
+                DYNAMIC_CAST_SCALE9SPRITE->updateDisplayedOpacity(getOpacity());
                 DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(m_capInsets);
             }
             else
             {
                 DYNAMIC_CAST_CCSPRITE->initWithSpriteFrameName(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+                DYNAMIC_CAST_CCSPRITE->updateDisplayedColor(getColor());
+                DYNAMIC_CAST_CCSPRITE->updateDisplayedOpacity(getOpacity());
             }
             break;
         default:
