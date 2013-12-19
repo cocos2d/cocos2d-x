@@ -854,20 +854,6 @@ void Node::transform()
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 
-    // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    //_grid is always null
-    if ( _camera != nullptr && false/*!(_grid != NULL && _grid->isActive())*/ )
-    {
-        bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
-
-        _camera->locate();
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
-    }
 }
 
 
