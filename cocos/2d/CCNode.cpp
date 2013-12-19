@@ -51,6 +51,7 @@ THE SOFTWARE.
 
 // externals
 #include "kazmath/GL/matrix.h"
+#include "kazmath/vec4.h"
 #include "CCComponent.h"
 #include "CCComponentContainer.h"
 
@@ -171,10 +172,7 @@ Node::~Node()
 
     for (auto& child : _children)
     {
-        if (child)
-        {
-            child->_parent = nullptr;
-        }
+        child->_parent = nullptr;
     }
 
     removeAllComponents();
@@ -576,9 +574,8 @@ void Node::cleanup()
     }
     
     // timers
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->cleanup();
-    });
 }
 
 
@@ -713,33 +710,26 @@ void Node::removeAllChildren()
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    if (!_children.empty())
+    for (auto& child : _children)
     {
-        for (auto& child : _children)
+        // IMPORTANT:
+        //  -1st do onExit
+        //  -2nd cleanup
+        if(_running)
         {
-            if (child)
-            {
-                // IMPORTANT:
-                //  -1st do onExit
-                //  -2nd cleanup
-                if(_running)
-                {
-                    child->onExitTransitionDidStart();
-                    child->onExit();
-                }
-
-                if (cleanup)
-                {
-                    child->cleanup();
-                }
-                // set parent nil at the end
-                child->setParent(nullptr);
-            }
+            child->onExitTransitionDidStart();
+            child->onExit();
         }
-        
-        _children.clear();
+
+        if (cleanup)
+        {
+            child->cleanup();
+        }
+        // set parent nil at the end
+        child->setParent(nullptr);
     }
     
+    _children.clear();
 }
 
 void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
@@ -793,39 +783,10 @@ void Node::reorderChild(Node *child, int zOrder)
 
 void Node::sortAllChildren()
 {
-#if 0
-    if (_reorderChildDirty)
-    {
-        int i,j,length = _children.size();
-
-        // insertion sort
-        for(i=1; i<length; i++)
-        {
-            j = i-1;
-            auto tempI = static_cast<Node*>( _children.at(i) );
-            auto tempJ = static_cast<Node*>( _children.at(j) );
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->_ZOrder < tempJ->_ZOrder || ( tempI->_ZOrder == tempJ->_ZOrder && tempI->_orderOfArrival < tempJ->_orderOfArrival ) ) )
-            {
-                _children.fastSetObject( tempJ, j+1 );
-                j = j-1;
-                if(j>=0)
-                    tempJ = static_cast<Node*>( _children.at(j) );
-            }
-            _children.fastSetObject(tempI, j+1);
-        }
-
-        //don't need to check children recursively, that's done in visit of each child
-
-        _reorderChildDirty = false;
-    }
-#else
     if( _reorderChildDirty ) {
         std::sort( std::begin(_children), std::end(_children), nodeComparisonLess );
         _reorderChildDirty = false;
     }
-#endif
 }
 
 
@@ -871,10 +832,8 @@ void Node::visit()
         // self draw
         this->draw();
 
-        // Uses std::for_each to improve performance.
-        std::for_each(_children.cbegin()+i, _children.cend(), [](Node* node){
-            node->visit();
-        });
+        for(auto it=_children.cbegin()+i; it<_children.cend(); ++it)
+            (*it)->visit();
     }
     else
     {
@@ -939,9 +898,8 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->onEnter();
-    });
 
     this->resume();
     
@@ -960,10 +918,9 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
-    });
-    
+
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -975,9 +932,8 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    });
     
     if (_scriptType != kScriptTypeNone)
     {
@@ -1001,9 +957,8 @@ void Node::onExit()
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
 
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->onExit();
-    });
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1236,20 +1191,19 @@ const kmMat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = { cy * _scaleX, sy * _scaleX,     0,  0,
-                        -sx * _scaleY, cx * _scaleY,    0,  0,
+        _transform = { cy * _scaleX, sy * _scaleX, 0,  0,
+                      -sx * _scaleY, cx * _scaleY, 0,  0,
                         0,  0,  1,  0,
                         x,  y,  0,  1 };
 
-        kmMat4Fill(&_transform, mat);
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            kmMat4 skewMatrix = {    1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
-                                    tanf(CC_DEGREES_TO_RADIANS(_skewX)),1, 0, 0,
-                                    0,  0, 1, 0,
-                                    0,  0,  0, 1};
+            kmMat4 skewMatrix = { 1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                                  tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
+                                  0,  0,  1, 0,
+                                  0,  0,  0, 1};
 
             kmMat4Multiply(&_transform, &skewMatrix, &_transform);
 
@@ -1257,8 +1211,12 @@ const kmMat4& Node::getNodeToParentTransform() const
             if (!_anchorPointInPoints.equals(Point::ZERO))
             {
                 // XXX: Argh, kmMat needs a "translate" method
-                _transform.mat[12] += -_anchorPointInPoints.x;
-                _transform.mat[13] += -_anchorPointInPoints.y;
+                kmVec4 v = {-_anchorPointInPoints.x, -_anchorPointInPoints.y, 0, 1};
+                kmVec4Transform(&v, &v, &_transform);
+                _transform.mat[12] = v.x;
+                _transform.mat[13] = v.y;
+                _transform.mat[14] = v.z;
+                _transform.mat[15] = v.w;
             }
         }
 
@@ -1411,9 +1369,8 @@ bool Node::updatePhysicsTransform()
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for( const auto &child: _children)
         child->updateTransform();
-    });
 }
 
 Component* Node::getComponent(const char *pName)

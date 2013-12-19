@@ -33,6 +33,8 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "TransformUtils.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -137,14 +139,30 @@ void AtlasNode::updateAtlasValues()
 // AtlasNode - draw
 void AtlasNode::draw(void)
 {
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
+//    getShaderProgram()->setUniformLocationWith4fv(_uniformColor, colors, 1);
+//
+//    _textureAtlas->drawNumberOfQuads(_quadsToDraw, 0);
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
-    GLfloat colors[4] = {_displayedColor.r / 255.0f, _displayedColor.g / 255.0f, _displayedColor.b / 255.0f, _displayedOpacity / 255.0f};
-    getShaderProgram()->setUniformLocationWith4fv(_uniformColor, colors, 1);
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _textureAtlas->drawNumberOfQuads(_quadsToDraw, 0);
+    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              _modelViewTransform);
+
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+
 }
 
 // AtlasNode - RGBA protocol

@@ -139,9 +139,6 @@ set(COCOS2D_SRC
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
   ../../external/edtaa3func/edtaa3func.cpp
-  renderer/CCNewDrawNode.cpp
-  renderer/CCNewLabelAtlas.cpp
-  renderer/CCNewParticleSystemQuad.cpp
   renderer/CCNewRenderTexture.cpp
   renderer/CCNewSprite.cpp
   renderer/CCNewSpriteBatchNode.cpp

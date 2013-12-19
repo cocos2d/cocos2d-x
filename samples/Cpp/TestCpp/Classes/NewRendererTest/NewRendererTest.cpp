@@ -88,12 +88,12 @@ MultiSceneTest::~MultiSceneTest()
 
 }
 
-string MultiSceneTest::title()
+std::string MultiSceneTest::title() const
 {
     return BaseTest::title();
 }
 
-string MultiSceneTest::subtitle()
+std::string MultiSceneTest::subtitle() const
 {
     return BaseTest::subtitle();
 }
@@ -211,13 +211,12 @@ void NewSpriteTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *e
 
 }
 
-
-string NewSpriteTest::title()
+std::string NewSpriteTest::title() const
 {
     return "NewRender";
 }
 
-string NewSpriteTest::subtitle()
+std::string NewSpriteTest::subtitle() const
 {
     return "SpriteTest";
 }
@@ -239,17 +238,17 @@ NewSpriteBatchTest::~NewSpriteBatchTest()
 
 }
 
-string NewSpriteBatchTest::title()
+std::string NewSpriteBatchTest::title() const
 {
     return "NewRender";
 }
 
-string NewSpriteBatchTest::subtitle()
+std::string NewSpriteBatchTest::subtitle() const
 {
     return "SpriteBatchTest";
 }
 
-void NewSpriteBatchTest::onTouchesEnded(const vector<Touch *> &touches, Event *event)
+void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
 {
     for (auto &touch : touches)
     {
@@ -343,12 +342,12 @@ NewClippingNodeTest::~NewClippingNodeTest()
 
 }
 
-string NewClippingNodeTest::title()
+std::string NewClippingNodeTest::title() const
 {
     return "New Render";
 }
 
-string NewClippingNodeTest::subtitle()
+std::string NewClippingNodeTest::subtitle() const
 {
     return "ClipNode";
 }
@@ -392,7 +391,7 @@ NewDrawNodeTest::NewDrawNodeTest()
     parent->setPosition(s.width/2, s.height/2);
     addChild(parent);
 
-    auto rectNode = NewDrawNode::create();
+    auto rectNode = DrawNode::create();
     Point rectangle[4];
     rectangle[0] = Point(-50, -50);
     rectangle[1] = Point(50, -50);
@@ -409,12 +408,12 @@ NewDrawNodeTest::~NewDrawNodeTest()
 
 }
 
-string NewDrawNodeTest::title()
+std::string NewDrawNodeTest::title() const
 {
     return "New Render";
 }
 
-string NewDrawNodeTest::subtitle()
+std::string NewDrawNodeTest::subtitle() const
 {
     return "DrawNode";
 }
@@ -423,7 +422,7 @@ NewCullingTest::NewCullingTest()
 {
     auto s = Director::getInstance()->getWinSize();
     
-    std::vector<string> images;
+    std::vector<std::string> images;
     images.push_back("Images/grossini_dance_01.png");
     images.push_back("Images/grossini_dance_02.png");
     images.push_back("Images/grossini_dance_03.png");
@@ -476,12 +475,12 @@ NewCullingTest::~NewCullingTest()
     
 }
 
-string NewCullingTest::title()
+std::string NewCullingTest::title() const
 {
     return "New Render";
 }
 
-string NewCullingTest::subtitle()
+std::string NewCullingTest::subtitle() const
 {
     return "Culling";
 }

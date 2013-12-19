@@ -144,7 +144,7 @@ void LabelMainScene::initWithSubTest(int nodes)
         onIncrease(this);
 }
 
-std::string LabelMainScene::title()
+std::string LabelMainScene::title() const
 {
     switch (_s_labelCurCase)
     {
