@@ -567,17 +567,11 @@ void Widget::setUpdateEnabled(bool enable)
     _updateEnabled = enable;
     if (enable)
     {
-        if (_scheduler)
-        {
-            _scheduler->scheduleUpdateForTarget(this, 0, false);
-        }
+        scheduleUpdate();
     }
     else
     {
-        if (_scheduler)
-        {
-            _scheduler->unscheduleUpdateForTarget(this);
-        }
+        unscheduleUpdate();
     }
 }
 
