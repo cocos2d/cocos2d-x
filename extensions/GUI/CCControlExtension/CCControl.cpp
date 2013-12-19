@@ -224,13 +224,9 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
     
-    std::for_each(_children.begin(), _children.end(), [&](Node* obj){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(obj);
-        if (rgba)
-        {
-            rgba->setOpacityModifyRGB(bOpacityModifyRGB);
-        }
-    });
+    for(auto child : _children){
+        child->setOpacityModifyRGB(bOpacityModifyRGB);
+    }
 }
 
 bool Control::isOpacityModifyRGB() const

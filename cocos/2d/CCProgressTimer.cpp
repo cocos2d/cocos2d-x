@@ -151,28 +151,6 @@ void ProgressTimer::setReverseProgress(bool reverse)
     }
 }
 
-void ProgressTimer::setColor(const Color3B& color)
-{
-    _sprite->setColor(color);
-    updateColor();
-}
-
-const Color3B& ProgressTimer::getColor() const
-{
-    return _sprite->getColor();
-}
-
-void ProgressTimer::setOpacity(GLubyte opacity)
-{
-    _sprite->setOpacity(opacity);
-    updateColor();
-}
-
-GLubyte ProgressTimer::getOpacity() const
-{
-    return _sprite->getOpacity();
-}
-
 // Interval
 
 ///
