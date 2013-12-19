@@ -31,30 +31,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#include <spine/BoundingBoxAttachment.h>
+#include <spine/extension.h>
 
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+void _spBoundingBoxAttachment_dispose (spAttachment* attachment) {
+	spBoundingBoxAttachment* self = SUB_CAST(spBoundingBoxAttachment, attachment);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+	_spAttachment_deinit(attachment);
 
-typedef struct {
-	spAttachmentLoader super;
-	spAtlas* atlas;
-} spAtlasAttachmentLoader;
-
-spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAtlasAttachmentLoader AtlasAttachmentLoader;
-#define AtlasAttachmentLoader_create(...) spAtlasAttachmentLoader_create(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+	FREE(self->vertices);
+	FREE(self);
 }
-#endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+spBoundingBoxAttachment* spBoundingBoxAttachment_create (const char* name) {
+	spBoundingBoxAttachment* self = NEW(spBoundingBoxAttachment);
+	_spAttachment_init(SUPER(self), name, ATTACHMENT_BOUNDING_BOX, _spBoundingBoxAttachment_dispose);
+	return self;
+}
+
+void spBoundingBoxAttachment_computeWorldVertices (spBoundingBoxAttachment* self, float x, float y, spBone* bone, float* worldVertices) {
+	int i;
+	float px, py;
+	float* vertices = self->vertices;
+
+	x += bone->worldX;
+	y += bone->worldY;
+	for (i = 0; i < self->verticesCount; i += 2) {
+		px = vertices[i];
+		py = vertices[i + 1];
+		worldVertices[i] = px * bone->m00 + py * bone->m01 + x;
+		worldVertices[i + 1] = px * bone->m10 + py * bone->m11 + y;
+	}
+}
