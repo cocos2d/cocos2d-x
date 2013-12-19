@@ -140,8 +140,6 @@ static void deleteNodeByKey(const char *pKey)
  */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_userDefault);
-    _userDefault = NULL;
 }
 
 UserDefault::UserDefault()
