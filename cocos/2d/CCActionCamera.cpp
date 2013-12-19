@@ -69,7 +69,7 @@ OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, floa
         return obitCamera;
     }
     CC_SAFE_DELETE(obitCamera);
-    return NULL;
+    return nullptr;
 }
 
 OrbitCamera* OrbitCamera::clone() const

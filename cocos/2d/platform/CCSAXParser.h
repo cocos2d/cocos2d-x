@@ -77,22 +77,22 @@ public:
      * @js NA
      * @lua NA
      */
-    bool init(const char *pszEncoding);
+    bool init(const char *encoding);
     /**
      * @js NA
      * @lua NA
      */
-    bool parse(const char* pXMLData, size_t uDataLength);
+    bool parse(const char* xmlData, size_t dataLength);
     /**
      * @js NA
      * @lua NA
      */
-    bool parse(const char *pszFile);
+    bool parse(const char *file);
     /**
      * @js NA
      * @lua NA
      */
-    void setDelegator(SAXDelegator* pDelegator);
+    void setDelegator(SAXDelegator* delegator);
     /**
      * @js NA
      * @lua NA

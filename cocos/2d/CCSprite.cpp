@@ -71,7 +71,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
@@ -83,7 +83,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rot
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename)
@@ -95,7 +95,7 @@ Sprite* Sprite::create(const std::string& filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
@@ -107,7 +107,7 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
@@ -119,7 +119,7 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
@@ -129,7 +129,7 @@ Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
-    CCASSERT(frame != NULL, msg);
+    CCASSERT(frame != nullptr, msg);
 #endif
     
     return createWithSpriteFrame(frame);
@@ -144,17 +144,17 @@ Sprite* Sprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 bool Sprite::init(void)
 {
-    return initWithTexture(NULL, Rect::ZERO );
+    return initWithTexture(nullptr, Rect::ZERO );
 }
 
 bool Sprite::initWithTexture(Texture2D *texture)
 {
-    CCASSERT(texture != NULL, "Invalid texture for sprite");
+    CCASSERT(texture != nullptr, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
     rect.size = texture->getContentSize();
@@ -211,7 +211,7 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame != NULL, "");
+    CCASSERT(spriteFrame != nullptr, "");
 
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
@@ -224,7 +224,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
     if (NodeRGBA::init())
     {
-        _batchNode = NULL;
+        _batchNode = nullptr;
         
         _recursiveDirty = false;
         setDirty(false);
@@ -261,7 +261,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        setBatchNode(NULL);
+        setBatchNode(nullptr);
         
         return true;
     }
@@ -288,11 +288,11 @@ Sprite::~Sprite(void)
 
 /*
  * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default texture when sprite's texture is set to NULL.
+ * It's used for creating a default texture when sprite's texture is set to nullptr.
  * Supposing codes as follows:
  *
  *   auto sp = new Sprite();
- *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *   sp->init();  // Texture was set to nullptr, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
  *
  * The test is in "TestCpp/SpriteTest/Sprite without texture".
  */
@@ -567,7 +567,7 @@ void Sprite::updateTransform(void)
             _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
 
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
 		{
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
@@ -761,7 +761,7 @@ void Sprite::addChild(Node *child, int zOrder)
 
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
-    CCASSERT(child != NULL, "Argument must be non-NULL");
+    CCASSERT(child != nullptr, "Argument must be non-nullptr");
 
     if (_batchNode)
     {
@@ -783,7 +783,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != NULL, "");
+    CCASSERT(child != nullptr, "");
     CCASSERT(_children.contains(child), "");
 
     if (zOrder == child->getZOrder())
@@ -1148,7 +1148,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
-    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
 
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
@@ -1191,7 +1191,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     // self render
     if( ! _batchNode ) {
         _atlasIndex = INDEX_NOT_INITIALIZED;
-        setTextureAtlas(NULL);
+        setTextureAtlas(nullptr);
         _recursiveDirty = false;
         setDirty(false);
 
