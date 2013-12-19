@@ -1346,8 +1346,10 @@ void TransitionCrossFade::onExit()
 // TurnOffTilesTransition
 //
 TransitionTurnOffTiles::TransitionTurnOffTiles()
+: _outSceneProxy(nullptr)
 {
-    _outSceneProxy = nullptr;
+    _outSceneProxy = NodeGrid::create();
+    _outSceneProxy->retain();
 }
 
 TransitionTurnOffTiles::~TransitionTurnOffTiles()
@@ -1376,9 +1378,6 @@ void TransitionTurnOffTiles::sceneOrder()
 void TransitionTurnOffTiles::onEnter()
 {
     TransitionScene::onEnter();
-
-    _outSceneProxy = NodeGrid::create();
-    _outSceneProxy->retain();
     _outSceneProxy->setTarget(_outScene);
     _outSceneProxy->onEnter();
 
@@ -1403,6 +1402,7 @@ void TransitionTurnOffTiles::onEnter()
 
 void TransitionTurnOffTiles::onExit()
 {
+    _outSceneProxy->setTarget(nullptr);
     _outSceneProxy->onExit();
     TransitionScene::onExit();
 }
