@@ -45,7 +45,8 @@ void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
     // self->width = texture->getPixelsWide();
     // self->height = texture->getPixelsHigh();
     self->width = texture->getContentSize().width;
-    self->height = texture->getContentSize().height;}
+    self->height = texture->getContentSize().height;
+}
 
 void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 	((TextureAtlas*)self->rendererObject)->release();
@@ -54,8 +55,8 @@ void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 char* _spUtil_readFile (const char* path, int* length) {
     ssize_t size;
     char* data = reinterpret_cast<char*>(
-        FileUtils::getInstance()->getFileData( FileUtils::getInstance()->fullPathForFilename(path).c_str(), "r", &size));
-    *length = size;
+        FileUtils::getInstance()->getFileData( FileUtils::getInstance()->fullPathForFilename(path).c_str(), "rb", &size));
+    *length = static_cast<int>(size);
     return data;}
 
 /**/
