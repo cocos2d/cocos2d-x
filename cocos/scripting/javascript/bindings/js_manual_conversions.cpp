@@ -312,6 +312,20 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 
 #pragma mark - Conversion Routines
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *outval )
+{
+    JSBool ok = JS_TRUE;
+    double dp;
+    ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+    *outval = (unsigned short)dp;
+
+    return ok;
+}
+
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {
     JSBool ok = JS_TRUE;
@@ -723,7 +737,7 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
 }
 
 
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
 {
     JSObject *jsobj;
     JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
@@ -732,7 +746,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    Array* arr = Array::createWithCapacity(len);
+    __Array* arr = __Array::createWithCapacity(len);
     for (uint32_t i=0; i < len; i++) {
         jsval value;
         if (JS_GetElement(cx, jsobj, i, &value)) {
@@ -750,7 +764,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else if (!JS_IsArrayObject(cx, tmp)){
                     // It's a normal js object.
-                    Dictionary* dictVal = NULL;
+                    __Dictionary* dictVal = NULL;
                     JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                     if (ok) {
                         arr->addObject(dictVal);
@@ -758,7 +772,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else {
                     // It's a js array object.
-                    Array* arrVal = NULL;
+                    __Array* arrVal = NULL;
                     JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                     if (ok) {
                         arr->addObject(arrVal);
@@ -1347,6 +1361,11 @@ jsval int32_to_jsval( JSContext *cx, int32_t number )
 }
 
 jsval uint32_to_jsval( JSContext *cx, uint32_t number )
+{
+    return UINT_TO_JSVAL(number);
+}
+
+jsval ushort_to_jsval( JSContext *cx, unsigned short number )
 {
     return UINT_TO_JSVAL(number);
 }

@@ -1,21 +1,37 @@
-//
-// Created by NiTe Luo on 10/31/13.
-//
+/****************************************************************************
+ Copyright (c) 2013 cocos2d-x.org
 
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 
 #ifndef __CC_RENDERER_H_
 #define __CC_RENDERER_H_
 
 #include "CCPlatformMacros.h"
-#include "RenderCommand.h"
+#include "CCRenderCommand.h"
 #include "CCGLProgram.h"
 #include "CCGL.h"
 #include <vector>
 #include <stack>
-
-#define VBO_SIZE 10500
-#define DEFAULT_RENDER_QUEUE 0
 
 NS_CC_BEGIN
 
@@ -30,9 +46,11 @@ struct RenderStackElement
 class Renderer : public Object
 {
 public:
-    static Renderer* getInstance();
-    static void destroyInstance();
-    
+    static const int VBO_SIZE = 65536 / 6;
+
+    Renderer();
+    ~Renderer();
+
     //TODO manage GLView inside Render itself
     void initGLView();
     
@@ -46,11 +64,7 @@ public:
     void render();
 
 protected:
-    Renderer();
-    ~Renderer();
 
-    bool init();
-    
     void setupIndices();
     //Setup VBO or VAO based on OpenGL extensions
     void setupBuffer();
@@ -64,7 +78,6 @@ protected:
 
     void onBackToForeground(Object* obj);
 
-protected:
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;

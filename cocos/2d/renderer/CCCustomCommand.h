@@ -23,45 +23,45 @@
  ****************************************************************************/
 
 
-#include "CCNewLabelAtlas.h"
-#include "RenderCommand.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
-#include "CCMenuItem.h"
-#include "Frustum.h"
-#include "CCDirector.h"
-#include "CCTextureAtlas.h"
-#include "CCShaderCache.h"
+#ifndef _CC_CUSTOMCOMMAND_H_
+#define _CC_CUSTOMCOMMAND_H_
+
+#include "CCRenderCommand.h"
+#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-
-void NewLabelAtlas::draw()
+class CustomCommand : public RenderCommand
 {
-//    LabelAtlas::draw();
-//    _renderCommand.init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc,
-//                        _textureAtlas->getQuads(), _textureAtlas->getTotalQuads() );
-//
-//    Renderer::getInstance()->addCommand(&_renderCommand);
+public:
+    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
 
+    void init(int viewport, int32_t depth);
 
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    // +----------+----------+-----+-----------------------------------+
+    // |          |          |     |                |                  |
+    // | ViewPort | Transluc |     |      Depth     |                  |
+    // |   3 bits |    1 bit |     |    24 bits     |                  |
+    // +----------+----------+-----+----------------+------------------+
+    virtual int64_t generateID();
 
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+    void execute();
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-              
-    Renderer::getInstance()->addCommand(cmd);
+    inline bool isTranslucent() { return true; }
+    virtual void releaseToCommandPool() override;
+    std::function<void()> func;
 
-}
+protected:
+    CustomCommand();
+    ~CustomCommand();
+
+    int _viewport;
+    int32_t _depth;
+    static RenderCommandPool<CustomCommand> _commandPool;
+
+    friend class RenderCommandPool<CustomCommand>;
+};
 
 NS_CC_END
+
+#endif //_CC_CUSTOMCOMMAND_H_

@@ -50,6 +50,9 @@ public:
 
     kmMat4 getNodeToWorldTransform() const override;
     kmMat4 getNodeToWorldTransformAR() const;
+    
+    virtual void draw() override;
+    
     /**
      *  @js NA
      *  @lua NA

@@ -35,7 +35,7 @@ class SpriteMainScene : public Scene
 {
 public:
     virtual ~SpriteMainScene();
-    virtual std::string title();
+    virtual std::string title() const;
 
     void initWithSubTest(int nSubTest, int nNodes);
     void updateNodes();
@@ -81,49 +81,49 @@ class SpritePerformTest1 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest2 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest3 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest4 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest5 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest6 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpritePerformTest7 : public SpriteMainScene
 {
 public:
     virtual void doTest(Sprite* sprite);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 void runSpriteTest();

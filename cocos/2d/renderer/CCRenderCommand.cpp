@@ -23,28 +23,43 @@
  ****************************************************************************/
 
 
-#ifndef __CCNEWLABELATLAS_H_
-#define __CCNEWLABELATLAS_H_
-
-#include "CCLabelAtlas.h"
-#include "CCPlatformMacros.h"
-#include "QuadCommand.h"
+#include "CCRenderCommand.h"
 
 NS_CC_BEGIN
 
-class NewLabelAtlas : public LabelAtlas
+RenderCommand::RenderCommand()
 {
-    
-public:
-    NewLabelAtlas() {}
-    virtual ~NewLabelAtlas() {}
+    _id = 0;
+    _type = RenderCommand::Type::UNKNOWN_COMMAND;
+}
 
-    virtual void draw(void) override;
+RenderCommand::~RenderCommand()
+{
+}
 
-protected:
-    QuadCommand _renderCommand;
-};
+void printBits(size_t const size, void const * const ptr)
+{
+    unsigned char *b = (unsigned char*) ptr;
+    unsigned char byte;
+    int i, j;
+
+    for (i=size-1;i>=0;i--)
+    {
+        for (j=7;j>=0;j--)
+        {
+            byte = b[i] & (1<<j);
+            byte >>= j;
+            printf("%u", byte);
+        }
+    }
+    puts("");
+}
+
+void RenderCommand::printID()
+{
+    printf("CommandID: ");
+    printBits(sizeof(_id), &_id);
+    printf("\n");
+}
 
 NS_CC_END
-
-#endif /* defined(__CCNEWLABELATLAS_H_) */

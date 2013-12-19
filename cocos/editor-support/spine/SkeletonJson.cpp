@@ -73,7 +73,6 @@ void _SkeletonJson_setError (SkeletonJson* self, Json* root, const char* value1,
 static float toColor (const char* value, int index) {
 	char digits[3];
 	char *error;
-	int color;
 
 	if (strlen(value) != 8) return -1;
 	value += index * 2;
@@ -81,7 +80,7 @@ static float toColor (const char* value, int index) {
 	digits[0] = *value;
 	digits[1] = *(value + 1);
 	digits[2] = '\0';
-	color = strtoul(digits, &error, 16);
+	auto color = strtoul(digits, &error, 16);
 	if (*error != 0) return -1;
 	return color / (float)255;
 }

@@ -63,7 +63,7 @@ public:
     virtual void    swapBuffers() = 0;
 
     /** Open or close IME keyboard , subclass must implement this method. */
-    virtual void    setIMEKeyboardState(bool bOpen) = 0;
+    virtual void    setIMEKeyboardState(bool open) = 0;
 
     /**
      * Polls input events. Subclass must implement methods if platform
@@ -109,7 +109,7 @@ public:
     virtual const Size&  getDesignResolutionSize() const;
 
     /** Set touch delegate */
-    virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
+    virtual void setTouchDelegate(EGLTouchDelegate * delegate);
 
     /**
      * Set opengl view port rectangle with points.

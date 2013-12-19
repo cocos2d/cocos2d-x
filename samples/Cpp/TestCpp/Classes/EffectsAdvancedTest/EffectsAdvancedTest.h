@@ -20,8 +20,8 @@ public:
     virtual void onEnter();
     ~EffectAdvanceTextLayer(void);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
@@ -32,28 +32,28 @@ class Effect1 : public EffectAdvanceTextLayer
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Effect2 : public EffectAdvanceTextLayer
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Effect3 : public EffectAdvanceTextLayer
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Effect4 : public EffectAdvanceTextLayer
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Effect5 : public EffectAdvanceTextLayer
@@ -61,15 +61,15 @@ class Effect5 : public EffectAdvanceTextLayer
 public:
     virtual void onEnter();
     virtual void onExit();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Issue631 : public EffectAdvanceTextLayer
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class EffectAdvanceScene : public TestScene
