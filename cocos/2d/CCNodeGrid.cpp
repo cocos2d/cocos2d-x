@@ -2,9 +2,9 @@
 #include "CCNodeGrid.h"
 #include "CCGrid.h"
 
-#include "GroupCommand.h"
-#include "Renderer.h"
-#include "CustomCommand.h"
+#include "CCGroupCommand.h"
+#include "CCRenderer.h"
+#include "CCCustomCommand.h"
 
 
 NS_CC_BEGIN
@@ -73,7 +73,7 @@ void NodeGrid::visit()
         return;
     }
     
-    Renderer* renderer = Renderer::getInstance();
+    Renderer* renderer = Director::getInstance()->getRenderer();
 
     GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
     groupCommand->init(0,_vertexZ);
