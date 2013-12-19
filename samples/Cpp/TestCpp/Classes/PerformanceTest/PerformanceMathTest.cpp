@@ -658,7 +658,7 @@ const char*  Vec4AddTest::testName()
 ///----------------------------------------
 void runMathPerformanceTest()
 {
-    g_curCase = 2;
+    //g_curCase = 2;
     auto scene = createFunctions[g_curCase]();
     scene->initPerformanceScene();
     
