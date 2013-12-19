@@ -199,7 +199,7 @@ void cc_utf8_trim_ws(std::vector<unsigned short>* str)
  * @max: the maximum number of bytes to examine. If @max
  *       is less than 0, then the string is assumed to be
  *       null-terminated. If @max is 0, @p will not be examined and
- *       may be %NULL.
+ *       may be %nullptr.
  *
  * Returns the length of the string in characters.
  *
@@ -211,7 +211,7 @@ cc_utf8_strlen (const char * p, int max)
     long len = 0;
     const char *start = p;
     
-    if (!(p != NULL || max == 0))
+    if (!(p != nullptr || max == 0))
     {
         return 0;
     }
@@ -275,10 +275,10 @@ cc_utf8_get_char (const char * p)
 }
 
 
-unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = NULL */)
+unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = nullptr */)
 {
     unsigned short len = cc_utf8_strlen(str_old, length);
-    if (rUtf16Size != NULL) {
+    if (rUtf16Size != nullptr) {
         *rUtf16Size = len;
     }
     
@@ -310,7 +310,7 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
  * cc_unichar_to_utf8:
  * @c: a ISO10646 character code
  * @outbuf: output buffer, must have at least 6 bytes of space.
- *       If %NULL, the length will be computed and returned
+ *       If %nullptr, the length will be computed and returned
  *       and nothing will be written to @outbuf.
  *
  * Converts a single character to UTF-8.
@@ -378,15 +378,15 @@ cc_unichar_to_utf8 (unsigned short c,
  * @str: a UTF-16 encoded string
  * @len: the maximum length of @str to use. If @len < 0, then
  *       the string is terminated with a 0 character.
- * @items_read: location to store number of words read, or %NULL.
- *              If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
+ * @items_read: location to store number of words read, or %nullptr.
+ *              If %nullptr, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
  *              returned in case @str contains a trailing partial
  *              character. If an error occurs then the index of the
  *              invalid input is stored here.
- * @items_written: location to store number of bytes written, or %NULL.
+ * @items_written: location to store number of bytes written, or %nullptr.
  *                 The value stored here does not include the trailing
  *                 0 byte.
- * @error: location to store the error occuring, or %NULL to ignore
+ * @error: location to store the error occuring, or %nullptr to ignore
  *         errors. Any of the errors in #GConvertError other than
  *         %G_CONVERT_ERROR_NO_CONVERSION may occur.
  *
@@ -395,7 +395,7 @@ cc_unichar_to_utf8 (unsigned short c,
  *
  * Return value: a pointer to a newly allocated UTF-8 string.
  *               This value must be freed with free(). If an
- *               error occurs, %NULL will be returned and
+ *               error occurs, %nullptr will be returned and
  *               @error set.
  **/
 char *
@@ -409,11 +409,11 @@ cc_utf16_to_utf8 (const unsigned short  *str,
      */
     const unsigned short *in;
     char *out;
-    char *result = NULL;
+    char *result = nullptr;
     int n_bytes;
     unsigned short high_surrogate;
     
-    if (str == 0) return NULL;
+    if (str == 0) return nullptr;
     
     n_bytes = 0;
     in = str;

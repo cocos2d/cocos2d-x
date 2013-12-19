@@ -33,11 +33,8 @@ NS_CC_BEGIN
 
 class CustomCommand : public RenderCommand
 {
-protected:
-    CustomCommand();
-    ~CustomCommand();
-    
 public:
+    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -50,21 +47,17 @@ public:
 
     inline bool isTranslucent() { return true; }
     virtual void releaseToCommandPool() override;
-
-public:
     std::function<void()> func;
 
 protected:
-    int _viewport;
+    CustomCommand();
+    ~CustomCommand();
 
+    int _viewport;
     int32_t _depth;
-    
-public:
-    friend class RenderCommandPool<CustomCommand>;
-    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
-protected:
     static RenderCommandPool<CustomCommand> _commandPool;
 
+    friend class RenderCommandPool<CustomCommand>;
 };
 
 NS_CC_END

@@ -191,7 +191,7 @@ private:
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool generateTextGlyphs(const char * text);
-    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
+    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
     unsigned char * preparePageGlyphData(TextPageDef *thePage);
     

@@ -98,12 +98,12 @@ void SchedulerTestLayer::restartCallback(Object* sender)
     scene->release();
 }
 
-std::string SchedulerTestLayer::title()
+std::string SchedulerTestLayer::title() const
 {
     return "No title";
 }
 
-std::string SchedulerTestLayer::subtitle()
+std::string SchedulerTestLayer::subtitle() const
 {
     return "";
 }
@@ -139,12 +139,12 @@ void SchedulerAutoremove::tick(float dt)
     CCLOG("This scheduler should not be removed");
 }
 
-std::string SchedulerAutoremove::title()
+std::string SchedulerAutoremove::title() const
 {
     return "Self-remove an scheduler";
 }
 
-std::string SchedulerAutoremove::subtitle()
+std::string SchedulerAutoremove::subtitle() const
 {
     return "1 scheduler will be autoremoved in 3 seconds. See console";
 }
@@ -178,12 +178,12 @@ void SchedulerPauseResume::pause(float dt)
     Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
-std::string SchedulerPauseResume::title()
+std::string SchedulerPauseResume::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResume::subtitle()
+std::string SchedulerPauseResume::subtitle() const
 {
     return "Scheduler should be paused after 3 seconds. See console";
 }
@@ -266,12 +266,12 @@ void SchedulerPauseResumeAll::resume(float dt)
     _pausedTargets.clear();
 }
 
-std::string SchedulerPauseResumeAll::title()
+std::string SchedulerPauseResumeAll::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResumeAll::subtitle()
+std::string SchedulerPauseResumeAll::subtitle() const
 {
     return "Everything will pause after 3s, then resume at 5s. See console";
 }
@@ -343,12 +343,12 @@ void SchedulerPauseResumeAllUser::resume(float dt)
     _pausedTargets.clear();
 }
 
-std::string SchedulerPauseResumeAllUser::title()
+std::string SchedulerPauseResumeAllUser::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResumeAllUser::subtitle()
+std::string SchedulerPauseResumeAllUser::subtitle() const
 {
     return "Everything will pause after 3s, then resume at 5s. See console";
 }
@@ -395,12 +395,12 @@ void SchedulerUnscheduleAll::unscheduleAll(float dt)
     unscheduleAllSelectors();
 }
 
-std::string SchedulerUnscheduleAll::title()
+std::string SchedulerUnscheduleAll::title() const
 {
     return "Unschedule All selectors";
 }
 
-std::string SchedulerUnscheduleAll::subtitle()
+std::string SchedulerUnscheduleAll::subtitle() const
 {
     return "All scheduled selectors will be unscheduled in 4 seconds. See console";
 }
@@ -467,12 +467,12 @@ void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
     _actionManagerActive = false;
 }
 
-std::string SchedulerUnscheduleAllHard::title()
+std::string SchedulerUnscheduleAllHard::title() const
 {
     return "Unschedule All selectors (HARD)";
 }
 
-std::string SchedulerUnscheduleAllHard::subtitle()
+std::string SchedulerUnscheduleAllHard::subtitle() const
 {
     return "Unschedules all user selectors after 4s. Action will stop. See console";
 }
@@ -525,12 +525,12 @@ void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
     Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
-std::string SchedulerUnscheduleAllUserLevel::title()
+std::string SchedulerUnscheduleAllUserLevel::title() const
 {
     return "Unschedule All user selectors";
 }
 
-std::string SchedulerUnscheduleAllUserLevel::subtitle()
+std::string SchedulerUnscheduleAllUserLevel::subtitle() const
 {
     return "Unschedules all user selectors after 4s. Action should not stop. See console";
 }
@@ -569,12 +569,12 @@ void SchedulerSchedulesAndRemove::tick4(float dt)
     CCLOG("tick4");
 }
 
-std::string SchedulerSchedulesAndRemove::title()
+std::string SchedulerSchedulesAndRemove::title() const
 {
     return "Schedule from Schedule";
 }
 
-std::string SchedulerSchedulesAndRemove::subtitle()
+std::string SchedulerSchedulesAndRemove::subtitle() const
 {
     return "Will unschedule and schedule selectors in 4s. See console";
 }
@@ -669,12 +669,12 @@ void SchedulerUpdate::removeUpdates(float dt)
     }
 }
 
-std::string SchedulerUpdate::title()
+std::string SchedulerUpdate::title() const
 {
     return "Schedule update with priority";
 }
 
-std::string SchedulerUpdate::subtitle()
+std::string SchedulerUpdate::subtitle() const
 {
     return "3 scheduled updates. Priority should work. Stops in 4s. See console";
 }
@@ -708,12 +708,12 @@ void SchedulerUpdateAndCustom::stopSelectors(float dt)
     unscheduleAllSelectors();
 }
 
-std::string SchedulerUpdateAndCustom::title()
+std::string SchedulerUpdateAndCustom::title() const
 {
     return "Schedule Update + custom selector";
 }
 
-std::string SchedulerUpdateAndCustom::subtitle()
+std::string SchedulerUpdateAndCustom::subtitle() const
 {
     return "Update + custom selector at the same time. Stops in 4s. See console";
 }
@@ -748,12 +748,12 @@ void SchedulerUpdateFromCustom::stopUpdate(float dt)
     unschedule(schedule_selector(SchedulerUpdateFromCustom::stopUpdate));
 }
 
-std::string SchedulerUpdateFromCustom::title()
+std::string SchedulerUpdateFromCustom::title() const
 {
     return "Schedule Update in 2 sec";
 }
 
-std::string SchedulerUpdateFromCustom::subtitle()
+std::string SchedulerUpdateFromCustom::subtitle() const
 {
     return "Update schedules in 2 secs. Stops 2 sec later. See console";
 }
@@ -772,12 +772,12 @@ void RescheduleSelector::onEnter()
     schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
 }
 
-std::string RescheduleSelector::title()
+std::string RescheduleSelector::title() const
 {
     return "Reschedule Selector";
 }
 
-std::string RescheduleSelector::subtitle()
+std::string RescheduleSelector::subtitle() const
 {
     return "Interval is 1 second, then 2, then 3...";
 }
@@ -804,12 +804,12 @@ void SchedulerDelayAndRepeat::onEnter()
     CCLOG("update is scheduled should begin after 3 seconds");
 }
 
-std::string SchedulerDelayAndRepeat::title()
+std::string SchedulerDelayAndRepeat::title() const
 {
     return "Schedule with delay of 3 sec, repeat 4 times";
 }
 
-std::string SchedulerDelayAndRepeat::subtitle()
+std::string SchedulerDelayAndRepeat::subtitle() const
 {
     return "After 5 x executed, method unscheduled. See console";
 }
@@ -896,12 +896,12 @@ void SchedulerTimeScale::onExit()
     SchedulerTestLayer::onExit();
 }
 
-std::string SchedulerTimeScale::title()
+std::string SchedulerTimeScale::title() const
 {
     return "Scheduler timeScale Test";
 }
 
-std::string SchedulerTimeScale::subtitle()
+std::string SchedulerTimeScale::subtitle() const
 {
     return "Fast-forward and rewind using scheduler.timeScale";
 }
@@ -1041,12 +1041,12 @@ TwoSchedulers::~TwoSchedulers()
     actionManager2->release();
 }
 
-std::string TwoSchedulers::title()
+std::string TwoSchedulers::title() const
 {
     return "Two custom schedulers";
 }
 
-std::string TwoSchedulers::subtitle()
+std::string TwoSchedulers::subtitle() const
 {
     return "Three schedulers. 2 custom + 1 default. Two different time scales";
 }
@@ -1098,12 +1098,12 @@ SchedulerIssue2268::~SchedulerIssue2268()
 
 }
 
-std::string SchedulerIssue2268::title()
+std::string SchedulerIssue2268::title() const
 {
     return "Issue #2268";
 }
 
-std::string SchedulerIssue2268::subtitle()
+std::string SchedulerIssue2268::subtitle() const
 {
     return "Should not crash";
 }

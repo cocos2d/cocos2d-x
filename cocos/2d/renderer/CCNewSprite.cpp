@@ -45,7 +45,7 @@ NewSprite* NewSprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite* NewSprite::create(const char *filename)
@@ -57,7 +57,7 @@ NewSprite* NewSprite::create(const char *filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 NewSprite::NewSprite()
@@ -80,7 +80,6 @@ bool NewSprite::initWithTexture(Texture2D *texture, const Rect &rect, bool rotat
 
 void NewSprite::updateQuadVertices()
 {
-
 #ifdef CC_USE_PHYSICS
     updatePhysicsTransform();
     setDirty(true);

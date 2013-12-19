@@ -41,7 +41,7 @@ void Effect1::onEnter()
     target->runAction( Sequence::create(lens, delay, reuse, waves, NULL) );
 }
 
-std::string Effect1::title()
+std::string Effect1::title() const
 {
     return "Lens + Waves3d and OrbitCamera";
 }
@@ -82,7 +82,7 @@ void Effect2::onEnter()
     target->runAction(Sequence::create( shaky, delay, reuse, shuffle, delay->clone(), turnoff, turnon, NULL) );
 }
 
-std::string Effect2::title()
+std::string Effect2::title() const
 {
     return "ShakyTiles + ShuffleTiles + TurnOffTiles";
 }
@@ -112,7 +112,7 @@ void Effect3::onEnter()
     bg->runAction(RepeatForever::create( Sequence::create(move, move->reverse(), NULL) ));    
 }
 
-std::string Effect3::title()
+std::string Effect3::title() const
 {
     return "Effects on 2 sprites";
 }
@@ -176,7 +176,7 @@ void Effect4::onEnter()
     this->runAction( lens );
 }
 
-std::string Effect4::title()
+std::string Effect4::title() const
 {
     return "Jumpy Lens3D";
 }
@@ -206,7 +206,7 @@ void Effect5::onEnter()
     bg->runAction(stopEffect);
 }
 
-std::string Effect5::title()
+std::string Effect5::title() const
 {
     return "Test Stop-Copy-Restar";
 }
@@ -252,12 +252,12 @@ void Issue631::onEnter()
     layer2->runAction( RepeatForever::create(effect) );
 }
 
-std::string Issue631::title()
+std::string Issue631::title() const
 {
     return "Testing Opacity";
 }
 
-std::string Issue631::subtitle()
+std::string Issue631::subtitle() const
 {
     return "Effect image should be 100% opaque. Testing issue #631";
 }
@@ -358,12 +358,12 @@ EffectAdvanceTextLayer::~EffectAdvanceTextLayer(void)
 {
 }
 
-std::string EffectAdvanceTextLayer::title()
+std::string EffectAdvanceTextLayer::title() const
 {
     return "No title";
 }
 
-std::string EffectAdvanceTextLayer::subtitle()
+std::string EffectAdvanceTextLayer::subtitle() const
 {
     return "";
 }

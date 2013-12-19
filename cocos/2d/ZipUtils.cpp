@@ -197,7 +197,7 @@ ssize_t ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, uns
     ssize_t outLength = 0;
     int err = inflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
     
-    if (err != Z_OK || *out == NULL) {
+    if (err != Z_OK || *out == nullptr) {
         if (err == Z_MEM_ERROR)
         {
             CCLOG("cocos2d: ZipUtils: Out of memory while decompressing map data!");
@@ -217,7 +217,7 @@ ssize_t ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, uns
 
         if(*out) {
             free(*out);
-            *out = NULL;
+            *out = nullptr;
         }
         outLength = 0;
     }
@@ -240,7 +240,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     CCASSERT(&*out, "");
     
     gzFile inFile = gzopen(path, "rb");
-    if( inFile == NULL ) {
+    if( inFile == nullptr ) {
         CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
         return -1;
     }
@@ -262,7 +262,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
         {
             CCLOG("cocos2d: ZipUtils: error in gzread");
             free( *out );
-            *out = NULL;
+            *out = nullptr;
             return -1;
         }
         if (len == 0)
@@ -286,7 +286,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
         {
             CCLOG("cocos2d: ZipUtils: out of memory");
             free( *out );
-            *out = NULL;
+            *out = nullptr;
             return -1;
         }
         
@@ -304,12 +304,12 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
 bool ZipUtils::isCCZFile(const char *path)
 {
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
 
     ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
-    if(compressed == NULL || fileLen == 0)
+    if(compressed == nullptr || fileLen == 0)
     {
         CCLOG("cocos2d: ZipUtils: loading file failed");
         return false;
@@ -336,12 +336,12 @@ bool ZipUtils::isCCZBuffer(const unsigned char *buffer, ssize_t len)
 bool ZipUtils::isGZipFile(const char *path)
 {
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
 
     ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
-    if(NULL == compressed || 0 == fileLen)
+    if(nullptr == compressed || 0 == fileLen)
     {
         CCLOG("cocos2d: ZipUtils: loading file failed");
         return false;
@@ -446,7 +446,7 @@ int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, ssize_t bufferLen, u
     {
         CCLOG("cocos2d: CCZ: Failed to uncompress data");
         free( *out );
-        *out = NULL;
+        *out = nullptr;
         return -1;
     }
 
@@ -459,12 +459,12 @@ int ZipUtils::inflateCCZFile(const char *path, unsigned char **out)
     CCAssert(&*out, "");
     
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
     
     ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
     
-    if(NULL == compressed || 0 == fileLen)
+    if(nullptr == compressed || 0 == fileLen)
     {
         CCLOG("cocos2d: Error loading CCZ compressed file");
         return -1;
@@ -593,7 +593,7 @@ bool ZipFile::fileExists(const std::string &fileName) const
 
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
 {
-    unsigned char * buffer = NULL;
+    unsigned char * buffer = nullptr;
     if (size)
         *size = 0;
 

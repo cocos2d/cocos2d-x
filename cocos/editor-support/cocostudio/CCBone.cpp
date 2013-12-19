@@ -74,7 +74,8 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     kmMat4Identity(&_worldTransform);
     _boneTransformDirty = true;
-    _blendType = BLEND_NORMAL;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendDirty = false;
     _worldInfo = nullptr;
 
     _armatureParentBone = nullptr;
@@ -228,7 +229,8 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj){
+    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj)
+    {
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
     });
@@ -248,6 +250,15 @@ void Bone::applyParentTransform(Bone *parent)
     _worldInfo->skewY = _worldInfo->skewY + parent->_worldInfo->skewY;
 }
 
+
+void CCBone::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    {
+        _blendFunc = blendFunc;
+        _blendDirty = true;
+    }
+}
 
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
@@ -429,25 +440,31 @@ void Bone::changeDisplayByIndex(int index, bool force)
     _displayManager->changeDisplayByIndex(index, force);
 }
 
-Array *Bone::getColliderBodyList()
+
+void Bone::changeDisplayByName(const char *name, bool force)
+{
+    _displayManager->changeDisplayByName(name, force);
+}
+
+ColliderDetector* Bone::getColliderDetector() const
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
-            return detector->getColliderBodyList();
+            return detector;
         }
     }
     return nullptr;
 }
 
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
-    Array *array = _displayManager->getDecorativeDisplayList();
+    auto array = _displayManager->getDecorativeDisplayList();
 
-    for(auto object : *array)
+    for(auto& object : array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
@@ -467,6 +484,6 @@ ColliderFilter *Bone::getColliderFilter()
     }
     return nullptr;
 }
-
+#endif
 
 }

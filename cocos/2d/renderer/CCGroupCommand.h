@@ -52,10 +52,8 @@ protected:
 
 class GroupCommand : public RenderCommand
 {
-protected:
-    GroupCommand();
-    ~GroupCommand();
 public:
+    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
     void init(int viewport, float depth);
 
     // +----------+----------+-----+-----------------------------------+
@@ -70,13 +68,13 @@ public:
     virtual void releaseToCommandPool() override;
     
 protected:
+    GroupCommand();
+    ~GroupCommand();
+
     int _renderQueueID;
-    
-public:
-    friend class RenderCommandPool<GroupCommand>;
-    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
-protected:
     static RenderCommandPool<GroupCommand> _commandPool;
+
+    friend class RenderCommandPool<GroupCommand>;
 };
 
 NS_CC_END

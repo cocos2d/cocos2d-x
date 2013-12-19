@@ -75,12 +75,12 @@ void RenderTextureTest::backCallback(Object* sender)
     s->release();
 } 
 
-std::string RenderTextureTest::title()
+std::string RenderTextureTest::title() const
 {
     return "No title";
 }
 
-std::string RenderTextureTest::subtitle()
+std::string RenderTextureTest::subtitle() const
 {
     return "";
 }
@@ -121,12 +121,12 @@ RenderTextureSave::RenderTextureSave()
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
-string RenderTextureSave::title()
+std::string RenderTextureSave::title() const
 {
     return "Touch the screen";
 }
 
-string RenderTextureSave::subtitle()
+std::string RenderTextureSave::subtitle() const
 {
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
@@ -270,12 +270,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     addChild(rend);
 }
 
-std::string RenderTextureIssue937::title()
+std::string RenderTextureIssue937::title() const
 {
     return "Testing issue #937";
 }
 
-std::string RenderTextureIssue937::subtitle()
+std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
 }
@@ -354,12 +354,12 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setColor(Color3B::YELLOW);
 }
 
-string RenderTextureZbuffer::title()
+std::string RenderTextureZbuffer::title() const
 {
     return "Testing Z Buffer in Render Texture";
 }
 
-string RenderTextureZbuffer::subtitle()
+std::string RenderTextureZbuffer::subtitle() const
 {
     return "Touch screen. It should be green";
 }
@@ -469,12 +469,12 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     this->addChild(rend);
 }
 
-std::string RenderTextureTestDepthStencil::title()
+std::string RenderTextureTestDepthStencil::title() const
 {
     return "Testing depthStencil attachment";
 }
 
-std::string RenderTextureTestDepthStencil::subtitle()
+std::string RenderTextureTestDepthStencil::subtitle() const
 {
     return "Circle should be missing 1/4 of its region";
 }
@@ -557,12 +557,12 @@ void RenderTextureTargetNode::update(float dt)
     time += dt;
 }
 
-string RenderTextureTargetNode::title()
+std::string RenderTextureTargetNode::title() const
 {
     return "Testing Render Target Node";
 }
 
-string RenderTextureTargetNode::subtitle()
+std::string RenderTextureTargetNode::subtitle() const
 {
     return "Sprites should be equal and move with each frame";
 }
@@ -682,12 +682,12 @@ void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, 
     }
 }
 
-std::string SpriteRenderTextureBug::title()
+std::string SpriteRenderTextureBug::title() const
 {
     return "SpriteRenderTextureBug";
 }
 
-std::string SpriteRenderTextureBug::subtitle()
+std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
 }
