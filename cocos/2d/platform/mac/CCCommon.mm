@@ -33,50 +33,50 @@
 NS_CC_BEGIN
 
 // XXX deprecated
-void CCLog(const char * pszFormat, ...)
+void CCLog(const char * format, ...)
 {
     printf("Cocos2d: ");
-    char szBuf[kMaxLogLen];
+    char buf[kMaxLogLen];
 
     va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_start(ap, format);
+    vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
-    printf("%s", szBuf);
+    printf("%s", buf);
     printf("\n");
     fflush(stdout);
 }
 
-void log(const char * pszFormat, ...)
+void log(const char * format, ...)
 {
     printf("Cocos2d: ");
-    char szBuf[kMaxLogLen];
+    char buf[kMaxLogLen];
 
     va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_start(ap, format);
+    vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
-    printf("%s", szBuf);
+    printf("%s", buf);
     printf("\n");
     fflush(stdout);
 }
 
 
-void LuaLog(const char * pszFormat)
+void LuaLog(const char * format)
 {
-    puts(pszFormat);
+    puts(format);
 }
 
 // ios no MessageBox, use log instead
-void MessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * msg, const char * title)
 {
-    NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
-    NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
+    NSString * tmpTitle = (title) ? [NSString stringWithUTF8String : title] : nil;
+    NSString * tmpMsg = (msg) ? [NSString stringWithUTF8String : msg] : nil;
 
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:msg];
-	[alert setInformativeText:title];
+	[alert setMessageText:tmpMsg];
+	[alert setInformativeText:tmpTitle];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
 	NSWindow *window = [[CCEAGLView sharedEGLView] window];

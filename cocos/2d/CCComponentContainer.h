@@ -46,11 +46,11 @@ public:
      * @lua NA
      */
     virtual ~ComponentContainer(void);
-    virtual Component* get(const char *pName) const;
-    virtual bool add(Component *pCom);
-    virtual bool remove(const char *pName);
+    virtual Component* get(const char *name) const;
+    virtual bool add(Component *com);
+    virtual bool remove(const char *name);
     virtual void removeAll();
-    virtual void visit(float fDelta);
+    virtual void visit(float delta);
 public:
     bool isEmpty() const;
     

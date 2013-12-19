@@ -4,13 +4,14 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCNewRenderTexture.h"
 
 class RenderTextureTest : public BaseTest
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
@@ -23,14 +24,14 @@ public:
     CREATE_FUNC(RenderTextureSave);
     RenderTextureSave();
     ~RenderTextureSave();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void clearImage(Object *pSender);
     void saveImage(Object *pSender);
 
 private:
-    RenderTexture *_target;
+    NewRenderTexture *_target;
     Sprite *_brush;
 };
 
@@ -39,8 +40,8 @@ class RenderTextureIssue937 : public RenderTextureTest
 public:
     CREATE_FUNC(RenderTextureIssue937);
     RenderTextureIssue937();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class RenderTextureScene : public TestScene
@@ -58,8 +59,8 @@ public:
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void renderScreenShot();
 
@@ -82,8 +83,8 @@ class RenderTextureTestDepthStencil : public RenderTextureTest
 public:
     CREATE_FUNC(RenderTextureTestDepthStencil);
     RenderTextureTestDepthStencil();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class RenderTextureTargetNode : public RenderTextureTest
@@ -96,8 +97,8 @@ public:
     RenderTextureTargetNode();
     
     virtual void update(float t);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
     void touched(Object* sender);
 };
@@ -123,8 +124,8 @@ public:
     SpriteRenderTextureBug();
     
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
     SimpleSprite* addNewSpriteWithCoords(const Point& p);
 };

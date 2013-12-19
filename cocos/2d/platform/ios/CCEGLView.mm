@@ -42,7 +42,7 @@ EGLView::~EGLView()
 
 bool EGLView::isOpenGLReady()
 {
-    return [CCEAGLView sharedEGLView] != NULL;
+    return [CCEAGLView sharedEGLView] != nullptr;
 }
     
 bool EGLView::setContentScaleFactor(float contentScaleFactor)

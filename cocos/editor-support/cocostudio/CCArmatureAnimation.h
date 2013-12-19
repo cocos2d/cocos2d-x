@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "cocostudio/CCProcessBase.h"
+#include "cocostudio/CCTween.h"
 #include <queue>
 
 namespace cocostudio {
@@ -55,6 +56,13 @@ struct FrameEvent
     const char *frameEventName;
     int originFrameIndex;
     int currentFrameIndex;
+};
+
+struct MovementEvent
+{
+    Armature *armature;
+    MovementEventType movementType;
+    const char *movementID;
 };
 
 class  ArmatureAnimation : public ProcessBase
@@ -98,7 +106,7 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    virtual void setAnimationInternal(float animationInternal);
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {}
 
     using ProcessBase::play;
     /**
@@ -109,33 +117,23 @@ public:
      *         It's meaning is changing to this animation need how many frames
      *
      *         -1 : use the value from MovementData get from flash design panel
-     * @param  durationTween  The frame count you want to play in the game.
-     *         if  _durationTween is 80, then the animation will played 80 frames in a loop
-     *
-     *         -1 : use the value from MovementData get from flash design panel
-     *
      * @param  loop   Whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
-     *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
-     *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
-     *         -1 : fade out
-     *         0  : line
-     *         1  : fade in
-     *         2  : fade in and out
-     *
      */
-    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1,  int loop = -1);
 
     /**
      * Play animation by index, the other param is the same to play.
      * @param  animationIndex  the animation index you want to play
      */
-    void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+
+
+    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * Go to specified frame and play current movement.
@@ -171,7 +169,7 @@ public:
     /**
      * Get movement count
      */
-    int getMovementCount() const;
+    long getMovementCount() const;
 
     void update(float dt);
 
@@ -185,13 +183,16 @@ public:
      * Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
-    void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Object *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
-    void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
+    CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
+    
+    void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> listener);
+    void setFrameEventCallFunc(std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
 
     virtual void setAnimationData(AnimationData *data) 
     {
@@ -255,6 +256,13 @@ protected:
      */
     void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    /**
+     * Emit a movement event
+     */
+    void movementEvent(Armature *armature, MovementEventType movementType, const char *movementID);
+
+    void updateMovementList();
+
     bool isIgnoreFrameEvent() const { return _ignoreFrameEvent; }
 
     friend class Tween;
@@ -273,11 +281,19 @@ protected:
 
     int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
-    cocos2d::Array *_tweenList;
+    cocos2d::Vector<Tween*> _tweenList;
 
     bool _ignoreFrameEvent;
     
     std::queue<FrameEvent*> _frameEventQueue;
+    std::queue<MovementEvent*> _movementEventQueue;
+
+    std::vector<std::string> _movementList;
+    
+    bool _onMovementList;
+    bool _movementListLoop;
+    unsigned int _movementIndex;
+    int _movementListDurationTo;
 
     cocos2d::Object *_userObject;
 protected:
@@ -301,6 +317,10 @@ protected:
 
     cocos2d::Object *_movementEventTarget;
     cocos2d::Object *_frameEventTarget;
+    
+    
+    std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> _movementEventListener;
+    std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> _frameEventListener;
 };
 
 }

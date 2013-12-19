@@ -24,6 +24,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
 
 extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native
+extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue);
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue);
 extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue);
 extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue);
@@ -32,6 +33,7 @@ extern bool luaval_to_number(lua_State* L,int lo,double* outValue);
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue);
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue);
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue);
+extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue);
 
 extern bool luaval_to_point(lua_State* L,int lo,Point* outValue);
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue);

@@ -82,6 +82,30 @@ bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
     return false;
 }
 
+bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (unsigned short)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
+}
+
 
 bool luaval_to_int32(lua_State* L,int lo,int* outValue)
 {
@@ -281,6 +305,11 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
         lua_pop(L, 1);
     }
     return ok;
+}
+
+bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
+{
+    return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
 }
 
 bool luaval_to_long(lua_State* L,int lo, long* outValue)

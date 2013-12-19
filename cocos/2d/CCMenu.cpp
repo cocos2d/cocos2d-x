@@ -54,7 +54,7 @@ Menu::~Menu()
 
 Menu* Menu::create()
 {
-    return Menu::create(NULL, NULL);
+    return Menu::create(nullptr, nullptr);
 }
 
 Menu * Menu::create(MenuItem* item, ...)
@@ -62,11 +62,11 @@ Menu * Menu::create(MenuItem* item, ...)
     va_list args;
     va_start(args,item);
     
-    Menu *pRet = Menu::createWithItems(item, args);
+    Menu *ret = Menu::createWithItems(item, args);
     
     va_end(args);
     
-    return pRet;
+    return ret;
 }
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
@@ -103,7 +103,7 @@ Menu* Menu::createWithItems(MenuItem* item, va_list args)
 
 Menu* Menu::createWithItem(MenuItem* item)
 {
-    return Menu::create(item, NULL);
+    return Menu::create(item, nullptr);
 }
 
 bool Menu::init()
@@ -133,7 +133,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
             z++;
         }
     
-        _selectedItem = NULL;
+        _selectedItem = nullptr;
         _state = Menu::State::WAITING;
         
         // enable cascade color and opacity on menus
@@ -171,7 +171,7 @@ void Menu::addChild(Node * child, int zOrder)
 
 void Menu::addChild(Node * child, int zOrder, int tag)
 {
-    CCASSERT( dynamic_cast<MenuItem*>(child) != NULL, "Menu only supports MenuItem objects as children");
+    CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     Layer::addChild(child, zOrder, tag);
 }
 
@@ -187,7 +187,7 @@ void Menu::onExit()
         if (_selectedItem)
         {
             _selectedItem->unselected();
-            _selectedItem = NULL;
+            _selectedItem = nullptr;
         }
         
         _state = Menu::State::WAITING;
@@ -198,12 +198,12 @@ void Menu::onExit()
 
 void Menu::removeChild(Node* child, bool cleanup)
 {
-    MenuItem *pMenuItem = dynamic_cast<MenuItem*>(child);
-    CCASSERT(pMenuItem != NULL, "Menu only supports MenuItem objects as children");
+    MenuItem *menuItem = dynamic_cast<MenuItem*>(child);
+    CCASSERT(menuItem != nullptr, "Menu only supports MenuItem objects as children");
     
-    if (_selectedItem == pMenuItem)
+    if (_selectedItem == menuItem)
     {
-        _selectedItem = NULL;
+        _selectedItem = nullptr;
     }
     
     Node::removeChild(child, cleanup);
@@ -218,7 +218,7 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         return false;
     }
     
-    for (Node *c = this->_parent; c != NULL; c = c->getParent())
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
@@ -291,7 +291,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
 {
     float height = -padding;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             height += child->getContentSize().height * child->getScaleY() + padding;
@@ -300,7 +300,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
 
     float y = height / 2.0f;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
@@ -317,7 +317,7 @@ void Menu::alignItemsHorizontally(void)
 void Menu::alignItemsHorizontallyWithPadding(float padding)
 {
     float width = -padding;
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             width += child->getContentSize().width * child->getScaleX() + padding;
@@ -326,7 +326,7 @@ void Menu::alignItemsHorizontallyWithPadding(float padding)
 
     float x = -width / 2.0f;
     
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
@@ -365,7 +365,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     int columnsOccupied = 0;
     int rowColumns = 0;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             CCASSERT(row < rows.size(), "");
@@ -401,7 +401,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     float x = 0.0;
     float y = (float)(height / 2);
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             if (child)
@@ -469,7 +469,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     int rowsOccupied = 0;
     int columnRows;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             // check if too many menu items for the amount of rows/columns
@@ -511,7 +511,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     float x = (float)(-width / 2);
     float y = 0.0;
 
-    _children.forEach([&](Node* child){
+    std::for_each(_children.begin(), _children.end(), [&](Node* child){
         if (child)
         {
             if (columnRows == 0)
@@ -565,7 +565,7 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 std::string Menu::getDescription() const

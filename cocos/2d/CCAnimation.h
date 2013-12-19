@@ -157,7 +157,7 @@ public:
     /** Adds a SpriteFrame to a Animation.
      The frame will be added with one "delay unit".
      */
-    void addSpriteFrame(SpriteFrame *pFrame);
+    void addSpriteFrame(SpriteFrame *frame);
 
     /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
      The frame will be added with one "delay unit".
