@@ -82,9 +82,12 @@ void NodeGrid::visit()
     renderer->pushGroup(groupCommand->getRenderQueueID());
 
     kmGLPushMatrix();
-
-
-    this->transform();
+    Director::Projection beforeProjectionType;
+    if(_nodeGrid && _nodeGrid->isActive())
+    {
+        beforeProjectionType = Director::getInstance()->getProjection();
+        _nodeGrid->set2DProjection();
+    }
     
     kmGLGetMatrix(KM_GL_MODELVIEW, &_cachedMVmat);
     
@@ -93,7 +96,8 @@ void NodeGrid::visit()
     gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(gridBeginCmd);
 
-
+    this->transform();
+    
     if(_gridTarget)
     {
         _gridTarget->visit();
@@ -129,6 +133,13 @@ void NodeGrid::visit()
     
     // reset for next frame
     _orderOfArrival = 0;
+    
+    if(_nodeGrid && _nodeGrid->isActive())
+    {
+        // restore projection
+        Director *director = Director::getInstance();
+        director->setProjection(beforeProjectionType);
+    }
 
     CustomCommand* gridEndCmd = CustomCommand::getCommandPool().generateCommand();
     gridEndCmd->init(0,_vertexZ);
