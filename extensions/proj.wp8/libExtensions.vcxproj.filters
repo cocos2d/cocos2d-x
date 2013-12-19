@@ -454,6 +454,9 @@
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -881,6 +884,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h">
       <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
+      <Filter>CocoStudio\Action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
