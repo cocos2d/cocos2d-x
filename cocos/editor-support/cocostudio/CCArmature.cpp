@@ -373,9 +373,9 @@ void Armature::update(float dt)
 {
     _animation->update(dt);
 
-    std::for_each(_topBoneList.begin(), _topBoneList.end(), [&dt](Bone* bone){
+    for(const auto &bone : _topBoneList) {
         bone->update(dt);
-    });
+    }
 
     _armatureTransformDirty = false;
 }

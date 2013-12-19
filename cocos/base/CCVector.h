@@ -29,7 +29,6 @@ THE SOFTWARE.
 
 #include <vector>
 #include <functional>
-#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -267,10 +266,10 @@ public:
     /** Push all elements of an existing vector to the end of current vector. */
     void pushBack(const Vector<T>& other)
     {
-        std::for_each(other.begin(), other.end(), [this](T obj){
+        for(const auto &obj : other) {
             _data.push_back(obj);
             obj->retain();
-        });
+        }
     }
 
     /** @brief Insert a certain object at a certain index 
@@ -415,9 +414,9 @@ protected:
     /** Retains all the objects in the vector */
     void addRefForAllObjects()
     {
-        std::for_each(_data.begin(), _data.end(), [](T obj){
+        for(const auto &obj : _data) {
             obj->retain();
-        });
+        }
     }
     
     std::vector<T> _data;
