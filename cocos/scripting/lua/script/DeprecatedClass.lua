@@ -273,11 +273,19 @@ _G["CCFadeIn"] = DeprecatedClass.CCFadeIn()
 
 --CCNodeRGBA class will be Deprecated,begin
 function DeprecatedClass.CCNodeRGBA()
-    deprecatedTip("CCNodeRGBA","cc.NodeRGBA")
-    return cc.NodeRGBA
+    deprecatedTip("CCNodeRGBA","cc.Node")
+    return cc.Node
 end
 _G["CCNodeRGBA"] = DeprecatedClass.CCNodeRGBA()
 --CCNodeRGBA class will be Deprecated,end
+
+--NodeRGBA class will be Deprecated,begin
+function DeprecatedClass.NodeRGBA()
+    deprecatedTip("cc.NodeRGBA","cc.Node")
+    return cc.Node
+end
+_G["cc"]["NodeRGBA"] = DeprecatedClass.NodeRGBA()
+--NodeRGBA class will be Deprecated,end
 
 --CCAnimationCache class will be Deprecated,begin
 function DeprecatedClass.CCAnimationCache()
@@ -1305,11 +1313,19 @@ _G["CCCamera"] = DeprecatedClass.CCCamera()
 
 --CCLayerRGBA class will be Deprecated,begin
 function DeprecatedClass.CCLayerRGBA()
-    deprecatedTip("CCLayerRGBA","cc.LayerRGBA")
-    return cc.LayerRGBA
+    deprecatedTip("CCLayerRGBA","cc.Layer")
+    return cc.Layer
 end
 _G["CCLayerRGBA"] = DeprecatedClass.CCLayerRGBA()
 --CCLayerRGBA class will be Deprecated,end
+
+--LayerRGBA class will be Deprecated,begin
+function DeprecatedClass.LayerRGBA()
+    deprecatedTip("cc.LayerRGBA","cc.Layer")
+    return cc.Layer
+end
+_G["cc"]["LayerRGBA"] = DeprecatedClass.LayerRGBA()
+--LayerRGBA class will be Deprecated,end
 
 --CCBezierTo class will be Deprecated,begin
 function DeprecatedClass.CCBezierTo()

@@ -297,11 +297,8 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
             particle->resetSystem();
         }
 
-        if (RGBAProtocol *rgbaProtocaol = dynamic_cast<RGBAProtocol *>(_displayRenderNode))
-        {
-			rgbaProtocaol->setColor(_bone->getDisplayedColor());
-			rgbaProtocaol->setOpacity(_bone->getDisplayedOpacity());
-        }
+        _displayRenderNode->setColor(_bone->getDisplayedColor());
+        _displayRenderNode->setOpacity(_bone->getDisplayedOpacity());
 
         _displayRenderNode->retain();
         _displayRenderNode->setVisible(_visible);

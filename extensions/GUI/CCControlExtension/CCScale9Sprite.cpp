@@ -700,14 +700,9 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     }
     _opacityModifyRGB = var;
     
-    auto& children = _scale9Image->getChildren();
-    std::for_each(children.begin(), children.end(), [this](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacityModifyRGB(_opacityModifyRGB);
-        }
-    });
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacityModifyRGB(_opacityModifyRGB);
+    }
 }
 
 bool Scale9Sprite::isOpacityModifyRGB() const
@@ -788,21 +783,11 @@ void Scale9Sprite::setColor(const Color3B& color)
         return;
     }
     
-    NodeRGBA::setColor(color);
+    Node::setColor(color);
     
-    auto& children = _scale9Image->getChildren();
-    std::for_each(children.begin(), children.end(), [&color](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setColor(color);
-        }
-    });
-}
-
-const Color3B& Scale9Sprite::getColor() const
-{
-	return _realColor;
+    for(auto child : _scale9Image->getChildren()){
+        child->setColor(color);
+    }
 }
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
@@ -811,21 +796,11 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     {
         return;
     }
-    NodeRGBA::setOpacity(opacity);
+    Node::setOpacity(opacity);
     
-    auto& children = _scale9Image->getChildren();
-    std::for_each(children.begin(), children.end(), [&opacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacity(opacity);
-        }
-    });
-}
-
-GLubyte Scale9Sprite::getOpacity() const
-{
-	return _realOpacity;
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacity(opacity);
+    }
 }
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
@@ -834,16 +809,11 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     {
         return;
     }
-    NodeRGBA::updateDisplayedColor(parentColor);
-    
-    auto& children = _scale9Image->getChildren();
-    std::for_each(children.begin(), children.end(), [&parentColor](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedColor(parentColor);
-        }
-    });
+    Node::updateDisplayedColor(parentColor);
+
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedColor(parentColor);
+    }
 }
 
 void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -852,16 +822,11 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     {
         return;
     }
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
+    Node::updateDisplayedOpacity(parentOpacity);
     
-    auto& children = _scale9Image->getChildren();
-    std::for_each(children.begin(), children.end(), [&parentOpacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedOpacity(parentOpacity);
-        }
-    });
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedOpacity(parentOpacity);
+    }
 }
 
 NS_CC_EXT_END
