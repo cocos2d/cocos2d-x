@@ -107,6 +107,7 @@ CocoStudio/Action/CCActionManager.cpp \
 CocoStudio/Action/CCActionObject.cpp \
 CocoStudio/Action/CCActionNode.cpp \
 CocoStudio/Action/CCActionFrame.cpp \
+CocoStudio/Action/CCActionEaseEx.cpp \
 CocoStudio/Action/CCActionFrameEasing.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
