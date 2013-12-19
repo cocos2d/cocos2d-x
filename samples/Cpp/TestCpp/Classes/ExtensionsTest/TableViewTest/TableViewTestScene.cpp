@@ -60,7 +60,7 @@ void TableViewTestLayer::tableCellTouched(TableView* table, TableViewCell* cell)
     CCLOG("cell touched at index: %ld", cell->getIdx());
 }
 
-Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, long idx)
+Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
     if (idx == 2) {
         return Size(100, 100);
@@ -68,7 +68,7 @@ Size TableViewTestLayer::tableCellSizeForIndex(TableView *table, long idx)
     return Size(60, 60);
 }
 
-TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, long idx)
+TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t idx)
 {
     auto string = String::createWithFormat("%ld", idx);
     TableViewCell *cell = table->dequeueCell();

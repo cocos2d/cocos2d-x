@@ -1369,12 +1369,11 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
-    const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
-    const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
+    std::string russian  = strings["russian"].asString();
+    std::string spanish  = strings["spanish"].asString();
+    std::string japanese = strings["japanese"].asString();
 
     auto s = Director::getInstance()->getWinSize();
 

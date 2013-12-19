@@ -27,6 +27,7 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 // some utility functions
 // to native
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *ret );
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *ret );
 JSBool jsval_to_uint32( JSContext *cx, jsval vp, uint32_t *ret );
 JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *ret );
@@ -41,10 +42,10 @@ JSBool jsval_to_cccolor4b(JSContext *cx, jsval v, cocos2d::Color4B* ret);
 JSBool jsval_to_cccolor4f(JSContext *cx, jsval v, cocos2d::Color4F* ret);
 JSBool jsval_to_cccolor3b(JSContext *cx, jsval v, cocos2d::Color3B* ret);
 JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, cocos2d::Point **points, int *numPoints);
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::Array** ret);
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::Dictionary** ret);
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, cocos2d::__Array** ret);
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, cocos2d::__Dictionary** ret);
 JSBool jsval_to_ccacceleration(JSContext* cx,jsval v, cocos2d::Acceleration* ret);
-JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::Array** ret);
+JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** ret);
 
 // forward declaration
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj);
@@ -118,6 +119,7 @@ JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
 // from native
 jsval int32_to_jsval( JSContext *cx, int32_t l);
 jsval uint32_to_jsval( JSContext *cx, uint32_t number );
+jsval ushort_to_jsval( JSContext *cx, unsigned short number );
 jsval long_to_jsval( JSContext *cx, long number );
 jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);

@@ -60,11 +60,12 @@ public:
      *  @js NA
      */
     void draw() override;
-
-    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture) const;
+    
+    void setPopGroupCommand(bool pop) { _popGroupCommand = pop; }
 protected:
-    cocos2d::TextureAtlas *_atlas;
-    cocos2d::Dictionary *_textureAtlasDic;
+    void generateGroupCommand();
+
+    bool _popGroupCommand;
 };
 
 }

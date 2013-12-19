@@ -197,7 +197,6 @@ private:
     
     // glyph rendering
     unsigned char * renderGlyphData(TextPageDef *thePage);
-    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;

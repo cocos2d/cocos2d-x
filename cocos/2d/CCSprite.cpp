@@ -44,8 +44,8 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -673,7 +673,7 @@ void Sprite::draw(void)
     //TODO implement z order
     QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
     renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Renderer::getInstance()->addCommand(renderCommand);
+    Director::getInstance()->getRenderer()->addCommand(renderCommand);
 }
 
 void Sprite::updateQuadVertices()
@@ -688,7 +688,7 @@ void Sprite::updateQuadVertices()
     long offset = 0;
     setGLBufferData(&_quad, 4 * kQuadSize, 0);
 #else
-    size_t offset = (size_t)&_quad;
+//    size_t offset = (size_t)&_quad;
 #endif // EMSCRIPTEN
 
     //TODO optimize the performance cache affineTransformation
@@ -817,7 +817,7 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        _children.forEach([this](Node* child){
+        std::for_each(_children.begin(), _children.end(), [this](Node* child){
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
@@ -863,7 +863,7 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            _children.forEach([](Node* child){
+            std::for_each(_children.begin(), _children.end(), [](Node* child){
                 child->sortAllChildren();
             });
         }
@@ -900,7 +900,7 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        _children.forEach([](Node* child){
+        std::for_each(_children.begin(), _children.end(), [](Node* child){
             Sprite* sp = dynamic_cast<Sprite*>(child);
             if (sp)
             {
