@@ -1195,6 +1195,10 @@
 		A07A537B1784AC9B0073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A537C1784AC9B0073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A537D1784AC9B0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		B6A5753C18619F2800D70665 /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752C18619E1800D70665 /* PerformanceMathTest.cpp */; };
+		B6A5753D18619F2800D70665 /* PerformanceMathTest.h in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752D18619E1800D70665 /* PerformanceMathTest.h */; };
+		B6A5753E18619F5100D70665 /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752C18619E1800D70665 /* PerformanceMathTest.cpp */; };
+		B6A5753F18619F5100D70665 /* PerformanceMathTest.h in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752D18619E1800D70665 /* PerformanceMathTest.h */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D60AE43717F9142200757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
@@ -2878,6 +2882,8 @@
 		B3AF01AA184313DE00A98B85 /* Mobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mobile.h; sourceTree = "<group>"; };
 		B3AF01AB184313DE00A98B85 /* MobileBalanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileBalanced.h; sourceTree = "<group>"; };
 		B3AF01AC184313DE00A98B85 /* MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotorJoint.h; sourceTree = "<group>"; };
+		B6A5752C18619E1800D70665 /* PerformanceMathTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceMathTest.cpp; sourceTree = "<group>"; };
+		B6A5752D18619E1800D70665 /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -4970,6 +4976,8 @@
 		1AAF50FC180E2C1A000584C8 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				B6A5752C18619E1800D70665 /* PerformanceMathTest.cpp */,
+				B6A5752D18619E1800D70665 /* PerformanceMathTest.h */,
 				1AAF50FD180E2C1A000584C8 /* PerformanceAllocTest.cpp */,
 				1AAF50FE180E2C1A000584C8 /* PerformanceAllocTest.h */,
 				1AAF50FF180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp */,
@@ -6783,6 +6791,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A5753C18619F2800D70665 /* PerformanceMathTest.cpp in Sources */,
+				B6A5753D18619F2800D70665 /* PerformanceMathTest.h in Sources */,
 				1AAF514A180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514C180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
 				1AAF514E180E2C1A000584C8 /* ActionsEaseTest.cpp in Sources */,
@@ -7065,6 +7075,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A5753E18619F5100D70665 /* PerformanceMathTest.cpp in Sources */,
+				B6A5753F18619F5100D70665 /* PerformanceMathTest.h in Sources */,
 				1AAF514B180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514D180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
 				50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
@@ -8797,7 +8809,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8823,7 +8835,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -8919,7 +8931,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../cocos/math/glm $(SRCROOT)/../cocos/math/c3d $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
@@ -8943,7 +8955,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../cocos/math/glm $(SRCROOT)/../cocos/math/c3d $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};
