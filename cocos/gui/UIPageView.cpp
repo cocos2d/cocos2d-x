@@ -105,11 +105,8 @@ void PageView::addWidgetToPage(Widget *widget, int pageIdx, bool forceCreate)
     }
     else
     {
-        Layout * page = dynamic_cast<Layout*>(_pages.at(pageIdx));
-        if (page)
-        {
-            page->addChild(widget);
-        }
+        Layout * page = _pages.at(pageIdx);
+        page->addChild(widget);
     }
 }
 
@@ -185,7 +182,7 @@ void PageView::insertPage(Layout* page, int idx)
         }
         int length = _pages.size();
         for (int i=(idx+1); i<length; i++) {
-            Widget* behindPage = dynamic_cast<Widget*>(_pages.at(i));
+            Widget* behindPage = _pages.at(i);
             Point formerPos = behindPage->getPosition();
             behindPage->setPosition(Point(formerPos.x+getSize().width, 0));
         }
@@ -210,11 +207,8 @@ void PageView::removePageAtIndex(int index)
     {
         return;
     }
-    Layout* page = dynamic_cast<Layout*>(_pages.at(index));
-    if (page)
-    {
-        removePage(page);
-    }
+    Layout* page = _pages.at(index);
+    removePage(page);
 }
     
 void PageView::removeAllPages()
@@ -230,8 +224,8 @@ void PageView::updateBoundaryPages()
         _rightChild = nullptr;
         return;
     }
-    _leftChild = dynamic_cast<Widget*>(_pages.at(0));
-    _rightChild = dynamic_cast<Widget*>(_pages.at(_pages.size()-1));
+    _leftChild = _pages.at(0);
+    _rightChild = _pages.at(_pages.size()-1);
 }
 
 float PageView::getPositionXByIndex(int idx)
@@ -256,9 +250,9 @@ void PageView::addChild(Node *child, int zOrder, int tag)
 
 void PageView::removeChild(Node *child, bool cleanup)
 {
-    if (_pages.contains((Widget*)child))
+    if (_pages.contains(static_cast<Layout*>(child)))
     {
-        _pages.eraseObject((Widget*)child);
+        _pages.eraseObject(static_cast<Layout*>(child));
     }
     Layout::removeChild(child, cleanup);
 }
@@ -277,7 +271,7 @@ void PageView::updateChildrenSize()
     int length = _pages.size();
     for (long i=0; i<length; i++)
     {
-        Layout* page = dynamic_cast<Layout*>(_pages.at(i));
+        Layout* page = _pages.at(i);
         page->setSize(selfSize);
     }
 }
@@ -297,7 +291,7 @@ void PageView::updateChildrenPosition()
     float pageWidth = getSize().width;
     for (int i=0; i<pageCount; i++)
     {
-        Layout* page = dynamic_cast<Layout*>(_pages.at(i));
+        Layout* page = _pages.at(i);
         page->setPosition(Point((i-_curPageIdx)*pageWidth, 0));
     }
 }
@@ -315,7 +309,7 @@ void PageView::scrollToPage(int idx)
         return;
     }
     _curPageIdx = idx;
-    Widget* curPage = dynamic_cast<Widget*>(_pages.at(idx));
+    Widget* curPage = _pages.at(idx);
     _autoScrollDistance = -(curPage->getPosition().x);
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
     _autoScrollDir = _autoScrollDistance > 0 ? 1 : 0;
@@ -419,7 +413,7 @@ void PageView::movePages(float offset)
     int length = _pages.size();
     for (int i = 0; i < length; i++)
     {
-        Widget* child = (Widget*)(_pages.at(i));
+        Widget* child = _pages.at(i);
         _movePagePoint.x = child->getPosition().x + offset;
         _movePagePoint.y = child->getPosition().y;
         child->setPosition(_movePagePoint);
@@ -498,7 +492,7 @@ void PageView::handleReleaseLogic(const Point &touchPoint)
     {
         return;
     }
-    Widget* curPage = dynamic_cast<Widget*>(_pages.at(_curPageIdx));
+    Widget* curPage = _pages.at(_curPageIdx);
     if (curPage)
     {
         Point curPagePos = curPage->getPosition();
@@ -586,7 +580,7 @@ int PageView::getCurPageIndex() const
     return _curPageIdx;
 }
 
-Vector<Widget*>& PageView::getPages()
+Vector<Layout*>& PageView::getPages()
 {
     return _pages;
 }
@@ -597,7 +591,7 @@ Layout* PageView::getPage(int index)
     {
         return nullptr;
     }
-    return (Layout*)_pages.at(index);
+    return _pages.at(index);
 }
 
 std::string PageView::getDescription() const
@@ -612,11 +606,11 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    Vector<Widget*> modelPages = dynamic_cast<PageView*>(model)->getPages();
+    Vector<Layout*> modelPages = dynamic_cast<PageView*>(model)->getPages();
     int length = modelPages.size();
     for (int i=0; i<length; i++)
     {
-        Layout* page = (Layout*)(modelPages.at(i));
+        Layout* page = modelPages.at(i);
         addPage(dynamic_cast<Layout*>(page->clone()));
     }
 }

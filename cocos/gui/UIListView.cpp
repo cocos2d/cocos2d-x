@@ -367,7 +367,7 @@ void ListView::refreshView()
     int length = _items.size();
     for (int i=0; i<length; i++)
     {
-        Widget* item = (Widget*)(_items.at(i));
+        Widget* item = _items.at(i);
         item->setZOrder(i);
         remedyLayoutParameter(item);
     }
@@ -445,7 +445,7 @@ void ListView::copyClonedWidgetChildren(Widget* model)
     int length = arrayItems.size();
     for (int i=0; i<length; i++)
     {
-        Widget* item = (Widget*)(arrayItems.at(i));
+        Widget* item = arrayItems.at(i);
         pushBackCustomItem(item->clone());
     }
 }

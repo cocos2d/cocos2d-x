@@ -42,7 +42,7 @@ Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
     int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        Widget* child = (Widget*)(arrayRootChildren.at(i));
+        Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
         Widget* res = seekWidgetByTag(child,tag);
         if (res != nullptr)
         {
@@ -66,7 +66,7 @@ Widget* UIHelper::seekWidgetByName(Widget* root, const char *name)
     int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        Widget* child = (Widget*)(arrayRootChildren.at(i));
+        Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
         Widget* res = seekWidgetByName(child,name);
         if (res != nullptr)
         {
@@ -86,7 +86,7 @@ Widget* UIHelper::seekWidgetByRelativeName(Widget *root, const char *name)
     int length = arrayRootChildren.size();
     for (int i=0;i<length;i++)
     {
-        Widget* child = (Widget*)(arrayRootChildren.at(i));
+        Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
         RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
         if (layoutParameter && strcmp(layoutParameter->getRelativeName(), name) == 0)
         {
@@ -111,7 +111,7 @@ Widget* UIHelper::seekActionWidgetByActionTag(Widget* root, int tag)
     int length = arrayRootChildren.size();
 	for (int i=0;i<length;i++)
 	{
-		Widget* child = (Widget*)(arrayRootChildren.at(i));
+		Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
 		Widget* res = seekActionWidgetByActionTag(child,tag);
 		if (res != nullptr)
 		{

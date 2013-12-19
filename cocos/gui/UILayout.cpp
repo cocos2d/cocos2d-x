@@ -80,8 +80,6 @@ bool Layout::init()
 {
     if (NodeRGBA::init())
     {
-        _layoutParameterDictionary = Dictionary::create();
-        CC_SAFE_RETAIN(_layoutParameterDictionary);
         initRenderer();
         _renderer->retain();
         setCascadeColorEnabled(true);
@@ -107,7 +105,7 @@ void Layout::addChild(Node * child, int zOrder)
 
 void Layout::addChild(Node *child, int zOrder, int tag)
 {
-    supplyTheLayoutParameterLackToChild(dynamic_cast<Widget*>(child));
+    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
 }
@@ -412,7 +410,7 @@ void Layout::onSizeChanged()
         _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
         }
     }
     if (_colorRender)
@@ -463,28 +461,29 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
     _bgImageTexType = texType;
     if (_backGroundScale9Enabled)
     {
+        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->initWithFile(fileName);
+                bgiScale9->initWithFile(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->initWithSpriteFrameName(fileName);
+                bgiScale9->initWithSpriteFrameName(fileName);
                 break;
             default:
                 break;
         }
-        dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        bgiScale9->setPreferredSize(_size);
     }
     else
     {
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_backGroundImage)->setTexture(fileName);
+                static_cast<Sprite*>(_backGroundImage)->setTexture(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
+                static_cast<Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
                 break;
             default:
                 break;
@@ -492,13 +491,15 @@ void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
     }
     if (_backGroundScale9Enabled)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setOpacity(getOpacity());
+        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<Sprite*>(_backGroundImage)->setColor(getColor());
-        dynamic_cast<Sprite*>(_backGroundImage)->setOpacity(getOpacity());
+        Sprite* bgiScale9 = static_cast<Sprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
@@ -509,7 +510,7 @@ void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
 
@@ -554,7 +555,7 @@ void Layout::addBackGroundImage()
         _backGroundImage = extension::Scale9Sprite::create();
         _backGroundImage->setZOrder(-1);
         _renderer->addChild(_backGroundImage);
-        dynamic_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
@@ -702,7 +703,7 @@ void Layout::setLayoutType(LayoutType type)
     {
         if (child)
         {
-            supplyTheLayoutParameterLackToChild((Widget*)child);
+            supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
         }
     }
     _doLayoutDirty = true;

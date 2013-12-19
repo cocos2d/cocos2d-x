@@ -109,21 +109,21 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithFile(fileName);
+                static_cast<extension::Scale9Sprite*>(_barRenderer)->initWithFile(fileName);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setTexture(fileName);
+                static_cast<Sprite*>(_barRenderer)->setTexture(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
+                static_cast<extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(fileName);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setSpriteFrame(fileName);
+                static_cast<Sprite*>(_barRenderer)->setSpriteFrame(fileName);
             }
             break;
         default:
@@ -131,13 +131,13 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
     }
     if (_scale9Enabled)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
+        static_cast<extension::Scale9Sprite*>(_barRenderer)->setColor(getColor());
+        static_cast<extension::Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_barRenderer)->setOpacity(getOpacity());
+        static_cast<Sprite*>(_barRenderer)->setColor(getColor());
+        static_cast<Sprite*>(_barRenderer)->setOpacity(getOpacity());
     }
     barRendererScaleChangedWithSize();
 }
@@ -155,21 +155,21 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithFile(fileName);
+                static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithFile(fileName);
             }
             else
             {
-                dynamic_cast<Sprite*>(_progressBarRenderer)->setTexture(fileName);
+                static_cast<Sprite*>(_progressBarRenderer)->setTexture(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
+                static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->initWithSpriteFrameName(fileName);
             }
             else
             {
-                dynamic_cast<Sprite*>(_progressBarRenderer)->setSpriteFrame(fileName);
+                static_cast<Sprite*>(_progressBarRenderer)->setSpriteFrame(fileName);
             }
             break;
         default:
@@ -177,13 +177,13 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
     }
     if (_scale9Enabled)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setOpacity(getOpacity());
+        static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setColor(getColor());
+        static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<Sprite*>(_progressBarRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_progressBarRenderer)->setOpacity(getOpacity());
+        static_cast<Sprite*>(_progressBarRenderer)->setColor(getColor());
+        static_cast<Sprite*>(_progressBarRenderer)->setOpacity(getOpacity());
     }
     _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
@@ -252,7 +252,7 @@ void Slider::setCapInsetsBarRenderer(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
 void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
@@ -262,7 +262,7 @@ void Slider::setCapInsetProgressBarRebderer(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setCapInsets(capInsets);
 }
 
 void Slider::loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType)
@@ -356,7 +356,7 @@ void Slider::setPercent(int percent)
     _slidBallRenderer->setPosition(Point(-_barLength/2.0f + dis, 0.0f));
     if (_scale9Enabled)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(Size(dis,_progressBarTextureSize.height));
+        static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(Size(dis,_progressBarTextureSize.height));
     }
     else
     {
@@ -377,7 +377,7 @@ void Slider::setPercent(int percent)
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_progressBarRenderer)->setTextureRect(Rect(x, y, _progressBarTextureSize.width * (percent/100.0f), _progressBarTextureSize.height));
+        static_cast<Sprite*>(_progressBarRenderer)->setTextureRect(Rect(x, y, _progressBarTextureSize.width * (percent/100.0f), _progressBarTextureSize.height));
     }
 }
 
@@ -467,7 +467,7 @@ void Slider::barRendererScaleChangedWithSize()
         _barLength = _size.width;
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -503,7 +503,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_progressBarRenderer)->setPreferredSize(_size);
         }
         else
         {

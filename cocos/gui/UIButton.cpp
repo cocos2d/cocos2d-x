@@ -175,36 +175,38 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
     _normalTexType = texType;
     if (_scale9Enabled)
     {
+        extension::Scale9Sprite* normalRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer);
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->initWithFile(normal);
+                normalRendererScale9->initWithFile(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->initWithSpriteFrameName(normal);
+                normalRendererScale9->initWithSpriteFrameName(normal);
                 break;
             default:
                 break;
         }
-        dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(_capInsetsNormal);
+        normalRendererScale9->setColor(getColor());
+        normalRendererScale9->setOpacity(getOpacity());
+        normalRendererScale9->setCapInsets(_capInsetsNormal);
     }
     else
     {
+        Sprite* normalRenderer = static_cast<Sprite*>(_buttonNormalRenderer);
         switch (_normalTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonNormalRenderer)->setTexture(normal);
+                normalRenderer->setTexture(normal);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonNormalRenderer)->setSpriteFrame(normal);
+                normalRenderer->setSpriteFrame(normal);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonNormalRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonNormalRenderer)->setOpacity(getOpacity());
+        normalRenderer->setColor(getColor());
+        normalRenderer->setOpacity(getOpacity());
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
     updateAnchorPoint();
@@ -221,36 +223,38 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
     _pressedTexType = texType;
     if (_scale9Enabled)
     {
+        extension::Scale9Sprite* clickedRendererScale9 = static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer);
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->initWithFile(selected);
+                clickedRendererScale9->initWithFile(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->initWithSpriteFrameName(selected);
+                clickedRendererScale9->initWithSpriteFrameName(selected);
                 break;
             default:
                 break;
         }
-        dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(_capInsetsPressed);
+        clickedRendererScale9->setColor(getColor());
+        clickedRendererScale9->setOpacity(getOpacity());
+        clickedRendererScale9->setCapInsets(_capInsetsPressed);
     }
     else
     {
+        Sprite* clickedRenderer = static_cast<Sprite*>(_buttonClickedRenderer);
         switch (_pressedTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonClickedRenderer)->setTexture(selected);
+                clickedRenderer->setTexture(selected);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonClickedRenderer)->setSpriteFrame(selected);
+                clickedRenderer->setSpriteFrame(selected);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonClickedRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonClickedRenderer)->setOpacity(getOpacity());
+        clickedRenderer->setColor(getColor());
+        clickedRenderer->setOpacity(getOpacity());
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
     updateAnchorPoint();
@@ -267,36 +271,38 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
     _disabledTexType = texType;
     if (_scale9Enabled)
     {
+        extension::Scale9Sprite* disabledScale9 = static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer);
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->initWithFile(disabled);
+                disabledScale9->initWithFile(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->initWithSpriteFrameName(disabled);
+                disabledScale9->initWithSpriteFrameName(disabled);
                 break;
             default:
                 break;
         }
-        dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
-        dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(_capInsetsDisabled);
+        disabledScale9->setColor(getColor());
+        disabledScale9->setOpacity(getOpacity());
+        disabledScale9->setCapInsets(_capInsetsDisabled);
     }
     else
     {
+        Sprite* disabledRenderer = static_cast<Sprite*>(_buttonDisableRenderer);
         switch (_disabledTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<Sprite*>(_buttonDisableRenderer)->setTexture(disabled);
+                disabledRenderer->setTexture(disabled);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<Sprite*>(_buttonDisableRenderer)->setSpriteFrame(disabled);
+                disabledRenderer->setSpriteFrame(disabled);
                 break;
             default:
                 break;
         }
-        dynamic_cast<Sprite*>(_buttonDisableRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_buttonDisableRenderer)->setOpacity(getOpacity());
+        disabledRenderer->setColor(getColor());
+        disabledRenderer->setOpacity(getOpacity());
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
     updateAnchorPoint();
@@ -317,7 +323,7 @@ void Button::setCapInsetsNormalRenderer(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setCapInsets(capInsets);
 }
 
 void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
@@ -327,7 +333,7 @@ void Button::setCapInsetsPressedRenderer(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setCapInsets(capInsets);
 }
 
 void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
@@ -337,7 +343,7 @@ void Button::setCapInsetsDisabledRenderer(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setCapInsets(capInsets);
 }
 
 void Button::onPressStateChangedToNormal()
@@ -392,9 +398,9 @@ void Button::setFlipX(bool flipX)
     {
         return;
     }
-    dynamic_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
-    dynamic_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
-    dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
+    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedX(flipX);
+    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedX(flipX);
+    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedX(flipX);
 }
 
 void Button::setFlipY(bool flipY)
@@ -404,9 +410,9 @@ void Button::setFlipY(bool flipY)
     {
         return;
     }
-    dynamic_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
-    dynamic_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
-    dynamic_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
+    static_cast<Sprite*>(_buttonNormalRenderer)->setFlippedY(flipY);
+    static_cast<Sprite*>(_buttonClickedRenderer)->setFlippedY(flipY);
+    static_cast<Sprite*>(_buttonDisableRenderer)->setFlippedY(flipY);
 }
 
 bool Button::isFlipX()
@@ -415,7 +421,7 @@ bool Button::isFlipX()
     {
         return false;
     }
-    return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
+    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedX();
 }
 
 bool Button::isFlipY()
@@ -424,7 +430,7 @@ bool Button::isFlipY()
     {
         return false;
     }
-    return dynamic_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
+    return static_cast<Sprite*>(_buttonNormalRenderer)->isFlippedY();
 }
 
 void Button::setAnchorPoint(const Point &pt)
@@ -483,7 +489,7 @@ void Button::normalTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -514,7 +520,7 @@ void Button::pressedTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
         }
         else
         {
@@ -545,7 +551,7 @@ void Button::disabledTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_buttonDisableRenderer)->setPreferredSize(_size);
         }
         else
         {

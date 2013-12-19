@@ -119,7 +119,7 @@ public:
      */
     int getCurPageIndex() const;
     
-    Vector<Widget*>& getPages();
+    Vector<Layout*>& getPages();
     
     Layout* getPage(int index);
     
@@ -189,7 +189,7 @@ protected:
     virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
     int _curPageIdx;
-    Vector<Widget*> _pages;
+    Vector<Layout*> _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;
     float _touchMoveStartLocation;

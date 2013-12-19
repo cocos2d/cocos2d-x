@@ -28,10 +28,7 @@
 NS_CC_BEGIN
 
 namespace gui {
-
-
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_barRenderer)
-
+    
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
@@ -86,7 +83,7 @@ void LoadingBar::setDirection(LoadingBarType dir)
             _barRenderer->setPosition(Point(-_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+                static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
             }
             break;
         case LoadingBarTypeRight:
@@ -94,7 +91,7 @@ void LoadingBar::setDirection(LoadingBarType dir)
             _barRenderer->setPosition(Point(_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+                static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
             }
             break;
     }
@@ -118,23 +115,25 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithFile(texture);
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
+                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                barRendererScale9->initWithFile(texture);
+                barRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setTexture(texture);
+                static_cast<Sprite*>(_barRenderer)->setTexture(texture);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
-                dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(_capInsets);
+                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                barRendererScale9->initWithSpriteFrameName(texture);
+                barRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setSpriteFrame(texture);
+                static_cast<Sprite*>(_barRenderer)->setSpriteFrame(texture);
             }
             break;
         default:
@@ -142,14 +141,15 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
     }
     if (_scale9Enabled)
     {
-        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
-        
+        extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+        barRendererScale9->setColor(getColor());
+        barRendererScale9->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_barRenderer)->setOpacity(getOpacity());
+        Sprite* barRenderer = static_cast<Sprite*>(_barRenderer);
+        barRenderer->setColor(getColor());
+        barRenderer->setOpacity(getOpacity());
     }
     _barRendererTextureSize = _barRenderer->getContentSize();
     
@@ -159,14 +159,14 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+            static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
         }
         break;
     case LoadingBarTypeRight:
         _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+            static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
         }
         break;
     }
@@ -212,7 +212,7 @@ void LoadingBar::setCapInsets(const Rect &capInsets)
     {
         return;
     }
-    dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
 void LoadingBar::setPercent(int percent)
@@ -233,7 +233,7 @@ void LoadingBar::setPercent(int percent)
     {
         case UI_TEX_TYPE_PLIST:
         {
-            Sprite* barNode = DYNAMIC_CAST_CCSPRITE;
+            Sprite* barNode = dynamic_cast<Sprite*>(_barRenderer);
             if (barNode)
             {
                 Point to = barNode->getTextureRect().origin;
@@ -251,7 +251,7 @@ void LoadingBar::setPercent(int percent)
     }
     else
     {
-        dynamic_cast<Sprite*>(_barRenderer)->setTextureRect(Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
+        static_cast<Sprite*>(_barRenderer)->setTextureRect(Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
     }
 }
 
@@ -334,7 +334,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 void LoadingBar::setScale9Scale()
 {
     float width = (float)(_percent) / 100 * _totalLength;
-    dynamic_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
+    static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
 std::string LoadingBar::getDescription() const

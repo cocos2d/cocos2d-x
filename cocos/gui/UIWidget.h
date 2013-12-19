@@ -747,7 +747,7 @@ protected:
 	int _actionTag;
     Size _size;
     Size _customSize;
-    Dictionary* _layoutParameterDictionary;
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
     bool _ignoreSize;
     Vector<Node*> _widgetChildren;
     bool _affectByClipping;

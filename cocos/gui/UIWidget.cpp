@@ -49,7 +49,6 @@ _widgetType(WidgetTypeWidget),
 _actionTag(0),
 _size(Size::ZERO),
 _customSize(Size::ZERO),
-_layoutParameterDictionary(nullptr),
 _ignoreSize(false),
 _affectByClipping(false),
 _sizeType(SIZE_ABSOLUTE),
@@ -68,8 +67,6 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _renderer->release();
-    _layoutParameterDictionary->removeAllObjects();
-    CC_SAFE_RELEASE(_layoutParameterDictionary);
 }
 
 Widget* Widget::create()
@@ -88,8 +85,6 @@ bool Widget::init()
 {
     if (NodeRGBA::init())
     {
-        _layoutParameterDictionary = Dictionary::create();
-        CC_SAFE_RETAIN(_layoutParameterDictionary);
         initRenderer();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
@@ -236,7 +231,7 @@ void Widget::setEnabled(bool enabled)
     {
         if (child)
         {
-            ((Widget*)child)->setEnabled(enabled);
+            static_cast<Widget*>(child)->setEnabled(enabled);
         }
     }
 }
@@ -247,7 +242,7 @@ Widget* Widget::getChildByName(const char *name)
     {
         if (child)
         {
-            Widget* widgetChild = (Widget*)child;
+            Widget* widgetChild = static_cast<Widget*>(child);
             if (strcmp(widgetChild->getName(), name) == 0)
             {
                 return widgetChild;
@@ -521,7 +516,7 @@ void Widget::onSizeChanged()
     {
         if (child)
         {
-            ((Widget*)child)->updateSizeAndPosition();
+            static_cast<Widget*>(child)->updateSizeAndPosition();
         }
     }
 }
@@ -995,12 +990,12 @@ void Widget::setLayoutParameter(LayoutParameter *parameter)
     {
         return;
     }
-    _layoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
+    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
 }
 
 LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
 {
-    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary->objectForKey(type));
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
 }
 
 std::string Widget::getDescription() const
@@ -1026,7 +1021,7 @@ void Widget::copyClonedWidgetChildren(Widget* model)
     int length = model->getChildren().size();
     for (int i=0; i<length; i++)
     {
-        Widget* child = (Widget*)(model->getChildren().at(i));
+        Widget* child = static_cast<Widget*>(model->getChildren().at(i));
         addChild(child->clone());
     }
 }

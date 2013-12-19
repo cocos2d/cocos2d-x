@@ -30,8 +30,8 @@ NS_CC_BEGIN
 namespace gui {
 
 
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<Sprite*>(_imageRenderer)
-#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<extension::Scale9Sprite*>(_imageRenderer)
+#define STATIC_CAST_CCSPRITE static_cast<Sprite*>(_imageRenderer)
+#define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
 
 ImageView::ImageView():
 _scale9Enabled(false),
@@ -82,31 +82,35 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                DYNAMIC_CAST_SCALE9SPRITE->initWithFile(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
-                DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(_capInsets);
+                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                imageRendererScale9->initWithFile(fileName);
+                imageRendererScale9->setColor(getColor());
+                imageRendererScale9->setOpacity(getOpacity());
+                imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->setTexture(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
+                imageRenderer->setTexture(fileName);
+                imageRenderer->setColor(getColor());
+                imageRenderer->setOpacity(getOpacity());
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                DYNAMIC_CAST_SCALE9SPRITE->initWithSpriteFrameName(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
-                DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(_capInsets);
+                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                imageRendererScale9->initWithSpriteFrameName(fileName);
+                imageRendererScale9->setColor(getColor());
+                imageRendererScale9->setOpacity(getOpacity());
+                imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->setSpriteFrame(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
+                imageRenderer->setSpriteFrame(fileName);
+                imageRenderer->setColor(getColor());
+                imageRenderer->setOpacity(getOpacity());
             }
             break;
         default:
@@ -124,7 +128,7 @@ void ImageView::setTextureRect(const Rect &rect)
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setTextureRect(rect);
+        STATIC_CAST_CCSPRITE->setTextureRect(rect);
     }
 }
 
@@ -135,7 +139,7 @@ void ImageView::setFlipX(bool flipX)
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setFlippedX(flipX);
+        STATIC_CAST_CCSPRITE->setFlippedX(flipX);
     }
 }
 
@@ -146,7 +150,7 @@ void ImageView::setFlipY(bool flipY)
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setFlippedY(flipY);
+        STATIC_CAST_CCSPRITE->setFlippedY(flipY);
     }
 }
 
@@ -158,7 +162,7 @@ bool ImageView::isFlipX()
     }
     else
     {
-        return DYNAMIC_CAST_CCSPRITE->isFlippedX();
+        return STATIC_CAST_CCSPRITE->isFlippedX();
     }
 }
 
@@ -170,7 +174,7 @@ bool ImageView::isFlipY()
     }
     else
     {
-        return DYNAMIC_CAST_CCSPRITE->isFlippedY();
+        return STATIC_CAST_CCSPRITE->isFlippedY();
     }
 }
 
@@ -224,7 +228,7 @@ void ImageView::setCapInsets(const Rect &capInsets)
     {
         return;
     }
-    DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
+    STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
 void ImageView::setAnchorPoint(const Point &pt)
@@ -263,7 +267,7 @@ void ImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
         }
         else
         {
