@@ -38,8 +38,11 @@ float TransitionPageTurn::POLYGON_OFFSET_UNITS = -20.f;
 
 TransitionPageTurn::TransitionPageTurn()
 {
-    _inSceneProxy = nullptr;
-    _outSceneProxy = nullptr;
+    _inSceneProxy = NodeGrid::create();
+    _outSceneProxy = NodeGrid::create();
+    
+    _inSceneProxy->retain();
+    _outSceneProxy->retain();
 }
 
 TransitionPageTurn::~TransitionPageTurn()
@@ -99,12 +102,6 @@ void TransitionPageTurn::draw()
 void TransitionPageTurn::onEnter()
 {
     TransitionScene::onEnter();
-    _inSceneProxy = NodeGrid::create();
-    _outSceneProxy = NodeGrid::create();
-    
-    CCASSERT(_inSceneProxy && _outSceneProxy, "TransitionPageTurn proxy scene can not be nullptr");
-    _inSceneProxy->retain();
-    _outSceneProxy->retain();
 
     _inSceneProxy->setTarget(_inScene);
     _outSceneProxy->setTarget(_outScene);
@@ -159,6 +156,8 @@ void TransitionPageTurn::onEnter()
 }
 void TransitionPageTurn::onExit()
 {
+    _outSceneProxy->setTarget(nullptr);
+    _outSceneProxy->setTarget(nullptr);
     _outSceneProxy->onExit();
     _inSceneProxy->onExit();
     
