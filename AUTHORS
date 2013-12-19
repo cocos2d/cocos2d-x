@@ -669,6 +669,9 @@ Developers:
     zhiqiangxu
         Fixed a logic error in ControlUtils::RectUnion.
         
+    yinkaile (2youyouo2)
+        Maintainer of Armature Bone Animation.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
