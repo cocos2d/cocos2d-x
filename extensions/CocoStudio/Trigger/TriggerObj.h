@@ -71,11 +71,14 @@ public:
     virtual void done();
     virtual void removeAll();
     virtual void serialize(const rapidjson::Value &val);
+	unsigned int getId();
+	void setEnable(bool bEnable);
   
 private:
     CCArray *_cons;
     CCArray *_acts;
 	unsigned int _id;
+	bool _bEnable;
 };
 
 NS_CC_EXT_END
