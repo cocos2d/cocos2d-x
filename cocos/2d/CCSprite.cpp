@@ -528,7 +528,7 @@ void Sprite::updateTransform(void)
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
                 kmMat4 nodeToParent = getNodeToParentTransform();
                 kmMat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
-                kmMat4Multiply(&_transformToBatch, &nodeToParent, &parentTransform);
+                kmMat4Multiply(&_transformToBatch, &parentTransform, &nodeToParent);
             }
 
             //
