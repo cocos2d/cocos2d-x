@@ -48,7 +48,7 @@ NS_CC_BEGIN
  * implements of UserDefault
  */
 
-UserDefault* UserDefault::_userDefault = 0;
+UserDefault* UserDefault::_userDefault = nullptr;
 string UserDefault::_filePath = string("");
 bool UserDefault::_isFilePathInitialized = false;
 
@@ -134,19 +134,12 @@ static void deleteNodeByKey(const char *pKey)
 }
 #endif
 
-/**
- * If the user invoke delete UserDefault::getInstance(), should set _userDefault
- * to null to avoid error when he invoke UserDefault::getInstance() later.
- */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_userDefault);
-    _userDefault = nullptr;
 }
 
 UserDefault::UserDefault()
 {
-	_userDefault = nullptr;
 }
 
 bool UserDefault::getBoolForKey(const char* pKey)
@@ -503,8 +496,7 @@ UserDefault* UserDefault::getInstance()
 
 void UserDefault::destroyInstance()
 {
-    delete _userDefault;
-    _userDefault = nullptr;
+    CC_SAFE_DELETE(_userDefault);
 }
 
 // XXX: deprecated
