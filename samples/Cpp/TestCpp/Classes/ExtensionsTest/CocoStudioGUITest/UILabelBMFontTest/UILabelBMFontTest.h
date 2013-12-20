@@ -33,7 +33,7 @@ public:
     bool init();
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILabelBMFontTest)
+    UI_SCENE_CREATE_FUNC(UILabelBMFontTest)
 };
 
 #endif /* defined(__TestCpp__UILabelBMFontTest__) */

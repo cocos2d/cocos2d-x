@@ -37,7 +37,8 @@ _itemsMargin(0.0f),
 _listViewEventListener(NULL),
 _listViewEventSelector(NULL),
 _curSelectedIndex(0),
-_refreshViewDirty(true)
+_refreshViewDirty(true),
+_items(NULL)
 {
     
 }

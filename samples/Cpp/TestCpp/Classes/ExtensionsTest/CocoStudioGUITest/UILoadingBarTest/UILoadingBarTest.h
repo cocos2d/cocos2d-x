@@ -35,12 +35,12 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
     int m_nCount;
 };
 
@@ -52,12 +52,12 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
     int m_nCount;
 };
 
@@ -69,12 +69,12 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
     int m_nCount;
 };
 
@@ -86,12 +86,12 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
+    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
     int m_nCount;
 };
 

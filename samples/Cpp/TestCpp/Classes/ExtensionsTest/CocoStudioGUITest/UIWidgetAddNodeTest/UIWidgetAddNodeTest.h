@@ -22,36 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__CocosGUIExamplesRegisterScene__
-#define __TestCpp__CocosGUIExamplesRegisterScene__
+#ifndef __TestCpp__UIWidgetAddNodeTest__
+#define __TestCpp__UIWidgetAddNodeTest__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "../../testBasic.h"
+#include "../UIScene.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
-class CocosGUIExamplesRegisterScene : public CCScene
+class UIWidgetAddNodeTest : public UIScene
 {
 public:
-    CocosGUIExamplesRegisterScene(bool bPortrait = false);
-    ~CocosGUIExamplesRegisterScene();
-    
-    virtual void onEnter();
-    virtual void onExit();
-    
-	virtual void runThisTest();    	
-    
-    void toCocosGUIScene(CCObject* pSender);
-    void toCocosGUIExamplesEquipScene(CCObject* pSender);
-    
-    void attachWithIMEEvent(CCObject* pSender);
-    void detachWithIMEEvent(CCObject* pSender);
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
+    bool init();
     
 protected:
-//    UILayer* m_pUILayer;
-//    UILayout* m_pLayout;
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
 };
 
-#endif /* defined(__TestCpp__CocosGUIExamplesRegisterScene__) */
+#endif /* defined(__TestCpp__UIWidgetAddNodeTest__) */

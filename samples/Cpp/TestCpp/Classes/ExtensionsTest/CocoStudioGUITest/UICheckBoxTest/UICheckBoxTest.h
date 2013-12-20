@@ -33,11 +33,11 @@ public:
     UICheckBoxTest();
     ~UICheckBoxTest();
     bool init();
-//    void selectedStateEvent(CCObject* pSender, CheckBoxEventType type);
+    void selectedStateEvent(CCObject* pSender, CheckBoxEventType type);    
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UICheckBoxTest)
-//    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UICheckBoxTest)
+    UILabel* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

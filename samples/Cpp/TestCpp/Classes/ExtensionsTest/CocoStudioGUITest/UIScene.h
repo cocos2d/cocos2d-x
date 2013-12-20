@@ -28,6 +28,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 
+using namespace cocos2d::gui;
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -57,19 +58,19 @@ public:
     ~UIScene();
     bool init();
     // Menu Callbacks
-    void toExtensionsMainLayer(CCObject* sender);
-    virtual void previousCallback(CCObject* sender);
-    virtual void restartCallback(CCObject* sender);
-    virtual void nextCallback(CCObject* sender);
+    void toCocosGUITestScene(CCObject* sender, cocos2d::gui::TouchEventType type);
+    virtual void previousCallback(CCObject* sender, cocos2d::gui::TouchEventType type);
+    virtual void restartCallback(CCObject* sender, cocos2d::gui::TouchEventType type);
+    virtual void nextCallback(CCObject* sender, cocos2d::gui::TouchEventType type);
     
     /** Title label of the scene.*/
-//    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
-    
-//    UI_SCENE_CREATE_FUNC(UIScene);
+    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
+        
+    UI_SCENE_CREATE_FUNC(UIScene);
     
 protected:
-//    UILayer *m_pUiLayer;
-//    UILayout *m_pWidget;
+    UILayer *m_pUiLayer;
+    Layout *m_pWidget;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

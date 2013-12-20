@@ -138,8 +138,6 @@ protected:
 *   @lua NA
 */
 
-class UILayout;
-
 class RelativeLayoutParameter : public LayoutParameter
 {
 public:

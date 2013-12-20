@@ -33,7 +33,36 @@ public:
     bool init();
     
 protected:
-//    UI_SCENE_CREATE_FUNC(UILabelTest)
+    UI_SCENE_CREATE_FUNC(UILabelTest)
 };
+
+/*===*/
+class UILabelTest_LineWrap : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILabelTest_LineWrap)
+};
+
+class UILabelTest_Effect : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILabelTest_Effect)
+};
+
+class UILabelTest_TTF : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UILabelTest_TTF)
+};
+/*=*/
 
 #endif /* defined(__TestCpp__UILabelTest__) */

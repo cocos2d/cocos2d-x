@@ -48,7 +48,7 @@ bool UILayer::init()
     {
         m_pRootWidget = Widget::create();
         m_pRootWidget->retain();
-        addChild(m_pRootWidget->getRenderer());
+        addChild(m_pRootWidget);
         m_pInputManager = new UIInputManager();
         m_pInputManager->setRootWidget(m_pRootWidget);
         return true;

@@ -44,7 +44,8 @@ _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(NULL),
-_pageViewEventSelector(NULL)
+_pageViewEventSelector(NULL),
+_pages(NULL)
 {
 }
 
@@ -270,6 +271,10 @@ void PageView::onSizeChanged()
 
 void PageView::updateChildrenSize()
 {
+    if (!_pages)
+    {
+        return;
+    }
     CCSize selfSize = getSize();
     int length = _pages->count();
     for (long i=0; i<length; i++)
@@ -281,6 +286,10 @@ void PageView::updateChildrenSize()
 
 void PageView::updateChildrenPosition()
 {
+    if (!_pages)
+    {
+        return;
+    }
     int pageCount = _pages->count();
     if (pageCount <= 0)
     {

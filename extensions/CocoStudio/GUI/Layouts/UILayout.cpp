@@ -80,6 +80,10 @@ bool Layout::init()
 {
     if (CCNodeRGBA::init())
     {
+        _widgetChildren = CCArray::create();
+        CC_SAFE_RETAIN(_widgetChildren);
+        _layoutParameterDictionary = CCDictionary::create();
+        CC_SAFE_RETAIN(_layoutParameterDictionary);
         initRenderer();
         _renderer->retain();
         setCascadeColorEnabled(true);
@@ -88,10 +92,6 @@ bool Layout::init()
         ignoreContentAdaptWithSize(false);
         setSize(CCSizeZero);
         setAnchorPoint(CCPointZero);
-        _widgetChildren = CCArray::create();
-        CC_SAFE_RETAIN(_widgetChildren);
-        _layoutParameterDictionary = CCDictionary::create();
-        CC_SAFE_RETAIN(_layoutParameterDictionary);
         return true;
     }
     return false;

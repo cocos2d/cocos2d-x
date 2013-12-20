@@ -56,7 +56,9 @@ _sizePercent(CCPointZero),
 _positionType(POSITION_ABSOLUTE),
 _positionPercent(CCPointZero),
 _reorderWidgetChildDirty(true),
-_hitted(false)
+_hitted(false),
+_widgetChildren(NULL),
+_layoutParameterDictionary(NULL)
 //    ,
 //_touchListener(NULL)
 {
@@ -91,16 +93,16 @@ bool Widget::init()
 {
     if (CCNodeRGBA::init())
     {
+        _widgetChildren = CCArray::create();
+        CC_SAFE_RETAIN(_widgetChildren);
+        _layoutParameterDictionary = CCDictionary::create();
+        CC_SAFE_RETAIN(_layoutParameterDictionary);
         initRenderer();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
         setBright(true);
         ignoreContentAdaptWithSize(true);
         setAnchorPoint(CCPoint(0.5f, 0.5f));
-        _widgetChildren = CCArray::create();
-        CC_SAFE_RETAIN(_widgetChildren);
-        _layoutParameterDictionary = CCDictionary::create();
-        CC_SAFE_RETAIN(_layoutParameterDictionary);
         return true;
     }
     return false;

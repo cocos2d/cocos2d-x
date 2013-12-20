@@ -1,81 +1,40 @@
+
+#ifndef __COMPATIBLECLASSES_H__
+#define __COMPATIBLECLASSES_H__
+
+#include "../UILabel.h"
+#include "../../Layouts/UILayout.h"
+#include "../UIButton.h"
+#include "../ScrollWidget/UIScrollView.h"
+
+
+//class type define
+NS_CC_BEGIN
 //
-//#ifndef __COMPATIBLECLASSES_H__
-//#define __COMPATIBLECLASSES_H__
-//
-//#include "../UILabel.h"
-//#include "../../Layouts/UILayout.h"
-//#include "../UIButton.h"
-//#include "../ScrollWidget/UIScrollView.h"
-//
-//NS_CC_EXT_BEGIN
-//
-////class type define
-////typedef UILayout Layout;
-////typedef UILayout UIPanel;
-////typedef UILabel UITextArea;
-////typedef UILayout UIContainerWidget;
-////typedef UIButton UITextButton;
-////typedef UIWidget UINodeContainer;
-/////**
-////*   @js NA
-////*   @lua NA
-////*/
-////class UIZoomButton : public UITextButton
-////{
-////public:
-////    static UIZoomButton* create()
-////    {
-////        UIZoomButton* widget = new UIZoomButton();
-////        if (widget && widget->init())
-////        {
-////            widget->autorelease();
-////            return widget;
-////        }
-////        CC_SAFE_DELETE(widget);
-////        return NULL;
-////    };
-////protected:
-////    virtual bool init()
-////    {
-////        if (UITextButton::init())
-////        {
-////            setScale9Enabled(true);
-////            setPressedActionEnabled(true);
-////            return true;
-////        }
-////        return false;
-////    };
-////};
-////
-////class UIDragPanel : public UIScrollView
-////{
-////public:
-////    static UIDragPanel* create()
-////    {
-////        UIDragPanel* widget = new UIDragPanel();
-////        if (widget && widget->init())
-////        {
-////            widget->autorelease();
-////            return widget;
-////        }
-////        CC_SAFE_DELETE(widget);
-////        return NULL;
-////    };
-////protected:
-////    virtual bool init()
-////    {
-////        if (UIScrollView::init())
-////        {
-////            setDirection(SCROLLVIEW_DIR_BOTH);
-////            return true;
-////        }
-////        return false;
-////    };
-////};
-////
-//////enmu type define
-////typedef LayoutBackGroundColorType PanelColorType;
-//
-//NS_CC_EXT_END
-//
-//#endif /* defined(__CompatibleClasses__) */
+namespace gui {
+    
+typedef cocos2d::gui::Layout UILayout;
+typedef cocos2d::gui::Widget UIWidget;
+
+typedef cocos2d::gui::LayoutParameter UILayoutParameter;
+typedef cocos2d::gui::Margin UIMargin;
+
+typedef cocos2d::gui::ListView UIListView;
+typedef cocos2d::gui::PageView UIPageView;
+typedef cocos2d::gui::ScrollView UIScrollView;
+typedef cocos2d::gui::Button UIButton;
+typedef cocos2d::gui::CheckBox UICheckBox;
+typedef cocos2d::gui::ImageView UIImageView;
+typedef cocos2d::gui::Label UILabel;
+typedef cocos2d::gui::LabelAtlas UILabelAtlas;
+typedef cocos2d::gui::LabelBMFont UILabelBMFont;
+typedef cocos2d::gui::LoadingBar UILoadingBar;
+typedef cocos2d::gui::Slider UISlider;
+typedef cocos2d::gui::TextField UITextField;
+
+    
+}
+NS_CC_END
+
+
+#endif /* defined(__CompatibleClasses__) */
