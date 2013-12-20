@@ -73,7 +73,6 @@ static EventListener::ListenerID __getListenerID(Event* event)
             break;
         case Event::Type::CUSTOM:
             {
-                CCASSERT(event, "event shoud not be nullptr!");
                 auto customEvent = static_cast<EventCustom*>(event);
                 ret = customEvent->getEventName();
             }
