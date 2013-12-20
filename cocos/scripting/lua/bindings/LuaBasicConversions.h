@@ -11,7 +11,7 @@ extern "C" {
 
 using namespace cocos2d;
 
-extern std::map<long, std::string>  g_luaType;
+extern std::unordered_map<std::string, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
@@ -160,8 +160,8 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 
         if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
         {
-            long typeId = typeid(*obj).hash_code();
-            auto iter = g_luaType.find(typeId);
+            std::string typeName = typeid(*obj).name();
+            auto iter = g_luaType.find(typeName);
             if (g_luaType.end() != iter)
             {
                 lua_pushnumber(L, (lua_Number)indexTable);
