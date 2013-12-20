@@ -51,6 +51,7 @@ _pageViewEventSelector(NULL)
 PageView::~PageView()
 {
     _pages->removeAllObjects();
+    CC_SAFE_RELEASE(_pages);
     _pageViewEventListener = NULL;
     _pageViewEventSelector = NULL;
 }
@@ -74,6 +75,8 @@ bool PageView::init()
         setClippingEnabled(true);
         setUpdateEnabled(true);
         setTouchEnabled(true);
+        _pages = CCArray::create();
+        CC_SAFE_RETAIN(_pages);
         return true;
     }
     return false;

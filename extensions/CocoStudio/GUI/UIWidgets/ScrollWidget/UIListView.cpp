@@ -44,6 +44,8 @@ _refreshViewDirty(true)
 
 ListView::~ListView()
 {
+    _items->removeAllObjects();
+    CC_SAFE_RELEASE(_items);
     _listViewEventListener = NULL;
     _listViewEventSelector = NULL;
 }
@@ -65,6 +67,8 @@ bool ListView::init()
     if (ScrollView::init())
     {
         setLayoutType(LAYOUT_LINEAR_VERTICAL);
+        _items = CCArray::create();
+        CC_SAFE_RETAIN(_items);
         return true;
     }
     return false;
