@@ -67,7 +67,7 @@ static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 static char *_js_log_buf = NULL;
 
