@@ -40,12 +40,12 @@ extern callfuncTarget_proxy_t *_callfuncTarget_native_ht;
 template <class T>
 inline js_type_class_t *js_get_type_from_native(T* native_obj) {
     bool found = false;
-    long typeId = typeid(*native_obj).hash_code();
-    auto typeProxyIter = _js_global_type_map.find(typeId);
+    std::string typeName = typeid(*native_obj).name();
+    auto typeProxyIter = _js_global_type_map.find(typeName);
     if (typeProxyIter == _js_global_type_map.end())
     {
-        typeId = typeid(T).hash_code();
-        typeProxyIter = _js_global_type_map.find(typeId);
+        typeName = typeid(T).name();
+        typeProxyIter = _js_global_type_map.find(typeName);
         if (typeProxyIter != _js_global_type_map.end())
         {
             found = true;

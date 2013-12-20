@@ -148,22 +148,22 @@ private:
     void addEventListener(EventListener* listener);
     
     /** Gets event the listener list for the event listener type. */
-    EventListenerVector* getListeners(EventListener::ListenerID listenerID);
+    EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
     
     /** Update dirty flag */
     void updateDirtyFlagForSceneGraph();
     
     /** Removes all listeners with the same event listener ID */
-    void removeEventListenersForListenerID(EventListener::ListenerID listenerID);
+    void removeEventListenersForListenerID(const EventListener::ListenerID& listenerID);
     
     /** Sort event listener */
-    void sortEventListeners(EventListener::ListenerID listenerID);
+    void sortEventListeners(const EventListener::ListenerID& listenerID);
     
     /** Sorts the listeners of specified type by scene graph priority */
-    void sortEventListenersOfSceneGraphPriority(EventListener::ListenerID listenerID);
+    void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID);
     
     /** Sorts the listeners of specified type by fixed priority */
-    void sortEventListenersOfFixedPriority(EventListener::ListenerID listenerID);
+    void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
     
     /** Updates all listeners
      *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
@@ -193,7 +193,7 @@ private:
     };
     
     /** Sets the dirty flag for a specified listener ID */
-    void setDirty(EventListener::ListenerID listenerID, DirtyFlag flag);
+    void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node);
