@@ -869,9 +869,7 @@ void Node::transform()
     kmGLMultMatrix( &transfrom4x4 );
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
-
 }
-
 
 void Node::onEnter()
 {
