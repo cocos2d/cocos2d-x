@@ -30,14 +30,14 @@ static unsigned int _StreameID();
 
 static EffectList& sharedList()
 {
-    static EffectList s_List;
-    return s_List;
+    static EffectList _effectList;
+    return _effectList;
 }
 
 static MciPlayer& sharedMusic()
 {
-    static MciPlayer s_Music;
-    return s_Music;
+    static MciPlayer _music;
+    return _music;
 }
 
 
@@ -63,10 +63,10 @@ SimpleAudioEngine::SimpleAudioEngine()
 		log(available(j));
 	} 
 
-	MciPlayer::dev = driver(available(choice), 48000);
-	oae::Listener* lis = MciPlayer::dev->GetListener();
+	MciPlayer::_device = driver(available(choice), 48000);
+	oae::Listener* lis = MciPlayer::_device->GetListener();
 
-	MciPlayer::lib=lib;
+	MciPlayer::_lib=lib;
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
@@ -92,8 +92,8 @@ void SimpleAudioEngine::end()
     }   
     sharedList().clear();
 
-	MciPlayer::dev->ReleaseRenderer(); // release device
-	FreeLibrary(MciPlayer::lib); // release engine
+	MciPlayer::_device->ReleaseRenderer(); // release device
+	FreeLibrary(MciPlayer::_lib); // release engine
     return;
 }
 
@@ -108,12 +108,12 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-	if (sharedMusic().m_strFileName!=_FullPath(pszFilePath))
+	if (sharedMusic()._fileName!=_FullPath(pszFilePath))
 	{
 		sharedMusic().Close();
 	}
 	
-	if (sharedMusic().m_scr==NULL)
+	if (sharedMusic()._scr==NULL)
 	{
 		sharedMusic().Open(_FullPath(pszFilePath).c_str(), _StreameID());
 	}
@@ -174,10 +174,10 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
 	for (EffectListIt it=sharedList().begin();it!=sharedList().end();++it)
 	{
 		MciPlayer* pTempPlayer=it->second;
-		if (!pTempPlayer->IsPlaying() && pTempPlayer->m_strFileName==_FullPath(pszFilePath))
+		if (!pTempPlayer->IsPlaying() && pTempPlayer->_fileName==_FullPath(pszFilePath))
 		{
 			pTempPlayer->Play((bLoop) ? -1 : 1);
-			return pTempPlayer->m_nSoundID;
+			return pTempPlayer->_nSoundID;
 		}
 	}
 	
@@ -265,7 +265,7 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
 	for (EffectListIt it=sharedList().begin();it!=sharedList().end();++it)
 	{
-		if (it->second->m_strFileName==pszFilePath)
+		if (it->second->_fileName==pszFilePath)
 		{
 			delete it->second;
 			it->second = NULL;
@@ -318,7 +318,7 @@ unsigned int _StreameID()
 	{
 		for (EffectListIt it=sharedList().begin();it!=sharedList().end();)
 		{
-			if (!it->second->m_scr->GetSourceState())
+			if (!it->second->_scr->GetSourceState())
 			{
 				it->second->Close();
 				delete it->second;
