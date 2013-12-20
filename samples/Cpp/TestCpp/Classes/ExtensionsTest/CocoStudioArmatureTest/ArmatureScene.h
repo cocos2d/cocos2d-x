@@ -168,6 +168,8 @@ public:
     virtual std::string title() const override;
     void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
+protected:
+    NodeGrid* _gridNode;
 };
 
 

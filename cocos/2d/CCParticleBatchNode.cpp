@@ -135,20 +135,9 @@ void ParticleBatchNode::visit()
 
     kmGLPushMatrix();
 
-    if ( _grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
-
     transform();
 
     draw();
-
-    if ( _grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
 }
