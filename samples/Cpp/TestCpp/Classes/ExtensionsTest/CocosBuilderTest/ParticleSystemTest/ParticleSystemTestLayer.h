@@ -2,7 +2,7 @@
 #define _PARTICLESYSTEMTESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 class ParticleSystemTestLayer : public cocos2d::Layer {
     public:

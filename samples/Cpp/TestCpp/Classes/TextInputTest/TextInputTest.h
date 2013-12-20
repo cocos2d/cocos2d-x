@@ -19,7 +19,7 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-    std::string title();
+    virtual std::string title() const;
     void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
     
     virtual void onEnter();
@@ -34,10 +34,9 @@ class KeyboardNotificationLayer : public Layer, public IMEDelegate
 public:
     KeyboardNotificationLayer();
 
-    virtual std::string subtitle() = 0;
+    virtual std::string subtitle() const = 0;
     virtual void onClickTrackNode(bool bClicked) = 0;
 
-//    virtual void registerWithTouchDispatcher();
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
     // Layer
@@ -57,7 +56,7 @@ class TextFieldTTFDefaultTest : public KeyboardNotificationLayer
 {
 public:
     // KeyboardNotificationLayer
-    virtual std::string subtitle();
+    virtual std::string subtitle() const override;
     virtual void onClickTrackNode(bool bClicked);
 
     // Layer
@@ -79,7 +78,7 @@ public:
     void callbackRemoveNodeWhenDidAction(Node * node);
 
     // KeyboardNotificationLayer
-    virtual std::string subtitle();
+    virtual std::string subtitle() const override;
     virtual void onClickTrackNode(bool bClicked);
 
     // Layer

@@ -28,7 +28,7 @@ void Bug422Layer::reset()
     // => CRASH BOOM BANG
     auto node = getChildByTag(localtag-1);
     log("Menu: %p", node);
-    removeChild(node, false);
+    removeChild(node, true);
 //    [self removeChildByTag:localtag-1 cleanup:NO];
 
     auto item1 = MenuItemFont::create("One", CC_CALLBACK_1(Bug422Layer::menuCallback, this) );
@@ -47,14 +47,10 @@ void Bug422Layer::reset()
 
 void Bug422Layer::check(Node* t)
 {
-    auto array = t->getChildren();
-    Object* pChild = NULL;
-    CCARRAY_FOREACH(array, pChild)
-    {
-        CC_BREAK_IF(! pChild);
-        auto node = static_cast<Node*>(pChild);
-        log("%p, rc: %d", node, node->retainCount());
-        check(node);
+    auto& children = t->getChildren();
+    for(const auto &child : children) {
+        log("%p, rc: %d", child, child->retainCount());
+        check(child);
     }
 }
 

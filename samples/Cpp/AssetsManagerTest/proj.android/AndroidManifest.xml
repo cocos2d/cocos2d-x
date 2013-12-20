@@ -26,9 +26,10 @@
             </intent-filter>
         </activity>
     </application>
-    <supports-screens android:largeScreens="true"
+    <supports-screens android:anyDensity="true"
                       android:smallScreens="true"
-                      android:anyDensity="true"
-                      android:normalScreens="true"/>
+                      android:normalScreens="true"
+                      android:largeScreens="true"
+                      android:xlargeScreens="true"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest> 

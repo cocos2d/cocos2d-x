@@ -2,20 +2,20 @@
 #define __CC_SceneController_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
-
-class SceneController : public cocos2d::extension::ComController
+class SceneController : public cocostudio::ComController
 {
 protected:
     SceneController(void);
     virtual ~SceneController(void);
         
 public:
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
+    virtual bool init() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float delta) override;
    
    static SceneController* create(void);
    
@@ -32,7 +32,7 @@ public:
    
 protected:
     cocos2d::Array *_targets;
-	cocos2d::Array *_projectiles;
+	  cocos2d::Array *_projectiles;
 };
 
 

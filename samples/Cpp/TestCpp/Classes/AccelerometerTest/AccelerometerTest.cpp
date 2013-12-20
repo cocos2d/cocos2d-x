@@ -21,9 +21,10 @@ AccelerometerTest::AccelerometerTest(void)
 AccelerometerTest::~AccelerometerTest(void)
 {
     _ball->release();
+    Device::setAccelerometerEnabled(false);
 }
 
-std::string AccelerometerTest::title()
+std::string AccelerometerTest::title() const
 {
     return "AccelerometerTest";
 }
@@ -32,8 +33,9 @@ void AccelerometerTest::onEnter()
 {
     Layer::onEnter();
 
-    setAccelerometerEnabled(true);
-
+    Device::setAccelerometerEnabled(true);
+    auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(AccelerometerTest::onAcceleration, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);

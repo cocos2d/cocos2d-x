@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>位图 1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{184,2},{40,20}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{40,20}}</string>
+                <key>sourceSize</key>
+                <string>{40,20}</string>
+            </dict>
+            <key>位图 2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{226,2},{28,32}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{28,32}}</string>
+                <key>sourceSize</key>
+                <string>{28,32}</string>
+            </dict>
+            <key>位图 3.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,64},{88,80}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{88,80}}</string>
+                <key>sourceSize</key>
+                <string>{88,80}</string>
+            </dict>
+            <key>位图 4.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{184,24},{16,32}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{16,32}}</string>
+                <key>sourceSize</key>
+                <string>{16,32}</string>
+            </dict>
+            <key>位图 6.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{180,60}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{180,60}}</string>
+                <key>sourceSize</key>
+                <string>{180,60}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>hero.png</string>
+            <key>size</key>
+            <string>{256,256}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:fccdc6814264ea6eb325552e320881a4$</string>
+            <key>textureFileName</key>
+            <string>hero.png</string>
+        </dict>
+    </dict>
+</plist>

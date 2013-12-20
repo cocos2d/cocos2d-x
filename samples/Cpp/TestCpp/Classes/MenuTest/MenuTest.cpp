@@ -25,8 +25,14 @@ enum {
 //------------------------------------------------------------------
 MenuLayerMainMenu::MenuLayerMainMenu()
 {
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->setSwallowTouches(true);
+    _touchListener->onTouchBegan = CC_CALLBACK_2(MenuLayerMainMenu::onTouchBegan, this);
+    _touchListener->onTouchMoved = CC_CALLBACK_2(MenuLayerMainMenu::onTouchMoved, this);
+    _touchListener->onTouchEnded = CC_CALLBACK_2(MenuLayerMainMenu::onTouchEnded, this);
+    _touchListener->onTouchCancelled = CC_CALLBACK_2(MenuLayerMainMenu::onTouchCancelled, this);
+    
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, 1);
 
     // Font Item    
     auto spriteNormal = Sprite::create(s_MenuItem, Rect(0,23*2,115,23));
@@ -61,22 +67,20 @@ MenuLayerMainMenu::MenuLayerMainMenu()
 
     // Events
     MenuItemFont::setFontName("Marker Felt");
-    auto item6 = MenuItemFont::create("Priority Test", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackPriorityTest, this));
-    
     // Bugs Item
-    auto item7 = MenuItemFont::create("Bugs", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackBugsTest, this));
+    auto item6 = MenuItemFont::create("Bugs", CC_CALLBACK_1(MenuLayerMainMenu::menuCallbackBugsTest, this));
 
     // Font Item
-    auto item8 = MenuItemFont::create("Quit", CC_CALLBACK_1(MenuLayerMainMenu::onQuit, this));
+    auto item7= MenuItemFont::create("Quit", CC_CALLBACK_1(MenuLayerMainMenu::onQuit, this));
     
-    auto item9 = MenuItemFont::create("Remove menu item when moving", CC_CALLBACK_1(MenuLayerMainMenu::menuMovingCallback, this));
+    auto item8 = MenuItemFont::create("Remove menu item when moving", CC_CALLBACK_1(MenuLayerMainMenu::menuMovingCallback, this));
     
     auto color_action = TintBy::create(0.5f, 0, -255, -255);
     auto color_back = color_action->reverse();
     auto seq = Sequence::create(color_action, color_back, NULL);
-    item8->runAction(RepeatForever::create(seq));
+    item7->runAction(RepeatForever::create(seq));
 
-    auto menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8, item9, NULL);
+    auto menu = Menu::create( item1, item2, item3, item4, item5, item6, item7, item8,  NULL);
     menu->alignItemsVertically();
     
     
@@ -84,25 +88,16 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto s = Director::getInstance()->getWinSize();
     
     int i=0;
-    Node* child;
-    auto pArray = menu->getChildren();
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pArray, pObject)
-    {
-        if(pObject == NULL)
-            break;
-
-        child = static_cast<Node*>(pObject);
-
+    for(const auto &child : menu->getChildren()) {
         auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)
             offset = -offset;
         
         child->setPosition( Point( dstPoint.x + offset, dstPoint.y) );
-        child->runAction( 
-                          EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f) 
-                        );
+        child->runAction(
+                         EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f)
+                         );
         i++;
     }
 
@@ -132,6 +127,7 @@ void MenuLayerMainMenu::onTouchMoved(Touch *touch, Event * event)
 
 MenuLayerMainMenu::~MenuLayerMainMenu()
 {
+    _eventDispatcher->removeEventListener(_touchListener);
     _disabledItem->release();
 }
 
@@ -147,8 +143,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Object* sender)
 
 void MenuLayerMainMenu::allowTouches(float dt)
 {
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY+1, this);
+    _eventDispatcher->setPriority(_touchListener, 1);
     unscheduleAllSelectors();
     log("TOUCHES ALLOWED AGAIN");
 }
@@ -156,8 +151,7 @@ void MenuLayerMainMenu::allowTouches(float dt)
 void MenuLayerMainMenu::menuCallbackDisabled(Object* sender) 
 {
     // hijack all touch events for 5 seconds
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->setPriority(Menu::HANDLER_PRIORITY-1, this);
+    _eventDispatcher->setPriority(_touchListener, -1);
     schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
@@ -167,14 +161,9 @@ void MenuLayerMainMenu::menuCallback2(Object* sender)
     static_cast<LayerMultiplex*>(_parent)->switchTo(2);
 }
 
-void MenuLayerMainMenu::menuCallbackPriorityTest(Object* sender)
-{
-    static_cast<LayerMultiplex*>(_parent)->switchTo(4);
-}
-
 void MenuLayerMainMenu::menuCallbackBugsTest(Object *pSender)
 {
-    static_cast<LayerMultiplex*>(_parent)->switchTo(5);
+    static_cast<LayerMultiplex*>(_parent)->switchTo(4);
 }
 
 void MenuLayerMainMenu::onQuit(Object* sender)
@@ -185,7 +174,7 @@ void MenuLayerMainMenu::onQuit(Object* sender)
 
 void MenuLayerMainMenu::menuMovingCallback(Object *pSender)
 {
-    static_cast<LayerMultiplex*>(_parent)->switchTo(6);
+    static_cast<LayerMultiplex*>(_parent)->switchTo(5);
 }
 
 //------------------------------------------------------------------
@@ -408,15 +397,10 @@ MenuLayer4::MenuLayer4()
                                                                 MenuItemFont::create( "Off" ), 
                                                                 NULL );
     
-    //auto more_items = UxArray::arrayWithObjects(
-    //                                                 MenuItemFont::create( "33%" ),
-    //                                                 MenuItemFont::create( "66%" ),
-    //                                                 MenuItemFont::create( "100%" ),
-    //                                                 NULL );
     // TIP: you can manipulate the items like any other MutableArray
-    item4->getSubItems()->addObject( MenuItemFont::create( "33%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "66%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "100%" ) ); 
+    item4->getSubItems().pushBack( MenuItemFont::create( "33%" ) );
+    item4->getSubItems().pushBack( MenuItemFont::create( "66%" ) );
+    item4->getSubItems().pushBack( MenuItemFont::create( "100%" ) );
     
     // you can change the one of the items by doing this
     item4->setSelectedIndex( 2 );
@@ -456,64 +440,6 @@ void MenuLayer4::backCallback(Object* sender)
     static_cast<LayerMultiplex*>(_parent)->switchTo(0);
 }
 
-MenuLayerPriorityTest::MenuLayerPriorityTest()
-{
-    // Testing empty menu
-    _menu1 = Menu::create();
-    _menu2 = Menu::create();
-
-
-    // Menu 1
-    MenuItemFont::setFontName("Marker Felt");
-    MenuItemFont::setFontSize(18);
-    auto item1 = MenuItemFont::create("Return to Main Menu", CC_CALLBACK_1(MenuLayerPriorityTest::menuCallback, this));
-    auto item2 = MenuItemFont::create("Disable menu for 5 seconds", [&](Object *sender) {
-		_menu1->setEnabled(false);
-		auto wait = DelayTime::create(5);
-		auto enable = CallFunc::create( [&]() {
-			    _menu1->setEnabled(true);
-		});
-		auto seq = Sequence::create(wait, enable, NULL);
-		_menu1->runAction(seq);
-	});
-
-
-    _menu1->addChild(item1);
-    _menu1->addChild(item2);
-
-    _menu1->alignItemsVerticallyWithPadding(2);
-
-    addChild(_menu1);
-
-    // Menu 2
-    _priority = true;
-    MenuItemFont::setFontSize(48);
-    item1 = MenuItemFont::create("Toggle priority", [&](Object *sender) {
-		if( _priority) {
-//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY + 20);
-			_priority = false;
-		} else {
-//			_menu2->setHandlerPriority(Menu::HANDLER_PRIORITY - 20);
-			_priority = true;
-		}
-	});
-
-    item1->setColor(Color3B(0,0,255));
-    _menu2->addChild(item1);
-    addChild(_menu2);
-}
-
-MenuLayerPriorityTest::~MenuLayerPriorityTest()
-{
-
-}
-
-void MenuLayerPriorityTest::menuCallback(Object* sender)
-{
-    static_cast<LayerMultiplex*>(_parent)->switchTo(0);
-//    [[Director sharedDirector] poscene];
-}
-
 // BugsTest
 BugsTest::BugsTest()
 {
@@ -532,8 +458,8 @@ BugsTest::BugsTest()
 void BugsTest::issue1410MenuCallback(Object *sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
-    menu->setTouchEnabled(false);
-    menu->setTouchEnabled(true);
+    menu->setEnabled(false);
+    menu->setEnabled(true);
     
     log("NO CRASHES");
 }
@@ -541,8 +467,8 @@ void BugsTest::issue1410MenuCallback(Object *sender)
 void BugsTest::issue1410v2MenuCallback(cocos2d::Object *pSender)
 {
     auto menu = static_cast<Menu*>( static_cast<MenuItem*>(pSender)->getParent() );
-    menu->setTouchEnabled(true);
-    menu->setTouchEnabled(false);
+    menu->setEnabled(true);
+    menu->setEnabled(false);
     
     log("NO CRASHES. AND MENU SHOULD STOP WORKING");
 }
@@ -571,17 +497,14 @@ RemoveMenuItemWhenMove::RemoveMenuItemWhenMove()
     
     menu->setPosition(Point(s.width/2, s.height/2));
     
-    setTouchEnabled(true);
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
-    
     // Register Touch Event
-    _touchListener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    _touchListener = EventListenerTouchOneByOne::create();
     _touchListener->setSwallowTouches(false);
     
     _touchListener->onTouchBegan = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchBegan, this);
     _touchListener->onTouchMoved = CC_CALLBACK_2(RemoveMenuItemWhenMove::onTouchMoved, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(_touchListener, -129);
+    _eventDispatcher->addEventListenerWithFixedPriority(_touchListener, -129);
     
 }
 
@@ -592,7 +515,7 @@ void RemoveMenuItemWhenMove::goBack(Object *pSender)
 
 RemoveMenuItemWhenMove::~RemoveMenuItemWhenMove()
 {
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
+    _eventDispatcher->removeEventListener(_touchListener);
     CC_SAFE_RELEASE(item);
 }
 
@@ -619,11 +542,10 @@ void MenuTestScene::runThisTest()
     auto layer2 = new MenuLayer2();
     auto layer3 = new MenuLayer3();
     auto layer4 = new MenuLayer4();
-    auto layer5 = new MenuLayerPriorityTest();
-    auto layer6 = new BugsTest();
-    auto layer7 = new RemoveMenuItemWhenMove();
+    auto layer5 = new BugsTest();
+    auto layer6 = new RemoveMenuItemWhenMove();
 
-    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, layer7, NULL);
+    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, NULL);
     addChild(layer, 0); 
 
     layer1->release();
@@ -632,7 +554,6 @@ void MenuTestScene::runThisTest()
     layer4->release();
     layer5->release();
     layer6->release();
-    layer7->release();
 
     Director::getInstance()->replaceScene(this);
 }

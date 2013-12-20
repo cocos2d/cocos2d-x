@@ -23,12 +23,6 @@ namespace ShaderTest2
     Layer* createTest(int index)
     {
         auto layer = (createFunctions[index])();;
-        
-        if (layer)
-        {
-            layer->autorelease();
-        }
-        
         return layer;
     }
     
@@ -67,27 +61,23 @@ ShaderTestDemo2::ShaderTestDemo2()
 
 void ShaderTestDemo2::backCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();
+    auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::backAction() );
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestDemo2::nextCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();//CCScene::create();
+    auto s = ShaderTestScene2::create();
     s->addChild( ShaderTest2::nextAction() );
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestDemo2::restartCallback(Object* sender)
 {
-    auto s = new ShaderTestScene2();
-    s->addChild(ShaderTest2::restartAction());
-    
+    auto s = ShaderTestScene2::create();
+    s->addChild(ShaderTest2::restartAction());    
     Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void ShaderTestScene2::runThisTest()
@@ -101,18 +91,13 @@ template <class spriteType>
 class ShaderSpriteCreator
 {
 public:
-    static spriteType* createSprite(const char* pszFileName)
+    static spriteType* createSprite(const std::string& filename)
     {
-        spriteType* pRet = new spriteType();
-        if (pRet && pRet->initWithFile(pszFileName))
-        {
-            pRet->autorelease();
-        }
-        else
-        {
-            CC_SAFE_DELETE(pRet);
-        }
-        return pRet;
+        spriteType* ret = spriteType::create();
+        ret->setTexture(filename);
+        ret->initShader();
+        ret->setBackgroundNotification();
+        return ret;
     }
 };
 
@@ -122,9 +107,10 @@ public:
     ShaderSprite();
     ~ShaderSprite();
 
-    bool initWithTexture(Texture2D* texture, const Rect&  rect);
+    virtual void initShader();
+    void setBackgroundNotification();
+
     void draw();
-    void initProgram();
     void listenBackToForeground(Object *obj);
     
 protected:
@@ -147,48 +133,39 @@ ShaderSprite::~ShaderSprite()
 void ShaderSprite::listenBackToForeground(Object *obj)
 {
     setShaderProgram(NULL);
-    initProgram();
+    initShader();
 }
 
-bool ShaderSprite::initWithTexture(Texture2D* texture, const Rect& rect)
+void ShaderSprite::setBackgroundNotification()
 {
-    if( Sprite::initWithTexture(texture, rect) )
-    {
-        NotificationCenter::getInstance()->addObserver(this,
-                                                       callfuncO_selector(ShaderSprite::listenBackToForeground),
-                                                       EVNET_COME_TO_FOREGROUND,
-                                                       NULL);
-        
-        this->initProgram();
-        
-        return true;
-    }
-    
-    return false;
+    NotificationCenter::getInstance()->addObserver(this,
+                                               callfuncO_selector(ShaderSprite::listenBackToForeground),
+                                               EVNET_COME_TO_FOREGROUND,
+                                               NULL);
 }
 
-void ShaderSprite::initProgram()
+void ShaderSprite::initShader()
 {
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile.c_str()).c_str())->getCString();
-    auto pProgram = new GLProgram();
-    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
-    setShaderProgram(pProgram);
-    pProgram->release();
+                                                                     FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
+    auto program = new GLProgram();
+    program->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    setShaderProgram(program);
+    program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->link();
+    program->link();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->updateUniforms();
+    program->updateUniforms();
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -199,14 +176,12 @@ void ShaderSprite::initProgram()
 
 void ShaderSprite::draw()
 {
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    getShaderProgram()->use();
-    getShaderProgram()->setUniformsForBuiltins();
+    CC_NODE_DRAW_SETUP();
+
     setCustomUniforms();
-    
+
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     GL::bindTexture2D( getTexture()->getName());
     
     //
@@ -236,6 +211,7 @@ void ShaderSprite::draw()
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>
 {
 public:
+    CREATE_FUNC(NormalSprite);
     NormalSprite();
 protected:
     virtual void buildCustomUniforms();
@@ -260,6 +236,7 @@ void NormalSprite::setCustomUniforms()
 class GreyScaleSprite : public ShaderSprite, public ShaderSpriteCreator<GreyScaleSprite>
 {
 public:
+    CREATE_FUNC(GreyScaleSprite);
     GreyScaleSprite();
 protected:
     virtual void buildCustomUniforms();
@@ -284,6 +261,7 @@ void GreyScaleSprite::setCustomUniforms()
 class BlurSprite : public ShaderSprite, public ShaderSpriteCreator<BlurSprite>
 {
 public:
+    CREATE_FUNC(BlurSprite);
     BlurSprite();
     void setBlurSize(float f);
 protected:
@@ -331,6 +309,7 @@ void BlurSprite::setBlurSize(float f)
 class NoiseSprite : public ShaderSprite, public ShaderSpriteCreator<NoiseSprite>
 {
 public:
+    CREATE_FUNC(NoiseSprite);
     NoiseSprite();
     
 private:
@@ -362,6 +341,7 @@ void NoiseSprite::setCustomUniforms()
 class EdgeDetectionSprite : public ShaderSprite, public ShaderSpriteCreator<EdgeDetectionSprite>
 {
 public:
+    CREATE_FUNC(EdgeDetectionSprite);
     EdgeDetectionSprite();
     
 private:
@@ -393,6 +373,7 @@ void EdgeDetectionSprite::setCustomUniforms()
 class BloomSprite : public ShaderSprite, public ShaderSpriteCreator<BloomSprite>
 {
 public:
+    CREATE_FUNC(BloomSprite);
     BloomSprite();
     
 private:
@@ -424,6 +405,7 @@ void BloomSprite::setCustomUniforms()
 class CelShadingSprite : public ShaderSprite, public ShaderSpriteCreator<CelShadingSprite>
 {
 public:
+    CREATE_FUNC(CelShadingSprite);
     CelShadingSprite();
     
 private:
@@ -455,6 +437,7 @@ void CelShadingSprite::setCustomUniforms()
 class LensFlareSprite : public ShaderSprite, public ShaderSpriteCreator<LensFlareSprite>
 {
 public:
+    CREATE_FUNC(LensFlareSprite);
     LensFlareSprite();
     
 private:

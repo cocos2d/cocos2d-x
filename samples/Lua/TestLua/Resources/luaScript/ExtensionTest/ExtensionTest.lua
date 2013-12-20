@@ -1233,12 +1233,51 @@ local function ExtensionsMainLayer()
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, kItemTagBasic + i)
         if ((i == ExtensionTestEnum.TEST_WEBSOCKET + 1) and (false == bSupportWebSocket))
-        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) then
+        or ((i == ExtensionTestEnum.TEST_EDITBOX + 1) and (false == bSupportEdit)) 
+        or (i == ExtensionTestEnum.TEST_NOTIFICATIONCENTER + 1)then
             item:setEnabled(false)
         end
 	end
 
     layer:addChild(menu)
+
+    -- handling touch events
+    local beginPos = {x = 0, y = 0}
+    local function onTouchBegan(x, y)
+        beginPos = {x = x, y = y}
+        return true
+    end
+
+    local function onTouchMoved(x, y)
+        local nMoveY = y - beginPos.y
+        local curPosx, curPosy = menu:getPosition()
+        local nextPosy = curPosy + nMoveY
+        local winSize = cc.Director:getInstance():getWinSize()
+        if nextPosy < 0 then
+            menu:setPosition(0, 0)
+            return
+        end
+
+        if nextPosy > ((ExtensionTestEnum.TEST_MAX_COUNT + 1) * LINE_SPACE - winSize.height) then
+            menu:setPosition(0, ((ExtensionTestEnum.TEST_MAX_COUNT + 1) * LINE_SPACE - winSize.height))
+            return
+        end
+
+        menu:setPosition(curPosx, nextPosy)
+        beginPos = {x = x, y = y}
+    end
+
+    local function onTouch(eventType, x, y)
+        if eventType == "began" then
+            return onTouchBegan(x, y)
+        elseif eventType == "moved" then
+            return onTouchMoved(x, y)
+        end
+    end
+
+    layer:setTouchEnabled(true)
+
+    layer:registerScriptTouchHandler(onTouch)
 
 	return layer
 end

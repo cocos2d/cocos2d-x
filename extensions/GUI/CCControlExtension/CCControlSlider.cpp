@@ -28,7 +28,7 @@
  */
 
 #include "CCControlSlider.h"
-#include "event_dispatcher/CCTouch.h"
+#include "CCTouch.h"
 #include "CCDirector.h"
 
 NS_CC_EXT_BEGIN
@@ -84,7 +84,6 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
-        setTouchEnabled(true);
 
         this->setBackgroundSprite(backgroundSprite);
         this->setProgressSprite(progressSprite);

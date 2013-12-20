@@ -2,7 +2,7 @@
 #define __TABLEVIEWTESTSCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 void runTableViewTest();
 
@@ -18,9 +18,9 @@ public:
     virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) {};
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) {}
     virtual void tableCellTouched(cocos2d::extension::TableView* table, cocos2d::extension::TableViewCell* cell);
-    virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, unsigned int idx);
-    virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, unsigned int idx);
-    virtual unsigned int numberOfCellsInTableView(cocos2d::extension::TableView *table);
+    virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx);
+    virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx);
+    virtual long numberOfCellsInTableView(cocos2d::extension::TableView *table);
 };
 
 #endif // __TABLEVIEWTESTSCENE_H__

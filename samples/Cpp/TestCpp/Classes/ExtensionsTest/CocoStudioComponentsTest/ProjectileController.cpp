@@ -3,6 +3,7 @@
 #include "EnemyController.h"
 
 using namespace cocos2d;
+using namespace cocostudio;
 
 ProjectileController::ProjectileController(void)
 {

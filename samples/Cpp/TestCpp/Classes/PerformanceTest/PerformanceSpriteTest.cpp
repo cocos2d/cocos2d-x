@@ -10,10 +10,9 @@ enum {
 enum {
     kTagInfoLayer = 1,
     kTagMainLayer = 2,
+    kTagAutoTestMenu = 3,
     kTagMenuLayer = (kMaxNodes + 1000),
 };
-
-static int s_nSpriteCurCase = 0;
 
 ////////////////////////////////////////////////////////
 //
@@ -53,7 +52,7 @@ void SubTest::initWithSubTest(int nSubTest, Node* p)
     */
 
     // purge textures
-    auto mgr = TextureCache::getInstance();
+    auto mgr = Director::getInstance()->getTextureCache();
     //        [mgr removeAllTextures];
     mgr->removeTexture(mgr->addImage("Images/grossinis_sister1.png"));
     mgr->removeTexture(mgr->addImage("Images/grossini_dance_atlas.png"));
@@ -227,6 +226,37 @@ void SubTest::removeByTag(int tag)
 // SpriteMenuLayer
 //
 ////////////////////////////////////////////////////////
+void SpriteMenuLayer::restartCallback(Object* sender)
+{
+    if ( SpriteMainScene::_s_autoTest )
+    {
+        log("It's auto sprite performace testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::restartCallback(sender);
+}
+void SpriteMenuLayer::nextCallback(Object* sender)
+{
+    if ( SpriteMainScene::_s_autoTest )
+    {
+        log("It's auto sprite performace testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::nextCallback(sender);
+}
+void SpriteMenuLayer::backCallback(Object* sender)
+{
+    if ( SpriteMainScene::_s_autoTest )
+    {
+        log("It's auto sprite performace testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::backCallback(sender);
+}
+
 void SpriteMenuLayer::showCurrentTest()
 {
     SpriteMainScene* scene = NULL;
@@ -258,7 +288,8 @@ void SpriteMenuLayer::showCurrentTest()
         scene = new SpritePerformTest7;
         break;
     }
-    s_nSpriteCurCase = _curCase;
+    
+    SpriteMainScene::_s_nSpriteCurCase = _curCase;
 
     if (scene)
     {
@@ -267,12 +298,15 @@ void SpriteMenuLayer::showCurrentTest()
         scene->release();
     }
 }
-
 ////////////////////////////////////////////////////////
 //
 // SpriteMainScene
 //
 ////////////////////////////////////////////////////////
+
+bool SpriteMainScene::_s_autoTest = false;
+int  SpriteMainScene::_s_nSpriteCurCase = 0;
+
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
     //srandom(0);
@@ -303,10 +337,33 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // add menu
-    auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, s_nSpriteCurCase);
+    auto menuLayer = new SpriteMenuLayer(true, TEST_COUNT, SpriteMainScene::_s_nSpriteCurCase);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
-
+    
+    /**
+     *  auto test menu
+     */
+    
+    auto menuAutoTest = Menu::create();
+    menuAutoTest->setPosition( Point::ZERO );
+    MenuItemFont::setFontName("Arial");
+    MenuItemFont::setFontSize(24);
+    
+    MenuItemFont* autoTestItem = NULL;
+    if (SpriteMainScene::_s_autoTest)
+    {
+        autoTestItem = MenuItemFont::create("Auto Test On",CC_CALLBACK_1(SpriteMainScene::onAutoTest, this));
+    }
+    else
+    {
+        autoTestItem = MenuItemFont::create("Auto Test Off",CC_CALLBACK_1(SpriteMainScene::onAutoTest, this));
+    }
+    autoTestItem->setTag(1);
+    autoTestItem->setPosition(Point( s.width - 90, s.height / 2));
+    menuAutoTest->addChild(autoTestItem);
+    addChild( menuAutoTest, 3, kTagAutoTestMenu );
+    
     // Sub Tests
     MenuItemFont::setFontSize(32);
     auto subMenu = Menu::create();
@@ -340,7 +397,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
         onIncrease(this);
 }
 
-std::string SpriteMainScene::title()
+std::string SpriteMainScene::title() const
 {
     return "No title";
 }
@@ -356,6 +413,12 @@ SpriteMainScene::~SpriteMainScene()
 
 void SpriteMainScene::testNCallback(Object* sender)
 {
+    if (SpriteMainScene::_s_autoTest)
+    {
+        log("It's auto sprite performace testing,so this operation is invalid");
+        return;
+    }
+    
     subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
     auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
     menu->restartCallback(sender);
@@ -375,7 +438,7 @@ void SpriteMainScene::updateNodes()
 }
 
 void SpriteMainScene::onIncrease(Object* sender)
-{
+{    
     if( quantityNodes >= kMaxNodes)
         return;
 
@@ -391,6 +454,7 @@ void SpriteMainScene::onIncrease(Object* sender)
 
 void SpriteMainScene::onDecrease(Object* sender)
 {
+    
     if( quantityNodes <= 0 )
         return;
 
@@ -401,6 +465,209 @@ void SpriteMainScene::onDecrease(Object* sender)
     }
 
     updateNodes();
+}
+
+void  SpriteMainScene::dumpProfilerFPS()
+{
+    if (_vecFPS.empty())
+    {
+        log("Error: the FPS vector is empty");
+        return;
+    }
+    
+    auto iter = _vecFPS.begin();
+    float minFPS = *iter;
+    float maxFPS = *iter;
+    float totalFPS = 0.0f;
+    float averagerFPS = 0.0f;
+    for (auto fps : _vecFPS)
+    {
+        CCLOG("fps is :%f\n",fps);
+        minFPS = std::min(minFPS, fps);
+        maxFPS = std::max(maxFPS, fps);
+        totalFPS += fps;
+    }
+    
+    averagerFPS = totalFPS / _vecFPS.size();
+    log("Cur test: %d, cur sub item :%d,cur sprite nums:%d, the min FPS value is %.1f,the max FPS value is %.1f,the averager FPS is %.1f", SpriteMainScene::_s_nSpriteCurCase, subtestNumber, quantityNodes, minFPS, maxFPS, averagerFPS);
+    
+}
+
+void SpriteMainScene::updateAutoTest(float dt)
+{
+    if (SpriteMainScene::_s_autoTest)
+    {
+        _executeTimes += 1;
+        _vecFPS.push_back(Director::getInstance()->getFrameRate());
+        if ( _executeTimes >= SpriteMainScene::MAX_AUTO_TEST_TIMES )
+        {
+            dumpProfilerFPS();
+            nextAutoTest();
+        }
+    }
+}
+
+void SpriteMainScene::onEnter()
+{
+    Scene::onEnter();
+    
+    if ( SpriteMainScene::_s_autoTest )
+    {
+        _vecFPS.clear();
+        _executeTimes = 0;
+        
+        auto director = Director::getInstance();
+        auto sched = director->getScheduler();
+        
+        sched->scheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this, 0.2f, false);
+        
+    }
+}
+
+void SpriteMainScene::onExit()
+{
+    if ( SpriteMainScene::_s_autoTest )
+    {
+        auto director = Director::getInstance();
+        auto sched = director->getScheduler();
+        
+        sched->unscheduleSelector(SEL_SCHEDULE(&SpriteMainScene::updateAutoTest), this );
+    }
+    
+    Scene::onExit();
+}
+
+void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
+{
+    
+    SpriteMainScene* scene = NULL;
+    
+    switch (curCase)
+    {
+        case 0:
+            scene = new SpritePerformTest1;
+            break;
+        case 1:
+            scene = new SpritePerformTest2;
+            break;
+        case 2:
+            scene = new SpritePerformTest3;
+            break;
+        case 3:
+            scene = new SpritePerformTest4;
+            break;
+        case 4:
+            scene = new SpritePerformTest5;
+            break;
+        case 5:
+            scene = new SpritePerformTest6;
+            break;
+        case 6:
+            scene = new SpritePerformTest7;
+            break;
+    }
+    
+    SpriteMainScene::_s_nSpriteCurCase = curCase;
+    
+    if (scene)
+    {
+        scene->initWithSubTest(subTest, nodes);
+        Director::getInstance()->replaceScene(scene);
+        scene->release();
+    }
+}
+
+void SpriteMainScene::beginAutoTest()
+{
+    if (0 != SpriteMainScene::_s_nSpriteCurCase)
+    {
+        SpriteMainScene::_s_nSpriteCurCase = 0;
+    }
+    
+    auto scene = new SpritePerformTest1;
+    scene->initWithSubTest(1, 500);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
+}
+
+void  SpriteMainScene::endAutoTest()
+{
+    SpriteMainScene::_s_autoTest = false;
+    
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+    
+    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this );
+}
+
+void  SpriteMainScene::nextAutoTest()
+{
+    if ( SpriteMainScene::_s_nSpriteCurCase < SpriteMainScene::MAX_SPRITE_TEST_CASE )
+    {
+        if ( subtestNumber < SpriteMainScene::MAX_SUB_TEST_NUMS )
+        {
+            subtestNumber += 1;
+            autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, subtestNumber, quantityNodes);
+        }
+        else if ( subtestNumber == SpriteMainScene::MAX_SUB_TEST_NUMS )
+        {
+            if (quantityNodes == SpriteMainScene::AUTO_TEST_NODE_NUM1)
+            {
+                autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM2);
+            }
+            else
+            {
+                if (SpriteMainScene::_s_nSpriteCurCase + 1 < SpriteMainScene::MAX_SPRITE_TEST_CASE)
+                {
+                    SpriteMainScene::_s_nSpriteCurCase += 1;
+                    autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM1);
+                }
+                else
+                {
+                    finishAutoTest();
+                }
+            }
+        }
+    }
+}
+
+void  SpriteMainScene::finishAutoTest()
+{
+    SpriteMainScene::_s_autoTest = false;
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+    sched->unscheduleSelector( SEL_SCHEDULE( &SpriteMainScene::updateAutoTest ), this);
+    
+    auto autoTestMenu = dynamic_cast<Menu*>(getChildByTag(kTagAutoTestMenu));
+    if (nullptr != autoTestMenu)
+    {
+        auto menuItemFont = dynamic_cast<MenuItemFont*>(autoTestMenu->getChildByTag(1));
+        if (nullptr != menuItemFont)
+        {
+            menuItemFont->setString("Auto Test finish");
+        }
+    }
+    
+    log("Sprite performance test is  finish ");
+}
+
+void  SpriteMainScene::onAutoTest(Object* sender)
+{
+    SpriteMainScene::_s_autoTest = !SpriteMainScene::_s_autoTest;
+    MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);
+    if (nullptr != menuItem)
+    {
+        if (SpriteMainScene::_s_autoTest)
+        {
+            menuItem->setString("Auto Test On");
+            beginAutoTest();
+        }
+        else
+        {
+            menuItem->setString("Auto Test Off");
+            endAutoTest();
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////
@@ -486,7 +753,7 @@ void performanceScale(Sprite* sprite)
 // SpritePerformTest1
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest1::title()
+std::string SpritePerformTest1::title() const
 {
     char str[32] = {0};
     sprintf(str, "A (%d) position", subtestNumber);
@@ -498,13 +765,12 @@ void SpritePerformTest1::doTest(Sprite* sprite)
 {
     performancePosition(sprite);
 }
-
 ////////////////////////////////////////////////////////
 //
 // SpritePerformTest2
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest2::title()
+std::string SpritePerformTest2::title() const
 {
     char str[32] = {0};
     sprintf(str, "B (%d) scale", subtestNumber);
@@ -522,7 +788,7 @@ void SpritePerformTest2::doTest(Sprite* sprite)
 // SpritePerformTest3
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest3::title()
+std::string SpritePerformTest3::title() const
 {
     char str[32] = {0};
     sprintf(str, "C (%d) scale + rot", subtestNumber);
@@ -540,7 +806,7 @@ void SpritePerformTest3::doTest(Sprite* sprite)
 // SpritePerformTest4
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest4::title()
+std::string SpritePerformTest4::title() const
 {
     char str[32] = {0};
     sprintf(str, "D (%d) 100%% out", subtestNumber);
@@ -558,7 +824,7 @@ void SpritePerformTest4::doTest(Sprite* sprite)
 // SpritePerformTest5
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest5::title()
+std::string SpritePerformTest5::title() const
 {
     char str[32] = {0};
     sprintf(str, "E (%d) 80%% out", subtestNumber);
@@ -576,7 +842,7 @@ void SpritePerformTest5::doTest(Sprite* sprite)
 // SpritePerformTest6
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest6::title()
+std::string SpritePerformTest6::title() const
 {
     char str[32] = {0};
     sprintf(str, "F (%d) actions", subtestNumber);
@@ -594,7 +860,7 @@ void SpritePerformTest6::doTest(Sprite* sprite)
 // SpritePerformTest7
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest7::title()
+std::string SpritePerformTest7::title() const
 {
     char str[32] = {0};
     sprintf(str, "G (%d) actions 80%% out", subtestNumber);
@@ -609,6 +875,7 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 
 void runSpriteTest()
 {
+    SpriteMainScene::_s_autoTest = false;
     auto scene = new SpritePerformTest1;
     scene->initWithSubTest(1, 50);
     Director::getInstance()->replaceScene(scene);

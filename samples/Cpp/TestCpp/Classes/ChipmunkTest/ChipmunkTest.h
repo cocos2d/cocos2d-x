@@ -7,7 +7,7 @@
 #include "cocos2d.h"
 #include "chipmunk.h"
 #include "../testBasic.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 USING_NS_CC_EXT;
 
@@ -24,8 +24,8 @@ public:
     void addNewSpriteAtPosition(Point p);
     void update(float dt);
     void toggleDebugCallback(Object* sender);
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    virtual void onAcceleration(Acceleration* acc, Event* event);
 
 private:
     Texture2D* _spriteTexture; // weak ref

@@ -34,7 +34,7 @@
 #ifndef __CCCONTROL_UTILS_H__
 #define __CCCONTROL_UTILS_H__
 
-#include "sprite_nodes/CCSprite.h"
+#include "CCSprite.h"
 #include "../../ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN

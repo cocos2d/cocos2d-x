@@ -22,15 +22,16 @@ cocos2d-x is:
 How to start a new game
 -----------------------
 
-1. Download the code from [Github][3] or from [cocos2d download site][4]
+1. Download the code from [cocos2d download site][4]
+2. Enter `tools/project-creator`
 
-2. Run the `create-multi-platform-projects.py` script
+2. Run the `create-projects.py` script
 
 Example:
 
-	$ cd cocos2d-x
-	$ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-    $ cd projects/mygame
+    $ cd cocos2d-x/tools/project-creator
+    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
+    $ cd ../../projects/mygame
 
 
 Main features
@@ -69,7 +70,7 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 4.6+
-* or Ubuntu 13.04+
+* or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2012+
 
 
@@ -79,9 +80,6 @@ Runtime Requirements
   * Android 2.3+ for Android games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
-  * Tizen 2.2+
-  * Emscripten
-  * Google Native Client
 
 
 Running Tests
@@ -92,28 +90,31 @@ Select the test you want from Xcode Scheme chooser.
 * For OS X / iOS
 
 ```
-$ cd cocos2d-x/samples
+$ cd cocos2d-x/build
 $ open samples.xcodeproj
 ```
 
 * For Linux
 
 ```
-$ cd cocos2d-x
-$ ./make-all-linux-projects.sh
+$ cd cocos2d-x/build
+$ ./install-deps-linux.sh
+$ cmake ..
+$ make
 ```
 
-or open the `cocos2d-x/cocos2dx-qt5.pro` file using QT Creator 5.
+      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, 
+      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run onece.
 
 * For Windows
 
-Open the `cocos2d-x/cocos2d-win32.vc2012.sln`
+Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
 
 * For Android
 
 ```
-$ cd cocos2d-x/samples/Cpp/HelloCpp/proj.android
-$ ./build_native.sh
+$ cd cocos2d-x/build
+$ python ./android-build.py hellocpp
 ```
 
 Import HelloCpp Android project using Eclipse(released with Android SDK). The path to be imported is `cocos2d-x/samples/Cpp/HelloCpp/proj.android`.
@@ -138,7 +139,7 @@ Contact us
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [3]: http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Download
-[4]: https://github.com/cocos2d/cocos2d-x/tree/develop
+[4]: http://www.cocos2d-x.org/download/version#Cocos2d-x
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"

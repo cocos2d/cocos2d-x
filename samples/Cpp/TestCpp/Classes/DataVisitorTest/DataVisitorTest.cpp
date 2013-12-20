@@ -1,12 +1,12 @@
 #include "DataVisitorTest.h"
 #include "../testResource.h"
 
-std::string PrettyPrinterDemo::title()
+std::string PrettyPrinterDemo::title() const
 {
     return "PrettyPrinter Test";
 }
 
-std::string PrettyPrinterDemo::subtitle()
+std::string PrettyPrinterDemo::subtitle() const
 {
     return "Please see log!";
 }
@@ -71,7 +71,7 @@ void PrettyPrinterDemo::onEnter()
     
     vistor.clear();
     addSprite();
-//    dict = TextureCache::getInstance()->snapshotTextures();
+//    dict = Director::getInstance()->getTextureCache()->snapshotTextures();
 //    dict->acceptVisitor(vistor);
 //    log("%s", vistor.getResult().c_str());
 }

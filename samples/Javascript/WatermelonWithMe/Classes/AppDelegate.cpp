@@ -5,11 +5,12 @@
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_extension_manual.h"
+#include "jsb_cocos2dx_builder_auto.hpp"
+#include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "js_bindings_chipmunk_registration.h"
-#include "js_bindings_ccbreader.h"
-#include "js_bindings_system_registration.h"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
+#include "localstorage/js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
 
 USING_NS_CC;
@@ -38,17 +39,24 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     EGLView::getInstance()->setDesignResolutionSize(480, 320, ResolutionPolicy::FIXED_HEIGHT);
     
+    FileUtils::getInstance()->addSearchPath("script");
+    
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(jsb_register_chipmunk);
+    sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
     sc->addRegisterCallback(jsb_register_system);
     sc->addRegisterCallback(JSB_register_opengl);
 
     sc->start();
+    
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     
     auto pEngine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);

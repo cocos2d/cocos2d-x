@@ -76,8 +76,6 @@ bool ControlPotentiometer::initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite*
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
-
         setProgressTimer(progressTimer);
         setThumbSprite(thumbSprite);
         thumbSprite->setPosition(progressTimer->getPosition());

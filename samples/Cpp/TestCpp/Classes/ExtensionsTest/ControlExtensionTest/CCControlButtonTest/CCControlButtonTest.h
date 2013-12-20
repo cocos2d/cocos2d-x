@@ -54,8 +54,10 @@ public:
     void touchUpInsideAction(Object *sender, Control::EventType controlEvent);
     void touchUpOutsideAction(Object *sender, Control::EventType controlEvent);
     void touchCancelAction(Object *sender, Control::EventType controlEvent);
+    void touchBitmaskAction(Object *sender, Control::EventType controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayValueLabel, DisplayValueLabel)
+    CC_SYNTHESIZE_RETAIN(LabelTTF *, _displayBitmaskLabel, DisplayBitmaskLabel)
     CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Event)
 };
 

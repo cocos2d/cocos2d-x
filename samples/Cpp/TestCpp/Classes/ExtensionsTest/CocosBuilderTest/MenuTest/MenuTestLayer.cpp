@@ -2,6 +2,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
 
 MenuTestLayer::MenuTestLayer()
 : mMenuItemStatusLabelBMFont(NULL)

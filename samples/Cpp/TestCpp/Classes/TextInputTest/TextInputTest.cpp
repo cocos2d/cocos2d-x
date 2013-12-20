@@ -109,7 +109,7 @@ void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * lay
     addChild(layer);
 }
 
-std::string TextInputTest::title()
+std::string TextInputTest::title() const
 {
     return "text input test";
 }
@@ -126,15 +126,11 @@ void TextInputTest::onEnter()
 KeyboardNotificationLayer::KeyboardNotificationLayer()
 : _trackNode(0)
 {
-    setTouchEnabled(true);
-    
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
-    
+    auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchBegan, this);
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
-    
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 //void KeyboardNotificationLayer::registerWithTouchDispatcher()
@@ -168,13 +164,13 @@ void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& in
     CCLOG("TextInputTest:needAdjustVerticalPosition(%f)", adjustVert);
 
     // move all the children node of KeyboardNotificationLayer
-    auto children = getChildren();
+    auto& children = getChildren();
     Node * node = 0;
-    int count = children->count();
+    int count = children.size();
     Point pos;
     for (int i = 0; i < count; ++i)
     {
-        node = (Node*)children->getObjectAtIndex(i);
+        node = children.at(i);
         pos = node->getPosition();
         pos.y += adjustVert;
         node->setPosition(pos);
@@ -225,7 +221,7 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 // implement TextFieldTTFDefaultTest
 //////////////////////////////////////////////////////////////////////////
 
-std::string TextFieldTTFDefaultTest::subtitle()
+std::string TextFieldTTFDefaultTest::subtitle() const
 {
     return "TextFieldTTF with default behavior test";
 }
@@ -274,7 +270,7 @@ void TextFieldTTFDefaultTest::onEnter()
 // implement TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
 
-std::string TextFieldTTFActionTest::subtitle()
+std::string TextFieldTTFActionTest::subtitle() const
 {
     return "CCTextFieldTTF with action and char limit test";
 }

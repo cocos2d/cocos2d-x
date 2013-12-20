@@ -2,7 +2,7 @@
 #define _SCROLLVIEWTESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 class ScrollViewTestLayer : public cocos2d::Layer {
     public:

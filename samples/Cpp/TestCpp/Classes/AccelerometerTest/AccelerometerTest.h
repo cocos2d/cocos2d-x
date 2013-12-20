@@ -15,10 +15,10 @@ public:
     AccelerometerTest(void);
     ~AccelerometerTest(void);
 
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
+    void onAcceleration(Acceleration* acc, Event* event);
 
-    virtual std::string title();
-    virtual void onEnter();
+    virtual std::string title() const;
+    virtual void onEnter() override;
 };
 
 class AccelerometerTestScene : public TestScene

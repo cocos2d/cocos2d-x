@@ -7,8 +7,12 @@ KeyboardTest::KeyboardTest()
     addChild(label, 0);
     label->setPosition( Point(s.width/2, s.height-50) );
 
-    setKeyboardEnabled(true);
-
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = CC_CALLBACK_2(KeyboardTest::onKeyPressed, this);
+    listener->onKeyReleased = CC_CALLBACK_2(KeyboardTest::onKeyReleased, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     // create a label to display the tip string
     _label = LabelTTF::create("Please press any key and see console log...", "Arial", 22);
     _label->setPosition(Point(s.width / 2, s.height / 2));

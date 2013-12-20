@@ -1,7 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "GUI/CCControlExtension/CCControlSlider.h"
+#include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFOR_ANDROID)
@@ -65,14 +65,14 @@ private:
 //        Director::getInstance()->getTouchDispatcher()->addTargetedDelegate(this, 100, true);
         
         // Register Touch Event
-        auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+        auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
         listener->onTouchBegan = CC_CALLBACK_2(Button::onTouchBegan, this);
         listener->onTouchEnded = CC_CALLBACK_2(Button::onTouchEnded, this);
         listener->onTouchCancelled = CC_CALLBACK_2(Button::onTouchCancelled, this);
         
-        EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
     }
 
@@ -226,19 +226,6 @@ _sliderMusicVolume(NULL)
     addButtons();
     addSliders();
     schedule(schedule_selector(CocosDenshionTest::updateVolumes));
-
-//    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
-
-//    std::string testItems[] = {
-//        "unload effect",
-//        "pause effect",
-//        "resume effect",
-//        "pause all effects",
-//        "resume all effects",
-//        "stop all effects"
-//    };
-
-    setTouchEnabled(true);
 
     // preload background music and effect
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );

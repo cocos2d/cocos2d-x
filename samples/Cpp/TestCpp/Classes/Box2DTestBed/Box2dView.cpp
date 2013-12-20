@@ -33,6 +33,7 @@ MenuLayer::MenuLayer(void)
 
 MenuLayer::~MenuLayer(void)
 {
+    _eventDispatcher->removeEventListener(_touchListener);
 }
 
 MenuLayer* MenuLayer::menuWithEntryID(int entryId)
@@ -51,9 +52,6 @@ bool MenuLayer::initWithEntryID(int entryId)
 	Size visibleSize = director->getVisibleSize();
 
     m_entryID = entryId;
-    
-    setTouchEnabled( true );
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     Box2DView* view = Box2DView::viewWithEntryID( entryId );
     addChild(view, 0, kTagBox2DNode);
@@ -81,18 +79,17 @@ bool MenuLayer::initWithEntryID(int entryId)
     
     addChild(menu, 1);
     
-    // Removes touch event listener
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
-    
     // Adds touch event listener
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
 
     listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
 
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 1);
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
+
     _touchListener = listener;
+    
     return true;
 }
 
@@ -179,33 +176,27 @@ Box2DView* Box2DView::viewWithEntryID(int entryId)
 
 bool Box2DView::initWithEntryID(int entryId)
 {    
-//    setIsAccelerometerEnabled( true );
-    setTouchEnabled( true );
-    
     schedule( schedule_selector(Box2DView::tick) );
 
     m_entry = g_testEntries + entryId;
     m_test = m_entry->createFcn();
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
-    // Removes Touch Event Listener
-    EventDispatcher::getInstance()->removeEventListener(_touchListener);
     
     // Adds Touch Event Listener
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(Box2DView::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(Box2DView::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Box2DView::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, -10);
+    _eventDispatcher->addEventListenerWithFixedPriority(listener, -10);
     _touchListener = listener;
     
     return true;
 }
 
-std::string Box2DView::title()
+std::string Box2DView::title() const
 {
     return std::string(m_entry->name);
 }
@@ -232,6 +223,8 @@ void Box2DView::draw()
 
 Box2DView::~Box2DView()
 {
+    // Removes Touch Event Listener
+    _eventDispatcher->removeEventListener(_touchListener);
     delete m_test;
 }
 //

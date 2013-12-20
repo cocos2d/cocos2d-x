@@ -2,7 +2,7 @@
 #define _SPRITETESTLAYER_H_
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 class SpriteTestLayer : public cocos2d::Layer {
     public:

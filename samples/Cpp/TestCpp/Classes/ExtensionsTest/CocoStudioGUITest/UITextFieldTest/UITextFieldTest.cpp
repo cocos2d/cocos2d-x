@@ -51,7 +51,7 @@ bool UITextFieldTest::init()
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -67,8 +67,8 @@ void UITextFieldTest::textFieldEvent(Object *pSender, TextFiledEventType type)
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.225,
-                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            textField->runAction(CCMoveTo::create(0.225f,
+                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME")->getCString());
         }
             break;
@@ -77,12 +77,12 @@ void UITextFieldTest::textFieldEvent(Object *pSender, TextFiledEventType type)
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME")->getCString());
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words")->getCString());
             break;
             
@@ -132,14 +132,14 @@ bool UITextFieldTest_MaxLength::init()
         
         // Create the textfield
         UITextField* textField = UITextField::create();
-        textField->setMaxLengthEnable(true);
+        textField->setMaxLengthEnabled(true);
         textField->setMaxLength(3);
         textField->setTouchEnabled(true);
         textField->setFontName(font_UITextFieldTest);
         textField->setFontSize(30);
         textField->setPlaceHolder("input words here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_MaxLength::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -155,8 +155,8 @@ void UITextFieldTest_MaxLength::textFieldEvent(Object *pSender, TextFiledEventTy
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.225,
-                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            textField->runAction(CCMoveTo::create(0.225f,
+                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
@@ -165,12 +165,12 @@ void UITextFieldTest_MaxLength::textFieldEvent(Object *pSender, TextFiledEventTy
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME max length %d", textField->getMaxLength())->getCString());
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words max length %d", textField->getMaxLength())->getCString());
@@ -226,14 +226,14 @@ bool UITextFieldTest_Password::init()
         
         // Create the textfield
         UITextField* textField = UITextField::create();
-        textField->setPasswordEnable(true);
+        textField->setPasswordEnabled(true);
         textField->setPasswordStyleText("*");
         textField->setTouchEnabled(true);
         textField->setFontName(font_UITextFieldTest);
         textField->setFontSize(30);
         textField->setPlaceHolder("input password here");
         textField->setPosition(Point(screenSize.width / 2.0f, screenSize.height / 2.0f));
-        textField->addEventListener(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
+        textField->addEventListenerTextField(this, textfieldeventselector(UITextFieldTest_Password::textFieldEvent));
         m_pUiLayer->addWidget(textField);
         
         return true;
@@ -249,8 +249,8 @@ void UITextFieldTest_Password::textFieldEvent(Object *pSender, TextFiledEventTyp
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.225,
-                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2)));
+            textField->runAction(CCMoveTo::create(0.225f,
+                                                  Point(screenSize.width / 2.0f, screenSize.height / 2.0f + textField->getContentSize().height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("attach with IME password")->getCString());
         }
             break;
@@ -259,12 +259,12 @@ void UITextFieldTest_Password::textFieldEvent(Object *pSender, TextFiledEventTyp
         {
             UITextField* textField = dynamic_cast<UITextField*>(pSender);
             Size screenSize = CCDirector::getInstance()->getWinSize();
-            textField->runAction(CCMoveTo::create(0.175, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
+            textField->runAction(CCMoveTo::create(0.175f, Point(screenSize.width / 2.0f, screenSize.height / 2.0f)));
             m_pDisplayValueLabel->setText(CCString::createWithFormat("detach with IME password")->getCString());
         }
             break;
             
-        case TEXTFIELD_EVENT_INDERT_TEXT:
+        case TEXTFIELD_EVENT_INSERT_TEXT:
             m_pDisplayValueLabel->setText(CCString::createWithFormat("insert words password")->getCString());
             break;
             
