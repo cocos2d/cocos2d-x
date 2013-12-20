@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 
-#include "GroupCommand.h"
-#include "Renderer.h"
+#include "CCGroupCommand.h"
+#include "CCRenderer.h"
 #include "CCDirector.h"
 
 NS_CC_BEGIN
@@ -68,6 +68,7 @@ int GroupCommandManager::getGroupID()
     {
         if(!it->second)
         {
+            _groupMapping[it->first] = true;
             return it->first;
         }
     }

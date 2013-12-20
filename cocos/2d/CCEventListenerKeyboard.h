@@ -36,6 +36,8 @@ class Event;
 class EventListenerKeyboard : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerKeyboard* create();
     
     /// Overrides

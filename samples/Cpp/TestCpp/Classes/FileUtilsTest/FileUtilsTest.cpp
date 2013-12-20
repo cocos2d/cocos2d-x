@@ -82,12 +82,12 @@ void FileUtilsDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-string FileUtilsDemo::title()
+std::string FileUtilsDemo::title() const
 {
     return "No title";
 }
 
-string FileUtilsDemo::subtitle()
+std::string FileUtilsDemo::subtitle() const
 {
     return "";
 }
@@ -99,16 +99,16 @@ void TestResolutionDirectories::onEnter()
     FileUtilsDemo::onEnter();
     auto sharedFileUtils = FileUtils::getInstance();
 
-    string ret;
+    std::string ret;
     
     sharedFileUtils->purgeCachedEntries();
     _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = _defaultSearchPathArray;
+    std::vector<std::string> searchPaths = _defaultSearchPathArray;
     searchPaths.insert(searchPaths.begin(),   "Misc");
     sharedFileUtils->setSearchPaths(searchPaths);
     
     _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
+    std::vector<std::string> resolutionsOrder = _defaultResolutionsOrderArray;
 
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
     resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
@@ -136,12 +136,12 @@ void TestResolutionDirectories::onExit()
     FileUtilsDemo::onExit();
 }
 
-string TestResolutionDirectories::title()
+std::string TestResolutionDirectories::title() const
 {
     return "FileUtils: resolutions in directories";
 }
 
-string TestResolutionDirectories::subtitle()
+std::string TestResolutionDirectories::subtitle() const
 {
     return "See the console";
 }
@@ -153,13 +153,13 @@ void TestSearchPath::onEnter()
     FileUtilsDemo::onEnter();
     auto sharedFileUtils = FileUtils::getInstance();
     
-    string ret;
+    std::string ret;
     
     sharedFileUtils->purgeCachedEntries();
     _defaultSearchPathArray = sharedFileUtils->getSearchPaths();
-    vector<string> searchPaths = _defaultSearchPathArray;
-    string writablePath = sharedFileUtils->getWritablePath();
-    string fileName = writablePath+"external.txt";
+    std::vector<std::string> searchPaths = _defaultSearchPathArray;
+    std::string writablePath = sharedFileUtils->getWritablePath();
+    std::string fileName = writablePath+"external.txt";
     char szBuf[100] = "Hello Cocos2d-x!";
     FILE* fp = fopen(fileName.c_str(), "wb");
     if (fp)
@@ -177,7 +177,7 @@ void TestSearchPath::onEnter()
     sharedFileUtils->setSearchPaths(searchPaths);
     
     _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-    vector<string> resolutionsOrder = _defaultResolutionsOrderArray;
+    std::vector<std::string> resolutionsOrder = _defaultResolutionsOrderArray;
     
     resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipad");
     sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
@@ -189,7 +189,7 @@ void TestSearchPath::onEnter()
     }
     
     // Gets external.txt from writable path
-    string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
+    std::string fullPath = sharedFileUtils->fullPathForFilename("external.txt");
     log("external file path = %s", fullPath.c_str());
     if (fullPath.length() > 0)
     {
@@ -215,12 +215,12 @@ void TestSearchPath::onExit()
     FileUtilsDemo::onExit();
 }
 
-string TestSearchPath::title()
+std::string TestSearchPath::title() const
 {
     return "FileUtils: search path";
 }
 
-string TestSearchPath::subtitle()
+std::string TestSearchPath::subtitle() const
 {
     return "See the console";
 }
@@ -258,12 +258,12 @@ void TestFilenameLookup::onExit()
     FileUtilsDemo::onExit();
 }
 
-string TestFilenameLookup::title()
+std::string TestFilenameLookup::title() const
 {
     return "FileUtils: filename lookup";
 }
 
-string TestFilenameLookup::subtitle()
+std::string TestFilenameLookup::subtitle() const
 {
     return "See the console";
 }
@@ -302,12 +302,12 @@ void TestIsFileExist::onExit()
     FileUtilsDemo::onExit();
 }
 
-string TestIsFileExist::title()
+std::string TestIsFileExist::title() const
 {
     return "FileUtils: check whether the file exists";
 }
 
-string TestIsFileExist::subtitle()
+std::string TestIsFileExist::subtitle() const
 {
     return "";
 }
@@ -361,12 +361,12 @@ void TextWritePlist::onExit()
     FileUtilsDemo::onExit();
 }
 
-string TextWritePlist::title()
+std::string TextWritePlist::title() const
 {
     return "FileUtils: Dictionary to plist";
 }
 
-string TextWritePlist::subtitle()
+std::string TextWritePlist::subtitle() const
 {
     std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
     return ("See plist file at your writablePath");

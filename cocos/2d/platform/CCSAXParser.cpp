@@ -65,7 +65,7 @@ bool XmlSaxHander::VisitEnter( const tinyxml2::XMLElement& element, const tinyxm
     
     // nullptr is used in c++11
 	//attsVector.push_back(nullptr);
-    attsVector.push_back(NULL);
+    attsVector.push_back(nullptr);
 
 	SAXParser::startElement(_ccsaxParserImp, (const CC_XML_CHAR *)element.Value(), (const CC_XML_CHAR **)(&attsVector[0]));
 	return true;
@@ -87,31 +87,31 @@ bool XmlSaxHander::Visit( const tinyxml2::XMLText& text )
 
 SAXParser::SAXParser()
 {
-    _delegator = NULL;
+    _delegator = nullptr;
 }
 
 SAXParser::~SAXParser(void)
 {
 }
 
-bool SAXParser::init(const char *pszEncoding)
+bool SAXParser::init(const char *encoding)
 {
-    CC_UNUSED_PARAM(pszEncoding);
+    CC_UNUSED_PARAM(encoding);
     // nothing to do
     return true;
 }
 
-bool SAXParser::parse(const char* pXMLData, size_t uDataLength)
+bool SAXParser::parse(const char* xmlData, size_t dataLength)
 {
 	tinyxml2::XMLDocument tinyDoc;
-	tinyDoc.Parse(pXMLData, uDataLength);
+	tinyDoc.Parse(xmlData, dataLength);
 	XmlSaxHander printer;
 	printer.setSAXParserImp(this);
 	
 	return tinyDoc.Accept( &printer );	
 }
 
-bool SAXParser::parse(const char *filename)
+bool SAXParser::parse(const char *pszFile)
 {
     bool ret = false;
     Data data = FileUtils::getInstance()->getDataFromFile(filename);
@@ -136,9 +136,9 @@ void SAXParser::textHandler(void *ctx, const CC_XML_CHAR *name, int len)
 {
     ((SAXParser*)(ctx))->_delegator->textHandler(ctx, (char*)name, len);
 }
-void SAXParser::setDelegator(SAXDelegator* pDelegator)
+void SAXParser::setDelegator(SAXDelegator* delegator)
 {
-    _delegator = pDelegator;
+    _delegator = delegator;
 }
 
 NS_CC_END

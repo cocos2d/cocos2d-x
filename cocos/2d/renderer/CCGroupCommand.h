@@ -27,8 +27,8 @@
 #define _CC_GROUPCOMMAND_H_
 
 #include "CCPlatformMacros.h"
-#include "RenderCommand.h"
-#include "RenderCommandPool.h"
+#include "CCRenderCommand.h"
+#include "CCRenderCommandPool.h"
 #include <unordered_map>
 
 NS_CC_BEGIN
@@ -52,10 +52,9 @@ protected:
 
 class GroupCommand : public RenderCommand
 {
-protected:
-    GroupCommand();
-    ~GroupCommand();
 public:
+    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
+
     void init(int viewport, int32_t depth);
 
     // +----------+----------+-----+-----------------------------------+
@@ -70,15 +69,15 @@ public:
     virtual void releaseToCommandPool() override;
     
 protected:
+    GroupCommand();
+    ~GroupCommand();
+
     int _viewport;
     int32_t _depth;
     int _renderQueueID;
-    
-public:
-    friend class RenderCommandPool<GroupCommand>;
-    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
-protected:
     static RenderCommandPool<GroupCommand> _commandPool;
+
+    friend class RenderCommandPool<GroupCommand>;
 };
 
 NS_CC_END

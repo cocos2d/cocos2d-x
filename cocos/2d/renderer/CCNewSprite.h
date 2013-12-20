@@ -37,17 +37,16 @@ public:
     static NewSprite* create();
     static NewSprite* create(const char *filename);
 
-    NewSprite(void);
-    ~NewSprite();
-
-    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
-    
     virtual void updateQuadVertices();
     virtual void draw(void) override;
     
     bool culling() const;
     
 protected:
+    NewSprite(void);
+    ~NewSprite();
+
+    virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 };
 
 NS_CC_END

@@ -63,7 +63,7 @@ public:
      *  @param target The target which wants to observe notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      */
     void addObserver(Object *target, 
                      SEL_CallFuncO selector,
@@ -98,7 +98,7 @@ public:
 
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
-     *  @param sender The object posting the notification. Can be NULL
+     *  @param sender The object posting the notification. Can be nullptr
      */
     void postNotification(const char *name, Object *sender);
     
@@ -132,7 +132,7 @@ public:
      *  @param target The target which wants to observer notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      * @js NA
      * @lua NA
      */

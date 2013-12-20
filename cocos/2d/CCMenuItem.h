@@ -56,7 +56,7 @@ class SpriteFrame;
  *
  *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  */
-class CC_DLL MenuItem : public NodeRGBA
+class CC_DLL MenuItem : public Node
 {
 public:
     /** Creates a MenuItem with no target/selector */
@@ -105,7 +105,7 @@ protected:
     : _selected(false)
     , _enabled(false)
 	, _callback(nullptr)
-    , _target(NULL)
+    , _target(nullptr)
     {}
     /**
      * @js NA
@@ -181,7 +181,7 @@ protected:
      */
     MenuItemLabel()
     : _originalScale(0.0)
-    , _label(NULL)
+    , _label(nullptr)
     {}
     /**
      * @js NA
@@ -332,7 +332,7 @@ class CC_DLL MenuItemSprite : public MenuItem
 {
 public:
     /** creates a menu item with a normal, selected and disabled image*/
-    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = NULL);
+    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = nullptr);
     /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
@@ -369,9 +369,9 @@ public:
     
 protected:
     MenuItemSprite()
-    :_normalImage(NULL)
-    ,_selectedImage(NULL)
-    ,_disabledImage(NULL)
+    :_normalImage(nullptr)
+    ,_selectedImage(nullptr)
+    ,_disabledImage(nullptr)
     {}
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */

@@ -26,8 +26,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 using namespace cocos2d;
 
@@ -101,22 +101,12 @@ void BatchNode::visit()
     }
     kmGLPushMatrix();
 
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-    }
-
     transform();
     sortAllChildren();
     draw();
 
     // reset for next frame
     _orderOfArrival = 0;
-
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
 }

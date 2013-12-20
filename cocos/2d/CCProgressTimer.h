@@ -43,7 +43,7 @@ NS_CC_BEGIN
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL ProgressTimer : public NodeRGBA
+class CC_DLL ProgressTimer : public Node
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN
@@ -72,8 +72,8 @@ public:
     /** The image to show the progress percentage, retain */
     inline Sprite* getSprite() const { return _sprite; }
 
-    void setPercentage(float fPercentage);
-    void setSprite(Sprite *pSprite);
+    void setPercentage(float percentage);
+    void setSprite(Sprite *sprite);
     void setType(Type type);
     /**
      * @js setReverseDirection
@@ -111,10 +111,6 @@ public:
     // Overrides
     virtual void draw(void) override;
     void setAnchorPoint(const Point& anchorPoint) override;
-    virtual void setColor(const Color3B& color) override;
-    virtual const Color3B& getColor() const override;
-    virtual GLubyte getOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
     
 protected:
     /**
@@ -137,7 +133,7 @@ protected:
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
-    void updateColor(void);
+    virtual void updateColor(void) override;
     Point boundaryTexCoord(char index);
 
     Type _type;

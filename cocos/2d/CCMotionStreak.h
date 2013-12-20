@@ -43,7 +43,7 @@ NS_CC_BEGIN
 /** MotionStreak.
  Creates a trailing path.
  */
-class CC_DLL MotionStreak : public NodeRGBA, public TextureProtocol
+class CC_DLL MotionStreak : public Node, public TextureProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN

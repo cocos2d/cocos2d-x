@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCString.h"
 #include "platform/CCFileUtils.h"
-#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -481,10 +480,10 @@ __Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
     ValueVector arr = FileUtils::getInstance()->getValueVectorFromFile(fileName);
     
     __Array* ret = __Array::createWithCapacity(static_cast<int>(arr.size()));
-    
-    std::for_each(arr.cbegin(), arr.cend(), [&ret](const Value& value){
+
+    for(const auto &value : arr) {
         ret->addObject(__String::create(value.asString()));
-    });
+    }
     
     return ret;
 }

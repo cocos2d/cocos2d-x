@@ -22,12 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Renderer.h"
+#include "CCRenderer.h"
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
-#include "CustomCommand.h"
-#include "QuadCommand.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCQuadCommand.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
@@ -50,7 +50,8 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(elelment);
 }
 
 Renderer::~Renderer()
@@ -68,12 +69,12 @@ Renderer::~Renderer()
 
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
+#if 0//CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
                                                            EVNET_COME_TO_FOREGROUND,
-                                                           NULL);
+                                                           nullptr);
 #endif
 
     setupIndices();
@@ -91,7 +92,7 @@ void Renderer::onBackToForeground(Object* obj)
 
 void Renderer::setupIndices()
 {
-    for( int i=0; i < vbo_size; i++)
+    for( int i=0; i < VBO_SIZE; i++)
     {
         _indices[i*6+0] = (GLushort) (i*4+0);
         _indices[i*6+1] = (GLushort) (i*4+1);
@@ -122,7 +123,7 @@ void Renderer::setupVBOAndVAO()
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * vbo_size, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -137,7 +138,7 @@ void Renderer::setupVBOAndVAO()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * vbo_size * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
     GL::bindVAO(0);
@@ -160,11 +161,11 @@ void Renderer::mapBuffers()
     GL::bindVAO(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * vbo_size, _quads, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * VBO_SIZE, _quads, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * vbo_size * 6, _indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * VBO_SIZE * 6, _indices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
@@ -242,9 +243,9 @@ void Renderer::render()
                     ssize_t cmdQuadCount = cmd->getQuadCount();
                     
                     //Batch quads
-                    if(_numQuads + cmdQuadCount > vbo_size)
+                    if(_numQuads + cmdQuadCount > VBO_SIZE)
                     {
-                        CCASSERT(cmdQuadCount < vbo_size, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         drawBatchedQuads();
@@ -267,7 +268,8 @@ void Renderer::render()
                     _renderStack.top().currentIndex = i + 1;
                     
                     //push new renderQueue to renderStack
-                    _renderStack.push({cmd->getRenderQueueID(), 0});
+                    RenderStackElement element = {cmd->getRenderQueueID(), 0};
+                    _renderStack.push(element);
                     
                     //Exit current loop
                     break;
@@ -294,7 +296,10 @@ void Renderer::render()
     //TODO give command back to command pool
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
     {
-        for_each(_renderGroups[j].begin(), _renderGroups[j].end(), [](RenderCommand* cmd){ cmd->releaseToCommandPool(); });
+        for (const auto &cmd : _renderGroups[j])
+        {
+            cmd->releaseToCommandPool();
+        }
         _renderGroups[j].clear();
     }
     
@@ -303,7 +308,8 @@ void Renderer::render()
     {
         _renderStack.pop();
     }
-    _renderStack.push({DEFAULT_RENDER_QUEUE, 0});
+    RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
+    _renderStack.push(element);
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
 }
@@ -327,7 +333,7 @@ void Renderer::drawBatchedQuads()
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), NULL, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), nullptr, GL_DYNAMIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
         glUnmapBuffer(GL_ARRAY_BUFFER);

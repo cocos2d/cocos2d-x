@@ -694,8 +694,8 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    long typeId = typeid(CCBProxy).hash_code();
-    g_luaType[typeId] = "CCBProxy";
+    std::string typeName = typeid(CCBProxy).name();
+    g_luaType[typeName] = "CCBProxy";
     return 1;
 }
 

@@ -22,29 +22,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __NewClippingNode_H_
+#define __NewClippingNode_H_
 
-#ifndef __CCNEWLABELATLAS_H_
-#define __CCNEWLABELATLAS_H_
-
-#include "CCLabelAtlas.h"
 #include "CCPlatformMacros.h"
-#include "QuadCommand.h"
+#include "CCClippingNode.h"
+
 
 NS_CC_BEGIN
 
-class NewLabelAtlas : public LabelAtlas
+class NewClippingNode : public ClippingNode
 {
-    
 public:
-    NewLabelAtlas() {}
-    virtual ~NewLabelAtlas() {}
+    static NewClippingNode* create();
+    static NewClippingNode* create(Node* pStencil);
 
-    virtual void draw(void) override;
+    virtual ~NewClippingNode();
+
+    virtual void visit() override;
 
 protected:
-    QuadCommand _renderCommand;
+    NewClippingNode();
+
+    void beforeVisit();
+    void afterDrawStencil();
+    void afterVisit();
+
+    GLboolean currentStencilEnabled;
+    GLuint currentStencilWriteMask;
+    GLenum currentStencilFunc;
+    GLint currentStencilRef;
+    GLuint currentStencilValueMask;
+    GLenum currentStencilFail;
+    GLenum currentStencilPassDepthFail;
+    GLenum currentStencilPassDepthPass;
+    GLboolean currentDepthWriteMask;
+
+    GLboolean currentAlphaTestEnabled;
+    GLenum currentAlphaTestFunc;
+    GLclampf currentAlphaTestRef;
+
+    GLint mask_layer_le;
 };
 
 NS_CC_END
 
-#endif /* defined(__CCNEWLABELATLAS_H_) */
+#endif //__NewClippingNode_H_

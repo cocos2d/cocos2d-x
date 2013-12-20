@@ -2,12 +2,12 @@
 #include "../testResource.h"
 #include "ZipUtils.h"
 
-std::string TextureAtlasEncryptionDemo::title()
+std::string TextureAtlasEncryptionDemo::title() const
 {
     return "Texture Atlas Encryption";
 }
 
-std::string TextureAtlasEncryptionDemo::subtitle()
+std::string TextureAtlasEncryptionDemo::subtitle() const
 {
     return "";
 }

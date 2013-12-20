@@ -109,12 +109,6 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _originalUTF16String(0)
 , _advances(0)
 , _fontAtlas(atlas)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeColorEnabled(true)
-, _cascadeOpacityEnabled(true)
-, _displayedOpacity(255)
-, _realOpacity(255)
 , _isOpacityModifyRGB(true)
 ,_useDistanceField(useDistanceField)
 ,_useA8Shader(useA8Shader)
@@ -305,15 +299,12 @@ void Label::alignText()
     LabelTextFormatter::alignText(this);
   
     int strLen = cc_wcslen(_currentUTF16String);
-    std::for_each(_children.begin(), _children.end(), [this,&strLen](Node* child){
-        if (child)
-        {
-            int tag = child->getTag();
-            if(tag < 0 || tag >= strLen)
-                SpriteBatchNode::removeChild(child, true);
-        }
-    });
-    
+    for(const auto &child : _children) {
+        int tag = child->getTag();
+        if(tag < 0 || tag >= strLen)
+            SpriteBatchNode::removeChild(child, true);
+    }
+
     _reusedLetter->setBatchNode(nullptr);
    
     int vaildIndex = 0;
@@ -522,9 +513,8 @@ void Label::draw()
         _shaderProgram->setUniformLocationWith3f(_uniformEffectColor, _effectColor.r/255.0f,_effectColor.g/255.0f,_effectColor.b/255.0f);
     }
 
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for(const auto &child: _children)
         child->updateTransform();
-    });
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -710,123 +700,25 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
     _isOpacityModifyRGB = isOpacityModifyRGB;
     
-    std::for_each(_children.begin(), _children.end(), [this](Node* child){
-        if (child)
-        {
-            RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(child);
-            if (pRGBAProtocol)
-            {
-                pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
-            }
-        }
-    });
-    
+    for(const auto& child: _children) {
+        child->setOpacityModifyRGB(_isOpacityModifyRGB);
+    }
+
     _reusedLetter->setOpacityModifyRGB(true);
-}
-
-unsigned char Label::getOpacity() const
-{
-     return _realOpacity;
-}
-
-unsigned char Label::getDisplayedOpacity() const
-{
-    return _displayedOpacity;
-}
-
-void Label::setOpacity(GLubyte opacity)
-{
-    _displayedOpacity = _realOpacity = opacity;
-    _reusedLetter->setOpacity(opacity);
-	if( _cascadeOpacityEnabled ) {
-		GLubyte parentOpacity = 255;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (pParent && pParent->isCascadeOpacityEnabled())
-        {
-            parentOpacity = pParent->getDisplayedOpacity();
-        }
-        this->updateDisplayedOpacity(parentOpacity);
-	}
-}
-void Label::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-    _displayedOpacity = _realOpacity * parentOpacity/255.0;
-    
-    std::for_each(_children.begin(), _children.end(), [this](Node* child){
-        Sprite *item = static_cast<Sprite*>( child );
-        item->updateDisplayedOpacity(_displayedOpacity);
-    });
-
-    V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    auto count = _textureAtlas->getTotalQuads();
-    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    if (_isOpacityModifyRGB)
-    {
-        color4.r *= _displayedOpacity/255.0f;
-        color4.g *= _displayedOpacity/255.0f;
-        color4.b *= _displayedOpacity/255.0f;
-    }
-    for (int index = 0; index < count; ++index)
-    {    
-        quads[index].bl.colors = color4;
-        quads[index].br.colors = color4;
-        quads[index].tl.colors = color4;
-        quads[index].tr.colors = color4;
-        _textureAtlas->updateQuad(&quads[index], index);           
-    }
-}
-
-bool Label::isCascadeOpacityEnabled() const
-{
-    return false;
-}
-
-void Label::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    _cascadeOpacityEnabled = cascadeOpacityEnabled;
-}
-
-const Color3B& Label::getColor(void) const
-{
-    return _realColor;
-}
-
-const Color3B& Label::getDisplayedColor() const
-{
-    return _displayedColor;
 }
 
 void Label::setColor(const Color3B& color)
 {
-    _displayedColor = _realColor = color;
 	_reusedLetter->setColor(color);
-	if( _cascadeColorEnabled )
-    {
-		Color3B parentColor = Color3B::WHITE;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        
-        if (pParent && pParent->isCascadeColorEnabled())
-            parentColor = pParent->getDisplayedColor();
-        
-        updateDisplayedColor(parentColor);
-	}
+    SpriteBatchNode::setColor(color);
 }
 
-void Label::updateDisplayedColor(const Color3B& parentColor)
+void Label::updateColor()
 {
-    _displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    
-    std::for_each(_children.begin(), _children.end(), [this](Node* child){
-        Sprite *item = static_cast<Sprite*>( child );
-        item->updateDisplayedColor(_displayedColor);
-    });
-
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
     auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-
+    
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
     {
@@ -835,28 +727,18 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
         color4.b *= _displayedOpacity/255.0f;
     }
     for (int index=0; index<count; ++index)
-    {    
+    {
         quads[index].bl.colors = color4;
         quads[index].br.colors = color4;
         quads[index].tl.colors = color4;
         quads[index].tr.colors = color4;
         _textureAtlas->updateQuad(&quads[index], index);
-    }  
-}
-
-bool Label::isCascadeColorEnabled() const
-{
-    return false;
-}
-
-void Label::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    _cascadeColorEnabled = cascadeColorEnabled;
+    }
 }
 
 std::string Label::getDescription() const
 {
-    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String,-1,NULL,NULL));
+    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String,-1,nullptr,nullptr));
 }
 
 
