@@ -1002,8 +1002,6 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
-		2AFE08B718644C7600FD9459 /* SpineTest in Resources */ = {isa = PBXBuildFile; fileRef = 2AFE08B618644C7600FD9459 /* SpineTest */; };
-		2AFE08B818644C7600FD9459 /* SpineTest in Resources */ = {isa = PBXBuildFile; fileRef = 2AFE08B618644C7600FD9459 /* SpineTest */; };
 		3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
@@ -2788,7 +2786,6 @@
 		1AAF53AD180E363C000584C8 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../samples/Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
 		1AAF53AE180E363C000584C8 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../samples/Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2AFE08B618644C7600FD9459 /* SpineTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SpineTest; sourceTree = "<group>"; };
 		3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocoStudioTest; path = ../samples/Javascript/Shared/tests/CocoStudioTest; sourceTree = "<group>"; };
 		460E452D1807E712000CDD6D /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		460E452E1807E712000CDD6D /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -4001,7 +3998,6 @@
 				1A9DC964180E66FF007A3AD4 /* RotateWorldTest */,
 				1A9DC965180E66FF007A3AD4 /* SceneTest */,
 				1A9DC966180E66FF007A3AD4 /* SchedulerTest */,
-				2AFE08B618644C7600FD9459 /* SpineTest */,
 				1A9DC967180E66FF007A3AD4 /* SpriteTest */,
 				1A9DC968180E66FF007A3AD4 /* SysTest */,
 				1A9DC969180E66FF007A3AD4 /* tests_resources-html5.js */,
@@ -6418,7 +6414,6 @@
 				1A9DC9BF180E66FF007A3AD4 /* SceneTest in Resources */,
 				1A9DC9C1180E66FF007A3AD4 /* SchedulerTest in Resources */,
 				1A9DC9C3180E66FF007A3AD4 /* SpriteTest in Resources */,
-				2AFE08B818644C7600FD9459 /* SpineTest in Resources */,
 				1A9DC9C5180E66FF007A3AD4 /* SysTest in Resources */,
 				1A9DC9D3180E66FF007A3AD4 /* TextInputTest in Resources */,
 				1A9DC9D5180E66FF007A3AD4 /* TextureCacheTest in Resources */,
@@ -6533,7 +6528,6 @@
 				1A9DCA54180E7237007A3AD4 /* tests-boot-jsb.js in Resources */,
 				1A9DCA55180E7237007A3AD4 /* tests-main.js in Resources */,
 				1A9DC2AF180E6681007A3AD4 /* InfoPlist.strings in Resources */,
-				2AFE08B718644C7600FD9459 /* SpineTest in Resources */,
 				1A9DC2B0180E6681007A3AD4 /* MainMenu.xib in Resources */,
 				1A9DC2B1180E6681007A3AD4 /* Icon.icns in Resources */,
 				1A9DC2B2180E6681007A3AD4 /* Info-obfuscated.plist in Resources */,
