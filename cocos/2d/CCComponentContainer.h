@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CC_FRAMEWORK_COMCONTAINER_H__
 
 #include "CCMap.h"
+#include <string>
 
 NS_CC_BEGIN
 
