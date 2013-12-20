@@ -561,6 +561,9 @@ void Audio::UnloadSoundEffect(unsigned int sound)
 
     m_soundEffects[sound].m_soundEffectSourceVoice->DestroyVoice();
 
+    if(m_soundEffects[sound].m_soundEffectBufferData)
+        delete [] m_soundEffects[sound].m_soundEffectBufferData;
+
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
