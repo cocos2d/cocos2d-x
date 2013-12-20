@@ -207,6 +207,24 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
         default:
             break;
     }
+
+	if (m_pInnerContainer->getLeftInParent() > 0.0f)
+	{
+		m_pInnerContainer->setPosition(CCPoint(m_pInnerContainer->getAnchorPoint().x * m_pInnerContainer->getSize().width, m_pInnerContainer->getPosition().y));
+	}
+	if (m_pInnerContainer->getRightInParent() < m_size.width)
+	{
+		m_pInnerContainer->setPosition(CCPoint(m_size.width - ((1.0f - m_pInnerContainer->getAnchorPoint().x) * m_pInnerContainer->getSize().width), m_pInnerContainer->getPosition().y));
+	}
+	if (m_pInnerContainer->getPosition().y > 0.0f)
+	{
+		m_pInnerContainer->setPosition(CCPoint(m_pInnerContainer->getPosition().x, m_pInnerContainer->getAnchorPoint().y * m_pInnerContainer->getSize().height));
+	}
+	if (m_pInnerContainer->getTopInParent() < m_size.height)
+	{
+		m_pInnerContainer->setPosition(CCPoint(m_pInnerContainer->getPosition().x, m_size.height - (1.0f - m_pInnerContainer->getAnchorPoint().y) * m_pInnerContainer->getSize().height));
+	}
+
 }
 
 const CCSize& UIScrollView::getInnerContainerSize() const
