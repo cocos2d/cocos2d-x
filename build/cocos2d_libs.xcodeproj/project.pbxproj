@@ -1890,6 +1890,10 @@
 		B69FCC0A18641657008D32AE /* C3Dneon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */; };
 		B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */; };
 		B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */; };
+		B69FCC1F1864495A008D32AE /* C3DTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = B69FCC1E18644929008D32AE /* C3DTransform.h */; };
+		B69FCC2018644979008D32AE /* C3DTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC1D18644929008D32AE /* C3DTransform.cpp */; };
+		B69FCC211864498B008D32AE /* C3DTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC1D18644929008D32AE /* C3DTransform.cpp */; };
+		B69FCC2218644998008D32AE /* C3DTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = B69FCC1E18644929008D32AE /* C3DTransform.h */; };
 		B6A5753018619EA500D70665 /* C3DMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5751B18619D2700D70665 /* C3DMatrix.cpp */; };
 		B6A5753118619EA500D70665 /* C3DQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5751E18619D2700D70665 /* C3DQuaternion.cpp */; };
 		B6A5753218619EA500D70665 /* C3DMathUtilty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752118619D2700D70665 /* C3DMathUtilty.cpp */; };
@@ -3048,6 +3052,8 @@
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = C3Dneon_matrix_impl.c; path = c3d/C3Dneon_matrix_impl.c; sourceTree = "<group>"; };
 		B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3Dneon_matrix_impl.h; path = c3d/C3Dneon_matrix_impl.h; sourceTree = "<group>"; };
+		B69FCC1D18644929008D32AE /* C3DTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = C3DTransform.cpp; path = ../base/C3DTransform.cpp; sourceTree = "<group>"; };
+		B69FCC1E18644929008D32AE /* C3DTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DTransform.h; path = ../base/C3DTransform.h; sourceTree = "<group>"; };
 		B6A5751A18619D2700D70665 /* C3DMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DMath.h; path = c3d/C3DMath.h; sourceTree = "<group>"; };
 		B6A5751B18619D2700D70665 /* C3DMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = C3DMatrix.cpp; path = c3d/C3DMatrix.cpp; sourceTree = "<group>"; };
 		B6A5751C18619D2700D70665 /* C3DMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DMatrix.h; path = c3d/C3DMatrix.h; sourceTree = "<group>"; };
@@ -3500,6 +3506,8 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				B69FCC1D18644929008D32AE /* C3DTransform.cpp */,
+				B69FCC1E18644929008D32AE /* C3DTransform.h */,
 				1A5700A3180BC6060088DEC7 /* atitc.cpp */,
 				1A5700A4180BC6060088DEC7 /* atitc.h */,
 				1A5700A5180BC6060088DEC7 /* CCAffineTransform.cpp */,
@@ -5340,6 +5348,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69FCC2218644998008D32AE /* C3DTransform.h in Headers */,
 				B69FCC0A18641657008D32AE /* C3Dneon_matrix_impl.h in Headers */,
 				B6A575511861A74B00D70665 /* C3DMath.h in Headers */,
 				B6A575521861A74B00D70665 /* C3DMatrix.h in Headers */,
@@ -5914,6 +5923,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69FCC1F1864495A008D32AE /* C3DTransform.h in Headers */,
 				B69FCC091864163C008D32AE /* C3Dneon_matrix_impl.h in Headers */,
 				B6A575431861A70200D70665 /* C3DMath.h in Headers */,
 				B6A575441861A70200D70665 /* C3DMatrix.h in Headers */,
@@ -6716,6 +6726,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69FCC211864498B008D32AE /* C3DTransform.cpp in Sources */,
 				B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.c in Sources */,
 				B6A5753618619EEB00D70665 /* C3DMatrix.cpp in Sources */,
 				B6A5753718619EEB00D70665 /* C3DQuaternion.cpp in Sources */,
@@ -7231,6 +7242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B69FCC2018644979008D32AE /* C3DTransform.cpp in Sources */,
 				B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.c in Sources */,
 				B6A5753018619EA500D70665 /* C3DMatrix.cpp in Sources */,
 				B6A5753118619EA500D70665 /* C3DQuaternion.cpp in Sources */,
