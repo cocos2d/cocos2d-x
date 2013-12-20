@@ -68,6 +68,7 @@ int GroupCommandManager::getGroupID()
     {
         if(!it->second)
         {
+            _groupMapping[it->first] = true;
             return it->first;
         }
     }
