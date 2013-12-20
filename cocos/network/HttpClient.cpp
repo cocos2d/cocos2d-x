@@ -171,6 +171,8 @@ void processRequest(HttpRequest *request)
 // Worker thread
 static void networkThread(void)
 {
+    curlMultiHandle = curl_multi_init();
+    
     while (!s_need_quit)
     {
         // send http request if the requestQueue isn't empty
