@@ -472,7 +472,7 @@ Rect Armature::getBoundingBox() const
 
     Rect boundingBox = Rect(0, 0, 0, 0);
 
-    for_each(_children.begin(), _children.end(), [&minx, &miny, &maxx, &maxy, &first, &boundingBox](Node *object)
+    for (const auto& object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
@@ -498,7 +498,7 @@ Rect Armature::getBoundingBox() const
             boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
         }
 
-    });
+    }
 
     return RectApplyTransform(boundingBox, getNodeToParentTransform());
 }
@@ -642,15 +642,15 @@ void Armature::setBody(cpBody *body)
     _body = body;
     _body->data = this;
 
-    for (auto& object : _children)
+    for (const auto& object : _children)
     {
         if (Bone *bone = dynamic_cast<Bone *>(object))
         {
             auto displayList = bone->getDisplayManager()->getDecorativeDisplayList();
 
-            for_each(displayList.begin(), displayList.end(), [&body](DecorativeDisplay* displayObject)
+            for (const auto& displayObject : displayList)
             {
-                ColliderDetector *detector = displayObject->getColliderDetector();
+                auto detector = displayObject->getColliderDetector();
                 if (detector != nullptr)
                 {
                     detector->setBody(body);
