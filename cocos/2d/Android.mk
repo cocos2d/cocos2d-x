@@ -211,6 +211,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
@@ -223,3 +224,4 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,2d/platform/android)
+$(call import-module,editor-support/spine)
