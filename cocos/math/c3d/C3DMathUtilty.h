@@ -1,39 +1,41 @@
 //
-//  C3DUtilty.h
+//  C3DMathUtilty.h
 //  
 //
-//  utitlity function, such as approximate sin, cos
+//  utitlity function, such as approximate sin, cos, more fast less accuate, can be used by particle system
 //
 //
 
 #ifndef __C3DUtilty__
 #define __C3DUtilty__
 
-#include <iostream>
+
 
 namespace cocos3d
 {
 
-class C3DUtility
+class C3DMathUtility
 {
 public:
-    ~C3DUtility();
+    ~C3DMathUtility();
     
-    static C3DUtility& getInstance();
+    static C3DMathUtility& getInstance();
     
     /**
      * approximate value of sin(rad), precision 1 degree
      *
      * @param rad to retreive.
+     * @param buseTale use look up table retrive sin value.
      */
-    float sin(float rad);
+    float sin(float rad, bool buseTable = false);
     
     /**
      * approximate value of cos(rad), precision 1 degree
      *
      * @param rad to retreive.
+     * @param buseTale use look up table retrive sin value.
      */
-    float cos(float rad);
+    float cos(float rad, bool buseTable = false);
     
     /**
      * approximate value of cos(rad), precision 1 degree
@@ -41,13 +43,14 @@ public:
      * @param rad to retreive.
      * @param sinvalue to receive sin value
      * @param cosvalue to receive cos value
+     * @param buseTale use look up table retrive sin value.
      */
-    void sincos(float rad, float *sinvalue, float* cosvalue);
+    void sincos(float rad, float *sinvalue, float* cosvalue, bool bUseTable = false);
     
 private:
-    C3DUtility();
+    C3DMathUtility();
     
-    void initUtility();
+    void initMathUtility();
     
     /**
      * convert rad to degree

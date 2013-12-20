@@ -1,9 +1,6 @@
-#include "Base.h"
-#include "C3DMatrix.h"
-#include "C3DQuaternion.h"
+#include "C3DMath.h"
 
-#include "C3DUtilty.h"
-#include "C3DVector3.h"
+#include "C3Dneon_matrix_impl.h"
 
 #define MATRIX_SIZE     ( sizeof(float) * 16 )
 
@@ -359,15 +356,7 @@ void C3DMatrix::createRotation(const C3DVector3& axis, float angle, C3DMatrix* d
     }
 
     float c, s;
-    if (approximate)
-    {
-        C3DUtility::getInstance().sincos(angle, &s, &c);
-    }
-    else
-    {
-        c = cos(angle);
-        s = sin(angle);
-    }
+    C3DMathUtility::getInstance().sincos(angle, &s, &c, !approximate);
     
 
     float t = 1.0f - c;
@@ -790,6 +779,7 @@ void C3DMatrix::multiply(const C3DMatrix& m, float scalar, C3DMatrix* dst)
     dst->m[14] = m.m[14] * scalar;
     dst->m[15] = m.m[15] * scalar;
 }
+    
 
 void C3DMatrix::multiply(const C3DMatrix& m)
 {
@@ -798,7 +788,17 @@ void C3DMatrix::multiply(const C3DMatrix& m)
 
 void C3DMatrix::multiply(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst)
 {
-    assert(dst);
+    //assert(dst);
+
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+    
+    // It is possible to skip the memcpy() since "out" does not overwrite p1 or p2.
+    // otherwise a temp must be needed.
+    
+    // Invert column-order with row-order
+    NEON_Matrix4Mul( &m2.m[0], &m1.m[0], &dst->m[0] );
+    
+#else
 
     // Support the case where m1 or m2 is the same array as dst.
     float product[16];
@@ -824,6 +824,8 @@ void C3DMatrix::multiply(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* ds
     product[15] = m1.m[3] * m2.m[12] + m1.m[7] * m2.m[13] + m1.m[11] * m2.m[14] + m1.m[15] * m2.m[15];
 
     memcpy(dst->m, product, MATRIX_SIZE);
+#endif
+    
 }
 
 void C3DMatrix::negate()

@@ -1,5 +1,4 @@
-#include "Base.h"
-#include "C3DVector4.h"
+#include "C3DMath.h"
 
 namespace cocos3d
 {

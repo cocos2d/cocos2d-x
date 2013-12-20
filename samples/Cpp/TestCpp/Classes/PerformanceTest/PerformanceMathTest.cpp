@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-#define GLM_MATH
+//#define GLM_MATH
 #define C3D_MATH
 
 
@@ -288,7 +288,8 @@ void MatMultiplyTest::update(float dt)
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
-        c3dre = c3dmat * c3dmat;
+        cocos3d::C3DMatrix::multiply(c3dmat, c3dmat, &c3dre);
+        //c3dre = c3dmat * c3dmat;
     }
     CC_PROFILER_STOP(our.c_str());
 #endif
