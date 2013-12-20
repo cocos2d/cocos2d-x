@@ -447,6 +447,10 @@ NS_CC_EXT_BEGIN
 		{
 			return NULL;
 		}
+		if (_pNode->getTag() == nTag)
+		{
+			return _pNode;
+		}
 		return nodeByTag(_pNode, nTag);
 	}
 
