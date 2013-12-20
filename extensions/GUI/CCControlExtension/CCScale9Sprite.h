@@ -50,7 +50,7 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class Scale9Sprite : public NodeRGBA
+class Scale9Sprite : public Node
 {
 public:
     /**
@@ -70,25 +70,25 @@ public:
      * Creates a 9-slice sprite with a texture file, a delimitation zone and
      * with the specified cap insets.
      *
-     * @see initWithFile(const char *file, Rect rect, Rect capInsets)
+     * @see initWithFile(const char *file, const Rect& rect, const Rect& capInsets)
      */
-    static Scale9Sprite* create(const char* file, Rect rect,  Rect capInsets);
+    static Scale9Sprite* create(const char* file, const Rect& rect,  const Rect& capInsets);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
      * broken down into a 3×3 grid of equal blocks.
      *
-     * @see initWithFile(Rect capInsets, const char *file)
+     * @see initWithFile(const Rect& capInsets, const char *file)
      */
-    static Scale9Sprite* create(Rect capInsets, const char* file);
+    static Scale9Sprite* create(const Rect& capInsets, const char* file);
 
     /**
      * Creates a 9-slice sprite with a texture file and a delimitation zone. The
      * texture will be broken down into a 3×3 grid of equal blocks.
      *
-     * @see initWithFile(const char *file, Rect rect)
+     * @see initWithFile(const char *file, const Rect& rect)
      */
-    static Scale9Sprite* create(const char* file, Rect rect);
+    static Scale9Sprite* create(const char* file, const Rect& rect);
 
     /**
      * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -114,9 +114,9 @@ public:
      * to resize the sprite will all it's 9-slice goodness intract.
      * It respects the anchorPoint too.
      *
-     * @see initWithSpriteFrame(SpriteFrame *spriteFrame, Rect capInsets)
+     * @see initWithSpriteFrame(SpriteFrame *spriteFrame, const Rect& capInsets)
      */
-    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets);
+    static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
 
     /**
      * Creates a 9-slice sprite with an sprite frame name.
@@ -135,9 +135,9 @@ public:
      * to resize the sprite will all it's 9-slice goodness intract.
      * It respects the anchorPoint too.
      *
-     * @see initWithSpriteFrameName(const char *spriteFrameName, Rect capInsets)
+     * @see initWithSpriteFrameName(const char *spriteFrameName, const Rect& capInsets)
      */
-    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, Rect capInsets);
+    static Scale9Sprite* createWithSpriteFrameName(const char*spriteFrameName, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with a texture file, a delimitation zone and
@@ -152,7 +152,7 @@ public:
      * texture's full rect.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(const char* file, Rect rect,  Rect capInsets);
+    virtual bool initWithFile(const char* file, const Rect& rect,  const Rect& capInsets);
     
     /**
      * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
@@ -166,7 +166,7 @@ public:
      * is the whole image. If the shape is the whole texture, set this to the 
      * texture's full rect.
      */
-    virtual bool initWithFile(const char* file, Rect rect);
+    virtual bool initWithFile(const char* file, const Rect& rect);
     
     /**
      * Initializes a 9-slice sprite with a texture file and with the specified cap
@@ -178,7 +178,7 @@ public:
      * @param file The name of the texture file.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithFile(Rect capInsets, const char* file);
+    virtual bool initWithFile(const Rect& capInsets, const char* file);
     
     /**
      * Initializes a 9-slice sprite with a texture file. The whole texture will be
@@ -201,7 +201,7 @@ public:
      * @param spriteFrame The sprite frame object.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets);
+    virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with an sprite frame.
@@ -223,7 +223,7 @@ public:
      * @param spriteFrameName The sprite frame name.
      * @param capInsets The values to use for the cap insets.
      */
-    virtual bool initWithSpriteFrameName(const char*spriteFrameName, Rect capInsets);
+    virtual bool initWithSpriteFrameName(const char*spriteFrameName, const Rect& capInsets);
 
     /**
      * Initializes a 9-slice sprite with an sprite frame name.
@@ -236,8 +236,8 @@ public:
     virtual bool initWithSpriteFrameName(const char*spriteFrameName);
 
     virtual bool init();
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
-    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets);
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
+    virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
 
     /**
      * Creates and returns a new sprite object with the specified cap insets.
@@ -247,9 +247,9 @@ public:
      *
      * @param capInsets The values to use for the cap insets.
      */
-    Scale9Sprite* resizableSpriteWithCapInsets(Rect capInsets);
+    Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
     
-    virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets);
+    virtual bool updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets);
     virtual void setSpriteFrame(SpriteFrame * spriteFrame);
 
     // overrides
@@ -262,9 +262,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;
-	virtual GLubyte getOpacity() const override;
     virtual void setColor(const Color3B& color) override;
-	virtual const Color3B& getColor() const override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
 

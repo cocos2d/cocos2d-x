@@ -2,6 +2,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
 
 ButtonTestLayer::ButtonTestLayer()
 : mControlEventLabel(NULL)
@@ -28,7 +29,7 @@ bool ButtonTestLayer::onAssignCCBMemberVariable(Object * pTarget, const char * p
     return false;
 }
 
-void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, cocos2d::extension::Control::EventType pControlEvent) {
+void ButtonTestLayer::onControlButtonClicked(cocos2d::Object *pSender, Control::EventType pControlEvent) {
     switch(pControlEvent) {
         case Control::EventType::TOUCH_DOWN:
             this->mControlEventLabel->setString("Touch Down.");

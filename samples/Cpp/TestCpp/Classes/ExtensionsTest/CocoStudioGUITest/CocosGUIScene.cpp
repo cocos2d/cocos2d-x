@@ -1,7 +1,7 @@
 #include "CocosGUIScene.h"
 #include "UISceneManager.h"
-//#include "CocosGUIExamplesRegisterScene.h"
 #include "../ExtensionsTest.h"
+#include "cocostudio/CocoStudio.h"
 
 const char* gui_scene_names[2] =
 {
@@ -17,26 +17,15 @@ CocosGUITestScene::CocosGUITestScene(bool bPortrait)
 
 CocosGUITestScene::~CocosGUITestScene()
 {
-	cocos2d::extension::SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::ActionManagerEx::purgeActionManager();
-	cocos2d::extension::UIHelper::purgeUIHelper();
+	cocostudio::SceneReader::getInstance()->purgeSceneReader();
+	cocostudio::ActionManagerEx::purgeActionManager();
 }
 
 void CocosGUITestScene::runThisTest()
 {
     
 	Director::getInstance()->replaceScene(this);
-    
-    ul = UILayer::create();
-    ul->scheduleUpdate();
-    this->addChild(ul);
-    
-    /*
-    Layout* layout = static_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UI/UI01.json"));
-    ul->addWidget(layout);
-     */
-    
-//    /*
+
     Size s = CCDirector::getInstance()->getWinSize();
     
     _itemMenu = CCMenu::create();
@@ -57,7 +46,6 @@ void CocosGUITestScene::runThisTest()
 }
 void CocosGUITestScene::MainMenuCallback(Object* pSender)
 {
-    ul->removeFromParent();
     ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();    

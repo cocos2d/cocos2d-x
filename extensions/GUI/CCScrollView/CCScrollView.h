@@ -27,7 +27,7 @@
 #define __CCSCROLLVIEW_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
@@ -166,7 +166,8 @@ public:
      */
     void resume(Object* sender);
 
-
+    void setTouchEnabled(bool enabled);
+	bool isTouchEnabled() const;
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
@@ -216,10 +217,6 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *event);
     
     // Overrides
-//    virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) override;
-//    virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) override;
     virtual void setContentSize(const Size & size) override;
     virtual const Size& getContentSize() const override;
     /**
@@ -230,7 +227,6 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child) override;
-    void setTouchEnabled(bool e) override;
 
 protected:
     /**
@@ -352,6 +348,9 @@ protected:
      */
     Rect _parentScissorRect;
     bool _scissorRestored;
+    
+    /** Touch listener */
+    EventListenerTouchOneByOne* _touchListener;
 };
 
 // end of GUI group

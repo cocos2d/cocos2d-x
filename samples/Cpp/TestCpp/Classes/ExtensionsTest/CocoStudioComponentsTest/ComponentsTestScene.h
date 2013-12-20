@@ -2,7 +2,7 @@
 #define __COMPONENTSTESTSCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 void runComponentsTestLayerTest();
 
@@ -14,7 +14,7 @@ public:
 
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, 
     // instead of returning 'id' in cocos2d-iphone
-	virtual bool init();
+	virtual bool init() override;
     
     // there's no 'id' in cpp, so we recommand to return the exactly class pointer
 	static cocos2d::Scene* scene();

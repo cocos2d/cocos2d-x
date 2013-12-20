@@ -2,20 +2,21 @@
 #define __CC_ENEMYCONTROLLER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
 
-class EnemyController : public cocos2d::extension::ComController
+class EnemyController : public cocostudio::ComController
 {
 protected:
     EnemyController(void);
     virtual ~EnemyController(void);
         
 public:
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
+    virtual bool init() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float delta) override;
    
     static EnemyController* create(void);
 public:

@@ -29,7 +29,7 @@ void UserDefaultTest::doTest()
 
     // print value
 
-    string ret = UserDefault::getInstance()->getStringForKey("string");
+    std::string ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
     double d = UserDefault::getInstance()->getDoubleForKey("double");

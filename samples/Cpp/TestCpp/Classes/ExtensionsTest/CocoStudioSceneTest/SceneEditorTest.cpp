@@ -1,27 +1,29 @@
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
+#include "cocostudio/CocoStudio.h"
+#include "gui/CocosGUI.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
+using namespace cocostudio;
+using namespace gui;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    armature::ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
-	cocos2d::extension::ActionManagerEx::shareManager()->purgeActionManager();
-	cocos2d::extension::UIHelper::instance()->purgeUIHelper();
+	ActionManagerEx::shareManager()->purgeActionManager();
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
 {
-	_curNode = NULL;
+	_curNode = nullptr;
 }
 
 Scene* SceneEditorTestLayer::scene()
 {
-	Scene * scene = NULL;
+	Scene * scene = nullptr;
 	do 
 	{
 		// 'scene' is an autorelease object
@@ -58,31 +60,37 @@ bool SceneEditorTestLayer::init()
 	return bRet;
 }
 
+static ActionObject* actionObject = nullptr;
+
 cocos2d::Node* SceneEditorTestLayer::createGameScene()
 {
     Node *pNode = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/FishJoy2.json");
-	if (pNode == NULL)
+	if (pNode == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	_curNode = pNode;
    
     MenuItemFont *itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(SceneEditorTestLayer::toExtensionsMainLayer, this));
         itemBack->setColor(Color3B(255, 255, 255));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        Menu *menuBack = Menu::create(itemBack, NULL);
+        Menu *menuBack = Menu::create(itemBack, nullptr);
         menuBack->setPosition(Point(0.0f, 0.0f));
 		menuBack->setZOrder(4);
 
     pNode->addChild(menuBack);
     
     //ui action
-	cocos2d::extension::ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
 void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 {
+	if (actionObject)
+	{
+		actionObject->stop();
+	}
     ComAudio *pBackMusic = (ComAudio*)(_curNode->getComponent("CCBackgroundAudio"));
     pBackMusic->stopBackgroundMusic();
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();

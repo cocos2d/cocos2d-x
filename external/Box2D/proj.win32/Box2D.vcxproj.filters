@@ -159,6 +159,9 @@
     <ClCompile Include="..\Rope\b2Rope.cpp">
       <Filter>Rope</Filter>
     </ClCompile>
+    <ClCompile Include="..\Dynamics\Joints\b2MotorJoint.cpp">
+      <Filter>Dynamics\Joints</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Collision\b2BroadPhase.h">
@@ -297,5 +300,8 @@
       <Filter>Rope</Filter>
     </ClInclude>
     <ClInclude Include="..\Box2D.h" />
+    <ClInclude Include="..\Dynamics\Joints\b2MotorJoint.h">
+      <Filter>Dynamics\Joints</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

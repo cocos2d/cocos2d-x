@@ -56,6 +56,7 @@ ScrollView::ScrollView()
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
+, _touchListener(nullptr)
 {
 
 }
@@ -110,7 +111,6 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         this->setViewSize(size);
 
         setTouchEnabled(true);
-        setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
         
         _touches.reserve(EventTouch::MAX_TOUCHES);
         
@@ -151,36 +151,45 @@ bool ScrollView::isNodeVisible(Node* node)
 
 void ScrollView::pause(Object* sender)
 {
-    _container->pauseSchedulerAndActions();
+    _container->pause();
 
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->pauseSchedulerAndActions();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->pause();
     }
 }
 
 void ScrollView::resume(Object* sender)
 {
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->resumeSchedulerAndActions();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->resume();
     }
 
-    _container->resumeSchedulerAndActions();
+    _container->resume();
 }
 
-void ScrollView::setTouchEnabled(bool e)
+bool ScrollView::isTouchEnabled() const
 {
-    Layer::setTouchEnabled(e);
-    if (!e)
+	return _touchListener != nullptr;
+}
+
+void ScrollView::setTouchEnabled(bool enabled)
+{
+    _eventDispatcher->removeEventListener(_touchListener);
+    _touchListener = nullptr;
+
+    if (enabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        _touchListener->onTouchBegan = CC_CALLBACK_2(ScrollView::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(ScrollView::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(ScrollView::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(ScrollView::onTouchCancelled, this);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
     {
         _dragging = false;
         _touchMoved = false;
@@ -469,8 +478,6 @@ void ScrollView::updateInset()
  */
 void ScrollView::addChild(Node * child, int zOrder, int tag)
 {
-    child->ignoreAnchorPointForPosition(false);
-    child->setAnchorPoint(Point(0.0f, 0.0f));
     if (_container != child) {
         _container->addChild(child, zOrder, tag);
     } else {
@@ -542,24 +549,18 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
 
-	if(_children)
+	if (!_children.empty())
     {
 		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -572,12 +573,11 @@ void ScrollView::visit()
 		
 		// this draw
 		this->draw();
-		updateEventPriorityIndex();
         
 		// draw children zOrder >= 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			child->visit();
 		}
         
@@ -585,14 +585,9 @@ void ScrollView::visit()
     else
     {
 		this->draw();
-        updateEventPriorityIndex();
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }

@@ -38,14 +38,14 @@ void Paddle::onEnter()
     Sprite::onEnter();
     
     // Register Touch Event
-    auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+    auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     
     listener->onTouchBegan = CC_CALLBACK_2(Paddle::onTouchBegan, this);
     listener->onTouchMoved = CC_CALLBACK_2(Paddle::onTouchMoved, this);
     listener->onTouchEnded = CC_CALLBACK_2(Paddle::onTouchEnded, this);
     
-    EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void Paddle::onExit()

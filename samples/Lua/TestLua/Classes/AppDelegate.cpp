@@ -3,6 +3,7 @@
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
+#include "lua_assetsmanager_test_sample.h"
 
 using namespace CocosDenshion;
 
@@ -50,8 +51,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID ||CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    LuaStack* stack = pEngine->getLuaStack();
+    register_assetsmanager_test_sample(stack->getLuaState());
+#endif
+    
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
+    searchPaths.insert(searchPaths.begin(), "Images");
     searchPaths.insert(searchPaths.begin(), "cocosbuilderRes");
+    if (screenSize.height > 320)
+    {
+        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
+    }
+    else
+    {
+        searchPaths.insert(searchPaths.begin(), "scenetest");
+    }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

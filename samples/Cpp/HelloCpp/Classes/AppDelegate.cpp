@@ -23,8 +23,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glView = EGLView::getInstance();
 
     director->setOpenGLView(glView);
-    
-    auto size = director->getWinSize();
 
     // Set the design resolution
     glView->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);

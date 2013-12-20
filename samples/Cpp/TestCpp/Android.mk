@@ -38,6 +38,7 @@ Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/ConfigurationTest/ConfigurationTest.cpp \
+Classes/ConsoleTest/ConsoleTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
 Classes/DataVisitorTest/DataVisitorTest.cpp \
@@ -98,6 +99,7 @@ Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
+Classes/InputTest/MouseTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeyboardTest/KeyboardTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
@@ -108,6 +110,7 @@ Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
 Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
+Classes/NewRendererTest/NewRendererTest.cpp \
 Classes/NodeTest/NodeTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
@@ -118,6 +121,7 @@ Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/PerformanceTest/PerformanceLabelTest.cpp \
 Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \
@@ -141,18 +145,20 @@ Classes/ZwoptexTest/ZwoptexTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/Classes
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += box2d_static
-LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cocosbuilder_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_extension_static
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/Classes
             
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,CocosDenshion/android)
-$(call import-module,external/Box2D)
-$(call import-module,external/chipmunk)
-$(call import-module,cocos2dx)
 $(call import-module,extensions)
+$(call import-module,editor-support/cocosbuilder)
+$(call import-module,editor-support/spine)
+$(call import-module,editor-support/cocostudio)
+$(call import-module,network)
+$(call import-module,2d)

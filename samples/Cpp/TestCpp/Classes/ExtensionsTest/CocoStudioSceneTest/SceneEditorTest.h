@@ -2,7 +2,7 @@
 #define __SCENEEDITORTESTSCENE_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 void runSceneEditorTestLayer();
 

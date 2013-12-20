@@ -4,6 +4,7 @@ require "Cocos2d"
 require "Cocos2dConstants"
 require "Opengl"
 require "OpenglConstants"
+require "StudioConstants"
 require "luaScript/helper"
 require "luaScript/testResource"
 require "luaScript/VisibleRect"
@@ -13,9 +14,11 @@ require "luaScript/ActionManagerTest/ActionManagerTest"
 require "luaScript/ActionsEaseTest/ActionsEaseTest"
 require "luaScript/ActionsProgressTest/ActionsProgressTest"
 require "luaScript/ActionsTest/ActionsTest"
+require "luaScript/AssetsManagerTest/AssetsManagerTest"
 require "luaScript/BugsTest/BugsTest"
 require "luaScript/ClickAndMoveTest/ClickAndMoveTest"
 require "luaScript/CocosDenshionTest/CocosDenshionTest"
+require "luaScript/CocoStudioTest/CocoStudioTest"
 require "luaScript/CurrentLanguageTest/CurrentLanguageTest"
 require "luaScript/DrawPrimitivesTest/DrawPrimitivesTest"
 require "luaScript/EffectsTest/EffectsTest"
@@ -25,6 +28,7 @@ require "luaScript/FontTest/FontTest"
 require "luaScript/IntervalTest/IntervalTest"
 require "luaScript/KeypadTest/KeypadTest"
 require "luaScript/LabelTest/LabelTest"
+require "luaScript/LabelTestNew/LabelTestNew"
 require "luaScript/LayerTest/LayerTest"
 require "luaScript/MenuTest/MenuTest"
 require "luaScript/MotionStreakTest/MotionStreakTest"
@@ -44,6 +48,7 @@ require "luaScript/TransitionsTest/TransitionsTest"
 require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
 require "luaScript/LuaBridgeTest/LuaBridgeTest"
+require "luaScript/XMLHttpRequestTest/XMLHttpRequestTest"
 
 
 local LINE_SPACE = 40
@@ -58,12 +63,14 @@ local _allTests = {
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
     { isSupported = true,  name = "ActionsProgressTest"    , create_func   =       ProgressActionsTest      },
     { isSupported = true,  name = "ActionsTest"            , create_func   =               ActionsTest      },
+    { isSupported = true,  name = "AssetsManagerTest"      , create_func   =         AssetsManagerTestMain      },
     { isSupported = false,  name = "Box2dTest"              , create_func=                 Box2dTestMain  },
     { isSupported = false,  name = "Box2dTestBed"           , create_func=              Box2dTestBedMain  },
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
@@ -74,7 +81,9 @@ local _allTests = {
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
+    { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
+    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
@@ -96,16 +105,16 @@ local _allTests = {
     { isSupported = true,  name = "TouchesTest"            , create_func   =               TouchesTest      },
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
-    { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  },
-    { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest }
+    { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
+    { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 
 local TESTS_COUNT = table.getn(_allTests)
 
 -- create scene
 local function CreateTestScene(nIdx)
-    local scene = _allTests[nIdx].create_func()
     cc.Director:getInstance():purgeCachedData()
+    local scene = _allTests[nIdx].create_func()
     return scene
 end
 -- create menu

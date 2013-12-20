@@ -62,7 +62,6 @@ bool ControlHuePicker::initWithTargetAndPos(Node* target, Point pos)
 {
     if (Control::init())
     {
-        setTouchEnabled(true);
         // Add background and slider sprites
         this->setBackground(ControlUtils::addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, Point(0.0f, 0.0f)));
         this->setSlider(ControlUtils::addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, Point(0.5f, 0.5f)));

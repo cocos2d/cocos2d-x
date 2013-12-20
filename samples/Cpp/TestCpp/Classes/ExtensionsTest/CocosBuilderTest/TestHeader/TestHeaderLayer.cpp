@@ -2,6 +2,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocosbuilder;
 
 SEL_MenuHandler TestHeaderLayer::onResolveCCBCCMenuItemSelector(Object * pTarget, const char * pSelectorName) {
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onBackClicked", TestHeaderLayer::onBackClicked);
@@ -14,7 +15,7 @@ Control::Handler TestHeaderLayer::onResolveCCBCCControlSelector(Object * pTarget
     return NULL;
 }
 
-void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocos2d::extension::NodeLoader * nodeLoader)
+void TestHeaderLayer::onNodeLoaded(cocos2d::Node * node, cocosbuilder::NodeLoader * nodeLoader)
 {
     CCLOG("TestHeaderLayer::onNodeLoaded");
 }

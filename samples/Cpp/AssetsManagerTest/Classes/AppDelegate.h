@@ -11,7 +11,7 @@
 
 #include "CCApplication.h"
 #include "cocos2d.h"
-#include "AssetsManager/AssetsManager.h"
+#include "extensions/assets-manager/AssetsManager.h"
 
 /**
 @brief    The cocos2d Application.

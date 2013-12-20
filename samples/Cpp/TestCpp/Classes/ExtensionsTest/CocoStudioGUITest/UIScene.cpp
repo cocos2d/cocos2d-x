@@ -1,8 +1,11 @@
 
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 #include "UIScene.h"
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
+#include "editor-support/cocostudio/CCSGUIReader.h"
+
+using namespace gui;
 
 UIScene::UIScene()
 : m_pSceneTitle(NULL)
@@ -23,7 +26,7 @@ bool UIScene::init()
         m_pUiLayer = UILayer::create();
         addChild(m_pUiLayer);
         
-        m_pWidget = dynamic_cast<Layout*>(CCUIHELPER->createWidgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pWidget = dynamic_cast<UILayout*>(cocostudio::GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
@@ -61,6 +64,7 @@ void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         auto scene = new ExtensionsTestScene();
         scene->runThisTest();
         scene->release();
@@ -71,6 +75,7 @@ void UIScene::previousCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
     }
 }
@@ -79,6 +84,7 @@ void UIScene::restartCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
     }
 }
@@ -87,6 +93,7 @@ void UIScene::nextCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
+        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
     }
 }

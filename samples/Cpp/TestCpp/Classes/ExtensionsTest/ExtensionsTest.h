@@ -8,13 +8,16 @@ class ExtensionsMainLayer : public Layer
 public:
     virtual void onEnter();
 
-	virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
 	Point _beginPos;
     Menu* _itemMenu;
 
 	int _testcount;
+    
+protected:
+    void onMouseScroll(Event* event);
 };
 
 class ExtensionsTestScene : public TestScene

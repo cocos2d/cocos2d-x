@@ -1,7 +1,7 @@
 
 
 #include "UINodeContainerTest.h"
-#include "cocos-ext.h"
+#include "extensions/cocos-ext.h"
 
 const char* font_UINodeContainerTest =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -52,7 +52,7 @@ bool UINodeContainerTest::init()
         m_pUiLayer->addWidget(nodeContainer);
         
         Sprite* sprite = Sprite::create("cocosgui/ccicon.png");
-        sprite->setPosition(Point(0, sprite->boundingBox().size.height / 4));
+        sprite->setPosition(Point(0, sprite->getBoundingBox().size.height / 4));
         nodeContainer->addRenderer(sprite, 0);
         
         return true;

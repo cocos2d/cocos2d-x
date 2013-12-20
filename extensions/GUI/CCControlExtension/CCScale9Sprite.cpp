@@ -84,12 +84,12 @@ bool Scale9Sprite::init()
     return this->initWithBatchNode(NULL, Rect::ZERO, Rect::ZERO);
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, Rect capInsets)
+bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets)
 {
     return this->initWithBatchNode(batchnode, rect, false, capInsets);
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets)
+bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, bool rotated, const Rect& capInsets)
 {
     if(batchnode)
     {
@@ -108,10 +108,11 @@ bool Scale9Sprite::initWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool
 #define    TRANSLATE_Y(x, y, ytranslate) \
     y+=ytranslate;                       \
 
-bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bool rotated, Rect capInsets)
+bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, const Rect& originalRect, bool rotated, const Rect& capInsets)
 {
     GLubyte opacity = getOpacity();
     Color3B color = getColor();
+    Rect rect(originalRect);
 
     // Release old sprites
     this->removeAllChildrenWithCleanup(true);
@@ -244,48 +245,49 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         centertopbounds = RectApplyAffineTransform(centertopbounds, t);
 
         // Centre
-        _centre = new Sprite();
-        _centre->initWithTexture(_scale9Image->getTexture(), centerbounds);
+        _centre = Sprite::createWithTexture(_scale9Image->getTexture(), centerbounds);
+        _centre->retain();
         _scale9Image->addChild(_centre, 0, pCentre);
+
         
         // Top
-        _top = new Sprite();
-        _top->initWithTexture(_scale9Image->getTexture(), centertopbounds);
+        _top = Sprite::createWithTexture(_scale9Image->getTexture(), centertopbounds);
+        _top->retain();
         _scale9Image->addChild(_top, 1, pTop);
         
         // Bottom
-        _bottom = new Sprite();
-        _bottom->initWithTexture(_scale9Image->getTexture(), centerbottombounds);
+        _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), centerbottombounds);
+        _bottom->retain();
         _scale9Image->addChild(_bottom, 1, pBottom);
         
         // Left
-        _left = new Sprite();
-        _left->initWithTexture(_scale9Image->getTexture(), leftcenterbounds);
+        _left = Sprite::createWithTexture(_scale9Image->getTexture(), leftcenterbounds);
+        _left->retain();
         _scale9Image->addChild(_left, 1, pLeft);
         
         // Right
-        _right = new Sprite();
-        _right->initWithTexture(_scale9Image->getTexture(), rightcenterbounds);
+        _right = Sprite::createWithTexture(_scale9Image->getTexture(), rightcenterbounds);
+        _right->retain();
         _scale9Image->addChild(_right, 1, pRight);
         
         // Top left
-        _topLeft = new Sprite();
-        _topLeft->initWithTexture(_scale9Image->getTexture(), lefttopbounds);
+        _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), lefttopbounds);
+        _topLeft->retain();
         _scale9Image->addChild(_topLeft, 2, pTopLeft);
         
         // Top right
-        _topRight = new Sprite();
-        _topRight->initWithTexture(_scale9Image->getTexture(), righttopbounds);
+        _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), righttopbounds);
+        _topRight->retain();
         _scale9Image->addChild(_topRight, 2, pTopRight);
         
         // Bottom left
-        _bottomLeft = new Sprite();
-        _bottomLeft->initWithTexture(_scale9Image->getTexture(), leftbottombounds);
+        _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), leftbottombounds);
+        _bottomLeft->retain();
         _scale9Image->addChild(_bottomLeft, 2, pBottomLeft);
         
         // Bottom right
-        _bottomRight = new Sprite();
-        _bottomRight->initWithTexture(_scale9Image->getTexture(), rightbottombounds);
+        _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rightbottombounds);
+        _bottomRight->retain();
         _scale9Image->addChild(_bottomRight, 2, pBottomRight);
     } else {
         // set up transformation of coordinates
@@ -329,48 +331,48 @@ bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode* batchnode, Rect rect, bo
         rotatedcentertopbounds.origin = centertopbounds.origin;
 
         // Centre
-        _centre = new Sprite();
-        _centre->initWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, true);
+        _centre = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbounds, true);
+        _centre->retain();
         _scale9Image->addChild(_centre, 0, pCentre);
         
         // Top
-        _top = new Sprite();
-        _top->initWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, true);
+        _top = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcentertopbounds, true);
+        _top->retain();
         _scale9Image->addChild(_top, 1, pTop);
         
         // Bottom
-        _bottom = new Sprite();
-        _bottom->initWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
+        _bottom = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedcenterbottombounds, true);
+        _bottom->retain();
         _scale9Image->addChild(_bottom, 1, pBottom);
         
         // Left
-        _left = new Sprite();
-        _left->initWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, true);
+        _left = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftcenterbounds, true);
+        _left->retain();
         _scale9Image->addChild(_left, 1, pLeft);
         
         // Right
-        _right = new Sprite();
-        _right->initWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, true);
+        _right = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightcenterbounds, true);
+        _right->retain();
         _scale9Image->addChild(_right, 1, pRight);
         
         // Top left
-        _topLeft = new Sprite();
-        _topLeft->initWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, true);
+        _topLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedlefttopbounds, true);
+        _topLeft->retain();
         _scale9Image->addChild(_topLeft, 2, pTopLeft);
         
         // Top right
-        _topRight = new Sprite();
-        _topRight->initWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, true);
+        _topRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrighttopbounds, true);
+        _topRight->retain();
         _scale9Image->addChild(_topRight, 2, pTopRight);
         
         // Bottom left
-        _bottomLeft = new Sprite();
-        _bottomLeft->initWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, true);
+        _bottomLeft = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedleftbottombounds, true);
+        _bottomLeft->retain();
         _scale9Image->addChild(_bottomLeft, 2, pBottomLeft);
         
         // Bottom right
-        _bottomRight = new Sprite();
-        _bottomRight->initWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, true);
+        _bottomRight = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedrightbottombounds, true);
+        _bottomRight->retain();
         _scale9Image->addChild(_bottomRight, 2, pBottomRight);
     }
 
@@ -453,7 +455,7 @@ void Scale9Sprite::updatePositions()
     _centre->setPosition(Point(leftWidth, bottomHeight));
 }
 
-bool Scale9Sprite::initWithFile(const char* file, Rect rect,  Rect capInsets)
+bool Scale9Sprite::initWithFile(const char* file, const Rect& rect,  const Rect& capInsets)
 {
     CCASSERT(file != NULL, "Invalid file for sprite");
     
@@ -462,7 +464,7 @@ bool Scale9Sprite::initWithFile(const char* file, Rect rect,  Rect capInsets)
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect,  Rect capInsets)
+Scale9Sprite* Scale9Sprite::create(const char* file, const Rect& rect,  const Rect& capInsets)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
@@ -474,14 +476,14 @@ Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect,  Rect capInsets)
     return NULL;
 }
 
-bool Scale9Sprite::initWithFile(const char* file, Rect rect)
+bool Scale9Sprite::initWithFile(const char* file, const Rect& rect)
 {
     CCASSERT(file != NULL, "Invalid file for sprite");
     bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect)
+Scale9Sprite* Scale9Sprite::create(const char* file, const Rect& rect)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(file, rect) )
@@ -494,13 +496,13 @@ Scale9Sprite* Scale9Sprite::create(const char* file, Rect rect)
 }
 
 
-bool Scale9Sprite::initWithFile(Rect capInsets, const char* file)
+bool Scale9Sprite::initWithFile(const Rect& capInsets, const char* file)
 {
     bool pReturn = this->initWithFile(file, Rect::ZERO, capInsets);
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::create(Rect capInsets, const char* file)
+Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const char* file)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithFile(capInsets, file) )
@@ -531,7 +533,7 @@ Scale9Sprite* Scale9Sprite::create(const char* file)
     return NULL;
 }
 
-bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets)
+bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Texture2D* texture = spriteFrame->getTexture();
     CCASSERT(texture != NULL, "CCTexture must be not nil");
@@ -543,7 +545,7 @@ bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets)
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, Rect capInsets)
+Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
@@ -573,7 +575,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
     return NULL;
 }
 
-bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, Rect capInsets)
+bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, const Rect& capInsets)
 {
     CCASSERT((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
 
@@ -586,7 +588,7 @@ bool Scale9Sprite::initWithSpriteFrameName(const char* spriteFrameName, Rect cap
     return pReturn;
 }
 
-Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameName, Rect capInsets)
+Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameName, const Rect& capInsets)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
@@ -621,7 +623,7 @@ Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const char* spriteFrameNam
     
 }
 
-Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(Rect capInsets)
+Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets)
 {
     Scale9Sprite* pReturn = new Scale9Sprite();
     if ( pReturn && pReturn->initWithBatchNode(_scale9Image, _spriteRect, capInsets) )
@@ -697,17 +699,12 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
         return;
     }
     _opacityModifyRGB = var;
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setOpacityModifyRGB(_opacityModifyRGB);
-        }
+    
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacityModifyRGB(_opacityModifyRGB);
     }
 }
+
 bool Scale9Sprite::isOpacityModifyRGB() const
 {
     return _opacityModifyRGB;
@@ -786,22 +783,11 @@ void Scale9Sprite::setColor(const Color3B& color)
         return;
     }
     
-    NodeRGBA::setColor(color);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setColor(color);
-        }
+    Node::setColor(color);
+    
+    for(auto child : _scale9Image->getChildren()){
+        child->setColor(color);
     }
-}
-
-const Color3B& Scale9Sprite::getColor() const
-{
-	return _realColor;
 }
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
@@ -810,22 +796,11 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     {
         return;
     }
-    NodeRGBA::setOpacity(opacity);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->setOpacity(opacity);
-        }
+    Node::setOpacity(opacity);
+    
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacity(opacity);
     }
-}
-
-GLubyte Scale9Sprite::getOpacity() const
-{
-	return _realOpacity;
 }
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
@@ -834,16 +809,10 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     {
         return;
     }
-    NodeRGBA::updateDisplayedColor(parentColor);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->updateDisplayedColor(parentColor);
-        }
+    Node::updateDisplayedColor(parentColor);
+
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedColor(parentColor);
     }
 }
 
@@ -853,16 +822,10 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     {
         return;
     }
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
-    Object* child;
-    Array* children = _scale9Image->getChildren();
-    CCARRAY_FOREACH(children, child)
-    {
-        RGBAProtocol* pNode = dynamic_cast<RGBAProtocol*>(child);
-        if (pNode)
-        {
-            pNode->updateDisplayedOpacity(parentOpacity);
-        }
+    Node::updateDisplayedOpacity(parentOpacity);
+    
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedOpacity(parentOpacity);
     }
 }
 
