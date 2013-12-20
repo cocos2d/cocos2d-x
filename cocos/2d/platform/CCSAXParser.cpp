@@ -111,7 +111,7 @@ bool SAXParser::parse(const char* xmlData, size_t dataLength)
 	return tinyDoc.Accept( &printer );	
 }
 
-bool SAXParser::parse(const char *pszFile)
+bool SAXParser::parse(const std::string& filename)
 {
     bool ret = false;
     Data data = FileUtils::getInstance()->getDataFromFile(filename);

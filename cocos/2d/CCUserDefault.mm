@@ -365,7 +365,7 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
 
 Data UserDefault::getDataForKey(const char* pKey)
 {
-    return getDataForKey(pKey, NULL);
+    return getDataForKey(pKey, Data::Null);
 }
 
 Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
