@@ -9,11 +9,13 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          Removed most hungarian notations.
      [FIX]          Merged NodeRGBA to Node.
      [NEW]          New renderer support.
+     [FIX]          Potential hash collision fix.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.
      [NEW]          Bindings-generator supports to bind 'unsigned long'.
      [FIX]          'Test Frame Event' of TestJavascript/CocoStudioArmatureTest Crashes.
+     [FIX]          UserDefault::getDoubleForKey() doesn't pass default value to Java.
 [Windows]
      [NEW]          CMake support for windows.
      

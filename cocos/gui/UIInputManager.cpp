@@ -71,8 +71,8 @@ void UIInputManager::registWidget(UIWidget* widget)
 bool UIInputManager::checkTouchEvent(UIWidget *root, const Point &touchPoint)
 {
     ccArray* arrayRootChildren = root->getChildren()->data;
-    int length = arrayRootChildren->num;
-    for (int i=length-1; i >= 0; i--)
+    ssize_t length = arrayRootChildren->num;
+    for (ssize_t i=length-1; i >= 0; i--)
     {
         UIWidget* widget = (UIWidget*)(arrayRootChildren->arr[i]);
         if (checkTouchEvent(widget, touchPoint))
@@ -130,7 +130,7 @@ void UIInputManager::update(float dt)
         }
     }
     ccArray* arrayWidget = _checkedDoubleClickWidget->data;
-    int widgetCount = arrayWidget->num;
+    ssize_t widgetCount = arrayWidget->num;
     for (int i=0;i<widgetCount;i++)
     {
         UIWidget* widget = (UIWidget*)(arrayWidget->arr[i]);
@@ -173,7 +173,7 @@ void UIInputManager::onTouchEnd(Touch* touch)
     _touchEndedPoint.x = touch->getLocation().x;
     _touchEndedPoint.y = touch->getLocation().y;
     ccArray* selectedWidgetArray = _selectedWidgets->data;
-    int length = selectedWidgetArray->num;
+    ssize_t length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);
@@ -188,7 +188,7 @@ void UIInputManager::onTouchCancelled(Touch* touch)
     _touchEndedPoint.x = touch->getLocation().x;
     _touchEndedPoint.y = touch->getLocation().y;
     ccArray* selectedWidgetArray = _selectedWidgets->data;
-    int length = selectedWidgetArray->num;
+    ssize_t length = selectedWidgetArray->num;
     for (int i=0; i<length; ++i)
     {
         UIWidget* hitWidget = (UIWidget*)(selectedWidgetArray->arr[0]);

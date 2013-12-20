@@ -203,9 +203,9 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
-        std::for_each(spritesheets.cbegin(), spritesheets.cend(), [](const Value& value){
+        for(const auto &value : spritesheets) {
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
-        });
+        }
     }
 
     switch (version) {

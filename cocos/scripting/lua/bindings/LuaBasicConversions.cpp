@@ -32,7 +32,7 @@ extern "C" {
 }
 #endif
 
-std::map<long, std::string>  g_luaType;
+std::unordered_map<std::string, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
@@ -1640,8 +1640,8 @@ void array_to_luaval(lua_State* L,Array* inValue)
         if (nullptr == obj)
             continue;
         
-        long typeId = typeid(*obj).hash_code();
-        auto iter = g_luaType.find(typeId);
+        std::string typeName = typeid(*obj).name();
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;
@@ -1729,9 +1729,9 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (NULL == element)
             continue;
         
-        long typeId = typeid(element->getObject()).hash_code();
+        std::string typeName = typeid(element->getObject()).name();
         
-        auto iter = g_luaType.find(typeId);
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;

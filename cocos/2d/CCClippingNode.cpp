@@ -41,9 +41,9 @@ static void setProgram(Node *n, GLProgram *p)
     n->setShaderProgram(p);
     
     auto& children = n->getChildren();
-    std::for_each(children.begin(), children.end(), [p](Node* child){
+    for(const auto &child : children) {
         setProgram(child, p);
-    });
+    }
 }
 
 ClippingNode::ClippingNode()
