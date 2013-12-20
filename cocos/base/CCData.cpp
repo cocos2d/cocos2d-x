@@ -21,9 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include <string.h>
+
 #include "CCData.h"
 #include "platform/CCCommon.h"
+#include "ccMacros.h"
+
+#include <string>
 
 NS_CC_BEGIN
 
@@ -51,7 +54,7 @@ Data::Data(const Data& other)
 Data::~Data()
 {
     CCLOGINFO("deallocing Data: %p", this);
-    free(_bytes);
+    clear();
 }
 
 Data& Data::operator= (const Data& other)
@@ -94,10 +97,11 @@ ssize_t Data::getSize() const
 
 void Data::copy(unsigned char* bytes, const ssize_t size)
 {
-    free(_bytes);
-    _size = size;
+    clear();
+    
     if (size > 0)
     {
+        _size = size;
         _bytes = (unsigned char*)malloc(sizeof(unsigned char) * _size);
         memcpy(_bytes, bytes, _size);
     }
@@ -105,9 +109,15 @@ void Data::copy(unsigned char* bytes, const ssize_t size)
 
 void Data::fastSet(unsigned char* bytes, const ssize_t size)
 {
-    free(_bytes);
     _bytes = bytes;
     _size = size;
+}
+
+void Data::clear()
+{
+    free(_bytes);
+    _bytes = nullptr;
+    _size = 0;
 }
 
 NS_CC_END

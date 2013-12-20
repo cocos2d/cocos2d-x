@@ -27,6 +27,7 @@
 
 #include "CCPlatformMacros.h"
 #include <stdint.h> // for ssize_t
+#include <string.h>
 
 NS_CC_BEGIN
 
@@ -62,14 +63,17 @@ public:
      */
     void copy(unsigned char* bytes, const ssize_t size);
     
-    /** Fast set the buffer pointer and its size.
+    /** Fast set the buffer pointer and its size. Please use it carefully.
      *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
      *         since in the destructor of Data, the buffer will be deleted by 'free'.
-     *  @note This method will move the ownship of 'bytes'pointer to Data,
-     *        The pointer should not be used outside after it was passed to this method.
+     *  @note 1. This method will move the ownship of 'bytes'pointer to Data,
+     *        2. The pointer should not be used outside after it was passed to this method.
      *  @see Data::copy
      */
     void fastSet(unsigned char* bytes, const ssize_t size);
+    
+    /** Clears data, free buffer and reset data size */
+    void clear();
     
     /** Check whether the data is null. */
     bool isNull() const;
