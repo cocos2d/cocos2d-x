@@ -48,10 +48,10 @@ void Bug422Layer::reset()
 void Bug422Layer::check(Node* t)
 {
     auto& children = t->getChildren();
-    std::for_each(children.begin(), children.end(), [this](Node* child){
+    for(const auto &child : children) {
         log("%p, rc: %d", child, child->retainCount());
         check(child);
-    });
+    }
 }
 
 void Bug422Layer::menuCallback(Object* sender)

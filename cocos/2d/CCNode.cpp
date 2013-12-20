@@ -109,7 +109,6 @@ Node::Node(void)
 , _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
-, _grid(nullptr)
 , _ZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -171,7 +170,6 @@ Node::~Node()
     // attributes
     CC_SAFE_RELEASE(_camera);
 
-    CC_SAFE_RELEASE(_grid);
     CC_SAFE_RELEASE(_shaderProgram);
     CC_SAFE_RELEASE(_userObject);
 
@@ -414,15 +412,6 @@ Camera* Node::getCamera()
     
     return _camera;
 }
-
-/// grid setter
-void Node::setGrid(GridBase* grid)
-{
-    CC_SAFE_RETAIN(grid);
-    CC_SAFE_RELEASE(_grid);
-    _grid = grid;
-}
-
 
 /// isVisible getter
 bool Node::isVisible() const
@@ -823,11 +812,6 @@ void Node::visit()
     
     kmGLPushMatrix();
 
-     if (_grid && _grid->isActive())
-     {
-         _grid->beforeDraw();
-     }
-
     this->transform();
     int i = 0;
 
@@ -857,11 +841,6 @@ void Node::visit()
 
     // reset for next frame
     _orderOfArrival = 0;
-
-     if (_grid && _grid->isActive())
-     {
-         _grid->afterDraw(this);
-    }
  
     kmGLPopMatrix();
 }
@@ -888,24 +867,9 @@ void Node::transform()
 
 
     kmGLMultMatrix( &transfrom4x4 );
-
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 
-
-    // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    if ( _camera != nullptr && !(_grid != nullptr && _grid->isActive()) )
-    {
-        bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
-
-        _camera->locate();
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
-    }
 }
 
 
