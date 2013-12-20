@@ -378,7 +378,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
 #endif
     
     char * encodedDefaultData = NULL;
-    unsigned int encodedDefaultDataLen = defaultValue ? base64Encode(defaultValue->getBytes(), defaultValue->getSize(), &encodedDefaultData) : 0;
+    unsigned int encodedDefaultDataLen = !defaultValue.isNull() ? base64Encode(defaultValue.getBytes(), defaultValue.getSize(), &encodedDefaultData) : 0;
     
     string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
 
