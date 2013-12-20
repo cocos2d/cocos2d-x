@@ -98,7 +98,7 @@ void TableView::reloadData()
 {
     _oldDirection = Direction::NONE;
 
-    std::for_each(_cellsUsed.begin(), _cellsUsed.end(), [this](TableViewCell* cell){
+    for(const auto &cell : _cellsUsed) {
         if(_tableViewDelegate != NULL) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }
@@ -110,7 +110,7 @@ void TableView::reloadData()
         {
             this->getContainer()->removeChild(cell, true);
         }
-    });
+    }
 
     _indices->clear();
     _cellsUsed.clear();

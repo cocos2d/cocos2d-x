@@ -63,7 +63,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void dispatchInsertText(const char * pText, int nLen);
+    void dispatchInsertText(const char * text, int len);
 
     /**
      @brief Dispatches the delete-backward operation.
@@ -109,20 +109,20 @@ protected:
     /**
     @brief Add delegate to receive IME messages.
     */
-    void addDelegate(IMEDelegate * pDelegate);
+    void addDelegate(IMEDelegate * delegate);
 
     /**
     @brief Attach the pDelegate to the IME.
     @return If the old delegate can detach from the IME, and the new delegate 
             can attach to the IME, return true, otherwise false.
     */
-    bool attachDelegateWithIME(IMEDelegate * pDelegate);
-    bool detachDelegateWithIME(IMEDelegate * pDelegate);
+    bool attachDelegateWithIME(IMEDelegate * delegate);
+    bool detachDelegateWithIME(IMEDelegate * delegate);
 
     /**
     @brief Remove the delegate from the delegates which receive IME messages.
     */
-    void removeDelegate(IMEDelegate * pDelegate);
+    void removeDelegate(IMEDelegate * delegate);
 
 private:
     IMEDispatcher();

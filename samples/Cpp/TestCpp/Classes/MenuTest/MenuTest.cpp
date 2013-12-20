@@ -88,9 +88,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto s = Director::getInstance()->getWinSize();
     
     int i=0;
-    auto& children = menu->getChildren();
-    
-    std::for_each(children.begin(), children.end(), [&i, &s](Node* child){
+    for(const auto &child : menu->getChildren()) {
         auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)
@@ -101,7 +99,7 @@ MenuLayerMainMenu::MenuLayerMainMenu()
                          EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f)
                          );
         i++;
-    });
+    }
 
     _disabledItem = item3; item3->retain();
     _disabledItem->setEnabled( false );

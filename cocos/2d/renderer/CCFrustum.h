@@ -43,9 +43,9 @@ public:
     const kmVec3& getRight() const;
     const kmVec3& getUp() const;
     
-private:
+protected:
     void LazyAdjust() const;
-private:
+
     kmVec3 _position;
     kmVec3 _focus;
     kmVec3 _up;
@@ -73,7 +73,8 @@ public:
     kmVec3 getNegativePoint(const kmVec3& direction) const;
     
     const AABB& expand(const kmVec3& point);
-private:
+
+protected:
     kmVec3 _min;
     kmVec3 _max;
 };
@@ -87,7 +88,7 @@ public:
         INTERSECT = 1,
         INSIDE = 2
     };
-public:
+
     Frustum();
     ~Frustum();
 
@@ -101,18 +102,18 @@ public:
     IntersectResult intersectAABB(const AABB& aabb) const;
     IntersectResult intersectSphere(const kmVec3& center, float radius) const;
     
-private:
+protected:
     enum FrustumPlane
     {
-        NEAR = 0,
-        FAR = 1,
-        BOTTOM = 2,
-        TOP = 3,
-        LEFT = 4,
-        RIGHT = 5,
-        NUMBER = 6
+        FRUSTUM_NEAR = 0,
+        FRUSTUM_FAR = 1,
+        FRUSTUM_BOTTOM = 2,
+        FRUSTUM_TOP = 3,
+        FRUSTUM_LEFT = 4,
+        FRUSTUM_RIGHT = 5,
+        FRUSTUM_NUMBER = 6
     };
-    kmPlane _frustumPlanes[FrustumPlane::NUMBER];
+    kmPlane _frustumPlanes[FrustumPlane::FRUSTUM_NUMBER];
 };
 
 NS_CC_END 

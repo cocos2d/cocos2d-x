@@ -44,8 +44,10 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
+#include "CCFrustum.h"
+
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -69,7 +71,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
@@ -81,7 +83,7 @@ Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rot
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename)
@@ -93,7 +95,7 @@ Sprite* Sprite::create(const std::string& filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
@@ -105,7 +107,7 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
@@ -117,7 +119,7 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
@@ -127,7 +129,7 @@ Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
-    CCASSERT(frame != NULL, msg);
+    CCASSERT(frame != nullptr, msg);
 #endif
     
     return createWithSpriteFrame(frame);
@@ -142,17 +144,17 @@ Sprite* Sprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 bool Sprite::init(void)
 {
-    return initWithTexture(NULL, Rect::ZERO );
+    return initWithTexture(nullptr, Rect::ZERO );
 }
 
 bool Sprite::initWithTexture(Texture2D *texture)
 {
-    CCASSERT(texture != NULL, "Invalid texture for sprite");
+    CCASSERT(texture != nullptr, "Invalid texture for sprite");
 
     Rect rect = Rect::ZERO;
     rect.size = texture->getContentSize();
@@ -209,7 +211,7 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame != NULL, "");
+    CCASSERT(spriteFrame != nullptr, "");
 
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
@@ -220,9 +222,9 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    if (NodeRGBA::init())
+    if (Node::init())
     {
-        _batchNode = NULL;
+        _batchNode = nullptr;
         
         _recursiveDirty = false;
         setDirty(false);
@@ -259,7 +261,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        setBatchNode(NULL);
+        setBatchNode(nullptr);
         
         return true;
     }
@@ -286,11 +288,11 @@ Sprite::~Sprite(void)
 
 /*
  * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default texture when sprite's texture is set to NULL.
+ * It's used for creating a default texture when sprite's texture is set to nullptr.
  * Supposing codes as follows:
  *
  *   auto sp = new Sprite();
- *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *   sp->init();  // Texture was set to nullptr, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
  *
  * The test is in "TestCpp/SpriteTest/Sprite without texture".
  */
@@ -526,7 +528,7 @@ void Sprite::updateTransform(void)
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
                 kmMat4 nodeToParent = getNodeToParentTransform();
                 kmMat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
-                kmMat4Multiply(&_transformToBatch, &nodeToParent, &parentTransform);
+                kmMat4Multiply(&_transformToBatch, &parentTransform, &nodeToParent);
             }
 
             //
@@ -565,7 +567,7 @@ void Sprite::updateTransform(void)
             _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
 
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
 		{
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
@@ -665,31 +667,51 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(void)
 {
-//    updateQuadVertices();
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
     //TODO implement z order
     QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+
+//    if(!culling())
+//    {
+//        renderCommand->releaseToCommandPool();
+//    }
+//    else
+    {
+        Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    }
+}
+
+bool Sprite::culling() const
+{
+    Frustum* frustum = Director::getInstance()->getFrustum();
+    //TODO optimize this transformation, should use parent's transformation instead
+    kmMat4 worldTM = getNodeToWorldTransform();
+    //generate aabb
+
+    //
+    // calculate the Quad based on the Affine Matrix
+    //
+    Rect newRect = RectApplyTransform(_rect, worldTM);
+
+    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
+
+    AABB aabb(point,point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
+
+    return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
 }
 
 void Sprite::updateQuadVertices()
 {
-
-//#ifdef CC_USE_PHYSICS
-//    updatePhysicsTransform();
-//    setDirty(true);
-//#endif
-#define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
-    long offset = 0;
-    setGLBufferData(&_quad, 4 * kQuadSize, 0);
-#else
-    size_t offset = (size_t)&_quad;
-#endif // EMSCRIPTEN
+#ifdef CC_USE_PHYSICS
+    updatePhysicsTransform();
+    setDirty(true);
+#endif
 
     //TODO optimize the performance cache affineTransformation
 
@@ -713,38 +735,13 @@ void Sprite::updateQuadVertices()
         //
         // calculate the Quad based on the Affine Matrix
         //
+        Rect newRect = RectApplyTransform(_rect, _transformToBatch);
 
-        Size size = _rect.size;
-
-        float x1 = _offsetPosition.x;
-        float y1 = _offsetPosition.y;
-
-        float x2 = x1 + size.width;
-        float y2 = y1 + size.height;
-        float x = _transformToBatch.mat[12];
-        float y = _transformToBatch.mat[13];
-
-        float cr = _transformToBatch.mat[0];
-        float sr = _transformToBatch.mat[1];
-        float cr2 = _transformToBatch.mat[5];
-        float sr2 = -_transformToBatch.mat[4];
-        float ax = x1 * cr - y1 * sr2 + x;
-        float ay = x1 * sr + y1 * cr2 + y;
-
-        float bx = x2 * cr - y1 * sr2 + x;
-        float by = x2 * sr + y1 * cr2 + y;
-
-        float cx = x2 * cr - y2 * sr2 + x;
-        float cy = x2 * sr + y2 * cr2 + y;
-
-        float dx = x1 * cr - y2 * sr2 + x;
-        float dy = x1 * sr + y2 * cr2 + y;
-
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
-
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        
         _recursiveDirty = false;
         setDirty(false);
     }
@@ -764,7 +761,7 @@ void Sprite::addChild(Node *child, int zOrder)
 
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
-    CCASSERT(child != NULL, "Argument must be non-NULL");
+    CCASSERT(child != nullptr, "Argument must be non-nullptr");
 
     if (_batchNode)
     {
@@ -786,7 +783,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != NULL, "");
+    CCASSERT(child != nullptr, "");
     CCASSERT(_children.contains(child), "");
 
     if (zOrder == child->getZOrder())
@@ -817,13 +814,13 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
                 _batchNode->removeSpriteFromAtlas(sprite);
             }
-        });
+        }
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
@@ -863,9 +860,8 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            std::for_each(_children.begin(), _children.end(), [](Node* child){
+            for(const auto &child : _children)
                 child->sortAllChildren();
-            });
         }
 
         _reorderChildDirty = false;
@@ -900,13 +896,13 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        std::for_each(_children.begin(), _children.end(), [](Node* child){
+        for(const auto &child: _children) {
             Sprite* sp = dynamic_cast<Sprite*>(child);
             if (sp)
             {
                 sp->setDirtyRecursively(true);
             }
-        });
+        }
     }
 }
 
@@ -1079,20 +1075,6 @@ void Sprite::updateColor(void)
     // do nothing
 }
 
-void Sprite::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-
-    updateColor();
-}
-
-void Sprite::setColor(const Color3B& color3)
-{
-    NodeRGBA::setColor(color3);
-
-    updateColor();
-}
-
 void Sprite::setOpacityModifyRGB(bool modify)
 {
     if (_opacityModifyRGB != modify)
@@ -1105,20 +1087,6 @@ void Sprite::setOpacityModifyRGB(bool modify)
 bool Sprite::isOpacityModifyRGB(void) const
 {
     return _opacityModifyRGB;
-}
-
-void Sprite::updateDisplayedColor(const Color3B& parentColor)
-{
-    NodeRGBA::updateDisplayedColor(parentColor);
-    
-    updateColor();
-}
-
-void Sprite::updateDisplayedOpacity(GLubyte opacity)
-{
-    NodeRGBA::updateDisplayedOpacity(opacity);
-    
-    updateColor();
 }
 
 // Frames
@@ -1151,7 +1119,7 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
-    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
 
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
@@ -1194,7 +1162,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     // self render
     if( ! _batchNode ) {
         _atlasIndex = INDEX_NOT_INITIALIZED;
-        setTextureAtlas(NULL);
+        setTextureAtlas(nullptr);
         _recursiveDirty = false;
         setDirty(false);
 

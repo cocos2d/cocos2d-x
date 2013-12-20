@@ -74,7 +74,8 @@ Bone::Bone()
 //    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
     kmMat4Identity(&_worldTransform);
     _boneTransformDirty = true;
-    _blendType = BLEND_NORMAL;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendDirty = false;
     _worldInfo = nullptr;
 
     _armatureParentBone = nullptr;
@@ -228,10 +229,10 @@ void Bone::update(float delta)
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    std::for_each(_children.begin(), _children.end(), [&delta](Node* obj){
+    for(const auto &obj: _children) {
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
-    });
+    }
 
     _boneTransformDirty = false;
 }
@@ -249,40 +250,34 @@ void Bone::applyParentTransform(Bone *parent)
 }
 
 
+void CCBone::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    {
+        _blendFunc = blendFunc;
+        _blendDirty = true;
+    }
+}
+
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
     _realColor = Color3B(255, 255, 255);
-    NodeRGBA::updateDisplayedColor(parentColor);
-    updateColor();
+    Node::updateDisplayedColor(parentColor);
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
-    updateColor();
-}
-
-void Bone::setColor(const Color3B& color)
-{
-    NodeRGBA::setColor(color);
-    updateColor();
-}
-
-void Bone::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-    updateColor();
+    Node::updateDisplayedOpacity(parentOpacity);
 }
 
 void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();
-    RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
-    if(protocol != nullptr)
+    if(display != nullptr)
     {
-        protocol->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
-        protocol->setOpacity(_displayedOpacity * _tweenData->a / 255);
+        display->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
+        display->setOpacity(_displayedOpacity * _tweenData->a / 255);
     }
 }
 
@@ -429,25 +424,31 @@ void Bone::changeDisplayByIndex(int index, bool force)
     _displayManager->changeDisplayByIndex(index, force);
 }
 
-Array *Bone::getColliderBodyList()
+
+void Bone::changeDisplayByName(const char *name, bool force)
+{
+    _displayManager->changeDisplayByName(name, force);
+}
+
+ColliderDetector* Bone::getColliderDetector() const
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
-            return detector->getColliderBodyList();
+            return detector;
         }
     }
     return nullptr;
 }
 
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
-    Array *array = _displayManager->getDecorativeDisplayList();
+    auto array = _displayManager->getDecorativeDisplayList();
 
-    for(auto object : *array)
+    for(auto& object : array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
@@ -467,6 +468,6 @@ ColliderFilter *Bone::getColliderFilter()
     }
     return nullptr;
 }
-
+#endif
 
 }

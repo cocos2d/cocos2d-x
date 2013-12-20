@@ -54,7 +54,7 @@ class FontAtlas;
 
 
 
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
 {
 public:
     
@@ -78,21 +78,9 @@ public:
     virtual float getScaleX() const;
     virtual float getScaleY() const;
 
-    // RGBAProtocol
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual unsigned char  getOpacity() const override;
-    virtual unsigned char  getDisplayedOpacity() const override;
     
      // CCLabelTextFormat protocol implementation
     virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
@@ -155,9 +143,11 @@ private:
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
-         
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);        
-    
+
+    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+
+    virtual void updateColor() override;
+
     
     //! used for optimization
     Sprite              *_reusedLetter;
@@ -172,12 +162,6 @@ private:
     unsigned short int *        _originalUTF16String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;
-    Color3B                     _displayedColor;
-    Color3B                     _realColor;
-    bool                        _cascadeColorEnabled;
-    bool                        _cascadeOpacityEnabled;
-    unsigned char               _displayedOpacity;
-    unsigned char               _realOpacity;
     bool                        _isOpacityModifyRGB;
 
     bool                        _useDistanceField;

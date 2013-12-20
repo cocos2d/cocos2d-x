@@ -92,7 +92,7 @@ void UIListView::updateInnerContainerSize()
     switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            int childrenCount = _items->count();
+            ssize_t childrenCount = _items->count();
             float totalHeight = _model->getSize().height * childrenCount + (childrenCount - 1) * _itemsMargin;
             float finalWidth = _size.width;
             float finalHeight = totalHeight;
@@ -101,7 +101,7 @@ void UIListView::updateInnerContainerSize()
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            int childrenCount = _items->count();
+            ssize_t childrenCount = _items->count();
             float totalWidth = _model->getSize().width * childrenCount + (childrenCount - 1) * _itemsMargin;
             float finalWidth = totalWidth;
             float finalHeight = _size.height;
@@ -373,7 +373,7 @@ void UIListView::refreshView()
         return;
     }
     cocos2d::ccArray* arrayItems = _items->data;
-    int length = arrayItems->num;
+    ssize_t length = arrayItems->num;
     for (int i=0; i<length; i++)
     {
         UIWidget* item = (UIWidget*)(arrayItems->arr[i]);

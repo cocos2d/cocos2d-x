@@ -28,8 +28,8 @@
 #include "CCTextureCache.h"
 #include "CCSprite.h"
 #include "CCNewSprite.h"
-#include "QuadCommand.h"
-#include "Renderer.h"
+#include "CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 

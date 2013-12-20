@@ -23,4 +23,4 @@
  ****************************************************************************/
 
 
-#include "RenderMaterial.h"
+#include "CCRenderMaterial.h"

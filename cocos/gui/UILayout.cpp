@@ -78,12 +78,8 @@ bool UILayout::init()
     initRenderer();
     _renderer->retain();
     _renderer->setZOrder(_widgetZOrder);
-    cocos2d::RGBAProtocol* renderRGBA = dynamic_cast<cocos2d::RGBAProtocol*>(_renderer);
-    if (renderRGBA)
-    {
-        renderRGBA->setCascadeColorEnabled(false);
-        renderRGBA->setCascadeOpacityEnabled(false);
-    }
+    _renderer->setCascadeColorEnabled(false);
+    _renderer->setCascadeOpacityEnabled(false);
     ignoreContentAdaptWithSize(false);
     setSize(cocos2d::Size::ZERO);
     setBright(true);
@@ -132,7 +128,7 @@ void UILayout::onSizeChanged()
     if (strcmp(getDescription(), "Layout") == 0)
     {
         cocos2d::ccArray* arrayChildren = _children->data;
-        int length = arrayChildren->num;
+        ssize_t length = arrayChildren->num;
         for (int i=0; i<length; ++i)
         {
             UIWidget* child = (UIWidget*)arrayChildren->arr[i];
@@ -428,11 +424,7 @@ void UILayout::setColor(const cocos2d::Color3B &color)
     UIWidget::setColor(color);
     if (_backGroundImage)
     {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setColor(color);
-        }
+        _backGroundImage->setColor(color);
     }
 }
 
@@ -441,11 +433,7 @@ void UILayout::setOpacity(int opacity)
     UIWidget::setOpacity(opacity);
     if (_backGroundImage)
     {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setOpacity(opacity);
-        }
+        _backGroundImage->setOpacity(opacity);
     }
 }
 
@@ -464,7 +452,7 @@ void UILayout::setLayoutType(LayoutType type)
     _layoutType = type;
 
     cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-    int length = layoutChildrenArray->num;
+    ssize_t length = layoutChildrenArray->num;
     for (int i=0; i<length; i++)
     {
         UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
@@ -486,7 +474,7 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_VERTICAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            ssize_t length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
             for (int i=0; i<length; ++i)
@@ -527,7 +515,7 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_HORIZONTAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            ssize_t length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float leftBoundary = 0.0f;
             for (int i=0; i<length; ++i)
@@ -568,8 +556,8 @@ void UILayout::doLayout()
         case LAYOUT_RELATIVE:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            int unlayoutChildCount = length;
+            ssize_t length, unlayoutChildCount;
+            length = unlayoutChildCount = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             
             for (int i=0; i<length; i++)

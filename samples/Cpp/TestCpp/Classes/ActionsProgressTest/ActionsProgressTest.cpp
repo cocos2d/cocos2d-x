@@ -78,12 +78,12 @@ SpriteDemo::~SpriteDemo(void)
 {
 }
 
-std::string SpriteDemo::title()
+std::string SpriteDemo::title() const
 {
     return "ActionsProgressTest";
 }
 
-std::string SpriteDemo::subtitle()
+std::string SpriteDemo::subtitle() const
 {
     return "";
 }
@@ -150,7 +150,7 @@ void SpriteProgressToRadial::onEnter()
     right->runAction( RepeatForever::create(to2));
 }
 
-std::string SpriteProgressToRadial::subtitle()
+std::string SpriteProgressToRadial::subtitle() const
 {
     return "ProgressTo Radial";
 }
@@ -191,7 +191,7 @@ void SpriteProgressToHorizontal::onEnter()
     right->runAction( RepeatForever::create(to2));
 }
 
-std::string SpriteProgressToHorizontal::subtitle()
+std::string SpriteProgressToHorizontal::subtitle() const
 {
     return "ProgressTo Horizontal";
 }
@@ -232,7 +232,7 @@ void SpriteProgressToVertical::onEnter()
     right->runAction( RepeatForever::create(to2));
 }
 
-std::string SpriteProgressToVertical::subtitle()
+std::string SpriteProgressToVertical::subtitle() const
 {
     return "ProgressTo Vertical";
 }
@@ -276,7 +276,7 @@ void SpriteProgressToRadialMidpointChanged::onEnter()
     right->runAction(RepeatForever::create(action->clone()));
 }
 
-std::string SpriteProgressToRadialMidpointChanged::subtitle()
+std::string SpriteProgressToRadialMidpointChanged::subtitle() const
 {
     return "Radial w/ Different Midpoints";
 }
@@ -326,7 +326,7 @@ void SpriteProgressBarVarious::onEnter()
     right->runAction(RepeatForever::create(to->clone()));
 }
 
-std::string SpriteProgressBarVarious::subtitle()
+std::string SpriteProgressBarVarious::subtitle() const
 {
     return "ProgressTo Bar Mid";
 }
@@ -393,7 +393,7 @@ void SpriteProgressBarTintAndFade::onEnter()
     right->addChild(LabelTTF::create("Tint and Fade", "Marker Felt", 20.0f));
 }
 
-std::string SpriteProgressBarTintAndFade::subtitle()
+std::string SpriteProgressBarTintAndFade::subtitle() const
 {
     return "ProgressTo Bar Mid";
 }
@@ -444,7 +444,7 @@ void SpriteProgressWithSpriteFrame::onEnter()
     right->runAction(RepeatForever::create(to->clone()));
 }
 
-std::string SpriteProgressWithSpriteFrame::subtitle()
+std::string SpriteProgressWithSpriteFrame::subtitle() const
 {
     return "Progress With Sprite Frame";
 }

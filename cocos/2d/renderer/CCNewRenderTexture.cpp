@@ -24,9 +24,9 @@
 
 
 #include "CCNewRenderTexture.h"
-#include "CustomCommand.h"
-#include "Renderer.h"
-#include "GroupCommand.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 
@@ -42,7 +42,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
@@ -55,7 +55,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h, Texture2D::PixelFormat 
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 NewRenderTexture* NewRenderTexture::create(int w, int h)
@@ -68,7 +68,7 @@ NewRenderTexture* NewRenderTexture::create(int w, int h)
         return pRet;
     }
     CC_SAFE_DELETE(pRet);
-    return NULL;
+    return nullptr;
 }
 
 void NewRenderTexture::draw()
@@ -115,7 +115,7 @@ void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float 
 
 void NewRenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
 {
-    setClearColor({r, g, b, a});
+    setClearColor(Color4F(r, g, b, a));
 
     setClearDepth(depthValue);
 

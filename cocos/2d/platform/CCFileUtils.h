@@ -95,7 +95,6 @@ public:
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
-     *  @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead.
      */
     CC_DEPRECATED_ATTRIBUTE unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
 
@@ -104,8 +103,8 @@ public:
      *
      *  @param[in]  filename The resource file name which contains the relative path of the zip file.
      *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
+     *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
+     *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
      */
     virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size);
 

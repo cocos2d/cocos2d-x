@@ -115,7 +115,7 @@ LanguageType Application::getCurrentLanguage()
     }
     else if ([languageCode isEqualToString:@"en"])
     {
-        ret = LanguageType::ENGLISH;;
+        ret = LanguageType::ENGLISH;
     }
     else if ([languageCode isEqualToString:@"fr"]){
         ret = LanguageType::FRENCH;

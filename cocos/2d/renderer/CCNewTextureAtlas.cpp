@@ -25,8 +25,8 @@
 #include "CCNewTextureAtlas.h"
 #include "CCTexture2D.h"
 #include "CCDirector.h"
-#include "Renderer.h"
-#include "QuadCommand.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -50,7 +50,7 @@ NewTextureAtlas *NewTextureAtlas::create(const char *file, long capacity)
         return textureAtlas;
     }
     CC_SAFE_DELETE(textureAtlas);
-    return NULL;
+    return nullptr;
 }
 
 NewTextureAtlas *NewTextureAtlas::createWithTexture(Texture2D *texture, long capacity)
@@ -62,7 +62,7 @@ NewTextureAtlas *NewTextureAtlas::createWithTexture(Texture2D *texture, long cap
         return textureAtlas;
     }
     CC_SAFE_DELETE(textureAtlas);
-    return NULL;
+    return nullptr;
 }
 
 

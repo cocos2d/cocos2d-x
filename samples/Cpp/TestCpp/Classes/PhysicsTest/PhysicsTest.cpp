@@ -104,12 +104,12 @@ PhysicsDemo::~PhysicsDemo()
     
 }
 
-std::string PhysicsDemo::title()
+std::string PhysicsDemo::title() const
 {
     return "PhysicsTest";
 }
 
-std::string PhysicsDemo::subtitle()
+std::string PhysicsDemo::subtitle() const
 {
     return "";
 }
@@ -210,7 +210,7 @@ void PhysicsDemoClickAdd::onEnter()
     addGrossiniAtPosition(VisibleRect::center());
 }
 
-std::string PhysicsDemoClickAdd::subtitle()
+std::string PhysicsDemoClickAdd::subtitle() const
 {
     return "multi touch to add grossini";
 }
@@ -453,7 +453,7 @@ void PhysicsDemoLogoSmash::onEnter()
     _ball->addChild(bullet);
 }
 
-std::string PhysicsDemoLogoSmash::title()
+std::string PhysicsDemoLogoSmash::title() const
 {
     return "Logo Smash";
 }void PhysicsDemoPyramidStack::onEnter()
@@ -485,7 +485,7 @@ std::string PhysicsDemoLogoSmash::title()
         }
     }
 }
-std::string PhysicsDemoPyramidStack::title()
+std::string PhysicsDemoPyramidStack::title() const
 {
     return "Pyramid Stack";
 }
@@ -661,7 +661,7 @@ void PhysicsDemoRayCast::onTouchesEnded(const std::vector<Touch*>& touches, Even
     }
 }
 
-std::string PhysicsDemoRayCast::title()
+std::string PhysicsDemoRayCast::title() const
 {
     return "Ray Cast";
 }
@@ -871,7 +871,7 @@ void PhysicsDemoJoints::onEnter()
     }
 }
 
-std::string PhysicsDemoJoints::title()
+std::string PhysicsDemoJoints::title() const
 {
     return "Joints";
 }
@@ -909,7 +909,7 @@ void PhysicsDemoActions::onEnter()
     sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
 }
 
-std::string PhysicsDemoActions::title()
+std::string PhysicsDemoActions::title() const
 {
     return "Actions";
 }
@@ -1067,12 +1067,12 @@ void PhysicsDemoPump::onTouchEnded(Touch* touch, Event* event)
     _distance = 0;
 }
 
-std::string PhysicsDemoPump::title()
+std::string PhysicsDemoPump::title() const
 {
     return "Pump";
 }
 
-std::string PhysicsDemoPump::subtitle()
+std::string PhysicsDemoPump::subtitle() const
 {
     return "touch screen on left or right";
 }
@@ -1111,7 +1111,7 @@ bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const Physics
     return contact.getContactData()->normal.y < 0;
 }
 
-std::string PhysicsDemoOneWayPlatform::title()
+std::string PhysicsDemoOneWayPlatform::title() const
 {
     return "One Way Platform";
 }
@@ -1211,12 +1211,12 @@ void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event *event)
     _scene->getPhysicsWorld()->rayCast(func, touch->getStartLocation(), touch->getLocation(), nullptr);
 }
 
-std::string PhysicsDemoSlice::title()
+std::string PhysicsDemoSlice::title() const
 {
     return "Slice";
 }
 
-std::string PhysicsDemoSlice::subtitle()
+std::string PhysicsDemoSlice::subtitle() const
 {
     return "click and drag to slice up the block";
 }

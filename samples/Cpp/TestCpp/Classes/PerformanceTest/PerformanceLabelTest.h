@@ -24,7 +24,7 @@ public:
 
     virtual ~LabelMainScene();
 
-    std::string title();
+    std::string title() const;
     void initWithSubTest(int nodes);
     void updateNodes();
 

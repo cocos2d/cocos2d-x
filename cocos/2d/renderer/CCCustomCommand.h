@@ -22,50 +22,46 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __NewClippingNode_H_
-#define __NewClippingNode_H_
 
-#include "CCPlatformMacros.h"
-#include "CCClippingNode.h"
+#ifndef _CC_CUSTOMCOMMAND_H_
+#define _CC_CUSTOMCOMMAND_H_
 
+#include "CCRenderCommand.h"
+#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
-class NewClippingNode : public ClippingNode
+class CustomCommand : public RenderCommand
 {
 public:
-    static NewClippingNode* create();
-    static NewClippingNode* create(Node* pStencil);
+    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
 
-    virtual ~NewClippingNode();
+    void init(int viewport, int32_t depth);
 
-    virtual void visit() override;
+    // +----------+----------+-----+-----------------------------------+
+    // |          |          |     |                |                  |
+    // | ViewPort | Transluc |     |      Depth     |                  |
+    // |   3 bits |    1 bit |     |    24 bits     |                  |
+    // +----------+----------+-----+----------------+------------------+
+    virtual int64_t generateID();
+
+    void execute();
+
+    inline bool isTranslucent() { return true; }
+    virtual void releaseToCommandPool() override;
+    std::function<void()> func;
 
 protected:
-    NewClippingNode();
+    CustomCommand();
+    ~CustomCommand();
 
-    void beforeVisit();
-    void afterDrawStencil();
-    void afterVisit();
+    int _viewport;
+    int32_t _depth;
+    static RenderCommandPool<CustomCommand> _commandPool;
 
-protected:
-    GLboolean currentStencilEnabled;
-    GLuint currentStencilWriteMask;
-    GLenum currentStencilFunc;
-    GLint currentStencilRef;
-    GLuint currentStencilValueMask;
-    GLenum currentStencilFail;
-    GLenum currentStencilPassDepthFail;
-    GLenum currentStencilPassDepthPass;
-    GLboolean currentDepthWriteMask;
-
-    GLboolean currentAlphaTestEnabled;
-    GLenum currentAlphaTestFunc;
-    GLclampf currentAlphaTestRef;
-
-    GLint mask_layer_le;
+    friend class RenderCommandPool<CustomCommand>;
 };
 
 NS_CC_END
 
-#endif //__NewClippingNode_H_
+#endif //_CC_CUSTOMCOMMAND_H_
