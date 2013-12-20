@@ -240,31 +240,7 @@ void SpriteBatchNode::sortAllChildren()
 {
     if (_reorderChildDirty)
     {
-#if 0
-        int i = 0,j = 0,length = _children->count();
-
-        // insertion sort
-        for(i=1; i<length; i++)
-        {
-            j = i-1;
-            auto tempI = static_cast<Node*>( _children->getObjectAtIndex(i) );
-            auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
-
-            //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
-                           ( tempI->getZOrder() == tempJ->getZOrder() &&
-                            tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
-            {
-                _children->fastSetObject( tempJ, j+1 );
-                j = j-1;
-                if(j>=0)
-                    tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
-            }
-            _children->fastSetObject(tempI, j+1);
-        }
-#else
         std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
-#endif
 
         //sorted now check all children
         if (!_children.empty())
