@@ -69,6 +69,7 @@ public:
         _pTarget = NULL;
         _pSelector = NULL;
         _pUserData = NULL;
+        _progressCallback = [](HttpResponse*, double, double) {};
     };
     
     /** Destructor */
@@ -174,6 +175,16 @@ public:
         return _downloadPath;
     }
     
+    inline void setProgressCallback(std::function<void (HttpResponse*, double dlnow, double dltotal)> f)
+    {
+        _progressCallback = std::move(f);
+    }
+    
+    inline const std::function<void (HttpResponse*, double dlnow, double dltotal)>& getProgressCallback()
+    {
+        return _progressCallback;
+    }
+    
     /** Required field. You should set the callback selector function at ack the http request completed
      */
     CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(cocos2d::Object* pTarget, cocos2d::SEL_CallFuncND pSelector)
@@ -257,6 +268,7 @@ protected:
     std::vector<std::string>    _headers;		      /// custom http headers
     std::string                 _downloadPath;
     std::function<void (HttpResponse*)>    _callback;
+    std::function<void (HttpResponse*, double dlnow, double dltotal)>    _progressCallback;
 };
 
 }

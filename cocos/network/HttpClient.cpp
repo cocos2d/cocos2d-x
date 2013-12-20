@@ -98,6 +98,12 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
     
     return sizes;
 }
+    
+static int progressCallback(HttpResponse *response, double dltotal, double dlnow, double ultotal, double ulnow)
+{
+    response->getHttpRequest()->getProgressCallback()(response, dlnow, dltotal);
+    return 0;
+}
 
 
 static int processGetTask(HttpRequest *request, write_callback callback, write_callback headerCallback, HttpResponse *response);
@@ -322,7 +328,10 @@ public:
                 && setOption(CURLOPT_WRITEFUNCTION, callback)
                 && setOption(CURLOPT_WRITEDATA, response)
                 && setOption(CURLOPT_HEADERFUNCTION, headerCallback)
-                && setOption(CURLOPT_HEADERDATA, response);
+                && setOption(CURLOPT_HEADERDATA, response)
+                && setOption(CURLOPT_NOPROGRESS, 0L)
+                && setOption(CURLOPT_PROGRESSFUNCTION, progressCallback)
+                && setOption(CURLOPT_PROGRESSDATA, response);
         
     }
 
