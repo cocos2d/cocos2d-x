@@ -83,7 +83,7 @@ TMXTilesetInfo::~TMXTilesetInfo()
     CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
-Rect TMXTilesetInfo::rectForGID(unsigned int gid)
+Rect TMXTilesetInfo::rectForGID(int gid)
 {
     Rect rect;
     rect.size = _tileSize;
@@ -265,7 +265,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename.c_str());
             
-            _currentFirstGID = (unsigned int)attributeDict["firstgid"].asInt();
+            _currentFirstGID = attributeDict["firstgid"].asInt();
             
             tmxMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -275,15 +275,15 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tileset->_name = attributeDict["name"].asString();
             if (_currentFirstGID == 0)
             {
-                tileset->_firstGid = (unsigned int)attributeDict["firstgid"].asInt();
+                tileset->_firstGid = attributeDict["firstgid"].asInt();
             }
             else
             {
                 tileset->_firstGid = _currentFirstGID;
                 _currentFirstGID = 0;
             }
-            tileset->_spacing = (unsigned int)attributeDict["spacing"].asInt();
-            tileset->_margin = (unsigned int)attributeDict["margin"].asInt();
+            tileset->_spacing = attributeDict["spacing"].asInt();
+            tileset->_margin = attributeDict["margin"].asInt();
             Size s;
             s.width = attributeDict["tilewidth"].asFloat();
             s.height = attributeDict["tileheight"].asFloat();
@@ -299,7 +299,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            unsigned int gid = (unsigned int)attributeDict["gid"].asInt();
+            int gid = attributeDict["gid"].asInt();
             int tilesAmount = layerSize.width*layerSize.height;
             
             do
@@ -435,7 +435,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 tiles[tilesAmount - 1] = tilesAmount - 1;
             }
 
-            layer->_tiles = (unsigned int*) tiles;
+            layer->_tiles = tiles;
         }
         else if (encoding == "base64")
         {
@@ -678,11 +678,11 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                     return;
                 }
                 
-                layer->_tiles = (unsigned int*) deflated;
+                layer->_tiles = reinterpret_cast<int*>(deflated);
             }
             else
             {
-                layer->_tiles = (unsigned int*) buffer;
+                layer->_tiles = reinterpret_cast<int*>(buffer);
             }
             
             tmxMapInfo->setCurrentString("");
