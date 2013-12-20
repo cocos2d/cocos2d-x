@@ -672,6 +672,9 @@ Developers:
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
         
+    dmurtagh
+        Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
