@@ -170,7 +170,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
 		return 0;
 	}
 
-	//看池中是否有缓冲好的
+	//Find in buffet
 	for (EffectListIt it=sharedList().begin();it!=sharedList().end();++it)
 	{
 		MciPlayer* pTempPlayer=it->second;
@@ -181,7 +181,7 @@ unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
 		}
 	}
 	
-	//添加新的
+	//create new
     unsigned int nRet = _StreameID();
 
 	MciPlayer* pPlayer=new MciPlayer();
