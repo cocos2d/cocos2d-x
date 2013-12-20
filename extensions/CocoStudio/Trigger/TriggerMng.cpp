@@ -34,7 +34,8 @@ TriggerMng::TriggerMng(void)
 : _eventTriggers(NULL)
 ,_triggerObjs(NULL)
 {
-    
+	_triggerObjs = CCDictionary::create();
+	_triggerObjs->retain();
 }
 
 TriggerMng::~TriggerMng(void)
@@ -77,7 +78,11 @@ void TriggerMng::parse(const rapidjson::Value &root)
 				{
 					add((unsigned int)(*iter), obj);
 				}
-				_triggerObjs->setObject(obj, obj->getId());
+				if (_triggerObjs != NULL)
+				{
+					_triggerObjs->setObject(obj, obj->getId());
+				}
+				
           }
         
     } while (0);
@@ -232,8 +237,6 @@ void TriggerMng::alloc(void)
 {
     _eventTriggers = CCDictionary::create();
     _eventTriggers->retain();
-	_triggerObjs = CCDictionary::create();
-	_triggerObjs->retain();
 }
 
 
