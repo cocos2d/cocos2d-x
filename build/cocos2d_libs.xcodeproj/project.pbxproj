@@ -1888,8 +1888,8 @@
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
 		B69FCC091864163C008D32AE /* C3Dneon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */; };
 		B69FCC0A18641657008D32AE /* C3Dneon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */; };
-		B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.cpp */; };
-		B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.cpp */; };
+		B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */; };
+		B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */; };
 		B6A5753018619EA500D70665 /* C3DMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5751B18619D2700D70665 /* C3DMatrix.cpp */; };
 		B6A5753118619EA500D70665 /* C3DQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5751E18619D2700D70665 /* C3DQuaternion.cpp */; };
 		B6A5753218619EA500D70665 /* C3DMathUtilty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5752118619D2700D70665 /* C3DMathUtilty.cpp */; };
@@ -3046,7 +3046,7 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
-		B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = C3Dneon_matrix_impl.cpp; path = c3d/C3Dneon_matrix_impl.cpp; sourceTree = "<group>"; };
+		B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = C3Dneon_matrix_impl.c; path = c3d/C3Dneon_matrix_impl.c; sourceTree = "<group>"; };
 		B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3Dneon_matrix_impl.h; path = c3d/C3Dneon_matrix_impl.h; sourceTree = "<group>"; };
 		B6A5751A18619D2700D70665 /* C3DMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = C3DMath.h; path = c3d/C3DMath.h; sourceTree = "<group>"; };
 		B6A5751B18619D2700D70665 /* C3DMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = C3DMatrix.cpp; path = c3d/C3DMatrix.cpp; sourceTree = "<group>"; };
@@ -5309,7 +5309,7 @@
 		B6A5751718619C3700D70665 /* c3d */ = {
 			isa = PBXGroup;
 			children = (
-				B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.cpp */,
+				B69FCC051864121A008D32AE /* C3Dneon_matrix_impl.c */,
 				B69FCC061864121A008D32AE /* C3Dneon_matrix_impl.h */,
 				B6A5751A18619D2700D70665 /* C3DMath.h */,
 				B6A5751B18619D2700D70665 /* C3DMatrix.cpp */,
@@ -6716,7 +6716,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.cpp in Sources */,
+				B69FCC0D18641748008D32AE /* C3Dneon_matrix_impl.c in Sources */,
 				B6A5753618619EEB00D70665 /* C3DMatrix.cpp in Sources */,
 				B6A5753718619EEB00D70665 /* C3DQuaternion.cpp in Sources */,
 				B6A5753818619EEB00D70665 /* C3DMathUtilty.cpp in Sources */,
@@ -7231,7 +7231,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.cpp in Sources */,
+				B69FCC0C1864169C008D32AE /* C3Dneon_matrix_impl.c in Sources */,
 				B6A5753018619EA500D70665 /* C3DMatrix.cpp in Sources */,
 				B6A5753118619EA500D70665 /* C3DQuaternion.cpp in Sources */,
 				B6A5753218619EA500D70665 /* C3DMathUtilty.cpp in Sources */,
