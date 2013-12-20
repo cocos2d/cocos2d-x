@@ -63,6 +63,7 @@ set(COCOS2D_SRC
   CCDrawNode.cpp
   CCGrabber.cpp
   CCGrid.cpp
+  CCNodeGrid.cpp
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp

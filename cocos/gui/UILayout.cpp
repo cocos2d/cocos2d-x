@@ -128,7 +128,7 @@ void UILayout::onSizeChanged()
     if (strcmp(getDescription(), "Layout") == 0)
     {
         cocos2d::ccArray* arrayChildren = _children->data;
-        int length = arrayChildren->num;
+        ssize_t length = arrayChildren->num;
         for (int i=0; i<length; ++i)
         {
             UIWidget* child = (UIWidget*)arrayChildren->arr[i];
@@ -452,7 +452,7 @@ void UILayout::setLayoutType(LayoutType type)
     _layoutType = type;
 
     cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-    int length = layoutChildrenArray->num;
+    ssize_t length = layoutChildrenArray->num;
     for (int i=0; i<length; i++)
     {
         UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
@@ -474,7 +474,7 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_VERTICAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            ssize_t length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
             for (int i=0; i<length; ++i)
@@ -515,7 +515,7 @@ void UILayout::doLayout()
         case LAYOUT_LINEAR_HORIZONTAL:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            ssize_t length = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             float leftBoundary = 0.0f;
             for (int i=0; i<length; ++i)
@@ -556,8 +556,8 @@ void UILayout::doLayout()
         case LAYOUT_RELATIVE:
         {
             cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            int unlayoutChildCount = length;
+            ssize_t length, unlayoutChildCount;
+            length = unlayoutChildCount = layoutChildrenArray->num;
             cocos2d::Size layoutSize = getSize();
             
             for (int i=0; i<length; i++)
