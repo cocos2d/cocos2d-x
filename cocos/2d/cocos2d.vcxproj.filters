@@ -569,6 +569,9 @@
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -1187,6 +1190,9 @@
     </ClInclude>
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
       <Filter>label_nodes</Filter>

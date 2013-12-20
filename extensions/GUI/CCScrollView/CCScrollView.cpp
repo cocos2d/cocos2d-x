@@ -549,12 +549,6 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
@@ -594,10 +588,6 @@ void ScrollView::visit()
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }

@@ -146,21 +146,10 @@ void SpriteBatchNode::visit(void)
 
     kmGLPushMatrix();
 
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
-
     sortAllChildren();
     transform();
 
     draw();
-    
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
     setOrderOfArrival(0);
