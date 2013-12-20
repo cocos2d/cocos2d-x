@@ -456,22 +456,11 @@ void RenderTexture::visit()
     }
 	
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
     
     transform();
     _sprite->visit();
     draw();
     
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
-	
 	kmGLPopMatrix();
 
     _orderOfArrival = 0;
@@ -529,12 +518,12 @@ void RenderTexture::draw()
 		//! make sure all children are drawn
         sortAllChildren();
 		
-        std::for_each(_children.begin(), _children.end(), [this](Node* child){
+        for(const auto &child : _children) {
             if (child != _sprite)
             {
                 child->visit();
             }
-        });
+        }
         
         end();
 	}
