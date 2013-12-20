@@ -26,6 +26,10 @@ set(SPINE_SRC
   spine-cocos2dx.cpp
   CCSkeleton.cpp
   CCSkeletonAnimation.cpp
+  BoundingBoxAttachment.cpp
+  Event.cpp
+  EventData.cpp
+  SkeletonBounds.cpp
 )
 
 include_directories(
