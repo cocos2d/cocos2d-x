@@ -194,7 +194,7 @@ public:
     
     inline void setResponseCallback(std::function<void (HttpResponse*)> f)
     {
-        _callback = f;
+        _callback = std::move(f);
         setResponseCallback(this, httpresponse_selector(HttpRequest::httpNetworkResponseHandler));
     }
 

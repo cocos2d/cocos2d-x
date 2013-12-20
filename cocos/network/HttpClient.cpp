@@ -169,7 +169,7 @@ void processRequest(HttpRequest *request)
 }
 
 // Worker thread
-static void networkThread(void)
+void HttpClient::networkThread()
 {
     curlMultiHandle = curl_multi_init();
     
@@ -389,7 +389,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, writ
     return ok ? 0 : 1;
 }
 
-bool pollCurlEvents()
+bool HttpClient::pollCurlEvents()
 {
     int runningHandles = 0;
     
@@ -441,15 +441,14 @@ bool pollCurlEvents()
                 s_responseQueue->pushBack(resp);
                 s_responseQueueMutex.unlock();
                 
-                // resume dispatcher selector
-                Director::getInstance()->getScheduler()->resumeTarget(HttpClient::getInstance());
+                Director::getInstance()->getScheduler()->performFunctionInCocosThread(CC_CALLBACK_0(HttpClient::dispatchResponseCallbacks, this));
             }
         }
     }
     
     if (runningHandles)
     {
-//        curl_multi_wait(curlMultiHandle, NULL, 0, 50, NULL);
+        curl_multi_wait(curlMultiHandle, NULL, 0, 50, NULL);
         return true;
     }
     else
