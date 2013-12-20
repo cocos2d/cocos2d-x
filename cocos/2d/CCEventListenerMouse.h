@@ -36,6 +36,8 @@ class Event;
 class EventListenerMouse : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerMouse* create();
 
     /// Overrides
