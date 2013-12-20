@@ -16,55 +16,30 @@ public:
 
     void Close();
 
-    /**
-    @brief 播放声音文件
-    @param pFileName 播放的声音文件名称，需要包含文件的路径
-    @param nTimes    播放声音文件的循环次数，默认值为 1，即播放一次
-    */
     void Open(const char* pFileName, UINT uId);
 
     void Play(UINT uTimes = 1);
 
-    /**
-    @brief 暂停播放声音
-    */
     void Pause();
 
-    /**
-    @brief 继续播放声音
-    */
     void Resume();
 
-    /**
-    @brief 停止播放声音
-    */
     void Stop();
 
-    /**
-    @brief 重新播放
-    */
     void Rewind();
 
-    /**
-    @brief 获取播放器当前是否正在播放中
-    */
     bool IsPlaying();
 
-
-    /**
-    @brief 获取当前播放的音效 ID
-    @return 当前播放的音效ID
-    */
     UINT GetSoundID();
 public:
-	static oae::Renderer* dev;
-	static HMODULE lib;
+	static oae::Renderer* _device;
+	static HMODULE _lib;
 
-	std::string m_strFileName;
-	oae::Screamer* m_scr;
+	std::string _fileName;
+	oae::Screamer* _scr;
 
-	UINT        m_nSoundID;
-    UINT        m_uTimes;
+	UINT        _nSoundID;
+    UINT        _uTimes;
 };
 
 } // end of namespace CocosDenshion

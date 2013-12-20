@@ -4,14 +4,14 @@
 namespace CocosDenshion {
 
 
-HMODULE MciPlayer::lib=NULL;
+HMODULE MciPlayer::_lib=NULL;
 
-oae::Renderer* MciPlayer::dev=NULL;
+oae::Renderer* MciPlayer::_device=NULL;
 
 MciPlayer::MciPlayer()
-: m_nSoundID(0)
-, m_uTimes(0)
-, m_scr(NULL)
+: _nSoundID(0)
+, _uTimes(0)
+, _scr(NULL)
 {
 
 }
@@ -23,65 +23,65 @@ MciPlayer::~MciPlayer()
 
 void MciPlayer::Open(const char* pFileName, UINT uId)
 {
-	m_scr=dev->GetScreamer(pFileName);
+	_scr=_device->GetScreamer(pFileName);
 
-	if (m_scr==NULL)
+	if (_scr==NULL)
 	{
-		if (!cocos2d::CCFileUtils::getInstance()->isFileExist(m_strFileName))
+		if (!cocos2d::CCFileUtils::getInstance()->isFileExist(_fileName))
 		{
-			assert(m_scr!=NULL && "File not exist!");
+			assert(_scr!=NULL && "File not exist!");
 		}
 		else
 		{
-			assert(m_scr!=NULL && "Only suppost .ogg file!");
+			assert(_scr!=NULL && "Only suppost .ogg file!");
 		}
 	}
 	
-	m_strFileName=pFileName;
+	_fileName=pFileName;
 	
-	m_nSoundID=uId;
+	_nSoundID=uId;
 }
 
 void MciPlayer::Play(UINT uTimes /* = 1 */)
 {
-	assert(m_scr);
+	assert(_scr);
 
-	m_scr->SetSourceState(1);
-	m_uTimes=uTimes;
+	_scr->SetSourceState(1);
+	_uTimes=uTimes;
 
 	UINT nTime=-1;
 
-	m_scr->Loop(nTime==uTimes);
+	_scr->Loop(nTime==uTimes);
 }
 
 void MciPlayer::Close()
 {
-	dev->ReleaseScreamer(m_scr);
-	m_scr=NULL;
+	_device->ReleaseScreamer(_scr);
+	_scr=NULL;
 }
 
 void MciPlayer::Pause()
 {	
-	if (m_scr)
+	if (_scr)
 	{
-		m_scr->SetSourceState(0);
+		_scr->SetSourceState(0);
 	}
 }
 
 void MciPlayer::Resume()
 {
-	if (m_scr)
+	if (_scr)
 	{
-		m_scr->SetSourceState(1);
+		_scr->SetSourceState(1);
 	}
 }
 
 void MciPlayer::Stop()
 {
-	if (m_scr)
+	if (_scr)
 	{
-		m_scr->SetSourceState(0);
-		m_scr->Seek(0);
+		_scr->SetSourceState(0);
+		_scr->Seek(0);
 	}
 }
 
@@ -92,17 +92,17 @@ void MciPlayer::Rewind()
 
 bool MciPlayer::IsPlaying()
 {
-	if (!m_scr)
+	if (!_scr)
 	{
 		return false;
 	}
 	
-    return m_scr->GetSourceState();
+    return _scr->GetSourceState();
 }
 
 UINT MciPlayer::GetSoundID()
 {
-    return m_nSoundID;
+    return _nSoundID;
 }
 
 }
