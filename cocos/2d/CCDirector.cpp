@@ -432,6 +432,10 @@ void Director::setProjection(Projection projection)
             kmGLMultMatrix(&orthoMatrix);
             kmGLMatrixMode(KM_GL_MODELVIEW);
             kmGLLoadIdentity();
+            
+            _cameraZ = 0;
+            _nearClip = -1024;
+            _farClip = 1024;
             break;
 
         case Projection::_3D:
@@ -457,6 +461,10 @@ void Director::setProjection(Projection projection)
             kmVec3Fill(&up, 0.0f, 1.0f, 0.0f);
             kmMat4LookAt(&matrixLookup, &eye, &center, &up);
             kmGLMultMatrix(&matrixLookup);
+            
+            _cameraZ = zeye;
+            _nearClip = .1f;
+            _farClip = zeye * 2;
             break;
         }
             

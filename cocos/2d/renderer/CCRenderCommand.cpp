@@ -24,6 +24,7 @@
 
 
 #include "CCRenderCommand.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -43,9 +44,30 @@ void RenderCommand::init(int viewport, float depth)
     
     //convert depth from float to unsigned int
     //currently we only support 2 digits after decimal point
-    _depth = depth * 100 + CC_RENDERER_DEPTH_HALF;
-    _depth = MIN(_depth, CC_RENDERER_DEPTH_MAX);
-    _depth = MAX(_depth, CC_RENDERER_DEPTH_MIN);
+    Director* director = Director::getInstance();
+    Director::Projection projection = director->getProjection();
+    
+    switch (projection)
+    {
+        case Director::Projection::_3D:
+        {
+            float z = depth - director->getCameraZ();
+            if (z == 0)
+            {
+                _depth = 0;
+            }
+            else
+            {
+                _depth = CC_RENDERER_DEPTH_MAX * director->getFarClip() * (1 - director->getNearClip())/(director->getFarClip() - director->getNearClip()) / z;
+            }
+            break;
+        }
+        default:
+            _depth = depth * 100 + CC_RENDERER_DEPTH_HALF;
+            _depth = MIN(_depth, CC_RENDERER_DEPTH_MAX);
+            _depth = MAX(_depth, CC_RENDERER_DEPTH_MIN);
+            break;
+    }
 }
 
 void printBits(size_t const size, void const * const ptr)
