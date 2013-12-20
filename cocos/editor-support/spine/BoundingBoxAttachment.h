@@ -31,30 +31,35 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef SPINE_BOUNDINGBOXATTACHMENT_H_
+#define SPINE_BOUNDINGBOXATTACHMENT_H_
 
-#include <spine/AttachmentLoader.h>
+#include <spine/Attachment.h>
 #include <spine/Atlas.h>
+#include <spine/Slot.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-	spAttachmentLoader super;
-	spAtlas* atlas;
-} spAtlasAttachmentLoader;
+typedef struct spBoundingBoxAttachment spBoundingBoxAttachment;
+struct spBoundingBoxAttachment {
+	spAttachment super;
+	int verticesCount;
+	float* vertices;
+};
 
-spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
+spBoundingBoxAttachment* spBoundingBoxAttachment_create (const char* name);
+void spBoundingBoxAttachment_computeWorldVertices (spBoundingBoxAttachment* self, float x, float y, spBone* bone, float* vertices);
 
 #ifdef SPINE_SHORT_NAMES
-typedef spAtlasAttachmentLoader AtlasAttachmentLoader;
-#define AtlasAttachmentLoader_create(...) spAtlasAttachmentLoader_create(__VA_ARGS__)
+typedef spBoundingBoxAttachment BoundingBoxAttachment;
+#define BoundingBoxAttachment_create(...) spBoundingBoxAttachment_create(__VA_ARGS__)
+#define BoundingBoxAttachment_computeWorldVertices(...) spBoundingBoxAttachment_computeWorldVertices(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* SPINE_BOUNDINGBOXATTACHMENT_H_ */
