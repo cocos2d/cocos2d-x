@@ -1003,7 +1003,22 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
         UIWidget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            widget->addChild(child);
+            /*===*/
+            if (dynamic_cast<UIPageView*>(widget) && dynamic_cast<UILayout*>(child))
+            {
+                dynamic_cast<UIPageView*>(widget)->addPage((UILayout*)child);
+            }
+            else if (dynamic_cast<UIListViewEx*>(widget))
+            {
+                dynamic_cast<UIListViewEx*>(widget)->pushBackCustomItem(child);
+            }
+            else
+            {
+                widget->addChild(child);
+            }
+            // before
+//            widget->addChild(child);
+            /**/
         }
     }
     
@@ -1880,12 +1895,26 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(UIWidg
 
 void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
 {
-    
+    setPropsForLayoutFromJsonDictionary(widget, options);
 }
 
 void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(UIWidget* widget, const rapidjson::Value& options)
 {
+    setPropsForLayoutFromJsonDictionary(widget, options);
     
+    UIListViewEx* listView = (UIListViewEx*)widget;
+    
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    listView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	listView->setDirection((SCROLLVIEW_DIR)direction);
+    
+    ListViewGravity gravity = (ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    listView->setGravity(gravity);
+    
+    float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
+    listView->setItemsMargin(itemMargin);        
 }
 
 NS_CC_EXT_END
