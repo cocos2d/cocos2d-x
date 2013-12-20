@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <vector>
 #include <functional>
+#include <algorithm> // for std::find
 
 NS_CC_BEGIN
 

@@ -202,28 +202,28 @@ void ColliderDetector::addContourData(ContourData *contourData)
 
 void ColliderDetector::addContourDataList(cocos2d::Vector<ContourData*> &contourDataList)
 {
-    for_each(contourDataList.begin(), contourDataList.end(), [this](ContourData *contourData)
+    for (const auto &contourData : contourDataList)
     {
         this->addContourData(contourData);
-    });
+    }
 }
 
 void ColliderDetector::removeContourData(ContourData *contourData)
 {
     std::vector<ColliderBody*> eraseList;
     
-    for_each(_colliderBodyList.begin(), _colliderBodyList.end(), [&contourData, this, &eraseList](ColliderBody *body)
+    for (const auto &body : _colliderBodyList)
     {
 		if (body && body->getContourData() == contourData)
 		{
             eraseList.push_back(body);
 		}
-    });
+    }
     
-    for_each(eraseList.begin(), eraseList.end(), [this](ColliderBody *body)
+    for (const auto &body : eraseList)
     {
         this->_colliderBodyList.eraseObject(body);
-    });
+    }
 }
 
 void ColliderDetector::removeAll()
