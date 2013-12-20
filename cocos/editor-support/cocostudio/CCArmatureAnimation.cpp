@@ -97,28 +97,28 @@ bool ArmatureAnimation::init(Armature *armature)
 
 void ArmatureAnimation::pause()
 {
-    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
+    for (const auto& tween : _tweenList)
     {
         tween->pause();
-    });
+    }
     ProcessBase::pause();
 }
 
 void ArmatureAnimation::resume()
 {
-    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
+    for (const auto& tween : _tweenList)
     {
         tween->resume();
-    });
+    }
     ProcessBase::resume();
 }
 
 void ArmatureAnimation::stop()
 {
-    for_each(_tweenList.begin(), _tweenList.end(), [](Tween *tween)
+    for (const auto& tween : _tweenList)
     {
         tween->stop();
-    });
+    }
     _tweenList.clear();
     ProcessBase::stop();
 }
@@ -308,10 +308,10 @@ void ArmatureAnimation::gotoAndPlay(int frameIndex)
     _currentFrame = _nextFrameIndex * _currentPercent;
 
     
-    for_each(_tweenList.begin(), _tweenList.end(), [&frameIndex](Tween* tween)
+    for (const auto &tween : _tweenList)
     {
         tween->gotoAndPlay(frameIndex);
-    });
+    }
 
     _armature->update(0);
 
@@ -333,10 +333,10 @@ void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
     
-    for_each(_tweenList.begin(), _tweenList.end(), [&dt](Tween* tween)
+    for (const auto &tween : _tweenList)
     {
         tween->update(dt);
-    });
+    }
 
     while (_frameEventQueue.size() > 0)
     {
