@@ -95,7 +95,8 @@
       </Command>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)" xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\oae\prebuilt\*.*" "$(OutDir)"</Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)" 
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\win32-specific\oae\prebuilt\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
