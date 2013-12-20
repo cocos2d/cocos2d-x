@@ -38,7 +38,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
-static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict);
+static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
 static void addItemToArray(id item, ValueVector& array)
 {
@@ -83,7 +83,7 @@ static void addItemToArray(id item, ValueVector& array)
     }
 }
 
-static void addObjectToNSArray(Value& value, NSMutableArray *array)
+static void addObjectToNSArray(const Value& value, NSMutableArray *array)
 {
     // add string into array
     if (value.getType() == Value::Type::STRING)
@@ -100,9 +100,10 @@ static void addObjectToNSArray(Value& value, NSMutableArray *array)
         
         ValueVector valueArray = value.asValueVector();
         
-        std::for_each(valueArray.begin(), valueArray.end(), [=](Value& e){
+        for (const auto &e : valueArray)
+        {
             addObjectToNSArray(e, element);
-        });
+        }
         
         [array addObject:element];
         return;
@@ -171,7 +172,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     }
 }
 
-static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict)
+static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
 {
     NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
     
@@ -204,9 +205,10 @@ static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDic
         
         ValueVector array = value.asValueVector();
         
-        std::for_each(array.begin(), array.end(), [=](Value& v){
+        for(const auto& v : array)
+        {
             addObjectToNSArray(v, arrElement);
-        });
+        }
 
         [dict setObject:arrElement forKey:NSkey];
         return;
