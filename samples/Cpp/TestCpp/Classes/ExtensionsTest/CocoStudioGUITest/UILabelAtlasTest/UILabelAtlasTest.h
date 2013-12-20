@@ -11,7 +11,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILabelAtlasTest)
+//    UI_SCENE_CREATE_FUNC(UILabelAtlasTest)
 };
 
 #endif /* defined(__TestCpp__UILabelAtlasTest__) */

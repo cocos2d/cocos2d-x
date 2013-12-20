@@ -33,7 +33,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILabelTest)
+//    UI_SCENE_CREATE_FUNC(UILabelTest)
 };
 
 #endif /* defined(__TestCpp__UILabelTest__) */

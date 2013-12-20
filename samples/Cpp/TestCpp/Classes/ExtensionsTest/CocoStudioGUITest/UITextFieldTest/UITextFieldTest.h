@@ -33,11 +33,11 @@ public:
     UITextFieldTest();
     ~UITextFieldTest();
     bool init();
-    void textFieldEvent(CCObject* pSender, TextFiledEventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest)
-    UILabel* m_pDisplayValueLabel;
+//    void textFieldEvent(CCObject* pSender, TextFiledEventType type);
+//    
+//protected:
+//    UI_SCENE_CREATE_FUNC(UITextFieldTest)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 class UITextFieldTest_MaxLength : public UIScene
@@ -46,11 +46,11 @@ public:
     UITextFieldTest_MaxLength();
     ~UITextFieldTest_MaxLength();
     bool init();
-    void textFieldEvent(CCObject* pSender, TextFiledEventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_MaxLength)
-    UILabel* m_pDisplayValueLabel;
+//    void textFieldEvent(CCObject* pSender, TextFiledEventType type);
+//    
+//protected:
+//    UI_SCENE_CREATE_FUNC(UITextFieldTest_MaxLength)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 class UITextFieldTest_Password : public UIScene
@@ -59,10 +59,10 @@ public:
     UITextFieldTest_Password();
     ~UITextFieldTest_Password();
     bool init();
-    void textFieldEvent(CCObject* pSender, TextFiledEventType type);    
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
-    UILabel* m_pDisplayValueLabel;
+//    void textFieldEvent(CCObject* pSender, TextFiledEventType type);    
+//    
+//protected:
+//    UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
+//    UILabel* m_pDisplayValueLabel;
 };
 #endif /* defined(__TestCpp__UITextFieldTest__) */

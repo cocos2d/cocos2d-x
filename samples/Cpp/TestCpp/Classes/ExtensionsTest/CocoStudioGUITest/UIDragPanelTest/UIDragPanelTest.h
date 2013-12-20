@@ -35,8 +35,8 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest)
-    UILabel *m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIDragPanelTest)
+//    UILabel *m_pDisplayValueLabel;
 };
 
 class UIDragPanelTest_Bounce : public UIScene
@@ -47,8 +47,8 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
-    UILabel *m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
+//    UILabel *m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIDragPanelTest__) */

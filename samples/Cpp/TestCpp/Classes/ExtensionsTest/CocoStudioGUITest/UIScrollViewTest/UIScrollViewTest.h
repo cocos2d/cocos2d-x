@@ -35,8 +35,8 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIScrollViewTest_Vertical)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIScrollViewTest_Vertical)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 class UIScrollViewTest_Horizontal : public UIScene
@@ -47,8 +47,8 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIScrollViewTest_Horizontal)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIScrollViewTest_Horizontal)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

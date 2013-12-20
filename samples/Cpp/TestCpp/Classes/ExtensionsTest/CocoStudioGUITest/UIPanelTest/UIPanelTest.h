@@ -35,7 +35,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest)
 };
 
 class UIPanelTest_Color : public UIScene
@@ -46,7 +46,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Color)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_Color)
 };
 
 class UIPanelTest_Gradient : public UIScene
@@ -57,7 +57,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Gradient)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_Gradient)
 };
 
 class UIPanelTest_BackGroundImage : public UIScene
@@ -68,7 +68,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage)
 };
 
 class UIPanelTest_BackGroundImage_Scale9 : public UIScene
@@ -79,7 +79,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage_Scale9)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage_Scale9)
 };
 
 class UIPanelTest_Layout_Linear_Vertical : public UIScene
@@ -90,7 +90,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Vertical)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Vertical)
 };
 
 class UIPanelTest_Layout_Linear_Horizontal : public UIScene
@@ -101,7 +101,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Horizontal)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Horizontal)
 };
 
 class UIPanelTest_Layout_Relative : public UIScene
@@ -112,7 +112,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Relative)
+//    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Relative)
 };
 
 #endif /* defined(__TestCpp__UIPanelTest__) */

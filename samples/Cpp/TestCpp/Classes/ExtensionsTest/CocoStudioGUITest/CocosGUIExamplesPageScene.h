@@ -53,7 +53,7 @@ protected:
     void pageTurningEvent(CCObject* pSender);
     
 protected:
-    UILayer* m_pUILayer;
+//    UILayer* m_pUILayer;
 };
 
 #endif /* defined(__TestCpp__CocosGUIExamplesPageScene__) */

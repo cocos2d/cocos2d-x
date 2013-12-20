@@ -40,7 +40,7 @@ public:
 	virtual void nextCallback(CCObject* sender);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
+//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
     int m_nCount;
 };
 
@@ -57,7 +57,7 @@ public:
 	virtual void nextCallback(CCObject* sender);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
+//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
     int m_nCount;
 };
 
@@ -74,7 +74,7 @@ public:
 	virtual void nextCallback(CCObject* sender);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
+//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
     int m_nCount;
 };
 
@@ -91,7 +91,7 @@ public:
 	virtual void nextCallback(CCObject* sender);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
+//    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
     int m_nCount;
 };
 

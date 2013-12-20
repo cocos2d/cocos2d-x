@@ -33,11 +33,11 @@ public:
     UIListViewTest_Vertical();
     ~UIListViewTest_Vertical();
     bool init();
-    void listViewEvent(CCObject* pSender, ListViewEventType type);
+//    void listViewEvent(CCObject* pSender, ListViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
+//    UILabel* m_pDisplayValueLabel;
     
     int m_nCount;
     CCArray* m_array;
@@ -49,11 +49,11 @@ public:
     UIListViewTest_Horizontal();
     ~UIListViewTest_Horizontal();
     bool init();
-    void listViewEvent(CCObject* pSender, ListViewEventType type);    
+//    void listViewEvent(CCObject* pSender, ListViewEventType type);    
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
+//    UILabel* m_pDisplayValueLabel;
     
     int m_nCount;
     CCArray* m_array;

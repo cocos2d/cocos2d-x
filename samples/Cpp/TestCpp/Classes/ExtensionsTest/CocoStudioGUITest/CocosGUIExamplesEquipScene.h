@@ -85,7 +85,7 @@ protected:
     };
     
 protected:
-    UILayer* m_pUILayer;
+//    UILayer* m_pUILayer;
     
     // equip
     EQUIP_TYPE m_eEquipType;
@@ -112,7 +112,7 @@ protected:
     
     CCPoint widgetLastWorldSpace;
     CCPoint widgetLastNodeSpace;
-    UIWidget* lastWidgetParent;
+//    UIWidget* lastWidgetParent;
 };
 
 #endif /* defined(__TestCpp__CocosGUIExamplesEquipScene__) */

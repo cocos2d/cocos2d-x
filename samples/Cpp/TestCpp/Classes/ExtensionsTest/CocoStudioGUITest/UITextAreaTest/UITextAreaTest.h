@@ -33,7 +33,7 @@ public:
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextAreaTest)
+//    UI_SCENE_CREATE_FUNC(UITextAreaTest)
 };
 
 #endif /* defined(__TestCpp__UITextAreaTest__) */

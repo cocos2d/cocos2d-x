@@ -26,40 +26,47 @@
 #include "../System/UIHelper.h"
 #include "../../../GUI/CCControlExtension/CCScale9Sprite.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
-#define DYNAMIC_CAST_CLIPPINGLAYER dynamic_cast<UIRectClippingNode*>(m_pRenderer)
+namespace gui {
 
-UILayout::UILayout():
-m_bClippingEnabled(false),
-m_bBackGroundScale9Enabled(false),
-m_pBackGroundImage(NULL),
-m_strBackGroundImageFileName(""),
-m_backGroundImageCapInsets(CCRectZero),
-m_colorType(LAYOUT_COLOR_NONE),
-m_eBGImageTexType(UI_TEX_TYPE_LOCAL),
-m_pColorRender(NULL),
-m_pGradientRender(NULL),
-m_cColor(ccWHITE),
-m_gStartColor(ccWHITE),
-m_gEndColor(ccWHITE),
-m_AlongVector(ccp(0.0f, -1.0f)),
-m_nCOpacity(255),
-m_backGroundImageTextureSize(CCSizeZero),
-m_eLayoutType(LAYOUT_ABSOLUTE),
-m_bDoLayoutDirty(true)
+static GLint g_sStencilBits = -1;
+
+Layout::Layout():
+_clippingEnabled(false),
+_backGroundScale9Enabled(false),
+_backGroundImage(NULL),
+_backGroundImageFileName(""),
+_backGroundImageCapInsets(CCRectZero),
+_colorType(LAYOUT_COLOR_NONE),
+_bgImageTexType(UI_TEX_TYPE_LOCAL),
+_colorRender(NULL),
+_gradientRender(NULL),
+_cColor(ccWHITE),
+_gStartColor(ccWHITE),
+_gEndColor(ccWHITE),
+_alongVector(CCPoint(0.0f, -1.0f)),
+_cOpacity(255),
+_backGroundImageTextureSize(CCSizeZero),
+_layoutType(LAYOUT_ABSOLUTE),
+_clippingType(LAYOUT_CLIPPING_STENCIL),
+_clippingStencil(NULL),
+_handleScissor(false),
+_scissorRectDirty(false),
+_clippingRect(CCRectZero),
+_clippingParent(NULL),
+_doLayoutDirty(true)
 {
-    m_WidgetType = WidgetTypeContainer;
+    _widgetType = WidgetTypeContainer;
 }
 
-UILayout::~UILayout()
+Layout::~Layout()
 {
-    DYNAMIC_CAST_CLIPPINGLAYER->setVisitEventListener(NULL, NULL);
 }
 
-UILayout* UILayout::create()
+Layout* Layout::create()
 {
-    UILayout* layout = new UILayout();
+    Layout* layout = new Layout();
     if (layout && layout->init())
     {
         layout->autorelease();
@@ -69,197 +76,474 @@ UILayout* UILayout::create()
     return NULL;
 }
 
-bool UILayout::init()
+bool Layout::init()
 {
-    m_children = CCArray::create();
-    m_children->retain();
-    m_pLayoutParameterDictionary = CCDictionary::create();
-    CC_SAFE_RETAIN(m_pLayoutParameterDictionary);
-    initRenderer();
-    m_pRenderer->retain();
-    m_pRenderer->setZOrder(m_nWidgetZOrder);
-    CCRGBAProtocol* renderRGBA = dynamic_cast<CCRGBAProtocol*>(m_pRenderer);
-    if (renderRGBA)
+    if (CCNodeRGBA::init())
     {
-        renderRGBA->setCascadeColorEnabled(false);
-        renderRGBA->setCascadeOpacityEnabled(false);
+        initRenderer();
+        _renderer->retain();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        setBright(true);
+        ignoreContentAdaptWithSize(false);
+        setSize(CCSizeZero);
+        setAnchorPoint(CCPointZero);
+        _widgetChildren = CCArray::create();
+        CC_SAFE_RETAIN(_widgetChildren);
+        _layoutParameterDictionary = CCDictionary::create();
+        CC_SAFE_RETAIN(_layoutParameterDictionary);
+        return true;
     }
-    ignoreContentAdaptWithSize(false);
-    setSize(CCSizeZero);
-    setBright(true);
-    setAnchorPoint(ccp(0, 0));
-    m_pScheduler = CCDirector::sharedDirector()->getScheduler();
-    CC_SAFE_RETAIN(m_pScheduler);
-    return true;
+    return false;
 }
-
-void UILayout::initRenderer()
-{
-    m_pRenderer = UIRectClippingNode::create();
-    DYNAMIC_CAST_CLIPPINGLAYER->setVisitEventListener(this, visitselector(UILayout::rendererVisitCallBack));
-}
-
-bool UILayout::addChild(cocos2d::extension::UIWidget *child)
-{
-    m_bDoLayoutDirty = true;
-    supplyTheLayoutParameterLackToChild(child);
-    return UIWidget::addChild(child);
-}
-
-bool UILayout::isClippingEnabled()
-{
-    return m_bClippingEnabled;
-}
-
-void UILayout::setClippingEnabled(bool able)
-{
-    m_bClippingEnabled = able;
-    DYNAMIC_CAST_CLIPPINGLAYER->setClippingEnabled(able);
-}
-
-void UILayout::rendererVisitCallBack()
-{
-    doLayout();
-}
-
-void UILayout::onSizeChanged()
-{
-    UIWidget::onSizeChanged();
-    DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(m_size);
-    m_bDoLayoutDirty = true;
     
-    if (m_pBackGroundImage)
-    {
-        m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
-        if (m_bBackGroundScale9Enabled && m_pBackGroundImage)
-        {
-            dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
-        }
-    }
-    if (m_pColorRender)
-    {
-        m_pColorRender->setContentSize(m_size);
-    }
-    if (m_pGradientRender)
-    {
-        m_pGradientRender->setContentSize(m_size);
-    }
+void Layout::addChild(CCNode *child)
+{
+    Widget::addChild(child);
 }
 
-void UILayout::setBackGroundImageScale9Enabled(bool able)
+void Layout::addChild(CCNode * child, int zOrder)
 {
-    if (m_bBackGroundScale9Enabled == able)
+    Widget::addChild(child, zOrder);
+}
+
+void Layout::addChild(CCNode *child, int zOrder, int tag)
+{
+    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+    
+void Layout::initRenderer()
+{
+    Widget::initRenderer();
+}
+
+bool Layout::isClippingEnabled()
+{
+    return _clippingEnabled;
+}
+    
+void Layout::visit()
+{
+    if (!_enabled)
     {
         return;
     }
-    m_pRenderer->removeChild(m_pBackGroundImage, true);
-    m_pBackGroundImage = NULL;
-    m_bBackGroundScale9Enabled = able;
-    if (m_bBackGroundScale9Enabled)
+    if (_clippingEnabled)
     {
-        m_pBackGroundImage = CCScale9Sprite::create();
-        m_pRenderer->addChild(m_pBackGroundImage);
+        switch (_clippingType)
+        {
+            case LAYOUT_CLIPPING_STENCIL:
+                stencilClippingVisit();
+                break;
+            case LAYOUT_CLIPPING_SCISSOR:
+                scissorClippingVisit();
+                break;
+            default:
+                break;
+        }
     }
     else
     {
-        m_pBackGroundImage = CCSprite::create();
-        m_pRenderer->addChild(m_pBackGroundImage);
+        CCNodeRGBA::visit();
     }
-    m_pBackGroundImage->setZOrder(-1);
-    setBackGroundImage(m_strBackGroundImageFileName.c_str(),m_eBGImageTexType);    
-    setBackGroundImageCapInsets(m_backGroundImageCapInsets);
+}
+    
+void Layout::sortAllChildren()
+{
+    Widget::sortAllChildren();
+    doLayout();
+}
+    
+void Layout::stencilClippingVisit()
+{
+    if (!_clippingStencil || !_clippingStencil->isVisible())
+    {
+        CCNodeRGBA::visit();
+        return;
+    }
+    if (g_sStencilBits < 1)
+    {
+        CCNodeRGBA::visit();
+        return;
+    }
+    static GLint layer = -1;
+    if (layer + 1 == g_sStencilBits)
+    {
+        static bool once = true;
+        if (once)
+        {
+            char warning[200] = {0};
+            snprintf(warning, sizeof(warning), "Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", g_sStencilBits);
+            CCLOG("%s", warning);
+            
+            once = false;
+        }
+        CCNodeRGBA::visit();
+        return;
+    }
+    layer++;
+    GLint mask_layer = 0x1 << layer;
+    GLint mask_layer_l = mask_layer - 1;
+    GLint mask_layer_le = mask_layer | mask_layer_l;
+    GLboolean currentStencilEnabled = GL_FALSE;
+    GLuint currentStencilWriteMask = ~0;
+    GLenum currentStencilFunc = GL_ALWAYS;
+    GLint currentStencilRef = 0;
+    GLuint currentStencilValueMask = ~0;
+    GLenum currentStencilFail = GL_KEEP;
+    GLenum currentStencilPassDepthFail = GL_KEEP;
+    GLenum currentStencilPassDepthPass = GL_KEEP;
+    currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
+    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
+    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
+    glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
+    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&currentStencilValueMask);
+    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&currentStencilFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&currentStencilPassDepthFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&currentStencilPassDepthPass);
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+    glStencilMask(mask_layer);
+    GLboolean currentDepthWriteMask = GL_TRUE;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
+    glDepthMask(GL_FALSE);
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    ccDrawSolidRect(CCPoint(-1,-1), CCPoint(1,1), ccc4f(1, 1, 1, 1));
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    GLboolean currentAlphaTestEnabled = GL_FALSE;
+    GLenum currentAlphaTestFunc = GL_ALWAYS;
+    GLclampf currentAlphaTestRef = 1;
+#endif
+    kmGLPushMatrix();
+    transform();
+    _clippingStencil->visit();
+    kmGLPopMatrix();
+    glDepthMask(currentDepthWriteMask);
+    glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_le);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    CCNodeRGBA::visit();
+    glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
+    glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
+    glStencilMask(currentStencilWriteMask);
+    if (!currentStencilEnabled)
+    {
+        glDisable(GL_STENCIL_TEST);
+    }
+    layer--;
+}
+    
+void Layout::scissorClippingVisit()
+{
+    CCRect clippingRect = getClippingRect();
+    if (_handleScissor)
+    {
+        glEnable(GL_SCISSOR_TEST);
+    }
+    CCEGLView::sharedOpenGLView()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    CCNodeRGBA::visit();
+    if (_handleScissor)
+    {
+        glDisable(GL_SCISSOR_TEST);
+    }
 }
 
-void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
+void Layout::setClippingEnabled(bool able)
+{
+    if (able == _clippingEnabled)
+    {
+        return;
+    }
+    _clippingEnabled = able;
+    switch (_clippingType)
+    {
+        case LAYOUT_CLIPPING_STENCIL:
+            if (able)
+            {
+                glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                _clippingStencil = CCDrawNode::create();
+                _clippingStencil->onEnter();
+                _clippingStencil->retain();
+                setStencilClippingSize(_size);
+            }
+            else
+            {
+                _clippingStencil->onExit();
+                _clippingStencil->release();
+                _clippingStencil = NULL;
+            }
+            break;
+        default:
+            break;
+    }
+}
+    
+void Layout::setClippingType(LayoutClippingType type)
+{
+    if (type == _clippingType)
+    {
+        return;
+    }
+    bool clippingEnabled = isClippingEnabled();
+    setClippingEnabled(false);
+    _clippingType = type;
+    setClippingEnabled(clippingEnabled);
+}
+    
+void Layout::setStencilClippingSize(const CCSize &size)
+{
+    if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
+    {
+        CCPoint rect[4];
+        rect[0] = CCPointZero;
+        rect[1] = CCPoint(_size.width, 0);
+        rect[2] = CCPoint(_size.width, _size.height);
+        rect[3] = CCPoint(0, _size.height);
+        ccColor4F green = ccc4f(0, 1, 0, 1);
+        _clippingStencil->clear();
+        _clippingStencil->drawPolygon(rect, 4, green, 0, green);
+    }
+}
+    
+const CCRect& Layout::getClippingRect()
+{
+    _handleScissor = true;
+    CCPoint worldPos = convertToWorldSpace(CCPointZero);
+    CCAffineTransform t = nodeToWorldTransform();
+    float scissorWidth = _size.width*t.a;
+    float scissorHeight = _size.height*t.d;
+    CCRect parentClippingRect;
+    Layout* parent = this;
+    bool firstClippingParentFounded = false;
+    while (parent)
+    {
+        parent = dynamic_cast<Layout*>(parent->getParent());
+        if(parent)
+        {
+            if (parent->isClippingEnabled())
+            {
+                if (!firstClippingParentFounded)
+                {
+                    _clippingParent = parent;
+                    firstClippingParentFounded = true;
+                }
+                
+                if (parent->_clippingType == LAYOUT_CLIPPING_SCISSOR)
+                {
+                    _handleScissor = false;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (_clippingParent)
+    {
+        parentClippingRect = _clippingParent->getClippingRect();
+        float finalX = worldPos.x - (scissorWidth * m_obAnchorPoint.x);
+        float finalY = worldPos.y - (scissorHeight * m_obAnchorPoint.y);
+        float finalWidth = scissorWidth;
+        float finalHeight = scissorHeight;
+        
+        float leftOffset = worldPos.x - parentClippingRect.origin.x;
+        if (leftOffset < 0.0f)
+        {
+            finalX = parentClippingRect.origin.x;
+            finalWidth += leftOffset;
+        }
+        float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
+        if (rightOffset > 0.0f)
+        {
+            finalWidth -= rightOffset;
+        }
+        float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
+        if (topOffset > 0.0f)
+        {
+            finalHeight -= topOffset;
+        }
+        float bottomOffset = worldPos.y - parentClippingRect.origin.y;
+        if (bottomOffset < 0.0f)
+        {
+            finalY = parentClippingRect.origin.x;
+            finalHeight += bottomOffset;
+        }
+        if (finalWidth < 0.0f)
+        {
+            finalWidth = 0.0f;
+        }
+        if (finalHeight < 0.0f)
+        {
+            finalHeight = 0.0f;
+        }
+        _clippingRect.origin.x = finalX;
+        _clippingRect.origin.y = finalY;
+        _clippingRect.size.width = finalWidth;
+        _clippingRect.size.height = finalHeight;
+    }
+    else
+    {
+        _clippingRect.origin.x = worldPos.x - (scissorWidth * m_obAnchorPoint.x);
+        _clippingRect.origin.y = worldPos.y - (scissorHeight * m_obAnchorPoint.y);
+        _clippingRect.size.width = scissorWidth;
+        _clippingRect.size.height = scissorHeight;
+    }
+    return _clippingRect;
+}
+
+void Layout::onSizeChanged()
+{
+    Widget::onSizeChanged();
+    setStencilClippingSize(_size);
+    _doLayoutDirty = true;
+    if (_backGroundImage)
+    {
+        _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
+        if (_backGroundScale9Enabled && _backGroundImage)
+        {
+            static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        }
+    }
+    if (_colorRender)
+    {
+        _colorRender->setContentSize(_size);
+    }
+    if (_gradientRender)
+    {
+        _gradientRender->setContentSize(_size);
+    }
+}
+
+void Layout::setBackGroundImageScale9Enabled(bool able)
+{
+    if (_backGroundScale9Enabled == able)
+    {
+        return;
+    }
+    _renderer->removeChild(_backGroundImage, true);
+    _backGroundImage = NULL;
+    _backGroundScale9Enabled = able;
+    if (_backGroundScale9Enabled)
+    {
+        _backGroundImage = extension::CCScale9Sprite::create();
+        _renderer->addChild(_backGroundImage);
+    }
+    else
+    {
+        _backGroundImage = CCSprite::create();
+        _renderer->addChild(_backGroundImage);
+    }
+    _backGroundImage->setZOrder(-1);
+    setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
+    setBackGroundImageCapInsets(_backGroundImageCapInsets);
+}
+
+void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
-    if (m_pBackGroundImage == NULL)
+    if (_backGroundImage == NULL)
     {
         addBackGroundImage();
     }
-    m_strBackGroundImageFileName = fileName;
-    m_eBGImageTexType = texType;
-    if (m_bBackGroundScale9Enabled)
+    _backGroundImageFileName = fileName;
+    _bgImageTexType = texType;
+    if (_backGroundScale9Enabled)
     {
-        switch (m_eBGImageTexType)
+        extension::CCScale9Sprite* bgiScale9 = static_cast<extension::CCScale9Sprite*>(_backGroundImage);
+        switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->initWithFile(fileName);
+                bgiScale9->initWithFile(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->initWithSpriteFrameName(fileName);
+                bgiScale9->initWithSpriteFrameName(fileName);
                 break;
             default:
                 break;
         }
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
+        bgiScale9->setPreferredSize(_size);
     }
     else
     {
-        switch (m_eBGImageTexType)
+        switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<CCSprite*>(m_pBackGroundImage)->initWithFile(fileName);
+                static_cast<CCSprite*>(_backGroundImage)->initWithFile(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<CCSprite*>(m_pBackGroundImage)->initWithSpriteFrameName(fileName);
+                static_cast<CCSprite*>(_backGroundImage)->initWithSpriteFrameName(fileName);
                 break;
             default:
                 break;
         }
     }
-    if (m_bBackGroundScale9Enabled)
+    if (_backGroundScale9Enabled)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setColor(getColor());
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
+        extension::CCScale9Sprite* bgiScale9 = static_cast<extension::CCScale9Sprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<CCSprite*>(m_pBackGroundImage)->setColor(getColor());
-        dynamic_cast<CCSprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
+        CCSprite* bgiScale9 = static_cast<CCSprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
-    m_backGroundImageTextureSize = m_pBackGroundImage->getContentSize();
-    m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
+    _backGroundImageTextureSize = _backGroundImage->getContentSize();
+    _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
 }
 
-void UILayout::setBackGroundImageCapInsets(const CCRect &capInsets)
+void Layout::setBackGroundImageCapInsets(const CCRect &capInsets)
 {
-    m_backGroundImageCapInsets = capInsets;
-    if (m_bBackGroundScale9Enabled && m_pBackGroundImage)
+    _backGroundImageCapInsets = capInsets;
+    if (_backGroundScale9Enabled && _backGroundImage)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setCapInsets(capInsets);
+        static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
 
-void UILayout::supplyTheLayoutParameterLackToChild(UIWidget *child)
+void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 {
     if (!child)
     {
         return;
     }
-    switch (m_eLayoutType)
+    switch (_layoutType)
     {
         case LAYOUT_ABSOLUTE:
             break;
         case LAYOUT_LINEAR_HORIZONTAL:
         case LAYOUT_LINEAR_VERTICAL:
         {
-            UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(UILinearLayoutParameter::create());
+                child->setLayoutParameter(LinearLayoutParameter::create());
             }
             break;
         }
         case LAYOUT_RELATIVE:
         {
-            UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(UIRelativeLayoutParameter::create());
+                child->setLayoutParameter(RelativeLayoutParameter::create());
             }
             break;
         }
@@ -268,228 +552,196 @@ void UILayout::supplyTheLayoutParameterLackToChild(UIWidget *child)
     }
 }
 
-void UILayout::addBackGroundImage()
+void Layout::addBackGroundImage()
 {
-    if (m_bBackGroundScale9Enabled)
+    if (_backGroundScale9Enabled)
     {
-        m_pBackGroundImage = CCScale9Sprite::create();
-        m_pBackGroundImage->setZOrder(-1);
-        m_pRenderer->addChild(m_pBackGroundImage);
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setPreferredSize(m_size);
+        _backGroundImage = extension::CCScale9Sprite::create();
+        _backGroundImage->setZOrder(-1);
+        _renderer->addChild(_backGroundImage);
+        static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
-        m_pBackGroundImage = CCSprite::create();
-        m_pBackGroundImage->setZOrder(-1);
-        m_pRenderer->addChild(m_pBackGroundImage);
+        _backGroundImage = CCSprite::create();
+        _backGroundImage->setZOrder(-1);
+        _renderer->addChild(_backGroundImage);
     }
-    m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));
+    _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
 }
 
-void UILayout::removeBackGroundImage()
+void Layout::removeBackGroundImage()
 {
-    if (!m_pBackGroundImage)
+    if (!_backGroundImage)
     {
         return;
     }
-    m_pRenderer->removeChild(m_pBackGroundImage,  true);
-    m_pBackGroundImage = NULL;
-    m_strBackGroundImageFileName = "";
-    m_backGroundImageTextureSize = CCSizeZero;
+    _renderer->removeChild(_backGroundImage,  true);
+    _backGroundImage = NULL;
+    _backGroundImageFileName = "";
+    _backGroundImageTextureSize = CCSizeZero;
 }
 
-void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
+void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
 {
-    if (m_colorType == type)
+    if (_colorType == type)
     {
         return;
     }
-    switch (m_colorType)
+    switch (_colorType)
     {
         case LAYOUT_COLOR_NONE:
-            if (m_pColorRender)
+            if (_colorRender)
             {
-                m_pRenderer->removeChild(m_pColorRender, true);
-                m_pColorRender = NULL;
+                _renderer->removeChild(_colorRender);
+                _colorRender = NULL;
             }
-            if (m_pGradientRender)
+            if (_gradientRender)
             {
-                m_pRenderer->removeChild(m_pGradientRender, true);
-                m_pGradientRender = NULL;
+                _renderer->removeChild(_gradientRender);
+                _gradientRender = NULL;
             }
             break;
         case LAYOUT_COLOR_SOLID:
-            if (m_pColorRender)
+            if (_colorRender)
             {
-                m_pRenderer->removeChild(m_pColorRender, true);
-                m_pColorRender = NULL;
+                _renderer->removeChild(_colorRender);
+                _colorRender = NULL;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
-            if (m_pGradientRender)
+            if (_gradientRender)
             {
-                m_pRenderer->removeChild(m_pGradientRender, true);
-                m_pGradientRender = NULL;
+                _renderer->removeChild(_gradientRender);
+                _gradientRender = NULL;
             }
             break;
         default:
             break;
     }
-    m_colorType = type;
-    switch (m_colorType)
+    _colorType = type;
+    switch (_colorType)
     {
         case LAYOUT_COLOR_NONE:
             break;
         case LAYOUT_COLOR_SOLID:
-            m_pColorRender = CCLayerColor::create();
-            m_pColorRender->setContentSize(m_size);
-            m_pColorRender->setOpacity(m_nCOpacity);
-            m_pColorRender->setColor(m_cColor);
-            m_pRenderer->addChild(m_pColorRender,-2);
+            _colorRender = CCLayerColor::create();
+            _colorRender->setContentSize(_size);
+            _colorRender->setOpacity(_cOpacity);
+            _colorRender->setColor(_cColor);
+            _renderer->addChild(_colorRender,-2);
             break;
         case LAYOUT_COLOR_GRADIENT:
-            m_pGradientRender = CCLayerGradient::create();
-            m_pGradientRender->setContentSize(m_size);
-            m_pGradientRender->setOpacity(m_nCOpacity);
-            m_pGradientRender->setStartColor(m_gStartColor);
-            m_pGradientRender->setEndColor(m_gEndColor);
-            m_pGradientRender->setVector(m_AlongVector);
-            m_pRenderer->addChild(m_pGradientRender,-2);
-            break;
-        default:
-            break;
-    }
-}
-
-void UILayout::setBackGroundColor(const ccColor3B &color)
-{
-    m_cColor = color;
-    if (m_pColorRender)
-    {
-        m_pColorRender->setColor(color);
-    }
-}
-
-void UILayout::setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor)
-{
-    m_gStartColor = startColor;
-    if (m_pGradientRender)
-    {
-        m_pGradientRender->setStartColor(startColor);
-    }
-    m_gEndColor = endColor;
-    if (m_pGradientRender)
-    {
-        m_pGradientRender->setEndColor(endColor);
-    }
-}
-
-void UILayout::setBackGroundColorOpacity(int opacity)
-{
-    m_nCOpacity = opacity;
-    switch (m_colorType)
-    {
-        case LAYOUT_COLOR_NONE:
-            break;
-        case LAYOUT_COLOR_SOLID:
-            m_pColorRender->setOpacity(opacity);
-            break;
-        case LAYOUT_COLOR_GRADIENT:
-            m_pGradientRender->setOpacity(opacity);
+            _gradientRender = CCLayerGradient::create();
+            _gradientRender->setContentSize(_size);
+            _gradientRender->setOpacity(_cOpacity);
+            _gradientRender->setStartColor(_gStartColor);
+            _gradientRender->setEndColor(_gEndColor);
+            _gradientRender->setVector(_alongVector);
+            _renderer->addChild(_gradientRender,-2);
             break;
         default:
             break;
     }
 }
 
-void UILayout::setBackGroundColorVector(const CCPoint &vector)
+void Layout::setBackGroundColor(const ccColor3B &color)
 {
-    m_AlongVector = vector;
-    if (m_pGradientRender)
+    _cColor = color;
+    if (_colorRender)
     {
-        m_pGradientRender->setVector(vector);
+        _colorRender->setColor(color);
     }
 }
 
-void UILayout::setColor(const ccColor3B &color)
+void Layout::setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor)
 {
-    UIWidget::setColor(color);
-    if (m_pBackGroundImage)
+    _gStartColor = startColor;
+    if (_gradientRender)
     {
-        CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(m_pBackGroundImage);
-        if (rgbap)
+        _gradientRender->setStartColor(startColor);
+    }
+    _gEndColor = endColor;
+    if (_gradientRender)
+    {
+        _gradientRender->setEndColor(endColor);
+    }
+}
+
+void Layout::setBackGroundColorOpacity(int opacity)
+{
+    _cOpacity = opacity;
+    switch (_colorType)
+    {
+        case LAYOUT_COLOR_NONE:
+            break;
+        case LAYOUT_COLOR_SOLID:
+            _colorRender->setOpacity(opacity);
+            break;
+        case LAYOUT_COLOR_GRADIENT:
+            _gradientRender->setOpacity(opacity);
+            break;
+        default:
+            break;
+    }
+}
+
+void Layout::setBackGroundColorVector(const CCPoint &vector)
+{
+    _alongVector = vector;
+    if (_gradientRender)
+    {
+        _gradientRender->setVector(vector);
+    }
+}
+
+const CCSize& Layout::getBackGroundImageTextureSize() const
+{
+    return _backGroundImageTextureSize;
+}
+
+void Layout::setLayoutType(LayoutType type)
+{
+    _layoutType = type;
+    if(_widgetChildren && _widgetChildren->count() > 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(_widgetChildren, child)
         {
-            rgbap->setColor(color);
+            supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
         }
     }
+    _doLayoutDirty = true;
 }
 
-void UILayout::setOpacity(int opacity)
+LayoutType Layout::getLayoutType() const
 {
-    UIWidget::setOpacity(opacity);
-    if (m_pBackGroundImage)
-    {
-        CCRGBAProtocol* rgbap = dynamic_cast<CCRGBAProtocol*>(m_pBackGroundImage);
-        if (rgbap)
-        {
-            rgbap->setOpacity(opacity);
-        }
-    }
+    return _layoutType;
 }
 
-const CCSize& UILayout::getBackGroundImageTextureSize() const
+void Layout::doLayout()
 {
-    return m_backGroundImageTextureSize;
-}
-
-const CCSize& UILayout::getContentSize() const
-{
-    return m_pRenderer->getContentSize();
-}
-
-void UILayout::setLayoutType(LayoutType type)
-{
-    m_eLayoutType = type;
-
-    ccArray* layoutChildrenArray = getChildren()->data;
-    int length = layoutChildrenArray->num;
-    for (int i=0; i<length; i++)
-    {
-        UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-        supplyTheLayoutParameterLackToChild(child);
-    }
-    m_bDoLayoutDirty = true;
-}
-
-LayoutType UILayout::getLayoutType() const
-{
-    return m_eLayoutType;
-}
-
-void UILayout::doLayout()
-{
-    if (!m_bDoLayoutDirty)
+    if (!_doLayoutDirty)
     {
         return;
     }
-    switch (m_eLayoutType)
+    switch (_layoutType)
     {
         case LAYOUT_ABSOLUTE:
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {
-            ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            int length = _widgetChildren->count();
             CCSize layoutSize = getSize();
             float topBoundary = layoutSize.height;
             for (int i=0; i<length; ++i)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                Widget* child = static_cast<Widget*>(_widgetChildren->objectAtIndex(i));
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
-                    UILinearGravity childGravity = layoutParameter->getGravity();
+                    LinearGravity childGravity = layoutParameter->getGravity();
                     CCPoint ap = child->getAnchorPoint();
                     CCSize cs = child->getSize();
                     float finalPosX = ap.x * cs.width;
@@ -508,10 +760,10 @@ void UILayout::doLayout()
                         default:
                             break;
                     }
-                    UIMargin mg = layoutParameter->getMargin();
+                    Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
-                    child->setPosition(ccp(finalPosX, finalPosY));
+                    child->setPosition(CCPoint(finalPosX, finalPosY));
                     topBoundary = child->getBottomInParent() - mg.bottom;
                 }
             }
@@ -519,18 +771,17 @@ void UILayout::doLayout()
         }
         case LAYOUT_LINEAR_HORIZONTAL:
         {
-            ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            int length = _widgetChildren->count();
             CCSize layoutSize = getSize();
             float leftBoundary = 0.0f;
             for (int i=0; i<length; ++i)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                Widget* child = static_cast<Widget*>(_widgetChildren->objectAtIndex(i));
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
-                    UILinearGravity childGravity = layoutParameter->getGravity();
+                    LinearGravity childGravity = layoutParameter->getGravity();
                     CCPoint ap = child->getAnchorPoint();
                     CCSize cs = child->getSize();
                     float finalPosX = leftBoundary + (ap.x * cs.width);
@@ -549,10 +800,10 @@ void UILayout::doLayout()
                         default:
                             break;
                     }
-                    UIMargin mg = layoutParameter->getMargin();
+                    Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
-                    child->setPosition(ccp(finalPosX, finalPosY));
+                    child->setPosition(CCPoint(finalPosX, finalPosY));
                     leftBoundary = child->getRightInParent() + mg.right;
                 }
             }
@@ -560,37 +811,36 @@ void UILayout::doLayout()
         }
         case LAYOUT_RELATIVE:
         {
-            ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
+            int length = _widgetChildren->count();
             int unlayoutChildCount = length;
             CCSize layoutSize = getSize();
             
             for (int i=0; i<length; i++)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
-                layoutParameter->m_bPut = false;
+                Widget* child = static_cast<Widget*>(_widgetChildren->objectAtIndex(i));
+                RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                layoutParameter->_put = false;
             }
             
             while (unlayoutChildCount > 0)
             {
                 for (int i=0; i<length; i++)
                 {
-                    UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                    UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                    Widget* child = static_cast<Widget*>(_widgetChildren->objectAtIndex(i));
+                    RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                     
                     if (layoutParameter)
                     {
-                        if (layoutParameter->m_bPut)
+                        if (layoutParameter->_put)
                         {
                             continue;
                         }
                         CCPoint ap = child->getAnchorPoint();
                         CCSize cs = child->getSize();
-                        UIRelativeAlign align = layoutParameter->getAlign();
+                        RelativeAlign align = layoutParameter->getAlign();
                         const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                        UIWidget* relativeWidget = NULL;
-                        UIRelativeLayoutParameter* relativeWidgetLP = NULL;
+                        Widget* relativeWidget = NULL;
+                        RelativeLayoutParameter* relativeWidgetLP = NULL;
                         float finalPosX = 0.0f;
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
@@ -598,7 +848,7 @@ void UILayout::doLayout()
                             relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
-                                relativeWidgetLP = dynamic_cast<UIRelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                                relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                             }
                         }
                         switch (align)
@@ -644,7 +894,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_ABOVE_LEFTALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -657,7 +907,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_ABOVE_CENTER:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -671,7 +921,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_ABOVE_RIGHTALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -684,7 +934,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_LEFT_OF_TOPALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -697,7 +947,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_LEFT_OF_CENTER:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -711,7 +961,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -724,7 +974,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_RIGHT_OF_TOPALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -737,7 +987,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_RIGHT_OF_CENTER:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -751,7 +1001,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -764,7 +1014,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_BELOW_LEFTALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -777,7 +1027,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_BELOW_CENTER:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -791,7 +1041,7 @@ void UILayout::doLayout()
                             case RELATIVE_LOCATION_BELOW_RIGHTALIGN:
                                 if (relativeWidget)
                                 {
-                                    if (relativeWidgetLP && !relativeWidgetLP->m_bPut)
+                                    if (relativeWidgetLP && !relativeWidgetLP->_put)
                                     {
                                         continue;
                                     }
@@ -804,8 +1054,8 @@ void UILayout::doLayout()
                             default:
                                 break;
                         }
-                        UIMargin relativeWidgetMargin;
-                        UIMargin mg = layoutParameter->getMargin();
+                        Margin relativeWidgetMargin;
+                        Margin mg = layoutParameter->getMargin();
                         if (relativeWidgetLP)
                         {
                             relativeWidgetMargin = relativeWidgetLP->getMargin();
@@ -973,8 +1223,8 @@ void UILayout::doLayout()
                             default:
                                 break;
                         }
-                        child->setPosition(ccp(finalPosX, finalPosY));
-                        layoutParameter->m_bPut = true;
+                        child->setPosition(CCPoint(finalPosX, finalPosY));
+                        layoutParameter->_put = true;
                         unlayoutChildCount--;
                     }
                 }
@@ -984,148 +1234,41 @@ void UILayout::doLayout()
         default:
             break;
     }
-    m_bDoLayoutDirty = false;
+    _doLayoutDirty = false;
 }
 
-const char* UILayout::getDescription() const
+std::string Layout::getDescription() const
 {
     return "Layout";
 }
 
-UIWidget* UILayout::createCloneInstance()
+Widget* Layout::createCloneInstance()
 {
-    return UILayout::create();
+    return Layout::create();
 }
 
-void UILayout::copyClonedWidgetChildren(UIWidget* model)
+void Layout::copyClonedWidgetChildren(Widget* model)
 {
-    UIWidget::copyClonedWidgetChildren(model);
+    Widget::copyClonedWidgetChildren(model);
 }
 
-void UILayout::copySpecialProperties(UIWidget *widget)
+void Layout::copySpecialProperties(Widget *widget)
 {
-    UILayout* layout = dynamic_cast<UILayout*>(widget);
+    Layout* layout = dynamic_cast<Layout*>(widget);
     if (layout)
     {
-        setBackGroundImageScale9Enabled(layout->m_bBackGroundScale9Enabled);
-        setBackGroundImage(layout->m_strBackGroundImageFileName.c_str(),layout->m_eBGImageTexType);
-        setBackGroundImageCapInsets(layout->m_backGroundImageCapInsets);
-        setBackGroundColorType(layout->m_colorType);
-        setBackGroundColor(layout->m_cColor);
-        setBackGroundColor(layout->m_gStartColor, layout->m_gEndColor);
-        setBackGroundColorOpacity(layout->m_nCOpacity);
-        setBackGroundColorVector(layout->m_AlongVector);
-        setLayoutType(layout->m_eLayoutType);
-        setClippingEnabled(layout->m_bClippingEnabled);
+        setBackGroundImageScale9Enabled(layout->_backGroundScale9Enabled);
+        setBackGroundImage(layout->_backGroundImageFileName.c_str(),layout->_bgImageTexType);
+        setBackGroundImageCapInsets(layout->_backGroundImageCapInsets);
+        setBackGroundColorType(layout->_colorType);
+        setBackGroundColor(layout->_cColor);
+        setBackGroundColor(layout->_gStartColor, layout->_gEndColor);
+        setBackGroundColorOpacity(layout->_cOpacity);
+        setBackGroundColorVector(layout->_alongVector);
+        setLayoutType(layout->_layoutType);
+        setClippingEnabled(layout->_clippingEnabled);
+        setClippingType(layout->_clippingType);
     }
 }
-
-UIRectClippingNode::UIRectClippingNode():
-m_pInnerStencil(NULL),
-m_bEnabled(true),
-m_clippingSize(CCSizeMake(50.0f, 50.0f)),
-m_bClippingEnabled(false),
-m_pVisitTarget(NULL),
-m_pfnVistEvent(NULL)
-{
-    
 }
-
-UIRectClippingNode::~UIRectClippingNode()
-{
-    
-}
-
-UIRectClippingNode* UIRectClippingNode::create()
-{
-    UIRectClippingNode *pRet = new UIRectClippingNode();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    
-    return pRet;
-}
-
-bool UIRectClippingNode::init()
-{
-    m_pInnerStencil = CCDrawNode::create();
-    rect[0] = ccp(0, 0);
-    rect[1] = ccp(m_clippingSize.width, 0);
-    rect[2] = ccp(m_clippingSize.width, m_clippingSize.height);
-    rect[3] = ccp(0, m_clippingSize.height);
-    
-    ccColor4F green = {0, 1, 0, 1};
-    m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
-    if (CCClippingNode::init(m_pInnerStencil))
-    {
-        return true;
-    }
-    return false;
-}
-
-
-void UIRectClippingNode::setClippingSize(const cocos2d::CCSize &size)
-{
-    setContentSize(size);
-    m_clippingSize = size;
-    rect[0] = ccp(0, 0);
-    rect[1] = ccp(m_clippingSize.width, 0);
-    rect[2] = ccp(m_clippingSize.width, m_clippingSize.height);
-    rect[3] = ccp(0, m_clippingSize.height);
-    ccColor4F green = {0, 1, 0, 1};
-    m_pInnerStencil->clear();
-    m_pInnerStencil->drawPolygon(rect, 4, green, 0, green);
-}
-
-void UIRectClippingNode::setClippingEnabled(bool enabled)
-{
-    m_bClippingEnabled = enabled;
-}
-
-void UIRectClippingNode::visit()
-{
-    if (!m_bEnabled)
-    {
-        return;
-    }
-    if (m_bClippingEnabled)
-    {
-        CCClippingNode::visit();
-    }
-    else
-    {
-        CCNode::visit();
-    }
-}
-
-void UIRectClippingNode::setEnabled(bool enabled)
-{
-    m_bEnabled = enabled;
-}
-
-bool UIRectClippingNode::isEnabled() const
-{
-    return m_bEnabled;
-}
-
-void UIRectClippingNode::sortAllChildren()
-{
-    CCClippingNode::sortAllChildren();
-    if (m_pVisitTarget && m_pfnVistEvent)
-    {
-        (m_pVisitTarget->*m_pfnVistEvent)();
-    }
-}
-
-void UIRectClippingNode::setVisitEventListener(cocos2d::CCObject *target, SEL_VisitEvent selector)
-{
-    m_pVisitTarget = target;
-    m_pfnVistEvent = selector;
-}
-
-NS_CC_EXT_END
+NS_CC_END

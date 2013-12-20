@@ -63,13 +63,13 @@ public:
     virtual void nextCallback(CCObject* sender);
     
     /** Title label of the scene.*/
-    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
-        
-    UI_SCENE_CREATE_FUNC(UIScene);
+//    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
+    
+//    UI_SCENE_CREATE_FUNC(UIScene);
     
 protected:
-    UILayer *m_pUiLayer;
-    UILayout *m_pWidget;
+//    UILayer *m_pUiLayer;
+//    UILayout *m_pWidget;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

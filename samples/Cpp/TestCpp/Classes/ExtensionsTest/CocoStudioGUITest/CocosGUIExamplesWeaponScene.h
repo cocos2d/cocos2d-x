@@ -54,7 +54,7 @@ protected:
     void create();
     
     void itemTouch(CCObject* pObject);
-    void itemShowDetail(UIWidget* widget);
+//    void itemShowDetail(UIWidget* widget);
     
     void close(CCObject* pObject);
     
@@ -64,7 +64,7 @@ protected:
     void BuyOk(CCObject* pSender);
     
 protected:
-    UILayer* m_pUILayer;        
+//    UILayer* m_pUILayer;        
 };
 
 #endif /* defined(__TestCpp__CocosGUIExamplesWeaponScene__) */

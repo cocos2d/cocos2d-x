@@ -27,29 +27,31 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui{
+
 /**
- *  @lua NA
- */
-class UIButton : public UIWidget
+*   @js NA
+*   @lua NA
+*/
+class Button : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UIButton();
+    Button();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UIButton();
+    virtual ~Button();
     
     /**
      * Allocates and initializes.
      */
-    static UIButton* create();
+    static Button* create();
     
     /**
      * Load textures for button.
@@ -120,7 +122,7 @@ public:
     void setCapInsetsDisabledRenderer(const CCRect &capInsets);
     
     //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void setAnchorPoint(const CCPoint &pt) override;
     
     /**
      * Sets if button is using scale9 renderer.
@@ -130,16 +132,16 @@ public:
     virtual void setScale9Enabled(bool able);
     
     //override "setFlipX" of widget.
-    virtual void setFlipX(bool flipX);
+    virtual void setFlipX(bool flipX) override;
     
     //override "setFlipY" of widget.
-    virtual void setFlipY(bool flipY);
+    virtual void setFlipY(bool flipY) override;
     
     //override "isFlipX" of widget.
-    virtual bool isFlipX();
+    virtual bool isFlipX() override;
     
     //override "isFlipY" of widget.
-    virtual bool isFlipY();
+    virtual bool isFlipY() override;
     
     /**
      * Changes if button can be clicked zoom effect.
@@ -149,13 +151,13 @@ public:
     void setPressedActionEnabled(bool enabled);
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override "getContentSize" method of widget.
-    virtual const CCSize& getContentSize() const;
+    virtual const CCSize& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual CCNode* getVirtualRenderer();
+    virtual CCNode* getVirtualRenderer() override;
     
     /**
      * Sets color to widget
@@ -164,74 +166,60 @@ public:
      *
      * @param color
      */
-    virtual void setColor(const ccColor3B &color);
+    virtual void setColor(const ccColor3B &color) override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
     
-    void setTitleText(const char* text);
-    const char* getTitleText() const;
+    void setTitleText(const std::string& text);
+    const std::string& getTitleText() const;
     void setTitleColor(const ccColor3B& color);
     const ccColor3B& getTitleColor() const;
     void setTitleFontSize(float size);
     float getTitleFontSize() const;
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
-    /*Compatible*/
-    /**
-     * These methods will be removed
-     */
-    void setText(const char* text){setTitleText(text);};
-    void setTextColor(int r,int g,int b){setTitleColor(ccc3(r, g, b));};
-    void setFontSize(int size){setTitleFontSize(size);};
-    void setFontName(const char* fontName){setTitleFontName(fontName);};
-    void setTextures(const char* normal,const char* selected,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(normal, selected, disabled, texType);};
-    void setNormalTexture(const char* normal, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureNormal(normal,texType);};
-    void setPressedTexture(const char* selected, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexturePressed(selected,texType);};
-    void setDisabledTexture(const char* disabled, TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureDisabled(disabled,texType);};
-    void setScale9Enable(bool able){setScale9Enabled(able);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    /************/
 
 protected:
-    virtual bool init();
-    virtual void initRenderer();
-    virtual void onPressStateChangedToNormal();
-    virtual void onPressStateChangedToPressed();
-    virtual void onPressStateChangedToDisabled();
-    virtual void onSizeChanged();
+    virtual bool init() override;
+    virtual void initRenderer() override;
+    virtual void onPressStateChangedToNormal() override;
+    virtual void onPressStateChangedToPressed() override;
+    virtual void onPressStateChangedToDisabled() override;
+    virtual void onSizeChanged() override;
     
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    CCNode* m_pButtonNormalRenderer;
-    CCNode* m_pButtonClickedRenderer;
-    CCNode* m_pButtonDisableRenderer;
-    CCLabelTTF* m_pTitleRenderer;
-    std::string m_strNormalFileName;
-    std::string m_strClickedFileName;
-    std::string m_strDisabledFileName;
-    bool m_bPrevIgnoreSize;
-    bool m_bScale9Enabled;
-//    CCRect m_capInsets;
-    CCRect m_capInsetsNormal;
-    CCRect m_capInsetsPressed;
-    CCRect m_capInsetsDisabled;
-    TextureResType m_eNormalTexType;
-    TextureResType m_ePressedTexType;
-    TextureResType m_eDisabledTexType;
-    CCSize m_normalTextureSize;
-    CCSize m_pressedTextureSize;
-    CCSize m_disabledTextureSize;
-    bool m_bPressedActionEnabled;
-    ccColor3B m_titleColor;
+    CCNode* _buttonNormalRenderer;
+    CCNode* _buttonClickedRenderer;
+    CCNode* _buttonDisableRenderer;
+    CCLabelTTF* _titleRenderer;
+    std::string _normalFileName;
+    std::string _clickedFileName;
+    std::string _disabledFileName;
+    bool _prevIgnoreSize;
+    bool _scale9Enabled;
+    CCRect _capInsetsNormal;
+    CCRect _capInsetsPressed;
+    CCRect _capInsetsDisabled;
+    TextureResType _normalTexType;
+    TextureResType _pressedTexType;
+    TextureResType _disabledTexType;
+    CCSize _normalTextureSize;
+    CCSize _pressedTextureSize;
+    CCSize _disabledTextureSize;
+    bool _pressedActionEnabled;
+    ccColor3B _titleColor;
 };
 
-NS_CC_EXT_END
+}
 
-#endif /* defined(__CocoGUI__UIButton__) */
+NS_CC_END
+
+#endif /* defined(__CocoGUI__Button__) */

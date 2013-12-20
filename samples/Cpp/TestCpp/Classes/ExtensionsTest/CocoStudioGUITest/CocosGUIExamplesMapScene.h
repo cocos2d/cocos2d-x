@@ -58,7 +58,7 @@ protected:
     void MapAlertClose(CCObject* pSender);
     
 protected:
-    UILayer* m_pUILayer;
+//    UILayer* m_pUILayer;
 };
 
 #endif /* defined(__TestCpp__CocosGUIExamplesMapScene__) */

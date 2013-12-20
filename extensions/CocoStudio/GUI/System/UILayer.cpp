@@ -25,7 +25,9 @@
 #include "UILayer.h"
 #include "UIHelper.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 UILayer::UILayer():
 m_pRootWidget(NULL),
@@ -44,7 +46,7 @@ bool UILayer::init()
 {
     if (CCLayer::init())
     {
-        m_pRootWidget = UIRootWidget::create();
+        m_pRootWidget = Widget::create();
         m_pRootWidget->retain();
         addChild(m_pRootWidget->getRenderer());
         m_pInputManager = new UIInputManager();
@@ -89,12 +91,12 @@ void UILayer::onEnterTransitionDidFinish()
     CCLayer::onEnterTransitionDidFinish();
 }
 
-void UILayer::addWidget(UIWidget* widget)
+void UILayer::addWidget(Widget* widget)
 {
     m_pRootWidget->addChild(widget);
 }
 
-void UILayer::removeWidget(UIWidget* widget)
+void UILayer::removeWidget(Widget* widget)
 {
     m_pRootWidget->removeChild(widget);
 }
@@ -105,7 +107,7 @@ void UILayer::setVisible(bool visible)
     m_pRootWidget->setVisible(visible);
 }
 
-UIWidget* UILayer::getWidgetByTag(int tag)
+Widget* UILayer::getWidgetByTag(int tag)
 {
     if (!m_pRootWidget)
     {
@@ -114,7 +116,7 @@ UIWidget* UILayer::getWidgetByTag(int tag)
     return UIHelper::seekWidgetByTag(m_pRootWidget, tag);
 }
 
-UIWidget* UILayer::getWidgetByName(const char* name)
+Widget* UILayer::getWidgetByName(const char* name)
 {
     if (!m_pRootWidget)
     {
@@ -123,7 +125,7 @@ UIWidget* UILayer::getWidgetByName(const char* name)
     return UIHelper::seekWidgetByName(m_pRootWidget, name);
 }
 
-UIRootWidget* UILayer::getRootWidget()
+Widget* UILayer::getRootWidget()
 {
     return m_pRootWidget;
 }
@@ -140,7 +142,7 @@ void UILayer::clear()
 
 bool UILayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    if (m_pInputManager && m_pInputManager->onTouchBegan(pTouch))
+    if (m_pInputManager && m_pInputManager->onTouchBegan(pTouch, pEvent))
     {
         return true;
     }
@@ -149,17 +151,19 @@ bool UILayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void UILayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-    m_pInputManager->onTouchMoved(pTouch);
+    m_pInputManager->onTouchMoved(pTouch, pEvent);
 }
 
 void UILayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    m_pInputManager->onTouchEnd(pTouch);
+    m_pInputManager->onTouchEnd(pTouch, pEvent);
 }
 
 void UILayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
-    m_pInputManager->onTouchCancelled(pTouch);
+    m_pInputManager->onTouchCancelled(pTouch, pEvent);
+}
+    
 }
 
-NS_CC_EXT_END
+NS_CC_END

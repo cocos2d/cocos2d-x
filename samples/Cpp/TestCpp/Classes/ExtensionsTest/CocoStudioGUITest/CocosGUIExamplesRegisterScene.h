@@ -50,8 +50,8 @@ public:
     void detachWithIMEEvent(CCObject* pSender);
     
 protected:
-    UILayer* m_pUILayer;
-    UILayout* m_pLayout;
+//    UILayer* m_pUILayer;
+//    UILayout* m_pLayout;
 };
 
 #endif /* defined(__TestCpp__CocosGUIExamplesRegisterScene__) */

@@ -95,13 +95,13 @@ public:
     void WeaponInit();
     void WeaponCreate();
     
-    void WeaponItemTouch(CCObject* pObject);
-    void WeaponItemShowDetail(UIWidget* widget);
+//    void WeaponItemTouch(CCObject* pObject);
+//    void WeaponItemShowDetail(UIWidget* widget);
     
     void WeaponClose(CCObject* pObject);
     
 protected:
-    UILayer* m_pUILayer;
+//    UILayer* m_pUILayer;
     
     // equip
     EQUIP_TYPE m_eEquipType;
@@ -128,7 +128,7 @@ protected:
     
     CCPoint widgetLastWorldSpace;
     CCPoint widgetLastNodeSpace;
-    UIWidget* lastWidgetParent;
+//    UIWidget* lastWidgetParent;
     //
 };
 

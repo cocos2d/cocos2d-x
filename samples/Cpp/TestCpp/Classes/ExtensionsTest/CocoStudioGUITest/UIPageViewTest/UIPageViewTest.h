@@ -34,11 +34,11 @@ public:
     ~UIPageViewTest();
     bool init();
     
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
+//    void pageViewEvent(CCObject* pSender, PageViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UIPageViewTest)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest__) */

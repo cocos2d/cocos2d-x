@@ -33,11 +33,11 @@ public:
     UITextButtonTest();
     ~UITextButtonTest();
     bool init();
-    void touchEvent(CCObject *pSender, TouchEventType type);
+//    void touchEvent(CCObject *pSender, TouchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest)
-    UILabel* m_pDisplayValueLabel;
+//    UI_SCENE_CREATE_FUNC(UITextButtonTest)
+//    UILabel* m_pDisplayValueLabel;
 };
 
 class UITextButtonTest_Scale9 : public UIScene
@@ -46,12 +46,12 @@ public:
     UITextButtonTest_Scale9();
     ~UITextButtonTest_Scale9();
     bool init();
-    void touchEvent(CCObject *pSender, TouchEventType type);    
+//    void touchEvent(CCObject *pSender, TouchEventType type);    
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest_Scale9)
+//    UI_SCENE_CREATE_FUNC(UITextButtonTest_Scale9)
 //    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    UILabel* m_pDisplayValueLabel;
+//    UILabel* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UITextButtonTest__) */
