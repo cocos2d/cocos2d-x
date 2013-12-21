@@ -114,22 +114,24 @@ void TransitionScene::draw()
 
 void TransitionScene::finish()
 {
-    // clean up     
-     _inScene->setVisible(true);
-     _inScene->setPosition(Point(0,0));
-     _inScene->setScale(1.0f);
-     _inScene->setRotation(0.0f);
-//     _inScene->getCamera()->restore();
+    kmMat4 identity;
+    kmMat4Identity(&identity);
 
-     _outScene->setVisible(false);
-     _outScene->setPosition(Point(0,0));
-     _outScene->setScale(1.0f);
-     _outScene->setRotation(0.0f);
-//     _outScene->getCamera()->restore();
+    // clean up
+    _inScene->setVisible(true);
+    _inScene->setPosition(Point(0,0));
+    _inScene->setScale(1.0f);
+    _inScene->setRotation(0.0f);
+    _inScene->setAdditionalTransform(identity);
+
+    _outScene->setVisible(false);
+    _outScene->setPosition(Point(0,0));
+    _outScene->setScale(1.0f);
+    _outScene->setRotation(0.0f);
+    _outScene->setAdditionalTransform(identity);
 
     //[self schedule:@selector(setNewScene:) interval:0];
     this->schedule(schedule_selector(TransitionScene::setNewScene), 0);
-
 }
 
 void TransitionScene::setNewScene(float dt)
