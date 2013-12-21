@@ -138,6 +138,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Action/CCActionObject.cpp \
 ../CocoStudio/Action/CCActionNode.cpp \
 ../CocoStudio/Action/CCActionFrame.cpp \
+../CocoStudio/Action/CCActionEaseEx.cpp \
 ../CocoStudio/Action/CCActionFrameEasing.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk

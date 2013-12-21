@@ -71,8 +71,6 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-// static const char *A_VERT = "vert";
-// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -85,7 +83,7 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
-//static const char *A_TWEEN_ROTATE = "twR";
+static const char *A_EASING_PARAM = "twEP";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
 static const char *A_MOVEMENT = "mov";
@@ -105,6 +103,9 @@ static const char *A_COCOS2D_PIVOT_X = "cocos2d_pX";
 static const char *A_COCOS2D_PIVOT_Y = "cocos2d_pY";
 
 static const char *A_BLEND_TYPE = "bd";
+static const char *A_BLEND_SRC = "bd_src";
+static const char *A_BLEND_DST = "bd_dst";
+
 
 static const char *A_ALPHA = "a";
 static const char *A_RED = "r";
@@ -116,16 +117,11 @@ static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
 static const char *A_TWEEN_FRAME = "tweenFrame";
-//static const char *A_ROTATION = "rotation";
-//static const char *A_USE_COLOR_INFO = "uci";
 
 
 
 static const char *CONTOUR = "con";
 static const char *CONTOUR_VERTEX = "con_vt";
-
-//static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
-//static const char *SOUND_FRAME = "soundFrame";
 
 
 static const char *FL_NAN = "NaN";
@@ -1029,7 +1025,11 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
         frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
-
+    bool tweenFrame = false;
+    if (frameXML->QueryBoolAttribute(A_TWEEN_FRAME, &tweenFrame) == tinyxml2::XML_SUCCESS)
+    {
+        frameData->isTween = tweenFrame;
+    }
 
     if (dataInfo->flashToolVersion >= VERSION_2_0)
     {
@@ -1088,7 +1088,39 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
     }
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
-        frameData->blendType = (CCBlendType)blendType;
+        switch (blendType)
+        {
+        case BLEND_NORMAL:
+            {
+                frameData->blendFunc.src = CC_BLEND_SRC;
+                frameData->blendFunc.dst = CC_BLEND_DST;
+            }
+            break;
+        case BLEND_ADD:
+            {
+                frameData->blendFunc.src = GL_SRC_ALPHA;
+                frameData->blendFunc.dst = GL_ONE;
+            }
+            break;
+        case BLEND_MULTIPLY:
+            {
+                frameData->blendFunc.src = GL_DST_COLOR;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            }
+            break;
+        case BLEND_SCREEN:
+            {
+                frameData->blendFunc.src = GL_ONE;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+            }
+            break;
+        default:
+            {
+                frameData->blendFunc.src = CC_BLEND_SRC;
+                frameData->blendFunc.dst = CC_BLEND_DST;
+            }
+            break;
+        }
     }
 
     tinyxml2::XMLElement *colorTransformXML = frameXML->FirstChildElement(A_COLOR_TRANSFORM);
@@ -1613,7 +1645,8 @@ CCFrameData *CCDataReaderHelper::decodeFrame(const rapidjson::Value &json, DataI
 
 	frameData->tweenEasing = (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
-    frameData->blendType = (CCBlendType)(DICTOOL->getIntValue_json(json, A_BLEND_TYPE));
+    frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, CC_BLEND_SRC));
+    frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, CC_BLEND_DST));
 	frameData->isTween = DICTOOL->getBooleanValue_json(json, A_TWEEN_FRAME, true);
 	const char *event =  DICTOOL->getStringValue_json(json, A_EVENT);
     
@@ -1630,6 +1663,18 @@ CCFrameData *CCDataReaderHelper::decodeFrame(const rapidjson::Value &json, DataI
     {
         frameData->frameID = DICTOOL->getIntValue_json(json, A_FRAME_INDEX);
     }
+
+    int length = DICTOOL->getArrayCount_json(json, A_EASING_PARAM);
+    if (length != 0)
+    {
+        frameData->easingParams = new float[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            frameData->easingParams[i] = DICTOOL->getFloatValueFromArray_json(json, A_EASING_PARAM, i);
+        }
+    }
+    
 
     return frameData;
 }
@@ -1686,8 +1731,8 @@ CCContourData *CCDataReaderHelper::decodeContour(const rapidjson::Value &json)
 
 void CCDataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo)
 {
-	node->x =  DICTOOL->getFloatValue_json(json, A_X) * s_PositionReadScale;
-    node->y = DICTOOL->getFloatValue_json(json, A_Y) * s_PositionReadScale;
+	node->x =  DICTOOL->getFloatValue_json(json, A_X) * dataInfo->contentScale;
+    node->y = DICTOOL->getFloatValue_json(json, A_Y) * dataInfo->contentScale;
 	node->zOrder = DICTOOL->getIntValue_json(json, A_Z);
 
     node->skewX = DICTOOL->getFloatValue_json(json, A_SKEW_X);

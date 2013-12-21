@@ -40,12 +40,8 @@ CCProcessBase::CCProcessBase(void)
     , m_fCurrentFrame(0)
     , m_iCurFrameIndex(0)
     , m_bIsLoopBack(false)
+    , m_fAnimationInternal(1/60.0f)
 {
-    /*
-     *  set m_fAnimationInternal defualt value to CCDirector::sharedDirector()
-     *  ->getAnimationInterval(), in line with game update speed
-     */
-    m_fAnimationInternal = CCDirector::sharedDirector()->getAnimationInterval();
 }
 
 

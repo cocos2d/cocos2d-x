@@ -117,8 +117,8 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Action/CCActionObject.cpp \
 ../CocoStudio/Action/CCActionNode.cpp \
 ../CocoStudio/Action/CCActionFrame.cpp \
+../CocoStudio/Action/CCActionEaseEx.cpp \
 ../CocoStudio/Action/CCActionFrameEasing.cpp \
-
 
 all:
 

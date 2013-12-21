@@ -42,6 +42,8 @@ enum {
 	TEST_ARMATURE_NESTING,
     TEST_ARMATURE_NESTING_2,
     TEST_PLAY_SEVERAL_MOVEMENT,
+    TEST_EASING,
+    TEST_CHANGE_ANIMATION_INTERNAL,
 
 	TEST_LAYER_COUNT
 };
@@ -361,4 +363,33 @@ public:
     virtual std::string subtitle();
 };
 
+class TestEasing : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void registerWithTouchDispatcher();
+
+    virtual void updateSubTitle();
+
+    cocos2d::extension::CCArmature *armature;
+    int animationID;
+};
+
+
+class TestChangeAnimationInternal : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual void onExit();
+    virtual std::string title();
+    virtual std::string subtitle();
+
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void registerWithTouchDispatcher();
+};
 #endif  // __HELLOWORLD_SCENE_H__

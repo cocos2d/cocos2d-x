@@ -72,10 +72,12 @@ CCBone::CCBone()
     m_bIgnoreMovementBoneData = false;
     m_tWorldTransform = CCAffineTransformMake(1, 0, 0, 1, 0, 0);
     m_bBoneTransformDirty = true;
-    m_eBlendType = BLEND_NORMAL;
     m_tWorldInfo = NULL;
     m_pArmatureParentBone = NULL;
     m_fDataVersion = 0;
+    m_sBlendFunc.src = CC_BLEND_SRC;
+    m_sBlendFunc.dst = CC_BLEND_DST;
+    m_bBlendDirty = false;
 }
 
 
@@ -378,6 +380,15 @@ CCArmature *CCBone::getChildArmature()
 CCTween *CCBone::getTween()
 {
     return m_pTween;
+}
+
+void CCBone::setBlendFunc(const ccBlendFunc& blendFunc)
+{
+    if (m_sBlendFunc.src != blendFunc.src && m_sBlendFunc.dst != blendFunc.dst)
+    {
+        m_sBlendFunc = blendFunc;
+        m_bBlendDirty = true;
+    }
 }
 
 void CCBone::setZOrder(int zOrder)

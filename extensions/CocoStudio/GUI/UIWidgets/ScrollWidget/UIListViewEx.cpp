@@ -85,32 +85,45 @@ void UIListViewEx::setItemModel(UIWidget *model)
 
 void UIListViewEx::updateInnerContainerSize()
 {
-    if (!m_pModel)
-    {
-        return;
-    }
-    switch (m_eDirection) {
-        case SCROLLVIEW_DIR_VERTICAL:
-        {
-            int childrenCount = m_pItems->count();
-            float totalHeight = m_pModel->getSize().height * childrenCount + (childrenCount - 1) * m_fItemsMargin;
-            float finalWidth = m_size.width;
-            float finalHeight = totalHeight;
-            setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
-            break;
-        }
-        case SCROLLVIEW_DIR_HORIZONTAL:
-        {
-            int childrenCount = m_pItems->count();
-            float totalWidth = m_pModel->getSize().width * childrenCount + (childrenCount - 1) * m_fItemsMargin;
-            float finalWidth = totalWidth;
-            float finalHeight = m_size.height;
-            setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
-            break;
-        }
-        default:
-            break;
-    }
+    //if (!m_pModel)
+    //{
+    //    return;
+    //}
+	switch (m_eDirection) {
+	case SCROLLVIEW_DIR_VERTICAL:
+		{
+			ccArray* arrayItems = m_pItems->data;
+			int length = arrayItems->num;
+			float totalHeight = (length - 1) * m_fItemsMargin;
+			for (int i=0; i<length; i++)
+			{
+				UIWidget* item = (UIWidget*)arrayItems->arr[i];
+				totalHeight += item->getSize().height;
+			}
+			float finalWidth = m_size.width;
+			float finalHeight = totalHeight;
+			setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
+			break;
+		}
+	case SCROLLVIEW_DIR_HORIZONTAL:
+		{
+			ccArray* arrayItems = m_pItems->data;
+			int length = arrayItems->num;
+			float totalWidth = (length - 1) * m_fItemsMargin;
+			for (int i=0; i<length; i++)
+			{
+				UIWidget* item = (UIWidget*)arrayItems->arr[i];
+				totalWidth += item->getSize().width;
+			}
+
+			float finalWidth = totalWidth;
+			float finalHeight = m_size.height;
+			setInnerContainerSize(CCSizeMake(finalWidth, finalHeight));
+			break;
+		}
+	default:
+		break;
+	}
 }
 
 void UIListViewEx::remedyLayoutParameter(UIWidget *item)
