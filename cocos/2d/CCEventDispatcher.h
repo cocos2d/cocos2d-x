@@ -40,6 +40,8 @@ NS_CC_BEGIN
 class Event;
 class EventTouch;
 class Node;
+class EventCustom;
+class EventListenerCustom;
 
 /**
 This class manages event listener subscriptions
@@ -68,6 +70,12 @@ public:
      *        0 priority is forbidden for fixed priority since it's used for scene graph based priority.
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
+
+    /** Adds a Custom event listener.
+     It will use a fixed priority of 1.
+     @return the generated event. Needed in order to remove the event from the dispather
+     */
+    EventListenerCustom* addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback);
 
     /** Remove a listener 
      *  @param listener The specified event listener which needs to be removed.
@@ -103,7 +111,7 @@ public:
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
-private:
+protected:
     friend class Node;
     
     /** Sets the dirty flag for a node. */
@@ -198,7 +206,6 @@ private:
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node);
     
-private:
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
     

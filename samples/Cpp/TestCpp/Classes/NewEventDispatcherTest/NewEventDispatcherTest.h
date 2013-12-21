@@ -113,4 +113,19 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class DirectorEventTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(DirectorEventTest);
+    virtual void onEnter() override;
+    void onEvent1(EventListener *event);
+    void onEvent2(EventListener *event);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    Label *_label1, *_label2, *_label3, *_label4;
+};
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */
