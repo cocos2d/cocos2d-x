@@ -24,7 +24,6 @@ CCActionTween.cpp \
 CCAnimation.cpp \
 CCAnimationCache.cpp \
 CCAtlasNode.cpp \
-CCCamera.cpp \
 ccCArray.cpp \
 CCClippingNode.cpp \
 CCComponent.cpp \

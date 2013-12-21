@@ -135,7 +135,6 @@ void NodeGrid::visit()
         // self draw,currently we have nothing to draw on NodeGrid, so there is no need to add render command
         this->draw();
 
-        // Uses std::for_each to improve performance.
         for(auto it=_children.cbegin()+i; it != _children.cend(); ++it) {
             (*it)->visit();
         }
