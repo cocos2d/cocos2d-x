@@ -86,6 +86,7 @@ CCEGLView::CCEGLView()
     , m_eglDisplay(nullptr)
     , m_eglContext(nullptr)
     , m_eglSurface(nullptr)
+    , m_isXamlWindow(false)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
@@ -136,6 +137,7 @@ bool CCEGLView::Create(CoreWindow^ window)
 bool CCEGLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height)
 {
 	m_bSupportTouch = true;
+    m_isXamlWindow = true;
     m_eglDisplay = eglDisplay;
     m_eglContext = eglContext;
     m_eglSurface = eglSurface;
@@ -318,7 +320,8 @@ int CCEGLView::Run()
 {
 	m_running = true; 
 
-    if(m_eglDisplay)
+    // XAML version does not have a run loop
+    if(m_isXamlWindow)
         return 0;
 
 	while (!m_windowClosed)
@@ -412,8 +415,8 @@ void CCEGLView::UpdateForWindowSizeChange(float width, float height)
 void CCEGLView::UpdateForWindowSizeChange()
 {
     m_orientation = DisplayProperties::CurrentOrientation;
-    m_width = ConvertDipsToPixels(m_window->Bounds.Height);
-    m_height = ConvertDipsToPixels(m_window->Bounds.Width);
+    m_width = ConvertDipsToPixels(m_window->Bounds.Width);
+    m_height = ConvertDipsToPixels(m_window->Bounds.Height);
  
     UpdateWindowSize();
 }
