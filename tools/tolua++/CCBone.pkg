@@ -44,9 +44,6 @@ class CCBone : public CCNodeRGBA
     virtual bool getIgnoreMovementBoneData(void);
     virtual void setIgnoreMovementBoneData(bool var);
 
-    virtual CCBlendType getBlendType(void) const;
-    virtual void setBlendType(CCBlendType var);
-
     virtual std::string getName(void) const;
     virtual void setName(std::string var);
 

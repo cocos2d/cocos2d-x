@@ -84,7 +84,8 @@ def checkParams(context):
                           "mac",
                           "blackberry",
                           "linux",
-                          "marmalade"]
+                          "marmalade",
+                          "tizen"]
     elif ("lua" == context["language"]):
         context["src_project_name"] = "HelloLua"
         context["src_package_name"] = "org.cocos2dx.hellolua"
