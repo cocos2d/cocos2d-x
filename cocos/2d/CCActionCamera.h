@@ -58,7 +58,6 @@ public:
         ,_upX(0)
         ,_upY(1)
         ,_upZ(0)
-        ,_dirty(false)
     {}
     /**
      * @js NA
@@ -88,7 +87,6 @@ protected:
     float _upX;
     float _upY;
     float _upZ;
-    bool _dirty;
 };
 
 /** 

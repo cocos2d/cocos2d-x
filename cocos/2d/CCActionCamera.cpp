@@ -61,8 +61,6 @@ void ActionCamera::restore()
     _upX = 0.0f;
     _upY = 1.0f;
     _upZ = 0.0f;
-
-    _dirty = false;
 }
 
 void ActionCamera::setEye(float x, float y, float z)
