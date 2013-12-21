@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
  
@@ -124,6 +124,13 @@ void ActionCamera::updateTransform()
         kmMat4Multiply(&mv, &mv, &t);
     }
 
+    // XXX FIXME TODO
+    // Using the AdditionalTransform is a complete hack.
+    // This should be done by multipliying the lookup-Matrix with the Node's MV matrix
+    // And then setting the result as the new MV matrix
+    // But that operation needs to be done after all the 'updates'.
+    // So the Director should emit an 'director_after_update' event.
+    // And this object should listen to it
     _target->setAdditionalTransform(mv);
 }
 
