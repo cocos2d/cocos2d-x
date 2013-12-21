@@ -79,9 +79,6 @@ protected:
     void setUp(float x, float y, float z);
     void updateTransform();
 
-    kmMat4 _lookupMatrix;
-    kmMat4 _targetTransformCopy;
-
     float _centerX;
     float _centerY;
     float _centerZ;

@@ -36,7 +36,6 @@ NS_CC_BEGIN
 void ActionCamera::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    _targetTransformCopy = target->getNodeToParentTransform();
 }
 
 ActionCamera* ActionCamera::clone() const
@@ -65,10 +64,6 @@ void ActionCamera::restore()
     _upZ = 0.0f;
 
     _dirty = false;
-
-    kmMat4Identity(&_lookupMatrix);
-    if( _target )
-        _target->setNodeToParentTransform(_targetTransformCopy);
 }
 
 void ActionCamera::setEye(float x, float y, float z)
@@ -106,9 +101,31 @@ void ActionCamera::updateTransform()
     kmVec3Fill(&center, _centerX, _centerY, _centerZ);
     kmVec3Fill(&up, _upX, _upY, _upZ);
 
-    kmMat4LookAt(&_lookupMatrix, &eye, &center, &up);
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
 
-    _target->setNodeToParentTransform(_lookupMatrix);
+    Point anchorPoint = _target->getAnchorPointInPoints();
+
+    bool needsTranslation = !anchorPoint.equals(Point::ZERO);
+
+    kmMat4 mv;
+    kmMat4Identity(&mv);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, anchorPoint.x, anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    kmMat4Multiply(&mv, &mv, &lookupMatrix);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, -anchorPoint.x, -anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    _target->setAdditionalTransform(mv);
 }
 
 //
@@ -156,7 +173,8 @@ bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, flo
 
 void OrbitCamera::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(target);
+    ActionCamera::startWithTarget(target);
+
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
     if( isnan(_radius) )
@@ -172,7 +190,7 @@ void OrbitCamera::startWithTarget(Node *target)
 
 void OrbitCamera::update(float dt)
 {
-    float r = (_radius + _deltaRadius * dt) * Camera::getZEye();
+    float r = (_radius + _deltaRadius * dt) * FLT_EPSILON;
     float za = _radZ + _radDeltaZ * dt;
     float xa = _radX + _radDeltaX * dt;
 
