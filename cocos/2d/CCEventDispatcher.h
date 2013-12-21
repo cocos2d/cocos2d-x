@@ -77,17 +77,17 @@ public:
      */
     EventListenerCustom* addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback);
 
-    /** Remove a listener 
+    /** Remove a listener
      *  @param listener The specified event listener which needs to be removed.
      */
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event listener type */
     void removeEventListeners(EventListener::Type listenerType);
-    
+
     /** Removes all custom listeners with the same event name */
     void removeCustomEventListeners(const std::string& customEventName);
-    
+
     /** Removes all listeners */
     void removeAllEventListeners();
 
@@ -105,7 +105,10 @@ public:
      *  event dispatcher list.
      */
     void dispatchEvent(Event* event);
-    
+
+    /** Dispatches a Custom Event with a event name an optional user data */
+    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData);
+
     /** Constructor of EventDispatcher */
     EventDispatcher();
     /** Destructor of EventDispatcher */

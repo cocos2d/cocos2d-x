@@ -13,8 +13,6 @@ namespace {
     
 std::function<Layer*()> createFunctions[] =
 {
-    CL(DirectorEventTest),
-
     CL(TouchableSpriteTest),
     CL(FixedPriorityTest),
     CL(RemoveListenerWhenDispatching),
@@ -757,36 +755,86 @@ void DirectorEventTest::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
 
-    _label1 = Label::createWithTTF("After Visit: 0", "fonts/arial.ttf", 20);
+    _label1 = Label::createWithTTF("Update: 0", "fonts/arial.ttf", 20);
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
-    _label2 = Label::createWithTTF("After Draw: 0", "fonts/arial.ttf", 20);
+    _label2 = Label::createWithTTF("Visit: 0", "fonts/arial.ttf", 20);
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
-    _label3 = Label::createWithTTF("After Update: 0", "fonts/arial.ttf", 20);
+    _label3 = Label::createWithTTF("Draw: 0", "fonts/arial.ttf", 20);
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
-    _label4 = Label::createWithTTF("Projection Changed: 0", "fonts/arial.ttf", 20);
+    _label4 = Label::createWithTTF("Projection: 0", "fonts/arial.ttf", 20);
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
 
     auto dispatcher = Director::getInstance()->getEventDispatcher();
 
-    dispatcher->addEventListenerWithFixedPriority(<#cocos2d::EventListener *listener#>, <#int fixedPriority#>)
+    _event1 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&DirectorEventTest::onEvent1, this, std::placeholders::_1));
+    _event2 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_VISIT, std::bind(&DirectorEventTest::onEvent2, this, std::placeholders::_1));
+    _event3 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Draw: %d", _count3++);
+        _label3->setString(buf);
+    });
+    _event4 = dispatcher->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Projection: %d", _count4++);
+        _label4->setString(buf);
+    });
 
+    _event1->retain();
+    _event2->retain();
+    _event3->retain();
+    _event4->retain();
+
+    scheduleUpdate();
 }
 
-void DirectorEventTest::onEvent1(EventListener *event)
+void DirectorEventTest::update(float dt)
 {
+    static float time = 0;
+
+    time += dt;
+    if(time > 0.5) {
+        Director::getInstance()->setProjection(Director::Projection::_2D);
+        time = 0;
+    }
 }
 
-void DirectorEventTest::onEvent2(EventListener *event)
+void DirectorEventTest::onExit()
 {
+    EventDispatcherTestDemo::onExit();
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeEventListener(_event1);
+    dispatcher->removeEventListener(_event2);
+    dispatcher->removeEventListener(_event3);
+    dispatcher->removeEventListener(_event4);
+
+    _event1->release();
+    _event2->release();
+    _event3->release();
+    _event4->release();
+}
+
+void DirectorEventTest::onEvent1(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Update: %d", _count1++);
+    _label1->setString(buf);
+}
+
+void DirectorEventTest::onEvent2(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Visit: %d", _count2++);
+    _label2->setString(buf);
 }
 
 
