@@ -171,7 +171,7 @@ private:
 	EGLDisplay m_eglDisplay;
 	EGLContext m_eglContext;
 	EGLSurface m_eglSurface;
-
+    bool m_isXamlWindow;
     PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
 };
 
