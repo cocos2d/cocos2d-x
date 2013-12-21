@@ -518,6 +518,13 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     _shaderProgram = pShaderProgram;
 }
 
+Scene* Node::getScene()
+{
+    if(!_parent)
+        return nullptr;
+    return _parent->getScene();
+}
+
 Rect Node::getBoundingBox() const
 {
     Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);

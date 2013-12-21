@@ -53,6 +53,7 @@ class ActionManager;
 class Component;
 class ComponentContainer;
 class EventDispatcher;
+class Scene;
 #ifdef CC_USE_PHYSICS
 class PhysicsBody;
 #endif
@@ -910,6 +911,11 @@ public:
      */
     virtual void visit();
 
+    /** Returns the Scene that contains the Node.
+     It returns `nullptr` if the node doesn't belong to any Scene.
+     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     */
+    virtual Scene* getScene();
 
     /**
      * Returns a "local" axis aligned bounding box of the node.
