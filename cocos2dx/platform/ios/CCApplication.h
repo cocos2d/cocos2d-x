@@ -49,7 +49,12 @@ public:
     */
     int run();
         
-    /**
+	/**
+	@brief	Open URL with device's default internal browser.
+	*/
+	void openURL(const char* pszUrl);    
+
+	/**
     @brief    Get the current application instance.
     @return Current application instance pointer.
     @js getInstance

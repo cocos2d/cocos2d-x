@@ -52,6 +52,23 @@ void CCApplication::setAnimationInterval(double interval)
     }
 }
 
+void CCApplication::openURL(const char* pszUrl)
+{
+
+    JniMethodInfo minfo;
+
+    if(JniHelper::getStaticMethodInfo(minfo,
+                                      "org/cocos2dx/lib/Cocos2dxActivity",
+                                      "openURL",
+                                      "(Ljava/lang/String;)V"))
+    {
+        jstring StringArg1 = minfo.env->NewStringUTF(pszUrl);
+        minfo.env->CallStaticVoidMethod(minfo.classID, minfo.methodID, StringArg1);
+        minfo.env->DeleteLocalRef(StringArg1);
+        minfo.env->DeleteLocalRef(minfo.classID);
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////

@@ -151,7 +151,13 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         // Set framelayout as the content view
 		setContentView(framelayout);
 	}
-	
+
+	public static void openURL(String url) {
+       		Intent i = new Intent(Intent.ACTION_VIEW);
+        	i.setData(Uri.parse(url));
+	        me.startActivity(i);
+	}
+
     public Cocos2dxGLSurfaceView onCreateView() {
     	return new Cocos2dxGLSurfaceView(this);
     }
