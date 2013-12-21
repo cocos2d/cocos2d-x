@@ -588,6 +588,14 @@ void EventDispatcher::dispatchEvent(Event* event)
     updateListeners(event);
 }
 
+void EventDispatcher::dispatchCustomEvent(const std::string &eventName, void *optionalUserData)
+{
+    EventCustom ev(eventName);
+    ev.setUserData(optionalUserData);
+    dispatchEvent(&ev);
+}
+
+
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
     sortEventListeners(EventListenerTouchOneByOne::LISTENER_ID);
