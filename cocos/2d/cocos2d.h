@@ -254,7 +254,6 @@ THE SOFTWARE.
 #include "CCEventListenerCustom.h"
 
 // root
-#include "CCCamera.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"

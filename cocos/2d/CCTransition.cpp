@@ -25,7 +25,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCTransition.h"
-#include "CCCamera.h"
 #include "CCDirector.h"
 #include "CCActionInterval.h"
 #include "CCActionInstant.h"
