@@ -4,6 +4,8 @@
 
 static std::function<Layer*()> createFunctions[] = {
 
+    CL(ActionOrbit),
+
     CL(ActionManual),
     CL(ActionMove),
     CL(ActionRotate),
@@ -1226,31 +1228,47 @@ void ActionOrbit::onEnter()
     auto  action1 = Sequence::create(
         orbit1,
         orbit1->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit2 = OrbitCamera::create(2,1, 0, 0, 180, -45, 0);
     auto  action2 = Sequence::create(
         orbit2,
         orbit2->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit3 = OrbitCamera::create(2,1, 0, 0, 180, 90, 0);
     auto  action3 = Sequence::create(
         orbit3,
         orbit3->reverse(),
-        NULL);
+        nullptr);
 
-    _kathia->runAction(RepeatForever::create(action1));
-    _tamara->runAction(RepeatForever::create(action2));
-    _grossini->runAction(RepeatForever::create(action3));
+    auto camera1 = Node::create();
+    auto camera2 = Node::create();
+    auto camera3 = Node::create();
 
-    auto move = MoveBy::create(3, Point(100,-100));
-    auto move_back = move->reverse();
-    auto seq = Sequence::create(move, move_back, NULL);
-    auto rfe = RepeatForever::create(seq);
-    _kathia->runAction(rfe);
-    _tamara->runAction(rfe->clone() );
-    _grossini->runAction( rfe->clone() );
+    this->addChild(camera1);
+    this->addChild(camera2);
+    this->addChild(camera3);
+
+    _kathia->removeFromParent();
+    _tamara->removeFromParent();
+    _grossini->removeFromParent();
+
+    camera1->addChild(_kathia);
+    camera2->addChild(_tamara);
+    camera3->addChild(_grossini);
+
+    camera1->runAction(RepeatForever::create(action1));
+    camera2->runAction(RepeatForever::create(action2));
+    camera3->runAction(RepeatForever::create(action3));
+
+//    auto move = MoveBy::create(3, Point(100,-100));
+//    auto move_back = move->reverse();
+//    auto seq = Sequence::create(move, move_back, NULL);
+//    auto rfe = RepeatForever::create(seq);
+//    _kathia->runAction(rfe);
+//    _tamara->runAction(rfe->clone() );
+//    _grossini->runAction( rfe->clone() );
 }
 
 std::string ActionOrbit::subtitle() const

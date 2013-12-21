@@ -119,13 +119,13 @@ void TransitionScene::finish()
      _inScene->setPosition(Point(0,0));
      _inScene->setScale(1.0f);
      _inScene->setRotation(0.0f);
-     _inScene->getCamera()->restore();
- 
+//     _inScene->getCamera()->restore();
+
      _outScene->setVisible(false);
      _outScene->setPosition(Point(0,0));
      _outScene->setScale(1.0f);
      _outScene->setRotation(0.0f);
-     _outScene->getCamera()->restore();
+//     _outScene->getCamera()->restore();
 
     //[self schedule:@selector(setNewScene:) interval:0];
     this->schedule(schedule_selector(TransitionScene::setNewScene), 0);
