@@ -13,6 +13,8 @@ namespace {
     
 std::function<Layer*()> createFunctions[] =
 {
+    CL(DirectorEventTest),
+
     CL(TouchableSpriteTest),
     CL(FixedPriorityTest),
     CL(RemoveListenerWhenDispatching),
@@ -20,7 +22,8 @@ std::function<Layer*()> createFunctions[] =
     CL(LabelKeyboardEventTest),
     CL(SpriteAccelerationEventTest),
     CL(RemoveAndRetainNodeTest),
-    CL(RemoveListenerAfterAddingTest)
+    CL(RemoveListenerAfterAddingTest),
+    CL(DirectorEventTest),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -742,6 +745,59 @@ std::string RemoveListenerAfterAddingTest::title() const
 std::string RemoveListenerAfterAddingTest::subtitle() const
 {
     return "Should not crash!";
+}
+
+
+//
+//DirectorEventTest
+//
+void DirectorEventTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+
+    Size s = Director::getInstance()->getWinSize();
+
+    _label1 = Label::createWithTTF("After Visit: 0", "fonts/arial.ttf", 20);
+    _label1->setPosition(30,s.height/2 + 60);
+    this->addChild(_label1);
+
+    _label2 = Label::createWithTTF("After Draw: 0", "fonts/arial.ttf", 20);
+    _label2->setPosition(30,s.height/2 + 20);
+    this->addChild(_label2);
+
+    _label3 = Label::createWithTTF("After Update: 0", "fonts/arial.ttf", 20);
+    _label3->setPosition(30,30);
+    _label3->setPosition(30,s.height/2 - 20);
+    this->addChild(_label3);
+
+    _label4 = Label::createWithTTF("Projection Changed: 0", "fonts/arial.ttf", 20);
+    _label4->setPosition(30,30);
+    _label4->setPosition(30,s.height/2 - 60);
+    this->addChild(_label4);
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+
+    dispatcher->addEventListenerWithFixedPriority(<#cocos2d::EventListener *listener#>, <#int fixedPriority#>)
+
+}
+
+void DirectorEventTest::onEvent1(EventListener *event)
+{
+}
+
+void DirectorEventTest::onEvent2(EventListener *event)
+{
+}
+
+
+std::string DirectorEventTest::title() const
+{
+    return "Testing Director Events";
+}
+
+std::string DirectorEventTest::subtitle() const
+{
+    return "after visit, after draw, after update, projection changed";
 }
 
 
