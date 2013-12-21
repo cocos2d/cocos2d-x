@@ -127,7 +127,6 @@ set(COCOS2D_SRC
   ccGLStateCache.cpp
   CCShaderCache.cpp
   ccShaders.cpp
-  CCCamera.cpp
   CCConfiguration.cpp
   CCDirector.cpp
   CCScheduler.cpp
