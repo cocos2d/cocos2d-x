@@ -51,30 +51,30 @@ Scene::~Scene()
 
 bool Scene::init()
 {
-    bool bRet = false;
+    bool ret = false;
      do 
      {
-         Director * pDirector;
-         CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
-         this->setContentSize(pDirector->getWinSize());
+         Director * director;
+         CC_BREAK_IF( ! (director = Director::getInstance()) );
+         this->setContentSize(director->getWinSize());
          // success
-         bRet = true;
+         ret = true;
      } while (0);
-     return bRet;
+     return ret;
 }
 
 Scene *Scene::create()
 {
-    Scene *pRet = new Scene();
-    if (pRet && pRet->init())
+    Scene *ret = new Scene();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
+        CC_SAFE_DELETE(ret);
+        return nullptr;
     }
 }
 
@@ -83,37 +83,42 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
+Scene* Scene::getScene()
+{
+    return this;
+}
+
 #ifdef CC_USE_PHYSICS
 Scene *Scene::createWithPhysics()
 {
-    Scene *pRet = new Scene();
-    if (pRet && pRet->initWithPhysics())
+    Scene *ret = new Scene();
+    if (ret && ret->initWithPhysics())
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
+        CC_SAFE_DELETE(ret);
+        return nullptr;
     }
 }
 
 bool Scene::initWithPhysics()
 {
-    bool bRet = false;
+    bool ret = false;
     do
     {
-        Director * pDirector;
-        CC_BREAK_IF( ! (pDirector = Director::getInstance()) );
-        this->setContentSize(pDirector->getWinSize());
+        Director * director;
+        CC_BREAK_IF( ! (director = Director::getInstance()) );
+        this->setContentSize(director->getWinSize());
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
         this->scheduleUpdate();
         // success
-        bRet = true;
+        ret = true;
     } while (0);
-    return bRet;
+    return ret;
 }
 
 void Scene::addChild(Node* child)
@@ -146,9 +151,9 @@ void Scene::addChildToPhysicsWorld(Node* child)
             }
             
             auto& children = node->getChildren();
-            std::for_each(children.begin(), children.end(), [addToPhysicsWorldFunc](Node* n){
+            for( const auto &n : children) {
                 addToPhysicsWorldFunc(n);
-            });
+            }
         };
         
         addToPhysicsWorldFunc(child);

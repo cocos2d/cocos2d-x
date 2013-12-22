@@ -35,22 +35,22 @@ using namespace std;
 
 NS_CC_BEGIN
 
-AnimationCache* AnimationCache::s_pSharedAnimationCache = NULL;
+AnimationCache* AnimationCache::s_sharedAnimationCache = nullptr;
 
 AnimationCache* AnimationCache::getInstance()
 {
-    if (! s_pSharedAnimationCache)
+    if (! s_sharedAnimationCache)
     {
-        s_pSharedAnimationCache = new AnimationCache();
-        s_pSharedAnimationCache->init();
+        s_sharedAnimationCache = new AnimationCache();
+        s_sharedAnimationCache->init();
     }
 
-    return s_pSharedAnimationCache;
+    return s_sharedAnimationCache;
 }
 
 void AnimationCache::destroyInstance()
 {
-    CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+    CC_SAFE_RELEASE_NULL(s_sharedAnimationCache);
 }
 
 bool AnimationCache::init()
@@ -203,9 +203,9 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
-        std::for_each(spritesheets.cbegin(), spritesheets.cend(), [](const Value& value){
+        for(const auto &value : spritesheets) {
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
-        });
+        }
     }
 
     switch (version) {

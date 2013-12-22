@@ -213,6 +213,17 @@ kmMat4 Skin::getNodeToWorldTransformAR() const
     return TransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
 }
 
+void Skin::draw()
+{
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+
+    //TODO implement z order
+    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
+    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+}
+
 void Skin::setBone(Bone *bone)
 {
     _bone = bone;

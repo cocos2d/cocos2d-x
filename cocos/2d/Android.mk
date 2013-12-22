@@ -24,7 +24,6 @@ CCActionTween.cpp \
 CCAnimation.cpp \
 CCAnimationCache.cpp \
 CCAtlasNode.cpp \
-CCCamera.cpp \
 ccCArray.cpp \
 CCClippingNode.cpp \
 CCComponent.cpp \
@@ -60,6 +59,7 @@ CCGLProgram.cpp \
 ccGLStateCache.cpp \
 CCGrabber.cpp \
 CCGrid.cpp \
+CCNodeGrid.cpp \
 CCIMEDispatcher.cpp \
 CCLabel.cpp \
 CCLabelAtlas.cpp \
@@ -117,9 +117,6 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
-renderer/CCNewDrawNode.cpp \
-renderer/CCNewLabelAtlas.cpp \
-renderer/CCNewParticleSystemQuad.cpp \
 renderer/CCNewRenderTexture.cpp \
 renderer/CCNewSprite.cpp \
 renderer/CCNewSpriteBatchNode.cpp \

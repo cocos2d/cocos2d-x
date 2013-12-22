@@ -113,12 +113,12 @@ AtlasDemoNew::~AtlasDemoNew(void)
 {
 }
 
-std::string AtlasDemoNew::title()
+std::string AtlasDemoNew::title() const
 {
     return "No title";
 }
 
-std::string AtlasDemoNew::subtitle()
+std::string AtlasDemoNew::subtitle() const
 {
     return "";
 }
@@ -176,12 +176,12 @@ LabelTTFAlignmentNew::LabelTTFAlignmentNew()
     this->addChild(ttf2);
 }
 
-std::string LabelTTFAlignmentNew::title()
+std::string LabelTTFAlignmentNew::title() const
 {
     return "New Label + TTF";
 }
 
-std::string LabelTTFAlignmentNew::subtitle()
+std::string LabelTTFAlignmentNew::subtitle() const
 {
     return "Tests alignment values";
 }
@@ -236,12 +236,12 @@ void LabelFNTColorAndOpacity::step(float dt)
     label3->setString(string);
 }
 
-std::string LabelFNTColorAndOpacity::title()
+std::string LabelFNTColorAndOpacity::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTColorAndOpacity::subtitle()
+std::string LabelFNTColorAndOpacity::subtitle() const
 {
     return "Testing opacity + tint";
 }
@@ -314,12 +314,12 @@ void LabelFNTSpriteActions::step(float dt)
     label1->setString(string);
 }
 
-std::string LabelFNTSpriteActions::title()
+std::string LabelFNTSpriteActions::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTSpriteActions::subtitle()
+std::string LabelFNTSpriteActions::subtitle() const
 {
     return "Using fonts as Sprite objects. Some characters should rotate.";
 }
@@ -335,12 +335,12 @@ LabelFNTPadding::LabelFNTPadding()
     label->setAnchorPoint( Point(0.5f, 0.5f) );
 }
 
-std::string LabelFNTPadding::title()
+std::string LabelFNTPadding::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTPadding::subtitle()
+std::string LabelFNTPadding::subtitle() const
 {
     return "Testing padding";
 }
@@ -366,12 +366,12 @@ LabelFNTOffset::LabelFNTOffset()
     label->setAnchorPoint( Point(0.5f, 0.5f) ); 
 }
 
-std::string LabelFNTOffset::title()
+std::string LabelFNTOffset::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTOffset::subtitle()
+std::string LabelFNTOffset::subtitle() const
 {
     return "Rendering should be OK. Testing offset";
 }
@@ -401,12 +401,12 @@ LabelFNTColor::LabelFNTColor()
     label->setString("Green");
 }
 
-std::string LabelFNTColor::title()
+std::string LabelFNTColor::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTColor::subtitle()
+std::string LabelFNTColor::subtitle() const
 {
     return "Testing color";
 }
@@ -429,12 +429,12 @@ LabelFNTHundredLabels::LabelFNTHundredLabels()
     }
 }
 
-std::string LabelFNTHundredLabels::title()
+std::string LabelFNTHundredLabels::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTHundredLabels::subtitle()
+std::string LabelFNTHundredLabels::subtitle() const
 {
     return "Creating several Labels using the same FNT file; should be fast";
 }
@@ -473,12 +473,12 @@ LabelFNTMultiLine::LabelFNTMultiLine()
     label3->setPosition(VisibleRect::rightTop());
 }
 
-std::string LabelFNTMultiLine::title()
+std::string LabelFNTMultiLine::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTMultiLine::subtitle()
+std::string LabelFNTMultiLine::subtitle() const
 {
     return "Multiline + anchor point";
 }
@@ -528,12 +528,12 @@ void LabelFNTandTTFEmpty::updateStrings(float dt)
     }
 }
 
-std::string LabelFNTandTTFEmpty::title()
+std::string LabelFNTandTTFEmpty::title() const
 {
     return "New Label : .FNT file & .TTF file";
 }
 
-std::string LabelFNTandTTFEmpty::subtitle()
+std::string LabelFNTandTTFEmpty::subtitle() const
 {
     return "2 empty labels: new Label + .FNT and new Label + .TTF";
 }
@@ -549,12 +549,12 @@ LabelFNTRetina::LabelFNTRetina()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-std::string LabelFNTRetina::title()
+std::string LabelFNTRetina::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTRetina::subtitle()
+std::string LabelFNTRetina::subtitle() const
 {
     return "loading arista16 or arista16-hd";
 }
@@ -573,12 +573,12 @@ LabelFNTGlyphDesigner::LabelFNTGlyphDesigner()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-std::string LabelFNTGlyphDesigner::title()
+std::string LabelFNTGlyphDesigner::title() const
 {
     return "New Label + .FNT file";
 }
 
-std::string LabelFNTGlyphDesigner::subtitle()
+std::string LabelFNTGlyphDesigner::subtitle() const
 {
     return "Testing Glyph Designer: you should see a font with shawdows and outline";
 }
@@ -594,12 +594,12 @@ LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
     this->addChild(label);
 }
 
-std::string LabelTTFUnicodeChinese::title()
+std::string LabelTTFUnicodeChinese::title() const
 {
     return "New Label + .TTF file Chinese";
 }
 
-string LabelTTFUnicodeChinese::subtitle()
+std::string LabelTTFUnicodeChinese::subtitle() const
 {
     return "Testing new Label + TTF with Chinese character";
 }
@@ -613,12 +613,12 @@ LabelFNTUnicodeChinese::LabelFNTUnicodeChinese()
     this->addChild(label);
 }
 
-string LabelFNTUnicodeChinese::title()
+std::string LabelFNTUnicodeChinese::title() const
 {
     return "New Label + .FNT file Chinese";
 }
 
-string LabelFNTUnicodeChinese::subtitle()
+std::string LabelFNTUnicodeChinese::subtitle() const
 {
     return "Testing new Label + FNT with Chinese character";
 }
@@ -721,12 +721,12 @@ LabelFNTMultiLineAlignment::~LabelFNTMultiLineAlignment()
     this->_arrowsShouldRetain->release();
 }
 
-std::string LabelFNTMultiLineAlignment::title()
+std::string LabelFNTMultiLineAlignment::title() const
 {
     return "";
 }
 
-std::string LabelFNTMultiLineAlignment::subtitle()
+std::string LabelFNTMultiLineAlignment::subtitle() const
 {
     return "";
 }
@@ -832,12 +832,11 @@ void LabelFNTMultiLineAlignment::snapArrowsToEdge()
 /// BMFontUnicodeNew
 LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
-    const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
-    const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
+    std::string russian  = strings["russian"].asString();
+    std::string spanish  = strings["spanish"].asString();
+    std::string japanese = strings["japanese"].asString();
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -862,12 +861,12 @@ LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
     label4->setPosition(Point(s.width/2, s.height/5*1.5));
 }
 
-std::string LabelFNTUNICODELanguages::title()
+std::string LabelFNTUNICODELanguages::title() const
 {
     return "New Label + .FNT + UNICODE";
 }
 
-std::string LabelFNTUNICODELanguages::subtitle()
+std::string LabelFNTUNICODELanguages::subtitle() const
 {
     return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
 }
@@ -886,12 +885,12 @@ LabelFNTBounds::LabelFNTBounds()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-string LabelFNTBounds::title()
+std::string LabelFNTBounds::title() const
 {
     return "New Label + .FNT + Bounds";
 }
 
-string LabelFNTBounds::subtitle()
+std::string LabelFNTBounds::subtitle() const
 {
     return "You should see string enclosed by a box";
 }
@@ -925,12 +924,12 @@ LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
     addChild(label1);
 }
 
-std::string LabelTTFLongLineWrapping::title()
+std::string LabelTTFLongLineWrapping::title() const
 {
     return "New Label + .TTF";
 }
 
-std::string LabelTTFLongLineWrapping::subtitle()
+std::string LabelTTFLongLineWrapping::subtitle() const
 {
     return "Uses the new Label with TTF. Testing auto-wrapping";
 }
@@ -961,12 +960,12 @@ LabelTTFColor::LabelTTFColor()
     addChild(label3);
 }
 
-std::string LabelTTFColor::title()
+std::string LabelTTFColor::title() const
 {
     return "New Label + .TTF";
 }
 
-std::string LabelTTFColor::subtitle()
+std::string LabelTTFColor::subtitle() const
 {
     return "Uses the new Label with TTF. Testing Color";
 }
@@ -1020,12 +1019,12 @@ void LabelTTFDynamicAlignment::setAlignmentRight(Object* sender)
     this->updateAlignment();
 }
 
-std::string LabelTTFDynamicAlignment::title()
+std::string LabelTTFDynamicAlignment::title() const
 {
     return "New Label + .TTF";
 }
 
-std::string LabelTTFDynamicAlignment::subtitle()
+std::string LabelTTFDynamicAlignment::subtitle() const
 {
     return "Uses the new Label with TTF. Testing alignment";
 }
@@ -1035,12 +1034,12 @@ std::string LabelTTFDynamicAlignment::subtitle()
 //
 LabelTTFUnicodeNew::LabelTTFUnicodeNew()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
     
-    //const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    //const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
-    //const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
+//    std::string russian  = strings["russian"].asString();
+//    std::string spanish  = strings["spanish"].asString();
+//    std::string japanese = strings["japanese"].asString();
     
     auto size = Director::getInstance()->getWinSize();
     
@@ -1061,18 +1060,18 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
     addChild(label2);
     
     // chinese
-    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, chinese);
+    auto label3 = Label::createWithTTF(chinese, "fonts/wt021.ttf", 45, size.width, TextHAlignment::CENTER, GlyphCollection::CUSTOM, chinese.c_str());
     label3->setPosition( Point(size.width/2, vSize - (vStep * 6.5)) );
     label3->setAnchorPoint(Point(0.5, 0.5));
     addChild(label3);
 }
 
-std::string LabelTTFUnicodeNew::title()
+std::string LabelTTFUnicodeNew::title() const
 {
     return "New Label + TTF unicode";
 }
 
-std::string LabelTTFUnicodeNew::subtitle()
+std::string LabelTTFUnicodeNew::subtitle() const
 {
     return "Uses the new Label with TTF. Testing unicode";
 }
@@ -1106,12 +1105,12 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
     }
 }
 
-std::string LabelTTFFontsTestNew::title()
+std::string LabelTTFFontsTestNew::title() const
 {
     return "New Label + TTF";
 }
 
-std::string LabelTTFFontsTestNew::subtitle()
+std::string LabelTTFFontsTestNew::subtitle() const
 {
     return "";
 }
@@ -1126,12 +1125,12 @@ LabelBMFontTestNew::LabelBMFontTestNew()
     addChild(label1);
 }
 
-std::string LabelBMFontTestNew::title()
+std::string LabelBMFontTestNew::title() const
 {
     return "New Label + FNT";
 }
 
-std::string LabelBMFontTestNew::subtitle()
+std::string LabelBMFontTestNew::subtitle() const
 {
     return "Uses the new Label with .FNT file";
 }
@@ -1161,12 +1160,12 @@ LabelTTFDistanceField::LabelTTFDistanceField()
 
 }
 
-std::string LabelTTFDistanceField::title()
+std::string LabelTTFDistanceField::title() const
 {
     return "New Label + .TTF";
 }
 
-std::string LabelTTFDistanceField::subtitle()
+std::string LabelTTFDistanceField::subtitle() const
 {
     return "Testing rendering base on DistanceField";
 }
@@ -1201,12 +1200,12 @@ LabelTTFDistanceFieldEffect::LabelTTFDistanceFieldEffect()
 
 }
 
-std::string LabelTTFDistanceFieldEffect::title()
+std::string LabelTTFDistanceFieldEffect::title() const
 {
     return "New Label + .TTF";
 }
 
-std::string LabelTTFDistanceFieldEffect::subtitle()
+std::string LabelTTFDistanceFieldEffect::subtitle() const
 {
     return "Testing effect base on DistanceField";
 }

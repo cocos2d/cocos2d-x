@@ -78,7 +78,7 @@ struct transformValues_;
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
-class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
+class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
 
@@ -170,7 +170,7 @@ public:
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
      *
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
-     *         NULL if the sprite isn't used batch node.
+     *         nullptr if the sprite isn't used batch node.
      */
     virtual SpriteBatchNode* getBatchNode(void);
     /**
@@ -426,16 +426,8 @@ public:
     virtual void setVisible(bool bVisible) override;
     virtual void updateQuadVertices();
     virtual void draw(void) override;
-    /// @}
-
-    /// @{
-    /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const Color3B& color3) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     /// @}
 
 protected:
@@ -535,6 +527,8 @@ protected:
     virtual void updateBlendFunc(void);
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
+
+    bool culling() const;
 
     //
     // Data used when the sprite is rendered using a SpriteSheet

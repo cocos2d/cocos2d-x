@@ -46,7 +46,7 @@ struct RenderStackElement
 class Renderer : public Object
 {
 public:
-    static const int vbo_size = 65536 / 6;
+    static const int VBO_SIZE = 65536 / 6;
 
     Renderer();
     ~Renderer();
@@ -88,8 +88,8 @@ protected:
     size_t _firstCommand;
     size_t _lastCommand;
 
-    V3F_C4B_T2F_Quad _quads[vbo_size];
-    GLushort _indices[6 * vbo_size];
+    V3F_C4B_T2F_Quad _quads[VBO_SIZE];
+    GLushort _indices[6 * VBO_SIZE];
     GLuint _quadVAO;
     GLuint _buffersVBO[2]; //0: vertex  1: indices
 

@@ -26,6 +26,9 @@
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
+#include "CCCustomCommand.h"
+#include "CCDirector.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -101,7 +104,7 @@ DrawNode::DrawNode()
 , _vbo(0)
 , _bufferCapacity(0)
 , _bufferCount(0)
-, _buffer(NULL)
+, _buffer(nullptr)
 , _dirty(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -110,7 +113,7 @@ DrawNode::DrawNode()
 DrawNode::~DrawNode()
 {
     free(_buffer);
-    _buffer = NULL;
+    _buffer = nullptr;
     
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
@@ -129,17 +132,17 @@ DrawNode::~DrawNode()
 
 DrawNode* DrawNode::create()
 {
-    DrawNode* pRet = new DrawNode();
-    if (pRet && pRet->init())
+    DrawNode* ret = new DrawNode();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 void DrawNode::ensureCapacity(int count)
@@ -196,7 +199,7 @@ bool DrawNode::init()
     NotificationCenter::getInstance()->addObserver(this,
                                                    callfuncO_selector(DrawNode::listenBackToForeground),
                                                    EVNET_COME_TO_FOREGROUND,
-                                                   NULL);
+                                                   nullptr);
 #endif
     
     return true;
@@ -238,9 +241,17 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(DrawNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void DrawNode::onDraw()
+{
     CC_NODE_DRAW_SETUP();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
+    
     render();
 }
 

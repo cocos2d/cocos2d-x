@@ -73,6 +73,8 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
+//static const char *A_EASING_PARAM_NUMBER = "twEPN";
+static const char *A_EASING_PARAM = "twEP";
 //static const char *A_TWEEN_ROTATE = "twR";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
@@ -93,6 +95,8 @@ static const char *A_COCOS2D_PIVOT_X = "cocos2d_pX";
 static const char *A_COCOS2D_PIVOT_Y = "cocos2d_pY";
 
 static const char *A_BLEND_TYPE = "bd";
+static const char *A_BLEND_SRC = "bd_src";
+static const char *A_BLEND_DST = "bd_dst";
 
 static const char *A_ALPHA = "a";
 static const char *A_RED = "r";
@@ -820,8 +824,8 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
         }
     }
 
-    int length = 0;
-    int index = 0;
+    unsigned long length = 0;
+    unsigned long index = 0;
     int parentTotalDuration = 0;
     int currentDuration = 0;
 
@@ -882,24 +886,24 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
         frameXML = frameXML->NextSiblingElement(FRAME);
     }
 
-
+    
 	//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-	FrameData **frames = (FrameData **)movBoneData->frameList.data->arr;
-	for (int j = movBoneData->frameList.count() - 1; j >= 0; j--)
+	auto frames = movBoneData->frameList;
+	for (long j = movBoneData->frameList.size() - 1; j >= 0; j--)
 	{
 		if (j > 0)
 		{
-			float difSkewX = frames[j]->skewX -  frames[j - 1]->skewX;
-			float difSkewY = frames[j]->skewY -  frames[j - 1]->skewY;
+			float difSkewX = frames.at(j)->skewX -  frames.at(j-1)->skewX;
+			float difSkewY = frames.at(j)->skewY -  frames.at(j-1)->skewY;
 
 			if (difSkewX < -M_PI || difSkewX > M_PI)
 			{
-				frames[j - 1]->skewX = difSkewX < 0 ? frames[j - 1]->skewX - 2 * M_PI : frames[j - 1]->skewX + 2 * M_PI;
+				frames.at(j-1)->skewX = difSkewX < 0 ? frames.at(j-1)->skewX - 2 * M_PI : frames.at(j-1)->skewX + 2 * M_PI;
 			}
 
 			if (difSkewY < -M_PI || difSkewY > M_PI)
 			{
-				frames[j - 1]->skewY = difSkewY < 0 ? frames[j - 1]->skewY - 2 * M_PI : frames[j - 1]->skewY + 2 * M_PI;
+				frames.at(j-1)->skewY = difSkewY < 0 ? frames.at(j-1)->skewY - 2 * M_PI : frames.at(j-1)->skewY + 2 * M_PI;
 			}
 		}
 	}
@@ -907,7 +911,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
     //
     FrameData *frameData = new FrameData();
-    frameData->copy((FrameData *)movBoneData->frameList.getLastObject());
+    frameData->copy((FrameData *)movBoneData->frameList.back());
     frameData->frameID = movBoneData->duration;
     movBoneData->addFrameData(frameData);
     frameData->release();
@@ -939,6 +943,11 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
         frameData->strSoundEffect = frameXML->Attribute(A_SOUND_EFFECT);
     }
 
+    bool tweenFrame = false;
+    if (frameXML->QueryBoolAttribute(A_TWEEN_FRAME, &tweenFrame) == tinyxml2::XML_SUCCESS)
+    {
+        frameData->isTween = tweenFrame;
+    }
 
 
     if (dataInfo->flashToolVersion >= VERSION_2_0)
@@ -998,7 +1007,38 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
     }
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
-        frameData->blendType = (BlendType)blendType;
+        switch (blendType)
+        {
+        case BLEND_NORMAL:
+            {
+                frameData->blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+            }
+            break;
+        case BLEND_ADD:
+            {
+                frameData->blendFunc.src = GL_SRC_ALPHA;
+                frameData->blendFunc.dst = GL_ONE;
+            }
+            break;
+        case BLEND_MULTIPLY:
+            {
+                frameData->blendFunc.src = GL_DST_COLOR;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+            }
+            break;
+        case BLEND_SCREEN:
+            {
+                frameData->blendFunc.src = GL_ONE;
+                frameData->blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+            }
+            break;
+        default:
+            {
+                frameData->blendFunc.src = CC_BLEND_SRC;
+                frameData->blendFunc.dst = CC_BLEND_DST;
+            }
+            break;
+        }
     }
 
     tinyxml2::XMLElement *colorTransformXML = frameXML->FirstChildElement(A_COLOR_TRANSFORM);
@@ -1128,14 +1168,13 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
     while (vertexDataXML)
     {
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
-        vertex->release();
+        Point vertex;
 
-        vertexDataXML->QueryFloatAttribute(A_X, &vertex->x);
-        vertexDataXML->QueryFloatAttribute(A_Y, &vertex->y);
+        vertexDataXML->QueryFloatAttribute(A_X, &vertex.x);
+        vertexDataXML->QueryFloatAttribute(A_Y, &vertex.y);
 
-        vertex->y = -vertex->y;
-        contourData->vertexList.addObject(vertex);
+        vertex.y = -vertex.y;
+        contourData->vertexList.push_back(vertex);
 
         vertexDataXML = vertexDataXML->NextSiblingElement(CONTOUR_VERTEX);
     }
@@ -1362,11 +1401,11 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(JsonDictionary &json, DataInfo 
         {
             if (dataInfo->asyncStruct)
             {
-                static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->asyncStruct->baseFilePath + plist;
+                static_cast<ParticleDisplayData *>(displayData)->displayName = dataInfo->asyncStruct->baseFilePath + plist;
             }
             else
             {
-                static_cast<ParticleDisplayData *>(displayData)->plist = dataInfo->baseFilePath + plist;
+                static_cast<ParticleDisplayData *>(displayData)->displayName = dataInfo->baseFilePath + plist;
             }
         }
     }
@@ -1474,22 +1513,22 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 	if (dataInfo->cocoStudioVersion < VERSION_CHANGE_ROTATION_RANGE)
 	{
 		//! Change rotation range from (-180 -- 180) to (-infinity -- infinity)
-		FrameData **frames = (FrameData **)movementBoneData->frameList.data->arr;
-		for (int i = movementBoneData->frameList.count() - 1; i >= 0; i--)
+		auto frames = movementBoneData->frameList;
+		for (long i = frames.size() - 1; i >= 0; i--)
 		{
 			if (i > 0)
 			{
-				float difSkewX = frames[i]->skewX -  frames[i - 1]->skewX;
-				float difSkewY = frames[i]->skewY -  frames[i - 1]->skewY;
+				float difSkewX = frames.at(i)->skewX -  frames.at(i-1)->skewX;
+				float difSkewY = frames.at(i)->skewY -  frames.at(i-1)->skewY;
 
 				if (difSkewX < -M_PI || difSkewX > M_PI)
 				{
-					frames[i - 1]->skewX = difSkewX < 0 ? frames[i - 1]->skewX - 2 * M_PI : frames[i - 1]->skewX + 2 * M_PI;
+					frames.at(i-1)->skewX = difSkewX < 0 ? frames.at(i-1)->skewX - 2 * M_PI : frames.at(i-1)->skewX + 2 * M_PI;
 				}
 
 				if (difSkewY < -M_PI || difSkewY > M_PI)
 				{
-					frames[i - 1]->skewY = difSkewY < 0 ? frames[i - 1]->skewY - 2 * M_PI : frames[i - 1]->skewY + 2 * M_PI;
+					frames.at(i-1)->skewY = difSkewY < 0 ? frames.at(i-1)->skewY - 2 * M_PI : frames.at(i-1)->skewY + 2 * M_PI;
 				}
 			}
 		}
@@ -1497,10 +1536,10 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(JsonDictionary &json, Dat
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        if (movementBoneData->frameList.count() > 0)
+        if (movementBoneData->frameList.size() > 0)
         {
             FrameData *frameData = new FrameData();
-            frameData->copy((FrameData *)movementBoneData->frameList.getLastObject());
+            frameData->copy((FrameData *)movementBoneData->frameList.back());
             movementBoneData->addFrameData(frameData);
             frameData->release();
 
@@ -1519,7 +1558,8 @@ FrameData *DataReaderHelper::decodeFrame(JsonDictionary &json, DataInfo *dataInf
 
     frameData->tweenEasing = (TweenType)json.getItemIntValue(A_TWEEN_EASING, Linear);
     frameData->displayIndex = json.getItemIntValue(A_DISPLAY_INDEX, 0);
-    frameData->blendType = (BlendType)json.getItemIntValue(A_BLEND_TYPE, 0);
+    frameData->blendFunc.src = (GLenum)(json.getItemIntValue(A_BLEND_SRC, BlendFunc::ALPHA_NON_PREMULTIPLIED.src));
+    frameData->blendFunc.dst = (GLenum)(json.getItemIntValue(A_BLEND_DST, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst));
 	frameData->isTween = (bool)json.getItemBoolvalue(A_TWEEN_FRAME, true);
 
     const char *event = json.getItemStringValue(A_EVENT);
@@ -1535,6 +1575,18 @@ FrameData *DataReaderHelper::decodeFrame(JsonDictionary &json, DataInfo *dataInf
     else
     {
         frameData->frameID = json.getItemIntValue(A_FRAME_INDEX, 0);
+    }
+
+
+    int length = json.getArrayItemCount(A_EASING_PARAM);
+    if (length != 0)
+    {
+        frameData->easingParams = new float[length];
+        
+        for (int i = 0; i < length; i++)
+        {
+            frameData->easingParams[i] = json.getFloatValueFromArray(A_EASING_PARAM, i, 0);
+        }
     }
 
     return frameData;
@@ -1561,7 +1613,7 @@ TextureData *DataReaderHelper::decodeTexture(JsonDictionary &json)
     {
         JsonDictionary *dic = json.getSubItemFromArray(CONTOUR_DATA, i);
         ContourData *contourData = decodeContour(*dic);
-        textureData->contourDataList.addObject(contourData);
+        textureData->contourDataList.pushBack(contourData);
         contourData->release();
 
         delete dic;
@@ -1580,13 +1632,12 @@ ContourData *DataReaderHelper::decodeContour(JsonDictionary &json)
     {
         JsonDictionary *dic = json.getSubItemFromArray(VERTEX_POINT, i);
 
-        ContourVertex2 *vertex = new ContourVertex2(0, 0);
+        Point vertex;
 
-        vertex->x = dic->getItemFloatValue(A_X, 0);
-        vertex->y = dic->getItemFloatValue(A_Y, 0);
+        vertex.x = dic->getItemFloatValue(A_X, 0);
+        vertex.y = dic->getItemFloatValue(A_Y, 0);
 
-        contourData->vertexList.addObject(vertex);
-        vertex->release();
+        contourData->vertexList.push_back(vertex);
 
         delete dic;
     }

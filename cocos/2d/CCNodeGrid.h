@@ -22,46 +22,52 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef __MISCNODE_CCGRID_NODE_H__
+#define __MISCNODE_CCGRID_NODE_H__
 
-#include "CCNewLabelAtlas.h"
-#include "CCRenderCommand.h"
-#include "CCRenderer.h"
-#include "CCQuadCommand.h"
-#include "CCMenuItem.h"
-#include "CCFrustum.h"
-#include "CCDirector.h"
-#include "CCTextureAtlas.h"
-#include "CCShaderCache.h"
+#include "CCNode.h"
+#include "kazmath/GL/matrix.h"
 
 NS_CC_BEGIN
 
+class GridBase;
 
-void NewLabelAtlas::draw()
+class NodeGrid : public Node
 {
-//    LabelAtlas::draw();
-//    _renderCommand.init(0, _vertexZ, _textureAtlas->getTexture()->getName(), _shaderProgram, _blendFunc,
-//                        _textureAtlas->getQuads(), _textureAtlas->getTotalQuads() );
-//
-//    Renderer::getInstance()->addCommand(&_renderCommand);
+public:
+    static NodeGrid* create();
 
+    GridBase* getGrid() { return _nodeGrid; }
+    /**
+    * @js NA
+    */
+    const GridBase* getGrid() const { return _nodeGrid; }
 
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    /**
+     * Changes a grid object that is used when applying effects
+     *
+     * @param grid  A Grid object that is used when applying effects
+     */
+    void setGrid(GridBase *grid);
 
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+    void setTarget(Node *target);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-              
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    // overrides
+    virtual void visit() override;
 
-}
+protected:
+    NodeGrid();
+    virtual ~NodeGrid();
 
+    void onGridBeginDraw();
+    void onGridEndDraw();
+
+    Node* _gridTarget;
+    GridBase* _nodeGrid;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
+};
 NS_CC_END
+
+#endif

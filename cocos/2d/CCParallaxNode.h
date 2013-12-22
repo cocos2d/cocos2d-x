@@ -43,7 +43,7 @@ struct _ccArray;
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
 */
-class CC_DLL ParallaxNode : public Node 
+class CC_DLL ParallaxNode : public Node
 {
 public:
     // Create a Parallax node

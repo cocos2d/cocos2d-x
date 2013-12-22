@@ -70,30 +70,30 @@ Layer::~Layer()
 
 bool Layer::init()
 {
-    bool bRet = false;
+    bool ret = false;
     do 
     {        
-        Director * pDirector;
-        CC_BREAK_IF(!(pDirector = Director::getInstance()));
-        this->setContentSize(pDirector->getWinSize());
+        Director * director;
+        CC_BREAK_IF(!(director = Director::getInstance()));
+        this->setContentSize(director->getWinSize());
         // success
-        bRet = true;
+        ret = true;
     } while(0);
-    return bRet;
+    return ret;
 }
 
 Layer *Layer::create()
 {
-    Layer *pRet = new Layer();
-    if (pRet && pRet->init())
+    Layer *ret = new Layer();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
-        return NULL;
+        CC_SAFE_DELETE(ret);
+        return nullptr;
     }
 }
 
@@ -412,154 +412,17 @@ std::string Layer::getDescription() const
     return StringUtils::format("<Layer | Tag = %d>", _tag);
 }
 
+__LayerRGBA::__LayerRGBA()
+{
+    CCLOG("LayerRGBA deprecated.");
+}
+
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
-// LayerRGBA
-LayerRGBA::LayerRGBA()
-: _displayedOpacity(255)
-, _realOpacity (255)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeOpacityEnabled(false)
-, _cascadeColorEnabled(false)
-{}
-
-LayerRGBA::~LayerRGBA() {}
-
-bool LayerRGBA::init()
-{
-	if (Layer::init())
-    {
-        _displayedOpacity = _realOpacity = 255;
-        _displayedColor = _realColor = Color3B::WHITE;
-        setCascadeOpacityEnabled(false);
-        setCascadeColorEnabled(false);
-        
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-GLubyte LayerRGBA::getOpacity() const
-{
-	return _realOpacity;
-}
-
-GLubyte LayerRGBA::getDisplayedOpacity() const
-{
-	return _displayedOpacity;
-}
-
-/** Override synthesized setOpacity to recurse items */
-void LayerRGBA::setOpacity(GLubyte opacity)
-{
-	_displayedOpacity = _realOpacity = opacity;
-    
-	if( _cascadeOpacityEnabled )
-    {
-		GLubyte parentOpacity = 255;
-        RGBAProtocol *parent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (parent && parent->isCascadeOpacityEnabled())
-        {
-            parentOpacity = parent->getDisplayedOpacity();
-        }
-        updateDisplayedOpacity(parentOpacity);
-	}
-}
-
-const Color3B& LayerRGBA::getColor() const
-{
-	return _realColor;
-}
-
-const Color3B& LayerRGBA::getDisplayedColor() const
-{
-	return _displayedColor;
-}
-
-void LayerRGBA::setColor(const Color3B& color)
-{
-	_displayedColor = _realColor = color;
-	
-	if (_cascadeColorEnabled)
-    {
-		Color3B parentColor = Color3B::WHITE;
-        RGBAProtocol* parent = dynamic_cast<RGBAProtocol*>(_parent);
-		if (parent && parent->isCascadeColorEnabled())
-        {
-            parentColor = parent->getDisplayedColor();
-        }
-
-        updateDisplayedColor(parentColor);
-	}
-}
-
-void LayerRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-    
-    if (_cascadeOpacityEnabled)
-    {
-        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedOpacity(_displayedOpacity);
-            }
-        });
-    }
-}
-
-void LayerRGBA::updateDisplayedColor(const Color3B& parentColor)
-{
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    
-    if (_cascadeColorEnabled)
-    {
-        std::for_each(_children.begin(), _children.end(),[this](Node* obj){
-            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(obj);
-            if (item)
-            {
-                item->updateDisplayedColor(_displayedColor);
-            }
-        });
-    }
-}
-
-bool LayerRGBA::isCascadeOpacityEnabled() const
-{
-    return _cascadeOpacityEnabled;
-}
-
-void LayerRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    _cascadeOpacityEnabled = cascadeOpacityEnabled;
-}
-
-bool LayerRGBA::isCascadeColorEnabled() const
-{
-    return _cascadeColorEnabled;
-}
-
-void LayerRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    _cascadeColorEnabled = cascadeColorEnabled;
-}
-
-std::string LayerRGBA::getDescription() const
-{
-    return StringUtils::format("<LayerRGBA | Tag = %d>", _tag);
-}
-
 /// LayerColor
 
 LayerColor::LayerColor()
@@ -585,40 +448,40 @@ void LayerColor::setBlendFunc(const BlendFunc &var)
 
 LayerColor* LayerColor::create()
 {
-    LayerColor* pRet = new LayerColor();
-    if (pRet && pRet->init())
+    LayerColor* ret = new LayerColor();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
 {
-    LayerColor * pLayer = new LayerColor();
-    if( pLayer && pLayer->initWithColor(color,width,height))
+    LayerColor * layer = new LayerColor();
+    if( layer && layer->initWithColor(color,width,height))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerColor * LayerColor::create(const Color4B& color)
 {
-    LayerColor * pLayer = new LayerColor();
-    if(pLayer && pLayer->initWithColor(color))
+    LayerColor * layer = new LayerColor();
+    if(layer && layer->initWithColor(color))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 bool LayerColor::init()
@@ -734,62 +597,49 @@ void LayerColor::onDraw()
     CC_INCREMENT_GL_DRAWS(1);
 }
 
-void LayerColor::setColor(const Color3B &color)
-{
-    LayerRGBA::setColor(color);
-    updateColor();
-}
-
-void LayerColor::setOpacity(GLubyte opacity)
-{
-    LayerRGBA::setOpacity(opacity);
-    updateColor();
-}
-
 std::string LayerColor::getDescription() const
 {
     return StringUtils::format("<LayerColor | Tag = %d>", _tag);
 }
-
 //
 // LayerGradient
 // 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
 {
-    LayerGradient * pLayer = new LayerGradient();
-    if( pLayer && pLayer->initWithColor(start, end))
+    LayerGradient * layer = new LayerGradient();
+    if( layer && layer->initWithColor(start, end))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Point& v)
 {
-    LayerGradient * pLayer = new LayerGradient();
-    if( pLayer && pLayer->initWithColor(start, end, v))
+    LayerGradient * layer = new LayerGradient();
+    if( layer && layer->initWithColor(start, end, v))
     {
-        pLayer->autorelease();
-        return pLayer;
+        layer->autorelease();
+        return layer;
     }
-    CC_SAFE_DELETE(pLayer);
-    return NULL;
+    CC_SAFE_DELETE(layer);
+    return nullptr;
 }
 
 LayerGradient* LayerGradient::create()
 {
-    LayerGradient* pRet = new LayerGradient();
-    if (pRet && pRet->init())
+    LayerGradient* ret = new LayerGradient();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool LayerGradient::init()
@@ -952,9 +802,9 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    std::for_each(_layers.begin(), _layers.end(), [](Layer* layer){
+    for(const auto &layer : _layers) {
         layer->cleanup();
-    });
+    }
 }
 
 LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
@@ -962,49 +812,49 @@ LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)
     va_list args;
     va_start(args,layer);
 
-    LayerMultiplex * pMultiplexLayer = new LayerMultiplex();
-    if(pMultiplexLayer && pMultiplexLayer->initWithLayers(layer, args))
+    LayerMultiplex * multiplexLayer = new LayerMultiplex();
+    if(multiplexLayer && multiplexLayer->initWithLayers(layer, args))
     {
-        pMultiplexLayer->autorelease();
+        multiplexLayer->autorelease();
         va_end(args);
-        return pMultiplexLayer;
+        return multiplexLayer;
     }
     va_end(args);
-    CC_SAFE_DELETE(pMultiplexLayer);
-    return NULL;
+    CC_SAFE_DELETE(multiplexLayer);
+    return nullptr;
 }
 
 LayerMultiplex * LayerMultiplex::createWithLayer(Layer* layer)
 {
-    return LayerMultiplex::create(layer, NULL);
+    return LayerMultiplex::create(layer, nullptr);
 }
 
 LayerMultiplex* LayerMultiplex::create()
 {
-    LayerMultiplex* pRet = new LayerMultiplex();
-    if (pRet && pRet->init())
+    LayerMultiplex* ret = new LayerMultiplex();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 LayerMultiplex* LayerMultiplex::createWithArray(const Vector<Layer*>& arrayOfLayers)
 {
-    LayerMultiplex* pRet = new LayerMultiplex();
-    if (pRet && pRet->initWithArray(arrayOfLayers))
+    LayerMultiplex* ret = new LayerMultiplex();
+    if (ret && ret->initWithArray(arrayOfLayers))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 void LayerMultiplex::addLayer(Layer* layer)
