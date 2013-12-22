@@ -48,7 +48,6 @@ protected:
     void afterDrawStencil();
     void afterVisit();
 
-protected:
     GLboolean currentStencilEnabled;
     GLuint currentStencilWriteMask;
     GLenum currentStencilFunc;

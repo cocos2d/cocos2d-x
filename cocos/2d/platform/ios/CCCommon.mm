@@ -32,37 +32,37 @@
 NS_CC_BEGIN
 
 // XXX deprecated
-void CCLog(const char * pszFormat, ...)
+void CCLog(const char * format, ...)
 {
     printf("cocos2d: ");
-    char szBuf[kMaxLogLen+1] = {0};
+    char buf[kMaxLogLen+1] = {0};
     va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_start(ap, format);
+    vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
-    printf("%s", szBuf);
+    printf("%s", buf);
     printf("\n");
 }
 
-void log(const char * pszFormat, ...)
+void log(const char * format, ...)
 {
     printf("cocos2d: ");
-    char szBuf[kMaxLogLen+1] = {0};
+    char buf[kMaxLogLen+1] = {0};
     va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, kMaxLogLen, pszFormat, ap);
+    va_start(ap, format);
+    vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
-    printf("%s", szBuf);
+    printf("%s", buf);
     printf("\n");
 }
 
 // ios no MessageBox, use log instead
-void MessageBox(const char * pszMsg, const char * pszTitle)
+void MessageBox(const char * msg, const char * title)
 {
-    NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
-    NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
-    UIAlertView * messageBox = [[UIAlertView alloc] initWithTitle: title
-                                                          message: msg
+    NSString * tmpTitle = (title) ? [NSString stringWithUTF8String : title] : nil;
+    NSString * tmpMsg = (msg) ? [NSString stringWithUTF8String : msg] : nil;
+    UIAlertView * messageBox = [[UIAlertView alloc] initWithTitle: tmpTitle
+                                                          message: tmpMsg
                                                          delegate: nil
                                                 cancelButtonTitle: @"OK"
                                                 otherButtonTitles: nil];
@@ -70,9 +70,9 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     [messageBox show];
 }
 
-void LuaLog(const char * pszFormat)
+void LuaLog(const char * format)
 {
-    puts(pszFormat);
+    puts(format);
 }
 
 NS_CC_END

@@ -2,7 +2,7 @@
 
 enum {
     kMaxNodes = 200,
-    kNodesIncrease = 2,
+    kNodesIncrease = 10,
 
     TEST_COUNT = 5,
 };
@@ -144,7 +144,7 @@ void LabelMainScene::initWithSubTest(int nodes)
         onIncrease(this);
 }
 
-std::string LabelMainScene::title()
+std::string LabelMainScene::title() const
 {
     switch (_s_labelCurCase)
     {
@@ -316,31 +316,22 @@ void LabelMainScene::updateText(float dt)
     switch (_s_labelCurCase)
     {
     case kCaseLabelTTFUpdate:
-        std::for_each(children.begin(), children.end(), [&text](Node* child){
-            if (child)
-            {
-                LabelTTF* label = (LabelTTF*)child;
-                label->setString(text);
-            }
-        });
+        for(const auto &child : children) {
+            LabelTTF* label = (LabelTTF*)child;
+            label->setString(text);
+        }
         break;
     case kCaseLabelBMFontUpdate:
-        std::for_each(children.begin(), children.end(), [&text](Node* child){
-            if (child)
-            {
-                LabelBMFont* label = (LabelBMFont*)child;
-                label->setString(text);
-            }
-        });
+        for(const auto &child : children) {
+            LabelBMFont* label = (LabelBMFont*)child;
+            label->setString(text);
+        }
         break;
     case kCaseLabelUpdate:
-        std::for_each(children.begin(), children.end(), [&text](Node* child){
-            if (child)
-            {
-                Label* label = (Label*)child;
-                label->setString(text,false);
-            }
-        });
+        for(const auto &child : children) {
+            Label* label = (Label*)child;
+            label->setString(text,false);
+        }
         break;
     default:
         break;
@@ -397,7 +388,7 @@ void  LabelMainScene::nextAutoTest()
     if ( LabelMainScene::_s_labelCurCase + 1 < LabelMainScene::MAX_SUB_TEST_NUMS )
     {
         LabelMainScene::_s_labelCurCase += 1;
-        autoShowLabelTests(LabelMainScene::_s_labelCurCase, LabelMainScene::AUTO_TEST_NODE_NUM);
+        autoShowLabelTests(LabelMainScene::_s_labelCurCase, _quantityNodes);
     }
     else
     {
@@ -431,7 +422,7 @@ void  LabelMainScene::onAutoTest(Object* sender)
         if (LabelMainScene::_s_autoTest)
         {
             menuItem->setString("Auto Test On");
-            autoShowLabelTests(0,AUTO_TEST_NODE_NUM);
+            autoShowLabelTests(0,_quantityNodes);
         }
         else
         {

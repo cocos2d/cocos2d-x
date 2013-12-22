@@ -33,6 +33,8 @@ NS_CC_BEGIN
 class EventListenerAcceleration : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerAcceleration* create(std::function<void(Acceleration*, Event*)> callback);
     virtual ~EventListenerAcceleration();
     

@@ -82,12 +82,12 @@ void ZwoptexTest::backCallback(Object* sender)
     Director::getInstance()->replaceScene(s);
 }
 
-std::string ZwoptexTest::title()
+std::string ZwoptexTest::title() const
 {
     return "No title";
 }
 
-std::string ZwoptexTest::subtitle()
+std::string ZwoptexTest::subtitle() const
 {
     return "";
 }
@@ -198,12 +198,12 @@ ZwoptexGenericTest::~ZwoptexGenericTest()
     cache->removeSpriteFramesFromFile("zwoptex/grossini-generic.plist");
 }
 
-std::string ZwoptexGenericTest::title()
+std::string ZwoptexGenericTest::title() const
 {
     return "Zwoptex Tests";
 }
 
-std::string ZwoptexGenericTest::subtitle()
+std::string ZwoptexGenericTest::subtitle() const
 {
     return "Coordinate Formats, Rotation, Trimming, flipX/Y";
 }

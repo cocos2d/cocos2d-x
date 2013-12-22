@@ -195,7 +195,7 @@ bool EventListenerPhysicsContact::init()
         onEvent(event);
     };
     
-    return EventListenerCustom::init(std::hash<std::string>()(PHYSICSCONTACT_EVENT_NAME), func);
+    return EventListenerCustom::init(PHYSICSCONTACT_EVENT_NAME, func);
 }
 
 void EventListenerPhysicsContact::onEvent(EventCustom* event)

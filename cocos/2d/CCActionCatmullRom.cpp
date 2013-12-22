@@ -149,9 +149,9 @@ void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, int index)
 void PointArray::removeControlPointAtIndex(int index)
 {
     vector<Point*>::iterator iter = _controlPoints->begin() + index;
-    Point* pRemovedPoint = *iter;
+    Point* removedPoint = *iter;
     _controlPoints->erase(iter);
-    delete pRemovedPoint;
+    delete removedPoint;
 }
 
 int PointArray::count() const
@@ -475,8 +475,8 @@ CatmullRomTo* CatmullRomTo::clone() const
 
 CatmullRomTo* CatmullRomTo::reverse() const
 {
-    PointArray *pReverse = _points->reverse();
-    return CatmullRomTo::create(_duration, pReverse);
+    PointArray *reverse = _points->reverse();
+    return CatmullRomTo::create(_duration, reverse);
 }
 
 
