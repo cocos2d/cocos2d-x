@@ -20,7 +20,7 @@ public:
 class LabelMainScene : public Scene
 {
 public:
-    static const  int AUTO_TEST_NODE_NUM  = 6;
+    static const  int AUTO_TEST_NODE_NUM  = 20;
 
     virtual ~LabelMainScene();
 
@@ -47,7 +47,7 @@ public:
     static int  _s_labelCurCase;
 
 private:
-    static const  int MAX_AUTO_TEST_TIMES  = 50;
+    static const  int MAX_AUTO_TEST_TIMES  = 35;
     static const  int MAX_SUB_TEST_NUMS    = 5;
     
 

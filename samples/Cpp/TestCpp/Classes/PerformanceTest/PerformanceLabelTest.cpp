@@ -2,7 +2,7 @@
 
 enum {
     kMaxNodes = 200,
-    kNodesIncrease = 2,
+    kNodesIncrease = 10,
 
     TEST_COUNT = 5,
 };
@@ -388,7 +388,7 @@ void  LabelMainScene::nextAutoTest()
     if ( LabelMainScene::_s_labelCurCase + 1 < LabelMainScene::MAX_SUB_TEST_NUMS )
     {
         LabelMainScene::_s_labelCurCase += 1;
-        autoShowLabelTests(LabelMainScene::_s_labelCurCase, LabelMainScene::AUTO_TEST_NODE_NUM);
+        autoShowLabelTests(LabelMainScene::_s_labelCurCase, _quantityNodes);
     }
     else
     {
@@ -422,7 +422,7 @@ void  LabelMainScene::onAutoTest(Object* sender)
         if (LabelMainScene::_s_autoTest)
         {
             menuItem->setString("Auto Test On");
-            autoShowLabelTests(0,AUTO_TEST_NODE_NUM);
+            autoShowLabelTests(0,_quantityNodes);
         }
         else
         {
