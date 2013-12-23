@@ -216,17 +216,17 @@ void GridBase::afterDraw(cocos2d::Node *target)
     Director *director = Director::getInstance();
     director->setProjection(_directorProjection);
 
-    if (target->getCamera()->isDirty())
-    {
-        Point offset = target->getAnchorPointInPoints();
-
-        //
-        // XXX: Camera should be applied in the AnchorPoint
-        //
-        kmGLTranslatef(offset.x, offset.y, 0);
-        target->getCamera()->locate();
-        kmGLTranslatef(-offset.x, -offset.y, 0);
-    }
+//    if (target->getCamera()->isDirty())
+//    {
+//        Point offset = target->getAnchorPointInPoints();
+//
+//        //
+//        // XXX: Camera should be applied in the AnchorPoint
+//        //
+//        kmGLTranslatef(offset.x, offset.y, 0);
+//        target->getCamera()->locate();
+//        kmGLTranslatef(-offset.x, -offset.y, 0);
+//    }
 
     GL::bindTexture2D(_texture->getName());
 
