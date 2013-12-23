@@ -73,6 +73,8 @@
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
+		1A087AEE1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
+		1A087AEF1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
 		1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		1A1197CC1785363400D62A44 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		1A1197CD1785363400D62A44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1047,6 +1049,8 @@
 		50E9E93E182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E938182A274000F6FDF1 /* UIDragPanelTest.cpp */; };
 		50E9E93F182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
 		50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */; };
+		599121E6182C74AC00CE785B /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599121E4182C74AC00CE785B /* NewRendererTest.cpp */; };
+		599121E7182C74AC00CE785B /* NewRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599121E4182C74AC00CE785B /* NewRendererTest.cpp */; };
 		59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59A79D5B1821E95C00F19697 /* MouseTest.cpp */; };
 		A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2078,6 +2082,8 @@
 		15C6482C165F3988007D4F18 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceLabelTest.cpp; sourceTree = "<group>"; };
+		1A087AED1860418300196EF5 /* PerformanceLabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceLabelTest.h; sourceTree = "<group>"; };
 		1A1197D71785363400D62A44 /* Hello lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A119870178538E400D62A44 /* Test lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A3B1DB1180E7C4700497A22 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -2851,6 +2857,8 @@
 		50E9E939182A274000F6FDF1 /* UIDragPanelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDragPanelTest.h; sourceTree = "<group>"; };
 		50E9E93B182A274000F6FDF1 /* UIListViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListViewTest.cpp; sourceTree = "<group>"; };
 		50E9E93C182A274000F6FDF1 /* UIListViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListViewTest.h; sourceTree = "<group>"; };
+		599121E4182C74AC00CE785B /* NewRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewRendererTest.cpp; sourceTree = "<group>"; };
+		599121E5182C74AC00CE785B /* NewRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRendererTest.h; sourceTree = "<group>"; };
 		59A79D5B1821E95C00F19697 /* MouseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MouseTest.cpp; sourceTree = "<group>"; };
 		59A79D5C1821E95C00F19697 /* MouseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseTest.h; sourceTree = "<group>"; };
 		A01E16931784BDA100B0CA4A /* Simple Game iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Game iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4031,6 +4039,7 @@
 		1AAF4FA5180E2C17000584C8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				599121E3182C74AC00CE785B /* NewRendererTest */,
 				1AAF4FA6180E2C17000584C8 /* AccelerometerTest */,
 				1AAF4FA9180E2C17000584C8 /* ActionManagerTest */,
 				1AAF4FAC180E2C17000584C8 /* ActionsEaseTest */,
@@ -4972,6 +4981,8 @@
 			children = (
 				1AAF50FD180E2C1A000584C8 /* PerformanceAllocTest.cpp */,
 				1AAF50FE180E2C1A000584C8 /* PerformanceAllocTest.h */,
+				1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */,
+				1A087AED1860418300196EF5 /* PerformanceLabelTest.h */,
 				1AAF50FF180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp */,
 				1AAF5100180E2C1A000584C8 /* PerformanceNodeChildrenTest.h */,
 				1AAF5101180E2C1A000584C8 /* PerformanceParticleTest.cpp */,
@@ -5467,6 +5478,15 @@
 				50E9E93C182A274000F6FDF1 /* UIListViewTest.h */,
 			);
 			path = UIListViewTest;
+			sourceTree = "<group>";
+		};
+		599121E3182C74AC00CE785B /* NewRendererTest */ = {
+			isa = PBXGroup;
+			children = (
+				599121E4182C74AC00CE785B /* NewRendererTest.cpp */,
+				599121E5182C74AC00CE785B /* NewRendererTest.h */,
+			);
+			path = NewRendererTest;
 			sourceTree = "<group>";
 		};
 		59A79D5A1821E95C00F19697 /* InputTest */ = {
@@ -6874,6 +6894,7 @@
 				1AAF51F6180E2C1A000584C8 /* TableViewTestScene.cpp in Sources */,
 				1AAF51F8180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,
 				1AAF51FA180E2C1A000584C8 /* FontTest.cpp in Sources */,
+				1A087AEE1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */,
 				1AAF51FC180E2C1A000584C8 /* IntervalTest.cpp in Sources */,
 				1AAF51FE180E2C1A000584C8 /* KeyboardTest.cpp in Sources */,
 				1AAF5200180E2C1A000584C8 /* KeypadTest.cpp in Sources */,
@@ -6895,6 +6916,7 @@
 				1AAF5220180E2C1A000584C8 /* PerformanceTextureTest.cpp in Sources */,
 				1AAF5222180E2C1A000584C8 /* PerformanceTouchesTest.cpp in Sources */,
 				1AAF5224180E2C1A000584C8 /* PhysicsTest.cpp in Sources */,
+				599121E6182C74AC00CE785B /* NewRendererTest.cpp in Sources */,
 				1AAF5226180E2C1A000584C8 /* RenderTextureTest.cpp in Sources */,
 				1AAF5228180E2C1A000584C8 /* RotateWorldTest.cpp in Sources */,
 				1AAF522A180E2C1A000584C8 /* SceneTest.cpp in Sources */,
@@ -7076,6 +7098,7 @@
 				1AAF5159180E2C1A000584C8 /* Box2dTest.cpp in Sources */,
 				1AAF515B180E2C1A000584C8 /* Box2dView.cpp in Sources */,
 				1AAF515D180E2C1A000584C8 /* GLES-Render.cpp in Sources */,
+				1A087AEF1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */,
 				50E9E940182A274000F6FDF1 /* UIListViewTest.cpp in Sources */,
 				1AAF515F180E2C1A000584C8 /* Test.cpp in Sources */,
 				1AAF5161180E2C1A000584C8 /* TestEntries.cpp in Sources */,
@@ -7150,6 +7173,7 @@
 				1AAF51EF180E2C1A000584C8 /* WebSocketTest.cpp in Sources */,
 				1AAF51F1180E2C1A000584C8 /* NotificationCenterTest.cpp in Sources */,
 				1AAF51F3180E2C1A000584C8 /* Scale9SpriteTest.cpp in Sources */,
+				599121E7182C74AC00CE785B /* NewRendererTest.cpp in Sources */,
 				1AAF51F5180E2C1A000584C8 /* CustomTableViewCell.cpp in Sources */,
 				1AAF51F7180E2C1A000584C8 /* TableViewTestScene.cpp in Sources */,
 				1AAF51F9180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,

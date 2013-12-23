@@ -57,7 +57,7 @@ void SpriteEase::testStopAction(float dt)
     _grossini->stopActionByTag(1);
 }
 
-std::string SpriteEase::title()
+std::string SpriteEase::title() const
 {
     return "EaseIn - EaseOut - Stop";
 }
@@ -97,7 +97,7 @@ void SpriteEaseInOut::onEnter()
 }
 
 
-std::string SpriteEaseInOut::title()
+std::string SpriteEaseInOut::title() const
 {
     return "EaseInOut and rates";
 }
@@ -134,7 +134,7 @@ void SpriteEaseExponential::onEnter()
 }
 
 
-std::string SpriteEaseExponential::title()
+std::string SpriteEaseExponential::title() const
 {
     return "ExpIn - ExpOut actions";
 }
@@ -167,7 +167,7 @@ void SpriteEaseExponentialInOut::onEnter()
 }
 
 
-std::string SpriteEaseExponentialInOut::title()
+std::string SpriteEaseExponentialInOut::title() const
 {
     return "EaseExponentialInOut action";
 }
@@ -204,7 +204,7 @@ void SpriteEaseSine::onEnter()
 }
 
 
-std::string SpriteEaseSine::title()
+std::string SpriteEaseSine::title() const
 {
     return "EaseSineIn - EaseSineOut";
 }
@@ -236,7 +236,7 @@ void SpriteEaseSineInOut::onEnter()
 }
 
 
-std::string SpriteEaseSineInOut::title()
+std::string SpriteEaseSineInOut::title() const
 {
     return "EaseSineInOut action";
 }
@@ -271,7 +271,7 @@ void SpriteEaseElastic::onEnter()
 }
 
 
-std::string SpriteEaseElastic::title()
+std::string SpriteEaseElastic::title() const
 {
     return "Elastic In - Out actions";
 }
@@ -309,7 +309,7 @@ void SpriteEaseElasticInOut::onEnter()
 }
 
 
-std::string SpriteEaseElasticInOut::title()
+std::string SpriteEaseElasticInOut::title() const
 {
     return "EaseElasticInOut action";
 }
@@ -346,7 +346,7 @@ void SpriteEaseBounce::onEnter()
 }
 
 
-std::string SpriteEaseBounce::title()
+std::string SpriteEaseBounce::title() const
 {
     return "Bounce In - Out actions";
 }
@@ -380,7 +380,7 @@ void SpriteEaseBounceInOut::onEnter()
 }
 
 
-std::string SpriteEaseBounceInOut::title()
+std::string SpriteEaseBounceInOut::title() const
 {
     return "EaseBounceInOut action";
 }
@@ -416,7 +416,7 @@ void SpriteEaseBack::onEnter()
 }
 
 
-std::string SpriteEaseBack::title()
+std::string SpriteEaseBack::title() const
 {
     return "Back In - Out actions";
 }
@@ -449,7 +449,7 @@ void SpriteEaseBackInOut::onEnter()
 }
 
 
-std::string SpriteEaseBackInOut::title()
+std::string SpriteEaseBackInOut::title() const
 {
     return "EaseBackInOut action";
 }
@@ -502,7 +502,7 @@ void SpeedTest::altertime(float dt)
     action3->setSpeed( CCRANDOM_MINUS1_1() * 2 );
 }
 
-std::string SpeedTest::title()
+std::string SpeedTest::title() const
 {
     return "Speed action";
 }
@@ -599,7 +599,7 @@ void EaseSpriteDemo::positionForTwo()
 }
 
 
-std::string EaseSpriteDemo::title()
+std::string EaseSpriteDemo::title() const
 {
     return "No title";
 }

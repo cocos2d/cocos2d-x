@@ -1,6 +1,7 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
+#include "renderer/CCNewRenderTexture.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -74,12 +75,12 @@ void RenderTextureTest::backCallback(Object* sender)
     s->release();
 } 
 
-std::string RenderTextureTest::title()
+std::string RenderTextureTest::title() const
 {
     return "No title";
 }
 
-std::string RenderTextureTest::subtitle()
+std::string RenderTextureTest::subtitle() const
 {
     return "";
 }
@@ -92,7 +93,7 @@ RenderTextureSave::RenderTextureSave()
     auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+    _target = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Point(s.width / 2, s.height / 2));
 
@@ -120,12 +121,12 @@ RenderTextureSave::RenderTextureSave()
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
-string RenderTextureSave::title()
+std::string RenderTextureSave::title() const
 {
     return "Touch the screen";
 }
 
-string RenderTextureSave::subtitle()
+std::string RenderTextureSave::subtitle() const
 {
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
@@ -240,7 +241,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     
     
     /* A2 & B2 setup */
-    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = NewRenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
     if (NULL == rend)
     {
@@ -269,12 +270,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     addChild(rend);
 }
 
-std::string RenderTextureIssue937::title()
+std::string RenderTextureIssue937::title() const
 {
     return "Testing issue #937";
 }
 
-std::string RenderTextureIssue937::subtitle()
+std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
 }
@@ -353,12 +354,12 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setColor(Color3B::YELLOW);
 }
 
-string RenderTextureZbuffer::title()
+std::string RenderTextureZbuffer::title() const
 {
     return "Testing Z Buffer in Render Texture";
 }
 
-string RenderTextureZbuffer::subtitle()
+std::string RenderTextureZbuffer::subtitle() const
 {
     return "Touch screen. It should be green";
 }
@@ -409,7 +410,7 @@ void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    auto texture = RenderTexture::create(512, 512);
+    auto texture = NewRenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -443,7 +444,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     auto sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    auto rend = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -468,12 +469,12 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     this->addChild(rend);
 }
 
-std::string RenderTextureTestDepthStencil::title()
+std::string RenderTextureTestDepthStencil::title() const
 {
     return "Testing depthStencil attachment";
 }
 
-std::string RenderTextureTestDepthStencil::subtitle()
+std::string RenderTextureTestDepthStencil::subtitle() const
 {
     return "Circle should be missing 1/4 of its region";
 }
@@ -505,7 +506,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -556,12 +557,12 @@ void RenderTextureTargetNode::update(float dt)
     time += dt;
 }
 
-string RenderTextureTargetNode::title()
+std::string RenderTextureTargetNode::title() const
 {
     return "Testing Render Target Node";
 }
 
-string RenderTextureTargetNode::subtitle()
+std::string RenderTextureTargetNode::subtitle() const
 {
     return "Sprites should be equal and move with each frame";
 }
@@ -590,7 +591,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
@@ -681,12 +682,12 @@ void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, 
     }
 }
 
-std::string SpriteRenderTextureBug::title()
+std::string SpriteRenderTextureBug::title() const
 {
     return "SpriteRenderTextureBug";
 }
 
-std::string SpriteRenderTextureBug::subtitle()
+std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
 }

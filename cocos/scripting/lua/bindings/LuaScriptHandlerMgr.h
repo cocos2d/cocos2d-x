@@ -110,6 +110,22 @@ public:
         
         EVENT_LISTENER,
         ARMATURE_EVENT,
+        
+        EVENTLISTENER_ACC,
+        EVENTLISTENER_CUSTIOM,
+        
+        EVENTLISTENER_KEYBOARD_PRESSED,
+        EVENTLISTENER_KEYBOARD_RELEASE,
+        
+        EVENTLISTENER_TOUCH_BEGAN,
+        EVENTLISTENER_TOUCH_MOVED,
+        EVENTLISTENER_TOUCH_ENDED,
+        EVENTLISTENER_TOUCH_CANCELLED,
+        
+        EVENTLISTENER_MOUSE_DOWN,
+        EVENTLISTENER_MOUSE_UP,
+        EVENTLISTENER_MOUSE_MOVE,
+        EVENTLISTENER_MOUSE_SCROLL,
     };
     
     typedef int Handler;
@@ -133,14 +149,6 @@ private:
 };
 
 NS_CC_END
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-TOLUA_API int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S);
-#endif
-
-TOLUA_API int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 

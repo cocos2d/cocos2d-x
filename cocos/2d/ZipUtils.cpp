@@ -39,7 +39,7 @@ bool ZipUtils::s_bEncryptionKeyIsValid = false;
 
 // --------------------- ZipUtils ---------------------
 
-inline void ZipUtils::decodeEncodedPvr(unsigned int *data, long len)
+inline void ZipUtils::decodeEncodedPvr(unsigned int *data, ssize_t len)
 {
     const int enclen = 1024;
     const int securelen = 512;
@@ -108,7 +108,7 @@ inline void ZipUtils::decodeEncodedPvr(unsigned int *data, long len)
     }
 }
 
-inline unsigned int ZipUtils::checksumPvr(const unsigned int *data, long len)
+inline unsigned int ZipUtils::checksumPvr(const unsigned int *data, ssize_t len)
 {
     unsigned int cs = 0;
     const int cslen = 128;
@@ -127,12 +127,12 @@ inline unsigned int ZipUtils::checksumPvr(const unsigned int *data, long len)
 // Should buffer factor be 1.5 instead of 2 ?
 #define BUFFER_INC_FACTOR (2)
 
-int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long *outLength, long outLenghtHint)
+int ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t *outLength, ssize_t outLenghtHint)
 {
     /* ret value */
     int err = Z_OK;
     
-    long bufferSize = outLenghtHint;
+    ssize_t bufferSize = outLenghtHint;
     *out = (unsigned char*)malloc(bufferSize);
     
     z_stream d_stream; /* decompression stream */
@@ -141,9 +141,9 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     d_stream.opaque = (voidpf)0;
     
     d_stream.next_in  = in;
-    d_stream.avail_in = inLength;
+    d_stream.avail_in = static_cast<unsigned int>(inLength);
     d_stream.next_out = *out;
-    d_stream.avail_out = bufferSize;
+    d_stream.avail_out = static_cast<unsigned int>(bufferSize);
     
     /* window size to hold 256k */
     if( (err = inflateInit2(&d_stream, 15 + 32)) != Z_OK )
@@ -182,7 +182,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
             }
             
             d_stream.next_out = *out + bufferSize;
-            d_stream.avail_out = bufferSize;
+            d_stream.avail_out = static_cast<unsigned int>(bufferSize);
             bufferSize *= BUFFER_INC_FACTOR;
         }
     }
@@ -192,12 +192,12 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     return err;
 }
 
-int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint)
+ssize_t ZipUtils::inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint)
 {
-    long outLength = 0;
+    ssize_t outLength = 0;
     int err = inflateMemoryWithHint(in, inLength, out, &outLength, outLengthHint);
     
-    if (err != Z_OK || *out == NULL) {
+    if (err != Z_OK || *out == nullptr) {
         if (err == Z_MEM_ERROR)
         {
             CCLOG("cocos2d: ZipUtils: Out of memory while decompressing map data!");
@@ -217,7 +217,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
 
         if(*out) {
             free(*out);
-            *out = NULL;
+            *out = nullptr;
         }
         outLength = 0;
     }
@@ -225,7 +225,7 @@ int ZipUtils::inflateMemoryWithHint(unsigned char *in, long inLength, unsigned c
     return outLength;
 }
 
-int ZipUtils::inflateMemory(unsigned char *in, long inLength, unsigned char **out)
+ssize_t ZipUtils::inflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out)
 {
     // 256k for hint
     return inflateMemoryWithHint(in, inLength, out, 256 * 1024);
@@ -240,7 +240,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     CCASSERT(&*out, "");
     
     gzFile inFile = gzopen(path, "rb");
-    if( inFile == NULL ) {
+    if( inFile == nullptr ) {
         CCLOG("cocos2d: ZipUtils: error open gzip file: %s", path);
         return -1;
     }
@@ -262,7 +262,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
         {
             CCLOG("cocos2d: ZipUtils: error in gzread");
             free( *out );
-            *out = NULL;
+            *out = nullptr;
             return -1;
         }
         if (len == 0)
@@ -286,7 +286,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
         {
             CCLOG("cocos2d: ZipUtils: out of memory");
             free( *out );
-            *out = NULL;
+            *out = nullptr;
             return -1;
         }
         
@@ -304,12 +304,12 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
 bool ZipUtils::isCCZFile(const char *path)
 {
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
 
-    long fileLen = 0;
+    ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
-    if(compressed == NULL || fileLen == 0)
+    if(compressed == nullptr || fileLen == 0)
     {
         CCLOG("cocos2d: ZipUtils: loading file failed");
         return false;
@@ -321,7 +321,7 @@ bool ZipUtils::isCCZFile(const char *path)
     return ret;
 }
 
-bool ZipUtils::isCCZBuffer(const unsigned char *buffer, long len)
+bool ZipUtils::isCCZBuffer(const unsigned char *buffer, ssize_t len)
 {
     if (static_cast<size_t>(len) < sizeof(struct CCZHeader))
     {
@@ -336,12 +336,12 @@ bool ZipUtils::isCCZBuffer(const unsigned char *buffer, long len)
 bool ZipUtils::isGZipFile(const char *path)
 {
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
 
-    long fileLen = 0;
+    ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
 
-    if(NULL == compressed || 0 == fileLen)
+    if(nullptr == compressed || 0 == fileLen)
     {
         CCLOG("cocos2d: ZipUtils: loading file failed");
         return false;
@@ -352,7 +352,7 @@ bool ZipUtils::isGZipFile(const char *path)
     return ret;
 }
 
-bool ZipUtils::isGZipBuffer(const unsigned char *buffer, long len)
+bool ZipUtils::isGZipBuffer(const unsigned char *buffer, ssize_t len)
 {
     if (len < 2)
     {
@@ -363,7 +363,7 @@ bool ZipUtils::isGZipBuffer(const unsigned char *buffer, long len)
 }
 
 
-int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsigned char **out)
+int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, ssize_t bufferLen, unsigned char **out)
 {
     struct CCZHeader *header = (struct CCZHeader*) buffer;
 
@@ -407,7 +407,7 @@ int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsi
 
         // decrypt
         unsigned int* ints = (unsigned int*)(buffer+12);
-        int enclen = (bufferLen-12)/4;
+        ssize_t enclen = (bufferLen-12)/4;
 
         decodeEncodedPvr(ints, enclen);
 
@@ -439,14 +439,14 @@ int ZipUtils::inflateCCZBuffer(const unsigned char *buffer, long bufferLen, unsi
     }
 
     unsigned long destlen = len;
-    unsigned long source = (unsigned long) buffer + sizeof(*header);
+    size_t source = (size_t) buffer + sizeof(*header);
     int ret = uncompress(*out, &destlen, (Bytef*)source, bufferLen - sizeof(*header) );
 
     if( ret != Z_OK )
     {
         CCLOG("cocos2d: CCZ: Failed to uncompress data");
         free( *out );
-        *out = NULL;
+        *out = nullptr;
         return -1;
     }
 
@@ -459,12 +459,12 @@ int ZipUtils::inflateCCZFile(const char *path, unsigned char **out)
     CCAssert(&*out, "");
     
     // load file into memory
-    unsigned char* compressed = NULL;
+    unsigned char* compressed = nullptr;
     
-    long fileLen = 0;
+    ssize_t fileLen = 0;
     compressed = FileUtils::getInstance()->getFileData(path, "rb", &fileLen);
     
-    if(NULL == compressed || 0 == fileLen)
+    if(nullptr == compressed || 0 == fileLen)
     {
         CCLOG("cocos2d: Error loading CCZ compressed file");
         return -1;
@@ -593,7 +593,7 @@ bool ZipFile::fileExists(const std::string &fileName) const
 
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
 {
-    unsigned char * buffer = NULL;
+    unsigned char * buffer = nullptr;
     if (size)
         *size = 0;
 
@@ -614,7 +614,7 @@ unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
         CC_BREAK_IF(UNZ_OK != nRet);
         
         buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
-        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer, fileInfo.uncompressed_size);
+        int CC_UNUSED nSize = unzReadCurrentFile(_data->zipFile, buffer, static_cast<unsigned int>(fileInfo.uncompressed_size));
         CCASSERT(nSize == 0 || nSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
         
         if (size)

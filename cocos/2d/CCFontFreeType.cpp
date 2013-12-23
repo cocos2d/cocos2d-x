@@ -93,6 +93,8 @@ _letterPadding(5),
 _ttfData(nullptr),
 _dynamicGlyphCollection(dynamicGlyphCollection)
 {
+    if(_distanceFieldEnabled)
+        _letterPadding += 2 * DistanceMapSpread;
 }
 
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
@@ -297,7 +299,7 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar) const
         return 0;
     
     // get to the advance for this glyph
-    return (_fontRef->glyph->advance.x >> 6);
+    return (static_cast<int>(_fontRef->glyph->advance.x >> 6));
 }
 
 int FontFreeType::getBearingXForChar(unsigned short theChar) const
@@ -316,7 +318,7 @@ int FontFreeType::getBearingXForChar(unsigned short theChar) const
     if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
         return 0;
     
-    return (_fontRef->glyph->metrics.horiBearingX >>6);
+    return (static_cast<int>(_fontRef->glyph->metrics.horiBearingX >>6));
 }
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
@@ -346,31 +348,29 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     if (FT_Get_Kerning( _fontRef, glyphIndex1, glyphIndex2,  FT_KERNING_DEFAULT,  &kerning))
         return 0;
     
-    return (kerning.x >> 6);
+    return (static_cast<int>(kerning.x >> 6));
 }
 
 int FontFreeType::getFontMaxHeight() const
 {
-    return (_fontRef->size->metrics.height >> 6);
+    return (static_cast<int>(_fontRef->size->metrics.height >> 6));
 }
 
-unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
+unsigned char * FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
 {
     if (!_fontRef)
         return 0;
     
-    // get the ID to the char we need
-    int glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-    
-    if (!glyphIndex)
-        return 0;
-    
-    // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
-        return 0;
-    
-    if (FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL ))
-        return 0;
+    if (_distanceFieldEnabled)
+    {    
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            return 0;
+    }
+    else
+    {
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER))
+            return 0;
+    }
     
     outWidth  = _fontRef->glyph->bitmap.width;
     outHeight = _fontRef->glyph->bitmap.rows;

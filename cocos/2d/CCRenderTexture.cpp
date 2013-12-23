@@ -49,14 +49,14 @@ RenderTexture::RenderTexture()
 , _oldFBO(0)
 , _texture(0)
 , _textureCopy(0)
-, _UITextureImage(NULL)
+, _UITextureImage(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
 , _clearStencil(0)
 , _autoDraw(false)
-, _sprite(NULL)
+, _sprite(nullptr)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
@@ -64,12 +64,12 @@ RenderTexture::RenderTexture()
     NotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(RenderTexture::listenToBackground),
                                                                   EVENT_COME_TO_BACKGROUND,
-                                                                  NULL);
+                                                                  nullptr);
     
     NotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(RenderTexture::listenToForeground),
                                                                   EVNET_COME_TO_FOREGROUND, // this is misspelt
-                                                                  NULL);
+                                                                  nullptr);
 #endif
 }
 
@@ -142,41 +142,41 @@ void RenderTexture::listenToForeground(cocos2d::Object *obj)
 
 RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
 {
-    RenderTexture *pRet = new RenderTexture();
+    RenderTexture *ret = new RenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, eFormat))
+    if(ret && ret->initWithWidthAndHeight(w, h, eFormat))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
 {
-    RenderTexture *pRet = new RenderTexture();
+    RenderTexture *ret = new RenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
+    if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 RenderTexture * RenderTexture::create(int w, int h)
 {
-    RenderTexture *pRet = new RenderTexture();
+    RenderTexture *ret = new RenderTexture();
 
-    if(pRet && pRet->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
+    if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
@@ -184,12 +184,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     return initWithWidthAndHeight(w, h, eFormat, 0);
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat)
 {
-    CCASSERT(eFormat != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
+    CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
-    bool bRet = false;
-    void *data = NULL;
+    bool ret = false;
+    void *data = nullptr;
     do 
     {
         w = (int)(w * CC_CONTENT_SCALE_FACTOR());
@@ -217,7 +217,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         CC_BREAK_IF(! data);
 
         memset(data, 0, dataLen);
-        _pixelFormat = eFormat;
+        _pixelFormat = format;
 
         _texture = new Texture2D();
         if (_texture)
@@ -251,16 +251,16 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         // associate texture with FBO
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
 
-        if (uDepthStencilFormat != 0)
+        if (depthStencilFormat != 0)
         {
             //create and attach depth buffer
             glGenRenderbuffers(1, &_depthRenderBufffer);
             glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, uDepthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+            glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment
-            if (uDepthStencilFormat == GL_DEPTH24_STENCIL8)
+            if (depthStencilFormat == GL_DEPTH24_STENCIL8)
             {
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
             }
@@ -288,12 +288,12 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         // add sprite for backward compatibility
         addChild(_sprite);
         
-        bRet = true;
+        ret = true;
     } while (0);
     
     CC_SAFE_FREE(data);
     
-    return bRet;
+    return ret;
 }
 
 void RenderTexture::begin()
@@ -411,6 +411,7 @@ void RenderTexture::end()
 	kmGLPopMatrix();
 }
 
+//TODO find a better way to clear the screen, there is no need to rebind render buffer there.
 void RenderTexture::clear(float r, float g, float b, float a)
 {
     this->beginWithClear(r, g, b, a);
@@ -455,22 +456,11 @@ void RenderTexture::visit()
     }
 	
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
     
     transform();
     _sprite->visit();
     draw();
     
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
-	
 	kmGLPopMatrix();
 
     _orderOfArrival = 0;
@@ -528,12 +518,12 @@ void RenderTexture::draw()
 		//! make sure all children are drawn
         sortAllChildren();
 		
-        _children.forEach([this](Node* child){
+        for(const auto &child : _children) {
             if (child != _sprite)
             {
                 child->visit();
             }
-        });
+        }
         
         end();
 	}
@@ -554,7 +544,7 @@ bool RenderTexture::saveToFile(const std::string& filename)
 }
 bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format)
 {
-    bool bRet = false;
+    bool ret = false;
     CCASSERT(format == Image::Format::JPG || format == Image::Format::PNG,
              "the image can only be saved as JPG or PNG format");
 
@@ -563,12 +553,12 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
     {
         std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
         
-        bRet = image->saveToFile(fullpath.c_str(), true);
+        ret = image->saveToFile(fullpath.c_str(), true);
     }
 
     CC_SAFE_DELETE(image);
 
-    return bRet;
+    return ret;
 }
 
 /* get buffer as Image */
@@ -576,9 +566,9 @@ Image* RenderTexture::newImage(bool fliimage)
 {
     CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
-    if (NULL == _texture)
+    if (nullptr == _texture)
     {
-        return NULL;
+        return nullptr;
     }
 
     const Size& s = _texture->getContentSizeInPixels();
@@ -586,51 +576,51 @@ Image* RenderTexture::newImage(bool fliimage)
     // to get the image size to save
     //        if the saving image domain exceeds the buffer texture domain,
     //        it should be cut
-    int nSavedBufferWidth = (int)s.width;
-    int nSavedBufferHeight = (int)s.height;
+    int savedBufferWidth = (int)s.width;
+    int savedBufferHeight = (int)s.height;
 
-    GLubyte *pBuffer = NULL;
-    GLubyte *pTempData = NULL;
+    GLubyte *buffer = nullptr;
+    GLubyte *tempData = nullptr;
     Image *image = new Image();
 
     do
     {
-        CC_BREAK_IF(! (pBuffer = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]));
+        CC_BREAK_IF(! (buffer = new GLubyte[savedBufferWidth * savedBufferHeight * 4]));
 
-        if(! (pTempData = new GLubyte[nSavedBufferWidth * nSavedBufferHeight * 4]))
+        if(! (tempData = new GLubyte[savedBufferWidth * savedBufferHeight * 4]))
         {
-            delete[] pBuffer;
-            pBuffer = NULL;
+            delete[] buffer;
+            buffer = nullptr;
             break;
         }
 
         this->begin();
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0,0,nSavedBufferWidth, nSavedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, pTempData);
+        glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
         this->end();
 
         if ( fliimage ) // -- flip is only required when saving image to file
         {
             // to get the actual texture data
             // #640 the image read from rendertexture is dirty
-            for (int i = 0; i < nSavedBufferHeight; ++i)
+            for (int i = 0; i < savedBufferHeight; ++i)
             {
-                memcpy(&pBuffer[i * nSavedBufferWidth * 4], 
-                       &pTempData[(nSavedBufferHeight - i - 1) * nSavedBufferWidth * 4], 
-                       nSavedBufferWidth * 4);
+                memcpy(&buffer[i * savedBufferWidth * 4],
+                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
+                       savedBufferWidth * 4);
             }
 
-            image->initWithRawData(pBuffer, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
         }
         else
         {
-            image->initWithRawData(pTempData, nSavedBufferWidth * nSavedBufferHeight * 4, nSavedBufferWidth, nSavedBufferHeight, 8);
+            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
         }
         
     } while (0);
 
-    CC_SAFE_DELETE_ARRAY(pBuffer);
-    CC_SAFE_DELETE_ARRAY(pTempData);
+    CC_SAFE_DELETE_ARRAY(buffer);
+    CC_SAFE_DELETE_ARRAY(tempData);
 
     return image;
 }

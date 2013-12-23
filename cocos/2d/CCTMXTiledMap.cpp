@@ -168,8 +168,9 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     int idx=0;
 
-    mapInfo->getLayers().forEach([&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
-        if (layerInfo && layerInfo->_visible)
+    auto& layers = mapInfo->getLayers();
+    for(const auto &layerInfo : layers) {
+        if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
             addChild((Node*)child, idx, idx);
@@ -183,7 +184,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             
             idx++;
         }
-    });
+    }
 }
 
 // public
@@ -243,7 +244,12 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
     
     return Value();
 }
-        
+
+std::string TMXTiledMap::getDescription() const
+{
+    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %zd", _tag, _children.size());
+}
+
 
 NS_CC_END
 

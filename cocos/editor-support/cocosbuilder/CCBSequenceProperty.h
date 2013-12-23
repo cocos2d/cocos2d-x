@@ -27,12 +27,12 @@ public:
     int getType();
     void setType(int type);
     
-    cocos2d::Array* getKeyframes();
+    cocos2d::Vector<CCBKeyframe*>& getKeyframes();
 
 private:
     std::string _name;
     int _type;
-    cocos2d::Array *_keyframes;
+    cocos2d::Vector<CCBKeyframe*> _keyframes;
 };
 
 }

@@ -129,7 +129,7 @@ public:
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(int quantity);
+    void increaseAtlasCapacityTo(ssize_t quantity);
     int searchNewPositionInChildrenForZ(int z);
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
     int addChildHelper(ParticleSystem* child, int z, int aTag);

@@ -96,7 +96,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    virtual std::string getDescription() const;
 
 //    Dictionary* snapshotTextures();
 
@@ -192,7 +192,7 @@ protected:
     std::thread* _loadingThread;
 
     std::queue<AsyncStruct*>* _asyncStructQueue;
-    std::queue<ImageInfo*>* _imageInfoQueue;
+    std::deque<ImageInfo*>* _imageInfoQueue;
 
     std::mutex _asyncStructQueueMutex;
     std::mutex _imageInfoMutex;

@@ -28,7 +28,7 @@ if [ "$GEN_JSB"x = "YES"x ]; then
     fi
     export NDK_ROOT=$HOME/bin/android-ndk
     cd $COCOS2DX_ROOT/tools/travis-scripts
-    # ./generate-jsbindings.sh
+    ./generate-jsbindings.sh
 elif [ "$PLATFORM"x = "android"x ]; then
     export NDK_ROOT=$HOME/bin/android-ndk
 
@@ -50,7 +50,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Build all samples
     echo "Building all samples ..."
     cd $COCOS2DX_ROOT/build
-    ./android-build.py -n "NDK_BUG=0 -j10" hellocpp testcpp simplegame
+    ./android-build.py -n "NDK_BUG=0 -j10" all
 
     # Build template
     # echo "Building template ..."
@@ -74,14 +74,14 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
-    cmake ../.. -DBUILD_LIBS_LUA=OFF -DBUILD_HelloLua=OFF -DBUILD_TestLua=OFF
+    cmake ../..
     make -j10
     cd ../../template/multi-platform-cpp
     cmake .
     make -j10
-    # cd ../multi-platform-lua
-    # cmake .
-    # make -j10
+    cd ../multi-platform-lua
+    cmake .
+    make -j10
 
 elif [ "$PLATFORM"x = "emscripten"x ]; then
     # Generate binding glue codes

@@ -44,7 +44,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static SpriteFrameCache *_sharedSpriteFrameCache = NULL;
+static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
 SpriteFrameCache* SpriteFrameCache::getInstance()
 {
@@ -86,13 +86,14 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     ZWTCoordinatesFormatOptionXML1_2 = 3, // Desktop Version 1.0.2+
     */
 
-    ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+    
     ValueMap& framesDict = dictionary["frames"].asValueMap();
     int format = 0;
 
     // get the format
-    if (!metadataDict.empty())
+    if (dictionary.find("metadata") != dictionary.end())
     {
+        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
         format = metadataDict["format"].asInt();
     }
 
@@ -171,7 +172,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // get aliases
             ValueVector& aliases = frameDict["aliases"].asValueVector();
 
-            std::for_each(aliases.cbegin(), aliases.cend(), [this, &spriteFrameName](const Value& value){
+            for(const auto &value : aliases) {
                 std::string oneAlias = value.asString();
                 if (_spriteFramesAliases.find(oneAlias) != _spriteFramesAliases.end())
                 {
@@ -179,7 +180,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 }
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
-            });
+            }
             
             // create frame
             spriteFrame = new SpriteFrame();
@@ -221,7 +222,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 {
-    CCASSERT(pszPlist.size()>0, "plist filename should not be NULL");
+    CCASSERT(pszPlist.size()>0, "plist filename should not be nullptr");
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
@@ -230,9 +231,9 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 
         string texturePath("");
 
-        ValueMap& metadataDict = dict["metadata"].asValueMap();
-        if (!metadataDict.empty())
+        if (dict.find("metadata") != dict.end())
         {
+            ValueMap& metadataDict = dict["metadata"].asValueMap();
             // try to read  texture file name from meta data
             texturePath = metadataDict["textureFileName"].asString();
         }
@@ -285,7 +286,7 @@ void SpriteFrameCache::removeSpriteFrames()
 
 void SpriteFrameCache::removeUnusedSpriteFrames()
 {
-    bool bRemoved = false;
+    bool removed = false;
     std::vector<std::string> toRemoveFrames;
     
     for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
@@ -295,14 +296,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         {
             toRemoveFrames.push_back(iter->first);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
-            bRemoved = true;
+            removed = true;
         }
     }
 
-    _spriteFrames.remove(toRemoveFrames);
+    _spriteFrames.erase(toRemoveFrames);
     
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-    if( bRemoved )
+    if( removed )
     {
         _loadedFileNames->clear();
     }
@@ -320,12 +321,12 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 
     if (!key.empty())
     {
-        _spriteFrames.remove(key);
+        _spriteFrames.erase(key);
         _spriteFramesAliases.erase(key);
     }
     else
     {
-        _spriteFrames.remove(name);
+        _spriteFrames.erase(name);
     }
 
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
@@ -364,7 +365,7 @@ void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
         }
     }
 
-    _spriteFrames.remove(keysToRemove);
+    _spriteFrames.erase(keysToRemove);
 }
 
 void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
@@ -381,7 +382,7 @@ void SpriteFrameCache::removeSpriteFramesFromTexture(Texture2D* texture)
         }
     }
 
-    _spriteFrames.remove(keysToRemove);
+    _spriteFrames.erase(keysToRemove);
 }
 
 SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)

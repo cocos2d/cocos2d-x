@@ -190,7 +190,7 @@ double getDoubleForKeyJNI(const char* pKey, double defaultValue)
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDoubleForKey", "(Ljava/lang/String;D)D")) {
         jstring stringArg = t.env->NewStringUTF(pKey);
-        jdouble ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, stringArg);
+        jdouble ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
         t.env->DeleteLocalRef(stringArg);

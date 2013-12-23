@@ -56,7 +56,7 @@ class SpriteFrame;
  *
  *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  */
-class CC_DLL MenuItem : public NodeRGBA
+class CC_DLL MenuItem : public Node
 {
 public:
     /** Creates a MenuItem with no target/selector */
@@ -94,6 +94,9 @@ public:
     */
     CC_DEPRECATED_ATTRIBUTE void setTarget(Object *rec, SEL_MenuHandler selector);
 
+
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor
@@ -102,7 +105,7 @@ protected:
     : _selected(false)
     , _enabled(false)
 	, _callback(nullptr)
-    , _target(NULL)
+    , _target(nullptr)
     {}
     /**
      * @js NA
@@ -178,7 +181,7 @@ protected:
      */
     MenuItemLabel()
     : _originalScale(0.0)
-    , _label(NULL)
+    , _label(nullptr)
     {}
     /**
      * @js NA
@@ -329,7 +332,7 @@ class CC_DLL MenuItemSprite : public MenuItem
 {
 public:
     /** creates a menu item with a normal, selected and disabled image*/
-    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = NULL);
+    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = nullptr);
     /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
@@ -366,9 +369,9 @@ public:
     
 protected:
     MenuItemSprite()
-    :_normalImage(NULL)
-    ,_selectedImage(NULL)
-    ,_disabledImage(NULL)
+    :_normalImage(nullptr)
+    ,_selectedImage(nullptr)
+    ,_disabledImage(nullptr)
     {}
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
@@ -453,8 +456,19 @@ private:
 class CC_DLL MenuItemToggle : public MenuItem
 {
 public:
+    /** creates a menu item from a Array with a target selector
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems);
+    /** creates a menu item from a list of items with a target/selector
+     * @js NA
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
+    
     /** creates a menu item from a Array with a callable object */
-    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, Array* menuItems);
+    static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, const Vector<MenuItem*>& menuItems);
     /** creates a menu item from a list of items with a callable object */
     static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
     /** creates a menu item with no target/selector and no items */
@@ -496,16 +510,6 @@ public:
     virtual void setEnabled(bool var) override;
 
 protected:
-    /** creates a menu item from a Array with a target selector
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Object* target, SEL_MenuHandler selector, Array* menuItems);
-    /** creates a menu item from a list of items with a target/selector
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Object* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
     /**
      * @js ctor
      */

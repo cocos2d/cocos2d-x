@@ -69,23 +69,26 @@ static ssize_t mydprintf(int sock, const char *format, ...)
 	return write(sock, buf, strlen(buf));
 }
 
-static void printSceneGraph(int fd, Node* node, int level)
+static int printSceneGraph(int fd, Node* node, int level)
 {
+    int total = 1;
     for(int i=0; i<level; ++i)
         write(fd, "-", 1);
 
-    mydprintf(fd, " %s: z=%d, tag=%d\n", node->description(), node->getZOrder(), node->getTag());
+    mydprintf(fd, " %s\n", node->getDescription().c_str());
 
     for(const auto& child: node->getChildren())
-        printSceneGraph(fd, child, level+1);
+        total += printSceneGraph(fd, child, level+1);
+
+    return total;
 }
 
 static void printSceneGraphBoot(int fd)
 {
     write(fd,"\n",1);
     auto scene = Director::getInstance()->getRunningScene();
-    printSceneGraph(fd, scene, 0);
-    write(fd,"\n",1);
+    int total = printSceneGraph(fd, scene, 0);
+    mydprintf(fd, "Total Nodes: %d\n", total);
 }
 
 

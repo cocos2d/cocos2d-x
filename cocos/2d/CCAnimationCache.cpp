@@ -35,22 +35,22 @@ using namespace std;
 
 NS_CC_BEGIN
 
-AnimationCache* AnimationCache::s_pSharedAnimationCache = NULL;
+AnimationCache* AnimationCache::s_sharedAnimationCache = nullptr;
 
 AnimationCache* AnimationCache::getInstance()
 {
-    if (! s_pSharedAnimationCache)
+    if (! s_sharedAnimationCache)
     {
-        s_pSharedAnimationCache = new AnimationCache();
-        s_pSharedAnimationCache->init();
+        s_sharedAnimationCache = new AnimationCache();
+        s_sharedAnimationCache->init();
     }
 
-    return s_pSharedAnimationCache;
+    return s_sharedAnimationCache;
 }
 
 void AnimationCache::destroyInstance()
 {
-    CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+    CC_SAFE_RELEASE_NULL(s_sharedAnimationCache);
 }
 
 bool AnimationCache::init()
@@ -77,7 +77,7 @@ void AnimationCache::removeAnimation(const std::string& name)
     if (name.size()==0)
         return;
 
-    _animations.remove(name);
+    _animations.erase(name);
 }
 
 Animation* AnimationCache::getAnimation(const std::string& name)
@@ -102,7 +102,7 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             continue;
         }
 
-        Vector<AnimationFrame*> frames(frameNames.size());
+        Vector<AnimationFrame*> frames(static_cast<int>(frameNames.size()));
 
         for (auto& frameName : frameNames)
         {
@@ -141,12 +141,12 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
     for (auto iter = animations.cbegin(); iter != animations.cend(); ++iter)
     {
         std::string name = iter->first;
-        const ValueMap& animationDict = iter->second.asValueMap();
+        ValueMap& animationDict = const_cast<ValueMap&>(iter->second.asValueMap());
 
-        const Value& loops = animationDict.at("loops");
-        bool restoreOriginalFrame = animationDict.at("restoreOriginalFrame").asBool();
+        const Value& loops = animationDict["loops"];
+        bool restoreOriginalFrame = animationDict["restoreOriginalFrame"].asBool();
 
-        const ValueVector& frameArray = animationDict.at("frames").asValueVector();
+        ValueVector& frameArray = animationDict["frames"].asValueVector();
 
         if ( frameArray.empty() )
         {
@@ -155,12 +155,12 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
         }
 
         // Array of AnimationFrames
-        Vector<AnimationFrame*> array(frameArray.size());
+        Vector<AnimationFrame*> array(static_cast<int>(frameArray.size()));
 
         for (auto& obj : frameArray)
         {
-            const ValueMap& entry = obj.asValueMap();
-            std::string spriteFrameName = entry.at("spriteframe").asString();
+            ValueMap& entry = obj.asValueMap();
+            std::string spriteFrameName = entry["spriteframe"].asString();
             SpriteFrame *spriteFrame = frameCache->getSpriteFrameByName(spriteFrameName);
 
             if( ! spriteFrame ) {
@@ -169,15 +169,15 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
                 continue;
             }
 
-            float delayUnits = entry.at("delayUnits").asFloat();
-            const Value& userInfo = entry.at("notification");
+            float delayUnits = entry["delayUnits"].asFloat();
+            Value& userInfo = entry["notification"];
 
             AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, delayUnits, userInfo.asValueMap());
 
             array.pushBack(animFrame);
         }
 
-        float delayPerUnit = animationDict.at("delayPerUnit").asFloat();
+        float delayPerUnit = animationDict["delayPerUnit"].asFloat();
         Animation *animation = Animation::create(array, delayPerUnit, loops.getType() != Value::Type::NONE ? loops.asInt() : 1);
 
         animation->setRestoreOriginalFrame(restoreOriginalFrame);
@@ -203,9 +203,9 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
-        std::for_each(spritesheets.cbegin(), spritesheets.cend(), [](const Value& value){
+        for(const auto &value : spritesheets) {
             SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
-        });
+        }
     }
 
     switch (version) {

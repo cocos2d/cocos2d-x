@@ -121,7 +121,7 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, long* size)
+unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, ssize_t* size)
 {
     unsigned char * pBuffer = NULL;
     CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
