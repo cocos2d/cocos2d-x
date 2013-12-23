@@ -119,7 +119,6 @@ platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
 renderer/CCNewSprite.cpp \
 renderer/CCNewSpriteBatchNode.cpp \
-renderer/CCNewTextureAtlas.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
