@@ -36,13 +36,12 @@ public:
     static NewRenderTexture* create(int w, int h, Texture2D::PixelFormat eFormat);
     static NewRenderTexture* create(int w, int h);
 
-    virtual void begin() override;
-    virtual void end() override;
-    virtual void draw() override;
+    //virtual void begin() override;
+    //virtual void end() override;
 
-    void clearDepth(float depthValue);
+    //void clearDepth(float depthValue);
 protected:
-    virtual void _beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags) override;
+    //virtual void _beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags) override;
 protected:
     NewRenderTexture();
     virtual ~NewRenderTexture();
