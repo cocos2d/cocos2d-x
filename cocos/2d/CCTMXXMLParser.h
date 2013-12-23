@@ -111,8 +111,6 @@ public:
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
-    int                 _minGID;
-    int                 _maxGID;
     Point               _offset;
 };
 
@@ -313,6 +311,7 @@ protected:
     //! tile properties
     IntValueMap _tileProperties;
     int _currentFirstGID;
+    bool _recordFirstGID;
 };
 
 // end of tilemap_parallax_nodes group
