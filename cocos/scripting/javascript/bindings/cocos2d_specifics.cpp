@@ -780,25 +780,6 @@ JSBool js_cocos2dx_swap_native_object(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-template <class T>
-JSBool js_cocos2dx_clone(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 0) {
-		JSObject *obj = JS_THIS_OBJECT(cx, vp);
-		js_proxy_t *proxy = jsb_get_js_proxy(obj);
-		T *clonable = (T *)(proxy ? proxy->ptr : NULL);
-		TEST_NATIVE_OBJECT(cx, clonable)
-		cocos2d::Object *ret = clonable->clone();
-        proxy = js_get_or_create_proxy<cocos2d::Object>(cx, ret);
-		if (ret && proxy) {
-			JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(proxy->obj));
-			return JS_TRUE;
-		}
-	}
-    JS_ReportError(cx, "wrong number of arguments");
-	return JS_FALSE;
-}
-
 JSObject* getObjectFromNamespace(JSContext* cx, JSObject *ns, const char *name) {
 	JS::RootedValue out(cx);
     JSBool ok = JS_TRUE;
@@ -4001,11 +3982,8 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_LayerColor_prototype, "setBlendFunc", js_cocos2dx_CCLayerColor_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ParticleSystem_prototype, "setBlendFunc", js_cocos2dx_CCParticleSystem_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
-
-	JS_DefineFunction(cx, jsb_Action_prototype, "clone", js_cocos2dx_clone<cocos2d::Action>, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_Action_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_Action_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, jsb_Animation_prototype, "clone", js_cocos2dx_clone<cocos2d::Animation>, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_Animation_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_Animation_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_SpriteFrame_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
