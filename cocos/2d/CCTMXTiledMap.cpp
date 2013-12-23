@@ -126,7 +126,7 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
                 {
                     for( int x=0; x < size.width; x++ )
                     {
-                        int pos = (int)(x + size.width * y);
+                        int pos = static_cast<int>(x + size.width * y);
                         int gid = layerInfo->_tiles[ pos ];
 
                         // gid are stored in little endian.
