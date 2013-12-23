@@ -33,15 +33,20 @@ TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
 TriggerMng::TriggerMng(void)
 : _eventTriggers(NULL)
 ,_triggerObjs(NULL)
+,_movementDispatches(NULL)
 {
 	_triggerObjs = CCDictionary::create();
 	_triggerObjs->retain();
+	_movementDispatches = new std::map<CCArmature*, ArmatureMovementDispatcher*>;
 }
 
 TriggerMng::~TriggerMng(void)
 {
     CC_SAFE_RELEASE(_eventTriggers);
 	CC_SAFE_RELEASE(_triggerObjs);
+
+	removeAllArmatureMovementCallBack();
+	CC_SAFE_DELETE(_movementDispatches);
 }
 
 const char* TriggerMng::triggerMngVersion()
@@ -238,6 +243,109 @@ void TriggerMng::alloc(void)
     _eventTriggers = CCDictionary::create();
     _eventTriggers->retain();
 }
+
+void TriggerMng::addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+{
+	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	{
+		return;
+	}
+
+	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	ArmatureMovementDispatcher *amd = NULL;
+	if (iter == _movementDispatches->end())
+	{
+		amd = new ArmatureMovementDispatcher();
+		pAr->getAnimation()->setMovementEventCallFunc(amd, movementEvent_selector(ArmatureMovementDispatcher::animationEvent));
+		amd->addAnnimationEventCallBack(pTarget, mecf);
+		_movementDispatches->insert(std::map<CCArmature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
+	}
+	else
+	{
+		amd = iter->second;
+		amd->addAnnimationEventCallBack(pTarget, mecf);
+	}
+}
+
+void TriggerMng::removeArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+{
+	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	{
+		return;
+	}
+
+	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	ArmatureMovementDispatcher *amd = NULL;
+	if (iter == _movementDispatches->end())
+	{
+		return;
+	}
+	else
+	{
+		amd = iter->second;
+		amd->removeAnnimationEventCallBack(pTarget, mecf);
+	}
+}
+
+void TriggerMng::removeArmatureAllMovementCallBack(CCArmature *pAr)
+{
+	if (pAr == NULL)
+	{
+		return;
+	}
+
+	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	ArmatureMovementDispatcher *amd = NULL;
+	if (iter == _movementDispatches->end())
+	{
+		return;
+	}
+	else
+	{
+		CC_SAFE_DELETE(iter->second);
+		_movementDispatches->erase(iter);
+	}
+}
+
+void TriggerMng::removeAllArmatureMovementCallBack()
+{
+	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->begin();
+	while (iter != _movementDispatches->end())
+	{
+		removeArmatureAllMovementCallBack(iter->first);
+	}
+	_movementDispatches->clear();
+}
+
+ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
+: _mapEventAnimation(NULL)
+{
+	_mapEventAnimation = new std::map<CCObject*, SEL_MovementEventCallFunc> ;
+}
+
+ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
+{
+	_mapEventAnimation->clear();
+	CC_SAFE_DELETE(_mapEventAnimation);
+}
+
+ void ArmatureMovementDispatcher::animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID)
+ {
+	 for (std::map<CCObject*, SEL_MovementEventCallFunc> ::iterator iter = _mapEventAnimation->begin(); iter != _mapEventAnimation->end(); ++iter)
+	 {
+		   (iter->first->*iter->second)(armature, movementType, movementID);
+	 }
+ }
+
+  void ArmatureMovementDispatcher::addAnnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+  {
+	  _mapEventAnimation->insert(std::map<CCObject*, SEL_MovementEventCallFunc>::value_type(pTarget, mecf));
+  }
+
+  void ArmatureMovementDispatcher::removeAnnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+  {
+	  _mapEventAnimation->erase(pTarget);
+  }
 
 
 NS_CC_EXT_END

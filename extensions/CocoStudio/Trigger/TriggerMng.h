@@ -33,6 +33,19 @@ NS_CC_EXT_BEGIN
 
 class TriggerObj;
 
+class ArmatureMovementDispatcher : public CCObject
+{
+public:
+	ArmatureMovementDispatcher(void);
+	~ArmatureMovementDispatcher(void);
+public:
+	void addAnnimationEventCallBack(CCObject*pTarget, SEL_MovementEventCallFunc mecf);
+	void removeAnnimationEventCallBack(CCObject*pTarget, SEL_MovementEventCallFunc mecf);
+	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
+	std::map<CCObject*, SEL_MovementEventCallFunc> *_mapEventAnimation;
+
+};
+
 class TriggerMng
 {
 public:
@@ -54,15 +67,18 @@ public:
 	bool remove(unsigned int event, TriggerObj *pObj);
 	bool removeTriggerObj(unsigned int id);
     bool isEmpty(void) const;
-    
+    void addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf);
+	void removeArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget, SEL_MovementEventCallFunc mecf);
+	void removeArmatureAllMovementCallBack(CCArmature *pAr);
+	void removeAllArmatureMovementCallBack();
 private:
     void alloc(void);
 private:
     CCDictionary *_eventTriggers;
     static TriggerMng *_sharedTriggerMng;
 	CCDictionary *_triggerObjs;
+	std::map<CCArmature*, ArmatureMovementDispatcher*> *_movementDispatches;
 };
-
 
 NS_CC_EXT_END
 
