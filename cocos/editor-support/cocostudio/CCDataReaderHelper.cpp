@@ -254,7 +254,7 @@ DataReaderHelper::~DataReaderHelper()
 	_dataReaderHelper = nullptr;
 }
 
-void DataReaderHelper::addDataFromFile(const char *filePath)
+void DataReaderHelper::addDataFromFile(const std::string& filePath)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
@@ -307,7 +307,7 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     free(pFileContent);
 }
 
-void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, Object *target, SEL_SCHEDULE selector)
+void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Object *target, SEL_SCHEDULE selector)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
@@ -470,7 +470,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 }
 
 
-void DataReaderHelper::removeConfigFile(const char *configFile)
+void DataReaderHelper::removeConfigFile(const std::string& configFile)
 {
     std::vector<std::string>::iterator it = _configFileList.end();
     for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); i++)
@@ -489,7 +489,7 @@ void DataReaderHelper::removeConfigFile(const char *configFile)
 
 
 
-void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromCache(const char* pFileContent, DataInfo *dataInfo)
 {
     tinyxml2::XMLDocument document;
     document.Parse(pFileContent);
@@ -1180,7 +1180,7 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
 
 
-void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromJsonCache(const char* fileContent, DataInfo *dataInfo)
 {
     JsonDictionary json;
     json.initWithDescription(fileContent);

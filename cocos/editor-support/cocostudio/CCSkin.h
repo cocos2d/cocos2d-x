@@ -34,8 +34,8 @@ class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static Skin *create(const char *pszFileName);
+    static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
+    static Skin *create(const std::string& pszFileName);
 public:
     /**
      *  @js ctor

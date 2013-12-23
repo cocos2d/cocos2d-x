@@ -47,7 +47,7 @@ Bone *Bone::create()
 
 }
 
-Bone *Bone::create(const char *name)
+Bone *Bone::create(const std::string& name)
 {
 
     Bone *pBone = new Bone();
@@ -101,16 +101,13 @@ bool Bone::init()
 }
 
 
-bool Bone::init(const char *name)
+bool Bone::init(const std::string& name)
 {
     bool bRet = false;
     do
     {
 
-        if(nullptr != name)
-        {
-            _name = name;
-        }
+        _name = name;
 
         CC_SAFE_DELETE(_tweenData);
         _tweenData = new FrameData();
@@ -425,7 +422,7 @@ void Bone::changeDisplayByIndex(int index, bool force)
 }
 
 
-void Bone::changeDisplayByName(const char *name, bool force)
+void Bone::changeDisplayByName(const std::string& name, bool force)
 {
     _displayManager->changeDisplayByName(name, force);
 }
