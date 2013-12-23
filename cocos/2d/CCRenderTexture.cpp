@@ -625,4 +625,124 @@ Image* RenderTexture::newImage(bool fliimage)
     return image;
 }
 
+void RenderTexture::onBegin()
+{
+    //
+    kmGLGetMatrix(KM_GL_PROJECTION, &_oldProjMatrix);
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_projectionMatrix);
+
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLLoadMatrix(&_transformMatrix);
+
+    Director *director = Director::getInstance();
+    director->setProjection(director->getProjection());
+
+    const Size& texSize = _texture->getContentSizeInPixels();
+
+    // Calculate the adjustment ratios based on the old and new projections
+    Size size = director->getWinSizeInPixels();
+    float widthRatio = size.width / texSize.width;
+    float heightRatio = size.height / texSize.height;
+
+    // Adjust the orthographic projection and viewport
+    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+
+
+    kmMat4 orthoMatrix;
+    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+            (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+    kmGLMultMatrix(&orthoMatrix);
+
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+
+    //TODO move this to configration, so we don't check it every time
+    /*  Certain Qualcomm Andreno gpu's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+     */
+    if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+    {
+        // -- bind a temporary texture so we can clear the render buffer without losing our texture
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
+        CHECK_GL_ERROR_DEBUG();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+    }
+}
+
+void RenderTexture::onEnd()
+{
+    Director *director = Director::getInstance();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+
+    // restore viewport
+    director->setViewport();
+
+    //
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_oldProjMatrix);
+
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLLoadMatrix(&_oldTransMatrix);
+}
+
+void RenderTexture::onClear()
+{
+    // save clear color
+    GLfloat oldClearColor[4] = {0.0f};
+    GLfloat oldDepthClearValue = 0.0f;
+    GLint oldStencilClearValue = 0;
+
+    // backup and set
+    if (_clearFlags & GL_COLOR_BUFFER_BIT)
+    {
+        glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+        glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    }
+
+    if (_clearFlags & GL_DEPTH_BUFFER_BIT)
+    {
+        glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+        glClearDepth(_clearDepth);
+    }
+
+    if (_clearFlags & GL_STENCIL_BUFFER_BIT)
+    {
+        glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+        glClearStencil(_clearStencil);
+    }
+
+    // clear
+    glClear(_clearFlags);
+
+    // restore
+    if (_clearFlags & GL_COLOR_BUFFER_BIT)
+    {
+        glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
+    }
+    if (_clearFlags & GL_DEPTH_BUFFER_BIT)
+    {
+        glClearDepth(oldDepthClearValue);
+    }
+    if (_clearFlags & GL_STENCIL_BUFFER_BIT)
+    {
+        glClearStencil(oldStencilClearValue);
+    }
+}
+
+void RenderTexture::onClearDepth()
+{
+    //! save old depth value
+    GLfloat depthClearValue;
+    glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+
+    glClearDepth(_clearDepth);
+    glClear(GL_DEPTH_BUFFER_BIT);
+
+    // restore clear color
+    glClearDepth(depthClearValue);
+}
+
 NS_CC_END

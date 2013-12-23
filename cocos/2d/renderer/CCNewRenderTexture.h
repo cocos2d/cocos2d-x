@@ -46,16 +46,6 @@ protected:
 protected:
     NewRenderTexture();
     virtual ~NewRenderTexture();
-
-    void onBegin();
-    void onEnd();
-
-    //Clear render buffer
-    void onClear();
-    void onClearDepth();
-
-    kmMat4 _oldTransMatrix, _oldProjMatrix;
-    kmMat4 _transformMatrix, _projectionMatrix;
 };
 
 NS_CC_END
