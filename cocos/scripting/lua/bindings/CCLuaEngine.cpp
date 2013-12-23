@@ -23,12 +23,14 @@
  ****************************************************************************/
 
 #include "CCLuaEngine.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "CCArray.h"
 #include "CCScheduler.h"
 #include "LuaScriptHandlerMgr.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 #include "LuaOpengl.h"
+#include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 
@@ -266,6 +268,36 @@ int LuaEngine::sendEvent(ScriptEvent* evt)
             {
                 return handleArmatureWrapper(evt->data);
             }
+            break;
+        case kEventListenerAcc:
+            {
+                return handleEventListenerAcc(evt->data);
+            }
+            break;
+        case kEventListenerKeyboard:
+            {
+                return handleEventListenerKeyboard(evt->data);
+            }
+            break;
+        case kEventListenerTouch:
+            {
+                return handleEventListenerTouch(evt->data);
+            }
+            break;
+        case kEventListenerTouches:
+            {
+                return handleEventListenerTouches(evt->data);
+            }
+            break;
+        case kEventListenerMouse:
+            {
+                return handleEventListenerMouse(evt->data);
+            }
+            break;
+        case kEventListenerCustom:
+            {
+                return handleEventListenerCustom(evt->data);
+            };
             break;
         default:
             break;
@@ -856,6 +888,162 @@ int LuaEngine::handleArmatureWrapper(void* data)
     _stack->clean();
     
     return 0;
+}
+
+int LuaEngine::handleEventListenerAcc(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (nullptr == basicScriptData->nativeObject || nullptr == basicScriptData->value)
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::EVENTLISTENER_ACC);
+    if (0 == handler)
+        return 0;
+    
+    lua_State* L = _stack->getLuaState();
+    
+    LuaEventListenerAccelerationData* eventListennerAcc = static_cast<LuaEventListenerAccelerationData*>(basicScriptData->value);    
+    toluafix_pushusertype_ccobject(L, eventListennerAcc->event->_ID, &(eventListennerAcc->event->_luaID), (void*)(eventListennerAcc->event),"Event");
+    Acceleration*  accleration = static_cast<Acceleration*>(eventListennerAcc->acc);
+    lua_pushnumber(L,accleration->x);
+    lua_pushnumber(L,accleration->y);
+    lua_pushnumber(L,accleration->z);
+    lua_pushnumber(L,accleration->timestamp);
+    int ret = _stack->executeFunctionByHandler(handler, 5);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleEventListenerKeyboard(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData* basicScriptData = static_cast<BasicScriptData*>(data);
+    if (nullptr == basicScriptData->nativeObject || nullptr == basicScriptData->value)
+        return 0;
+    
+    LuaEventListenerKeyboarData* keyboardData = static_cast<LuaEventListenerKeyboarData*>(basicScriptData->value);
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, keyboardData->type);
+    if (0 == handler)
+        return 0;
+    
+    lua_State* L = _stack->getLuaState();
+    lua_pushinteger(L, keyboardData->keyCode);
+    toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"Event");
+    int ret = _stack->executeFunctionByHandler(handler, 2);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleEventListenerTouch(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    LuaEventListenerTouchData* listenerData = static_cast<LuaEventListenerTouchData*>(data);
+    if (nullptr == listenerData->nativeObject || nullptr == listenerData->touch || nullptr == listenerData->event)
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(listenerData->nativeObject, listenerData->type);
+    if (0 == handler)
+        return 0;
+    
+    int ret = 0;
+    
+    Touch* touch = listenerData->touch;
+    if (NULL != touch) {
+        lua_State* L = _stack->getLuaState();
+        toluafix_pushusertype_ccobject(L, listenerData->touch->_ID, &(listenerData->touch->_luaID), (void*)(listenerData->touch),"Touch");
+        toluafix_pushusertype_ccobject(L, listenerData->event->_ID, &(listenerData->event->_luaID), (void*)(listenerData->event),"Event");
+        ret = _stack->executeFunctionByHandler(handler, 2);
+    }
+    _stack->clean();
+    
+    return ret;
+}
+
+int LuaEngine::handleEventListenerTouches(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    LuaEventListenerTouchesData * listenerData = static_cast<LuaEventListenerTouchesData*>(data);
+    if (NULL == listenerData->nativeObject || nullptr == listenerData->event || listenerData->touches.size() == 0)
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, listenerData->type);
+    
+    if (0 == handler)
+        return 0;
+    
+    lua_State *L = _stack->getLuaState();
+    int ret = 0;
+    
+    lua_newtable(L);
+    int i = 1;
+    for (auto& touch : listenerData->touches)
+    {        
+        lua_pushnumber(L, (lua_Number)i);
+        toluafix_pushusertype_ccobject(L, touch->_ID, &(touch->_luaID), (void*)(touch),"Touch");
+        lua_rawset(L, -3);
+        ++i;
+    }
+    toluafix_pushusertype_ccobject(L, listenerData->event->_ID, &(listenerData->event->_luaID), (void*)(listenerData->event),"Event");
+    
+    ret = _stack->executeFunctionByHandler(handler, 2);
+    _stack->clean();
+    return ret;
+}
+
+int LuaEngine::handleEventListenerMouse(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    LuaEventListenerMouseData * listenerData = static_cast<LuaEventListenerMouseData*>(data);
+    if (NULL == listenerData->nativeObject || nullptr == listenerData->event )
+        return 0;
+    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, listenerData->type);
+    
+    if (0 == handler)
+        return 0;
+    
+    lua_State* L = _stack->getLuaState();
+    toluafix_pushusertype_ccobject(L, listenerData->event->_ID, &(listenerData->event->_luaID), (void*)(listenerData->event),"Event");
+    
+    int ret = _stack->executeFunctionByHandler(handler, 1);
+    _stack->clean();
+    
+    return ret;
+}
+
+int LuaEngine::handleEventListenerCustom(void* data)
+{
+    if (nullptr == data)
+        return 0;
+    
+    BasicScriptData * listenerData = static_cast<BasicScriptData*>(data);
+    if (NULL == listenerData->nativeObject || nullptr == listenerData->value )
+        return 0;
+    
+    EventCustom* eventCustom = static_cast<EventCustom*>(listenerData->value);    
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, ScriptHandlerMgr::HandlerType::EVENTLISTENER_CUSTIOM);
+    
+    if (0 == handler)
+        return 0;
+    
+    lua_State* L = _stack->getLuaState();
+    toluafix_pushusertype_ccobject(L, eventCustom->_ID, &(eventCustom->_luaID), (void*)(eventCustom),"EventCustom");
+    int ret = _stack->executeFunctionByHandler(handler, 1);
+    _stack->clean();
+    
+    return ret;
 }
 
 NS_CC_END

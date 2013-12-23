@@ -46,6 +46,8 @@ private:
     
     bool init(std::function<void(Acceleration*, Event* event)> callback);
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;
+    
+    friend class LuaEventListenerAcceleration;
 };
 
 NS_CC_END
