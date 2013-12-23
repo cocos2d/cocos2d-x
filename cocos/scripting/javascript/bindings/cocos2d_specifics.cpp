@@ -3861,20 +3861,6 @@ JSBool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *v
 	return JS_FALSE;
 
 
-static JSBool js_cocos2dx_CCCamera_getCenter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    js_cocos2dx_CCCamera_getXYZ(getCenter)
-}
-
-static JSBool js_cocos2dx_CCCamera_getUp(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    js_cocos2dx_CCCamera_getXYZ(getUp)
-}
-
-static JSBool js_cocos2dx_CCCamera_getEye(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    js_cocos2dx_CCCamera_getXYZ(getEye)
-}
 
 JSBool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -3883,17 +3869,16 @@ JSBool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, 
 	cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
 	JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_cocos2dx_SpriteBatchNode_getDescendants : Invalid Native Object");
 	if (argc == 0) {
-		std::vector<cocos2d::Sprite *, std::allocator<cocos2d::Sprite *> > ret = cobj->getDescendants();
+		std::vector<Sprite*> ret = cobj->getDescendants();
 		
 		JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
-		int vSize = ret.size();
-		js_proxy_t *proxy;
+		size_t vSize = ret.size();
 		jsval jsret;
-		for (int i=0; i<vSize; i++)
+		for (size_t i = 0; i < vSize; i++)
 		{
 			proxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, ret[i]);
 			jsret = OBJECT_TO_JSVAL(proxy->obj);
-			JS_SetElement(cx, jsretArr, i, &jsret);
+			JS_SetElement(cx, jsretArr, static_cast<uint32_t>(i), &jsret);
 		}
 		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsretArr));
 		return JS_TRUE;
@@ -4015,10 +4000,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_ParticleBatchNode_prototype, "setBlendFunc", js_cocos2dx_CCParticleBatchNode_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_LayerColor_prototype, "setBlendFunc", js_cocos2dx_CCLayerColor_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_ParticleSystem_prototype, "setBlendFunc", js_cocos2dx_CCParticleSystem_setBlendFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    JS_DefineFunction(cx, jsb_Camera_prototype, "getCenter", js_cocos2dx_CCCamera_getCenter, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_Camera_prototype, "getUp", js_cocos2dx_CCCamera_getUp, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_Camera_prototype, "getEye", js_cocos2dx_CCCamera_getEye, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 
 	JS_DefineFunction(cx, jsb_Action_prototype, "clone", js_cocos2dx_clone<cocos2d::Action>, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
