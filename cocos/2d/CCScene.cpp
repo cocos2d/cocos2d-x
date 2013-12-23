@@ -83,6 +83,11 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
+Scene* Scene::getScene()
+{
+    return this;
+}
+
 #ifdef CC_USE_PHYSICS
 Scene *Scene::createWithPhysics()
 {

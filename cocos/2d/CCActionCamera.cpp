@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
  
@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 #include "CCActionCamera.h"
 #include "CCNode.h"
-#include "CCCamera.h"
 #include "CCStdC.h"
 
 NS_CC_BEGIN
@@ -36,11 +35,6 @@ NS_CC_BEGIN
 void ActionCamera::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
-    
-    Camera *camera = target->getCamera();
-    camera->getCenter(&_centerXOrig, &_centerYOrig, &_centerZOrig);
-    camera->getEye(&_eyeXOrig, &_eyeYOrig, &_eyeZOrig);
-    camera->getUp(&_upXOrig, &_upYOrig, &_upZOrig);
 }
 
 ActionCamera* ActionCamera::clone() const
@@ -56,6 +50,88 @@ ActionCamera * ActionCamera::reverse() const
     // FIXME: This conversion isn't safe.
     return (ActionCamera*)ReverseTime::create(const_cast<ActionCamera*>(this));
 }
+
+void ActionCamera::restore()
+{
+    _eyeX = _eyeY = 0.0f;
+    _eyeZ = FLT_EPSILON;
+
+    _centerX = _centerY = _centerZ = 0.0f;
+
+    _upX = 0.0f;
+    _upY = 1.0f;
+    _upZ = 0.0f;
+}
+
+void ActionCamera::setEye(float x, float y, float z)
+{
+    _eyeX = x;
+    _eyeY = y;
+    _eyeZ = z;
+
+    updateTransform();
+}
+
+void ActionCamera::setCenter(float centerX, float centerY, float centerZ)
+{
+    _centerX = centerX;
+    _centerY = centerY;
+    _centerZ = centerZ;
+
+    updateTransform();
+}
+
+void ActionCamera::setUp(float upX, float upY, float upZ)
+{
+    _upX = upX;
+    _upY = upY;
+    _upZ = upZ;
+
+    updateTransform();
+}
+
+void ActionCamera::updateTransform()
+{
+    kmVec3 eye, center, up;
+
+    kmVec3Fill(&eye, _eyeX, _eyeY , _eyeZ);
+    kmVec3Fill(&center, _centerX, _centerY, _centerZ);
+    kmVec3Fill(&up, _upX, _upY, _upZ);
+
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+
+    Point anchorPoint = _target->getAnchorPointInPoints();
+
+    bool needsTranslation = !anchorPoint.equals(Point::ZERO);
+
+    kmMat4 mv;
+    kmMat4Identity(&mv);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, anchorPoint.x, anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    kmMat4Multiply(&mv, &mv, &lookupMatrix);
+
+    if(needsTranslation) {
+        kmMat4 t;
+        kmMat4Translation(&t, -anchorPoint.x, -anchorPoint.y, 0);
+        kmMat4Multiply(&mv, &mv, &t);
+    }
+
+    // XXX FIXME TODO
+    // Using the AdditionalTransform is a complete hack.
+    // This should be done by multipliying the lookup-Matrix with the Node's MV matrix
+    // And then setting the result as the new MV matrix
+    // But that operation needs to be done after all the 'updates'.
+    // So the Director should emit an 'director_after_update' event.
+    // And this object should listen to it
+    _target->setAdditionalTransform(mv);
+}
+
 //
 // OrbitCamera
 //
@@ -101,7 +177,8 @@ bool OrbitCamera::initWithDuration(float t, float radius, float deltaRadius, flo
 
 void OrbitCamera::startWithTarget(Node *target)
 {
-    ActionInterval::startWithTarget(target);
+    ActionCamera::startWithTarget(target);
+
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
     if( isnan(_radius) )
@@ -117,30 +194,25 @@ void OrbitCamera::startWithTarget(Node *target)
 
 void OrbitCamera::update(float dt)
 {
-    float r = (_radius + _deltaRadius * dt) * Camera::getZEye();
+    float r = (_radius + _deltaRadius * dt) * FLT_EPSILON;
     float za = _radZ + _radDeltaZ * dt;
     float xa = _radX + _radDeltaX * dt;
 
-    float i = sinf(za) * cosf(xa) * r + _centerXOrig;
-    float j = sinf(za) * sinf(xa) * r + _centerYOrig;
-    float k = cosf(za) * r + _centerZOrig;
+    float i = sinf(za) * cosf(xa) * r + _centerX;
+    float j = sinf(za) * sinf(xa) * r + _centerY;
+    float k = cosf(za) * r + _centerZ;
 
-    _target->getCamera()->setEye(i,j,k);
+    setEye(i,j,k);
 }
 
 void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimuth)
 {
-    float ex, ey, ez, cx, cy, cz, x, y, z;
     float r; // radius
     float s;
 
-    Camera* camera = _target->getCamera();
-    camera->getEye(&ex, &ey, &ez);
-    camera->getCenter(&cx, &cy, &cz);
-
-    x = ex-cx;
-    y = ey-cy;
-    z = ez-cz;
+    float x = _eyeX - _centerX;
+    float y = _eyeY - _centerY;
+    float z = _eyeZ - _centerZ;
 
     r = sqrtf( powf(x,2) + powf(y,2) + powf(z,2));
     s = sqrtf( powf(x,2) + powf(y,2));
@@ -155,7 +227,7 @@ void OrbitCamera::sphericalRadius(float *newRadius, float *zenith, float *azimut
     else
         *azimuth = asinf(y/s);
 
-    *newRadius = r / Camera::getZEye();                
+    *newRadius = r / FLT_EPSILON;
 }
 
 NS_CC_END

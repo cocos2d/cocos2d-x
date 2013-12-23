@@ -29,6 +29,7 @@
 #include "CCEventListenerAcceleration.h"
 #include "CCEventListenerMouse.h"
 #include "CCEventListenerKeyboard.h"
+#include "CCEventListenerCustom.h"
 
 #include "CCNode.h"
 #include "CCDirector.h"
@@ -338,6 +339,8 @@ void EventDispatcher::addEventListener(EventListener* listener)
     {
         _toAddedListeners.push_back(listener);
     }
+
+    listener->retain();
 }
 
 void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node)
@@ -352,7 +355,6 @@ void EventDispatcher::addEventListenerWithSceneGraphPriority(EventListener* list
     listener->setFixedPriority(0);
     listener->setRegistered(true);
     
-    listener->retain();
     addEventListener(listener);
 
     associateNodeAndEventListener(node, listener);
@@ -376,10 +378,15 @@ void EventDispatcher::addEventListenerWithFixedPriority(EventListener* listener,
     listener->setFixedPriority(fixedPriority);
     listener->setRegistered(true);
     listener->setPaused(false);
-    
-    listener->retain();
 
     addEventListener(listener);
+}
+
+EventListenerCustom* EventDispatcher::addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback)
+{
+    EventListenerCustom *listener = EventListenerCustom::create(eventName, callback);
+    addEventListenerWithFixedPriority(listener, 1);
+    return listener;
 }
 
 void EventDispatcher::removeEventListener(EventListener* listener)
@@ -580,6 +587,14 @@ void EventDispatcher::dispatchEvent(Event* event)
     
     updateListeners(event);
 }
+
+void EventDispatcher::dispatchCustomEvent(const std::string &eventName, void *optionalUserData)
+{
+    EventCustom ev(eventName);
+    ev.setUserData(optionalUserData);
+    dispatchEvent(&ev);
+}
+
 
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {

@@ -328,16 +328,17 @@ void ActionRotationalSkew::onEnter()
 
     this->centerSprites(3);
 
-    auto actionTo = RotateTo::create(2, 37.2f, -37.2f);
+    auto actionTo = RotateTo::create(2, 180, 180);
     auto actionToBack = RotateTo::create(2, 0, 0);
-    auto actionBy = RotateBy::create(2, 0.0f, -90.0f);
-    auto actionBy2 = RotateBy::create(2, 45.0f, 45.0f);
+    auto actionBy = RotateBy::create(2, 0.0f, 360);
     auto actionByBack = actionBy->reverse();
 
-    _tamara->runAction( Sequence::create(actionTo, actionToBack, NULL) );
-    _grossini->runAction( Sequence::create(actionBy, actionByBack, NULL) );
+    auto actionBy2 = RotateBy::create(2, 360, 0);
+    auto actionBy2Back = actionBy2->reverse();
 
-    _kathia->runAction( Sequence::create(actionBy2, actionBy2->reverse(), NULL) );
+    _tamara->runAction( Sequence::create(actionBy, actionByBack, NULL) );
+    _grossini->runAction( Sequence::create(actionTo, actionToBack, NULL) );
+    _kathia->runAction( Sequence::create(actionBy2, actionBy2Back, NULL) );
 }
 
 std::string ActionRotationalSkew::subtitle() const
@@ -1220,25 +1221,26 @@ void ActionOrbit::onEnter()
 {
     ActionsDemo::onEnter();
 
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     centerSprites(3);
 
     auto orbit1 = OrbitCamera::create(2,1, 0, 0, 180, 0, 0);
-    auto  action1 = Sequence::create(
+    auto action1 = Sequence::create(
         orbit1,
         orbit1->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit2 = OrbitCamera::create(2,1, 0, 0, 180, -45, 0);
-    auto  action2 = Sequence::create(
+    auto action2 = Sequence::create(
         orbit2,
         orbit2->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit3 = OrbitCamera::create(2,1, 0, 0, 180, 90, 0);
-    auto  action3 = Sequence::create(
+    auto action3 = Sequence::create(
         orbit3,
         orbit3->reverse(),
-        NULL);
+        nullptr);
 
     _kathia->runAction(RepeatForever::create(action1));
     _tamara->runAction(RepeatForever::create(action2));
