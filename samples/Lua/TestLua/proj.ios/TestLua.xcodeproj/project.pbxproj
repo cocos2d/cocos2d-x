@@ -185,6 +185,10 @@
 		1AD263D01683506D0089000C /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B81683506C0089000C /* Shaders */; };
 		1AD263D11683506D0089000C /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263B91683506C0089000C /* TileMaps */; };
 		1AD263D21683506D0089000C /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263BA1683506C0089000C /* zwoptex */; };
+		375BD4B4186840C10024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4AC186840C10024609E /* ObjectFactory.cpp */; };
+		375BD4B5186840C10024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4AE186840C10024609E /* TriggerBase.cpp */; };
+		375BD4B6186840C10024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4B0186840C10024609E /* TriggerMng.cpp */; };
+		375BD4B7186840C10024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4B2186840C10024609E /* TriggerObj.cpp */; };
 		37FFCAED186071240078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAEB186071240078F312 /* CCActionEaseEx.cpp */; };
 		46C1008C16BF786A00F74D54 /* CCLuaBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */; };
 		46C1008D16BF786A00F74D54 /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46C1007C16BF786A00F74D54 /* CCLuaEngine.cpp */; };
@@ -617,6 +621,14 @@
 		1AD263B81683506C0089000C /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		1AD263B91683506C0089000C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		1AD263BA1683506C0089000C /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		375BD4AC186840C10024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
+		375BD4AD186840C10024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		375BD4AE186840C10024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
+		375BD4AF186840C10024609E /* TriggerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerBase.h; sourceTree = "<group>"; };
+		375BD4B0186840C10024609E /* TriggerMng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerMng.cpp; sourceTree = "<group>"; };
+		375BD4B1186840C10024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
+		375BD4B2186840C10024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
+		375BD4B3186840C10024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		37FFCAEB186071240078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAEC186071240078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		46C1007A16BF786A00F74D54 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
@@ -1381,6 +1393,21 @@
 			path = ios;
 			sourceTree = "<group>";
 		};
+		375BD4AB186840C10024609E /* Trigger */ = {
+			isa = PBXGroup;
+			children = (
+				375BD4AC186840C10024609E /* ObjectFactory.cpp */,
+				375BD4AD186840C10024609E /* ObjectFactory.h */,
+				375BD4AE186840C10024609E /* TriggerBase.cpp */,
+				375BD4AF186840C10024609E /* TriggerBase.h */,
+				375BD4B0186840C10024609E /* TriggerMng.cpp */,
+				375BD4B1186840C10024609E /* TriggerMng.h */,
+				375BD4B2186840C10024609E /* TriggerObj.cpp */,
+				375BD4B3186840C10024609E /* TriggerObj.h */,
+			);
+			path = Trigger;
+			sourceTree = "<group>";
+		};
 		46C1007916BF786A00F74D54 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
@@ -1435,6 +1462,7 @@
 		ED53146A18331444008CD8A5 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				375BD4AB186840C10024609E /* Trigger */,
 				ED53146B18331444008CD8A5 /* Action */,
 				ED53147618331444008CD8A5 /* Armature */,
 				ED5314A418331444008CD8A5 /* Components */,
@@ -1927,6 +1955,7 @@
 				F293B6FE15EB823D00256477 /* RootViewController.mm in Sources */,
 				ED53152318331445008CD8A5 /* UILayoutParameter.cpp in Sources */,
 				F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */,
+				375BD4B4186840C10024609E /* ObjectFactory.cpp in Sources */,
 				15C153F71683112E00D239F2 /* CCBAnimationManager.cpp in Sources */,
 				15C153F81683112E00D239F2 /* CCBFileLoader.cpp in Sources */,
 				15C153F91683112E00D239F2 /* CCBKeyframe.cpp in Sources */,
@@ -2028,6 +2057,7 @@
 				ED53150318331445008CD8A5 /* CCActionFrameEasing.cpp in Sources */,
 				15C155221683118600D239F2 /* b2CollidePolygon.cpp in Sources */,
 				15C155231683118600D239F2 /* b2Collision.cpp in Sources */,
+				375BD4B6186840C10024609E /* TriggerMng.cpp in Sources */,
 				15C155241683118600D239F2 /* b2Distance.cpp in Sources */,
 				15C155251683118600D239F2 /* b2DynamicTree.cpp in Sources */,
 				15C155261683118600D239F2 /* b2TimeOfImpact.cpp in Sources */,
@@ -2042,6 +2072,7 @@
 				15C1552A1683118600D239F2 /* b2PolygonShape.cpp in Sources */,
 				15C1552B1683118600D239F2 /* b2BlockAllocator.cpp in Sources */,
 				15C1552C1683118600D239F2 /* b2Draw.cpp in Sources */,
+				375BD4B7186840C10024609E /* TriggerObj.cpp in Sources */,
 				15C1552D1683118600D239F2 /* b2Math.cpp in Sources */,
 				15C1552E1683118600D239F2 /* b2Settings.cpp in Sources */,
 				15C1552F1683118600D239F2 /* b2StackAllocator.cpp in Sources */,
@@ -2058,6 +2089,7 @@
 				15C155361683118600D239F2 /* b2WorldCallbacks.cpp in Sources */,
 				15C155371683118600D239F2 /* b2ChainAndCircleContact.cpp in Sources */,
 				15C155381683118600D239F2 /* b2ChainAndPolygonContact.cpp in Sources */,
+				375BD4B5186840C10024609E /* TriggerBase.cpp in Sources */,
 				ED53150818331445008CD8A5 /* CCProcessBase.cpp in Sources */,
 				ED53151718331445008CD8A5 /* CCTransformHelp.cpp in Sources */,
 				ED53150A18331445008CD8A5 /* CCArmature.cpp in Sources */,

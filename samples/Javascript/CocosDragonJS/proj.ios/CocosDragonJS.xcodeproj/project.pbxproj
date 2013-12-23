@@ -214,6 +214,10 @@
 		1AF284D317F00D3300642436 /* js_bindings_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */; };
 		1AF2873017F013D800642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
 		1AF2873117F013E200642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2872F17F013D800642436 /* jsb_deprecated.js */; };
+		375BD46D18683F630024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD46518683F630024609E /* ObjectFactory.cpp */; };
+		375BD46E18683F630024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD46718683F630024609E /* TriggerBase.cpp */; };
+		375BD46F18683F630024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD46918683F630024609E /* TriggerMng.cpp */; };
+		375BD47018683F630024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD46B18683F630024609E /* TriggerObj.cpp */; };
 		37FFCAA318606CC00078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAA118606CBF0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B8B183355E300F2C4D6 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B89183355E300F2C4D6 /* UIListViewEx.cpp */; };
 		3EC20B8D1833564000F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B8C1833564000F2C4D6 /* jsb_cocos2d_studio.js */; };
@@ -620,6 +624,14 @@
 		1AF284D117F00D3300642436 /* js_bindings_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_opengl.cpp; sourceTree = "<group>"; };
 		1AF284D217F00D3300642436 /* js_bindings_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_opengl.h; sourceTree = "<group>"; };
 		1AF2872F17F013D800642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		375BD46518683F630024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
+		375BD46618683F630024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		375BD46718683F630024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
+		375BD46818683F630024609E /* TriggerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerBase.h; sourceTree = "<group>"; };
+		375BD46918683F630024609E /* TriggerMng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerMng.cpp; sourceTree = "<group>"; };
+		375BD46A18683F630024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
+		375BD46B18683F630024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
+		375BD46C18683F630024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		37FFCAA118606CBF0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAA218606CC00078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		37FFCAA518606D300078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -912,6 +924,7 @@
 		1A36F54C17EFE682000D0275 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				375BD46418683F630024609E /* Trigger */,
 				1A36F54D17EFE682000D0275 /* Action */,
 				1A36F55817EFE682000D0275 /* Armature */,
 				1A36F58617EFE682000D0275 /* Components */,
@@ -1450,6 +1463,21 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
+		375BD46418683F630024609E /* Trigger */ = {
+			isa = PBXGroup;
+			children = (
+				375BD46518683F630024609E /* ObjectFactory.cpp */,
+				375BD46618683F630024609E /* ObjectFactory.h */,
+				375BD46718683F630024609E /* TriggerBase.cpp */,
+				375BD46818683F630024609E /* TriggerBase.h */,
+				375BD46918683F630024609E /* TriggerMng.cpp */,
+				375BD46A18683F630024609E /* TriggerMng.h */,
+				375BD46B18683F630024609E /* TriggerObj.cpp */,
+				375BD46C18683F630024609E /* TriggerObj.h */,
+			);
+			path = Trigger;
+			sourceTree = "<group>";
+		};
 		37FFCAA418606D300078F312 /* rapidjson */ = {
 			isa = PBXGroup;
 			children = (
@@ -1695,6 +1723,7 @@
 				15A3D00F1682C331002FB0C5 /* CDOpenALSupport.m in Sources */,
 				15A3D0101682C331002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3D0111682C331002FB0C5 /* SimpleAudioEngine.mm in Sources */,
+				375BD46E18683F630024609E /* TriggerBase.cpp in Sources */,
 				1AF284AA17F00BF400642436 /* main.debug.js in Sources */,
 				15A3D0121682C331002FB0C5 /* SimpleAudioEngine_objc.m in Sources */,
 				15A3D09F1682E721002FB0C5 /* cocos2d_specifics.cpp in Sources */,
@@ -1785,6 +1814,7 @@
 				1A36F60B17EFE683000D0275 /* UIInputManager.cpp in Sources */,
 				1A36F60C17EFE683000D0275 /* UILayer.cpp in Sources */,
 				460E5386182B71B10040458A /* GUIReader.cpp in Sources */,
+				375BD47018683F630024609E /* TriggerObj.cpp in Sources */,
 				1A36F60E17EFE683000D0275 /* UIListView.cpp in Sources */,
 				1A36F60F17EFE683000D0275 /* UIPageView.cpp in Sources */,
 				1A36F61017EFE683000D0275 /* UIScrollView.cpp in Sources */,
@@ -1808,10 +1838,12 @@
 				1A36F69317EFE6D2000D0275 /* cpDampedSpring.c in Sources */,
 				1AF284A817F00BF400642436 /* jsb_cocos2d_extension.js in Sources */,
 				1A36F69417EFE6D2000D0275 /* cpGearJoint.c in Sources */,
+				375BD46D18683F630024609E /* ObjectFactory.cpp in Sources */,
 				1A36F69517EFE6D2000D0275 /* cpGrooveJoint.c in Sources */,
 				1A36F69617EFE6D2000D0275 /* cpPinJoint.c in Sources */,
 				1AF284BC17F00C5400642436 /* js_bindings_chipmunk_registration.cpp in Sources */,
 				1AF284C317F00C8200642436 /* CCPhysicsSprite.cpp in Sources */,
+				375BD46F18683F630024609E /* TriggerMng.cpp in Sources */,
 				1A36F69717EFE6D2000D0275 /* cpPivotJoint.c in Sources */,
 				1A36F69817EFE6D2000D0275 /* cpRatchetJoint.c in Sources */,
 				1A36F69917EFE6D2000D0275 /* cpRotaryLimitJoint.c in Sources */,

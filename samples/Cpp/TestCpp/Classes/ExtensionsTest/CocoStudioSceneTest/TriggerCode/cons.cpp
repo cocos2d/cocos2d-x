@@ -28,7 +28,7 @@ bool TimeElapsed::init()
     return true;
 }
 
-bool TimeElapsed::check()
+bool TimeElapsed::detect()
 {
     return _bSuc;
 }
@@ -90,7 +90,7 @@ bool ArmatureActionState::init()
 	return true;
 }
 
-bool ArmatureActionState::check()
+bool ArmatureActionState::detect()
 {
     return _bSuc;
 }
@@ -164,7 +164,7 @@ bool NodeInRect::init()
     return true;
 }
 
-bool NodeInRect::check()
+bool NodeInRect::detect()
 {
 	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
 	if (pNode != NULL && abs(pNode->getPositionX() - _origin.x) <= _size.width && abs(pNode->getPositionY() - _origin.y) <= _size.height)
@@ -231,7 +231,7 @@ bool NodeVisible::init()
 	return true;
 }
 
-bool NodeVisible::check()
+bool NodeVisible::detect()
 {
 	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
 	if (pNode != NULL && pNode->isVisible() == _bVisible)

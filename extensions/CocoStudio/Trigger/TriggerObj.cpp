@@ -38,7 +38,7 @@ bool BaseTriggerCondition::init()
     return true;
 }
 
-bool BaseTriggerCondition::check()
+bool BaseTriggerCondition::detect()
 {
     return true;
 }
@@ -119,7 +119,7 @@ TriggerObj* TriggerObj::create()
     return pRet;
 }
 
-bool TriggerObj::check()
+bool TriggerObj::detect()
 {
 	if (!_bEnable || _cons == NULL || _cons->count() == 0)
 	{
@@ -130,7 +130,7 @@ bool TriggerObj::check()
     CCARRAY_FOREACH(_cons, pObj)
     {
         BaseTriggerCondition* con = (BaseTriggerCondition*)pObj;
-        bRet = bRet && con->check();
+        bRet = bRet && con->detect();
     }
 
     return bRet;
