@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 #include "cocos2d.h"
+#include "LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 class LuaEventListenerCustom
@@ -51,23 +52,23 @@ struct LuaEventListenerKeyboarData
     };
     int keyCode;
     Event* event;
-    KeyboardStatus status;
+    ScriptHandlerMgr::HandlerType type;
     
-    LuaEventListenerKeyboarData(int inKeyCode,Event* inEvent,KeyboardStatus inStatus)
-    :keyCode(inKeyCode),event(inEvent),status(inStatus)
+    LuaEventListenerKeyboarData(int inKeyCode,Event* inEvent,ScriptHandlerMgr::HandlerType inType)
+    :keyCode(inKeyCode),event(inEvent),type(inType)
     {
     }
 };
 
 struct LuaEventListenerTouchData
 {
-    EventTouch::EventCode eventCode;
+    ScriptHandlerMgr::HandlerType type;
     void* nativeObject;
     Touch* touch;
     Event* event;
     
-    LuaEventListenerTouchData(EventTouch::EventCode inEventCode, void* inNativeObject, Touch* inTouch, Event* inEvent)
-    : eventCode(inEventCode),
+    LuaEventListenerTouchData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, Touch* inTouch, Event* inEvent)
+    : type(inType),
     nativeObject(inNativeObject),
     touch(inTouch),
     event(inEvent)
@@ -77,13 +78,13 @@ struct LuaEventListenerTouchData
 
 struct LuaEventListenerTouchesData
 {
-    EventTouch::EventCode eventCode;
+    ScriptHandlerMgr::HandlerType type;
     void* nativeObject;
     std::vector<Touch*> touches;
     Event* event;
     
-    LuaEventListenerTouchesData(EventTouch::EventCode inEventCode, void* inNativeObject, std::vector<Touch*> inTouches, Event* inEvent)
-    : eventCode(inEventCode),
+    LuaEventListenerTouchesData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, std::vector<Touch*> inTouches, Event* inEvent)
+    : type(inType),
     nativeObject(inNativeObject),
     touches(inTouches),
     event(inEvent)
@@ -93,12 +94,12 @@ struct LuaEventListenerTouchesData
 
 struct LuaEventListenerMouseData
 {
-    EventMouse::MouseEventType eventType;
+    ScriptHandlerMgr::HandlerType type;
     void* nativeObject;
     Event* event;
     
-    LuaEventListenerMouseData(EventMouse::MouseEventType inEventType, void* inNativeObject, Event* inEvent)
-    : eventType(inEventType),
+    LuaEventListenerMouseData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, Event* inEvent)
+    : type(inType),
     nativeObject(inNativeObject),
     event(inEvent)
     {

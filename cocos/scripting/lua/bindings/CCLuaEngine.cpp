@@ -927,12 +927,8 @@ int LuaEngine::handleEventListenerKeyboard(void* data)
         return 0;
     
     LuaEventListenerKeyboarData* keyboardData = static_cast<LuaEventListenerKeyboarData*>(basicScriptData->value);
-    ScriptHandlerMgr::HandlerType type = ScriptHandlerMgr::HandlerType::EVENTLISTENER_KEYBOARD_PRESSED;
-    if (keyboardData->status == LuaEventListenerKeyboarData::KeyboardStatus::RELEASE)
-        type = ScriptHandlerMgr::HandlerType::EVENTLISTENER_KEYBOARD_RELEASE;
     
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, type);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, keyboardData->type);
     if (0 == handler)
         return 0;
     
@@ -953,28 +949,7 @@ int LuaEngine::handleEventListenerTouch(void* data)
     if (nullptr == listenerData->nativeObject || nullptr == listenerData->touch || nullptr == listenerData->event)
         return 0;
     
-    ScriptHandlerMgr::HandlerType handlerType;
-    switch (listenerData->eventCode)
-    {
-        case EventTouch::EventCode::BEGAN:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_BEGAN;
-            break;
-            
-        case EventTouch::EventCode::MOVED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_MOVED;
-            break;
-            
-        case EventTouch::EventCode::ENDED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_ENDED;
-            break;
-        case EventTouch::EventCode::CANCELLED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_CANCELLED;
-            break;
-        default:
-            return 0;
-    }
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(listenerData->nativeObject, handlerType);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(listenerData->nativeObject, listenerData->type);
     if (0 == handler)
         return 0;
     
@@ -1001,28 +976,7 @@ int LuaEngine::handleEventListenerTouches(void* data)
     if (NULL == listenerData->nativeObject || nullptr == listenerData->event || listenerData->touches.size() == 0)
         return 0;
     
-    ScriptHandlerMgr::HandlerType handlerType;
-    switch (listenerData->eventCode)
-    {
-        case EventTouch::EventCode::BEGAN:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_BEGAN;
-            break;
-            
-        case EventTouch::EventCode::MOVED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_MOVED;
-            break;
-            
-        case EventTouch::EventCode::ENDED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_ENDED;
-            break;
-        case EventTouch::EventCode::CANCELLED:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_CANCELLED;
-            break;
-        default:
-            return 0;
-    }
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, handlerType);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, listenerData->type);
     
     if (0 == handler)
         return 0;
@@ -1055,28 +1009,7 @@ int LuaEngine::handleEventListenerMouse(void* data)
     if (NULL == listenerData->nativeObject || nullptr == listenerData->event )
         return 0;
     
-    ScriptHandlerMgr::HandlerType handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_DOWN;
-    switch (listenerData->eventType)
-    {
-        case EventMouse::MouseEventType::MOUSE_DOWN:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_DOWN;
-            break;
-            
-        case EventMouse::MouseEventType::MOUSE_UP:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_UP;
-            break;
-            
-        case EventMouse::MouseEventType::MOUSE_MOVE:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_MOVE;
-            break;
-        case EventMouse::MouseEventType::MOUSE_SCROLL:
-            handlerType = ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_SCROLL;
-            break;
-        default:
-            break;
-    }
-    
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, handlerType);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)listenerData->nativeObject, listenerData->type);
     
     if (0 == handler)
         return 0;
