@@ -105,8 +105,8 @@ public:
     
     // Overrides
     void visit();
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
