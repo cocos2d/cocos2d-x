@@ -36,7 +36,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
     
     int m_nCount;
     Array* m_array;
@@ -51,7 +51,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
     
     int m_nCount;
     Array* m_array;

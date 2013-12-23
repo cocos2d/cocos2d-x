@@ -31,22 +31,22 @@ bool UILoadingBarTest_Left::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LoadingBar");
         alert->setFontName(font_UILoadingBarTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        cocos2d::gui::LoadingBar* loadingBar = cocos2d::gui::LoadingBar::create();
         loadingBar->setName("LoadingBar");
         loadingBar->loadTexture("cocosgui/sliderProgress.png");
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -60,8 +60,7 @@ void UILoadingBarTest_Left::update(float delta)
     {
         m_nCount = 0;
     }
-        
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    cocos2d::gui::LoadingBar* loadingBar = dynamic_cast<cocos2d::gui::LoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -114,23 +113,23 @@ bool UILoadingBarTest_Right::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LoadingBar");
         alert->setFontName(font_UILoadingBarTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        cocos2d::gui::LoadingBar* loadingBar = cocos2d::gui::LoadingBar::create();
         loadingBar->setName("LoadingBar");
         loadingBar->loadTexture("cocosgui/sliderProgress.png");
         loadingBar->setDirection(LoadingBarTypeRight);
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -145,7 +144,7 @@ void UILoadingBarTest_Right::update(float delta)
         m_nCount = 0;
     }
     
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    cocos2d::gui::LoadingBar* loadingBar = dynamic_cast<cocos2d::gui::LoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -198,16 +197,16 @@ bool UILoadingBarTest_Left_Scale9::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LoadingBar Scale9 Render");
         alert->setFontName(font_UILoadingBarTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        cocos2d::gui::LoadingBar* loadingBar = cocos2d::gui::LoadingBar::create();
         loadingBar->setName("LoadingBar");
         loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
@@ -216,7 +215,7 @@ bool UILoadingBarTest_Left_Scale9::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -231,7 +230,7 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
         m_nCount = 0;
     }
     
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    cocos2d::gui::LoadingBar* loadingBar = dynamic_cast<cocos2d::gui::LoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 
@@ -284,16 +283,16 @@ bool UILoadingBarTest_Right_Scale9::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("LoadingBar Scale9 Render");
         alert->setFontName(font_UILoadingBarTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the loading bar
-        UILoadingBar* loadingBar = UILoadingBar::create();
+        cocos2d::gui::LoadingBar* loadingBar = cocos2d::gui::LoadingBar::create();
         loadingBar->setName("LoadingBar");
         loadingBar->loadTexture("cocosgui/slider_bar_active_9patch.png");
         loadingBar->setScale9Enabled(true);
@@ -303,7 +302,7 @@ bool UILoadingBarTest_Right_Scale9::init()
         loadingBar->setPercent(0);
         
         loadingBar->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + loadingBar->getSize().height / 4.0f));
-        m_pUiLayer->addWidget(loadingBar);
+        m_pUiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -317,8 +316,7 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     {
         m_nCount = 0;
     }
-    CCLOG("wocao");
-    UILoadingBar* loadingBar = dynamic_cast<UILoadingBar*>(m_pUiLayer->getWidgetByName("LoadingBar"));
+    cocos2d::gui::LoadingBar* loadingBar = dynamic_cast<cocos2d::gui::LoadingBar*>(UIHelper::seekWidgetByName(m_pUiLayer, "LoadingBar"));
     loadingBar->setPercent(m_nCount);
 }
 

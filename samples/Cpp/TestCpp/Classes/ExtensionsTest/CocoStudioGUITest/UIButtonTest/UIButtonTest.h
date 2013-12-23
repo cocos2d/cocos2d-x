@@ -37,7 +37,7 @@ public:
 
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 class UIButtonTest_Scale9 : public UIScene
@@ -50,7 +50,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_Scale9)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 class UIButtonTest_PressedAction : public UIScene
@@ -63,7 +63,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIButtonTest_PressedAction)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIButtonTest__) */

@@ -27,6 +27,8 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 class UIScrollInterface
@@ -35,12 +37,13 @@ public:
     virtual ~UIScrollInterface() {}
 
 protected:
-    virtual void handlePressLogic(const cocos2d::Point &touchPoint) = 0;
-    virtual void handleMoveLogic(const cocos2d::Point &touchPoint) = 0;
-    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint) = 0;
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint) = 0;
+    virtual void handlePressLogic(const Point &touchPoint) = 0;
+    virtual void handleMoveLogic(const Point &touchPoint) = 0;
+    virtual void handleReleaseLogic(const Point &touchPoint) = 0;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Point &touchPoint) = 0;
 };
 
 }
+NS_CC_END
 
 #endif /* defined(__UIScrollDelegate__) */

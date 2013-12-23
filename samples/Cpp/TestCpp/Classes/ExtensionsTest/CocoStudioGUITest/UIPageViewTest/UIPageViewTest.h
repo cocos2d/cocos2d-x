@@ -38,7 +38,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    UILabel* m_pDisplayValueLabel;
+    cocos2d::gui::Label* m_pDisplayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest__) */

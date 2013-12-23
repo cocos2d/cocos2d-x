@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "ccCArray.h"
 #include "TransformUtils.h"
+#include "CCCamera.h"
 #include "CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
@@ -105,8 +106,10 @@ Node::Node(void)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
+, _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
+, _grid(nullptr)
 , _ZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -126,12 +129,6 @@ Node::Node(void)
 #ifdef CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
-, _displayedOpacity(255)
-, _realOpacity(255)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeColorEnabled(false)
-, _cascadeOpacityEnabled(false)
 {
     // set default scheduler and actionManager
     Director *director = Director::getInstance();
@@ -166,6 +163,9 @@ Node::~Node()
     CC_SAFE_RELEASE(_eventDispatcher);
     
     // attributes
+    CC_SAFE_RELEASE(_camera);
+
+    CC_SAFE_RELEASE(_grid);
     CC_SAFE_RELEASE(_shaderProgram);
     CC_SAFE_RELEASE(_userObject);
 
@@ -398,6 +398,26 @@ ssize_t Node::getChildrenCount() const
     return _children.size();
 }
 
+/// camera getter: lazy alloc
+Camera* Node::getCamera()
+{
+    if (!_camera)
+    {
+        _camera = new Camera();
+    }
+    
+    return _camera;
+}
+
+/// grid setter
+void Node::setGrid(GridBase* grid)
+{
+    CC_SAFE_RETAIN(grid);
+    CC_SAFE_RELEASE(_grid);
+    _grid = grid;
+}
+
+
 /// isVisible getter
 bool Node::isVisible() const
 {
@@ -518,13 +538,6 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     _shaderProgram = pShaderProgram;
 }
 
-Scene* Node::getScene()
-{
-    if(!_parent)
-        return nullptr;
-    return _parent->getScene();
-}
-
 Rect Node::getBoundingBox() const
 {
     Rect rect = Rect(0, 0, _contentSize.width, _contentSize.height);
@@ -627,16 +640,6 @@ void Node::addChild(Node *child, int zOrder, int tag)
         if (_isTransitionFinished) {
             child->onEnterTransitionDidFinish();
         }
-    }
-    
-    if (_cascadeColorEnabled)
-    {
-        updateCascadeColor();
-    }
-    
-    if (_cascadeOpacityEnabled)
-    {
-        updateCascadeOpacity();
     }
 }
 
@@ -804,6 +807,11 @@ void Node::visit()
     
     kmGLPushMatrix();
 
+     if (_grid && _grid->isActive())
+     {
+         _grid->beforeDraw();
+     }
+
     this->transform();
     int i = 0;
 
@@ -833,6 +841,11 @@ void Node::visit()
 
     // reset for next frame
     _orderOfArrival = 0;
+
+     if (_grid && _grid->isActive())
+     {
+         _grid->afterDraw(this);
+    }
  
     kmGLPopMatrix();
 }
@@ -859,9 +872,26 @@ void Node::transform()
 
 
     kmGLMultMatrix( &transfrom4x4 );
+
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
+
+
+    // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+    if ( _camera != nullptr && !(_grid != nullptr && _grid->isActive()) )
+    {
+        bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
+
+        if( translate )
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
+
+        _camera->locate();
+
+        if( translate )
+            kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
+    }
 }
+
 
 void Node::onEnter()
 {
@@ -1159,12 +1189,10 @@ const kmMat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = { cy * _scaleX, sy * _scaleX, 0,  0,
+        _transform = { cy * _scaleX, sy * _scaleX, 0,  0,
                       -sx * _scaleY, cx * _scaleY, 0,  0,
                         0,  0,  1,  0,
                         x,  y,  0,  1 };
-        
-        kmMat4Fill(&_transform, mat);
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
@@ -1197,12 +1225,6 @@ const kmMat4& Node::getNodeToParentTransform() const
     }
     
     return _transform;
-}
-
-void Node::setNodeToParentTransform(const kmMat4& transform)
-{
-    _transform = transform;
-    _transformDirty = false;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
@@ -1396,158 +1418,149 @@ PhysicsBody* Node::getPhysicsBody() const
 }
 #endif //CC_USE_PHYSICS
 
-GLubyte Node::getOpacity(void) const
+// NodeRGBA
+NodeRGBA::NodeRGBA()
+: _displayedOpacity(255)
+, _realOpacity(255)
+, _displayedColor(Color3B::WHITE)
+, _realColor(Color3B::WHITE)
+, _cascadeColorEnabled(false)
+, _cascadeOpacityEnabled(false)
+{}
+
+NodeRGBA::~NodeRGBA() {}
+
+bool NodeRGBA::init()
+{
+    if (Node::init())
+    {
+        _displayedOpacity = _realOpacity = 255;
+        _displayedColor = _realColor = Color3B::WHITE;
+        _cascadeOpacityEnabled = _cascadeColorEnabled = false;
+        return true;
+    }
+    return false;
+}
+
+NodeRGBA * NodeRGBA::create(void)
+{
+	NodeRGBA * pRet = new NodeRGBA();
+    if (pRet && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+	return pRet;
+}
+
+GLubyte NodeRGBA::getOpacity(void) const
 {
 	return _realOpacity;
 }
 
-GLubyte Node::getDisplayedOpacity(void) const
+GLubyte NodeRGBA::getDisplayedOpacity(void) const
 {
 	return _displayedOpacity;
 }
 
-void Node::setOpacity(GLubyte opacity)
+void NodeRGBA::setOpacity(GLubyte opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
     
-    updateCascadeOpacity();
+	if (_cascadeOpacityEnabled)
+    {
+		GLubyte parentOpacity = 255;
+        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
+        if (pParent && pParent->isCascadeOpacityEnabled())
+        {
+            parentOpacity = pParent->getDisplayedOpacity();
+        }
+        this->updateDisplayedOpacity(parentOpacity);
+	}
 }
 
-void Node::updateDisplayedOpacity(GLubyte parentOpacity)
+void NodeRGBA::updateDisplayedOpacity(GLubyte parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-    updateColor();
-    
+	
     if (_cascadeOpacityEnabled)
     {
-        for(auto child : _children){
-            child->updateDisplayedOpacity(_displayedOpacity);
+        for(const auto &child : _children) {
+            RGBAProtocol* item = dynamic_cast<RGBAProtocol*>(child);
+            if (item)
+            {
+                item->updateDisplayedOpacity(_displayedOpacity);
+            }
         }
     }
 }
 
-bool Node::isCascadeOpacityEnabled(void) const
+bool NodeRGBA::isCascadeOpacityEnabled(void) const
 {
     return _cascadeOpacityEnabled;
 }
 
-void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+void NodeRGBA::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
-    if (_cascadeOpacityEnabled == cascadeOpacityEnabled)
-    {
-        return;
-    }
-    
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
-    
-    if (cascadeOpacityEnabled)
-    {
-        updateCascadeOpacity();
-    }
-    else
-    {
-        disableCascadeOpacity();
-    }
 }
 
-void Node::updateCascadeOpacity()
-{
-    GLubyte parentOpacity = 255;
-    
-    if (_parent != nullptr && _parent->isCascadeOpacityEnabled())
-    {
-        parentOpacity = _parent->getDisplayedOpacity();
-    }
-    
-    updateDisplayedOpacity(parentOpacity);
-}
-
-void Node::disableCascadeOpacity()
-{
-    _displayedOpacity = _realOpacity;
-    
-    for(auto child : _children){
-        child->updateDisplayedOpacity(255);
-    }
-}
-
-const Color3B& Node::getColor(void) const
+const Color3B& NodeRGBA::getColor(void) const
 {
 	return _realColor;
 }
 
-const Color3B& Node::getDisplayedColor() const
+const Color3B& NodeRGBA::getDisplayedColor() const
 {
 	return _displayedColor;
 }
 
-void Node::setColor(const Color3B& color)
+void NodeRGBA::setColor(const Color3B& color)
 {
 	_displayedColor = _realColor = color;
 	
-	updateCascadeColor();
+	if (_cascadeColorEnabled)
+    {
+		Color3B parentColor = Color3B::WHITE;
+        RGBAProtocol *parent = dynamic_cast<RGBAProtocol*>(_parent);
+		if (parent && parent->isCascadeColorEnabled())
+        {
+            parentColor = parent->getDisplayedColor(); 
+        }
+        
+        updateDisplayedColor(parentColor);
+	}
 }
 
-void Node::updateDisplayedColor(const Color3B& parentColor)
+void NodeRGBA::updateDisplayedColor(const Color3B& parentColor)
 {
 	_displayedColor.r = _realColor.r * parentColor.r/255.0;
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    updateColor();
     
     if (_cascadeColorEnabled)
     {
-        for(const auto &child : _children){
-            child->updateDisplayedColor(_displayedColor);
+        for(const auto &child : _children) {
+            RGBAProtocol *item = dynamic_cast<RGBAProtocol*>(child);
+            if (item)
+            {
+                item->updateDisplayedColor(_displayedColor);
+            }
         }
     }
 }
 
-bool Node::isCascadeColorEnabled(void) const
+bool NodeRGBA::isCascadeColorEnabled(void) const
 {
     return _cascadeColorEnabled;
 }
 
-void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
+void NodeRGBA::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
-    if (_cascadeColorEnabled == cascadeColorEnabled)
-    {
-        return;
-    }
-    
     _cascadeColorEnabled = cascadeColorEnabled;
-    
-    if (_cascadeColorEnabled)
-    {
-        updateCascadeColor();
-    }
-    else
-    {
-        disableCascadeColor();
-    }
-}
-
-void Node::updateCascadeColor()
-{
-	Color3B parentColor = Color3B::WHITE;
-    if (_parent && _parent->isCascadeColorEnabled())
-    {
-        parentColor = _parent->getDisplayedColor();
-    }
-    
-    updateDisplayedColor(parentColor);
-}
-
-void Node::disableCascadeColor()
-{
-    for(auto child : _children){
-        child->updateDisplayedColor(Color3B::WHITE);
-    }
-}
-
-__NodeRGBA::__NodeRGBA()
-{
-    CCLOG("NodeRGBA deprecated.");
 }
 
 NS_CC_END

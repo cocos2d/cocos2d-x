@@ -24,34 +24,34 @@ bool UITextButtonTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = m_pWidget->getSize();
-        
-        // Add a label in which the text button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName(font_UITextButtonTest);
-        m_pDisplayValueLabel->setFontSize(32);
-        m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
-        
-        // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextButton");
-        alert->setFontName(font_UITextButtonTest);
-        alert->setFontSize(30);
-        alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
-        
-        // Create the text button
-        UIButton* textButton = UIButton::create();
-        textButton->setTouchEnabled(true);
-        textButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
-        textButton->setTitleText("Text Button");
-        textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
-        m_pUiLayer->addWidget(textButton);
+//        Size widgetSize = m_pWidget->getSize();
+//        
+//        // Add a label in which the text button events will be displayed
+//        m_pDisplayValueLabel = UILabel::create();
+//        m_pDisplayValueLabel->setText("No Event");
+//        m_pDisplayValueLabel->setFontName(font_UITextButtonTest);
+//        m_pDisplayValueLabel->setFontSize(32);
+//        m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
+//        m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+//        m_pUiLayer->addChild(m_pDisplayValueLabel);
+//        
+//        // Add the alert
+//        UILabel *alert = UILabel::create();
+//        alert->setText("TextButton");
+//        alert->setFontName(font_UITextButtonTest);
+//        alert->setFontSize(30);
+//        alert->setColor(Color3B(159, 168, 176));
+//        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+//        m_pUiLayer->addChild(alert);        
+//        
+//        // Create the text button
+//        UIButton* textButton = UIButton::create();
+//        textButton->setTouchEnabled(true);
+//        textButton->loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "");
+//        textButton->setTitleText("Text Button");
+//        textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+//        textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
+//        m_pUiLayer->addChild(textButton);
         
         return true;
     }
@@ -99,36 +99,36 @@ bool UITextButtonTest_Scale9::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = m_pWidget->getSize();
-        
-        // Add a label in which the text button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName(font_UITextButtonTest);
-        m_pDisplayValueLabel->setFontSize(32);
-        m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
-        
-        // Add the alert
-        UILabel *alert = UILabel::create();
-        alert->setText("TextButton scale9 render");
-        alert->setFontName(font_UITextButtonTest);
-        alert->setFontSize(30);
-        alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
-        
-        // Create the text button
-        UIButton* textButton = UIButton::create();
-        textButton->setTouchEnabled(true);
-        textButton->setScale9Enabled(true);
-        textButton->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
-        textButton->setSize(Size(180, textButton->getContentSize().height * 1.5f));
-        textButton->setTitleText("Text Button scale9 render");
-        textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
-        m_pUiLayer->addWidget(textButton);
+//        Size widgetSize = m_pWidget->getSize();
+//        
+//        // Add a label in which the text button events will be displayed
+//        m_pDisplayValueLabel = UILabel::create();
+//        m_pDisplayValueLabel->setText("No Event");
+//        m_pDisplayValueLabel->setFontName(font_UITextButtonTest);
+//        m_pDisplayValueLabel->setFontSize(32);
+//        m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
+//        m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+//        m_pUiLayer->addChild(m_pDisplayValueLabel);
+//        
+//        // Add the alert
+//        UILabel *alert = UILabel::create();
+//        alert->setText("TextButton scale9 render");
+//        alert->setFontName(font_UITextButtonTest);
+//        alert->setFontSize(30);
+//        alert->setColor(Color3B(159, 168, 176));
+//        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
+//        m_pUiLayer->addChild(alert);
+//        
+//        // Create the text button
+//        UIButton* textButton = UIButton::create();
+//        textButton->setTouchEnabled(true);
+//        textButton->setScale9Enabled(true);
+//        textButton->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+//        textButton->setSize(Size(180, textButton->getContentSize().height * 1.5f));
+//        textButton->setTitleText("Text Button scale9 render");
+//        textButton->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+//        textButton->addTouchEventListener(this, toucheventselector(UITextButtonTest::touchEvent));        
+//        m_pUiLayer->addChild(textButton);
         
         return true;
     }

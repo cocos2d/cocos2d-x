@@ -85,7 +85,7 @@ public:
     /** Title label of the scene. */
 //    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
     
-    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
+    CC_SYNTHESIZE_READONLY(cocos2d::gui::Label*, m_pSceneTitle, SceneTitle)
     
     UI_SCENE_CREATE_FUNC(UIScene);
     
@@ -94,8 +94,8 @@ protected:
     void menuCloseCallback(Object* pSender, TouchEventType type);
     
 protected:
-    UILayer *m_pUiLayer;
-    UILayout *m_pWidget;
+    cocos2d::gui::Layout *m_pUiLayer;
+    cocos2d::gui::Layout *m_pWidget;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

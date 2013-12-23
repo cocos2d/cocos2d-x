@@ -27,27 +27,27 @@ bool UIPageViewTest::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("Move by horizontal direction");
         m_pDisplayValueLabel->setFontName(font_UIPageViewTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the black background
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("PageView");
         alert->setFontName(font_UIPageViewTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 2.925));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        cocos2d::gui::Layout *background = dynamic_cast<cocos2d::gui::Layout*>(UIHelper::seekWidgetByName(m_pUiLayer, "background_Panel"));
         
         // Create the page view
-        UIPageView* pageView = UIPageView::create();
+        cocos2d::gui::PageView* pageView = cocos2d::gui::PageView::create();
         pageView->setTouchEnabled(true);
         pageView->setSize(Size(240, 130));
         Size backgroundSize = background->getContentSize();
@@ -58,10 +58,10 @@ bool UIPageViewTest::init()
         
         for (int i = 0; i < 3; ++i)
         {
-            UILayout* layout = UILayout::create();
+            cocos2d::gui::Layout* layout = cocos2d::gui::Layout::create();
             layout->setSize(Size(240, 130));
             
-            UIImageView* imageView = UIImageView::create();
+            cocos2d::gui::ImageView* imageView = cocos2d::gui::ImageView::create();
             imageView->setTouchEnabled(true);
             imageView->setScale9Enabled(true);
             imageView->loadTexture("cocosgui/scrollviewbg.png");
@@ -69,7 +69,7 @@ bool UIPageViewTest::init()
             imageView->setPosition(Point(layout->getSize().width / 2, layout->getSize().height / 2));
             layout->addChild(imageView);
             
-            UILabel* label = UILabel::create();
+            cocos2d::gui::Label* label = cocos2d::gui::Label::create();
             label->setText(CCString::createWithFormat("page %d", (i + 1))->getCString());
             label->setFontName(font_UIPageViewTest);
             label->setFontSize(30);
@@ -81,7 +81,7 @@ bool UIPageViewTest::init()
         }
         pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
-        m_pUiLayer->addWidget(pageView);
+        m_pUiLayer->addChild(pageView);
         
         return true;
     }
@@ -94,7 +94,7 @@ void UIPageViewTest::pageViewEvent(Object *pSender, PageViewEventType type)
     {
         case PAGEVIEW_EVENT_TURNING:
         {
-            UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
+            PageView* pageView = dynamic_cast<PageView*>(pSender);
             
             m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getCurPageIndex() + 1)->getCString());
         }

@@ -50,9 +50,7 @@ public:
     void loadTextureCallBack(Object *obj);
     
     void menuCallback(Object* pSender);
-    
-    UILayer* ul;
-    
+        
     LabelTTF* _label;
     
     Menu* _itemMenu;

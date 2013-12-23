@@ -26,31 +26,31 @@ bool UIButtonTest::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UIButtonTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);        
+        m_pUiLayer->addChild(m_pDisplayValueLabel);        
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("Button");
         alert->setFontName(font_UIButtonTest);
         alert->setFontSize(30);        
         alert->setColor(Color3B(159, 168, 176));                
         
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the button
-        UIButton *button = UIButton::create();
+        cocos2d::gui::Button *button = cocos2d::gui::Button::create();
         button->setTouchEnabled(true);
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));        
         button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
 
         return true;
     }
@@ -102,25 +102,25 @@ bool UIButtonTest_Scale9::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UIButtonTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("Button scale9 render");
         alert->setFontName(font_UIButtonTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        m_pUiLayer->addChild(alert);        
         
         // Create the button
-        UIButton *button = UIButton::create();
+        cocos2d::gui::Button *button = cocos2d::gui::Button::create();
         button->setTouchEnabled(true);
         // open scale9 render
         button->setScale9Enabled(true);
@@ -128,7 +128,7 @@ bool UIButtonTest_Scale9::init()
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->setSize(Size(150, button->getContentSize().height * 1.5f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_Scale9::touchEvent));
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
         
         return true;
     }
@@ -177,32 +177,32 @@ bool UIButtonTest_PressedAction::init()
         Size widgetSize = m_pWidget->getSize();
         
         // Add a label in which the button events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
+        m_pDisplayValueLabel = cocos2d::gui::Label::create();
         m_pDisplayValueLabel->setText("No Event");
         m_pDisplayValueLabel->setFontName(font_UIButtonTest);
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
         m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        m_pUiLayer->addChild(m_pDisplayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        cocos2d::gui::Label *alert = cocos2d::gui::Label::create();
         alert->setText("Button Pressed Action");
         alert->setFontName(font_UIButtonTest);
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
         
         alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);
+        m_pUiLayer->addChild(alert);
         
         // Create the button
-        UIButton *button = UIButton::create();
+        cocos2d::gui::Button *button = cocos2d::gui::Button::create();
         button->setTouchEnabled(true);
         button->setPressedActionEnabled(true);
         button->loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "");
         button->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         button->addTouchEventListener(this, toucheventselector(UIButtonTest_PressedAction::touchEvent));        
-        m_pUiLayer->addWidget(button);
+        m_pUiLayer->addChild(button);
         
         return true;
     }

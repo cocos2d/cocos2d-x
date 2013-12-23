@@ -23,36 +23,36 @@ bool UIScene::init()
 {
     if (CCLayer::init())
     {
-        m_pUiLayer = UILayer::create();
+        m_pUiLayer = Layout::create();
         addChild(m_pUiLayer);
         
-        m_pWidget = dynamic_cast<UILayout*>(cocostudio::GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
-        m_pUiLayer->addWidget(m_pWidget);
+        m_pWidget = dynamic_cast<Layout*>(cocostudio::GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        m_pUiLayer->addChild(m_pWidget);
         
-        m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
+        m_pSceneTitle = dynamic_cast<cocos2d::gui::Label*>(UIHelper::seekWidgetByName(m_pUiLayer, "UItest"));
         
-        UILabel *back_label = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("back"));
+        cocos2d::gui::Label *back_label = dynamic_cast<cocos2d::gui::Label*>(UIHelper::seekWidgetByName(m_pUiLayer, "back"));
         back_label->setVisible(false);
 //        back_label->addReleaseEvent(this, coco_releaseselector(UIScene::toExtensionsMainLayer));
         
-        UIButton *left_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("left_Button"));
+        Button *left_button = dynamic_cast<Button*>(UIHelper::seekWidgetByName(m_pUiLayer, "left_Button"));
         left_button->addTouchEventListener(this, toucheventselector(UIScene::previousCallback));
         
-        UIButton *middle_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("middle_Button"));
+        Button *middle_button = dynamic_cast<Button*>(UIHelper::seekWidgetByName(m_pUiLayer, "middle_Button"));
         middle_button->addTouchEventListener(this, toucheventselector(UIScene::restartCallback));
         
-        UIButton *right_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("right_Button"));
+        Button *right_button = dynamic_cast<Button*>(UIHelper::seekWidgetByName(m_pUiLayer, "right_Button"));
         right_button->addTouchEventListener(this, toucheventselector(UIScene::nextCallback));
         
         
-        UILabel* mainMenuLabel = UILabel::create();
+        cocos2d::gui::Label* mainMenuLabel = cocos2d::gui::Label::create();
         mainMenuLabel->setText("MainMenu");
         mainMenuLabel->setFontSize(20);
         mainMenuLabel->setTouchScaleChangeEnabled(true);
         mainMenuLabel->setPosition(Point(430,30));
         mainMenuLabel->setTouchEnabled(true);
         mainMenuLabel->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
-        m_pUiLayer->addWidget(mainMenuLabel);
+        m_pUiLayer->addChild(mainMenuLabel);
     
         
         return true;
