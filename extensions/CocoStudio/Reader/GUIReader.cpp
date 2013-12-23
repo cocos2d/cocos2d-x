@@ -1505,7 +1505,7 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(UIWidge
                 std::string tp_c = m_strFilePath;
                 const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
+                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getStringValue_json(options, "startCharMap"));
                 break;
             }
             case 1:
