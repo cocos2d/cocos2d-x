@@ -109,10 +109,10 @@ CocoStudio/Action/CCActionNode.cpp \
 CocoStudio/Action/CCActionFrame.cpp \
 CocoStudio/Action/CCActionEaseEx.cpp \
 CocoStudio/Action/CCActionFrameEasing.cpp \
-CocoStudio/Action/ObjectFactory.cpp \
-CocoStudio/Action/TriggerBase.cpp \
-CocoStudio/Action/TriggerMng.cpp \
-CocoStudio/Action/TriggerObj.cpp \
+CocoStudio/Trigger/ObjectFactory.cpp \
+CocoStudio/Trigger/TriggerBase.cpp \
+CocoStudio/Trigger/TriggerMng.cpp \
+CocoStudio/Trigger/TriggerObj.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
