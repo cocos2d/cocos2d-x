@@ -29,7 +29,6 @@
 
 #include <vector>
 #include <unordered_map>
-#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -241,9 +240,9 @@ public:
      */
     void erase(const std::vector<K>& keys)
     {
-        std::for_each(keys.cbegin(), keys.cend(), [this](const K& key){
+        for(const auto &key : keys) {
             this->erase(key);
-        });
+        }
     }
     
     /** All the elements in the Map<K,V> container are dropped:

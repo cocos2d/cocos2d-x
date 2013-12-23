@@ -1530,13 +1530,13 @@ void MultipleParticleSystems::update(float dt)
 
     unsigned int count = 0; 
     
-    std::for_each(_children.begin(), _children.end(), [&count](Node* child){
+    for(const auto &child : _children) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[100] = {0};
     sprintf(str, "%4d", count);
@@ -1578,18 +1578,16 @@ void MultipleParticleSystemsBatched::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-    
-    auto& children = batchNode->getChildren();
-    std::for_each(children.begin(), children.end(), [&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[50] = {0};
     sprintf(str, "%4d", count);
@@ -1668,18 +1666,16 @@ void AddAndDeleteParticleSystems::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned int count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-    
-    auto& children = batchNode->getChildren();
-    std::for_each(children.begin(), children.end(), [&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[100] = {0};
     sprintf(str, "%4d", count);
@@ -1805,18 +1801,16 @@ void ReorderParticleSystems::update(float dt)
 {
     auto atlas = static_cast<LabelAtlas*>(getChildByTag(kTagParticleCount));
 
-    unsigned int count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-
-    auto& children = batchNode->getChildren();
-    std::for_each(children.begin(), children.end(), [&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != nullptr)
         {
             count += item->getParticleCount();
         }
-    });
+    }
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);

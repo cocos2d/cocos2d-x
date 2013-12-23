@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "ccCArray.h"
 #include "TransformUtils.h"
-#include "CCCamera.h"
 #include "CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
@@ -106,10 +105,8 @@ Node::Node(void)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
-, _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
-, _grid(nullptr)
 , _ZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -169,9 +166,6 @@ Node::~Node()
     CC_SAFE_RELEASE(_eventDispatcher);
     
     // attributes
-    CC_SAFE_RELEASE(_camera);
-
-    CC_SAFE_RELEASE(_grid);
     CC_SAFE_RELEASE(_shaderProgram);
     CC_SAFE_RELEASE(_userObject);
 
@@ -404,26 +398,6 @@ ssize_t Node::getChildrenCount() const
     return _children.size();
 }
 
-/// camera getter: lazy alloc
-Camera* Node::getCamera()
-{
-    if (!_camera)
-    {
-        _camera = new Camera();
-    }
-    
-    return _camera;
-}
-
-/// grid setter
-void Node::setGrid(GridBase* grid)
-{
-    CC_SAFE_RETAIN(grid);
-    CC_SAFE_RELEASE(_grid);
-    _grid = grid;
-}
-
-
 /// isVisible getter
 bool Node::isVisible() const
 {
@@ -542,6 +516,13 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
     _shaderProgram = pShaderProgram;
+}
+
+Scene* Node::getScene()
+{
+    if(!_parent)
+        return nullptr;
+    return _parent->getScene();
 }
 
 Rect Node::getBoundingBox() const
@@ -823,11 +804,6 @@ void Node::visit()
     
     kmGLPushMatrix();
 
-     if (_grid && _grid->isActive())
-     {
-         _grid->beforeDraw();
-     }
-
     this->transform();
     int i = 0;
 
@@ -857,11 +833,6 @@ void Node::visit()
 
     // reset for next frame
     _orderOfArrival = 0;
-
-     if (_grid && _grid->isActive())
-     {
-         _grid->afterDraw(this);
-    }
  
     kmGLPopMatrix();
 }
@@ -888,26 +859,9 @@ void Node::transform()
 
 
     kmGLMultMatrix( &transfrom4x4 );
-
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
-
-
-    // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-    if ( _camera != nullptr && !(_grid != nullptr && _grid->isActive()) )
-    {
-        bool translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
-
-        _camera->locate();
-
-        if( translate )
-            kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
-    }
 }
-
 
 void Node::onEnter()
 {
@@ -1205,10 +1159,12 @@ const kmMat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        _transform = { cy * _scaleX, sy * _scaleX, 0,  0,
+        kmScalar mat[] = { cy * _scaleX, sy * _scaleX, 0,  0,
                       -sx * _scaleY, cx * _scaleY, 0,  0,
                         0,  0,  1,  0,
                         x,  y,  0,  1 };
+        
+        kmMat4Fill(&_transform, mat);
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
@@ -1241,6 +1197,12 @@ const kmMat4& Node::getNodeToParentTransform() const
     }
     
     return _transform;
+}
+
+void Node::setNodeToParentTransform(const kmMat4& transform)
+{
+    _transform = transform;
+    _transformDirty = false;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)

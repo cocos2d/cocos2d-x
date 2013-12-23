@@ -679,8 +679,7 @@ void ShaderRetroEffect::update(float dt)
     _accum += dt;
 
     int i=0;
-    auto& children = _label->getChildren();
-    std::for_each(children.begin(), children.end(), [&i, this](Node* sprite){
+    for(const auto &sprite : _label->getChildren()) {
         i++;
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
@@ -689,7 +688,7 @@ void ShaderRetroEffect::update(float dt)
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
         
         sprite->setScaleY(scaleY);
-    });
+    }
 }
 
 std::string ShaderRetroEffect::title() const

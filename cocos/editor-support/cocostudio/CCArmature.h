@@ -178,6 +178,8 @@ public:
      * Set contentsize and Calculate anchor point.
      */
     virtual void updateOffsetPoint();
+    virtual void setAnchorPoint(const cocos2d::Point& point) override;
+    virtual const cocos2d::Point& getAnchorPointInPoints() const override;
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation() const;
@@ -265,6 +267,7 @@ protected:
     cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
 
     cocos2d::Point _offsetPoint;
+    cocos2d::Point _realAnchorPointInPoints;
 
     ArmatureAnimation *_animation;
 

@@ -70,6 +70,8 @@ protected:
     bool init(ListenerID listenerId, std::function<void(EventCustom*)> callback);
     
     std::function<void(EventCustom*)> _onCustomEvent;
+    
+    friend class LuaEventListenerCustom;
 };
 
 NS_CC_END

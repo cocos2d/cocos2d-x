@@ -1,6 +1,7 @@
 #include "ArmatureScene.h"
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
+#include "CCNodeGrid.h"
 
 
 using namespace cocos2d;
@@ -574,6 +575,7 @@ void TestAnimationEvent::callback2()
 void TestFrameEvent::onEnter()
 {
     ArmatureTestLayer::onEnter();
+    _gridNode = NodeGrid::create();
     Armature *armature = Armature::create("HeroAnimation");
     armature->getAnimation()->play("attack");
     armature->getAnimation()->setSpeedScale(0.5);
@@ -584,7 +586,9 @@ void TestFrameEvent::onEnter()
      * To disconnect this event, just setFrameEventCallFunc(nullptr);
      */
     armature->getAnimation()->setFrameEventCallFunc(CC_CALLBACK_0(TestFrameEvent::onFrameEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-    addChild(armature);
+
+    _gridNode->addChild(armature);
+    addChild(_gridNode);
 
     schedule( schedule_selector(TestFrameEvent::checkAction) );
 }
@@ -596,20 +600,19 @@ void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIn
 {
     CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
 
+    if (!_gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG) || _gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
+    {
+        _gridNode->stopAllActions();
 
-//    if (!this->getActionByTag(FRAME_EVENT_ACTION_TAG) || this->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
-//    {
-//        this->stopAllActions();
-//
-//        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
-//        action->setTag(FRAME_EVENT_ACTION_TAG);
-//        this->runAction(action);
-//    }
+        ActionInterval *action =  ShatteredTiles3D::create(0.2f, Size(16,12), 5, false);
+        action->setTag(FRAME_EVENT_ACTION_TAG);
+        _gridNode->runAction(action);
+    }
 }
 void TestFrameEvent::checkAction(float dt)
 {
-    if ( this->getNumberOfRunningActions() == 0 && this->getGrid() != nullptr)
-        this->setGrid(nullptr);
+    if ( _gridNode->getNumberOfRunningActions() == 0 && _gridNode->getGrid() != nullptr)
+        _gridNode->setGrid(nullptr);
 }
 
 
@@ -1428,9 +1431,6 @@ void TestEasing::updateSubTitle()
     label->setString(str.c_str());
 }
 
-
-
-
 void TestChangeAnimationInternal::onEnter()
 {
     ArmatureTestLayer::onEnter();
@@ -1451,11 +1451,11 @@ void TestChangeAnimationInternal::onExit()
 {
     Director::getInstance()->setAnimationInterval(1/60.0f);
 }
-std::string TestChangeAnimationInternal::title()
+std::string TestChangeAnimationInternal::title() const
 {
     return "Test change animation internal";
 }
-std::string TestChangeAnimationInternal::subtitle()
+std::string TestChangeAnimationInternal::subtitle() const
 {
     return "Touch to change animation internal";
 }

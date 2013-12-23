@@ -453,7 +453,6 @@
     <ClCompile Include="CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCConfiguration.cpp" />
     <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
@@ -568,6 +567,9 @@
     </ClCompile>
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
       <Filter>label_nodes</Filter>
@@ -1048,7 +1050,6 @@
     <ClInclude Include="CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCConfiguration.h" />
     <ClInclude Include="CCDirector.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -1187,6 +1188,9 @@
     </ClInclude>
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
       <Filter>label_nodes</Filter>

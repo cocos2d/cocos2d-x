@@ -56,6 +56,8 @@ public:
     static Scene *createWithPhysics();
 #endif
 
+    // Overrides
+    virtual Scene *getScene() override;
 
 #ifdef CC_USE_PHYSICS
 public:
@@ -74,6 +76,7 @@ protected:
 
     PhysicsWorld* _physicsWorld;
 #endif // CC_USE_PHYSICS
+
 
 
 protected:

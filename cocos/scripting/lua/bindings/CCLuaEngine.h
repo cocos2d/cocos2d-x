@@ -139,6 +139,12 @@ private:
     int handleAssetsManagerEvent(void* data);
     int handleCocoStudioEventListener(void* data);
     int handleArmatureWrapper(void* data);
+    int handleEventListenerAcc(void* data);
+    int handleEventListenerKeyboard(void* data);
+    int handleEventListenerTouch(void* data);
+    int handleEventListenerTouches(void* data);
+    int handleEventListenerMouse(void* data);
+    int handleEventListenerCustom(void* data);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

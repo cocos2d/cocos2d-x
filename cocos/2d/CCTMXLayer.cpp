@@ -380,17 +380,14 @@ Sprite * TMXLayer::insertTileForGID(int gid, const Point& pos)
         
         // update possible children
         
-        std::for_each(_children.begin(), _children.end(), [&indexForZ](Node* child){
+        for(const auto &child : _children) {
             Sprite* sp = static_cast<Sprite*>(child);
-            if (child)
+            ssize_t ai = sp->getAtlasIndex();
+            if ( ai >= indexForZ )
             {
-                ssize_t ai = sp->getAtlasIndex();
-                if ( ai >= indexForZ )
-                {
-                    sp->setAtlasIndex(ai+1);
-                }
+                sp->setAtlasIndex(ai+1);
             }
-        });
+        }
         
         _tiles[z] = gid;
         return tile;
@@ -399,7 +396,7 @@ Sprite * TMXLayer::insertTileForGID(int gid, const Point& pos)
     return nullptr;
 }
 
-Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)
+Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)    
 {
     Rect rect = _tileSet->rectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
@@ -593,17 +590,14 @@ void TMXLayer::removeTileAt(const Point& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            std::for_each(_children.begin(), _children.end(), [&atlasIndex](Node* obj){
+            for(const auto &obj : _children) {
                 Sprite* child = static_cast<Sprite*>(obj);
-                if (child)
+                ssize_t ai = child->getAtlasIndex();
+                if ( ai >= atlasIndex )
                 {
-                    ssize_t ai = child->getAtlasIndex();
-                    if ( ai >= atlasIndex )
-                    {
-                        child->setAtlasIndex(ai-1);
-                    }
+                    child->setAtlasIndex(ai-1);
                 }
-            });
+            }
         }
     }
 }

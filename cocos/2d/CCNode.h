@@ -43,7 +43,6 @@
 
 NS_CC_BEGIN
 
-class Camera;
 class GridBase;
 class Point;
 class Touch;
@@ -54,6 +53,7 @@ class ActionManager;
 class Component;
 class ComponentContainer;
 class EventDispatcher;
+class Scene;
 #ifdef CC_USE_PHYSICS
 class PhysicsBody;
 #endif
@@ -98,7 +98,6 @@ class EventListener;
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - Camera (an interface to gluLookAt )
  - GridBase (to do mesh transformations)
  - anchor point
  - size
@@ -120,18 +119,14 @@ class EventListener;
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
- -# The node will be moved according to the camera values (camera)
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
  -# The grid will capture the screen
- -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
 
- Camera:
- - Each node has a camera. By default it points to the center of the Node.
  */
 
 class CC_DLL Node : public Object
@@ -702,34 +697,7 @@ public:
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
-
-
-
-    /// @{
-    /// @name Grid object for effects
-
-    /**
-     * Returns a grid object that is used when applying effects
-     *
-     * @return A Grid object that is used when applying effects
-     * @js NA
-     */
-    virtual GridBase* getGrid() { return _grid; }
-    /**
-    * @js NA
-    */
-    virtual const GridBase* getGrid() const { return _grid; }
-
-    /**
-     * Changes a grid object that is used when applying effects
-     *
-     * @param grid  A Grid object that is used when applying effects
-     */
-    virtual void setGrid(GridBase *grid);
-
-    /// @} end of Grid
-
-
+    
     /// @{
     /// @name Tag & User data
 
@@ -862,19 +830,6 @@ public:
 
 
     /**
-     * Returns a camera object that lets you move the node using a gluLookAt
-     *
-     @code
-     Camera* camera = node->getCamera();
-     camera->setEye(0, 0, 415/2);
-     camera->setCenter(0, 0, 0);
-     @endcode
-     *
-     * @return A Camera object that lets you move the node using a gluLookAt
-     */
-    virtual Camera* getCamera();
-
-    /**
      * Returns whether or not the node accepts event callbacks.
      *
      * Running means the node accept event callbacks like onEnter(), onExit(), update()
@@ -956,6 +911,11 @@ public:
      */
     virtual void visit();
 
+    /** Returns the Scene that contains the Node.
+     It returns `nullptr` if the node doesn't belong to any Scene.
+     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     */
+    virtual Scene* getScene();
 
     /**
      * Returns a "local" axis aligned bounding box of the node.
@@ -1229,6 +1189,11 @@ public:
     virtual const kmMat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
+    /** 
+     * Sets the Transformation matrix manually.
+     */
+    virtual void setNodeToParentTransform(const kmMat4& transform);
+
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
@@ -1463,10 +1428,6 @@ protected:
     mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
-
-    Camera *_camera;                ///< a camera
-
-    GridBase *_grid;                ///< a grid
 
     int _ZOrder;                      ///< z-order value that affects the draw order
     
