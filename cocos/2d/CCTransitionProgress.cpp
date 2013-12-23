@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCActionInstant.h"
 #include "CCActionProgressTimer.h"
-#include "CCNewRenderTexture.h"
 
 NS_CC_BEGIN
 

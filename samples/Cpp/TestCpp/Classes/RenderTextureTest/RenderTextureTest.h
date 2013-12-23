@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "renderer/CCNewRenderTexture.h"
 
 class RenderTextureTest : public BaseTest
 {
