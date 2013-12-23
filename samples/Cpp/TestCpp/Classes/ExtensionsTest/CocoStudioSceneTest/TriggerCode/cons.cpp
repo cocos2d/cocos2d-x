@@ -84,8 +84,7 @@ bool ArmatureActionState::init()
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);
-		pAr->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(ArmatureActionState::animationEvent));
-
+		TriggerMng::sharedTriggerMng()->addArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
 	} while (0);
 	
 	return true;
@@ -128,7 +127,16 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 
 void ArmatureActionState::removeAll()
 {
-	CCLOG("ArmatureActionState::removeAll");
+	do 
+	{
+		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CC_BREAK_IF(pNode == NULL);
+		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_ComName.c_str()));
+		CC_BREAK_IF(pRender == NULL);
+		CCArmature *pAr = (CCArmature *)(pRender->getNode());
+		CC_BREAK_IF(pAr == NULL);
+		TriggerMng::sharedTriggerMng()->removeArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
+	} while (0);
 }
 
 void ArmatureActionState::animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID)

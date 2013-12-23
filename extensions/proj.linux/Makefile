@@ -138,6 +138,10 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Action/CCActionFrame.cpp \
 ../CocoStudio/Action/CCActionEaseEx.cpp \
 ../CocoStudio/Action/CCActionFrameEasing.cpp \
+../CocoStudio/Action/ObjectFactory.cpp \
+../CocoStudio/Action/TriggerBase.cpp \
+../CocoStudio/Action/TriggerMng.cpp \
+../CocoStudio/Action/TriggerObj.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

@@ -6,7 +6,7 @@
 
 void runSceneEditorTestLayer();
 
-class SceneEditorTestLayer : public cocos2d::CCLayerColor
+class SceneEditorTestLayer : public cocos2d::CCLayer
 {
 public:
 	SceneEditorTestLayer();

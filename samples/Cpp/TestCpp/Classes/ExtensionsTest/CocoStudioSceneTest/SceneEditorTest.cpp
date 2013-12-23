@@ -46,8 +46,6 @@ bool SceneEditorTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(0,0,0,255) ) );
-        
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
@@ -120,7 +118,7 @@ cocos2d::CCNode* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
 	//ui action
-	actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	//actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
 
     return pNode;
 }
@@ -131,6 +129,7 @@ void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
 	{
 		actionObject->stop();
 	}
+	this->setTouchEnabled(false);
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();
