@@ -11,7 +11,7 @@ extern "C" {
 
 using namespace cocos2d;
 
-extern std::map<long, std::string>  g_luaType;
+extern std::unordered_map<std::string, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
@@ -114,6 +114,17 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret)
     return ok;
 }
 
+bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret);
+bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret);
+
+template <class T>
+bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, T>* ret)
+{
+    // TO BE DONE:
+    return false;
+}
+
+
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret);
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret);
 extern bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret);
@@ -149,8 +160,8 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 
         if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
         {
-            long typeId = typeid(*obj).hash_code();
-            auto iter = g_luaType.find(typeId);
+            std::string typeName = typeid(*obj).name();
+            auto iter = g_luaType.find(typeName);
             if (g_luaType.end() != iter)
             {
                 lua_pushnumber(L, (lua_Number)indexTable);
@@ -163,6 +174,12 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
             }
         }
     }
+}
+
+template <class T>
+void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
+{
+    // TO BE DONE:
 }
 
 void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);

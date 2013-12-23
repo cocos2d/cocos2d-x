@@ -802,9 +802,9 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    std::for_each(_layers.begin(), _layers.end(), [](Layer* layer){
+    for(const auto &layer : _layers) {
         layer->cleanup();
-    });
+    }
 }
 
 LayerMultiplex * LayerMultiplex::create(Layer * layer, ...)

@@ -149,7 +149,7 @@ bool UIWidget::addChild(UIWidget *child)
         return false;
     }
     child->setParent(this);
-    int childrenCount = _children->data->num;
+    ssize_t childrenCount = _children->data->num;
     if (childrenCount <= 0)
     {
         _children->addObject(child);
@@ -158,7 +158,7 @@ bool UIWidget::addChild(UIWidget *child)
     {
         bool seekSucceed = false;
         cocos2d::ccArray* arrayChildren = _children->data;
-        for (int i=childrenCount-1; i>=0; --i)
+        for (ssize_t i=childrenCount-1; i>=0; --i)
         {
             UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
             if (child->getZOrder() >= widget->getZOrder())
@@ -226,7 +226,7 @@ void UIWidget::removeAllChildren()
     {
         return;
     }
-    int times = _children->data->num;
+    ssize_t times = _children->data->num;
     for (int i=0; i<times; ++i)
     {
         UIWidget* lastChild = (UIWidget*)(_children->getLastObject());
@@ -238,7 +238,7 @@ void UIWidget::reorderChild(UIWidget* child)
 {
     CC_SAFE_RETAIN(child);
     _children->removeObject(child);
-    int childrenCount = _children->data->num;
+    ssize_t childrenCount = _children->data->num;
     if (childrenCount <= 0)
     {
         _children->addObject(child);
@@ -247,7 +247,7 @@ void UIWidget::reorderChild(UIWidget* child)
     {
         bool seekSucceed = false;
         cocos2d::ccArray* arrayChildren = _children->data;
-        for (int i=childrenCount-1; i>=0; --i)
+        for (ssize_t i=childrenCount-1; i>=0; --i)
         {
             UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
             if (child->getZOrder() >= widget->getZOrder())
@@ -287,7 +287,7 @@ void UIWidget::setEnabled(bool enabled)
         dynamic_cast<UIRectClippingNode*>(_renderer)->setEnabled(enabled);
     }
     cocos2d::ccArray* arrayChildren = _children->data;
-    int childrenCount = arrayChildren->num;
+    ssize_t childrenCount = arrayChildren->num;
     for (int i = 0; i < childrenCount; i++)
     {
         UIWidget* child = dynamic_cast<UIWidget*>(arrayChildren->arr[i]);
@@ -1166,7 +1166,7 @@ UIWidget* UIWidget::createCloneInstance()
 void UIWidget::copyClonedWidgetChildren(UIWidget* model)
 {
     cocos2d::ccArray* arrayWidgetChildren = model->getChildren()->data;
-    int length = arrayWidgetChildren->num;
+    ssize_t length = arrayWidgetChildren->num;
     for (int i=0; i<length; i++)
     {
         UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);

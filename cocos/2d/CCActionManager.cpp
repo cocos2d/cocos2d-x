@@ -158,9 +158,9 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 {
-    std::for_each(targetsToResume.begin(), targetsToResume.end(), [this](Node* node){
+    for(const auto &node : targetsToResume) {
         this->resumeTarget(node);
-    });
+    }
 }
 
 // run

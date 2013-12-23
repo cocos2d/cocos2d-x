@@ -63,6 +63,7 @@ set(COCOS2D_SRC
   CCDrawNode.cpp
   CCGrabber.cpp
   CCGrid.cpp
+  CCNodeGrid.cpp
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp
@@ -126,7 +127,6 @@ set(COCOS2D_SRC
   ccGLStateCache.cpp
   CCShaderCache.cpp
   ccShaders.cpp
-  CCCamera.cpp
   CCConfiguration.cpp
   CCDirector.cpp
   CCScheduler.cpp

@@ -222,7 +222,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCAnimation.cpp" />
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="ccCArray.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
@@ -257,6 +256,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="ccGLStateCache.cpp" />
     <ClCompile Include="CCGrabber.cpp" />
     <ClCompile Include="CCGrid.cpp" />
+    <ClCompile Include="CCNodeGrid.cpp" />
     <ClCompile Include="CCIMEDispatcher.cpp" />
     <ClCompile Include="CCLabel.cpp" />
     <ClCompile Include="CCLabelAtlas.cpp" />
@@ -405,7 +405,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCAnimation.h" />
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="ccCArray.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCComponent.h" />
@@ -442,6 +441,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ccGLStateCache.h" />
     <ClInclude Include="CCGrabber.h" />
     <ClInclude Include="CCGrid.h" />
+    <ClInclude Include="CCNodeGrid.h" />
     <ClInclude Include="CCIMEDelegate.h" />
     <ClInclude Include="CCIMEDispatcher.h" />
     <ClInclude Include="CCLabel.h" />

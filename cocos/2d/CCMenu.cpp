@@ -290,23 +290,16 @@ void Menu::alignItemsVertically()
 void Menu::alignItemsVerticallyWithPadding(float padding)
 {
     float height = -padding;
-    
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
-        {
-            height += child->getContentSize().height * child->getScaleY() + padding;
-        }
-    });
+
+    for(const auto &child : _children)
+        height += child->getContentSize().height * child->getScaleY() + padding;
 
     float y = height / 2.0f;
     
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
-        {
-            child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
-            y -= child->getContentSize().height * child->getScaleY() + padding;
-        }
-    });
+    for(const auto &child : _children) {
+        child->setPosition(Point(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
+        y -= child->getContentSize().height * child->getScaleY() + padding;
+    }
 }
 
 void Menu::alignItemsHorizontally(void)
@@ -317,22 +310,15 @@ void Menu::alignItemsHorizontally(void)
 void Menu::alignItemsHorizontallyWithPadding(float padding)
 {
     float width = -padding;
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
-        {
-            width += child->getContentSize().width * child->getScaleX() + padding;
-        }
-    });
+    for(const auto &child : _children)
+        width += child->getContentSize().width * child->getScaleX() + padding;
 
     float x = -width / 2.0f;
     
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
-        {
-            child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
-            x += child->getContentSize().width * child->getScaleX() + padding;
-        }
-    });
+    for(const auto &child : _children) {
+        child->setPosition(Point(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
+        x += child->getContentSize().width * child->getScaleX() + padding;
+    }
 }
 
 void Menu::alignItemsInColumns(int columns, ...)
@@ -365,29 +351,26 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     int columnsOccupied = 0;
     int rowColumns = 0;
 
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
+    for(const auto &child : _children) {
+        CCASSERT(row < rows.size(), "");
+        
+        rowColumns = rows[row].asInt();
+        // can not have zero columns on a row
+        CCASSERT(rowColumns, "");
+        
+        float tmp = child->getContentSize().height;
+        rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
+        
+        ++columnsOccupied;
+        if (columnsOccupied >= rowColumns)
         {
-            CCASSERT(row < rows.size(), "");
+            height += rowHeight + 5;
             
-            rowColumns = rows[row].asInt();
-            // can not have zero columns on a row
-            CCASSERT(rowColumns, "");
-            
-            float tmp = child->getContentSize().height;
-            rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
-            
-            ++columnsOccupied;
-            if (columnsOccupied >= rowColumns)
-            {
-                height += rowHeight + 5;
-                
-                columnsOccupied = 0;
-                rowHeight = 0;
-                ++row;
-            }
+            columnsOccupied = 0;
+            rowHeight = 0;
+            ++row;
         }
-    });
+    }
 
     // check if too many rows/columns for available menu items
     CCASSERT(! columnsOccupied, "");
@@ -401,39 +384,33 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     float x = 0.0;
     float y = (float)(height / 2);
 
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
+    for(const auto &child : _children) {
+        if (rowColumns == 0)
         {
-            if (child)
-            {
-                if (rowColumns == 0)
-                {
-                    rowColumns = rows[row].asInt();
-                    w = winSize.width / (1 + rowColumns);
-                    x = w;
-                }
-
-                float tmp = child->getContentSize().height;
-                rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
-
-                child->setPosition(Point(x - winSize.width / 2,
-                                       y - child->getContentSize().height / 2));
-
-                x += w;
-                ++columnsOccupied;
-
-                if (columnsOccupied >= rowColumns)
-                {
-                    y -= rowHeight + 5;
-
-                    columnsOccupied = 0;
-                    rowColumns = 0;
-                    rowHeight = 0;
-                    ++row;
-                }
-            }
+            rowColumns = rows[row].asInt();
+            w = winSize.width / (1 + rowColumns);
+            x = w;
         }
-    });
+
+        float tmp = child->getContentSize().height;
+        rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
+
+        child->setPosition(Point(x - winSize.width / 2,
+                               y - child->getContentSize().height / 2));
+
+        x += w;
+        ++columnsOccupied;
+
+        if (columnsOccupied >= rowColumns)
+        {
+            y -= rowHeight + 5;
+
+            columnsOccupied = 0;
+            rowColumns = 0;
+            rowHeight = 0;
+            ++row;
+        }
+    }
 }
 
 void Menu::alignItemsInRows(int rows, ...)
@@ -469,36 +446,33 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     int rowsOccupied = 0;
     int columnRows;
 
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
+    for(const auto &child : _children) {
+        // check if too many menu items for the amount of rows/columns
+        CCASSERT(column < columns.size(), "");
+
+        columnRows = columns[column].asInt();
+        // can't have zero rows on a column
+        CCASSERT(columnRows, "");
+
+        // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+        float tmp = child->getContentSize().width;
+        columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+
+        columnHeight += (int)(child->getContentSize().height + 5);
+        ++rowsOccupied;
+
+        if (rowsOccupied >= columnRows)
         {
-            // check if too many menu items for the amount of rows/columns
-            CCASSERT(column < columns.size(), "");
+            columnWidths.push_back(columnWidth);
+            columnHeights.push_back(columnHeight);
+            width += columnWidth + 10;
 
-            columnRows = columns[column].asInt();
-            // can't have zero rows on a column
-            CCASSERT(columnRows, "");
-
-            // columnWidth = fmaxf(columnWidth, [item contentSize].width);
-            float tmp = child->getContentSize().width;
-            columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
-
-            columnHeight += (int)(child->getContentSize().height + 5);
-            ++rowsOccupied;
-
-            if (rowsOccupied >= columnRows)
-            {
-                columnWidths.push_back(columnWidth);
-                columnHeights.push_back(columnHeight);
-                width += columnWidth + 10;
-
-                rowsOccupied = 0;
-                columnWidth = 0;
-                columnHeight = -5;
-                ++column;
-            }
+            rowsOccupied = 0;
+            columnWidth = 0;
+            columnHeight = -5;
+            ++column;
         }
-    });
+    }
 
     // check if too many rows/columns for available menu items.
     CCASSERT(! rowsOccupied, "");
@@ -511,35 +485,32 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     float x = (float)(-width / 2);
     float y = 0.0;
 
-    std::for_each(_children.begin(), _children.end(), [&](Node* child){
-        if (child)
+    for(const auto &child : _children) {
+        if (columnRows == 0)
         {
-            if (columnRows == 0)
-            {
-                columnRows = columns[column].asInt();
-                y = (float) columnHeights[column];
-            }
-
-            // columnWidth = fmaxf(columnWidth, [item contentSize].width);
-            float tmp = child->getContentSize().width;
-            columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
-
-            child->setPosition(Point(x + columnWidths[column] / 2,
-                                   y - winSize.height / 2));
-
-            y -= child->getContentSize().height + 10;
-            ++rowsOccupied;
-
-            if (rowsOccupied >= columnRows)
-            {
-                x += columnWidth + 5;
-                rowsOccupied = 0;
-                columnRows = 0;
-                columnWidth = 0;
-                ++column;
-            }
+            columnRows = columns[column].asInt();
+            y = (float) columnHeights[column];
         }
-    });
+
+        // columnWidth = fmaxf(columnWidth, [item contentSize].width);
+        float tmp = child->getContentSize().width;
+        columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
+
+        child->setPosition(Point(x + columnWidths[column] / 2,
+                               y - winSize.height / 2));
+
+        y -= child->getContentSize().height + 10;
+        ++rowsOccupied;
+
+        if (rowsOccupied >= columnRows)
+        {
+            x += columnWidth + 5;
+            rowsOccupied = 0;
+            columnRows = 0;
+            columnWidth = 0;
+            ++column;
+        }
+    }
 }
 
 MenuItem* Menu::getItemForTouch(Touch *touch)
