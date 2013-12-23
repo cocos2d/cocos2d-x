@@ -35,8 +35,6 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCRenderTexture.h"
 #include "CCNodeGrid.h"
-#include "CCNewRenderTexture.h"
-
 
 NS_CC_BEGIN
 
