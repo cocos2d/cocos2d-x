@@ -124,8 +124,6 @@ public:
     virtual float getCurrentPercent() const { return _currentPercent; }
     virtual int getRawDuration() const { return _rawDuration; }
 
-    virtual void setAnimationInternal(float animationInternal) { _animationInternal = animationInternal; }
-    virtual float getAnimationInternal() const { return _animationInternal; }
 protected:
 
     virtual void gotoFrame(int frameIndex);

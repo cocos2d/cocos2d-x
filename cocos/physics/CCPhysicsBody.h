@@ -30,11 +30,8 @@
 
 #include "CCObject.h"
 #include "CCGeometry.h"
-#include "CCArray.h"
-
 #include "CCPhysicsShape.h"
-
-#include <vector>
+#include "CCVector.h"
 
 NS_CC_BEGIN
 class Sprite;
@@ -103,9 +100,9 @@ public:
     /* remove all shapes */
     void removeAllShapes(bool reduceMassAndMoment = true);
     /* get the body shapes. */
-    inline Array* getShapes() const { return _shapes; }
+    inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
     /* get the first shape of the body shapes. */
-    inline PhysicsShape* getFirstShape() const { return _shapes->count() >= 1 ? dynamic_cast<PhysicsShape*>(_shapes->getObjectAtIndex(0)) : nullptr; }
+    inline PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
     /* get the shape of the body. */
     PhysicsShape* getShape(int tag) const;
     
@@ -305,7 +302,7 @@ protected:
 protected:
     Node*                       _node;
     std::vector<PhysicsJoint*>  _joints;
-    Array*                      _shapes;
+    Vector<PhysicsShape*>       _shapes;
     PhysicsWorld*               _world;
     PhysicsBodyInfo*            _info;
     bool                        _dynamic;

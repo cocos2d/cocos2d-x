@@ -40,13 +40,14 @@ static void setProgram(Node *n, GLProgram *p)
 {
     n->setShaderProgram(p);
     
-    n->getChildren().forEach([p](Node* child){
+    auto& children = n->getChildren();
+    for(const auto &child : children) {
         setProgram(child, p);
-    });
+    }
 }
 
 ClippingNode::ClippingNode()
-: _stencil(NULL)
+: _stencil(nullptr)
 , _alphaThreshold(0.0f)
 , _inverted(false)
 {}
@@ -58,43 +59,43 @@ ClippingNode::~ClippingNode()
 
 ClippingNode* ClippingNode::create()
 {
-    ClippingNode *pRet = new ClippingNode();
-    if (pRet && pRet->init())
+    ClippingNode *ret = new ClippingNode();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 ClippingNode* ClippingNode::create(Node *pStencil)
 {
-    ClippingNode *pRet = new ClippingNode();
-    if (pRet && pRet->init(pStencil))
+    ClippingNode *ret = new ClippingNode();
+    if (ret && ret->init(pStencil))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
 bool ClippingNode::init()
 {
-    return init(NULL);
+    return init(nullptr);
 }
 
-bool ClippingNode::init(Node *pStencil)
+bool ClippingNode::init(Node *stencil)
 {
     CC_SAFE_RELEASE(_stencil);
-    _stencil = pStencil;
+    _stencil = stencil;
     CC_SAFE_RETAIN(_stencil);
     
     _alphaThreshold = 1;
@@ -117,24 +118,44 @@ bool ClippingNode::init(Node *pStencil)
 void ClippingNode::onEnter()
 {
     Node::onEnter();
-    _stencil->onEnter();
+    
+    if (_stencil != nullptr)
+    {
+        _stencil->onEnter();
+    }
+    else
+    {
+        CCLOG("ClippingNode warning: _stencil is nil.");
+    }
 }
 
 void ClippingNode::onEnterTransitionDidFinish()
 {
     Node::onEnterTransitionDidFinish();
-    _stencil->onEnterTransitionDidFinish();
+    
+    if (_stencil != nullptr)
+    {
+        _stencil->onEnterTransitionDidFinish();
+    }
 }
 
 void ClippingNode::onExitTransitionDidStart()
 {
-    _stencil->onExitTransitionDidStart();
+    if (_stencil != nullptr)
+    {
+        _stencil->onExitTransitionDidStart();
+    }
+   
     Node::onExitTransitionDidStart();
 }
 
 void ClippingNode::onExit()
 {
-    _stencil->onExit();
+    if (_stencil != nullptr)
+    {
+        _stencil->onExit();
+    }
+    
     Node::onExit();
 }
 
@@ -321,7 +342,10 @@ void ClippingNode::visit()
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     transform();
-    _stencil->visit();
+    if (_stencil != nullptr)
+    {
+        _stencil->visit();
+    }
     kmGLPopMatrix();
     
     // restore alpha test state
@@ -381,10 +405,10 @@ Node* ClippingNode::getStencil() const
     return _stencil;
 }
 
-void ClippingNode::setStencil(Node *pStencil)
+void ClippingNode::setStencil(Node *stencil)
 {
     CC_SAFE_RELEASE(_stencil);
-    _stencil = pStencil;
+    _stencil = stencil;
     CC_SAFE_RETAIN(_stencil);
 }
 
@@ -393,9 +417,9 @@ GLfloat ClippingNode::getAlphaThreshold() const
     return _alphaThreshold;
 }
 
-void ClippingNode::setAlphaThreshold(GLfloat fAlphaThreshold)
+void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
 {
-    _alphaThreshold = fAlphaThreshold;
+    _alphaThreshold = alphaThreshold;
 }
 
 bool ClippingNode::isInverted() const
@@ -403,9 +427,9 @@ bool ClippingNode::isInverted() const
     return _inverted;
 }
 
-void ClippingNode::setInverted(bool bInverted)
+void ClippingNode::setInverted(bool inverted)
 {
-    _inverted = bInverted;
+    _inverted = inverted;
 }
 
 NS_CC_END

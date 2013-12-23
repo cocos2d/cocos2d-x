@@ -28,9 +28,11 @@ require "luaScript/FontTest/FontTest"
 require "luaScript/IntervalTest/IntervalTest"
 require "luaScript/KeypadTest/KeypadTest"
 require "luaScript/LabelTest/LabelTest"
+require "luaScript/LabelTestNew/LabelTestNew"
 require "luaScript/LayerTest/LayerTest"
 require "luaScript/MenuTest/MenuTest"
 require "luaScript/MotionStreakTest/MotionStreakTest"
+require "luaScript/NewEventDispatcherTest/NewEventDispatcherTest"
 require "luaScript/NodeTest/NodeTest"
 require "luaScript/OpenGLTest/OpenGLTest"
 require "luaScript/ParallaxTest/ParallaxTest"
@@ -80,11 +82,13 @@ local _allTests = {
     { isSupported = true,  name = "IntervalTest"           , create_func   =              IntervalTestMain  },
     { isSupported = true,  name = "KeypadTest"             , create_func=                KeypadTestMain  }, 
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
+    { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
@@ -111,8 +115,8 @@ local TESTS_COUNT = table.getn(_allTests)
 
 -- create scene
 local function CreateTestScene(nIdx)
-    local scene = _allTests[nIdx].create_func()
     cc.Director:getInstance():purgeCachedData()
+    local scene = _allTests[nIdx].create_func()
     return scene
 end
 -- create menu

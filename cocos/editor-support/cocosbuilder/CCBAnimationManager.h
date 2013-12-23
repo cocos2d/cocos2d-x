@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
-#include "CCBValue.h"
 #include "CCBSequenceProperty.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
@@ -36,8 +35,8 @@ public:
     
     virtual bool init();
     
-    cocos2d::Array* getSequences();
-    void setSequences(cocos2d::Array* seq);
+    cocos2d::Vector<CCBSequence*>& getSequences();
+    void setSequences(const cocos2d::Vector<CCBSequence*>& seq);
 
     
     int getAutoPlaySequenceId();
@@ -57,15 +56,15 @@ public:
     void setDocumentControllerName(const std::string &name);
     
     std::string getDocumentControllerName();
-    cocos2d::Array* getDocumentCallbackNames();
-    cocos2d::Array* getDocumentCallbackNodes();
-    cocos2d::Array* getDocumentCallbackControlEvents();
+    cocos2d::ValueVector& getDocumentCallbackNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentCallbackNodes();
+    cocos2d::ValueVector& getDocumentCallbackControlEvents();
     
-    cocos2d::Array* getDocumentOutletNames();
-    cocos2d::Array* getDocumentOutletNodes();
+    cocos2d::ValueVector& getDocumentOutletNames();
+    cocos2d::Vector<cocos2d::Node*>& getDocumentOutletNodes();
     std::string getLastCompletedSequenceName();
     
-    cocos2d::Array* getKeyframeCallbacks();
+    cocos2d::ValueVector& getKeyframeCallbacks();
     
     const cocos2d::Size& getRootContainerSize();
     void setRootContainerSize(const cocos2d::Size &rootContainerSize);
@@ -77,8 +76,10 @@ public:
     
     const cocos2d::Size& getContainerSize(cocos2d::Node* pNode);
     
-    void addNode(cocos2d::Node *pNode, cocos2d::Dictionary *pSeq);
-    void setBaseValue(cocos2d::Object *pValue, cocos2d::Node *pNode, const char *propName);
+    void addNode(cocos2d::Node *pNode, const std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>& seq);
+    void setBaseValue(const cocos2d::Value& value, cocos2d::Node *pNode, const std::string& propName);
+    void setObject(cocos2d::Object* obj, cocos2d::Node *pNode, const std::string& propName);
+    
     void moveAnimationsFromNode(cocos2d::Node* fromNode, cocos2d::Node* toNode);
 
     /** @deprecated This interface will be deprecated sooner or later.*/
@@ -113,19 +114,23 @@ public:
     float getSequenceDuration(const char* pSequenceName);
     
 private:
-    cocos2d::Object* getBaseValue(cocos2d::Node *pNode, const char* propName);
+    const cocos2d::Value& getBaseValue(cocos2d::Node *pNode, const std::string& propName);
+    Object* getObject(cocos2d::Node *pNode, const std::string& propName);
+    
     CCBSequence* getSequence(int nSequenceId);
-    cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const char *propName, cocos2d::Node *pNode);
-    void setAnimatedProperty(const char *propName,cocos2d::Node *pNode, Object *pValue, float fTweenDuraion);
+    cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const std::string& propName, cocos2d::Node *pNode);
+    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Object* obj, float fTweenDuraion);
     void setFirstFrame(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     cocos2d::ActionInterval* getEaseAction(cocos2d::ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     void sequenceCompleted();
     
 private:
-    cocos2d::Array *_sequences;
-    cocos2d::Dictionary *_nodeSequences;
-    cocos2d::Dictionary *_baseValues;
+    cocos2d::Vector<CCBSequence*> _sequences;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<int, cocos2d::Map<std::string, CCBSequenceProperty*>>> _nodeSequences;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Value>> _baseValues;
+    std::unordered_map<cocos2d::Node*, std::unordered_map<std::string, cocos2d::Object*>> _objects;
+    
     int _autoPlaySequenceId;
     
     cocos2d::Node *_rootNode;
@@ -135,13 +140,13 @@ private:
     CCBAnimationManagerDelegate *_delegate;
     CCBSequence *_runningSequence;
     
-    cocos2d::Array *_documentOutletNames;
-    cocos2d::Array *_documentOutletNodes;
-    cocos2d::Array *_documentCallbackNames;
-    cocos2d::Array *_documentCallbackNodes;
-    cocos2d::Array *_documentCallbackControlEvents;
-    cocos2d::Array *_keyframeCallbacks;
-    cocos2d::Dictionary *_keyframeCallFuncs;
+    cocos2d::ValueVector _documentOutletNames;
+    cocos2d::Vector<cocos2d::Node*> _documentOutletNodes;
+    cocos2d::ValueVector _documentCallbackNames;
+    cocos2d::Vector<cocos2d::Node*> _documentCallbackNodes;
+    cocos2d::ValueVector _documentCallbackControlEvents;
+    cocos2d::ValueVector _keyframeCallbacks;
+    cocos2d::Map<std::string, cocos2d::CallFunc*> _keyframeCallFuncs;
     
     std::string _documentControllerName;
     std::string _lastCompletedSequenceName;

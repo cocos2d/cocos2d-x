@@ -156,7 +156,7 @@ bool AssetsManager::checkUpdate()
     
     if (res != 0)
     {
-        ThreadHelper::runOnGLThread([&, this]{
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
                 this->_delegate->onError(ErrorCode::NETWORK);
         });
@@ -168,7 +168,7 @@ bool AssetsManager::checkUpdate()
     string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
     if (recordedVersion == _version)
     {
-        ThreadHelper::runOnGLThread([&, this]{
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
                 this->_delegate->onError(ErrorCode::NO_NEW_VERSION);
         });
@@ -191,7 +191,7 @@ void AssetsManager::downloadAndUncompress()
         {
             if (! downLoad()) break;
             
-            ThreadHelper::runOnGLThread([&, this]{
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
                 UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),
                                                             this->_version.c_str());
                 UserDefault::getInstance()->flush();
@@ -201,14 +201,14 @@ void AssetsManager::downloadAndUncompress()
         // Uncompress zip file.
         if (! uncompress())
         {
-            ThreadHelper::runOnGLThread([&, this]{
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
             });
             break;
         }
         
-        ThreadHelper::runOnGLThread([&, this] {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this] {
             
             // Record new version code.
             UserDefault::getInstance()->setStringForKey(this->keyOfVersion().c_str(), this->_version.c_str());
@@ -479,7 +479,7 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
     if (percent != tmp)
     {
         percent = tmp;
-        ThreadHelper::runOnGLThread([=]{
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
             auto manager = static_cast<AssetsManager*>(ptr);
             if (manager->_delegate)
                 manager->_delegate->onProgress(percent);
@@ -498,7 +498,7 @@ bool AssetsManager::downLoad()
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
-        ThreadHelper::runOnGLThread([&, this]{
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
                 this->_delegate->onError(ErrorCode::CREATE_FILE);
         });
@@ -518,7 +518,7 @@ bool AssetsManager::downLoad()
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        ThreadHelper::runOnGLThread([&, this]{
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
                 this->_delegate->onError(ErrorCode::NETWORK);
         });

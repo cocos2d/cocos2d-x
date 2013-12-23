@@ -134,7 +134,7 @@ void PointArray::insertControlPoint(Point &controlPoint, int index)
 
 Point PointArray::getControlPointAtIndex(int index)
 {
-    index = MIN(_controlPoints->size()-1, MAX(index, 0));
+    index = static_cast<int>(MIN(_controlPoints->size()-1, MAX(index, 0)));
     return *(_controlPoints->at(index));
 }
 
@@ -149,9 +149,9 @@ void PointArray::replaceControlPoint(cocos2d::Point &controlPoint, int index)
 void PointArray::removeControlPointAtIndex(int index)
 {
     vector<Point*>::iterator iter = _controlPoints->begin() + index;
-    Point* pRemovedPoint = *iter;
+    Point* removedPoint = *iter;
     _controlPoints->erase(iter);
-    delete pRemovedPoint;
+    delete removedPoint;
 }
 
 int PointArray::count() const
@@ -291,7 +291,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 
 void CardinalSplineTo::update(float time)
 {
-    ssize_t p;
+    int p;
     float lt;
 	
 	// eg.
@@ -475,8 +475,8 @@ CatmullRomTo* CatmullRomTo::clone() const
 
 CatmullRomTo* CatmullRomTo::reverse() const
 {
-    PointArray *pReverse = _points->reverse();
-    return CatmullRomTo::create(_duration, pReverse);
+    PointArray *reverse = _points->reverse();
+    return CatmullRomTo::create(_duration, reverse);
 }
 
 

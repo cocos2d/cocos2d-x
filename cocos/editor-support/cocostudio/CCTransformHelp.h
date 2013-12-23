@@ -47,7 +47,9 @@ public:
     static void transformToParentWithoutScale(BaseData &node, const BaseData &parentNode);
 
     static void nodeToMatrix(const BaseData &_node, cocos2d::AffineTransform &_matrix);
+    static void nodeToMatrix(const BaseData &node, kmMat4 &matrix);
     static void matrixToNode(const cocos2d::AffineTransform &_matrix, BaseData &_node);
+    static void matrixToNode(const kmMat4 &_matrix, BaseData &_node);
 
     static void nodeConcat(BaseData &target, BaseData &source);
     static void nodeSub(BaseData &target, BaseData &source);

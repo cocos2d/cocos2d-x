@@ -286,7 +286,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         
         CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
         
-        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
+        CGContextBeginTransparencyLayerWithRect(context, rect, nullptr);
         // actually draw the text in the context
 		// XXX: ios7 casting
         [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
@@ -428,12 +428,12 @@ bool Image::saveToFile(const std::string& filename, bool bIsToRGB)
     {
         bitmapInfo |= kCGImageAlphaPremultipliedLast;
     }
-    CGDataProviderRef provider        = CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+    CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
     CGImageRef iref                    = CGImageCreate(_width, _height,
                                                         bitsPerComponent, bitsPerPixel, bytesPerRow,
                                                         colorSpaceRef, bitmapInfo, provider,
-                                                        NULL, false,
+                                                        nullptr, false,
                                                         kCGRenderingIntentDefault);
         
     UIImage* image                    = [[UIImage alloc] initWithCGImage:iref];

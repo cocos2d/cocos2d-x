@@ -118,9 +118,9 @@ static int		eventQueueCount;
 		dispatchEvents_ = YES;
 
 		// delegates
-		keyboardDelegates_ = NULL;
-		mouseDelegates_ = NULL;
-                touchDelegates_ = NULL;
+		keyboardDelegates_ = nullptr;
+		mouseDelegates_ = nullptr;
+                touchDelegates_ = nullptr;
 		
 #if	CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
 		eventQueueCount = 0;
@@ -144,7 +144,7 @@ static int		eventQueueCount;
 	listElement->delegate = [delegate retain];
 	listElement->priority = priority;
 	listElement->flags = flags;
-	listElement->next = listElement->prev = NULL;
+	listElement->next = listElement->prev = nullptr;
 	
 	// empty list ?
 	if( ! *list ) {

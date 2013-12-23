@@ -91,7 +91,7 @@ void UIPageView::addWidgetToPage(UIWidget *widget, int pageIdx, bool forceCreate
     {
         return;
     }
-    int pageCount = _pages->count();
+    ssize_t pageCount = _pages->count();
     if (pageIdx < 0 || pageIdx >= pageCount)
     {
         if (forceCreate)
@@ -168,7 +168,7 @@ void UIPageView::insertPage(UILayout* page, int idx)
         return;
     }
     
-    int pageCount = _pages->count();
+    ssize_t pageCount = _pages->count();
     if (idx >= pageCount)
     {
         addPage(page);
@@ -186,7 +186,7 @@ void UIPageView::insertPage(UILayout* page, int idx)
             page->setSize(pvSize);
         }
         cocos2d::ccArray* arrayPages = _pages->data;
-        int length = arrayPages->num;
+        ssize_t length = arrayPages->num;
         for (int i=(idx+1); i<length; i++) {
             UIWidget* behindPage = dynamic_cast<UIWidget*>(arrayPages->arr[i]);
             cocos2d::Point formerPos = behindPage->getPosition();
@@ -286,7 +286,7 @@ void UIPageView::updateChildrenPosition()
         return;
     }
     
-    int pageCount = _pages->data->num;
+    ssize_t pageCount = _pages->data->num;
     if (pageCount <= 0)
     {
         _curPageIdx = 0;
@@ -411,7 +411,7 @@ void UIPageView::onTouchEnded(const cocos2d::Point &touchPoint)
 void UIPageView::movePages(float offset)
 {
     cocos2d::ccArray* arrayPages = _pages->data;
-    int length = arrayPages->num;
+    ssize_t length = arrayPages->num;
     for (int i = 0; i < length; i++)
     {
         UIWidget* child = (UIWidget*)(arrayPages->arr[i]);
@@ -502,7 +502,7 @@ void UIPageView::handleReleaseLogic(const cocos2d::Point &touchPoint)
     if (curPage)
     {
         cocos2d::Point curPagePos = curPage->getPosition();
-        int pageCount = _pages->count();
+        ssize_t pageCount = _pages->count();
         float curPageLocation = curPagePos.x;
         float pageWidth = getSize().width;
         float boundary = pageWidth/2.0f;
@@ -613,7 +613,7 @@ UIWidget* UIPageView::createCloneInstance()
 void UIPageView::copyClonedWidgetChildren(UIWidget* model)
 {
     cocos2d::ccArray* arrayPages = dynamic_cast<UIPageView*>(model)->getPages()->data;
-    int length = arrayPages->num;
+    ssize_t length = arrayPages->num;
     for (int i=0; i<length; i++)
     {
         UILayout* page = (UILayout*)(arrayPages->arr[i]);

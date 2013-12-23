@@ -349,7 +349,7 @@ namespace
     typedef struct 
     {
         const unsigned char * data;
-        int size;
+        ssize_t size;
         int offset;
     }tImageSource;
     
@@ -941,7 +941,7 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
 
         // read png data
-        png_uint_32 rowbytes;
+        png_size_t rowbytes;
         png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * _height );
 
         rowbytes = png_get_rowbytes(png_ptr, info_ptr);
@@ -1418,7 +1418,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
 		_mipmaps[i].address = _data + dataOffset;
-		_mipmaps[i].len = packetLength;
+		_mipmaps[i].len = static_cast<int>(packetLength);
 		
 		dataOffset += packetLength;
 		CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid lenght");

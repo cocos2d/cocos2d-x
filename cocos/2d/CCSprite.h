@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -77,7 +78,7 @@ struct transformValues_;
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
-class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
+class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
 
@@ -169,7 +170,7 @@ public:
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
      *
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
-     *         NULL if the sprite isn't used batch node.
+     *         nullptr if the sprite isn't used batch node.
      */
     virtual SpriteBatchNode* getBatchNode(void);
     /**
@@ -257,7 +258,7 @@ public:
      * Changes the display frame with animation name and index.
      * The animation name will be get from the AnimationCache
      */
-    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex);
+    virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
 
 
@@ -291,13 +292,13 @@ public:
     /**
      * Returns the index used on the TextureAtlas.
      */
-    inline int getAtlasIndex(void) const { return _atlasIndex; }
+    inline ssize_t getAtlasIndex(void) const { return _atlasIndex; }
 
     /**
      * Sets the index used on the TextureAtlas.
      * @warning Don't modify this value unless you know what you are doing
      */
-    inline void setAtlasIndex(int atlasIndex) { _atlasIndex = atlasIndex; }
+    inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
      * Returns the rect of the Sprite in points
@@ -391,6 +392,8 @@ public:
     inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
+    virtual std::string getDescription() const override;
+
     /// @{
     /// @name Functions inherited from Node
     virtual void setScaleX(float scaleX) override;
@@ -401,6 +404,7 @@ public:
     * @lua NA
     */
     virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationX(float rotationX) override;
     virtual void setRotationY(float rotationY) override;
@@ -420,17 +424,10 @@ public:
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
+    virtual void updateQuadVertices();
     virtual void draw(void) override;
-    /// @}
-
-    /// @{
-    /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const Color3B& color3) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     /// @}
 
 protected:
@@ -531,18 +528,20 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
+    bool culling() const;
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
     TextureAtlas*       _textureAtlas;      /// SpriteBatchNode texture atlas (weak reference)
-    int                 _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
+    ssize_t             _atlasIndex;        /// Absolute (real) Index on the SpriteSheet
     SpriteBatchNode*    _batchNode;         /// Used batch node (weak reference)
 
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    AffineTransform     _transformToBatch;
+    kmMat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered

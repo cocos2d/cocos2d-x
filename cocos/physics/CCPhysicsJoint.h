@@ -54,13 +54,19 @@ public:
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
     inline bool isEnabled() const { return _enable; }
+    /** Enable/Disable the joint */
     void setEnable(bool enable);
     inline bool isCollisionEnabled() const { return _collisionEnable; }
+    /** Enable/disable the collision between two bodies */
     void setCollisionEnable(bool enable);
+    /** Remove the joint from the world */
     void removeFormWorld();
+    /** Distory the joint*/
     static void destroy(PhysicsJoint* joint);
     
+    /** Set the max force between two bodies */
     void setMaxForce(float force);
+    /** Get the max force setting */
     float getMaxForce() const;
     
 protected:
@@ -145,6 +151,7 @@ protected:
     virtual ~PhysicsJointPin() {}
 };
 
+/** Set the fixed distance with two bodies */
 class PhysicsJointDistance : public PhysicsJoint
 {
 public:
@@ -161,6 +168,7 @@ protected:
     virtual ~PhysicsJointDistance() {}
 };
 
+/** Connecting two physics bodies together with a spring. */
 class PhysicsJointSpring : public PhysicsJoint
 {
 public:
@@ -184,6 +192,7 @@ protected:
     virtual ~PhysicsJointSpring() {}
 };
 
+/** Attach body a to a line, and attach body b to a dot */
 class PhysicsJointGroove : public PhysicsJoint
 {
 public:
@@ -204,6 +213,7 @@ protected:
     virtual ~PhysicsJointGroove() {}
 };
 
+/** Likes a spring joint, but works with rotary */
 class PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
@@ -224,6 +234,7 @@ protected:
     virtual ~PhysicsJointRotarySpring() {}
 };
 
+/** Likes a limit joint, but works with rotary */
 class PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
@@ -243,6 +254,7 @@ protected:
     virtual ~PhysicsJointRotaryLimit() {}
 };
 
+/** Works like a socket wrench. */
 class PhysicsJointRatchet : public PhysicsJoint
 {
 public:
@@ -263,6 +275,7 @@ protected:
     virtual ~PhysicsJointRatchet() {}
 };
 
+/** Keeps the angular velocity ratio of a pair of bodies constant. */
 class PhysicsJointGear : public PhysicsJoint
 {
 public:
@@ -281,6 +294,7 @@ protected:
     virtual ~PhysicsJointGear() {}
 };
 
+/** Keeps the relative angular velocity of a pair of bodies constant */
 class PhysicsJointMotor : public PhysicsJoint
 {
 public:

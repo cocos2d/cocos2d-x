@@ -62,7 +62,7 @@ class Invocation;
  *
  * To use the Control you have to subclass it.
  */
-class Control : public LayerRGBA
+class Control : public Layer
 {
 public:
     /** Kinds of possible events for the control objects. */
@@ -210,8 +210,7 @@ protected:
     *
     * @return the Invocation list for the given control event.
     */
-    //<Invocation*>
-    Array* dispatchListforControlEvent(EventType controlEvent);
+    Vector<Invocation*>& dispatchListforControlEvent(EventType controlEvent);
 
     /**
      * Adds a target and action for a particular event to an internal dispatch 
@@ -254,7 +253,7 @@ protected:
      * target-actions pairs. For each ButtonEvents a list of NSInvocation
      * (which contains the target-action pair) is linked.
      */
-    Dictionary* _dispatchTable;
+    std::unordered_map<int, Vector<Invocation*>*> _dispatchTable;
 
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;

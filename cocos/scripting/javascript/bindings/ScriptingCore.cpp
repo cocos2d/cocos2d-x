@@ -67,7 +67,7 @@ static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 static char *_js_log_buf = NULL;
 
@@ -533,7 +533,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    long length = 0;
+    ssize_t length = 0;
     unsigned char* data = futil->getFileData(byteCodePath.c_str(),
                                     "rb",
                                     &length);
@@ -1480,21 +1480,21 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_NEW_PROXY(p, nativeObj, jsObj);
     return p;
 }
 
 js_proxy_t* jsb_get_native_proxy(void* nativeObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_GET_PROXY(p, nativeObj);
     return p;
 }
 
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_GET_NATIVE_PROXY(p, jsObj);
     return p;
 }
@@ -1504,58 +1504,4 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
-// JSStringWrapper
-JSStringWrapper::JSStringWrapper()
-: _buffer(nullptr)
-{
-}
-
-JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(str, cx);
-}
-
-JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(val, cx);
-}
-
-JSStringWrapper::~JSStringWrapper()
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-}
-
-void JSStringWrapper::set(jsval val, JSContext* cx)
-{
-    if (val.isString())
-    {
-        this->set(val.toString(), cx);
-    }
-    else
-    {
-        CC_SAFE_DELETE_ARRAY(_buffer);
-    }
-}
-
-void JSStringWrapper::set(JSString* str, JSContext* cx)
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-    
-    if (!cx)
-    {
-        cx = ScriptingCore::getInstance()->getGlobalContext();
-    }
-    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-    //buffer = JS_EncodeString(cx, string);
-    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-    
-    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-}
-
-const char* JSStringWrapper::get()
-{
-    return _buffer ? _buffer : "";
-}
 

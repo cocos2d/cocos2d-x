@@ -50,7 +50,7 @@ NS_CC_EXT_BEGIN
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
-class Scale9Sprite : public NodeRGBA
+class Scale9Sprite : public Node
 {
 public:
     /**
@@ -262,9 +262,7 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override;
     virtual bool isOpacityModifyRGB(void) const override;
     virtual void setOpacity(GLubyte opacity) override;
-	virtual GLubyte getOpacity() const override;
     virtual void setColor(const Color3B& color) override;
-	virtual const Color3B& getColor() const override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
 

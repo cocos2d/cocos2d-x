@@ -36,7 +36,7 @@ namespace cocostudio {
 
 class Armature;
 
-class Bone : public cocos2d::NodeRGBA
+class Bone : public cocos2d::Node
 {
 public:
     /**
@@ -92,6 +92,7 @@ public:
     void removeDisplay(int index);
 
     void changeDisplayByIndex(int index, bool force);
+    void changeDisplayByName(const char *name, bool force);
 
     /**
      * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
@@ -133,11 +134,8 @@ public:
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
     void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    virtual void setColor(const cocos2d::Color3B& color) override;
-    virtual void setOpacity(GLubyte opacity) override;
-
     //! Update color to render display
-    void updateColor();
+    virtual void updateColor() override;
 
     //! Update zorder
     void updateZOrder();
@@ -152,8 +150,8 @@ public:
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
-    virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
+    virtual kmMat4 getNodeToArmatureTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
     DisplayType getDisplayRenderNodeType();
@@ -161,10 +159,12 @@ public:
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      */
-    virtual cocos2d::Array *getColliderBodyList();
+    virtual ColliderDetector* getColliderDetector() const;
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
     virtual ColliderFilter *getColliderFilter();
+#endif
 
     virtual void setBoneData(BoneData *boneData);
     virtual BoneData *getBoneData() const;
@@ -188,8 +188,18 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 
-    virtual void setBlendType(BlendType type) { _blendType = type; }
-    virtual BlendType getBlendType() const { return _blendType; }
+    
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
+    virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return _blendDirty; }
 
     virtual FrameData *getTweenData() const { return _tweenData; }
 
@@ -220,7 +230,8 @@ protected:
      */
     bool _ignoreMovementBoneData;
 
-    BlendType _blendType;
+    cocos2d::BlendFunc _blendFunc;
+    bool _blendDirty;
 
     Tween *_tween;				//! Calculate tween effect
 
@@ -233,7 +244,7 @@ protected:
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    cocos2d::AffineTransform _worldTransform;
+    kmMat4 _worldTransform;
 
     BaseData *_worldInfo;
     

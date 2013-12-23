@@ -47,10 +47,11 @@ void Bug422Layer::reset()
 
 void Bug422Layer::check(Node* t)
 {
-    t->getChildren().forEach([this](Node* child){
+    auto& children = t->getChildren();
+    for(const auto &child : children) {
         log("%p, rc: %d", child, child->retainCount());
         check(child);
-    });
+    }
 }
 
 void Bug422Layer::menuCallback(Object* sender)
