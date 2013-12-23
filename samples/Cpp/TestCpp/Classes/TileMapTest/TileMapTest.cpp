@@ -135,9 +135,9 @@ TMXOrthoTest::TMXOrthoTest()
         child->getTexture()->setAntiAliasTexParameters();
     }
 
-    float x, y, z;
-    map->getCamera()->getEye(&x, &y, &z);
-    map->getCamera()->setEye(x-200, y, z+300);    
+//    float x, y, z;
+//    map->getCamera()->getEye(&x, &y, &z);
+//    map->getCamera()->setEye(x-200, y, z+300);    
 }
 
 void TMXOrthoTest::onEnter()

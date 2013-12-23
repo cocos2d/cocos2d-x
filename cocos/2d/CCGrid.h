@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "CCNode.h"
-#include "CCCamera.h"
 #include "ccTypes.h"
 #include "CCTexture2D.h"
 #include "CCDirector.h"

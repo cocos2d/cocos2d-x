@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "ccCArray.h"
 #include "TransformUtils.h"
-#include "CCCamera.h"
 #include "CCGrid.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"
@@ -106,7 +105,6 @@ Node::Node(void)
 , _additionalTransformDirty(false)
 , _transformDirty(true)
 , _inverseDirty(true)
-, _camera(nullptr)
 // children (lazy allocs)
 // lazy alloc
 , _ZOrder(0)
@@ -168,8 +166,6 @@ Node::~Node()
     CC_SAFE_RELEASE(_eventDispatcher);
     
     // attributes
-    CC_SAFE_RELEASE(_camera);
-
     CC_SAFE_RELEASE(_shaderProgram);
     CC_SAFE_RELEASE(_userObject);
 
@@ -402,17 +398,6 @@ ssize_t Node::getChildrenCount() const
     return _children.size();
 }
 
-/// camera getter: lazy alloc
-Camera* Node::getCamera()
-{
-    if (!_camera)
-    {
-        _camera = new Camera();
-    }
-    
-    return _camera;
-}
-
 /// isVisible getter
 bool Node::isVisible() const
 {
@@ -531,6 +516,13 @@ void Node::setShaderProgram(GLProgram *pShaderProgram)
     CC_SAFE_RETAIN(pShaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
     _shaderProgram = pShaderProgram;
+}
+
+Scene* Node::getScene()
+{
+    if(!_parent)
+        return nullptr;
+    return _parent->getScene();
 }
 
 Rect Node::getBoundingBox() const
@@ -869,9 +861,7 @@ void Node::transform()
     kmGLMultMatrix( &transfrom4x4 );
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
-
 }
-
 
 void Node::onEnter()
 {
@@ -1207,6 +1197,12 @@ const kmMat4& Node::getNodeToParentTransform() const
     }
     
     return _transform;
+}
+
+void Node::setNodeToParentTransform(const kmMat4& transform)
+{
+    _transform = transform;
+    _transformDirty = false;
 }
 
 void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
