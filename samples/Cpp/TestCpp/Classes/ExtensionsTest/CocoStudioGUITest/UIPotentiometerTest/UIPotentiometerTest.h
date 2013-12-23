@@ -22,18 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UITextAreaTest__
-#define __TestCpp__UITextAreaTest__
+#ifndef __TestCpp__UIPotentiometerTest__
+#define __TestCpp__UIPotentiometerTest__
 
 #include "../UIScene.h"
 
-class UITextAreaTest : public UIScene
+class UIPotentiometerTest : public UIScene
 {
 public:
+    UIPotentiometerTest();
+    ~UIPotentiometerTest();
     bool init();
+    void valueChangedEvent(Object* pSender, PotentiometerEventType type);
+    
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextAreaTest)
+    UI_SCENE_CREATE_FUNC(UIPotentiometerTest)
+    gui::Label* _displayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UITextAreaTest__) */
+
+#endif /* defined(__TestCpp__UIPotentiometerTest__) */

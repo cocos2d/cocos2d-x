@@ -22,33 +22,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIDragPanelTest__
-#define __TestCpp__UIDragPanelTest__
+#ifndef __TestCpp__UIGridViewTest__
+#define __TestCpp__UIGridViewTest__
 
 #include "../UIScene.h"
 
-class UIDragPanelTest : public UIScene
+class UIGridViewTest_Mode_Column : public UIScene
 {
 public:
-    UIDragPanelTest();
-    ~UIDragPanelTest();
+    UIGridViewTest_Mode_Column();
+    ~UIGridViewTest_Mode_Column();
     bool init();
+    void selectedChildEvent(Object* pSender, ScrollviewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest)
-    UILabel *m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Column)
+    gui::Label* _displayValueLabel;
 };
 
-class UIDragPanelTest_Bounce : public UIScene
+class UIGridViewTest_Mode_Row : public UIScene
 {
 public:
-    UIDragPanelTest_Bounce();
-    ~UIDragPanelTest_Bounce();
+    UIGridViewTest_Mode_Row();
+    ~UIGridViewTest_Mode_Row();
     bool init();
+    void selectedChildEvent(Object* pSender, ScrollviewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
-    UILabel *m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Row)
+    gui::Label* _displayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UIDragPanelTest__) */
+#endif /* defined(__TestCpp__UIGridViewTest__) */

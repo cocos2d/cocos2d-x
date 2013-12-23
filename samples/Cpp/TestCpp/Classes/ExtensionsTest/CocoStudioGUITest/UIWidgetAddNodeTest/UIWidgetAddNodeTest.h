@@ -27,17 +27,15 @@
 
 #include "../UIScene.h"
 
-class UINodeContainerTest : public UIScene
+class UIWidgetAddNodeTest : public UIScene
 {
 public:
-    UINodeContainerTest();
-    ~UINodeContainerTest();
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UINodeContainerTest)
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
 };
 
 #endif /* defined(__TestCpp__UINodeContainerTest__) */
