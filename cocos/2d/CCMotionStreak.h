@@ -43,7 +43,7 @@ NS_CC_BEGIN
 /** MotionStreak.
  Creates a trailing path.
  */
-class CC_DLL MotionStreak : public NodeRGBA, public TextureProtocol
+class CC_DLL MotionStreak : public Node, public TextureProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN
@@ -98,6 +98,11 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
+
+protected:
+    kmMat4 _cachedMV;
+    //renderer callback
+    void onDraw();
 
 protected:
     /**

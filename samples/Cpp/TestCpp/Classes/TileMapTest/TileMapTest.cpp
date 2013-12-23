@@ -130,14 +130,14 @@ TMXOrthoTest::TMXOrthoTest()
     
     auto& children = map->getChildren();
 
-    std::for_each(children.begin(), children.end(), [](Node* obj){
+    for(const auto &obj : children) {
         auto child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
-    float x, y, z;
-    map->getCamera()->getEye(&x, &y, &z);
-    map->getCamera()->setEye(x-200, y, z+300);    
+//    float x, y, z;
+//    map->getCamera()->getEye(&x, &y, &z);
+//    map->getCamera()->setEye(x-200, y, z+300);    
 }
 
 void TMXOrthoTest::onEnter()
@@ -174,10 +174,10 @@ TMXOrthoTest2::TMXOrthoTest2()
     auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    std::for_each(children.begin(), children.end(), [&child](Node* obj){
+    for(const auto &obj : children) {
         child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     map->runAction( ScaleBy::create(2, 0.5f) ) ;
 }
@@ -203,10 +203,10 @@ TMXOrthoTest3::TMXOrthoTest3()
     auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    std::for_each(children.begin(), children.end(), [&child](Node* node){
+    for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
     
     map->setScale(0.2f);
     map->setAnchorPoint( Point(0.5f, 0.5f) );
@@ -234,10 +234,10 @@ TMXOrthoTest4::TMXOrthoTest4()
     
     auto& children = map->getChildren();
     
-    std::for_each(children.begin(), children.end(), [&child](Node* node){
+    for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
     
     map->setAnchorPoint(Point(0, 0));
 
@@ -534,10 +534,10 @@ TMXUncompressedTest::TMXUncompressedTest()
     TMXLayer* layer;
     
     auto& children = map->getChildren();
-    std::for_each(children.begin(), children.end(), [&layer](Node* node){
+    for(const auto &node : children) {
         layer= static_cast<TMXLayer*>(node);
         layer->releaseMap();
-    });
+    }
 
 }
 
@@ -1090,10 +1090,10 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* node){
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1119,10 +1119,10 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* node){
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1197,10 +1197,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* node){
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1225,10 +1225,10 @@ TMXBug987::TMXBug987()
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
     auto& children = map->getChildren();
-    std::for_each(children.begin(), children.end(), [](Node* child){
+    for(const auto &child : children) {
         auto node = static_cast<TMXLayer*>(child);
         node->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     map->setAnchorPoint(Point(0, 0));
     auto layer = map->getLayer("Tile Layer 1");

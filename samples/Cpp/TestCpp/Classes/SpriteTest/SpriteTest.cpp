@@ -699,23 +699,23 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     auto& children = asmtest->getChildren();
 
-    std::for_each(children.begin(), children.end(), [&prev](Node* obj){
+    for(const auto &obj : children) {
         auto child = static_cast<Sprite*>(obj);
 
         int currentIndex = child->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("children %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
-    });
+    }
     
     prev = -1;
     auto& descendants = asmtest->getDescendants();
-    std::for_each(descendants.begin(), descendants.end(), [&](Sprite* sprite) {
+    for(const auto &sprite : descendants) {
         int currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
         prev = currentIndex;
-    });
+    }
 }
 
 std::string SpriteBatchNodeReorder::title() const
@@ -1544,19 +1544,19 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
 
     if( _usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
-        std::for_each(children.begin(), children.end(), [&sprite, this](Node* obj){
+        for(const auto &obj : children) {
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture2);
-        });
+        }
 
         _usingTexture1 = false;
     } 
     else 
     {
-        std::for_each(children.begin(), children.end(), [&sprite, this](Node* obj){
+        for(const auto &obj : children) {
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture1);
-        });
+        }
 
         _usingTexture1 = true;
     }
@@ -2322,17 +2322,17 @@ void SpriteHybrid::reparentSprite(float dt)
     ////----CCLOG("New parent is: %x", p2);
     
     auto& p1Children = p1->getChildren();
-    std::for_each(p1Children.begin(), p1Children.end(), [&retArray](Node* node){
+    for(const auto &node : p1Children) {
         retArray.pushBack(node);
-    });
+    }
 
     int i=0;
     p1->removeAllChildrenWithCleanup(false);
 
-    std::for_each(retArray.begin(), retArray.end(), [&i, &p2](Node* node){
+    for(const auto &node : retArray) {
         p2->addChild(node, i, i);
         i++;
-    });
+    }
 
     _usingSpriteBatchNode = ! _usingSpriteBatchNode;
 }
@@ -4288,18 +4288,18 @@ void NodeSort::reorderSprite(float dt)
     
     auto& children = _node->getChildren();
     
-    std::for_each(children.begin(), children.end(), [](Node* child){
+    for(const auto &child : children) {
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-    });
+    }
     //z-4
     _node->reorderChild( _node->getChildren().at(0), -6);
 
     _node->sortAllChildren();
     
     log("After reorder--");
-    std::for_each(children.begin(), children.end(), [](Node* child){
+    for(const auto &child : children) {
         log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
-    });
+    }
 }
 
 /// SpriteBatchNodeReorderSameIndex
@@ -4350,9 +4350,9 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
 
     _batchNode->sortAllChildren();
 
-    std::for_each(_batchNode->getDescendants().begin(), _batchNode->getDescendants().end(), [&](Sprite* sprite) {
+    for(const auto &sprite : _batchNode->getDescendants()) {
         log("tag %i", sprite->getTag() );
-    });
+    }
 }
 
 /// SpriteBatchNodeReorderOneChild

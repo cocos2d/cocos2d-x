@@ -299,12 +299,12 @@ void MenuItemLabel::setEnabled(bool enabled)
     {
         if(enabled == false)
         {
-            _colorBackup = dynamic_cast<RGBAProtocol*>(_label)->getColor();
-            dynamic_cast<RGBAProtocol*>(_label)->setColor(_disabledColor);
+            _colorBackup = _label->getColor();
+            _label->setColor(_disabledColor);
         }
         else
         {
-            dynamic_cast<RGBAProtocol*>(_label)->setColor(_colorBackup);
+            _label->setColor(_colorBackup);
         }
     }
     MenuItem::setEnabled(enabled);
@@ -918,9 +918,9 @@ void MenuItemToggle::addSubItem(MenuItem *item)
 
 MenuItemToggle::~MenuItemToggle()
 {
-    std::for_each(_subItems.begin(), _subItems.end(), [](MenuItem* item){
+    for(const auto &item : _subItems) {
         item->cleanup();
-    });
+    }
 }
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
@@ -970,9 +970,9 @@ void MenuItemToggle::setEnabled(bool enabled)
     {
         MenuItem::setEnabled(enabled);
 
-        std::for_each(_subItems.begin(), _subItems.end(), [&enabled](MenuItem* item){
+        for(const auto &item : _subItems) {
             item->setEnabled(enabled);
-        });
+        }
     }
 }
 

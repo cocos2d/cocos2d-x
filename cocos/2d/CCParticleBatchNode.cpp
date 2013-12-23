@@ -135,20 +135,9 @@ void ParticleBatchNode::visit()
 
     kmGLPushMatrix();
 
-    if ( _grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
-
     transform();
 
     draw();
-
-    if ( _grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
 }
@@ -385,9 +374,8 @@ void ParticleBatchNode::removeChildAtIndex(int index, bool doCleanup)
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    std::for_each(_children.begin(), _children.end(), [](Node* child){
+    for(const auto &child : _children)
         static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
-    });
 
     Node::removeAllChildrenWithCleanup(doCleanup);
 
@@ -481,11 +469,11 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 {
     int index = 0;
     
-    std::for_each(_children.begin(), _children.end(), [&index](Node* child){
+    for(const auto &child : _children) {
         ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
         partiSys->setAtlasIndex(index);
         index += partiSys->getTotalParticles();
-    });
+    }
 }
 
 // ParticleBatchNode - CocosNodeTexture protocol

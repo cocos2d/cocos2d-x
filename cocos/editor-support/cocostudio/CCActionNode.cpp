@@ -399,7 +399,7 @@ int ActionNode::getLastFrameIndex()
 			continue;
 		}
 		bFindFrame = true;
-		int lastInex = cArray->count() - 1;
+		ssize_t lastInex = cArray->count() - 1;
 		ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(lastInex));
 		int iFrameIndex = frame->getFrameIndex();
 
@@ -428,7 +428,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 		{
 			continue;
 		}
-		int frameCount = cArray->count();
+		ssize_t frameCount = cArray->count();
 		for (int i = 0; i < frameCount; i++)
 		{
 			ActionFrame* frame = (ActionFrame*)(cArray->getObjectAtIndex(i));

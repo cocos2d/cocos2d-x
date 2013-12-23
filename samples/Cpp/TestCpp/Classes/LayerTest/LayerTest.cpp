@@ -22,7 +22,9 @@ static std::function<Layer*()> createFunctions[] = {
     CL(LayerIgnoreAnchorPointPos),
     CL(LayerIgnoreAnchorPointRot),
     CL(LayerIgnoreAnchorPointScale),
-    CL(LayerExtendedBlendOpacityTest)
+    CL(LayerExtendedBlendOpacityTest),
+    CL(LayerBug3162A),
+    CL(LayerBug3162B),
 };
 
 static int sceneIdx=-1;
@@ -112,17 +114,13 @@ void LayerTest::backCallback(Object* sender)
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
-    auto rgba = dynamic_cast<RGBAProtocol*>(node);
-    if (rgba)
-    {
-        rgba->setCascadeColorEnabled(enable);
-        rgba->setCascadeOpacityEnabled(enable);
-    }
+    node->setCascadeColorEnabled(enable);
+    node->setCascadeOpacityEnabled(enable);
     
     auto& children = node->getChildren();
-    std::for_each(children.begin(), children.end(), [enable](Node* child){
+    for(const auto &child : children) {
         setEnableRecursiveCascading(child, enable);
-    });
+    }
 }
 
 // LayerTestCascadingOpacityA
@@ -131,7 +129,7 @@ void LayerTestCascadingOpacityA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -170,7 +168,7 @@ void LayerTestCascadingOpacityA::onEnter()
 
 std::string LayerTestCascadingOpacityA::title() const
 {
-    return "LayerRGBA: cascading opacity";
+    return "Layer: cascading opacity";
 }
 
 
@@ -284,7 +282,7 @@ void LayerTestCascadingColorA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -326,7 +324,7 @@ void LayerTestCascadingColorA::onEnter()
 
 std::string LayerTestCascadingColorA::title() const
 {
-    return "LayerRGBA: cascading color";
+    return "Layer: cascading color";
 }
 
 
@@ -868,3 +866,91 @@ std::string LayerExtendedBlendOpacityTest::subtitle() const
     return "You should see 3 layers";
 }
 
+// LayerBug3162A
+void LayerBug3162A::onEnter()
+{
+    LayerTest::onEnter();
+    
+    Size size = VisibleRect::getVisibleRect().size;
+    size.width = size.width / 2;
+    size.height = size.height / 3;
+    Color4B color[3] = {Color4B(255, 0, 0, 255), Color4B(0, 255, 0, 255), Color4B(0, 0, 255, 255)};
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        _layer[i] = LayerColor::create(color[i]);
+        _layer[i]->setContentSize(size);
+        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        _layer[i]->setOpacity(150);
+        _layer[i]->setCascadeOpacityEnabled(true);
+        if (i > 0)
+        {
+            _layer[i-1]->addChild(_layer[i]);
+        }
+    }
+    
+    this->addChild(_layer[0]);
+    
+    schedule(schedule_selector(LayerBug3162A::step), 0.5, kRepeatForever, 0);
+}
+
+void LayerBug3162A::step(float dt)
+{
+    _layer[0]->setCascadeOpacityEnabled(!_layer[0]->isCascadeOpacityEnabled());
+}
+
+std::string LayerBug3162A::title() const
+{
+    return "Bug 3162 red layer cascade opacity eable/disable";
+}
+
+std::string LayerBug3162A::subtitle() const
+{
+    return "g and b layer opacity is effected/diseffected with r layer";
+}
+
+// LayerBug3162B
+void LayerBug3162B::onEnter()
+{
+    LayerTest::onEnter();
+    
+    Size size = VisibleRect::getVisibleRect().size;
+    size.width = size.width / 2;
+    size.height = size.height / 3;
+    Color4B color[3] = {Color4B(200, 0, 0, 255), Color4B(150, 0, 0, 255), Color4B(100, 0, 0, 255)};
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        _layer[i] = LayerColor::create(color[i]);
+        _layer[i]->setContentSize(size);
+        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        //_layer[i]->setOpacity(150);
+        if (i > 0)
+        {
+            _layer[i-1]->addChild(_layer[i]);
+        }
+    }
+    
+    this->addChild(_layer[0]);
+    
+    _layer[0]->setCascadeColorEnabled(true);
+    _layer[1]->setCascadeColorEnabled(true);
+    _layer[2]->setCascadeColorEnabled(true);
+    
+    schedule(schedule_selector(LayerBug3162B::step), 0.5, kRepeatForever, 0);
+}
+
+void LayerBug3162B::step(float dt)
+{
+    _layer[0]->setCascadeColorEnabled(!_layer[0]->isCascadeColorEnabled());
+}
+
+std::string LayerBug3162B::title() const
+{
+    return "Bug 3162 bottom layer cascade color eable/disable";
+}
+
+std::string LayerBug3162B::subtitle() const
+{
+    return "u and m layer color is effected/diseffected with b layer";
+}
