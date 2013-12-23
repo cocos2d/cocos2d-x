@@ -31,7 +31,7 @@ public:
     void saveImage(Object *pSender);
 
 private:
-    NewRenderTexture *_target;
+    RenderTexture *_target;
     Sprite *_brush;
 };
 
