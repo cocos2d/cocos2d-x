@@ -37,7 +37,7 @@ void sendEvent(unsigned int event)
         CCARRAY_FOREACH(array, pObj)
         {
             TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-            if (triobj != NULL && triobj->check())
+            if (triobj != NULL && triobj->detect())
             {
                 triobj->done();
             }

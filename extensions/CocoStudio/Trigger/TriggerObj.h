@@ -41,7 +41,7 @@ protected:
 public:
 	virtual ~BaseTriggerCondition(void);
     virtual bool init();
-    virtual bool check();
+    virtual bool detect();
 	virtual void serialize(const rapidjson::Value &val);
     virtual void removeAll();
 };
@@ -67,7 +67,7 @@ public:
     virtual bool init();
     static TriggerObj* create(void);
     
-    virtual bool check();
+    virtual bool detect();
     virtual void done();
     virtual void removeAll();
     virtual void serialize(const rapidjson::Value &val);

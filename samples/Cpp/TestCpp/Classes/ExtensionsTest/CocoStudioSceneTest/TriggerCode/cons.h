@@ -14,7 +14,7 @@ public:
      virtual ~TimeElapsed(void);
 
      virtual bool init();
-     virtual bool check();
+     virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 	 virtual void update(float dt);
@@ -34,7 +34,7 @@ public:
      virtual ~ArmatureActionState(void);
 
      virtual bool init();
-     virtual bool check();
+     virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 	 void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
@@ -55,7 +55,7 @@ public:
      virtual ~NodeInRect(void);
 
      virtual bool init();
-     virtual bool check();
+     virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
@@ -72,7 +72,7 @@ public:
      virtual ~NodeVisible(void);
 
      virtual bool init();
-     virtual bool check();
+     virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
