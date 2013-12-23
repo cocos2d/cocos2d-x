@@ -2640,142 +2640,6 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_cocos2dx_Camera_getCenter(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    Camera* self = nullptr;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"Camera",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<Camera *>(tolua_tousertype(tolua_S,1,0));
-    
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self)
-    {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getCenter'\n", nullptr);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (0 == argc)
-    {
-        float x;
-        float y;
-        float z;
-        self->getCenter(&x, &y, &z);
-        tolua_pushnumber(tolua_S,(lua_Number)x);
-        tolua_pushnumber(tolua_S, (lua_Number)y);
-        tolua_pushnumber(tolua_S, (lua_Number)z);
-        return 3;
-    }
-    
-    CCLOG("'getCenter' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getCenter'.",&tolua_err);
-    return 0;
-#endif
-}
-
-static int tolua_cocos2dx_Camera_getEye(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    Camera* self = nullptr;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"Camera",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<Camera *>(tolua_tousertype(tolua_S,1,0));
-    
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getEye'\n", nullptr);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (0 == argc)
-    {
-        float x;
-        float y;
-        float z;
-        self->getEye(&x, &y, &z);
-        tolua_pushnumber(tolua_S,(lua_Number)x);
-        tolua_pushnumber(tolua_S, (lua_Number)y);
-        tolua_pushnumber(tolua_S, (lua_Number)z);
-        return 3;
-    }
-    
-    CCLOG("'getEye' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getEye'.",&tolua_err);
-    return 0;
-#endif
-}
-
-static int tolua_cocos2dx_Camera_getUp(lua_State* tolua_S)
-{
-    if (nullptr == tolua_S)
-        return 0;
-    
-    int argc = 0;
-    Camera* self = nullptr;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"Camera",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    self = static_cast<Camera *>(tolua_tousertype(tolua_S,1,0));
-    
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self) {
-		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_Camera_getUp'\n", nullptr);
-		return 0;
-	}
-#endif
-    
-    argc = lua_gettop(tolua_S) - 1;
-    
-    if (0 == argc)
-    {
-        float x;
-        float y;
-        float z;
-        self->getUp(&x, &y, &z);
-        tolua_pushnumber(tolua_S,(lua_Number)x);
-        tolua_pushnumber(tolua_S, (lua_Number)y);
-        tolua_pushnumber(tolua_S, (lua_Number)z);
-        return 3;
-    }
-    
-    CCLOG("'getUp' has wrong number of arguments: %d, was expecting %d\n", argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'getUp'.",&tolua_err);
-    return 0;
-#endif
-}
-
 static int tolua_cocos2dx_FileUtils_getStringFromFile(lua_State* tolua_S)
 {
     if (nullptr == tolua_S)
@@ -3562,27 +3426,6 @@ static void extendParticleSystem(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-static void extendCamera(lua_State* tolua_S)
-{
-    lua_pushstring(tolua_S, "Camera");
-    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
-    if (lua_istable(tolua_S,-1))
-    {
-        lua_pushstring(tolua_S,"getCenter");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getCenter );
-        lua_rawset(tolua_S,-3);
-        
-        lua_pushstring(tolua_S,"getUp");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getUp );
-        lua_rawset(tolua_S,-3);
-        
-        lua_pushstring(tolua_S,"getEye");
-        lua_pushcfunction(tolua_S,tolua_cocos2dx_Camera_getEye );
-        lua_rawset(tolua_S,-3);
-    }
-    lua_pop(tolua_S, 1);
-}
-
 static void extendFileUtils(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "FileUtils");
@@ -3651,7 +3494,7 @@ EventListenerCustom* LuaEventListenerCustom::create(const std::string& eventName
     if (nullptr == eventCustom)
         return nullptr;
     
-    if ( eventCustom->init(std::hash<std::string>()(eventName), [=](EventCustom* event){
+    if ( eventCustom->init(eventName, [=](EventCustom* event){
         BasicScriptData data((void*)eventCustom,(void*)event);
         ScriptEvent accEvent(kEventListenerCustom,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
@@ -3768,11 +3611,11 @@ int register_cocos2dx_event_releated(lua_State* tolua_S)
       tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    size_t typeEventCustomId = typeid(LuaEventListenerCustom).hash_code();
-    g_luaType[typeEventCustomId] = "LuaEventListenerCustom";
+    std::string typeEventCustomName = typeid(LuaEventListenerCustom).name();
+    g_luaType[typeEventCustomName] = "LuaEventListenerCustom";
     
-    size_t typeEventAccelerationId = typeid(LuaEventListenerAcceleration).hash_code();
-    g_luaType[typeEventAccelerationId] = "LuaEventListenerAcceleration";
+    std::string typeEventAccelerationName = typeid(LuaEventListenerAcceleration).name();
+    g_luaType[typeEventAccelerationName] = "LuaEventListenerAcceleration";
     
     return 1;
 }
@@ -4354,7 +4197,6 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendLayerColor(tolua_S);
     extendLayerMultiplex(tolua_S);
     extendParticleSystem(tolua_S);
-    extendCamera(tolua_S);
     extendFileUtils(tolua_S);
     extendUserDefault(tolua_S);
     extendGLProgram(tolua_S);
