@@ -749,16 +749,6 @@ void Sprite::updateQuadVertices()
 
 // Node overrides
 
-void Sprite::addChild(Node *child)
-{
-    Node::addChild(child);
-}
-
-void Sprite::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
