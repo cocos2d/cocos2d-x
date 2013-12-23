@@ -22,47 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UITextFieldTest__
-#define __TestCpp__UITextFieldTest__
+#ifndef __TestCpp__UISwitchTest__
+#define __TestCpp__UISwitchTest__
 
 #include "../UIScene.h"
 
-class UITextFieldTest : public UIScene
+class UISwitchTest_Horizontal : public UIScene
 {
 public:
-    UITextFieldTest();
-    ~UITextFieldTest();
+    UISwitchTest_Horizontal();
+    ~UISwitchTest_Horizontal();
     bool init();
-    void textFieldEvent(Object* pSender, TextFiledEventType type);    
+    void switchEvent(Object* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Horizontal)
     gui::Label* _displayValueLabel;
 };
 
-class UITextFieldTest_MaxLength : public UIScene
+class UISwitchTest_Vertical : public UIScene
 {
 public:
-    UITextFieldTest_MaxLength();
-    ~UITextFieldTest_MaxLength();
+    UISwitchTest_Vertical();
+    ~UISwitchTest_Vertical();
     bool init();
-    void textFieldEvent(Object* pSender, TextFiledEventType type);
+    void switchEvent(Object* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_MaxLength)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Vertical)
     gui::Label* _displayValueLabel;
 };
 
-class UITextFieldTest_Password : public UIScene
+class UISwitchTest_VerticalAndTitleVertical : public UIScene
 {
 public:
-    UITextFieldTest_Password();
-    ~UITextFieldTest_Password();
+    UISwitchTest_VerticalAndTitleVertical();
+    ~UISwitchTest_VerticalAndTitleVertical();
     bool init();
-    void textFieldEvent(Object* pSender, TextFiledEventType type);
+    void switchEvent(Object* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_VerticalAndTitleVertical)
     gui::Label* _displayValueLabel;
 };
-#endif /* defined(__TestCpp__UITextFieldTest__) */
+
+#endif /* defined(__TestCpp__UISwitchTest__) */

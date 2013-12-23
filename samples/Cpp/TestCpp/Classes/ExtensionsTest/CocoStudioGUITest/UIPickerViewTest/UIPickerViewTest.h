@@ -22,36 +22,41 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UITextButtonTest__
-#define __TestCpp__UITextButtonTest__
+#ifndef __TestCpp__UIPickViewTest__
+#define __TestCpp__UIPickViewTest__
 
 #include "../UIScene.h"
 
-class UITextButtonTest : public UIScene
+class UIPickerViewTest_Vertical : public UIScene
 {
 public:
-    UITextButtonTest();
-    ~UITextButtonTest();
+    UIPickerViewTest_Vertical();
+    ~UIPickerViewTest_Vertical();
     bool init();
-    void touchEvent(Object *pSender, TouchEventType type);
+    void selectedItemEvent(Object* pSender, ScrollviewEventType type);
+    void pickItemEvent(Object* pSender, PickerViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Vertical)
+    gui::Label* m_pDisplayValueLabel;
+    
+    __Array* m_array;
 };
 
-class UITextButtonTest_Scale9 : public UIScene
+class UIPickerViewTest_Horizontal : public UIScene
 {
 public:
-    UITextButtonTest_Scale9();
-    ~UITextButtonTest_Scale9();
+    UIPickerViewTest_Horizontal();
+    ~UIPickerViewTest_Horizontal();
     bool init();
-    void touchEvent(Object *pSender, TouchEventType type);    
+    void selectedItemEvent(Object* pSender, ScrollviewEventType type);
+    void pickItemEvent(Object* pSender, PickerViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest_Scale9)
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Horizontal)
+    gui::Label* m_pDisplayValueLabel;
+    
+    __Array* m_array;
 };
 
-#endif /* defined(__TestCpp__UITextButtonTest__) */
+#endif /* defined(__TestCpp__UIPickViewTest__) */
