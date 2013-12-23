@@ -65,9 +65,11 @@ _touchListener(nullptr)
 Widget::~Widget()
 {
     //recheck
+    
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _renderer->release();
+    _widgetChildren.clear();
     CC_SAFE_RELEASE(_touchListener);
 }
 
@@ -665,9 +667,11 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(Touch *touch, Event *unused_event)
 {
-    
     _touchStartPos = touch->getLocation();
-    _hitted = hitTest(_touchStartPos);
+    _hitted = isEnabled()
+    & isTouchEnabled()
+    & hitTest(_touchStartPos)
+    & clippingParentAreaContainPoint(_touchStartPos);
     if (!_hitted)
     {
         return false;
@@ -881,11 +885,6 @@ void Widget::setPositionPercent(const Point &percent)
     }
 }
 
-void Widget::setAnchorPoint(const Point &pt)
-{
-    NodeRGBA::setAnchorPoint(pt);
-}
-
 void Widget::updateAnchorPoint()
 {
     setAnchorPoint(getAnchorPoint());
@@ -904,22 +903,6 @@ void Widget::setPositionType(PositionType type)
 PositionType Widget::getPositionType() const
 {
     return _positionType;
-}
-
-const Point& Widget::getAnchorPoint() const
-{
-    return NodeRGBA::getAnchorPoint();
-}
-
-void Widget::setVisible(bool visible)
-{
-    _visible = visible;
-    _renderer->setVisible(visible);
-}
-
-bool Widget::isVisible() const
-{
-    return _visible;
 }
 
 bool Widget::isBright() const

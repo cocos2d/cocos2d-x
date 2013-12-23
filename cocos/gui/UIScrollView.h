@@ -53,7 +53,7 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-typedef void (CCObject::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
+typedef void (Object::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 

@@ -46,6 +46,7 @@ ListView::~ListView()
 {
     _listViewEventListener = nullptr;
     _listViewEventSelector = nullptr;
+    _items.clear();
 }
 
 ListView* ListView::create()

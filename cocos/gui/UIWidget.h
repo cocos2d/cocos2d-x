@@ -114,22 +114,6 @@ public:
     bool isEnabled() const;
     
     /**
-     * Sets whether the widget is visible
-     *
-     * The default value is true, a widget is default to visible
-     *
-     * @param visible   true if the widget is visible, false if the widget is hidden.
-     */
-    void setVisible(bool visible);
-    
-    /**
-     * Determines if the widget is visible
-     *
-     * @return true if the widget is visible, false if the widget is hidden.
-     */
-    bool isVisible() const;
-    
-    /**
      * Sets whether the widget is bright
      *
      * The default value is true, a widget is default to bright
@@ -418,28 +402,6 @@ public:
      * @return type  the position type of widget
      */
     PositionType getPositionType() const;
-    
-    /**
-     * Sets the anchor point in percent.
-     *
-     * anchorPoint is the point around which all transformations and positioning manipulations take place.
-     * It's like a pin in the widget where it is "attached" to its parent.
-     * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
-     * But you can use values higher than (1,1) and lower than (0,0) too.
-     * The default anchorPoint is (0.5,0.5), so it starts in the center of the widget.
-     *
-     * @param anchorPoint   The anchor point of widget.
-     */
-    virtual void setAnchorPoint(const Point &pt);
-    
-    /**
-     * Returns the anchor point in percent.
-     *
-     * @see setAnchorPoint(const Point&)
-     *
-     * @return The anchor point of widget.
-     */
-    const Point& getAnchorPoint() const;
     
     /**
      * Sets whether the widget should be flipped horizontally or not.
