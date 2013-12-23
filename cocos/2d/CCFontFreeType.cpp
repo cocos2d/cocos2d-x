@@ -90,7 +90,6 @@ FT_Library FontFreeType::getFTLibrary()
 FontFreeType::FontFreeType(bool dynamicGlyphCollection)
 : _fontRef(nullptr),
 _letterPadding(5),
-_ttfData(nullptr),
 _dynamicGlyphCollection(dynamicGlyphCollection)
 {
     if(_distanceFieldEnabled)
@@ -101,20 +100,13 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    ssize_t len = 0;
-    Data data = FileUtils::getInstance()->getDataFromFile(fontName);
-    _ttfData = data.getBytes();
-    len = data.getSize();
+    _ttfData = FileUtils::getInstance()->getDataFromFile(fontName);
     
-    // The data needs to be saved in this class,
-    // to prevent the buffer is freed in the destructor of Data, we should reset the buffer pointer by Data::fastSet.
-    data.fastSet(nullptr, 0);
-    
-    if (!_ttfData)
+    if (_ttfData.isNull())
         return false;
 
     // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), _ttfData, len, 0, &face ))          
+    if (FT_New_Memory_Face(getFTLibrary(), _ttfData.getBytes(), _ttfData.getSize(), 0, &face ))
         return false;
 
     //we want to use unicode
@@ -142,11 +134,6 @@ FontFreeType::~FontFreeType()
     if (_fontRef)
     {
         FT_Done_Face(_fontRef);
-    }
-    if (_ttfData)
-    {
-        free(_ttfData);
-        _ttfData = nullptr;
     }
 }
 
