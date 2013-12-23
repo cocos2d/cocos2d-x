@@ -26,8 +26,8 @@
 #define __CCDATA_H__
 
 #include "CCPlatformMacros.h"
-#include <stdint.h> // for ssize_t
-#include <string.h>
+#include <stdint.h> // for ssize_t on android
+#include <string>   // for ssize_t on linux
 
 NS_CC_BEGIN
 
