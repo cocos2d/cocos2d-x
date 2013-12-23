@@ -93,6 +93,8 @@ Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \
 Classes/FontTest/FontTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
