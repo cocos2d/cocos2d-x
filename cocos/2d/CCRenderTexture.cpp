@@ -339,20 +339,20 @@ void RenderTexture::begin()
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a)
 {
-    beginWithClear(r, g, b, a, 0, 0, GL_COLOR_BUFFER_BIT);
+    _beginWithClear(r, g, b, a, 0, 0, GL_COLOR_BUFFER_BIT);
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue)
 {
-    beginWithClear(r, g, b, a, depthValue, 0, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    _beginWithClear(r, g, b, a, depthValue, 0, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
 {
-    beginWithClear(r, g, b, a, depthValue, stencilValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+    _beginWithClear(r, g, b, a, depthValue, stencilValue, GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 }
 
-void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
+void RenderTexture::_beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags)
 {
     this->begin();
 
