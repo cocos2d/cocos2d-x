@@ -116,10 +116,6 @@ void UILabelAtlas::setProperty(const char *stringValue, const char *charMapFile,
 {
     m_strStringValue = stringValue;
     m_strCharMapFileName = charMapFile;
-    /*===*/
-    itemWidth /= CC_CONTENT_SCALE_FACTOR();
-    itemHeight /= CC_CONTENT_SCALE_FACTOR();
-    /**/
     m_nItemWidth = itemWidth;
     m_nItemHeight = itemHeight;
     m_strStartCharMap = startCharMap;
