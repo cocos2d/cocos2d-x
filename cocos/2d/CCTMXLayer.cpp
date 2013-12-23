@@ -67,8 +67,6 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _layerName = layerInfo->_name;
         _layerSize = size;
         _tiles = layerInfo->_tiles;
-        _minGID = layerInfo->_minGID;
-        _maxGID = layerInfo->_maxGID;
         _opacity = layerInfo->_opacity;
         setProperties(layerInfo->getProperties());
         _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
@@ -100,8 +98,6 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
 TMXLayer::TMXLayer()
 :_layerName("")
 ,_opacity(0)
-,_minGID(0)
-,_maxGID(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
 ,_reusedTile(nullptr)
@@ -165,7 +161,7 @@ void TMXLayer::setupTiles()
     {
         for (int x=0; x < _layerSize.width; x++)
         {
-            int pos = (int)(x + _layerSize.width * y);
+            int pos = static_cast<int>(x + _layerSize.width * y);
             int gid = _tiles[ pos ];
 
             // gid are stored in little endian.
@@ -178,16 +174,9 @@ void TMXLayer::setupTiles()
             if (gid != 0) 
             {
                 this->appendTileForGID(gid, Point(x, y));
-
-                // Optimization: update min and max GID rendered by the layer
-                _minGID = MIN(gid, _minGID);
-                _maxGID = MAX(gid, _maxGID);
             }
         }
     }
-
-    CCASSERT( _maxGID >= _tileSet->_firstGid &&
-        _minGID >= _tileSet->_firstGid, "TMX: Only 1 tileset per layer is supported");    
 }
 
 // TMXLayer - Properties
@@ -369,40 +358,45 @@ int TMXLayer::getTileGIDAt(const Point& pos, ccTMXTileFlags* flags/* = nullptr*/
 // TMXLayer - adding helper methods
 Sprite * TMXLayer::insertTileForGID(int gid, const Point& pos)
 {
-    Rect rect = _tileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-    intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
-
-    Sprite *tile = reusedTileWithRect(rect);
-
-    setupTileSprite(tile, pos, gid);
-
-    // get atlas index
-    ssize_t indexForZ = atlasIndexForNewZ(static_cast<int>(z));
-
-    // Optimization: add the quad without adding a child
-    this->insertQuadFromSprite(tile, indexForZ);
-
-    // insert it into the local atlasindex array
-    ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
-
-    // update possible children
-    
-    std::for_each(_children.begin(), _children.end(), [&indexForZ](Node* child){
-        Sprite* sp = static_cast<Sprite*>(child);
-        if (child)
-        {
-            ssize_t ai = sp->getAtlasIndex();
-            if ( ai >= indexForZ )
+    if (gid != 0 && (static_cast<int>((gid & kFlippedMask)) - _tileSet->_firstGid) >= 0)
+    {
+        Rect rect = _tileSet->rectForGID(gid);
+        rect = CC_RECT_PIXELS_TO_POINTS(rect);
+        
+        intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
+        
+        Sprite *tile = reusedTileWithRect(rect);
+        
+        setupTileSprite(tile, pos, gid);
+        
+        // get atlas index
+        ssize_t indexForZ = atlasIndexForNewZ(static_cast<int>(z));
+        
+        // Optimization: add the quad without adding a child
+        this->insertQuadFromSprite(tile, indexForZ);
+        
+        // insert it into the local atlasindex array
+        ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
+        
+        // update possible children
+        
+        std::for_each(_children.begin(), _children.end(), [&indexForZ](Node* child){
+            Sprite* sp = static_cast<Sprite*>(child);
+            if (child)
             {
-                sp->setAtlasIndex(ai+1);
+                ssize_t ai = sp->getAtlasIndex();
+                if ( ai >= indexForZ )
+                {
+                    sp->setAtlasIndex(ai+1);
+                }
             }
-        }
-    });
-
-    _tiles[z] = gid;
-    return tile;
+        });
+        
+        _tiles[z] = gid;
+        return tile;
+    }
+    
+    return nullptr;
 }
 
 Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)
@@ -429,27 +423,32 @@ Sprite * TMXLayer::updateTileForGID(int gid, const Point& pos)
 // since lot's of assumptions are no longer true
 Sprite * TMXLayer::appendTileForGID(int gid, const Point& pos)
 {
-    Rect rect = _tileSet->rectForGID(gid);
-    rect = CC_RECT_PIXELS_TO_POINTS(rect);
-
-    intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
-
-    Sprite *tile = reusedTileWithRect(rect);
-
-    setupTileSprite(tile ,pos ,gid);
-
-    // optimization:
-    // The difference between appendTileForGID and insertTileforGID is that append is faster, since
-    // it appends the tile at the end of the texture atlas
-    ssize_t indexForZ = _atlasIndexArray->num;
-
-    // don't add it using the "standard" way.
-    insertQuadFromSprite(tile, indexForZ);
-
-    // append should be after addQuadFromSprite since it modifies the quantity values
-    ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
-
-    return tile;
+    if (gid != 0 && (static_cast<int>((gid & kFlippedMask)) - _tileSet->_firstGid) >= 0)
+    {
+        Rect rect = _tileSet->rectForGID(gid);
+        rect = CC_RECT_PIXELS_TO_POINTS(rect);
+        
+        intptr_t z = (intptr_t)(pos.x + pos.y * _layerSize.width);
+        
+        Sprite *tile = reusedTileWithRect(rect);
+        
+        setupTileSprite(tile ,pos ,gid);
+        
+        // optimization:
+        // The difference between appendTileForGID and insertTileforGID is that append is faster, since
+        // it appends the tile at the end of the texture atlas
+        ssize_t indexForZ = _atlasIndexArray->num;
+        
+        // don't add it using the "standard" way.
+        insertQuadFromSprite(tile, indexForZ);
+        
+        // append should be after addQuadFromSprite since it modifies the quantity values
+        ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
+        
+        return tile;
+    }
+    
+    return nullptr;
 }
 
 // TMXLayer - atlasIndex and Z

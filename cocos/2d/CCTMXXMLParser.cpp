@@ -43,8 +43,6 @@ TMXLayerInfo::TMXLayerInfo()
 : _name("")
 , _tiles(nullptr)
 , _ownTiles(true)
-, _minGID(100000)
-, _maxGID(0)        
 , _offset(Point::ZERO)
 {
 }
@@ -141,7 +139,7 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
     _storingCharacters = false;
     _layerAttribs = TMXLayerAttribNone;
     _parentElement = TMXPropertyNone;
-    _currentFirstGID = 0;
+    _currentFirstGID = -1;
 }
 bool TMXMapInfo::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
@@ -160,7 +158,8 @@ TMXMapInfo::TMXMapInfo()
 , _tileSize(Size::ZERO)
 , _layerAttribs(0)
 , _storingCharacters(false)
-, _currentFirstGID(0)
+, _currentFirstGID(-1)
+, _recordFirstGID(true)
 {
 }
 
@@ -266,6 +265,11 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename.c_str());
             
             _currentFirstGID = attributeDict["firstgid"].asInt();
+            if (_currentFirstGID < 0)
+            {
+                _currentFirstGID = 0;
+            }
+            _recordFirstGID = false;
             
             tmxMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -273,15 +277,23 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXTilesetInfo *tileset = new TMXTilesetInfo();
             tileset->_name = attributeDict["name"].asString();
-            if (_currentFirstGID == 0)
+            
+            if (_recordFirstGID)
             {
+                // unset before, so this is tmx file.
                 tileset->_firstGid = attributeDict["firstgid"].asInt();
+                
+                if (tileset->_firstGid < 0)
+                {
+                    tileset->_firstGid = 0;
+                }
             }
             else
             {
                 tileset->_firstGid = _currentFirstGID;
                 _currentFirstGID = 0;
             }
+            
             tileset->_spacing = attributeDict["spacing"].asInt();
             tileset->_margin = attributeDict["margin"].asInt();
             Size s;
@@ -304,15 +316,12 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             
             do
             {
-                // Check the gid is legal or not
-                CC_BREAK_IF(gid == 0);
-                
                 if (tilesAmount > 1)
                 {
                     // Check the value is all set or not
-                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != 0 && layer->_tiles[tilesAmount - 1] != 0);
+                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != -1 && layer->_tiles[tilesAmount - 1] != -1);
                     
-                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 1;
+                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 2;
                     layer->_tiles[currentTileIndex] = gid;
                     
                     if (currentTileIndex != tilesAmount - 1)
@@ -322,7 +331,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 }
                 else if(tilesAmount == 1)
                 {
-                    if (layer->_tiles[0] == 0)
+                    if (layer->_tiles[0] == -1)
                     {
                         layer->_tiles[0] = gid;
                     }
@@ -419,10 +428,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             int tilesAmount = layerSize.width*layerSize.height;
 
             int *tiles = (int *) malloc(tilesAmount*sizeof(int));
-            for (int i = 0; i < tilesAmount; i++)
-            {
-                tiles[i] = 0;
-            }
+            // set all value to -1
+            memset(tiles, 0xFF, tilesAmount*sizeof(int));
             
             /* Save the special index in tiles[tilesAmount - 1];
              * When we load tiles, we can do this:
@@ -432,7 +439,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
              */
             if (tilesAmount > 1)
             {
-                tiles[tilesAmount - 1] = tilesAmount - 1;
+                tiles[tilesAmount - 1] = tilesAmount - 2;
             }
 
             layer->_tiles = tiles;
@@ -693,11 +700,19 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width * layerSize.height;
             
-            //reset the layer->_tiles[tilesAmount - 1]
-            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == 0)
+            //set all the tiles unseted to 0
+            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == -1)
+            {
+                for (int i = tilesAmount - layer->_tiles[tilesAmount - 1] - 2; i < tilesAmount; ++i)
+                {
+                    layer->_tiles[i] = 0;
+                }
+            }
+            else if (layer->_tiles[tilesAmount - 1] == -1)
             {
                 layer->_tiles[tilesAmount - 1] = 0;
             }
+                
         }
 
     }
@@ -720,6 +735,10 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     {
         // The object element has ended
         tmxMapInfo->setParentElement(TMXPropertyNone);
+    }
+    else if (elementName == "tileset")
+    {
+        _recordFirstGID = true;
     }
 }
 

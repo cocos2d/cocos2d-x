@@ -217,10 +217,7 @@ protected:
     std::string _layerName;
     //! TMX Layer supports opacity
     unsigned char        _opacity;
-
-    int        _minGID;
-    int        _maxGID;
-
+    
     //! Only used when vertexZ is used
     int                    _vertexZvalue;
     bool                _useAutomaticVertexZ;
