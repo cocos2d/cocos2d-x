@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,47 +29,45 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/Slot.h>
 #include <spine/extension.h>
 #include <spine/Skeleton.h>
 
-namespace spine {
-
 typedef struct {
-	Slot super;
+	spSlot super;
 	float attachmentTime;
-} _Internal;
+} _spSlot;
 
-Slot* Slot_create (SlotData* data, Skeleton* skeleton, Bone* bone) {
-	Slot* self = SUPER(NEW(_Internal));
-	CONST_CAST(SlotData*, self->data) = data;
-	CONST_CAST(Skeleton*, self->skeleton) = skeleton;
-	CONST_CAST(Bone*, self->bone) = bone;
-	Slot_setToSetupPose(self);
+spSlot* spSlot_create (spSlotData* data, spSkeleton* skeleton, spBone* bone) {
+	spSlot* self = SUPER(NEW(_spSlot));
+	CONST_CAST(spSlotData*, self->data) = data;
+	CONST_CAST(spSkeleton*, self->skeleton) = skeleton;
+	CONST_CAST(spBone*, self->bone) = bone;
+	spSlot_setToSetupPose(self);
 	return self;
 }
 
-void Slot_dispose (Slot* self) {
+void spSlot_dispose (spSlot* self) {
 	FREE(self);
 }
 
-void Slot_setAttachment (Slot* self, Attachment* attachment) {
-	CONST_CAST(Attachment*, self->attachment) = attachment;
-	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time;
+void spSlot_setAttachment (spSlot* self, spAttachment* attachment) {
+	CONST_CAST(spAttachment*, self->attachment) = attachment;
+	SUB_CAST(_spSlot, self) ->attachmentTime = self->skeleton->time;
 }
 
-void Slot_setAttachmentTime (Slot* self, float time) {
-	SUB_CAST(_Internal, self) ->attachmentTime = self->skeleton->time - time;
+void spSlot_setAttachmentTime (spSlot* self, float time) {
+	SUB_CAST(_spSlot, self) ->attachmentTime = self->skeleton->time - time;
 }
 
-float Slot_getAttachmentTime (const Slot* self) {
-	return self->skeleton->time - SUB_CAST(_Internal, self) ->attachmentTime;
+float spSlot_getAttachmentTime (const spSlot* self) {
+	return self->skeleton->time - SUB_CAST(_spSlot, self) ->attachmentTime;
 }
 
-void Slot_setToSetupPose (Slot* self) {
-	Attachment* attachment = 0;
+void spSlot_setToSetupPose (spSlot* self) {
+	spAttachment* attachment = 0;
 	self->r = self->data->r;
 	self->g = self->data->g;
 	self->b = self->data->b;
@@ -72,12 +78,10 @@ void Slot_setToSetupPose (Slot* self) {
 		int i;
 		for (i = 0; i < self->skeleton->data->slotCount; ++i) {
 			if (self->data == self->skeleton->data->slots[i]) {
-				attachment = Skeleton_getAttachmentForSlotIndex(self->skeleton, i, self->data->attachmentName);
+				attachment = spSkeleton_getAttachmentForSlotIndex(self->skeleton, i, self->data->attachmentName);
 				break;
 			}
 		}
 	}
-	Slot_setAttachment(self, attachment);
+	spSlot_setAttachment(self, attachment);
 }
-
-} // namespace spine {

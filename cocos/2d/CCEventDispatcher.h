@@ -40,6 +40,8 @@ NS_CC_BEGIN
 class Event;
 class EventTouch;
 class Node;
+class EventCustom;
+class EventListenerCustom;
 
 /**
 This class manages event listener subscriptions
@@ -69,17 +71,23 @@ public:
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
-    /** Remove a listener 
+    /** Adds a Custom event listener.
+     It will use a fixed priority of 1.
+     @return the generated event. Needed in order to remove the event from the dispather
+     */
+    EventListenerCustom* addCustomEventListener(const std::string &eventName, std::function<void(EventCustom*)> callback);
+
+    /** Remove a listener
      *  @param listener The specified event listener which needs to be removed.
      */
     void removeEventListener(EventListener* listener);
 
     /** Removes all listeners with the same event listener type */
     void removeEventListeners(EventListener::Type listenerType);
-    
+
     /** Removes all custom listeners with the same event name */
     void removeCustomEventListeners(const std::string& customEventName);
-    
+
     /** Removes all listeners */
     void removeAllEventListeners();
 
@@ -97,13 +105,16 @@ public:
      *  event dispatcher list.
      */
     void dispatchEvent(Event* event);
-    
+
+    /** Dispatches a Custom Event with a event name an optional user data */
+    void dispatchCustomEvent(const std::string &eventName, void *optionalUserData);
+
     /** Constructor of EventDispatcher */
     EventDispatcher();
     /** Destructor of EventDispatcher */
     ~EventDispatcher();
 
-private:
+protected:
     friend class Node;
     
     /** Sets the dirty flag for a node. */
@@ -148,22 +159,22 @@ private:
     void addEventListener(EventListener* listener);
     
     /** Gets event the listener list for the event listener type. */
-    EventListenerVector* getListeners(EventListener::ListenerID listenerID);
+    EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
     
     /** Update dirty flag */
     void updateDirtyFlagForSceneGraph();
     
     /** Removes all listeners with the same event listener ID */
-    void removeEventListenersForListenerID(EventListener::ListenerID listenerID);
+    void removeEventListenersForListenerID(const EventListener::ListenerID& listenerID);
     
     /** Sort event listener */
-    void sortEventListeners(EventListener::ListenerID listenerID);
+    void sortEventListeners(const EventListener::ListenerID& listenerID);
     
     /** Sorts the listeners of specified type by scene graph priority */
-    void sortEventListenersOfSceneGraphPriority(EventListener::ListenerID listenerID);
+    void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID);
     
     /** Sorts the listeners of specified type by fixed priority */
-    void sortEventListenersOfFixedPriority(EventListener::ListenerID listenerID);
+    void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
     
     /** Updates all listeners
      *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
@@ -193,12 +204,11 @@ private:
     };
     
     /** Sets the dirty flag for a specified listener ID */
-    void setDirty(EventListener::ListenerID listenerID, DirtyFlag flag);
+    void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node);
     
-private:
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
     

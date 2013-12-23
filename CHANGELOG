@@ -9,6 +9,8 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          Removed most hungarian notations.
      [FIX]          Merged NodeRGBA to Node.
      [NEW]          New renderer support.
+     [FIX]          Potential hash collision fix.
+     [FIX]          Updates spine runtime to the latest version.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.

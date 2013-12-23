@@ -54,6 +54,8 @@ class Node;
 class Scheduler;
 class ActionManager;
 class EventDispatcher;
+class EventCustom;
+class EventListenerCustom;
 class TextureCache;
 class Frustum;
 class Renderer;
@@ -81,6 +83,12 @@ and when to execute the Scenes.
 class CC_DLL Director : public Object
 {
 public:
+    static const char *EVENT_PROJECTION_CHANGED;
+    static const char* EVENT_AFTER_UPDATE;
+    static const char* EVENT_AFTER_VISIT;
+    static const char* EVENT_AFTER_DRAW;
+
+
     /** @typedef ccDirectorProjection
      Possible OpenGL projections used by director
      */
@@ -414,6 +422,7 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
