@@ -187,7 +187,16 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+protected:
+    //renderer caches and callbacks
+    void onBegin();
+    void onEnd();
 
+    void onClear();
+    void onClearDepth();
+    
+    kmMat4 _oldTransMatrix, _oldProjMatrix;
+    kmMat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 
