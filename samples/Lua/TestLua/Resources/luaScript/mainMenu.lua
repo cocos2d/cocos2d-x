@@ -32,6 +32,7 @@ require "luaScript/LabelTestNew/LabelTestNew"
 require "luaScript/LayerTest/LayerTest"
 require "luaScript/MenuTest/MenuTest"
 require "luaScript/MotionStreakTest/MotionStreakTest"
+require "luaScript/NewEventDispatcherTest/NewEventDispatcherTest"
 require "luaScript/NodeTest/NodeTest"
 require "luaScript/OpenGLTest/OpenGLTest"
 require "luaScript/ParallaxTest/ParallaxTest"
@@ -87,6 +88,7 @@ local _allTests = {
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
