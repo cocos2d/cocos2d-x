@@ -72,7 +72,7 @@ void TransitionProgress::onEnter()
     Size size = Director::getInstance()->getWinSize();
 
     // create the second render texture for outScene
-    RenderTexture *texture = NewRenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height);
     texture->getSprite()->setAnchorPoint(Point(0.5f,0.5f));
     texture->setPosition(Point(size.width/2, size.height/2));
     texture->setAnchorPoint(Point(0.5f,0.5f));
