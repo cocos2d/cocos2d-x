@@ -1,0 +1,29 @@
+#ifndef __EVENTDEF__
+#define __EVENTDEF__
+
+
+
+#define TRIGGEREVENT_ENTERSCENE       0
+
+
+#define TRIGGEREVENT_LEAVESCENE       1
+
+
+#define TRIGGEREVENT_INITSCENE       2
+
+
+#define TRIGGEREVENT_UPDATESCENE       3
+
+
+#define TRIGGEREVENT_TOUCHBEGAN       4
+
+
+#define TRIGGEREVENT_TOUCHMOVED       5
+
+
+#define TRIGGEREVENT_TOUCHENDED       6
+
+
+#define TRIGGEREVENT_TOUCHCANCELLED       7
+
+#endif
