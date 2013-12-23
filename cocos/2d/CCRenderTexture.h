@@ -164,7 +164,7 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
 protected:
-    virtual void _beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
 
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
