@@ -24,6 +24,8 @@
 
 #include "gui/UILabelAtlas.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
@@ -55,7 +57,7 @@ void UICCLabelAtlas::setProperty(const std::string& string, const std::string& c
     initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap);
 }
 
-void UICCLabelAtlas::setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
+void UICCLabelAtlas::setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
 {
     initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
@@ -67,18 +69,18 @@ void UICCLabelAtlas::draw()
         return;
     }
     
-    cocos2d::AtlasNode::draw();
+    AtlasNode::draw();
 }
 
 void UICCLabelAtlas::updateDisplayedOpacity(GLubyte opacity)
 {
-    cocos2d::AtlasNode::setOpacity(opacity);
+    AtlasNode::setOpacity(opacity);
 }
 
 
 
 
-UILabelAtlas::UILabelAtlas():
+LabelAtlas::LabelAtlas():
 _laberAtlasRenderer(nullptr),
 _stringValue(""),
 _charMapFileName(""),
@@ -89,14 +91,14 @@ _startCharMap("")
     
 }
 
-UILabelAtlas::~UILabelAtlas()
+LabelAtlas::~LabelAtlas()
 {
     
 }
 
-UILabelAtlas* UILabelAtlas::create()
+LabelAtlas* LabelAtlas::create()
 {
-    UILabelAtlas* widget = new UILabelAtlas();
+    LabelAtlas* widget = new LabelAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -106,14 +108,14 @@ UILabelAtlas* UILabelAtlas::create()
     return nullptr;
 }
 
-void UILabelAtlas::initRenderer()
+void LabelAtlas::initRenderer()
 {
-    UIWidget::initRenderer();
+    Widget::initRenderer();
     _laberAtlasRenderer = UICCLabelAtlas::create();
     _renderer->addChild(_laberAtlasRenderer);
 }
 
-void UILabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
+void LabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
 {
     _stringValue = stringValue;
     _charMapFileName = charMapFile;
@@ -125,40 +127,41 @@ void UILabelAtlas::setProperty(const std::string& stringValue, const std::string
     labelAtlasScaleChangedWithSize();
 }
 
-void UILabelAtlas::setStringValue(const std::string& value)
+void LabelAtlas::setStringValue(const std::string& value)
 {
     _stringValue = value;
     _laberAtlasRenderer->setString(value);
     labelAtlasScaleChangedWithSize();
 }
 
-const std::string& UILabelAtlas::getStringValue() const
+const std::string& LabelAtlas::getStringValue() const
 {
     return _laberAtlasRenderer->getString();
 }
 
-void UILabelAtlas::setAnchorPoint(const cocos2d::Point &pt)
+void LabelAtlas::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
-    _laberAtlasRenderer->setAnchorPoint(cocos2d::Point(pt.x, pt.y));
+    Widget::setAnchorPoint(pt);
+    _laberAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
 }
 
-void UILabelAtlas::onSizeChanged()
+void LabelAtlas::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelAtlasScaleChangedWithSize();
 }
 
-const cocos2d::Size& UILabelAtlas::getContentSize() const
+const Size& LabelAtlas::getContentSize() const
 {
     return _laberAtlasRenderer->getContentSize();
 }
 
-cocos2d::Node* UILabelAtlas::getVirtualRenderer()
+Node* LabelAtlas::getVirtualRenderer()
 {
     return _laberAtlasRenderer;
 }
 
-void UILabelAtlas::labelAtlasScaleChangedWithSize()
+void LabelAtlas::labelAtlasScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -167,7 +170,7 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _laberAtlasRenderer->getContentSize();
+        Size textureSize = _laberAtlasRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _laberAtlasRenderer->setScale(1.0f);
@@ -180,19 +183,19 @@ void UILabelAtlas::labelAtlasScaleChangedWithSize()
     }
 }
 
-const char* UILabelAtlas::getDescription() const
+std::string LabelAtlas::getDescription() const
 {
     return "LabelAtlas";
 }
 
-UIWidget* UILabelAtlas::createCloneInstance()
+Widget* LabelAtlas::createCloneInstance()
 {
-    return UILabelAtlas::create();
+    return LabelAtlas::create();
 }
 
-void UILabelAtlas::copySpecialProperties(UIWidget *widget)
+void LabelAtlas::copySpecialProperties(Widget *widget)
 {
-    UILabelAtlas* labelAtlas = dynamic_cast<UILabelAtlas*>(widget);
+    LabelAtlas* labelAtlas = dynamic_cast<LabelAtlas*>(widget);
     if (labelAtlas)
     {
         setProperty(labelAtlas->_stringValue, labelAtlas->_charMapFileName, labelAtlas->_itemWidth, labelAtlas->_itemHeight, labelAtlas->_startCharMap);
@@ -200,3 +203,4 @@ void UILabelAtlas::copySpecialProperties(UIWidget *widget)
 }
     
 }
+NS_CC_END
