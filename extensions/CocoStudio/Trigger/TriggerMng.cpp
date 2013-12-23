@@ -231,6 +231,7 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	{
 		remove(*iter, obj);
 	}
+	return true;
 }
 
 bool TriggerMng::isEmpty(void) const
