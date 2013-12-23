@@ -93,6 +93,7 @@ void MoveTo::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCMoveTo::create(_fDuration, _pos);
 		CC_BREAK_IF(actionTo == NULL);
+		pNode->stopAllActions();
 		pNode->runAction(actionTo);
 	} while (0);
 }
@@ -156,6 +157,7 @@ void MoveBy::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCMoveBy::create(_fDuration, _pos);
 		CC_BREAK_IF(actionBy == NULL);
+		pNode->stopAllActions();
 		if (_bReverse == true)
 		{
 			CCActionInterval*  actionByBack = actionBy->reverse();
@@ -235,6 +237,7 @@ void RotateTo::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCRotateTo::create(_fDuration, _fDeltaAngle);
 		CC_BREAK_IF(actionTo == NULL);
+		pNode->stopAllActions();
 		pNode->runAction(actionTo);
 	} while (0);
 }
@@ -297,6 +300,7 @@ void RotateBy::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCRotateBy::create(_fDuration, _fDeltaAngle);
 		CC_BREAK_IF(actionBy == NULL);
+		pNode->stopAllActions();
 		if (_bReverse == true)
 		{
 			CCActionInterval*  actionByBack = actionBy->reverse();
@@ -370,6 +374,7 @@ void ScaleTo::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCScaleTo::create(_fDuration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionTo == NULL);
+		pNode->stopAllActions();
 		pNode->runAction(actionTo);
 	} while (0);
 }
@@ -436,6 +441,7 @@ void ScaleBy::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCScaleBy::create(_fDuration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionBy == NULL);
+		pNode->stopAllActions();
 		if (_bReverse == true)
 		{
 			CCActionInterval*  actionByBack = actionBy->reverse();
@@ -514,6 +520,7 @@ void SkewTo::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCSkewTo::create(_fDuration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionTo == NULL);
+		pNode->stopAllActions();
 		pNode->runAction(actionTo);
 	} while (0);
 }
@@ -580,6 +587,7 @@ void SkewBy::done()
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCSkewBy::create(_fDuration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionBy == NULL);
+		pNode->stopAllActions();
 		if (_bReverse == true)
 		{
 			CCActionInterval*  actionByBack = actionBy->reverse();
