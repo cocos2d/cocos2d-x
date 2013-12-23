@@ -1869,10 +1869,6 @@
 		593BDCEB184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */; };
 		593BDCEC184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */; };
 		593BDCED184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */; };
-		593BDCEE184D0A6E00C21E48 /* CCNewTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD6184D0A6E00C21E48 /* CCNewTextureAtlas.cpp */; };
-		593BDCEF184D0A6E00C21E48 /* CCNewTextureAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD6184D0A6E00C21E48 /* CCNewTextureAtlas.cpp */; };
-		593BDCF0184D0A6E00C21E48 /* CCNewTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD7184D0A6E00C21E48 /* CCNewTextureAtlas.h */; };
-		593BDCF1184D0A6E00C21E48 /* CCNewTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD7184D0A6E00C21E48 /* CCNewTextureAtlas.h */; };
 		593BDCF2184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */; };
 		593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */; };
 		593BDCF4184D0A6E00C21E48 /* CCCustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */; };
@@ -3058,8 +3054,6 @@
 		593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSprite.h; sourceTree = "<group>"; };
 		593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSpriteBatchNode.cpp; sourceTree = "<group>"; };
 		593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSpriteBatchNode.h; sourceTree = "<group>"; };
-		593BDCD6184D0A6E00C21E48 /* CCNewTextureAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewTextureAtlas.cpp; sourceTree = "<group>"; };
-		593BDCD7184D0A6E00C21E48 /* CCNewTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewTextureAtlas.h; sourceTree = "<group>"; };
 		593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomCommand.cpp; sourceTree = "<group>"; };
 		593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomCommand.h; sourceTree = "<group>"; };
 		593BDCDA184D0A6E00C21E48 /* CCGroupCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGroupCommand.cpp; sourceTree = "<group>"; };
@@ -5350,8 +5344,6 @@
 				593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */,
 				593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */,
 				593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */,
-				593BDCD6184D0A6E00C21E48 /* CCNewTextureAtlas.cpp */,
-				593BDCD7184D0A6E00C21E48 /* CCNewTextureAtlas.h */,
 				593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */,
 				593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */,
 				74AC80EEB031D67E86B45096 /* CCFrustum.cpp */,
@@ -5749,7 +5741,6 @@
 				74AC8589A38C358F1E472BBD /* CCRenderMaterial.h in Headers */,
 				74AC8E3E7D85FB595242AAEC /* CCMaterialManager.h in Headers */,
 				A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */,
-				593BDCF0184D0A6E00C21E48 /* CCNewTextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6005,7 +5996,6 @@
 				46A170BD1807CEA4005B8026 /* neon_matrix_impl.h in Headers */,
 				46A1702E1807CBFE005B8026 /* CCDevice.h in Headers */,
 				46A1702A1807CBFE005B8026 /* CCLock.h in Headers */,
-				593BDCF1184D0A6E00C21E48 /* CCNewTextureAtlas.h in Headers */,
 				46A170451807CC07005B8026 /* CCESRenderer.h in Headers */,
 				46A170C41807CEA4005B8026 /* vec4.h in Headers */,
 				46A171011807CECB005B8026 /* CCPhysicsJoint.h in Headers */,
@@ -6847,7 +6837,6 @@
 				B375107A1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				1A57007D180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
-				593BDCEE184D0A6E00C21E48 /* CCNewTextureAtlas.cpp in Sources */,
 				1A570081180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570085180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
 				1A570089180BC5A10088DEC7 /* CCActionProgressTimer.cpp in Sources */,
@@ -7371,7 +7360,6 @@
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
-				593BDCEF184D0A6E00C21E48 /* CCNewTextureAtlas.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570086180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
 				1A57008A180BC5A10088DEC7 /* CCActionProgressTimer.cpp in Sources */,
