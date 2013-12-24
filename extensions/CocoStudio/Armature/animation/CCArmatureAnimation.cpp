@@ -56,7 +56,7 @@ CCArmatureAnimation::CCArmatureAnimation()
     , m_bIgnoreFrameEvent(false)
     , m_bOnMovementList(false)
     , m_bMovementListLoop(false)
-	, m_iMovementListDurationTo(-1)
+    , m_iMovementListDurationTo(-1)
     , m_pUserObject(NULL)
 
     , m_sMovementEventCallFunc(NULL)
@@ -266,11 +266,11 @@ void CCArmatureAnimation::play(const std::vector<std::string>& movementNames, in
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
-	m_iMovementListDurationTo = durationTo;
+    m_iMovementListDurationTo = durationTo;
     m_bOnMovementList = true;
     m_uMovementIndex = 0;
 
-	m_sMovementList = movementNames;
+    m_sMovementList = movementNames;
 
     updateMovementList();
 }
@@ -279,7 +279,7 @@ void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, i
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
-	m_iMovementListDurationTo =durationTo;
+    m_iMovementListDurationTo =durationTo;
     m_bOnMovementList = true;
     m_uMovementIndex = 0;
 
@@ -294,6 +294,28 @@ void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, i
     updateMovementList();
 }
 
+void CCArmatureAnimation::playWithArray(CCArray *movementNames, int durationTo, bool loop)
+{
+    std::vector<std::string> names;
+    
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(movementNames, object)
+    {
+        names.push_back(static_cast<CCString*>(object)->getCString());
+    }
+    play(names, durationTo, loop);
+}
+void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durationTo, bool loop)
+{
+    std::vector<int> indexes;
+
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(movementIndexes, object)
+    {
+        indexes.push_back(static_cast<CCInteger*>(object)->getValue());
+    }
+    playByIndex(indexes, durationTo, loop);
+}
 void CCArmatureAnimation::gotoAndPlay(int frameIndex)
 {
     if (!m_pMovementData || frameIndex < 0 || frameIndex >= m_pMovementData->duration)
