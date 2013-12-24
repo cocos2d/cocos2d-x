@@ -288,11 +288,8 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     std::string str = &filePathStr[startPos];
 
     // Read content from file
-    ssize_t size;
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    unsigned char *pTempContent = (unsigned char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
-
-    std::string contentStr = std::string((const char*)pTempContent, size);
+    std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
@@ -307,8 +304,6 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
-    
-    free(pTempContent);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Object *target, SEL_SCHEDULE selector)
@@ -391,10 +386,9 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     std::string str = &filePathStr[startPos];
 
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    ssize_t size;
 
     // XXX fileContent is being leaked
-    data->fileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+    data->fileContent = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     if (str == ".xml")
     {
