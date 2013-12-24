@@ -80,10 +80,6 @@ const Vector3& Transform::getScale() const
     return _scale;
 }
 
-void Transform::getScale(Vector3* scale) const
-{
-    scale->set(_scale);
-}
 
 float Transform::getScaleX() const
 {
@@ -105,10 +101,6 @@ const Quaternion& Transform::getRotation() const
     return _rotation;
 }
 
-void Transform::getRotation(Quaternion* rotation) const
-{
-	rotation->set(_rotation);
-}
 
 void Transform::getRotation(Matrix* rotation) const
 {
@@ -125,10 +117,6 @@ const Vector3& Transform::getPosition() const
     return _position;
 }
 
-void Transform::getPosition(Vector3* translation) const
-{
-    translation->set(_position);
-}
 
 float Transform::getPositionX() const
 {

@@ -82,13 +82,7 @@ public:
      * Returns the scale for this transform.
      */
     const Vector3& getScale() const;
-
-    /**
-     * Gets the scale component of this transform in the specified vector.
-     *
-     * @param scale The vector to store the scale in.
-     */
-    void getScale(Vector3* scale) const;
+	
 
     /**
      * Gets the scale factor along the x-axis of this transform.
@@ -116,13 +110,7 @@ public:
      */
     const Quaternion& getRotation() const;
 
-    /**
-     * Gets the rotation component of this transform in the specified quaternion.
-     *
-     * @param rotation The quaternion to store the rotation in.
-     */
-    void getRotation(Quaternion* rotation) const;
-
+	
     /**
      * Gets the rotation component of this transform in the specified matrix.
      *
@@ -144,13 +132,7 @@ public:
      * Returns the translation for this transform.
      */
     const Vector3& getPosition() const;
-
-    /**
-     * Gets the translation component of this transform in the specified vector.
-     *
-     * @param translation The vector to store the translation in.
-     */
-    void getPosition(Vector3* translation) const;
+	
 
     /**
      * Gets the translation factor along the x-axis of this transform.
