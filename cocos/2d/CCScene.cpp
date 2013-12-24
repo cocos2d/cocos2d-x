@@ -121,16 +121,6 @@ bool Scene::initWithPhysics()
     return ret;
 }
 
-void Scene::addChild(Node* child)
-{
-    Node::addChild(child);
-}
-
-void Scene::addChild(Node* child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
