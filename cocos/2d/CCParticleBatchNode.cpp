@@ -143,16 +143,6 @@ void ParticleBatchNode::visit()
 }
 
 // override addChild:
-void ParticleBatchNode::addChild(Node * child)
-{
-    Node::addChild(child);
-}
-
-void ParticleBatchNode::addChild(Node * child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 {
     CCASSERT( aChild != nullptr, "Argument must be non-nullptr");
