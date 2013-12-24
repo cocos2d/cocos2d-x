@@ -31,6 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GridBase;
+class NodeGrid;
 
 /**
  * @addtogroup actions
@@ -57,6 +58,10 @@ protected:
     bool initWithDuration(float duration, const Size& gridSize);
 
     Size _gridSize;
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GridAction);
@@ -248,7 +253,7 @@ private:
 /** @brief StopGrid action.
  @warning Don't call this action if another grid action is active.
  Call if you want to remove the the grid effect. Example:
- Sequence::actions(Lens::action(...), StopGrid::action(...), NULL);
+ Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  */
 class CC_DLL StopGrid : public ActionInstant
 {
@@ -264,6 +269,10 @@ public:
 protected:
     StopGrid() {}
     virtual ~StopGrid() {}
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(StopGrid);
@@ -286,7 +295,11 @@ protected:
     virtual ~ReuseGrid() {}
     /** initializes an action with the number of times that the current grid will be reused */
     bool initWithTimes(int times);
-
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
+    
     int _times;
 
 private:

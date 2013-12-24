@@ -154,8 +154,8 @@ public:
     virtual const BlendFunc& getBlendFunc() const override;
 
     virtual void visit() override;
-    virtual void addChild(Node* child) override{ Node::addChild(child);}
-    virtual void addChild(Node * child, int zOrder) override { Node::addChild(child, zOrder);}
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void reorderChild(Node *child, int zOrder) override;
         

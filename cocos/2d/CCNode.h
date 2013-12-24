@@ -39,21 +39,21 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
-class Camera;
 class GridBase;
 class Point;
 class Touch;
 class Action;
-class RGBAProtocol;
 class LabelProtocol;
 class Scheduler;
 class ActionManager;
 class Component;
 class ComponentContainer;
 class EventDispatcher;
+class Scene;
 #ifdef CC_USE_PHYSICS
 class PhysicsBody;
 #endif
@@ -98,7 +98,6 @@ class EventListener;
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - Camera (an interface to gluLookAt )
  - GridBase (to do mesh transformations)
  - anchor point
  - size
@@ -120,18 +119,14 @@ class EventListener;
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
- -# The node will be moved according to the camera values (camera)
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
  -# The grid will capture the screen
- -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
 
- Camera:
- - Each node has a camera. By default it points to the center of the Node.
  */
 
 class CC_DLL Node : public Object
@@ -602,7 +597,7 @@ public:
      * Composing a "tree" structure is a very important feature of Node
      * Here's a sample code of traversing children array:
      @code
-     Node* node = NULL;
+     Node* node = nullptr;
      CCARRAY_FOREACH(parent->getChildren(), node)
      {
         node->setPosition(0,0);
@@ -702,34 +697,7 @@ public:
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
-
-
-
-    /// @{
-    /// @name Grid object for effects
-
-    /**
-     * Returns a grid object that is used when applying effects
-     *
-     * @return A Grid object that is used when applying effects
-     * @js NA
-     */
-    virtual GridBase* getGrid() { return _grid; }
-    /**
-    * @js NA
-    */
-    virtual const GridBase* getGrid() const { return _grid; }
-
-    /**
-     * Changes a grid object that is used when applying effects
-     *
-     * @param grid  A Grid object that is used when applying effects
-     */
-    virtual void setGrid(GridBase *grid);
-
-    /// @} end of Grid
-
-
+    
     /// @{
     /// @name Tag & User data
 
@@ -749,7 +717,7 @@ public:
      parent->addChild(node2);
      parent->addChild(node3);
      // identify by tags
-     Node* node = NULL;
+     Node* node = nullptr;
      CCARRAY_FOREACH(parent->getChildren(), node)
      {
          switch(node->getTag())
@@ -862,19 +830,6 @@ public:
 
 
     /**
-     * Returns a camera object that lets you move the node using a gluLookAt
-     *
-     @code
-     Camera* camera = node->getCamera();
-     camera->setEye(0, 0, 415/2);
-     camera->setCenter(0, 0, 0);
-     @endcode
-     *
-     * @return A Camera object that lets you move the node using a gluLookAt
-     */
-    virtual Camera* getCamera();
-
-    /**
      * Returns whether or not the node accepts event callbacks.
      *
      * Running means the node accept event callbacks like onEnter(), onExit(), update()
@@ -956,6 +911,11 @@ public:
      */
     virtual void visit();
 
+    /** Returns the Scene that contains the Node.
+     It returns `nullptr` if the node doesn't belong to any Scene.
+     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     */
+    virtual Scene* getScene();
 
     /**
      * Returns a "local" axis aligned bounding box of the node.
@@ -1226,35 +1186,45 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getNodeToParentTransform() const;
+    virtual const kmMat4& getNodeToParentTransform() const;
+    virtual AffineTransform getNodeToParentAffineTransform() const;
+
+    /** 
+     * Sets the Transformation matrix manually.
+     */
+    virtual void setNodeToParentTransform(const kmMat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getParentToNodeTransform() const;
+    virtual const kmMat4& getParentToNodeTransform() const;
+    virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToWorldTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const;
+    virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getWorldToNodeTransform() const;
+    virtual kmMat4 getWorldToNodeTransform() const;
+    virtual AffineTransform getWorldToNodeAffineTransform() const;
+
 
     /** @deprecated Use worldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 
@@ -1343,6 +1313,7 @@ public:
      @endcode
      */
     void setAdditionalTransform(const AffineTransform& additionalTransform);
+    void setAdditionalTransform(const kmMat4& additionalTransform);
 
     /// @} end of Coordinate Converters
 
@@ -1387,6 +1358,24 @@ public:
     virtual bool updatePhysicsTransform();
 
 #endif
+    
+    // overrides
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled() const;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const { return false; };
 
 protected:
     // Nodes should be created using create();
@@ -1405,6 +1394,12 @@ protected:
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
+    
+    virtual void updateCascadeOpacity();
+    virtual void disableCascadeOpacity();
+    virtual void updateCascadeColor();
+    virtual void disableCascadeColor();
+    virtual void updateColor() {}
 
 
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1426,16 +1421,13 @@ protected:
     Size _contentSize;             ///< untransformed size of the node
 
     // "cache" variables are allowed to be mutable
-    mutable AffineTransform _additionalTransform; ///< transform
-    mutable AffineTransform _transform;     ///< transform
-    mutable AffineTransform _inverse;       ///< inverse transform
+    mutable kmMat4 _additionalTransform; ///< transform
+    mutable kmMat4 _transform;     ///< transform
+    mutable kmMat4 _inverse;       ///< inverse transform
+    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
     mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
-
-    Camera *_camera;                ///< a camera
-
-    GridBase *_grid;                ///< a grid
 
     int _ZOrder;                      ///< z-order value that affects the draw order
     
@@ -1476,6 +1468,14 @@ protected:
 #ifdef CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
+    
+    // opacity controls
+    GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+    Color3B	    _displayedColor;
+    Color3B     _realColor;
+    bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
@@ -1484,49 +1484,41 @@ private:
 //#pragma mark - NodeRGBA
 
 /** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
-
+ 
  All features from Node are valid, plus the following new features:
  - opacity
  - RGB colors
-
+ 
  Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
  @since v2.1
  */
-class CC_DLL NodeRGBA : public Node, public RGBAProtocol
+class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
 {
 public:
     // overrides
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const  override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const  override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
+    virtual GLubyte getOpacity() const override { return Node::getOpacity(); }
+    virtual GLubyte getDisplayedOpacity() const  override { return Node::getDisplayedOpacity(); }
+    virtual void setOpacity(GLubyte opacity) override { return Node::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Node::updateDisplayedOpacity(parentOpacity); }
+    virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
+    virtual const Color3B& getColor(void) const override { return Node::getColor(); }
+    virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
+    virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }
+    virtual bool isCascadeColorEnabled() const override { return Node::isCascadeColorEnabled(); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabled(cascadeColorEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);};
-    virtual bool isOpacityModifyRGB() const override { return false; };
+    virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
+    virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
 protected:
-    NodeRGBA();
-    virtual ~NodeRGBA();
-    virtual bool init();
-
-	GLubyte		_displayedOpacity;
-    GLubyte     _realOpacity;
-	Color3B	    _displayedColor;
-    Color3B     _realColor;
-	bool		_cascadeColorEnabled;
-    bool        _cascadeOpacityEnabled;
+    __NodeRGBA();
+    virtual ~__NodeRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
 };
 
 // end of base_node group

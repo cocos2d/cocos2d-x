@@ -94,7 +94,7 @@ std::string TextureCache::getDescription() const
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
 {
-    Texture2D *texture = NULL;
+    Texture2D *texture = nullptr;
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path.c_str());
 
@@ -102,17 +102,17 @@ void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_Ca
     if( it != _textures.end() )
         texture = it->second;
 
-    if (texture != NULL && target && selector)
+    if (texture != nullptr && target && selector)
     {
         (target->*selector)(texture);
         return;
     }
 
     // lazy init
-    if (_asyncStructQueue == NULL)
+    if (_asyncStructQueue == nullptr)
     {             
         _asyncStructQueue = new queue<AsyncStruct*>();
-        _imageInfoQueue   = new queue<ImageInfo*>();        
+        _imageInfoQueue   = new deque<ImageInfo*>();        
 
         // create a new thread to load images
         _loadingThread = new std::thread(&TextureCache::loadImage, this);
@@ -170,16 +170,39 @@ void TextureCache::loadImage()
             _asyncStructQueueMutex.unlock();
         }        
 
-        const char *filename = asyncStruct->filename.c_str();
-        
-        // generate image            
-        Image *image = new Image();
-        if (image && !image->initWithImageFileThreadSafe(filename))
+        Image *image = nullptr;
+        bool generateImage = false;
+
+        auto it = _textures.find(asyncStruct->filename);
+        if( it == _textures.end() )
         {
-            CC_SAFE_RELEASE(image);
-            CCLOG("can not load %s", filename);
-            continue;
+           _imageInfoMutex.lock();
+           ImageInfo *imageInfo;
+           size_t pos = 0;
+           size_t infoSize = _imageInfoQueue->size();
+           for (; pos < infoSize; pos++)
+           {
+               imageInfo = (*_imageInfoQueue)[pos];
+               if(imageInfo->asyncStruct->filename.compare(asyncStruct->filename))
+                   break;
+           }
+           _imageInfoMutex.unlock();
+           if(infoSize > 0 && pos < infoSize)
+               generateImage = true;
         }
+
+        if (generateImage)
+        {
+            const char *filename = asyncStruct->filename.c_str();
+            // generate image      
+            image = new Image();
+            if (image && !image->initWithImageFileThreadSafe(filename))
+            {
+                CC_SAFE_RELEASE(image);
+                CCLOG("can not load %s", filename);
+                continue;
+            }
+        }    
 
         // generate image info
         ImageInfo *imageInfo = new ImageInfo();
@@ -188,7 +211,7 @@ void TextureCache::loadImage()
 
         // put the image info into the queue
         _imageInfoMutex.lock();
-        _imageInfoQueue->push(imageInfo);
+        _imageInfoQueue->push_back(imageInfo);
         _imageInfoMutex.unlock();
     }
     
@@ -204,7 +227,7 @@ void TextureCache::loadImage()
 void TextureCache::addImageAsyncCallBack(float dt)
 {
     // the image is generated in loading thread
-    std::queue<ImageInfo*> *imagesQueue = _imageInfoQueue;
+    std::deque<ImageInfo*> *imagesQueue = _imageInfoQueue;
 
     _imageInfoMutex.lock();
     if (imagesQueue->empty())
@@ -214,7 +237,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
     else
     {
         ImageInfo *imageInfo = imagesQueue->front();
-        imagesQueue->pop();
+        imagesQueue->pop_front();
         _imageInfoMutex.unlock();
 
         AsyncStruct *asyncStruct = imageInfo->asyncStruct;
@@ -224,28 +247,40 @@ void TextureCache::addImageAsyncCallBack(float dt)
         SEL_CallFuncO selector = asyncStruct->selector;
         const char* filename = asyncStruct->filename.c_str();
 
-        // generate texture in render thread
-        Texture2D *texture = new Texture2D();
+        Texture2D *texture = nullptr;
+        if (image)
+        {
+            // generate texture in render thread
+            texture = new Texture2D();
 
-        texture->initWithImage(image);
+            texture->initWithImage(image);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-       // cache the texture file name
-       VolatileTextureMgr::addImageTexture(texture, filename);
+            // cache the texture file name
+            VolatileTextureMgr::addImageTexture(texture, filename);
 #endif
-        // cache the texture. retain it, since it is added in the map
-        _textures.insert( std::make_pair(filename, texture) );
-        texture->retain();
+            // cache the texture. retain it, since it is added in the map
+            _textures.insert( std::make_pair(filename, texture) );
+            texture->retain();
 
-        texture->autorelease();
-
+            texture->autorelease();
+        }
+        else
+        {
+            auto it = _textures.find(asyncStruct->filename);
+            if(it != _textures.end())
+                texture = it->second;
+        }
+        
         if (target && selector)
         {
             (target->*selector)(texture);
             target->release();
         }        
-
-        image->release();
+        if(image)
+        {
+            image->release();
+        }       
         delete asyncStruct;
         delete imageInfo;
 
@@ -259,8 +294,8 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
 Texture2D * TextureCache::addImage(const std::string &path)
 {
-    Texture2D * texture = NULL;
-    Image* image = NULL;
+    Texture2D * texture = nullptr;
+    Image* image = nullptr;
     // Split up directory and filename
     // MUTEX:
     // Needed since addImageAsync calls this method from a different thread
@@ -268,7 +303,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path.c_str());
     if (fullpath.size() == 0)
     {
-        return NULL;
+        return nullptr;
     }
     auto it = _textures.find(fullpath);
     if( it != _textures.end() )
@@ -280,7 +315,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
         do 
         {
             image = new Image();
-            CC_BREAK_IF(NULL == image);
+            CC_BREAK_IF(nullptr == image);
 
             bool bRet = image->initWithImageFile(fullpath.c_str());
             CC_BREAK_IF(!bRet);
@@ -310,9 +345,9 @@ Texture2D * TextureCache::addImage(const std::string &path)
 
 Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 {
-    CCASSERT(image != NULL, "TextureCache: image MUST not be nil");
+    CCASSERT(image != nullptr, "TextureCache: image MUST not be nil");
 
-    Texture2D * texture = NULL;
+    Texture2D * texture = nullptr;
 
     do
     {
@@ -404,7 +439,7 @@ Texture2D* TextureCache::getTextureForKey(const std::string &key) const
     auto it = _textures.find(key);
     if( it != _textures.end() )
         return it->second;
-    return NULL;
+    return nullptr;
 }
 
 void TextureCache::reloadAllTextures()
@@ -457,11 +492,11 @@ bool VolatileTextureMgr::_isReloading = false;
 VolatileTexture::VolatileTexture(Texture2D *t)
 : _texture(t)
 , _cashedImageType(kInvalid)
-, _textureData(NULL)
+, _textureData(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
 , _text("")
-, _uiImage(NULL)
+, _uiImage(nullptr)
 {
     _texParams.minFilter = GL_LINEAR;
     _texParams.magFilter = GL_LINEAR;

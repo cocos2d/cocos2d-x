@@ -185,6 +185,7 @@ public:
     /** TMXLayer doesn't support adding a Sprite manually.
      @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
      */
+    using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;
