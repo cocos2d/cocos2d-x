@@ -1425,14 +1425,81 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret)
 
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret)
 {
-    // TO BE DONE IN CPP FILE
-    return false;
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        std::string value = "";
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isstring(L, -1))
+            {
+                ok = luaval_to_std_string(L, -1, &value);
+                if(ok)
+                    ret->push_back(value);
+            }
+            else
+            {
+                CCASSERT(false, "string type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
 }
 
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
 {
-    // TO BE DONE IN CPP FILE
-    return false;
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isnumber(L, -1))
+            {
+                ret->push_back((int)tolua_tonumber(L, -1, 0));
+            }
+            else
+            {
+                CCASSERT(false, "int type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
 }
 
 void point_to_luaval(lua_State* L,const Point& pt)
