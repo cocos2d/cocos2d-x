@@ -143,7 +143,6 @@ set(COCOS2D_SRC
   renderer/CCFrustum.cpp
   renderer/CCGroupCommand.cpp
   renderer/CCMaterialManager.cpp
-  renderer/CCNewClippingNode.cpp
   renderer/CCQuadCommand.cpp
   renderer/CCRenderCommand.cpp
   renderer/CCRenderer.cpp
