@@ -229,7 +229,7 @@ NewSpriteBatchTest::NewSpriteBatchTest()
     touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteBatchTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-    auto BatchNode = NewSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
+    auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(BatchNode, 0, kTagSpriteBatchNode);
 }
 
@@ -259,7 +259,7 @@ void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Eve
 
 void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
 {
-    auto BatchNode = static_cast<NewSpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
 
     int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
     int x = (idx%5) * 85;
