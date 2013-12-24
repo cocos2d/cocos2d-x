@@ -296,7 +296,6 @@ void TriggerMng::removeArmatureAllMovementCallBack(CCArmature *pAr)
 	}
 
 	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
-	ArmatureMovementDispatcher *amd = NULL;
 	if (iter == _movementDispatches->end())
 	{
 		return;
