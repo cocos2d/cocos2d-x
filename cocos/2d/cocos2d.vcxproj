@@ -181,6 +181,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
+    <ClCompile Include="..\base\Transform.cpp" />
     <ClCompile Include="..\math\kazmath\src\aabb.c" />
     <ClCompile Include="..\math\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\math\kazmath\src\GL\matrix.c" />
@@ -194,6 +195,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\math\kazmath\src\vec2.c" />
     <ClCompile Include="..\math\kazmath\src\vec3.c" />
     <ClCompile Include="..\math\kazmath\src\vec4.c" />
+    <ClCompile Include="..\math\MathUtilty.cpp" />
+    <ClCompile Include="..\math\Matrix.cpp" />
+    <ClCompile Include="..\math\neon_matrix_impl.c" />
+    <ClCompile Include="..\math\Quaternion.cpp" />
+    <ClCompile Include="..\math\Vector2.cpp" />
+    <ClCompile Include="..\math\Vector3.cpp" />
+    <ClCompile Include="..\math\Vector4.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -348,6 +356,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\s3tc.h" />
+    <ClInclude Include="..\base\Transform.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\aabb.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\GL\matrix.h" />
@@ -362,6 +371,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\math\kazmath\include\kazmath\vec2.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h" />
+    <ClInclude Include="..\math\Math.h" />
+    <ClInclude Include="..\math\MathUtilty.h" />
+    <ClInclude Include="..\math\Matrix.h" />
+    <ClInclude Include="..\math\neon_matrix_impl.h" />
+    <ClInclude Include="..\math\Quaternion.h" />
+    <ClInclude Include="..\math\Vector2.h" />
+    <ClInclude Include="..\math\Vector3.h" />
+    <ClInclude Include="..\math\Vector4.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
@@ -516,6 +533,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="uthash.h" />
     <ClInclude Include="utlist.h" />
     <ClInclude Include="ZipUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\math\Matrix.inl" />
+    <None Include="..\math\Quaternion.inl" />
+    <None Include="..\math\Vector2.inl" />
+    <None Include="..\math\Vector3.inl" />
+    <None Include="..\math\Vector4.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

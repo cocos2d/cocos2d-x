@@ -1,19 +1,19 @@
 #include "C3DMath.h"
 
-namespace cocos3d
+namespace cocos2d
 {
 
-C3DVector4::C3DVector4()
+Vector4::Vector4()
     : x(0.0f), y(0.0f), z(0.0f), w(0.0f)
 {
 }
 
-C3DVector4::C3DVector4(float x, float y, float z, float w)
+Vector4::Vector4(float x, float y, float z, float w)
 {
     set(x, y, z, w);
 }
 
-C3DVector4::C3DVector4(const float* array)
+Vector4::Vector4(const float* array)
 {
     if (array)
         set(array);
@@ -21,17 +21,17 @@ C3DVector4::C3DVector4(const float* array)
         set(0, 0, 0, 0);
 }
 
-C3DVector4::C3DVector4(const C3DVector4& p1, const C3DVector4& p2)
+Vector4::Vector4(const Vector4& p1, const Vector4& p2)
 {
     set(p1, p2);
 }
 
-C3DVector4::C3DVector4(const C3DVector4& copy)
+Vector4::Vector4(const Vector4& copy)
 {
     set(copy);
 }
 
-C3DVector4 C3DVector4::fromColor(unsigned int color)
+Vector4 Vector4::fromColor(unsigned int color)
 {
     float components[4];
     int componentIndex = 0;
@@ -42,61 +42,61 @@ C3DVector4 C3DVector4::fromColor(unsigned int color)
         components[componentIndex++] = static_cast<float>(component) / 255.0f;
     }
 
-    C3DVector4 value(components);
+    Vector4 value(components);
     return value;
 }
 
-C3DVector4::~C3DVector4()
+Vector4::~Vector4()
 {
 }
 
-const C3DVector4& C3DVector4::zero()
+const Vector4& Vector4::zero()
 {
-    static C3DVector4 value(0.0f, 0.0f, 0.0f, 0.0f);
+    static Vector4 value(0.0f, 0.0f, 0.0f, 0.0f);
     return value;
 }
 
-const C3DVector4& C3DVector4::one()
+const Vector4& Vector4::one()
 {
-    static C3DVector4 value(1.0f, 1.0f, 1.0f, 1.0f);
+    static Vector4 value(1.0f, 1.0f, 1.0f, 1.0f);
     return value;
 }
 
-const C3DVector4& C3DVector4::unitX()
+const Vector4& Vector4::unitX()
 {
-    static C3DVector4 value(1.0f, 0.0f, 0.0f, 0.0f);
+    static Vector4 value(1.0f, 0.0f, 0.0f, 0.0f);
     return value;
 }
 
-const C3DVector4& C3DVector4::unitY()
+const Vector4& Vector4::unitY()
 {
-    static C3DVector4 value(0.0f, 1.0f, 0.0f, 0.0f);
+    static Vector4 value(0.0f, 1.0f, 0.0f, 0.0f);
     return value;
 }
 
-const C3DVector4& C3DVector4::unitZ()
+const Vector4& Vector4::unitZ()
 {
-    static C3DVector4 value(0.0f, 0.0f, 1.0f, 0.0f);
+    static Vector4 value(0.0f, 0.0f, 1.0f, 0.0f);
     return value;
 }
 
-const C3DVector4& C3DVector4::unitW()
+const Vector4& Vector4::unitW()
 {
-    static C3DVector4 value(0.0f, 0.0f, 0.0f, 1.0f);
+    static Vector4 value(0.0f, 0.0f, 0.0f, 1.0f);
     return value;
 }
 
-bool C3DVector4::isZero() const
+bool Vector4::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f;
 }
 
-bool C3DVector4::isOne() const
+bool Vector4::isOne() const
 {
     return x == 1.0f && y == 1.0f && z == 1.0f && z == 1.0f;
 }
 
-float C3DVector4::angle(const C3DVector4& v1, const C3DVector4& v2)
+float Vector4::angle(const Vector4& v1, const Vector4& v2)
 {
     float dx = v1.w * v2.x - v1.x * v2.w - v1.y * v2.z + v1.z * v2.y;
     float dy = v1.w * v2.y - v1.y * v2.w - v1.z * v2.x + v1.x * v2.z;
@@ -105,7 +105,9 @@ float C3DVector4::angle(const C3DVector4& v1, const C3DVector4& v2)
     return atan2f(sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void C3DVector4::add(const C3DVector4& v1, const C3DVector4& v2, C3DVector4* dst)
+
+
+void Vector4::add(const Vector4& v1, const Vector4& v2, Vector4* dst)
 {
     assert(dst);
 
@@ -115,7 +117,7 @@ void C3DVector4::add(const C3DVector4& v1, const C3DVector4& v2, C3DVector4* dst
     dst->w = v1.w + v2.w;
 }
 
-void C3DVector4::clamp(const C3DVector4& min, const C3DVector4& max)
+void Vector4::clamp(const Vector4& min, const Vector4& max)
 {
     assert(!( min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w));
 
@@ -144,7 +146,7 @@ void C3DVector4::clamp(const C3DVector4& min, const C3DVector4& max)
         w = max.w;
 }
 
-void C3DVector4::clamp(const C3DVector4& v, const C3DVector4& min, const C3DVector4& max, C3DVector4* dst)
+void Vector4::clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* dst)
 {
     assert(dst);
     assert(!( min.x > max.x || min.y > max.y || min.z > max.z || min.w > max.w));
@@ -178,7 +180,7 @@ void C3DVector4::clamp(const C3DVector4& v, const C3DVector4& min, const C3DVect
         dst->w = max.w;
 }
 
-float C3DVector4::distance(const C3DVector4& v) const
+float Vector4::distance(const Vector4& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -188,7 +190,7 @@ float C3DVector4::distance(const C3DVector4& v) const
     return sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
 }
 
-float C3DVector4::distanceSquared(const C3DVector4& v) const
+float Vector4::distanceSquared(const Vector4& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -198,28 +200,28 @@ float C3DVector4::distanceSquared(const C3DVector4& v) const
     return (dx * dx + dy * dy + dz * dz + dw * dw);
 }
 
-float C3DVector4::dot(const C3DVector4& v) const
+float Vector4::dot(const Vector4& v) const
 {
     return (x * v.x + y * v.y + z * v.z + w * v.w);
 }
 
-float C3DVector4::dot(const C3DVector4& v1, const C3DVector4& v2)
+float Vector4::dot(const Vector4& v1, const Vector4& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w);
 }
 
-float C3DVector4::length() const
+float Vector4::length() const
 {
     return sqrt(x * x + y * y + z * z + w * w);
 }
 
 
-float C3DVector4::lengthSquared() const
+float Vector4::lengthSquared() const
 {
     return (x * x + y * y + z * z + w * w);
 }
 
-void C3DVector4::negate()
+void Vector4::negate()
 {
     x = -x;
     y = -y;
@@ -227,13 +229,13 @@ void C3DVector4::negate()
     w = -w;
 }
 
-C3DVector4& C3DVector4::normalize()
+Vector4& Vector4::normalize()
 {
     normalize(this);
     return *this;
 }
 
-void C3DVector4::normalize(C3DVector4* dst)
+void Vector4::normalize(Vector4* dst)
 {
     assert(dst);
 
@@ -262,7 +264,7 @@ void C3DVector4::normalize(C3DVector4* dst)
     dst->w *= n;
 }
 
-void C3DVector4::scale(float scalar)
+void Vector4::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
@@ -270,7 +272,7 @@ void C3DVector4::scale(float scalar)
     w *= scalar;
 }
 
-void C3DVector4::set(float x, float y, float z, float w)
+void Vector4::set(float x, float y, float z, float w)
 {
     this->x = x;
     this->y = y;
@@ -278,7 +280,7 @@ void C3DVector4::set(float x, float y, float z, float w)
     this->w = w;
 }
 
-void C3DVector4::set(const float* array)
+void Vector4::set(const float* array)
 {
     assert(array);
 
@@ -288,7 +290,7 @@ void C3DVector4::set(const float* array)
     w = array[3];
 }
 
-void C3DVector4::set(const C3DVector4& v)
+void Vector4::set(const Vector4& v)
 {
     this->x = v.x;
     this->y = v.y;
@@ -296,7 +298,7 @@ void C3DVector4::set(const C3DVector4& v)
     this->w = v.w;
 }
 
-void C3DVector4::set(const C3DVector4& p1, const C3DVector4& p2)
+void Vector4::set(const Vector4& p1, const Vector4& p2)
 {
     x = p2.x - p1.x;
     y = p2.y - p1.y;
@@ -304,7 +306,7 @@ void C3DVector4::set(const C3DVector4& p1, const C3DVector4& p2)
     w = p2.w - p1.w;
 }
 
-void C3DVector4::subtract(const C3DVector4& v)
+void Vector4::subtract(const Vector4& v)
 {
     x -= v.x;
     y -= v.y;
@@ -312,7 +314,7 @@ void C3DVector4::subtract(const C3DVector4& v)
     w -= v.w;
 }
 
-void C3DVector4::subtract(const C3DVector4& v1, const C3DVector4& v2, C3DVector4* dst)
+void Vector4::subtract(const Vector4& v1, const Vector4& v2, Vector4* dst)
 {
     assert(dst);
 

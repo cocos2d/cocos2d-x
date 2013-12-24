@@ -1,11 +1,11 @@
-#ifndef C3DMATRIX_H_
-#define C3DMATRIX_H_
+#ifndef Matrix_H_
+#define Matrix_H_
 
 #include "CCPlatformMacros.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
+#include "Vector3.h"
+#include "Vector4.h"
 
-namespace cocos3d
+namespace cocos2d
 {
 
 /**
@@ -34,12 +34,12 @@ namespace cocos3d
  * methods for post-multiplying by a matrix representing a scale, rotation, or translation).
  *
  * In the case of repeated local transformations (i.e. rotate around the Z-axis by 0.76 radians,
- * then translate by 2.1 along the X-axis, then ...), it is better to use the C3DTransform class
+ * then translate by 2.1 along the X-axis, then ...), it is better to use the Transform class
  * (which is optimized for that kind of usage).
  *
- * @see C3DTransform
+ * @see Transform
  */
-class  C3DMatrix
+class  Matrix
 {
 public:
 
@@ -56,7 +56,7 @@ public:
      * 0  0  1  0
      * 0  0  0  1
      */
-    C3DMatrix();
+    Matrix();
 
     /**
      * Constructs a matrix initialized to the specified value.
@@ -78,7 +78,7 @@ public:
      * @param m43 The third element of the fourth row.
      * @param m44 The fourth element of the fourth row.
      */
-    C3DMatrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
+    Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31,
            float m32, float m33, float m34, float m41, float m42, float m43, float m44);
 
     /**
@@ -93,19 +93,19 @@ public:
      *
      * @param m An array containing 16 elements in column-major order.
      */
-    C3DMatrix(const float* m);
+    Matrix(const float* m);
 
     /**
      * Constructs a new matrix by copying the values from the specified matrix.
      *
      * @param copy The matrix to copy.
      */
-    C3DMatrix(const C3DMatrix& copy);
+    Matrix(const Matrix& copy);
 
     /**
      * Destructor.
      */
-    ~C3DMatrix();
+    ~Matrix();
 
     /**
      * Returns the identity matrix:
@@ -117,19 +117,19 @@ public:
      *
      * @return The identity matrix.
      */
-    static const C3DMatrix& identity();
+    static const Matrix& identity();
 
     /**
      * Returns the matrix with all zeros.
      *
      * @return The matrix with all zeros.
      */
-    static const C3DMatrix& zero();
+    static const Matrix& zero();
 
-    static C3DMatrix createFromVectors(C3DVector3& vx, C3DVector3& vy, C3DVector3& vz, C3DVector3& pos);
+    static Matrix createFromVectors(Vector3& vx, Vector3& vy, Vector3& vz, Vector3& pos);
 
 
-	static void createPitchYawRoll(float pitch, float yaw, float roll, C3DMatrix* dst);
+	static void createPitchYawRoll(float pitch, float yaw, float roll, Matrix* dst);
     /**
      * Creates a view matrix based on the specified input parameters.
      *
@@ -138,10 +138,10 @@ public:
      * @param up The up vector.
      * @param dst A matrix to store the result in.
      */
-    static void createLookAt(const C3DVector3& eyePosition, const C3DVector3& targetPosition, const C3DVector3& up, C3DMatrix* dst);
+    static void createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst);
 
 	// 通过轴创建矩阵 lvlong
-	//static void createAxis(C3DVector3& position, C3DVector3& xaxis, C3DVector3& yaxis, C3DVector3& zaxis, C3DMatrix* dst);
+	//static void createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst);
 
     /**
      * Creates a view matrix based on the specified input parameters.
@@ -158,10 +158,10 @@ public:
      * @param dst A matrix to store the result in.
      */
     static void createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ, float targetCenterX,
-                             float targetCenterY, float targetCenterZ, float upX, float upY, float upZ, C3DMatrix* dst);
+                             float targetCenterY, float targetCenterZ, float upX, float upY, float upZ, Matrix* dst);
 
 
-	static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, C3DMatrix* dst);
+	static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, Matrix* dst);
 
     /**
      * Builds a perspective projection matrix based on a field of view and returns by value.
@@ -177,10 +177,10 @@ public:
      * @param zFarPlane The distance to the far view plane.
      * @param dst A matrix to store the result in.
      */
-    static void createPerspectiveFOV(float width, float height, float zNear, float zFar, C3DMatrix* dst);
+    static void createPerspectiveFOV(float width, float height, float zNear, float zFar, Matrix* dst);
 
 	 static void createPerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
-                                            float zFar, C3DMatrix* dst);
+                                            float zFar, Matrix* dst);
     /**
      * Creates an orthographic projection matrix.
      *
@@ -190,7 +190,7 @@ public:
      * @param zFarPlane The maximum z-value of the view volume.
      * @param dst A matrix to store the result in.
      */
-    static void createOrthographic(float width, float height, float zNearPlane, float zFarPlane, C3DMatrix* dst);
+    static void createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Matrix* dst);
 
     /**
      * Creates an orthographic projection matrix.
@@ -221,7 +221,7 @@ public:
      * @param dst A matrix to store the result in.
      */
     static void createOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane,
-                                            float zFarPlane, C3DMatrix* dst);
+                                            float zFarPlane, Matrix* dst);
 
 //    /*
 //     * Creates a spherical billboard that rotates around a specified object position.
@@ -236,15 +236,15 @@ public:
 //     * @param cameraUpVector The up vector of the camera.
 //     * @param dst A matrix to store the result in.
 //     */
-//    static void createBillboard(const C3DVector3& objectPosition, const C3DVector3& cameraPosition, const C3DVector3& cameraUpVector, C3DMatrix* dst);
+//    static void createBillboard(const Vector3& objectPosition, const Vector3& cameraPosition, const Vector3& cameraUpVector, Matrix* dst);
 //
 //    /*
-//     * Fills in an existing C3DMatrix so that it reflects the coordinate system about a specified Plane.
+//     * Fills in an existing Matrix so that it reflects the coordinate system about a specified Plane.
 //     *
 //     * @param plane The Plane about which to create a reflection.
 //     * @param dst A matrix to store the result in.
 //     */
-//    static void createReflection(const Plane& plane, C3DMatrix* dst);
+//    static void createReflection(const Plane& plane, Matrix* dst);
 
     /**
      * Creates a scale matrix.
@@ -252,7 +252,7 @@ public:
      * @param scale The amount to scale.
      * @param dst A matrix to store the result in.
      */
-    static void createScale(const C3DVector3& scale, C3DMatrix* dst);
+    static void createScale(const Vector3& scale, Matrix* dst);
 
     /**
      * Creates a scale matrix.
@@ -262,7 +262,7 @@ public:
      * @param zScale The amount to scale along the z-axis.
      * @param dst A matrix to store the result in.
      */
-    static void createScale(float xScale, float yScale, float zScale, C3DMatrix* dst);
+    static void createScale(float xScale, float yScale, float zScale, Matrix* dst);
 
 
 
@@ -272,7 +272,7 @@ public:
      * @param quat A quaternion describing a 3D orientation.
      * @param dst A matrix to store the result in.
      */
-    static void createRotation(const C3DQuaternion& quat, C3DMatrix* dst);
+    static void createRotation(const Quaternion& quat, Matrix* dst);
 
     /**
      * Creates a rotation matrix from the specified axis and angle.
@@ -283,7 +283,7 @@ public:
      * @param dst A matrix to store the result in.
      * 
      */
-    static void createRotation(const C3DVector3& axis, float angle, C3DMatrix* dst, bool approximate = false);
+    static void createRotation(const Vector3& axis, float angle, Matrix* dst, bool approximate = false);
 
     /**
      * Creates a matrix describing a rotation around the x-axis.
@@ -291,7 +291,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A matrix to store the result in.
      */
-    static void createRotationX(float angle, C3DMatrix* dst);
+    static void createRotationX(float angle, Matrix* dst);
 
     /**
      * Creates a matrix describing a rotation around the y-axis.
@@ -299,7 +299,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A matrix to store the result in.
      */
-    static void createRotationY(float angle, C3DMatrix* dst);
+    static void createRotationY(float angle, Matrix* dst);
 
     /**
      * Creates a matrix describing a rotation around the z-axis.
@@ -307,7 +307,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A matrix to store the result in.
      */
-    static void createRotationZ(float angle, C3DMatrix* dst);
+    static void createRotationZ(float angle, Matrix* dst);
 
     /**
      * Creates a translation matrix.
@@ -315,7 +315,7 @@ public:
      * @param translation The translation.
      * @param dst A matrix to store the result in.
      */
-    static void createTranslation(const C3DVector3& translation, C3DMatrix* dst);
+    static void createTranslation(const Vector3& translation, Matrix* dst);
 
     /**
      * Creates a translation matrix.
@@ -325,7 +325,7 @@ public:
      * @param zTranslation The translation on the z-axis.
      * @param dst A matrix to store the result in.
      */
-    static void createTranslation(float xTranslation, float yTranslation, float zTranslation, C3DMatrix* dst);
+    static void createTranslation(float xTranslation, float yTranslation, float zTranslation, Matrix* dst);
 
     /**
      * Adds a scalar value to each component of this matrix.
@@ -340,14 +340,14 @@ public:
      * @param scalar The scalar value to add.
      * @param dst A matrix to store the result in.
      */
-    void add(float scalar, C3DMatrix* dst);
+    void add(float scalar, Matrix* dst);
 
     /**
      * Adds the specified matrix to this matrix.
      *
      * @param m The matrix to add.
      */
-    void add(const C3DMatrix& m);
+    void add(const Matrix& m);
 
     /**
      * Adds the specified matrices and stores the result in dst.
@@ -356,7 +356,7 @@ public:
      * @param m2 The second matrix.
      * @param dst The destination matrix to add to.
      */
-    static void add(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst);
+    static void add(const Matrix& m1, const Matrix& m2, Matrix* dst);
 
     /**
      * Decomposes the scale, rotation and translation components of this matrix.
@@ -365,7 +365,7 @@ public:
      * @param rotation The rotation.
      * @param translation The translation.
      */
-    bool decompose(C3DVector3* scale, C3DQuaternion* rotation, C3DVector3* translation) const;
+    bool decompose(Vector3* scale, Quaternion* rotation, Vector3* translation) const;
 
     /**
      * Computes the determinant of this matrix.
@@ -384,7 +384,7 @@ public:
      *
      * @param scale A vector to receive the scale.
      */
-    void getScale(C3DVector3* scale) const;
+    void getScale(Vector3* scale) const;
 
     /**
      * Gets the rotational component of this matrix in the specified quaternion.
@@ -393,21 +393,21 @@ public:
      * 
      * @return true if the rotation is successfully extracted, false otherwise.
      */
-    bool getRotation(C3DQuaternion* rotation) const;
+    bool getRotation(Quaternion* rotation) const;
 
     /**
      * Gets the translational component of this matrix in the specified vector.
      *
      * @param translation A vector to receive the translation.
      */
-    void getPosition(C3DVector3* translation) const;
+    void getPosition(Vector3* translation) const;
 
     /**
      * Gets the up vector of this matrix.
      *
      * @param dst The destination vector.
      */
-    void getUpVector(C3DVector3* dst) const;
+    void getUpVector(Vector3* dst) const;
 
 	
 
@@ -416,14 +416,14 @@ public:
      *
      * @param dst The destination vector.
      */
-    void getRightVector(C3DVector3* dst) const;
+    void getRightVector(Vector3* dst) const;
 
     /**
      * Gets the forward vector of this matrix.
      *
      * @param dst The destination vector.
      */
-    void getForwardVector(C3DVector3* dst) const;
+    void getForwardVector(Vector3* dst) const;
 
 
 
@@ -441,19 +441,19 @@ public:
      * 
      * @return true if the the matrix can be inverted, false otherwise.
      */
-    bool invert(C3DMatrix* dst) const;
+    bool invert(Matrix* dst) const;
     
     /**
      * Inverts a orthogonal matrix, it is more fast than invert()
      */
-    C3DMatrix& invertOrthMat();
+    Matrix& invertOrthMat();
     
     /**
      * compute the inverse of a orthogonal matrix
      * @param mat A matrix whose inverse matrix will be computed, must be a orthogonal matrix
      * @param invMat The inverted matrix
      */
-    static void invertOrthMat(const C3DMatrix& mat, C3DMatrix& invMat);
+    static void invertOrthMat(const Matrix& mat, Matrix& invMat);
 
     /**
      * Determines if this matrix is equal to the identity matrix.
@@ -475,7 +475,7 @@ public:
      * @param scalar The scalar value.
      * @param dst A matrix to store the result in.
      */
-    void multiply(float scalar, C3DMatrix* dst) const;
+    void multiply(float scalar, Matrix* dst) const;
 
     /**
      * Multiplies the components of the specified matrix by a scalar and stores the result in dst.
@@ -484,14 +484,14 @@ public:
      * @param scalar The scalar value.
      * @param dst A matrix to store the result in.
      */
-    static void multiply(const C3DMatrix& m, float scalar, C3DMatrix* dst);
+    static void multiply(const Matrix& m, float scalar, Matrix* dst);
 
     /**
      * Multiplies this matrix by the specified one.
      *
      * @param m The matrix to multiply.
      */
-    void multiply(const C3DMatrix& m);
+    void multiply(const Matrix& m);
 
     /**
      * Multiplies m1 by m2 and stores the result in dst.
@@ -500,7 +500,7 @@ public:
      * @param m2 The second matrix to multiply.
      * @param dst A matrix to store the result in.
      */
-    static void multiply(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst);
+    static void multiply(const Matrix& m1, const Matrix& m2, Matrix* dst);
 
     /**
      * Negates this matrix.
@@ -512,7 +512,7 @@ public:
      *
      * @param dst A matrix to store the result in.
      */
-    void negate(C3DMatrix* dst) const;
+    void negate(Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -520,7 +520,7 @@ public:
      *
      * @param q The quaternion to rotate by.
      */
-    void rotate(const C3DQuaternion& q);
+    void rotate(const Quaternion& q);
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -529,7 +529,7 @@ public:
      * @param q The quaternion to rotate by.
      * @param dst A matrix to store the result in.
      */
-    void rotate(const C3DQuaternion& q, C3DMatrix* dst) const;
+    void rotate(const Quaternion& q, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -538,7 +538,7 @@ public:
      * @param axis The axis to rotate about.
      * @param angle The angle (in radians).
      */
-    void rotate(const C3DVector3& axis, float angle);
+    void rotate(const Vector3& axis, float angle);
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the specified
@@ -548,7 +548,7 @@ public:
      * @param angle The angle (in radians).
      * @param dst A matrix to store the result in.
      */
-    void rotate(const C3DVector3& axis, float angle, C3DMatrix* dst) const;
+    void rotate(const Vector3& axis, float angle, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -565,7 +565,7 @@ public:
      * @param angle The angle (in radians).
      * @param dst A matrix to store the result in.
      */
-    void rotateX(float angle, C3DMatrix* dst) const;
+    void rotateX(float angle, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -582,7 +582,7 @@ public:
      * @param angle The angle (in radians).
      * @param dst A matrix to store the result in.
      */
-    void rotateY(float angle, C3DMatrix* dst) const;
+    void rotateY(float angle, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -599,7 +599,7 @@ public:
      * @param angle The angle (in radians).
      * @param dst A matrix to store the result in.
      */
-    void rotateZ(float angle, C3DMatrix* dst) const;
+    void rotateZ(float angle, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -616,7 +616,7 @@ public:
      * @param value The amount to scale along all axes.
      * @param dst A matrix to store the result in.
      */
-    void scale(float value, C3DMatrix* dst) const;
+    void scale(float value, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -639,7 +639,7 @@ public:
      * @param zScale The amount to scale along the z-axis.
      * @param dst A matrix to store the result in.
      */
-    void scale(float xScale, float yScale, float zScale, C3DMatrix* dst) const;
+    void scale(float xScale, float yScale, float zScale, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -647,7 +647,7 @@ public:
      *
      * @param s The scale values along the x, y and z axes.
      */
-    void scale(const C3DVector3& s);
+    void scale(const Vector3& s);
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -656,7 +656,7 @@ public:
      * @param s The scale values along the x, y and z axes.
      * @param dst A matrix to store the result in.
      */
-    void scale(const C3DVector3& s, C3DMatrix* dst) const;
+    void scale(const Vector3& s, Matrix* dst) const;
 
     /**
      * Sets the values of this matrix.
@@ -693,13 +693,13 @@ public:
      *
      * @param m The source matrix.
      */
-    void set(const C3DMatrix& m);
+    void set(const Matrix& m);
 
-	void setCol(int idx, const C3DVector3& col);
+	void setCol(int idx, const Vector3& col);
 
-	C3DVector3 getCol(int idx) const;
+	Vector3 getCol(int idx) const;
 
-	void getCol(int idx, C3DVector3& col) const;
+	void getCol(int idx, Vector3& col) const;
 
     /**
      * Sets this matrix to the identity matrix.
@@ -716,7 +716,7 @@ public:
      *
      * @param m The matrix to subtract.
      */
-    void subtract(const C3DMatrix& m);
+    void subtract(const Matrix& m);
 
     /**
      * Subtracts the specified matrix from the current matrix.
@@ -725,7 +725,7 @@ public:
      * @param m2 The second matrix.
      * @param dst A matrix to store the result in.
      */
-    static void subtract(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst);
+    static void subtract(const Matrix& m1, const Matrix& m2, Matrix* dst);
 
     /**
      * Transforms the specified point by this matrix.
@@ -734,7 +734,7 @@ public:
      *
      * @param point The point to transform and also a vector to hold the result in.
      */
-    void transformPoint(C3DVector3* point) const;
+    void transformPoint(Vector3* point) const;
 
     /**
      * Transforms the specified point by this matrix, and stores
@@ -743,7 +743,7 @@ public:
      * @param point The point to transform.
      * @param dst A vector to store the transformed point in.
      */
-    void transformPoint(const C3DVector3& point, C3DVector3* dst) const;
+    void transformPoint(const Vector3& point, Vector3* dst) const;
 
     /**
      * Transforms the specified vector by this matrix by
@@ -753,7 +753,7 @@ public:
      *
      * @param vector The vector to transform and also a vector to hold the result in.
      */
-    void transformVector(C3DVector3* vector) const;
+    void transformVector(Vector3* vector) const;
 
     /**
      * Transforms the specified vector by this matrix by
@@ -763,7 +763,7 @@ public:
      * @param vector The vector to transform.
      * @param dst A vector to store the transformed vector in.
      */
-    void transformVector(const C3DVector3& vector, C3DVector3* dst) const;
+    void transformVector(const Vector3& vector, Vector3* dst) const;
 
     /**
      * Transforms the specified vector by this matrix.
@@ -774,7 +774,7 @@ public:
      * @param w The vector w-coordinate to transform by.
      * @param dst A vector to store the transformed point in.
      */
-    void transformVector(float x, float y, float z, float w, C3DVector3* dst) const;
+    void transformVector(float x, float y, float z, float w, Vector3* dst) const;
     
     /**
      * Transforms the specified vector by this matrix.
@@ -784,7 +784,7 @@ public:
      * @param z The vector z-coordinate to transform by.
      * @param dst A vector to store the transformed point in.
      */
-    void transformVector(float x, float y, float z, C3DVector3* dst) const;
+    void transformVector(float x, float y, float z, Vector3* dst) const;
 
     /**
      * Transforms the specified vector by this matrix.
@@ -793,7 +793,7 @@ public:
      *
      * @param vector The vector to transform.
      */
-    void transformVector(C3DVector4* vector) const;
+    void transformVector(Vector4* vector) const;
 
     /**
      * Transforms the specified vector by this matrix.
@@ -801,7 +801,7 @@ public:
      * @param vector The vector to transform.
      * @param dst A vector to store the transformed point in.
      */
-    void transformVector(const C3DVector4& vector, C3DVector4* dst) const;
+    void transformVector(const Vector4& vector, Vector4* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -822,7 +822,7 @@ public:
      * @param z The amount to translate along the z-axis.
      * @param dst A matrix to store the result in.
      */
-    void translate(float x, float y, float z, C3DMatrix* dst) const;
+    void translate(float x, float y, float z, Matrix* dst) const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -830,7 +830,7 @@ public:
      *
      * @param t The translation values along the x, y and z axes.
      */
-    void translate(const C3DVector3& t);
+    void translate(const Vector3& t);
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -839,7 +839,7 @@ public:
      * @param t The translation values along the x, y and z axes.
      * @param dst A matrix to store the result in.
      */
-    void translate(const C3DVector3& t, C3DMatrix* dst) const;
+    void translate(const Vector3& t, Matrix* dst) const;
 
     /**
      * Transposes this matrix.
@@ -851,7 +851,7 @@ public:
      *
      * @param dst A matrix to store the result in.
      */
-    void transpose(C3DMatrix* dst) const;
+    void transpose(Matrix* dst) const;
 
     /**
      * Calculates the sum of this matrix with the given matrix.
@@ -861,7 +861,7 @@ public:
      * @param m The matrix to add.
      * @return The matrix sum.
      */
-    inline const C3DMatrix operator+(const C3DMatrix& m) const;
+    inline const Matrix operator+(const Matrix& m) const;
     
     /**
      * Adds the given matrix to this matrix.
@@ -869,7 +869,7 @@ public:
      * @param m The matrix to add.
      * @return This matrix, after the addition occurs.
      */
-    inline C3DMatrix& operator+=(const C3DMatrix& m);
+    inline Matrix& operator+=(const Matrix& m);
 
     /**
      * Calculates the difference of this matrix with the given matrix.
@@ -879,7 +879,7 @@ public:
      * @param m The matrix to subtract.
      * @return The matrix difference.
      */
-    inline const C3DMatrix operator-(const C3DMatrix& m) const;
+    inline const Matrix operator-(const Matrix& m) const;
 
     /**
      * Subtracts the given matrix from this matrix.
@@ -887,7 +887,7 @@ public:
      * @param m The matrix to subtract.
      * @return This matrix, after the subtraction occurs.
      */
-    inline C3DMatrix& operator-=(const C3DMatrix& m);
+    inline Matrix& operator-=(const Matrix& m);
 
     /**
      * Calculates the negation of this matrix.
@@ -896,7 +896,7 @@ public:
      * 
      * @return The negation of this matrix.
      */
-    inline const C3DMatrix operator-() const;
+    inline const Matrix operator-() const;
 
     /**
      * Calculates the matrix product of this matrix with the given matrix.
@@ -906,7 +906,7 @@ public:
      * @param m The matrix to multiply by.
      * @return The matrix product.
      */
-    inline const C3DMatrix operator*(const C3DMatrix& m) const;
+    inline const Matrix operator*(const Matrix& m) const;
 
     /**
      * Right-multiplies this matrix by the given matrix.
@@ -914,7 +914,7 @@ public:
      * @param m The matrix to multiply by.
      * @return This matrix, after the multiplication occurs.
      */
-    inline C3DMatrix& operator*=(const C3DMatrix& m);
+    inline Matrix& operator*=(const Matrix& m);
 };
 
 /**
@@ -926,7 +926,7 @@ public:
  * @param m The matrix to transform by.
  * @return This vector, after the transformation occurs.
  */
-inline C3DVector3& operator*=(C3DVector3& v, const C3DMatrix& m);
+inline Vector3& operator*=(Vector3& v, const Matrix& m);
 
 /**
  * Transforms the given vector by the given matrix.
@@ -937,7 +937,7 @@ inline C3DVector3& operator*=(C3DVector3& v, const C3DMatrix& m);
  * @param v The vector to transform.
  * @return The resulting transformed vector.
  */
-inline const C3DVector3 operator*(const C3DMatrix& m, const C3DVector3& v);
+inline const Vector3 operator*(const Matrix& m, const Vector3& v);
 
 /**
  * Transforms the given vector by the given matrix.
@@ -948,7 +948,7 @@ inline const C3DVector3 operator*(const C3DMatrix& m, const C3DVector3& v);
  * @param m The matrix to transform by.
  * @return This vector, after the transformation occurs.
  */
-inline C3DVector4& operator*=(C3DVector4& v, const C3DMatrix& m);
+inline Vector4& operator*=(Vector4& v, const Matrix& m);
 
 /**
  * Transforms the given vector by the given matrix.
@@ -959,9 +959,9 @@ inline C3DVector4& operator*=(C3DVector4& v, const C3DMatrix& m);
  * @param v The vector to transform.
  * @return The resulting transformed vector.
  */
-inline const C3DVector4 operator*(const C3DMatrix& m, const C3DVector4& v);
+inline const Vector4 operator*(const Matrix& m, const Vector4& v);
     
-inline std::ostream& operator << (std::ostream& stream, const C3DMatrix& m)
+inline std::ostream& operator << (std::ostream& stream, const Matrix& m)
 {
     return stream <<
         m.m[0] << "," << m.m[1] << "," << m.m[2] << "," << m.m[3] <<
@@ -970,7 +970,7 @@ inline std::ostream& operator << (std::ostream& stream, const C3DMatrix& m)
         m.m[12] << "," << m.m[13] << "," << m.m[14] << "," << m.m[15];
 }
 
-inline std::istream& operator >> (std::istream& stream, C3DMatrix& m)
+inline std::istream& operator >> (std::istream& stream, Matrix& m)
 {
     stream >> m.m[0];
     for (int i = 1; i < 16 ; ++i)
@@ -983,6 +983,6 @@ inline std::istream& operator >> (std::istream& stream, C3DMatrix& m)
 
 }
 
-#include "C3DMatrix.inl"
+#include "Matrix.inl"
 
 #endif

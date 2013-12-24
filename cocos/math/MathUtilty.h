@@ -11,31 +11,31 @@
 
 
 
-namespace cocos3d
+namespace cocos2d
 {
 
-class C3DMathUtility
+class MathUtility
 {
 public:
-    ~C3DMathUtility();
+    ~MathUtility();
     
-    static C3DMathUtility& getInstance();
+    static MathUtility& getInstance();
     
     /**
      * approximate value of sin(rad), precision 1 degree
      *
      * @param rad to retreive.
-     * @param buseTale use look up table retrive sin value.
+     * @param isUseTable use look up table retrive sin value.
      */
-    float sin(float rad, bool buseTable = false);
+    float sin(float rad, bool isUseTable = false);
     
     /**
      * approximate value of cos(rad), precision 1 degree
      *
      * @param rad to retreive.
-     * @param buseTale use look up table retrive sin value.
+     * @param isUseTable use look up table retrive sin value.
      */
-    float cos(float rad, bool buseTable = false);
+    float cos(float rad, bool isUseTable = false);
     
     /**
      * approximate value of cos(rad), precision 1 degree
@@ -43,12 +43,13 @@ public:
      * @param rad to retreive.
      * @param sinvalue to receive sin value
      * @param cosvalue to receive cos value
-     * @param buseTale use look up table retrive sin value.
+     * @param isUseTable use look up table retrive sin value.
      */
-    void sincos(float rad, float *sinvalue, float* cosvalue, bool bUseTable = false);
+    void sincos(float rad, float *sinvalue, float* cosvalue, bool isUseTable = false);
+
     
 private:
-    C3DMathUtility();
+    MathUtility();
     
     void initMathUtility();
     

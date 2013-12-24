@@ -2,15 +2,15 @@
 #define VECTOR4_H_
 #include <iostream>
 
-namespace cocos3d
+namespace cocos2d
 {
 
-class C3DMatrix;
+class Matrix;
 
 /**
  * Defines 4-element floating point vector.
  */
-class  C3DVector4
+class  Vector4
 {
 public:
 
@@ -37,7 +37,7 @@ public:
     /**
      * Constructs a new vector initialized to all zeros.
      */
-    C3DVector4();
+    Vector4();
 
     /**
      * Constructs a new vector initialized to the specified values.
@@ -47,14 +47,14 @@ public:
      * @param z The z coordinate.
      * @param w The w coordinate.
      */
-    C3DVector4(float x, float y, float z, float w);
+    Vector4(float x, float y, float z, float w);
 
     /**
      * Constructs a new vector from the values in the specified array.
      *
      * @param array An array containing the elements of the vector in the order x, y, z, w.
      */
-    C3DVector4(const float* array);
+    Vector4(const float* array);
 
     /**
      * Constructs a vector that describes the direction between the specified points.
@@ -62,7 +62,7 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    C3DVector4(const C3DVector4& p1, const C3DVector4& p2);
+    Vector4(const Vector4& p1, const Vector4& p2);
 
     /**
      * Constructor.
@@ -71,7 +71,7 @@ public:
      *
      * @param copy The vector to copy.
      */
-    C3DVector4(const C3DVector4& copy);
+    Vector4(const Vector4& copy);
 
     /**
      * Creates a new vector from an integer interpreted as an RGBA value.
@@ -81,54 +81,54 @@ public:
      *
      * @return A vector corresponding to the interpreted RGBA color.
      */
-    static C3DVector4 fromColor(unsigned int color);
+    static Vector4 fromColor(unsigned int color);
 
     /**
      * Destructor.
      */
-    ~C3DVector4();
+    ~Vector4();
 
     /**
      * Returns the zero vector.
      *
      * @return The 4-element vector of 0s.
      */
-    static const C3DVector4& zero();
+    static const Vector4& zero();
 
     /**
      * Returns the one vector.
      *
      * @return The 4-element vector of 1s.
      */
-    static const C3DVector4& one();
+    static const Vector4& one();
 
     /**
      * Returns the unit x vector.
      *
      * @return The 4-element unit vector along the x axis.
      */
-    static const C3DVector4& unitX();
+    static const Vector4& unitX();
 
     /**
      * Returns the unit y vector.
      *
      * @return The 4-element unit vector along the y axis.
      */
-    static const C3DVector4& unitY();
+    static const Vector4& unitY();
 
     /**
      * Returns the unit z vector.
      *
      * @return The 4-element unit vector along the z axis.
      */
-    static const C3DVector4& unitZ();
+    static const Vector4& unitZ();
 
     /**
      * Returns the unit w vector.
      *
      * @return The 4-element unit vector along the w axis.
      */
-    static const C3DVector4& unitW();
+    static const Vector4& unitW();
 
     /**
      * Indicates whether this vector contains all zeros.
@@ -152,14 +152,14 @@ public:
      * 
      * @return The angle between the two vectors (in radians).
      */
-    static float angle(const C3DVector4& v1, const C3DVector4& v2);
+    static float angle(const Vector4& v1, const Vector4& v2);
 
     /**
      * Adds the elements of the specified vector to this one.
      *
      * @param v The vector to add.
      */
-    inline void add(const C3DVector4& v);
+    inline void add(const Vector4& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -168,7 +168,7 @@ public:
      * @param v2 The second vector.
      * @param dst A vector to store the result in.
      */
-    static void add(const C3DVector4& v1, const C3DVector4& v2, C3DVector4* dst);
+    static void add(const Vector4& v1, const Vector4& v2, Vector4* dst);
 
     /**
      * Clamps this vector within the specified range.
@@ -176,7 +176,7 @@ public:
      * @param min The minimum value.
      * @param max The maximum value.
      */
-    void clamp(const C3DVector4& min, const C3DVector4& max);
+    void clamp(const Vector4& min, const Vector4& max);
 
     /**
      * Clamps the specified vector within the specified range and returns it in dst.
@@ -186,7 +186,7 @@ public:
      * @param max The maximum value.
      * @param dst A vector to store the result in.
      */
-    static void clamp(const C3DVector4& v, const C3DVector4& min, const C3DVector4& max, C3DVector4* dst);
+    static void clamp(const Vector4& v, const Vector4& min, const Vector4& max, Vector4* dst);
 
     /**
      * Returns the distance between this vector and v.
@@ -197,7 +197,7 @@ public:
      * 
      * @see distanceSquared
      */
-    float distance(const C3DVector4& v) const;
+    float distance(const Vector4& v) const;
 
     /**
      * Returns the squared distance between this vector and v.
@@ -213,7 +213,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const C3DVector4& v) const;
+    float distanceSquared(const Vector4& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -222,7 +222,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const C3DVector4& v) const;
+    float dot(const Vector4& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -232,7 +232,7 @@ public:
      * 
      * @return The dot product between the vectors.
      */
-    static float dot(const C3DVector4& v1, const C3DVector4& v2);
+    static float dot(const Vector4& v1, const Vector4& v2);
 
     /**
      * Computes the length of this vector.
@@ -265,7 +265,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this C3DVector4 so that it is of
+     * This method normalizes this Vector4 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -273,7 +273,7 @@ public:
      * 
      * @return This vector, after the normalization occurs.
      */
-    C3DVector4& normalize();
+    Vector4& normalize();
 
     /**
      * Normalizes this vector and stores the result in dst.
@@ -284,7 +284,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    void normalize(C3DVector4* dst);
+    void normalize(Vector4* dst);
 
     /**
      * Scales all elements of this vector by the specified value.
@@ -315,7 +315,7 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const C3DVector4& v);
+    void set(const Vector4& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
@@ -323,7 +323,7 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    void set(const C3DVector4& p1, const C3DVector4& p2);
+    void set(const Vector4& p1, const Vector4& p2);
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -331,7 +331,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const C3DVector4& v);
+    void subtract(const Vector4& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -341,7 +341,7 @@ public:
      * @param v2 The second vector.
      * @param dst The destination vector.
      */
-    static void subtract(const C3DVector4& v1, const C3DVector4& v2, C3DVector4* dst);
+    static void subtract(const Vector4& v1, const Vector4& v2, Vector4* dst);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -351,7 +351,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const C3DVector4 operator+(const C3DVector4& v) const;
+    inline const Vector4 operator+(const Vector4& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -359,7 +359,7 @@ public:
      * @param v The vector to add.
      * @return This vector, after the addition occurs.
      */
-    inline C3DVector4& operator+=(const C3DVector4& v);
+    inline Vector4& operator+=(const Vector4& v);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -369,7 +369,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const C3DVector4 operator-(const C3DVector4& v) const;
+    inline const Vector4 operator-(const Vector4& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -377,7 +377,7 @@ public:
      * @param v The vector to subtract.
      * @return This vector, after the subtraction occurs.
      */
-    inline C3DVector4& operator-=(const C3DVector4& v);
+    inline Vector4& operator-=(const Vector4& v);
 
     /**
      * Calculates the negation of this vector.
@@ -386,7 +386,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const C3DVector4 operator-() const;
+    inline const Vector4 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -396,9 +396,9 @@ public:
      * @param x The value to scale by.
      * @return The scaled vector.
      */
-    inline const C3DVector4 operator*(float x) const;
+    inline const Vector4 operator*(float x) const;
 
-	inline const C3DVector4 operator*(const C3DVector4& v) const;
+	inline const Vector4 operator*(const Vector4& v) const;
 
     /**
      * Scales this vector by the given value.
@@ -406,7 +406,7 @@ public:
      * @param x The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline C3DVector4& operator*=(float x);
+    inline Vector4& operator*=(float x);
 
     /**
      * Determines if this vector is less than the given vector.
@@ -415,7 +415,7 @@ public:
      * 
      * @return True if this vector is less than the given vector, false otherwise.
      */
-    inline bool operator<(const C3DVector4& v) const;
+    inline bool operator<(const Vector4& v) const;
 
     /**
      * Determines if this vector is equal to the given vector.
@@ -424,7 +424,7 @@ public:
      * 
      * @return True if this vector is equal to the given vector, false otherwise.
      */
-    inline bool operator==(const C3DVector4& v) const;
+    inline bool operator==(const Vector4& v) const;
 
     /**
      * Determines if this vector is not equal to the given vector.
@@ -433,7 +433,7 @@ public:
      * 
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
-    inline bool operator!=(const C3DVector4& v) const;
+    inline bool operator!=(const Vector4& v) const;
 };
 
 /**
@@ -443,14 +443,14 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const C3DVector4 operator*(float x, const C3DVector4& v);
+inline const Vector4 operator*(float x, const Vector4& v);
 
-inline std::ostream& operator << (std::ostream& stream, const C3DVector4& v)
+inline std::ostream& operator << (std::ostream& stream, const Vector4& v)
 {
     return stream << v.x << "," << v.y << "," << v.z << "," << v.w;
 }
 
-inline std::istream& operator >> (std::istream& stream, C3DVector4& v)
+inline std::istream& operator >> (std::istream& stream, Vector4& v)
 {
     stream >> v.x;
     stream.ignore(256, ',');
@@ -464,6 +464,6 @@ inline std::istream& operator >> (std::istream& stream, C3DVector4& v)
     
 }
 
-#include "C3DVector4.inl"
+#include "Vector4.inl"
 
 #endif

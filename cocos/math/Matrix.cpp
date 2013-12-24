@@ -4,7 +4,7 @@
 
 #define MATRIX_SIZE     ( sizeof(float) * 16 )
 
-namespace cocos3d
+namespace cocos2d
 {
 
 static const float MATRIX_IDENTITY[16] =
@@ -15,36 +15,36 @@ static const float MATRIX_IDENTITY[16] =
     0.0f, 0.0f, 0.0f, 1.0f
 };
 
-C3DMatrix::C3DMatrix()
+Matrix::Matrix()
 {
-    *this = C3DMatrix::identity();
+    *this = Matrix::identity();
 }
 
-C3DMatrix::C3DMatrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     set(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
 }
 
-C3DMatrix::C3DMatrix(const float* m)
+Matrix::Matrix(const float* m)
 {
     if (m)
         set(m);
     else
-        *this = C3DMatrix::identity();
+        *this = Matrix::identity();
 }
 
-C3DMatrix::C3DMatrix(const C3DMatrix& copy)
+Matrix::Matrix(const Matrix& copy)
 {
     memcpy(m, copy.m, MATRIX_SIZE);
 }
 
-C3DMatrix::~C3DMatrix()
+Matrix::~Matrix()
 {
 }
 
-const C3DMatrix& C3DMatrix::identity()
+const Matrix& Matrix::identity()
 {
-    static C3DMatrix m(
+    static Matrix m(
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
@@ -52,9 +52,9 @@ const C3DMatrix& C3DMatrix::identity()
     return m;
 }
 
-const C3DMatrix& C3DMatrix::zero()
+const Matrix& Matrix::zero()
 {
-    static C3DMatrix m(
+    static Matrix m(
         0, 0, 0, 0,
         0, 0, 0, 0,
         0, 0, 0, 0,
@@ -62,9 +62,9 @@ const C3DMatrix& C3DMatrix::zero()
     return m;
 }
 
-C3DMatrix C3DMatrix::createFromVectors(C3DVector3& vx, C3DVector3& vy, C3DVector3& vz, C3DVector3& pos)
+Matrix Matrix::createFromVectors(Vector3& vx, Vector3& vy, Vector3& vz, Vector3& pos)
 {
-	C3DMatrix mat;
+	Matrix mat;
 	
 	vx.normalize();
 	vy.normalize();
@@ -94,7 +94,7 @@ C3DMatrix C3DMatrix::createFromVectors(C3DVector3& vx, C3DVector3& vy, C3DVector
 
 }
 
-void C3DMatrix::createPitchYawRoll(float pitch, float yaw, float roll, C3DMatrix* dst)
+void Matrix::createPitchYawRoll(float pitch, float yaw, float roll, Matrix* dst)
 {
     float cr = cos(pitch);
     float sr = sin(pitch);
@@ -122,32 +122,32 @@ void C3DMatrix::createPitchYawRoll(float pitch, float yaw, float roll, C3DMatrix
 
 }
 
-void C3DMatrix::createLookAt(const C3DVector3& eyePosition, const C3DVector3& targetPosition, const C3DVector3& up, C3DMatrix* dst)
+void Matrix::createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst)
 {
     createLookAt(eyePosition.x, eyePosition.y, eyePosition.z, targetPosition.x, targetPosition.y, targetPosition.z, up.x, up.y, up.z, dst);
 }
 
-void C3DMatrix::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
+void Matrix::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                           float targetPositionX, float targetPositionY, float targetPositionZ,
-                          float upX, float upY, float upZ, C3DMatrix* dst)
+                          float upX, float upY, float upZ, Matrix* dst)
 {
     assert(dst);
 
-    C3DVector3 eye(eyePositionX, eyePositionY, eyePositionZ);
-    C3DVector3 target(targetPositionX, targetPositionY, targetPositionZ);
-    C3DVector3 up(upX, upY, upZ);
+    Vector3 eye(eyePositionX, eyePositionY, eyePositionZ);
+    Vector3 target(targetPositionX, targetPositionY, targetPositionZ);
+    Vector3 up(upX, upY, upZ);
     up.normalize();
 
-    C3DVector3 zaxis;
-    C3DVector3::subtract(eye, target, &zaxis);
+    Vector3 zaxis;
+    Vector3::subtract(eye, target, &zaxis);
     zaxis.normalize();
 
-    C3DVector3 xaxis;
-    C3DVector3::cross(up, zaxis, &xaxis);
+    Vector3 xaxis;
+    Vector3::cross(up, zaxis, &xaxis);
     xaxis.normalize();
 
-    C3DVector3 yaxis;
-    C3DVector3::cross(zaxis, xaxis, &yaxis);
+    Vector3 yaxis;
+    Vector3::cross(zaxis, xaxis, &yaxis);
     yaxis.normalize();
 
     dst->m[0] = xaxis.x;
@@ -165,13 +165,13 @@ void C3DMatrix::createLookAt(float eyePositionX, float eyePositionY, float eyePo
     dst->m[10] = zaxis.z;
     dst->m[11] = 0.0f;
 
-    dst->m[12] = -C3DVector3::dot(xaxis, eye);
-    dst->m[13] = -C3DVector3::dot(yaxis, eye);
-    dst->m[14] = -C3DVector3::dot(zaxis, eye);
+    dst->m[12] = -Vector3::dot(xaxis, eye);
+    dst->m[13] = -Vector3::dot(yaxis, eye);
+    dst->m[14] = -Vector3::dot(zaxis, eye);
     dst->m[15] = 1.0f;
 }
 //
-//void C3DMatrix::createAxis(C3DVector3& position, C3DVector3& xaxis, C3DVector3& yaxis, C3DVector3& zaxis, C3DMatrix* dst)
+//void Matrix::createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst)
 //{
 //	zaxis.normalize();
 //	xaxis.normalize();
@@ -192,14 +192,14 @@ void C3DMatrix::createLookAt(float eyePositionX, float eyePositionY, float eyePo
 //	dst->m[10] = zaxis.z;
 //	dst->m[11] = 0.0f;
 //
-//	dst->m[12] = -C3DVector3::dot(xaxis, position);
-//	dst->m[13] = -C3DVector3::dot(yaxis, position);
-//	dst->m[14] = -C3DVector3::dot(zaxis, position);
+//	dst->m[12] = -Vector3::dot(xaxis, position);
+//	dst->m[13] = -Vector3::dot(yaxis, position);
+//	dst->m[14] = -Vector3::dot(zaxis, position);
 //	dst->m[15] = 1.0f;
 //}
 
-void C3DMatrix::createPerspective(float fieldOfView, float aspectRatio,
-                                     float zNearPlane, float zFarPlane, C3DMatrix* dst)
+void Matrix::createPerspective(float fieldOfView, float aspectRatio,
+                                     float zNearPlane, float zFarPlane, Matrix* dst)
 {
     assert(dst);
 
@@ -215,15 +215,15 @@ void C3DMatrix::createPerspective(float fieldOfView, float aspectRatio,
     dst->m[14] = -2.0f * zFarPlane * zNearPlane * f_n;
 }
 
-void C3DMatrix::createPerspectiveFOV(float width, float height, float zNear, float zFar, C3DMatrix* dst)
+void Matrix::createPerspectiveFOV(float width, float height, float zNear, float zFar, Matrix* dst)
 {
 	float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
 	createPerspectiveOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, dst);
 }
 
-void C3DMatrix::createPerspectiveOffCenter(float left, float right, float bottom, float top,
-                                         float zNear, float zFar, C3DMatrix* dst)
+void Matrix::createPerspectiveOffCenter(float left, float right, float bottom, float top,
+                                         float zNear, float zFar, Matrix* dst)
 {
     assert(dst);
 
@@ -243,15 +243,15 @@ void C3DMatrix::createPerspectiveOffCenter(float left, float right, float bottom
 }
 
 
-void C3DMatrix::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, C3DMatrix* dst)
+void Matrix::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Matrix* dst)
 {
     float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
     createOrthographicOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNearPlane, zFarPlane, dst);
 }
 
-void C3DMatrix::createOrthographicOffCenter(float left, float right, float bottom, float top,
-                                         float zNearPlane, float zFarPlane, C3DMatrix* dst)
+void Matrix::createOrthographicOffCenter(float left, float right, float bottom, float top,
+                                         float zNearPlane, float zFarPlane, Matrix* dst)
 {
     assert(dst);
 
@@ -269,7 +269,7 @@ void C3DMatrix::createOrthographicOffCenter(float left, float right, float botto
     dst->m[15] = 1.0f;
 }
 
-void C3DMatrix::createScale(const C3DVector3& scale, C3DMatrix* dst)
+void Matrix::createScale(const Vector3& scale, Matrix* dst)
 {
     assert(dst);
 
@@ -280,7 +280,7 @@ void C3DMatrix::createScale(const C3DVector3& scale, C3DMatrix* dst)
     dst->m[10] = scale.z;
 }
 
-void C3DMatrix::createScale(float xScale, float yScale, float zScale, C3DMatrix* dst)
+void Matrix::createScale(float xScale, float yScale, float zScale, Matrix* dst)
 {
     assert(dst);
 
@@ -292,7 +292,7 @@ void C3DMatrix::createScale(float xScale, float yScale, float zScale, C3DMatrix*
 }
 
 
-void C3DMatrix::createRotation(const C3DQuaternion& q, C3DMatrix* dst)
+void Matrix::createRotation(const Quaternion& q, Matrix* dst)
 {
     assert(dst);
 
@@ -331,7 +331,7 @@ void C3DMatrix::createRotation(const C3DQuaternion& q, C3DMatrix* dst)
     dst->m[15] = 1.0f;
 }
 
-void C3DMatrix::createRotation(const C3DVector3& axis, float angle, C3DMatrix* dst, bool approximate)
+void Matrix::createRotation(const Vector3& axis, float angle, Matrix* dst, bool approximate)
 {
     assert(dst);
 
@@ -356,7 +356,15 @@ void C3DMatrix::createRotation(const C3DVector3& axis, float angle, C3DMatrix* d
     }
 
     float c, s;
-    C3DMathUtility::getInstance().sincos(angle, &s, &c, !approximate);
+    if (approximate)
+    {
+        MathUtility::getInstance().sincos(angle, &s, &c);
+    }
+    else
+    {
+        c = cos(angle);
+        s = sin(angle);
+    }
     
 
     float t = 1.0f - c;
@@ -391,7 +399,7 @@ void C3DMatrix::createRotation(const C3DVector3& axis, float angle, C3DMatrix* d
     dst->m[15] = 1.0f;
 }
 
-void C3DMatrix::createRotationX(float angle, C3DMatrix* dst)
+void Matrix::createRotationX(float angle, Matrix* dst)
 {
     assert(dst);
 
@@ -406,7 +414,7 @@ void C3DMatrix::createRotationX(float angle, C3DMatrix* dst)
     dst->m[10] = c;
 }
 
-void C3DMatrix::createRotationY(float angle, C3DMatrix* dst)
+void Matrix::createRotationY(float angle, Matrix* dst)
 {
     assert(dst);
 
@@ -421,7 +429,7 @@ void C3DMatrix::createRotationY(float angle, C3DMatrix* dst)
     dst->m[10] = c;
 }
 
-void C3DMatrix::createRotationZ(float angle, C3DMatrix* dst)
+void Matrix::createRotationZ(float angle, Matrix* dst)
 {
     assert(dst);
 
@@ -436,7 +444,7 @@ void C3DMatrix::createRotationZ(float angle, C3DMatrix* dst)
     dst->m[5] = c;
 }
 
-void C3DMatrix::createTranslation(const C3DVector3& translation, C3DMatrix* dst)
+void Matrix::createTranslation(const Vector3& translation, Matrix* dst)
 {
     assert(dst);
 
@@ -447,7 +455,7 @@ void C3DMatrix::createTranslation(const C3DVector3& translation, C3DMatrix* dst)
     dst->m[14] = translation.z;
 }
 
-void C3DMatrix::createTranslation(float xTranslation, float yTranslation, float zTranslation, C3DMatrix* dst)
+void Matrix::createTranslation(float xTranslation, float yTranslation, float zTranslation, Matrix* dst)
 {
     assert(dst);
 
@@ -458,12 +466,12 @@ void C3DMatrix::createTranslation(float xTranslation, float yTranslation, float 
     dst->m[14] = zTranslation;
 }
 
-void C3DMatrix::add(float scalar)
+void Matrix::add(float scalar)
 {
     add(scalar, this);
 }
 
-void C3DMatrix::add(float scalar, C3DMatrix* dst)
+void Matrix::add(float scalar, Matrix* dst)
 {
     assert(dst);
 
@@ -485,12 +493,12 @@ void C3DMatrix::add(float scalar, C3DMatrix* dst)
     dst->m[15] = m[15] + scalar;
 }
 
-void C3DMatrix::add(const C3DMatrix& m)
+void Matrix::add(const Matrix& m)
 {
     add(*this, m, this);
 }
 
-void C3DMatrix::add(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst)
+void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* dst)
 {
     assert(dst);
 
@@ -512,7 +520,7 @@ void C3DMatrix::add(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst)
     dst->m[15] = m1.m[15] + m2.m[15];
 }
 
-bool C3DMatrix::decompose(C3DVector3* scale, C3DQuaternion* rotation, C3DVector3* translation) const
+bool Matrix::decompose(Vector3* scale, Quaternion* rotation, Vector3* translation) const
 {
     if (translation)
     {
@@ -528,13 +536,13 @@ bool C3DMatrix::decompose(C3DVector3* scale, C3DQuaternion* rotation, C3DVector3
 
     // Extract the scale.
     // This is simply the length of each axis (row/column) in the matrix.
-    C3DVector3 xaxis(m[0], m[1], m[2]);
+    Vector3 xaxis(m[0], m[1], m[2]);
     float scaleX = xaxis.length();
 
-    C3DVector3 yaxis(m[4], m[5], m[6]);
+    Vector3 yaxis(m[4], m[5], m[6]);
     float scaleY = yaxis.length();
 
-    C3DVector3 zaxis(m[8], m[9], m[10]);
+    Vector3 zaxis(m[8], m[9], m[10]);
     float scaleZ = zaxis.length();
 
     // Determine if we have a negative scale (true if determinant is less than zero).
@@ -618,7 +626,7 @@ bool C3DMatrix::decompose(C3DVector3* scale, C3DQuaternion* rotation, C3DVector3
     return true;
 }
 
-float C3DMatrix::determinant() const
+float Matrix::determinant() const
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -637,22 +645,22 @@ float C3DMatrix::determinant() const
     return (a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0);
 }
 
-void C3DMatrix::getScale(C3DVector3* scale) const
+void Matrix::getScale(Vector3* scale) const
 {
     decompose(scale, NULL, NULL);
 }
 
-bool C3DMatrix::getRotation(C3DQuaternion* rotation) const
+bool Matrix::getRotation(Quaternion* rotation) const
 {
     return decompose(NULL, rotation, NULL);
 }
 
-void C3DMatrix::getPosition(C3DVector3* translation) const
+void Matrix::getPosition(Vector3* translation) const
 {
     decompose(NULL, NULL, translation);
 }
 
-void C3DMatrix::getUpVector(C3DVector3* dst) const
+void Matrix::getUpVector(Vector3* dst) const
 {
     assert(dst);
 
@@ -666,7 +674,7 @@ void C3DMatrix::getUpVector(C3DVector3* dst) const
 }
 
 
-void C3DMatrix::getRightVector(C3DVector3* dst) const
+void Matrix::getRightVector(Vector3* dst) const
 {
     assert(dst);
 
@@ -675,7 +683,7 @@ void C3DMatrix::getRightVector(C3DVector3* dst) const
     dst->z = m[2];
 }
 
-void C3DMatrix::getForwardVector(C3DVector3* dst) const
+void Matrix::getForwardVector(Vector3* dst) const
 {
     assert(dst);
 
@@ -689,12 +697,12 @@ void C3DMatrix::getForwardVector(C3DVector3* dst) const
 }
 
 
-bool C3DMatrix::invert()
+bool Matrix::invert()
 {
     return invert(this);
 }
 
-bool C3DMatrix::invert(C3DMatrix* dst) const
+bool Matrix::invert(Matrix* dst) const
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -717,7 +725,7 @@ bool C3DMatrix::invert(C3DMatrix* dst) const
         return false;
 
     // Support the case where m == dst.
-    C3DMatrix inverse;
+    Matrix inverse;
     inverse.m[0]  = m[5] * b5 - m[6] * b4 + m[7] * b3;
     inverse.m[1]  = -m[1] * b5 + m[2] * b4 - m[3] * b3;
     inverse.m[2]  = m[13] * a5 - m[14] * a4 + m[15] * a3;
@@ -743,22 +751,22 @@ bool C3DMatrix::invert(C3DMatrix* dst) const
     return true;
 }
 
-bool C3DMatrix::isIdentity() const
+bool Matrix::isIdentity() const
 {
     return (memcmp(m, MATRIX_IDENTITY, MATRIX_SIZE) == 0);
 }
 
-void C3DMatrix::multiply(float scalar)
+void Matrix::multiply(float scalar)
 {
     multiply(scalar, this);
 }
 
-void C3DMatrix::multiply(float scalar, C3DMatrix* dst) const
+void Matrix::multiply(float scalar, Matrix* dst) const
 {
     multiply(*this, scalar, dst);
 }
 
-void C3DMatrix::multiply(const C3DMatrix& m, float scalar, C3DMatrix* dst)
+void Matrix::multiply(const Matrix& m, float scalar, Matrix* dst)
 {
     assert(dst);
 
@@ -781,12 +789,12 @@ void C3DMatrix::multiply(const C3DMatrix& m, float scalar, C3DMatrix* dst)
 }
     
 
-void C3DMatrix::multiply(const C3DMatrix& m)
+void Matrix::multiply(const Matrix& m)
 {
     multiply(*this, m, this);
 }
 
-void C3DMatrix::multiply(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst)
+void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst)
 {
     //assert(dst);
 
@@ -828,12 +836,12 @@ void C3DMatrix::multiply(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* ds
     
 }
 
-void C3DMatrix::negate()
+void Matrix::negate()
 {
     negate(this);
 }
 
-void C3DMatrix::negate(C3DMatrix* dst) const
+void Matrix::negate(Matrix* dst) const
 {
     dst->m[0]  = -m[0];
     dst->m[1]  = -m[1];
@@ -853,110 +861,110 @@ void C3DMatrix::negate(C3DMatrix* dst) const
     dst->m[15] = -m[15];
 }
 
-void C3DMatrix::rotate(const C3DQuaternion& q)
+void Matrix::rotate(const Quaternion& q)
 {
     rotate(q, this);
 }
 
-void C3DMatrix::rotate(const C3DQuaternion& q, C3DMatrix* dst) const
+void Matrix::rotate(const Quaternion& q, Matrix* dst) const
 {
-    C3DMatrix r;
+    Matrix r;
     createRotation(q, &r);
     multiply(*this, r, dst);
 }
 
-void C3DMatrix::rotate(const C3DVector3& axis, float angle)
+void Matrix::rotate(const Vector3& axis, float angle)
 {
     rotate(axis, angle, this);
 }
 
-void C3DMatrix::rotate(const C3DVector3& axis, float angle, C3DMatrix* dst) const
+void Matrix::rotate(const Vector3& axis, float angle, Matrix* dst) const
 {
-    C3DMatrix r;
+    Matrix r;
     createRotation(axis, angle, &r);
     multiply(*this, r, dst);
 }
 
-void C3DMatrix::rotateX(float angle)
+void Matrix::rotateX(float angle)
 {
     rotateX(angle, this);
 }
 
-void C3DMatrix::rotateX(float angle, C3DMatrix* dst) const
+void Matrix::rotateX(float angle, Matrix* dst) const
 {
-    C3DMatrix r;
+    Matrix r;
     createRotationX(angle, &r);
     multiply(*this, r, dst);
 }
 
-void C3DMatrix::rotateY(float angle)
+void Matrix::rotateY(float angle)
 {
     rotateY(angle, this);
 }
 
-void C3DMatrix::rotateY(float angle, C3DMatrix* dst) const
+void Matrix::rotateY(float angle, Matrix* dst) const
 {
-    C3DMatrix r;
+    Matrix r;
     createRotationY(angle, &r);
     multiply(*this, r, dst);
 }
 
-void C3DMatrix::rotateZ(float angle)
+void Matrix::rotateZ(float angle)
 {
     rotateZ(angle, this);
 }
 
-void C3DMatrix::rotateZ(float angle, C3DMatrix* dst) const
+void Matrix::rotateZ(float angle, Matrix* dst) const
 {
     assert(dst);
 
-    C3DMatrix r;
+    Matrix r;
     createRotationZ(angle, &r);
     multiply(*this, r, dst);
 }
 
-void C3DMatrix::scale(float value)
+void Matrix::scale(float value)
 {
     scale(value, this);
 }
 
-void C3DMatrix::scale(float value, C3DMatrix* dst) const
+void Matrix::scale(float value, Matrix* dst) const
 {
     scale(value, value, value, dst);
 }
 
-void C3DMatrix::scale(float xScale, float yScale, float zScale)
+void Matrix::scale(float xScale, float yScale, float zScale)
 {
     scale(xScale, yScale, zScale, this);
 }
 
-void C3DMatrix::setScale(float xScale,float yScale,float zScale)
+void Matrix::setScale(float xScale,float yScale,float zScale)
 {	
     this->m[0] = xScale;
     this->m[5] = yScale;
     this->m[10] = zScale;
 }
 
-void C3DMatrix::scale(float xScale, float yScale, float zScale, C3DMatrix* dst) const
+void Matrix::scale(float xScale, float yScale, float zScale, Matrix* dst) const
 {
     assert(dst);
 
-    C3DMatrix s;
+    Matrix s;
     createScale(xScale, yScale, zScale, &s);
     multiply(*this, s, dst);
 }
 
-void C3DMatrix::scale(const C3DVector3& s)
+void Matrix::scale(const Vector3& s)
 {
     scale(s.x, s.y, s.z, this);
 }
 
-void C3DMatrix::scale(const C3DVector3& s, C3DMatrix* dst) const
+void Matrix::scale(const Vector3& s, Matrix* dst) const
 {
     scale(s.x, s.y, s.z, dst);
 }
 
-void C3DMatrix::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
+void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24, float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     m[0]  = m11;
     m[1]  = m21;
@@ -976,18 +984,18 @@ void C3DMatrix::set(float m11, float m12, float m13, float m14, float m21, float
     m[15] = m44;
 }
 
-void C3DMatrix::set(const float* m)
+void Matrix::set(const float* m)
 {
     assert(m);
     memcpy(this->m, m, MATRIX_SIZE);
 }
 
-void C3DMatrix::set(const C3DMatrix& m)
+void Matrix::set(const Matrix& m)
 {
     memcpy(this->m, m.m, MATRIX_SIZE);
 }
 
-void C3DMatrix::setCol(int idx, const C3DVector3& col)
+void Matrix::setCol(int idx, const Vector3& col)
 {
 	if (idx > 4)
 		return;
@@ -997,17 +1005,17 @@ void C3DMatrix::setCol(int idx, const C3DVector3& col)
 	m[idx] = col.z;
 }
 
-C3DVector3 C3DMatrix::getCol(int idx) const
+Vector3 Matrix::getCol(int idx) const
 {
 	if (idx > 4)
-		return C3DVector3::zero();
-	static C3DVector3 col;
+		return Vector3::zero();
+	static Vector3 col;
 	idx *= 4;
 	col.set(m[idx], m[idx+1], m[idx+2]);
 	return col;
 }
 
-void C3DMatrix::getCol(int idx, C3DVector3& col) const
+void Matrix::getCol(int idx, Vector3& col) const
 {
 	if (idx > 4)
 		return;
@@ -1015,22 +1023,22 @@ void C3DMatrix::getCol(int idx, C3DVector3& col) const
 	col.set(m[idx], m[idx+1], m[idx+2]);
 }
 
-void C3DMatrix::setIdentity()
+void Matrix::setIdentity()
 {
     memcpy(m, MATRIX_IDENTITY, MATRIX_SIZE);
 }
 
-void C3DMatrix::setZero()
+void Matrix::setZero()
 {
     memset(m, 0, MATRIX_SIZE);
 }
 
-void C3DMatrix::subtract(const C3DMatrix& m)
+void Matrix::subtract(const Matrix& m)
 {
     subtract(*this, m, this);
 }
 
-void C3DMatrix::subtract(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* dst)
+void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* dst)
 {
     dst->m[0]  = m1.m[0]  - m2.m[0];
     dst->m[1]  = m1.m[1]  - m2.m[1];
@@ -1050,27 +1058,27 @@ void C3DMatrix::subtract(const C3DMatrix& m1, const C3DMatrix& m2, C3DMatrix* ds
     dst->m[15] = m1.m[15] - m2.m[15];
 }
 
-void C3DMatrix::transformPoint(C3DVector3* point) const
+void Matrix::transformPoint(Vector3* point) const
 {
     transformVector(point->x, point->y, point->z, 1.0f, point);
 }
 
-void C3DMatrix::transformPoint(const C3DVector3& point, C3DVector3* dst) const
+void Matrix::transformPoint(const Vector3& point, Vector3* dst) const
 {
     transformVector(point.x, point.y, point.z, 1.0f, dst);
 }
 
-void C3DMatrix::transformVector(C3DVector3* vector) const
+void Matrix::transformVector(Vector3* vector) const
 {
     transformVector(vector->x, vector->y, vector->z, vector);
 }
 
-void C3DMatrix::transformVector(const C3DVector3& vector, C3DVector3* dst) const
+void Matrix::transformVector(const Vector3& vector, Vector3* dst) const
 {
     transformVector(vector.x, vector.y, vector.z, dst);
 }
 
-void C3DMatrix::transformVector(float x, float y, float z, float w, C3DVector3* dst) const
+void Matrix::transformVector(float x, float y, float z, float w, Vector3* dst) const
 {
     assert(dst);
     
@@ -1080,7 +1088,7 @@ void C3DMatrix::transformVector(float x, float y, float z, float w, C3DVector3* 
         x * m[2] + y * m[6] + z * m[10] + w * m[14] );
 }
     
-void C3DMatrix::transformVector(float x, float y, float z, C3DVector3* dst) const
+void Matrix::transformVector(float x, float y, float z, Vector3* dst) const
 {
     assert(dst);
     
@@ -1089,12 +1097,12 @@ void C3DMatrix::transformVector(float x, float y, float z, C3DVector3* dst) cons
              x * m[2] + y * m[6] + z * m[10]);
 }
 
-void C3DMatrix::transformVector(C3DVector4* vector) const
+void Matrix::transformVector(Vector4* vector) const
 {
     transformVector(*vector, vector);
 }
 
-void C3DMatrix::transformVector(const C3DVector4& vector, C3DVector4* dst) const
+void Matrix::transformVector(const Vector4& vector, Vector4* dst) const
 {
     assert(dst);
 
@@ -1105,36 +1113,36 @@ void C3DMatrix::transformVector(const C3DVector4& vector, C3DVector4* dst) const
         vector.x * m[3] + vector.y * m[7] + vector.z * m[11] + vector.w * m[15] );
 }
 
-void C3DMatrix::translate(float x, float y, float z)
+void Matrix::translate(float x, float y, float z)
 {
     translate(x, y, z, this);
 }
 
-void C3DMatrix::translate(float x, float y, float z, C3DMatrix* dst) const
+void Matrix::translate(float x, float y, float z, Matrix* dst) const
 {
     assert(dst);
 
-    C3DMatrix t;
+    Matrix t;
     createTranslation(x, y, z, &t);
     multiply(*this, t, dst);
 }
 
-void C3DMatrix::translate(const C3DVector3& t)
+void Matrix::translate(const Vector3& t)
 {
     translate(t.x, t.y, t.z, this);
 }
 
-void C3DMatrix::translate(const C3DVector3& t, C3DMatrix* dst) const
+void Matrix::translate(const Vector3& t, Matrix* dst) const
 {
     translate(t.x, t.y, t.z, dst);
 }
 
-void C3DMatrix::transpose()
+void Matrix::transpose()
 {
     transpose(this);
 }
 
-void C3DMatrix::transpose(C3DMatrix* dst) const
+void Matrix::transpose(Matrix* dst) const
 {
     assert(dst);
     
@@ -1147,14 +1155,14 @@ void C3DMatrix::transpose(C3DMatrix* dst) const
     memcpy(dst->m, t, MATRIX_SIZE);
 }
     
-C3DMatrix& C3DMatrix::invertOrthMat()
+Matrix& Matrix::invertOrthMat()
 {
-    C3DMatrix src = *this;
-    C3DMatrix::invertOrthMat(src, *this);
+    Matrix src = *this;
+    Matrix::invertOrthMat(src, *this);
     return *this;
 }
     
-void C3DMatrix::invertOrthMat(const C3DMatrix& mat, C3DMatrix& invMat)
+void Matrix::invertOrthMat(const Matrix& mat, Matrix& invMat)
 {
     invMat.m[0] = mat.m[0];
     invMat.m[1] = mat.m[4];

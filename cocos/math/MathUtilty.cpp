@@ -1,44 +1,44 @@
 //
-//  C3DMathUtilty.cpp
+//  MathUtilty.cpp
 //  
 //
 //  
 //
 //
+#include "Math.h"
 
-#include "C3DMath.h"
-
-namespace cocos3d
+namespace cocos2d
 {
+    
+    
+MathUtility::MathUtility(): _costab(NULL), _sintab(NULL)
+{
+}
 
-C3DMathUtility::~C3DMathUtility()
+MathUtility::~MathUtility()
 {
     delete[] _costab;
     delete[] _sintab;
         
 }
 
-C3DMathUtility& C3DMathUtility::getInstance()
+MathUtility& MathUtility::getInstance()
 {
-    static C3DMathUtility instance;
+    static MathUtility instance;
     return instance;
 }
 
 
-C3DMathUtility::C3DMathUtility(): _costab(NULL), _sintab(NULL)
-{
-
-}
 
 // approximate value of sin(rad), precision 1 degree
-float C3DMathUtility::sin(float rad, bool bUseTable)
+float MathUtility::sin(float rad, bool isUseTable)
 {
-    if (bUseTable)
+    if (isUseTable)
     {
         initMathUtility();
-        
+            
         int degree = rad2degree(rad);
-        
+            
         return _sintab[degree];
     }
 
@@ -46,9 +46,9 @@ float C3DMathUtility::sin(float rad, bool bUseTable)
 }
 
 // approximate value of sin(rad), precision 1 degree
-float C3DMathUtility::cos(float rad, bool bUseTable)
+float MathUtility::cos(float rad, bool isUseTable)
 {
-    if (bUseTable)
+    if (isUseTable)
     {
         initMathUtility();
         
@@ -59,9 +59,9 @@ float C3DMathUtility::cos(float rad, bool bUseTable)
     return cosf(rad);
 }
     
-int C3DMathUtility::rad2degree(float rad)
+int MathUtility::rad2degree(float rad)
 {
-    int degree = (int)((rad) + 0.5f);
+    int degree = (int)(MATH_RAD_TO_DEG(rad) + 0.5f);
     if (degree >= 360 || degree <= -360)
     {
         degree = degree % 360;
@@ -72,9 +72,9 @@ int C3DMathUtility::rad2degree(float rad)
     return degree;
 }
     
-void C3DMathUtility::sincos(float rad, float *sinvalue, float* cosvalue, bool bUseTable)
+void MathUtility::sincos(float rad, float *sinvalue, float* cosvalue, bool isUseTable)
 {
-    if (bUseTable)
+    if (isUseTable)
     {
         initMathUtility();
         
@@ -95,7 +95,7 @@ void C3DMathUtility::sincos(float rad, float *sinvalue, float* cosvalue, bool bU
     }
 }
 
-void C3DMathUtility::initMathUtility()
+void MathUtility::initMathUtility()
 {
     
     if (_sintab && _costab)

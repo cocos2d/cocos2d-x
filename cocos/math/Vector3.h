@@ -1,49 +1,62 @@
-#ifndef VECTOR2_H_
-#define VECTOR2_H_
+#ifndef VECTOR3_H_
+#define VECTOR3_H_
 
 #include <iostream>
 
-namespace cocos3d
+namespace cocos2d
 {
 
-class C3DMatrix;
+class Matrix;
+class Quaternion;
 
 /**
- * Defines a 2-element floating point vector.
+ * Defines a 3-element floating point vector.
+ *
+ * When using a vector to represent a surface normal,
+ * the vector should typically be normalized.
+ * Other uses of directional vectors may wish to leave
+ * the magnitude of the vector intact. When used as a point,
+ * the elements of the vector represent a position in 3D space.
  */
-class  C3DVector2
+class  Vector3
 {
 public:
 
     /**
-     * The x coordinate.
+     * The x-coordinate.
      */
     float x;
 
     /**
-     * The y coordinate.
+     * The y-coordinate.
      */
     float y;
 
     /**
+     * The z-coordinate.
+     */
+    float z;
+
+    /**
      * Constructs a new vector initialized to all zeros.
      */
-    C3DVector2();
+    Vector3();
 
     /**
      * Constructs a new vector initialized to the specified values.
      *
      * @param x The x coordinate.
      * @param y The y coordinate.
+     * @param z The z coordinate.
      */
-    C3DVector2(float x, float y);
+    Vector3(float x, float y, float z);
 
     /**
      * Constructs a new vector from the values in the specified array.
      *
-     * @param array An array containing the elements of the vector in the order x, y.
+     * @param array An array containing the elements of the vector in the order x, y, z.
      */
-    C3DVector2(const float* array);
+    Vector3(const float* array);
 
     /**
      * Constructs a vector that describes the direction between the specified points.
@@ -51,47 +64,64 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    C3DVector2(const C3DVector2& p1, const C3DVector2& p2);
+    Vector3(const Vector3& p1, const Vector3& p2);
 
     /**
      * Constructs a new vector that is a copy of the specified vector.
      *
      * @param copy The vector to copy.
      */
-    C3DVector2(const C3DVector2& copy);
+    Vector3(const Vector3& copy);
+
+    /**
+     * Creates a new vector from an integer interpreted as an RGB value.
+     * E.g. 0xff0000 represents red or the vector (1, 0, 0).
+     *
+     * @param color The integer to interpret as an RGB value.
+     *
+     * @return A vector corresponding to the interpreted RGB color.
+     */
+    static Vector3 fromColor(unsigned int color);
 
     /**
      * Destructor.
      */
-    ~C3DVector2();
+    ~Vector3();
 
     /**
      * Returns the zero vector.
      *
-     * @return The 2-element vector of 0s.
+     * @return The 3-element vector of 0s.
      */
-    static const C3DVector2& zero();
+    static const Vector3& zero();
 
     /**
      * Returns the one vector.
      *
-     * @return The 2-element vector of 1s.
+     * @return The 3-element vector of 1s.
      */
-    static const C3DVector2& one();
+    static const Vector3& one();
 
     /**
      * Returns the unit x vector.
      *
-     * @return The 2-element unit vector along the x axis.
+     * @return The 3-element unit vector along the x axis.
      */
-    static const C3DVector2& unitX();
+    static const Vector3& unitX();
 
     /**
      * Returns the unit y vector.
      *
-     * @return The 2-element unit vector along the y axis.
+     * @return The 3-element unit vector along the y axis.
      */
-    static const C3DVector2& unitY();
+    static const Vector3& unitY();
+
+    /**
+     * Returns the unit z vector.
+     *
+     * @return The 3-element unit vector along the z axis.
+     */
+    static const Vector3& unitZ();
 
     /**
      * Indicates whether this vector contains all zeros.
@@ -115,14 +145,15 @@ public:
      * 
      * @return The angle between the two vectors (in radians).
      */
-    static float angle(const C3DVector2& v1, const C3DVector2& v2);
+    static float angle(const Vector3& v1, const Vector3& v2);
+
 
     /**
      * Adds the elements of the specified vector to this one.
      *
      * @param v The vector to add.
      */
-    void add(const C3DVector2& v);
+    void add(const Vector3& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -131,7 +162,7 @@ public:
      * @param v2 The second vector.
      * @param dst A vector to store the result in.
      */
-    static void add(const C3DVector2& v1, const C3DVector2& v2, C3DVector2* dst);
+    static void add(const Vector3& v1, const Vector3& v2, Vector3* dst);
 
     /**
      * Clamps this vector within the specified range.
@@ -139,7 +170,7 @@ public:
      * @param min The minimum value.
      * @param max The maximum value.
      */
-    void clamp(const C3DVector2& min, const C3DVector2& max);
+    void clamp(const Vector3& min, const Vector3& max);
 
     /**
      * Clamps the specified vector within the specified range and returns it in dst.
@@ -149,7 +180,23 @@ public:
      * @param max The maximum value.
      * @param dst A vector to store the result in.
      */
-    static void clamp(const C3DVector2& v, const C3DVector2& min, const C3DVector2& max, C3DVector2* dst);
+    static void clamp(const Vector3& v, const Vector3& min, const Vector3& max, Vector3* dst);
+
+    /**
+     * Sets this vector to the cross product between itself and the specified vector.
+     *
+     * @param v The vector to compute the cross product with.
+     */
+    void cross(const Vector3& v);
+
+    /**
+     * Computes the cross product of the specified vectors and stores the result in dst.
+     *
+     * @param v1 The first vector.
+     * @param v2 The second vector.
+     * @param dst A vector to store the result in.
+     */
+    static void cross(const Vector3& v1, const Vector3& v2, Vector3* dst);
 
     /**
      * Returns the distance between this vector and v.
@@ -160,7 +207,7 @@ public:
      * 
      * @see distanceSquared
      */
-    float distance(const C3DVector2& v) const;
+    float distance(const Vector3& v) const;
 
     /**
      * Returns the squared distance between this vector and v.
@@ -176,7 +223,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const C3DVector2& v) const;
+    float distanceSquared(const Vector3& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -185,7 +232,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const C3DVector2& v) const;
+    float dot(const Vector3& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -195,7 +242,7 @@ public:
      * 
      * @return The dot product between the vectors.
      */
-    static float dot(const C3DVector2& v1, const C3DVector2& v2);
+    static float dot(const Vector3& v1, const Vector3& v2);
 
     /**
      * Computes the length of this vector.
@@ -228,7 +275,7 @@ public:
     /**
      * Normalizes this vector.
      *
-     * This method normalizes this C3DVector2 so that it is of
+     * This method normalizes this Vector3 so that it is of
      * unit length (in other words, the length of the vector
      * after calling this method will be 1.0f). If the vector
      * already has unit length or if the length of the vector
@@ -236,7 +283,7 @@ public:
      * 
      * @return This vector, after the normalization occurs.
      */
-    C3DVector2& normalize();
+    Vector3& normalize();
 
     /**
      * Normalizes this vector and stores the result in dst.
@@ -247,7 +294,7 @@ public:
      *
      * @param dst The destination vector.
      */
-    void normalize(C3DVector2* dst);
+    void normalize(Vector3* dst) const;
 
     /**
      * Scales all elements of this vector by the specified value.
@@ -257,32 +304,18 @@ public:
     void scale(float scalar);
 
     /**
-     * Scales each element of this vector by the matching component of scale.
-     *
-     * @param scale The vector to scale by.
-     */
-    void scale(const C3DVector2& scale);
-
-    /**
-     * Rotates this vector by angle (specified in radians) around the given point.
-     *
-     * @param point The point to rotate around.
-     * @param angle The angle to rotate by (in radians).
-     */
-    void rotate(const C3DVector2& point, float angle);
-
-    /**
      * Sets the elements of this vector to the specified values.
      *
      * @param x The new x coordinate.
      * @param y The new y coordinate.
+     * @param z The new z coordinate.
      */
-    void set(float x, float y);
+    void set(float x, float y, float z);
 
     /**
      * Sets the elements of this vector from the values in the specified array.
      *
-     * @param array An array containing the elements of the vector in the order x, y.
+     * @param array An array containing the elements of the vector in the order x, y, z.
      */
     void set(const float* array);
 
@@ -291,15 +324,12 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const C3DVector2& v);
+    void set(const Vector3& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
-     * 
-     * @param p1 The first point.
-     * @param p2 The second point.
      */
-    void set(const C3DVector2& p1, const C3DVector2& p2);
+    void set(const Vector3& p1, const Vector3& p2);
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -307,7 +337,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const C3DVector2& v);
+    void subtract(const Vector3& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -317,7 +347,7 @@ public:
      * @param v2 The second vector.
      * @param dst The destination vector.
      */
-    static void subtract(const C3DVector2& v1, const C3DVector2& v2, C3DVector2* dst);
+    static void subtract(const Vector3& v1, const Vector3& v2, Vector3* dst);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -327,7 +357,7 @@ public:
      * @param v The vector to add.
      * @return The vector sum.
      */
-    inline const C3DVector2 operator+(const C3DVector2& v) const;
+    inline const Vector3 operator+(const Vector3& v) const;
 
     /**
      * Adds the given vector to this vector.
@@ -335,17 +365,17 @@ public:
      * @param v The vector to add.
      * @return This vector, after the addition occurs.
      */
-    inline C3DVector2& operator+=(const C3DVector2& v);
+    inline Vector3& operator+=(const Vector3& v);
 
     /**
-     * Calculates the sum of this vector with the given vector.
+     * Calculates the difference of this vector with the given vector.
      * 
      * Note: this does not modify this vector.
      * 
-     * @param v The vector to add.
-     * @return The vector sum.
+     * @param v The vector to subtract.
+     * @return The vector difference.
      */
-    inline const C3DVector2 operator-(const C3DVector2& v) const;
+    inline const Vector3 operator-(const Vector3& v) const;
 
     /**
      * Subtracts the given vector from this vector.
@@ -353,7 +383,7 @@ public:
      * @param v The vector to subtract.
      * @return This vector, after the subtraction occurs.
      */
-    inline C3DVector2& operator-=(const C3DVector2& v);
+    inline Vector3& operator-=(const Vector3& v);
 
     /**
      * Calculates the negation of this vector.
@@ -362,7 +392,7 @@ public:
      * 
      * @return The negation of this vector.
      */
-    inline const C3DVector2 operator-() const;
+    inline const Vector3 operator-() const;
 
     /**
      * Calculates the scalar product of this vector with the given value.
@@ -372,7 +402,7 @@ public:
      * @param x The value to scale by.
      * @return The scaled vector.
      */
-    inline const C3DVector2 operator*(float x) const;
+    inline const Vector3 operator*(float x) const;
 
     /**
      * Scales this vector by the given value.
@@ -380,7 +410,7 @@ public:
      * @param x The value to scale by.
      * @return This vector, after the scale occurs.
      */
-    inline C3DVector2& operator*=(float x);
+    inline Vector3& operator*=(float x);
 
     /**
      * Determines if this vector is less than the given vector.
@@ -389,7 +419,7 @@ public:
      * 
      * @return True if this vector is less than the given vector, false otherwise.
      */
-    inline bool operator<(const C3DVector2& v) const;
+    inline bool operator<(const Vector3& v) const;
 
     /**
      * Determines if this vector is equal to the given vector.
@@ -398,7 +428,7 @@ public:
      * 
      * @return True if this vector is equal to the given vector, false otherwise.
      */
-    inline bool operator==(const C3DVector2& v) const;
+    inline bool operator==(const Vector3& v) const;
 
     /**
      * Determines if this vector is not equal to the given vector.
@@ -407,7 +437,10 @@ public:
      * 
      * @return True if this vector is not equal to the given vector, false otherwise.
      */
-    inline bool operator!=(const C3DVector2& v) const;
+    inline bool operator!=(const Vector3& v) const;
+
+	inline float operator[](int index) const;
+
 };
 
 /**
@@ -417,23 +450,25 @@ public:
  * @param v The vector to scale.
  * @return The scaled vector.
  */
-inline const C3DVector2 operator*(float x, const C3DVector2& v);
+inline const Vector3 operator*(float x, const Vector3& v);
     
-inline std::ostream& operator << (std::ostream& stream, const C3DVector2& v)
+inline std::ostream& operator << (std::ostream& stream, const Vector3& v)
 {
-    return stream << v.x << "," << v.y;
+    return stream << v.x << "," << v.y << "," << v.z;
 }
 
-inline std::istream& operator >> (std::istream& stream, C3DVector2& v)
+inline std::istream& operator >> (std::istream& stream, Vector3& v)
 {
     stream >> v.x;
     stream.ignore(256, ',');
     stream >> v.y;
+    stream.ignore(256, ',');
+    stream >> v.z;
     return stream;
 }
 
 }
 
-#include "C3DVector2.inl"
+#include "Vector3.inl"
 
 #endif

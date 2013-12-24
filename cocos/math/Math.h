@@ -1,14 +1,15 @@
-#ifndef C3DMath_H_
-#define C3DMath_H_
+#ifndef Math_H_
+#define Math_H_
 
 #include <math.h>
+#include <assert.h>
 
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
-#include "C3DQuaternion.h"
-#include "C3DMatrix.h"
-#include "C3DMathUtilty.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+#include "Quaternion.h"
+#include "Matrix.h"
+#include "MathUtilty.h"
 
 
 #define MATH_DEG_TO_RAD(x)          ((x) * 0.0174532925f)

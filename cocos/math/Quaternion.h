@@ -1,14 +1,14 @@
-#ifndef C3DQUATERNION_H_
-#define C3DQUATERNION_H_
+#ifndef Quaternion_H_
+#define Quaternion_H_
 
-#include "C3DVector3.h"
-#include "C3DMatrix.h"
+#include "Vector3.h"
+#include "Matrix.h"
 
 
-namespace cocos3d
+namespace cocos2d
 {
 
-class C3DMatrix;
+class Matrix;
 
 /**
  * Defines a 4-element quaternion that represents the orientation of an object in space.
@@ -38,7 +38,7 @@ class C3DMatrix;
  * q4 = (-0.8, 0.0, -0.6, 0.0).
  * For the point p = (1.0, 1.0, 1.0), the following figures show the trajectories of p using lerp, slerp, and squad.
  */
-class  C3DQuaternion
+class  Quaternion
 {
     friend class C3DAnimationCurve;
 
@@ -64,7 +64,7 @@ public:
     /**
      * Constructs a quaternion initialized to (0, 0, 0, 1).
      */
-    C3DQuaternion();
+    Quaternion();
 
     /**
      * Constructs a quaternion initialized to (0, 0, 0, 1).
@@ -74,21 +74,21 @@ public:
      * @param z The z component of the quaternion.
      * @param w The w component of the quaternion.
      */
-    C3DQuaternion(float x, float y, float z, float w);
+    Quaternion(float x, float y, float z, float w);
 
     /**
      * Constructs a new quaternion from the values in the specified array.
      *
      * @param array The values for the new quaternion.
      */
-    C3DQuaternion(float* array);
+    Quaternion(float* array);
 
     /**
      * Constructs a quaternion equal to the rotational part of the specified matrix.
      *
      * @param m The matrix.
      */
-    C3DQuaternion(const C3DMatrix& m);
+    Quaternion(const Matrix& m);
 
     /**
      * Constructs a quaternion equal to the rotation from the specified axis and angle.
@@ -96,33 +96,33 @@ public:
      * @param axis A vector describing the axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    C3DQuaternion(const C3DVector3& axis, float angle);
+    Quaternion(const Vector3& axis, float angle);
 
     /**
      * Constructs a new quaternion that is a copy of the specified one.
      *
      * @param copy The quaternion to copy.
      */
-    C3DQuaternion(const C3DQuaternion& copy);
+    Quaternion(const Quaternion& copy);
 
     /**
      * Destructor.
      */
-    ~C3DQuaternion();
+    ~Quaternion();
 
     /**
      * Returns the identity quaternion.
      *
      * @return The identity quaternion.
      */
-    static const C3DQuaternion& identity();
+    static const Quaternion& identity();
 
     /**
      * Returns the quaternion with all zeros.
      *
      * @return The quaternion.
      */
-    static const C3DQuaternion& zero();
+    static const Quaternion& zero();
 
     /**
      * Determines if this quaternion is equal to the identity quaternion.
@@ -145,7 +145,7 @@ public:
      * @param m The matrix.
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromRotationMatrix(const C3DMatrix& m, C3DQuaternion* dst);
+    static void createFromRotationMatrix(const Matrix& m, Quaternion* dst);
 
     /**
      * Creates this quaternion equal to the rotation from the specified axis and angle
@@ -155,7 +155,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromAxisAngle(const C3DVector3& axis, float angle, C3DQuaternion* dst);
+    static void createFromAxisAngle(const Vector3& axis, float angle, Quaternion* dst);
 
     /**
      * Sets this quaternion to the conjugate of itself.
@@ -167,7 +167,7 @@ public:
      *
      * @param dst A quaternion to store the conjugate in.
      */
-    void conjugate(C3DQuaternion* dst) const;
+    void conjugate(Quaternion* dst) const;
 
     /**
      * Sets this quaternion to the inverse of itself.
@@ -193,14 +193,14 @@ public:
      * 
      * @return true if the inverse can be computed, false otherwise.
      */
-    bool inverse(C3DQuaternion* dst) const;
+    bool inverse(Quaternion* dst) const;
 
     /**
      * Multiplies this quaternion by the specified one and stores the result in this quaternion.
      *
      * @param q The quaternion to multiply.
      */
-    void multiply(const C3DQuaternion& q);
+    void multiply(const Quaternion& q);
 
     /**
      * Multiplies the specified quaternions and stores the result in dst.
@@ -209,7 +209,7 @@ public:
      * @param q2 The second quaternion.
      * @param dst A quaternion to store the result in.
      */
-    static void multiply(const C3DQuaternion& q1, const C3DQuaternion& q2, C3DQuaternion* dst);
+    static void multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* dst);
 
     /**
      * Normalizes this quaternion to have unit length.
@@ -228,7 +228,7 @@ public:
      *
      * @param dst A quaternion to store the result in.
      */
-    void normalize(C3DQuaternion* dst) const;
+    void normalize(Quaternion* dst) const;
 
     /**
      * Sets the elements of the quaternion to the specified values.
@@ -252,7 +252,7 @@ public:
      *
      * @param m The matrix.
      */
-    void set(const C3DMatrix& m);
+    void set(const Matrix& m);
 
     /**
      * Sets the quaternion equal to the rotation from the specified axis and angle.
@@ -260,14 +260,14 @@ public:
      * @param axis The axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    void set(const C3DVector3& axis, float angle);
+    void set(const Vector3& axis, float angle);
 
     /**
      * Sets the elements of this quaternion to a copy of the specified quaternion.
      *
      * @param q The quaternion to copy.
      */
-    void set(const C3DQuaternion& q);
+    void set(const Quaternion& q);
 
     /**
      * Sets this quaternion to be equal to the identity quaternion.
@@ -281,7 +281,7 @@ public:
      * 
      * @return The angle (in radians).
      */
-    float toAxisAngle(C3DVector3* e) const;
+    float toAxisAngle(Vector3* e) const;
 
     /**
      * Interpolates between two quaternions using linear interpolation.
@@ -294,7 +294,7 @@ public:
      * @param t The interpolation coefficient.
      * @param dst A quaternion to store the result in.
      */
-    static void lerp(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst);
+    static void lerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
     
     /**
      * Interpolates between two quaternions using spherical linear interpolation.
@@ -311,7 +311,7 @@ public:
      * @param t The interpolation coefficient.
      * @param dst A quaternion to store the result in.
      */
-    static void slerp(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst);
+    static void slerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
     
     /**
      * Interpolates over a series of quaternions using spherical spline interpolation.
@@ -330,7 +330,7 @@ public:
      * @param t The interpolation coefficient.
      * @param dst A quaternion to store the result in.
      */
-    static void squad(const C3DQuaternion& q1, const C3DQuaternion& q2, const C3DQuaternion& s1, const C3DQuaternion& s2, float t, C3DQuaternion* dst);
+    static void squad(const Quaternion& q1, const Quaternion& q2, const Quaternion& s1, const Quaternion& s2, float t, Quaternion* dst);
 
     /**
      * Calculates the quaternion product of this quaternion with the given quaternion.
@@ -340,7 +340,7 @@ public:
      * @param q The quaternion to multiply.
      * @return The quaternion product.
      */
-    inline const C3DQuaternion operator*(const C3DQuaternion& q) const;
+    inline const Quaternion operator*(const Quaternion& q) const;
 
     /**
      * Multiplies this quaternion with the given quaternion.
@@ -348,11 +348,11 @@ public:
      * @param q The quaternion to multiply.
      * @return This quaternion, after the multiplication occurs.
      */
-    inline C3DQuaternion& operator*=(const C3DQuaternion& q);
+    inline Quaternion& operator*=(const Quaternion& q);
 
-    C3DVector3 operator* (const C3DVector3& v) const;
+    Vector3 operator* (const Vector3& v) const;
 
-	inline bool operator!= (const C3DQuaternion& v) const
+	inline bool operator!= (const Quaternion& v) const
 	{
 		return x != v.x || y != v.y || z != v.z || w != v.w;
 	}
@@ -385,15 +385,15 @@ private:
      */
     static void slerp(float q1x, float q1y, float q1z, float q1w, float q2x, float q2y, float q2z, float q2w, float t, float* dstx, float* dsty, float* dstz, float* dstw);
 
-    static void slerpForSquad(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst);
+    static void slerpForSquad(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
 };
 
-inline std::ostream& operator << (std::ostream& stream, const C3DQuaternion& v)
+inline std::ostream& operator << (std::ostream& stream, const Quaternion& v)
 {
     return stream << v.x << "," << v.y << "," << v.z << "," << v.w;
 }
 
-inline std::istream& operator >> (std::istream& stream, C3DQuaternion& v)
+inline std::istream& operator >> (std::istream& stream, Quaternion& v)
 {
     stream >> v.x;
     stream.ignore(256, ',');
@@ -407,6 +407,6 @@ inline std::istream& operator >> (std::istream& stream, C3DQuaternion& v)
 
 }
 
-#include "C3DQuaternion.inl"
+#include "Quaternion.inl"
 
 #endif

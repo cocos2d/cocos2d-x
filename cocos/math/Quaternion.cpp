@@ -1,19 +1,19 @@
 #include "C3DMath.h"
 
-namespace cocos3d
+namespace cocos2d
 {
 
-C3DQuaternion::C3DQuaternion()
+Quaternion::Quaternion()
     : x(0.0f), y(0.0f), z(0.0f), w(1.0f)
 {
 }
 
-C3DQuaternion::C3DQuaternion(float x, float y, float z, float w)
+Quaternion::Quaternion(float x, float y, float z, float w)
 {
     set(x, y, z, w);
 }
 
-C3DQuaternion::C3DQuaternion(float* array)
+Quaternion::Quaternion(float* array)
 {
     if (array)
         set(array);
@@ -21,62 +21,62 @@ C3DQuaternion::C3DQuaternion(float* array)
         set(0, 0, 0, 1.0f);
 }
 
-C3DQuaternion::C3DQuaternion(const C3DMatrix& m)
+Quaternion::Quaternion(const Matrix& m)
 {
     set(m);
 }
 
-C3DQuaternion::C3DQuaternion(const C3DVector3& axis, float angle)
+Quaternion::Quaternion(const Vector3& axis, float angle)
 {
     set(axis, angle);
 }
 
-C3DQuaternion::C3DQuaternion(const C3DQuaternion& copy)
+Quaternion::Quaternion(const Quaternion& copy)
 {
     set(copy);
 }
 
-C3DQuaternion::~C3DQuaternion()
+Quaternion::~Quaternion()
 {
 }
 
-const C3DQuaternion& C3DQuaternion::identity()
+const Quaternion& Quaternion::identity()
 {
-    static C3DQuaternion value(0.0f, 0.0f, 0.0f, 1.0f);
+    static Quaternion value(0.0f, 0.0f, 0.0f, 1.0f);
     return value;
 }
 
-const C3DQuaternion& C3DQuaternion::zero()
+const Quaternion& Quaternion::zero()
 {
-    static C3DQuaternion value(0.0f, 0.0f, 0.0f, 0.0f);
+    static Quaternion value(0.0f, 0.0f, 0.0f, 0.0f);
     return value;
 }
 
-bool C3DQuaternion::isIdentity() const
+bool Quaternion::isIdentity() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f && w == 1.0f;
 }
 
-bool C3DQuaternion::isZero() const
+bool Quaternion::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f && z == 0.0f;
 }
 
-void C3DQuaternion::createFromRotationMatrix(const C3DMatrix& m, C3DQuaternion* dst)
+void Quaternion::createFromRotationMatrix(const Matrix& m, Quaternion* dst)
 {
     assert(dst);
 
     m.getRotation(dst);
 }
 
-void C3DQuaternion::createFromAxisAngle(const C3DVector3& axis, float angle, C3DQuaternion* dst)
+void Quaternion::createFromAxisAngle(const Vector3& axis, float angle, Quaternion* dst)
 {
     assert(dst);
 
     float halfAngle = angle * 0.5f;
     float sinHalfAngle = sinf(halfAngle);
 
-    C3DVector3 normal(axis);
+    Vector3 normal(axis);
     normal.normalize();
     dst->x = normal.x * sinHalfAngle;
     dst->y = normal.y * sinHalfAngle;
@@ -84,12 +84,12 @@ void C3DQuaternion::createFromAxisAngle(const C3DVector3& axis, float angle, C3D
     dst->w = cosf(halfAngle);
 }
 
-void C3DQuaternion::conjugate()
+void Quaternion::conjugate()
 {
     conjugate(this);
 }
 
-void C3DQuaternion::conjugate(C3DQuaternion* dst) const
+void Quaternion::conjugate(Quaternion* dst) const
 {
     dst->x = -x;
     dst->y = -y;
@@ -97,12 +97,12 @@ void C3DQuaternion::conjugate(C3DQuaternion* dst) const
     dst->w =  w;
 }
 
-bool C3DQuaternion::inverse()
+bool Quaternion::inverse()
 {
     return inverse(this);
 }
 
-bool C3DQuaternion::inverse(C3DQuaternion* dst) const
+bool Quaternion::inverse(Quaternion* dst) const
 {
     float n = x * x + y * y + z * z + w * w;
     if (n == 1.0f)
@@ -128,12 +128,12 @@ bool C3DQuaternion::inverse(C3DQuaternion* dst) const
     return true;
 }
 
-void C3DQuaternion::multiply(const C3DQuaternion& q)
+void Quaternion::multiply(const Quaternion& q)
 {
     multiply(*this, q, this);
 }
 
-void C3DQuaternion::multiply(const C3DQuaternion& q1, const C3DQuaternion& q2, C3DQuaternion* dst)
+void Quaternion::multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* dst)
 {
     float x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
     float y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x;
@@ -146,12 +146,12 @@ void C3DQuaternion::multiply(const C3DQuaternion& q1, const C3DQuaternion& q2, C
     dst->w = w;
 }
 
-void C3DQuaternion::normalize()
+void Quaternion::normalize()
 {
     normalize(this);
 }
 
-void C3DQuaternion::normalize(C3DQuaternion* dst) const
+void Quaternion::normalize(Quaternion* dst) const
 {
     assert(dst);
 
@@ -181,7 +181,7 @@ void C3DQuaternion::normalize(C3DQuaternion* dst) const
     dst->w *= n;
 }
 
-void C3DQuaternion::set(float x, float y, float z, float w)
+void Quaternion::set(float x, float y, float z, float w)
 {
     this->x = x;
     this->y = y;
@@ -189,7 +189,7 @@ void C3DQuaternion::set(float x, float y, float z, float w)
     this->w = w;
 }
 
-void C3DQuaternion::set(float* array)
+void Quaternion::set(float* array)
 {
     assert(array);
 
@@ -199,17 +199,17 @@ void C3DQuaternion::set(float* array)
     w = array[3];
 }
 
-void C3DQuaternion::set(const C3DMatrix& m)
+void Quaternion::set(const Matrix& m)
 {
-    C3DQuaternion::createFromRotationMatrix(m, this);
+    Quaternion::createFromRotationMatrix(m, this);
 }
 
-void C3DQuaternion::set(const C3DVector3& axis, float angle)
+void Quaternion::set(const Vector3& axis, float angle)
 {
-    C3DQuaternion::createFromAxisAngle(axis, angle, this);
+    Quaternion::createFromAxisAngle(axis, angle, this);
 }
 
-void C3DQuaternion::set(const C3DQuaternion& q)
+void Quaternion::set(const Quaternion& q)
 {
     this->x = q.x;
     this->y = q.y;
@@ -217,7 +217,7 @@ void C3DQuaternion::set(const C3DQuaternion& q)
     this->w = q.w;
 }
 
-void C3DQuaternion::setIdentity()
+void Quaternion::setIdentity()
 {
     x = 0.0f;
     y = 0.0f;
@@ -225,11 +225,11 @@ void C3DQuaternion::setIdentity()
     w = 1.0f;
 }
 
-float C3DQuaternion::toAxisAngle(C3DVector3* axis) const
+float Quaternion::toAxisAngle(Vector3* axis) const
 {
     assert(axis);
 
-    C3DQuaternion q(x, y, z, w);
+    Quaternion q(x, y, z, w);
     q.normalize();
     axis->x = q.x;
     axis->y = q.y;
@@ -239,7 +239,7 @@ float C3DQuaternion::toAxisAngle(C3DVector3* axis) const
     return (2.0f * acos(q.w));
 }
 
-void C3DQuaternion::lerp(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst)
+void Quaternion::lerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst)
 {
     assert(dst);
     assert(!(t < 0.0f || t > 1.0f));
@@ -263,25 +263,25 @@ void C3DQuaternion::lerp(const C3DQuaternion& q1, const C3DQuaternion& q2, float
     dst->w = t1 * q1.w + t * q2.w;
 }
 
-void C3DQuaternion::slerp(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst)
+void Quaternion::slerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst)
 {
     slerp(q1.x, q1.y, q1.z, q1.w, q2.x, q2.y, q2.z, q2.w, t, &dst->x, &dst->y, &dst->z, &dst->w);
 }
 
-void C3DQuaternion::squad(const C3DQuaternion& q1, const C3DQuaternion& q2, const C3DQuaternion& s1, const C3DQuaternion& s2, float t, C3DQuaternion* dst)
+void Quaternion::squad(const Quaternion& q1, const Quaternion& q2, const Quaternion& s1, const Quaternion& s2, float t, Quaternion* dst)
 {
     assert(dst);
     assert(!(t < 0.0f || t > 1.0f));
 
-    C3DQuaternion dstQ(0.0f, 0.0f, 0.0f, 1.0f);
-    C3DQuaternion dstS(0.0f, 0.0f, 0.0f, 1.0f);
+    Quaternion dstQ(0.0f, 0.0f, 0.0f, 1.0f);
+    Quaternion dstS(0.0f, 0.0f, 0.0f, 1.0f);
 
     slerpForSquad(q1, q2, t, &dstQ);
     slerpForSquad(s1, s2, t, &dstS);
     slerpForSquad(dstQ, dstS, 2.0f * t * (1.0f - t), dst);
 }
 
-void C3DQuaternion::slerp(float q1x, float q1y, float q1z, float q1w, float q2x, float q2y, float q2z, float q2w, float t, float* dstx, float* dsty, float* dstz, float* dstw)
+void Quaternion::slerp(float q1x, float q1y, float q1z, float q1w, float q2x, float q2y, float q2z, float q2w, float t, float* dstx, float* dsty, float* dstz, float* dstw)
 {
     // Fast slerp implementation by kwhatmough:
     // It contains no division operations, no trig, no inverse trig
@@ -380,7 +380,7 @@ void C3DQuaternion::slerp(float q1x, float q1y, float q1z, float q1w, float q2x,
     *dstz = z * f1;
 }
 
-void C3DQuaternion::slerpForSquad(const C3DQuaternion& q1, const C3DQuaternion& q2, float t, C3DQuaternion* dst)
+void Quaternion::slerpForSquad(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst)
 {
     // cos(omega) = q1 * q2;
     // slerp(q1, q2, t) = (q1*sin((1-t)*omega) + q2*sin(t*omega))/sin(omega);
@@ -416,13 +416,13 @@ void C3DQuaternion::slerpForSquad(const C3DQuaternion& q1, const C3DQuaternion& 
     dst->w = (q1.w * r1 + q2.w * r2);
 }
 
-cocos3d::C3DVector3 C3DQuaternion::operator*(const C3DVector3& v) const
+cocos2d::Vector3 Quaternion::operator*(const Vector3& v) const
 {
     // nVidia SDK implementation
-    C3DVector3 uv, uuv;
-    C3DVector3 qvec(x, y, z);
-    C3DVector3::cross(qvec, v, &uv);
-    C3DVector3::cross(qvec, uv, &uuv);
+    Vector3 uv, uuv;
+    Vector3 qvec(x, y, z);
+    Vector3::cross(qvec, v, &uv);
+    Vector3::cross(qvec, uv, &uuv);
     uv *= (2.0f * w);
     uuv *= 2.0f;
 

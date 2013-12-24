@@ -1,19 +1,19 @@
-#include "C3DMath.h"
+#include "Math.h"
 
-namespace cocos3d
+namespace cocos2d
 {
 
-C3DVector2::C3DVector2()
+Vector2::Vector2()
     : x(0.0f), y(0.0f)
 {
 }
 
-C3DVector2::C3DVector2(float x, float y)
+Vector2::Vector2(float x, float y)
 {
     set(x, y);
 }
 
-C3DVector2::C3DVector2(const float* array)
+Vector2::Vector2(const float* array)
 {
     if (array)
         set(array);
@@ -21,67 +21,67 @@ C3DVector2::C3DVector2(const float* array)
         set(0, 0);
 }
 
-C3DVector2::C3DVector2(const C3DVector2& p1, const C3DVector2& p2)
+Vector2::Vector2(const Vector2& p1, const Vector2& p2)
 {
     set(p1, p2);
 }
 
-C3DVector2::C3DVector2(const C3DVector2& copy)
+Vector2::Vector2(const Vector2& copy)
 {
     set(copy);
 }
 
-C3DVector2::~C3DVector2()
+Vector2::~Vector2()
 {
 }
 
-const C3DVector2& C3DVector2::zero()
+const Vector2& Vector2::zero()
 {
-    static C3DVector2 value(0.0f, 0.0f);
+    static Vector2 value(0.0f, 0.0f);
     return value;
 }
 
-const C3DVector2& C3DVector2::one()
+const Vector2& Vector2::one()
 {
-    static C3DVector2 value(1.0f, 1.0f);
+    static Vector2 value(1.0f, 1.0f);
     return value;
 }
 
-const C3DVector2& C3DVector2::unitX()
+const Vector2& Vector2::unitX()
 {
-    static C3DVector2 value(1.0f, 0.0f);
+    static Vector2 value(1.0f, 0.0f);
     return value;
 }
 
-const C3DVector2& C3DVector2::unitY()
+const Vector2& Vector2::unitY()
 {
-    static C3DVector2 value(0.0f, 1.0f);
+    static Vector2 value(0.0f, 1.0f);
     return value;
 }
 
-bool C3DVector2::isZero() const
+bool Vector2::isZero() const
 {
     return x == 0.0f && y == 0.0f;
 }
 
-bool C3DVector2::isOne() const
+bool Vector2::isOne() const
 {
     return x == 1.0f && y == 1.0f;
 }
 
-float C3DVector2::angle(const C3DVector2& v1, const C3DVector2& v2)
+float Vector2::angle(const Vector2& v1, const Vector2& v2)
 {
     float dz = v1.x * v2.y - v1.y * v2.x;
     return atan2f(fabsf(dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void C3DVector2::add(const C3DVector2& v)
+void Vector2::add(const Vector2& v)
 {
     x += v.x;
     y += v.y;
 }
 
-void C3DVector2::add(const C3DVector2& v1, const C3DVector2& v2, C3DVector2* dst)
+void Vector2::add(const Vector2& v1, const Vector2& v2, Vector2* dst)
 {
     assert(dst);
 
@@ -89,7 +89,7 @@ void C3DVector2::add(const C3DVector2& v1, const C3DVector2& v2, C3DVector2* dst
     dst->y = v1.y + v2.y;
 }
 
-void C3DVector2::clamp(const C3DVector2& min, const C3DVector2& max)
+void Vector2::clamp(const Vector2& min, const Vector2& max)
 {
     assert(!( min.x > max.x || min.y > max.y ));
 
@@ -106,7 +106,7 @@ void C3DVector2::clamp(const C3DVector2& min, const C3DVector2& max)
         y = max.y;
 }
 
-void C3DVector2::clamp(const C3DVector2& v, const C3DVector2& min, const C3DVector2& max, C3DVector2* dst)
+void Vector2::clamp(const Vector2& v, const Vector2& min, const Vector2& max, Vector2* dst)
 {
     assert(dst);
     assert(!( min.x > max.x || min.y > max.y ));
@@ -126,7 +126,7 @@ void C3DVector2::clamp(const C3DVector2& v, const C3DVector2& min, const C3DVect
         dst->y = max.y;
 }
 
-float C3DVector2::distance(const C3DVector2& v) const
+float Vector2::distance(const Vector2& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -134,46 +134,46 @@ float C3DVector2::distance(const C3DVector2& v) const
     return sqrt(dx * dx + dy * dy);
 }
 
-float C3DVector2::distanceSquared(const C3DVector2& v) const
+float Vector2::distanceSquared(const Vector2& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
     return (dx * dx + dy * dy);
 }
 
-float C3DVector2::dot(const C3DVector2& v) const
+float Vector2::dot(const Vector2& v) const
 {
     return (x * v.x + y * v.y);
 }
 
-float C3DVector2::dot(const C3DVector2& v1, const C3DVector2& v2)
+float Vector2::dot(const Vector2& v1, const Vector2& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y);
 }
 
-float C3DVector2::length() const
+float Vector2::length() const
 {
     return sqrt(x * x + y * y);
 }
 
-float C3DVector2::lengthSquared() const
+float Vector2::lengthSquared() const
 {
     return (x * x + y * y);
 }
 
-void C3DVector2::negate()
+void Vector2::negate()
 {
     x = -x;
     y = -y;
 }
 
-C3DVector2& C3DVector2::normalize()
+Vector2& Vector2::normalize()
 {
     normalize(this);
     return *this;
 }
 
-void C3DVector2::normalize(C3DVector2* dst)
+void Vector2::normalize(Vector2* dst)
 {
     assert(dst);
 
@@ -198,19 +198,19 @@ void C3DVector2::normalize(C3DVector2* dst)
     dst->y *= n;
 }
 
-void C3DVector2::scale(float scalar)
+void Vector2::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
 }
 
-void C3DVector2::scale(const C3DVector2& scale)
+void Vector2::scale(const Vector2& scale)
 {
     x *= scale.x;
     y *= scale.y;
 }
 
-void C3DVector2::rotate(const C3DVector2& point, float angle)
+void Vector2::rotate(const Vector2& point, float angle)
 {
     double sinAngle = sin(angle);
     double cosAngle = cos(angle);
@@ -231,13 +231,13 @@ void C3DVector2::rotate(const C3DVector2& point, float angle)
     }
 }
 
-void C3DVector2::set(float x, float y)
+void Vector2::set(float x, float y)
 {
     this->x = x;
     this->y = y;
 }
 
-void C3DVector2::set(const float* array)
+void Vector2::set(const float* array)
 {
     assert(array);
 
@@ -245,25 +245,25 @@ void C3DVector2::set(const float* array)
     y = array[1];
 }
 
-void C3DVector2::set(const C3DVector2& v)
+void Vector2::set(const Vector2& v)
 {
     this->x = v.x;
     this->y = v.y;
 }
 
-void C3DVector2::set(const C3DVector2& p1, const C3DVector2& p2)
+void Vector2::set(const Vector2& p1, const Vector2& p2)
 {
      x = p2.x - p1.x;
      y = p2.y - p1.y;
 }
 
-void C3DVector2::subtract(const C3DVector2& v)
+void Vector2::subtract(const Vector2& v)
 {
     x -= v.x;
     y -= v.y;
 }
 
-void C3DVector2::subtract(const C3DVector2& v1, const C3DVector2& v2, C3DVector2* dst)
+void Vector2::subtract(const Vector2& v1, const Vector2& v2, Vector2* dst)
 {
     assert(dst);
 
