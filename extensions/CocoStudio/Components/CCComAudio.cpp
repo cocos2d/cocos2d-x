@@ -86,7 +86,7 @@ void CCComAudio::end()
 void CCComAudio::preloadBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(pszFilePath);
-	setFile(pszFilePath);
+    setFile(pszFilePath);
 	setLoop(false);
 }
 
@@ -208,8 +208,8 @@ void CCComAudio::stopAllEffects()
 void CCComAudio::preloadEffect(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect(pszFilePath);
-	setFile(pszFilePath);
-	setLoop(false);
+    setFile(pszFilePath);
+    setLoop(false);
 }
 
 void CCComAudio::unloadEffect(const char *pszFilePath)

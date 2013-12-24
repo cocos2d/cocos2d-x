@@ -54,7 +54,7 @@ const char* TriggerMng::triggerMngVersion()
     return "1.0.0.0";
 }
 
-TriggerMng* TriggerMng::sharedTriggerMng()
+TriggerMng* TriggerMng::getInstance()
 {
     if (NULL == _sharedTriggerMng)
     {
@@ -63,7 +63,7 @@ TriggerMng* TriggerMng::sharedTriggerMng()
     return _sharedTriggerMng;
 }
 
-void TriggerMng::purgeTriggerMng()
+void TriggerMng::destroyInstance()
 {
     CC_SAFE_DELETE(_sharedTriggerMng);
 }

@@ -51,7 +51,7 @@ NS_CC_EXT_BEGIN
         do {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               _pNode = createObject(jsonDict, NULL);
-			  TriggerMng::sharedTriggerMng()->parse(jsonDict);
+			  TriggerMng::getInstance()->parse(jsonDict);
 			  
         } while (0);
         
@@ -71,6 +71,7 @@ NS_CC_EXT_BEGIN
               CCData *data = new CCData(pBytes, size);
 	          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
 	          CC_SAFE_DELETE(data);
+              CC_SAFE_FREE(pBytes);
               doc.Parse<0>(load_str.c_str());
               CC_BREAK_IF(doc.HasParseError());
               bRet = true;
@@ -84,7 +85,7 @@ NS_CC_EXT_BEGIN
 		{
 			return NULL;
 		}
-		CCNode *_pNode = NULL;
+		CCNode *_retNode = NULL;
 		CCArray *pChildren = pParent->getChildren();
 		if(pChildren && pChildren->count() > 0)
 		{
@@ -94,13 +95,13 @@ NS_CC_EXT_BEGIN
 				CCNode* pNode = (CCNode*)child;
 				if(pNode && pNode->getTag() == nTag)
 				{
-					_pNode =  pNode;
+					_retNode =  pNode;
 					break;
 				}
 				else
 				{
-					_pNode = g_NodeByTag(pNode, nTag);
-					if (_pNode != NULL)
+					_retNode = nodeByTag(pNode, nTag);
+					if (_retNode != NULL)
 					{
 						break;
 					}
@@ -108,7 +109,7 @@ NS_CC_EXT_BEGIN
 				}
 			}
 		}
-		return _pNode;
+		return _retNode;
 	}
 
 	CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
@@ -493,7 +494,7 @@ NS_CC_EXT_BEGIN
     {
 		CC_SAFE_DELETE(_sharedReader);
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-		TriggerMng::sharedTriggerMng()->purgeTriggerMng();
+		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
     }
 

@@ -220,6 +220,7 @@ static void addData(AsyncStruct *pAsyncStruct)
     pthread_mutex_lock(&s_GetFileDataMutex);
 	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
 	CCData data(pBytes, size);
+    CC_SAFE_FREE(pBytes);
 	pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
     pthread_mutex_unlock(&s_GetFileDataMutex);
 
@@ -381,6 +382,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     {
         CCDataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
+    CC_SAFE_FREE(pBytes);
 }
 
 void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector)

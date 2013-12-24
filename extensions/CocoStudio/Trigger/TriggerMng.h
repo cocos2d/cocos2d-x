@@ -53,9 +53,9 @@ public:
 	virtual ~TriggerMng(void);
 	
 public:
-    static TriggerMng* sharedTriggerMng();
+    static TriggerMng* getInstance();
     static const char* triggerMngVersion();
-    void purgeTriggerMng();
+    void destroyInstance();
     
 public:
 	void parse(const rapidjson::Value &root);

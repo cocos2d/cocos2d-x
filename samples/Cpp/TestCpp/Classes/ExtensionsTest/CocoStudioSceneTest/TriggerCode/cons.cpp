@@ -84,7 +84,7 @@ bool ArmatureActionState::init()
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);
-		TriggerMng::sharedTriggerMng()->addArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
+		TriggerMng::getInstance()->addArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
 	} while (0);
 	
 	return true;
@@ -135,7 +135,7 @@ void ArmatureActionState::removeAll()
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);
-		TriggerMng::sharedTriggerMng()->removeArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
+		TriggerMng::getInstance()->removeArmatureMovementCallBack(pAr, this, movementEvent_selector(ArmatureActionState::animationEvent));
 	} while (0);
 }
 

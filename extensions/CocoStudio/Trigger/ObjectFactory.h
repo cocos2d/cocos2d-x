@@ -53,10 +53,8 @@ class ObjectFactory
 public:
     ObjectFactory(void);
     virtual ~ObjectFactory(void);
-public:
-    static ObjectFactory* sharedFactory();
-    void purgeFactory();
-public:
+    static ObjectFactory* getInstance();
+    void destroyInstance();
     CCObject* createObject(const char *name);
     void registerType(const TInfo &t);
     void removeAll();
