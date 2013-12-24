@@ -569,28 +569,28 @@
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DMathUtilty.cpp">
+    <ClCompile Include="..\math\MathUtilty.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DMatrix.cpp">
+    <ClCompile Include="..\math\Matrix.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3Dneon_matrix_impl.c">
+    <ClCompile Include="..\math\neon_matrix_impl.c">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DQuaternion.cpp">
+    <ClCompile Include="..\math\Quaternion.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DVector2.cpp">
+    <ClCompile Include="..\math\Vector2.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DVector3.cpp">
+    <ClCompile Include="..\math\Vector3.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\C3DVector4.cpp">
+    <ClCompile Include="..\math\Vector4.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\C3DTransform.cpp">
+    <ClCompile Include="..\base\Transform.cpp">
       <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1170,48 +1170,48 @@
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DMath.h">
+    <ClInclude Include="..\math\Math.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DMathUtilty.h">
+    <ClInclude Include="..\math\MathUtilty.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DMatrix.h">
+    <ClInclude Include="..\math\Matrix.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3Dneon_matrix_impl.h">
+    <ClInclude Include="..\math\neon_matrix_impl.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DQuaternion.h">
+    <ClInclude Include="..\math\Quaternion.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DVector2.h">
+    <ClInclude Include="..\math\Vector2.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DVector3.h">
+    <ClInclude Include="..\math\Vector3.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\C3DVector4.h">
+    <ClInclude Include="..\math\Vector4.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\C3DTransform.h">
+    <ClInclude Include="..\base\Transform.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\math\C3DMatrix.inl">
+    <None Include="..\math\Matrix.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\math\C3DQuaternion.inl">
+    <None Include="..\math\Quaternion.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\math\C3DVector2.inl">
+    <None Include="..\math\Vector2.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\math\C3DVector3.inl">
+    <None Include="..\math\Vector3.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\math\C3DVector4.inl">
+    <None Include="..\math\Vector4.inl">
       <Filter>math</Filter>
     </None>
   </ItemGroup>

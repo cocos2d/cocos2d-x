@@ -1,40 +1,40 @@
-#include "C3DTransform.h"
+#include "Transform.h"
 
-namespace cocos3d
+namespace cocos2d
 {
 
-C3DTransform::C3DTransform()
+Transform::Transform()
     : _matrixDirtyBits(0)
 {
-    _scale.set(C3DVector3::one());
+    _scale.set(Vector3::one());
 }
 
-C3DTransform::C3DTransform(const C3DVector3& scale, const C3DQuaternion& rotation, const C3DVector3& translation)
+Transform::Transform(const Vector3& scale, const Quaternion& rotation, const Vector3& translation)
     : _matrixDirtyBits(0)
 {
    
     set(scale, rotation, translation);
 }
 
-C3DTransform::C3DTransform(const C3DVector3& scale, const C3DMatrix& rotation, const C3DVector3& translation)
+Transform::Transform(const Vector3& scale, const Matrix& rotation, const Vector3& translation)
     : _matrixDirtyBits(0)
 {   
     set(scale, rotation, translation);
 }
 
-C3DTransform::C3DTransform(const C3DTransform& copy)
+Transform::Transform(const Transform& copy)
     : _matrixDirtyBits(0)
 {
    
     set(copy);
 }
 
-C3DTransform::~C3DTransform()
+Transform::~Transform()
 {
     
 }
 
-const C3DMatrix& C3DTransform::getMatrix() const
+const Matrix& Transform::getMatrix() const
 {
     if (_matrixDirtyBits)
     {
@@ -46,7 +46,7 @@ const C3DMatrix& C3DTransform::getMatrix() const
         // multiply M*v (as opposed to XNA and DirectX that use row-major matrices with row vectors and multiply v*M).
         if (hasTranslation || (_matrixDirtyBits & DIRTY_TRANSLATION) == DIRTY_TRANSLATION)
         {
-            C3DMatrix::createTranslation(_position, &_matrix);
+            Matrix::createTranslation(_position, &_matrix);
             if (hasRotation || (_matrixDirtyBits & DIRTY_ROTATION) == DIRTY_ROTATION)
             {
                 _matrix.rotate(_rotation);
@@ -58,7 +58,7 @@ const C3DMatrix& C3DTransform::getMatrix() const
         }
         else if (hasRotation || (_matrixDirtyBits & DIRTY_ROTATION) == DIRTY_ROTATION)
         {
-            C3DMatrix::createRotation(_rotation, &_matrix);
+            Matrix::createRotation(_rotation, &_matrix);
             if (hasScale || (_matrixDirtyBits & DIRTY_SCALE) == DIRTY_SCALE)
             {
                 _matrix.scale(_scale);
@@ -66,7 +66,7 @@ const C3DMatrix& C3DTransform::getMatrix() const
         }
         else if (hasScale || (_matrixDirtyBits & DIRTY_SCALE) == DIRTY_SCALE)
         {
-            C3DMatrix::createScale(_scale, &_matrix);
+            Matrix::createScale(_scale, &_matrix);
         }
 
         _matrixDirtyBits = 0;
@@ -75,200 +75,200 @@ const C3DMatrix& C3DTransform::getMatrix() const
     return _matrix;
 }
 
-const C3DVector3& C3DTransform::getScale() const
+const Vector3& Transform::getScale() const
 {
     return _scale;
 }
 
-void C3DTransform::getScale(C3DVector3* scale) const
+void Transform::getScale(Vector3* scale) const
 {
     scale->set(_scale);
 }
 
-float C3DTransform::getScaleX() const
+float Transform::getScaleX() const
 {
     return _scale.x;
 }
 
-float C3DTransform::getScaleY() const
+float Transform::getScaleY() const
 {
     return _scale.y;
 }
 
-float C3DTransform::getScaleZ() const
+float Transform::getScaleZ() const
 {
     return _scale.z;
 }
 
-const C3DQuaternion& C3DTransform::getRotation() const
+const Quaternion& Transform::getRotation() const
 {
     return _rotation;
 }
 
-void C3DTransform::getRotation(C3DQuaternion* rotation) const
+void Transform::getRotation(Quaternion* rotation) const
 {
 	rotation->set(_rotation);
 }
 
-void C3DTransform::getRotation(C3DMatrix* rotation) const
+void Transform::getRotation(Matrix* rotation) const
 {
-    C3DMatrix::createRotation(_rotation, rotation);
+    Matrix::createRotation(_rotation, rotation);
 }
 
-float C3DTransform::getRotation(C3DVector3* axis) const
+float Transform::getRotation(Vector3* axis) const
 {
     return _rotation.toAxisAngle(axis);
 }
 
-const C3DVector3& C3DTransform::getPosition() const
+const Vector3& Transform::getPosition() const
 {
     return _position;
 }
 
-void C3DTransform::getPosition(C3DVector3* translation) const
+void Transform::getPosition(Vector3* translation) const
 {
     translation->set(_position);
 }
 
-float C3DTransform::getPositionX() const
+float Transform::getPositionX() const
 {
     return _position.x;
 }
 
-float C3DTransform::getPositionY() const
+float Transform::getPositionY() const
 {
     return _position.y;
 }
 
-float C3DTransform::getPositionZ() const
+float Transform::getPositionZ() const
 {
     return _position.z;
 }
 
-C3DVector3 C3DTransform::getForwardVector() const
+Vector3 Transform::getForwardVector() const
 {
-    C3DVector3 v;
+    Vector3 v;
     getForwardVector(&v);
     return v;
 }
 
-void C3DTransform::getForwardVector(C3DVector3* dst) const
+void Transform::getForwardVector(Vector3* dst) const
 {
     getMatrix().getForwardVector(dst);
 }
 
 
-C3DVector3 C3DTransform::getUpVector() const
+Vector3 Transform::getUpVector() const
 {
-    C3DVector3 v;
+    Vector3 v;
     getUpVector(&v);
     return v;
 }
 
-void C3DTransform::getUpVector(C3DVector3* dst) const
+void Transform::getUpVector(Vector3* dst) const
 {
     getMatrix().getUpVector(dst);
 }
 
 
-C3DVector3 C3DTransform::getRightVector() const
+Vector3 Transform::getRightVector() const
 {
-    C3DVector3 v;
+    Vector3 v;
     getRightVector(&v);
     return v;
 }
 
-void C3DTransform::getRightVector(C3DVector3* dst) const
+void Transform::getRightVector(Vector3* dst) const
 {
     getMatrix().getRightVector(dst);
 }
 
-void C3DTransform::rotate(float qx, float qy, float qz, float qw)
+void Transform::rotate(float qx, float qy, float qz, float qw)
 {
-    C3DQuaternion q(qx, qy, qz, qw);
+    Quaternion q(qx, qy, qz, qw);
     _rotation.multiply(q);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotate(const C3DQuaternion& rotation)
+void Transform::rotate(const Quaternion& rotation)
 {
     _rotation.multiply(rotation);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotate(const C3DVector3& axis, float angle)
+void Transform::rotate(const Vector3& axis, float angle)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(axis, angle, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(axis, angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     _rotation.normalize();
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotate(const C3DMatrix& rotation)
+void Transform::rotate(const Matrix& rotation)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotateX(float angle)
+void Transform::rotateX(float angle)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitX(), angle, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitX(), angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotateY(float angle)
+void Transform::rotateY(float angle)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitY(), angle, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitY(), angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::rotateZ(float angle)
+void Transform::rotateZ(float angle)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitZ(), angle, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitZ(), angle, &rotationQuat);
     _rotation.multiply(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::setRotationX(float angle)
+void Transform::setRotationX(float angle)
 {	
-	C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitX(), angle, &rotationQuat);
+	Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitX(), angle, &rotationQuat);
 	_rotation = rotationQuat;
 	dirty(DIRTY_ROTATION);
 
 }
-void C3DTransform::setRotationY(float angle)
+void Transform::setRotationY(float angle)
 {
-	C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitY(), angle, &rotationQuat);
+	Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitY(), angle, &rotationQuat);
 	_rotation = rotationQuat;
 	dirty(DIRTY_ROTATION);
 }
 
 
-void C3DTransform::setRotationZ(float angle)
+void Transform::setRotationZ(float angle)
 {
-	C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromAxisAngle(C3DVector3::unitZ(), angle, &rotationQuat);
+	Quaternion rotationQuat;
+    Quaternion::createFromAxisAngle(Vector3::unitZ(), angle, &rotationQuat);
 	_rotation = rotationQuat;
 	dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::scale(float scale)
+void Transform::scale(float scale)
 {
     _scale.scale(scale);
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::scale(float sx, float sy, float sz)
+void Transform::scale(float sx, float sy, float sz)
 {
     _scale.x *= sx;
     _scale.y *= sy;
@@ -276,7 +276,7 @@ void C3DTransform::scale(float sx, float sy, float sz)
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::scale(const C3DVector3& scale)
+void Transform::scale(const Vector3& scale)
 {
     _scale.x *= scale.x;
     _scale.y *= scale.y;
@@ -284,25 +284,25 @@ void C3DTransform::scale(const C3DVector3& scale)
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::scaleX(float sx)
+void Transform::scaleX(float sx)
 {
     _scale.x *= sx;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::scaleY(float sy)
+void Transform::scaleY(float sy)
 {
     _scale.y *= sy;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::scaleZ(float sz)
+void Transform::scaleZ(float sz)
 {
     _scale.z *= sz;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::set(const C3DVector3& scale, const C3DQuaternion& rotation, const C3DVector3& translation)
+void Transform::set(const Vector3& scale, const Quaternion& rotation, const Vector3& translation)
 {
     _scale.set(scale);
     _rotation.set(rotation);
@@ -310,17 +310,17 @@ void C3DTransform::set(const C3DVector3& scale, const C3DQuaternion& rotation, c
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void C3DTransform::set(const C3DVector3& scale, const C3DMatrix& rotation, const C3DVector3& translation)
+void Transform::set(const Vector3& scale, const Matrix& rotation, const Vector3& translation)
 {
     _scale.set(scale);
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.set(rotationQuat);
     _position.set(translation);
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void C3DTransform::set(const C3DVector3& scale, const C3DVector3& axis, float angle, const C3DVector3& translation)
+void Transform::set(const Vector3& scale, const Vector3& axis, float angle, const Vector3& translation)
 {
     _scale.set(scale);
     _rotation.set(axis, angle);
@@ -328,7 +328,7 @@ void C3DTransform::set(const C3DVector3& scale, const C3DVector3& axis, float an
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void C3DTransform::set(const C3DTransform& transform)
+void Transform::set(const Transform& transform)
 {
     _scale.set(transform._scale);
     _rotation.set(transform._rotation);
@@ -336,7 +336,7 @@ void C3DTransform::set(const C3DTransform& transform)
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void C3DTransform::setIdentity()
+void Transform::setIdentity()
 {
     _scale.set(1.0f, 1.0f, 1.0f);
     _rotation.setIdentity();
@@ -344,99 +344,99 @@ void C3DTransform::setIdentity()
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
-void C3DTransform::setScale(float scale)
+void Transform::setScale(float scale)
 {
     _scale.set(scale, scale, scale);
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setScale(float sx, float sy, float sz)
+void Transform::setScale(float sx, float sy, float sz)
 {
     _scale.set(sx, sy, sz);
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setScale(const C3DVector3& scale)
+void Transform::setScale(const Vector3& scale)
 {
     _scale.set(scale);
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setScaleX(float sx)
+void Transform::setScaleX(float sx)
 {
     _scale.x = sx;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setScaleY(float sy)
+void Transform::setScaleY(float sy)
 {
     _scale.y = sy;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setScaleZ(float sz)
+void Transform::setScaleZ(float sz)
 {
     _scale.z = sz;
     dirty(DIRTY_SCALE);
 }
 
-void C3DTransform::setRotation(const C3DQuaternion& rotation)
+void Transform::setRotation(const Quaternion& rotation)
 {
     _rotation.set(rotation);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::setRotation(float qx, float qy, float qz, float qw)
+void Transform::setRotation(float qx, float qy, float qz, float qw)
 {
     _rotation.set(qx, qy, qz, qw);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::setRotation(const C3DMatrix& rotation)
+void Transform::setRotation(const Matrix& rotation)
 {
-    C3DQuaternion rotationQuat;
-    C3DQuaternion::createFromRotationMatrix(rotation, &rotationQuat);
+    Quaternion rotationQuat;
+    Quaternion::createFromRotationMatrix(rotation, &rotationQuat);
     _rotation.set(rotationQuat);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::setRotation(const C3DVector3& axis, float angle)
+void Transform::setRotation(const Vector3& axis, float angle)
 {
     _rotation.set(axis, angle);
     dirty(DIRTY_ROTATION);
 }
 
-void C3DTransform::setPosition(const C3DVector3& translation)
+void Transform::setPosition(const Vector3& translation)
 {
     _position.set(translation);
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::setPosition(float tx, float ty, float tz)
+void Transform::setPosition(float tx, float ty, float tz)
 {
     _position.set(tx, ty, tz);
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::setPositionX(float tx)
+void Transform::setPositionX(float tx)
 {
     _position.x = tx;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::setPositionY(float ty)
+void Transform::setPositionY(float ty)
 {
     _position.y = ty;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::setPositionZ(float tz)
+void Transform::setPositionZ(float tz)
 {
     _position.z = tz;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translate(float tx, float ty, float tz)
+void Transform::translate(float tx, float ty, float tz)
 {
     _position.x += tx;
     _position.y += ty;
@@ -444,7 +444,7 @@ void C3DTransform::translate(float tx, float ty, float tz)
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translate(const C3DVector3& translation)
+void Transform::translate(const Vector3& translation)
 {
     _position.x += translation.x;
     _position.y += translation.y;
@@ -452,30 +452,30 @@ void C3DTransform::translate(const C3DVector3& translation)
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translateX(float tx)
+void Transform::translateX(float tx)
 {
     _position.x += tx;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translateY(float ty)
+void Transform::translateY(float ty)
 {
     _position.y += ty;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translateZ(float tz)
+void Transform::translateZ(float tz)
 {
     _position.z += tz;
     dirty(DIRTY_TRANSLATION);
 }
 
-void C3DTransform::translateRight(float amount)
+void Transform::translateRight(float amount)
 {
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    C3DVector3 right;
+    Vector3 right;
     _matrix.getRightVector(&right);
     right.normalize();
     right.scale(amount);
@@ -483,12 +483,12 @@ void C3DTransform::translateRight(float amount)
     translate(right);
 }
 
-void C3DTransform::translateUp(float amount)
+void Transform::translateUp(float amount)
 {
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    C3DVector3 up;
+    Vector3 up;
     _matrix.getUpVector(&up);
     up.normalize();
     up.scale(amount);
@@ -496,12 +496,12 @@ void C3DTransform::translateUp(float amount)
     translate(up);
 }
 
-void C3DTransform::translateForward(float amount)
+void Transform::translateForward(float amount)
 {
     // Force the current transform matrix to be updated.
     getMatrix();
 
-    C3DVector3 forward;
+    Vector3 forward;
     _matrix.getForwardVector(&forward);
     forward.normalize();
     forward.scale(amount);
@@ -509,62 +509,62 @@ void C3DTransform::translateForward(float amount)
     translate(forward);
 }
 
-void C3DTransform::transformPoint(C3DVector3* point)
+void Transform::transformPoint(Vector3* point)
 {
     getMatrix();
     _matrix.transformPoint(point);
 }
 
-void C3DTransform::transformPoint(const C3DVector3& point, C3DVector3* dst)
+void Transform::transformPoint(const Vector3& point, Vector3* dst)
 {
     getMatrix();
     _matrix.transformPoint(point, dst);
 }
 
-void C3DTransform::transformVector(C3DVector3* normal)
+void Transform::transformVector(Vector3* normal)
 {
     getMatrix();
     _matrix.transformVector(normal);
 }
 
-void C3DTransform::transformVector(const C3DVector3& normal, C3DVector3* dst)
+void Transform::transformVector(const Vector3& normal, Vector3* dst)
 {
     getMatrix();
     _matrix.transformVector(normal, dst);
 }
 
-void C3DTransform::transformVector(float x, float y, float z, float w, C3DVector3* dst)
+void Transform::transformVector(float x, float y, float z, float w, Vector3* dst)
 {
     getMatrix();
     _matrix.transformVector(x, y, z, w, dst);
 }
 
 
-void C3DTransform::dirty(char matrixDirtyBits)
+void Transform::dirty(char matrixDirtyBits)
 {
     _matrixDirtyBits |= matrixDirtyBits;
     transformChanged();
 }
 
 
-void C3DTransform::lookAt(const C3DVector3& position, const C3DVector3& up, const C3DVector3& target)
+void Transform::lookAt(const Vector3& position, const Vector3& up, const Vector3& target)
 {
 
-	C3DMatrix matRotate;
+	Matrix matRotate;
 
-    C3DVector3 upv = up;
+    Vector3 upv = up;
     upv.normalize();
 
-    C3DVector3 zaxis;
-    C3DVector3::subtract(position, target, &zaxis);
+    Vector3 zaxis;
+    Vector3::subtract(position, target, &zaxis);
     zaxis.normalize();
 
-    C3DVector3 xaxis;
-    C3DVector3::cross(upv, zaxis, &xaxis);
+    Vector3 xaxis;
+    Vector3::cross(upv, zaxis, &xaxis);
     xaxis.normalize();
 
-    C3DVector3 yaxis;
-    C3DVector3::cross(zaxis, xaxis, &yaxis);
+    Vector3 yaxis;
+    Vector3::cross(zaxis, xaxis, &yaxis);
     yaxis.normalize();
 
     matRotate.m[0] = xaxis.x;
@@ -586,7 +586,7 @@ void C3DTransform::lookAt(const C3DVector3& position, const C3DVector3& up, cons
 	setPosition(position);
 }
 
-void C3DTransform::copyFrom(const C3DTransform* other)
+void Transform::copyFrom(const Transform* other)
 {
 	_scale = other->_scale;
 	_position = other->_position;
@@ -597,7 +597,7 @@ void C3DTransform::copyFrom(const C3DTransform* other)
 	transformChanged();
 }
 
-void C3DTransform::setRotationAlong(const C3DVector3& point, const C3DVector3& axis, float angle)
+void Transform::setRotationAlong(const Vector3& point, const Vector3& axis, float angle)
 {
     // p' = rot * (p - point) + point = rot * p - rot * point + point
 	_rotation.set(axis, angle);
@@ -605,9 +605,9 @@ void C3DTransform::setRotationAlong(const C3DVector3& point, const C3DVector3& a
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION);
 }
 
-void C3DTransform::rotateAlong(const C3DVector3& point, const C3DVector3& axis, float angle)
+void Transform::rotateAlong(const Vector3& point, const Vector3& axis, float angle)
 {
-    C3DQuaternion rot(axis, angle);
+    Quaternion rot(axis, angle);
 
     // p' = rot0 * p + pos0
     // p'' = rot * (p' - point) + point
