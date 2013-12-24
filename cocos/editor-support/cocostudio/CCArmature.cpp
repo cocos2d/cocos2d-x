@@ -125,7 +125,7 @@ bool Armature::init(const std::string& name)
 
         ArmatureDataManager *armatureDataManager = ArmatureDataManager::getInstance();
 
-        if(_name.length() != 0)
+        if(!_name.empty())
         {
             AnimationData *animationData = armatureDataManager->getAnimationData(name);
             CCASSERT(animationData, "AnimationData not exist! ");
@@ -236,7 +236,7 @@ void Armature::addBone(Bone *bone, const std::string& parentName)
     CCASSERT( bone != nullptr, "Argument must be non-nil");
     CCASSERT(_boneDic.at(bone->getName()) == nullptr, "bone already added. It can't be added again");
 
-    if ("" != parentName)
+    if (!parentName.empty())
     {
         Bone *boneParent = _boneDic.at(parentName);
         if (boneParent)
@@ -292,7 +292,7 @@ void Armature::changeBoneParent(Bone *bone, const std::string& parentName)
         bone->setParentBone(nullptr);
     }
 
-    if (parentName != "")
+    if (!parentName.empty())
     {
         Bone *boneParent = _boneDic.at(parentName);
 
