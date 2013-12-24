@@ -6,8 +6,6 @@ class CCMotionStreak : public CCNodeRGBA
     void tintWithColor(ccColor3B colors);
     void reset();
 
-    void setPosition(CCPoint& position);
-
     CCTexture2D* getTexture(void);
     void setTexture(CCTexture2D *texture);
     void setBlendFunc(ccBlendFunc blendFunc);
