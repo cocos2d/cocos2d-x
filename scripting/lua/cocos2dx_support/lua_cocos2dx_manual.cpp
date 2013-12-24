@@ -139,8 +139,209 @@ static void extendCCNode(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int tolua_Cocos2d_CCLens3D_setPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCLens3D",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCLens3D* self = (CCLens3D*)  tolua_tousertype(tolua_S,1,0);
+        CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        {
+            self->setPosition(position);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setPosition'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_CCLens3D_setPosition01(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCLens3D",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
+        !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        CCLens3D* self = (CCLens3D*)  tolua_tousertype(tolua_S,1,0);
+        double x = tolua_tonumber(tolua_S, 2, 0);
+        double y = tolua_tonumber(tolua_S, 3, 0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        self->setPosition(ccp(x,y));
+    }
+    return 0;
+tolua_lerror:
+    return tolua_Cocos2d_CCLens3D_setPosition00(tolua_S);
+}
+
+static void extendCCLens3D(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "CCLens3D");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "setPosition", tolua_Cocos2d_CCLens3D_setPosition01);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_Cocos2d_CCRipple3D_setPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCRipple3D",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCRipple3D* self = (CCRipple3D*)  tolua_tousertype(tolua_S,1,0);
+        CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        {
+            self->setPosition(position);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setPosition'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_CCRipple3D_setPosition01(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCRipple3D",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
+        !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        CCRipple3D* self = (CCRipple3D*)  tolua_tousertype(tolua_S,1,0);
+        double x = tolua_tonumber(tolua_S, 2, 0);
+        double y = tolua_tonumber(tolua_S, 3, 0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        self->setPosition(ccp(x,y));
+    }
+    return 0;
+tolua_lerror:
+    return tolua_Cocos2d_CCRipple3D_setPosition00(tolua_S);
+}
+
+static void extendCCRipple3D(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "CCRipple3D");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "setPosition", tolua_Cocos2d_CCRipple3D_setPosition01);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_Cocos2d_CCTwirl_setPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCTwirl",0,&tolua_err) ||
+        (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCPoint",0,&tolua_err)) ||
+        !tolua_isnoobj(tolua_S,3,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+#endif
+    {
+        CCTwirl* self = (CCTwirl*)  tolua_tousertype(tolua_S,1,0);
+        CCPoint position = *((CCPoint*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        {
+            self->setPosition(position);
+        }
+    }
+    return 0;
+#ifndef TOLUA_RELEASE
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'setPosition'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_Cocos2d_CCTwirl_setPosition01(lua_State* tolua_S)
+{
+    tolua_Error tolua_err;
+    if (
+        !tolua_isusertype(tolua_S,1,"CCTwirl",0,&tolua_err) ||
+        !tolua_isnumber(tolua_S, 2, 0, &tolua_err) ||
+        !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
+        !tolua_isnoobj(tolua_S,4,&tolua_err)
+        )
+        goto tolua_lerror;
+    else
+    {
+        CCTwirl* self = (CCTwirl*)  tolua_tousertype(tolua_S,1,0);
+        double x = tolua_tonumber(tolua_S, 2, 0);
+        double y = tolua_tonumber(tolua_S, 3, 0);
+#ifndef TOLUA_RELEASE
+        if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setPosition'", NULL);
+#endif
+        self->setPosition(ccp(x,y));
+    }
+    return 0;
+tolua_lerror:
+    return tolua_Cocos2d_CCTwirl_setPosition00(tolua_S);
+}
+
+static void extendCCTwirl(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "CCTwirl");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "setPosition", tolua_Cocos2d_CCTwirl_setPosition01);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     extendCCNode(tolua_S);
+    extendCCLens3D(tolua_S);
+    extendCCRipple3D(tolua_S);
+    extendCCTwirl(tolua_S);
     return 0;
 }

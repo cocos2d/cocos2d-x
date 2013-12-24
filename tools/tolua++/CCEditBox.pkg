@@ -90,8 +90,7 @@ public:
     void setInputFlag(EditBoxInputFlag inputFlag);
     
     void setReturnType(KeyboardReturnType returnType);
-       
-    virtual void setPosition(const CCPoint& pos);
+
     virtual void setVisible(bool visible);
     virtual void visit(void);
     virtual void onEnter(void);
