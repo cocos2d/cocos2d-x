@@ -86,15 +86,14 @@ bool Button::init()
 
 void Button::initRenderer()
 {
-    Widget::initRenderer();
     _buttonNormalRenderer = Sprite::create();
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
-    _renderer->addChild(_buttonNormalRenderer,NORMALRENDERERZ);
-    _renderer->addChild(_buttonClickedRenderer,PRESSEDRENDERERZ);
-    _renderer->addChild(_buttonDisableRenderer,DISABLEDRENDERERZ);
-    _renderer->addChild(_titleRenderer,TITLERENDERERZ);
+    Node::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
+    Node::addChild(_buttonClickedRenderer, PRESSEDRENDERERZ, -1);
+    Node::addChild(_buttonDisableRenderer, DISABLEDRENDERERZ, -1);
+    Node::addChild(_titleRenderer, TITLERENDERERZ, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -106,10 +105,9 @@ void Button::setScale9Enabled(bool able)
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
 
-    
-    _renderer->removeChild(_buttonNormalRenderer, true);
-    _renderer->removeChild(_buttonClickedRenderer, true);
-    _renderer->removeChild(_buttonDisableRenderer, true);
+    Node::removeChild(_buttonNormalRenderer);
+    Node::removeChild(_buttonClickedRenderer);
+    Node::removeChild(_buttonDisableRenderer);
     
     _buttonNormalRenderer = nullptr;
     _buttonClickedRenderer = nullptr;
@@ -130,9 +128,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    _renderer->addChild(_buttonNormalRenderer,NORMALRENDERERZ);
-    _renderer->addChild(_buttonClickedRenderer,PRESSEDRENDERERZ);
-    _renderer->addChild(_buttonDisableRenderer,DISABLEDRENDERERZ);
+    Node::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
+    Node::addChild(_buttonClickedRenderer, PRESSEDRENDERERZ, -1);
+    Node::addChild(_buttonDisableRenderer, DISABLEDRENDERERZ, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;

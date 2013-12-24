@@ -269,7 +269,7 @@ bool UICCTextField::getDeleteBackward()
     return _deleteBackward;
 }
 
-
+#define TEXTFIELDRENDERERZ (-1)
 
     
 TextField::TextField():
@@ -313,9 +313,8 @@ bool TextField::init()
 
 void TextField::initRenderer()
 {
-    Widget::initRenderer();
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    _renderer->addChild(_textFieldRenderer);
+    Node::addChild(_textFieldRenderer, TEXTFIELDRENDERERZ, -1);
 }
 
 void TextField::setTouchSize(const Size &size)

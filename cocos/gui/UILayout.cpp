@@ -29,6 +29,9 @@
 NS_CC_BEGIN
 
 namespace gui {
+    
+#define BACKGROUNDIMAGEZ (-1)
+#define BCAKGROUNDCOLORRENDERERZ (-2)
 
 static GLint g_sStencilBits = -1;
 
@@ -81,7 +84,6 @@ bool Layout::init()
     if (Node::init())
     {
         initRenderer();
-        _renderer->retain();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
         setBright(true);
@@ -108,11 +110,6 @@ void Layout::addChild(Node *child, int zOrder, int tag)
     supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
     Widget::addChild(child, zOrder, tag);
     _doLayoutDirty = true;
-}
-    
-void Layout::initRenderer()
-{
-    Widget::initRenderer();
 }
 
 bool Layout::isClippingEnabled()
@@ -429,21 +426,20 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     {
         return;
     }
-    _renderer->removeChild(_backGroundImage, true);
+    Node::removeChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        _renderer->addChild(_backGroundImage);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        _renderer->addChild(_backGroundImage);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
     }
-    _backGroundImage->setZOrder(-1);
-    setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
+    setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
 
@@ -554,14 +550,14 @@ void Layout::addBackGroundImage()
     {
         _backGroundImage = extension::Scale9Sprite::create();
         _backGroundImage->setZOrder(-1);
-        _renderer->addChild(_backGroundImage);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
         _backGroundImage->setZOrder(-1);
-        _renderer->addChild(_backGroundImage);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
@@ -572,7 +568,7 @@ void Layout::removeBackGroundImage()
     {
         return;
     }
-    _renderer->removeChild(_backGroundImage,  true);
+    Node::removeChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundImageFileName = "";
     _backGroundImageTextureSize = Size::ZERO;
@@ -589,26 +585,26 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             if (_colorRender)
             {
-                _renderer->removeChild(_colorRender);
+                Node::removeChild(_colorRender);
                 _colorRender = nullptr;
             }
             if (_gradientRender)
             {
-                _renderer->removeChild(_gradientRender);
+                Node::removeChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
-                _renderer->removeChild(_colorRender);
+                Node::removeChild(_colorRender);
                 _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
-                _renderer->removeChild(_gradientRender);
+                Node::removeChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
@@ -625,7 +621,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            _renderer->addChild(_colorRender,-2);
+            Node::addChild(_colorRender, BACKGROUNDIMAGEZ, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = LayerGradient::create();
@@ -634,7 +630,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            _renderer->addChild(_gradientRender,-2);
+            Node::addChild(_gradientRender, BACKGROUNDIMAGEZ, -1);
             break;
         default:
             break;
