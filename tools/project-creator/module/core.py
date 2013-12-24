@@ -166,8 +166,8 @@ class CocosProject:
                 shutil.rmtree(self.context["dst_project_path"])
             return False
 
-        print ("\n")
-        print ("New project has been created in this path: " + self.context["dst_project_path"].replace("\\", "/"))
+        print ("###New project has been created in this path: ")
+        print (self.context["dst_project_path"].replace("\\", "/"))
         print ("Have Fun!")
         return True
 
@@ -190,8 +190,7 @@ class CocosProject:
             os.makedirs(dstPath)
 
         # begin copy
-        print("\n")
-        print("begin copy engine...")
+        print("###begin copy engine...")
         # list engine root dir.
         dirlist = os.listdir(self.cocos_root)
         for line in dirlist:
