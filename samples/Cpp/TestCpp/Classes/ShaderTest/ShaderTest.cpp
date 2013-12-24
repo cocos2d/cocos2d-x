@@ -78,12 +78,12 @@ void ShaderTestDemo::nextCallback(Object* sender)
     s->release();
 }
 
-std::string ShaderTestDemo::title()
+std::string ShaderTestDemo::title() const
 {
     return "No title";
 }
 
-std::string ShaderTestDemo::subtitle()
+std::string ShaderTestDemo::subtitle() const
 {
     return "";
 }
@@ -242,12 +242,12 @@ bool ShaderMonjori::init()
     return false;
 }
 
-std::string ShaderMonjori::title()
+std::string ShaderMonjori::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderMonjori::subtitle()
+std::string ShaderMonjori::subtitle() const
 {
     return "Monjori plane deformations";
 }
@@ -276,12 +276,12 @@ bool ShaderMandelbrot::init()
     return false;
 }
 
-std::string ShaderMandelbrot::title()
+std::string ShaderMandelbrot::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderMandelbrot::subtitle()
+std::string ShaderMandelbrot::subtitle() const
 {
     return "Mandelbrot shader with Zoom";
 }
@@ -309,12 +309,12 @@ bool ShaderJulia::init()
     return false;
 }
 
-std::string ShaderJulia::title()
+std::string ShaderJulia::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderJulia::subtitle()
+std::string ShaderJulia::subtitle() const
 {
     return "Julia shader";
 }
@@ -343,12 +343,12 @@ bool ShaderHeart::init()
     return false;
 }
 
-std::string ShaderHeart::title()
+std::string ShaderHeart::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderHeart::subtitle()
+std::string ShaderHeart::subtitle() const
 {
     return "Heart";
 }
@@ -376,12 +376,12 @@ bool ShaderFlower::init()
     return false;
 }
 
-std::string ShaderFlower::title()
+std::string ShaderFlower::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderFlower::subtitle()
+std::string ShaderFlower::subtitle() const
 {
     return "Flower";
 }
@@ -409,12 +409,12 @@ bool ShaderPlasma::init()
     return false;
 }
 
-std::string ShaderPlasma::title()
+std::string ShaderPlasma::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderPlasma::subtitle()
+std::string ShaderPlasma::subtitle() const
 {
     return "Plasma";
 }
@@ -571,12 +571,12 @@ ShaderBlur::ShaderBlur()
     init();
 }
 
-std::string ShaderBlur::title()
+std::string ShaderBlur::title() const
 {
     return "Shader: Frag shader";
 }
 
-std::string ShaderBlur::subtitle()
+std::string ShaderBlur::subtitle() const
 {
      return "Gaussian blur";
 }
@@ -679,7 +679,7 @@ void ShaderRetroEffect::update(float dt)
     _accum += dt;
 
     int i=0;
-    _label->getChildren().forEach([&i, this](Node* sprite){
+    for(const auto &sprite : _label->getChildren()) {
         i++;
         auto oldPosition = sprite->getPosition();
         sprite->setPosition(Point( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
@@ -688,15 +688,15 @@ void ShaderRetroEffect::update(float dt)
         float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
         
         sprite->setScaleY(scaleY);
-    });
+    }
 }
 
-std::string ShaderRetroEffect::title()
+std::string ShaderRetroEffect::title() const
 {
     return "Shader: Retro test";
 }
 
-std::string ShaderRetroEffect::subtitle()
+std::string ShaderRetroEffect::subtitle() const
 {
     return "sin() effect with moving colors";
 }
@@ -743,12 +743,12 @@ ShaderFail::ShaderFail()
     p->release();
 }
 
-string ShaderFail::title()
+std::string ShaderFail::title() const
 {
     return "Shader: Invalid shader";
 }
 
-string ShaderFail::subtitle()
+std::string ShaderFail::subtitle() const
 {
     return "See console for output with useful error log";
 }

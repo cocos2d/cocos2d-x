@@ -31,7 +31,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static NotificationCenter *s_sharedNotifCenter = NULL;
+static NotificationCenter *s_sharedNotifCenter = nullptr;
 
 NotificationCenter::NotificationCenter()
 : _scriptHandler(0)
@@ -76,7 +76,7 @@ void NotificationCenter::purgeNotificationCenter(void)
 //
 bool NotificationCenter::observerExisted(Object *target,const char *name, Object *sender)
 {
-    Object* obj = NULL;
+    Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
     {
         NotificationObserver* observer = (NotificationObserver*) obj;
@@ -110,7 +110,7 @@ void NotificationCenter::addObserver(Object *target,
 
 void NotificationCenter::removeObserver(Object *target,const char *name)
 {
-    Object* obj = NULL;
+    Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
     {
         NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
@@ -127,7 +127,7 @@ void NotificationCenter::removeObserver(Object *target,const char *name)
 
 int NotificationCenter::removeAllObservers(Object *target)
 {
-    Object *obj = NULL;
+    Object *obj = nullptr;
     __Array *toRemove = __Array::create();
 
     CCARRAY_FOREACH(_observers, obj)
@@ -149,10 +149,10 @@ int NotificationCenter::removeAllObservers(Object *target)
 void NotificationCenter::registerScriptObserver( Object *target, int handler,const char* name)
 {
     
-    if (this->observerExisted(target, name, NULL))
+    if (this->observerExisted(target, name, nullptr))
         return;
     
-    NotificationObserver *observer = new NotificationObserver(target, NULL, name, NULL);
+    NotificationObserver *observer = new NotificationObserver(target, nullptr, name, nullptr);
     if (!observer)
         return;
     
@@ -163,7 +163,7 @@ void NotificationCenter::registerScriptObserver( Object *target, int handler,con
 
 void NotificationCenter::unregisterScriptObserver(Object *target,const char* name)
 {        
-    Object* obj = NULL;
+    Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
     {
         NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
@@ -181,14 +181,14 @@ void NotificationCenter::postNotification(const char *name, Object *sender)
 {
     __Array* ObserversCopy = __Array::createWithCapacity(_observers->count());
     ObserversCopy->addObjectsFromArray(_observers);
-    Object* obj = NULL;
+    Object* obj = nullptr;
     CCARRAY_FOREACH(ObserversCopy, obj)
     {
         NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
         if (!observer)
             continue;
         
-        if (!strcmp(name,observer->getName()) && (observer->getSender() == sender || observer->getSender() == NULL || sender == NULL))
+        if (!strcmp(name,observer->getName()) && (observer->getSender() == sender || observer->getSender() == nullptr || sender == nullptr))
         {
             if (0 != observer->getHandler())
             {
@@ -206,21 +206,21 @@ void NotificationCenter::postNotification(const char *name, Object *sender)
 
 void NotificationCenter::postNotification(const char *name)
 {
-    this->postNotification(name,NULL);
+    this->postNotification(name,nullptr);
 }
 
 int NotificationCenter::getObserverHandlerByName(const char* name)
 {
-    if (NULL == name || strlen(name) == 0)
+    if (nullptr == name || strlen(name) == 0)
     {
         return 0;
     }
     
-    Object* obj = NULL;
+    Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
     {
         NotificationObserver* observer = static_cast<NotificationObserver*>(obj);
-        if (NULL == observer)
+        if (nullptr == observer)
             continue;
         
         if ( 0 == strcmp(observer->getName(),name) )

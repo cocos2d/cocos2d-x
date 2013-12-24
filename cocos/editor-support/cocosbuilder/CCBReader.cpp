@@ -293,9 +293,10 @@ void CCBReader::cleanUpNodeGraph(Node *node)
 {
     node->setUserObject(nullptr);
     
-    node->getChildren().forEach([this](Node* obj){
+    auto& children = node->getChildren();
+    for(const auto &obj : children) {
         cleanUpNodeGraph(obj);
-    });
+    }
 }
 
 Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)

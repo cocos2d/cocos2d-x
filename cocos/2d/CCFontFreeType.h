@@ -71,7 +71,7 @@ private:
     static FT_Library _FTlibrary;
     static bool       _FTInitialized;
     FT_Face           _fontRef;
-    const int         _letterPadding;
+    int               _letterPadding;
     std::string       _fontName;
     unsigned char*    _ttfData;
     bool              _dynamicGlyphCollection;

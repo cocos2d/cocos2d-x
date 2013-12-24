@@ -40,7 +40,7 @@ TileMapTest::TileMapTest()
     map->runAction(RepeatForever::create(seq));
 }
 
-std::string TileMapTest::title()
+std::string TileMapTest::title() const
 {
     return "TileMapAtlas";
 }
@@ -102,7 +102,7 @@ void TileMapEditTest::updateMap(float dt)
     tilemap->setTile(c, Point(13,21) );             
 }
 
-std::string TileMapEditTest::title()
+std::string TileMapEditTest::title() const
 {
     return "Editable TileMapAtlas";
 }
@@ -128,16 +128,16 @@ TMXOrthoTest::TMXOrthoTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    auto& pChildrenArray = map->getChildren();
+    auto& children = map->getChildren();
 
-    pChildrenArray.forEach([](Node* obj){
+    for(const auto &obj : children) {
         auto child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
-    float x, y, z;
-    map->getCamera()->getEye(&x, &y, &z);
-    map->getCamera()->setEye(x-200, y, z+300);    
+//    float x, y, z;
+//    map->getCamera()->getEye(&x, &y, &z);
+//    map->getCamera()->setEye(x-200, y, z+300);    
 }
 
 void TMXOrthoTest::onEnter()
@@ -153,7 +153,7 @@ void TMXOrthoTest::onExit()
     TileDemo::onExit();
 }
 
-std::string TMXOrthoTest::title()
+std::string TMXOrthoTest::title() const
 {
     return "TMX Orthogonal test";
 }
@@ -171,18 +171,18 @@ TMXOrthoTest2::TMXOrthoTest2()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-    auto& pChildrenArray = map->getChildren();
+    auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    pChildrenArray.forEach([&child](Node* obj){
+    for(const auto &obj : children) {
         child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     map->runAction( ScaleBy::create(2, 0.5f) ) ;
 }
 
-std::string TMXOrthoTest2::title()
+std::string TMXOrthoTest2::title() const
 {
     return "TMX Ortho test2";
 }
@@ -203,16 +203,16 @@ TMXOrthoTest3::TMXOrthoTest3()
     auto& children = map->getChildren();
     SpriteBatchNode* child = NULL;
 
-    children.forEach([&child](Node* node){
+    for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
     
     map->setScale(0.2f);
     map->setAnchorPoint( Point(0.5f, 0.5f) );
 }
 
-std::string TMXOrthoTest3::title()
+std::string TMXOrthoTest3::title() const
 {
     return "TMX anchorPoint test";
 }
@@ -231,10 +231,13 @@ TMXOrthoTest4::TMXOrthoTest4()
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
     SpriteBatchNode* child = nullptr;
-    map->getChildren().forEach([&child](Node* node){
+    
+    auto& children = map->getChildren();
+    
+    for(const auto &node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
     
     map->setAnchorPoint(Point(0, 0));
 
@@ -267,7 +270,7 @@ void TMXOrthoTest4::removeSprite(float dt)
     layer->removeChild(sprite, true);
 }
 
-std::string TMXOrthoTest4::title()
+std::string TMXOrthoTest4::title() const
 {
     return "TMX width/height test";
 }
@@ -404,7 +407,7 @@ void TMXReadWriteTest::removeTiles(float dt)
 
 
 
-std::string TMXReadWriteTest::title()
+std::string TMXReadWriteTest::title() const
 {
     return "TMX Read/Write test";
 }
@@ -426,7 +429,7 @@ TMXHexTest::TMXHexTest()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
-std::string TMXHexTest::title()
+std::string TMXHexTest::title() const
 {
     return "TMX Hex tes";
 }
@@ -450,7 +453,7 @@ TMXIsoTest::TMXIsoTest()
     map->runAction( MoveTo::create(1.0f, Point( -ms.width * ts.width/2, -ms.height * ts.height/2 )) ); 
 }
 
-std::string TMXIsoTest::title()
+std::string TMXIsoTest::title() const
 {
     return "TMX Isometric test 0";
 }
@@ -474,7 +477,7 @@ TMXIsoTest1::TMXIsoTest1()
     map->setAnchorPoint(Point(0.5f, 0.5f));
 }
 
-std::string TMXIsoTest1::title()
+std::string TMXIsoTest1::title() const
 {
     return "TMX Isometric test + anchorPoint";
 }
@@ -501,7 +504,7 @@ TMXIsoTest2::TMXIsoTest2()
     map->runAction( MoveTo::create(1.0f, Point( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ));
 }
 
-std::string TMXIsoTest2::title()
+std::string TMXIsoTest2::title() const
 {
     return "TMX Isometric test 2";
 }
@@ -529,14 +532,16 @@ TMXUncompressedTest::TMXUncompressedTest()
     
     // testing release map
     TMXLayer* layer;
-    map->getChildren().forEach([&layer](Node* node){
+    
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
         layer= static_cast<TMXLayer*>(node);
         layer->releaseMap();
-    });
+    }
 
 }
 
-std::string TMXUncompressedTest::title()
+std::string TMXUncompressedTest::title() const
 {
     return "TMX Uncompressed test";
 }
@@ -565,7 +570,7 @@ TMXTilesetTest::TMXTilesetTest()
     layer->getTexture()->setAntiAliasTexParameters();
 }
 
-std::string TMXTilesetTest::title()
+std::string TMXTilesetTest::title() const
 {
     return "TMX Tileset test";
 }
@@ -583,19 +588,11 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
     
-    ////----CCLOG("----> Iterating over all the group objets");
     auto group = map->getObjectGroup("Object Group 1");
     auto& objects = group->getObjects();
 
-    for (auto& obj : objects)
-    {
-        ValueMap& dict = obj.asValueMap();
-        ////----CCLOG("object: %x", dict);
-    }
-    
-    ////----CCLOG("----> Fetching 1 object by name");
-    // auto platform = group->objectNamed("platform");
-    ////----CCLOG("platform: %x", platform);
+    Value objectsVal = Value(objects);
+    CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
 void TMXOrthoObjectsTest::draw()
@@ -625,12 +622,12 @@ void TMXOrthoObjectsTest::draw()
     }
 }
 
-std::string TMXOrthoObjectsTest::title()
+std::string TMXOrthoObjectsTest::title() const
 {
     return "TMX Ortho object test";
 }
 
-std::string TMXOrthoObjectsTest::subtitle()
+std::string TMXOrthoObjectsTest::subtitle() const
 {
     return "You should see a white box around the 3 platforms";
 }
@@ -652,15 +649,10 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
     auto group = map->getObjectGroup("Object Group 1");
 
-    //auto objects = group->objects();
     auto& objects = group->getObjects();
-    //UxMutableDictionary<std::string>* dict;
-    for (auto& obj : objects)
-    {
-        ValueMap& dict = obj.asValueMap();
-
-        ////----CCLOG("object: %x", dict);
-    }        
+    
+    Value objectsVal = Value(objects);
+    CCLOG("%s", objectsVal.getDescription().c_str());
 }
 
 void TMXIsoObjectsTest::draw()
@@ -688,12 +680,12 @@ void TMXIsoObjectsTest::draw()
     }
 }
 
-std::string TMXIsoObjectsTest::title()
+std::string TMXIsoObjectsTest::title() const
 {
     return "TMX Iso object test";
 }
 
-std::string TMXIsoObjectsTest::subtitle()
+std::string TMXIsoObjectsTest::subtitle() const
 {
     return "You need to parse them manually. See bug #810";
 }
@@ -726,12 +718,12 @@ TMXResizeTest::TMXResizeTest()
     }        
 }
 
-std::string TMXResizeTest::title()
+std::string TMXResizeTest::title() const
 {
     return "TMX resize test";
 }
 
-std::string TMXResizeTest::subtitle()
+std::string TMXResizeTest::subtitle() const
 {
     return "Should not crash. Testing issue #740";
 }
@@ -790,17 +782,17 @@ void TMXIsoZorder::repositionSprite(float dt)
     // if tamara < 144,z=2
     
     int newZ = 4 - (p.y / 48);
-    newZ = max(newZ,0);
+    newZ = std::max(newZ,0);
     
     map->reorderChild(_tamara, newZ);    
 }
 
-std::string TMXIsoZorder::title()
+std::string TMXIsoZorder::title() const
 {
     return "TMX Iso Zorder";
 }
 
-std::string TMXIsoZorder::subtitle()
+std::string TMXIsoZorder::subtitle() const
 {
     return "Sprite should hide behind the trees";
 }
@@ -851,17 +843,17 @@ void TMXOrthoZorder::repositionSprite(float dt)
 
     // -10: customization for this particular sample
     int newZ = 4 - ( (p.y-10) / 81);
-    newZ = max(newZ,0);
+    newZ = std::max(newZ,0);
 
     map->reorderChild(_tamara, newZ);
 }
 
-std::string TMXOrthoZorder::title()
+std::string TMXOrthoZorder::title() const
 {
     return "TMX Ortho Zorder";
 }
 
-std::string TMXOrthoZorder::subtitle()
+std::string TMXOrthoZorder::subtitle() const
 {
     return "Sprite should hide behind the trees";
 }
@@ -926,12 +918,12 @@ void TMXIsoVertexZ::onExit()
     TileDemo::onExit();
 }
 
-std::string TMXIsoVertexZ::title()
+std::string TMXIsoVertexZ::title() const
 {
     return "TMX Iso VertexZ";
 }
 
-std::string TMXIsoVertexZ::subtitle()
+std::string TMXIsoVertexZ::subtitle() const
 {
     return "Sprite should hide behind the trees";
 }
@@ -995,12 +987,12 @@ void TMXOrthoVertexZ::onExit()
     TileDemo::onExit();
 }
 
-std::string TMXOrthoVertexZ::title()
+std::string TMXOrthoVertexZ::title() const
 {
     return "TMX Ortho vertexZ";
 }
 
-std::string TMXOrthoVertexZ::subtitle()
+std::string TMXOrthoVertexZ::subtitle() const
 {
     return "Sprite should hide behind the trees";
 }
@@ -1022,12 +1014,12 @@ TMXIsoMoveLayer::TMXIsoMoveLayer()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
-std::string TMXIsoMoveLayer::title()
+std::string TMXIsoMoveLayer::title() const
 {
     return "TMX Iso Move Layer";
 }
 
-std::string TMXIsoMoveLayer::subtitle()
+std::string TMXIsoMoveLayer::subtitle() const
 {
     return "Trees should be horizontally aligned";
 }
@@ -1047,12 +1039,12 @@ TMXOrthoMoveLayer::TMXOrthoMoveLayer()
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 }
 
-std::string TMXOrthoMoveLayer::title()
+std::string TMXOrthoMoveLayer::title() const
 {
     return "TMX Ortho Move Layer";
 }
 
-std::string TMXOrthoMoveLayer::subtitle()
+std::string TMXOrthoMoveLayer::subtitle() const
 {
     return "Trees should be horizontally aligned";
 }
@@ -1073,12 +1065,12 @@ TMXTilePropertyTest::TMXTilePropertyTest()
     }
 }
 
-std::string TMXTilePropertyTest::title()
+std::string TMXTilePropertyTest::title() const
 {
     return "TMX Tile Property Test";
 }
 
-std::string TMXTilePropertyTest::subtitle()
+std::string TMXTilePropertyTest::subtitle() const
 {
     return "In the console you should see tile properties";
 }
@@ -1097,16 +1089,17 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     Size CC_UNUSED s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
 }
 
-std::string TMXOrthoFlipTest::title()
+std::string TMXOrthoFlipTest::title() const
 {
     return "TMX tile flip test";
 }
@@ -1125,10 +1118,11 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
@@ -1136,12 +1130,12 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     schedule(schedule_selector(TMXOrthoFlipRunTimeTest::flipIt), 1.0f);
 }
 
-std::string TMXOrthoFlipRunTimeTest::title()
+std::string TMXOrthoFlipRunTimeTest::title() const
 {
     return "TMX tile flip run time test";
 }
 
-std::string TMXOrthoFlipRunTimeTest::subtitle()
+std::string TMXOrthoFlipRunTimeTest::subtitle() const
 {
     return "in 2 sec bottom left tiles will flip";
 }
@@ -1190,8 +1184,8 @@ void TMXOrthoFlipRunTimeTest::flipIt(float dt)
 
 TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
 {
-    string resources = "TileMaps";        // partial paths are OK as resource paths.
-    string file = resources + "/orthogonal-test1.tmx";
+    std::string resources = "TileMaps";        // partial paths are OK as resource paths.
+    std::string file = resources + "/orthogonal-test1.tmx";
 
     auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
     CCASSERT(str != NULL, "Unable to open file");
@@ -1202,16 +1196,17 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     auto s = map->getContentSize();
     log("ContentSize: %f, %f", s.width,s.height);
 
-    map->getChildren().forEach([](Node* node){
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
 }
 
-std::string TMXOrthoFromXMLTest::title()
+std::string TMXOrthoFromXMLTest::title() const
 {
     return "TMX created from XML test";
 }
@@ -1229,22 +1224,23 @@ TMXBug987::TMXBug987()
     Size CC_UNUSED s1 = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
-    map->getChildren().forEach([](Node* child){
+    auto& children = map->getChildren();
+    for(const auto &child : children) {
         auto node = static_cast<TMXLayer*>(child);
         node->getTexture()->setAntiAliasTexParameters();
-    });
+    }
 
     map->setAnchorPoint(Point(0, 0));
     auto layer = map->getLayer("Tile Layer 1");
     layer->setTileGID(3, Point(2,2));
 }
 
-std::string TMXBug987::title()
+std::string TMXBug987::title() const
 {
     return "TMX Bug 987";
 }
 
-std::string TMXBug987::subtitle()
+std::string TMXBug987::subtitle() const
 {
     return "You should see an square";
 }
@@ -1262,12 +1258,12 @@ TMXBug787::TMXBug787()
     map->setScale(0.25f);
 }
 
-std::string TMXBug787::title()
+std::string TMXBug787::title() const
 {
     return "TMX Bug 787";
 }
 
-std::string TMXBug787::subtitle()
+std::string TMXBug787::subtitle() const
 {
     return "You should see a map";
 }
@@ -1371,12 +1367,12 @@ TileDemo::~TileDemo(void)
 {
 }
 
-std::string TileDemo::title()
+std::string TileDemo::title() const
 {
     return "No title";
 }
 
-std::string TileDemo::subtitle()
+std::string TileDemo::subtitle() const
 {
     return "drag the screen";
 }
@@ -1473,12 +1469,12 @@ void TMXGIDObjectsTest::draw()
     }
 }
 
-string TMXGIDObjectsTest::title()
+std::string TMXGIDObjectsTest::title() const
 {
     return "TMX GID objects";
 }
 
-string TMXGIDObjectsTest::subtitle()
+std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
 }

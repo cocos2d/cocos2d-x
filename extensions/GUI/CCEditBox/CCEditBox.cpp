@@ -343,7 +343,7 @@ static Rect getRect(Node * pNode)
 {
 	Size contentSize = pNode->getContentSize();
 	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
-	return RectApplyAffineTransform(rect, pNode->getNodeToWorldTransform());
+	return RectApplyTransform(rect, pNode->getNodeToWorldTransform());
 }
 
 void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)

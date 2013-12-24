@@ -40,13 +40,13 @@ NS_CC_BEGIN
 
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *pRet = new TMXLayer();
-    if (pRet->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
+    TMXLayer *ret = new TMXLayer();
+    if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    return NULL;
+    return nullptr;
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
@@ -55,7 +55,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     float totalNumberOfTiles = size.width * size.height;
     float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
-    Texture2D *texture = NULL;
+    Texture2D *texture = nullptr;
     if( tilesetInfo )
     {
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
@@ -104,13 +104,13 @@ TMXLayer::TMXLayer()
 ,_maxGID(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
-,_reusedTile(NULL)
-,_atlasIndexArray(NULL)
+,_reusedTile(nullptr)
+,_atlasIndexArray(nullptr)
 ,_contentScaleFactor(1.0f)
 ,_layerSize(Size::ZERO)
 ,_mapTileSize(Size::ZERO)
-,_tiles(NULL)
-,_tileSet(NULL)
+,_tiles(nullptr)
+,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
 {}
 
@@ -122,7 +122,7 @@ TMXLayer::~TMXLayer()
     if (_atlasIndexArray)
     {
         ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = NULL;
+        _atlasIndexArray = nullptr;
     }
 
     CC_SAFE_DELETE_ARRAY(_tiles);
@@ -133,13 +133,13 @@ void TMXLayer::releaseMap()
     if (_tiles)
     {
         delete [] _tiles;
-        _tiles = NULL;
+        _tiles = nullptr;
     }
 
     if (_atlasIndexArray)
     {
         ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = NULL;
+        _atlasIndexArray = nullptr;
     }
 }
 
@@ -300,7 +300,7 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
     {
         // XXX HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
-        _reusedTile->setBatchNode(NULL);
+        _reusedTile->setBatchNode(nullptr);
         
 		// Re-init the sprite
         _reusedTile->setTextureRect(rect, false, rect.size);
@@ -389,17 +389,14 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
 
     // update possible children
     
-    _children.forEach([&indexForZ](Node* child){
+    for(const auto &child : _children) {
         Sprite* sp = static_cast<Sprite*>(child);
-        if (child)
+        ssize_t ai = sp->getAtlasIndex();
+        if ( ai >= indexForZ )
         {
-            ssize_t ai = sp->getAtlasIndex();
-            if ( ai >= indexForZ )
-            {
-                sp->setAtlasIndex(ai+1);
-            }
+            sp->setAtlasIndex(ai+1);
         }
-    });
+    }
 
     _tiles[z] = gid;
     return tile;
@@ -594,17 +591,14 @@ void TMXLayer::removeTileAt(const Point& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            _children.forEach([&atlasIndex](Node* obj){
+            for(const auto &obj : _children) {
                 Sprite* child = static_cast<Sprite*>(obj);
-                if (child)
+                ssize_t ai = child->getAtlasIndex();
+                if ( ai >= atlasIndex )
                 {
-                    ssize_t ai = child->getAtlasIndex();
-                    if ( ai >= atlasIndex )
-                    {
-                        child->setAtlasIndex(ai-1);
-                    }
+                    child->setAtlasIndex(ai-1);
                 }
-            });
+            }
         }
     }
 }
