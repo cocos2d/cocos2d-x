@@ -30,7 +30,7 @@ NS_CC_EXT_BEGIN
 
 void sendEvent(unsigned int event)
 {
-    CCArray *array = TriggerMng::sharedTriggerMng()->get(event);
+    CCArray *array = TriggerMng::getInstance()->get(event);
     do {
         CC_BREAK_IF(array == NULL);
         CCObject* pObj = NULL;

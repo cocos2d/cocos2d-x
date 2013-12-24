@@ -35,33 +35,6 @@ NS_CC_EXT_BEGIN
 typedef void (CCObject::*SEL_CallFuncOD)(CCObject*, void*);
 #define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
-static CCNode* g_NodeByTag(CCNode *parent, int nTag)
-{
-	if (parent == NULL)
-	{
-		return NULL;
-	}
-	CCNode *Node = NULL;
-	CCArray *pChildren = parent->getChildren();
-	if(pChildren && pChildren->count() > 0)
-	{
-		CCObject* child;
-		CCARRAY_FOREACH(pChildren, child)
-		{
-			CCNode* pNode = (CCNode*)child;
-			if(pNode && pNode->getTag() == nTag)
-			{
-				return pNode;
-			}
-			else
-			{
-				Node = g_NodeByTag(pNode, nTag);
-			}
-		}
-	}
-	return Node;
-}
-
 /**
 *   @js NA
 *   @lua NA

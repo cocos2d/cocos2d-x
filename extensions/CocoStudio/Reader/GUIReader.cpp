@@ -134,6 +134,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 	CCData *data = new CCData(pBytes, size);
 	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
 	CC_SAFE_DELETE(data);
+    CC_SAFE_FREE(pBytes);
 	jsonDict.Parse<0>(load_str.c_str());
     if (jsonDict.HasParseError())
     {
@@ -163,7 +164,6 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     }
 
     CC_SAFE_DELETE(pReader);
-    CC_SAFE_DELETE_ARRAY(pBytes);
     return widget;
 }
 
@@ -1003,7 +1003,6 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
         UIWidget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            /*===*/
             if (dynamic_cast<UIPageView*>(widget) && dynamic_cast<UILayout*>(child))
             {
                 dynamic_cast<UIPageView*>(widget)->addPage((UILayout*)child);
@@ -1016,9 +1015,6 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
             {
                 widget->addChild(child);
             }
-            // before
-//            widget->addChild(child);
-            /**/
         }
     }
     

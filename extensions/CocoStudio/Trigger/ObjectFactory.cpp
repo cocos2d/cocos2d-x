@@ -36,7 +36,7 @@ TInfo::TInfo(const std::string& type, Instance ins)
 :_class(type)
 ,_fun(ins)
 {
-    cocos2d::extension::ObjectFactory::sharedFactory()->registerType(*this);
+    cocos2d::extension::ObjectFactory::getInstance()->registerType(*this);
 }
 
 TInfo::TInfo(const TInfo &t)
@@ -68,10 +68,10 @@ ObjectFactory::ObjectFactory(void)
 
 ObjectFactory::~ObjectFactory(void)
 {
-
+    _typeMap.clear();
 }
 
-ObjectFactory* ObjectFactory::sharedFactory()
+ObjectFactory* ObjectFactory::getInstance()
 {
     if ( NULL == _sharedFactory)
     {
@@ -80,7 +80,7 @@ ObjectFactory* ObjectFactory::sharedFactory()
     return _sharedFactory;
 }
 
-void ObjectFactory::purgeFactory()
+void ObjectFactory::destroyInstance()
 {
     CC_SAFE_DELETE(_sharedFactory);
 }

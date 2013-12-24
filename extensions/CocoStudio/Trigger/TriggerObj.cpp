@@ -186,7 +186,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         {
             continue;
         }
-        BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::sharedFactory()->createObject(classname));
+        BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
         CCAssert(con != NULL, "class named classname can not implement!");
         con->serialize(subDict);
 		con->init();
@@ -203,7 +203,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		{
 			continue;
 		}
-		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::sharedFactory()->createObject(classname));
+		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
 		CCAssert(act != NULL, "class named classname can not implement!");
 		act->serialize(subDict);
 		act->init();

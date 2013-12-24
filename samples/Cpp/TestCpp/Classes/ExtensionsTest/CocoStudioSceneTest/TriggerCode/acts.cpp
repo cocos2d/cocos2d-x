@@ -651,7 +651,7 @@ bool TriggerState::init()
 
 void TriggerState::done()
 {
-    TriggerObj *obj = TriggerMng::sharedTriggerMng()->getTriggerObj(_nID);
+    TriggerObj *obj = TriggerMng::getInstance()->getTriggerObj(_nID);
 	if (obj != NULL)
 	{
 		if (_nState == 0)
@@ -664,7 +664,7 @@ void TriggerState::done()
 		}
 		else if (_nState == 2)
 		{
-			TriggerMng::sharedTriggerMng()->removeTriggerObj(_nID);
+			TriggerMng::getInstance()->removeTriggerObj(_nID);
 		}
 		
 	}
