@@ -1861,10 +1861,6 @@
 		50A1FF1918290ED4001840C4 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1FF1618290ED4001840C4 /* UIListView.cpp */; };
 		50A1FF1A18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
 		50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
-		593BDCE6184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
-		593BDCE7184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */; };
-		593BDCE8184D0A6E00C21E48 /* CCNewSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */; };
-		593BDCE9184D0A6E00C21E48 /* CCNewSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */; };
 		593BDCEA184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */; };
 		593BDCEB184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */; };
 		593BDCEC184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */; };
@@ -3050,8 +3046,6 @@
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50A1FF1618290ED4001840C4 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
 		50A1FF1718290ED4001840C4 /* UIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListView.h; sourceTree = "<group>"; };
-		593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSprite.cpp; sourceTree = "<group>"; };
-		593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSprite.h; sourceTree = "<group>"; };
 		593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSpriteBatchNode.cpp; sourceTree = "<group>"; };
 		593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSpriteBatchNode.h; sourceTree = "<group>"; };
 		593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomCommand.cpp; sourceTree = "<group>"; };
@@ -5340,8 +5334,6 @@
 			isa = PBXGroup;
 			children = (
 				A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */,
-				593BDCD2184D0A6E00C21E48 /* CCNewSprite.cpp */,
-				593BDCD3184D0A6E00C21E48 /* CCNewSprite.h */,
 				593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */,
 				593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */,
 				593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */,
@@ -5730,7 +5722,6 @@
 				1A8C5A01180E930E00EF57C3 /* CCTweenFunction.h in Headers */,
 				1A8C5A05180E930E00EF57C3 /* CCUtilMath.h in Headers */,
 				1A8C5A07180E930E00EF57C3 /* CocoStudio.h in Headers */,
-				593BDCE8184D0A6E00C21E48 /* CCNewSprite.h in Headers */,
 				1A8C5A0B180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */,
 				59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */,
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
@@ -6105,7 +6096,6 @@
 				1A570205180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				1A57020B180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
-				593BDCE9184D0A6E00C21E48 /* CCNewSprite.h in Headers */,
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
@@ -6899,7 +6889,6 @@
 				1A5701FB180BCBAD0088DEC7 /* CCMenuItem.cpp in Sources */,
 				1A570202180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				1A570208180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
-				593BDCE6184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */,
 				1A570210180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				1A570214180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				1A570221180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
@@ -7422,7 +7411,6 @@
 				1A5701FC180BCBAD0088DEC7 /* CCMenuItem.cpp in Sources */,
 				1A570203180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
-				593BDCE7184D0A6E00C21E48 /* CCNewSprite.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
