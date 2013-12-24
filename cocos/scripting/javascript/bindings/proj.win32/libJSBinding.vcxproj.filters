@@ -41,6 +41,9 @@
     <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.cpp">
       <Filter>generated</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_spine_auto.cpp">
+      <Filter>generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocos2d_specifics.hpp">
@@ -77,6 +80,9 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_auto.hpp">
+      <Filter>generated</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\auto-generated\js-bindings\jsb_cocos2dx_spine_auto.hpp">
       <Filter>generated</Filter>
     </ClInclude>
   </ItemGroup>
