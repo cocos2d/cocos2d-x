@@ -295,7 +295,7 @@ NewClippingNodeTest::NewClippingNodeTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto clipper = NewClippingNode::create();
+    auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
