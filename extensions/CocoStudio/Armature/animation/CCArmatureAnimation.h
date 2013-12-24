@@ -150,7 +150,8 @@ public:
      * Play several animation by names
      */
     virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
-	/**
+
+    /**
      * Play several animation by indexes
      */
     virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
