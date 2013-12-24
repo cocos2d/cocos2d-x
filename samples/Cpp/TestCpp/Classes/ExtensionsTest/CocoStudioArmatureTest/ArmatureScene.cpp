@@ -1363,13 +1363,17 @@ void TestPlaySeveralMovement::onEnter()
 {
     ArmatureTestLayer::onEnter();
 
-    std::string names[] = {"Walk", "FireMax", "Fire"};
-    //int indexes[] = {0, 1, 2};
+    // To use names, you could create a std::vector like this.  
+    // std::string name[] = {"Walk", "FireMax", "Fire"};
+    // std::vector<std::string> names(name, name+3);
+    // armature->getAnimation()->play(names);
 
-    cocos2d::extension::CCArmature *armature = NULL;
-    armature = cocos2d::extension::CCArmature::create("Cowboy");
-    armature->getAnimation()->play(true, names, 3);
-    //armature->getAnimation()->playByIndex(true, indexes, 3);
+    int index[] = {0, 1, 2};
+    std::vector<int> indexes(index, index+3);
+
+    CCArmature *armature = CCArmature::create("Cowboy");
+    
+    armature->getAnimation()->playByIndex(indexes);
     armature->setScale(0.2f);
 
     armature->setPosition(ccp(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
