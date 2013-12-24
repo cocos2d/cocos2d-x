@@ -365,15 +365,14 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 
     unsigned long size;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);;
+    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = NULL;
     dataInfo.baseFilePath = basefilePath;
 
-	CCData data(pBytes, size);
-	std::string load_str = std::string((const char*)data.getBytes(), data.getSize());
+	std::string load_str = std::string((const char*)pBytes, size);
     if (str.compare(".xml") == 0)
     {
         CCDataReaderHelper::addDataFromCache(load_str.c_str(), &dataInfo);
