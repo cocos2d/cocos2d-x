@@ -190,7 +190,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public NewSpriteBatchNode, public LabelProtocol
+class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol
 {
 public:
     /**
