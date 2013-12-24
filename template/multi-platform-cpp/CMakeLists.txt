@@ -52,7 +52,6 @@ include_directories(
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/audio/include
   ${COCOS2D_ROOT}/cocos/2d
-  ${COCOS2D_ROOT}/cocos/2d/renderer
   ${COCOS2D_ROOT}/cocos/2d/platform
   ${COCOS2D_ROOT}/cocos/2d/platform/linux
   ${COCOS2D_ROOT}/cocos/base
@@ -61,7 +60,6 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/math/kazmath/include
   ${COCOS2D_ROOT}/extensions
   ${COCOS2D_ROOT}/external
-  ${COCOS2D_ROOT}/external/edtaa3func
   ${COCOS2D_ROOT}/external/jpeg/include/linux
   ${COCOS2D_ROOT}/external/tiff/include/linux
   ${COCOS2D_ROOT}/external/webp/include/linux

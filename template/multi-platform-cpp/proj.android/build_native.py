@@ -88,7 +88,7 @@ def build():
     select_toolchain_version()
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(current_dir, "../../..")
+    cocos_root = os.path.join(current_dir, "../cocos2d")
 
     app_android_root = current_dir
     copy_resources(app_android_root)
