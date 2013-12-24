@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "CCActionNode.h"
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
 
@@ -105,7 +105,14 @@ public:
      */
 	float getCurrentTime();
 	
-    /**
+	/**
+	* Gets the total time of frame.
+	*
+	* @return fTime   the current time of frame
+	*/
+	float getTotalTime();
+
+	/**
      * Return if the action is playing.
      *
 	 * @return true if the action is playing, false the otherwise
@@ -117,8 +124,15 @@ public:
      */
 	void play();
 
-    /**
-     * Pause the action.
+	/**
+	* Play the action.
+	*
+	* @ Action Call Back
+	*/
+	void play(cocos2d::CallFunc* func);
+
+    /** 
+	* Pause the action.
      */
 	void pause();
     
@@ -145,7 +159,7 @@ public:
 	void updateToFrameByTime(float fTime);
 
     /*init properties with a json dictionary*/
-    void initWithDictionary(JsonDictionary* dic,cocos2d::Object* root);
+	void initWithDictionary(const rapidjson::Value& dic,Object* root);
 
     /*scheduler update function*/
 	void simulationActionUpdate(float dt);
@@ -158,6 +172,8 @@ protected:
 	float _fUnitTime;
 	float _currentTime;
 	cocos2d::Scheduler *_pScheduler;
+	cocos2d::CallFunc *_CallBack;
+	float _fTotalTime;
 };
 
 }
