@@ -110,7 +110,7 @@ void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 
 // TextureAtlas - alloc & init
 
-TextureAtlas * TextureAtlas::create(const char* file, ssize_t capacity)
+TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 {
     TextureAtlas * textureAtlas = new TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))

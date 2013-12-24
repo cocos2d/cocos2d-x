@@ -193,13 +193,13 @@ void TextureCache::loadImage()
 
         if (generateImage)
         {
-            const char *filename = asyncStruct->filename.c_str();
+            const std::string& filename = asyncStruct->filename;
             // generate image      
             image = new Image();
             if (image && !image->initWithImageFileThreadSafe(filename))
             {
                 CC_SAFE_RELEASE(image);
-                CCLOG("can not load %s", filename);
+                CCLOG("can not load %s", filename.c_str());
                 continue;
             }
         }    
@@ -245,7 +245,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
         Object *target = asyncStruct->target;
         SEL_CallFuncO selector = asyncStruct->selector;
-        const char* filename = asyncStruct->filename.c_str();
+        const std::string& filename = asyncStruct->filename;
 
         Texture2D *texture = nullptr;
         if (image)

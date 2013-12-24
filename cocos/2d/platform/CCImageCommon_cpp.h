@@ -434,7 +434,7 @@ bool Image::initWithImageFile(const std::string& path)
     return ret;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath)
+bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
 {
     bool ret = false;
     ssize_t dataLen = 0;
