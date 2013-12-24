@@ -309,9 +309,6 @@
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp">
       <Filter>platform\wp8</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp">
-      <Filter>platform\wp8</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\winrt\CCAccelerometer.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
@@ -741,9 +738,6 @@
       <Filter>particle_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\wp8\CCEGLView.h">
-      <Filter>platform\wp8</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h">
       <Filter>platform\wp8</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\winrt\CCAccelerometer.h">

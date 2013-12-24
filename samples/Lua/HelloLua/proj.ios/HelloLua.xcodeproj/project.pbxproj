@@ -21,6 +21,7 @@
 		15A3DC4F1682FC3C002FB0C5 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1D1682FC3C002FB0C5 /* tolua_map.c */; };
 		15A3DC501682FC3C002FB0C5 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1E1682FC3C002FB0C5 /* tolua_push.c */; };
 		15A3DC511682FC3C002FB0C5 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = 15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */; };
+		15CA8CED186966CF000032AB /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8CEB186966CF000032AB /* lua_cocos2dx_manual.cpp */; };
 		1AA88D0E171E337C0023E7B2 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA88D0D171E337C0023E7B2 /* libluajit.a */; };
 		375BD4A6186840A30024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD49E186840A30024609E /* ObjectFactory.cpp */; };
 		375BD4A7186840A30024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4A0186840A30024609E /* TriggerBase.cpp */; };
@@ -250,6 +251,8 @@
 		15A3DC1D1682FC3C002FB0C5 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
 		15A3DC1E1682FC3C002FB0C5 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		15A3DC1F1682FC3C002FB0C5 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
+		15CA8CEB186966CF000032AB /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
+		15CA8CEC186966CF000032AB /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
 		15DB6521184C2778002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		15DB6522184C2778002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		15DB6524184C2778002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -692,6 +695,8 @@
 		15A3DBC81682FC3C002FB0C5 /* cocos2dx_support */ = {
 			isa = PBXGroup;
 			children = (
+				15CA8CEB186966CF000032AB /* lua_cocos2dx_manual.cpp */,
+				15CA8CEC186966CF000032AB /* lua_cocos2dx_manual.h */,
 				1515AC251847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.cpp */,
 				1515AC261847277400E1CD27 /* lua_cocos2dx_cocostudio_manual.h */,
 				1515AC271847277400E1CD27 /* LuaCocoStudio.cpp */,
@@ -1700,6 +1705,7 @@
 				464EA476175DC6D5004C192B /* cpHashSet.c in Sources */,
 				464EA477175DC6D5004C192B /* cpPolyShape.c in Sources */,
 				464EA478175DC6D5004C192B /* cpShape.c in Sources */,
+				15CA8CED186966CF000032AB /* lua_cocos2dx_manual.cpp in Sources */,
 				ED53142B183311CE008CD8A5 /* CCActionFrameEasing.cpp in Sources */,
 				464EA479175DC6D5004C192B /* cpSpace.c in Sources */,
 				464EA47A175DC6D5004C192B /* cpSpaceComponent.c in Sources */,

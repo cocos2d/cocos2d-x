@@ -149,12 +149,17 @@ public:
     /**
      * Play several animation by names
      */
-    virtual void play(bool loop, const std::string *movementNames, int movementNumber);
+    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
 
     /**
-     * Play several animation by index
+     * Play several animation by indexes
      */
-    virtual void playByIndex(bool loop, const int *movementIndexes, int movementNumber);
+    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
+
+
+    // For bindings
+    virtual void playWithArray(cocos2d::CCArray *movementNames, int durationTo = -1, bool loop = true);
+    virtual void playWithIndexArray(cocos2d::CCArray *movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * Go to specified frame and play current movement.
@@ -286,6 +291,7 @@ protected:
     bool m_bOnMovementList;
     bool m_bMovementListLoop;
     unsigned int m_uMovementIndex;
+	int m_iMovementListDurationTo;
 
     CCObject *m_pUserObject;
 protected:

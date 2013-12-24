@@ -17,9 +17,9 @@
 */
 
 #include "pch.h"
-#include "DirectXHelper.h"
 #include "MediaStreamer.h"
 #include <wrl\wrappers\corewrappers.h>
+#include <ppltasks.h>
 
 using namespace Microsoft::WRL;
 using namespace Windows::Storage;
@@ -34,6 +34,15 @@ using namespace Concurrency;
                 ((uint32)(byte)(ch0) | ((uint32)(byte)(ch1) << 8) |       \
                 ((uint32)(byte)(ch2) << 16) | ((uint32)(byte)(ch3) << 24 ))
 #endif /* defined(MAKEFOURCC) */
+
+inline void ThrowIfFailed(HRESULT hr)
+{
+    if (FAILED(hr))
+    {
+        // Set a breakpoint on this line to catch DX API errors.
+        throw Platform::Exception::CreateException(hr);
+    }
+}
 
 MediaStreamer::MediaStreamer() :
     m_offset(0)
@@ -174,16 +183,16 @@ void MediaStreamer::Initialize(__in const WCHAR* url)
 	DWORD chunkSize = 0;
 	DWORD chunkPos = 0;
 
-	DX::ThrowIfFailed(ReadChunk(MAKEFOURCC('R', 'I', 'F', 'F'), chunkSize, chunkPos));
-	if (*reinterpret_cast<const DWORD *>(&dataPtr[chunkPos]) != MAKEFOURCC('W', 'A', 'V', 'E')) DX::ThrowIfFailed(E_FAIL);
+	ThrowIfFailed(ReadChunk(MAKEFOURCC('R', 'I', 'F', 'F'), chunkSize, chunkPos));
+	if (*reinterpret_cast<const DWORD *>(&dataPtr[chunkPos]) != MAKEFOURCC('W', 'A', 'V', 'E')) ThrowIfFailed(E_FAIL);
 
 	// Locate 'fmt ' chunk, copy to WAVEFORMATEXTENSIBLE.
-	DX::ThrowIfFailed(ReadChunk(MAKEFOURCC('f', 'm', 't', ' '), chunkSize, chunkPos));
-	DX::ThrowIfFailed((chunkSize <= sizeof(m_waveFormat)) ? S_OK : E_FAIL);
+	ThrowIfFailed(ReadChunk(MAKEFOURCC('f', 'm', 't', ' '), chunkSize, chunkPos));
+	ThrowIfFailed((chunkSize <= sizeof(m_waveFormat)) ? S_OK : E_FAIL);
 	CopyMemory(&m_waveFormat, &dataPtr[chunkPos], chunkSize);
 
 	// Locate the 'data' chunk and copy its contents to a buffer.
-	DX::ThrowIfFailed(ReadChunk(MAKEFOURCC('d', 'a', 't', 'a'), chunkSize, chunkPos));
+	ThrowIfFailed(ReadChunk(MAKEFOURCC('d', 'a', 't', 'a'), chunkSize, chunkPos));
 	m_data.resize(chunkSize);
 	CopyMemory(m_data.data(), &dataPtr[chunkPos], chunkSize);
 

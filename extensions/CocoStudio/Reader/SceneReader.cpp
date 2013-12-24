@@ -72,7 +72,7 @@ NS_CC_EXT_BEGIN
               CCData *data = new CCData(pBytes, size);
 	          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
 	          CC_SAFE_DELETE(data);
-              CC_SAFE_FREE(pBytes);
+              CC_SAFE_DELETE_ARRAY(pBytes);
               doc.Parse<0>(load_str.c_str());
               CC_BREAK_IF(doc.HasParseError());
               bRet = true;
@@ -351,13 +351,6 @@ NS_CC_EXT_BEGIN
 					if (nResType == 0)
 					{
 						pAttribute = CCComAttribute::create();
-						unsigned long size = 0;
-						const char* pData = 0;
-						pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(), "r", &size));
-						if(pData != NULL && strcmp(pData, "") != 0)
-						{
-                            pAttribute->parse(pData);
-						}
 					}
 					else
 					{
