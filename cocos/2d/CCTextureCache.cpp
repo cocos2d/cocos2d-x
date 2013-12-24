@@ -632,7 +632,7 @@ void VolatileTextureMgr::reloadAllTextures()
                 
                 Data data = FileUtils::getInstance()->getDataFromFile(vt->_fileName);
                 
-                if (image && image->initWithImageData(data->getBytes(), data->getSize()))
+                if (image && image->initWithImageData(data.getBytes(), data.getSize()))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
