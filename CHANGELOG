@@ -19,6 +19,8 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          UserDefault::getDoubleForKey() doesn't pass default value to Java.
 [Windows]
      [NEW]          CMake support for windows.
+[Bindings]
+     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
      
 cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]
