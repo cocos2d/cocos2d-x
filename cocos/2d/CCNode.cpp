@@ -1346,7 +1346,7 @@ void Node::updateTransform()
         child->updateTransform();
 }
 
-Component* Node::getComponent(const char *pName)
+Component* Node::getComponent(const std::string& pName)
 {
     if( _componentContainer )
         return _componentContainer->get(pName);
@@ -1361,7 +1361,7 @@ bool Node::addComponent(Component *pComponent)
     return _componentContainer->add(pComponent);
 }
 
-bool Node::removeComponent(const char *pName)
+bool Node::removeComponent(const std::string& pName)
 {
     if( _componentContainer )
         return _componentContainer->remove(pName);

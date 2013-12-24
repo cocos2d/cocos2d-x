@@ -134,7 +134,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capac
     return nullptr;
 }
 
-bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
+bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
 {
     // retained in property
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
@@ -145,7 +145,7 @@ bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
     }
     else
     {
-        CCLOG("cocos2d: Could not open file: %s", file);
+        CCLOG("cocos2d: Could not open file: %s", file.c_str());
         return false;
     }
 }

@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class NewTextureAtlas : public TextureAtlas
 {
 public:
-    static NewTextureAtlas* create(const char* file, long capacity);
+    static NewTextureAtlas* create(const std::string& file, long capacity);
     static NewTextureAtlas* createWithTexture(Texture2D *texture, long capacity);
 
     void drawNumberOfQuads(long numberOfQuads, long start);

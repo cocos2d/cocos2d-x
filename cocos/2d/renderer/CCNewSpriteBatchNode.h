@@ -36,7 +36,7 @@ class NewSpriteBatchNode : public SpriteBatchNode
     static const int DEFAULT_CAPACITY = 29;
 public:
     static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
-    static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    static NewSpriteBatchNode* create(const std::string& fileImage, long capacity = DEFAULT_CAPACITY);
 
     void draw(void);
 

@@ -41,7 +41,7 @@ NewTextureAtlas::~NewTextureAtlas()
 
 }
 
-NewTextureAtlas *NewTextureAtlas::create(const char *file, long capacity)
+NewTextureAtlas *NewTextureAtlas::create(const std::string& file, long capacity)
 {
     NewTextureAtlas * textureAtlas = new NewTextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))

@@ -42,7 +42,7 @@ NewSpriteBatchNode *NewSpriteBatchNode::createWithTexture(Texture2D *tex, int ca
     return batchNode;
 }
 
-NewSpriteBatchNode *NewSpriteBatchNode::create(const char *fileImage, long capacity)
+NewSpriteBatchNode *NewSpriteBatchNode::create(const std::string& fileImage, long capacity)
 {
     NewSpriteBatchNode* batchNode = new NewSpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);

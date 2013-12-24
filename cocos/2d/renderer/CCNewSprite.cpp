@@ -48,7 +48,7 @@ NewSprite* NewSprite::create()
     return nullptr;
 }
 
-NewSprite* NewSprite::create(const char *filename)
+NewSprite* NewSprite::create(const std::string& filename)
 {
     NewSprite* sprite = new NewSprite();
     if(sprite && sprite->initWithFile(filename))
