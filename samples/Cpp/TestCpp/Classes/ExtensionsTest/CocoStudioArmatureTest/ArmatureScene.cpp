@@ -539,14 +539,14 @@ void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType mo
 {
     if (movementType == LOOP_COMPLETE)
     {
-        if (movementID.compare("Fire") == 0)
+        if (movementID == "Fire")
         {
             ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
             armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
-        else if (movementID.compare("FireMax") == 0)
+        else if (movementID == "FireMax")
         {
             ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
