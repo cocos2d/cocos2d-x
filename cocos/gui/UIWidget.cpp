@@ -506,7 +506,7 @@ const Point& Widget::getSizePercent() const
 
 Point Widget::getWorldPosition()
 {
-    return _renderer->convertToWorldSpace(Point::ZERO);
+    return convertToWorldSpace(Point::ZERO);
 }
 
 Node* Widget::getVirtualRenderer()
@@ -789,7 +789,7 @@ void Widget::removeRenderer(Node* renderer, bool cleanup)
 
 bool Widget::hitTest(const Point &pt)
 {
-    Point nsp = _renderer->convertToNodeSpace(pt);
+    Point nsp = convertToNodeSpace(pt);
     Rect bb = Rect(-_size.width * _anchorPoint.x, -_size.height * _anchorPoint.y, _size.width, _size.height);
     if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
     {
@@ -880,7 +880,7 @@ void Widget::setPositionPercent(const Point &percent)
         {
             Size parentSize = widgetParent->getSize();
             Point absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-            _renderer->setPosition(absPos);
+            setPosition(absPos);
         }
     }
 }
