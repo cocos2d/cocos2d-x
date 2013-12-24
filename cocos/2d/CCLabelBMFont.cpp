@@ -817,9 +817,6 @@ void LabelBMFont::updateLabel()
             }
             
             skip += justSkipped;
-            
-            if (!characterSprite->isVisible())
-                continue;
 
             if (i >= stringLength)
                 break;
@@ -867,6 +864,8 @@ void LabelBMFont::updateLabel()
                     startOfLine  = startOfWord;
                     start_line = true;
                 }
+                ++i;
+                continue;
             }
 
             // Whitespace.

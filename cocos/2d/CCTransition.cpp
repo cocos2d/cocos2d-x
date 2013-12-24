@@ -35,8 +35,6 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCRenderTexture.h"
 #include "CCNodeGrid.h"
-#include "CCNewRenderTexture.h"
-
 
 NS_CC_BEGIN
 
@@ -1275,7 +1273,7 @@ void TransitionCrossFade::onEnter()
     LayerColor* layer = LayerColor::create(color);
 
     // create the first render texture for inScene
-    RenderTexture* inTexture = NewRenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* inTexture = RenderTexture::create((int)size.width, (int)size.height);
 
     if (nullptr == inTexture)
     {
@@ -1292,7 +1290,7 @@ void TransitionCrossFade::onEnter()
     inTexture->end();
 
     // create the second render texture for outScene
-    RenderTexture* outTexture = NewRenderTexture::create((int)size.width, (int)size.height);
+    RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height);
     outTexture->getSprite()->setAnchorPoint( Point(0.5f,0.5f) );
     outTexture->setPosition( Point(size.width/2, size.height/2) );
     outTexture->setAnchorPoint( Point(0.5f,0.5f) );

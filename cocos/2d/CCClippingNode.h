@@ -120,6 +120,27 @@ protected:
     Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
+protected:
+    //renderData and callback
+    void onBeforeVisit();
+    void onAfterDrawStencil();
+    void onAfterVisit();
+
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+
+    GLint _mask_layer_le;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

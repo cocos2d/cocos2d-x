@@ -179,21 +179,21 @@ void NewSpriteTest::createNewSpriteTest()
 {
     Size winSize = Director::getInstance()->getWinSize();
 
-    NewSprite* parent = NewSprite::create("Images/grossini.png");
+    Sprite* parent = Sprite::create("Images/grossini.png");
     parent->setPosition(winSize.width*2/3, winSize.height/2);
-    NewSprite* child1 = NewSprite::create("Images/grossinis_sister1.png");
+    Sprite* child1 = Sprite::create("Images/grossinis_sister1.png");
     child1->setPosition(0.0f, -20.0f);
-    NewSprite* child2 = NewSprite::create("Images/grossinis_sister2.png");
+    Sprite* child2 = Sprite::create("Images/grossinis_sister2.png");
     child2->setPosition(20.0f, -20.0f);
-    NewSprite* child3 = NewSprite::create("Images/grossinis_sister1.png");
+    Sprite* child3 = Sprite::create("Images/grossinis_sister1.png");
     child3->setPosition(40.0f, -20.0f);
-    NewSprite* child4 = NewSprite::create("Images/grossinis_sister2.png");
+    Sprite* child4 = Sprite::create("Images/grossinis_sister2.png");
     child4->setPosition(60.0f, -20.0f);
-    NewSprite* child5 = NewSprite::create("Images/grossinis_sister2.png");
+    Sprite* child5 = Sprite::create("Images/grossinis_sister2.png");
     child5->setPosition(80.0f, -20.0f);
-    NewSprite* child6 = NewSprite::create("Images/grossinis_sister2.png");
+    Sprite* child6 = Sprite::create("Images/grossinis_sister2.png");
     child6->setPosition(100.0f, -20.0f);
-    NewSprite* child7 = NewSprite::create("Images/grossinis_sister2.png");
+    Sprite* child7 = Sprite::create("Images/grossinis_sister2.png");
     child7->setPosition(120.0f, -20.0f);
 
     parent->addChild(child1);
@@ -229,7 +229,7 @@ NewSpriteBatchTest::NewSpriteBatchTest()
     touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteBatchTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-    auto BatchNode = NewSpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
+    auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
     addChild(BatchNode, 0, kTagSpriteBatchNode);
 }
 
@@ -259,14 +259,14 @@ void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Eve
 
 void NewSpriteBatchTest::addNewSpriteWithCoords(Point p)
 {
-    auto BatchNode = static_cast<NewSpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
+    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
 
     int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
     int x = (idx%5) * 85;
     int y = (idx/5) * 121;
 
 
-    auto sprite = NewSprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
+    auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
     BatchNode->addChild(sprite);
 
     sprite->setPosition( Point( p.x, p.y) );
@@ -295,7 +295,7 @@ NewClippingNodeTest::NewClippingNodeTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto clipper = NewClippingNode::create();
+    auto clipper = ClippingNode::create();
     clipper->setTag( kTagClipperNode );
     clipper->setContentSize(  Size(200, 200) );
     clipper->setAnchorPoint(  Point(0.5, 0.5) );
@@ -318,11 +318,11 @@ NewClippingNodeTest::NewClippingNodeTest()
 
     //Test with alpha Test
     clipper->setAlphaThreshold(0.05f);
-    auto stencil = NewSprite::create("Images/grossini.png");
+    auto stencil = Sprite::create("Images/grossini.png");
     stencil->setPosition(s.width/2, s.height/2);
     clipper->setStencil(stencil);
 
-    auto content = NewSprite::create("Images/background2.png");
+    auto content = Sprite::create("Images/background2.png");
     content->setTag( kTagContentNode );
     content->setAnchorPoint(  Point(0.5, 0.5) );
     content->setPosition( Point(clipper->getContentSize().width / 2, clipper->getContentSize().height / 2) );
@@ -448,7 +448,7 @@ NewCullingTest::NewCullingTest()
         parent->addChild(parent2);
         parent2->setPosition(-50,0);
         parent2->runAction(RepeatForever::create((JumpBy::create(10, Point(0,0), 400, 1))));
-        NewSprite* sprite = NewSprite::create(images[index % images.size()].c_str());
+        Sprite* sprite = Sprite::create(images[index % images.size()].c_str());
         sprite->setPosition(Point(0,0));
         //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
         sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
@@ -461,7 +461,7 @@ NewCullingTest::NewCullingTest()
         parent->addChild(parent2);
         parent2->setPosition(50,0);
         parent2->runAction(RepeatForever::create((JumpBy::create(7, Point(0,0), 400, 1))));
-        NewSprite* sprite = NewSprite::create(images[index % images.size()].c_str());
+        Sprite* sprite = Sprite::create(images[index % images.size()].c_str());
         sprite->setPosition(Point(0,0));
         //sprite->runAction(RepeatForever::create(RotateBy::create(3, 360)));
         sprite->runAction(RepeatForever::create(Sequence::createWithTwoActions(ScaleBy::create(2, 2), ScaleBy::create(2,0.5))));
