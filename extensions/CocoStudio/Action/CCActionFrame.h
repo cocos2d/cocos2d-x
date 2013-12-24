@@ -172,6 +172,16 @@ public:
      * @return CCAction
      */
 	virtual CCActionInterval* getAction(float fDuration);
+	    /**
+     * Gets the CCAction of ActionFrame.
+     *
+     * @parame fDuration   the duration time of ActionFrame
+	 *
+	 * @parame fDuration   the source ActionFrame
+     *
+     * @return CCAction
+     */
+	virtual CCActionInterval* getAction(float fDuration,ActionFrame* srcFrame);
 
 	/**
 	*Set the CCAction easing parameter.
@@ -337,7 +347,17 @@ public:
      * @return CCAction
      */
 	virtual CCActionInterval* getAction(float fDuration);
-protected:
+		    /**
+     * Gets the CCAction of ActionFrame.
+     *
+     * @parame fDuration   the duration time of ActionFrame
+	 *
+	 * @parame fDuration   the source ActionFrame
+     *
+     * @return CCAction
+     */
+	virtual CCActionInterval* getAction(float fDuration,ActionFrame* srcFrame);
+public:
 	float m_rotation;
 };
 /**
