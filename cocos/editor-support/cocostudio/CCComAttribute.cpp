@@ -28,84 +28,114 @@ using namespace cocos2d;
 namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
-: _jsonDict(nullptr)
+: _dict(NULL)
 {
     _name = "ComAttribute";
 }
 
 ComAttribute::~ComAttribute(void)
 {
-	CC_SAFE_DELETE(_jsonDict);
+    CC_SAFE_RELEASE(_dict);
 }
 
 bool ComAttribute::init()
 {
-	_jsonDict = new JsonDictionary();
+    _dict = CCDictionary::create();
+	_dict->retain();
     return true;
-}
-
-ComAttribute* ComAttribute::create(void)
-{
-    ComAttribute * pRet = new ComAttribute();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
 }
 
 void ComAttribute::setInt(const char *key, int value)
 {
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
+    _dict->setObject(CCInteger::create(value), key);
 }
 
 void ComAttribute::setFloat(const char *key, float value)
 {
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
+    _dict->setObject(CCFloat::create(value), key);
 }
 
 void ComAttribute::setBool(const char *key, bool value)
 {
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
+    _dict->setObject(CCBool::create(value), key);
 }
 
 void ComAttribute::setCString(const char *key, const char *value)
 {
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
+    _dict->setObject(CCString::create(value), key);
 }
 
 
-int ComAttribute::getInt(const char *key) const
+int ComAttribute::getInt(const char *key, int def) const
 {
-    return _jsonDict->getItemIntValue(key, -1);
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret)
+    {
+		
+		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+			return obj->getValue();
+	}
+    return def;
 }
 
-float ComAttribute::getFloat(const char *key) const
+float ComAttribute::getFloat(const char *key, float def) const
 {
-    return _jsonDict->getItemFloatValue(key, -1.0f);
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret)
+    {
+		
+		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
+			return obj->getValue();
+	}
+    return def;
 }
 
-bool ComAttribute::getBool(const char *key) const
+bool ComAttribute::getBool(const char *key, bool def) const
 {
-	return _jsonDict->getItemBoolvalue(key, false);
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret) {
+		
+		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
+			return obj->getValue();
+	}
+    return def;
 }
 
-const char* ComAttribute::getCString(const char *key) const
+const char* ComAttribute::getCString(const char *key, const char *def) const
 {
-   return _jsonDict->getItemStringValue(key);
+   CCObject *ret = _dict->objectForKey(key);
+	if(ret) {
+		
+		if( CCString *obj = dynamic_cast<CCString*>(ret) )
+			return obj->getCString();
+	}
+    return def;
 }
 
-JsonDictionary* ComAttribute::getDict() const
+void ComAttribute::parse(const char *data)
 {
-	return _jsonDict;
+      rapidjson::Document _doc;
+      _doc.Parse<0>(data);
+      if (_doc.HasParseError())
+      {
+         CCLOG("CCComAttribute faled to parse!");
+         return;
+      }
 }
+
+ComAttribute* ComAttribute::create(void)
+{
+	ComAttribute * pRet = new ComAttribute();
+	if (pRet && pRet->init())
+	{
+		pRet->autorelease();
+	}
+	else
+	{
+		CC_SAFE_DELETE(pRet);
+	}
+	return pRet;
+}
+
 
 }

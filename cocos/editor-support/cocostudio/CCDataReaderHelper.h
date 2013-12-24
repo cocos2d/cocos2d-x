@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCArmature.h"
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
 
 #include <string>
 #include <queue>
@@ -156,20 +156,20 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = nullptr);
 
-    static ArmatureData *decodeArmature(JsonDictionary &json, DataInfo *dataInfo);
-    static BoneData *decodeBone(JsonDictionary &json, DataInfo *dataInfo);
-    static DisplayData *decodeBoneDisplay(JsonDictionary &json, DataInfo *dataInfo);
+    static ArmatureData *decodeArmature(const rapidjson::Value& json, DataInfo *dataInfo);
+    static BoneData *decodeBone(const rapidjson::Value& json, DataInfo *dataInfo);
+    static DisplayData *decodeBoneDisplay(const rapidjson::Value& json, DataInfo *dataInfo);
 
-    static AnimationData *decodeAnimation(JsonDictionary &json, DataInfo *dataInfo);
-    static MovementData *decodeMovement(JsonDictionary &json, DataInfo *dataInfo);
-    static MovementBoneData *decodeMovementBone(JsonDictionary &json, DataInfo *dataInfo);
-    static FrameData *decodeFrame(JsonDictionary &json, DataInfo *dataInfo);
+    static AnimationData *decodeAnimation(const rapidjson::Value& json, DataInfo *dataInfo);
+    static MovementData *decodeMovement(const rapidjson::Value& json, DataInfo *dataInfo);
+    static MovementBoneData *decodeMovementBone(const rapidjson::Value& json, DataInfo *dataInfo);
+    static FrameData *decodeFrame(const rapidjson::Value& json, DataInfo *dataInfo);
 
-    static TextureData *decodeTexture(JsonDictionary &json);
+    static TextureData *decodeTexture(const rapidjson::Value& json);
 
-    static ContourData *decodeContour(JsonDictionary &json);
+    static ContourData *decodeContour(const rapidjson::Value& json);
 
-    static void decodeNode(BaseData *node, JsonDictionary &json, DataInfo *dataInfo);
+    static void decodeNode(BaseData *node, const rapidjson::Value& json, DataInfo *dataInfo);
 
 protected:
 	void loadData();

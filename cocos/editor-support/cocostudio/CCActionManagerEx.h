@@ -27,7 +27,7 @@
 
 #include "cocos2d.h"
 #include "cocostudio/CCActionObject.h"
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
 
@@ -84,9 +84,19 @@ public:
      */
 	ActionObject* playActionByName(const char* jsonName,const char* actionName);
     
-    /*init properties with json dictionay*/
-    void initWithDictionary(const char* jsonName,JsonDictionary* dic,cocos2d::Object* root);
+	/**
+	* Play an Action with a name.
+	*
+	* @param jsonName  UI file name
+	*
+	* @param actionName  action name in teh UIfile.
+	*
+	* @param func ui action call back
+	*/
+	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 
+	/*init properties with json dictionay*/
+	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Object* root);
 	/**
      * Release all actions.
      *

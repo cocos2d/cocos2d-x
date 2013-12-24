@@ -54,7 +54,6 @@
 #include "cocostudio/CCComController.h"
 #include "cocostudio/CCComRender.h"
 #include "cocostudio/CCInputDelegate.h"
-#include "cocostudio/CSContentJsonDictionary.h"
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "cocostudio/CCSSceneReader.h"

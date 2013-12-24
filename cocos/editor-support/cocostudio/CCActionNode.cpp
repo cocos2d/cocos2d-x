@@ -73,13 +73,13 @@ ActionNode::~ActionNode()
 	}
 }
 
-void ActionNode::initWithDictionary(JsonDictionary *dic,Object* root)
+void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 {
 	setActionTag(DICTOOL->getIntValue_json(dic, "ActionTag"));
 	int actionFrameCount = DICTOOL->getArrayCount_json(dic, "actionframelist");
 	for (int i=0; i<actionFrameCount; i++) {
 
-		JsonDictionary* actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
+		const rapidjson::Value& actionFrameDic = DICTOOL->getDictionaryFromArray_json(dic, "actionframelist", i);
 		int frameInex = DICTOOL->getIntValue_json(actionFrameDic,"frameid");
 
 		bool existPosition = DICTOOL->checkObjectExist_json(actionFrameDic,"positionx");
@@ -141,8 +141,6 @@ void ActionNode::initWithDictionary(JsonDictionary *dic,Object* root)
 			Array* cActionArray = (Array*)_frameArray->getObjectAtIndex((int)kKeyframeTint);
 			cActionArray->addObject(actionFrame);
 		}
-
-		CC_SAFE_DELETE(actionFrameDic);
 	}
 	initActionNodeFromRoot(root);
 }
@@ -435,7 +433,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 
 			if (frame->getFrameIndex()*getUnitTime() == fTime)
 			{
-				this->easingToFrame(1.0f,1.0f,frame);
+				this->easingToFrame(1.0f,1.0f,NULL,frame);
 				bFindFrame = true;
 				break;
 			}
@@ -443,7 +441,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 			{
 				if (i == 0)
 				{
-					this->easingToFrame(1.0f,1.0f,frame);
+					this->easingToFrame(1.0f,1.0f,NULL,frame);
 					bFindFrame = false;
 				}
 				else
@@ -451,9 +449,9 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 					srcFrame = (ActionFrame*)(cArray->getObjectAtIndex(i-1));
 					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*getUnitTime();
 					float delaytime = fTime - srcFrame->getFrameIndex()*getUnitTime();
-					this->easingToFrame(duration,1.0f,srcFrame);
+					this->easingToFrame(duration,1.0f,NULL,srcFrame);
 					//float easingTime = ActionFrameEasing::bounceTime(delaytime);
-					this->easingToFrame(duration,delaytime/duration,frame);
+					this->easingToFrame(duration,delaytime/duration,srcFrame,frame);
 					bFindFrame = true;
 				}
 				break;
@@ -463,9 +461,9 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	return bFindFrame;
 }
 
-void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destFrame)
+void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* srcFrame,ActionFrame* destFrame)
 {
-	Action* cAction = destFrame->getAction(duration);
+	CCAction* cAction = destFrame->getAction(duration,srcFrame);
 	Node* cNode = this->getActionNode();
 	if (cAction == NULL || cNode == NULL)
 	{

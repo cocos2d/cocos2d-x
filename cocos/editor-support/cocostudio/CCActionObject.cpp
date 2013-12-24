@@ -38,6 +38,8 @@ ActionObject::ActionObject()
 , _fUnitTime(0.1f)
 , _currentTime(0.0f)
 , _pScheduler(NULL)
+, _CallBack(NULL)
+, _fTotalTime(0.0f)
 {
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
@@ -95,26 +97,35 @@ void ActionObject::setCurrentTime(float fTime)
 	_currentTime = fTime;
 }
 
+float ActionObject::getTotalTime()
+{
+	return _fTotalTime;
+}
 bool ActionObject::isPlaying()
 {
 	return _bPlaying;
 }
 
-void ActionObject::initWithDictionary(JsonDictionary *dic,Object* root)
+void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
 {
     setName(DICTOOL->getStringValue_json(dic, "name"));
     setLoop(DICTOOL->getBooleanValue_json(dic, "loop"));
 	setUnitTime(DICTOOL->getFloatValue_json(dic, "unittime"));
     int actionNodeCount = DICTOOL->getArrayCount_json(dic, "actionnodelist");
+	int maxLength = 0;
     for (int i=0; i<actionNodeCount; i++) {
         ActionNode* actionNode = new ActionNode();
 		actionNode->autorelease();
-        JsonDictionary* actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
+		const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
 		actionNode->setUnitTime(getUnitTime());
         _actionNodeList->addObject(actionNode);
-		CC_SAFE_DELETE(actionNodeDic);
+
+		int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
+		if(length > maxLength)
+			maxLength = length;
     }
+	_fTotalTime = maxLength*_fTotalTime;
 }
 
 void ActionObject::addActionNode(ActionNode* node)
@@ -149,8 +160,17 @@ void ActionObject::play()
 	{
 		_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f , kRepeatForever, 0.0f, false);
 	}
+	else
+	{
+		_pScheduler->scheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this, 0.0f, false);
+	}
 }
 
+void ActionObject::play(CallFunc* func)
+{
+	this->play();
+	this->_CallBack = func;
+}
 void ActionObject::pause()
 {
 	_bPause = true;
@@ -186,28 +206,30 @@ void ActionObject::updateToFrameByTime(float fTime)
 
 void ActionObject::simulationActionUpdate(float dt)
 {
-	if (_loop)
+	bool isEnd = true;
+	auto nodeNum = _actionNodeList->count();
+
+	for ( int i = 0; i < nodeNum; i++ )
 	{
-		bool isEnd = true;
-		auto nodeNum = _actionNodeList->count();
+		ActionNode* actionNode = static_cast<ActionNode*>(_actionNodeList->getObjectAtIndex(i));
 
-		for ( int i = 0; i < nodeNum; i++ )
+		if (actionNode->isActionDoneOnce() == false)
 		{
-			ActionNode* actionNode = static_cast<ActionNode*>(_actionNodeList->getObjectAtIndex(i));
-
-			if (actionNode->isActionDoneOnce() == false)
-			{
-				isEnd = false;
-				break;
-			}
+			isEnd = false;
+			break;
 		}
+	}
 
-		if (isEnd)
+	if (isEnd)
+	{
+		if (_CallBack != NULL)
+		{
+			_CallBack->execute();
+		}
+		if (_loop)
 		{
 			this->play();
 		}
-
-		//CCLOG("ActionObject Update");
 	}
 }
 }

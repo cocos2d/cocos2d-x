@@ -26,7 +26,7 @@
 #define __DICTIONARYHELPER_H__
 
 #include "cocos2d.h"
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "json/document.h"
 
 #define DICTOOL DictionaryHelper::shareHelper()
 
@@ -55,18 +55,24 @@ public:
     bool objectToBooleanValue(cocos2d::Object* obj);
     cocos2d::Array* objectToCCArray(cocos2d::Object* obj);
     
-    JsonDictionary* getSubDictionary_json(JsonDictionary* root,const char* key);
-    int getIntValue_json(JsonDictionary* root,const char* key);
-    float getFloatValue_json(JsonDictionary* root,const char* key);
-    const char* getStringValue_json(JsonDictionary* root,const char* key);
-    bool getBooleanValue_json(JsonDictionary* root,const char* key);
-    int getArrayCount_json(JsonDictionary* root,const char* key);
-    int getIntValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx);
-    float getFloatValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx);
-    bool getBoolValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx);
-    const char* getStringValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx);
-    JsonDictionary* getDictionaryFromArray_json(JsonDictionary* root,const char* arrayKey,int idx);
-    bool checkObjectExist_json(JsonDictionary* root,const char* key);
+	const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
+    const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);
+    const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, int idx);
+    
+	int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
+	float getFloatValue_json(const rapidjson::Value& root,const char* key, float def = 0.0f);
+    bool  getBooleanValue_json(const rapidjson::Value& root,const char* key, bool def = false);
+    const char* getStringValue_json(const rapidjson::Value& root,const char* key, const char *def = NULL);
+    int   getArrayCount_json(const rapidjson::Value& root,const char* key, int def = 0);
+	
+    int   getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, int def = 0);
+	float getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, float def = 0.0f);
+	bool  getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, bool def = false);
+	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def = NULL);
+	const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx);
+	bool checkObjectExist_json(const rapidjson::Value &root);
+    bool checkObjectExist_json(const rapidjson::Value &root, const char* key);
+    bool checkObjectExist_json(const rapidjson::Value &root, int index);
 };
 
 }

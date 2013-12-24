@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCActionFrame.h"
+#include "CCActionEaseEx.h"
 
  using namespace cocos2d;
 
@@ -30,9 +31,9 @@ namespace cocostudio {
 
 ActionFrame::ActionFrame()
 : _frameType(0)
-, _easingType(0)
 , _frameIndex(0)
 , _fTime(0.0f)
+, _easingType(FrameEase_Linear)
 {
 
 }
@@ -70,17 +71,158 @@ int ActionFrame::getFrameType()
 
 void ActionFrame::setEasingType(int easingType)
 {
-	_easingType = easingType;
+	_easingType = (FrameEaseType)easingType;
 }
 int ActionFrame::getEasingType()
 {
-	return _easingType;
+	return (int)_easingType;
 }
 
-Action* ActionFrame::getAction(float fDuration)
+ActionInterval* ActionFrame::getAction(float fDuration)
 {
 	log("Need a definition of <getAction> for ActionFrame");
 	return NULL;
+}
+ActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
+{
+	return this->getAction(fDuration);
+}
+
+void ActionFrame::setEasingParameter(std::vector<float> parameter)
+{
+	_Parameter.clear();
+
+	for ( unsigned int i = 0; i<parameter.size(); i++)
+	{
+		_Parameter.push_back(parameter[i]);
+	}
+}
+
+ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
+{
+	if (action == NULL)
+	{
+		return NULL;
+	}
+
+	switch (_easingType)
+	{
+	case FrameEase_Custom:
+		{
+			EaseBezierAction* cAction = EaseBezierAction::create(action);
+			cAction->setBezierParamer(_Parameter[0],_Parameter[1],_Parameter[2],_Parameter[3]);
+			return cAction;
+		}
+		break;
+	case FrameEase_Linear:
+		return action;
+		break;
+	case FrameEase_Sine_EaseIn:
+		return EaseSineIn::create(action);
+		break;
+	case FrameEase_Sine_EaseOut:
+		return EaseSineOut::create(action);
+		break;
+	case FrameEase_Sine_EaseInOut:
+		return EaseSineInOut::create(action);
+		break;
+	case FrameEase_Quad_EaseIn:
+		return EaseQuadraticActionIn::create(action);
+		break;
+	case FrameEase_Quad_EaseOut:
+		return EaseQuadraticActionOut::create(action);
+		break;
+	case FrameEase_Quad_EaseInOut:
+		return EaseQuadraticActionInOut::create(action);
+		break;
+	case FrameEase_Cubic_EaseIn:
+		return EaseCubicActionIn::create(action);
+		break;
+	case FrameEase_Cubic_EaseOut:
+		return EaseCubicActionOut::create(action);
+		break;
+	case FrameEase_Cubic_EaseInOut:
+		return EaseCubicActionInOut::create(action);
+		break;
+	case FrameEase_Quart_EaseIn:
+		return EaseQuarticActionIn::create(action);
+		break;
+	case FrameEase_Quart_EaseOut:
+		return EaseQuadraticActionOut::create(action);
+		break;
+	case FrameEase_Quart_EaseInOut:
+		return EaseQuarticActionInOut::create(action);
+		break;
+	case FrameEase_Quint_EaseIn:
+		return EaseQuinticActionIn::create(action);
+		break;
+	case FrameEase_Quint_EaseOut:
+		return EaseQuinticActionOut::create(action);
+		break;
+	case FrameEase_Quint_EaseInOut:
+		return EaseQuinticActionInOut::create(action);
+		break;
+	case FrameEase_Expo_EaseIn:
+		return EaseExponentialIn::create(action);
+		break;
+	case FrameEase_Expo_EaseOut:
+		return EaseExponentialOut::create(action);
+		break;
+	case FrameEase_Expo_EaseInOut:
+		return EaseExponentialInOut::create(action);
+		break;
+	case FrameEase_Circ_EaseIn:
+		return EaseCircleActionIn::create(action);
+		break;
+	case FrameEase_Circ_EaseOut:
+		return EaseCircleActionOut::create(action);
+		break;
+	case FrameEase_Circ_EaseInOut:
+		return EaseCircleActionInOut::create(action);
+		break;
+	case FrameEase_Elastic_EaseIn:
+		{
+			EaseElasticIn* cAction = EaseElasticIn::create(action);
+			cAction->setPeriod(_Parameter[0]);
+			return cAction;
+		}
+		break;
+	case FrameEase_Elastic_EaseOut:
+		{
+			EaseElasticOut* cAction = EaseElasticOut::create(action);
+			cAction->setPeriod(_Parameter[0]);
+			return cAction;
+		}
+		break;
+	case FrameEase_Elastic_EaseInOut:
+		{
+			EaseElasticInOut* cAction = EaseElasticInOut::create(action);
+			cAction->setPeriod(_Parameter[0]);
+			return cAction;
+		}
+		break;
+	case FrameEase_Back_EaseIn:
+		return EaseBackIn::create(action);
+		break;
+	case FrameEase_Back_EaseOut:
+		return EaseBackOut::create(action);
+		break;
+	case FrameEase_Back_EaseInOut:
+		return EaseBackInOut::create(action);
+		break;
+	case FrameEase_Bounce_EaseIn:
+		return EaseBounceIn::create(action);
+		break;
+	case FrameEase_Bounce_EaseOut:
+		return EaseBounceOut::create(action);
+		break;
+	case FrameEase_Bounce_EaseInOut:
+		return EaseBounceInOut::create(action);
+		break;
+	default:
+		return action;
+		break;
+	}
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -101,9 +243,9 @@ Point ActionMoveFrame::getPosition()
 {
 	return _position;
 }
-Action* ActionMoveFrame::getAction(float fDuration)
+ActionInterval* ActionMoveFrame::getAction(float fDuration)
 {
-	return MoveTo::create(fDuration,_position);
+	return this->getEasingAction(CCMoveTo::create(fDuration,_position));
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -139,9 +281,9 @@ float ActionScaleFrame::getScaleY()
 	return _scaleY;
 }
 
-Action* ActionScaleFrame::getAction(float fDuration)
+ActionInterval* ActionScaleFrame::getAction(float fDuration)
 {
-	return ScaleTo::create(fDuration,_scaleX,_scaleY);
+	return this->getEasingAction(CCScaleTo::create(fDuration,_scaleX,_scaleY));
 }
 
 ActionRotationFrame::ActionRotationFrame()
@@ -165,9 +307,22 @@ float ActionRotationFrame::getRotation()
 	return _rotation;
 }
 
-Action* ActionRotationFrame::getAction(float fDuration)
+ActionInterval* ActionRotationFrame::getAction(float fDuration)
 {
-	return RotateTo::create(fDuration,_rotation);
+	return this->getEasingAction(CCRotateTo::create(fDuration,_rotation));
+}
+ActionInterval* ActionRotationFrame::getAction(float fDuration,ActionFrame* srcFrame)
+{
+	ActionRotationFrame* srcRotationFrame = static_cast<ActionRotationFrame*>(srcFrame);
+	if (srcRotationFrame == NULL)
+	{
+		return this->getAction(fDuration);
+	}
+	else
+	{
+		float diffRotation = _rotation - srcRotationFrame->_rotation;
+		return this->getEasingAction(CCRotateBy::create(fDuration,diffRotation));
+	}
 }
 
 ActionFadeFrame::ActionFadeFrame()
@@ -191,9 +346,9 @@ int ActionFadeFrame::getOpacity()
 	return _opacity;
 }
 
-Action* ActionFadeFrame::getAction(float fDuration)
+ActionInterval* ActionFadeFrame::getAction(float fDuration)
 {
-	return FadeTo::create(fDuration,_opacity);
+	return this->getEasingAction(CCFadeTo::create(fDuration,_opacity));
 }
 
 
@@ -218,9 +373,9 @@ Color3B ActionTintFrame::getColor()
 	return _color;
 }
 
-Action* ActionTintFrame::getAction(float fDuration)
+ActionInterval* ActionTintFrame::getAction(float fDuration)
 {
-	return TintTo::create(fDuration,_color.r,_color.g,_color.b);
+	return this->getEasingAction(CCTintTo::create(fDuration,_color.r,_color.g,_color.b));
 }
 
 
