@@ -65,7 +65,7 @@ public:
      *
      * @return text  string value.
      */
-    const std::string& getStringValue();
+    const char* getStringValue();
     
     /**
      * Gets the string length of label.

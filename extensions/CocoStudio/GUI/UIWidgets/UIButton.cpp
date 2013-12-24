@@ -29,10 +29,10 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define NORMALRENDERERZ (0)
-#define PRESSEDRENDERERZ (0)
-#define DISABLEDRENDERERZ (0)
-#define TITLERENDERERZ (1)
+#define NORMALRENDERERZ (-2)
+#define PRESSEDRENDERERZ (-2)
+#define DISABLEDRENDERERZ (-2)
+#define TITLERENDERERZ (-1)
     
 Button::Button():
 _buttonNormalRenderer(NULL),
@@ -86,15 +86,15 @@ bool Button::init()
 
 void Button::initRenderer()
 {
-    Widget::initRenderer();
     _buttonNormalRenderer = CCSprite::create();
     _buttonClickedRenderer = CCSprite::create();
     _buttonDisableRenderer = CCSprite::create();
     _titleRenderer = CCLabelTTF::create();
-    _renderer->addChild(_buttonNormalRenderer,NORMALRENDERERZ);
-    _renderer->addChild(_buttonClickedRenderer,PRESSEDRENDERERZ);
-    _renderer->addChild(_buttonDisableRenderer,DISABLEDRENDERERZ);
-    _renderer->addChild(_titleRenderer,TITLERENDERERZ);
+    
+    CCNodeRGBA::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
+    CCNodeRGBA::addChild(_buttonClickedRenderer,PRESSEDRENDERERZ, -1);
+    CCNodeRGBA::addChild(_buttonDisableRenderer,DISABLEDRENDERERZ, -1);
+    CCNodeRGBA::addChild(_titleRenderer,TITLERENDERERZ, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -105,12 +105,9 @@ void Button::setScale9Enabled(bool able)
     }
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
-
-    
-    _renderer->removeChild(_buttonNormalRenderer, true);
-    _renderer->removeChild(_buttonClickedRenderer, true);
-    _renderer->removeChild(_buttonDisableRenderer, true);
-    
+    CCNodeRGBA::removeChild(_buttonNormalRenderer, true);
+    CCNodeRGBA::removeChild(_buttonClickedRenderer, true);
+    CCNodeRGBA::removeChild(_buttonDisableRenderer, true);
     _buttonNormalRenderer = NULL;
     _buttonClickedRenderer = NULL;
     _buttonDisableRenderer = NULL;
@@ -130,9 +127,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    _renderer->addChild(_buttonNormalRenderer,NORMALRENDERERZ);
-    _renderer->addChild(_buttonClickedRenderer,PRESSEDRENDERERZ);
-    _renderer->addChild(_buttonDisableRenderer,DISABLEDRENDERERZ);
+    CCNodeRGBA::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
+    CCNodeRGBA::addChild(_buttonClickedRenderer,PRESSEDRENDERERZ, -1);
+    CCNodeRGBA::addChild(_buttonDisableRenderer,DISABLEDRENDERERZ, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -579,9 +576,9 @@ void Button::setTitleText(const std::string& text)
     _titleRenderer->setString(text.c_str());
 }
 
-const std::string& Button::getTitleText() const
+const char* Button::getTitleText() const
 {
-    return std::string(_titleRenderer->getString());
+    return _titleRenderer->getString();
 }
 
 void Button::setTitleColor(const ccColor3B& color)

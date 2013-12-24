@@ -314,38 +314,8 @@ public:
      */
     Widget* getChildByName(const char* name);
     
-    /**
-     * Gets the renderer of widget
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @return a Node object
-     */
-    CCNode* getRenderer();
     
     virtual void visit();
-    
-    /**
-     * Add a Node for rendering.
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @param renderer     A render node
-     *
-     * @param zOrder    Z order for drawing priority. Please refer to Node::setZOrder(int)
-     */
-    void addRenderer(CCNode* renderer, int zOrder);
-    
-    /**
-     * Remove a Node from widget.
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @param renderer     A render node which needs to be removed
-     *
-     * @param cleanup   true if all running actions and callbacks on the render node will be cleanup, false otherwise.
-     */
-    void removeRenderer(CCNode* renderer, bool cleanup);
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -664,7 +634,7 @@ protected:
     virtual bool init();
     
     //initializes renderer of widget.
-    virtual void initRenderer();
+    virtual void initRenderer(){};
     
     //call back function called widget's state changed to normal.
     virtual void onPressStateChangedToNormal();
@@ -693,7 +663,6 @@ protected:
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     bool _updateEnabled;      ///< is "update" method scheduled
-    CCNodeRGBA* _renderer;        ///< base renderer
     CCPoint _touchStartPos;    ///< touch began point
     CCPoint _touchMovePos;     ///< touch moved point
     CCPoint _touchEndPos;      ///< touch ended point

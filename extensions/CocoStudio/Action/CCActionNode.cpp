@@ -214,7 +214,7 @@ CCNode* ActionNode::getActionNode()
 		cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(m_Object);
 		if (rootWidget != NULL)
 		{
-			return rootWidget->getRenderer();
+			return rootWidget;
 		}
 	}
 	return NULL;

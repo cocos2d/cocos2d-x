@@ -38,7 +38,6 @@ _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
 _updateEnabled(false),
-_renderer(NULL),
 _touchStartPos(CCPointZero),
 _touchMovePos(CCPointZero),
 _touchEndPos(CCPointZero),
@@ -59,18 +58,14 @@ _reorderWidgetChildDirty(true),
 _hitted(false),
 _widgetChildren(NULL),
 _layoutParameterDictionary(NULL)
-//    ,
-//_touchListener(NULL)
 {
     
 }
 
 Widget::~Widget()
 {
-    //recheck
     _touchEventListener = NULL;
     _touchEventSelector = NULL;
-    _renderer->release();
     _widgetChildren->removeAllObjects();
     CC_SAFE_RELEASE(_widgetChildren);
     _layoutParameterDictionary->removeAllObjects();
@@ -283,13 +278,6 @@ Widget* Widget::getChildByName(const char *name)
         }
     }
     return NULL;
-}
-
-void Widget::initRenderer()
-{
-    _renderer = CCNodeRGBA::create();
-    _renderer->retain();
-    CCNodeRGBA::addChild(_renderer, -1, -1);
 }
 
 void Widget::setSize(const CCSize &size)
@@ -535,12 +523,12 @@ const CCPoint& Widget::getSizePercent() const
 
 CCPoint Widget::getWorldPosition()
 {
-    return _renderer->convertToWorldSpace(CCPointZero);
+    return convertToWorldSpace(CCPointZero);
 }
 
 CCNode* Widget::getVirtualRenderer()
 {
-    return _renderer;
+    return this;
 }
 
 void Widget::onSizeChanged()
@@ -568,14 +556,6 @@ void Widget::setTouchEnabled(bool enable)
         return;
     }
     _touchEnabled = enable;
-    if (_touchEnabled)
-    {
-        
-    }
-    else
-    {
-
-    }
 }
 
 bool Widget::isTouchEnabled() const
@@ -795,24 +775,9 @@ void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
     _touchEventSelector = selector;
 }
 
-CCNode* Widget::getRenderer()
-{
-    return _renderer;
-}
-
-void Widget::addRenderer(CCNode* renderer, int zOrder)
-{
-    _renderer->addChild(renderer, zOrder);
-}
-
-void Widget::removeRenderer(CCNode* renderer, bool cleanup)
-{
-    _renderer->removeChild(renderer,cleanup);
-}
-
 bool Widget::hitTest(const CCPoint &pt)
 {
-    CCPoint nsp = _renderer->convertToNodeSpace(pt);
+    CCPoint nsp = convertToNodeSpace(pt);
     CCRect bb = CCRect(-_size.width * m_obAnchorPoint.x, -_size.height * m_obAnchorPoint.y, _size.width, _size.height);
     if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
     {
@@ -903,7 +868,7 @@ void Widget::setPositionPercent(const CCPoint &percent)
         {
             CCSize parentSize = widgetParent->getSize();
             CCPoint absPos = CCPoint(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-            _renderer->setPosition(absPos);
+            setPosition(absPos);
         }
     }
 }

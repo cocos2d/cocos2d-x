@@ -215,10 +215,7 @@ public:
 protected:
     //override "init" method of widget.
     virtual bool init() override;
-    
-    //initializes renderer of widget.
-    virtual void initRenderer();
-    
+        
     //override "onSizeChanged" method of widget.
     virtual void onSizeChanged() override;
     

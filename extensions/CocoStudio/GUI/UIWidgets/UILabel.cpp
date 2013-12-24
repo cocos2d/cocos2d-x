@@ -28,6 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
+#define LABELRENDERERZ (-1)
 
 Label::Label():
 _touchScaleChangeEnabled(false),
@@ -68,9 +69,8 @@ bool Label::init()
 
 void Label::initRenderer()
 {
-    Widget::initRenderer();
     _labelRenderer = CCLabelTTF::create();
-    _renderer->addChild(_labelRenderer);
+    CCNodeRGBA::addChild(_labelRenderer, LABELRENDERERZ, -1);
 }
 
 void Label::setText(const std::string& text)
@@ -82,7 +82,7 @@ void Label::setText(const std::string& text)
     labelScaleChangedWithSize();
 }
 
-const std::string& Label::getStringValue()
+const char* Label::getStringValue()
 {
     return _labelRenderer->getString();
 }
@@ -179,8 +179,8 @@ void Label::onPressStateChangedToDisabled()
 
 void Label::clickScale(float scaleX, float scaleY)
 {
-    _renderer->setScaleX(scaleX);
-    _renderer->setScaleY(scaleY);
+    setScaleX(scaleX);
+    setScaleY(scaleY);
 }
 
 void Label::setFlipX(bool flipX)

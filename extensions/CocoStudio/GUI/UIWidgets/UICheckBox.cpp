@@ -28,6 +28,11 @@ NS_CC_BEGIN
 
 namespace gui {
 
+#define BACKGROUNDBOXRENDERERZ (-1)
+#define BACKGROUNDBOXSELECTEDRENDERERZ (-1)
+#define FRONTCROSSRENDERERZ (-1)
+#define BACKGROUNDBOXDISABLEDRENDERER (-1)
+#define FRONTCROSSDISABLEDRENDERER (-1)
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(NULL),
@@ -81,17 +86,17 @@ bool CheckBox::init()
 
 void CheckBox::initRenderer()
 {
-    Widget::initRenderer();
     _backGroundBoxRenderer = CCSprite::create();
     _backGroundSelectedBoxRenderer = CCSprite::create();
     _frontCrossRenderer = CCSprite::create();
     _backGroundBoxDisabledRenderer = CCSprite::create();
     _frontCrossDisabledRenderer = CCSprite::create();
-    _renderer->addChild(_backGroundBoxRenderer);
-    _renderer->addChild(_backGroundSelectedBoxRenderer);
-    _renderer->addChild(_frontCrossRenderer);
-    _renderer->addChild(_backGroundBoxDisabledRenderer);
-    _renderer->addChild(_frontCrossDisabledRenderer);
+    
+    CCNodeRGBA::addChild(_backGroundBoxRenderer, BACKGROUNDBOXRENDERERZ, -1);
+    CCNodeRGBA::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDBOXSELECTEDRENDERERZ, -1);
+    CCNodeRGBA::addChild(_frontCrossRenderer, FRONTCROSSRENDERERZ, -1);
+    CCNodeRGBA::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLEDRENDERER, -1);
+    CCNodeRGBA::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLEDRENDERER, -1);
 }
 
 void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)

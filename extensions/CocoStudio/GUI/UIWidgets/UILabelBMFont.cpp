@@ -28,6 +28,8 @@ NS_CC_BEGIN
 
 namespace gui {
     
+#define LABELBMFONTRENDERERZ (-1)
+    
 LabelBMFont::LabelBMFont():
 _labelBMFontRenderer(NULL),
 _fntFileHasInit(false),
@@ -55,9 +57,8 @@ LabelBMFont* LabelBMFont::create()
 
 void LabelBMFont::initRenderer()
 {
-    Widget::initRenderer();
     _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
-    _renderer->addChild(_labelBMFontRenderer);
+    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONTRENDERERZ, -1);
 }
 
 void LabelBMFont::setFntFile(const char *fileName)

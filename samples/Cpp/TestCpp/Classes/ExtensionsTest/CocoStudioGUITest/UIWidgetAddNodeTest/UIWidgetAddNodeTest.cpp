@@ -36,7 +36,7 @@ bool UIWidgetAddNodeTest::init()
         
         CCSprite* sprite = CCSprite::create("cocosgui/ccicon.png");
         sprite->setPosition(ccp(0, sprite->boundingBox().size.height / 4));
-        widget->addRenderer(sprite, 0);
+//        widget->addRenderer(sprite, 0);
         
         return true;
     }

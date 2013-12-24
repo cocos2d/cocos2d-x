@@ -270,7 +270,7 @@ bool UICCTextField::getDeleteBackward()
 }
 
 
-
+#define TEXTFIELDRENDERERZ (-1)
     
 TextField::TextField():
 _textFieldRenderer(NULL),
@@ -313,9 +313,8 @@ bool TextField::init()
 
 void TextField::initRenderer()
 {
-    Widget::initRenderer();
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    _renderer->addChild(_textFieldRenderer);
+    CCNodeRGBA::addChild(_textFieldRenderer, TEXTFIELDRENDERERZ, -1);
 }
 
 void TextField::setTouchSize(const CCSize &size)

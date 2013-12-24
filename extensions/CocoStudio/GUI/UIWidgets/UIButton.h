@@ -174,7 +174,7 @@ public:
     virtual std::string getDescription() const override;
     
     void setTitleText(const std::string& text);
-    const std::string& getTitleText() const;
+    const char* getTitleText() const;
     void setTitleColor(const ccColor3B& color);
     const ccColor3B& getTitleColor() const;
     void setTitleFontSize(float size);

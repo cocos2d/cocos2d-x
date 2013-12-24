@@ -86,7 +86,7 @@ public:
     void setStringValue(const std::string& value);
     
     //get string value for labelatlas.
-    const std::string& getStringValue() const;
+    const char* getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt) override;
