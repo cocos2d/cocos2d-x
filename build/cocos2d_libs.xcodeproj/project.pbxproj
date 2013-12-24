@@ -1861,10 +1861,6 @@
 		50A1FF1918290ED4001840C4 /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A1FF1618290ED4001840C4 /* UIListView.cpp */; };
 		50A1FF1A18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
 		50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A1FF1718290ED4001840C4 /* UIListView.h */; };
-		593BDCEA184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */; };
-		593BDCEB184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */; };
-		593BDCEC184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */; };
-		593BDCED184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */; };
 		593BDCF2184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */; };
 		593BDCF3184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */; };
 		593BDCF4184D0A6E00C21E48 /* CCCustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */; };
@@ -3046,8 +3042,6 @@
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50A1FF1618290ED4001840C4 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
 		50A1FF1718290ED4001840C4 /* UIListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIListView.h; sourceTree = "<group>"; };
-		593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCNewSpriteBatchNode.cpp; sourceTree = "<group>"; };
-		593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNewSpriteBatchNode.h; sourceTree = "<group>"; };
 		593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomCommand.cpp; sourceTree = "<group>"; };
 		593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomCommand.h; sourceTree = "<group>"; };
 		593BDCDA184D0A6E00C21E48 /* CCGroupCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGroupCommand.cpp; sourceTree = "<group>"; };
@@ -5334,8 +5328,6 @@
 			isa = PBXGroup;
 			children = (
 				A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */,
-				593BDCD4184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp */,
-				593BDCD5184D0A6E00C21E48 /* CCNewSpriteBatchNode.h */,
 				593BDCD8184D0A6E00C21E48 /* CCCustomCommand.cpp */,
 				593BDCD9184D0A6E00C21E48 /* CCCustomCommand.h */,
 				74AC80EEB031D67E86B45096 /* CCFrustum.cpp */,
@@ -5452,7 +5444,6 @@
 				1A57008B180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				1A0DB7381823828F0025743D /* CCGL.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
-				593BDCEC184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
@@ -6244,7 +6235,6 @@
 				1A9DCA3C180E6955007A3AD4 /* firePngData.h in Headers */,
 				1A9DCA40180E6955007A3AD4 /* TransformUtils.h in Headers */,
 				1A9DCA46180E6D90007A3AD4 /* CCDeprecated.h in Headers */,
-				593BDCED184D0A6E00C21E48 /* CCNewSpriteBatchNode.h in Headers */,
 				1A9DCA4C180E6DE3007A3AD4 /* ccTypes.h in Headers */,
 				1A8C58EF180E92CC00EF57C3 /* CocosGUI.h in Headers */,
 				1A8C58F3180E92CC00EF57C3 /* UILayout.h in Headers */,
@@ -6852,7 +6842,6 @@
 				1A57010E180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570112180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011B180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
-				593BDCEA184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */,
 				1A57011F180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				1A57013A180BC9460088DEC7 /* CCEvent.cpp in Sources */,
 				1A57013E180BC9460088DEC7 /* CCEventAcceleration.cpp in Sources */,
@@ -7374,7 +7363,6 @@
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011C180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
-				593BDCEB184D0A6E00C21E48 /* CCNewSpriteBatchNode.cpp in Sources */,
 				1A570120180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				1A57013B180BC9460088DEC7 /* CCEvent.cpp in Sources */,
 				1A57013F180BC9460088DEC7 /* CCEventAcceleration.cpp in Sources */,
