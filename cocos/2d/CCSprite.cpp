@@ -222,6 +222,7 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
+    bool result;
     if (Node::init())
     {
         _batchNode = nullptr;
@@ -262,13 +263,15 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
-        
-        return true;
+        result = true;
     }
     else
     {
-        return false;
+        result = false;
     }
+    _recursiveDirty = true;
+    setDirty(true);
+    return result;
 }
 
 Sprite::Sprite(void)
@@ -694,7 +697,7 @@ bool Sprite::culling() const
     Rect newRect = RectApplyTransform(_rect, worldTM);
 
     kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
-
+    
     AABB aabb(point,point);
     kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
     aabb.expand(point);
@@ -725,8 +728,8 @@ void Sprite::updateQuadVertices()
 //        }
 //        else
 //        {
-//            CCASSERT( dynamic_cast<NewSprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<NewSprite*>(_parent)->_transformToBatch );
+//            CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
 //        }
 
         //TODO optimize this transformation, should use parent's transformation instead
