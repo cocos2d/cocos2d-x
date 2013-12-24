@@ -285,7 +285,7 @@ void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, i
 
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
 
-    for (int i = 0; i<movementIndexes.size(); i++)
+    for (size_t i = 0; i<movementIndexes.size(); i++)
     {
         std::string name = movName.at(movementIndexes[i]);
         m_sMovementList.push_back(name);
@@ -504,7 +504,7 @@ void CCArmatureAnimation::updateMovementList()
     {
         if (m_bMovementListLoop)
         {
-            play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, 0);
+            play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, -1, 0);
             m_uMovementIndex++;
             if (m_uMovementIndex >= m_sMovementList.size())
             {
@@ -515,7 +515,7 @@ void CCArmatureAnimation::updateMovementList()
         {
             if (m_uMovementIndex < m_sMovementList.size())
             {
-                play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, 0);
+                play(m_sMovementList.at(m_uMovementIndex).c_str(), m_iMovementListDurationTo, -1, 0);
                 m_uMovementIndex++;
             }
             else
