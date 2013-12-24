@@ -200,6 +200,11 @@ void ClippingNode::drawFullScreenQuadClearStencil()
 
 void ClippingNode::visit()
 {
+    if(!_visible)
+        return;
+    
+    kmGLPushMatrix();
+    transform();
     //Add group command
     
     Renderer* renderer = Director::getInstance()->getRenderer();
@@ -222,7 +227,31 @@ void ClippingNode::visit()
     afterDrawStencilCmd->func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(afterDrawStencilCmd);
 
-    Node::visit();
+    int i = 0;
+    
+    if(!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
+        {
+            auto node = _children.at(i);
+            
+            if ( node && node->getZOrder() < 0 )
+                node->visit();
+            else
+                break;
+        }
+        // self draw
+        this->draw();
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit();
+    }
+    else
+    {
+        this->draw();
+    }
 
     CustomCommand* afterVisitCmd = CustomCommand::getCommandPool().generateCommand();
     afterVisitCmd->init(0,_vertexZ);
@@ -230,6 +259,8 @@ void ClippingNode::visit()
     renderer->addCommand(afterVisitCmd);
 
     renderer->popGroup();
+    
+    kmGLPopMatrix();
 }
 
 Node* ClippingNode::getStencil() const
