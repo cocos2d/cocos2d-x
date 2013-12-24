@@ -96,7 +96,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    CC_DEPRECATED_ATTRIBUTE unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
