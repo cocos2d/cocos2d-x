@@ -123,7 +123,6 @@ THE SOFTWARE.
 #include "renderer/CCFrustum.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMaterialManager.h"
-#include "renderer/CCNewClippingNode.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCRenderCommandPool.h"
