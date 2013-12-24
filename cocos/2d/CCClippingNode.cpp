@@ -41,7 +41,7 @@ static GLint g_sStencilBits = -1;
 // store the current stencil layer (position in the stencil buffer),
 // this will allow nesting up to n ClippingNode,
 // where n is the number of bits of the stencil buffer.
-static GLint layer = -1;
+static GLint s_layer = -1;
 
 static void setProgram(Node *n, GLProgram *p)
 {
@@ -212,21 +212,21 @@ void ClippingNode::visit()
 
     CustomCommand* beforeVisitCmd = CustomCommand::getCommandPool().generateCommand();
     beforeVisitCmd->init(0,_vertexZ);
-    beforeVisitCmd->func = CC_CALLBACK_0(ClippingNode::beforeVisit, this);
+    beforeVisitCmd->func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
     renderer->addCommand(beforeVisitCmd);
 
     _stencil->visit();
 
     CustomCommand* afterDrawStencilCmd = CustomCommand::getCommandPool().generateCommand();
     afterDrawStencilCmd->init(0,_vertexZ);
-    afterDrawStencilCmd->func = CC_CALLBACK_0(ClippingNode::afterDrawStencil, this);
+    afterDrawStencilCmd->func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(afterDrawStencilCmd);
 
     Node::visit();
 
     CustomCommand* afterVisitCmd = CustomCommand::getCommandPool().generateCommand();
     afterVisitCmd->init(0,_vertexZ);
-    afterVisitCmd->func = CC_CALLBACK_0(ClippingNode::afterVisit, this);
+    afterVisitCmd->func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
     renderer->addCommand(afterVisitCmd);
 
     renderer->popGroup();
@@ -264,16 +264,16 @@ void ClippingNode::setInverted(bool inverted)
     _inverted = inverted;
 }
 
-void ClippingNode::beforeVisit()
+void ClippingNode::onBeforeVisit()
 {
     ///////////////////////////////////
     // INIT
 
     // increment the current layer
-    layer++;
+    s_layer++;
 
     // mask of the current layer (ie: for layer 3: 00000100)
-    GLint mask_layer = 0x1 << layer;
+    GLint mask_layer = 0x1 << s_layer;
     // mask of all layers less than the current (ie: for layer 3: 00000011)
     GLint mask_layer_l = mask_layer - 1;
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
@@ -376,7 +376,7 @@ void ClippingNode::beforeVisit()
     //Draw _stencil
 }
 
-void ClippingNode::afterDrawStencil()
+void ClippingNode::onAfterDrawStencil()
 {
     // restore alpha test state
     if (_alphaThreshold < 1)
@@ -415,7 +415,7 @@ void ClippingNode::afterDrawStencil()
 }
 
 
-void ClippingNode::afterVisit()
+void ClippingNode::onAfterVisit()
 {
     ///////////////////////////////////
     // CLEANUP
@@ -430,7 +430,7 @@ void ClippingNode::afterVisit()
     }
 
     // we are done using this layer, decrement
-    layer--;
+    s_layer--;
 }
 
 NS_CC_END
