@@ -122,9 +122,9 @@ protected:
     bool    _inverted;
 protected:
     //renderData and callback
-    void beforeVisit();
-    void afterDrawStencil();
-    void afterVisit();
+    void onBeforeVisit();
+    void onAfterDrawStencil();
+    void onAfterVisit();
 
     GLboolean _currentStencilEnabled;
     GLuint _currentStencilWriteMask;
