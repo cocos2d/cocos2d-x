@@ -39,14 +39,10 @@ static GUIReader* sharedReader = nullptr;
 GUIReader::GUIReader():
 m_strFilePath("")
 {
-    _fileDesignSizes = CCDictionary::create();
-    CC_SAFE_RETAIN(_fileDesignSizes);
 }
 
 GUIReader::~GUIReader()
 {
-    _fileDesignSizes->removeAllObjects();
-    CC_SAFE_RELEASE(_fileDesignSizes);
 }
 
 GUIReader* GUIReader::shareReader()
@@ -100,22 +96,23 @@ int GUIReader::getVersionInteger(const char *str)
 
 void GUIReader::storeFileDesignSize(const char *fileName, const cocos2d::Size &size)
 {
-    if (!_fileDesignSizes)
-    {
-        return;
-    }
-    cocos2d::String* strSize = cocos2d::String::createWithFormat("{%f,%f}", size.width, size.height);
-    _fileDesignSizes->setObject(strSize, fileName);
+    std::string keyWidth = fileName;
+    keyWidth.append("width");
+    std::string keyHeight = fileName;
+    keyHeight.append("height");
+    _fileDesignSizes[keyWidth] = Value(size.width);
+    _fileDesignSizes[keyHeight] = Value(size.height);
 }
 
 const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 {
-    if (!_fileDesignSizes)
-    {
-        return cocos2d::Size::ZERO;
-    }
-    cocos2d::Size designSize = cocos2d::SizeFromString(((cocos2d::String*)_fileDesignSizes->objectForKey(fileName))->_string.c_str());
-    return designSize;
+    std::string keyWidth = fileName;
+    keyWidth.append("width");
+    std::string keyHeight = fileName;
+    keyHeight.append("height");
+    float w = _fileDesignSizes.at(keyWidth).asFloat();
+    float h = _fileDesignSizes.at(keyHeight).asFloat();
+    return Size(w, h);
 }
 
 
