@@ -38,12 +38,9 @@ public:
     static NewSpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
     static NewSpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
 
-    void draw(void);
-
 protected:
     NewSpriteBatchNode();
     virtual ~NewSpriteBatchNode();
-    bool init();
 };
 
 NS_CC_END

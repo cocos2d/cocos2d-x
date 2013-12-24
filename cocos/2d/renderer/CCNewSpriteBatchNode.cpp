@@ -61,41 +61,4 @@ NewSpriteBatchNode::~NewSpriteBatchNode()
 
 }
 
-bool NewSpriteBatchNode::init()
-{
-    Texture2D* texture = new Texture2D();
-    texture->autorelease();
-    return this->initWithTexture(texture, 0);
-}
-
-void NewSpriteBatchNode::draw()
-{
-    // Optimization: Fast Dispatch
-    if( _textureAtlas->getTotalQuads() == 0 )
-    {
-        return;
-    }
-
-    for(const auto &child: _children)
-        child->updateTransform();
-
-//    arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
-
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
-}
-
 NS_CC_END

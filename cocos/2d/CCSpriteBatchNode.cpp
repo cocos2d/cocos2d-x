@@ -42,6 +42,8 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCLayer.h"
 #include "CCScene.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -342,28 +344,34 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-// draw
-void SpriteBatchNode::draw(void)
+void SpriteBatchNode::draw()
 {
-    CC_PROFILER_START("CCSpriteBatchNode - draw");
-
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )
     {
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
-
-    for(const auto &child: _children) {
+    for(const auto &child: _children)
         child->updateTransform();
-    }
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//    arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
 
-    _textureAtlas->drawQuads();
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+
+    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)
