@@ -355,8 +355,6 @@ void SpriteBatchNode::draw()
     for(const auto &child: _children)
         child->updateTransform();
 
-//    arrayMakeObjectsPerformSelector(_children, updateTransform, NewSprite*);
-
     auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
     kmMat4 mv;
