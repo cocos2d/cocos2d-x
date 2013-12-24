@@ -972,10 +972,6 @@
 		1A8C5A06180E930E00EF57C3 /* CCUtilMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5985180E930E00EF57C3 /* CCUtilMath.h */; };
 		1A8C5A07180E930E00EF57C3 /* CocoStudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5986180E930E00EF57C3 /* CocoStudio.h */; };
 		1A8C5A08180E930E00EF57C3 /* CocoStudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5986180E930E00EF57C3 /* CocoStudio.h */; };
-		1A8C5A09180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5987180E930E00EF57C3 /* CSContentJsonDictionary.cpp */; };
-		1A8C5A0A180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5987180E930E00EF57C3 /* CSContentJsonDictionary.cpp */; };
-		1A8C5A0B180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5988180E930E00EF57C3 /* CSContentJsonDictionary.h */; };
-		1A8C5A0C180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C5988180E930E00EF57C3 /* CSContentJsonDictionary.h */; };
 		1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5989180E930E00EF57C3 /* DictionaryHelper.cpp */; };
 		1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5989180E930E00EF57C3 /* DictionaryHelper.cpp */; };
 		1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C598A180E930E00EF57C3 /* DictionaryHelper.h */; };
@@ -1434,30 +1430,6 @@
 		1AD71EF5180E27CF00808F54 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71EEE180E27CF00808F54 /* CCPhysicsSprite.cpp */; };
 		1AD71EF6180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
 		1AD71EF7180E27CF00808F54 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */; };
-		1AD71F09180E28C400808F54 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EF9180E28C400808F54 /* autolink.h */; };
-		1AD71F0A180E28C400808F54 /* autolink.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EF9180E28C400808F54 /* autolink.h */; };
-		1AD71F0B180E28C400808F54 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFA180E28C400808F54 /* config.h */; };
-		1AD71F0C180E28C400808F54 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFA180E28C400808F54 /* config.h */; };
-		1AD71F0D180E28C400808F54 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFB180E28C400808F54 /* features.h */; };
-		1AD71F0E180E28C400808F54 /* features.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFB180E28C400808F54 /* features.h */; };
-		1AD71F0F180E28C400808F54 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFC180E28C400808F54 /* forwards.h */; };
-		1AD71F10180E28C400808F54 /* forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFC180E28C400808F54 /* forwards.h */; };
-		1AD71F11180E28C400808F54 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFD180E28C400808F54 /* json.h */; };
-		1AD71F12180E28C400808F54 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFD180E28C400808F54 /* json.h */; };
-		1AD71F13180E28C400808F54 /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFE180E28C400808F54 /* json_batchallocator.h */; };
-		1AD71F14180E28C400808F54 /* json_batchallocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71EFE180E28C400808F54 /* json_batchallocator.h */; };
-		1AD71F15180E28C400808F54 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F01180E28C400808F54 /* json_reader.cpp */; };
-		1AD71F16180E28C400808F54 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F01180E28C400808F54 /* json_reader.cpp */; };
-		1AD71F17180E28C400808F54 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F02180E28C400808F54 /* json_value.cpp */; };
-		1AD71F18180E28C400808F54 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F02180E28C400808F54 /* json_value.cpp */; };
-		1AD71F19180E28C400808F54 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F04180E28C400808F54 /* json_writer.cpp */; };
-		1AD71F1A180E28C400808F54 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AD71F04180E28C400808F54 /* json_writer.cpp */; };
-		1AD71F1B180E28C400808F54 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F05180E28C400808F54 /* reader.h */; };
-		1AD71F1C180E28C400808F54 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F05180E28C400808F54 /* reader.h */; };
-		1AD71F1D180E28C400808F54 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F07180E28C400808F54 /* value.h */; };
-		1AD71F1E180E28C400808F54 /* value.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F07180E28C400808F54 /* value.h */; };
-		1AD71F1F180E28C400808F54 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F08180E28C400808F54 /* writer.h */; };
-		1AD71F20180E28C400808F54 /* writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD71F08180E28C400808F54 /* writer.h */; };
 		1AE3C844184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
 		1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AE3C842184F14F700CF29B5 /* CCValue.cpp */; };
 		1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AE3C843184F14F700CF29B5 /* CCValue.h */; };
@@ -1478,6 +1450,7 @@
 		2AC795E81862875D005EC8E1 /* Event.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D61862867D005EC8E1 /* Event.h */; };
 		2AC795E91862875D005EC8E1 /* EventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D81862867D005EC8E1 /* EventData.h */; };
 		2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 2AC795D418628672005EC8E1 /* BoundingBoxAttachment.h */; };
+		3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
@@ -2545,8 +2518,6 @@
 		1A8C5984180E930E00EF57C3 /* CCUtilMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCUtilMath.cpp; sourceTree = "<group>"; };
 		1A8C5985180E930E00EF57C3 /* CCUtilMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUtilMath.h; sourceTree = "<group>"; };
 		1A8C5986180E930E00EF57C3 /* CocoStudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoStudio.h; sourceTree = "<group>"; };
-		1A8C5987180E930E00EF57C3 /* CSContentJsonDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSContentJsonDictionary.cpp; sourceTree = "<group>"; };
-		1A8C5988180E930E00EF57C3 /* CSContentJsonDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSContentJsonDictionary.h; sourceTree = "<group>"; };
 		1A8C5989180E930E00EF57C3 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
 		1A8C598A180E930E00EF57C3 /* DictionaryHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryHelper.h; sourceTree = "<group>"; };
 		1A9DC9F8180E6955007A3AD4 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
@@ -2688,22 +2659,6 @@
 		1AD71EED180E27CF00808F54 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		1AD71EEE180E27CF00808F54 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		1AD71EEF180E27CF00808F54 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
-		1AD71EF9180E28C400808F54 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
-		1AD71EFA180E28C400808F54 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		1AD71EFB180E28C400808F54 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
-		1AD71EFC180E28C400808F54 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
-		1AD71EFD180E28C400808F54 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
-		1AD71EFE180E28C400808F54 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
-		1AD71EFF180E28C400808F54 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
-		1AD71F00180E28C400808F54 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
-		1AD71F01180E28C400808F54 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
-		1AD71F02180E28C400808F54 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
-		1AD71F03180E28C400808F54 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
-		1AD71F04180E28C400808F54 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
-		1AD71F05180E28C400808F54 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		1AD71F06180E28C400808F54 /* sconscript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sconscript; sourceTree = "<group>"; };
-		1AD71F07180E28C400808F54 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
-		1AD71F08180E28C400808F54 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
 		1AE3C842184F14F700CF29B5 /* CCValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCValue.cpp; path = ../base/CCValue.cpp; sourceTree = "<group>"; };
 		1AE3C843184F14F700CF29B5 /* CCValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCValue.h; path = ../base/CCValue.h; sourceTree = "<group>"; };
 		2AC795D318628672005EC8E1 /* BoundingBoxAttachment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBoxAttachment.cpp; sourceTree = "<group>"; };
@@ -2714,6 +2669,18 @@
 		2AC795D81862867D005EC8E1 /* EventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventData.h; sourceTree = "<group>"; };
 		2AC795D918628689005EC8E1 /* SkeletonBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkeletonBounds.cpp; sourceTree = "<group>"; };
 		2AC795DA18628689005EC8E1 /* SkeletonBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletonBounds.h; sourceTree = "<group>"; };
+		3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
+		37936A341869B76800E974DD /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		37936A351869B76800E974DD /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
+		37936A371869B76800E974DD /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		37936A381869B76800E974DD /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		37936A391869B76800E974DD /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		37936A3A1869B76800E974DD /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		37936A3B1869B76800E974DD /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		37936A3C1869B76800E974DD /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		37936A3D1869B76800E974DD /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		37936A3E1869B76800E974DD /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		37936A401869B7B200E974DD /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
 		3EEF8BCC1839F390005E8A6C /* jsb_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
 		3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_gui_manual.cpp; path = gui/jsb_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
@@ -4258,6 +4225,8 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
+				3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */,
+				37936A401869B7B200E974DD /* CCActionEaseEx.h */,
 				1A8C5948180E930E00EF57C3 /* CCActionFrame.cpp */,
 				1A8C5949180E930E00EF57C3 /* CCActionFrame.h */,
 				1A8C594A180E930E00EF57C3 /* CCActionFrameEasing.cpp */,
@@ -4321,8 +4290,6 @@
 				1A8C5984180E930E00EF57C3 /* CCUtilMath.cpp */,
 				1A8C5985180E930E00EF57C3 /* CCUtilMath.h */,
 				1A8C5986180E930E00EF57C3 /* CocoStudio.h */,
-				1A8C5987180E930E00EF57C3 /* CSContentJsonDictionary.cpp */,
-				1A8C5988180E930E00EF57C3 /* CSContentJsonDictionary.h */,
 				1A8C5989180E930E00EF57C3 /* DictionaryHelper.cpp */,
 				1A8C598A180E930E00EF57C3 /* DictionaryHelper.h */,
 			);
@@ -4627,25 +4594,27 @@
 		1AD71EF8180E28C400808F54 /* json */ = {
 			isa = PBXGroup;
 			children = (
-				1AD71EF9180E28C400808F54 /* autolink.h */,
-				1AD71EFA180E28C400808F54 /* config.h */,
-				1AD71EFB180E28C400808F54 /* features.h */,
-				1AD71EFC180E28C400808F54 /* forwards.h */,
-				1AD71EFD180E28C400808F54 /* json.h */,
-				1AD71EFE180E28C400808F54 /* json_batchallocator.h */,
-				1AD71EFF180E28C400808F54 /* json_internalarray.inl */,
-				1AD71F00180E28C400808F54 /* json_internalmap.inl */,
-				1AD71F01180E28C400808F54 /* json_reader.cpp */,
-				1AD71F02180E28C400808F54 /* json_value.cpp */,
-				1AD71F03180E28C400808F54 /* json_valueiterator.inl */,
-				1AD71F04180E28C400808F54 /* json_writer.cpp */,
-				1AD71F05180E28C400808F54 /* reader.h */,
-				1AD71F06180E28C400808F54 /* sconscript */,
-				1AD71F07180E28C400808F54 /* value.h */,
-				1AD71F08180E28C400808F54 /* writer.h */,
+				37936A341869B76800E974DD /* document.h */,
+				37936A351869B76800E974DD /* filestream.h */,
+				37936A361869B76800E974DD /* internal */,
+				37936A3A1869B76800E974DD /* prettywriter.h */,
+				37936A3B1869B76800E974DD /* rapidjson.h */,
+				37936A3C1869B76800E974DD /* reader.h */,
+				37936A3D1869B76800E974DD /* stringbuffer.h */,
+				37936A3E1869B76800E974DD /* writer.h */,
 			);
 			name = json;
 			path = ../external/json;
+			sourceTree = "<group>";
+		};
+		37936A361869B76800E974DD /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				37936A371869B76800E974DD /* pow10.h */,
+				37936A381869B76800E974DD /* stack.h */,
+				37936A391869B76800E974DD /* strfunc.h */,
+			);
+			path = internal;
 			sourceTree = "<group>";
 		};
 		3EEF8BD01839F5A7005E8A6C /* gui */ = {
@@ -5637,16 +5606,7 @@
 				1AD71EE3180E26E600808F54 /* SlotData.h in Headers */,
 				1AD71EE7180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EE9180E26E600808F54 /* spine.h in Headers */,
-				1AD71F09180E28C400808F54 /* autolink.h in Headers */,
-				1AD71F0B180E28C400808F54 /* config.h in Headers */,
-				1AD71F0D180E28C400808F54 /* features.h in Headers */,
 				1A85BA0D1845F31700260FC0 /* CCVector.h in Headers */,
-				1AD71F0F180E28C400808F54 /* forwards.h in Headers */,
-				1AD71F11180E28C400808F54 /* json.h in Headers */,
-				1AD71F13180E28C400808F54 /* json_batchallocator.h in Headers */,
-				1AD71F1B180E28C400808F54 /* reader.h in Headers */,
-				1AD71F1D180E28C400808F54 /* value.h in Headers */,
-				1AD71F1F180E28C400808F54 /* writer.h in Headers */,
 				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
@@ -5722,7 +5682,6 @@
 				1A8C5A01180E930E00EF57C3 /* CCTweenFunction.h in Headers */,
 				1A8C5A05180E930E00EF57C3 /* CCUtilMath.h in Headers */,
 				1A8C5A07180E930E00EF57C3 /* CocoStudio.h in Headers */,
-				1A8C5A0B180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */,
 				59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */,
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC82C9892F007745926C93 /* CCFrustum.h in Headers */,
@@ -6213,15 +6172,6 @@
 				1AD71EE4180E26E600808F54 /* SlotData.h in Headers */,
 				1AD71EE8180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EEA180E26E600808F54 /* spine.h in Headers */,
-				1AD71F0A180E28C400808F54 /* autolink.h in Headers */,
-				1AD71F0C180E28C400808F54 /* config.h in Headers */,
-				1AD71F0E180E28C400808F54 /* features.h in Headers */,
-				1AD71F10180E28C400808F54 /* forwards.h in Headers */,
-				1AD71F12180E28C400808F54 /* json.h in Headers */,
-				1AD71F14180E28C400808F54 /* json_batchallocator.h in Headers */,
-				1AD71F1C180E28C400808F54 /* reader.h in Headers */,
-				1AD71F1E180E28C400808F54 /* value.h in Headers */,
-				1AD71F20180E28C400808F54 /* writer.h in Headers */,
 				1AAF536D180E3374000584C8 /* HttpClient.h in Headers */,
 				A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */,
 				1AAF536F180E3374000584C8 /* HttpRequest.h in Headers */,
@@ -6304,7 +6254,6 @@
 				1AE3C847184F14F700CF29B5 /* CCValue.h in Headers */,
 				1A8C5A06180E930E00EF57C3 /* CCUtilMath.h in Headers */,
 				1A8C5A08180E930E00EF57C3 /* CocoStudio.h in Headers */,
-				1A8C5A0C180E930E00EF57C3 /* CSContentJsonDictionary.h in Headers */,
 				1A8C5A10180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
 				74AC8EE0C2AAB82783F47089 /* CCFrustum.h in Headers */,
 				74AC84A2F1052B49CA60C2D1 /* CCRenderer.h in Headers */,
@@ -6907,6 +6856,7 @@
 				1A57029D180BCD890088DEC7 /* base64.cpp in Sources */,
 				1A5702A3180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */,
 				1A5702A9180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */,
+				3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */,
 				59A79D551821E26E00F19697 /* CCEventMouse.cpp in Sources */,
 				1A5702AF180BCDBC0088DEC7 /* ccUTF8.cpp in Sources */,
 				1A5702B5180BCDF40088DEC7 /* CCVertex.cpp in Sources */,
@@ -6982,9 +6932,6 @@
 				1AD71EDD180E26E600808F54 /* Slot.cpp in Sources */,
 				1AD71EE1180E26E600808F54 /* SlotData.cpp in Sources */,
 				1AD71EE5180E26E600808F54 /* spine-cocos2dx.cpp in Sources */,
-				1AD71F15180E28C400808F54 /* json_reader.cpp in Sources */,
-				1AD71F17180E28C400808F54 /* json_value.cpp in Sources */,
-				1AD71F19180E28C400808F54 /* json_writer.cpp in Sources */,
 				1AAF536A180E3374000584C8 /* HttpClient.cpp in Sources */,
 				1AAF5372180E3374000584C8 /* SocketIO.cpp in Sources */,
 				1AAF5376180E3374000584C8 /* WebSocket.cpp in Sources */,
@@ -7054,7 +7001,6 @@
 				1A8C59FB180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				1A8C59FF180E930E00EF57C3 /* CCTweenFunction.cpp in Sources */,
 				1A8C5A03180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
-				1A8C5A09180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC8C8DDFD05322513C8C72 /* CCFrustum.cpp in Sources */,
 				74AC8796ABB6761790CF8CC2 /* CCRenderer.cpp in Sources */,
@@ -7504,9 +7450,6 @@
 				1AD71EDE180E26E600808F54 /* Slot.cpp in Sources */,
 				1AD71EE2180E26E600808F54 /* SlotData.cpp in Sources */,
 				1AD71EE6180E26E600808F54 /* spine-cocos2dx.cpp in Sources */,
-				1AD71F16180E28C400808F54 /* json_reader.cpp in Sources */,
-				1AD71F18180E28C400808F54 /* json_value.cpp in Sources */,
-				1AD71F1A180E28C400808F54 /* json_writer.cpp in Sources */,
 				1AAF536B180E3374000584C8 /* HttpClient.cpp in Sources */,
 				1AAF5373180E3374000584C8 /* SocketIO.cpp in Sources */,
 				1AAF5377180E3374000584C8 /* WebSocket.cpp in Sources */,
@@ -7576,7 +7519,6 @@
 				1A8C59FC180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				1A8C5A00180E930E00EF57C3 /* CCTweenFunction.cpp in Sources */,
 				1A8C5A04180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
-				1A8C5A0A180E930E00EF57C3 /* CSContentJsonDictionary.cpp in Sources */,
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC858052DDF289AF7D6309 /* CCFrustum.cpp in Sources */,
 				74AC80E553789C6DE3EC737A /* CCRenderer.cpp in Sources */,

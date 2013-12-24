@@ -30,21 +30,14 @@ namespace cocostudio {
 
 static inline float bezieratFunction( float a, float b, float c, float d, float t )
 {
-	return (powf(1-t,3) * a + 
-		3*t*(powf(1-t,2))*b + 
-		3*powf(t,2)*(1-t)*c +
-		powf(t,3)*d );
+	return (powf(1-t,3) * a + 3*t*(powf(1-t,2))*b + 3*powf(t,2)*(1-t)*c + powf(t,3)*d );
 }
 
-//
-// EaseBezier
-//
-
-EaseBezierAction* EaseBezierAction::create(ActionInterval* pAction)
+EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* pAction)
 {
 	EaseBezierAction *pRet = new EaseBezierAction();
 	if (pRet)
-	{
+	{  
 		if (pRet->initWithAction(pAction))
 		{
 			pRet->autorelease();
