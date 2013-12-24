@@ -279,7 +279,7 @@ void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, i
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
-    m_iMovementListDurationTo =durationTo;
+    m_iMovementListDurationTo = durationTo;
     m_bOnMovementList = true;
     m_uMovementIndex = 0;
 
@@ -305,6 +305,7 @@ void CCArmatureAnimation::playWithArray(CCArray *movementNames, int durationTo, 
     }
     play(names, durationTo, loop);
 }
+
 void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durationTo, bool loop)
 {
     std::vector<int> indexes;
@@ -316,6 +317,7 @@ void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durat
     }
     playByIndex(indexes, durationTo, loop);
 }
+
 void CCArmatureAnimation::gotoAndPlay(int frameIndex)
 {
     if (!m_pMovementData || frameIndex < 0 || frameIndex >= m_pMovementData->duration)
