@@ -119,10 +119,7 @@ THE SOFTWARE.
 #include "CCParticleSystemQuad.h"
 
 // new renderer
-#include "renderer/CCNewRenderTexture.h"
-#include "renderer/CCNewSprite.h"
 #include "renderer/CCNewSpriteBatchNode.h"
-#include "renderer/CCNewTextureAtlas.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCFrustum.h"
 #include "renderer/CCGroupCommand.h"
