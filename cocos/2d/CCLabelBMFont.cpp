@@ -867,6 +867,8 @@ void LabelBMFont::updateLabel()
                     startOfLine  = startOfWord;
                     start_line = true;
                 }
+                ++i;
+                continue;
             }
 
             // Whitespace.
