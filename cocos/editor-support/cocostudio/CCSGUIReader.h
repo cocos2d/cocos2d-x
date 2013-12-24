@@ -65,7 +65,8 @@ public:
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
 protected:
     std::string m_strFilePath;
-    cocos2d::Dictionary* _fileDesignSizes;
+    cocos2d::ValueMap _fileDesignSizes;
+    
 };
 
 class WidgetPropertiesReader : public cocos2d::Object
