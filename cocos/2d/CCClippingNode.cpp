@@ -301,7 +301,6 @@ void ClippingNode::onBeforeVisit()
 
     // manually save the depth test state
 
-    //currentDepthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
 
     // disable depth test while drawing the stencil
@@ -342,9 +341,6 @@ void ClippingNode::onBeforeVisit()
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-//    GLboolean currentAlphaTestEnabled = GL_FALSE;
-//    GLenum currentAlphaTestFunc = GL_ALWAYS;
-//    GLclampf currentAlphaTestRef = 1;
 #endif
     if (_alphaThreshold < 1) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
