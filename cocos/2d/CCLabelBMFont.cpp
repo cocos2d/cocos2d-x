@@ -817,9 +817,6 @@ void LabelBMFont::updateLabel()
             }
             
             skip += justSkipped;
-            
-            if (!characterSprite->isVisible())
-                continue;
 
             if (i >= stringLength)
                 break;
