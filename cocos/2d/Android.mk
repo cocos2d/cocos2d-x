@@ -117,10 +117,7 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
-renderer/CCNewRenderTexture.cpp \
-renderer/CCNewSprite.cpp \
 renderer/CCNewSpriteBatchNode.cpp \
-renderer/CCNewTextureAtlas.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
