@@ -122,7 +122,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char* pFileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
 
 
@@ -154,7 +154,7 @@ public:
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
-    static void addDataFromJsonCache(const char* fileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo = nullptr);
 
     static ArmatureData *decodeArmature(JsonDictionary &json, DataInfo *dataInfo);
     static BoneData *decodeBone(JsonDictionary &json, DataInfo *dataInfo);
