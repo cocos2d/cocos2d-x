@@ -81,7 +81,7 @@ public:
     *
     * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
     */
-    bool initWithFile(const char* file, ssize_t capacity);
+    bool initWithFile(const std::string& file, ssize_t capacity);
 
     /** initializes a TextureAtlas with a previously initialized Texture2D object, and
     * with an initial capacity for Quads. 

@@ -111,7 +111,7 @@ public:
     @param path   the absolute file path.
     @return true if loaded correctly.
     */
-    bool initWithImageFile(const char *path);
+    bool initWithImageFile(const std::string& path);
 
     /**
     @brief Load image from stream buffer.

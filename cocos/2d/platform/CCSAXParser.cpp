@@ -111,11 +111,11 @@ bool SAXParser::parse(const char* xmlData, size_t dataLength)
 	return tinyDoc.Accept( &printer );	
 }
 
-bool SAXParser::parse(const char *file)
+bool SAXParser::parse(const std::string& file)
 {
     bool ret = false;
     ssize_t size = 0;
-    char* buffer = (char*)FileUtils::getInstance()->getFileData(file, "rt", &size);
+    char* buffer = (char*)FileUtils::getInstance()->getFileData(file.c_str(), "rt", &size);
     if (buffer != nullptr && size > 0)
     {
         ret = parse(buffer, size);

@@ -35,7 +35,7 @@ class NewSprite : public Sprite
     
 public:
     static NewSprite* create();
-    static NewSprite* create(const char *filename);
+    static NewSprite* create(const std::string& filename);
 
     virtual void updateQuadVertices();
     virtual void draw(void) override;

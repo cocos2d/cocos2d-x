@@ -95,7 +95,7 @@ public:
      * @js init
      * @lua init
      */
-    bool initWithFile(const char* fileImage, ssize_t capacity);
+    bool initWithFile(const std::string& fileImage, ssize_t capacity);
     bool init();
 
     /** returns the TextureAtlas object */
