@@ -59,7 +59,7 @@ public:
     /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
      * The TextureAtlas capacity can be increased in runtime.
      */
-    static TextureAtlas* create(const char* file , ssize_t capacity);
+    static TextureAtlas* create(const std::string& file , ssize_t capacity);
 
     /** creates a TextureAtlas with a previously initialized Texture2D object, and
      * with an initial capacity for n Quads.
