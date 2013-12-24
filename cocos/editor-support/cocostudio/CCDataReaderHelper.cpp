@@ -287,9 +287,12 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
+    // Read content from file
     ssize_t size;
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+    unsigned char *pTempContent = (unsigned char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+
+    std::string contentStr = std::string((const char*)pTempContent, size);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
@@ -298,13 +301,14 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     if (str.compare(".xml") == 0)
     {
-        DataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromCache(contentStr, &dataInfo);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        DataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
-    free(pFileContent);
+    
+    free(pTempContent);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Object *target, SEL_SCHEDULE selector)
@@ -489,10 +493,10 @@ void DataReaderHelper::removeConfigFile(const std::string& configFile)
 
 
 
-void DataReaderHelper::addDataFromCache(const char* pFileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo)
 {
     tinyxml2::XMLDocument document;
-    document.Parse(pFileContent);
+    document.Parse(pFileContent.c_str());
 
     tinyxml2::XMLElement *root = document.RootElement();
     CCASSERT(root, "XML error  or  XML is empty.");
@@ -1180,10 +1184,10 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
 
 
-void DataReaderHelper::addDataFromJsonCache(const char* fileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo)
 {
     JsonDictionary json;
-    json.initWithDescription(fileContent);
+    json.initWithDescription(fileContent.c_str());
 
     dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
 
