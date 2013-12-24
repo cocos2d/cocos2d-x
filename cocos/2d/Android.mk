@@ -117,7 +117,6 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
-renderer/CCNewSprite.cpp \
 renderer/CCNewSpriteBatchNode.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
