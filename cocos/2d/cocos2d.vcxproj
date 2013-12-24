@@ -166,6 +166,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
     <ClCompile Include="..\base\atitc.cpp" />
+    <ClCompile Include="..\base\C3DTransform.cpp" />
     <ClCompile Include="..\base\CCAffineTransform.cpp" />
     <ClCompile Include="..\base\CCArray.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
@@ -181,6 +182,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
+    <ClCompile Include="..\math\C3DMathUtilty.cpp" />
+    <ClCompile Include="..\math\C3DMatrix.cpp" />
+    <ClCompile Include="..\math\C3Dneon_matrix_impl.c" />
+    <ClCompile Include="..\math\C3DQuaternion.cpp" />
+    <ClCompile Include="..\math\C3DVector2.cpp" />
+    <ClCompile Include="..\math\C3DVector3.cpp" />
+    <ClCompile Include="..\math\C3DVector4.cpp" />
     <ClCompile Include="..\math\kazmath\src\aabb.c" />
     <ClCompile Include="..\math\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\math\kazmath\src\GL\matrix.c" />
@@ -325,6 +333,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\base\atitc.h" />
+    <ClInclude Include="..\base\C3DTransform.h" />
     <ClInclude Include="..\base\CCAffineTransform.h" />
     <ClInclude Include="..\base\CCArray.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
@@ -348,6 +357,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\s3tc.h" />
+    <ClInclude Include="..\math\C3DMath.h" />
+    <ClInclude Include="..\math\C3DMathUtilty.h" />
+    <ClInclude Include="..\math\C3DMatrix.h" />
+    <ClInclude Include="..\math\C3Dneon_matrix_impl.h" />
+    <ClInclude Include="..\math\C3DQuaternion.h" />
+    <ClInclude Include="..\math\C3DVector2.h" />
+    <ClInclude Include="..\math\C3DVector3.h" />
+    <ClInclude Include="..\math\C3DVector4.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\aabb.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\GL\matrix.h" />
@@ -516,6 +533,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="uthash.h" />
     <ClInclude Include="utlist.h" />
     <ClInclude Include="ZipUtils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\math\C3DMatrix.inl" />
+    <None Include="..\math\C3DQuaternion.inl" />
+    <None Include="..\math\C3DVector2.inl" />
+    <None Include="..\math\C3DVector3.inl" />
+    <None Include="..\math\C3DVector4.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

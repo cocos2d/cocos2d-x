@@ -1,33 +1,29 @@
-#include "C3DMath.h"
 #include "C3DTransform.h"
-#include "cocos2d.h"
 
 namespace cocos3d
 {
 
 C3DTransform::C3DTransform()
-    : _matrixDirtyBits(0), _listeners(NULL)
+    : _matrixDirtyBits(0)
 {
-
     _scale.set(C3DVector3::one());
 }
 
 C3DTransform::C3DTransform(const C3DVector3& scale, const C3DQuaternion& rotation, const C3DVector3& translation)
-    : _matrixDirtyBits(0), _listeners(NULL)
+    : _matrixDirtyBits(0)
 {
    
     set(scale, rotation, translation);
 }
 
 C3DTransform::C3DTransform(const C3DVector3& scale, const C3DMatrix& rotation, const C3DVector3& translation)
-    : _matrixDirtyBits(0), _listeners(NULL)
-{
-   
+    : _matrixDirtyBits(0)
+{   
     set(scale, rotation, translation);
 }
 
 C3DTransform::C3DTransform(const C3DTransform& copy)
-    : _matrixDirtyBits(0), _listeners(NULL)
+    : _matrixDirtyBits(0)
 {
    
     set(copy);
@@ -35,7 +31,7 @@ C3DTransform::C3DTransform(const C3DTransform& copy)
 
 C3DTransform::~C3DTransform()
 {
-    CC_SAFE_DELETE(_listeners);
+    
 }
 
 const C3DMatrix& C3DTransform::getMatrix() const
@@ -111,21 +107,16 @@ const C3DQuaternion& C3DTransform::getRotation() const
 
 void C3DTransform::getRotation(C3DQuaternion* rotation) const
 {
-    assert(rotation);
-
-    rotation->set(_rotation);
+	rotation->set(_rotation);
 }
 
 void C3DTransform::getRotation(C3DMatrix* rotation) const
 {
-    assert(rotation);
-
     C3DMatrix::createRotation(_rotation, rotation);
 }
 
 float C3DTransform::getRotation(C3DVector3* axis) const
 {
-    assert(axis);
     return _rotation.toAxisAngle(axis);
 }
 
@@ -520,24 +511,18 @@ void C3DTransform::translateForward(float amount)
 
 void C3DTransform::transformPoint(C3DVector3* point)
 {
-    assert(point);
-
     getMatrix();
     _matrix.transformPoint(point);
 }
 
 void C3DTransform::transformPoint(const C3DVector3& point, C3DVector3* dst)
 {
-    assert(dst);
-
     getMatrix();
     _matrix.transformPoint(point, dst);
 }
 
 void C3DTransform::transformVector(C3DVector3* normal)
 {
-    assert(normal);
-
     getMatrix();
     _matrix.transformVector(normal);
 }
@@ -555,50 +540,10 @@ void C3DTransform::transformVector(float x, float y, float z, float w, C3DVector
 }
 
 
-
-
 void C3DTransform::dirty(char matrixDirtyBits)
 {
     _matrixDirtyBits |= matrixDirtyBits;
     transformChanged();
-}
-
-void C3DTransform::addListener(C3DTransform::Listener* listener, long cookie)
-{
-    if (_listeners == NULL)
-        _listeners = new std::list<TransformListener>();
-
-    TransformListener l;
-    l.listener = listener;
-    l.cookie = cookie;
-    _listeners->push_back(l);
-}
-
-void C3DTransform::removeListener(C3DTransform::Listener* listener)
-{
-    if (_listeners)
-    {
-        for (std::list<TransformListener>::iterator itr = _listeners->begin(); itr != _listeners->end(); itr++)
-        {
-            if ((*itr).listener == listener)
-            {
-                _listeners->erase(itr);
-                break;
-            }
-        }
-    }
-}
-
-void C3DTransform::transformChanged()
-{
-    if (_listeners)
-    {
-        for (std::list<TransformListener>::iterator itr = _listeners->begin(); itr != _listeners->end(); itr++)
-        {
-            TransformListener& l = *itr;
-            l.listener->transformChanged(this, l.cookie);
-        }
-    }
 }
 
 
@@ -673,11 +618,5 @@ void C3DTransform::rotateAlong(const C3DVector3& point, const C3DVector3& axis, 
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION);
 }
 
-//void C3DTransform::setRotation(const C3DVector3& dir, const C3DVector3& up)
-//{
-//	C3DMatrix matRotate;
-//	C3DMatrix::createLookAt(C3DVector3(0, 0, 0), -dir, up, &matRotate);
-//	setRotation(matRotate);
-//}
 
 }

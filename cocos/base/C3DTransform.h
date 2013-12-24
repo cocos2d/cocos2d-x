@@ -3,12 +3,15 @@
 
 #include <list>
 
-#include "C3DMath.h"
+#include "C3DVector3.h"
+#include "C3DQuaternion.h"
+#include "C3DMatrix.h"
 
 
 namespace cocos3d
 {
 
+class AnimationValue;
 
 /**
  * Defines a 3-dimensional transformation.
@@ -26,24 +29,7 @@ namespace cocos3d
 class  C3DTransform
 {
 public:   
-
-    /**
-     * Listener interface for C3DTransform events.
-     */
-    class  Listener
-    {
-    public:
-
-        virtual ~Listener() { }
-
-        /**
-         * Handles when an transform has changed.
-         *
-         * @param transform The C3DTransform object that was changed.
-         * @param cookie Cookie value that was specified when the listener was registered.
-         */
-        virtual void transformChanged(C3DTransform* transform, long cookie) = 0;
-    };
+	   
 
     /**
      * Constructs the identity transform.
@@ -226,6 +212,7 @@ public:
      * @param dst The vector to store the result in.
      */
     void getRightVector(C3DVector3* dst) const;
+		
 
     /**
      * Rotates this transform's rotation component by the given rotation.
@@ -616,21 +603,7 @@ public:
 	 *
 	 */
 	void lookAt(const C3DVector3& position, const C3DVector3& up, const C3DVector3& target);
-    /**
-     * Adds a transform listener.
-     *
-     * @param listener The listener to add.
-     * @param cookie An optional long value that is passed to the specified listener when it is called.
-     */
-    void addListener(C3DTransform::Listener* listener, long cookie = 0);
-
-    /**
-     * Removes a transform listener.
-     */
-    void removeListener(C3DTransform::Listener* listener);
-
-	//void setRotation(const C3DVector3& dir, const C3DVector3& up);
-
+	
     /**
      * Set position and rotation as rotating along a specific line
      * @param point a point at the line
@@ -649,21 +622,7 @@ public:
 
 protected:
 
-    /**
-     * C3DTransform Listener.
-     */
-    struct TransformListener
-    {
-        /**
-         * Listener for C3DTransform events.
-         */
-        Listener* listener;
-
-        /**
-         * An optional long value that is specified to the Listener's callback.
-         */
-        long cookie;
-    };
+   
 
     /**
      * Defines the matrix dirty bits for marking the translation, scale and rotation
@@ -684,7 +643,7 @@ protected:
     /**
      * Called when the transform changes.
      */
-    virtual void transformChanged();
+	virtual void transformChanged(){};
 
 	virtual void copyFrom(const C3DTransform* other);
 
@@ -713,10 +672,6 @@ protected:
      */
     mutable char _matrixDirtyBits;
     
-    /** 
-     * List of TransformListener's on the C3DTransform.
-     */
-    std::list<TransformListener>* _listeners;
 
 private:
 
