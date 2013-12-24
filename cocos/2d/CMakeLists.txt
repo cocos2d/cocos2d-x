@@ -139,7 +139,6 @@ set(COCOS2D_SRC
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
   ../../external/edtaa3func/edtaa3func.cpp
-  renderer/CCNewSprite.cpp
   renderer/CCNewSpriteBatchNode.cpp
   renderer/CCCustomCommand.cpp
   renderer/CCFrustum.cpp
