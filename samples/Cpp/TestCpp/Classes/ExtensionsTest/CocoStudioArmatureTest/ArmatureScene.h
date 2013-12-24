@@ -153,7 +153,7 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title() const override;
-	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 	void callback1();
 	void callback2();
 
@@ -166,7 +166,7 @@ class TestFrameEvent : public ArmatureTestLayer
 public:
     virtual void onEnter();
     virtual std::string title() const override;
-    void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
 protected:
     NodeGrid* _gridNode;
@@ -215,7 +215,7 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
@@ -273,7 +273,7 @@ public:
     virtual void update(float delta);
     virtual void draw();
     
-    void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
     void initWorld() {};
     cocostudio::Armature *armature;

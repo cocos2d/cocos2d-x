@@ -3594,38 +3594,6 @@ JSBool js_cocos2dx_CCFileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsva
     return JS_FALSE;
 }
 
-JSBool js_cocos2dx_CCFileUtils_getStringFromFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    JSBool ok = JS_TRUE;
-    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
-    
-    if (argc == 1) {
-        const char* arg0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        ssize_t size = 0;
-        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
-        if (data && size > 0) {
-            jsval jsret = c_string_to_jsval(cx, (char*)data, size);
-            free(data);
-            
-            JS_SET_RVAL(cx, vp, jsret);
-        }
-        else
-        {
-            JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        }
-
-        return JS_TRUE;
-    }
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
-    return JS_FALSE;
-}
-
 JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -3636,28 +3604,29 @@ JSBool js_cocos2dx_CCFileUtils_getByteArrayFromFile(JSContext *cx, uint32_t argc
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
     
     if (argc == 1) {
-        const char* arg0;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); arg0 = arg0_tmp.c_str();
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
         JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        ssize_t size = 0;
-        unsigned char* data = cobj->getFileData(arg0, "rb", &size);
+
+        Data data = cobj->getDataFromFile(arg0);
         do
         {
-            if (data && size > 0) {
+            if (!data.isNull())
+            {
+                uint32_t size = static_cast<uint32_t>(data.getSize());
                 JSObject* array = JS_NewUint8Array(cx, size);
-                if (NULL == array) {
+                if (nullptr == array)
                     break;
-                }
+
                 uint8_t* bufdata = (uint8_t*)JS_GetArrayBufferViewData(array);
-                memcpy(bufdata, data, size*sizeof(uint8_t));
-                free(data);
+                memcpy(bufdata, data.getBytes(), size*sizeof(uint8_t));
                 
                 JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(array));
                 return JS_TRUE;
             }
         } while(false);
         
-        JS_ReportError(cx, "get file(%s) data fails", arg0);
+        JS_ReportError(cx, "get file(%s) data fails", arg0.c_str());
         return JS_FALSE;
     }
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
@@ -3694,9 +3663,9 @@ static JSBool js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile(JSContext
 		std::string arg0;
 		ok &= jsval_to_std_string(cx, argv[0], &arg0);
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cocos2d::Dictionary* ret = Dictionary::createWithContentsOfFile(arg0.c_str());
+		cocos2d::ValueMap ret = FileUtils::getInstance()->getValueMapFromFile(arg0.c_str());
 		jsval jsret;
-		jsret = ccdictionary_to_jsval(cx, ret);
+		jsret = ccvaluemap_to_jsval(cx, ret);
 		JS_SET_RVAL(cx, vp, jsret);
 		return JS_TRUE;
 	}
@@ -3980,7 +3949,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_FileUtils_prototype, "setSearchPaths", js_cocos2dx_CCFileUtils_setSearchPaths, 1, JSPROP_PERMANENT );
     JS_DefineFunction(cx, jsb_FileUtils_prototype, "getSearchPaths", js_cocos2dx_CCFileUtils_getSearchPaths, 0, JSPROP_PERMANENT );
     JS_DefineFunction(cx, jsb_FileUtils_prototype, "getSearchResolutionsOrder", js_cocos2dx_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT );
-    JS_DefineFunction(cx, jsb_FileUtils_prototype, "getStringFromFile", js_cocos2dx_CCFileUtils_getStringFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, jsb_FileUtils_prototype, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_FileUtils_prototype, "getByteArrayFromFile", js_cocos2dx_CCFileUtils_getByteArrayFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);

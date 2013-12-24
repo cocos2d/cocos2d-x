@@ -510,6 +510,8 @@
 		1A8C58B9180E904800EF57C3 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559F180E8B8400EF57C3 /* luaj.lua */; };
 		1A8C58BA180E904800EF57C3 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A0180E8B8400EF57C3 /* Opengl.lua */; };
 		1A8C58BB180E904800EF57C3 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */; };
+		1A90D1091868646A00CFB4B6 /* SpineTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A90D1081868646A00CFB4B6 /* SpineTest */; };
+		1A90D10A1868646A00CFB4B6 /* SpineTest in Resources */ = {isa = PBXBuildFile; fileRef = 1A90D1081868646A00CFB4B6 /* SpineTest */; };
 		1A9141A1180BEB6A00CFC31F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419A180BEB6A00CFC31F /* InfoPlist.strings */; };
 		1A9141A2180BEB6A00CFC31F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419C180BEB6A00CFC31F /* MainMenu.xib */; };
 		1A9141A3180BEB6A00CFC31F /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419E180BEB6A00CFC31F /* Icon.icns */; };
@@ -2319,6 +2321,7 @@
 		1A8C587A180E8F0C00EF57C3 /* TestLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLua_Prefix.pch; sourceTree = "<group>"; };
 		1A8C589E180E8FB000EF57C3 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosbuilderRes; sourceTree = "<group>"; };
 		1A8C58A1180E8FC000EF57C3 /* luaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luaScript; sourceTree = "<group>"; };
+		1A90D1081868646A00CFB4B6 /* SpineTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SpineTest; path = ../samples/Javascript/Shared/tests/SpineTest; sourceTree = "<group>"; };
 		1A91419B180BEB6A00CFC31F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		1A91419D180BEB6A00CFC31F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		1A91419E180BEB6A00CFC31F /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = proj.mac/Icon.icns; sourceTree = "<group>"; };
@@ -3959,7 +3962,6 @@
 		1A9DC2D7180E66BB007A3AD4 /* JS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */,
 				1A9DC941180E66FE007A3AD4 /* ActionManagerTest */,
 				1A9DC942180E66FE007A3AD4 /* ActionsTest */,
 				1A9DC943180E66FE007A3AD4 /* AdvanceCompiler */,
@@ -3971,6 +3973,7 @@
 				1A9DC949180E66FE007A3AD4 /* ClippingNodeTest */,
 				1A9DC94A180E66FE007A3AD4 /* CocosDenshionTest */,
 				1A9DC94B180E66FE007A3AD4 /* CocosNodeTest */,
+				3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */,
 				1A9DC94C180E66FE007A3AD4 /* CurrentLanguageTest */,
 				1A9DC94D180E66FE007A3AD4 /* DrawPrimitivesTest */,
 				1A9DC94E180E66FE007A3AD4 /* EaseActionsTest */,
@@ -3998,14 +4001,15 @@
 				1A9DC964180E66FF007A3AD4 /* RotateWorldTest */,
 				1A9DC965180E66FF007A3AD4 /* SceneTest */,
 				1A9DC966180E66FF007A3AD4 /* SchedulerTest */,
+				1A90D1081868646A00CFB4B6 /* SpineTest */,
 				1A9DC967180E66FF007A3AD4 /* SpriteTest */,
 				1A9DC968180E66FF007A3AD4 /* SysTest */,
-				1A9DC969180E66FF007A3AD4 /* tests_resources-html5.js */,
-				1A9DC96A180E66FF007A3AD4 /* tests_resources-jsb.js */,
 				1A9DC96B180E66FF007A3AD4 /* tests-boot-html5.js */,
 				1A9DC96C180E66FF007A3AD4 /* tests-boot-jsb-for-obfuscation.js */,
 				1A9DC96D180E66FF007A3AD4 /* tests-boot-jsb.js */,
 				1A9DC96E180E66FF007A3AD4 /* tests-main.js */,
+				1A9DC969180E66FF007A3AD4 /* tests_resources-html5.js */,
+				1A9DC96A180E66FF007A3AD4 /* tests_resources-jsb.js */,
 				1A9DC96F180E66FF007A3AD4 /* TextInputTest */,
 				1A9DC970180E66FF007A3AD4 /* TextureCacheTest */,
 				1A9DC971180E66FF007A3AD4 /* TileMapTest */,
@@ -6414,6 +6418,7 @@
 				1A9DC9BF180E66FF007A3AD4 /* SceneTest in Resources */,
 				1A9DC9C1180E66FF007A3AD4 /* SchedulerTest in Resources */,
 				1A9DC9C3180E66FF007A3AD4 /* SpriteTest in Resources */,
+				1A90D10A1868646A00CFB4B6 /* SpineTest in Resources */,
 				1A9DC9C5180E66FF007A3AD4 /* SysTest in Resources */,
 				1A9DC9D3180E66FF007A3AD4 /* TextInputTest in Resources */,
 				1A9DC9D5180E66FF007A3AD4 /* TextureCacheTest in Resources */,
@@ -6528,6 +6533,7 @@
 				1A9DCA54180E7237007A3AD4 /* tests-boot-jsb.js in Resources */,
 				1A9DCA55180E7237007A3AD4 /* tests-main.js in Resources */,
 				1A9DC2AF180E6681007A3AD4 /* InfoPlist.strings in Resources */,
+				1A90D1091868646A00CFB4B6 /* SpineTest in Resources */,
 				1A9DC2B0180E6681007A3AD4 /* MainMenu.xib in Resources */,
 				1A9DC2B1180E6681007A3AD4 /* Icon.icns in Resources */,
 				1A9DC2B2180E6681007A3AD4 /* Info-obfuscated.plist in Resources */,

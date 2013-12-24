@@ -2019,6 +2019,120 @@ tolua_lerror:
 #endif
 }
 
+int tolua_cocos2d_Node_setContentSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = NULL;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setContentSize'", NULL);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    
+    if (1 == argc)
+    {
+        cocos2d::Size size;
+        ok &= luaval_to_size(tolua_S, 2, &size);
+        if (!ok)
+            return 0;
+        
+        cobj->setContentSize(size);
+    }
+    else if(2 == argc)
+    {
+        double width;
+        ok &= luaval_to_number(tolua_S, 2,&width);
+        
+        if (!ok)
+            return 0;
+        
+        double height;
+        ok &= luaval_to_number(tolua_S, 3,&height);
+        
+        if (!ok)
+            return 0;
+        
+        cobj->setContentSize(Size(width, height));
+        return 0;
+    }
+    
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setContentSize",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setContentSize'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Node* cobj = NULL;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setAnchorPoint'", NULL);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    
+    if (1 == argc)
+    {
+        cocos2d::Point pt;
+        ok &= luaval_to_point(tolua_S, 2, &pt);
+        if (!ok)
+            return 0;
+        
+        cobj->setAnchorPoint(pt);
+    }
+    else if(2 == argc)
+    {
+        double x;
+        ok &= luaval_to_number(tolua_S, 2,&x);
+        
+        if (!ok)
+            return 0;
+        
+        double y;
+        ok &= luaval_to_number(tolua_S, 3,&y);
+        
+        if (!ok)
+            return 0;
+        
+        cobj->setAnchorPoint(Point(x,y));
+        return 0;
+    }
+    
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "setAnchorPoint",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setAnchorPoint'.",&tolua_err);
+#endif
+    return 0;
+}
+
 static int tolua_cocos2d_Node_getPosition(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -3195,6 +3309,12 @@ static void extendNode(lua_State* tolua_S)
         lua_rawset(tolua_S, -3);
         lua_pushstring(tolua_S,"getPosition");
         lua_pushcfunction(tolua_S,tolua_cocos2d_Node_getPosition);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setContentSize");
+        lua_pushcfunction(tolua_S, tolua_cocos2d_Node_setContentSize);
+        lua_rawset(tolua_S, -3);
+        lua_pushstring(tolua_S, "setAnchorPoint");
+        lua_pushcfunction(tolua_S, tolua_cocos2d_Node_setAnchorPoint);
         lua_rawset(tolua_S, -3);
     }
     lua_pop(tolua_S, 1);

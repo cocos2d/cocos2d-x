@@ -81,7 +81,7 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
     pNode->addChild(menuBack);
     
     //ui action
-	actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	//actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 

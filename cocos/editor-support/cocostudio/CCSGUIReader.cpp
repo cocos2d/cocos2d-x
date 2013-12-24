@@ -119,23 +119,13 @@ const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 
 UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
-	unsigned char *pBytes = NULL;
 	std::string jsonpath;
 	rapidjson::Document jsonDict;
-    jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     int pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
-    ssize_t size = 0;
-    pBytes = CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(),"r" , &size);
-	if(NULL == pBytes || strcmp((const char*)pBytes, "") == 0)
-	{
-		printf("read json file[%s] error!\n", fileName);
-		return NULL;
-	}
-	CCData *data = new CCData(pBytes, size);
-	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
-	CC_SAFE_DELETE(data);
-	jsonDict.Parse<0>(load_str.c_str());
+    std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
+	jsonDict.Parse<0>(contentStr.c_str());
     if (jsonDict.HasParseError())
     {
         CCLOG("GetParseError %s\n",jsonDict.GetParseError());
@@ -164,7 +154,6 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     }
     
     CC_SAFE_DELETE(pReader);
-    CC_SAFE_DELETE_ARRAY(pBytes);
     return widget;
 }
 

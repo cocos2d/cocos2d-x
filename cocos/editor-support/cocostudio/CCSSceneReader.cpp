@@ -55,7 +55,6 @@ namespace cocostudio {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               _pNode = createObject(jsonDict, NULL);
 			  //TriggerMng::sharedTriggerMng()->parse(jsonDict);
-			  
         } while (0);
         
         return _pNode;
@@ -64,18 +63,11 @@ namespace cocostudio {
 	bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
 	{
 		bool bRet = false;
-		ssize_t size = 0;
-		unsigned char *pBytes = NULL;
 		do {
 			CC_BREAK_IF(pszFileName == NULL);
 			std::string jsonpath = CCFileUtils::getInstance()->fullPathForFilename(pszFileName);
-			pBytes = cocos2d::CCFileUtils::getInstance()->getFileData(jsonpath.c_str(), "r", &size);
-			CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-			CCData *data = new CCData(pBytes, size);
-			std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-			CC_SAFE_DELETE(data);
-			CC_SAFE_DELETE_ARRAY(pBytes);
-			doc.Parse<0>(load_str.c_str());
+            std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
+			doc.Parse<0>(contentStr.c_str());
 			CC_BREAK_IF(doc.HasParseError());
 			bRet = true;
 		} while (0);
@@ -273,11 +265,11 @@ namespace cocostudio {
                     {
                         file_path = reDir.substr(0, pos+1);
                     }
-                    
+
                     rapidjson::Document jsonDict;
                     if(!readJson(pPath.c_str(), jsonDict))
                     {
-                        CCLog("read json file[%s] error!\n", pPath.c_str());
+                        log("read json file[%s] error!\n", pPath.c_str());
                         continue;
                     }
                     
@@ -357,7 +349,7 @@ namespace cocostudio {
                         {
                             pAttribute->parse(pData);
                         }
-                        CC_SAFE_DELETE_ARRAY(pData);
+                        //CC_SAFE_FREE(pData);
                     }
                     else
                     {
