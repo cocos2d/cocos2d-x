@@ -27,7 +27,6 @@
 #include "CCShaderCache.h"
 #include "CCTextureCache.h"
 #include "CCSprite.h"
-#include "CCNewSprite.h"
 #include "CCQuadCommand.h"
 #include "CCRenderer.h"
 
