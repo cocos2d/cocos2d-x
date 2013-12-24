@@ -6,13 +6,19 @@
 # Author: chuanwei
 
 import sys
-from module.ui import TkProjectDialog
+from module.ui import TkCocosDialog
 from module.core import CocosProject
 
 # ------------ main --------------
 if __name__ == '__main__':
+    """
+    There have double ways to create cocos project.
+    1.UI
+    2.console
+        #create_project.py -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany
+    """
     if len(sys.argv)==1:
-        TkProjectDialog()
+        TkCocosDialog()
     else:
         project = CocosProject()
         name, package, language, path = project.checkParams()
