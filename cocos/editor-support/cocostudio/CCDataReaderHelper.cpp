@@ -297,22 +297,24 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
 
     ssize_t size;
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+    unsigned char *pBytes = CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
 
+    Data data(pBytes, size);
+    std::string load_str = std::string((const char*)data.getBytes(), data.getSize());
     if (str.compare(".xml") == 0)
     {
-        DataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromCache(load_str.c_str(), &dataInfo);
     }
     else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
     {
-        DataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
-    free(pFileContent);
+    CC_SAFE_FREE(pBytes);
 }
 
 void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, Object *target, SEL_SCHEDULE selector)

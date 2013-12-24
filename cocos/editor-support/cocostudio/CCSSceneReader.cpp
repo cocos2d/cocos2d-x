@@ -33,6 +33,9 @@ namespace cocostudio {
     SceneReader* SceneReader::s_sharedReader = nullptr;
 
     SceneReader::SceneReader()
+    : _pListener(NULL)
+    , _pfnSelector(NULL)
+    , _pNode(NULL)
     {
     }
 
@@ -65,8 +68,8 @@ namespace cocostudio {
 		unsigned char *pBytes = NULL;
 		do {
 			CC_BREAK_IF(pszFileName == NULL);
-			std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
-			pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
+			std::string jsonpath = CCFileUtils::getInstance()->fullPathForFilename(pszFileName);
+			pBytes = cocos2d::CCFileUtils::getInstance()->getFileData(jsonpath.c_str(), "r", &size);
 			CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 			CCData *data = new CCData(pBytes, size);
 			std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
@@ -85,12 +88,12 @@ namespace cocostudio {
 		{
 			return NULL;
 		}
-		CCNode *_retNode = NULL;
+		Node *_retNode = NULL;
 		Vector<Node*>& Children = pParent->getChildren();
 		Vector<Node*>::iterator iter = Children.begin();
 		while (iter != Children.end())
 		{
-			CCNode* pNode = *iter;
+			Node* pNode = *iter;
 			if(pNode != NULL && pNode->getTag() == nTag)
 			{
 				_retNode =  pNode;
@@ -110,7 +113,7 @@ namespace cocostudio {
 	}
 
 
-	CCNode* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::CCNode* parent)
+	Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* parent)
     {
         const char *className = DICTOOL->getStringValue_json(dict, "classname");
         if(strcmp(className, "CCNode") == 0)
@@ -440,7 +443,7 @@ namespace cocostudio {
 		return nodeByTag(_pNode, nTag);
 	}
 
-    void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
+    void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::Node *node)
     {
 		float x = DICTOOL->getFloatValue_json(root, "x");
 		float y = DICTOOL->getFloatValue_json(root, "y");

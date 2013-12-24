@@ -34,7 +34,7 @@ namespace cocostudio {
  @brief Ease Bezier
  @ingroup Actions
  */
-class EaseBezierAction:public cocos2d::ActionEase
+class EaseBezierAction : public cocos2d::ActionEase
 {
 public:
 	/** creates the action */

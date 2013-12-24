@@ -297,7 +297,8 @@ Spawn * ActionNode::refreshActionProperty()
 				ActionFrame* srcFrame = (ActionFrame*)(cArray->getObjectAtIndex(i-1));
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				Action* cAction = frame->getAction(duration);
-				cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+                if(cAction != NULL)
+				  cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
 			}
 		}
 		Sequence* cSequence = Sequence::create(cSequenceArray);
