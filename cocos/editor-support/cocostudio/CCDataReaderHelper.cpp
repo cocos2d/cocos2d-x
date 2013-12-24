@@ -261,7 +261,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     */
     for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (_configFileList[i].compare(filePath) == 0)
+        if (_configFileList[i] == filePath)
         {
             return;
         }
@@ -299,11 +299,11 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
 
-    if (str.compare(".xml") == 0)
+    if (str == ".xml")
     {
         DataReaderHelper::addDataFromCache(contentStr, &dataInfo);
     }
-    else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
+    else if(str == ".json" || str == ".ExportJson")
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
@@ -318,7 +318,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     */
     for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (_configFileList[i].compare(filePath) == 0)
+        if (_configFileList[i] == filePath)
         {
             if (target && selector)
             {
@@ -396,11 +396,11 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     // XXX fileContent is being leaked
     data->fileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
 
-    if (str.compare(".xml") == 0)
+    if (str == ".xml")
     {
         data->configType = DragonBone_XML;
     }
-    else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
+    else if(str == ".json" || str == ".ExportJson")
     {
         data->configType = CocoStudio_JSON;
     }
@@ -596,7 +596,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
             std::string parentNameStr = parentName;
             while (parentXML)
             {
-                if (parentNameStr.compare(parentXML->Attribute(A_NAME)) == 0)
+                if (parentNameStr == parentXML->Attribute(A_NAME))
                 {
                     break;
                 }
@@ -741,7 +741,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
     if(_easing != nullptr)
     {
         std::string str = _easing;
-        if(str.compare(FL_NAN) != 0)
+        if(str != FL_NAN)
         {
             if( movementXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
@@ -778,7 +778,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
 
             while (parentXml)
             {
-                if (parentName.compare(parentXml->Attribute(A_NAME)) == 0)
+                if (parentName == parentXml->Attribute(A_NAME))
                 {
                     break;
                 }
@@ -1070,7 +1070,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
     if(_easing != nullptr)
     {
         std::string str = _easing;
-        if(str.compare(FL_NAN) != 0)
+        if(str != FL_NAN)
         {
             if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
