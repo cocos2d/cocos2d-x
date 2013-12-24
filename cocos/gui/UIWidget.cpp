@@ -38,7 +38,6 @@ _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
 _updateEnabled(false),
-_renderer(nullptr),
 _touchStartPos(Point::ZERO),
 _touchMovePos(Point::ZERO),
 _touchEndPos(Point::ZERO),
@@ -64,11 +63,8 @@ _touchListener(nullptr)
 
 Widget::~Widget()
 {
-    //recheck
-    
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
-    _renderer->release();
     _widgetChildren.clear();
     CC_SAFE_RELEASE(_touchListener);
 }
@@ -258,9 +254,6 @@ Widget* Widget::getChildByName(const char *name)
 
 void Widget::initRenderer()
 {
-    _renderer = Node::create();
-    _renderer->retain();
-    Node::addChild(_renderer, -1, -1);
 }
 
 void Widget::setSize(const Size &size)
@@ -511,7 +504,7 @@ Point Widget::getWorldPosition()
 
 Node* Widget::getVirtualRenderer()
 {
-    return _renderer;
+    return this;
 }
 
 void Widget::onSizeChanged()
@@ -770,21 +763,6 @@ void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
-}
-
-Node* Widget::getRenderer()
-{
-    return _renderer;
-}
-
-void Widget::addRenderer(Node* renderer, int zOrder)
-{
-    _renderer->addChild(renderer, zOrder);
-}
-
-void Widget::removeRenderer(Node* renderer, bool cleanup)
-{
-    _renderer->removeChild(renderer,cleanup);
 }
 
 bool Widget::hitTest(const Point &pt)

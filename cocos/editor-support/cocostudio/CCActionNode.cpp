@@ -211,7 +211,7 @@ Node* ActionNode::getActionNode()
 		Widget* rootWidget = dynamic_cast<Widget*>(_object);
 		if (rootWidget != NULL)
 		{
-			return rootWidget->getRenderer();
+			return rootWidget;
 		}
 	}
 	return NULL;

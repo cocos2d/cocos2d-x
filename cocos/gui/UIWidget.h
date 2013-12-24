@@ -315,38 +315,7 @@ public:
      */
     Widget* getChildByName(const char* name);
     
-    /**
-     * Gets the renderer of widget
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @return a Node object
-     */
-    Node* getRenderer();
-    
     virtual void visit();
-    
-    /**
-     * Add a Node for rendering.
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @param renderer     A render node
-     *
-     * @param zOrder    Z order for drawing priority. Please refer to Node::setZOrder(int)
-     */
-    void addRenderer(Node* renderer, int zOrder);
-    
-    /**
-     * Remove a Node from widget.
-     *
-     * renderer is a Node, it's for drawing
-     *
-     * @param renderer     A render node which needs to be removed
-     *
-     * @param cleanup   true if all running actions and callbacks on the render node will be cleanup, false otherwise.
-     */
-    void removeRenderer(Node* renderer, bool cleanup);
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -694,7 +663,7 @@ protected:
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     bool _updateEnabled;      ///< is "update" method scheduled
-    Node* _renderer;        ///< base renderer
+//    Node* _renderer;        ///< base renderer
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point

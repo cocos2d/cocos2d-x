@@ -28,6 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
+#define LABELRENDERERZ (-1)
 
 Label::Label():
 _touchScaleChangeEnabled(false),
@@ -68,9 +69,8 @@ bool Label::init()
 
 void Label::initRenderer()
 {
-    Widget::initRenderer();
     _labelRenderer = LabelTTF::create();
-    _renderer->addChild(_labelRenderer);
+    Node::addChild(_labelRenderer, LABELRENDERERZ, -1);
 }
 
 void Label::setText(const std::string& text)
@@ -179,8 +179,8 @@ void Label::onPressStateChangedToDisabled()
 
 void Label::clickScale(float scaleX, float scaleY)
 {
-    _renderer->setScaleX(scaleX);
-    _renderer->setScaleY(scaleY);
+    setScaleX(scaleX);
+    setScaleY(scaleY);
 }
 
 void Label::setFlipX(bool flipX)

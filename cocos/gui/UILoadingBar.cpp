@@ -29,6 +29,8 @@ NS_CC_BEGIN
 
 namespace gui {
     
+#define BARRENDERERZ (-1)
+    
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
@@ -62,9 +64,8 @@ LoadingBar* LoadingBar::create()
 
 void LoadingBar::initRenderer()
 {
-    Widget::initRenderer();
     _barRenderer = Sprite::create();
-    _renderer->addChild(_barRenderer);
+    Node::addChild(_barRenderer, BARRENDERERZ, -1);
     _barRenderer->setAnchorPoint(Point(0.0,0.5));
 }
 
@@ -180,7 +181,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         return;
     }
     _scale9Enabled = enabled;
-    _renderer->removeChild(_barRenderer, true);
+    Node::removeChild(_barRenderer);
     _barRenderer = nullptr;
     if (_scale9Enabled)
     {
@@ -191,7 +192,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         _barRenderer = Sprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
-    _renderer->addChild(_barRenderer);
+    Node::addChild(_barRenderer, BARRENDERERZ, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;

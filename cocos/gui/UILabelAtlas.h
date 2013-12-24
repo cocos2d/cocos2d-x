@@ -54,7 +54,6 @@ public:
     static UICCLabelAtlas* create();
     void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     void setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void updateDisplayedOpacity(GLubyte opacity) override;
     virtual void draw(void) override;
 };
 /**
@@ -109,7 +108,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    UICCLabelAtlas* _laberAtlasRenderer;
+    UICCLabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;

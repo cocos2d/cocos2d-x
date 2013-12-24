@@ -28,7 +28,11 @@
 NS_CC_BEGIN
 
 namespace gui {
-
+    
+#define BASEBARRENDERERZ (-2)
+#define PROGRESSBARRENDERERZ (-2)
+#define SLIDBALLRENDERERZ (-1)
+    
 Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
@@ -78,12 +82,11 @@ Slider* Slider::create()
 
 void Slider::initRenderer()
 {
-    Widget::initRenderer();
     _barRenderer = Sprite::create();
     _progressBarRenderer = Sprite::create();
     _progressBarRenderer->setAnchorPoint(Point(0.0f, 0.5f));
-    _renderer->addChild(_barRenderer, -1);
-    _renderer->addChild(_progressBarRenderer, -1);
+    Node::addChild(_barRenderer, BASEBARRENDERERZ, -1);
+    Node::addChild(_progressBarRenderer, PROGRESSBARRENDERERZ, -1);
     _slidBallNormalRenderer = Sprite::create();
     _slidBallPressedRenderer = Sprite::create();
     _slidBallPressedRenderer->setVisible(false);
@@ -93,7 +96,7 @@ void Slider::initRenderer()
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
-    _renderer->addChild(_slidBallRenderer);
+    Node::addChild(_slidBallRenderer, SLIDBALLRENDERERZ, -1);
 }
 
 void Slider::loadBarTexture(const char* fileName, TextureResType texType)
@@ -198,8 +201,8 @@ void Slider::setScale9Enabled(bool able)
     }
     
     _scale9Enabled = able;
-    _renderer->removeChild(_barRenderer, true);
-    _renderer->removeChild(_progressBarRenderer, true);
+    Node::removeChild(_barRenderer);
+    Node::removeChild(_progressBarRenderer);
     _barRenderer = nullptr;
     _progressBarRenderer = nullptr;
     if (_scale9Enabled)
@@ -214,8 +217,8 @@ void Slider::setScale9Enabled(bool able)
     }
     loadBarTexture(_textureFile.c_str(), _barTexType);
     loadProgressBarTexture(_progressBarTextureFile.c_str(), _progressBarTexType);
-    _renderer->addChild(_barRenderer, -1);
-    _renderer->addChild(_progressBarRenderer, -1);
+    Node::addChild(_barRenderer, BASEBARRENDERERZ, -1);
+    Node::addChild(_progressBarRenderer, PROGRESSBARRENDERERZ, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
