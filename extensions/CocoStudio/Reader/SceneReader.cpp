@@ -24,6 +24,7 @@
 
 #include "SceneReader.h"
 #include "cocos-ext.h"
+#include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 
@@ -496,6 +497,8 @@ NS_CC_EXT_BEGIN
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
 		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+        
     }
 
 NS_CC_EXT_END
