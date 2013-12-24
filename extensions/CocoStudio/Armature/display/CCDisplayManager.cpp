@@ -129,6 +129,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
     {
         skin->setBone(m_pBone);
         displayData = CCSpriteDisplayData::create();
+        displayData->displayName = skin->getDisplayName();
 
         CCDisplayFactory::initSpriteDisplay(m_pBone, decoDisplay, skin->getDisplayName().c_str(), skin);
 

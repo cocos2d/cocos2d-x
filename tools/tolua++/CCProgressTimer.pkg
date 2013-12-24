@@ -15,7 +15,6 @@ class CCProgressTimer : public CCNodeRGBA
     void setSprite(CCSprite *pSprite);
     void setType(CCProgressTimerType type);
     void setReverseProgress(bool reverse);
-    void setAnchorPoint(CCPoint anchorPoint);
 
     void setColor(const ccColor3B& color);
     const ccColor3B& getColor(void);

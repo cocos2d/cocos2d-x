@@ -134,7 +134,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 	CCData *data = new CCData(pBytes, size);
 	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
 	CC_SAFE_DELETE(data);
-    CC_SAFE_FREE(pBytes);
+    CC_SAFE_DELETE_ARRAY(pBytes);
 	jsonDict.Parse<0>(load_str.c_str());
     if (jsonDict.HasParseError())
     {
