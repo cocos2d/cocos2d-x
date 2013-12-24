@@ -350,7 +350,7 @@ private:
         return false;
     }
     
-    bool callJSDelegate(TableView* table, long idx, std::string jsFunctionName, jsval& retVal)
+    bool callJSDelegate(TableView* table, ssize_t idx, std::string jsFunctionName, jsval& retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -360,7 +360,7 @@ private:
         JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        dataVal[1] = long_to_jsval(cx,idx);
+        dataVal[1] = ssize_to_jsval(cx,idx);
         
         JSObject* obj = _JSTableViewDataSource;
         JSAutoCompartment ac(cx, obj);
@@ -377,9 +377,9 @@ private:
                 return false;
             }
 
-            JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
+            JSBool ret = JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 2, dataVal, &retVal);
-            return true;
+            return ret == JS_TRUE ? true : false;
         }
         return false;
     }
