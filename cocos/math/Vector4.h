@@ -14,25 +14,13 @@ class  Vector4
 {
 public:
 
-    /**
-     * The x-coordinate.
-     */
-    float x;
-
-    /**
-     * The y-coordinate.
-     */
-    float y;
-
-    /**
-     * The z-coordinate.
-     */
-    float z;
-
-    /**
-     * The w-coordinate.
-     */
-    float w;
+    union
+    {
+        struct {
+            float x, y, z, w;
+        };
+        float m[4];
+    };
 
     /**
      * Constructs a new vector initialized to all zeros.
@@ -398,7 +386,7 @@ public:
      */
     inline const Vector4 operator*(float x) const;
 
-	inline const Vector4 operator*(const Vector4& v) const;
+    inline const Vector4 operator*(const Vector4& v) const;
 
     /**
      * Scales this vector by the given value.

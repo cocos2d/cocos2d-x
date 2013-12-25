@@ -226,28 +226,28 @@ void Transform::rotateZ(float angle)
 }
 
 void Transform::setRotationX(float angle)
-{	
-	Quaternion rotationQuat;
+{    
+    Quaternion rotationQuat;
     Quaternion::createFromAxisAngle(Vector3::unitX(), angle, &rotationQuat);
-	_rotation = rotationQuat;
-	dirty(DIRTY_ROTATION);
+    _rotation = rotationQuat;
+    dirty(DIRTY_ROTATION);
 
 }
 void Transform::setRotationY(float angle)
 {
-	Quaternion rotationQuat;
+    Quaternion rotationQuat;
     Quaternion::createFromAxisAngle(Vector3::unitY(), angle, &rotationQuat);
-	_rotation = rotationQuat;
-	dirty(DIRTY_ROTATION);
+    _rotation = rotationQuat;
+    dirty(DIRTY_ROTATION);
 }
 
 
 void Transform::setRotationZ(float angle)
 {
-	Quaternion rotationQuat;
+    Quaternion rotationQuat;
     Quaternion::createFromAxisAngle(Vector3::unitZ(), angle, &rotationQuat);
-	_rotation = rotationQuat;
-	dirty(DIRTY_ROTATION);
+    _rotation = rotationQuat;
+    dirty(DIRTY_ROTATION);
 }
 
 void Transform::scale(float scale)
@@ -538,7 +538,7 @@ void Transform::dirty(char matrixDirtyBits)
 void Transform::lookAt(const Vector3& position, const Vector3& up, const Vector3& target)
 {
 
-	Matrix matRotate;
+    Matrix matRotate;
 
     Vector3 upv = up;
     upv.normalize();
@@ -571,24 +571,24 @@ void Transform::lookAt(const Vector3& position, const Vector3& up, const Vector3
     matRotate.m[11] = 0;
 
     setRotation(matRotate);
-	setPosition(position);
+    setPosition(position);
 }
 
 void Transform::copyFrom(const Transform* other)
 {
-	_scale = other->_scale;
-	_position = other->_position;
-	_rotation = other->_rotation;
-	_matrix = other->_matrix;
-	_matrixDirtyBits = other->_matrixDirtyBits;
+    _scale = other->_scale;
+    _position = other->_position;
+    _rotation = other->_rotation;
+    _matrix = other->_matrix;
+    _matrixDirtyBits = other->_matrixDirtyBits;
 
-	transformChanged();
+    transformChanged();
 }
 
 void Transform::setRotationAlong(const Vector3& point, const Vector3& axis, float angle)
 {
     // p' = rot * (p - point) + point = rot * p - rot * point + point
-	_rotation.set(axis, angle);
+    _rotation.set(axis, angle);
     _position = point - _rotation * point;
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION);
 }

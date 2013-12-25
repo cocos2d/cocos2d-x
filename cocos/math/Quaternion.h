@@ -352,10 +352,10 @@ public:
 
     Vector3 operator* (const Vector3& v) const;
 
-	inline bool operator!= (const Quaternion& v) const
-	{
-		return x != v.x || y != v.y || z != v.z || w != v.w;
-	}
+    inline bool operator!= (const Quaternion& v) const
+    {
+        return x != v.x || y != v.y || z != v.z || w != v.w;
+    }
 
 private:
 
