@@ -53,7 +53,7 @@ public:
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
-    bool init(const char* viewName, float width, float height, float frameZoomFactor = 1.0f);
+    bool init(const std::string& viewName, float width, float height, float frameZoomFactor = 1.0f);
 public:
     
     //void resize(int width, int height);

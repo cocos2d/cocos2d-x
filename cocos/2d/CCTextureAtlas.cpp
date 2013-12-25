@@ -110,7 +110,7 @@ void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 
 // TextureAtlas - alloc & init
 
-TextureAtlas * TextureAtlas::create(const char* file, ssize_t capacity)
+TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 {
     TextureAtlas * textureAtlas = new TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))
@@ -134,7 +134,7 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capac
     return nullptr;
 }
 
-bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
+bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
 {
     // retained in property
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
@@ -145,7 +145,7 @@ bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
     }
     else
     {
-        CCLOG("cocos2d: Could not open file: %s", file);
+        CCLOG("cocos2d: Could not open file: %s", file.c_str());
         return false;
     }
 }
@@ -224,7 +224,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 std::string TextureAtlas::getDescription() const
 {
-    return String::createWithFormat("<TextureAtlas | totalQuads = %zd>", _totalQuads)->getCString();
+    return StringUtils::format("<TextureAtlas | totalQuads = %zd>", _totalQuads);
 }
 
 
