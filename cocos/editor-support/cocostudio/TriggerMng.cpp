@@ -33,19 +33,15 @@ namespace cocostudio {
 TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
 
 TriggerMng::TriggerMng(void)
-: _eventTriggers(NULL)
-,_triggerObjs(NULL)
-,_movementDispatches(NULL)
+    : _movementDispatches(NULL)
 {
-	_triggerObjs = Dictionary::create();
-	_triggerObjs->retain();
 	_movementDispatches = new std::map<Armature*, ArmatureMovementDispatcher*>;
 }
 
 TriggerMng::~TriggerMng(void)
 {
-    CC_SAFE_RELEASE(_eventTriggers);
-	CC_SAFE_RELEASE(_triggerObjs);
+    _eventTriggers.clear();
+	_triggerObjs.clear();
 
 	removeAllArmatureMovementCallBack();
 	CC_SAFE_DELETE(_movementDispatches);
@@ -85,37 +81,23 @@ void TriggerMng::parse(const rapidjson::Value &root)
 				{
 					add((unsigned int)(*iter), obj);
 				}
-				if (_triggerObjs != NULL)
-				{
-					_triggerObjs->setObject(obj, obj->getId());
-				}
 				
+                _triggerObjs.insert(std::pair<unsigned int, TriggerObj*>(obj->getId(), obj));
           }
         
     } while (0);
 }
 
-CCArray* TriggerMng::get(unsigned int event) const
+cocos2d::Vector<TriggerObj*> TriggerMng::get(unsigned int event) const
 {
-    CCArray* pRet = NULL;
     CCAssert(event >= 0, "Argument must be larger than 0");
-    do {
-        CC_BREAK_IF(NULL == _eventTriggers);
-        pRet = dynamic_cast<Array*>(_eventTriggers->objectForKey(event));
-        
-    } while (0);
-    return pRet;
+    
+    return _eventTriggers.at(event);
 }
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 {
-	if (_triggerObjs == NULL)
-	{
-		return NULL;
-	}
-	TriggerObj *obj = dynamic_cast<TriggerObj *>(_triggerObjs->objectForKey(id));
-
-	return obj;
+	return _triggerObjs.at(id);
 }
 
 bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
@@ -124,20 +106,20 @@ bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
     CCAssert(pObj != NULL, "Argument must be non-nil");
     do
     {
-        if (_eventTriggers == NULL)
+        auto iterator = _eventTriggers.find(event);
+        if (iterator == _eventTriggers.end())
         {
-            alloc();
+            _eventTriggers.insert(std::pair<unsigned int, cocos2d::Vector<TriggerObj*>>(event, cocos2d::Vector<TriggerObj*>()));
+            iterator = _eventTriggers.find(event);
         }
-        Array *pArray = dynamic_cast<Array*>(_eventTriggers->objectForKey(event));
-        if (pArray == NULL)
+        else
         {
-            pArray = Array::create();
+            Vector<TriggerObj*>& temp = iterator->second;
+            if(temp.find(pObj) == temp.end())
+            {
+                temp.pushBack(pObj);
+            }
         }
-		if (pArray->indexOfObject(pObj) == UINT_MAX)
-		{
-			pArray->addObject(pObj);
-			_eventTriggers->setObject(pArray, event);
-		}
         bRet = true;
     } while(0);
     return bRet;
@@ -145,24 +127,15 @@ bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
 
 void TriggerMng::removeAll(void)
 {
-    if(_eventTriggers != NULL)
+    for(auto temp : _eventTriggers)
     {
-        DictElement *pElement, *tmp;
-        HASH_ITER(hh, _eventTriggers->_elements, pElement, tmp)
+        for(auto obj : temp.second)
         {
-            HASH_DEL(_eventTriggers->_elements, pElement);
-            Object* pObj = NULL;
-            CCARRAY_FOREACH(((Array*)pElement->getObject()), pObj)
-            {
-                TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-                if (triobj != NULL)
-                {
-                    triobj->removeAll();
-                }
-            }
-            CC_SAFE_DELETE(pElement);
+            obj->removeAll();
         }
     }
+    
+    _eventTriggers.clear();
 }
 
 bool TriggerMng::remove(unsigned int event)
@@ -170,23 +143,18 @@ bool TriggerMng::remove(unsigned int event)
     bool bRet = false;
     CCAssert(event >= 0, "event must be larger than 0");
     do 
-    {        
-        CC_BREAK_IF(!_eventTriggers);
-        Object* pRetObject = NULL;
-        pRetObject = _eventTriggers->objectForKey(event);
-        CC_BREAK_IF(!pRetObject);
-        Array *array = dynamic_cast<Array*>(pRetObject);
-        CC_BREAK_IF(!array);
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(array, pObj)
+    {
+        auto iterator = _eventTriggers.find(event);
+        if(iterator != _eventTriggers.end())
         {
-            TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-            if (triobj != NULL)
+            for(auto obj : iterator->second)
             {
-                triobj->removeAll();
+                obj->removeAll();
             }
         }
-        _eventTriggers->removeObjectForKey(event);
+        
+        _eventTriggers.erase(event);
+        
         bRet = true;
     } while(0);
     return bRet;
@@ -198,24 +166,22 @@ bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 	CCAssert(event >= 0, "event must be larger than 0");
 	CCAssert(Obj != 0, "TriggerObj must be not 0");
 	do 
-	{        
-		CC_BREAK_IF(!_eventTriggers);
-		Object* pRetObject = NULL;
-		pRetObject = _eventTriggers->objectForKey(event);
-		CC_BREAK_IF(!pRetObject);
-		Array *array = dynamic_cast<Array*>(pRetObject);
-		CC_BREAK_IF(!array);
-		Object* pObj = NULL;
-		CCARRAY_FOREACH(array, pObj)
-		{
-			TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-			if (triobj != NULL && triobj == Obj)
-			{
-				triobj->removeAll();
-			}
-			array->removeObject(triobj);
-			break;
-		}
+	{
+        auto iterator = _eventTriggers.find(event);
+        if(iterator != _eventTriggers.end())
+        {
+            for(auto triobj : iterator->second)
+            {
+                if (triobj != NULL && triobj == Obj)
+                {
+                    triobj->removeAll();
+                    break;
+                }
+            }
+            
+            iterator->second.eraseObject(Obj);
+        }
+        
 		bRet = true;
 	} while(0);
 	return bRet;
@@ -238,13 +204,7 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 
 bool TriggerMng::isEmpty(void) const
 {
-    return (bool)(!(_eventTriggers && _eventTriggers->count()));
-}
-
-void TriggerMng::alloc(void)
-{
-    _eventTriggers = Dictionary::create();
-    _eventTriggers->retain();
+    return _eventTriggers.empty();
 }
 
 void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
@@ -261,7 +221,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 		amd = new ArmatureMovementDispatcher();
 		pAr->getAnimation()->setMovementEventCallFunc(amd, movementEvent_selector(ArmatureMovementDispatcher::animationEvent));
 		amd->addAnnimationEventCallBack(pTarget, mecf);
-		_movementDispatches->insert(std::map<CCArmature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
+		_movementDispatches->insert(std::map<Armature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
 	}
 	else
 	{
@@ -297,7 +257,7 @@ void TriggerMng::removeArmatureAllMovementCallBack(Armature *pAr)
 		return;
 	}
 
-	std::map<CCArmature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	std::map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
 	if (iter == _movementDispatches->end())
 	{
 		return;

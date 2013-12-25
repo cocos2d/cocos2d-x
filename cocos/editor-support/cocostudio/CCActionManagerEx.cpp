@@ -45,47 +45,44 @@ void ActionManagerEx::purgeActionManager()
 }
 
 ActionManagerEx::ActionManagerEx()
-: _pActionDic(NULL)
 {
-	_pActionDic = Dictionary::create();
-    _pActionDic->retain();
 }
 
 ActionManagerEx::~ActionManagerEx()
 {
-	_pActionDic->removeAllObjects();
-    _pActionDic->release();
+	_pActionDic.clear();
 }
 
 void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,Object* root)
 {
 	std::string path = jsonName;
-	int pos = path.find_last_of("/");
+	ssize_t pos = path.find_last_of("/");
 	std::string fileName = path.substr(pos+1,path.length());
 	CCLOG("filename == %s",fileName.c_str());
-	Array* actionList = Array::create();
+	cocos2d::Vector<ActionObject*> actionList;
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
     for (int i=0; i<actionCount; i++) {
         ActionObject* action = new ActionObject();
 		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
         action->initWithDictionary(actionDic,root);
-        actionList->addObject(action);
+        actionList.pushBack(action);
     }
-	_pActionDic->setObject(actionList, fileName);
+	_pActionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
 }
 
 
 ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* actionName)
 {
-	Array* actionList = (Array*)(_pActionDic->objectForKey(jsonName));
-	if (!actionList)
+	auto iterator = _pActionDic.find(jsonName);
+	if (iterator == _pActionDic.end())
 	{
 		return NULL;
 	}
-	for (int i = 0; i < actionList->count(); i++)
+    auto actionList = iterator->second;
+	for (int i = 0; i < actionList.size(); i++)
 	{
-		ActionObject* action = dynamic_cast<ActionObject*>(actionList->getObjectAtIndex(i));
+		ActionObject* action = actionList.at(i);
 		if (strcmp(actionName, action->getName()) == 0)
 		{
 			return action;
@@ -116,7 +113,7 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 
 void ActionManagerEx::releaseActions()
 {
-    _pActionDic->removeAllObjects();
+    _pActionDic.clear();
 }
 
 }

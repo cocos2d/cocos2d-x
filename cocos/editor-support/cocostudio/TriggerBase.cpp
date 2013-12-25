@@ -31,13 +31,10 @@ using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    Array *array = TriggerMng::getInstance()->get(event);
+    cocos2d::Vector<TriggerObj*> array = TriggerMng::getInstance()->get(event);
     do {
-        CC_BREAK_IF(array == NULL);
-        CCObject* pObj = NULL; 
-        CCARRAY_FOREACH(array, pObj)
+        for(auto triobj : array)
         {
-            TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
             if (triobj != NULL && triobj->detect())
             {
                 triobj->done();

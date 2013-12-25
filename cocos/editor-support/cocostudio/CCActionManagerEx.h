@@ -104,7 +104,7 @@ public:
 	void releaseActions();
 
 protected:
-	cocos2d::Dictionary* _pActionDic;
+	std::map<std::string, cocos2d::Vector<ActionObject*>> _pActionDic;
 };
 
 }

@@ -282,32 +282,10 @@ namespace cocostudio {
                         continue;
                     }
                     
-                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
                     const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
 
-                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-                    for (int i = 0; i < childrenCount; ++i)
-                    {
-                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
-                        if (plist == NULL)
-                        {
-                            continue;
-                        }
-                        std::string plistpath;
-                        plistpath += file_path;
-                        plistpath.append(plist);
-                        cocos2d::Dictionary *root = Dictionary::createWithContentsOfFile(plistpath.c_str());
-                        Dictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
-                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
-
-                        std::string textupath;
-                        textupath += file_path;
-                        textupath.append(textureFileName);
-
-                        ArmatureDataManager::getInstance()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
-
-                    }
+                    ArmatureDataManager::getInstance()->addArmatureFileInfo(pPath.c_str());
 
                     Armature *pAr = Armature::create(name);
                     ComRender *pRender = ComRender::create(pAr, "CCArmature");

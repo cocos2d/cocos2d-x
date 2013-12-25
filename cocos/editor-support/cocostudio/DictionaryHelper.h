@@ -42,18 +42,6 @@ public:
     ~DictionaryHelper();
     static DictionaryHelper* shareHelper();
 	static void purgeDictionaryHelper();
-    cocos2d::Dictionary* getSubDictionary(cocos2d::Dictionary* root,const char* key);
-    int getIntValue(cocos2d::Dictionary* root,const char* key);
-    float getFloatValue(cocos2d::Dictionary* root,const char* key);
-    const char* getStringValue(cocos2d::Dictionary* root,const char* key);
-    bool getBooleanValue(cocos2d::Dictionary* root,const char* key);
-    cocos2d::Array* getArrayValue(cocos2d::Dictionary* root,const char* key);
-    cocos2d::Object* checkObjectExist(cocos2d::Dictionary* root,const char* key);
-    int objectToIntValue(cocos2d::Object* obj);
-    float objectToFloatValue(cocos2d::Object* obj);
-    const char* objectToStringValue(cocos2d::Object* obj);
-    bool objectToBooleanValue(cocos2d::Object* obj);
-    cocos2d::Array* objectToCCArray(cocos2d::Object* obj);
     
 	const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);
