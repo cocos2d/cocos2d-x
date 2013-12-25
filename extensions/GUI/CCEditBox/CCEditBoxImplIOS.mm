@@ -396,6 +396,9 @@ void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
 {
+    // FIX ME: this is a temporary fix for issue #2920: IPA packed by Xcode5 may crash on iOS7 when switching to voice recognition input method
+    // I don't know how to fix it, so I changed the keyboard type to hide the dictation button to avoid crash.
+    // Issue #2920 url: http://www.cocos2d-x.org/issues/2920
     switch (inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
