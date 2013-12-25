@@ -22,45 +22,68 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __TRIGGEROBJ_H__
+#define __TRIGGEROBJ_H__
 
 #include "cocos2d.h"
-#include <string>
-#include "cocostudio/DictionaryHelper.h"
+#include "CocoStudio.h"
+#include "TriggerBase.h"
+#include <vector>
 
 namespace cocostudio {
 
-class ComAttribute : public cocos2d::Component
+
+class BaseTriggerCondition : public cocos2d::Object
 {
 protected:
-    /**
-     * @js ctor
-     */
-    ComAttribute(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComAttribute(void);
-    
+    BaseTriggerCondition(void);
 public:
-   virtual bool init();
-   static ComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
+	virtual ~BaseTriggerCondition(void);
+    virtual bool init();
+    virtual bool detect();
+	virtual void serialize(const rapidjson::Value &val);
+    virtual void removeAll();
+};
+
+class BaseTriggerAction : public cocos2d::Object
+{
+protected:
+    BaseTriggerAction(void);
+public:
+	virtual ~BaseTriggerAction(void);
+    virtual bool init();
+    virtual void done();
+	virtual void serialize(const rapidjson::Value &val);
+    virtual void removeAll();
+};
+
+
+class TriggerObj : public cocos2d::Object
+{
+public:
+    TriggerObj(void);
+    virtual ~TriggerObj(void);
+    virtual bool init();
+    static TriggerObj* create(void);
+    
+    virtual bool detect();
+    virtual void done();
+    virtual void removeAll();
+    virtual void serialize(const rapidjson::Value &val);
+	unsigned int getId();
+	void setEnable(bool bEnable);
+	std::vector<int>& getEvents();
+  
 private:
-   cocos2d::CCDictionary *_dict;
+    cocos2d::Array *_cons;
+    cocos2d::Array *_acts;
+	unsigned int _id;
+	bool _bEnable;
+	std::vector<int> _vInt;
 };
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif
+
+

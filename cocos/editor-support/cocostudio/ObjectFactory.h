@@ -22,45 +22,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __TRIGGERFACTORY_H__
+#define __TRIGGERFACTORY_H__
 
 #include "cocos2d.h"
+#include "CocoStudio.h"
 #include <string>
-#include "cocostudio/DictionaryHelper.h"
+#include <map>
 
 namespace cocostudio {
 
-class ComAttribute : public cocos2d::Component
+class ObjectFactory
 {
-protected:
-    /**
-     * @js ctor
-     */
-    ComAttribute(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComAttribute(void);
-    
 public:
-   virtual bool init();
-   static ComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
+    typedef cocos2d::Object* (*Instance)(void);
+    struct TInfo
+    {
+        TInfo(void);
+        TInfo(const std::string& type, Instance ins = NULL);
+        TInfo(const TInfo &t);
+        ~TInfo(void);
+        TInfo& operator= (const TInfo &t);
+        std::string _class;
+        Instance _fun;
+    };
+    typedef std::map<std::string, TInfo>  FactoryMap;
+    ObjectFactory(void);
+    virtual ~ObjectFactory(void);
+    static ObjectFactory* getInstance();
+    void destroyInstance();
+    cocos2d::Object* createObject(const char *name);
+    void registerType(const TInfo &t);
+    void removeAll();
 private:
-   cocos2d::CCDictionary *_dict;
+    static ObjectFactory *_sharedFactory;
+    FactoryMap _typeMap;
 };
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif

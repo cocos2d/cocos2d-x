@@ -22,45 +22,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#include "TriggerBase.h"
+#include "TriggerObj.h"
+#include "TriggerMng.h"
 
-#include "cocos2d.h"
-#include <string>
-#include "cocostudio/DictionaryHelper.h"
+using namespace cocos2d;
+using namespace cocostudio;
 
-namespace cocostudio {
-
-class ComAttribute : public cocos2d::Component
+void sendEvent(unsigned int event)
 {
-protected:
-    /**
-     * @js ctor
-     */
-    ComAttribute(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComAttribute(void);
-    
-public:
-   virtual bool init();
-   static ComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
-private:
-   cocos2d::CCDictionary *_dict;
-};
-
+    Array *array = TriggerMng::getInstance()->get(event);
+    do {
+        CC_BREAK_IF(array == NULL);
+        CCObject* pObj = NULL; 
+        CCARRAY_FOREACH(array, pObj)
+        {
+            TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
+            if (triobj != NULL && triobj->detect())
+            {
+                triobj->done();
+            }
+        }
+    } while (0);
 }
-
-#endif  // __FUNDATION__CCCOMPONENT_H__

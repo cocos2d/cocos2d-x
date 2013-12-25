@@ -54,7 +54,7 @@ namespace cocostudio {
         do {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               _pNode = createObject(jsonDict, NULL);
-			  //TriggerMng::sharedTriggerMng()->parse(jsonDict);
+			  TriggerMng::getInstance()->parse(jsonDict);
         } while (0);
         
         return _pNode;
@@ -152,6 +152,15 @@ namespace cocostudio {
                     {
                         pPlistFile.append(cocos2d::FileUtils::getInstance()->fullPathForFilename(plistFile));
                     }
+                    
+                    if (file == nullptr && plistFile == nullptr)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
                 }
 
                 if (comName != nullptr && strcmp(comName, "CCSprite") == 0)
@@ -342,14 +351,6 @@ namespace cocostudio {
                     if (nResType == 0)
                     {
                         pAttribute = ComAttribute::create();
-						ssize_t size = 0;
-						const char* pData = 0;
-                        pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
-                        if(pData != nullptr && strcmp(pData, "") != 0)
-                        {
-                            pAttribute->parse(pData);
-                        }
-                        //CC_SAFE_FREE(pData);
                     }
                     else
                     {
@@ -472,7 +473,7 @@ namespace cocostudio {
     {
         CC_SAFE_DELETE(s_sharedReader);
         DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-		//TriggerMng::sharedTriggerMng()->purgeTriggerMng();
+		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
     }
 
