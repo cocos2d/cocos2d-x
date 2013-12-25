@@ -128,7 +128,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
         m_pTweenData->scaleY += 1;
     }
 
-    if (m_iRawDuration == 0 )
+    if (m_iRawDuration == 0 || m_pMovementBoneData->frameList.count() == 1)
     {
         m_eLoopType = SINGLE_FRAME;
         if(durationTo == 0)

@@ -2122,38 +2122,6 @@ JSBool js_cocos2dx_CCSet_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 }
 
-JSBool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    JSBool ok = JS_TRUE;
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::CCNode* cobj = (cocos2d::CCNode *)(proxy ? proxy->ptr : NULL);
-	TEST_NATIVE_OBJECT(cx, cobj)
-    
-	if (argc == 1) {
-		cocos2d::CCPoint arg0;
-        ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        
-		cobj->setPosition(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	} if (argc == 2) {
-        double x;
-        ok &= JS_ValueToNumber(cx, argv[0], &x );
-        double y;
-        ok &= JS_ValueToNumber(cx, argv[1], &y );
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        
-        cobj->setPosition(ccp(x,y));
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return JS_TRUE;
-    }
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
-}
-
 JSBool js_cocos2dx_CCNode_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
@@ -2181,38 +2149,6 @@ JSBool js_cocos2dx_CCNode_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
 
     JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
     return JS_FALSE;
-}
-
-
-JSBool js_cocos2dx_CCSprite_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    JSBool ok = JS_TRUE;
-	js_proxy_t *proxy = jsb_get_js_proxy(obj);
-	cocos2d::CCSprite* cobj = (cocos2d::CCSprite *)(proxy ? proxy->ptr : NULL);
-	TEST_NATIVE_OBJECT(cx, cobj)
-    
-	if (argc == 1) {
-		cocos2d::CCPoint arg0;
-		ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-		cobj->setPosition(arg0);
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-		return JS_TRUE;
-	} if (argc == 2) {
-        double x;
-        ok &= JS_ValueToNumber(cx, argv[0], &x );
-        double y;
-        ok &= JS_ValueToNumber(cx, argv[1], &y );
-
-        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-        cobj->setPosition(CCPoint(x,y));
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return JS_TRUE;
-    }
-	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-	return JS_FALSE;
 }
 
 
@@ -3418,6 +3354,127 @@ static JSBool js_cocos2dx_CCCamera_getEyeXYZ(JSContext *cx, uint32_t argc, jsval
     js_cocos2dx_CCCamera_getXYZ(getEyeXYZ)
 }
 
+template<class T>
+static JSBool js_cocos2dx_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JSBool ok = JS_TRUE;
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+        if (argc == 1) {
+            cocos2d::CCPoint arg0;
+            ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setAnchorPoint(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        } if (argc == 2) {
+            double x;
+            ok &= JS_ValueToNumber(cx, argv[0], &x );
+            double y;
+            ok &= JS_ValueToNumber(cx, argv[1], &y );
+
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setAnchorPoint(CCPoint(x,y));
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        }
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+        return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setAnchorPoint<CCNode>(cx,argc,vp);
+}
+
+template<class T>
+static JSBool js_cocos2dx_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JSBool ok = JS_TRUE;
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+        if (argc == 1) {
+            cocos2d::CCSize arg0;
+            ok &= jsval_to_ccsize(cx, argv[0], &arg0);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setContentSize(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        } if (argc == 2) {
+            double x;
+            ok &= JS_ValueToNumber(cx, argv[0], &x );
+            double y;
+            ok &= JS_ValueToNumber(cx, argv[1], &y );
+
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setContentSize(CCSize(x,y));
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        }
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+        return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_CCNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setContentSize<CCNode>(cx,argc,vp);
+}
+
+template<class T>
+static JSBool js_cocos2dx_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    JSBool ok = JS_TRUE;
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
+    TEST_NATIVE_OBJECT(cx, cobj)
+
+        if (argc == 1) {
+            cocos2d::CCPoint arg0;
+            ok &= jsval_to_ccpoint(cx, argv[0], &arg0);
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setPosition(arg0);
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        } if (argc == 2) {
+            double x;
+            ok &= JS_ValueToNumber(cx, argv[0], &x );
+            double y;
+            ok &= JS_ValueToNumber(cx, argv[1], &y );
+
+            JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+            cobj->setPosition(CCPoint(x,y));
+            JS_SET_RVAL(cx, vp, JSVAL_VOID);
+            return JS_TRUE;
+        }
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
+        return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_CCLens3D_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setPosition<CCLens3D>(cx,argc,vp);
+}
+
+static JSBool js_cocos2dx_CCRipple3D_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setPosition<CCRipple3D>(cx,argc,vp);
+}
+
+static JSBool js_cocos2dx_CCTwirl_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    return js_cocos2dx_setPosition<CCTwirl>(cx,argc,vp);
+}
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -3437,6 +3494,10 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
 	JSObject *tmpObj;
 
+    JS_DefineFunction(cx, jsb_CCLens3D_prototype, "setPosition", js_cocos2dx_CCLens3D_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, jsb_CCRipple3D_prototype, "setPosition", js_cocos2dx_CCRipple3D_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, jsb_CCTwirl_prototype, "setPosition", js_cocos2dx_CCTwirl_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
+
     JS_DefineFunction(cx, jsb_CCNode_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_CCNode_prototype, "release", js_cocos2dx_release, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     
@@ -3455,8 +3516,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCNode_prototype, "scheduleUpdate", js_cocos2dx_CCNode_scheduleUpdate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "unschedule", js_CCNode_unschedule, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCNode_prototype, "unscheduleAllCallbacks", js_cocos2dx_CCNode_unscheduleAllSelectors, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_CCNode_prototype, "setPosition", js_cocos2dx_CCNode_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_CCNode_prototype, "setGrid", js_cocos2dx_CCNode_setGrid, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, jsb_CCNode_prototype, "setGrid", js_cocos2dx_CCNode_setGrid, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_CCNode_prototype, "setContentSize", js_cocos2dx_CCNode_setContentSize, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
+    JS_DefineFunction(cx, jsb_CCNode_prototype, "setAnchorPoint", js_cocos2dx_CCNode_setAnchorPoint, 1, JSPROP_READONLY | JSPROP_PERMANENT);    
 
     JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCGLProgram_prototype, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -3471,9 +3533,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "unscheduleAllCallbacks", js_cocos2dx_CCScheduler_unscheduleAll, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "unscheduleAllCallbacksWithMinPriority", js_cocos2dx_CCScheduler_unscheduleAllCallbacksWithMinPriority, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCScheduler_prototype, "isTargetPaused", js_cocos2dx_CCScheduler_isTargetPaused, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-    
-    JS_DefineFunction(cx, jsb_CCSprite_prototype, "setPosition", js_cocos2dx_CCSprite_setPosition, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JS_DefineFunction(cx, jsb_CCTMXLayer_prototype, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 

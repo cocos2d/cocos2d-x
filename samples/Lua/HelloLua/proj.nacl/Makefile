@@ -23,6 +23,7 @@ SOURCES = main.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/tolua_fix.c \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/CCBProxy.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/Lua_extensions_CCB.cpp \
+        $(COCOS_ROOT)/scripting/lua/cocos2dx_support/lua_cocos2dx_manual.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/lua_cocos2dx_extensions_manual.cpp \
         $(COCOS_ROOT)/scripting/lua/cocos2dx_support/lua_cocos2dx_cocostudio_manual.cpp
 

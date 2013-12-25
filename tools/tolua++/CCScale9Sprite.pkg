@@ -25,7 +25,6 @@ class CCScale9Sprite : public CCNodeRGBA
     float  getInsetBottom();
     void   setInsetBottom(float fBottom);
 
-    virtual void setContentSize(const CCSize & size);
     virtual void visit();
     
     virtual bool init();
