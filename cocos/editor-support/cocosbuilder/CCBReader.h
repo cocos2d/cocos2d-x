@@ -173,7 +173,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readNodeGraphFromData(cocos2d::Data *pData, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
+    cocos2d::Node* readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
    
     /**
      @lua NA
@@ -360,7 +360,7 @@ private:
     friend class NodeLoader;
 
 private:
-    cocos2d::Data *_data;
+    std::shared_ptr<cocos2d::Data> _data;
     unsigned char *_bytes;
     int _currentByte;
     int _currentBit;

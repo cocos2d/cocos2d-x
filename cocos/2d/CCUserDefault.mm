@@ -73,16 +73,16 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		ssize_t size;
-		char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
-		//const char* pXmlBuffer = (const char*)data.getBuffer();
-		if(nullptr == pXmlBuffer)
+
+        std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
+
+		if (xmlBuffer.empty())
 		{
             NSLog(@"can not read xml file");
 			break;
 		}
-		xmlDoc->Parse(pXmlBuffer);
-        free(pXmlBuffer);
+		xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
+
 		// get root node
 		rootNode = xmlDoc->RootElement();
 		if (nullptr == rootNode)
@@ -363,12 +363,12 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
     }
 }
 
-Data* UserDefault::getDataForKey(const char* pKey)
+Data UserDefault::getDataForKey(const char* pKey)
 {
-    return getDataForKey(pKey, nullptr);
+    return getDataForKey(pKey, Data::Null);
 }
 
-Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
+Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = nullptr;
@@ -382,12 +382,11 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
             int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
 
             if (decodedData) {
-                Data *ret = Data::create(decodedData, decodedDataLen);
+                Data ret;
+                ret.fastSet(decodedData, decodedDataLen);
                 
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
-                
-                free(decodedData);
                 
                 flush();
                 
@@ -412,17 +411,8 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
     }
     else
     {
-        unsigned char *bytes = {0};
-        int size = 0;
-        
-        if (data.length > 0) {
-            bytes = (unsigned char*)data.bytes;
-            size = static_cast<int>(data.length);
-        }
-        Data *ret = new Data(bytes, size);
-        
-        ret->autorelease();
-        
+        Data ret;
+        ret.copy((unsigned char*)data.bytes, data.length);
         return ret;
     }
 }

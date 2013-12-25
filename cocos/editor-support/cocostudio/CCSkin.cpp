@@ -51,7 +51,7 @@ Skin *Skin::create()
     return nullptr;
 }
 
-Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
@@ -63,7 +63,7 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return nullptr;
 }
 
-Skin *Skin::create(const char *pszFileName)
+Skin *Skin::create(const std::string& pszFileName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithFile(pszFileName))
