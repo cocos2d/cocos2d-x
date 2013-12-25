@@ -59,8 +59,6 @@ static const char *A_MOVEMENT_SCALE = "sc";
 static const char *A_MOVEMENT_DELAY = "dl";
 static const char *A_DISPLAY_INDEX = "dI";
 
-// static const char *A_VERT = "vert";
-// static const char *A_FRAG = "frag";
 static const char *A_PLIST = "plist";
 
 static const char *A_PARENT = "parent";
@@ -73,9 +71,8 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
-//static const char *A_EASING_PARAM_NUMBER = "twEPN";
 static const char *A_EASING_PARAM = "twEP";
-//static const char *A_TWEEN_ROTATE = "twR";
+static const char *A_TWEEN_ROTATE = "twR";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
 static const char *A_MOVEMENT = "mov";
@@ -108,16 +105,11 @@ static const char *A_GREEN_OFFSET = "gM";
 static const char *A_BLUE_OFFSET = "bM";
 static const char *A_COLOR_TRANSFORM = "colorTransform";
 static const char *A_TWEEN_FRAME = "tweenFrame";
-//static const char *A_ROTATION = "rotation";
-//static const char *A_USE_COLOR_INFO = "uci";
 
 
 
 static const char *CONTOUR = "con";
 static const char *CONTOUR_VERTEX = "con_vt";
-
-//static const char *MOVEMENT_EVENT_FRAME = "movementEventFrame";
-//static const char *SOUND_FRAME = "soundFrame";
 
 
 static const char *FL_NAN = "NaN";
@@ -262,14 +254,14 @@ DataReaderHelper::~DataReaderHelper()
 	_dataReaderHelper = nullptr;
 }
 
-void DataReaderHelper::addDataFromFile(const char *filePath)
+void DataReaderHelper::addDataFromFile(const std::string& filePath)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
     */
     for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (_configFileList[i].compare(filePath) == 0)
+        if (_configFileList[i] == filePath)
         {
             return;
         }
@@ -295,34 +287,33 @@ void DataReaderHelper::addDataFromFile(const char *filePath)
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    ssize_t size;
+    // Read content from file
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    char *pFileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+    std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
 
-    if (str.compare(".xml") == 0)
+    if (str == ".xml")
     {
-        DataReaderHelper::addDataFromCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromCache(contentStr, &dataInfo);
     }
-    else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
+    else if(str == ".json" || str == ".ExportJson")
     {
-        DataReaderHelper::addDataFromJsonCache(pFileContent, &dataInfo);
+        DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
-    free(pFileContent);
 }
 
-void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, Object *target, SEL_SCHEDULE selector)
+void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, Object *target, SEL_SCHEDULE selector)
 {
     /*
     * Check if file is already added to ArmatureDataManager, if then return.
     */
     for(unsigned int i = 0; i < _configFileList.size(); i++)
     {
-        if (_configFileList[i].compare(filePath) == 0)
+        if (_configFileList[i] == filePath)
         {
             if (target && selector)
             {
@@ -395,16 +386,15 @@ void DataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *p
     std::string str = &filePathStr[startPos];
 
     std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
-    ssize_t size;
 
     // XXX fileContent is being leaked
-    data->fileContent = (char *)CCFileUtils::getInstance()->getFileData(fullPath.c_str() , "r", &size);
+    data->fileContent = FileUtils::getInstance()->getStringFromFile(fullPath);
 
-    if (str.compare(".xml") == 0)
+    if (str == ".xml")
     {
         data->configType = DragonBone_XML;
     }
-    else if(str.compare(".json") == 0 || str.compare(".ExportJson") == 0)
+    else if(str == ".json" || str == ".ExportJson")
     {
         data->configType = CocoStudio_JSON;
     }
@@ -478,7 +468,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
 }
 
 
-void DataReaderHelper::removeConfigFile(const char *configFile)
+void DataReaderHelper::removeConfigFile(const std::string& configFile)
 {
     std::vector<std::string>::iterator it = _configFileList.end();
     for (std::vector<std::string>::iterator i = _configFileList.begin(); i != _configFileList.end(); i++)
@@ -497,10 +487,10 @@ void DataReaderHelper::removeConfigFile(const char *configFile)
 
 
 
-void DataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo)
 {
     tinyxml2::XMLDocument document;
-    document.Parse(pFileContent);
+    document.Parse(pFileContent.c_str());
 
     tinyxml2::XMLElement *root = document.RootElement();
     CCASSERT(root, "XML error  or  XML is empty.");
@@ -600,7 +590,7 @@ ArmatureData *DataReaderHelper::decodeArmature(tinyxml2::XMLElement *armatureXML
             std::string parentNameStr = parentName;
             while (parentXML)
             {
-                if (parentNameStr.compare(parentXML->Attribute(A_NAME)) == 0)
+                if (parentNameStr == parentXML->Attribute(A_NAME))
                 {
                     break;
                 }
@@ -745,7 +735,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
     if(_easing != nullptr)
     {
         std::string str = _easing;
-        if(str.compare(FL_NAN) != 0)
+        if(str != FL_NAN)
         {
             if( movementXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
@@ -782,7 +772,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
 
             while (parentXml)
             {
-                if (parentName.compare(parentXml->Attribute(A_NAME)) == 0)
+                if (parentName == parentXml->Attribute(A_NAME))
                 {
                     break;
                 }
@@ -921,8 +911,8 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
 
 FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, BoneData *boneData, DataInfo *dataInfo)
 {
-    float x, y, scale_x, scale_y, skew_x, skew_y = 0;
-    int duration, displayIndex, zOrder, tweenEasing, blendType = 0;
+    float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y = 0, tweenRotate = 0;
+    int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
 
     FrameData *frameData = new FrameData();
 
@@ -1005,6 +995,10 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
     {
         frameData->zOrder = zOrder;
     }
+    if(  frameXML->QueryFloatAttribute(A_TWEEN_ROTATE, &tweenRotate) == tinyxml2::XML_SUCCESS )
+    {
+        frameData->tweenRotate = tweenRotate;
+    }
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
         switch (blendType)
@@ -1070,7 +1064,7 @@ FrameData *DataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxm
     if(_easing != nullptr)
     {
         std::string str = _easing;
-        if(str.compare(FL_NAN) != 0)
+        if(str != FL_NAN)
         {
             if( frameXML->QueryIntAttribute(A_TWEEN_EASING, &(tweenEasing)) == tinyxml2::XML_SUCCESS)
             {
@@ -1184,10 +1178,10 @@ ContourData *DataReaderHelper::decodeContour(tinyxml2::XMLElement *contourXML, D
 
 
 
-void DataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo)
+void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo)
 {
     JsonDictionary json;
-    json.initWithDescription(fileContent);
+    json.initWithDescription(fileContent.c_str());
 
     dataInfo->contentScale = json.getItemFloatValue(CONTENT_SCALE, 1);
 

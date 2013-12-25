@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "CCValue.h"
+#include "CCData.h"
 
 NS_CC_BEGIN
 
@@ -76,15 +77,26 @@ public:
     virtual void purgeCachedEntries();
     
     /**
+     *  Gets string from a file.
+     */
+    virtual std::string getStringFromFile(const std::string& filename);
+    
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename);
+    
+    /**
      *  Gets resource file data
      *
      *  @param[in]  filename The resource file name which contains the path.
      *  @param[in]  pszMode The read mode of the file.
      *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
-     *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
+     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
+     *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t *size);
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
@@ -94,7 +106,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise nullptr.
      *  @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
      */
-    virtual unsigned char* getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size);
+    virtual unsigned char* getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size);
 
     
     /** Returns the fullpath for a given filename.

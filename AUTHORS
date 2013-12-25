@@ -675,6 +675,9 @@ Developers:
     dmurtagh
         Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
         
+    seobyeongky
+        Updates spine runtime.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

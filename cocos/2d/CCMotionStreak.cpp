@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCVertex.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -63,7 +65,7 @@ MotionStreak::~MotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
     MotionStreak *ret = new MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, path))
@@ -89,9 +91,9 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
     return nullptr;
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    CCASSERT(path != nullptr, "Invalid filename");
+    CCASSERT(!path.empty(), "Invalid filename");
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
@@ -322,12 +324,10 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::draw()
-{
-    if(_nuPoints <= 1)
-        return;
-
-    CC_NODE_DRAW_SETUP();
+void MotionStreak::onDraw()
+{  
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_cachedMV);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
@@ -351,8 +351,18 @@ void MotionStreak::draw()
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
+}
 
-    CC_INCREMENT_GL_DRAWS(1);
+void MotionStreak::draw()
+{
+    if(_nuPoints <= 1)
+        return;
+    kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0,_vertexZ);
+    cmd->func = CC_CALLBACK_0(MotionStreak::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+
 }
 
 NS_CC_END

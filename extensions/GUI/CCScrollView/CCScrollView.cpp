@@ -485,16 +485,6 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
-void ScrollView::addChild(Node * child, int zOrder)
-{
-    this->addChild(child, zOrder, child->getTag());
-}
-
-void ScrollView::addChild(Node * child)
-{
-    this->addChild(child, child->getZOrder(), child->getTag());
-}
-
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */

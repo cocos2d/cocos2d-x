@@ -72,14 +72,14 @@ Component* Component::create(void)
 	return ret;
 }
 
-const char* Component::getName() const
+const std::string& Component::getName() const
 {
-    return _name.c_str();
+    return _name;
 }
 
-void Component::setName(const char *name)
+void Component::setName(const std::string& name)
 {
-    _name.assign(name);
+    _name = name;
 }
 
 Node* Component::getOwner() const

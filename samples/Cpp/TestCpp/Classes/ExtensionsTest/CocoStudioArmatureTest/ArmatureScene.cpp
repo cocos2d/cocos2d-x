@@ -2,6 +2,8 @@
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
 #include "CCNodeGrid.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 using namespace cocos2d;
@@ -228,11 +230,6 @@ void ArmatureTestLayer::backCallback(Object *pSender)
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void ArmatureTestLayer::draw()
-{
-    Layer::draw();
-}
-
 
 void TestAsynchronousLoading::onEnter()
 {
@@ -535,20 +532,18 @@ std::string TestAnimationEvent::title() const
 {
     return "Test Armature Animation Event";
 }
-void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType movementType, const char *movementID)
+void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
-    std::string id = movementID;
-
     if (movementType == LOOP_COMPLETE)
     {
-        if (id.compare("Fire") == 0)
+        if (movementID == "Fire")
         {
             ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
             armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
-        else if (id.compare("FireMax") == 0)
+        else if (movementID == "FireMax")
         {
             ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
@@ -596,9 +591,9 @@ std::string TestFrameEvent::title() const
 {
     return "Test Frame Event";
 }
-void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+void TestFrameEvent::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
-    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
     if (!_gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG) || _gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
     {
@@ -778,9 +773,9 @@ std::string TestColliderDetector::title() const
 {
     return "Test Collider Detector";
 }
-void TestColliderDetector::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+void TestColliderDetector::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
-    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
     /*
     * originFrameIndex is the frame index editted in Action Editor
@@ -1099,15 +1094,23 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+}
 
+void TestBoundingBox::onDraw()
+{
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    
     rect = armature->getBoundingBox();
-
+    
     DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
     DrawPrimitives::drawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
 }
-
-
 
 void TestAnchorPoint::onEnter()
 {

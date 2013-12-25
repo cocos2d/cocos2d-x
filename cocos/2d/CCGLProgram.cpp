@@ -154,18 +154,18 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
 
 bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str())->getCString();
-    const GLchar * fragmentSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str())->getCString();
+    std::string vertexSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str());
+    std::string fragmentSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str());
 
-    return initWithVertexShaderByteArray(vertexSource, fragmentSource);
+    return initWithVertexShaderByteArray(vertexSource.c_str(), fragmentSource.c_str());
 }
 
 std::string GLProgram::getDescription() const
 {
-    return String::createWithFormat("<GLProgram = "
+    return StringUtils::format("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
                                       " | Program = %i, VertexShader = %i, FragmentShader = %i>",
-                                      (size_t)this, _program, _vertShader, _fragShader)->getCString();
+                                      (size_t)this, _program, _vertShader, _fragShader);
 }
 
 bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)

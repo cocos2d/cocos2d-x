@@ -1,7 +1,8 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
-#include "renderer/CCNewRenderTexture.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -93,7 +94,7 @@ RenderTextureSave::RenderTextureSave()
     auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Point(s.width / 2, s.height / 2));
 
@@ -241,7 +242,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     
     
     /* A2 & B2 setup */
-    auto rend = NewRenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
 
     if (NULL == rend)
     {
@@ -410,7 +411,7 @@ void RenderTextureZbuffer::onTouchesEnded(const std::vector<Touch*>& touches, Ev
 
 void RenderTextureZbuffer::renderScreenShot()
 {
-    auto texture = NewRenderTexture::create(512, 512);
+    auto texture = RenderTexture::create(512, 512);
     if (NULL == texture)
     {
         return;
@@ -444,7 +445,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     auto sprite = Sprite::create("Images/fire.png");
     sprite->setPosition(Point(s.width * 0.25f, 0));
     sprite->setScale(10);
-    auto rend = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
     glStencilMask(0xFF);
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
@@ -506,7 +507,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Point(s.width/2, s.height/2));
@@ -588,44 +589,25 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+    Sprite::draw();
+    
+}
+
+void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
+{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = NewRenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
-    
-	CC_NODE_DRAW_SETUP();
-    
-	BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    GL::bindTexture2D(getTexture()->getName());
-    
-	//
-	// Attributes
-	//
-    
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    
-#define kQuadSize sizeof(_quad.bl)
-	long offset = (long)&_quad;
-    
-	// vertex
-	int diff = offsetof( V3F_C4B_T2F, vertices);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-	// texCoods
-	diff = offsetof( V3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-	// color
-	diff = offsetof( V3F_C4B_T2F, colors);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()

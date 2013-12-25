@@ -110,7 +110,6 @@ CCBReader::CCBReader()
 CCBReader::~CCBReader()
 {
     CC_SAFE_RELEASE_NULL(_owner);
-    CC_SAFE_RELEASE_NULL(_data);
 
     this->_nodeLoaderLibrary->release();
 
@@ -218,23 +217,17 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     }
 
     std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
-    ssize_t size = 0;
 
-    unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
-    Data *data = new Data(pBytes, size);
-    free(pBytes);
-
-    Node *ret =  this->readNodeGraphFromData(data, pOwner, parentSize);
+    auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
     
-    data->release();
+    Node *ret =  this->readNodeGraphFromData(dataPtr, pOwner, parentSize);
     
     return ret;
 }
 
-Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &parentSize)
+Node* CCBReader::readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, Object *pOwner, const Size &parentSize)
 {
-   _data = pData;
-    CC_SAFE_RETAIN(_data);
+    _data = data;
     _bytes =_data->getBytes();
     _currentByte = 0;
     _currentBit = 0;
