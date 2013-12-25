@@ -533,18 +533,17 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    ssize_t length = 0;
-    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
-                                    "rb",
-                                    &length);
+
+    Data data = futil->getDataFromFile(byteCodePath);
     
-    if (data) {
-        script = JS_DecodeScript(cx, data, length, NULL, NULL);
-        free(data);
+    if (!data.isNull())
+    {
+        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
     }
     
     // b) no jsc file, check js file
-    if (!script) {
+    if (!script)
+    {
         /* Clear any pending exception from previous failed decoding.  */
         ReportException(cx);
         
@@ -553,12 +552,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        String* content = String::createWithContentsOfFile(path);
-        if (content) {
-            // Not supported in SpiderMonkey 19.0
-            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-            const char* contentCStr = content->getCString();
-            script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+        std::string jsFileContent = futil->getStringFromFile(fullPath);
+        if (!jsFileContent.empty())
+        {
+            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
         }
 #else
         script = JS::Compile(cx, obj, options, fullPath.c_str());
