@@ -228,11 +228,6 @@ void ArmatureTestLayer::backCallback(Object *pSender)
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void ArmatureTestLayer::draw()
-{
-    Layer::draw();
-}
-
 
 void TestAsynchronousLoading::onEnter()
 {
