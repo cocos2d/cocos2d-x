@@ -33,24 +33,21 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-typedef cocos2d::CCObject* (*Instance)(void);
-
-struct TInfo
-{
-    TInfo(void);
-    TInfo(const std::string& type, Instance ins = NULL);
-    TInfo(const TInfo &t);
-    ~TInfo(void);
-    TInfo& operator= (const TInfo &t);
-    std::string _class;
-    Instance _fun;
-};
-
-
 class ObjectFactory
 {
-    typedef std::map<std::string, TInfo>  FactoryMap;
 public:
+    typedef cocos2d::CCObject* (*Instance)(void);
+    struct TInfo
+    {
+        TInfo(void);
+        TInfo(const std::string& type, Instance ins = NULL);
+        TInfo(const TInfo &t);
+        ~TInfo(void);
+        TInfo& operator= (const TInfo &t);
+        std::string _class;
+        Instance _fun;
+    };
+    typedef std::map<std::string, TInfo>  FactoryMap;
     ObjectFactory(void);
     virtual ~ObjectFactory(void);
     static ObjectFactory* getInstance();

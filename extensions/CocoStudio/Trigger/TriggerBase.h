@@ -36,7 +36,7 @@ NS_CC_EXT_BEGIN
 
 #define DECLARE_CLASS_INFO \
     public: \
-        static cocos2d::extension::TInfo Type; \
+        static cocos2d::extension::ObjectFactory::TInfo Type; \
         static cocos2d::CCObject* createInstance(void); \
         
 #define IMPLEMENT_CLASS_INFO(className) \
@@ -44,7 +44,7 @@ NS_CC_EXT_BEGIN
         { \
             return new className; \
         } \
-        cocos2d::extension::TInfo className::Type(#className, &className::createInstance); \
+        cocos2d::extension::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 
 void sendEvent(unsigned int event);
