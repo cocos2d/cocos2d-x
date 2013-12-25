@@ -57,7 +57,7 @@ public:
     bool init();
 
     /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t * size) override;
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
 
     /**
      *  Gets string from a file.
