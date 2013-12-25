@@ -80,8 +80,8 @@ inline const Vector3 operator*(float x, const Vector3& v)
 }
 
 inline float Vector3::operator[](int index) const 
-{ 	
-	return ((float*)this)[index]; 
+{     
+    return ((float*)this)[index]; 
 }
 
 }

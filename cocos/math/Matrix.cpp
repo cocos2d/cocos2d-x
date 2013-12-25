@@ -1,6 +1,6 @@
-#include "C3DMath.h"
+#include "CocosMath.h"
 
-#include "C3Dneon_matrix_impl.h"
+#include "neonmatriximpl.h"
 
 #define MATRIX_SIZE     ( sizeof(float) * 16 )
 
@@ -25,10 +25,10 @@ Matrix::Matrix(float m11, float m12, float m13, float m14, float m21, float m22,
     set(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
 }
 
-Matrix::Matrix(const float* m)
+Matrix::Matrix(const float* m1)
 {
-    if (m)
-        set(m);
+    if (m1)
+        set(m1);
     else
         *this = Matrix::identity();
 }
@@ -64,33 +64,33 @@ const Matrix& Matrix::zero()
 
 Matrix Matrix::createFromVectors(Vector3& vx, Vector3& vy, Vector3& vz, Vector3& pos)
 {
-	Matrix mat;
-	
-	vx.normalize();
-	vy.normalize();
-	vz.normalize();
+    Matrix mat;
+    
+    vx.normalize();
+    vy.normalize();
+    vz.normalize();
 
-	mat.m[0] = vx.x;
-	mat.m[1] = vx.y;
-	mat.m[2] = vx.z;
-	mat.m[3] = 0.0f;
+    mat.m[0] = vx.x;
+    mat.m[1] = vx.y;
+    mat.m[2] = vx.z;
+    mat.m[3] = 0.0f;
 
-	mat.m[4] = vy.x;
-	mat.m[5] = vy.y;
-	mat.m[6] = vy.z;
-	mat.m[7] = 0.0f;
+    mat.m[4] = vy.x;
+    mat.m[5] = vy.y;
+    mat.m[6] = vy.z;
+    mat.m[7] = 0.0f;
 
-	mat.m[8]  = vz.x;
-	mat.m[9]  = vz.y;
-	mat.m[10] = vz.z;
-	mat.m[11] = 0.0f;
+    mat.m[8]  = vz.x;
+    mat.m[9]  = vz.y;
+    mat.m[10] = vz.z;
+    mat.m[11] = 0.0f;
 
-	mat.m[12] = pos.x;
-	mat.m[13] = pos.y;
-	mat.m[14] = pos.z;
-	mat.m[15] = 1.0f;
+    mat.m[12] = pos.x;
+    mat.m[13] = pos.y;
+    mat.m[14] = pos.z;
+    mat.m[15] = 1.0f;
 
-	return mat;
+    return mat;
 
 }
 
@@ -173,29 +173,29 @@ void Matrix::createLookAt(float eyePositionX, float eyePositionY, float eyePosit
 //
 //void Matrix::createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst)
 //{
-//	zaxis.normalize();
-//	xaxis.normalize();
-//	yaxis.normalize();
+//    zaxis.normalize();
+//    xaxis.normalize();
+//    yaxis.normalize();
 //
-//	dst->m[0] = xaxis.x;
-//	dst->m[1] = yaxis.x;
-//	dst->m[2] = zaxis.x;
-//	dst->m[3] = 0.0f;
+//    dst->m[0] = xaxis.x;
+//    dst->m[1] = yaxis.x;
+//    dst->m[2] = zaxis.x;
+//    dst->m[3] = 0.0f;
 //
-//	dst->m[4] = xaxis.y;
-//	dst->m[5] = yaxis.y;
-//	dst->m[6] = zaxis.y;
-//	dst->m[7] = 0.0f;
+//    dst->m[4] = xaxis.y;
+//    dst->m[5] = yaxis.y;
+//    dst->m[6] = zaxis.y;
+//    dst->m[7] = 0.0f;
 //
-//	dst->m[8] = xaxis.z;
-//	dst->m[9] = yaxis.z;
-//	dst->m[10] = zaxis.z;
-//	dst->m[11] = 0.0f;
+//    dst->m[8] = xaxis.z;
+//    dst->m[9] = yaxis.z;
+//    dst->m[10] = zaxis.z;
+//    dst->m[11] = 0.0f;
 //
-//	dst->m[12] = -Vector3::dot(xaxis, position);
-//	dst->m[13] = -Vector3::dot(yaxis, position);
-//	dst->m[14] = -Vector3::dot(zaxis, position);
-//	dst->m[15] = 1.0f;
+//    dst->m[12] = -Vector3::dot(xaxis, position);
+//    dst->m[13] = -Vector3::dot(yaxis, position);
+//    dst->m[14] = -Vector3::dot(zaxis, position);
+//    dst->m[15] = 1.0f;
 //}
 
 void Matrix::createPerspective(float fieldOfView, float aspectRatio,
@@ -204,7 +204,7 @@ void Matrix::createPerspective(float fieldOfView, float aspectRatio,
     assert(dst);
 
     float f_n = 1.0f / (zFarPlane - zNearPlane);
-    float factor = 1.0f / tanf(MATH_DEG_TO_RAD(fieldOfView) * 0.5f);
+    float factor = 1.0f / tanf(CC_DEGREES_TO_RADIANS(fieldOfView) * 0.5f);
 
     memset(dst, 0, MATRIX_SIZE);
 
@@ -217,9 +217,9 @@ void Matrix::createPerspective(float fieldOfView, float aspectRatio,
 
 void Matrix::createPerspectiveFOV(float width, float height, float zNear, float zFar, Matrix* dst)
 {
-	float halfWidth = width / 2.0f;
+    float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
-	createPerspectiveOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, dst);
+    createPerspectiveOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, dst);
 }
 
 void Matrix::createPerspectiveOffCenter(float left, float right, float bottom, float top,
@@ -234,10 +234,10 @@ void Matrix::createPerspectiveOffCenter(float left, float right, float bottom, f
     memset(dst, 0, MATRIX_SIZE);
     dst->m[0] = 2.0f * zNear * r_l;
     dst->m[5] = 2.0f * zNear * t_b;
-	dst->m[8] = (right + left) * r_l;
-	dst->m[9] = (top + bottom) * t_b;
-	dst->m[10] = (-(zFar + zNear)) * f_n;
-	dst->m[11] = -1.0f;
+    dst->m[8] = (right + left) * r_l;
+    dst->m[9] = (top + bottom) * t_b;
+    dst->m[10] = (-(zFar + zNear)) * f_n;
+    dst->m[11] = -1.0f;
     dst->m[14] = -2.0f * zNear * zFar * f_n;
    
 }
@@ -493,9 +493,9 @@ void Matrix::add(float scalar, Matrix* dst)
     dst->m[15] = m[15] + scalar;
 }
 
-void Matrix::add(const Matrix& m)
+void Matrix::add(const Matrix& m1)
 {
-    add(*this, m, this);
+    add(*this, m1, this);
 }
 
 void Matrix::add(const Matrix& m1, const Matrix& m2, Matrix* dst)
@@ -668,7 +668,7 @@ void Matrix::getUpVector(Vector3* dst) const
     //dst->y = m[9];
     //dst->z = m[10];
 
-	    dst->x = m[4];
+        dst->x = m[4];
     dst->y = m[5];
     dst->z = m[6];
 }
@@ -691,7 +691,7 @@ void Matrix::getForwardVector(Vector3* dst) const
     //dst->y = -m[5];
     //dst->z = -m[6];
 
-	dst->x = -m[8];
+    dst->x = -m[8];
     dst->y = -m[9];
     dst->z = -m[10];
 }
@@ -789,9 +789,9 @@ void Matrix::multiply(const Matrix& m, float scalar, Matrix* dst)
 }
     
 
-void Matrix::multiply(const Matrix& m)
+void Matrix::multiply(const Matrix& m1)
 {
-    multiply(*this, m, this);
+    multiply(*this, m1, this);
 }
 
 void Matrix::multiply(const Matrix& m1, const Matrix& m2, Matrix* dst)
@@ -939,7 +939,7 @@ void Matrix::scale(float xScale, float yScale, float zScale)
 }
 
 void Matrix::setScale(float xScale,float yScale,float zScale)
-{	
+{    
     this->m[0] = xScale;
     this->m[5] = yScale;
     this->m[10] = zScale;
@@ -984,43 +984,43 @@ void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m2
     m[15] = m44;
 }
 
-void Matrix::set(const float* m)
+void Matrix::set(const float* m1)
 {
-    assert(m);
-    memcpy(this->m, m, MATRIX_SIZE);
+    assert(m1);
+    memcpy(this->m, m1, MATRIX_SIZE);
 }
 
-void Matrix::set(const Matrix& m)
+void Matrix::set(const Matrix& m1)
 {
-    memcpy(this->m, m.m, MATRIX_SIZE);
+    memcpy(this->m, m1.m, MATRIX_SIZE);
 }
 
 void Matrix::setCol(int idx, const Vector3& col)
 {
-	if (idx > 4)
-		return;
-	idx *= 4;
-	m[idx++] = col.x;
-	m[idx++] = col.y;
-	m[idx] = col.z;
+    if (idx > 4)
+        return;
+    idx *= 4;
+    m[idx++] = col.x;
+    m[idx++] = col.y;
+    m[idx] = col.z;
 }
 
 Vector3 Matrix::getCol(int idx) const
 {
-	if (idx > 4)
-		return Vector3::zero();
-	static Vector3 col;
-	idx *= 4;
-	col.set(m[idx], m[idx+1], m[idx+2]);
-	return col;
+    if (idx > 4)
+        return Vector3::zero();
+    static Vector3 col;
+    idx *= 4;
+    col.set(m[idx], m[idx+1], m[idx+2]);
+    return col;
 }
 
 void Matrix::getCol(int idx, Vector3& col) const
 {
-	if (idx > 4)
-		return;
-	idx *= 4;
-	col.set(m[idx], m[idx+1], m[idx+2]);
+    if (idx > 4)
+        return;
+    idx *= 4;
+    col.set(m[idx], m[idx+1], m[idx+2]);
 }
 
 void Matrix::setIdentity()
@@ -1033,9 +1033,9 @@ void Matrix::setZero()
     memset(m, 0, MATRIX_SIZE);
 }
 
-void Matrix::subtract(const Matrix& m)
+void Matrix::subtract(const Matrix& m1)
 {
-    subtract(*this, m, this);
+    subtract(*this, m1, this);
 }
 
 void Matrix::subtract(const Matrix& m1, const Matrix& m2, Matrix* dst)

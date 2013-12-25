@@ -43,35 +43,35 @@ inline const Matrix Matrix::operator*(const Matrix& m) const
     return result;
 }
 
-inline Matrix& Matrix::operator*=(const Matrix& m)
+inline Matrix& Matrix::operator*=(const Matrix& m1)
 {
-    multiply(m);
+    multiply(m1);
     return *this;
 }
 
-inline Vector3& operator*=(Vector3& v, const Matrix& m)
+inline Vector3& operator*=(Vector3& v, const Matrix& m1)
 {
-    m.transformVector(&v);
+    m1.transformVector(&v);
     return v;
 }
 
-inline const Vector3 operator*(const Matrix& m, const Vector3& v)
+inline const Vector3 operator*(const Matrix& m1, const Vector3& v)
 {
     Vector3 x;
-    m.transformVector(v, &x);
+    m1.transformVector(v, &x);
     return x;
 }
 
-inline Vector4& operator*=(Vector4& v, const Matrix& m)
+inline Vector4& operator*=(Vector4& v, const Matrix& m1)
 {
-    m.transformVector(&v);
+    m1.transformVector(&v);
     return v;
 }
 
-inline const Vector4 operator*(const Matrix& m, const Vector4& v)
+inline const Vector4 operator*(const Matrix& m1, const Vector4& v)
 {
     Vector4 x;
-    m.transformVector(v, &x);
+    m1.transformVector(v, &x);
     return x;
 }
 

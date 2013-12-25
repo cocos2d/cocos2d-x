@@ -15,15 +15,13 @@ class  Vector2
 {
 public:
 
-    /**
-     * The x coordinate.
-     */
-    float x;
-
-    /**
-     * The y coordinate.
-     */
-    float y;
+    union
+    {
+        struct {
+            float x, y;
+        };
+        float m[2];
+    };
 
     /**
      * Constructs a new vector initialized to all zeros.

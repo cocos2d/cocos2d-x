@@ -22,20 +22,13 @@ class  Vector3
 {
 public:
 
-    /**
-     * The x-coordinate.
-     */
-    float x;
-
-    /**
-     * The y-coordinate.
-     */
-    float y;
-
-    /**
-     * The z-coordinate.
-     */
-    float z;
+    union
+    {
+        struct {
+            float x, y, z;
+        };
+        float m[3];
+    };
 
     /**
      * Constructs a new vector initialized to all zeros.
@@ -439,7 +432,7 @@ public:
      */
     inline bool operator!=(const Vector3& v) const;
 
-	inline float operator[](int index) const;
+    inline float operator[](int index) const;
 
 };
 
