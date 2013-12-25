@@ -1,4 +1,6 @@
 #include "DrawPrimitivesTest.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 using namespace std;
 
@@ -114,8 +116,20 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
+    CustomCommand * cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void DrawPrimitivesTest::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
     
-	CHECK_GL_ERROR_DEBUG();
+    //draw
+    CHECK_GL_ERROR_DEBUG();
     
 	// draw a simple line
 	// The default state is:
@@ -127,7 +141,7 @@ void DrawPrimitivesTest::draw()
     
 	CHECK_GL_ERROR_DEBUG();
     
-	// line: color, width, aliased
+    // line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
 	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
     //	glDisable(GL_LINE_SMOOTH);
@@ -138,7 +152,7 @@ void DrawPrimitivesTest::draw()
 	CHECK_GL_ERROR_DEBUG();
     
 	// TIP:
-	// If you are going to use always the same color or width, you don't
+	// If you are going to use always thde same color or width, you don't
 	// need to call it before every draw
 	//
 	// Remember: OpenGL is a state-machine.
@@ -221,6 +235,9 @@ void DrawPrimitivesTest::draw()
 	DrawPrimitives::setPointSize(1);
     
 	CHECK_GL_ERROR_DEBUG();
+    
+    //end draw
+    kmGLLoadMatrix(&oldMat);
 }
 
 string DrawPrimitivesTest::title() const
