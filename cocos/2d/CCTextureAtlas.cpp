@@ -224,7 +224,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 std::string TextureAtlas::getDescription() const
 {
-    return String::createWithFormat("<TextureAtlas | totalQuads = %zd>", _totalQuads)->getCString();
+    return StringUtils::format("<TextureAtlas | totalQuads = %zd>", _totalQuads);
 }
 
 
