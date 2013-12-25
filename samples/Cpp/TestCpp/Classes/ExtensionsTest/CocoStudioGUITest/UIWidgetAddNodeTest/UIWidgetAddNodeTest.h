@@ -22,43 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIROOTWIDGET_H__
-#define __UIROOTWIDGET_H__
+#ifndef __TestCpp__UIWidgetAddNodeTest__
+#define __TestCpp__UIWidgetAddNodeTest__
 
-#include "../Layouts/UILayout.h"
+#include "../UIScene.h"
 
-NS_CC_EXT_BEGIN
-/**
-*   @js NA
-*   @lua NA
-*/
-class UIRootWidget : public UILayout
+class UIWidgetAddNodeTest : public UIScene
 {
 public:
-    /**
-     * Default constructor
-     */
-    UIRootWidget();
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
+    bool init();
     
-    /**
-     * Default destructor
-     */
-    virtual ~UIRootWidget();
-    
-    /**
-     * Allocates and initializes a widget.
-     */
-    static UIRootWidget* create();
-    
-    /**
-     * Returns the "class name" of widget.
-     */
-    virtual const char* getDescription() const;
 protected:
-    //initializes state of widget.
-    virtual bool init();
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
 };
 
-NS_CC_EXT_END
-
-#endif /* defined(__CocoGUI__RootWidget__) */
+#endif /* defined(__TestCpp__UIWidgetAddNodeTest__) */

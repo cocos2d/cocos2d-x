@@ -28,7 +28,10 @@
 #include "cocos2d.h"
 #include "../Layouts/UILayout.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
+
 /**
 *   @js NA
 *   @lua NA
@@ -51,14 +54,14 @@ public:
      *
      * @param widget    registed widget can be touched.
      */
-    void registWidget(UIWidget* widget);
+    void registWidget(Widget* widget);
     
     /**
      * Remove a registed widget from input manager.
      *
      * @param widget    widget which will be removed.
      */
-    void removeManageredWidget(UIWidget* widget);
+    void removeManageredWidget(Widget* widget);
     
     /**
      * Finds a widget which is selected and call it's "onTouchBegan" method.
@@ -67,20 +70,20 @@ public:
      *
      * @return true that find a widget selected, false otherwise.
      */
-    bool checkEventWidget(const CCPoint &touchPoint);
+    bool checkEventWidget(CCTouch* touch, CCEvent *pEvent);
     
     
     void update(float dt);
-    bool onTouchBegan(CCTouch* touch);
-    void onTouchMoved(CCTouch* touch);
-    void onTouchEnd(CCTouch* touch);
-    void onTouchCancelled(CCTouch* touch);
+    bool onTouchBegan(CCTouch* touch, CCEvent *pEvent);
+    void onTouchMoved(CCTouch* touch, CCEvent *pEvent);
+    void onTouchEnd(CCTouch* touch, CCEvent *pEvent);
+    void onTouchCancelled(CCTouch* touch, CCEvent *pEvent);
     
-    void setRootWidget(UIWidget* root);
-    UIWidget* getRootWidget();
-    void addCheckedDoubleClickWidget(UIWidget* widget);
+    void setRootWidget(Widget* root);
+    Widget* getRootWidget();
+    void addCheckedDoubleClickWidget(Widget* widget);
 protected:
-    bool checkTouchEvent(UIWidget* root, const CCPoint& touchPoint);
+    bool checkTouchEvent(Widget* root, CCTouch* touch, CCEvent* pEvent);
 protected:
     CCArray* m_manageredWidget;
     CCArray* m_pSelectedWidgets;
@@ -92,9 +95,11 @@ protected:
     float m_fLongClickTime;
     float m_fLongClickRecordTime;
     CCArray* checkedDoubleClickWidget;
-    UIWidget* m_pRootWidget;
+    Widget* m_pRootWidget;
 };
+    
+}
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif /* defined(__CocoGUI__UIInputManager__) */

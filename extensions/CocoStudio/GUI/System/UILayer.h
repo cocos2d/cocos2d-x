@@ -28,10 +28,11 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../BaseClasses/UIRootWidget.h"
 #include "../System/UIInputManager.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 /**
  *  @lua NA
@@ -74,7 +75,7 @@ public:
      *
      * @param widget.
      */
-    void addWidget(UIWidget* widget);
+    void addWidget(Widget* widget);
     
     /**
      * Remove a widget from UILayer.
@@ -83,7 +84,7 @@ public:
      *
      * @param cleanup true if all running actions on all children widgets should be cleanup, false otherwise.
      */
-    void removeWidget(UIWidget* widget);
+    void removeWidget(Widget* widget);
     
     /**
      * Sets whether the UILayer is visible
@@ -99,14 +100,14 @@ public:
      *
      * @param tag.
      */
-    UIWidget* getWidgetByTag(int tag);
+    Widget* getWidgetByTag(int tag);
     
     /**
      * Seek a widget whose name is equal name param from widget tree.
      *
      * @param name.
      */
-    UIWidget* getWidgetByName(const char* name);
+    Widget* getWidgetByName(const char* name);
     
     /**
      * Gets UIInputManager.
@@ -128,21 +129,16 @@ public:
      *
      * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
      */
-    UIRootWidget* getRootWidget();
+    Widget* getRootWidget();
     
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    virtual void dispose(){removeFromParentAndCleanup(true);};
-    void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup){removeWidget(widget);};
-    /************/
 protected:
-    UIRootWidget* m_pRootWidget;
+    Widget* m_pRootWidget;
     UIInputManager* m_pInputManager;
 };
+    
+}
 
-NS_CC_EXT_END
+NS_CC_END
 
 
 
