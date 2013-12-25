@@ -140,18 +140,8 @@ void LoadingBar::loadTexture(const char* texture,TextureResType texType)
         default:
             break;
     }
-    if (_scale9Enabled)
-    {
-        extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
-        barRendererScale9->setColor(getColor());
-        barRendererScale9->setOpacity(getOpacity());
-    }
-    else
-    {
-        Sprite* barRenderer = static_cast<Sprite*>(_barRenderer);
-        barRenderer->setColor(getColor());
-        barRenderer->setOpacity(getOpacity());
-    }
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)

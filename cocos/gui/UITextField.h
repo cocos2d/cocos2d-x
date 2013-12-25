@@ -136,8 +136,6 @@ public:
     void addEventListenerTextField(Object* target, SEL_TextFieldEvent selecor);
 
     virtual void setAnchorPoint(const Point &pt) override;
-    virtual void setColor(const Color3B &color) override;
-    virtual void setOpacity(GLubyte opacity) override;
     
     /**
      * Returns the "class name" of widget.

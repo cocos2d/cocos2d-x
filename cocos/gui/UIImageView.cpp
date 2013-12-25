@@ -85,16 +85,12 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithFile(fileName);
-                imageRendererScale9->setColor(getColor());
-                imageRendererScale9->setOpacity(getOpacity());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
                 Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
                 imageRenderer->setTexture(fileName);
-                imageRenderer->setColor(getColor());
-                imageRenderer->setOpacity(getOpacity());
             }
             break;
         case UI_TEX_TYPE_PLIST:
@@ -102,22 +98,20 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             {
                 extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
                 imageRendererScale9->initWithSpriteFrameName(fileName);
-                imageRendererScale9->setColor(getColor());
-                imageRendererScale9->setOpacity(getOpacity());
                 imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
                 Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
                 imageRenderer->setSpriteFrame(fileName);
-                imageRenderer->setColor(getColor());
-                imageRenderer->setOpacity(getOpacity());
             }
             break;
         default:
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     imageTextureScaleChangedWithSize();
 }
