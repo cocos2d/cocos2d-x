@@ -89,7 +89,7 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
+    return StringUtils::format("<TextureCache | Number of textures = %lu>", _textures.size());
 }
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
