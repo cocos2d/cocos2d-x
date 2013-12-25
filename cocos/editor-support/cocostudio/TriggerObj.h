@@ -75,8 +75,8 @@ public:
 	std::vector<int>& getEvents();
   
 private:
-    cocos2d::Array *_cons;
-    cocos2d::Array *_acts;
+    cocos2d::Vector<BaseTriggerCondition*> _cons;
+    cocos2d::Vector<BaseTriggerAction*> _acts;
 	unsigned int _id;
 	bool _bEnable;
 	std::vector<int> _vInt;

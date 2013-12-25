@@ -80,9 +80,7 @@ void BaseTriggerAction::removeAll()
 }
 
 TriggerObj::TriggerObj(void)
-:_cons(NULL)
-,_acts(NULL)
-,_id(UINT_MAX)
+:_id(UINT_MAX)
 ,_bEnable(true)
 {
 	_vInt.clear();
@@ -95,16 +93,7 @@ TriggerObj::~TriggerObj(void)
 
 bool TriggerObj::init()
 {
-    bool bRet = false;
-    do {
-         _cons = Array::create();
-         _acts = Array::create();
-         CC_BREAK_IF(_cons == NULL || _acts == NULL);
-         _cons->retain();
-         _acts->retain();
-         bRet = true;
-    } while (0);
-    return bRet;
+    return true;
 }
 
 TriggerObj* TriggerObj::create()
@@ -123,15 +112,14 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::detect()
 {
-	if (!_bEnable || _cons == NULL || _cons->count() == 0)
+	if (!_bEnable || _cons.size() == 0)
 	{
 		return true;
 	}
     bool bRet = true;  
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_cons, pObj)
+
+    for(auto con : _cons)
     {
-        BaseTriggerCondition* con = (BaseTriggerCondition*)pObj;
         bRet = bRet && con->detect();
     }
 
@@ -140,40 +128,30 @@ bool TriggerObj::detect()
 
 void TriggerObj::done()
 {
-	if (!_bEnable || _acts == NULL || _acts->count() == 0)
+	if (!_bEnable || _acts.size() == 0)
 	{
 		return;
 	}
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_acts, pObj)
+    for(auto act : _acts)
     {
-        BaseTriggerAction *act = (BaseTriggerAction*)pObj;
         act->done();
     }
 }
 
 void TriggerObj::removeAll()
 {
-    Object* pObj = NULL;
-    if (_cons != NULL)
+    for(auto con : _cons)
     {
-        CCARRAY_FOREACH(_cons, pObj)
-        {
-            BaseTriggerCondition* con = (BaseTriggerCondition*)pObj;
-            con->removeAll();
-        }
-        _cons->removeAllObjects();
+        con->removeAll();
     }
-    if (_acts != NULL)
+    for(auto act : _acts)
     {
-        CCARRAY_FOREACH(_acts, pObj)
-        {
-            BaseTriggerAction* act = (BaseTriggerAction*)pObj;
-            act->removeAll();
-        }
-        _acts->removeAllObjects();
+        act->removeAll();
     }
+    
+    _cons.clear();
+    _acts.clear();
 }
 
 void TriggerObj::serialize(const rapidjson::Value &val)
@@ -193,7 +171,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
         con->serialize(subDict);
 		con->init();
         con->autorelease();
-        _cons->addObject(con);
+        _cons.pushBack(con);
     }
     
 	count = DICTOOL->getArrayCount_json(val, "actions");
@@ -210,7 +188,7 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 		act->serialize(subDict);
 		act->init();
 		act->autorelease();
-		_acts->addObject(act);
+		_acts.pushBack(act);
 	}
 
 	int length = DICTOOL->getArrayCount_json(val, "events");

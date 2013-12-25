@@ -164,7 +164,7 @@ public:
     /*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
-	cocos2d::Array* _actionNodeList;/*actionnode*/
+	cocos2d::Vector<ActionNode*> _actionNodeList;/*actionnode*/
 	std::string _name;
 	bool _loop;
 	bool _bPause;

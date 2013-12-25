@@ -41,16 +41,13 @@ ActionObject::ActionObject()
 , _CallBack(NULL)
 , _fTotalTime(0.0f)
 {
-	_actionNodeList = Array::create();
-	_actionNodeList->retain();
 	_pScheduler = Director::getInstance()->getScheduler();
 	CC_SAFE_RETAIN(_pScheduler);
 }
 
 ActionObject::~ActionObject()
 {
-	_actionNodeList->removeAllObjects();
-	_actionNodeList->release();
+	_actionNodeList.clear();
 	CC_SAFE_RELEASE(_pScheduler);
 }
 
@@ -75,10 +72,10 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	_fUnitTime = fTime;
-	auto nodeNum = _actionNodeList->count();
+	auto nodeNum = _actionNodeList.size();
 	for ( int i = 0; i < nodeNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
+		auto actionNode = _actionNodeList.at(i);
 		actionNode->setUnitTime(_fUnitTime);
 	}
 }
@@ -119,7 +116,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
 		const rapidjson::Value& actionNodeDic = DICTOOL->getDictionaryFromArray_json(dic, "actionnodelist", i);
         actionNode->initWithDictionary(actionNodeDic,root);
 		actionNode->setUnitTime(getUnitTime());
-        _actionNodeList->addObject(actionNode);
+        _actionNodeList.pushBack(actionNode);
 
 		int length = actionNode->getLastFrameIndex() - actionNode->getFirstFrameIndex();
 		if(length > maxLength)
@@ -134,7 +131,7 @@ void ActionObject::addActionNode(ActionNode* node)
 	{
 		return;
 	}
-	_actionNodeList->addObject(node);
+	_actionNodeList.pushBack(node);
 	node->setUnitTime(_fUnitTime);
 }
 void ActionObject::removeActionNode(ActionNode* node)
@@ -143,17 +140,17 @@ void ActionObject::removeActionNode(ActionNode* node)
 	{
 		return;
 	}
-	_actionNodeList->removeObject(node);
+	_actionNodeList.eraseObject(node);
 }
 
 void ActionObject::play()
 {
     stop();
 	this->updateToFrameByTime(0.0f);
-	auto frameNum = _actionNodeList->count();
+	auto frameNum = _actionNodeList.size();
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
+		auto actionNode = _actionNodeList.at(i);
 		actionNode->playAction();
 	}
 	if (_loop)
@@ -178,11 +175,11 @@ void ActionObject::pause()
 
 void ActionObject::stop()
 {
-	auto frameNum = _actionNodeList->count();
+	auto frameNum = _actionNodeList.size();
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
+		auto actionNode = _actionNodeList.at(i);
 		actionNode->stopAction();
 	}
 
@@ -194,11 +191,11 @@ void ActionObject::updateToFrameByTime(float fTime)
 {
 	_currentTime = fTime;
 
-	auto nodeNum = _actionNodeList->count();
+	auto nodeNum = _actionNodeList.size();
 
 	for ( int i = 0; i < nodeNum; i++ )
 	{
-		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
+		auto actionNode = _actionNodeList.at(i);
 
 		actionNode->updateActionToTimeLine(fTime);
 	}
@@ -207,11 +204,11 @@ void ActionObject::updateToFrameByTime(float fTime)
 void ActionObject::simulationActionUpdate(float dt)
 {
 	bool isEnd = true;
-	auto nodeNum = _actionNodeList->count();
+	auto nodeNum = _actionNodeList.size();
 
 	for ( int i = 0; i < nodeNum; i++ )
 	{
-		ActionNode* actionNode = static_cast<ActionNode*>(_actionNodeList->getObjectAtIndex(i));
+		auto actionNode = _actionNodeList.at(i);
 
 		if (actionNode->isActionDoneOnce() == false)
 		{

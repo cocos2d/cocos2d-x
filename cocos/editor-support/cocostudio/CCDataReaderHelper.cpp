@@ -1351,7 +1351,7 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
 		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != NULL)
         {
-            ((CCSpriteDisplayData *)displayData)->displayName = name;
+            ((SpriteDisplayData *)displayData)->displayName = name;
         }
 		const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
 		if(!dicArray.IsNull())
@@ -1552,7 +1552,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
 
     decodeNode(frameData, json, dataInfo);
 
-	frameData->tweenEasing = (CCTweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
+	frameData->tweenEasing = (TweenType)(DICTOOL->getIntValue_json(json, A_TWEEN_EASING, Linear));
 	frameData->displayIndex = DICTOOL->getIntValue_json(json, A_DISPLAY_INDEX);
 	frameData->blendFunc.src = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_SRC, BlendFunc::ALPHA_NON_PREMULTIPLIED.src));
 	frameData->blendFunc.dst = (GLenum)(DICTOOL->getIntValue_json(json, A_BLEND_DST, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst));
@@ -1616,7 +1616,7 @@ TextureData *DataReaderHelper::decodeTexture(const rapidjson::Value& json)
     return textureData;
 }
 
-CCContourData *DataReaderHelper::decodeContour(const rapidjson::Value& json)
+ContourData *DataReaderHelper::decodeContour(const rapidjson::Value& json)
 {
     ContourData *contourData = new ContourData();
 	contourData->init();
@@ -1638,7 +1638,7 @@ CCContourData *DataReaderHelper::decodeContour(const rapidjson::Value& json)
     return contourData;
 }
 
-void DataReaderHelper::decodeNode(CCBaseData *node, const rapidjson::Value& json, DataInfo *dataInfo)
+void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, DataInfo *dataInfo)
 {
     node->x = DICTOOL->getFloatValue_json(json, A_X) * s_PositionReadScale;
     node->y = DICTOOL->getFloatValue_json(json, A_Y) * s_PositionReadScale;
