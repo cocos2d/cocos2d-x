@@ -7,7 +7,7 @@ Notice:The best of generate path is english path.
 ##1.UI
 * Windows: double click "create_project.pyw" file
 * Mac: ./create_project.pyw
-* Linux: The tkinter was not installed in the linux's default python,
+* Linux: The tkinter was not installed in the linux's default python,therefore, in order to use the gui operate, you have to install the tkinter libaray manually. There is another way to create project by command line.  see below for details
 ##2.console
 	$ cd cocos2d-x/tools/project-creator
 	$ ./project-creator.pyw --help
