@@ -36,6 +36,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void draw();
+protected:
+    void onDraw();
 };
 
 class LabelAtlasTest : public AtlasDemo
@@ -102,6 +104,8 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class Atlas5 : public AtlasDemo
@@ -372,6 +376,8 @@ public:
     virtual void draw();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 private:
     LabelBMFont *label1;
 };
