@@ -49,7 +49,7 @@ void SpineTestScene::runThisTest()
 bool SpineTestLayer::init () {
     if (!Layer::init()) return false;
     
-    skeletonNode = CCSkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
+    skeletonNode = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
     skeletonNode->setMix("walk", "jump", 0.2f);
     skeletonNode->setMix("jump", "walk", 0.4f);
     
@@ -82,7 +82,7 @@ void SpineTestLayer::update (float deltaTime) {
     
 }
 
-void SpineTestLayer::animationStateEvent (CCSkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) {
+void SpineTestLayer::animationStateEvent (SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) {
     spTrackEntry* entry = spAnimationState_getCurrent(node->state, trackIndex);
     const char* animationName = (entry && entry->animation) ? entry->animation->name : 0;
     

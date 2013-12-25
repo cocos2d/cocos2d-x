@@ -40,25 +40,25 @@
 
 namespace spine {
 
-class CCSkeletonAnimation;
-typedef void (cocos2d::Object::*SEL_AnimationStateEvent)(spine::CCSkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+class SkeletonAnimation;
+typedef void (cocos2d::Object::*SEL_AnimationStateEvent)(spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
 #define animationStateEvent_selector(_SELECTOR) (SEL_AnimationStateEvent)(&_SELECTOR)
 
 /** Draws an animated skeleton, providing an AnimationState for applying one or more animations and queuing animations to be
   * played later. */
-class CCSkeletonAnimation: public CCSkeleton {
+class SkeletonAnimation: public Skeleton {
 public:
 	spAnimationState* state;
 
-	static CCSkeletonAnimation* createWithData (spSkeletonData* skeletonData);
-	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
-	static CCSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
+	static SkeletonAnimation* createWithData (spSkeletonData* skeletonData);
+	static SkeletonAnimation* createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
+	static SkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
 
-	CCSkeletonAnimation (spSkeletonData* skeletonData);
-	CCSkeletonAnimation (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
-	CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
+	SkeletonAnimation (spSkeletonData* skeletonData);
+	SkeletonAnimation (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
+	SkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
 
-	virtual ~CCSkeletonAnimation ();
+	virtual ~SkeletonAnimation ();
 
 	virtual void update (float deltaTime);
 
@@ -75,10 +75,10 @@ public:
 	virtual void onAnimationStateEvent (int trackIndex, spEventType type, spEvent* event, int loopCount);
 
 protected:
-	CCSkeletonAnimation ();
+	SkeletonAnimation ();
 
 private:
-	typedef CCSkeleton super;
+	typedef Skeleton super;
     cocos2d::Object* listenerInstance;
 	SEL_AnimationStateEvent listenerMethod;
 	bool ownsAnimationStateData;
