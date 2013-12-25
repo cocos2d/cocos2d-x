@@ -6,7 +6,7 @@
 # Author: chuanwei
 
 import sys
-from module.ui import TkCocosDialog
+from module.ui import createTkCocosDialog
 from module.core import CocosProject
 
 # ------------ main --------------
@@ -18,7 +18,7 @@ if __name__ == '__main__':
         #create_project.py -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany
     """
     if len(sys.argv)==1:
-        TkCocosDialog()
+        createTkCocosDialog()
     else:
         project = CocosProject()
         name, package, language, path = project.checkParams()
