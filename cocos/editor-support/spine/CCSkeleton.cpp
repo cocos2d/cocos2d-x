@@ -40,25 +40,25 @@ using std::max;
 
 namespace spine {
 
-CCSkeleton* CCSkeleton::createWithData (spSkeletonData* skeletonData, bool isOwnsSkeletonData) {
-	CCSkeleton* node = new CCSkeleton(skeletonData, isOwnsSkeletonData);
+Skeleton* Skeleton::createWithData (spSkeletonData* skeletonData, bool isOwnsSkeletonData) {
+	Skeleton* node = new Skeleton(skeletonData, isOwnsSkeletonData);
 	node->autorelease();
 	return node;
 }
 
-CCSkeleton* CCSkeleton::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
-	CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlas, scale);
+Skeleton* Skeleton::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
+	Skeleton* node = new Skeleton(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
-CCSkeleton* CCSkeleton::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	CCSkeleton* node = new CCSkeleton(skeletonDataFile, atlasFile, scale);
+Skeleton* Skeleton::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
+	Skeleton* node = new Skeleton(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
 }
 
-void CCSkeleton::initialize () {
+void Skeleton::initialize () {
 	atlas = 0;
 	debugSlots = false;
 	debugBones = false;
@@ -73,23 +73,23 @@ void CCSkeleton::initialize () {
 	scheduleUpdate();
 }
 
-void CCSkeleton::setSkeletonData (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
+void Skeleton::setSkeletonData (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
 	skeleton = spSkeleton_create(skeletonData);
 	rootBone = skeleton->bones[0];
 	this->ownsSkeletonData = isOwnsSkeletonData;
 }
 
-CCSkeleton::CCSkeleton () {
+Skeleton::Skeleton () {
 	initialize();
 }
 
-CCSkeleton::CCSkeleton (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
+Skeleton::Skeleton (spSkeletonData *skeletonData, bool isOwnsSkeletonData) {
 	initialize();
 
 	setSkeletonData(skeletonData, isOwnsSkeletonData);
 }
 
-CCSkeleton::CCSkeleton (const char* skeletonDataFile, spAtlas* aAtlas, float scale) {
+Skeleton::Skeleton (const char* skeletonDataFile, spAtlas* aAtlas, float scale) {
 	initialize();
 
 	spSkeletonJson* json = spSkeletonJson_create(aAtlas);
@@ -101,7 +101,7 @@ CCSkeleton::CCSkeleton (const char* skeletonDataFile, spAtlas* aAtlas, float sca
 	setSkeletonData(skeletonData, true);
 }
 
-CCSkeleton::CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale) {
+Skeleton::Skeleton (const char* skeletonDataFile, const char* atlasFile, float scale) {
 	initialize();
 
 	atlas = spAtlas_readAtlasFile(atlasFile);
@@ -116,17 +116,17 @@ CCSkeleton::CCSkeleton (const char* skeletonDataFile, const char* atlasFile, flo
 	setSkeletonData(skeletonData, true);
 }
 
-CCSkeleton::~CCSkeleton () {
+Skeleton::~Skeleton () {
 	if (ownsSkeletonData) spSkeletonData_dispose(skeleton->data);
 	if (atlas) spAtlas_dispose(atlas);
 	spSkeleton_dispose(skeleton);
 }
 
-void CCSkeleton::update (float deltaTime) {
+void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void CCSkeleton::draw () {
+void Skeleton::draw () {
 	CC_NODE_DRAW_SETUP();
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
@@ -168,7 +168,7 @@ void CCSkeleton::draw () {
 		textureAtlas = regionTextureAtlas;
         setFittedBlendingFunc(textureAtlas);
 
-		int quadCount = textureAtlas->getTotalQuads();
+		ssize_t quadCount = textureAtlas->getTotalQuads();
 		if (textureAtlas->getCapacity() == quadCount) {
 			textureAtlas->drawQuads();
 			textureAtlas->removeAllQuads();
@@ -222,11 +222,11 @@ void CCSkeleton::draw () {
 	}
 }
 
-TextureAtlas* CCSkeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
+TextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
 	return (TextureAtlas*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 }
 
-Rect CCSkeleton::getBoundingBox () const {
+Rect Skeleton::getBoundingBox () const {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = FLT_MIN, maxY = FLT_MIN;
 	float scaleX = getScaleX();
 	float scaleY = getScaleY();
@@ -259,50 +259,50 @@ Rect CCSkeleton::getBoundingBox () const {
 
 // --- Convenience methods for Skeleton_* functions.
 
-void CCSkeleton::updateWorldTransform () {
+void Skeleton::updateWorldTransform () {
 	spSkeleton_updateWorldTransform(skeleton);
 }
 
-void CCSkeleton::setToSetupPose () {
+void Skeleton::setToSetupPose () {
 	spSkeleton_setToSetupPose(skeleton);
 }
-void CCSkeleton::setBonesToSetupPose () {
+void Skeleton::setBonesToSetupPose () {
 	spSkeleton_setBonesToSetupPose(skeleton);
 }
-void CCSkeleton::setSlotsToSetupPose () {
+void Skeleton::setSlotsToSetupPose () {
 	spSkeleton_setSlotsToSetupPose(skeleton);
 }
 
-spBone* CCSkeleton::findBone (const char* boneName) const {
+spBone* Skeleton::findBone (const char* boneName) const {
 	return spSkeleton_findBone(skeleton, boneName);
 }
 
-spSlot* CCSkeleton::findSlot (const char* slotName) const {
+spSlot* Skeleton::findSlot (const char* slotName) const {
 	return spSkeleton_findSlot(skeleton, slotName);
 }
 
-bool CCSkeleton::setSkin (const char* skinName) {
+bool Skeleton::setSkin (const char* skinName) {
 	return spSkeleton_setSkinByName(skeleton, skinName) ? true : false;
 }
 
-spAttachment* CCSkeleton::getAttachment (const char* slotName, const char* attachmentName) const {
+spAttachment* Skeleton::getAttachment (const char* slotName, const char* attachmentName) const {
 	return spSkeleton_getAttachmentForSlotName(skeleton, slotName, attachmentName);
 }
-bool CCSkeleton::setAttachment (const char* slotName, const char* attachmentName) {
+bool Skeleton::setAttachment (const char* slotName, const char* attachmentName) {
 	return spSkeleton_setAttachment(skeleton, slotName, attachmentName) ? true : false;
 }
 
 // --- CCBlendProtocol
 
-const cocos2d::BlendFunc& CCSkeleton::getBlendFunc () const {
+const cocos2d::BlendFunc& Skeleton::getBlendFunc () const {
     return blendFunc;
 }
 
-void CCSkeleton::setBlendFunc (const cocos2d::BlendFunc& aBlendFunc) {
+void Skeleton::setBlendFunc (const cocos2d::BlendFunc& aBlendFunc) {
     this->blendFunc = aBlendFunc;
 }
     
-void CCSkeleton::setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture)
+void Skeleton::setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture)
 {
     if(nextRenderedTexture->getTexture() && nextRenderedTexture->getTexture()->hasPremultipliedAlpha())
     {
