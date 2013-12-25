@@ -22,7 +22,7 @@
 */
 
 
-#include "C3Dneon_matrix_impl.h"
+#include "neonmatriximpl.h"
 
 #if defined(__ARM_NEON__) && !defined(__arm64__)
 

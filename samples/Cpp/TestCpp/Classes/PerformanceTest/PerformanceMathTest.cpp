@@ -11,10 +11,7 @@
 
 
 #ifdef C3D_MATH
-#include "C3DMatrix.h"
-#include "C3DVector3.h"
-#include "C3DVector2.h"
-#include "C3DVector4.h"
+#include "CocosMath.h"
 #include "CCAction.h"
 #endif
 
@@ -281,14 +278,14 @@ void MatMultiplyTest::update(float dt)
 #endif
     
 #ifdef C3D_MATH
-    cocos3d::C3DMatrix c3dmat(m);
-    cocos3d::C3DMatrix c3dre;
+    Matrix c3dmat(m);
+    Matrix c3dre;
 
     string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
-        cocos3d::C3DMatrix::multiply(c3dmat, c3dmat, &c3dre);
+        Matrix::multiply(c3dmat, c3dmat, &c3dre);
         //c3dre = c3dmat * c3dmat;
     }
     CC_PROFILER_STOP(our.c_str());
@@ -378,9 +375,9 @@ void MatVec4MultiplyTest::update(float dt)
 #endif
     
 #ifdef C3D_MATH
-    cocos3d::C3DMatrix c3dmat(m);
-    cocos3d::C3DVector4 c3du;
-    cocos3d::C3DVector4 c3dv(vec41[0], vec41[1], vec41[2], vec41[3]);
+    Matrix c3dmat(m);
+    Vector4 c3du;
+    Vector4 c3dv(vec41[0], vec41[1], vec41[2], vec41[3]);
     
     string our = "c3d ";
     our += profilerName();
@@ -462,15 +459,15 @@ void Vec3CrossTest::update(float dt)
 #endif
     
 #ifdef C3D_MATH
-    cocos3d::C3DVector3 c3dv1(vec31[0],vec31[1],vec31[2]);
-    cocos3d::C3DVector3 c3dv2(vec32[0],vec32[1],vec32[2]);
-    cocos3d::C3DVector3 c3dv3;
+    Vector3 c3dv1(vec31[0],vec31[1],vec31[2]);
+    Vector3 c3dv2(vec32[0],vec32[1],vec32[2]);
+    Vector3 c3dv3;
     
     string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
-        cocos3d::C3DVector3::cross(c3dv1, c3dv2, &c3dv3);
+        Vector3::cross(c3dv1, c3dv2, &c3dv3);
     }
     CC_PROFILER_STOP(our.c_str());
 #endif
@@ -543,8 +540,8 @@ void Mat4AddTest::update(float dt)
 #endif
     
 #ifdef C3D_MATH
-    cocos3d::C3DMatrix c3dmat(m);
-    cocos3d::C3DMatrix c3dre;
+    Matrix c3dmat(m);
+    Matrix c3dre;
     
     string our = "c3d ";
     our += profilerName();
@@ -614,9 +611,9 @@ void Vec4AddTest::update(float dt)
 #endif
     
 #ifdef C3D_MATH
-    cocos3d::C3DVector4 c3dv1(vec41);
-    cocos3d::C3DVector4 c3dv2(vec41);
-    cocos3d::C3DVector4 c3dv3;
+    Vector4 c3dv1(vec41);
+    Vector4 c3dv2(vec41);
+    Vector4 c3dv3;
     
     string our = "c3d ";
     our += profilerName();

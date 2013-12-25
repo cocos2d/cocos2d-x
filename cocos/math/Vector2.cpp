@@ -1,4 +1,4 @@
-#include "Math.h"
+#include "CocosMath.h"
 
 namespace cocos2d
 {

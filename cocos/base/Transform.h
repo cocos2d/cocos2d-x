@@ -27,7 +27,7 @@ namespace cocos2d
 class  Transform
 {
 public:   
-	   
+       
 
     /**
      * Constructs the identity transform.
@@ -82,7 +82,7 @@ public:
      * Returns the scale for this transform.
      */
     const Vector3& getScale() const;
-	
+    
 
     /**
      * Gets the scale factor along the x-axis of this transform.
@@ -110,7 +110,7 @@ public:
      */
     const Quaternion& getRotation() const;
 
-	
+    
     /**
      * Gets the rotation component of this transform in the specified matrix.
      *
@@ -132,7 +132,7 @@ public:
      * Returns the translation for this transform.
      */
     const Vector3& getPosition() const;
-	
+    
 
     /**
      * Gets the translation factor along the x-axis of this transform.
@@ -166,7 +166,7 @@ public:
      * @param dst The vector to store the result in.
      */
     void getForwardVector(Vector3* dst) const;
-	
+    
 
     /**
      * Returns the up vector for this Transform.
@@ -192,7 +192,7 @@ public:
      * @param dst The vector to store the result in.
      */
     void getRightVector(Vector3* dst) const;
-		
+        
 
     /**
      * Rotates this transform's rotation component by the given rotation.
@@ -423,9 +423,9 @@ public:
      */
     void setRotation(const Vector3& axis, float angle);
 
-	void setRotationX(float angle);
-	void setRotationY(float angle);
-	void setRotationZ(float angle);
+    void setRotationX(float angle);
+    void setRotationY(float angle);
+    void setRotationZ(float angle);
 
     /**
      * Sets the translation component for this transform to the
@@ -578,27 +578,27 @@ public:
      */
     void transformVector(float x, float y, float z, float w, Vector3* dst);
 
-	/**
-	 * 
-	 *
-	 */
-	void lookAt(const Vector3& position, const Vector3& up, const Vector3& target);
-	
+    /**
+     * 
+     *
+     */
+    void lookAt(const Vector3& position, const Vector3& up, const Vector3& target);
+    
     /**
      * Set position and rotation as rotating along a specific line
      * @param point a point at the line
      * @param axis direction of the line
      * @param angle angle to rotate
      */
-	void setRotationAlong(const Vector3& point, const Vector3& axis, float angle);
+    void setRotationAlong(const Vector3& point, const Vector3& axis, float angle);
 
-	/**
+    /**
      * Rotate along a specific line
      * @param point a point at the line
      * @param axis direction of the line
      * @param angle angle to rotate
      */
-	void rotateAlong(const Vector3& point, const Vector3& axis, float angle);
+    void rotateAlong(const Vector3& point, const Vector3& axis, float angle);
 
 protected:
 
@@ -623,9 +623,9 @@ protected:
     /**
      * Called when the transform changes.
      */
-	virtual void transformChanged(){};
+    virtual void transformChanged(){};
 
-	virtual void copyFrom(const Transform* other);
+    virtual void copyFrom(const Transform* other);
 
     /**
      * The scale component of the Transform.

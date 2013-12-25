@@ -129,7 +129,7 @@ public:
     static Matrix createFromVectors(Vector3& vx, Vector3& vy, Vector3& vz, Vector3& pos);
 
 
-	static void createPitchYawRoll(float pitch, float yaw, float roll, Matrix* dst);
+    static void createPitchYawRoll(float pitch, float yaw, float roll, Matrix* dst);
     /**
      * Creates a view matrix based on the specified input parameters.
      *
@@ -139,9 +139,6 @@ public:
      * @param dst A matrix to store the result in.
      */
     static void createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst);
-
-	// 通过轴创建矩阵 lvlong
-	//static void createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst);
 
     /**
      * Creates a view matrix based on the specified input parameters.
@@ -161,7 +158,7 @@ public:
                              float targetCenterY, float targetCenterZ, float upX, float upY, float upZ, Matrix* dst);
 
 
-	static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, Matrix* dst);
+    static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, Matrix* dst);
 
     /**
      * Builds a perspective projection matrix based on a field of view and returns by value.
@@ -179,7 +176,7 @@ public:
      */
     static void createPerspectiveFOV(float width, float height, float zNear, float zFar, Matrix* dst);
 
-	 static void createPerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
+     static void createPerspectiveOffCenter(float left, float right, float bottom, float top, float zNear,
                                             float zFar, Matrix* dst);
     /**
      * Creates an orthographic projection matrix.
@@ -409,7 +406,7 @@ public:
      */
     void getUpVector(Vector3* dst) const;
 
-	
+    
 
     /**
      * Gets the right vector of this matrix.
@@ -628,7 +625,7 @@ public:
      */
     void scale(float xScale, float yScale, float zScale);
 
-	void setScale(float xScale,float yScale,float zScale);
+    void setScale(float xScale,float yScale,float zScale);
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the
@@ -695,11 +692,11 @@ public:
      */
     void set(const Matrix& m);
 
-	void setCol(int idx, const Vector3& col);
+    void setCol(int idx, const Vector3& col);
 
-	Vector3 getCol(int idx) const;
+    Vector3 getCol(int idx) const;
 
-	void getCol(int idx, Vector3& col) const;
+    void getCol(int idx, Vector3& col) const;
 
     /**
      * Sets this matrix to the identity matrix.

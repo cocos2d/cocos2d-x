@@ -5,13 +5,13 @@
 //  
 //
 //
-#include "Math.h"
+#include "CocosMath.h"
 
 namespace cocos2d
 {
     
     
-MathUtility::MathUtility(): _costab(NULL), _sintab(NULL)
+MathUtility::MathUtility(): _costab(nullptr), _sintab(nullptr)
 {
 }
 
@@ -61,14 +61,14 @@ float MathUtility::cos(float rad, bool isUseTable)
     
 int MathUtility::rad2degree(float rad)
 {
-    int degree = (int)(MATH_RAD_TO_DEG(rad) + 0.5f);
+    int degree = (int)(CC_RADIANS_TO_DEGREES(rad) + 0.5f);
     if (degree >= 360 || degree <= -360)
     {
         degree = degree % 360;
     }
     if (degree < 0)
         degree += 360;
-	
+    
     return degree;
 }
     
@@ -109,7 +109,7 @@ void MathUtility::initMathUtility()
     _sintab = new float[count];
     
     for (int i = 0; i < count; i++) {
-        float rad = MATH_DEG_TO_RAD(i);
+        float rad = CC_DEGREES_TO_RADIANS(i);
         _sintab[i] = sinf(rad);
         _costab[i] = cosf(rad);
     }
