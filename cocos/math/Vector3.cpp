@@ -1,4 +1,4 @@
-#include "C3DMath.h"
+#include "CocosMath.h"
 
 namespace cocos2d
 {

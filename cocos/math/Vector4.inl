@@ -5,10 +5,10 @@ namespace cocos2d
 
 inline void Vector4::add(const Vector4& v)
 {
-	x += v.x;
-	y += v.y;
-	z += v.z;
-	w += v.w;
+    x += v.x;
+    y += v.y;
+    z += v.z;
+    w += v.w;
 }
 inline const Vector4 Vector4::operator+(const Vector4& v) const
 {
@@ -93,7 +93,7 @@ inline const Vector4 operator*(float x, const Vector4& v)
 
 inline const Vector4 Vector4::operator*(const Vector4& v) const
 {
-	return Vector4(x * v.x, y * v.y, z * v.z, w * v.w);
+    return Vector4(x * v.x, y * v.y, z * v.z, w * v.w);
 }
 
 }
