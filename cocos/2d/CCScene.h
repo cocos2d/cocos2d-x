@@ -64,8 +64,7 @@ public:
 
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
 
-    virtual void addChild(Node* child) override;
-    virtual void addChild(Node* child, int zOrder) override;
+    using Node::addChild;
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void update(float delta) override;    
     virtual std::string getDescription() const override;

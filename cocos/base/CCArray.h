@@ -261,7 +261,7 @@ public:
      @return  The Array pointer generated from the file
      * @js NA
      */
-    static __Array* createWithContentsOfFile(const char* pFileName);
+    static __Array* createWithContentsOfFile(const std::string& pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
@@ -269,7 +269,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static __Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    static __Array* createWithContentsOfFileThreadSafe(const std::string& pFileName);
     /**
      * @js NA
      * @lua NA

@@ -62,7 +62,7 @@ char* _readFile (const char* path, int* length) {
 	if (!file) return 0;
 
 	fseek(file, 0, SEEK_END);
-	*length = ftell(file);
+	*length = (int)ftell(file);
 	fseek(file, 0, SEEK_SET);
 
 	data = MALLOC(char, *length);

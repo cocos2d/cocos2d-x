@@ -117,15 +117,10 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
-renderer/CCNewRenderTexture.cpp \
-renderer/CCNewSprite.cpp \
-renderer/CCNewSpriteBatchNode.cpp \
-renderer/CCNewTextureAtlas.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
-renderer/CCNewClippingNode.cpp \
 renderer/CCQuadCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
@@ -210,6 +205,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
@@ -222,3 +218,4 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,2d/platform/android)
+$(call import-module,editor-support/spine)

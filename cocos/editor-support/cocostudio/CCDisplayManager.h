@@ -85,7 +85,7 @@ public:
      */
     void changeDisplayByIndex(int index, bool force);
 
-    void changeDisplayByName(const char *name, bool force);
+    void changeDisplayByName(const std::string& name, bool force);
 
     cocos2d::Node *getDisplayRenderNode() const;
     DisplayType getDisplayRenderNodeType() const;
