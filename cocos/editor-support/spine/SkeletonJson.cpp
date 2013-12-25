@@ -65,7 +65,7 @@ void spSkeletonJson_dispose (spSkeletonJson* self) {
 
 void _spSkeletonJson_setError (spSkeletonJson* self, Json* root, const char* value1, const char* value2) {
 	char message[256];
-	int length;
+	size_t length = 0;
 	FREE(self->error);
 	strcpy(message, value1);
 	length = strlen(value1);
