@@ -168,7 +168,7 @@ void Skeleton::draw () {
 		textureAtlas = regionTextureAtlas;
         setFittedBlendingFunc(textureAtlas);
 
-		int quadCount = textureAtlas->getTotalQuads();
+		ssize_t quadCount = textureAtlas->getTotalQuads();
 		if (textureAtlas->getCapacity() == quadCount) {
 			textureAtlas->drawQuads();
 			textureAtlas->removeAllQuads();
