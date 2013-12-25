@@ -50,7 +50,7 @@ class CC_DLL MotionStreak : public Node, public TextureProtocol
 {
 public:
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
@@ -116,7 +116,7 @@ protected:
     virtual ~MotionStreak();
 
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
     /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 

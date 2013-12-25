@@ -396,10 +396,10 @@ Image::~Image()
     }
 }
 
-bool Image::initWithImageFile(const char * strPath)
+bool Image::initWithImageFile(const std::string& path)
 {
-    bool bRet = false;
-    _filePath = FileUtils::getInstance()->fullPathForFilename(strPath);
+    bool ret = false;
+    _filePath = FileUtils::getInstance()->fullPathForFilename(path);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
@@ -409,7 +409,7 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
-    bRet = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
+    ret = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
     unsigned int *tmp = (unsigned int *)_data;
     int nrPixels = iSurf->w * iSurf->h;
@@ -425,14 +425,14 @@ bool Image::initWithImageFile(const char * strPath)
 
     if (!data.isNull())
     {
-        bRet = initWithImageData(data.getBytes(), data.getSize());
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
 #endif // EMSCRIPTEN
 
-    return bRet;
+    return ret;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath)
+bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
 {
     bool ret = false;
     _filePath = fullpath;

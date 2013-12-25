@@ -60,8 +60,8 @@ public:
     virtual void setEnabled(bool b);
     static Component* create(void);
     
-    const char* getName() const;
-    void setName(const char *name);
+    const std::string& getName() const;
+    void setName(const std::string& name);
     
     void setOwner(Node *pOwner);
     Node* getOwner() const;
