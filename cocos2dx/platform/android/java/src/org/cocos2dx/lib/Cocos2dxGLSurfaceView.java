@@ -56,6 +56,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 	private Cocos2dxRenderer mCocos2dxRenderer;
 	private Cocos2dxEditText mCocos2dxEditText;
 
+	private boolean is_multi_touch_enabled = true;
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -178,7 +179,11 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 		//super.onPause();
 	}
-
+	
+	public void setMultiTouchEnabled(boolean is_multi_touch_enabled) {
+		this.is_multi_touch_enabled = is_multi_touch_enabled;
+	}
+	
 	@Override
 	public boolean onTouchEvent(final MotionEvent pMotionEvent) {
 		// these data are used in ACTION_MOVE and ACTION_CANCEL
@@ -195,6 +200,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 		switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_POINTER_DOWN:
+				if (pointerNumber > 1 && !is_multi_touch_enabled)
+					break;
 				final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 				final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
 				final float xPointerDown = pMotionEvent.getX(indexPointerDown);
@@ -232,6 +239,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				break;
 
 			case MotionEvent.ACTION_POINTER_UP:
+				if (pointerNumber > 1 && !is_multi_touch_enabled)
+					break;
 				final int indexPointUp = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 				final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
 				final float xPointerUp = pMotionEvent.getX(indexPointUp);
