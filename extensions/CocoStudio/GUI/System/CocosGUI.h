@@ -42,7 +42,7 @@
 #include "../UIWidgets/ScrollWidget/UIPageView.h"
 #include "UIHelper.h"
 #include "../../Reader/GUIReader.h"
-#include "UILayer.h"
+#include "UITouchGroup.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
 
 //NS_CC_EXT_BEGIN

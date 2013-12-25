@@ -693,7 +693,7 @@ protected:
     bool _hitted;
     
 //    EventListenerTouchOneByOne* _touchListener;
-    friend class UIInputManager;
+    friend class TouchGroup;
 };
 }
 

@@ -359,8 +359,7 @@
 		37CA1D1A17D87AC700A649D0 /* SceneEditorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37CA1CF717D87AC700A649D0 /* SceneEditorTest.cpp */; };
 		50181AE1185FEBAE0051CA1C /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50181ADF185FEBAE0051CA1C /* CCActionEaseEx.cpp */; };
 		50D6A4CD17E2C91100523A82 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D6A4CB17E2C91100523A82 /* GUIReader.cpp */; };
-		50DDB7711863E48800A1F278 /* UIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB76D1863E48800A1F278 /* UIInputManager.cpp */; };
-		50DDB7721863E48800A1F278 /* UILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB76F1863E48800A1F278 /* UILayer.cpp */; };
+		50DDB7721863E48800A1F278 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB76F1863E48800A1F278 /* UITouchGroup.cpp */; };
 		50DDB77B18643D9800A1F278 /* UILayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB77918643D9800A1F278 /* UILayoutTest.cpp */; };
 		50DDB77F186443FF00A1F278 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB77D186443FF00A1F278 /* UISliderTest.cpp */; };
 		50DDB783186444E700A1F278 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DDB781186444E700A1F278 /* UIWidgetAddNodeTest.cpp */; };
@@ -1157,10 +1156,8 @@
 		50181AE0185FEBAE0051CA1C /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		50D6A4CB17E2C91100523A82 /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
 		50D6A4CC17E2C91100523A82 /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
-		50DDB76D1863E48800A1F278 /* UIInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIInputManager.cpp; sourceTree = "<group>"; };
-		50DDB76E1863E48800A1F278 /* UIInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIInputManager.h; sourceTree = "<group>"; };
-		50DDB76F1863E48800A1F278 /* UILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayer.cpp; sourceTree = "<group>"; };
-		50DDB7701863E48800A1F278 /* UILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayer.h; sourceTree = "<group>"; };
+		50DDB76F1863E48800A1F278 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
+		50DDB7701863E48800A1F278 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		50DDB77918643D9800A1F278 /* UILayoutTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutTest.cpp; sourceTree = "<group>"; };
 		50DDB77A18643D9800A1F278 /* UILayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutTest.h; sourceTree = "<group>"; };
 		50DDB77D186443FF00A1F278 /* UISliderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISliderTest.cpp; sourceTree = "<group>"; };
@@ -2890,10 +2887,8 @@
 		37CA1BD217D87A3300A649D0 /* System */ = {
 			isa = PBXGroup;
 			children = (
-				50DDB76D1863E48800A1F278 /* UIInputManager.cpp */,
-				50DDB76E1863E48800A1F278 /* UIInputManager.h */,
-				50DDB76F1863E48800A1F278 /* UILayer.cpp */,
-				50DDB7701863E48800A1F278 /* UILayer.h */,
+				50DDB76F1863E48800A1F278 /* UITouchGroup.cpp */,
+				50DDB7701863E48800A1F278 /* UITouchGroup.h */,
 				37CA1BD517D87A3300A649D0 /* CocosGUI.cpp */,
 				37CA1BD617D87A3300A649D0 /* CocosGUI.h */,
 				37CA1BD717D87A3300A649D0 /* UIHelper.cpp */,
@@ -3459,7 +3454,7 @@
 				15A3D9091682F7D5002FB0C5 /* b2EdgeShape.cpp in Sources */,
 				50E9E948182A355B00F6FDF1 /* SceneReader.cpp in Sources */,
 				15A3D90A1682F7D5002FB0C5 /* b2PolygonShape.cpp in Sources */,
-				50DDB7721863E48800A1F278 /* UILayer.cpp in Sources */,
+				50DDB7721863E48800A1F278 /* UITouchGroup.cpp in Sources */,
 				15A3D90B1682F7D5002FB0C5 /* b2BlockAllocator.cpp in Sources */,
 				15A3D90C1682F7D5002FB0C5 /* b2Draw.cpp in Sources */,
 				15A3D90D1682F7D5002FB0C5 /* b2Math.cpp in Sources */,
@@ -3607,7 +3602,6 @@
 				37CA1C1C17D87A3300A649D0 /* CCArmatureAnimation.cpp in Sources */,
 				50DDB77F186443FF00A1F278 /* UISliderTest.cpp in Sources */,
 				37CA1C1D17D87A3300A649D0 /* CCProcessBase.cpp in Sources */,
-				50DDB7711863E48800A1F278 /* UIInputManager.cpp in Sources */,
 				37CA1C1E17D87A3300A649D0 /* CCTween.cpp in Sources */,
 				37CA1C1F17D87A3300A649D0 /* CCArmature.cpp in Sources */,
 				37CA1C2017D87A3300A649D0 /* CCBone.cpp in Sources */,

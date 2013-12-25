@@ -22,84 +22,111 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIINPUTMANAGER_H__
-#define __UIINPUTMANAGER_H__
+
+#ifndef __UILAYER_H__
+#define __UILAYER_H__
 
 #include "cocos2d.h"
-#include "../Layouts/UILayout.h"
+#include "ExtensionMacros.h"
+#include "../BaseClasses/UIWidget.h"
 
 NS_CC_BEGIN
 
 namespace gui {
 
 /**
-*   @js NA
-*   @lua NA
-*/
-class UIInputManager
+ *  @lua NA
+ */
+class TouchGroup : public CCLayer
 {
+    
 public:
     /**
      * Default constructor
+     * @js ctor
      */
-    UIInputManager();
+    TouchGroup();
     
     /**
      * Default destructor
+     * @js NA
      */
-    virtual ~UIInputManager();
+    virtual ~TouchGroup();
     
     /**
-     * Regist a widget to input manager.
-     *
-     * @param widget    registed widget can be touched.
+     * Allocates and initializes a widget.
      */
-    void registWidget(Widget* widget);
+    static TouchGroup *create(void);
+    
+    //initializes state of uilayer.
+    virtual bool init();
+    
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void onEnterTransitionDidFinish();
+    
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
     
     /**
-     * Remove a registed widget from input manager.
+     * Add a widget to UILayer, for drawing.
      *
-     * @param widget    widget which will be removed.
+     * @param widget.
      */
-    void removeManageredWidget(Widget* widget);
+    void addWidget(Widget* widget);
     
     /**
-     * Finds a widget which is selected and call it's "onTouchBegan" method.
+     * Remove a widget from UILayer.
      *
-     * @param touch point.
+     * @param widget.
      *
-     * @return true that find a widget selected, false otherwise.
+     * @param cleanup true if all running actions on all children widgets should be cleanup, false otherwise.
      */
-    bool checkEventWidget(CCTouch* touch, CCEvent *pEvent);
+    void removeWidget(Widget* widget);
     
+    /**
+     * Finds a widget whose tag is equal tag param from widget tree.
+     *
+     * @param tag.
+     */
+    Widget* getWidgetByTag(int tag);
     
-    void update(float dt);
-    bool onTouchBegan(CCTouch* touch, CCEvent *pEvent);
-    void onTouchMoved(CCTouch* touch, CCEvent *pEvent);
-    void onTouchEnd(CCTouch* touch, CCEvent *pEvent);
-    void onTouchCancelled(CCTouch* touch, CCEvent *pEvent);
+    /**
+     * Seek a widget whose name is equal name param from widget tree.
+     *
+     * @param name.
+     */
+    Widget* getWidgetByName(const char* name);
     
-    void setRootWidget(Widget* root);
+    /**
+     * Remove and clean up all of UILayer's widget.
+     */
+    virtual void clear();
+    
+    /**
+     * Gets root widget of UILayer.
+     *
+     * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
+     */
     Widget* getRootWidget();
-    void addCheckedDoubleClickWidget(Widget* widget);
 protected:
+    bool checkEventWidget(CCTouch* touch, CCEvent *pEvent);
     bool checkTouchEvent(Widget* root, CCTouch* touch, CCEvent* pEvent);
 protected:
-    CCArray* m_manageredWidget;
-    CCArray* m_pSelectedWidgets;
+    Widget* m_pRootWidget;
     CCPoint touchBeganedPoint;
     CCPoint touchMovedPoint;
     CCPoint touchEndedPoint;
     CCPoint touchCanceledPoint;
-    bool m_bTouchDown;
-    float m_fLongClickTime;
-    float m_fLongClickRecordTime;
-    CCArray* checkedDoubleClickWidget;
-    Widget* m_pRootWidget;
+    CCArray* m_pSelectedWidgets;
 };
     
 }
 
 NS_CC_END
 
-#endif /* defined(__CocoGUI__UIInputManager__) */
+
+
+#endif /* defined(__UILAYER_H__) */

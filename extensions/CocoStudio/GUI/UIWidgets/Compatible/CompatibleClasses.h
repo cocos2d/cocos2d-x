@@ -31,7 +31,7 @@ typedef cocos2d::gui::LabelBMFont UILabelBMFont;
 typedef cocos2d::gui::LoadingBar UILoadingBar;
 typedef cocos2d::gui::Slider UISlider;
 typedef cocos2d::gui::TextField UITextField;
-
+typedef cocos2d::gui::TouchGroup UILayer;
     
 }
 NS_CC_END
