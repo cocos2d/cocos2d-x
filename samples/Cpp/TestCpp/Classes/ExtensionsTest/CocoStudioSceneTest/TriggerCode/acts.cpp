@@ -69,23 +69,23 @@ void PlayMusic::removeAll()
 {
 }
 
-IMPLEMENT_CLASS_INFO(MoveTo)
-MoveTo::MoveTo(void)
+IMPLEMENT_CLASS_INFO(TMoveTo)
+TMoveTo::TMoveTo(void)
 :_nTag(-1)
 ,_fDuration(0.0f)
 {
 }
 
-MoveTo::~MoveTo(void)
+TMoveTo::~TMoveTo(void)
 {
 }
 
-bool MoveTo::init()
+bool TMoveTo::init()
 {
 	return true;
 }
 
-void MoveTo::done()
+void TMoveTo::done()
 {
 	do 
 	{
@@ -97,7 +97,7 @@ void MoveTo::done()
 	} while (0);
 }
 
-void MoveTo::serialize(const rapidjson::Value &val)
+void TMoveTo::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -127,28 +127,28 @@ void MoveTo::serialize(const rapidjson::Value &val)
 	}
 }
 
-void MoveTo::removeAll()
+void TMoveTo::removeAll()
 {
 }
 
-IMPLEMENT_CLASS_INFO(MoveBy)
-MoveBy::MoveBy(void)
+IMPLEMENT_CLASS_INFO(TMoveBy)
+TMoveBy::TMoveBy(void)
 :_nTag(-1)
 ,_fDuration(0.0f)
 ,_bReverse(false)
 {
 }
 
-MoveBy::~MoveBy(void)
+TMoveBy::~TMoveBy(void)
 {
 }
 
-bool MoveBy::init()
+bool TMoveBy::init()
 {
     return true;
 }
 
-void MoveBy::done()
+void TMoveBy::done()
 {
 	do 
 	{
@@ -168,7 +168,7 @@ void MoveBy::done()
 	} while (0);
 }
 
-void MoveBy::serialize(const rapidjson::Value &val)
+void TMoveBy::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -203,31 +203,31 @@ void MoveBy::serialize(const rapidjson::Value &val)
 	}
 }
 
-void MoveBy::removeAll()
+void TMoveBy::removeAll()
 {
-	CCLOG("MoveBy::removeAll");
+	CCLOG("TMoveBy::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(RotateTo)
-RotateTo::RotateTo(void)
+IMPLEMENT_CLASS_INFO(TRotateTo)
+TRotateTo::TRotateTo(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 , _fDeltaAngle(0.0f)
 {
 }
 
-RotateTo::~RotateTo(void)
+TRotateTo::~TRotateTo(void)
 {
 }
 
-bool RotateTo::init()
+bool TRotateTo::init()
 {
     return true;
 }
 
-void RotateTo::done()
+void TRotateTo::done()
 {
 	do 
 	{
@@ -239,7 +239,7 @@ void RotateTo::done()
 	} while (0);
 }
 
-void RotateTo::serialize(const rapidjson::Value &val)
+void TRotateTo::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -264,15 +264,15 @@ void RotateTo::serialize(const rapidjson::Value &val)
 	}
 }
 
-void RotateTo::removeAll()
+void TRotateTo::removeAll()
 {
-	CCLOG("RotateTo::removeAll");
+	CCLOG("TRotateTo::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(RotateBy)
-RotateBy::RotateBy(void)
+IMPLEMENT_CLASS_INFO(TRotateBy)
+TRotateBy::TRotateBy(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 , _fDeltaAngle(0.0f)
@@ -280,16 +280,16 @@ RotateBy::RotateBy(void)
 {
 }
 
-RotateBy::~RotateBy(void)
+TRotateBy::~TRotateBy(void)
 {
 }
 
-bool RotateBy::init()
+bool TRotateBy::init()
 {
     return true;
 }
 
-void RotateBy::done()
+void TRotateBy::done()
 {
 	do 
 	{
@@ -309,7 +309,7 @@ void RotateBy::done()
 	} while (0);
 }
 
-void RotateBy::serialize(const rapidjson::Value &val)
+void TRotateBy::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -339,30 +339,30 @@ void RotateBy::serialize(const rapidjson::Value &val)
 	}
 }
 
-void RotateBy::removeAll()
+void TRotateBy::removeAll()
 {
-	CCLOG("RotateBy::removeAll");
+	CCLOG("TRotateBy::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(ScaleTo)
-ScaleTo::ScaleTo(void)
+IMPLEMENT_CLASS_INFO(TScaleTo)
+TScaleTo::TScaleTo(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 {
 }
 
-ScaleTo::~ScaleTo(void)
+TScaleTo::~TScaleTo(void)
 {
 }
 
-bool ScaleTo::init()
+bool TScaleTo::init()
 {
     return true;
 }
 
-void ScaleTo::done()
+void TScaleTo::done()
 {
 	do 
 	{
@@ -374,7 +374,7 @@ void ScaleTo::done()
 	} while (0);
 }
 
-void ScaleTo::serialize(const rapidjson::Value &val)
+void TScaleTo::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -404,31 +404,31 @@ void ScaleTo::serialize(const rapidjson::Value &val)
 	}
 }
 
-void ScaleTo::removeAll()
+void TScaleTo::removeAll()
 {
-	CCLOG("ScaleTo::removeAll");
+	CCLOG("TScaleTo::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(ScaleBy)
-ScaleBy::ScaleBy(void)
+IMPLEMENT_CLASS_INFO(TScaleBy)
+TScaleBy::TScaleBy(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 , _bReverse(false)
 {
 }
 
-ScaleBy::~ScaleBy(void)
+TScaleBy::~TScaleBy(void)
 {
 }
 
-bool ScaleBy::init()
+bool TScaleBy::init()
 {
     return true;
 }
 
-void ScaleBy::done()
+void TScaleBy::done()
 {
 	do 
 	{
@@ -448,7 +448,7 @@ void ScaleBy::done()
 	} while (0);
 }
 
-void ScaleBy::serialize(const rapidjson::Value &val)
+void TScaleBy::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -483,30 +483,30 @@ void ScaleBy::serialize(const rapidjson::Value &val)
 	}
 }
 
-void ScaleBy::removeAll()
+void TScaleBy::removeAll()
 {
-	CCLOG("ScaleBy::removeAll");
+	CCLOG("TScaleBy::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(SkewTo)
-SkewTo::SkewTo(void)
+IMPLEMENT_CLASS_INFO(TSkewTo)
+TSkewTo::TSkewTo(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 {
 }
 
-SkewTo::~SkewTo(void)
+TSkewTo::~TSkewTo(void)
 {
 }
 
-bool SkewTo::init()
+bool TSkewTo::init()
 {
     return true;
 }
 
-void SkewTo::done()
+void TSkewTo::done()
 {
 	do 
 	{
@@ -518,7 +518,7 @@ void SkewTo::done()
 	} while (0);
 }
 
-void SkewTo::serialize(const rapidjson::Value &val)
+void TSkewTo::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -548,31 +548,31 @@ void SkewTo::serialize(const rapidjson::Value &val)
 	}
 }
 
-void SkewTo::removeAll()
+void TSkewTo::removeAll()
 {
-	CCLOG("SkewTo::removeAll");
+	CCLOG("TSkewTo::removeAll");
 }
 
 
 
-IMPLEMENT_CLASS_INFO(SkewBy)
-SkewBy::SkewBy(void)
+IMPLEMENT_CLASS_INFO(TSkewBy)
+TSkewBy::TSkewBy(void)
 : _nTag(-1)
 , _fDuration(0.0f)
 , _bReverse(false)
 {
 }
 
-SkewBy::~SkewBy(void)
+TSkewBy::~TSkewBy(void)
 {
 }
 
-bool SkewBy::init()
+bool TSkewBy::init()
 {
     return true;
 }
 
-void SkewBy::done()
+void TSkewBy::done()
 {
 	do 
 	{
@@ -592,7 +592,7 @@ void SkewBy::done()
 	} while (0);
 }
 
-void SkewBy::serialize(const rapidjson::Value &val)
+void TSkewBy::serialize(const rapidjson::Value &val)
 {
 	int count = DICTOOL->getArrayCount_json(val, "dataitems");
 	for (int i = 0; i < count; ++i)
@@ -626,9 +626,9 @@ void SkewBy::serialize(const rapidjson::Value &val)
 	}
 }
 
-void SkewBy::removeAll()
+void TSkewBy::removeAll()
 {
-	CCLOG("SkewBy::removeAll");
+	CCLOG("TSkewBy::removeAll");
 }
 
 

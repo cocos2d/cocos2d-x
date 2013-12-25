@@ -65,6 +65,7 @@ TriggerMng* TriggerMng::getInstance()
 
 void TriggerMng::destroyInstance()
 {
+    removeAll();
     CC_SAFE_DELETE(_sharedTriggerMng);
 }
 
