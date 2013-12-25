@@ -239,14 +239,13 @@ void IMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
-const char * IMEDispatcher::getContentText()
+const std::string& IMEDispatcher::getContentText()
 {
-    const char * contentText = 0;
     if (_impl && _impl->_delegateWithIme)
     {
-        contentText = _impl->_delegateWithIme->getContentText();
+        return _impl->_delegateWithIme->getContentText();
     }
-    return (contentText) ? contentText : "";
+    return STD_STRING_EMPTY;
 }
 
 //////////////////////////////////////////////////////////////////////////
