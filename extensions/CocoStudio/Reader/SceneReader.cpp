@@ -404,8 +404,10 @@ NS_CC_EXT_BEGIN
                 }
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
+                    cocos2d::gui::TouchGroup* tg = cocos2d::gui::TouchGroup::create();
                     cocos2d::gui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
-					CCComRender *pRender = CCComRender::create(widget, "GUIComponent");
+                    tg->addWidget(widget);
+					CCComRender *pRender = CCComRender::create(tg, "GUIComponent");
 					if (pComName != NULL)
 					{
                         pRender->setName(pComName);
@@ -413,7 +415,7 @@ NS_CC_EXT_BEGIN
 					gb->addComponent(pRender);
 					if (_pListener && _pfnSelector)
 					{
-						(_pListener->*_pfnSelector)(widget, (void*)(&subDict));
+						(_pListener->*_pfnSelector)(tg, (void*)(&subDict));
 					}
 				}
             }
