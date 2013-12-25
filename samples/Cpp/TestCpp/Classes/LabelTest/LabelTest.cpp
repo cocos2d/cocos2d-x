@@ -1613,6 +1613,14 @@ std::string LabelBMFontBounds::subtitle() const
 
 void LabelBMFontBounds::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void LabelBMFontBounds::onDraw()
+{
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
     
