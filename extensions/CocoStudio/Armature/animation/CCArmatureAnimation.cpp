@@ -251,8 +251,12 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
     m_pArmature->update(0);
 }
 
-
 void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
+{
+    playWithIndex(animationIndex, durationTo, durationTween, tweenEasing);
+}
+
+void CCArmatureAnimation::playWithIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     std::vector<std::string> &movName = m_pAnimationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
@@ -262,7 +266,7 @@ void CCArmatureAnimation::playByIndex(int animationIndex, int durationTo, int du
 }
 
 
-void CCArmatureAnimation::play(const std::vector<std::string>& movementNames, int durationTo, bool loop)
+void CCArmatureAnimation::playWithNames(const std::vector<std::string>& movementNames, int durationTo, bool loop)
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
@@ -275,7 +279,7 @@ void CCArmatureAnimation::play(const std::vector<std::string>& movementNames, in
     updateMovementList();
 }
 
-void CCArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, int durationTo, bool loop)
+void CCArmatureAnimation::playWithIndexes(const std::vector<int>& movementIndexes, int durationTo, bool loop)
 {
     m_sMovementList.clear();
     m_bMovementListLoop = loop;
@@ -303,7 +307,7 @@ void CCArmatureAnimation::playWithArray(CCArray *movementNames, int durationTo, 
     {
         names.push_back(static_cast<CCString*>(object)->getCString());
     }
-    play(names, durationTo, loop);
+    playWithNames(names, durationTo, loop);
 }
 
 void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durationTo, bool loop)
@@ -315,7 +319,7 @@ void CCArmatureAnimation::playWithIndexArray(CCArray *movementIndexes, int durat
     {
         indexes.push_back(static_cast<CCInteger*>(object)->getValue());
     }
-    playByIndex(indexes, durationTo, loop);
+    playWithIndexes(indexes, durationTo, loop);
 }
 
 void CCArmatureAnimation::gotoAndPlay(int frameIndex)
