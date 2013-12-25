@@ -23,12 +23,12 @@ private:
 	 int  _nType;
 };
 
-class  MoveTo: public cocos2d::extension::BaseTriggerAction
+class  TMoveTo: public cocos2d::extension::BaseTriggerAction
 {
 	DECLARE_CLASS_INFO
 public:
-	MoveTo(void);
-	virtual ~MoveTo(void);
+	TMoveTo(void);
+	virtual ~TMoveTo(void);
 
 	virtual bool init();
 	virtual void done();
@@ -41,12 +41,12 @@ private:
 };
 
 
-class MoveBy : public cocos2d::extension::BaseTriggerAction
+class TMoveBy : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     MoveBy(void);
-     virtual ~MoveBy(void);
+     TMoveBy(void);
+     virtual ~TMoveBy(void);
 
      virtual bool init();
      virtual void done();
@@ -60,12 +60,12 @@ private:
 };
 
 
-class RotateTo : public cocos2d::extension::BaseTriggerAction
+class TRotateTo : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     RotateTo(void);
-     virtual ~RotateTo(void);
+     TRotateTo(void);
+     virtual ~TRotateTo(void);
 
      virtual bool init();
      virtual void done();
@@ -78,12 +78,12 @@ private:
 };
 
 
-class RotateBy : public cocos2d::extension::BaseTriggerAction
+class TRotateBy : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     RotateBy(void);
-     virtual ~RotateBy(void);
+     TRotateBy(void);
+     virtual ~TRotateBy(void);
 
      virtual bool init();
      virtual void done();
@@ -97,12 +97,12 @@ private:
 };
 
 
-class ScaleTo : public cocos2d::extension::BaseTriggerAction
+class TScaleTo : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     ScaleTo(void);
-     virtual ~ScaleTo(void);
+     TScaleTo(void);
+     virtual ~TScaleTo(void);
 
      virtual bool init();
      virtual void done();
@@ -115,12 +115,12 @@ private:
 };
 
 
-class ScaleBy : public cocos2d::extension::BaseTriggerAction
+class TScaleBy : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     ScaleBy(void);
-     virtual ~ScaleBy(void);
+     TScaleBy(void);
+     virtual ~TScaleBy(void);
 
      virtual bool init();
      virtual void done();
@@ -135,12 +135,12 @@ private:
 };
 
 
-class SkewTo : public cocos2d::extension::BaseTriggerAction
+class TSkewTo : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     SkewTo(void);
-     virtual ~SkewTo(void);
+     TSkewTo(void);
+     virtual ~TSkewTo(void);
 
      virtual bool init();
      virtual void done();
@@ -153,12 +153,12 @@ private:
 };
 
 
-class SkewBy : public cocos2d::extension::BaseTriggerAction
+class TSkewBy : public cocos2d::extension::BaseTriggerAction
 {
     DECLARE_CLASS_INFO
 public:
-     SkewBy(void);
-     virtual ~SkewBy(void);
+     TSkewBy(void);
+     virtual ~TSkewBy(void);
 
      virtual bool init();
      virtual void done();

@@ -192,7 +192,7 @@
     {
       "actions": [
         {
-          "classname": "ScaleTo",
+          "classname": "TScaleTo",
           "dataitems": [
             {
               "key": "Tag",
@@ -213,7 +213,7 @@
           ]
         },
         {
-          "classname": "MoveBy",
+          "classname": "TMoveBy",
           "dataitems": [
             {
               "key": "Tag",
@@ -249,7 +249,7 @@
     {
       "actions": [
         {
-          "classname": "MoveBy",
+          "classname": "TMoveBy",
           "dataitems": [
             {
               "key": "Tag",
