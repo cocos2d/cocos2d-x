@@ -22,22 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UINodeContainerTest__
-#define __TestCpp__UINodeContainerTest__
+#ifndef __TestCpp__UIPotentiometerTest__
+#define __TestCpp__UIPotentiometerTest__
 
 #include "../UIScene.h"
 
-class UINodeContainerTest : public UIScene
+class UIPotentiometerTest : public UIScene
 {
 public:
-    UINodeContainerTest();
-    ~UINodeContainerTest();
+    UIPotentiometerTest();
+    ~UIPotentiometerTest();
     bool init();
+    void valueChangedEvent(Object* pSender, PotentiometerEventType type);
+    
     
 protected:
-    UI_SCENE_CREATE_FUNC(UINodeContainerTest)
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIPotentiometerTest)
+    gui::Label* _displayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UINodeContainerTest__) */
+
+#endif /* defined(__TestCpp__UIPotentiometerTest__) */
