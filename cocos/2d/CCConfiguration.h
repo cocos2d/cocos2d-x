@@ -128,7 +128,7 @@ public:
 	void gatherGPUInfo();
 
 	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
-	void loadConfigFile(const char *filename);
+	void loadConfigFile(const std::string& filename);
 
 private:
     Configuration(void);

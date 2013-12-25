@@ -236,9 +236,9 @@ void TextFieldTTF::deleteBackward()
     setString(text);
 }
 
-const char * TextFieldTTF::getContentText()
+const std::string& TextFieldTTF::getContentText()
 {
-    return _inputText.c_str();
+    return _inputText;
 }
 
 void TextFieldTTF::draw()

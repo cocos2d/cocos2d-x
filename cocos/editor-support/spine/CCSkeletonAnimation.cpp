@@ -43,28 +43,28 @@ using std::vector;
 namespace spine {
 
 static void callback (spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount) {
-	((CCSkeletonAnimation*)state->context)->onAnimationStateEvent(trackIndex, type, event, loopCount);
+	((SkeletonAnimation*)state->context)->onAnimationStateEvent(trackIndex, type, event, loopCount);
 }
 
-CCSkeletonAnimation* CCSkeletonAnimation::createWithData (spSkeletonData* skeletonData) {
-	CCSkeletonAnimation* node = new CCSkeletonAnimation(skeletonData);
+SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData) {
+	SkeletonAnimation* node = new SkeletonAnimation(skeletonData);
 	node->autorelease();
 	return node;
 }
 
-CCSkeletonAnimation* CCSkeletonAnimation::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
-	CCSkeletonAnimation* node = new CCSkeletonAnimation(skeletonDataFile, atlas, scale);
+SkeletonAnimation* SkeletonAnimation::createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlas, scale);
 	node->autorelease();
 	return node;
 }
 
-CCSkeletonAnimation* CCSkeletonAnimation::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
-	CCSkeletonAnimation* node = new CCSkeletonAnimation(skeletonDataFile, atlasFile, scale);
+SkeletonAnimation* SkeletonAnimation::createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale) {
+	SkeletonAnimation* node = new SkeletonAnimation(skeletonDataFile, atlasFile, scale);
 	node->autorelease();
 	return node;
 }
 
-void CCSkeletonAnimation::initialize () {
+void SkeletonAnimation::initialize () {
 	listenerInstance = 0;
 	listenerMethod = 0;
 
@@ -74,27 +74,27 @@ void CCSkeletonAnimation::initialize () {
 	state->listener = callback;
 }
 
-CCSkeletonAnimation::CCSkeletonAnimation (spSkeletonData *skeletonData)
-		: CCSkeleton(skeletonData) {
+SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData)
+		: Skeleton(skeletonData) {
 	initialize();
 }
 
-CCSkeletonAnimation::CCSkeletonAnimation (const char* skeletonDataFile, spAtlas* atlas, float scale)
-		: CCSkeleton(skeletonDataFile, atlas, scale) {
+SkeletonAnimation::SkeletonAnimation (const char* skeletonDataFile, spAtlas* atlas, float scale)
+		: Skeleton(skeletonDataFile, atlas, scale) {
 	initialize();
 }
 
-CCSkeletonAnimation::CCSkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale)
-		: CCSkeleton(skeletonDataFile, atlasFile, scale) {
+SkeletonAnimation::SkeletonAnimation (const char* skeletonDataFile, const char* atlasFile, float scale)
+		: Skeleton(skeletonDataFile, atlasFile, scale) {
 	initialize();
 }
 
-CCSkeletonAnimation::~CCSkeletonAnimation () {
+SkeletonAnimation::~SkeletonAnimation () {
 	if (ownsAnimationStateData) spAnimationStateData_dispose(state->data);
 	spAnimationState_dispose(state);
 }
 
-void CCSkeletonAnimation::update (float deltaTime) {
+void SkeletonAnimation::update (float deltaTime) {
 	super::update(deltaTime);
 
 	deltaTime *= timeScale;
@@ -103,7 +103,7 @@ void CCSkeletonAnimation::update (float deltaTime) {
 	spSkeleton_updateWorldTransform(skeleton);
 }
 
-void CCSkeletonAnimation::setAnimationStateData (spAnimationStateData* stateData) {
+void SkeletonAnimation::setAnimationStateData (spAnimationStateData* stateData) {
 	CCAssert(stateData, "stateData cannot be null.");
 
 	if (ownsAnimationStateData) spAnimationStateData_dispose(state->data);
@@ -115,46 +115,46 @@ void CCSkeletonAnimation::setAnimationStateData (spAnimationStateData* stateData
 	state->listener = callback;
 }
 
-void CCSkeletonAnimation::setMix (const char* fromAnimation, const char* toAnimation, float duration) {
+void SkeletonAnimation::setMix (const char* fromAnimation, const char* toAnimation, float duration) {
 	spAnimationStateData_setMixByName(state->data, fromAnimation, toAnimation, duration);
 }
 
-void CCSkeletonAnimation::setAnimationListener (Object* instance, SEL_AnimationStateEvent method) {
+void SkeletonAnimation::setAnimationListener (Object* instance, SEL_AnimationStateEvent method) {
 	listenerInstance = instance;
 	listenerMethod = method;
 }
 
-spTrackEntry* CCSkeletonAnimation::setAnimation (int trackIndex, const char* name, bool loop) {
+spTrackEntry* SkeletonAnimation::setAnimation (int trackIndex, const char* name, bool loop) {
 	spAnimation* animation = spSkeletonData_findAnimation(skeleton->data, name);
 	if (!animation) {
-		CCLog("Spine: Animation not found: %s", name);
+		log("Spine: Animation not found: %s", name);
 		return 0;
 	}
 	return spAnimationState_setAnimation(state, trackIndex, animation, loop);
 }
 
-spTrackEntry* CCSkeletonAnimation::addAnimation (int trackIndex, const char* name, bool loop, float delay) {
+spTrackEntry* SkeletonAnimation::addAnimation (int trackIndex, const char* name, bool loop, float delay) {
 	spAnimation* animation = spSkeletonData_findAnimation(skeleton->data, name);
 	if (!animation) {
-		CCLog("Spine: Animation not found: %s", name);
+		log("Spine: Animation not found: %s", name);
 		return 0;
 	}
 	return spAnimationState_addAnimation(state, trackIndex, animation, loop, delay);
 }
 
-spTrackEntry* CCSkeletonAnimation::getCurrent (int trackIndex) { 
+spTrackEntry* SkeletonAnimation::getCurrent (int trackIndex) { 
 	return spAnimationState_getCurrent(state, trackIndex);
 }
 
-void CCSkeletonAnimation::clearTracks () {
+void SkeletonAnimation::clearTracks () {
 	spAnimationState_clearTracks(state);
 }
 
-void CCSkeletonAnimation::clearTrack (int trackIndex) {
+void SkeletonAnimation::clearTrack (int trackIndex) {
 	spAnimationState_clearTrack(state, trackIndex);
 }
 
-void CCSkeletonAnimation::onAnimationStateEvent (int trackIndex, spEventType type, spEvent* event, int loopCount) {
+void SkeletonAnimation::onAnimationStateEvent (int trackIndex, spEventType type, spEvent* event, int loopCount) {
 	if (listenerInstance) (listenerInstance->*listenerMethod)(this, trackIndex, type, event, loopCount);
 }
 
