@@ -146,7 +146,6 @@ NS_CC_EXT_BEGIN
                 std::string pPath;
                 std::string pPlistFile;
 				int nResType = 0;
-				//if (fileData != NULL)
                 if (DICTOOL->checkObjectExist_json(fileData))
                 {
 					const char *file = DICTOOL->getStringValue_json(fileData, "path");
