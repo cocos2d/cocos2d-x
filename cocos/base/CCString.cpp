@@ -255,13 +255,8 @@ __String* __String::createWithFormat(const char* format, ...)
 
 __String* __String::createWithContentsOfFile(const char* filename)
 {
-    ssize_t size = 0;
-    unsigned char* data = 0;
-    __String* ret = NULL;
-    data = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-    ret = __String::createWithData(data, static_cast<int>(size));
-    free(data);
-    return ret;
+    std::string str = FileUtils::getInstance()->getStringFromFile(filename);
+    return __String::create(std::move(str));
 }
 
 void __String::acceptVisitor(DataVisitor &visitor)

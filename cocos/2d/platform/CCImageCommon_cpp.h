@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 
 #include "CCImage.h"
+#include "CCData.h"
 
 #include <string>
 #include <ctype.h>
@@ -420,15 +421,12 @@ bool Image::initWithImageFile(const char * strPath)
 
     SDL_FreeSurface(iSurf);
 #else
-    ssize_t bufferLen = 0;
-    unsigned char* buffer = FileUtils::getInstance()->getFileData(_filePath.c_str(), "rb", &bufferLen);
+    Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
 
-    if (buffer != nullptr && bufferLen > 0)
+    if (!data.isNull())
     {
-        bRet = initWithImageData(buffer, bufferLen);
+        bRet = initWithImageData(data.getBytes(), data.getSize());
     }
-
-    free(buffer);
 #endif // EMSCRIPTEN
 
     return bRet;
@@ -437,19 +435,15 @@ bool Image::initWithImageFile(const char * strPath)
 bool Image::initWithImageFileThreadSafe(const char *fullpath)
 {
     bool ret = false;
-    ssize_t dataLen = 0;
     _filePath = fullpath;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
-    unsigned char *buffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
-#else
-    unsigned char *buffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &dataLen);
-#endif
-    if (buffer != NULL && dataLen > 0)
+
+    Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+
+    if (!data.isNull())
     {
-        ret = initWithImageData(buffer, dataLen);
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
-    free(buffer);
+
     return ret;
 }
 

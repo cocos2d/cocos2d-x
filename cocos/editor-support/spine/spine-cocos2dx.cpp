@@ -52,12 +52,24 @@ void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 	((TextureAtlas*)self->rendererObject)->release();
 }
 
-char* _spUtil_readFile (const char* path, int* length) {
-    ssize_t size;
-    char* data = reinterpret_cast<char*>(
-        FileUtils::getInstance()->getFileData( FileUtils::getInstance()->fullPathForFilename(path).c_str(), "rb", &size));
-    *length = static_cast<int>(size);
-    return data;}
+char* _spUtil_readFile (const char* path, int* length)
+{
+    char* ret = nullptr;
+    int size = 0;
+    Data data = FileUtils::getInstance()->getDataFromFile(path);
+    
+    if (!data.isNull())
+    {
+        size = static_cast<int>(data.getSize());
+        *length = size;
+        // Allocates one more byte for string terminal, it will be safe when parsing JSON file in Spine runtime.
+        ret = (char*)malloc(size + 1);
+        ret[size] = '\0';
+        memcpy(ret, data.getBytes(), size);
+    }
+    
+    return ret;
+}
 
 /**/
 
