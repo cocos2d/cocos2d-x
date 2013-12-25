@@ -256,7 +256,7 @@ CCFrameData::CCFrameData(void)
     , easingParamNumber(0)
     , easingParams(NULL)
     , isTween(true)
-    , displayIndex(0)
+    , displayIndex(-1)
 
     , strEvent("")
     , strMovement("")
