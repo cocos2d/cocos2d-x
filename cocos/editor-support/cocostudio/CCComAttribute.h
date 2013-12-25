@@ -48,17 +48,17 @@ public:
    virtual bool init();
    static ComAttribute* create(void);
    
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
+   void setInt(const std::string& key, int value);
+   void setFloat(const std::string& key, float value);
+   void setBool(const std::string& key, bool value);
+   void setCString(const std::string& key, const std::string& value);
    
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
+   int    getInt(const std::string& key, int def = 0) const;
+   float  getFloat(const std::string& key, float def = 0.0f) const;
+   bool   getBool(const std::string& key, bool def = false) const;
+   std::string getCString(const std::string& key, const std::string& def = "") const;
 private:
-   cocos2d::CCDictionary *_dict;
+   cocos2d::Map<std::string, cocos2d::Object*> _dict;
 };
 
 }

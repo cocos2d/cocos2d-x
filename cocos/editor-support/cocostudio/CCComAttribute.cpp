@@ -35,78 +35,75 @@ ComAttribute::ComAttribute(void)
 
 ComAttribute::~ComAttribute(void)
 {
-    CC_SAFE_RELEASE(_dict);
+    _dict.clear();
 }
 
 bool ComAttribute::init()
 {
-    _dict = CCDictionary::create();
-	_dict->retain();
     return true;
 }
 
-void ComAttribute::setInt(const char *key, int value)
+void ComAttribute::setInt(const std::string& key, int value)
 {
-    _dict->setObject(CCInteger::create(value), key);
+    _dict.insert(key, __Integer::create(value));
 }
 
-void ComAttribute::setFloat(const char *key, float value)
+void ComAttribute::setFloat(const std::string& key, float value)
 {
-    _dict->setObject(CCFloat::create(value), key);
+    _dict.insert(key, __Float::create(value));
 }
 
-void ComAttribute::setBool(const char *key, bool value)
+void ComAttribute::setBool(const std::string& key, bool value)
 {
-    _dict->setObject(CCBool::create(value), key);
+    _dict.insert(key, __Bool::create(value));
 }
 
-void ComAttribute::setCString(const char *key, const char *value)
+void ComAttribute::setCString(const std::string& key, const std::string& value)
 {
-    _dict->setObject(CCString::create(value), key);
+    _dict.insert(key, __String::create(value));
 }
 
-
-int ComAttribute::getInt(const char *key, int def) const
+int ComAttribute::getInt(const std::string& key, int def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
+    Object *ret = _dict.at(key);
 	if(ret)
     {
 		
-		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+		if(__Integer *obj=dynamic_cast<__Integer*>(ret) )
 			return obj->getValue();
 	}
     return def;
 }
 
-float ComAttribute::getFloat(const char *key, float def) const
+float ComAttribute::getFloat(const std::string& key, float def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
-	if(ret)
+    Object *ret =  _dict.at(key);
+    if(ret)
     {
 		
-		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
+		if( __Float *obj=dynamic_cast<__Float*>(ret) )
 			return obj->getValue();
 	}
     return def;
 }
 
-bool ComAttribute::getBool(const char *key, bool def) const
+bool ComAttribute::getBool(const std::string& key, bool def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
+    Object *ret =  _dict.at(key);
 	if(ret) {
 		
-		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
+		if(__Bool *obj = dynamic_cast<__Bool*>(ret) )
 			return obj->getValue();
 	}
     return def;
 }
 
-const char* ComAttribute::getCString(const char *key, const char *def) const
+std::string ComAttribute::getCString(const std::string& key, const std::string& def) const
 {
-   CCObject *ret = _dict->objectForKey(key);
+   Object *ret =  _dict.at(key);
 	if(ret) {
 		
-		if( CCString *obj = dynamic_cast<CCString*>(ret) )
+		if( __String *obj = dynamic_cast<__String*>(ret) )
 			return obj->getCString();
 	}
     return def;
