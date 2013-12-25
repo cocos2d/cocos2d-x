@@ -89,7 +89,7 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
+    return StringUtils::format("<TextureCache | Number of textures = %lu>", _textures.size());
 }
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
@@ -629,10 +629,10 @@ void VolatileTextureMgr::reloadAllTextures()
         case VolatileTexture::kImageFile:
             {
                 Image* image = new Image();
-                ssize_t size = 0;
-                unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &size);
                 
-                if (image && image->initWithImageData(pBuffer, size))
+                Data data = FileUtils::getInstance()->getDataFromFile(vt->_fileName);
+                
+                if (image && image->initWithImageData(data.getBytes(), data.getSize()))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
@@ -640,7 +640,6 @@ void VolatileTextureMgr::reloadAllTextures()
                     Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                 }
                 
-                free(pBuffer);
                 CC_SAFE_RELEASE(image);
             }
             break;
