@@ -326,7 +326,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
             {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
-                VolatileTextureMgr::addImageTexture(texture, fullpath.c_str());
+                VolatileTextureMgr::addImageTexture(texture, fullpath);
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
@@ -509,7 +509,7 @@ VolatileTexture::~VolatileTexture()
     CC_SAFE_RELEASE(_uiImage);
 }
 
-void VolatileTextureMgr::addImageTexture(Texture2D *tt, const char* imageFileName)
+void VolatileTextureMgr::addImageTexture(Texture2D *tt, const std::string& imageFileName)
 {
     if (_isReloading)
     {

@@ -250,7 +250,7 @@ protected:
 class VolatileTextureMgr
 {
 public:
-    static void addImageTexture(Texture2D *tt, const char* imageFileName);
+    static void addImageTexture(Texture2D *tt, const std::string& imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
