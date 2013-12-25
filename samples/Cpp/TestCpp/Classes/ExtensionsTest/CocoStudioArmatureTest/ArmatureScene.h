@@ -326,7 +326,7 @@ public:
     Hero();
 
     virtual void changeMount(cocos2d::extension::CCArmature *armature);
-    virtual void playByIndex(int index);
+    virtual void playWithIndex(int index);
 
     CC_SYNTHESIZE(cocos2d::extension::CCArmature*, m_pMount, Mount);
     CC_SYNTHESIZE(cocos2d::CCLayer*, m_pLayer, Layer);

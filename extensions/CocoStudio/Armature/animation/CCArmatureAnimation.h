@@ -142,19 +142,21 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
+     * Deprecated, please use playWithIndex
      * @param  animationIndex  the animation index you want to play
      */
-    virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playWithIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
     /**
      * Play several animation by names
      */
-    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+    virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
 
     /**
      * Play several animation by indexes
      */
-    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
+    virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
 
     // For bindings
