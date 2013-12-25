@@ -113,7 +113,8 @@ public:
         SimpleSprite();
         virtual void draw();
         
-
+    protected:
+        void onBeforeDraw();
     public:
         RenderTexture *_rt;
     };
