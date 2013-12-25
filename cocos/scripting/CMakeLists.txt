@@ -26,6 +26,7 @@ include_directories(
   lua/bindings
   ../../cocos/editor-support/cocosbuilder
   ../../cocos/editor-support/cocostudio
+  ../../cocos/editor-support/spine
   ../../cocos/gui
   ../../external/lua/lua
   ../../external/lua/tolua
