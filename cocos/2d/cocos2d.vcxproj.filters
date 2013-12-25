@@ -453,7 +453,6 @@
     <ClCompile Include="CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCConfiguration.cpp" />
     <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
@@ -585,21 +584,6 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="renderer\CCMaterialManager.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewClippingNode.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewRenderTexture.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewSprite.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewSpriteBatchNode.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewTextureAtlas.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="renderer\CCQuadCommand.cpp">
@@ -1051,7 +1035,6 @@
     <ClInclude Include="CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCConfiguration.h" />
     <ClInclude Include="CCDirector.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -1207,21 +1190,6 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCMaterialManager.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewClippingNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewRenderTexture.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewSprite.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewSpriteBatchNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewTextureAtlas.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCQuadCommand.h">

@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "renderer/CCNewRenderTexture.h"
 
 class RenderTextureTest : public BaseTest
 {
@@ -31,7 +30,7 @@ public:
     void saveImage(Object *pSender);
 
 private:
-    NewRenderTexture *_target;
+    RenderTexture *_target;
     Sprite *_brush;
 };
 
@@ -114,7 +113,8 @@ public:
         SimpleSprite();
         virtual void draw();
         
-
+    protected:
+        void onBeforeDraw();
     public:
         RenderTexture *_rt;
     };

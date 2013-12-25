@@ -36,6 +36,8 @@ NS_CC_BEGIN
 class EventListenerTouchOneByOne : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerTouchOneByOne* create();
     
     virtual ~EventListenerTouchOneByOne();
@@ -67,8 +69,8 @@ private:
 class EventListenerTouchAllAtOnce : public EventListener
 {
 public:
-    static const ListenerID ID = static_cast<ListenerID>(Type::TOUCH_ALL_AT_ONCE);
-
+    static const std::string LISTENER_ID;
+    
     static EventListenerTouchAllAtOnce* create();
     virtual ~EventListenerTouchAllAtOnce();
     
