@@ -62,7 +62,6 @@ public:
     // overrides
     virtual void onEnter() override;
 	virtual void onExit() override;
-	virtual void draw() override;
 
 protected:
 	MenuItemImage *restartItem;
@@ -296,6 +295,8 @@ public:
 
 	cocostudio::Armature *armature;
 	Rect rect;
+protected:
+    void onDraw();
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
