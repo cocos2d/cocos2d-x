@@ -1712,15 +1712,31 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void ActionCardinalSplineStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCardinalSplineStacked::title() const

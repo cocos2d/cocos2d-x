@@ -440,6 +440,10 @@ public:
     virtual std::string subtitle() const override;
 private:
     PointArray* _array;
+protected:
+    void onDraw();
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
 };
 
 class Issue1305 : public ActionsDemo
