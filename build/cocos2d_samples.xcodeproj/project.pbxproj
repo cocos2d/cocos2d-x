@@ -1004,6 +1004,10 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		37A61460186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
+		37A61461186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
+		37A61462186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
+		37A61463186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
 		3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
@@ -2789,6 +2793,11 @@
 		1AAF53AD180E363C000584C8 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../samples/Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
 		1AAF53AE180E363C000584C8 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../samples/Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		37A6145B186B21F6007A4638 /* acts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acts.cpp; sourceTree = "<group>"; };
+		37A6145C186B21F6007A4638 /* acts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acts.h; sourceTree = "<group>"; };
+		37A6145D186B21F6007A4638 /* cons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cons.cpp; sourceTree = "<group>"; };
+		37A6145E186B21F6007A4638 /* cons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cons.h; sourceTree = "<group>"; };
+		37A6145F186B21F6007A4638 /* EventDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDef.h; sourceTree = "<group>"; };
 		3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocoStudioTest; path = ../samples/Javascript/Shared/tests/CocoStudioTest; sourceTree = "<group>"; };
 		460E452D1807E712000CDD6D /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		460E452E1807E712000CDD6D /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -4724,6 +4733,7 @@
 		1AAF509F180E2C19000584C8 /* CocoStudioSceneTest */ = {
 			isa = PBXGroup;
 			children = (
+				37A6145A186B21F6007A4638 /* TriggerCode */,
 				1AAF50A0180E2C19000584C8 /* SceneEditorTest.cpp */,
 				1AAF50A1180E2C19000584C8 /* SceneEditorTest.h */,
 			);
@@ -5297,6 +5307,18 @@
 				15C64832165F3AFD007D4F18 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		37A6145A186B21F6007A4638 /* TriggerCode */ = {
+			isa = PBXGroup;
+			children = (
+				37A6145B186B21F6007A4638 /* acts.cpp */,
+				37A6145C186B21F6007A4638 /* acts.h */,
+				37A6145D186B21F6007A4638 /* cons.cpp */,
+				37A6145E186B21F6007A4638 /* cons.h */,
+				37A6145F186B21F6007A4638 /* EventDef.h */,
+			);
+			path = TriggerCode;
 			sourceTree = "<group>";
 		};
 		460E45011807E711000CDD6D /* SimpleGame */ = {
@@ -6847,6 +6869,7 @@
 				1AAF518E180E2C1A000584C8 /* EffectsTest.cpp in Sources */,
 				1AAF5190180E2C1A000584C8 /* AnimationsTestLayer.cpp in Sources */,
 				50E9E93D182A274000F6FDF1 /* UIDragPanelTest.cpp in Sources */,
+				37A61460186B21F6007A4638 /* acts.cpp in Sources */,
 				1AAF5192180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5194180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5196180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
@@ -6930,6 +6953,7 @@
 				1AAF522E180E2C1A000584C8 /* ShaderTest.cpp in Sources */,
 				1AAF5230180E2C1A000584C8 /* ShaderTest2.cpp in Sources */,
 				1AAF5232180E2C1A000584C8 /* SpineTest.cpp in Sources */,
+				37A61462186B21F6007A4638 /* cons.cpp in Sources */,
 				1AAF5234180E2C1A000584C8 /* SpriteTest.cpp in Sources */,
 				1AAF5236180E2C1A000584C8 /* testBasic.cpp in Sources */,
 				1AAF5238180E2C1A000584C8 /* TextInputTest.cpp in Sources */,
@@ -7132,6 +7156,7 @@
 				1AAF518D180E2C1A000584C8 /* EffectsAdvancedTest.cpp in Sources */,
 				1AAF518F180E2C1A000584C8 /* EffectsTest.cpp in Sources */,
 				1AAF5191180E2C1A000584C8 /* AnimationsTestLayer.cpp in Sources */,
+				37A61461186B21F6007A4638 /* acts.cpp in Sources */,
 				1AAF5193180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5195180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5197180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
@@ -7200,6 +7225,7 @@
 				1AAF5217180E2C1A000584C8 /* PerformanceAllocTest.cpp in Sources */,
 				1AAF5219180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp in Sources */,
 				1AAF521B180E2C1A000584C8 /* PerformanceParticleTest.cpp in Sources */,
+				37A61463186B21F6007A4638 /* cons.cpp in Sources */,
 				1AAF521D180E2C1A000584C8 /* PerformanceSpriteTest.cpp in Sources */,
 				59A79D5E1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				50691337184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,

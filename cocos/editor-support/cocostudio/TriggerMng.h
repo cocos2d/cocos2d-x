@@ -40,7 +40,7 @@ public:
 public:
 	void addAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
-	void animationEvent(Armature *armature, MovementEventType movementType, const char *movementID);
+	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
 	std::map<Object*, SEL_MovementEventCallFunc> *_mapEventAnimation;
 
 };
@@ -59,7 +59,7 @@ public:
 public:
 	void parse(const rapidjson::Value &root);
 	void removeAll(void);
-	cocos2d::Vector<TriggerObj*> get(unsigned int event) const;
+	cocos2d::Vector<TriggerObj*>* get(unsigned int event) const;
 	TriggerObj* getTriggerObj(unsigned int id) const;
     bool add(unsigned int event, TriggerObj *pObj);
     bool remove(unsigned int event);
@@ -72,7 +72,7 @@ public:
 	void removeAllArmatureMovementCallBack();
 
 private:
-    std::map<unsigned int, cocos2d::Vector<TriggerObj*>> _eventTriggers;
+    std::map<unsigned int, cocos2d::Vector<TriggerObj*>*> _eventTriggers;
     static TriggerMng *_sharedTriggerMng;
 	std::map<unsigned int, TriggerObj*> _triggerObjs;
 	std::map<Armature*, ArmatureMovementDispatcher*> *_movementDispatches;

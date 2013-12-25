@@ -30,7 +30,7 @@ namespace cocostudio {
 
 ObjectFactory::TInfo::TInfo(void)
 :_class("")
-,_fun(NULL)
+,_fun(nullptr)
 {
 }
 
@@ -50,7 +50,7 @@ ObjectFactory::TInfo::TInfo(const TInfo &t)
 ObjectFactory::TInfo::~TInfo(void)
 {
    _class = "";
-   _fun = NULL;
+   _fun = nullptr;
 }
 
 ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
@@ -61,7 +61,7 @@ ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
 }
 
 
-ObjectFactory* ObjectFactory::_sharedFactory = NULL;
+ObjectFactory* ObjectFactory::_sharedFactory = nullptr;
 
 ObjectFactory::ObjectFactory(void)
 {
@@ -75,7 +75,7 @@ ObjectFactory::~ObjectFactory(void)
 
 ObjectFactory* ObjectFactory::getInstance()
 {
-    if ( NULL == _sharedFactory)
+    if ( nullptr == _sharedFactory)
     {
         _sharedFactory = new ObjectFactory();
     }
@@ -89,11 +89,11 @@ void ObjectFactory::destroyInstance()
 
 Object* ObjectFactory::createObject(const char *name)
 {
-	Object *o = NULL;
+	Object *o = nullptr;
 	do 
 	{
 		const TInfo t = _typeMap[name];
-		CC_BREAK_IF(t._fun == NULL);
+		CC_BREAK_IF(t._fun == nullptr);
 		o = t._fun();
 	} while (0);
    
