@@ -471,6 +471,8 @@ public:
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
+extern const std::string STD_STRING_EMPTY;
+
 NS_CC_END
 
 #endif //__CCTYPES_H__
