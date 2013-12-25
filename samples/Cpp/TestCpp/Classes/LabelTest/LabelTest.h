@@ -104,6 +104,8 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class Atlas5 : public AtlasDemo
