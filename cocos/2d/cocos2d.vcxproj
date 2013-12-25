@@ -321,11 +321,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="renderer\CCFrustum.cpp" />
     <ClCompile Include="renderer\CCGroupCommand.cpp" />
     <ClCompile Include="renderer\CCMaterialManager.cpp" />
-    <ClCompile Include="renderer\CCNewClippingNode.cpp" />
-    <ClCompile Include="renderer\CCNewRenderTexture.cpp" />
-    <ClCompile Include="renderer\CCNewSprite.cpp" />
-    <ClCompile Include="renderer\CCNewSpriteBatchNode.cpp" />
-    <ClCompile Include="renderer\CCNewTextureAtlas.cpp" />
     <ClCompile Include="renderer\CCQuadCommand.cpp" />
     <ClCompile Include="renderer\CCRenderCommand.cpp" />
     <ClCompile Include="renderer\CCRenderer.cpp" />
@@ -530,11 +525,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="renderer\CCFrustum.h" />
     <ClInclude Include="renderer\CCGroupCommand.h" />
     <ClInclude Include="renderer\CCMaterialManager.h" />
-    <ClInclude Include="renderer\CCNewClippingNode.h" />
-    <ClInclude Include="renderer\CCNewRenderTexture.h" />
-    <ClInclude Include="renderer\CCNewSprite.h" />
-    <ClInclude Include="renderer\CCNewSpriteBatchNode.h" />
-    <ClInclude Include="renderer\CCNewTextureAtlas.h" />
     <ClInclude Include="renderer\CCQuadCommand.h" />
     <ClInclude Include="renderer\CCRenderCommand.h" />
     <ClInclude Include="renderer\CCRenderCommandPool.h" />

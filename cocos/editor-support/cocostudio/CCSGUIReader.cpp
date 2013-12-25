@@ -119,22 +119,22 @@ const cocos2d::Size GUIReader::getFileDesignSize(const char* fileName) const
 Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
     DictionaryHelper* dicHelper = DICTOOL;
-    char *des = nullptr;
+
     std::string jsonpath;
     JsonDictionary *jsonDict = nullptr;
     jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
     int pos = jsonpath.find_last_of('/');
     m_strFilePath = jsonpath.substr(0,pos+1);
-    ssize_t size = 0;
-    des = (char*)(CCFileUtils::getInstance()->getFileData(jsonpath.c_str(),"r" , &size));
-    if(nullptr == des || strcmp(des, "") == 0)
+
+    std::string des = FileUtils::getInstance()->getStringFromFile(jsonpath);
+    if (des.empty())
     {
-        printf("read json file[%s] error!\n", fileName);
+        CCLOG("read json file[%s] error!\n", fileName);
         return nullptr;
     }
-    std::string strDes(des);
+
     jsonDict = new JsonDictionary();
-    jsonDict->initWithDescription(strDes.c_str());
+    jsonDict->initWithDescription(des.c_str());
     
     Widget* widget = nullptr;
     const char* fileVersion = dicHelper->getStringValue_json(jsonDict, "version");
@@ -161,7 +161,6 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
     
     CC_SAFE_DELETE(pReader);
     CC_SAFE_DELETE(jsonDict);
-    free(des);
     return widget;
 }
 
