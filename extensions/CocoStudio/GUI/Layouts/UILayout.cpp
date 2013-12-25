@@ -225,13 +225,13 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
     }
     if (m_bBackGroundScale9Enabled)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setColor(getColor());
-        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->updateDisplayedColor(getColor());
+        dynamic_cast<CCScale9Sprite*>(m_pBackGroundImage)->updateDisplayedOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<CCSprite*>(m_pBackGroundImage)->setColor(getColor());
-        dynamic_cast<CCSprite*>(m_pBackGroundImage)->setOpacity(getOpacity());
+        dynamic_cast<CCSprite*>(m_pBackGroundImage)->updateDisplayedColor(getColor());
+        dynamic_cast<CCSprite*>(m_pBackGroundImage)->updateDisplayedOpacity(getOpacity());
     }
     m_backGroundImageTextureSize = m_pBackGroundImage->getContentSize();
     m_pBackGroundImage->setPosition(ccp(m_size.width/2.0f, m_size.height/2.0f));

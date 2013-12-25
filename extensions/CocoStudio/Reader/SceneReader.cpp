@@ -24,6 +24,7 @@
 
 #include "SceneReader.h"
 #include "cocos-ext.h"
+#include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 
@@ -32,6 +33,7 @@ NS_CC_EXT_BEGIN
     SceneReader::SceneReader()
 	:_pListener(NULL)
 	,_pfnSelector(NULL)
+	,_pNode(NULL)
     {
 	}
 
@@ -46,14 +48,15 @@ NS_CC_EXT_BEGIN
 
     cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-		cocos2d::CCNode *pNode = NULL;
         rapidjson::Document jsonDict;
         do {
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-              pNode = createObject(jsonDict, NULL);
+              _pNode = createObject(jsonDict, NULL);
+			  TriggerMng::getInstance()->parse(jsonDict);
+			  
         } while (0);
         
-        return pNode;
+        return _pNode;
 	}
 
     bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
@@ -69,12 +72,46 @@ NS_CC_EXT_BEGIN
               CCData *data = new CCData(pBytes, size);
 	          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
 	          CC_SAFE_DELETE(data);
+              CC_SAFE_DELETE_ARRAY(pBytes);
               doc.Parse<0>(load_str.c_str());
               CC_BREAK_IF(doc.HasParseError());
               bRet = true;
             } while (0);
         return bRet;
     }
+
+	CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
+	{		
+		if (pParent == NULL)
+		{
+			return NULL;
+		}
+		CCNode *_retNode = NULL;
+		CCArray *pChildren = pParent->getChildren();
+		if(pChildren && pChildren->count() > 0)
+		{
+			CCObject* child;
+			CCARRAY_FOREACH(pChildren, child)
+			{
+				CCNode* pNode = (CCNode*)child;
+				if(pNode && pNode->getTag() == nTag)
+				{
+					_retNode =  pNode;
+					break;
+				}
+				else
+				{
+					_retNode = nodeByTag(pNode, nTag);
+					if (_retNode != NULL)
+					{
+						break;
+					}
+					
+				}
+			}
+		}
+		return _retNode;
+	}
 
 	CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
     {
@@ -109,7 +146,6 @@ NS_CC_EXT_BEGIN
                 std::string pPath;
                 std::string pPlistFile;
 				int nResType = 0;
-				//if (fileData != NULL)
                 if (DICTOOL->checkObjectExist_json(fileData))
                 {
 					const char *file = DICTOOL->getStringValue_json(fileData, "path");
@@ -314,13 +350,6 @@ NS_CC_EXT_BEGIN
 					if (nResType == 0)
 					{
 						pAttribute = CCComAttribute::create();
-						unsigned long size = 0;
-						const char* pData = 0;
-						pData = (char*)(cocos2d::CCFileUtils::sharedFileUtils()->getFileData(pPath.c_str(), "r", &size));
-						if(pData != NULL && strcmp(pData, "") != 0)
-						{
-                            pAttribute->parse(pData);
-						}
 					}
 					else
 					{
@@ -406,6 +435,19 @@ NS_CC_EXT_BEGIN
 		_pfnSelector = selector;
 	}
 
+	CCNode* SceneReader::getNodeByTag(int nTag)
+	{
+		if (_pNode == NULL)
+		{
+			return NULL;
+		}
+		if (_pNode->getTag() == nTag)
+		{
+			return _pNode;
+		}
+		return nodeByTag(_pNode, nTag);
+	}
+
     void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
     {
 		float x = DICTOOL->getFloatValue_json(root, "x");
@@ -445,7 +487,10 @@ NS_CC_EXT_BEGIN
     {
 		CC_SAFE_DELETE(_sharedReader);
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+        
     }
 
 NS_CC_EXT_END

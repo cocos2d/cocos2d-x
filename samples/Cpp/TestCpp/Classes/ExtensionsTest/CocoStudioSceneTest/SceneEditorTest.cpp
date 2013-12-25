@@ -2,6 +2,7 @@
 #include "cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
+#include "TriggerCode/EventDef.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -45,16 +46,55 @@ bool SceneEditorTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! CCLayerColor::initWithColor( ccc4(0,0,0,255) ) );
-        
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-
+        sendEvent(TRIGGEREVENT_INITSCENE);
+	    this->schedule(schedule_selector(SceneEditorTestLayer::gameLogic));
+	    this->setTouchEnabled(true);
+	    this->setTouchMode(kCCTouchesOneByOne);
 		bRet = true;
 	} while (0);
 
 	return bRet;
+}
+
+void SceneEditorTestLayer::onEnter()
+{
+	CCLayer::onEnter();
+	sendEvent(TRIGGEREVENT_ENTERSCENE);
+}
+
+void SceneEditorTestLayer::onExit()
+{
+	CCLayer::onExit();
+	sendEvent(TRIGGEREVENT_LEAVESCENE);
+}
+
+bool SceneEditorTestLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
+{
+	sendEvent(TRIGGEREVENT_TOUCHBEGAN);
+	return true;
+}
+
+void SceneEditorTestLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
+{
+	sendEvent(TRIGGEREVENT_TOUCHMOVED);
+}
+
+void SceneEditorTestLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
+{
+	sendEvent(TRIGGEREVENT_TOUCHENDED);
+}
+
+void SceneEditorTestLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
+{
+	sendEvent(TRIGGEREVENT_TOUCHCANCELLED);
+}
+
+void SceneEditorTestLayer::gameLogic(float dt)
+{
+    sendEvent(TRIGGEREVENT_UPDATESCENE);
 }
 
 static ActionObject* actionObject = NULL;
@@ -89,6 +129,7 @@ void SceneEditorTestLayer::toExtensionsMainLayer(cocos2d::CCObject *sender)
 	{
 		actionObject->stop();
 	}
+	this->setTouchEnabled(false);
 	ExtensionsTestScene *pScene = new ExtensionsTestScene();
 	pScene->runThisTest();
 	pScene->release();

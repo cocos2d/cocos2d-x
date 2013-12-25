@@ -447,6 +447,15 @@ files
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)
 	SceneEditorTest.cpp
 	SceneEditorTest.h
+    
+        [Test/ExtensionsTest/CocoStudioSceneTest/TriggerCode]
+	(../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode)
+	acts.cpp
+	acts.h
+	cons.cpp
+	cons.h
+        eventDef.h
+
 	
 	[Test/FontTest]
 	(../Classes/FontTest)

@@ -139,14 +139,14 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
     }
     if (m_bScale9Enabled)
     {
-        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setColor(getColor());
-        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->setOpacity(getOpacity());
+        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->updateDisplayedColor(getColor());
+        dynamic_cast<CCScale9Sprite*>(m_pBarRenderer)->updateDisplayedOpacity(getOpacity());
         
     }
     else
     {
-        dynamic_cast<CCSprite*>(m_pBarRenderer)->setColor(getColor());
-        dynamic_cast<CCSprite*>(m_pBarRenderer)->setOpacity(getOpacity());
+        dynamic_cast<CCSprite*>(m_pBarRenderer)->updateDisplayedColor(getColor());
+        dynamic_cast<CCSprite*>(m_pBarRenderer)->updateDisplayedOpacity(getOpacity());
     }
     m_barRendererTextureSize = m_pBarRenderer->getContentSize();
     

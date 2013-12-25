@@ -196,6 +196,10 @@
 		1AAF0C1616982A0000C5F611 /* js_bindings_system_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF0C1316982A0000C5F611 /* js_bindings_system_registration.cpp */; };
 		1AF2872C17F011EB00642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2872B17F011EA00642436 /* jsb_deprecated.js */; };
 		1AF2872D17F011F900642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2872B17F011EA00642436 /* jsb_deprecated.js */; };
+		375BD498186840490024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD490186840490024609E /* ObjectFactory.cpp */; };
+		375BD499186840490024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD492186840490024609E /* TriggerBase.cpp */; };
+		375BD49A186840490024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD494186840490024609E /* TriggerMng.cpp */; };
+		375BD49B186840490024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD496186840490024609E /* TriggerObj.cpp */; };
 		37FFCAD91860701E0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAD71860701E0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20BA018335A5C00F2C4D6 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B9E18335A5C00F2C4D6 /* UIListViewEx.cpp */; };
 		3EC20BA218335A6C00F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20BA118335A6C00F2C4D6 /* jsb_cocos2d_studio.js */; };
@@ -581,6 +585,14 @@
 		1AAF0C1316982A0000C5F611 /* js_bindings_system_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_system_registration.cpp; sourceTree = "<group>"; };
 		1AAF0C1416982A0000C5F611 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
 		1AF2872B17F011EA00642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		375BD490186840490024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
+		375BD491186840490024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		375BD492186840490024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
+		375BD493186840490024609E /* TriggerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerBase.h; sourceTree = "<group>"; };
+		375BD494186840490024609E /* TriggerMng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerMng.cpp; sourceTree = "<group>"; };
+		375BD495186840490024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
+		375BD496186840490024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
+		375BD497186840490024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		37FFCAD71860701E0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAD81860701E0078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		37FFCADB1860702F0078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -1060,6 +1072,7 @@
 		1A36F78A17EFED6D000D0275 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				375BD48F186840490024609E /* Trigger */,
 				1A36F78B17EFED6D000D0275 /* Action */,
 				1A36F79617EFED6D000D0275 /* Armature */,
 				1A36F7C417EFED6D000D0275 /* Components */,
@@ -1334,6 +1347,21 @@
 			path = LocalStorage;
 			sourceTree = "<group>";
 		};
+		375BD48F186840490024609E /* Trigger */ = {
+			isa = PBXGroup;
+			children = (
+				375BD490186840490024609E /* ObjectFactory.cpp */,
+				375BD491186840490024609E /* ObjectFactory.h */,
+				375BD492186840490024609E /* TriggerBase.cpp */,
+				375BD493186840490024609E /* TriggerBase.h */,
+				375BD494186840490024609E /* TriggerMng.cpp */,
+				375BD495186840490024609E /* TriggerMng.h */,
+				375BD496186840490024609E /* TriggerObj.cpp */,
+				375BD497186840490024609E /* TriggerObj.h */,
+			);
+			path = Trigger;
+			sourceTree = "<group>";
+		};
 		37FFCADA1860702F0078F312 /* rapidjson */ = {
 			isa = PBXGroup;
 			children = (
@@ -1554,6 +1582,7 @@
 				15A3D6161682F3D2002FB0C5 /* cpPinJoint.c in Sources */,
 				15A3D6171682F3D2002FB0C5 /* cpPivotJoint.c in Sources */,
 				15A3D6181682F3D2002FB0C5 /* cpRatchetJoint.c in Sources */,
+				375BD49B186840490024609E /* TriggerObj.cpp in Sources */,
 				15A3D6191682F3D2002FB0C5 /* cpRotaryLimitJoint.c in Sources */,
 				15A3D61A1682F3D2002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D61B1682F3D2002FB0C5 /* cpSlideJoint.c in Sources */,
@@ -1607,6 +1636,7 @@
 				15A3D7681682F407002FB0C5 /* CCControl.cpp in Sources */,
 				15A3D7691682F407002FB0C5 /* CCControlButton.cpp in Sources */,
 				15A3D76A1682F407002FB0C5 /* CCControlColourPicker.cpp in Sources */,
+				375BD49A186840490024609E /* TriggerMng.cpp in Sources */,
 				15A3D76B1682F407002FB0C5 /* CCControlHuePicker.cpp in Sources */,
 				15A3D76C1682F407002FB0C5 /* CCControlPotentiometer.cpp in Sources */,
 				15A3D76D1682F407002FB0C5 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
@@ -1653,6 +1683,7 @@
 				1A36F82417EFED6D000D0275 /* CCActionFrame.cpp in Sources */,
 				1A36F82517EFED6D000D0275 /* CCActionFrameEasing.cpp in Sources */,
 				1A36F82617EFED6D000D0275 /* CCActionManager.cpp in Sources */,
+				375BD498186840490024609E /* ObjectFactory.cpp in Sources */,
 				1A36F82717EFED6D000D0275 /* CCActionNode.cpp in Sources */,
 				1A36F82817EFED6D000D0275 /* CCActionObject.cpp in Sources */,
 				1A36F82917EFED6D000D0275 /* CCArmatureAnimation.cpp in Sources */,
@@ -1704,6 +1735,7 @@
 				1A36F85817EFED6D000D0275 /* UITextField.cpp in Sources */,
 				1A36F85A17EFED6D000D0275 /* DictionaryHelper.cpp in Sources */,
 				1AF2872C17F011EB00642436 /* jsb_deprecated.js in Sources */,
+				375BD499186840490024609E /* TriggerBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

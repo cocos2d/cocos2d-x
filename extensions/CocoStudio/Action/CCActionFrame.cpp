@@ -1,42 +1,42 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "CCActionFrame.h"
 #include "CCActionEaseEx.h"
 
 NS_CC_EXT_BEGIN
 
-ActionFrame::ActionFrame()
-: m_frameType(0)
-, m_frameIndex(0)
-, m_fTime(0.0f)
-, m_easingType(FrameEase_Linear)
+	ActionFrame::ActionFrame()
+	: m_frameType(0)
+	, m_frameIndex(0)
+	, m_fTime(0.0f)
+	, m_easingType(FrameEase_Linear)
 {
 }
 ActionFrame::~ActionFrame()
 {
-	
+
 }
 
 void ActionFrame::setFrameIndex(int index)
@@ -79,6 +79,11 @@ CCActionInterval* ActionFrame::getAction(float fDuration)
 {
 	CCLog("Need a definition of <getAction> for ActionFrame");
 	return NULL;
+}
+
+CCActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
+{
+	return this->getAction(fDuration);
 }
 
 void ActionFrame::setEasingParameter(std::vector<float> parameter)
@@ -220,7 +225,7 @@ CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 //////////////////////////////////////////////////////////////////////////
 
 ActionMoveFrame::ActionMoveFrame()
-: m_position(ccp(0.0f,0.0f))
+	: m_position(ccp(0.0f,0.0f))
 {
 	m_frameType = (int)kKeyframeMove;
 }
@@ -240,11 +245,12 @@ CCActionInterval* ActionMoveFrame::getAction(float fDuration)
 {
 	return this->getEasingAction(CCMoveTo::create(fDuration,m_position));
 }
+
 //////////////////////////////////////////////////////////////////////////
 
 ActionScaleFrame::ActionScaleFrame()
-: m_scaleX(1.0f)
-, m_scaleY(1.0f)
+	: m_scaleX(1.0f)
+	, m_scaleY(1.0f)
 {
 	m_frameType = (int)kKeyframeScale;
 }
@@ -280,7 +286,7 @@ CCActionInterval* ActionScaleFrame::getAction(float fDuration)
 }
 
 ActionRotationFrame::ActionRotationFrame()
-: m_rotation(0.0f)
+	: m_rotation(0.0f)
 {
 	m_frameType = (int)kKeyframeRotate;
 }
@@ -304,9 +310,23 @@ CCActionInterval* ActionRotationFrame::getAction(float fDuration)
 {
 	return this->getEasingAction(CCRotateTo::create(fDuration,m_rotation));
 }
+CCActionInterval* ActionRotationFrame::getAction(float fDuration,ActionFrame* srcFrame)
+{
+	ActionRotationFrame* srcRotationFrame = static_cast<ActionRotationFrame*>(srcFrame);
+	if (srcRotationFrame == NULL)
+	{
+		return this->getAction(fDuration);
+	}
+	else
+	{
+		float diffRotation = m_rotation - srcRotationFrame->m_rotation;
+		return this->getEasingAction(CCRotateBy::create(fDuration,diffRotation));
+	}
+}
 
+////////////////////////////////////////
 ActionFadeFrame::ActionFadeFrame()
-: m_opacity(255)
+	: m_opacity(255)
 {
 	m_frameType = (int)kKeyframeFade;
 }
@@ -333,7 +353,7 @@ CCActionInterval* ActionFadeFrame::getAction(float fDuration)
 
 
 ActionTintFrame::ActionTintFrame()
-: m_color(ccc3(255,255,255))
+	: m_color(ccc3(255,255,255))
 {
 	m_frameType = (int)kKeyframeTint;
 }

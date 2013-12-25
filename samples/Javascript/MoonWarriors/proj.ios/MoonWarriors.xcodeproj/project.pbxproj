@@ -210,6 +210,10 @@
 		1AF2872817F00F9800642436 /* jsb_cocos2d_extension.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2871F17F00F6D00642436 /* jsb_cocos2d_extension.js */; };
 		1AF2873817F0147B00642436 /* jsb_deprecated.js in Sources */ = {isa = PBXBuildFile; fileRef = 1AF2873717F0147B00642436 /* jsb_deprecated.js */; };
 		1AF2873917F0148200642436 /* jsb_deprecated.js in Resources */ = {isa = PBXBuildFile; fileRef = 1AF2873717F0147B00642436 /* jsb_deprecated.js */; };
+		375BD47B18683FBB0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD47318683FBB0024609E /* ObjectFactory.cpp */; };
+		375BD47C18683FBB0024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD47518683FBB0024609E /* TriggerBase.cpp */; };
+		375BD47D18683FBB0024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD47718683FBB0024609E /* TriggerMng.cpp */; };
+		375BD47E18683FBB0024609E /* TriggerObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD47918683FBB0024609E /* TriggerObj.cpp */; };
 		37FFCAC518606F5F0078F312 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37FFCAC318606F5F0078F312 /* CCActionEaseEx.cpp */; };
 		3EC20B991833592900F2C4D6 /* UIListViewEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B971833592900F2C4D6 /* UIListViewEx.cpp */; };
 		3EC20B9B1833593900F2C4D6 /* jsb_cocos2d_studio.js in Sources */ = {isa = PBXBuildFile; fileRef = 3EC20B9A1833593900F2C4D6 /* jsb_cocos2d_studio.js */; };
@@ -613,6 +617,14 @@
 		1AF2872317F00F7D00642436 /* jsb_cocos2dx_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_extension_auto.cpp; sourceTree = "<group>"; };
 		1AF2872417F00F7D00642436 /* jsb_cocos2dx_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_extension_auto.hpp; sourceTree = "<group>"; };
 		1AF2873717F0147B00642436 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_deprecated.js; sourceTree = "<group>"; };
+		375BD47318683FBB0024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
+		375BD47418683FBB0024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
+		375BD47518683FBB0024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
+		375BD47618683FBB0024609E /* TriggerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerBase.h; sourceTree = "<group>"; };
+		375BD47718683FBB0024609E /* TriggerMng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerMng.cpp; sourceTree = "<group>"; };
+		375BD47818683FBB0024609E /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
+		375BD47918683FBB0024609E /* TriggerObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerObj.cpp; sourceTree = "<group>"; };
+		375BD47A18683FBB0024609E /* TriggerObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerObj.h; sourceTree = "<group>"; };
 		37FFCAC318606F5F0078F312 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37FFCAC418606F5F0078F312 /* CCActionEaseEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionEaseEx.h; sourceTree = "<group>"; };
 		37FFCAC718606F760078F312 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
@@ -1081,6 +1093,7 @@
 		1AF285FA17F00F3700642436 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				375BD47218683FBB0024609E /* Trigger */,
 				1AF285FB17F00F3700642436 /* Action */,
 				1AF2860617F00F3700642436 /* Armature */,
 				1AF2863417F00F3700642436 /* Components */,
@@ -1423,6 +1436,21 @@
 			path = CCScrollView;
 			sourceTree = "<group>";
 		};
+		375BD47218683FBB0024609E /* Trigger */ = {
+			isa = PBXGroup;
+			children = (
+				375BD47318683FBB0024609E /* ObjectFactory.cpp */,
+				375BD47418683FBB0024609E /* ObjectFactory.h */,
+				375BD47518683FBB0024609E /* TriggerBase.cpp */,
+				375BD47618683FBB0024609E /* TriggerBase.h */,
+				375BD47718683FBB0024609E /* TriggerMng.cpp */,
+				375BD47818683FBB0024609E /* TriggerMng.h */,
+				375BD47918683FBB0024609E /* TriggerObj.cpp */,
+				375BD47A18683FBB0024609E /* TriggerObj.h */,
+			);
+			path = Trigger;
+			sourceTree = "<group>";
+		};
 		37FFCAC618606F760078F312 /* rapidjson */ = {
 			isa = PBXGroup;
 			children = (
@@ -1580,6 +1608,7 @@
 				1AF285E617F00F2100642436 /* CCBSequence.cpp in Sources */,
 				1AF285E917F00F2100642436 /* CCControlButtonLoader.cpp in Sources */,
 				460E53A2182B73B90040458A /* SceneReader.cpp in Sources */,
+				375BD47D18683FBB0024609E /* TriggerMng.cpp in Sources */,
 				1AF286B717F00F3700642436 /* CocosGUI.cpp in Sources */,
 				1AF2870817F00F4E00642436 /* CCControlButton.cpp in Sources */,
 				1AF2851B17F00EBD00642436 /* jsb_cocos2dx_extension_manual.cpp in Sources */,
@@ -1628,6 +1657,8 @@
 				3EC20B9B1833593900F2C4D6 /* jsb_cocos2d_studio.js in Sources */,
 				1AF286A917F00F3700642436 /* CCTransformHelp.cpp in Sources */,
 				1AF2870C17F00F4E00642436 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
+				375BD47B18683FBB0024609E /* ObjectFactory.cpp in Sources */,
+				375BD47C18683FBB0024609E /* TriggerBase.cpp in Sources */,
 				1AF285A217F00EED00642436 /* cpHashSet.c in Sources */,
 				1AF2873817F0147B00642436 /* jsb_deprecated.js in Sources */,
 				1AF286C817F00F3700642436 /* UITextField.cpp in Sources */,
@@ -1635,6 +1666,7 @@
 				1AF285EF17F00F2100642436 /* CCLayerGradientLoader.cpp in Sources */,
 				1AF2859F17F00EED00642436 /* cpBBTree.c in Sources */,
 				1AF286A717F00F3700642436 /* CCDataReaderHelper.cpp in Sources */,
+				375BD47E18683FBB0024609E /* TriggerObj.cpp in Sources */,
 				15A3D2D21682EE81002FB0C5 /* js_manual_conversions.cpp in Sources */,
 				1AF286C417F00F3700642436 /* UILabelBMFont.cpp in Sources */,
 				1AF2851417F00EBD00642436 /* cocosjs_manual_conversions.cpp in Sources */,
