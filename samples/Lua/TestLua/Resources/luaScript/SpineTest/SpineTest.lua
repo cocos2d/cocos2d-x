@@ -14,7 +14,7 @@ SpineTestLayer1 = function()
     local spineboy
     
     local addSpineBoy = function()
-		  spineboy = ccsp.CCSkeletonAnimation:create(s_pPathSpineBoyJson, s_pPathSpineBoyAtlas, 0.8)
+		  spineboy = sp.SkeletonAnimation:create(s_pPathSpineBoyJson, s_pPathSpineBoyAtlas, 0.8)
     	ret:addChild(spineboy)
     	spineboy:setPosition(cc.p(s.width/2, 20))
       spineboy:setMix("walk", "jump", 0.2)
