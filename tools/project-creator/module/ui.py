@@ -83,107 +83,91 @@ class StdoutRedirector(object):
         self.text_area.insert(END, str)
         self.text_area.see(END)
 
-class TkCocosDialog():
-    def __init__(self):
+class TkCocosDialog(Frame):
+    def __init__(self, parent):
+        Frame.__init__(self,parent)
+
         self.projectName = ""
         self.packageName = ""
         self.language = ""
-        self.old_stdout = sys.stdout
 
-        print("create_project.py -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany")
-        # top window
-        self.top = Tk()
-        self.top.title("CocosCreateProject")
+        self.parent = parent
+        self.columnconfigure(3, weight=1)
+        self.rowconfigure(5, weight=1)
 
         # project name frame
-        self.frameName = Frame(self.top)
-        self.labName = Label(self.frameName, text="projectName:", width=15)
+        self.labName = Label(self, text="projectName:")
         self.strName = StringVar()
         self.strName.set("MyGame")
-        self.editName = Entry(self.frameName, textvariable=self.strName, width=40 )
-        self.labName.pack(side = LEFT, fill = BOTH)
-        self.editName.pack(side = LEFT)
-        self.frameName.pack(padx=0, pady=10, anchor="nw")
+        self.editName = Entry(self, textvariable=self.strName)
+        self.labName.grid(sticky=W, pady=4, padx=5)
+        self.editName.grid(row=0, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
 
         # package name frame
-        self.framePackage = Frame(self.top)
-        self.labPackage = Label(self.framePackage, text="packageName:", width=15)
+        self.labPackage = Label(self, text="packageName:")
         self.strPackage=StringVar()
         self.strPackage.set("com.MyCompany.AwesomeGame")
-        self.editPackage = Entry(self.framePackage, textvariable=self.strPackage, width=40 )
-        self.labPackage.pack(side = LEFT)
-        self.editPackage.pack(side = LEFT)
-        self.framePackage.pack(padx=0, anchor="nw")
+        self.editPackage = Entry(self, textvariable=self.strPackage)
+        self.labPackage.grid(row=1, column=0,sticky=W, padx=5)
+        self.editPackage.grid(row=1, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
 
         # project path frame
-        self.framePath = Frame(self.top)
-        self.labPath = Label(self.framePath, text="projectPath:", width=15)
-        self.editPath = Entry(self.framePath, width=40)
-        self.btnPath = Button(self.framePath, text="...", width=10, command = self.pathCallback)
-        self.labPath.pack(side = LEFT)
-        self.editPath.pack(side = LEFT)
-        self.btnPath.pack(side = RIGHT)
-        self.framePath.pack(padx=0, pady=10, anchor="nw")
+        self.labPath = Label(self, text="projectPath:")
+        self.editPath = Entry(self)
+        self.btnPath = Button(self, text="...", width = 6, command = self.pathCallback)
+        self.labPath.grid(row=2, column=0,sticky=W, pady=4, padx=5)
+        self.editPath.grid(row=2, column=1, columnspan=3,padx=5, pady=2, sticky=E+W)
+        self.btnPath.grid(row=2, column=4,)
 
         # language frame
-        self.frameLanguage = Frame(self.top)
-        self.labLanguage = Label(self.frameLanguage, text="language:", width=15)
+        self.labLanguage = Label(self, text="language:")
         self.var=IntVar()
         self.var.set(1)
-        self.checkcpp = Radiobutton(self.frameLanguage, text="cpp", variable=self.var, value=1, width=8)
-        self.checklua = Radiobutton(self.frameLanguage, text="lua", variable=self.var, value=2, width=8)
-        self.checkjs = Radiobutton(self.frameLanguage, text="javascript", variable=self.var, value=3, width=15)
-        self.labLanguage.pack(side = LEFT)
-        self.checkcpp.pack(side = LEFT)
-        self.checklua.pack(side = LEFT)
-        self.checkjs.pack(side = LEFT)
-        self.frameLanguage.pack(padx=0,anchor="nw")
+        self.checkcpp = Radiobutton(self, text="cpp", variable=self.var, value=1)
+        self.checklua = Radiobutton(self, text="lua", variable=self.var, value=2)
+        self.checkjs = Radiobutton(self, text="javascript", variable=self.var, value=3)
+        self.labLanguage.grid(row=3, column=0,sticky=W, padx=5)
+        self.checkcpp.grid(row=3, column=1,sticky=N+W)
+        self.checklua.grid(row=3, column=2,padx=5,sticky=N+W)
+        self.checkjs.grid(row=3, column=3,padx=5,sticky=N+W)
 
         # show progress
-        self.progress = Scale(self.top, state= DISABLED, length=400, from_=0, to=100, orient=HORIZONTAL)
+        self.progress = Scale(self, state= DISABLED, from_=0, to=100, orient=HORIZONTAL)
         self.progress.set(0)
-        self.progress.pack(padx=10, pady=0, anchor="nw")
+        self.progress.grid(row=4, column=0, columnspan=4,padx=5, pady=2,sticky=E+W+S+N)
 
         # msg text frame
-        self.frameText = Frame(self.top)
-        self.text=Text(self.frameText, height=10, width=50)
+        self.text=Text(self,background = '#d9efff')
         self.text.bind("<KeyPress>", lambda e : "break")
-        self.scroll=Scrollbar(self.frameText, command=self.text.yview)
-        self.text.configure(yscrollcommand=self.scroll.set)
-        self.text.pack(side=LEFT, anchor="nw")
-        self.scroll.pack(side=RIGHT, fill=Y)
-        self.frameText.pack(padx=10, pady=5, anchor="nw")
+        self.text.grid(row=5, column=0, columnspan=4, rowspan=1, padx=5, sticky=E+W+S+N)
 
         # new project button
-        self.frameOperate = Frame(self.top)
-        self.btnCreate = Button(self.frameOperate, text="create", width=15, height =5, command = self.createBtnCallback)
-        self.btnCreate.pack(side = LEFT)
-        self.frameOperate.pack(pady=20)
+        self.btnCreate = Button(self, text="create", command = self.createBtnCallback)
+        self.btnCreate.grid(row=7, column=3, columnspan=1, rowspan=1,pady=2,ipadx=15,ipady =10, sticky=W)
 
         #center window on desktop
-        self.top.update()
-        curWidth = self.top.winfo_reqwidth()
-        curHeight = self.top.winfo_height()
-        scnWidth = self.top.winfo_screenwidth()
-        scnHeight = self.top.winfo_screenheight()
+        curWidth = 500
+        curHeight = 450
+        scnWidth = self.parent.winfo_screenwidth()
+        scnHeight = self.parent.winfo_screenheight()
         tmpcnf = '%dx%d+%d+%d'%(curWidth, curHeight, int((scnWidth-curWidth)/2), int((scnHeight-curHeight)/2))
-        self.top.geometry(tmpcnf)
+        self.parent.geometry(tmpcnf)
+        self.parent.title("CocosCreateProject")
 
         #fix size
-        self.top.maxsize(curWidth, curHeight)
-        self.top.minsize(curWidth, curHeight)
+        #self.parent.maxsize(curWidth, curHeight)
+        #self.parent.minsize(curWidth, curHeight)
 
         #redirect out to text
+        self.pack(fill=BOTH, expand=1)
         sys.stdout = StdoutRedirector(self.text)
-        self.top.mainloop()
-        sys.stdout = self.old_stdout
 
     def process_queue(self):
         """
         """
         #message is empty
         if self.queue.empty():
-            self.top.after(100, self.process_queue)
+            self.parent.after(100, self.process_queue)
             return
 
         #parse message
@@ -208,7 +192,7 @@ class TkCocosDialog():
             self.progress['state'] = DISABLED
             self.btnCreate['state'] = NORMAL
             return
-        self.top.after(100, self.process_queue)
+        self.parent.after(100, self.process_queue)
 
     def createBtnCallback(self):
         """Create button event.
@@ -253,7 +237,7 @@ class TkCocosDialog():
         self.btnCreate['state'] = DISABLED
         self.queue = Queue.Queue()
         ThreadedTask(self.queue, projectName, packageName, language, projectPath).start()
-        self.top.after(100, self.process_queue)
+        self.parent.after(100, self.process_queue)
 
     def pathCallback(self):
         """Paht button event.
@@ -263,5 +247,13 @@ class TkCocosDialog():
             self.editPath.delete(0, END)
             self.editPath.insert(0, filepath)
 
+def createTkCocosDialog():
+
+    old_stdout = sys.stdout
+    root = Tk()
+    app = TkCocosDialog(root)
+    root.mainloop()
+    sys.stdout = old_stdout
+
 if __name__ =='__main__':
-    TkCocosDialog()
+    createTkCocosDialog()
