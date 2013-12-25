@@ -31,14 +31,17 @@ using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    cocos2d::Vector<TriggerObj*> array = TriggerMng::getInstance()->get(event);
+    cocos2d::Vector<TriggerObj*> *array = TriggerMng::getInstance()->get(event);
     do {
-        for(auto triobj : array)
+        CC_BREAK_IF(array == nullptr);
+        cocos2d::Vector<TriggerObj*>::iterator iter = array->begin();
+        while (iter != array->end())
         {
-            if (triobj != NULL && triobj->detect())
+            if ((*iter) != nullptr && (*iter)->detect())
             {
-                triobj->done();
+                (*iter)->done();
             }
+            ++iter;
         }
     } while (0);
 }

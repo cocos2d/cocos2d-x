@@ -100,6 +100,7 @@ namespace cocostudio {
 				}
 
 			}
+            ++iter;
 		}
 		return _retNode;
 	}

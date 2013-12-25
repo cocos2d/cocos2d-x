@@ -162,12 +162,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
     {
         const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "conditions", i);
         const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
-        if (classname == NULL)
+        if (classname == nullptr)
         {
             continue;
         }
         BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
-        CCAssert(con != NULL, "class named classname can not implement!");
+        CCAssert(con != nullptr, "class named classname can not implement!");
         con->serialize(subDict);
 		con->init();
         con->autorelease();
@@ -179,12 +179,12 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 	{
 		const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(val, "actions", i);
 		const char *classname = DICTOOL->getStringValue_json(subDict, "classname");
-		if (classname == NULL)
+		if (classname == nullptr)
 		{
 			continue;
 		}
 		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-		CCAssert(act != NULL, "class named classname can not implement!");
+		CCAssert(act != nullptr, "class named classname can not implement!");
 		act->serialize(subDict);
 		act->init();
 		act->autorelease();
