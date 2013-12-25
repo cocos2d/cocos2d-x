@@ -2,6 +2,8 @@
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
 #include "CCNodeGrid.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 using namespace cocos2d;
@@ -1092,15 +1094,23 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+}
 
+void TestBoundingBox::onDraw()
+{
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    
     rect = armature->getBoundingBox();
-
+    
     DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
     DrawPrimitives::drawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
 }
-
-
 
 void TestAnchorPoint::onEnter()
 {

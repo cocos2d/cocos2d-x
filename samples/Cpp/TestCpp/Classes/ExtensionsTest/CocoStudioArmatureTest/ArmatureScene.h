@@ -295,6 +295,8 @@ public:
 
 	cocostudio::Armature *armature;
 	Rect rect;
+protected:
+    void onDraw();
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
