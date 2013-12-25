@@ -2048,6 +2048,7 @@ int tolua_cocos2d_Node_setContentSize(lua_State* tolua_S)
             return 0;
         
         cobj->setContentSize(size);
+        return 0;
     }
     else if(2 == argc)
     {
@@ -2105,6 +2106,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
             return 0;
         
         cobj->setAnchorPoint(pt);
+        return 0;
     }
     else if(2 == argc)
     {
