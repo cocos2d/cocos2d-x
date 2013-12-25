@@ -1,6 +1,6 @@
 EXECUTABLE = HelloLua
 
-COCOS_ROOT = ../../..
+COCOS_ROOT = ../cocos2d
 INCLUDES =  -I../ -I../Classes -I$(COCOS_ROOT)/audio/include \
     -I$(COCOS_ROOT)/scripting/lua/lua \
     -I$(COCOS_ROOT)/scripting/lua/tolua \

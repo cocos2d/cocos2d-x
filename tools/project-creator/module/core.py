@@ -1,11 +1,28 @@
 #!/usr/bin/python
 #coding=utf-8
-# create_project.py
-# Create cross-platform cocos2d-x project
-# Copyright (c) 2012 cocos2d-x.org
-# Author: WangZhe
-#modify:chuanwei 2013.12.23
+"""****************************************************************************
+Copyright (c) 2010 cocos2d-x.org
 
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************"""
 
 import sys
 import os, os.path
@@ -145,7 +162,7 @@ class CocosProject:
         else:
             shutil.copytree(self.context["src_project_path"], self.context["dst_project_path"], True)
 
-        #
+        # check cocos engine exist
         dirlist = os.listdir(self.cocos_root)
         if (not "cocos" in dirlist) or (not "extensions" in dirlist):
             print ("The Cocos2d Engine doesn\'t exist." \
@@ -161,7 +178,7 @@ class CocosProject:
 
         # copy cocos2d engine.
         if not self.__copyCocos2dEngine():
-            print "New project Failure"
+            print ("New project Failure")
             if os.path.exists(self.context["dst_project_path"]):
                 shutil.rmtree(self.context["dst_project_path"])
             return False
@@ -198,8 +215,6 @@ class CocosProject:
             filepath = os.path.join(self.cocos_root,line)
             showMsg = "%s\t\t\t: Done!" % line
             self.step += 1
-            if self.callbackfun:
-                self.callbackfun(self.step,self.totalStep,showMsg)
             if ignoreList.has_key(line):
                 continue
             if os.path.isdir(filepath):
@@ -207,13 +222,15 @@ class CocosProject:
                 print (showMsg)
             else:
                 shutil.copyfile(filepath, os.path.join(dstPath,line))
-            #print ("%s\t\t\t: Done!" % line)
+
+            if self.callbackfun:
+                self.callbackfun(self.step,self.totalStep,showMsg)
         return True
 
     def __processPlatformProjects(self, platform):
         """ Process each platform project.
         Arg:
-            platform: win32、android、ios
+            platform: "ios_mac", "android", "win32", "linux"
         """
 
         # determine proj_path

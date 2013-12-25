@@ -30,8 +30,8 @@ How to start a new game
 Example:
 
     $ cd cocos2d-x/tools/project-creator
-    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-    $ cd ../../projects/mygame
+    $ ./create-multi-platform-projects.py -n mygame -k com.your_company.mygame -l cpp -p /usr/mygame
+    $ cd /usr/mygame
 
 
 Main features
