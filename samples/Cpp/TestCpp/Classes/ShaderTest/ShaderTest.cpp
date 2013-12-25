@@ -1,6 +1,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 static int sceneIdx = -1; 
 
@@ -194,29 +196,37 @@ void ShaderNode::setPosition(const Point &newPosition)
 
 void ShaderNode::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ShaderNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
 
+void ShaderNode::onDraw()
+{
+    return;
+    CC_NODE_DRAW_SETUP();
+    
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-
+    
     //
     // Uniforms
     //
     getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
     getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
-
+    
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
-
+    
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-
+    
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     CC_INCREMENT_GL_DRAWS(1);
 }
-
 
 /// ShaderMonjori
 
