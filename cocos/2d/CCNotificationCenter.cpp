@@ -83,7 +83,7 @@ bool NotificationCenter::observerExisted(Object *target, const std::string& name
         if (!observer)
             continue;
         
-        if (observer->getName().compare(name) == 0 && observer->getTarget() == target && observer->getSender() == sender)
+        if (observer->getName() == name && observer->getTarget() == target && observer->getSender() == sender)
             return true;
     }
     return false;
@@ -117,7 +117,7 @@ void NotificationCenter::removeObserver(Object *target, const std::string& name)
         if (!observer)
             continue;
         
-        if (observer->getName().compare(name) == 0 && observer->getTarget() == target)
+        if (observer->getName() == name && observer->getTarget() == target)
         {
             _observers->removeObject(observer);
             return;
@@ -170,7 +170,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const std::stri
         if (!observer)
             continue;
             
-        if ( !observer->getName().compare(name) && observer->getTarget() == target)
+        if ( observer->getName() == name && observer->getTarget() == target)
         {
             _observers->removeObject(observer);
         }
@@ -188,7 +188,7 @@ void NotificationCenter::postNotification(const std::string& name, Object *sende
         if (!observer)
             continue;
         
-        if (!observer->getName().compare(name) && (observer->getSender() == sender || observer->getSender() == nullptr || sender == nullptr))
+        if (observer->getName() == name && (observer->getSender() == sender || observer->getSender() == nullptr || sender == nullptr))
         {
             if (0 != observer->getHandler())
             {
@@ -223,7 +223,7 @@ int NotificationCenter::getObserverHandlerByName(const std::string& name)
         if (nullptr == observer)
             continue;
         
-        if ( 0 == observer->getName().compare(name) )
+        if ( observer->getName() == name )
         {
             return observer->getHandler();
             break;
