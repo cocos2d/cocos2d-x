@@ -31,7 +31,7 @@ CCComAudio::CCComAudio(void)
 : m_strFilePath("")
 , m_bLoop(false)
 {
-    m_strName = "Audio";
+    m_strName = "CCComAudio";
 }
 
 CCComAudio::~CCComAudio(void)
@@ -86,6 +86,8 @@ void CCComAudio::end()
 void CCComAudio::preloadBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(pszFilePath);
+    setFile(pszFilePath);
+	setLoop(false);
 }
 
 void CCComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
@@ -96,6 +98,11 @@ void CCComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 void CCComAudio::playBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(pszFilePath);
+}
+
+void CCComAudio::playBackgroundMusic()
+{
+	 CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(m_strFilePath.c_str(), m_bLoop);
 }
 
 void CCComAudio::stopBackgroundMusic(bool bReleaseData)
@@ -163,6 +170,11 @@ unsigned int CCComAudio::playEffect(const char* pszFilePath)
     return CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(pszFilePath);
 }
 
+unsigned int CCComAudio::playEffect()
+{
+	return CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(m_strFilePath.c_str(), m_bLoop);
+}
+
 void CCComAudio::pauseEffect(unsigned int nSoundId)
 {
     return CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseEffect(nSoundId);
@@ -196,6 +208,8 @@ void CCComAudio::stopAllEffects()
 void CCComAudio::preloadEffect(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect(pszFilePath);
+    setFile(pszFilePath);
+    setLoop(false);
 }
 
 void CCComAudio::unloadEffect(const char *pszFilePath)

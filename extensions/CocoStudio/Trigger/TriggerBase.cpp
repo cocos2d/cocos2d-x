@@ -22,49 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
-#include "../Json/rapidjson/document.h"
-#include <string>
+#include "TriggerBase.h"
+#include "TriggerObj.h"
+#include "TriggerMng.h"
 
 NS_CC_EXT_BEGIN
-/**
- *  @lua NA
- */
-class CCComAttribute : public cocos2d::CCComponent
+
+void sendEvent(unsigned int event)
 {
-protected:
-    /**
-     *  @js ctor
-     */
-    CCComAttribute(void);
-    /**
-     *  @js NA
-     */
-    virtual ~CCComAttribute(void);
-    
-public:
-   virtual bool init();
-   static CCComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
-   
-private:
-   cocos2d::CCDictionary *_dict;
-};
+    CCArray *array = TriggerMng::getInstance()->get(event);
+    do {
+        CC_BREAK_IF(array == NULL);
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(array, pObj)
+        {
+            TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
+            if (triobj != NULL && triobj->detect())
+            {
+                triobj->done();
+            }
+        }
+    } while (0);
+}
 
 NS_CC_EXT_END
-
-#endif  // __FUNDATION__CCCOMPONENT_H__

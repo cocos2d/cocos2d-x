@@ -289,6 +289,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest">
       <UniqueIdentifier>{6ebd8fef-ff49-4352-9d54-f512728fe662}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
+      <UniqueIdentifier>{9ed6e130-9446-465b-9e07-15efeb543e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -680,6 +683,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1252,6 +1261,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

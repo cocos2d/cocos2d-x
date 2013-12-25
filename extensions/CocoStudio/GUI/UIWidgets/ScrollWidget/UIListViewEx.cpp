@@ -98,7 +98,7 @@ void UIListViewEx::updateInnerContainerSize()
 			for (int i=0; i<length; i++)
 			{
 				UIWidget* item = (UIWidget*)arrayItems->arr[i];
-				totalHeight += item->getSize().height;
+                totalHeight += item->getSize().height;
 			}
 			float finalWidth = m_size.width;
 			float finalHeight = totalHeight;
@@ -113,7 +113,7 @@ void UIListViewEx::updateInnerContainerSize()
 			for (int i=0; i<length; i++)
 			{
 				UIWidget* item = (UIWidget*)arrayItems->arr[i];
-				totalWidth += item->getSize().width;
+                totalWidth += item->getSize().width;
 			}
 
 			float finalWidth = totalWidth;

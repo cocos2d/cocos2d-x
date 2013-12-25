@@ -37,6 +37,7 @@ NS_CC_EXT_BEGIN
 	, m_fUnitTime(0.1f)
 	, m_CurrentTime(0.0f)
 	, m_pScheduler(NULL)
+	, m_CallBack(NULL)
 	, m_fTotalTime(0.0f)
 {
 	m_ActionNodeList = CCArray::create();

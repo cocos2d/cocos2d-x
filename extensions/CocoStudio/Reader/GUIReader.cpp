@@ -134,6 +134,7 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 	CCData *data = new CCData(pBytes, size);
 	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
 	CC_SAFE_DELETE(data);
+    CC_SAFE_DELETE_ARRAY(pBytes);
 	jsonDict.Parse<0>(load_str.c_str());
     if (jsonDict.HasParseError())
     {
@@ -163,7 +164,6 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
     }
 
     CC_SAFE_DELETE(pReader);
-    CC_SAFE_DELETE_ARRAY(pBytes);
     return widget;
 }
 
@@ -1003,7 +1003,18 @@ UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::
         UIWidget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            widget->addChild(child);
+            if (dynamic_cast<UIPageView*>(widget) && dynamic_cast<UILayout*>(child))
+            {
+                dynamic_cast<UIPageView*>(widget)->addPage((UILayout*)child);
+            }
+            else if (dynamic_cast<UIListViewEx*>(widget))
+            {
+                dynamic_cast<UIListViewEx*>(widget)->pushBackCustomItem(child);
+            }
+            else
+            {
+                widget->addChild(child);
+            }
         }
     }
     
@@ -1490,7 +1501,7 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(UIWidge
                 std::string tp_c = m_strFilePath;
                 const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
+                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getStringValue_json(options, "startCharMap"));
                 break;
             }
             case 1:
@@ -1880,12 +1891,26 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(UIWidg
 
 void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
 {
-    
+    setPropsForLayoutFromJsonDictionary(widget, options);
 }
 
 void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(UIWidget* widget, const rapidjson::Value& options)
 {
+    setPropsForLayoutFromJsonDictionary(widget, options);
     
+    UIListViewEx* listView = (UIListViewEx*)widget;
+    
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    listView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	listView->setDirection((SCROLLVIEW_DIR)direction);
+    
+    ListViewGravity gravity = (ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    listView->setGravity(gravity);
+    
+    float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
+    listView->setItemsMargin(itemMargin);        
 }
 
 NS_CC_EXT_END
