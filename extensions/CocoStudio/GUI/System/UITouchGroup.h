@@ -28,15 +28,16 @@
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
-#include "../BaseClasses/UIRootWidget.h"
-#include "../System/UIInputManager.h"
+#include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 /**
  *  @lua NA
  */
-class UILayer : public CCLayer
+class TouchGroup : public CCLayer
 {
     
 public:
@@ -44,18 +45,18 @@ public:
      * Default constructor
      * @js ctor
      */
-    UILayer();
+    TouchGroup();
     
     /**
      * Default destructor
      * @js NA
      */
-    virtual ~UILayer();
+    virtual ~TouchGroup();
     
     /**
      * Allocates and initializes a widget.
      */
-    static UILayer *create(void);
+    static TouchGroup *create(void);
     
     //initializes state of uilayer.
     virtual bool init();
@@ -74,7 +75,7 @@ public:
      *
      * @param widget.
      */
-    void addWidget(UIWidget* widget);
+    void addWidget(Widget* widget);
     
     /**
      * Remove a widget from UILayer.
@@ -83,40 +84,21 @@ public:
      *
      * @param cleanup true if all running actions on all children widgets should be cleanup, false otherwise.
      */
-    void removeWidget(UIWidget* widget);
-    
-    /**
-     * Sets whether the UILayer is visible
-     *
-     * The default value is true, a UILayer is default to visible
-     *
-     * @param visible   true if the UILayer is visible, false if the UILayer is hidden.
-     */
-    virtual void setVisible(bool visible);
+    void removeWidget(Widget* widget);
     
     /**
      * Finds a widget whose tag is equal tag param from widget tree.
      *
      * @param tag.
      */
-    UIWidget* getWidgetByTag(int tag);
+    Widget* getWidgetByTag(int tag);
     
     /**
      * Seek a widget whose name is equal name param from widget tree.
      *
      * @param name.
      */
-    UIWidget* getWidgetByName(const char* name);
-    
-    /**
-     * Gets UIInputManager.
-     *
-     * UIInputManager is the touch manager of UILayer.
-     *
-     * @return UIInputManager.
-     * @js NA
-     */
-    UIInputManager* getInputManager();
+    Widget* getWidgetByName(const char* name);
     
     /**
      * Remove and clean up all of UILayer's widget.
@@ -128,21 +110,22 @@ public:
      *
      * @return UIRootWidget, "UIRootWidget" is the root widget of UILayer.
      */
-    UIRootWidget* getRootWidget();
-    
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    virtual void dispose(){removeFromParentAndCleanup(true);};
-    void removeWidgetAndCleanUp(UIWidget* widget,bool cleanup){removeWidget(widget);};
-    /************/
+    Widget* getRootWidget();
 protected:
-    UIRootWidget* m_pRootWidget;
-    UIInputManager* m_pInputManager;
+    bool checkEventWidget(CCTouch* touch, CCEvent *pEvent);
+    bool checkTouchEvent(Widget* root, CCTouch* touch, CCEvent* pEvent);
+protected:
+    Widget* m_pRootWidget;
+    CCPoint touchBeganedPoint;
+    CCPoint touchMovedPoint;
+    CCPoint touchEndedPoint;
+    CCPoint touchCanceledPoint;
+    CCArray* m_pSelectedWidgets;
 };
+    
+}
 
-NS_CC_EXT_END
+NS_CC_END
 
 
 

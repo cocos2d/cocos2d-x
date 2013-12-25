@@ -50,8 +50,8 @@ void CocosGUITestScene::MainMenuCallback(CCObject* pSender)
 
 void CocosGUITestScene::toCocosGUIExampleScene(CCObject* pSender)
 {
-    ((UIScrollView*)pSender)->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
-    ((UIScrollView*)pSender)->getChildByName("backtotopbutton")->disable();
+//    ((UIScrollView*)pSender)->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
+//    ((UIScrollView*)pSender)->getChildByName("backtotopbutton")->disable();
     CCLOG("p2 click");
 }
 
@@ -70,17 +70,17 @@ void CocosGUITestScene::menuCallback(CCObject *pSender)
     {
         case 0:
         {
-            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-            CCScene* pScene = pManager->currentUIScene();
-            CCDirector::sharedDirector()->replaceScene(pScene);
+//            UISceneManager* pManager = UISceneManager::sharedUISceneManager();
+//            CCScene* pScene = pManager->currentUIScene();
+//            CCDirector::sharedDirector()->replaceScene(pScene);
         }
             break;
             
         case 1:
         {
-            CocosGUIExamplesRegisterScene* pScene = new CocosGUIExamplesRegisterScene();
-            pScene->runThisTest();
-            pScene->release();
+//            CocosGUIExamplesRegisterScene* pScene = new CocosGUIExamplesRegisterScene();
+//            pScene->runThisTest();
+//            pScene->release();
         }
             break;
             
