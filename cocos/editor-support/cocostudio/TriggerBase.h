@@ -22,45 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __TRIGGEREVENT_H__
+#define __TRIGGEREVENT_H__
 
 #include "cocos2d.h"
-#include <string>
-#include "cocostudio/DictionaryHelper.h"
+#include "cocostudio/CocoStudio.h"
+#include "ExtensionMacros.h"
+#include "TriggerObj.h"
+#include "ObjectFactory.h"
+#include "TriggerMng.h"
 
-namespace cocostudio {
 
-class ComAttribute : public cocos2d::Component
-{
-protected:
-    /**
-     * @js ctor
-     */
-    ComAttribute(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComAttribute(void);
-    
-public:
-   virtual bool init();
-   static ComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
-private:
-   cocos2d::CCDictionary *_dict;
-};
+#define DECLARE_CLASS_INFO \
+    public: \
+        static cocostudio::ObjectFactory::TInfo Type; \
+        static cocos2d::Object* createInstance(void); \
+        
+#define IMPLEMENT_CLASS_INFO(className) \
+        cocos2d::Object* className::createInstance(void) \
+        { \
+            return new className; \
+        } \
+        cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
-}
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+void sendEvent(unsigned int event);
+
+
+#endif

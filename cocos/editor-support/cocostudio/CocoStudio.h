@@ -57,5 +57,6 @@
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CCSGUIReader.h"
 #include "cocostudio/CCSSceneReader.h"
+#include "cocostudio/TriggerBase.h"
 
 #endif
