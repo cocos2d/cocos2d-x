@@ -1,5 +1,7 @@
-    #include "LabelTest.h"
+#include "LabelTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagTileMap = 1,
@@ -206,11 +208,19 @@ void Atlas1::draw()
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
-
-    _textureAtlas->drawQuads();
-
+    
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(Atlas1::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
 //    [textureAtlas drawNumberOfQuads:3];
     
+}
+
+void Atlas1::onDraw()
+{
+    _textureAtlas->drawQuads();
 }
 
 std::string Atlas1::title() const
