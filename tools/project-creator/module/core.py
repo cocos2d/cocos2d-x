@@ -181,7 +181,8 @@ class CocosProject:
             "samples": None,
             "docs": None,
             "licenses": None,
-            "template": None
+            "template": None,
+            ".git":None
         }
 
         # create "cocos2d" folder
