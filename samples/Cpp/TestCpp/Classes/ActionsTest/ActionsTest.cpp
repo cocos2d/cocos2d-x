@@ -2080,11 +2080,29 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
+
     kmGLPopMatrix();
-    
-    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
+
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
+
+
+void ActionCatmullRom::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
+}
+
 
 std::string ActionCatmullRom::title() const
 {
@@ -2158,15 +2176,31 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void ActionCardinalSpline::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCardinalSpline::title() const
