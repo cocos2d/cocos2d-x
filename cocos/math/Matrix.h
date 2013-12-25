@@ -140,9 +140,6 @@ public:
      */
     static void createLookAt(const Vector3& eyePosition, const Vector3& targetPosition, const Vector3& up, Matrix* dst);
 
-    // 通过轴创建矩阵 lvlong
-    //static void createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst);
-
     /**
      * Creates a view matrix based on the specified input parameters.
      *
