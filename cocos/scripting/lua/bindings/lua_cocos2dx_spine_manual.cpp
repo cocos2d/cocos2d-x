@@ -125,7 +125,6 @@ tolua_lerror:
 #endif
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
@@ -142,8 +141,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
             int handler = (  toluafix_ref_function(tolua_S,2,0));
-            ScriptHandlerMgr::HandlerType handlerType = static_cast<ScriptHandlerMgr::HandlerType>(SCRIPT_SPINE_EVENT);
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, handlerType);
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::SPINE_EVENT);
         }
     }
     return 0;
@@ -168,9 +166,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterScriptHandler00(lua_State* tolua
     {
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
-            ScriptHandlerMgr::HandlerType handlerType =  static_cast<ScriptHandlerMgr::HandlerType>(SCRIPT_SPINE_EVENT);
-
-            ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, handlerType);
+            ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::SPINE_EVENT);
         }
     }
     return 0;
@@ -180,7 +176,6 @@ tolua_lerror:
     return 0;
 #endif
 }
-#endif
 
 static int tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00(lua_State* tolua_S)
 {
@@ -293,7 +288,7 @@ tolua_lerror:
 
 static int tolua_spine_SkeletoneAnimation_setBlendFunc(lua_State* tolua_S)
 {
-    return tolua_cocos2dx_setBlendFunc<CCSkeletonAnimation>(tolua_S,"SkeletonAnimation");
+    return tolua_cocos2dx_setBlendFunc<spine::SkeletonAnimation>(tolua_S,"SkeletonAnimation");
 }
 
 
@@ -312,6 +307,7 @@ static void extendCCSkeletonAnimation(lua_State* L)
         tolua_function(L, "setDebugBones", tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00);
         tolua_function(L, "setPremultipliedAlpha", tolua_Cocos2d_CCSkeletonAnimation_setPremultipliedAlpha00);
     }
+    lua_pop(L, 1);
 }
 
 int register_all_cocos2dx_spine_manual(lua_State* L)

@@ -4290,6 +4290,112 @@ static void extendEventListenerMouse(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+static int tolua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::ActionCamera* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ActionCamera",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::ActionCamera*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2dx_ActionCamera_reverse'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        cocos2d::ActionCamera* reverse = cobj->reverse();
+        toluafix_pushusertype_ccobject(tolua_S, reverse->_ID, &(reverse->_luaID), (void*)(reverse),"ActionCamera");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reverse",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_ActionCamera_reverse'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static void extendActionCamera(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ActionCamera");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "reverse", tolua_cocos2dx_ActionCamera_reverse);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::GridAction* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"GridAction",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::GridAction*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2dx_GridAction_reverse'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        cocos2d::GridAction* reverse = cobj->reverse();
+        toluafix_pushusertype_ccobject(tolua_S, reverse->_ID, &(reverse->_luaID), (void*)(reverse),"GridAction");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reverse",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_GridAction_reverse'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static void extendGridAction(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "GridAction");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "reverse", tolua_cocos2dx_GridAction_reverse);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -4327,5 +4433,8 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerTouchOneByOne(tolua_S);
     extendEventListenerTouchAllAtOnce(tolua_S);
     extendEventListenerMouse(tolua_S);
+    extendActionCamera(tolua_S);
+    extendGridAction(tolua_S);
+    
     return 0;
 }
