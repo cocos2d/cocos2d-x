@@ -402,7 +402,7 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case EditBox::InputMode::NUMERIC:
-            _systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::PHONE_NUMBER:
             _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
@@ -414,10 +414,10 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::SINGLE_LINE:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         default:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
     }
 }
