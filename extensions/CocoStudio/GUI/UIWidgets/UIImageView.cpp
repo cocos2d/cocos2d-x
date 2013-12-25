@@ -118,6 +118,8 @@ void ImageView::loadTexture(const char *fileName, TextureResType texType)
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     imageTextureScaleChangedWithSize();
 }

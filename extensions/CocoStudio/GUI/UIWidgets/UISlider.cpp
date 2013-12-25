@@ -132,16 +132,8 @@ void Slider::loadBarTexture(const char* fileName, TextureResType texType)
         default:
             break;
     }
-    if (_scale9Enabled)
-    {
-        static_cast<extension::CCScale9Sprite*>(_barRenderer)->setColor(getColor());
-        static_cast<extension::CCScale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
-    }
-    else
-    {
-        static_cast<CCSprite*>(_barRenderer)->setColor(getColor());
-        static_cast<CCSprite*>(_barRenderer)->setOpacity(getOpacity());
-    }
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     barRendererScaleChangedWithSize();
 }
 
@@ -178,16 +170,8 @@ void Slider::loadProgressBarTexture(const char *fileName, TextureResType texType
         default:
             break;
     }
-    if (_scale9Enabled)
-    {
-        static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setColor(getColor());
-        static_cast<extension::CCScale9Sprite*>(_progressBarRenderer)->setOpacity(getOpacity());
-    }
-    else
-    {
-        static_cast<CCSprite*>(_progressBarRenderer)->setColor(getColor());
-        static_cast<CCSprite*>(_progressBarRenderer)->setOpacity(getOpacity());
-    }
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     _progressBarRenderer->setAnchorPoint(CCPoint(0.0f, 0.5f));
     _progressBarTextureSize = _progressBarRenderer->getContentSize();
     progressBarRendererScaleChangedWithSize();
@@ -294,8 +278,8 @@ void Slider::loadSlidBallTextureNormal(const char* normal,TextureResType texType
         default:
             break;
     }
-    _slidBallNormalRenderer->setColor(getColor());
-    _slidBallNormalRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
 }
 
 void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texType)
@@ -317,8 +301,8 @@ void Slider::loadSlidBallTexturePressed(const char* pressed,TextureResType texTy
         default:
             break;
     }
-    _slidBallPressedRenderer->setColor(getColor());
-    _slidBallPressedRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
 }
 
 void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType texType)
@@ -340,8 +324,8 @@ void Slider::loadSlidBallTextureDisabled(const char* disabled,TextureResType tex
         default:
             break;
     }
-    _slidBallDisabledRenderer->setColor(getColor());
-    _slidBallDisabledRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
 }
 
 void Slider::setPercent(int percent)

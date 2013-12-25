@@ -136,8 +136,6 @@ public:
     void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
 
     virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void setColor(const ccColor3B &color);
-    virtual void setOpacity(GLubyte opacity);
     
     /**
      * Returns the "class name" of widget.

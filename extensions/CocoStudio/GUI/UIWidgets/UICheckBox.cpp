@@ -127,8 +127,9 @@ void CheckBox::loadTextureBackGround(const char *backGround,TextureResType texTy
         default:
             break;
     }
-    _backGroundBoxRenderer->setColor(getColor());
-    _backGroundBoxRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    updateAnchorPoint();
     backGroundTextureScaleChangedWithSize();
 }
 
@@ -151,8 +152,9 @@ void CheckBox::loadTextureBackGroundSelected(const char *backGroundSelected,Text
         default:
             break;
     }
-    _backGroundSelectedBoxRenderer->setColor(getColor());
-    _backGroundSelectedBoxRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    updateAnchorPoint();
     backGroundSelectedTextureScaleChangedWithSize();
 }
 
@@ -175,8 +177,9 @@ void CheckBox::loadTextureFrontCross(const char *cross,TextureResType texType)
         default:
             break;
     }
-    _frontCrossRenderer->setColor(getColor());
-    _frontCrossRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    updateAnchorPoint();
     frontCrossTextureScaleChangedWithSize();
 }
 
@@ -199,8 +202,9 @@ void CheckBox::loadTextureBackGroundDisabled(const char *backGroundDisabled,Text
         default:
             break;
     }
-    _backGroundBoxDisabledRenderer->setColor(getColor());
-    _backGroundBoxDisabledRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    updateAnchorPoint();
     backGroundDisabledTextureScaleChangedWithSize();
 }
 
@@ -223,8 +227,9 @@ void CheckBox::loadTextureFrontCrossDisabled(const char *frontCrossDisabled,Text
         default:
             break;
     }
-    _frontCrossDisabledRenderer->setColor(getColor());
-    _frontCrossRenderer->setOpacity(getOpacity());
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    updateAnchorPoint();
     frontCrossDisabledTextureScaleChangedWithSize();
 }
 

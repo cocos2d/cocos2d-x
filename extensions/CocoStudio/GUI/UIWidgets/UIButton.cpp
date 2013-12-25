@@ -184,8 +184,6 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
             default:
                 break;
         }
-        normalRendererScale9->setColor(getColor());
-        normalRendererScale9->setOpacity(getOpacity());
         normalRendererScale9->setCapInsets(_capInsetsNormal);
     }
     else
@@ -202,10 +200,10 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
             default:
                 break;
         }
-        normalRenderer->setColor(getColor());
-        normalRenderer->setOpacity(getOpacity());
     }
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     normalTextureScaleChangedWithSize();
 }
@@ -232,8 +230,6 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
             default:
                 break;
         }
-        clickedRendererScale9->setColor(getColor());
-        clickedRendererScale9->setOpacity(getOpacity());
         clickedRendererScale9->setCapInsets(_capInsetsPressed);
     }
     else
@@ -250,10 +246,10 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
             default:
                 break;
         }
-        clickedRenderer->setColor(getColor());
-        clickedRenderer->setOpacity(getOpacity());
     }
     _pressedTextureSize = _buttonClickedRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     pressedTextureScaleChangedWithSize();
 }
@@ -280,8 +276,6 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
             default:
                 break;
         }
-        disabledScale9->setColor(getColor());
-        disabledScale9->setOpacity(getOpacity());
         disabledScale9->setCapInsets(_capInsetsDisabled);
     }
     else
@@ -298,10 +292,10 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
             default:
                 break;
         }
-        disabledRenderer->setColor(getColor());
-        disabledRenderer->setOpacity(getOpacity());
     }
     _disabledTextureSize = _buttonDisableRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     disabledTextureScaleChangedWithSize();
 }
@@ -584,7 +578,7 @@ const char* Button::getTitleText() const
 void Button::setTitleColor(const ccColor3B& color)
 {
     _titleColor = color;
-    _titleRenderer->setColor(color);
+    _titleRenderer->updateDisplayedColor(color);
 }
 
 const ccColor3B& Button::getTitleColor() const

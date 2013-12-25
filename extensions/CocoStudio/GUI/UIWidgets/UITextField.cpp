@@ -518,18 +518,6 @@ void TextField::setAnchorPoint(const CCPoint &pt)
     _textFieldRenderer->setAnchorPoint(pt);
 }
 
-void TextField::setColor(const ccColor3B &color)
-{
-    Widget::setColor(color);
-    _textFieldRenderer->setColor(color);
-}
-
-void TextField::setOpacity(GLubyte opacity)
-{
-    Widget::setOpacity(opacity);
-    _textFieldRenderer->setOpacity(opacity);
-}
-
 void TextField::onSizeChanged()
 {
     Widget::onSizeChanged();
