@@ -26,32 +26,32 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
-TInfo::TInfo(void)
+ObjectFactory::TInfo::TInfo(void)
 :_class("")
 ,_fun(NULL)
 {
 }
 
-TInfo::TInfo(const std::string& type, Instance ins)
+ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
 :_class(type)
 ,_fun(ins)
 {
     cocos2d::extension::ObjectFactory::getInstance()->registerType(*this);
 }
 
-TInfo::TInfo(const TInfo &t)
+ObjectFactory::TInfo::TInfo(const TInfo &t)
 {
     _class = t._class;
     _fun = t._fun;
 }
 
-TInfo::~TInfo(void)
+ObjectFactory::TInfo::~TInfo(void)
 {
    _class = "";
    _fun = NULL;
 }
 
-TInfo& TInfo::operator= (const TInfo &t)
+ObjectFactory::TInfo& ObjectFactory::TInfo::operator= (const TInfo &t)
 {
     _class = t._class;
     _fun = t._fun;
