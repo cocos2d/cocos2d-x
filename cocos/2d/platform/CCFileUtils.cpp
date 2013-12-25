@@ -83,7 +83,7 @@ public:
     {
     }
 
-    ValueMap dictionaryWithContentsOfFile(const char *fileName)
+    ValueMap dictionaryWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -95,7 +95,7 @@ public:
 		return _rootDict;
     }
 
-    ValueVector arrayWithContentsOfFile(const char* fileName)
+    ValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -555,10 +555,10 @@ Data FileUtils::getDataFromFile(const std::string& filename)
     return getData(filename, false);
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ssize_t *size)
+unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
-    CCASSERT(filename != nullptr && size != nullptr && mode != nullptr, "Invalid parameters.");
+    CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -585,7 +585,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ss
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size)
+unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
     unzFile file = nullptr;
@@ -593,13 +593,12 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
 
     do 
     {
-        CC_BREAK_IF(!zipFilePath || !filename);
-        CC_BREAK_IF(strlen(zipFilePath) == 0);
+        CC_BREAK_IF(zipFilePath.empty());
 
-        file = unzOpen(zipFilePath);
+        file = unzOpen(zipFilePath.c_str());
         CC_BREAK_IF(!file);
 
-        int ret = unzLocateFile(file, filename, 1);
+        int ret = unzLocateFile(file, filename.c_str(), 1);
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];

@@ -77,7 +77,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char * getContentText();
+    const std::string& getContentText();
 
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification

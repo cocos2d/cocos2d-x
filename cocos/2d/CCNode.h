@@ -1322,7 +1322,7 @@ public:
     /**
      *   gets a component by its name
      */
-    Component* getComponent(const char *pName);
+    Component* getComponent(const std::string& pName);
 
     /**
      *   adds a component
@@ -1332,7 +1332,7 @@ public:
     /**
      *   removes a component by its name
      */
-    virtual bool removeComponent(const char *pName);
+    virtual bool removeComponent(const std::string& pName);
 
     /**
      *   removes all components

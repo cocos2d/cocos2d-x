@@ -247,11 +247,11 @@ Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
     return getData(filename, false);
 }
 
-unsigned char* FileUtilsAndroid::getFileData(const char* filename, const char* mode, ssize_t * size)
+unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, ssize_t * size)
 {    
     unsigned char * data = 0;
     
-    if ((! filename) || (! mode) || 0 == strlen(filename))
+    if ( filename.empty() || (! mode) )
     {
         return 0;
     }
