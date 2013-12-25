@@ -127,13 +127,14 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
+     * Deprecated, please use
      * @param  animationIndex  the animation index you want to play
      */
-    virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+    CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+    virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
-
-    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
-    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
+    virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+    virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * Go to specified frame and play current movement.
