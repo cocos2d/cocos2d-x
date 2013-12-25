@@ -65,7 +65,7 @@ MotionStreak::~MotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
     MotionStreak *ret = new MotionStreak();
     if (ret && ret->initWithFade(fade, minSeg, stroke, color, path))
@@ -91,9 +91,9 @@ MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const
     return nullptr;
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    CCASSERT(path != nullptr, "Invalid filename");
+    CCASSERT(!path.empty(), "Invalid filename");
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
