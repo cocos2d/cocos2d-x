@@ -160,6 +160,15 @@ NS_CC_EXT_BEGIN
 					{
 						pPlistFile.append(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(plistFile));
 					}
+                    
+                    if (file == NULL && plistFile == NULL)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    continue;
                 }
 
                 if (comName != NULL && strcmp(comName, "CCSprite") == 0)
@@ -402,7 +411,7 @@ NS_CC_EXT_BEGIN
 					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
 					{
-					pRender->setName(pComName);
+                        pRender->setName(pComName);
 					}
 					gb->addComponent(pRender);
 					if (_pListener && _pfnSelector)
