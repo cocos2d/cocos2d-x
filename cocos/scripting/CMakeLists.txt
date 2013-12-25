@@ -19,6 +19,7 @@ set(LUABINDING_SRC
   lua/bindings/lua_cocos2dx_spine_manual.cpp
   lua/bindings/lua_cocos2dx_deprecated.cpp
   lua/bindings/lua_xml_http_request.cpp
+  lua/bindings/LuaSkeletonAnimation.cpp
 )
 
 include_directories(
