@@ -343,6 +343,9 @@ public:
     virtual void onEnter();
     virtual void draw();
     virtual std::string subtitle() const override;
+
+protected:
+    void onDraw();
 };
 
 class ActionTargeted : public ActionsDemo
@@ -415,6 +418,11 @@ public:
     virtual void onEnter();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    //cached data and callback
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
+    void onDraw();
 private:
     PointArray* _array1;
     PointArray* _array2;

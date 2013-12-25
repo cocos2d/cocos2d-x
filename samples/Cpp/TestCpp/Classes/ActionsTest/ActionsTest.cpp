@@ -2,6 +2,10 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+
 static std::function<Layer*()> createFunctions[] = {
 
     CL(ActionManual),
@@ -1285,13 +1289,22 @@ void ActionFollow::onEnter()
 
 void ActionFollow::draw()
 {
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ActionFollow::onDraw, this);
+    
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void ActionFollow::onDraw()
+{
     auto winSize = Director::getInstance()->getWinSize();
     
-	float x = winSize.width*2 - 100;
-	float y = winSize.height;
+    float x = winSize.width*2 - 100;
+    float y = winSize.height;
     
-	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	DrawPrimitives::drawPoly(vertices, 4, true);
+    Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
+    DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
 std::string ActionFollow::subtitle() const
@@ -1589,10 +1602,25 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void ActionCatmullRomStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLLoadMatrix(&_modelViewMV2);
     DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCatmullRomStacked::title() const
