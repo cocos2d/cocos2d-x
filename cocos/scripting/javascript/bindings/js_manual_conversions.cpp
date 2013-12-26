@@ -12,6 +12,84 @@
 
 USING_NS_CC;
 
+// JSStringWrapper
+JSStringWrapper::JSStringWrapper()
+: _buffer(nullptr)
+{
+}
+
+JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(str, cx);
+}
+
+JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(val, cx);
+}
+
+JSStringWrapper::~JSStringWrapper()
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+}
+
+void JSStringWrapper::set(jsval val, JSContext* cx)
+{
+    if (val.isString())
+    {
+        this->set(val.toString(), cx);
+    }
+    else
+    {
+        CC_SAFE_DELETE_ARRAY(_buffer);
+    }
+}
+
+void JSStringWrapper::set(JSString* str, JSContext* cx)
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+    
+    if (!cx)
+    {
+        cx = ScriptingCore::getInstance()->getGlobalContext();
+    }
+    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+    //buffer = JS_EncodeString(cx, string);
+    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+    
+    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
+}
+
+const char* JSStringWrapper::get()
+{
+    return _buffer ? _buffer : "";
+}
+
+// JSFunctionWrapper
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+: _cx(cx)
+, _jsthis(jsthis)
+, _fval(fval)
+{
+    JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+    JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+}
+
+JSFunctionWrapper::~JSFunctionWrapper()
+{
+    JS_RemoveValueRoot(this->_cx, &this->_fval);
+    JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+}
+
+JSBool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, jsval &rval)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+}
+
 static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
 {
     JS::RootedValue jsr(cx);
@@ -312,6 +390,20 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 
 #pragma mark - Conversion Routines
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *outval )
+{
+    JSBool ok = JS_TRUE;
+    double dp;
+    ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+    *outval = (unsigned short)dp;
+
+    return ok;
+}
+
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {
     JSBool ok = JS_TRUE;
@@ -723,7 +815,7 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
 }
 
 
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
 {
     JSObject *jsobj;
     JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
@@ -732,7 +824,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    Array* arr = Array::createWithCapacity(len);
+    __Array* arr = __Array::createWithCapacity(len);
     for (uint32_t i=0; i < len; i++) {
         jsval value;
         if (JS_GetElement(cx, jsobj, i, &value)) {
@@ -750,7 +842,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else if (!JS_IsArrayObject(cx, tmp)){
                     // It's a normal js object.
-                    Dictionary* dictVal = NULL;
+                    __Dictionary* dictVal = NULL;
                     JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                     if (ok) {
                         arr->addObject(dictVal);
@@ -758,7 +850,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret)
                 }
                 else {
                     // It's a js array object.
-                    Array* arrVal = NULL;
+                    __Array* arrVal = NULL;
                     JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                     if (ok) {
                         arr->addObject(arrVal);
@@ -1105,6 +1197,77 @@ JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
     return JS_TRUE;
 }
 
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret)
+{
+    return jsval_to_long(cx, vp, reinterpret_cast<long*>(ret));
+}
+
+JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret)
+{
+    JSObject *jsobj;
+    JSBool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    
+    for (uint32_t i=0; i < len; i++)
+    {
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (JSVAL_IS_STRING(value))
+            {
+                JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+                ret->push_back(valueWapper.get());
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return JS_FALSE;
+            }
+        }
+    }
+    
+    return JS_TRUE;
+}
+
+JSBool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret)
+{
+    JSObject *jsobj;
+    JSBool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    
+    for (uint32_t i=0; i < len; i++)
+    {
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (JSVAL_IS_NUMBER(value))
+            {
+                double number = 0.0;
+                JSBool ok = JS_ValueToNumber(cx, value, &number);
+                if (ok)
+                {
+                    ret->push_back(static_cast<int>(number));
+                }
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return JS_FALSE;
+            }
+        }
+    }
+    
+    return JS_TRUE;
+}
+
 // native --> jsval
 
 jsval ccarray_to_jsval(JSContext* cx, Array *arr)
@@ -1342,6 +1505,11 @@ jsval int32_to_jsval( JSContext *cx, int32_t number )
 }
 
 jsval uint32_to_jsval( JSContext *cx, uint32_t number )
+{
+    return UINT_TO_JSVAL(number);
+}
+
+jsval ushort_to_jsval( JSContext *cx, unsigned short number )
 {
     return UINT_TO_JSVAL(number);
 }
@@ -2020,4 +2188,9 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
         ++i;
     }
     return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval ssize_to_jsval(JSContext *cx, ssize_t v)
+{
+    return long_to_jsval(cx, v);
 }

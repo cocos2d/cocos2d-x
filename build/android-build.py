@@ -12,18 +12,6 @@ LUA_SAMPLES = ['hellolua', 'testlua']
 JSB_SAMPLES = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
-
-def usage():
-
-    print """%s [-n ndk-build-parameter] [-p android-platform] [-b build-mode] target.
-
-Valid android-platform are:[10|11|12|13|14|15|16|17]
-Valid build-mode are:[debug|release]
-Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon
-                   |crystalcraze|moonwarriors|testjavascript|watermelonwithme]
-
-You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely.""" % sys.argv[0]
-
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
     '''
@@ -253,14 +241,23 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 if __name__ == '__main__':
 
     #parse the params
-    parser = OptionParser()
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
-    parser.add_option("-p", "--platform", dest="android_platform", help='parameter for android-update')
-    parser.add_option("-b", "--build", dest="build_mode", help='the build mode for java project,debug or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    usage = """usage: %prog [options] target
+    
+  Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+
+  You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely."""
+
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", 
+    help='parameter for ndk-build')
+    parser.add_option("-p", "--platform", dest="android_platform", 
+    help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    parser.add_option("-b", "--build", dest="build_mode", 
+    help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
-        usage()
+        parser.print_help()
     else:
         try:
             build_samples(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)

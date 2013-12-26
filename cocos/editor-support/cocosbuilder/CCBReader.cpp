@@ -10,7 +10,6 @@
 #include "CCBAnimationManager.h"
 #include "CCBSequenceProperty.h"
 #include "CCBKeyframe.h"
-#include "CCBValue.h"
 
 #include <ctype.h>
 
@@ -60,7 +59,7 @@ CCBReader::CCBReader(NodeLoaderLibrary * pNodeLoaderLibrary, CCBMemberVariableAs
 , _currentByte(-1)
 , _currentBit(-1)
 , _owner(nullptr)
-, _actionManager(nullptr)
+, _animationManager(nullptr)
 , _animatedProps(nullptr)
 {
     this->_nodeLoaderLibrary = pNodeLoaderLibrary;
@@ -77,7 +76,7 @@ CCBReader::CCBReader(CCBReader * ccbReader)
 , _currentByte(-1)
 , _currentBit(-1)
 , _owner(nullptr)
-, _actionManager(nullptr)
+, _animationManager(nullptr)
 , _animatedProps(nullptr)
 {
     this->_loadedSpriteSheets = ccbReader->_loadedSpriteSheets;
@@ -99,7 +98,7 @@ CCBReader::CCBReader()
 , _currentByte(-1)
 , _currentBit(-1)
 , _owner(nullptr)
-, _actionManager(nullptr)
+, _animationManager(nullptr)
 , _nodeLoaderLibrary(nullptr)
 , _nodeLoaderListener(nullptr)
 , _CCBMemberVariableAssigner(nullptr)
@@ -111,7 +110,6 @@ CCBReader::CCBReader()
 CCBReader::~CCBReader()
 {
     CC_SAFE_RELEASE_NULL(_owner);
-    CC_SAFE_RELEASE_NULL(_data);
 
     this->_nodeLoaderLibrary->release();
 
@@ -143,31 +141,31 @@ bool CCBReader::init()
     pActionManager->release();
     
     // Setup resolution scale and container size
-    _actionManager->setRootContainerSize(Director::getInstance()->getWinSize());
+    _animationManager->setRootContainerSize(Director::getInstance()->getWinSize());
     
     return true;
 }
 
 CCBAnimationManager* CCBReader::getAnimationManager()
 {
-    return _actionManager;
+    return _animationManager;
 }
 
 void CCBReader::setAnimationManager(CCBAnimationManager *pAnimationManager)
 {
-    CC_SAFE_RELEASE(_actionManager);
-    _actionManager = pAnimationManager;
-    CC_SAFE_RETAIN(_actionManager);
+    CC_SAFE_RELEASE(_animationManager);
+    _animationManager = pAnimationManager;
+    CC_SAFE_RETAIN(_animationManager);
 }
 
-Map<Node*, CCBAnimationManager*>& CCBReader::getAnimationManagers()
+CCBReader::CCBAnimationManagerMapPtr CCBReader::getAnimationManagers()
 {
-    return _actionManagers;
+    return _animationManagers;
 }
 
-void CCBReader::setAnimationManagers(const Map<Node*, CCBAnimationManager*>& x)
+void CCBReader::setAnimationManagers(CCBAnimationManagerMapPtr x)
 {
-    _actionManagers = x;
+    _animationManagers = x;
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -219,47 +217,40 @@ Node* CCBReader::readNodeGraphFromFile(const char *pCCBFileName, Object *pOwner,
     }
 
     std::string strPath = FileUtils::getInstance()->fullPathForFilename(strCCBFileName.c_str());
-    long size = 0;
 
-    unsigned char * pBytes = FileUtils::getInstance()->getFileData(strPath.c_str(), "rb", &size);
-    Data *data = new Data(pBytes, size);
-    free(pBytes);
-
-    Node *ret =  this->readNodeGraphFromData(data, pOwner, parentSize);
+    auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(strPath));
     
-    data->release();
+    Node *ret =  this->readNodeGraphFromData(dataPtr, pOwner, parentSize);
     
     return ret;
 }
 
-Node* CCBReader::readNodeGraphFromData(Data *pData, Object *pOwner, const Size &parentSize)
+Node* CCBReader::readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, Object *pOwner, const Size &parentSize)
 {
-   _data = pData;
-    CC_SAFE_RETAIN(_data);
+    _data = data;
     _bytes =_data->getBytes();
     _currentByte = 0;
     _currentBit = 0;
     _owner = pOwner;
     CC_SAFE_RETAIN(_owner);
 
-    _actionManager->setRootContainerSize(parentSize);
-    _actionManager->_owner = _owner;
+    _animationManager->setRootContainerSize(parentSize);
+    _animationManager->_owner = _owner;
     
-    Map<Node*, CCBAnimationManager*> animationManagers;
-    Node *pNodeGraph = readFileWithCleanUp(true, animationManagers);
+    Node *pNodeGraph = readFileWithCleanUp(true, std::make_shared<CCBAnimationManagerMap>());
     
-    if (pNodeGraph && _actionManager->getAutoPlaySequenceId() != -1)
+    if (pNodeGraph && _animationManager->getAutoPlaySequenceId() != -1)
     {
         // Auto play animations
-        _actionManager->runAnimationsForSequenceIdTweenDuration(_actionManager->getAutoPlaySequenceId(), 0);
+        _animationManager->runAnimationsForSequenceIdTweenDuration(_animationManager->getAutoPlaySequenceId(), 0);
     }
     
     // Assign actionManagers to userObject
-    
-    for (auto iter = _actionManagers.begin(); iter != _actionManagers.end(); ++iter)
+    for (auto iter = _animationManagers->begin(); iter != _animationManagers->end(); ++iter)
     {
         Node* pNode = iter->first;
         CCBAnimationManager* manager = iter->second;
+        
         pNode->setUserObject(manager);
 
         if (_jsControlled)
@@ -295,12 +286,13 @@ void CCBReader::cleanUpNodeGraph(Node *node)
 {
     node->setUserObject(nullptr);
     
-    node->getChildren().forEach([this](Node* obj){
+    auto& children = node->getChildren();
+    for(const auto &obj : children) {
         cleanUpNodeGraph(obj);
-    });
+    }
 }
 
-Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const Map<Node*, CCBAnimationManager*>& am)
+Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)
 {
     if (! readHeader())
     {
@@ -321,7 +313,7 @@ Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const Map<Node*, CCBAnimatio
 
     Node *pNode = readNodeGraph(nullptr);
 
-    _actionManagers.insert(pNode, _actionManager);
+    _animationManagers->insert(pNode, _animationManager);
 
     if (bCleanUp)
     {
@@ -365,7 +357,7 @@ bool CCBReader::readHeader()
 
     // Read JS check
     _jsControlled = this->readBool();
-    _actionManager->_jsControlled = _jsControlled;
+    _animationManager->_jsControlled = _jsControlled;
 
     return true;
 }
@@ -540,26 +532,26 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     Node *node = ccNodeLoader->loadNode(pParent, this);
 
     // Set root node
-    if (! _actionManager->getRootNode())
+    if (! _animationManager->getRootNode())
     {
-        _actionManager->setRootNode(node);
+        _animationManager->setRootNode(node);
     }
     
     // Assign controller
-    if(_jsControlled && node == _actionManager->getRootNode())
+    if(_jsControlled && node == _animationManager->getRootNode())
     {
-        _actionManager->setDocumentControllerName(_jsControlledName);
+        _animationManager->setDocumentControllerName(_jsControlledName);
     }
 
     // Read animated properties
-    Dictionary *seqs = Dictionary::create();
+    std::unordered_map<int, Map<std::string, CCBSequenceProperty*>> seqs;
     _animatedProps = new set<string>();
     
     int numSequence = readInt(false);
     for (int i = 0; i < numSequence; ++i)
     {
         int seqId = readInt(false);
-        Dictionary *seqNodeProps = Dictionary::create();
+        Map<std::string, CCBSequenceProperty*> seqNodeProps;
         
         int numProps = readInt(false);
         
@@ -581,15 +573,15 @@ Node * CCBReader::readNodeGraph(Node * pParent)
                 seqProp->getKeyframes().pushBack(keyframe);
             }
             
-            seqNodeProps->setObject(seqProp, seqProp->getName());
+            seqNodeProps.insert(seqProp->getName(), seqProp);
         }
         
-        seqs->setObject(seqNodeProps, seqId);
+        seqs[seqId] = seqNodeProps;
     }
     
-    if (seqs->count() > 0)
+    if (!seqs.empty())
     {
-        _actionManager->addNode(node, seqs);
+        _animationManager->addNode(node, seqs);
     }
     
     // Read properties
@@ -610,7 +602,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         embeddedNode->setVisible(true);
         //embeddedNode->ignoreAnchorPointForPosition(ccbFileNode->isIgnoreAnchorPointForPosition());
         
-        _actionManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
+        _animationManager->moveAnimationsFromNode(ccbFileNode, embeddedNode);
 
         ccbFileNode->setCCBFileNode(nullptr);
         
@@ -631,7 +623,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
             Object * target = nullptr;
             if(memberVarAssignmentType == TargetType::DOCUMENT_ROOT)
             {
-                target = _actionManager->getRootNode();
+                target = _animationManager->getRootNode();
             } 
             else if(memberVarAssignmentType == TargetType::OWNER)
             {
@@ -661,8 +653,8 @@ Node * CCBReader::readNodeGraph(Node * pParent)
         {
             if(memberVarAssignmentType == TargetType::DOCUMENT_ROOT)
             {
-                _actionManager->addDocumentOutletName(memberVarAssignmentName);
-                _actionManager->addDocumentOutletNode(node);
+                _animationManager->addDocumentOutletName(memberVarAssignmentName);
+                _animationManager->addDocumentOutletNode(node);
             }
             else
             {
@@ -673,7 +665,7 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     }
     
     // Assign custom properties.
-    if (ccNodeLoader->getCustomProperties()->count() > 0)
+    if (!ccNodeLoader->getCustomProperties().empty())
     {
         bool customAssigned = false;
         
@@ -685,15 +677,15 @@ Node * CCBReader::readNodeGraph(Node * pParent)
                 CCBMemberVariableAssigner * targetAsCCBMemberVariableAssigner = dynamic_cast<CCBMemberVariableAssigner *>(target);
                 if(targetAsCCBMemberVariableAssigner != nullptr)
                 {
-                    Dictionary* pCustomPropeties = ccNodeLoader->getCustomProperties();
-                    DictElement* pElement;
-                    CCDICT_FOREACH(pCustomPropeties, pElement)
+                    auto& customPropeties = ccNodeLoader->getCustomProperties();
+                    
+                    for (auto iter = customPropeties.begin(); iter != customPropeties.end(); ++iter)
                     {
-                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
+                        customAssigned = targetAsCCBMemberVariableAssigner->onAssignCCBCustomProperty(target, iter->first.c_str(), iter->second);
 
                         if(!customAssigned && this->_CCBMemberVariableAssigner != nullptr)
                         {
-                            customAssigned = this->_CCBMemberVariableAssigner->onAssignCCBCustomProperty(target, pElement->getStrKey(), static_cast<CCBValue*>(pElement->getObject()));
+                            customAssigned = this->_CCBMemberVariableAssigner->onAssignCCBCustomProperty(target, iter->first.c_str(), iter->second);
                         }
                     }
                 }
@@ -742,7 +734,7 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
     
     CCBKeyframe::EasingType easingType = static_cast<CCBKeyframe::EasingType>(readInt(false));
     float easingOpt = 0;
-    Object *value = nullptr;
+    Value value;
     
     if (easingType == CCBKeyframe::EasingType::CUBIC_IN
         || easingType == CCBKeyframe::EasingType::CUBIC_OUT
@@ -758,24 +750,28 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
     
     if (type == PropertyType::CHECK)
     {
-        value = CCBValue::create(readBool());
+        value = readBool();
     }
     else if (type == PropertyType::BYTE)
     {
-        value = CCBValue::create(readByte());
+        value = readByte();
     }
     else if (type == PropertyType::COLOR3)
     {
-        int r = readByte();
-        int g = readByte();
-        int b = readByte();
+        unsigned char r = readByte();
+        unsigned char g = readByte();
+        unsigned char b = readByte();
         
-        Color3B c = Color3B(r,g,b);
-        value = Color3BWapper::create(c);
+        ValueMap colorMap;
+        colorMap["r"] = r;
+        colorMap["g"] = g;
+        colorMap["b"] = b;
+        
+        value = colorMap;
     }
     else if (type == PropertyType::DEGREES)
     {
-        value = CCBValue::create(readFloat());
+        value = readFloat();
     }
     else if (type == PropertyType::SCALE_LOCK || type == PropertyType::POSITION
 	     || type == PropertyType::FLOAT_XY)
@@ -783,9 +779,11 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         float a = readFloat();
         float b = readFloat();
         
-        value = Array::create(CCBValue::create(a),
-                                CCBValue::create(b),
-                                nullptr);
+        ValueVector ab;
+        ab.push_back(Value(a));
+        ab.push_back(Value(b));
+        
+        value = ab;
     }
     else if (type == PropertyType::SPRITEFRAME)
     {
@@ -817,10 +815,12 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
             
             spriteFrame = frameCache->getSpriteFrameByName(spriteFile.c_str());
         }
-        value = spriteFrame;
+        
+        keyframe->setObject(spriteFrame);
     }
     
-    keyframe->setValue(value);
+    if (!value.isNull())
+        keyframe->setValue(value);
     
     return  keyframe;
 }
@@ -841,19 +841,21 @@ bool CCBReader::readCallbackKeyframesForSeq(CCBSequence* seq)
       
         int callbackType = readInt(false);
       
-        Array* value = Array::create();
-        value->addObject(String::create(callbackName));
-        value->addObject(String::createWithFormat("%d", callbackType));
+        ValueVector valueVector;
+        valueVector.push_back(Value(callbackName));
+        valueVector.push_back(Value(callbackType));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->autorelease();
         
         keyframe->setTime(time);
-        keyframe->setValue(value);
+        keyframe->setValue(Value(valueVector));
         
         if(_jsControlled) {
-            string callbackIdentifier;
-            _actionManager->getKeyframeCallbacks()->addObject(String::createWithFormat("%d:%s",callbackType, callbackName.c_str()));
+            std::stringstream callbackIdentifier;
+            callbackIdentifier << callbackType;
+            callbackIdentifier << ":" + callbackName;
+            _animationManager->getKeyframeCallbacks().push_back(Value(callbackIdentifier.str()));
         }
     
         channel->getKeyframes().pushBack(keyframe);
@@ -878,17 +880,16 @@ bool CCBReader::readSoundKeyframesForSeq(CCBSequence* seq) {
         float pitch = readFloat();
         float pan = readFloat();
         float gain = readFloat();
-                
-        Array* value = Array::create();
         
-        value->addObject(String::create(soundFile));
-        value->addObject(String::createWithFormat("%f", pitch));
-        value->addObject(String::createWithFormat("%f", pan));
-        value->addObject(String::createWithFormat("%f", gain));
+        ValueVector vec;
+        vec.push_back(Value(soundFile));
+        vec.push_back(Value(pitch));
+        vec.push_back(Value(pan));
+        vec.push_back(Value(gain));
         
         CCBKeyframe* keyframe = new CCBKeyframe();
         keyframe->setTime(time);
-        keyframe->setValue(value);
+        keyframe->setValue(Value(vec));
         channel->getKeyframes().pushBack(keyframe);
         keyframe->release();
     }
@@ -905,7 +906,7 @@ Node * CCBReader::readNodeGraph() {
 
 bool CCBReader::readSequences()
 {
-    Array *sequences = _actionManager->getSequences();
+    auto& sequences = _animationManager->getSequences();
     
     int numSeqs = readInt(false);
     
@@ -922,10 +923,10 @@ bool CCBReader::readSequences()
         if(!readCallbackKeyframesForSeq(seq)) return false;
         if(!readSoundKeyframesForSeq(seq)) return false;
         
-        sequences->addObject(seq);
+        sequences.pushBack(seq);
     }
     
-    _actionManager->setAutoPlaySequenceId(readInt(true));
+    _animationManager->setAutoPlaySequenceId(readInt(true));
     return true;
 }
 
@@ -985,17 +986,17 @@ void CCBReader::addOwnerCallbackControlEvents(Control::EventType type)
 
 void CCBReader::addDocumentCallbackName(const std::string& name)
 {
-    _actionManager->addDocumentCallbackName(name);
+    _animationManager->addDocumentCallbackName(name);
 }
 
 void CCBReader::addDocumentCallbackNode(Node *node)
 {
-    _actionManager->addDocumentCallbackNode(node);
+    _animationManager->addDocumentCallbackNode(node);
 }
 
 void CCBReader::addDocumentCallbackControlEvents(Control::EventType eventType)
 {
-    _actionManager->addDocumentCallbackControlEvents(eventType);
+    _animationManager->addDocumentCallbackControlEvents(eventType);
 }
 
 ValueVector CCBReader::getOwnerCallbackNames()
@@ -1009,7 +1010,7 @@ ValueVector CCBReader::getOwnerCallbackNames()
         ret.push_back(Value(*it));
     }
     
-    return std::move(ret);
+    return ret;
 }
 
 Vector<Node*>& CCBReader::getOwnerCallbackNodes()
@@ -1031,7 +1032,7 @@ ValueVector CCBReader::getOwnerOutletNames()
     {
         ret.push_back(Value(*it));
     }
-    return std::move(ret);
+    return ret;
 }
 
 Vector<Node*>& CCBReader::getOwnerOutletNodes()

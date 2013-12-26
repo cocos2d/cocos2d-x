@@ -16,8 +16,7 @@ class GLNode:public cocos2d::Node
     virtual void draw();
 };
 
-TOLUA_API int tolua_Cocos2d_CCDrawNode_drawPolygon00(lua_State* tolua_S);
-
 TOLUA_API int tolua_opengl_open(lua_State* tolua_S);
+TOLUA_API int register_glnode_manual(lua_State* tolua_S);
 
 #endif //__LUA_OPENGL_H__

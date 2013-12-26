@@ -143,6 +143,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/audio/include
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/renderer
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/physics
@@ -152,6 +153,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/external
   ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
   ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+  ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
   ${CMAKE_CURRENT_SOURCE_DIR}/external/chipmunk/include/chipmunk
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/2d/platform/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/external/jpeg/include/${PLATFORM_FOLDER}

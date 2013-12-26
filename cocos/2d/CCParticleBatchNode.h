@@ -105,8 +105,8 @@ public:
     
     // Overrides
     void visit();
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
@@ -129,7 +129,7 @@ public:
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(int quantity);
+    void increaseAtlasCapacityTo(ssize_t quantity);
     int searchNewPositionInChildrenForZ(int z);
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
     int addChildHelper(ParticleSystem* child, int z, int aTag);

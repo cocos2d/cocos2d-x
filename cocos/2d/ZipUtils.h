@@ -31,6 +31,9 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+// for import ssize_t on win32 platform
+#include "CCStdC.h"
 #endif
 
 namespace cocos2d
@@ -259,8 +262,8 @@ namespace cocos2d
         * Get resource file data from a zip file.
         * @param fileName File name
         * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-        * @return Upon success, a pointer to the data is returned, otherwise NULL.
-        * @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
+        * @return Upon success, a pointer to the data is returned, otherwise nullptr.
+        * @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
         *
         * @since v2.0.5
         */

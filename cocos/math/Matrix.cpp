@@ -4,8 +4,7 @@
 
 #define MATRIX_SIZE     ( sizeof(float) * 16 )
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 static const float MATRIX_IDENTITY[16] =
 {
@@ -1184,4 +1183,4 @@ void Matrix::invertOrthMat(const Matrix& mat, Matrix& invMat)
     invMat.m[15] = 1.0f;
 }
 
-}
+NS_CC_END

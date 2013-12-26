@@ -29,21 +29,21 @@ NS_CC_BEGIN
 
 ActionTween* ActionTween::create(float aDuration, const std::string& key, float from, float to)
 {
-    ActionTween* pRet = new ActionTween();
-    if (pRet && pRet->initWithDuration(aDuration, key, from, to))
+    ActionTween* ret = new ActionTween();
+    if (ret && ret->initWithDuration(aDuration, key, from, to))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
-bool ActionTween::initWithDuration(float aDuration, const std::string& key, float from, float to)
+bool ActionTween::initWithDuration(float duration, const std::string& key, float from, float to)
 {
-    if (ActionInterval::initWithDuration(aDuration)) 
+    if (ActionInterval::initWithDuration(duration))
     {
         _key    = key;
         _to       = to;

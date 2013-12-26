@@ -153,16 +153,18 @@ void ScrollView::pause(Object* sender)
 {
     _container->pause();
 
-    _container->getChildren().forEach([](Node* child){
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
         child->pause();
-    });
+    }
 }
 
 void ScrollView::resume(Object* sender)
 {
-    _container->getChildren().forEach([](Node* child){
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
         child->resume();
-    });
+    }
 
     _container->resume();
 }
@@ -483,16 +485,6 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
-void ScrollView::addChild(Node * child, int zOrder)
-{
-    this->addChild(child, zOrder, child->getTag());
-}
-
-void ScrollView::addChild(Node * child)
-{
-    this->addChild(child, child->getZOrder(), child->getTag());
-}
-
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
@@ -547,12 +539,6 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
@@ -592,10 +578,6 @@ void ScrollView::visit()
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }

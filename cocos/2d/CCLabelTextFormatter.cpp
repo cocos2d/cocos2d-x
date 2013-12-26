@@ -58,7 +58,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
         int tIndex = 0;
 
-        for (int j = 0; j < strLen; j++)
+        for (int j = 0; j+skip < strLen; j++)
         {            
             LetterInfo* info = &leterInfo->at(j+skip);
 

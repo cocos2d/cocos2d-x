@@ -421,7 +421,7 @@ CallFuncN * CallFuncN::create(const std::function<void(Node*)> &func)
     }
 
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 // XXX deprecated

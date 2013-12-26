@@ -109,8 +109,11 @@
     <Filter Include="base">
       <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{cba0f362-878c-438b-ad0f-43d287516357}</UniqueIdentifier>
+    </Filter>
     <Filter Include="math">
-      <UniqueIdentifier>{0b6b594a-0e4c-4081-8798-c04c6aa6bce7}</UniqueIdentifier>
+      <UniqueIdentifier>{66f0d669-0d6a-46ad-9255-9a5c0c88c746}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -453,7 +456,6 @@
     <ClCompile Include="CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCConfiguration.cpp" />
     <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
@@ -569,13 +571,40 @@
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCCustomCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCFrustum.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCGroupCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCMaterialManager.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCQuadCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
     <ClCompile Include="..\math\MathUtilty.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\Matrix.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\neon_matrix_impl.c">
+    <ClCompile Include="..\math\neonmatriximpl.c">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\math\Quaternion.cpp">
@@ -588,6 +617,9 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\math\Vector4.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\Matrix.cpp">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\base\Transform.cpp">
@@ -1030,7 +1062,6 @@
     <ClInclude Include="CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCConfiguration.h" />
     <ClInclude Include="CCDirector.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -1170,7 +1201,40 @@
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\Math.h">
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCCustomCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCFrustum.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCGroupCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCMaterialManager.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCQuadCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommandPool.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderMaterial.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\CocosMath.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\math\MathUtilty.h">
@@ -1179,7 +1243,7 @@
     <ClInclude Include="..\math\Matrix.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\neon_matrix_impl.h">
+    <ClInclude Include="..\math\neonmatriximpl.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\math\Quaternion.h">
