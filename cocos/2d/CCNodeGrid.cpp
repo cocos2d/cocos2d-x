@@ -104,10 +104,9 @@ void NodeGrid::visit()
         _nodeGrid->set2DProjection();
     }
 
-    CustomCommand* gridBeginCmd = new CustomCommand();
-    gridBeginCmd->init(0,_vertexZ);
-    gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
-    renderer->addCommand(gridBeginCmd);
+    _gridBeginCommand.init(0,_vertexZ);
+    _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
+    renderer->addCommand(&_gridBeginCommand);
 
     this->transform();
     
@@ -153,10 +152,9 @@ void NodeGrid::visit()
         director->setProjection(beforeProjectionType);
     }
 
-    CustomCommand* gridEndCmd = new CustomCommand();
-    gridEndCmd->init(0,_vertexZ);
-    gridEndCmd->func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
-    renderer->addCommand(gridEndCmd);
+    _gridEndCommand.init(0,_vertexZ);
+    _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
+    renderer->addCommand(&_gridEndCommand);
 
     renderer->popGroup();
  

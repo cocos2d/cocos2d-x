@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccTypes.h"
 #include "CCNode.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -144,6 +145,8 @@ protected:
     Vertex2F* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
+    
+    CustomCommand _customCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
