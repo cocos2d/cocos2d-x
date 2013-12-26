@@ -166,7 +166,7 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
 
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret);
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret);
-extern bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret);
+extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret);
 extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret);
 
 
@@ -245,6 +245,6 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
 
 void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
 void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
-void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue);
+void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
