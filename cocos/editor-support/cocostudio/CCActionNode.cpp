@@ -34,15 +34,15 @@ using namespace gui;
 namespace cocostudio {
 
 ActionNode::ActionNode()
-	: _currentFrameIndex(0)
-	, _destFrameIndex(0)
-	, _fUnitTime(0.1f)
-	, _actionTag(0)
-	, _actionSpawn(NULL)
-	, _action(NULL)
-	, _object(NULL)
-	, _frameArray(NULL)
-	, _frameArrayNum(0)
+: _currentFrameIndex(0)
+, _destFrameIndex(0)
+, _fUnitTime(0.1f)
+, _actionTag(0)
+, _actionSpawn(NULL)
+, _action(NULL)
+, _object(NULL)
+, _frameArray(NULL)
+, _frameArrayNum(0)
 {
 	_frameArrayNum = (int)kKeyframeMax;
 	for(int i = 0; i < _frameArrayNum; i++)
