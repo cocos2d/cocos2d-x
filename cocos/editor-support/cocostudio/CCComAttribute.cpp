@@ -28,7 +28,6 @@ using namespace cocos2d;
 namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
-: _dict(NULL)
 {
     _name = "ComAttribute";
 }

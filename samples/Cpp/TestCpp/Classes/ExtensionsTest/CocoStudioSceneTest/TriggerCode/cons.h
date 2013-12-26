@@ -39,7 +39,7 @@ public:
 	 void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 private:
 	 int _nTag;
-	 std::string _ComName;
+	 std::string _comName;
 	 std::string _aniname;
 	 int _nState;
 	 bool _bSuc;

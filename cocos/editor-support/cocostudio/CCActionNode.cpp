@@ -38,10 +38,9 @@ ActionNode::ActionNode()
 , _destFrameIndex(0)
 , _fUnitTime(0.1f)
 , _actionTag(0)
-, _actionSpawn(NULL)
-, _action(NULL)
-, _object(NULL)
-, _frameArray(NULL)
+, _actionSpawn(nullptr)
+, _action(nullptr)
+, _object(nullptr)
 , _frameArrayNum(0)
 {
 	_frameArrayNum = (int)kKeyframeMax;
@@ -53,7 +52,7 @@ ActionNode::ActionNode()
 
 ActionNode::~ActionNode()
 {
-	if (_action == NULL)
+	if (_action == nullptr)
 	{
 		CC_SAFE_RELEASE_NULL(_actionSpawn);
 	}
@@ -140,13 +139,13 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 void ActionNode::initActionNodeFromRoot(Object* root)
 {	
 	Node* rootNode = dynamic_cast<Node*>(root);
-	if (rootNode != NULL)
+	if (rootNode != nullptr)
 	{
 		Widget* rootWidget = dynamic_cast<Widget*>(root);
-		if (rootWidget != NULL)
+		if (rootWidget != nullptr)
 		{
 			Widget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
-			if (widget != NULL)
+			if (widget != nullptr)
 			{
 				setObject(widget);
 			}
@@ -188,24 +187,24 @@ Object* ActionNode::getObject()
 Node* ActionNode::getActionNode()
 {
 	Node* cNode = dynamic_cast<Node*>(_object);
-	if (cNode != NULL)
+	if (cNode != nullptr)
 	{
 		return cNode;
 	}
 	else
 	{
 		Widget* rootWidget = dynamic_cast<Widget*>(_object);
-		if (rootWidget != NULL)
+		if (rootWidget != nullptr)
 		{
 			return rootWidget;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 void ActionNode::insertFrame(int index, ActionFrame* frame)
 {
-	if (frame == NULL)
+	if (frame == nullptr)
 	{
 		return;
 	}
@@ -219,7 +218,7 @@ void ActionNode::insertFrame(int index, ActionFrame* frame)
 
 void ActionNode::addFrame(ActionFrame* frame)
 {
-	if (frame == NULL)
+	if (frame == nullptr)
 	{
 		return;
 	}
@@ -234,7 +233,7 @@ void ActionNode::addFrame(ActionFrame* frame)
 
 void ActionNode::deleteFrame(ActionFrame* frame)
 {
-	if (frame == NULL)
+	if (frame == nullptr)
 	{
 		return;
 	}
@@ -256,9 +255,9 @@ void ActionNode::clearAllFrame()
 
 Spawn * ActionNode::refreshActionProperty()
 {
-	if ( _object == NULL )
+	if ( _object == nullptr )
 	{
-		return NULL;
+		return nullptr;
 	}
 	Vector<FiniteTimeAction*> cSpawnArray;
 
@@ -283,18 +282,18 @@ Spawn * ActionNode::refreshActionProperty()
 				auto srcFrame = cArray.at(i-1);
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				Action* cAction = frame->getAction(duration);
-				if(cAction != NULL)
+				if(cAction != nullptr)
 					cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
 			}
 		}
 		Sequence* cSequence = Sequence::create(cSequenceArray);
-		if (cSequence != NULL)
+		if (cSequence != nullptr)
 		{
 			cSpawnArray.pushBack(cSequence);
 		}
 	}
 
-	if (_action == NULL)
+	if (_action == nullptr)
 	{
 		CC_SAFE_RELEASE_NULL(_actionSpawn);
 	}
@@ -310,17 +309,17 @@ Spawn * ActionNode::refreshActionProperty()
 
 void ActionNode::playAction()
 {
-	if ( _object == NULL || _actionSpawn == NULL)
+	if ( _object == nullptr || _actionSpawn == nullptr)
 	{
 		return;
 	}
 
-	if (_action!=NULL)
+	if (_action!=nullptr)
 	{
 		_action->release();
 	}
 
-	_action = Sequence::create(_actionSpawn, NULL);
+	_action = Sequence::create(_actionSpawn, nullptr);
 	_action->retain();
 
 	this->runAction();
@@ -330,7 +329,7 @@ void ActionNode::playAction()
 void ActionNode::runAction()
 {
 	Node* cNode = this->getActionNode();
-	if (cNode != NULL && _action != NULL)
+	if (cNode != nullptr && _action != nullptr)
 	{
 		cNode->runAction(_action);
 	}
@@ -339,7 +338,7 @@ void ActionNode::runAction()
 void ActionNode::stopAction()
 {
 	Node* cNode = this->getActionNode();
-	if (cNode != NULL && _action != NULL)
+	if (cNode != nullptr && _action != nullptr)
 	{
 		cNode->stopAction(_action);
 	}
@@ -403,8 +402,8 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 {
 	bool bFindFrame = false;
 
-	ActionFrame* srcFrame = NULL;
-	//	ActionFrame* destFrame = NULL;
+	ActionFrame* srcFrame = nullptr;
+	//	ActionFrame* destFrame = nullptr;
 
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
@@ -420,7 +419,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 
 			if (frame->getFrameIndex()*getUnitTime() == fTime)
 			{
-				this->easingToFrame(1.0f,1.0f,NULL,frame);
+				this->easingToFrame(1.0f,1.0f,nullptr,frame);
 				bFindFrame = true;
 				break;
 			}
@@ -428,7 +427,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 			{
 				if (i == 0)
 				{
-					this->easingToFrame(1.0f,1.0f,NULL,frame);
+					this->easingToFrame(1.0f,1.0f,nullptr,frame);
 					bFindFrame = false;
 				}
 				else
@@ -436,7 +435,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 					srcFrame = cArray.at(i-1);
 					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*getUnitTime();
 					float delaytime = fTime - srcFrame->getFrameIndex()*getUnitTime();
-					this->easingToFrame(duration,1.0f,NULL,srcFrame);
+					this->easingToFrame(duration,1.0f,nullptr,srcFrame);
 					//float easingTime = ActionFrameEasing::bounceTime(delaytime);
 					this->easingToFrame(duration,delaytime/duration,srcFrame,frame);
 					bFindFrame = true;
@@ -452,7 +451,7 @@ void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* srcFr
 {
 	Action* cAction = destFrame->getAction(duration,srcFrame);
 	Node* cNode = this->getActionNode();
-	if (cAction == NULL || cNode == NULL)
+	if (cAction == nullptr || cNode == nullptr)
 	{
 		return;
 	}	
