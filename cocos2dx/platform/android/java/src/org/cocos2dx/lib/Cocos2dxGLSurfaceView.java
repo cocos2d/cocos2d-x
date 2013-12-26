@@ -200,9 +200,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 		switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
 			case MotionEvent.ACTION_POINTER_DOWN:
-				if (pointerNumber > 1 && !is_multi_touch_enabled)
-					break;
 				final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+				if (indexPointerDown != 0 && !is_multi_touch_enabled)
+					break;
 				final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
 				final float xPointerDown = pMotionEvent.getX(indexPointerDown);
 				final float yPointerDown = pMotionEvent.getY(indexPointerDown);
@@ -239,9 +239,9 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 				break;
 
 			case MotionEvent.ACTION_POINTER_UP:
-				if (pointerNumber > 1 && !is_multi_touch_enabled)
-					break;
 				final int indexPointUp = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT;
+				if (indexPointUp != 0 && !is_multi_touch_enabled)
+					break;
 				final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
 				final float xPointerUp = pMotionEvent.getX(indexPointUp);
 				final float yPointerUp = pMotionEvent.getY(indexPointUp);
