@@ -149,7 +149,7 @@ JSBool jsval_to_ccvector(JSContext* cx, jsval v, cocos2d::Vector<T>* ret)
 
 JSBool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret);
 JSBool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret);
-JSBool jsval_to_ccintvaluemap(JSContext* cx, jsval v, cocos2d::IntValueMap* ret);
+JSBool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* ret);
 JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret);
 JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret);
 JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret);
@@ -292,7 +292,7 @@ jsval ccmap_string_key_to_jsval(JSContext* cx, const cocos2d::Map<std::string, T
 
 jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v);
 jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v);
-jsval ccintvaluemap_to_jsval(JSContext* cx, const cocos2d::IntValueMap& v);
+jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v);
 jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
 
