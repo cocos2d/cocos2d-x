@@ -1,5 +1,7 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum 
 {
@@ -597,6 +599,18 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
 void TMXOrthoObjectsTest::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void TMXOrthoObjectsTest::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
     auto map = static_cast<TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto group = map->getObjectGroup("Object Group 1");
 
@@ -620,6 +634,8 @@ void TMXOrthoObjectsTest::draw()
         
         glLineWidth(1);
     }
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string TMXOrthoObjectsTest::title() const
@@ -657,6 +673,18 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
 void TMXIsoObjectsTest::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void TMXIsoObjectsTest::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
     auto map = (TMXTiledMap*) getChildByTag(kTagTileMap);
     auto group = map->getObjectGroup("Object Group 1");
 
@@ -678,6 +706,8 @@ void TMXIsoObjectsTest::draw()
         
         glLineWidth(1);
     }
+
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string TMXIsoObjectsTest::title() const
@@ -1445,9 +1475,21 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 void TMXGIDObjectsTest::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void TMXGIDObjectsTest::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
     auto map = (TMXTiledMap*)getChildByTag(kTagTileMap);
     auto group = map->getObjectGroup("Object Layer 1");
-
+    
     auto& objects = group->getObjects();
     for (auto& obj : objects)
     {
@@ -1457,16 +1499,18 @@ void TMXGIDObjectsTest::draw()
         float y = dict["y"].asFloat();
         float width = dict["width"].asFloat();
         float height = dict["height"].asFloat();
-
+        
         glLineWidth(3);
-
+        
         DrawPrimitives::drawLine(Point(x, y), Point(x + width, y));
         DrawPrimitives::drawLine(Point(x + width, y), Point(x + width, y + height));
         DrawPrimitives::drawLine(Point(x + width,y + height), Point(x,y + height));
         DrawPrimitives::drawLine(Point(x,y + height), Point(x,y));
-
+        
         glLineWidth(1);
     }
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string TMXGIDObjectsTest::title() const

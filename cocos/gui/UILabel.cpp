@@ -24,10 +24,13 @@
 
 #include "gui/UILabel.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
+#define LABELRENDERERZ (-1)
 
-UILabel::UILabel():
+Label::Label():
 _touchScaleChangeEnabled(false),
 _normalScaleValueX(1.0f),
 _normalScaleValueY(1.0f),
@@ -38,14 +41,14 @@ _labelRenderer(nullptr)
 {
 }
 
-UILabel::~UILabel()
+Label::~Label()
 {
     
 }
 
-UILabel* UILabel::create()
+Label* Label::create()
 {
-    UILabel* widget = new UILabel();
+    Label* widget = new Label();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -55,23 +58,22 @@ UILabel* UILabel::create()
     return nullptr;
 }
 
-bool UILabel::init()
+bool Label::init()
 {
-    if (UIWidget::init())
+    if (Widget::init())
     {
         return true;
     }
     return false;
 }
 
-void UILabel::initRenderer()
+void Label::initRenderer()
 {
-    UIWidget::initRenderer();
-    _labelRenderer = cocos2d::LabelTTF::create();
-    _renderer->addChild(_labelRenderer);
+    _labelRenderer = LabelTTF::create();
+    Node::addChild(_labelRenderer, LABELRENDERERZ, -1);
 }
 
-void UILabel::setText(const std::string& text)
+void Label::setText(const std::string& text)
 {
 	if (text.size()==0)
 		return;
@@ -80,79 +82,79 @@ void UILabel::setText(const std::string& text)
     labelScaleChangedWithSize();
 }
 
-const std::string& UILabel::getStringValue()
+const std::string& Label::getStringValue()
 {
     return _labelRenderer->getString();
 }
 
-int UILabel::getStringLength()
+int Label::getStringLength()
 {
     return _labelRenderer->getString().size();
 }
 
-void UILabel::setFontSize(int size)
+void Label::setFontSize(int size)
 {
     _fontSize = size;
     _labelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setFontName(const std::string& name)
+void Label::setFontName(const std::string& name)
 {
     _fontName = name;
     _labelRenderer->setFontName(name);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextAreaSize(const cocos2d::Size &size)
+void Label::setTextAreaSize(const Size &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
+void Label::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTextVerticalAlignment(cocos2d::TextVAlignment alignment)
+void Label::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void UILabel::setTouchScaleChangeEnabled(bool enable)
+void Label::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
     _normalScaleValueX = getScaleX();
     _normalScaleValueY = getScaleY();
 }
     
-void UILabel::setScale(float fScale)
+void Label::setScale(float fScale)
 {
-    UIWidget::setScale(fScale);
+    Widget::setScale(fScale);
     _normalScaleValueX = _normalScaleValueY = fScale;
 }
     
-void UILabel::setScaleX(float fScaleX)
+void Label::setScaleX(float fScaleX)
 {
-    UIWidget::setScaleX(fScaleX);
+    Widget::setScaleX(fScaleX);
     _normalScaleValueX = fScaleX;
 }
     
-void UILabel::setScaleY(float fScaleY)
+void Label::setScaleY(float fScaleY)
 {
-    UIWidget::setScaleY(fScaleY);
+    Widget::setScaleY(fScaleY);
     _normalScaleValueY = fScaleY;
 }
 
-bool UILabel::isTouchScaleChangeEnabled()
+bool Label::isTouchScaleChangeEnabled()
 {
     return _touchScaleChangeEnabled;
 }
 
-void UILabel::onPressStateChangedToNormal()
+void Label::onPressStateChangedToNormal()
 {
     if (!_touchScaleChangeEnabled)
     {
@@ -161,7 +163,7 @@ void UILabel::onPressStateChangedToNormal()
     clickScale(_normalScaleValueX, _normalScaleValueY);
 }
 
-void UILabel::onPressStateChangedToPressed()
+void Label::onPressStateChangedToPressed()
 {
     if (!_touchScaleChangeEnabled)
     {
@@ -170,59 +172,60 @@ void UILabel::onPressStateChangedToPressed()
     clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
-void UILabel::onPressStateChangedToDisabled()
+void Label::onPressStateChangedToDisabled()
 {
     
 }
 
-void UILabel::clickScale(float scaleX, float scaleY)
+void Label::clickScale(float scaleX, float scaleY)
 {
-    _renderer->setScaleX(scaleX);
-    _renderer->setScaleY(scaleY);
+    setScaleX(scaleX);
+    setScaleY(scaleY);
 }
 
-void UILabel::setFlipX(bool flipX)
+void Label::setFlipX(bool flipX)
 {
     _labelRenderer->setFlippedX(flipX);
 }
 
-void UILabel::setFlipY(bool flipY)
+void Label::setFlipY(bool flipY)
 {
     _labelRenderer->setFlippedY(flipY);
 }
 
-bool UILabel::isFlipX()
+bool Label::isFlipX()
 {
     return _labelRenderer->isFlippedX();
 }
 
-bool UILabel::isFlipY()
+bool Label::isFlipY()
 {
     return _labelRenderer->isFlippedY();
 }
 
-void UILabel::setAnchorPoint(const cocos2d::Point &pt)
+void Label::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
     _labelRenderer->setAnchorPoint(pt);
 }
 
-void UILabel::onSizeChanged()
+void Label::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelScaleChangedWithSize();
 }
 
-const cocos2d::Size& UILabel::getContentSize() const
+const Size& Label::getContentSize() const
 {
     return _labelRenderer->getContentSize();
 }
 
-cocos2d::Node* UILabel::getVirtualRenderer()
+Node* Label::getVirtualRenderer()
 {
     return _labelRenderer;
 }
 
-void UILabel::labelScaleChangedWithSize()
+void Label::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -231,7 +234,7 @@ void UILabel::labelScaleChangedWithSize()
     }
     else
     {
-        cocos2d::Size textureSize = _labelRenderer->getContentSize();
+        Size textureSize = _labelRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _labelRenderer->setScale(1.0f);
@@ -245,19 +248,19 @@ void UILabel::labelScaleChangedWithSize()
     
 }
 
-const char* UILabel::getDescription() const
+std::string Label::getDescription() const
 {
     return "Label";
 }
 
-UIWidget* UILabel::createCloneInstance()
+Widget* Label::createCloneInstance()
 {
-    return UILabel::create();
+    return Label::create();
 }
 
-void UILabel::copySpecialProperties(UIWidget *widget)
+void Label::copySpecialProperties(Widget *widget)
 {
-    UILabel* label = dynamic_cast<UILabel*>(widget);
+    Label* label = dynamic_cast<Label*>(widget);
     if (label)
     {
         setFontName(label->_fontName.c_str());
@@ -268,3 +271,5 @@ void UILabel::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END
