@@ -32,7 +32,7 @@ const Value Value::Null;
 Value::Value()
 : _vectorData(new ValueVector())
 , _mapData(new ValueMap())
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::NONE)
 {
     
@@ -137,19 +137,19 @@ Value::Value(ValueMap&& v)
     *_mapData = std::move(v);
 }
 
-Value::Value(const IntValueMap& v)
+Value::Value(const ValueMapIntKey& v)
 : _vectorData(nullptr)
 , _mapData(nullptr)
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::INT_KEY_MAP)
 {
     *_intKeyMapData = v;
 }
 
-Value::Value(IntValueMap&& v)
+Value::Value(ValueMapIntKey&& v)
 : _vectorData(nullptr)
 , _mapData(nullptr)
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::INT_KEY_MAP)
 {
     *_intKeyMapData = std::move(v);
@@ -209,7 +209,7 @@ Value& Value::operator= (const Value& other)
             break;
         case Type::INT_KEY_MAP:
             if (_intKeyMapData == nullptr)
-                _intKeyMapData = new IntValueMap();
+                _intKeyMapData = new ValueMapIntKey();
             *_intKeyMapData = *other._intKeyMapData;
             break;
         default:
@@ -357,20 +357,20 @@ Value& Value::operator= (ValueMap&& v)
     return *this;
 }
 
-Value& Value::operator= (const IntValueMap& v)
+Value& Value::operator= (const ValueMapIntKey& v)
 {
     clear();
     _type = Type::INT_KEY_MAP;
-    _intKeyMapData = new IntValueMap();
+    _intKeyMapData = new ValueMapIntKey();
     *_intKeyMapData = v;
     return *this;
 }
 
-Value& Value::operator= (IntValueMap&& v)
+Value& Value::operator= (ValueMapIntKey&& v)
 {
     clear();
     _type = Type::INT_KEY_MAP;
-    _intKeyMapData = new IntValueMap();
+    _intKeyMapData = new ValueMapIntKey();
     *_intKeyMapData = std::move(v);
     return *this;
 }
