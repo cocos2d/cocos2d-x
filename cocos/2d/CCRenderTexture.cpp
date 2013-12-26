@@ -643,12 +643,11 @@ void RenderTexture::begin()
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
 
-    GroupCommand* groupCommand = new GroupCommand();
-    groupCommand->init(0, _vertexZ);
+    _groupCommand.init(0, _vertexZ);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     CustomCommand* beginCmd = new CustomCommand();
     beginCmd->init(0, _vertexZ);

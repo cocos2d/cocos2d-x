@@ -92,10 +92,9 @@ void NodeGrid::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    GroupCommand* groupCommand = new GroupCommand();
-    groupCommand->init(0,_vertexZ);
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    _groupCommand.init(0,_vertexZ);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     kmGLPushMatrix();
     Director::Projection beforeProjectionType;

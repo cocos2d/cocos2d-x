@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 
+namespace cocos2d {
+    class GroupCommand;
+}
+
 namespace cocostudio {
 
 class BatchNode : public cocos2d::Node
@@ -61,11 +65,10 @@ public:
      */
     void draw() override;
     
-    void setPopGroupCommand(bool pop) { _popGroupCommand = pop; }
 protected:
     void generateGroupCommand();
 
-    bool _popGroupCommand;
+    cocos2d::GroupCommand* _groupCommand;
 };
 
 }
