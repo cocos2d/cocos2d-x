@@ -89,7 +89,7 @@ JSBool js_cocos2dx_GLNode_create(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_TRUE;
 }
 
-extern JSObject* jsb_Node_prototype;
+extern JSObject* jsb_cocos2d_Node_prototype;
 
 void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
     js_cocos2dx_GLNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -120,7 +120,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
 
     js_cocos2dx_GLNode_prototype = JS_InitClass(
         cx, global,
-        jsb_Node_prototype,
+        jsb_cocos2d_Node_prototype,
         js_cocos2dx_GLNode_class,
         js_cocos2dx_GLNode_constructor, 0, // constructor
         properties,
@@ -140,7 +140,7 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JSObject *global) {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = js_cocos2dx_GLNode_class;
         p->proto = js_cocos2dx_GLNode_prototype;
-        p->parentProto = jsb_Node_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
