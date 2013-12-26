@@ -31,14 +31,14 @@ THE SOFTWARE.
 namespace cocostudio {
 
 /** 
- @brief Ease Bezier
- @ingroup Actions
- */
+@brief Ease Bezier
+@ingroup Actions
+*/
 class EaseBezierAction : public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseBezierAction* create(cocos2d::ActionInterval* pAction);
+	static EaseBezierAction* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseBezierAction* clone() const override;
@@ -60,14 +60,14 @@ private:
 };
 
 /** 
- @brief Ease Quadratic In
- @ingroup Actions
- */
+@brief Ease Quadratic In
+@ingroup Actions
+*/
 class EaseQuadraticActionIn:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuadraticActionIn* create(cocos2d::ActionInterval* pAction);
+	static EaseQuadraticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuadraticActionIn* clone() const override;
@@ -83,14 +83,14 @@ private:
 };
 
 /** 
- @brief Ease Quadratic Out
- @ingroup Actions
- */
+@brief Ease Quadratic Out
+@ingroup Actions
+*/
 class EaseQuadraticActionOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuadraticActionOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuadraticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuadraticActionOut* clone() const override;
@@ -106,14 +106,14 @@ private:
 };
 
 /** 
- @brief Ease Quadratic InOut
- @ingroup Actions
- */
+@brief Ease Quadratic InOut
+@ingroup Actions
+*/
 class EaseQuadraticActionInOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuadraticActionInOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuadraticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuadraticActionInOut* clone() const override;
@@ -128,14 +128,14 @@ private:
 };
 
 /** 
- @brief Ease Quartic In
- @ingroup Actions
- */
+@brief Ease Quartic In
+@ingroup Actions
+*/
 class EaseQuarticActionIn:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuarticActionIn* create(cocos2d::ActionInterval* pAction);
+	static EaseQuarticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuarticActionIn* clone() const override;
@@ -150,14 +150,14 @@ private:
 };
 
 /** 
- @brief Ease Quartic Out
- @ingroup Actions
- */
+@brief Ease Quartic Out
+@ingroup Actions
+*/
 class EaseQuarticActionOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuarticActionOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuarticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuarticActionOut* clone() const override;
@@ -172,14 +172,14 @@ private:
 };
 
 /** 
- @brief Ease Quartic InOut
- @ingroup Actions
- */
+@brief Ease Quartic InOut
+@ingroup Actions
+*/
 class EaseQuarticActionInOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuarticActionInOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuarticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuarticActionInOut* clone() const override;
@@ -195,14 +195,14 @@ private:
 
 
 /** 
- @brief Ease Quintic In
- @ingroup Actions
- */
+@brief Ease Quintic In
+@ingroup Actions
+*/
 class EaseQuinticActionIn:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuinticActionIn* create(cocos2d::ActionInterval* pAction);
+	static EaseQuinticActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuinticActionIn* clone() const override;
@@ -217,14 +217,14 @@ private:
 };
 
 /** 
- @brief Ease Quintic Out
- @ingroup Actions
- */
+@brief Ease Quintic Out
+@ingroup Actions
+*/
 class EaseQuinticActionOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuinticActionOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuinticActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuinticActionOut* clone() const override;
@@ -239,14 +239,14 @@ private:
 };
 
 /** 
- @brief Ease Quintic InOut
- @ingroup Actions
- */
+@brief Ease Quintic InOut
+@ingroup Actions
+*/
 class EaseQuinticActionInOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseQuinticActionInOut* create(cocos2d::ActionInterval* pAction);
+	static EaseQuinticActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseQuinticActionInOut* clone() const override;
@@ -261,14 +261,14 @@ private:
 };
 
 /** 
- @brief Ease Circle In
- @ingroup Actions
- */
+@brief Ease Circle In
+@ingroup Actions
+*/
 class EaseCircleActionIn:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCircleActionIn* create(cocos2d::ActionInterval* pAction);
+	static EaseCircleActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCircleActionIn* clone() const override;
@@ -283,14 +283,14 @@ private:
 };
 
 /** 
- @brief Ease Circle Out
- @ingroup Actions
- */
+@brief Ease Circle Out
+@ingroup Actions
+*/
 class EaseCircleActionOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCircleActionOut* create(cocos2d::ActionInterval* pAction);
+	static EaseCircleActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCircleActionOut* clone() const override;
@@ -305,14 +305,14 @@ private:
 };
 
 /** 
- @brief Ease Circle InOut
- @ingroup Actions
- */
+@brief Ease Circle InOut
+@ingroup Actions
+*/
 class EaseCircleActionInOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCircleActionInOut* create(cocos2d::ActionInterval* pAction);
+	static EaseCircleActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCircleActionInOut* clone() const override;
@@ -327,14 +327,14 @@ private:
 };
 
 /** 
- @brief Ease Cubic In
- @ingroup Actions
- */
+@brief Ease Cubic In
+@ingroup Actions
+*/
 class EaseCubicActionIn:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCubicActionIn* create(cocos2d::ActionInterval* pAction);
+	static EaseCubicActionIn* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCubicActionIn* clone() const override;
@@ -349,14 +349,14 @@ private:
 };
 
 /** 
- @brief Ease Cubic Out
- @ingroup Actions
- */
+@brief Ease Cubic Out
+@ingroup Actions
+*/
 class EaseCubicActionOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCubicActionOut* create(cocos2d::ActionInterval* pAction);
+	static EaseCubicActionOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCubicActionOut* clone() const override;
@@ -371,14 +371,14 @@ private:
 };
 
 /** 
- @brief Ease Cubic InOut
- @ingroup Actions
- */
+@brief Ease Cubic InOut
+@ingroup Actions
+*/
 class EaseCubicActionInOut:public cocos2d::ActionEase
 {
 public:
 	/** creates the action */
-	static EaseCubicActionInOut* create(cocos2d::ActionInterval* pAction);
+	static EaseCubicActionInOut* create(cocos2d::ActionInterval* action);
 
 	virtual void update(float time) override;
 	virtual EaseCubicActionInOut* clone() const override;

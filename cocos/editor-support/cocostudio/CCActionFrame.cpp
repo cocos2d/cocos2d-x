@@ -1,31 +1,31 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "CCActionFrame.h"
 #include "CCActionEaseEx.h"
 
- using namespace cocos2d;
+using namespace cocos2d;
 
 namespace cocostudio {
 
@@ -33,7 +33,7 @@ ActionFrame::ActionFrame()
 : _frameType(0)
 , _frameIndex(0)
 , _fTime(0.0f)
-, _easingType(FrameEase_Linear)
+, _easingType(FrameEaseType::FrameEase_Linear)
 {
 
 }
@@ -81,7 +81,7 @@ int ActionFrame::getEasingType()
 ActionInterval* ActionFrame::getAction(float fDuration)
 {
 	log("Need a definition of <getAction> for ActionFrame");
-	return NULL;
+	return nullptr;
 }
 ActionInterval* ActionFrame::getAction(float fDuration,ActionFrame* srcFrame)
 {
@@ -100,123 +100,123 @@ void ActionFrame::setEasingParameter(std::vector<float> parameter)
 
 ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 {
-	if (action == NULL)
+	if (action == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	switch (_easingType)
 	{
-	case FrameEase_Custom:
+	case FrameEaseType::FrameEase_Custom:
 		{
 			EaseBezierAction* cAction = EaseBezierAction::create(action);
 			cAction->setBezierParamer(_Parameter[0],_Parameter[1],_Parameter[2],_Parameter[3]);
 			return cAction;
 		}
 		break;
-	case FrameEase_Linear:
+	case FrameEaseType::FrameEase_Linear:
 		return action;
 		break;
-	case FrameEase_Sine_EaseIn:
+	case FrameEaseType::FrameEase_Sine_EaseIn:
 		return EaseSineIn::create(action);
 		break;
-	case FrameEase_Sine_EaseOut:
+	case FrameEaseType::FrameEase_Sine_EaseOut:
 		return EaseSineOut::create(action);
 		break;
-	case FrameEase_Sine_EaseInOut:
+	case FrameEaseType::FrameEase_Sine_EaseInOut:
 		return EaseSineInOut::create(action);
 		break;
-	case FrameEase_Quad_EaseIn:
+	case FrameEaseType::FrameEase_Quad_EaseIn:
 		return EaseQuadraticActionIn::create(action);
 		break;
-	case FrameEase_Quad_EaseOut:
+	case FrameEaseType::FrameEase_Quad_EaseOut:
 		return EaseQuadraticActionOut::create(action);
 		break;
-	case FrameEase_Quad_EaseInOut:
+	case FrameEaseType::FrameEase_Quad_EaseInOut:
 		return EaseQuadraticActionInOut::create(action);
 		break;
-	case FrameEase_Cubic_EaseIn:
+	case FrameEaseType::FrameEase_Cubic_EaseIn:
 		return EaseCubicActionIn::create(action);
 		break;
-	case FrameEase_Cubic_EaseOut:
+	case FrameEaseType::FrameEase_Cubic_EaseOut:
 		return EaseCubicActionOut::create(action);
 		break;
-	case FrameEase_Cubic_EaseInOut:
+	case FrameEaseType::FrameEase_Cubic_EaseInOut:
 		return EaseCubicActionInOut::create(action);
 		break;
-	case FrameEase_Quart_EaseIn:
+	case FrameEaseType::FrameEase_Quart_EaseIn:
 		return EaseQuarticActionIn::create(action);
 		break;
-	case FrameEase_Quart_EaseOut:
+	case FrameEaseType::FrameEase_Quart_EaseOut:
 		return EaseQuadraticActionOut::create(action);
 		break;
-	case FrameEase_Quart_EaseInOut:
+	case FrameEaseType::FrameEase_Quart_EaseInOut:
 		return EaseQuarticActionInOut::create(action);
 		break;
-	case FrameEase_Quint_EaseIn:
+	case FrameEaseType::FrameEase_Quint_EaseIn:
 		return EaseQuinticActionIn::create(action);
 		break;
-	case FrameEase_Quint_EaseOut:
+	case FrameEaseType::FrameEase_Quint_EaseOut:
 		return EaseQuinticActionOut::create(action);
 		break;
-	case FrameEase_Quint_EaseInOut:
+	case FrameEaseType::FrameEase_Quint_EaseInOut:
 		return EaseQuinticActionInOut::create(action);
 		break;
-	case FrameEase_Expo_EaseIn:
+	case FrameEaseType::FrameEase_Expo_EaseIn:
 		return EaseExponentialIn::create(action);
 		break;
-	case FrameEase_Expo_EaseOut:
+	case FrameEaseType::FrameEase_Expo_EaseOut:
 		return EaseExponentialOut::create(action);
 		break;
-	case FrameEase_Expo_EaseInOut:
+	case FrameEaseType::FrameEase_Expo_EaseInOut:
 		return EaseExponentialInOut::create(action);
 		break;
-	case FrameEase_Circ_EaseIn:
+	case FrameEaseType::FrameEase_Circ_EaseIn:
 		return EaseCircleActionIn::create(action);
 		break;
-	case FrameEase_Circ_EaseOut:
+	case FrameEaseType::FrameEase_Circ_EaseOut:
 		return EaseCircleActionOut::create(action);
 		break;
-	case FrameEase_Circ_EaseInOut:
+	case FrameEaseType::FrameEase_Circ_EaseInOut:
 		return EaseCircleActionInOut::create(action);
 		break;
-	case FrameEase_Elastic_EaseIn:
+	case FrameEaseType::FrameEase_Elastic_EaseIn:
 		{
 			EaseElasticIn* cAction = EaseElasticIn::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEase_Elastic_EaseOut:
+	case FrameEaseType::FrameEase_Elastic_EaseOut:
 		{
 			EaseElasticOut* cAction = EaseElasticOut::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEase_Elastic_EaseInOut:
+	case FrameEaseType::FrameEase_Elastic_EaseInOut:
 		{
 			EaseElasticInOut* cAction = EaseElasticInOut::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEase_Back_EaseIn:
+	case FrameEaseType::FrameEase_Back_EaseIn:
 		return EaseBackIn::create(action);
 		break;
-	case FrameEase_Back_EaseOut:
+	case FrameEaseType::FrameEase_Back_EaseOut:
 		return EaseBackOut::create(action);
 		break;
-	case FrameEase_Back_EaseInOut:
+	case FrameEaseType::FrameEase_Back_EaseInOut:
 		return EaseBackInOut::create(action);
 		break;
-	case FrameEase_Bounce_EaseIn:
+	case FrameEaseType::FrameEase_Bounce_EaseIn:
 		return EaseBounceIn::create(action);
 		break;
-	case FrameEase_Bounce_EaseOut:
+	case FrameEaseType::FrameEase_Bounce_EaseOut:
 		return EaseBounceOut::create(action);
 		break;
-	case FrameEase_Bounce_EaseInOut:
+	case FrameEaseType::FrameEase_Bounce_EaseInOut:
 		return EaseBounceInOut::create(action);
 		break;
 	default:
@@ -227,7 +227,7 @@ ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 //////////////////////////////////////////////////////////////////////////
 
 ActionMoveFrame::ActionMoveFrame()
-: _position(Point(0.0f,0.0f))
+	: _position(Point(0.0f,0.0f))
 {
 	_frameType = (int)kKeyframeMove;
 }
@@ -250,8 +250,8 @@ ActionInterval* ActionMoveFrame::getAction(float fDuration)
 //////////////////////////////////////////////////////////////////////////
 
 ActionScaleFrame::ActionScaleFrame()
-: _scaleX(1.0f)
-, _scaleY(1.0f)
+	: _scaleX(1.0f)
+	, _scaleY(1.0f)
 {
 	_frameType = (int)kKeyframeScale;
 }
@@ -287,7 +287,7 @@ ActionInterval* ActionScaleFrame::getAction(float fDuration)
 }
 
 ActionRotationFrame::ActionRotationFrame()
-: _rotation(0.0f)
+	: _rotation(0.0f)
 {
 	_frameType = (int)kKeyframeRotate;
 }
@@ -314,7 +314,7 @@ ActionInterval* ActionRotationFrame::getAction(float fDuration)
 ActionInterval* ActionRotationFrame::getAction(float fDuration,ActionFrame* srcFrame)
 {
 	ActionRotationFrame* srcRotationFrame = static_cast<ActionRotationFrame*>(srcFrame);
-	if (srcRotationFrame == NULL)
+	if (srcRotationFrame == nullptr)
 	{
 		return this->getAction(fDuration);
 	}
@@ -326,7 +326,7 @@ ActionInterval* ActionRotationFrame::getAction(float fDuration,ActionFrame* srcF
 }
 
 ActionFadeFrame::ActionFadeFrame()
-: _opacity(255)
+	: _opacity(255)
 {
 	_frameType = (int)kKeyframeFade;
 }
@@ -353,7 +353,7 @@ ActionInterval* ActionFadeFrame::getAction(float fDuration)
 
 
 ActionTintFrame::ActionTintFrame()
-: _color(Color3B(255,255,255))
+	: _color(Color3B(255,255,255))
 {
 	_frameType = (int)kKeyframeTint;
 }
