@@ -5,7 +5,7 @@ LOCAL_MODULE := cocos_gui_static
 
 LOCAL_MODULE_FILENAME := libgui
 
-LOCAL_SRC_FILES :=
+LOCAL_SRC_FILES := \
 UIWidget.cpp \
 UILayout.cpp \
 UILayoutParameter.cpp \
