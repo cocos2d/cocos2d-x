@@ -42,7 +42,7 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCRenderer.h"
 
 NS_CC_BEGIN
@@ -392,8 +392,7 @@ void ParticleBatchNode::draw(void)
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    QuadCommand* cmd = new QuadCommand();
-    cmd->init(0,
+    _quadCommand.init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,
@@ -401,7 +400,7 @@ void ParticleBatchNode::draw(void)
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 
