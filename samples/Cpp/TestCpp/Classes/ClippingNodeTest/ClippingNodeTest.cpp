@@ -7,6 +7,8 @@
 
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
 	kTagTitleLabel = 1,
@@ -596,8 +598,14 @@ void RawStencilBufferTest::draw()
     
     auto planeSize = winPoint * (1.0 / _planeCount);
     
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
+    Renderer *renderer = Director::getInstance()->getRenderer();
+    
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
+    renderer->addCommand(cmd);
+    
+
         
     for (int i = 0; i < _planeCount; i++) {
         
@@ -608,21 +616,21 @@ void RawStencilBufferTest::draw()
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
         _sprite->setPosition( spritePoint );
-
-        this->setupStencilForClippingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-
-        DrawPrimitives::drawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
+        
+        cmd = CustomCommand::getCommandPool().generateCommand();
+        cmd->init(0, _vertexZ);
+        cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
+        renderer->addCommand(cmd);
         
         kmGLPushMatrix();
         this->transform();
         _sprite->visit();
         kmGLPopMatrix();
         
-        this->setupStencilForDrawingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-        
-        DrawPrimitives::drawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
+        cmd = CustomCommand::getCommandPool().generateCommand();
+        cmd->init(0, _vertexZ);
+        cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
+        renderer->addCommand(cmd);
         
         kmGLPushMatrix();
         this->transform();
@@ -630,8 +638,38 @@ void RawStencilBufferTest::draw()
         kmGLPopMatrix();
     }
     
+    cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
+    renderer->addCommand(cmd);
+
+}
+
+void RawStencilBufferTest::onEnableStencil()
+{
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onDisableStencil()
+{
     glDisable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Point& pt)
+{
+    this->setupStencilForClippingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, Color4F(1, 1, 1, 1));
+}
+
+void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Point& pt)
+{
+    this->setupStencilForDrawingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, _planeColor[planeIndex]);
 }
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)

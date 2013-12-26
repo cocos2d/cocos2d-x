@@ -156,6 +156,11 @@ public:
 	virtual void setupStencilForClippingOnPlane(GLint plane);
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
+public:
+    void onEnableStencil();
+    void onDisableStencil();
+    void onBeforeDrawClip(int planeIndex, const Point& pt);
+    void onBeforeDrawSprite(int planeIndex, const Point& pt);
 protected:
     Sprite* _sprite;
 };
