@@ -149,7 +149,7 @@ void Box2DTestLayer::draw()
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
 
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand *cmd = new CustomCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(cmd);

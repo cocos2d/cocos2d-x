@@ -147,7 +147,7 @@ void BatchNode::draw()
 void BatchNode::generateGroupCommand()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
+    GroupCommand* groupCommand = new GroupCommand();
     groupCommand->init(0,_vertexZ);
     renderer->addCommand(groupCommand);
 

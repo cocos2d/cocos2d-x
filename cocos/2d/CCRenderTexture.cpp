@@ -329,7 +329,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     this->begin();
 
     //clear screen
-    CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* clearCmd = new CustomCommand();
     clearCmd->init(0, _vertexZ);
     clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
     Director::getInstance()->getRenderer()->addCommand(clearCmd);
@@ -348,7 +348,7 @@ void RenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* cmd = new CustomCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
 
@@ -614,7 +614,7 @@ void RenderTexture::draw()
         begin();
 
         //clear screen
-        CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
+        CustomCommand* clearCmd = new CustomCommand();
         clearCmd->init(0, _vertexZ);
         clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
         Director::getInstance()->getRenderer()->addCommand(clearCmd);
@@ -643,14 +643,14 @@ void RenderTexture::begin()
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
+    GroupCommand* groupCommand = new GroupCommand();
     groupCommand->init(0, _vertexZ);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->addCommand(groupCommand);
     renderer->pushGroup(groupCommand->getRenderQueueID());
 
-    CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* beginCmd = new CustomCommand();
     beginCmd->init(0, _vertexZ);
     beginCmd->func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
@@ -659,7 +659,7 @@ void RenderTexture::begin()
 
 void RenderTexture::end()
 {
-    CustomCommand* endCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* endCmd = new CustomCommand();
     endCmd->init(0, _vertexZ);
     endCmd->func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 

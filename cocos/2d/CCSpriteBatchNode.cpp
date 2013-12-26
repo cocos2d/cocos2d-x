@@ -360,7 +360,7 @@ void SpriteBatchNode::draw()
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    QuadCommand* cmd = new QuadCommand();
     cmd->init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
