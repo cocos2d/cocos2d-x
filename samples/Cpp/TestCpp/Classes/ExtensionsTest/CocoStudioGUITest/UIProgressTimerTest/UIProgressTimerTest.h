@@ -22,23 +22,72 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UIProgressTimerTest__
+#define __TestCpp__UIProgressTimerTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UIProgressTimerTest_Radial : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
     bool init();
     
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
-    
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Radial)
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+class UIProgressTimerTest_Horizontal : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Horizontal)
+};
+
+class UIProgressTimerTest_Vertical : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Vertical)
+};
+
+class UIProgressTimerTest_RadialMidpointChanged : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_RadialMidpointChanged)
+};
+
+class UIProgressTimerTest_BarVarious : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_BarVarious)
+};
+
+class UIProgressTimerTest_BarTintAndFade : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_BarTintAndFade)
+};
+
+class UIProgressTimerTest_WithSpriteFrame : public UIScene
+{
+public:
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_WithSpriteFrame)
+};
+
+#endif /* defined(__TestCpp__UIProgressTimerTest__) */

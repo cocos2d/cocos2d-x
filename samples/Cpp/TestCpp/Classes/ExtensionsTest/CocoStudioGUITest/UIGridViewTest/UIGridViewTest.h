@@ -22,23 +22,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UIGridViewTest__
+#define __TestCpp__UIGridViewTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UIGridViewTest_Mode_Column : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
+    UIGridViewTest_Mode_Column();
+    ~UIGridViewTest_Mode_Column();
     bool init();
-    
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
+    void selectedChildEvent(CCObject* pSender, ScrollviewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Column)
     UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+class UIGridViewTest_Mode_Row : public UIScene
+{
+public:
+    UIGridViewTest_Mode_Row();
+    ~UIGridViewTest_Mode_Row();
+    bool init();
+    void selectedChildEvent(CCObject* pSender, ScrollviewEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Row)
+    UILabel* m_pDisplayValueLabel;
+};
+
+#endif /* defined(__TestCpp__UIScrollGridTest__) */

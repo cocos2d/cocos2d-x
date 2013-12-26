@@ -22,23 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UIPotentiometerTest__
+#define __TestCpp__UIPotentiometerTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UIPotentiometerTest : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
+    UIPotentiometerTest();
+    ~UIPotentiometerTest();
     bool init();
+    void valueChangedEvent(CCObject *pSender, PotentiometerEventType type);
     
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
+    UI_SCENE_CREATE_FUNC(UIPotentiometerTest)
     UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+
+#endif /* defined(__TestCpp__UIPotentiometerTest__) */
