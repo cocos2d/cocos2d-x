@@ -69,7 +69,6 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
