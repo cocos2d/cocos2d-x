@@ -968,6 +968,23 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		1ADCE790186BCAB9001B78A4 /* CocosGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360CA186819DB00828878 /* CocosGUIScene.cpp */; };
+		1ADCE793186BCAFB001B78A4 /* UIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360EA186819DB00828878 /* UIScene.cpp */; };
+		1ADCE794186BCAFB001B78A4 /* UISceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360EC186819DB00828878 /* UISceneManager.cpp */; };
+		1ADCE795186BCB20001B78A4 /* UIButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360CD186819DB00828878 /* UIButtonTest.cpp */; };
+		1ADCE796186BCB20001B78A4 /* UICheckBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360D0186819DB00828878 /* UICheckBoxTest.cpp */; };
+		1ADCE797186BCB21001B78A4 /* UIImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360D3186819DB00828878 /* UIImageViewTest.cpp */; };
+		1ADCE798186BCB21001B78A4 /* UILabelAtlasTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360D6186819DB00828878 /* UILabelAtlasTest.cpp */; };
+		1ADCE799186BCB21001B78A4 /* UILabelBMFontTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360D9186819DB00828878 /* UILabelBMFontTest.cpp */; };
+		1ADCE79A186BCB21001B78A4 /* UILabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360DC186819DB00828878 /* UILabelTest.cpp */; };
+		1ADCE79B186BCB21001B78A4 /* UILayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360DF186819DB00828878 /* UILayoutTest.cpp */; };
+		1ADCE79C186BCB21001B78A4 /* UIListViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360E2186819DB00828878 /* UIListViewTest.cpp */; };
+		1ADCE79D186BCB21001B78A4 /* UILoadingBarTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360E5186819DB00828878 /* UILoadingBarTest.cpp */; };
+		1ADCE79E186BCB21001B78A4 /* UIPageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360E8186819DB00828878 /* UIPageViewTest.cpp */; };
+		1ADCE79F186BCF19001B78A4 /* UIScrollViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360EF186819DB00828878 /* UIScrollViewTest.cpp */; };
+		1ADCE7A0186BCF19001B78A4 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F2186819DB00828878 /* UISliderTest.cpp */; };
+		1ADCE7A1186BCF19001B78A4 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F5186819DB00828878 /* UITextFieldTest.cpp */; };
+		1ADCE7A2186BCF19001B78A4 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F8186819DB00828878 /* UIWidgetAddNodeTest.cpp */; };
 		3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
@@ -6749,11 +6766,15 @@
 				1AAF5162180E2C1A000584C8 /* Bug-1159.cpp in Sources */,
 				1AAF5164180E2C1A000584C8 /* Bug-1174.cpp in Sources */,
 				1AAF5166180E2C1A000584C8 /* Bug-350.cpp in Sources */,
+				1ADCE79B186BCB21001B78A4 /* UILayoutTest.cpp in Sources */,
 				1AAF5168180E2C1A000584C8 /* Bug-422.cpp in Sources */,
 				1AAF516A180E2C1A000584C8 /* Bug-458.cpp in Sources */,
 				50691336184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,
+				1ADCE79F186BCF19001B78A4 /* UIScrollViewTest.cpp in Sources */,
+				1ADCE79C186BCB21001B78A4 /* UIListViewTest.cpp in Sources */,
 				1AAF516C180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516E180E2C1A000584C8 /* Bug-624.cpp in Sources */,
+				1ADCE79D186BCB21001B78A4 /* UILoadingBarTest.cpp in Sources */,
 				1AAF5170180E2C1A000584C8 /* Bug-886.cpp in Sources */,
 				1AAF5172180E2C1A000584C8 /* Bug-899.cpp in Sources */,
 				1AAF5174180E2C1A000584C8 /* Bug-914.cpp in Sources */,
@@ -6763,6 +6784,7 @@
 				1AAF517C180E2C1A000584C8 /* ClippingNodeTest.cpp in Sources */,
 				1AAF517E180E2C1A000584C8 /* CocosDenshionTest.cpp in Sources */,
 				1AAF5180180E2C1A000584C8 /* ConfigurationTest.cpp in Sources */,
+				1ADCE79E186BCB21001B78A4 /* UIPageViewTest.cpp in Sources */,
 				1AAF5182180E2C1A000584C8 /* controller.cpp in Sources */,
 				1AAF5184180E2C1A000584C8 /* CurlTest.cpp in Sources */,
 				1AAF5186180E2C1A000584C8 /* CurrentLanguageTest.cpp in Sources */,
@@ -6780,11 +6802,14 @@
 				1AAF519E180E2C1A000584C8 /* ArmatureScene.cpp in Sources */,
 				1AAF51A0180E2C1A000584C8 /* ComponentsTestScene.cpp in Sources */,
 				1AAF51A2180E2C1A000584C8 /* EnemyController.cpp in Sources */,
+				1ADCE799186BCB21001B78A4 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51A4180E2C1A000584C8 /* GameOverScene.cpp in Sources */,
 				59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF51A6180E2C1A000584C8 /* PlayerController.cpp in Sources */,
+				1ADCE796186BCB20001B78A4 /* UICheckBoxTest.cpp in Sources */,
 				1AAF51A8180E2C1A000584C8 /* ProjectileController.cpp in Sources */,
 				1AAF51AA180E2C1A000584C8 /* SceneController.cpp in Sources */,
+				1ADCE795186BCB20001B78A4 /* UIButtonTest.cpp in Sources */,
 				1AAF51D4180E2C1A000584C8 /* SceneEditorTest.cpp in Sources */,
 				1AAF51D6180E2C1A000584C8 /* CCControlButtonTest.cpp in Sources */,
 				1AAF51D8180E2C1A000584C8 /* CCControlColourPickerTest.cpp in Sources */,
@@ -6794,6 +6819,7 @@
 				1AAF51E0180E2C1A000584C8 /* CCControlSliderTest.cpp in Sources */,
 				1AAF51E2180E2C1A000584C8 /* CCControlStepperTest.cpp in Sources */,
 				1AAF51E4180E2C1A000584C8 /* CCControlSwitchTest.cpp in Sources */,
+				1ADCE790186BCAB9001B78A4 /* CocosGUIScene.cpp in Sources */,
 				1AAF51E6180E2C1A000584C8 /* EditBoxTest.cpp in Sources */,
 				1AAF51E8180E2C1A000584C8 /* ExtensionsTest.cpp in Sources */,
 				1AAF51EA180E2C1A000584C8 /* HttpClientTest.cpp in Sources */,
@@ -6801,7 +6827,9 @@
 				1AAF51EE180E2C1A000584C8 /* WebSocketTest.cpp in Sources */,
 				1AAF51F0180E2C1A000584C8 /* NotificationCenterTest.cpp in Sources */,
 				1AAF51F2180E2C1A000584C8 /* Scale9SpriteTest.cpp in Sources */,
+				1ADCE793186BCAFB001B78A4 /* UIScene.cpp in Sources */,
 				1AAF51F4180E2C1A000584C8 /* CustomTableViewCell.cpp in Sources */,
+				1ADCE797186BCB21001B78A4 /* UIImageViewTest.cpp in Sources */,
 				1AAF51F6180E2C1A000584C8 /* TableViewTestScene.cpp in Sources */,
 				1AAF51F8180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,
 				1AAF51FA180E2C1A000584C8 /* FontTest.cpp in Sources */,
@@ -6816,6 +6844,7 @@
 				1AAF520A180E2C1A000584C8 /* MotionStreakTest.cpp in Sources */,
 				1AAF520C180E2C1A000584C8 /* MutiTouchTest.cpp in Sources */,
 				1AAF520E180E2C1A000584C8 /* NewEventDispatcherTest.cpp in Sources */,
+				1ADCE794186BCAFB001B78A4 /* UISceneManager.cpp in Sources */,
 				1AAF5210180E2C1A000584C8 /* NodeTest.cpp in Sources */,
 				1AAF5212180E2C1A000584C8 /* ParallaxTest.cpp in Sources */,
 				1AAF5214180E2C1A000584C8 /* ParticleTest.cpp in Sources */,
@@ -6832,9 +6861,12 @@
 				1AAF5228180E2C1A000584C8 /* RotateWorldTest.cpp in Sources */,
 				1AAF522A180E2C1A000584C8 /* SceneTest.cpp in Sources */,
 				1AAF522C180E2C1A000584C8 /* SchedulerTest.cpp in Sources */,
+				1ADCE7A0186BCF19001B78A4 /* UISliderTest.cpp in Sources */,
 				1AAF522E180E2C1A000584C8 /* ShaderTest.cpp in Sources */,
 				1AAF5230180E2C1A000584C8 /* ShaderTest2.cpp in Sources */,
+				1ADCE79A186BCB21001B78A4 /* UILabelTest.cpp in Sources */,
 				1AAF5232180E2C1A000584C8 /* SpineTest.cpp in Sources */,
+				1ADCE7A1186BCF19001B78A4 /* UITextFieldTest.cpp in Sources */,
 				1AAF5234180E2C1A000584C8 /* SpriteTest.cpp in Sources */,
 				1AAF5236180E2C1A000584C8 /* testBasic.cpp in Sources */,
 				1AAF5238180E2C1A000584C8 /* TextInputTest.cpp in Sources */,
@@ -6844,9 +6876,11 @@
 				1AAF5240180E2C1A000584C8 /* TileMapTest.cpp in Sources */,
 				1AAF5242180E2C1A000584C8 /* Ball.cpp in Sources */,
 				1AAF5244180E2C1A000584C8 /* Paddle.cpp in Sources */,
+				1ADCE798186BCB21001B78A4 /* UILabelAtlasTest.cpp in Sources */,
 				1AAF5246180E2C1A000584C8 /* TouchesTest.cpp in Sources */,
 				1AAF5248180E2C1A000584C8 /* TransitionsTest.cpp in Sources */,
 				1AAF524A180E2C1A000584C8 /* UserDefaultTest.cpp in Sources */,
+				1ADCE7A2186BCF19001B78A4 /* UIWidgetAddNodeTest.cpp in Sources */,
 				1AAF524C180E2C1A000584C8 /* VisibleRect.cpp in Sources */,
 				1AAF524E180E2C1A000584C8 /* ZwoptexTest.cpp in Sources */,
 				1AAF5289180E2C31000584C8 /* main.cpp in Sources */,
