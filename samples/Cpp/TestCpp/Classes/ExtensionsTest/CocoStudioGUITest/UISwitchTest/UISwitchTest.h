@@ -22,23 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UISwitchTest__
+#define __TestCpp__UISwitchTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UISwitchTest_Horizontal : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
+    UISwitchTest_Horizontal();
+    ~UISwitchTest_Horizontal();
     bool init();
-    
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
+    void switchEvent(CCObject* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Horizontal)
     UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+class UISwitchTest_Vertical : public UIScene
+{
+public:
+    UISwitchTest_Vertical();
+    ~UISwitchTest_Vertical();
+    bool init();
+    void switchEvent(CCObject* pSender, SwitchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Vertical)
+    UILabel* m_pDisplayValueLabel;
+};
+
+class UISwitchTest_VerticalAndTitleVertical : public UIScene
+{
+public:
+    UISwitchTest_VerticalAndTitleVertical();
+    ~UISwitchTest_VerticalAndTitleVertical();
+    bool init();
+    void switchEvent(CCObject* pSender, SwitchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISwitchTest_VerticalAndTitleVertical)
+    UILabel* m_pDisplayValueLabel;
+};
+
+#endif /* defined(__TestCpp__UISwitchTest__) */

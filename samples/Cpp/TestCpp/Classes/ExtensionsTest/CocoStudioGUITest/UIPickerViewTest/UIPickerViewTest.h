@@ -22,23 +22,41 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UIPickViewTest__
+#define __TestCpp__UIPickViewTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UIPickerViewTest_Vertical : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
+    UIPickerViewTest_Vertical();
+    ~UIPickerViewTest_Vertical();
     bool init();
-    
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
+    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void pickItemEvent(CCObject* pSender, PickerViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Vertical)
     UILabel* m_pDisplayValueLabel;
+    
+    CCArray* m_array;
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+class UIPickerViewTest_Horizontal : public UIScene
+{
+public:
+    UIPickerViewTest_Horizontal();
+    ~UIPickerViewTest_Horizontal();
+    bool init();
+    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void pickItemEvent(CCObject* pSender, PickerViewEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Horizontal)
+    UILabel* m_pDisplayValueLabel;
+    
+    CCArray* m_array;
+};
+
+#endif /* defined(__TestCpp__UIPickViewTest__) */

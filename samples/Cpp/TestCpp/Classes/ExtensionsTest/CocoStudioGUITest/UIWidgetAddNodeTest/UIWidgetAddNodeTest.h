@@ -22,23 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPageViewTest__
-#define __TestCpp__UIPageViewTest__
+#ifndef __TestCpp__UIWidgetAddNodeTest__
+#define __TestCpp__UIWidgetAddNodeTest__
 
 #include "../UIScene.h"
 
-class UIPageViewTest : public UIScene
+class UIWidgetAddNodeTest : public UIScene
 {
 public:
-    UIPageViewTest();
-    ~UIPageViewTest();
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
     bool init();
     
-    void pageViewEvent(CCObject* pSender, PageViewEventType type);
-    
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    UILabel* m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
 };
 
-#endif /* defined(__TestCpp__UIPageViewTest__) */
+#endif /* defined(__TestCpp__UIWidgetAddNodeTest__) */
