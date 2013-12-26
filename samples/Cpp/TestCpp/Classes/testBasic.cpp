@@ -7,7 +7,7 @@ TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
 {
     if (physics)
     {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
         TestScene::initWithPhysics();
 #else
         Scene::init();

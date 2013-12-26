@@ -54,7 +54,7 @@ class Component;
 class ComponentContainer;
 class EventDispatcher;
 class Scene;
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 class PhysicsBody;
 #endif
 
@@ -1341,7 +1341,7 @@ public:
     /// @} end of component functions
 
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
      */
@@ -1465,7 +1465,7 @@ protected:
 
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
     
