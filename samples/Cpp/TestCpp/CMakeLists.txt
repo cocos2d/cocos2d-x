@@ -70,12 +70,11 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp
   Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
