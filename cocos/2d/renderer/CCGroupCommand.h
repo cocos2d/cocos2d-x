@@ -92,7 +92,7 @@ public:
     
     void pushBackCommand(GroupCommand* ptr)
     {
-        CC_UNUSED_PARAM(ptr);
+        delete ptr;
     }
 };
 

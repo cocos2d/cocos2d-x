@@ -31,6 +31,7 @@
 #include "CCNode.h"
 #include "CCGL.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -144,6 +145,9 @@ protected:
     GLint _mask_layer_le;
     
     GroupCommand _groupCommand;
+    CustomCommand _beforeVisitCmd;
+    CustomCommand _afterDrawStencilCmd;
+    CustomCommand _afterVisitCmd;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

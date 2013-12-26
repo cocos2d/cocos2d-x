@@ -30,6 +30,8 @@ public:
     virtual void draw();
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class DrawNodeTest : public BaseLayer

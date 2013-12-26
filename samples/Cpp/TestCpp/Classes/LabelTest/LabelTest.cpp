@@ -209,10 +209,9 @@ void Atlas1::draw()
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
     
-    CustomCommand *cmd = new CustomCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(Atlas1::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
 //    [textureAtlas drawNumberOfQuads:3];
     
@@ -526,10 +525,9 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-    CustomCommand *cmd = new CustomCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(Atlas4::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void Atlas4::onDraw()
@@ -1613,10 +1611,9 @@ std::string LabelBMFontBounds::subtitle() const
 
 void LabelBMFontBounds::draw()
 {
-    CustomCommand *cmd = new CustomCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void LabelBMFontBounds::onDraw()
