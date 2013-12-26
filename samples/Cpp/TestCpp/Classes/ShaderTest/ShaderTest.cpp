@@ -1,6 +1,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 static int sceneIdx = -1; 
 
@@ -194,29 +196,36 @@ void ShaderNode::setPosition(const Point &newPosition)
 
 void ShaderNode::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(ShaderNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
 
+void ShaderNode::onDraw()
+{
+    CC_NODE_DRAW_SETUP();
+    
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
-
+    
     //
     // Uniforms
     //
     getShaderProgram()->setUniformLocationWith2f(_uniformCenter, _center.x, _center.y);
     getShaderProgram()->setUniformLocationWith2f(_uniformResolution, _resolution.x, _resolution.y);
-
+    
     // time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
     glUniform1f(_uniformTime, _time);
-
+    
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-
+    
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     CC_INCREMENT_GL_DRAWS(1);
 }
-
 
 /// ShaderMonjori
 
@@ -438,6 +447,8 @@ public:
 
     GLuint    blurLocation;
     GLuint    subLocation;
+protected:
+    void onDraw();
 };
 
 SpriteBlur::~SpriteBlur()
@@ -521,38 +532,46 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void SpriteBlur::onDraw()
+{
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     BlendFunc blend = getBlendFunc();
     GL::blendFunc(blend.src, blend.dst);
-
+    
     getShaderProgram()->use();
     getShaderProgram()->setUniformsForBuiltins();
     getShaderProgram()->setUniformLocationWith2f(blurLocation, blur_.x, blur_.y);
     getShaderProgram()->setUniformLocationWith4fv(subLocation, sub_, 1);
-
+    
     GL::bindTexture2D( getTexture()->getName());
-
+    
     //
     // Attributes
     //
 #define kQuadSize sizeof(_quad.bl)
     long offset = (long)&_quad;
-
+    
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
+    
     // texCoods
     diff = offsetof( V3F_C4B_T2F, texCoords);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
+    
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-
+    
+    
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
+    
     CC_INCREMENT_GL_DRAWS(1);
 }
 
