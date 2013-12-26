@@ -804,10 +804,6 @@
 		1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */; };
 		1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
 		1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
-		1A8C590C180E92CC00EF57C3 /* UIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58CF180E92CC00EF57C3 /* UIInputManager.cpp */; };
-		1A8C590D180E92CC00EF57C3 /* UIInputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58CF180E92CC00EF57C3 /* UIInputManager.cpp */; };
-		1A8C590E180E92CC00EF57C3 /* UIInputManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D0180E92CC00EF57C3 /* UIInputManager.h */; };
-		1A8C590F180E92CC00EF57C3 /* UIInputManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D0180E92CC00EF57C3 /* UIInputManager.h */; };
 		1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
 		1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
 		1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UILabel.h */; };
@@ -820,10 +816,6 @@
 		1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */; };
 		1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
 		1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
-		1A8C591C180E92CC00EF57C3 /* UILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D7180E92CC00EF57C3 /* UILayer.cpp */; };
-		1A8C591D180E92CC00EF57C3 /* UILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D7180E92CC00EF57C3 /* UILayer.cpp */; };
-		1A8C591E180E92CC00EF57C3 /* UILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D8180E92CC00EF57C3 /* UILayer.h */; };
-		1A8C591F180E92CC00EF57C3 /* UILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D8180E92CC00EF57C3 /* UILayer.h */; };
 		1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */; };
@@ -836,10 +828,6 @@
 		1A8C592D180E92CC00EF57C3 /* UIPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58DF180E92CC00EF57C3 /* UIPageView.cpp */; };
 		1A8C592E180E92CC00EF57C3 /* UIPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E0180E92CC00EF57C3 /* UIPageView.h */; };
 		1A8C592F180E92CC00EF57C3 /* UIPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E0180E92CC00EF57C3 /* UIPageView.h */; };
-		1A8C5930180E92CC00EF57C3 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58E1180E92CC00EF57C3 /* UIRootWidget.cpp */; };
-		1A8C5931180E92CC00EF57C3 /* UIRootWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58E1180E92CC00EF57C3 /* UIRootWidget.cpp */; };
-		1A8C5932180E92CC00EF57C3 /* UIRootWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E2180E92CC00EF57C3 /* UIRootWidget.h */; };
-		1A8C5933180E92CC00EF57C3 /* UIRootWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E2180E92CC00EF57C3 /* UIRootWidget.h */; };
 		1A8C5934180E92CC00EF57C3 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E3180E92CC00EF57C3 /* UIScrollInterface.h */; };
 		1A8C5935180E92CC00EF57C3 /* UIScrollInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58E3180E92CC00EF57C3 /* UIScrollInterface.h */; };
 		1A8C5936180E92CC00EF57C3 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58E4180E92CC00EF57C3 /* UIScrollView.cpp */; };
@@ -2470,24 +2458,18 @@
 		1A8C58CC180E92CC00EF57C3 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
 		1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageView.cpp; sourceTree = "<group>"; };
 		1A8C58CE180E92CC00EF57C3 /* UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageView.h; sourceTree = "<group>"; };
-		1A8C58CF180E92CC00EF57C3 /* UIInputManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIInputManager.cpp; sourceTree = "<group>"; };
-		1A8C58D0180E92CC00EF57C3 /* UIInputManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIInputManager.h; sourceTree = "<group>"; };
 		1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
 		1A8C58D2180E92CC00EF57C3 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
 		1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlas.cpp; sourceTree = "<group>"; };
 		1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlas.h; sourceTree = "<group>"; };
 		1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFont.cpp; sourceTree = "<group>"; };
 		1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFont.h; sourceTree = "<group>"; };
-		1A8C58D7180E92CC00EF57C3 /* UILayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayer.cpp; sourceTree = "<group>"; };
-		1A8C58D8180E92CC00EF57C3 /* UILayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayer.h; sourceTree = "<group>"; };
 		1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
 		1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutDefine.h; sourceTree = "<group>"; };
 		1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBar.cpp; sourceTree = "<group>"; };
 		1A8C58DE180E92CC00EF57C3 /* UILoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBar.h; sourceTree = "<group>"; };
 		1A8C58DF180E92CC00EF57C3 /* UIPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageView.cpp; sourceTree = "<group>"; };
 		1A8C58E0180E92CC00EF57C3 /* UIPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPageView.h; sourceTree = "<group>"; };
-		1A8C58E1180E92CC00EF57C3 /* UIRootWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRootWidget.cpp; sourceTree = "<group>"; };
-		1A8C58E2180E92CC00EF57C3 /* UIRootWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRootWidget.h; sourceTree = "<group>"; };
 		1A8C58E3180E92CC00EF57C3 /* UIScrollInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollInterface.h; sourceTree = "<group>"; };
 		1A8C58E4180E92CC00EF57C3 /* UIScrollView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollView.cpp; sourceTree = "<group>"; };
 		1A8C58E5180E92CC00EF57C3 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
@@ -4242,24 +4224,18 @@
 				1A8C58CC180E92CC00EF57C3 /* UIHelper.h */,
 				1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */,
 				1A8C58CE180E92CC00EF57C3 /* UIImageView.h */,
-				1A8C58CF180E92CC00EF57C3 /* UIInputManager.cpp */,
-				1A8C58D0180E92CC00EF57C3 /* UIInputManager.h */,
 				1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */,
 				1A8C58D2180E92CC00EF57C3 /* UILabel.h */,
 				1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */,
 				1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */,
 				1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */,
 				1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */,
-				1A8C58D7180E92CC00EF57C3 /* UILayer.cpp */,
-				1A8C58D8180E92CC00EF57C3 /* UILayer.h */,
 				1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */,
 				1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */,
 				1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */,
 				1A8C58DE180E92CC00EF57C3 /* UILoadingBar.h */,
 				1A8C58DF180E92CC00EF57C3 /* UIPageView.cpp */,
 				1A8C58E0180E92CC00EF57C3 /* UIPageView.h */,
-				1A8C58E1180E92CC00EF57C3 /* UIRootWidget.cpp */,
-				1A8C58E2180E92CC00EF57C3 /* UIRootWidget.h */,
 				1A8C58E3180E92CC00EF57C3 /* UIScrollInterface.h */,
 				1A8C58E4180E92CC00EF57C3 /* UIScrollView.cpp */,
 				1A8C58E5180E92CC00EF57C3 /* UIScrollView.h */,
@@ -5691,15 +5667,12 @@
 				1A8C58FE180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5906180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C590E180E92CC00EF57C3 /* UIInputManager.h in Headers */,
 				1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */,
 				1A8C5916180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
 				1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
-				1A8C591E180E92CC00EF57C3 /* UILayer.h in Headers */,
 				1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592A180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592E180E92CC00EF57C3 /* UIPageView.h in Headers */,
-				1A8C5932180E92CC00EF57C3 /* UIRootWidget.h in Headers */,
 				1A8C5934180E92CC00EF57C3 /* UIScrollInterface.h in Headers */,
 				1A8C5938180E92CC00EF57C3 /* UIScrollView.h in Headers */,
 				1A8C593C180E92CC00EF57C3 /* UISlider.h in Headers */,
@@ -6274,15 +6247,12 @@
 				1A8C58FF180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5907180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C590F180E92CC00EF57C3 /* UIInputManager.h in Headers */,
 				1A8C5913180E92CC00EF57C3 /* UILabel.h in Headers */,
 				1A8C5917180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
 				1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
-				1A8C591F180E92CC00EF57C3 /* UILayer.h in Headers */,
 				1A8C5923180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592B180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592F180E92CC00EF57C3 /* UIPageView.h in Headers */,
-				1A8C5933180E92CC00EF57C3 /* UIRootWidget.h in Headers */,
 				1A8C5935180E92CC00EF57C3 /* UIScrollInterface.h in Headers */,
 				1A8C5939180E92CC00EF57C3 /* UIScrollView.h in Headers */,
 				1A8C593D180E92CC00EF57C3 /* UISlider.h in Headers */,
@@ -7028,16 +6998,13 @@
 				1A8C58FC180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5904180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5908180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C590C180E92CC00EF57C3 /* UIInputManager.cpp in Sources */,
 				1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */,
 				1A8C5914180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
 				1A8C5918180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
 				59A79D511821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
-				1A8C591C180E92CC00EF57C3 /* UILayer.cpp in Sources */,
 				1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5928180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,
 				1A8C592C180E92CC00EF57C3 /* UIPageView.cpp in Sources */,
-				1A8C5930180E92CC00EF57C3 /* UIRootWidget.cpp in Sources */,
 				1A8C5936180E92CC00EF57C3 /* UIScrollView.cpp in Sources */,
 				1A8C593A180E92CC00EF57C3 /* UISlider.cpp in Sources */,
 				1A8C593E180E92CC00EF57C3 /* UITextField.cpp in Sources */,
@@ -7555,16 +7522,13 @@
 				1A8C58FD180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5905180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C590D180E92CC00EF57C3 /* UIInputManager.cpp in Sources */,
 				1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */,
 				1A8C5915180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
 				1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
 				59A79D521821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
-				1A8C591D180E92CC00EF57C3 /* UILayer.cpp in Sources */,
 				1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5929180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,
 				1A8C592D180E92CC00EF57C3 /* UIPageView.cpp in Sources */,
-				1A8C5931180E92CC00EF57C3 /* UIRootWidget.cpp in Sources */,
 				1A8C5937180E92CC00EF57C3 /* UIScrollView.cpp in Sources */,
 				1A8C593B180E92CC00EF57C3 /* UISlider.cpp in Sources */,
 				1A8C593F180E92CC00EF57C3 /* UITextField.cpp in Sources */,
