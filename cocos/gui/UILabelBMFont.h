@@ -27,28 +27,31 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
     
-class UILabelBMFont : public UIWidget
+/**
+*   @js NA
+*   @lua NA
+*/    
+class LabelBMFont : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILabelBMFont();
+    LabelBMFont();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
-    virtual ~UILabelBMFont();
+    virtual ~LabelBMFont();
     
     /**
      * Allocates and initializes.
      */
-    static UILabelBMFont* create();
+    static LabelBMFont* create();
     
     /** init a bitmap font atlas with an initial string and the FNT file */
     void setFntFile(const char* fileName);
@@ -58,19 +61,19 @@ public:
     
     /** get string value for labelbmfont*/
     const char* getStringValue();
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
-    virtual const cocos2d::Size& getContentSize() const override;
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual void setAnchorPoint(const Point &pt) override;
+    virtual const Size& getContentSize() const override;
+    virtual Node* getVirtualRenderer() override;
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
     void labelBMFontScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     cocos2d::LabelBMFont* _labelBMFontRenderer;
     bool _fntFileHasInit;
@@ -79,5 +82,6 @@ protected:
 };
     
 }
+NS_CC_END
 
-#endif /* defined(__UILabelBMFont__) */
+#endif /* defined(__LabelBMFont__) */
