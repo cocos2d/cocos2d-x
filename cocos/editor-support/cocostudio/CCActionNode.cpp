@@ -142,10 +142,6 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 	Node* rootNode = dynamic_cast<Node*>(root);
 	if (rootNode != NULL)
 	{
-		log("Need a definition of <initActionNodeFromRoot> for gameObject");
-	}
-	else
-	{
 		Widget* rootWidget = dynamic_cast<Widget*>(root);
 		if (rootWidget != NULL)
 		{
@@ -155,7 +151,7 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 				setObject(widget);
 			}
 		}
-	}
+    }
 }
 
 void ActionNode::setUnitTime(float fTime)
