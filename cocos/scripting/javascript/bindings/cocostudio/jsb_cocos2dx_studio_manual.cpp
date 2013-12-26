@@ -227,14 +227,14 @@ static JSBool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint
     return JS_FALSE;
 }
 
-extern JSObject* jsb_ArmatureAnimation_prototype;
-extern JSObject* jsb_ArmatureDataManager_prototype;
+extern JSObject* jsb_cocostudio_ArmatureAnimation_prototype;
+extern JSObject* jsb_cocostudio_ArmatureDataManager_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocostudio_ArmatureAnimation_prototype, "setMovementEventCallFunc", js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_ArmatureAnimation_prototype, "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocostudio_ArmatureAnimation_prototype, "setFrameEventCallFunc", js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
-    JS_DefineFunction(cx, jsb_ArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocostudio_ArmatureDataManager_prototype, "addArmatureFileInfoAsync", jsb_Animation_addArmatureFileInfoAsyncCallFunc, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 }
