@@ -27,29 +27,31 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
 
 namespace gui {
 
-class UILabel : public UIWidget
+/**
+*   @js NA
+*   @lua NA
+*/
+class Label : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILabel();
+    Label();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
-    virtual ~UILabel();
+    virtual ~Label();
     
     /**
      * Allocates and initializes.
      */
-    static UILabel* create();
+    static Label* create();
     
     /**
      * Changes the string value of label.
@@ -141,22 +143,22 @@ public:
     virtual bool isFlipY() override;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt) override;
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
     
-    void setTextAreaSize(const cocos2d::Size &size);
-    void setTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
-    void setTextVerticalAlignment(cocos2d::TextVAlignment alignment);    
+    void setTextAreaSize(const Size &size);
+    void setTextHorizontalAlignment(TextHAlignment alignment);
+    void setTextVerticalAlignment(TextVAlignment alignment);    
 protected:
     virtual bool init() override;
     virtual void initRenderer() override;
@@ -166,8 +168,8 @@ protected:
     virtual void onSizeChanged() override;
     void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     bool _touchScaleChangeEnabled;
     float _normalScaleValueX;
@@ -175,9 +177,11 @@ protected:
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    cocos2d::LabelTTF* _labelRenderer;
+    LabelTTF* _labelRenderer;
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__Label__) */
