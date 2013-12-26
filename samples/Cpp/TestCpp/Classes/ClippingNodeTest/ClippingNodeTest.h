@@ -156,7 +156,7 @@ public:
 	virtual void setupStencilForClippingOnPlane(GLint plane);
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
-public:
+protected:
     void onEnableStencil();
     void onDisableStencil();
     void onBeforeDrawClip(int planeIndex, const Point& pt);
