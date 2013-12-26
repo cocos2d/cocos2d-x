@@ -104,7 +104,7 @@ public:
 	void releaseActions();
 
 protected:
-	std::map<std::string, cocos2d::Vector<ActionObject*>> _pActionDic;
+	std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _pActionDic;
 };
 
 }

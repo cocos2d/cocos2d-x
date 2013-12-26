@@ -80,7 +80,7 @@ bool ArmatureActionState::init()
 	{
 		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == nullptr);
-		ComRender *pRender = (ComRender*)(pNode->getComponent(_ComName.c_str()));
+		ComRender *pRender = (ComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
 		Armature *pAr = (Armature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == nullptr);
@@ -109,7 +109,7 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "componentName")
 		{
-			_ComName = DICTOOL->getStringValue_json(subDict, "value");
+			_comName = DICTOOL->getStringValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "AnimationName")
@@ -131,7 +131,7 @@ void ArmatureActionState::removeAll()
 	{
 		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == nullptr);
-		ComRender *pRender = (ComRender*)(pNode->getComponent(_ComName.c_str()));
+		ComRender *pRender = (ComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
 		Armature *pAr = (Armature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == nullptr);
