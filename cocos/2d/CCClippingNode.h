@@ -30,6 +30,7 @@
 
 #include "CCNode.h"
 #include "CCGL.h"
+#include "renderer/CCGroupCommand.h"
 
 NS_CC_BEGIN
 
@@ -141,6 +142,8 @@ protected:
     GLclampf _currentAlphaTestRef;
 
     GLint _mask_layer_le;
+    
+    GroupCommand _groupCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

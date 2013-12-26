@@ -27,6 +27,7 @@
 
 #include "CCNode.h"
 #include "kazmath/GL/matrix.h"
+#include "renderer/CCGroupCommand.h"
 
 NS_CC_BEGIN
 
@@ -64,6 +65,7 @@ protected:
 
     Node* _gridTarget;
     GridBase* _nodeGrid;
+    GroupCommand _groupCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
