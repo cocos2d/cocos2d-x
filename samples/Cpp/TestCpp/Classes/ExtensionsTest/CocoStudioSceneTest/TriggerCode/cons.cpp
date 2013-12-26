@@ -131,7 +131,7 @@ void ArmatureActionState::removeAll()
 	{
 		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
-		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_ComName.c_str()));
+		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);
