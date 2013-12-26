@@ -709,6 +709,11 @@ LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
+    
+void Layout::requestDoLayout()
+{
+    _doLayoutDirty = true;
+}
 
 void Layout::doLayout()
 {

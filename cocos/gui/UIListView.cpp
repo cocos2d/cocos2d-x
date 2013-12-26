@@ -362,6 +362,11 @@ void ListView::setDirection(SCROLLVIEW_DIR dir)
     }
     ScrollView::setDirection(dir);
 }
+    
+void ListView::requestRefreshView()
+{
+    _refreshViewDirty = true;
+}
 
 void ListView::refreshView()
 {
