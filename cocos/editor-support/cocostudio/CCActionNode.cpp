@@ -34,20 +34,20 @@ using namespace gui;
 namespace cocostudio {
 
 ActionNode::ActionNode()
-: _currentFrameIndex(0)
-, _destFrameIndex(0)
-, _fUnitTime(0.1f)
-, _actionTag(0)
-, _actionSpawn(NULL)
-, _action(NULL)
-, _object(NULL)
-, _frameArray(NULL)
-, _frameArrayNum(0)
+	: _currentFrameIndex(0)
+	, _destFrameIndex(0)
+	, _fUnitTime(0.1f)
+	, _actionTag(0)
+	, _actionSpawn(NULL)
+	, _action(NULL)
+	, _object(NULL)
+	, _frameArray(NULL)
+	, _frameArrayNum(0)
 {
 	_frameArrayNum = (int)kKeyframeMax;
 	for(int i = 0; i < _frameArrayNum; i++)
 	{
-        _frameArray.push_back(cocos2d::Vector<ActionFrame*>());
+		_frameArray.push_back(cocos2d::Vector<ActionFrame*>());
 	}
 }
 
@@ -61,8 +61,8 @@ ActionNode::~ActionNode()
 	{
 		CC_SAFE_RELEASE_NULL(_action);
 	}
-	
-    _frameArray.clear();
+
+	_frameArray.clear();
 }
 
 void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
@@ -214,11 +214,11 @@ void ActionNode::insertFrame(int index, ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-    if(frameType < _frameArray.size())
-    {
-        auto cArray = _frameArray.at(frameType);
-        cArray.insert(index, frame);
-    }
+	if(frameType < _frameArray.size())
+	{
+		auto cArray = _frameArray.at(frameType);
+		cArray.insert(index, frame);
+	}
 }
 
 void ActionNode::addFrame(ActionFrame* frame)
@@ -228,12 +228,12 @@ void ActionNode::addFrame(ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-    
-    if(frameType < _frameArray.size())
-    {
-        auto cArray = _frameArray.at(frameType);
-        cArray.pushBack(frame);
-    }
+
+	if(frameType < _frameArray.size())
+	{
+		auto cArray = _frameArray.at(frameType);
+		cArray.pushBack(frame);
+	}
 }
 
 void ActionNode::deleteFrame(ActionFrame* frame)
@@ -243,19 +243,19 @@ void ActionNode::deleteFrame(ActionFrame* frame)
 		return;
 	}
 	int frameType = frame->getFrameType();
-    if(frameType < _frameArray.size())
-    {
-        auto cArray = _frameArray.at(frameType);
-        cArray.eraseObject(frame);
-    }
+	if(frameType < _frameArray.size())
+	{
+		auto cArray = _frameArray.at(frameType);
+		cArray.eraseObject(frame);
+	}
 }
 
 void ActionNode::clearAllFrame()
 {
-    for(auto array : _frameArray)
-    {
-        array.clear();
-    }
+	for(auto array : _frameArray)
+	{
+		array.clear();
+	}
 }
 
 Spawn * ActionNode::refreshActionProperty()
@@ -265,7 +265,7 @@ Spawn * ActionNode::refreshActionProperty()
 		return NULL;
 	}
 	Vector<FiniteTimeAction*> cSpawnArray;
-    
+
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		auto cArray = _frameArray.at(n);
@@ -287,8 +287,8 @@ Spawn * ActionNode::refreshActionProperty()
 				auto srcFrame = cArray.at(i-1);
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
 				Action* cAction = frame->getAction(duration);
-                if(cAction != NULL)
-				  cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+				if(cAction != NULL)
+					cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
 			}
 		}
 		Sequence* cSequence = Sequence::create(cSequenceArray);
@@ -408,7 +408,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	bool bFindFrame = false;
 
 	ActionFrame* srcFrame = NULL;
-//	ActionFrame* destFrame = NULL;
+	//	ActionFrame* destFrame = NULL;
 
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
