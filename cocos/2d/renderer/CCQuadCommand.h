@@ -108,6 +108,7 @@ public:
 
     void pushBackCommand(QuadCommand* ptr)
     {
+        CC_UNUSED_PARAM(ptr);
     }
 };
 
