@@ -1,6 +1,8 @@
 // local import
 #include "Texture2dTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagLabel = 1,
@@ -1765,12 +1767,25 @@ std::string TextureDrawAtPoint::subtitle() const
 void TextureDrawAtPoint::draw()
 {
     TextureDemo::draw();
+    
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
+}
+
+void TextureDrawAtPoint::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
     auto s = Director::getInstance()->getWinSize();
-
+    
     _tex1->drawAtPoint(Point(s.width/2-50, s.height/2 - 50));
     _Tex2F->drawAtPoint(Point(s.width/2+50, s.height/2 - 50));
-
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 // TextureDrawInRect
