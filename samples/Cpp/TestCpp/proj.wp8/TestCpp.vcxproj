@@ -330,6 +330,9 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
@@ -460,6 +463,8 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest\CCControlButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlColourPicker\CCControlColourPickerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
