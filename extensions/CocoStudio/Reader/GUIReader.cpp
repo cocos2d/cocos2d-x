@@ -995,10 +995,6 @@ cocos2d::gui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const
         widget = PageView::create();
         setPropsForPageViewFromJsonDictionary(widget, uiOptions);
     }
-    
-
-
-    
     int childrenCount = DICTOOL->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
@@ -1006,17 +1002,22 @@ cocos2d::gui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const
         cocos2d::gui::Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            if (dynamic_cast<PageView*>(widget))
+            PageView* pageView = dynamic_cast<PageView*>(widget);
+            if (pageView)
             {
-                dynamic_cast<PageView*>(widget)->addPage(static_cast<Layout*>(child));
-            }
-            else if (dynamic_cast<ListView*>(widget))
-            {
-                dynamic_cast<ListView*>(widget)->pushBackCustomItem(child);
+                pageView->addPage(static_cast<Layout*>(child));
             }
             else
             {
-                widget->addChild(child);
+                ListView* listView = dynamic_cast<ListView*>(widget);
+                if (listView)
+                {
+                    dynamic_cast<ListView*>(widget)->pushBackCustomItem(child);
+                }
+                else
+                {
+                    widget->addChild(child);
+                }
             }
         }
     }
