@@ -204,7 +204,7 @@ protected:
     ValueMap _properties;
     
     //! tile properties
-    IntValueMap _tileProperties;
+    ValueMapIntKey _tileProperties;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);
