@@ -6,8 +6,9 @@ USING_NS_CC;
 namespace
 {
     static std::function<Layer*()> createFunctions[] = {
+#ifdef CC_USE_PHYSICS
         CL(PhysicsDemoLogoSmash),
-        CL(PhysicsDemoPlink),
+        CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoClickAdd),
         CL(PhysicsDemoRayCast),
         CL(PhysicsDemoJoints),
@@ -15,6 +16,9 @@ namespace
         CL(PhysicsDemoPump),
         CL(PhysicsDemoOneWayPlatform),
         CL(PhysicsDemoSlice),
+#else
+        CL(PhysicsDemoDisabled),
+#endif
     };
     
     static int sceneIdx=-1;
@@ -26,9 +30,6 @@ namespace
         sceneIdx = sceneIdx % MAX_LAYER;
         
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     
@@ -40,18 +41,12 @@ namespace
             sceneIdx += total;
         
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     
     static Layer* restart()
     {
         auto layer = (createFunctions[sceneIdx])();
-        layer->init();
-        layer->autorelease();
-        
         return layer;
     }
     
@@ -59,47 +54,49 @@ namespace
     static const int DRAG_BODYS_TAG = 0x80;
 }
 
-
-bool PhysicsTestScene::_debugDraw = false;
-
-bool PhysicsTestScene::initTest()
-{
+PhysicsTestScene::PhysicsTestScene()
 #ifdef CC_USE_PHYSICS
-    if(TestScene::initWithPhysics())
-    {
-        this->getPhysicsWorld()->setDebugDraw(_debugDraw);
-        return true;
-    }
+: TestScene(false, true)
 #else
-    return TestScene::init();
+: TestScene()
 #endif
-    
-    return false;
-}
+, _debugDraw(false)
+{}
 
 void PhysicsTestScene::runThisTest()
 {
-#ifdef CC_USE_PHYSICS
     sceneIdx = -1;
     addChild(next());
     
     Director::getInstance()->replaceScene(this);
-#else
-#endif
 }
 
 void PhysicsTestScene::toggleDebug()
 {
+#ifdef CC_USE_PHYSICS
     _debugDraw = !_debugDraw;
-    getPhysicsWorld()->setDebugDraw(_debugDraw);
+    getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
+#endif
 }
+
+#ifndef CC_USE_PHYSICS
+void PhysicsDemoDisabled::onEnter()
+{
+    auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
+                                  "Arial",
+                                  18);
+    auto size = Director::getInstance()->getWinSize();
+    label->setPosition(Point(size.width/2, size.height/2));
+    
+    addChild(label);
+}
+#else
 
 PhysicsDemo::PhysicsDemo()
 : _scene(nullptr)
 , _spriteTexture(nullptr)
 , _ball(nullptr)
 {
-    
 }
 
 PhysicsDemo::~PhysicsDemo()
@@ -107,12 +104,12 @@ PhysicsDemo::~PhysicsDemo()
     
 }
 
-std::string PhysicsDemo::title()
+std::string PhysicsDemo::title() const
 {
     return "PhysicsTest";
 }
 
-std::string PhysicsDemo::subtitle()
+std::string PhysicsDemo::subtitle() const
 {
     return "";
 }
@@ -120,7 +117,6 @@ std::string PhysicsDemo::subtitle()
 void PhysicsDemo::restartCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -129,7 +125,6 @@ void PhysicsDemo::restartCallback(Object* sender)
 void PhysicsDemo::nextCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -138,7 +133,6 @@ void PhysicsDemo::nextCallback(Object* sender)
 void PhysicsDemo::backCallback(Object* sender)
 {
     auto s = new PhysicsTestScene();
-    s->initTest();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -152,8 +146,6 @@ void PhysicsDemo::onEnter()
     
     _spriteTexture = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100)->getTexture();
     
-#ifdef CC_USE_PHYSICS
-    
     // menu for debug layer
     MenuItemFont::setFontSize(18);
     auto item = MenuItemFont::create("Toggle debug", CC_CALLBACK_1(PhysicsDemo::toggleDebugCallback, this));
@@ -161,13 +153,10 @@ void PhysicsDemo::onEnter()
     auto menu = Menu::create(item, NULL);
     this->addChild(menu);
     menu->setPosition(Point(VisibleRect::right().x-50, VisibleRect::top().y-10));
-#else
-#endif
 }
 
 Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
 {
-#ifdef CC_USE_PHYSICS
     CCLOG("Add sprite %0.2f x %02.f",p.x,p.y);
     
     int posx, posy;
@@ -185,18 +174,15 @@ Sprite* PhysicsDemo::addGrossiniAtPosition(Point p, float scale/* = 1.0*/)
     sp->setPosition(p);
     
     return sp;
-#endif
 }
 
 
 void PhysicsDemo::toggleDebugCallback(Object* sender)
 {
-#ifdef CC_USE_PHYSICS
     if (_scene != nullptr)
     {
         _scene->toggleDebug();
     }
-#endif
 }
 
 PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
@@ -207,8 +193,6 @@ PhysicsDemoClickAdd::~PhysicsDemoClickAdd()
 void PhysicsDemoClickAdd::onEnter()
 {
     PhysicsDemo::onEnter();
-    
-#ifdef CC_USE_PHYSICS
     
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(PhysicsDemoClickAdd::onTouchesEnded, this);
@@ -224,19 +208,9 @@ void PhysicsDemoClickAdd::onEnter()
     this->addChild(node);
     
     addGrossiniAtPosition(VisibleRect::center());
-    
-#else
-    auto label = LabelTTF::create("Should define CC_USE_BOX2D or CC_USE_CHIPMUNK\n to run this test case",
-                                  "Arial",
-                                  18);
-    auto size = Director::getInstance()->getWinSize();
-    label->setPosition(Point(size.width/2, size.height/2));
-    
-    addChild(label);
-#endif
 }
 
-std::string PhysicsDemoClickAdd::subtitle()
+std::string PhysicsDemoClickAdd::subtitle() const
 {
     return "multi touch to add grossini";
 }
@@ -255,7 +229,6 @@ void PhysicsDemoClickAdd::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 
 void PhysicsDemoClickAdd::onAcceleration(Acceleration* acc, Event* event)
 {
-#ifdef CC_USE_PHYSICS
     static float prevX=0, prevY=0;
     
 #define kFilterFactor 0.05f
@@ -273,7 +246,6 @@ void PhysicsDemoClickAdd::onAcceleration(Acceleration* acc, Event* event)
     {
         _scene->getPhysicsWorld()->setGravity(v);
     }
-#endif
 }
 
 namespace
@@ -388,29 +360,27 @@ Sprite* PhysicsDemo::makeTriangle(Point point, Size size, PhysicsMaterial materi
 bool PhysicsDemo::onTouchBegan(Touch* touch, Event* event)
 {
     auto location = touch->getLocation();
-    Array* arr = _scene->getPhysicsWorld()->getShapes(location);
+    auto arr = _scene->getPhysicsWorld()->getShapes(location);
     
-    PhysicsShape* shape = nullptr;
-    for (Object* obj : *arr)
+    PhysicsBody* body = nullptr;
+    for (auto& obj : arr)
     {
-        shape = dynamic_cast<PhysicsShape*>(obj);
-        
-        if ((shape->getTag() & DRAG_BODYS_TAG) != 0)
+        if ((obj->getBody()->getTag() & DRAG_BODYS_TAG) != 0)
         {
+            body = obj->getBody();
             break;
         }
     }
     
-    if (shape != nullptr)
+    if (body != nullptr)
     {
-        
         Node* mouse = Node::create();
         mouse->setPhysicsBody(PhysicsBody::create(PHYSICS_INFINITY, PHYSICS_INFINITY));
         mouse->getPhysicsBody()->setDynamic(false);
         mouse->setPosition(location);
         this->addChild(mouse);
-        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), shape->getBody(), location);
-        joint->setMaxForce(5000.0f * shape->getBody()->getMass());
+        PhysicsJointPin* joint = PhysicsJointPin::construct(mouse->getPhysicsBody(), body, location);
+        joint->setMaxForce(5000.0f * body->getMass());
         _scene->getPhysicsWorld()->addJoint(joint);
         _mouses.insert(std::make_pair(touch->getID(), mouse));
         
@@ -426,7 +396,6 @@ void PhysicsDemo::onTouchMoved(Touch* touch, Event* event)
     
     if (it != _mouses.end())
     {
-        it->second->getPhysicsBody()->setVelocity((touch->getLocation() - it->second->getPosition()) * 60.0f);
         it->second->setPosition(touch->getLocation());
     }
 }
@@ -448,6 +417,7 @@ void PhysicsDemoLogoSmash::onEnter()
     PhysicsDemo::onEnter();
     
     _scene->getPhysicsWorld()->setGravity(Point(0, 0));
+    _scene->getPhysicsWorld()->setUpdateRate(5.0f);
     
     _ball = SpriteBatchNode::create("Images/ball.png", sizeof(logo_image)/sizeof(logo_image[0]));
     addChild(_ball);
@@ -461,7 +431,7 @@ void PhysicsDemoLogoSmash::onEnter()
                 float y_jitter = 0.05*frand();
                 
                 Node* ball = makeBall(Point(2*(x - logo_width/2 + x_jitter) + VisibleRect::getVisibleRect().size.width/2,
-                                      2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2),
+                                            2*(logo_height-y + y_jitter) + VisibleRect::getVisibleRect().size.height/2 - logo_height/2),
                                       0.95f, PhysicsMaterial(0.01f, 0.0f, 0.0f));
                 
                 ball->getPhysicsBody()->setMass(1.0);
@@ -475,49 +445,48 @@ void PhysicsDemoLogoSmash::onEnter()
     
     
     auto bullet = makeBall(Point(400, 0), 10, PhysicsMaterial(PHYSICS_INFINITY, 0, 0));
-    bullet->getPhysicsBody()->setVelocity(Point(400, 0));
+    bullet->getPhysicsBody()->setVelocity(Point(200, 0));
     
-    bullet->setPosition(Point(-1000, VisibleRect::getVisibleRect().size.height/2));
+    bullet->setPosition(Point(-500, VisibleRect::getVisibleRect().size.height/2));
     
     _ball->addChild(bullet);
 }
 
-std::string PhysicsDemoLogoSmash::title()
+std::string PhysicsDemoLogoSmash::title() const
 {
     return "Logo Smash";
-}
-
-void PhysicsDemoPlink::onEnter()
+}void PhysicsDemoPyramidStack::onEnter()
 {
     PhysicsDemo::onEnter();
     
-    auto node = DrawNode::create();
-    auto body = PhysicsBody::create();
-    body->setDynamic(false);
-    node->setPhysicsBody(body);
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchBegan, this);
+    touchListener->onTouchMoved = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchMoved, this);
+    touchListener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoPyramidStack::onTouchEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
     
-    Point tris[] = { Point(-15, -15), Point(0, 10), Point(15, -15) };
+    auto node = Node::create();
+    node->setPhysicsBody(PhysicsBody::createEdgeSegment(VisibleRect::leftBottom() + Point(0, 50), VisibleRect::rightBottom() + Point(0, 50)));
+    this->addChild(node);
     
-    auto rect = VisibleRect::getVisibleRect();
-    for (int i = 0; i < 9; ++i)
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setScale(1);
+    ball->setPhysicsBody(PhysicsBody::createCircle(10));
+    ball->setPosition(VisibleRect::bottom() + Point(0, 60));
+    this->addChild(ball);
+
+    for(int i=0; i<14; i++)
     {
-        for (int j = 0; j < 4; ++j)
+        for(int j=0; j<=i; j++)
         {
-            Point offset(rect.origin.x + rect.size.width/9*i + (j%2)*40 - 20, rect.origin.y + j*70);
-            body->addShape(PhysicsShapePolygon::create(tris, 3, PHYSICSSHAPE_MATERIAL_DEFAULT, offset));
-            
-            Point drawVec[] = {tris[0] + offset, tris[1] + offset, tris[2] + offset};
-            node->drawPolygon(drawVec, 3, STATIC_COLOR, 1, STATIC_COLOR);
+            auto sp = addGrossiniAtPosition(VisibleRect::bottom() + Point((i/2 - j) * 11, (14 - i) * 23 + 100), 0.2f);
+            sp->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
         }
     }
-    
-    addChild(node);
-    
 }
-
-std::string PhysicsDemoPlink::title()
+std::string PhysicsDemoPyramidStack::title() const
 {
-    return "Plink";
+    return "Pyramid Stack";
 }
 
 PhysicsDemoRayCast::PhysicsDemoRayCast()
@@ -691,7 +660,7 @@ void PhysicsDemoRayCast::onTouchesEnded(const std::vector<Touch*>& touches, Even
     }
 }
 
-std::string PhysicsDemoRayCast::title()
+std::string PhysicsDemoRayCast::title() const
 {
     return "Ray Cast";
 }
@@ -699,6 +668,7 @@ std::string PhysicsDemoRayCast::title()
 void PhysicsDemoJoints::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = CC_CALLBACK_2(PhysicsDemoJoints::onTouchBegan, this);
@@ -716,7 +686,6 @@ void PhysicsDemoJoints::onEnter()
     node->setPhysicsBody(box);
     box->setDynamic(false);
     node->setPosition(Point::ZERO);
-    
     this->addChild(node);
     
     for (int i = 0; i < 4; ++i)
@@ -757,6 +726,143 @@ void PhysicsDemoJoints::onEnter()
                     this->addChild(sp2);
                     break;
                 }
+                case 2:
+                {
+                    
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointDistance* joint = PhysicsJointDistance::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point::ZERO, Point::ZERO);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 3:
+                {
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointLimit* joint = PhysicsJointLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point::ZERO, Point::ZERO, 30.0f, 60.0f);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 4:
+                {
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointSpring* joint = PhysicsJointSpring::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point::ZERO, Point::ZERO, 500.0f, 0.3f);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 5:
+                {
+                    auto sp1 = makeBall(offset - Point(30, 0), 10);
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    PhysicsJointGroove* joint = PhysicsJointGroove::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), Point(30, 15), Point(30, -15), Point(-30, 0));
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 6:
+                {
+                    auto sp1 = makeBox(offset - Point(30, 0), Size(30, 10));
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
+                    PhysicsJointRotarySpring* joint = PhysicsJointRotarySpring::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 3000.0f, 60.0f);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 7:
+                {
+                    auto sp1 = makeBox(offset - Point(30, 0), Size(30, 10));
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
+                    PhysicsJointRotaryLimit* joint = PhysicsJointRotaryLimit::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 8:
+                {
+                    auto sp1 = makeBox(offset - Point(30, 0), Size(30, 10));
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
+                    PhysicsJointRatchet* joint = PhysicsJointRatchet::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, M_PI_2);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 9:
+                {
+                    auto sp1 = makeBox(offset - Point(30, 0), Size(30, 10));
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
+                    PhysicsJointGear* joint = PhysicsJointGear::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), 0.0f, 2.0f);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
+                case 10:
+                {
+                    auto sp1 = makeBox(offset - Point(30, 0), Size(30, 10));
+                    sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    auto sp2 = makeBox(offset + Point(30, 0), Size(30, 10));
+                    sp2->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+                    
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp1->getPhysicsBody(), box, sp1->getPosition()));
+                    _scene->getPhysicsWorld()->addJoint(PhysicsJointPin::construct(sp2->getPhysicsBody(), box, sp2->getPosition()));
+                    PhysicsJointMotor* joint = PhysicsJointMotor::construct(sp1->getPhysicsBody(), sp2->getPhysicsBody(), M_PI_2);
+                    _scene->getPhysicsWorld()->addJoint(joint);
+                    
+                    this->addChild(sp1);
+                    this->addChild(sp2);
+                    break;
+                }
                 default:
                     break;
             }
@@ -764,7 +870,7 @@ void PhysicsDemoJoints::onEnter()
     }
 }
 
-std::string PhysicsDemoJoints::title()
+std::string PhysicsDemoJoints::title() const
 {
     return "Joints";
 }
@@ -802,7 +908,7 @@ void PhysicsDemoActions::onEnter()
     sp4->runAction(RepeatForever::create(Sequence::create(actionBy->clone(), actionByBack->clone(), NULL)));
 }
 
-std::string PhysicsDemoActions::title()
+std::string PhysicsDemoActions::title() const
 {
     return "Actions";
 }
@@ -810,6 +916,7 @@ std::string PhysicsDemoActions::title()
 void PhysicsDemoPump::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _distance = 0.0f;
     _rotationV = 0.0f;
@@ -910,9 +1017,8 @@ void PhysicsDemoPump::onEnter()
 
 void PhysicsDemoPump::update(float delta)
 {
-    for (auto obj : *_scene->getPhysicsWorld()->getAllBodies())
+    for (const auto& body : _scene->getPhysicsWorld()->getAllBodies())
     {
-        PhysicsBody* body = dynamic_cast<PhysicsBody*>(obj);
         if (body->getTag() == DRAG_BODYS_TAG && body->getPosition().y < 0.0f)
         {
             body->getNode()->setPosition(VisibleRect::leftTop() + Point(75 + CCRANDOM_0_1() * 90, 0));
@@ -960,14 +1066,14 @@ void PhysicsDemoPump::onTouchEnded(Touch* touch, Event* event)
     _distance = 0;
 }
 
-std::string PhysicsDemoPump::title()
+std::string PhysicsDemoPump::title() const
 {
     return "Pump";
 }
 
-std::string PhysicsDemoPump::subtitle()
+std::string PhysicsDemoPump::subtitle() const
 {
-    return "open debug to see it";
+    return "touch screen on left or right";
 }
 
 void PhysicsDemoOneWayPlatform::onEnter()
@@ -1004,7 +1110,7 @@ bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const Physics
     return contact.getContactData()->normal.y < 0;
 }
 
-std::string PhysicsDemoOneWayPlatform::title()
+std::string PhysicsDemoOneWayPlatform::title() const
 {
     return "One Way Platform";
 }
@@ -1012,6 +1118,7 @@ std::string PhysicsDemoOneWayPlatform::title()
 void PhysicsDemoSlice::onEnter()
 {
     PhysicsDemo::onEnter();
+    _scene->toggleDebug();
     
     _sliceTag = 1;
     
@@ -1103,12 +1210,14 @@ void PhysicsDemoSlice::onTouchEnded(Touch *touch, Event *event)
     _scene->getPhysicsWorld()->rayCast(func, touch->getStartLocation(), touch->getLocation(), nullptr);
 }
 
-std::string PhysicsDemoSlice::title()
+std::string PhysicsDemoSlice::title() const
 {
     return "Slice";
 }
 
-std::string PhysicsDemoSlice::subtitle()
+std::string PhysicsDemoSlice::subtitle() const
 {
-    return "click and drag to slice up the block, open debug to see it";
+    return "click and drag to slice up the block";
 }
+
+#endif // ifndef CC_USE_PHYSICS

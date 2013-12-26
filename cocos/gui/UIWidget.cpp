@@ -23,305 +23,240 @@
  ****************************************************************************/
 
 #include "gui/UIWidget.h"
-#include "gui/UILayer.h"
 #include "gui/UILayout.h"
 #include "gui/UIHelper.h"
 
+NS_CC_BEGIN
+
 namespace gui {
-
-#define DYNAMIC_CAST_CCBLENDPROTOCOL dynamic_cast<cocos2d::BlendProtocol*>(_renderer)
-
-#define DYNAMIC_CAST_CCRGBAPROTOCOL dynamic_cast<cocos2d::RGBAProtocol*>(_renderer)
-
-#define DYNAMIC_CAST_CCNODERGBA dynamic_cast<GUIRenderer*>(_renderer)
     
-UIWidget::UIWidget():
+Widget::Widget():
 _enabled(true),
-_visible(true),
 _bright(true),
 _touchEnabled(false),
 _touchPassedEnabled(false),
 _focus(false),
-_widgetZOrder(0),
-_anchorPoint(cocos2d::Point(0.5f, 0.5f)),
-_widgetParent(NULL),
 _brightStyle(BRIGHT_NONE),
 _updateEnabled(false),
-_renderer(NULL),
-_touchStartPos(cocos2d::Point::ZERO),
-_touchMovePos(cocos2d::Point::ZERO),
-_touchEndPos(cocos2d::Point::ZERO),
-_touchEventListener(NULL),
-_touchEventSelector(NULL),
-_widgetTag(-1),
+_touchStartPos(Point::ZERO),
+_touchMovePos(Point::ZERO),
+_touchEndPos(Point::ZERO),
+_touchEventListener(nullptr),
+_touchEventSelector(nullptr),
 _name("default"),
 _widgetType(WidgetTypeWidget),
 _actionTag(0),
-_size(cocos2d::Size::ZERO),
-_customSize(cocos2d::Size::ZERO),
-_layoutParameterDictionary(NULL),
+_size(Size::ZERO),
+_customSize(Size::ZERO),
 _ignoreSize(false),
-_children(NULL),
 _affectByClipping(false),
-_scheduler(NULL),
 _sizeType(SIZE_ABSOLUTE),
-_sizePercent(cocos2d::Point::ZERO),
+_sizePercent(Point::ZERO),
 _positionType(POSITION_ABSOLUTE),
-_positionPercent(cocos2d::Point::ZERO),
-_isRunning(false),
-_userObject(NULL)
+_positionPercent(Point::ZERO),
+_reorderWidgetChildDirty(true),
+_hitted(false),
+_touchListener(nullptr)
 {
     
 }
 
-UIWidget::~UIWidget()
+Widget::~Widget()
 {
-    _touchEventListener = NULL;
-    _touchEventSelector = NULL;
-    removeAllChildren();
-    _children->release();
-    _renderer->removeAllChildrenWithCleanup(true);
-    _renderer->removeFromParentAndCleanup(true);
-    _renderer->release();
-    setParent(NULL);
-    _layoutParameterDictionary->removeAllObjects();
-    CC_SAFE_RELEASE(_layoutParameterDictionary);
-    CC_SAFE_RELEASE(_scheduler);
-    CC_SAFE_RELEASE(_userObject);
+    _touchEventListener = nullptr;
+    _touchEventSelector = nullptr;
+    _widgetChildren.clear();
+    CC_SAFE_RELEASE(_touchListener);
 }
 
-UIWidget* UIWidget::create()
+Widget* Widget::create()
 {
-    UIWidget* widget = new UIWidget();
+    Widget* widget = new Widget();
     if (widget && widget->init())
     {
         widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
-bool UIWidget::init()
+bool Widget::init()
 {
-    _children = cocos2d::Array::create();
-    _children->retain();
-    _layoutParameterDictionary = cocos2d::Dictionary::create();
-    CC_SAFE_RETAIN(_layoutParameterDictionary);
-    initRenderer();
-    _renderer->retain();
-    _renderer->setZOrder(_widgetZOrder);
-    cocos2d::RGBAProtocol* renderRGBA = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (renderRGBA)
+    if (Node::init())
     {
-        renderRGBA->setCascadeColorEnabled(true);
-        renderRGBA->setCascadeOpacityEnabled(true);
-    }
-    setBright(true);
-    ignoreContentAdaptWithSize(true);
-    _scheduler = cocos2d::Director::getInstance()->getScheduler();
-    CC_SAFE_RETAIN(_scheduler);
-    return true;
-}
-
-void UIWidget::onEnter()
-{
-    arrayMakeObjectsPerformSelector(_children, onEnter, UIWidget*);
-    _isRunning = true;
-    updateSizeAndPosition();
-}
-
-void UIWidget::onExit()
-{
-    _isRunning = false;
-    arrayMakeObjectsPerformSelector(_children, onExit, UIWidget*);
-}
-    
-void UIWidget::setUserObject(cocos2d::Object *pUserObject)
-{
-    CC_SAFE_RETAIN(pUserObject);
-    CC_SAFE_RELEASE(_userObject);
-    _userObject = pUserObject;
-}
-
-bool UIWidget::addChild(UIWidget *child)
-{
-    if (!child)
-    {
-        return false;
-    }
-    if (_children->containsObject(child))
-    {
-        return false;
-    }
-    child->setParent(this);
-    int childrenCount = _children->data->num;
-    if (childrenCount <= 0)
-    {
-        _children->addObject(child);
-    }
-    else
-    {
-        bool seekSucceed = false;
-        cocos2d::ccArray* arrayChildren = _children->data;
-        for (int i=childrenCount-1; i>=0; --i)
-        {
-            UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
-            if (child->getZOrder() >= widget->getZOrder())
-            {
-                if (i == childrenCount-1)
-                {
-                    _children->addObject(child);
-                    seekSucceed = true;
-                    break;
-                }
-                else
-                {
-                    _children->insertObject(child, i+1);
-                    seekSucceed = true;
-                    break;
-                }
-            }
-        }
-        if (!seekSucceed)
-        {
-            _children->insertObject(child,0);
-        }
-    }
-    child->getRenderer()->setZOrder(child->getZOrder());
-    _renderer->addChild(child->getRenderer());
-    if (_isRunning)
-    {
-        child->onEnter();
-    }
-    return true;
-}
-
-bool UIWidget::removeChild(UIWidget *child)
-{
-    if (!child)
-    {
-        return false;
-    }
-    if (_children->containsObject(child))
-    {
-        if (_isRunning)
-        {
-            child->onExit();    
-        }
-        child->setUpdateEnabled(false);
-        child->setParent(NULL);
-        _renderer->removeChild(child->getRenderer());
-        _children->removeObject(child);
+        initRenderer();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        setBright(true);
+        ignoreContentAdaptWithSize(true);
+        setAnchorPoint(Point(0.5f, 0.5f));
         return true;
     }
     return false;
 }
 
-void UIWidget::removeFromParent()
+void Widget::onEnter()
 {
-    if (_widgetParent)
-    {
-        _widgetParent->removeChild(this);
-    }
+    updateSizeAndPosition();
+    Node::onEnter();
 }
 
-void UIWidget::removeAllChildren()
+void Widget::onExit()
 {
-    if (!_children || _children->count() <= 0)
+    Node::onExit();
+}
+    
+void Widget::visit()
+{
+    if (_enabled)
     {
-        return;
-    }
-    int times = _children->data->num;
-    for (int i=0; i<times; ++i)
-    {
-        UIWidget* lastChild = (UIWidget*)(_children->getLastObject());
-        removeChild(lastChild);
-    }
+        Node::visit();
+    }    
 }
 
-void UIWidget::reorderChild(UIWidget* child)
+void Widget::addChild(Node *child)
 {
-    CC_SAFE_RETAIN(child);
-    _children->removeObject(child);
-    int childrenCount = _children->data->num;
-    if (childrenCount <= 0)
+    Node::addChild(child);
+}
+
+void Widget::addChild(Node * child, int zOrder)
+{
+    Node::addChild(child, zOrder);
+}
+    
+void Widget::addChild(Node* child, int zOrder, int tag)
+{
+    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
+    Node::addChild(child, zOrder, tag);
+    _widgetChildren.pushBack(child);
+}
+    
+void Widget::sortAllChildren()
+{
+    _reorderWidgetChildDirty = _reorderChildDirty;
+    Node::sortAllChildren();
+    if( _reorderWidgetChildDirty )
     {
-        _children->addObject(child);
+        std::sort( std::begin(_widgetChildren), std::end(_widgetChildren), nodeComparisonLess );
+        _reorderWidgetChildDirty = false;
+    }
+}
+    
+Node* Widget::getChildByTag(int aTag)
+{
+    CCASSERT( aTag != Node::INVALID_TAG, "Invalid tag");
+    
+    for (auto& child : _widgetChildren)
+    {
+        if(child && child->getTag() == aTag)
+            return child;
+    }
+    return nullptr;
+}
+
+Vector<Node*>& Widget::getChildren()
+{
+    return _widgetChildren;
+}
+    
+const Vector<Node*>& Widget::getChildren() const
+{
+    return _widgetChildren;
+}
+    
+long Widget::getChildrenCount() const
+{
+    return _widgetChildren.size();
+}
+
+Widget* Widget::getWidgetParent()
+{
+    return dynamic_cast<Widget*>(getParent());
+}
+    
+void Widget::removeFromParent()
+{
+    removeFromParentAndCleanup(true);
+}
+
+void Widget::removeFromParentAndCleanup(bool cleanup)
+{
+    Node::removeFromParentAndCleanup(cleanup);
+}
+
+void Widget::removeChild(Node *child, bool cleanup)
+{
+    Node::removeChild(child, cleanup);
+    _widgetChildren.eraseObject(child);
+}
+
+void Widget::removeChildByTag(int tag, bool cleanup)
+{
+    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    Node *child = getChildByTag(tag);
+    
+    if (child == NULL)
+    {
+        CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
     else
     {
-        bool seekSucceed = false;
-        cocos2d::ccArray* arrayChildren = _children->data;
-        for (int i=childrenCount-1; i>=0; --i)
-        {
-            UIWidget* widget = (UIWidget*)(arrayChildren->arr[i]);
-            if (child->getZOrder() >= widget->getZOrder())
-            {
-                if (i == childrenCount-1)
-                {
-                    _children->addObject(child);
-                    seekSucceed = true;
-                    break;
-                }
-                else
-                {
-                    _children->insertObject(child, i+1);
-                    seekSucceed = true;
-                    break;
-                }
-            }
-        }
-        if (!seekSucceed)
-        {
-            _children->insertObject(child,0);
-        }
+        removeChild(child, cleanup);
     }
-    CC_SAFE_RELEASE(child);
 }
 
-void UIWidget::setEnabled(bool enabled)
+void Widget::removeAllChildren()
+{
+    removeAllChildrenWithCleanup(true);
+}
+    
+void Widget::removeAllChildrenWithCleanup(bool cleanup)
+{
+    for (auto& child : _widgetChildren)
+    {
+        if (child)
+        {
+            Node::removeChild(child);
+        }
+    }
+    _widgetChildren.clear();
+}
+
+void Widget::setEnabled(bool enabled)
 {
     _enabled = enabled;
-    GUIRenderer* renderer = DYNAMIC_CAST_CCNODERGBA;
-    if (renderer)
+    for (auto& child : _widgetChildren)
     {
-        renderer->setEnabled(enabled);
-    }
-    else
-    {
-        dynamic_cast<UIRectClippingNode*>(_renderer)->setEnabled(enabled);
-    }
-    cocos2d::ccArray* arrayChildren = _children->data;
-    int childrenCount = arrayChildren->num;
-    for (int i = 0; i < childrenCount; i++)
-    {
-        UIWidget* child = dynamic_cast<UIWidget*>(arrayChildren->arr[i]);
-        child->setEnabled(enabled);
+        if (child)
+        {
+            static_cast<Widget*>(child)->setEnabled(enabled);
+        }
     }
 }
 
-UIWidget* UIWidget::getChildByName(const char *name)
+Widget* Widget::getChildByName(const char *name)
 {
-    return UIHelper::seekWidgetByName(this, name);
+    for (auto& child : _widgetChildren)
+    {
+        if (child)
+        {
+            Widget* widgetChild = static_cast<Widget*>(child);
+            if (strcmp(widgetChild->getName(), name) == 0)
+            {
+                return widgetChild;
+            }
+        }
+    }
+    return nullptr;
 }
 
-UIWidget* UIWidget::getChildByTag(int tag)
+void Widget::initRenderer()
 {
-    return UIHelper::seekWidgetByTag(this, tag);
 }
 
-cocos2d::Array* UIWidget::getChildren()
-{
-    return _children;
-}
-
-void UIWidget::initRenderer()
-{
-    _renderer = GUIRenderer::create();
-}
-
-void UIWidget::setSize(const cocos2d::Size &size)
+void Widget::setSize(const Size &size)
 {
     _customSize = size;
     if (_ignoreSize)
@@ -332,20 +267,48 @@ void UIWidget::setSize(const cocos2d::Size &size)
     {
         _size = size;
     }
-    if (_isRunning)
+    if (_running)
     {
-        _sizePercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(_customSize.width / _widgetParent->getSize().width, _customSize.height / _widgetParent->getSize().height);
+        Widget* widgetParent = getWidgetParent();
+        Size pSize;
+        if (widgetParent)
+        {
+            pSize = widgetParent->getSize();
+        }
+        else
+        {
+            pSize = _parent->getContentSize();
+        }
+        float spx = 0.0f;
+        float spy = 0.0f;
+        if (pSize.width > 0.0f)
+        {
+            spx = _customSize.width / pSize.width;
+        }
+        if (pSize.height > 0.0f)
+        {
+            spy = _customSize.height / pSize.height;
+        }
+        _sizePercent = Point(spx, spy);
     }
     onSizeChanged();
 }
 
-void UIWidget::setSizePercent(const cocos2d::Point &percent)
+void Widget::setSizePercent(const Point &percent)
 {
     _sizePercent = percent;
-    cocos2d::Size cSize = _customSize;
-    if (_isRunning)
+    Size cSize = _customSize;
+    if (_running)
     {
-        cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * percent.x , _widgetParent->getSize().height * percent.y);
+        Widget* widgetParent = getWidgetParent();
+        if (widgetParent)
+        {
+            cSize = Size(widgetParent->getSize().width * percent.x , widgetParent->getSize().height * percent.y);
+        }
+        else
+        {
+            cSize = Size(_parent->getContentSize().width * percent.x , _parent->getContentSize().height * percent.y);
+        }
     }
     if (_ignoreSize)
     {
@@ -359,11 +322,12 @@ void UIWidget::setSizePercent(const cocos2d::Point &percent)
     onSizeChanged();
 }
 
-void UIWidget::updateSizeAndPosition()
+void Widget::updateSizeAndPosition()
 {
     switch (_sizeType)
     {
         case SIZE_ABSOLUTE:
+        {
             if (_ignoreSize)
             {
                 _size = getContentSize();
@@ -372,60 +336,143 @@ void UIWidget::updateSizeAndPosition()
             {
                 _size = _customSize;
             }
-            _sizePercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(_customSize.width / _widgetParent->getSize().width, _customSize.height / _widgetParent->getSize().height);
-            break;
-        case SIZE_PERCENT:
-        {
-            cocos2d::Size cSize = (_widgetParent == NULL) ? cocos2d::Size::ZERO : cocos2d::Size(_widgetParent->getSize().width * _sizePercent.x , _widgetParent->getSize().height * _sizePercent.y);
-            if (_ignoreSize)
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
             {
-                _size = getContentSize();
+                Size pSize = widgetParent->getSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = _customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = _customSize.height / pSize.height;
+                }
+                _sizePercent = Point(spx, spy);
             }
             else
             {
-                _size = cSize;
+                Size pSize = _parent->getContentSize();
+                float spx = 0.0f;
+                float spy = 0.0f;
+                if (pSize.width > 0.0f)
+                {
+                    spx = _customSize.width / pSize.width;
+                }
+                if (pSize.height > 0.0f)
+                {
+                    spy = _customSize.height / pSize.height;
+                }
+                _sizePercent = Point(spx, spy);
             }
-            _customSize = cSize;
+            break;
+        }
+        case SIZE_PERCENT:
+        {
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
+            {
+                Size cSize = Size(widgetParent->getSize().width * _sizePercent.x , widgetParent->getSize().height * _sizePercent.y);
+                if (_ignoreSize)
+                {
+                    _size = getContentSize();
+                }
+                else
+                {
+                    _size = cSize;
+                }
+                _customSize = cSize;
+            }
+            else
+            {
+                Size cSize = Size(_parent->getContentSize().width * _sizePercent.x , _parent->getContentSize().height * _sizePercent.y);
+                if (_ignoreSize)
+                {
+                    _size = getContentSize();
+                }
+                else
+                {
+                    _size = cSize;
+                }
+                _customSize = cSize;
+            }
         }
             break;
         default:
             break;
     }
     onSizeChanged();
-    cocos2d::Point absPos = getPosition();
+    Point absPos = getPosition();
     switch (_positionType)
     {
         case POSITION_ABSOLUTE:
-            _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(absPos.x / _widgetParent->getSize().width, absPos.y / _widgetParent->getSize().height);
+        {
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
+            {
+                Size pSize = widgetParent->getSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    _positionPercent = Point::ZERO;
+                }
+                else
+                {
+                    _positionPercent = Point(absPos.x / pSize.width, absPos.y / pSize.height);
+                }
+            }
+            else
+            {
+                Size pSize = _parent->getContentSize();
+                if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+                {
+                    _positionPercent = Point::ZERO;
+                }
+                else
+                {
+                    _positionPercent = Point(absPos.x / pSize.width, absPos.y / pSize.height);
+                }
+            }
             break;
+        }
         case POSITION_PERCENT:
         {
-            cocos2d::Size parentSize = _widgetParent->getSize();
-            absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-        }
+            Widget* widgetParent = getWidgetParent();
+            if (widgetParent)
+            {
+                Size parentSize = widgetParent->getSize();
+                absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            }
+            else
+            {
+                Size parentSize = _parent->getContentSize();
+                absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            }
             break;
+        }
         default:
             break;
     }
-    _renderer->setPosition(absPos);
+    setPosition(absPos);
 }
 
-void UIWidget::setSizeType(SizeType type)
+void Widget::setSizeType(SizeType type)
 {
     _sizeType = type;
 }
 
-SizeType UIWidget::getSizeType() const
+SizeType Widget::getSizeType() const
 {
     return _sizeType;
 }
 
-void UIWidget::ignoreContentAdaptWithSize(bool ignore)
+void Widget::ignoreContentAdaptWithSize(bool ignore)
 {
     _ignoreSize = ignore;
     if (_ignoreSize)
     {
-        cocos2d::Size s = getContentSize();
+        Size s = getContentSize();
         _size = s;
     }
     else
@@ -435,72 +482,78 @@ void UIWidget::ignoreContentAdaptWithSize(bool ignore)
     onSizeChanged();
 }
 
-bool UIWidget::isIgnoreContentAdaptWithSize() const
+bool Widget::isIgnoreContentAdaptWithSize() const
 {
     return _ignoreSize;
 }
 
-const cocos2d::Size& UIWidget::getSize() const
+const Size& Widget::getSize() const
 {
     return _size;
 }
 
-const cocos2d::Point& UIWidget::getSizePercent() const
+const Point& Widget::getSizePercent() const
 {
     return _sizePercent;
 }
 
-cocos2d::Point UIWidget::getWorldPosition()
+Point Widget::getWorldPosition()
 {
-    return _renderer->convertToWorldSpace(cocos2d::Point::ZERO);
+    return convertToWorldSpace(Point::ZERO);
 }
 
-cocos2d::Point UIWidget::convertToWorldSpace(const cocos2d::Point& pt)
+Node* Widget::getVirtualRenderer()
 {
-    return _renderer->convertToWorldSpace(pt);
+    return this;
 }
 
-cocos2d::Node* UIWidget::getVirtualRenderer()
+void Widget::onSizeChanged()
 {
-    return _renderer;
+    for (auto& child : getChildren())
+    {
+        if (child)
+        {
+            static_cast<Widget*>(child)->updateSizeAndPosition();
+        }
+    }
 }
 
-void UIWidget::onSizeChanged()
-{
-
-}
-
-const cocos2d::Size& UIWidget::getContentSize() const
+const Size& Widget::getContentSize() const
 {
     return _size;
 }
 
-void UIWidget::setZOrder(int z)
+void Widget::setTouchEnabled(bool enable)
 {
-    _widgetZOrder = z;
-    _renderer->setZOrder(z);
-    if (_widgetParent)
+    if (enable == _touchEnabled)
     {
-        _widgetParent->reorderChild(this);
+        return;
+    }
+    _touchEnabled = enable;
+    if (_touchEnabled)
+    {
+        _touchListener = EventListenerTouchOneByOne::create();
+        CC_SAFE_RETAIN(_touchListener);
+        _touchListener->setSwallowTouches(true);
+        _touchListener->onTouchBegan = CC_CALLBACK_2(Widget::onTouchBegan, this);
+        _touchListener->onTouchMoved = CC_CALLBACK_2(Widget::onTouchMoved, this);
+        _touchListener->onTouchEnded = CC_CALLBACK_2(Widget::onTouchEnded, this);
+        _touchListener->onTouchCancelled = CC_CALLBACK_2(Widget::onTouchCancelled, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(_touchListener, this);
+    }
+    else
+    {
+        _eventDispatcher->removeEventListener(_touchListener);
+        CC_SAFE_RELEASE_NULL(_touchListener);
     }
 }
 
-int UIWidget::getZOrder()
-{
-    return _widgetZOrder;
-}
-
-void UIWidget::setTouchEnabled(bool enable)
-{
-    _touchEnabled = enable;
-}
-
-bool UIWidget::isTouchEnabled() const
+bool Widget::isTouchEnabled() const
 {
     return _touchEnabled;
 }
 
-void UIWidget::setUpdateEnabled(bool enable)
+void Widget::setUpdateEnabled(bool enable)
 {
     if (enable == _updateEnabled)
     {
@@ -509,31 +562,25 @@ void UIWidget::setUpdateEnabled(bool enable)
     _updateEnabled = enable;
     if (enable)
     {
-        if (_scheduler)
-        {
-            _scheduler->scheduleUpdateForTarget(this, 0, false);
-        }
+        scheduleUpdate();
     }
     else
     {
-        if (_scheduler)
-        {
-            _scheduler->unscheduleUpdateForTarget(this);
-        }
+        unscheduleUpdate();
     }
 }
 
-bool UIWidget::isUpdateEnabled()
+bool Widget::isUpdateEnabled()
 {
     return _updateEnabled;
 }
 
-bool UIWidget::isFocused() const
+bool Widget::isFocused() const
 {
     return _focus;
 }
 
-void UIWidget::setFocused(bool fucos)
+void Widget::setFocused(bool fucos)
 {
     if (fucos == _focus)
     {
@@ -557,7 +604,7 @@ void UIWidget::setFocused(bool fucos)
     }
 }
 
-void UIWidget::setBright(bool bright)
+void Widget::setBright(bool bright)
 {
     _bright = bright;
     if (_bright)
@@ -571,7 +618,7 @@ void UIWidget::setBright(bool bright)
     }
 }
 
-void UIWidget::setBrightStyle(BrightStyle style)
+void Widget::setBrightStyle(BrightStyle style)
 {
     if (_brightStyle == style)
     {
@@ -591,60 +638,68 @@ void UIWidget::setBrightStyle(BrightStyle style)
     }
 }
 
-void UIWidget::onPressStateChangedToNormal()
+void Widget::onPressStateChangedToNormal()
 {
     
 }
 
-void UIWidget::onPressStateChangedToPressed()
+void Widget::onPressStateChangedToPressed()
 {
     
 }
 
-void UIWidget::onPressStateChangedToDisabled()
+void Widget::onPressStateChangedToDisabled()
 {
     
 }
 
-void UIWidget::didNotSelectSelf()
+void Widget::didNotSelectSelf()
 {
     
 }
 
-bool UIWidget::onTouchBegan(const cocos2d::Point &touchPoint)
+bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    setFocused(true);
-    _touchStartPos.x = touchPoint.x;
-    _touchStartPos.y = touchPoint.y;
-    if (_widgetParent)
+    _touchStartPos = touch->getLocation();
+    _hitted = isEnabled()
+    & isTouchEnabled()
+    & hitTest(_touchStartPos)
+    & clippingParentAreaContainPoint(_touchStartPos);
+    if (!_hitted)
     {
-        _widgetParent->checkChildInfo(0,this,touchPoint);
+        return false;
+    }
+    setFocused(true);
+    Widget* widgetParent = getWidgetParent();
+    if (widgetParent)
+    {
+        widgetParent->checkChildInfo(0,this,_touchStartPos);
     }
     pushDownEvent();
-    return _touchPassedEnabled;
+    return !_touchPassedEnabled;
 }
 
-void UIWidget::onTouchMoved(const cocos2d::Point &touchPoint)
+void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    _touchMovePos.x = touchPoint.x;
-    _touchMovePos.y = touchPoint.y;
-    setFocused(hitTest(touchPoint));
-    if (_widgetParent)
+    _touchMovePos = touch->getLocation();
+    setFocused(hitTest(_touchMovePos));
+    Widget* widgetParent = getWidgetParent();
+    if (widgetParent)
     {
-        _widgetParent->checkChildInfo(1,this,touchPoint);
+        widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
     moveEvent();
 }
 
-void UIWidget::onTouchEnded(const cocos2d::Point &touchPoint)
+void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    _touchEndPos.x = touchPoint.x;
-    _touchEndPos.y = touchPoint.y;
+    _touchEndPos = touch->getLocation();
     bool focus = _focus;
     setFocused(false);
-    if (_widgetParent)
+    Widget* widgetParent = getWidgetParent();
+    if (widgetParent)
     {
-        _widgetParent->checkChildInfo(2,this,touchPoint);
+        widgetParent->checkChildInfo(2,this,_touchEndPos);
     }
     if (focus)
     {
@@ -656,18 +711,18 @@ void UIWidget::onTouchEnded(const cocos2d::Point &touchPoint)
     }
 }
 
-void UIWidget::onTouchCancelled(const cocos2d::Point &touchPoint)
+void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     setFocused(false);
     cancelUpEvent();
 }
 
-void UIWidget::onTouchLongClicked(const cocos2d::Point &touchPoint)
+void Widget::onTouchLongClicked(const Point &touchPoint)
 {
     longClickEvent();
 }
 
-void UIWidget::pushDownEvent()
+void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -675,7 +730,7 @@ void UIWidget::pushDownEvent()
     }
 }
 
-void UIWidget::moveEvent()
+void Widget::moveEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -683,7 +738,7 @@ void UIWidget::moveEvent()
     }
 }
 
-void UIWidget::releaseUpEvent()
+void Widget::releaseUpEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -691,7 +746,7 @@ void UIWidget::releaseUpEvent()
     }
 }
 
-void UIWidget::cancelUpEvent()
+void Widget::cancelUpEvent()
 {
     if (_touchEventListener && _touchEventSelector)
     {
@@ -699,36 +754,21 @@ void UIWidget::cancelUpEvent()
     }
 }
 
-void UIWidget::longClickEvent()
+void Widget::longClickEvent()
 {
     
 }
 
-void UIWidget::addTouchEventListener(cocos2d::Object *target, SEL_TouchEvent selector)
+void Widget::addTouchEventListener(Object *target, SEL_TouchEvent selector)
 {
     _touchEventListener = target;
     _touchEventSelector = selector;
 }
 
-cocos2d::Node* UIWidget::getRenderer()
+bool Widget::hitTest(const Point &pt)
 {
-    return _renderer;
-}
-
-void UIWidget::addRenderer(cocos2d::Node* renderer, int zOrder)
-{
-    _renderer->addChild(renderer, zOrder);
-}
-
-void UIWidget::removeRenderer(cocos2d::Node* renderer, bool cleanup)
-{
-    _renderer->removeChild(renderer,cleanup);
-}
-
-bool UIWidget::hitTest(const cocos2d::Point &pt)
-{
-    cocos2d::Point nsp = _renderer->convertToNodeSpace(pt);
-    cocos2d::Rect bb = cocos2d::Rect(-_size.width * _anchorPoint.x, -_size.height * _anchorPoint.y, _size.width, _size.height);
+    Point nsp = convertToNodeSpace(pt);
+    Rect bb = Rect(-_size.width * _anchorPoint.x, -_size.height * _anchorPoint.y, _size.width, _size.height);
     if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
     {
         return true;
@@ -736,14 +776,14 @@ bool UIWidget::hitTest(const cocos2d::Point &pt)
     return false;
 }
 
-bool UIWidget::clippingParentAreaContainPoint(const cocos2d::Point &pt)
+bool Widget::clippingParentAreaContainPoint(const Point &pt)
 {
     _affectByClipping = false;
-    UIWidget* parent = getParent();
-    UIWidget* clippingParent = NULL;
+    Widget* parent = getWidgetParent();
+    Widget* clippingParent = nullptr;
     while (parent)
     {
-        UILayout* layoutParent = dynamic_cast<UILayout*>(parent);
+        Layout* layoutParent = dynamic_cast<Layout*>(parent);
         if (layoutParent)
         {
             if (layoutParent->isClippingEnabled())
@@ -753,7 +793,7 @@ bool UIWidget::clippingParentAreaContainPoint(const cocos2d::Point &pt)
                 break;
             }
         }
-        parent = parent->getParent();
+        parent = parent->getWidgetParent();
     }
     
     if (!_affectByClipping)
@@ -778,390 +818,179 @@ bool UIWidget::clippingParentAreaContainPoint(const cocos2d::Point &pt)
     return true;
 }
 
-void UIWidget::checkChildInfo(int handleState, UIWidget *sender, const cocos2d::Point &touchPoint)
+void Widget::checkChildInfo(int handleState, Widget *sender, const Point &touchPoint)
 {
-    if (_widgetParent)
+    Widget* widgetParent = getWidgetParent();
+    if (widgetParent)
     {
-        _widgetParent->checkChildInfo(handleState,sender,touchPoint);
+        widgetParent->checkChildInfo(handleState,sender,touchPoint);
     }
 }
 
-void UIWidget::setPosition(const cocos2d::Point &pos)
+void Widget::setPosition(const Point &pos)
 {
-    if (_isRunning)
+    if (_running)
     {
-        _positionPercent = (_widgetParent == NULL) ? cocos2d::Point::ZERO : cocos2d::Point(pos.x / _widgetParent->getSize().width, pos.y / _widgetParent->getSize().height);
+        Widget* widgetParent = getWidgetParent();
+        if (widgetParent)
+        {
+            Size pSize = widgetParent->getSize();
+            if (pSize.width <= 0.0f || pSize.height <= 0.0f)
+            {
+                _positionPercent = Point::ZERO;
+            }
+            else
+            {
+                _positionPercent = Point(pos.x / pSize.width, pos.y / pSize.height);
+            }
+        }
     }
-    _renderer->setPosition(pos);
+    Node::setPosition(pos);
 }
 
-void UIWidget::setPositionPercent(const cocos2d::Point &percent)
+void Widget::setPositionPercent(const Point &percent)
 {
     _positionPercent = percent;
-    if (_isRunning)
+    if (_running)
     {
-        cocos2d::Size parentSize = _widgetParent->getSize();
-        cocos2d::Point absPos = cocos2d::Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
-        _renderer->setPosition(absPos);
+        Widget* widgetParent = getWidgetParent();
+        if (widgetParent)
+        {
+            Size parentSize = widgetParent->getSize();
+            Point absPos = Point(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
+            setPosition(absPos);
+        }
     }
 }
 
-void UIWidget::setAnchorPoint(const cocos2d::Point &pt)
+void Widget::updateAnchorPoint()
 {
-    _anchorPoint = pt;
-    _renderer->setAnchorPoint(pt);
+    setAnchorPoint(getAnchorPoint());
 }
 
-void UIWidget::updateAnchorPoint()
-{
-    setAnchorPoint(_anchorPoint);
-}
-
-const cocos2d::Point& UIWidget::getPosition()
-{
-    return _renderer->getPosition();
-}
-
-const cocos2d::Point& UIWidget::getPositionPercent()
+const Point& Widget::getPositionPercent()
 {
     return _positionPercent;
 }
 
-void UIWidget::setPositionType(PositionType type)
+void Widget::setPositionType(PositionType type)
 {
     _positionType = type;
 }
 
-PositionType UIWidget::getPositionType() const
+PositionType Widget::getPositionType() const
 {
     return _positionType;
 }
 
-const cocos2d::Point& UIWidget::getAnchorPoint()
-{
-    return _anchorPoint;
-}
-
-void UIWidget::setScale(float scale)
-{
-    _renderer->setScale(scale);
-}
-
-float UIWidget::getScale()
-{
-    return _renderer->getScale();
-}
-
-void UIWidget::setScaleX(float scaleX)
-{
-    _renderer->setScaleX(scaleX);
-}
-
-float UIWidget::getScaleX()
-{
-    return _renderer->getScaleX();
-}
-
-void UIWidget::setScaleY(float scaleY)
-{
-    _renderer->setScaleY(scaleY);
-}
-
-float UIWidget::getScaleY()
-{
-    return _renderer->getScaleY();
-}
-
-void UIWidget::setRotation(float rotation)
-{
-    _renderer->setRotation(rotation);
-}
-
-float UIWidget::getRotation()
-{
-    return _renderer->getRotation();
-}
-
-void UIWidget::setRotationX(float rotationX)
-{
-    _renderer->setRotationX(rotationX);
-}
-
-float UIWidget::getRotationX()
-{
-    return _renderer->getRotationX();
-}
-
-void UIWidget::setRotationY(float rotationY)
-{
-    _renderer->setRotationY(rotationY);
-}
-
-float UIWidget::getRotationY()
-{
-    return _renderer->getRotationY();
-}
-
-void UIWidget::setVisible(bool visible)
-{
-    _visible = visible;
-    _renderer->setVisible(visible);
-}
-
-bool UIWidget::isVisible() const
-{
-    return _visible;
-}
-
-bool UIWidget::isBright() const
+bool Widget::isBright() const
 {
     return _bright;
 }
 
-bool UIWidget::isEnabled() const
+bool Widget::isEnabled() const
 {
     return _enabled;
 }
 
-float UIWidget::getLeftInParent()
+float Widget::getLeftInParent()
 {
     return getPosition().x - getAnchorPoint().x * _size.width;;
 }
 
-float UIWidget::getBottomInParent()
+float Widget::getBottomInParent()
 {
     return getPosition().y - getAnchorPoint().y * _size.height;;
 }
 
-float UIWidget::getRightInParent()
+float Widget::getRightInParent()
 {
     return getLeftInParent() + _size.width;
 }
 
-float UIWidget::getTopInParent()
+float Widget::getTopInParent()
 {
     return getBottomInParent() + _size.height;
 }
 
-UIWidget* UIWidget::getParent()
-{
-    return _widgetParent;
-}
-
-void UIWidget::setParent(UIWidget* parent)
-{
-	_widgetParent = parent;
-}
-
-cocos2d::Action* UIWidget::runAction(cocos2d::Action *action)
-{
-    return _renderer->runAction(action);
-}
-
-void UIWidget::setActionManager(cocos2d::ActionManager *actionManager)
-{
-    _renderer->setActionManager(actionManager);
-}
-
-cocos2d::ActionManager* UIWidget::getActionManager()
-{
-    return _renderer->getActionManager();
-}
-
-void UIWidget::stopAllActions()
-{
-    _renderer->stopAllActions();
-}
-
-void UIWidget::stopAction(cocos2d::Action *action)
-{
-    _renderer->stopAction(action);
-}
-
-void UIWidget::stopActionByTag(int tag)
-{
-    _renderer->stopActionByTag(tag);
-}
-
-cocos2d::Action* UIWidget::getActionByTag(int tag)
-{
-    return _renderer->getActionByTag(tag);
-}  
-
-void UIWidget::setColor(const cocos2d::Color3B &color)
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        rgbap->setColor(color);
-    }
-}
-
-const cocos2d::Color3B& UIWidget::getColor()
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        return rgbap->getColor();
-    }
-    return cocos2d::Color3B::WHITE;
-}
-
-void UIWidget::setOpacity(int opacity)
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        rgbap->setOpacity(opacity);
-    }
-}
-
-int UIWidget::getOpacity()
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        return rgbap->getOpacity();
-    }
-    return 255;
-}
-
-bool UIWidget::isCascadeOpacityEnabled()
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        return rgbap->isCascadeOpacityEnabled();
-    }
-    return false;
-}
-
-void UIWidget::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        rgbap->setCascadeOpacityEnabled(cascadeOpacityEnabled);
-    }
-}
-
-bool UIWidget::isCascadeColorEnabled()
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        return rgbap->isCascadeColorEnabled();
-    }
-    return false;
-}
-
-void UIWidget::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    cocos2d::RGBAProtocol* rgbap = DYNAMIC_CAST_CCRGBAPROTOCOL;
-    if (rgbap)
-    {
-        rgbap->setCascadeColorEnabled(cascadeColorEnabled);
-    }
-}
-
-void UIWidget::setBlendFunc(cocos2d::BlendFunc blendFunc)
-{
-    cocos2d::BlendProtocol * blendNode = DYNAMIC_CAST_CCBLENDPROTOCOL;
-    if (blendNode)
-    {
-        blendNode->setBlendFunc(blendFunc);
-    }
-}
-
-const cocos2d::Point& UIWidget::getTouchStartPos()
+const Point& Widget::getTouchStartPos()
 {
     return _touchStartPos;
 }
 
-const cocos2d::Point& UIWidget::getTouchMovePos()
+const Point& Widget::getTouchMovePos()
 {
     return _touchMovePos;
 }
 
-const cocos2d::Point& UIWidget::getTouchEndPos()
+const Point& Widget::getTouchEndPos()
 {
     return _touchEndPos;
 }
 
-void UIWidget::setTag(int tag)
-{
-    _widgetTag = tag;
-}
-
-int UIWidget::getTag() const
-{
-    return _widgetTag;
-}
-
-void UIWidget::setName(const char* name)
+void Widget::setName(const char* name)
 {
     _name = name;
 }
 
-const char* UIWidget::getName() const
+const char* Widget::getName() const
 {
     return _name.c_str();
 }
 
-WidgetType UIWidget::getWidgetType() const
+WidgetType Widget::getWidgetType() const
 {
     return _widgetType;
 }
 
-void UIWidget::setLayoutParameter(UILayoutParameter *parameter)
+void Widget::setLayoutParameter(LayoutParameter *parameter)
 {
     if (!parameter)
     {
         return;
     }
-    _layoutParameterDictionary->setObject(parameter, parameter->getLayoutType());
+    _layoutParameterDictionary.insert(parameter->getLayoutType(), parameter);
 }
 
-UILayoutParameter* UIWidget::getLayoutParameter(LayoutParameterType type)
+LayoutParameter* Widget::getLayoutParameter(LayoutParameterType type)
 {
-    return dynamic_cast<UILayoutParameter*>(_layoutParameterDictionary->objectForKey(type));
+    return dynamic_cast<LayoutParameter*>(_layoutParameterDictionary.at(type));
 }
 
-const char* UIWidget::getDescription() const
+std::string Widget::getDescription() const
 {
     return "Widget";
 }
 
-UIWidget* UIWidget::clone()
+Widget* Widget::clone()
 {
-    UIWidget* clonedWidget = createCloneInstance();
+    Widget* clonedWidget = createCloneInstance();
     clonedWidget->copyProperties(this);
     clonedWidget->copyClonedWidgetChildren(this);
     return clonedWidget;
 }
 
-UIWidget* UIWidget::createCloneInstance()
+Widget* Widget::createCloneInstance()
 {
-    return UIWidget::create();
+    return Widget::create();
 }
 
-void UIWidget::copyClonedWidgetChildren(UIWidget* model)
+void Widget::copyClonedWidgetChildren(Widget* model)
 {
-    cocos2d::ccArray* arrayWidgetChildren = model->getChildren()->data;
-    int length = arrayWidgetChildren->num;
+    int length = model->getChildren().size();
     for (int i=0; i<length; i++)
     {
-        UIWidget* child = (UIWidget*)(arrayWidgetChildren->arr[i]);
+        Widget* child = static_cast<Widget*>(model->getChildren().at(i));
         addChild(child->clone());
     }
 }
 
-void UIWidget::copySpecialProperties(UIWidget* model)
+void Widget::copySpecialProperties(Widget* model)
 {
     
 }
 
-void UIWidget::copyProperties(UIWidget *widget)
+void Widget::copyProperties(Widget *widget)
 {
     setEnabled(widget->isEnabled());
     setVisible(widget->isVisible());
@@ -1198,58 +1027,16 @@ void UIWidget::copyProperties(UIWidget *widget)
 }
 
 /*temp action*/
-void UIWidget::setActionTag(int tag)
+void Widget::setActionTag(int tag)
 {
 	_actionTag = tag;
 }
 
-int UIWidget::getActionTag()
+int Widget::getActionTag()
 {
 	return _actionTag;
 }
-
-GUIRenderer::GUIRenderer():
-_enabled(true)
-{
     
 }
 
-GUIRenderer::~GUIRenderer()
-{
-    
-}
-
-GUIRenderer* GUIRenderer::create()
-{
-    GUIRenderer* renderer = new GUIRenderer();
-    if (renderer && renderer->init())
-    {
-        renderer->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(renderer);
-    }
-    return renderer;
-}
-
-void GUIRenderer::setEnabled(bool enabled)
-{
-    _enabled = enabled;
-}
-
-bool GUIRenderer::isEnabled() const
-{
-    return _enabled;
-}
-
-void GUIRenderer::visit()
-{
-    if (!_enabled)
-    {
-        return;
-    }
-    cocos2d::NodeRGBA::visit();
-}
-    
-}
+NS_CC_END

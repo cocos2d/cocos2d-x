@@ -40,13 +40,13 @@ NS_CC_BEGIN
 
 TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {
-    TMXLayer *pRet = new TMXLayer();
-    if (pRet->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
+    TMXLayer *ret = new TMXLayer();
+    if (ret->initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    return NULL;
+    return nullptr;
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
 {    
@@ -55,7 +55,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     float totalNumberOfTiles = size.width * size.height;
     float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
-    Texture2D *texture = NULL;
+    Texture2D *texture = nullptr;
     if( tilesetInfo )
     {
         texture = Director::getInstance()->getTextureCache()->addImage(tilesetInfo->_sourceImage.c_str());
@@ -70,7 +70,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _minGID = layerInfo->_minGID;
         _maxGID = layerInfo->_maxGID;
         _opacity = layerInfo->_opacity;
-        setProperties(Dictionary::createWithDictionary(layerInfo->getProperties()));
+        setProperties(layerInfo->getProperties());
         _contentScaleFactor = Director::getInstance()->getContentScaleFactor(); 
 
         // tilesetInfo
@@ -104,27 +104,25 @@ TMXLayer::TMXLayer()
 ,_maxGID(0)
 ,_vertexZvalue(0)
 ,_useAutomaticVertexZ(false)
-,_reusedTile(NULL)
-,_atlasIndexArray(NULL)
+,_reusedTile(nullptr)
+,_atlasIndexArray(nullptr)
 ,_contentScaleFactor(1.0f)
 ,_layerSize(Size::ZERO)
 ,_mapTileSize(Size::ZERO)
-,_tiles(NULL)
-,_tileSet(NULL)
+,_tiles(nullptr)
+,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
-,_properties(NULL)
 {}
 
 TMXLayer::~TMXLayer()
 {
     CC_SAFE_RELEASE(_tileSet);
     CC_SAFE_RELEASE(_reusedTile);
-    CC_SAFE_RELEASE(_properties);
 
     if (_atlasIndexArray)
     {
         ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = NULL;
+        _atlasIndexArray = nullptr;
     }
 
     CC_SAFE_DELETE_ARRAY(_tiles);
@@ -135,13 +133,13 @@ void TMXLayer::releaseMap()
     if (_tiles)
     {
         delete [] _tiles;
-        _tiles = NULL;
+        _tiles = nullptr;
     }
 
     if (_atlasIndexArray)
     {
         ccCArrayFree(_atlasIndexArray);
-        _atlasIndexArray = NULL;
+        _atlasIndexArray = nullptr;
     }
 }
 
@@ -193,28 +191,28 @@ void TMXLayer::setupTiles()
 }
 
 // TMXLayer - Properties
-String* TMXLayer::getProperty(const char *propertyName) const
+Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    return static_cast<String*>(_properties->objectForKey(propertyName));
+    if (_properties.find(propertyName) != _properties.end())
+        return _properties.at(propertyName);
+    
+    return Value();
 }
 
 void TMXLayer::parseInternalProperties()
 {
     // if cc_vertex=automatic, then tiles will be rendered using vertexz
 
-    String *vertexz = getProperty("cc_vertexz");
-    if (vertexz) 
+    auto vertexz = getProperty("cc_vertexz");
+    if (!vertexz.isNull())
     {
+        std::string vertexZStr = vertexz.asString();
         // If "automatic" is on, then parse the "cc_alpha_func" too
-        if (vertexz->_string == "automatic")
+        if (vertexZStr == "automatic")
         {
             _useAutomaticVertexZ = true;
-            String *alphaFuncVal = getProperty("cc_alpha_func");
-            float alphaFuncValue = 0.0f;
-            if (alphaFuncVal != NULL)
-            {
-                alphaFuncValue = alphaFuncVal->floatValue();
-            }
+            auto alphaFuncVal = getProperty("cc_alpha_func");
+            float alphaFuncValue = alphaFuncVal.asFloat();
             setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
             GLint alphaValueLocation = glGetUniformLocation(getShaderProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
@@ -228,7 +226,7 @@ void TMXLayer::parseInternalProperties()
         }
         else
         {
-            _vertexZvalue = vertexz->intValue();
+            _vertexZvalue = vertexz.asInt();
         }
     }
 }
@@ -294,15 +292,15 @@ Sprite* TMXLayer::reusedTileWithRect(Rect rect)
 {
     if (! _reusedTile) 
     {
-        _reusedTile = new Sprite();
-        _reusedTile->initWithTexture(_textureAtlas->getTexture(), rect, false);
+        _reusedTile = Sprite::createWithTexture(_textureAtlas->getTexture(), rect);
         _reusedTile->setBatchNode(this);
+        _reusedTile->retain();
     }
     else
     {
         // XXX HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
-        _reusedTile->setBatchNode(NULL);
+        _reusedTile->setBatchNode(nullptr);
         
 		// Re-init the sprite
         _reusedTile->setTextureRect(rect, false, rect.size);
@@ -335,17 +333,15 @@ Sprite * TMXLayer::getTileAt(const Point& pos)
             Rect rect = _tileSet->rectForGID(gid);
             rect = CC_RECT_PIXELS_TO_POINTS(rect);
 
-            tile = new Sprite();
-            tile->initWithTexture(this->getTexture(), rect);
+            tile = Sprite::createWithTexture(this->getTexture(), rect);
             tile->setBatchNode(this);
             tile->setPosition(getPositionAt(pos));
             tile->setVertexZ((float)getVertexZForPos(pos));
             tile->setAnchorPoint(Point::ZERO);
             tile->setOpacity(_opacity);
 
-            unsigned int indexForZ = atlasIndexForExistantZ(z);
-            this->addSpriteWithoutQuad(tile, indexForZ, z);
-            tile->release();
+            ssize_t indexForZ = atlasIndexForExistantZ(z);
+            this->addSpriteWithoutQuad(tile, static_cast<int>(indexForZ), z);
         }
     }
     
@@ -383,7 +379,7 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile, pos, gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForNewZ(z);
+    ssize_t indexForZ = atlasIndexForNewZ(static_cast<int>(z));
 
     // Optimization: add the quad without adding a child
     this->insertQuadFromSprite(tile, indexForZ);
@@ -392,25 +388,20 @@ Sprite * TMXLayer::insertTileForGID(unsigned int gid, const Point& pos)
     ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
 
     // update possible children
-    if (_children && _children->count()>0)
-    {
-        Object* pObject = nullptr;
-        CCARRAY_FOREACH(_children, pObject)
+    
+    for(const auto &child : _children) {
+        Sprite* sp = static_cast<Sprite*>(child);
+        ssize_t ai = sp->getAtlasIndex();
+        if ( ai >= indexForZ )
         {
-            Sprite* child = static_cast<Sprite*>(pObject);
-            if (child)
-            {
-                unsigned int ai = child->getAtlasIndex();
-                if ( ai >= indexForZ )
-                {
-                    child->setAtlasIndex(ai+1);
-                }
-            }
+            sp->setAtlasIndex(ai+1);
         }
     }
+
     _tiles[z] = gid;
     return tile;
 }
+
 Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)    
 {
     Rect rect = _tileSet->rectForGID(gid);
@@ -422,7 +413,7 @@ Sprite * TMXLayer::updateTileForGID(unsigned int gid, const Point& pos)
     setupTileSprite(tile ,pos ,gid);
 
     // get atlas index
-    unsigned int indexForZ = atlasIndexForExistantZ(z);
+    ssize_t indexForZ = atlasIndexForExistantZ(z);
     tile->setAtlasIndex(indexForZ);
     tile->setDirty(true);
     tile->updateTransform();
@@ -447,7 +438,7 @@ Sprite * TMXLayer::appendTileForGID(unsigned int gid, const Point& pos)
     // optimization:
     // The difference between appendTileForGID and insertTileforGID is that append is faster, since
     // it appends the tile at the end of the texture atlas
-    unsigned int indexForZ = _atlasIndexArray->num;
+    ssize_t indexForZ = _atlasIndexArray->num;
 
     // don't add it using the "standard" way.
     insertQuadFromSprite(tile, indexForZ);
@@ -463,23 +454,25 @@ static inline int compareInts(const void * a, const void * b)
 {
     return ((*(int*)a) - (*(int*)b));
 }
-unsigned int TMXLayer::atlasIndexForExistantZ(unsigned int z)
+
+ssize_t TMXLayer::atlasIndexForExistantZ(unsigned int z)
 {
     int key=z;
     int *item = (int*)bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
 
     CCASSERT(item, "TMX atlas index not found. Shall not happen");
 
-    int index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
+    ssize_t index = ((size_t)item - (size_t)_atlasIndexArray->arr) / sizeof(void*);
     return index;
 }
-unsigned int TMXLayer::atlasIndexForNewZ(int z)
+
+ssize_t TMXLayer::atlasIndexForNewZ(int z)
 {
     // XXX: This can be improved with a sort of binary search
-    int i=0;
+    ssize_t i=0;
     for (i=0; i< _atlasIndexArray->num ; i++) 
     {
-        int val = (size_t) _atlasIndexArray->arr[i];
+        ssize_t val = (size_t) _atlasIndexArray->arr[i];
         if (z < val)
         {
             break;
@@ -560,10 +553,10 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
         return;
     }
 
-    CCASSERT(_children->containsObject(sprite), "Tile does not belong to TMXLayer");
+    CCASSERT(_children.contains(sprite), "Tile does not belong to TMXLayer");
 
-    unsigned int atlasIndex = sprite->getAtlasIndex();
-    unsigned int zz = (size_t)_atlasIndexArray->arr[atlasIndex];
+    ssize_t atlasIndex = sprite->getAtlasIndex();
+    ssize_t zz = (ssize_t)_atlasIndexArray->arr[atlasIndex];
     _tiles[zz] = 0;
     ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
     SpriteBatchNode::removeChild(sprite, cleanup);
@@ -579,7 +572,7 @@ void TMXLayer::removeTileAt(const Point& pos)
     if (gid) 
     {
         unsigned int z = (unsigned int)(pos.x + pos.y * _layerSize.width);
-        unsigned int atlasIndex = atlasIndexForExistantZ(z);
+        ssize_t atlasIndex = atlasIndexForExistantZ(z);
 
         // remove tile from GID map
         _tiles[z] = 0;
@@ -598,20 +591,12 @@ void TMXLayer::removeTileAt(const Point& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            if (_children && _children->count()>0)
-            {
-                Object* pObject = nullptr;
-                CCARRAY_FOREACH(_children, pObject)
+            for(const auto &obj : _children) {
+                Sprite* child = static_cast<Sprite*>(obj);
+                ssize_t ai = child->getAtlasIndex();
+                if ( ai >= atlasIndex )
                 {
-                    Sprite* child = static_cast<Sprite*>(pObject);
-                    if (child)
-                    {
-                        unsigned int ai = child->getAtlasIndex();
-                        if ( ai >= atlasIndex )
-                        {
-                            child->setAtlasIndex(ai-1);
-                        }
-                    }
+                    child->setAtlasIndex(ai-1);
                 }
             }
         }
@@ -712,6 +697,12 @@ int TMXLayer::getVertexZForPos(const Point& pos)
     
     return ret;
 }
+
+std::string TMXLayer::getDescription() const
+{
+    return StringUtils::format("<TMXLayer | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
+}
+
 
 NS_CC_END
 

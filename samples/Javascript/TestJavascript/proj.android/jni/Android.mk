@@ -17,6 +17,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += jsb_extension_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_localstorage_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_builder_static
+LOCAL_WHOLE_STATIC_LIBRARIES += jsb_gui_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_studio_static
 
 
@@ -30,4 +31,5 @@ $(call import-module,scripting/javascript/bindings/extension)
 $(call import-module,scripting/javascript/bindings/localstorage)
 $(call import-module,scripting/javascript/bindings/network)
 $(call import-module,scripting/javascript/bindings/cocosbuilder)
+$(call import-module,scripting/javascript/bindings/gui)
 $(call import-module,scripting/javascript/bindings/cocostudio)

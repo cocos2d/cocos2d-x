@@ -20,7 +20,7 @@ public:
     EaseSpriteDemo(void);
     ~EaseSpriteDemo(void);
 
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void onEnter();
 
     void restartCallback(Object* sender);
@@ -34,7 +34,7 @@ class SpriteEase : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 
     void testStopAction(float dt);
 };
@@ -43,84 +43,84 @@ class SpriteEaseInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseExponential : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseExponentialInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseSine : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseSineInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseElastic : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseElasticInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseBounce : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseBounceInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseBack : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpriteEaseBackInOut : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class SpeedTest : public EaseSpriteDemo
 {
 public:
     void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 
     void altertime(float dt);
 };

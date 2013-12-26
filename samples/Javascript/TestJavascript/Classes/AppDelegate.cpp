@@ -7,8 +7,11 @@
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "jsb_cocos2dx_studio_auto.hpp"
+#include "jsb_cocos2dx_gui_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "gui/jsb_cocos2dx_gui_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "cocosbuilder/cocosbuilder_specifics.hpp"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
@@ -47,6 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     FileUtils::getInstance()->addSearchPath("res");
     FileUtils::getInstance()->addSearchPath("script");
+    FileUtils::getInstance()->addSearchPath("res/scenetest");
     
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
@@ -62,8 +66,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
 
+    sc->addRegisterCallback(register_all_cocos2dx_gui);
+    sc->addRegisterCallback(register_all_cocos2dx_gui_manual);
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
     
     sc->start();
     

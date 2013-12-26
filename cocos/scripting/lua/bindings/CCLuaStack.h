@@ -29,8 +29,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
+#include "cocos2d.h"
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN
@@ -40,6 +39,8 @@ class LuaStack : public Object
 public:
     static LuaStack *create(void);
     static LuaStack *attach(lua_State *L);
+    
+    virtual ~LuaStack();
     
     /**
      @brief Method used to get a pointer to the lua_State that the script module is attached to.
@@ -101,6 +102,7 @@ public:
     virtual void clean(void);
     virtual void pushInt(int intValue);
     virtual void pushFloat(float floatValue);
+    virtual void pushLong(long longValue);
     virtual void pushBoolean(bool boolValue);
     virtual void pushString(const char* stringValue);
     virtual void pushString(const char* stringValue, int length);

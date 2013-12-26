@@ -186,7 +186,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterScriptHandler' function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -212,6 +212,7 @@ static void extendScrollView(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_ScrollView_unregisterScriptHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
@@ -313,7 +314,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    CCLOG("'unregisterControlEventHandler' function of Control  has wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -336,6 +337,7 @@ static void extendControl(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_control_unregisterControlEventHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S)
@@ -440,6 +442,7 @@ static void extendEditBox(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_CCBProxy_create(lua_State* tolua_S)
@@ -691,8 +694,8 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     
-    uint32_t typeId = typeid(CCBProxy).hash_code();
-    g_luaType[typeId] = "CCBProxy";
+    std::string typeName = typeid(CCBProxy).name();
+    g_luaType[typeName] = "CCBProxy";
     return 1;
 }
 
@@ -786,6 +789,7 @@ static void extendCCBReader(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CCBReader_load );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 
@@ -852,6 +856,7 @@ static void extendCCBAnimationManager(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed );
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 #define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
@@ -1021,7 +1026,7 @@ public:
     LUA_TableViewDataSource(){}
     virtual ~LUA_TableViewDataSource(){}
     
-    virtual Size tableCellSizeForIndex(TableView *table, unsigned int idx)
+    virtual Size tableCellSizeForIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1047,7 +1052,7 @@ public:
         return Size::ZERO;
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, unsigned int idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
     {
         if (nullptr != table )
         {
@@ -1073,7 +1078,7 @@ public:
         return NULL;
     }
     
-    virtual unsigned int numberOfCellsInTableView(TableView *table)
+    virtual long numberOfCellsInTableView(TableView *table)
     {
         if (nullptr != table )
         {
@@ -1089,7 +1094,7 @@ public:
                 Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
                 if (NULL != numbers)
                 {
-                    return (int)numbers->getValue();
+                    return (long)numbers->getValue();
                 }
             }
         }
@@ -1190,7 +1195,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
 #if COCOS2D_DEBUG >= 1
             if (!tolua_isusertype(L,3,"Node",0,&tolua_err)) goto tolua_lerror;
 #endif
-            Node* node = static_cast<Node*>(tolua_tousertype(L, 2, nullptr));
+            Node* node = static_cast<Node*>(tolua_tousertype(L, 3, nullptr));
             ret = TableView::create(dataSource, size, node);
         }
         
@@ -1328,6 +1333,7 @@ static void extendTableView(lua_State* L)
         tolua_function(L, "registerScriptHandler", lua_cocos2d_TableView_registerScriptHandler);
         tolua_function(L, "unregisterScriptHandler", lua_cocos2d_TableView_unregisterScriptHandler);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
@@ -1424,6 +1430,7 @@ static void extendBone(lua_State* L)
         tolua_function(L, "setIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData);
         tolua_function(L, "getIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData);
     }
+    lua_pop(L, 1);
 }
 
 class LuaAssetsManagerDelegateProtocol:public Object, public AssetsManagerDelegateProtocol
@@ -1540,6 +1547,7 @@ static void extendAssetsManager(lua_State* L)
     {
         tolua_function(L, "setDelegate", lua_cocos2dx_AssetsManager_setDelegate);
     }
+    lua_pop(L, 1);
 }
 
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)

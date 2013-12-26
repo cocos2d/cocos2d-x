@@ -27,29 +27,31 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 /**
 *   @js NA
 *   @lua NA
 */
-class UIImageView : public UIWidget
+class ImageView : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UIImageView();
+    ImageView();
     
     /**
      * Default destructor
      */
-    virtual ~UIImageView();
+    virtual ~ImageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIImageView* create();
+    static ImageView* create();
     
     /**
      * Load texture for imageview.
@@ -61,10 +63,10 @@ public:
     void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
-     * Updates the texture rect of the UIImageView in points.
+     * Updates the texture rect of the ImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
-    void setTextureRect(const cocos2d::Rect& rect);
+    void setTextureRect(const Rect& rect);
     
     /**
      * Sets if imageview is using scale9 renderer.
@@ -78,63 +80,51 @@ public:
      *
      * @param capInsets    capinsets for imageview
      */
-    void setCapInsets(const cocos2d::Rect &capInsets);
+    void setCapInsets(const Rect &capInsets);
     
     //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
+    virtual void setFlipX(bool flipX) override;
     
     //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
+    virtual void setFlipY(bool flipY) override;
     
     //override "isFlipX" method of widget.
-    virtual bool isFlipX();
+    virtual bool isFlipX() override;
     
     //override "isFlipY" method of widget.
-    virtual bool isFlipY();
+    virtual bool isFlipY() override;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
-    
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
     
-    void setDoubleClickEnabled(bool able);
-    void doubleClickEvent();
-    void checkDoubleClick(float dt);
-    virtual const cocos2d::Size& getContentSize() const;
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual const Size& getContentSize() const override;
+    virtual Node* getVirtualRenderer() override;
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
+    virtual void initRenderer() override;
+    virtual void onSizeChanged() override;
     void imageTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    int _clickCount;
-    float _clickTimeInterval;
-    bool _startCheckDoubleClick;
-    bool _touchRelease;
-    bool _doubleClickEnabled;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
-    cocos2d::Rect _capInsets;
-    cocos2d::Node* _imageRenderer;
+    Rect _capInsets;
+    Node* _imageRenderer;
     std::string _textureFile;
     TextureResType _imageTexType;
-    cocos2d::Size _imageTextureSize;
+    Size _imageTextureSize;
 };
 
 }
 
-#endif /* defined(__CocoGUI__UIImageView__) */
+NS_CC_END
+
+#endif /* defined(__CocoGUI__ImageView__) */

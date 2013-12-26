@@ -34,9 +34,12 @@ class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static Skin *create(const char *pszFileName);
+    static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
+    static Skin *create(const std::string& pszFileName);
 public:
+    /**
+     *  @js ctor
+     */
     Skin();
 
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName) override;
@@ -45,10 +48,20 @@ public:
     void updateArmatureTransform();
     void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const override;
-    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
-
+    kmMat4 getNodeToWorldTransform() const override;
+    kmMat4 getNodeToWorldTransformAR() const;
+    
+    virtual void draw() override;
+    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual void setSkinData(const BaseData &data);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     virtual const BaseData &getSkinData() const;
 
     virtual void setBone(Bone *bone);
@@ -59,7 +72,7 @@ protected:
     BaseData _skinData;
     Bone *_bone;
     Armature *_armature;
-    cocos2d::AffineTransform _skinTransform;
+    kmMat4 _skinTransform;
     std::string _displayName;
 };
 

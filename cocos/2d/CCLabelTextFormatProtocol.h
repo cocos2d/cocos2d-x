@@ -42,36 +42,38 @@ struct LetterInfo
 class CC_DLL LabelTextFormatProtocol
 {
 public:
-    virtual bool             recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) = 0; 
-    virtual bool             recordPlaceholderInfo(int spriteIndex) = 0; 
-    virtual std::vector<LetterInfo>  *getLettersInfo()                                                 = 0;
-    virtual float            getLetterPosXLeft(int index)  const                                       = 0;
-    virtual float            getLetterPosXRight(int index) const                                       = 0;
+
+    virtual ~LabelTextFormatProtocol() {}
+
+    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) = 0;
+    virtual bool recordPlaceholderInfo(int spriteIndex) = 0;
+    virtual std::vector<LetterInfo>  *getLettersInfo() = 0;
+    virtual float getLetterPosXLeft(int index)  const = 0;
+    virtual float getLetterPosXRight(int index) const = 0;
     // sprite related stuff
-    virtual cocos2d::Sprite *getLetter(int ID)                                                    = 0;   
+    virtual cocos2d::Sprite *getLetter(int ID) = 0;
     
     // font related stuff
-    virtual int              getCommonLineHeight()  const                                              = 0;
-    virtual int              getKerningForCharsPair(unsigned short first, unsigned short second) const = 0;
-    virtual int              getXOffsetForChar(unsigned short c)  const                                = 0;
-    virtual int              getYOffsetForChar(unsigned short c)  const                                = 0;
-    virtual int              getAdvanceForChar(unsigned short c, int hintPositionInString) const       = 0;
-    virtual cocos2d::Rect    getRectForChar(unsigned short c)  const                                   = 0;
+    virtual int getCommonLineHeight()  const = 0;
+    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const = 0;
+    virtual int getXOffsetForChar(unsigned short c) const = 0;
+    virtual int getYOffsetForChar(unsigned short c) const = 0;
+    virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const = 0;
+    virtual cocos2d::Rect getRectForChar(unsigned short c) const = 0;
     
     // string related stuff
-    virtual int              getStringNumLines()  const                                                = 0;
-    virtual int              getStringLenght() const                                                   = 0;
-    virtual unsigned short   getCharAtStringPosition(int position)  const                              = 0;
-    virtual unsigned short * getUTF8String()  const                                                    = 0;
-    virtual void             assignNewUTF8String(unsigned short *newString)                            = 0;
-    virtual TextHAlignment   getTextAlignment()  const                                                 = 0;
+    virtual int getStringNumLines() const = 0;
+    virtual int getStringLenght() const = 0;
+    virtual unsigned short getCharAtStringPosition(int position) const = 0;
+    virtual unsigned short * getUTF8String() const = 0;
+    virtual void assignNewUTF8String(unsigned short *newString) = 0;
+    virtual TextHAlignment   getTextAlignment() const = 0;
     
     // label related stuff
-    virtual float            getMaxLineWidth() const                                                   = 0;
-    virtual bool             breakLineWithoutSpace() const                                             = 0;
-    virtual cocos2d::Size    getLabelContentSize()  const                                              = 0;
-    virtual void             setLabelContentSize(const Size &newSize)                                  = 0;
-    
+    virtual float getMaxLineWidth() const = 0;
+    virtual bool breakLineWithoutSpace() const = 0;
+    virtual cocos2d::Size getLabelContentSize() const = 0;
+    virtual void setLabelContentSize(const Size &newSize) = 0;
 };
 
 NS_CC_END

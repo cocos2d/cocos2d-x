@@ -79,19 +79,6 @@ public:
     //CREATE_NODE(MenuLayer4);
 };
 
-class MenuLayerPriorityTest : public Layer
-{
-public:
-    MenuLayerPriorityTest();
-    ~MenuLayerPriorityTest();
-
-    void menuCallback(Object* sender);
-private:
-    Menu* _menu1;
-    Menu* _menu2;
-    bool _priority;
-};
-
 class BugsTest : public Layer
 {
 public:

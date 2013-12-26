@@ -41,15 +41,15 @@ ActionObject::ActionObject()
 {
 	_actionNodeList = Array::create();
 	_actionNodeList->retain();
-	_pScheduler = new Scheduler();
-	Director::sharedDirector()->getScheduler()->scheduleUpdateForTarget(_pScheduler, 0, false);
+	_pScheduler = Director::getInstance()->getScheduler();
+	CC_SAFE_RETAIN(_pScheduler);
 }
 
 ActionObject::~ActionObject()
 {
 	_actionNodeList->removeAllObjects();
 	_actionNodeList->release();
-	CC_SAFE_DELETE(_pScheduler);
+	CC_SAFE_RELEASE(_pScheduler);
 }
 
 void ActionObject::setName(const char* name)
@@ -73,7 +73,7 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	_fUnitTime = fTime;
-	int nodeNum = _actionNodeList->count();
+	auto nodeNum = _actionNodeList->count();
 	for ( int i = 0; i < nodeNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
@@ -139,7 +139,7 @@ void ActionObject::play()
 {
     stop();
 	this->updateToFrameByTime(0.0f);
-	int frameNum = _actionNodeList->count();
+	auto frameNum = _actionNodeList->count();
 	for ( int i = 0; i < frameNum; i++ )
 	{
 		ActionNode* actionNode = (ActionNode*)_actionNodeList->getObjectAtIndex(i);
@@ -158,7 +158,7 @@ void ActionObject::pause()
 
 void ActionObject::stop()
 {
-	int frameNum = _actionNodeList->count();
+	auto frameNum = _actionNodeList->count();
 
 	for ( int i = 0; i < frameNum; i++ )
 	{
@@ -174,7 +174,7 @@ void ActionObject::updateToFrameByTime(float fTime)
 {
 	_currentTime = fTime;
 
-	int nodeNum = _actionNodeList->count();
+	auto nodeNum = _actionNodeList->count();
 
 	for ( int i = 0; i < nodeNum; i++ )
 	{
@@ -189,11 +189,11 @@ void ActionObject::simulationActionUpdate(float dt)
 	if (_loop)
 	{
 		bool isEnd = true;
-		int nodeNum = _actionNodeList->count();
+		auto nodeNum = _actionNodeList->count();
 
 		for ( int i = 0; i < nodeNum; i++ )
 		{
-			ActionNode* actionNode = (ActionNode*)_actionNodeList->objectAtIndex(i);
+			ActionNode* actionNode = static_cast<ActionNode*>(_actionNodeList->getObjectAtIndex(i));
 
 			if (actionNode->isActionDoneOnce() == false)
 			{
@@ -207,7 +207,7 @@ void ActionObject::simulationActionUpdate(float dt)
 			this->play();
 		}
 
-		CCLOG("ActionObject Update");
+		//CCLOG("ActionObject Update");
 	}
 }
 }

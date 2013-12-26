@@ -43,7 +43,10 @@ namespace tinyxml2
 
 namespace cocostudio {
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DataReaderHelper : cocos2d::Object
 {
 protected:
@@ -105,12 +108,12 @@ public:
      */
     ~DataReaderHelper();
 
-    void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addDataFromFile(const std::string& filePath);
+    void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
-    void removeConfigFile(const char *configFile);
+    void removeConfigFile(const std::string& configFile);
 public:
 
     /**
@@ -119,7 +122,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
 
 
@@ -151,7 +154,7 @@ public:
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
-    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo = nullptr);
 
     static ArmatureData *decodeArmature(JsonDictionary &json, DataInfo *dataInfo);
     static BoneData *decodeBone(JsonDictionary &json, DataInfo *dataInfo);

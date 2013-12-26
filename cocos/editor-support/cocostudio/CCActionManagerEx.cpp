@@ -95,13 +95,14 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 	return NULL;
 }
 
-void ActionManagerEx::playActionByName(const char* jsonName,const char* actionName)
+ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char* actionName)
 {
 	ActionObject* action = getActionByName(jsonName,actionName);
 	if (action)
 	{
 		action->play();
 	}
+	return action;
 }
 
 void ActionManagerEx::releaseActions()

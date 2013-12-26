@@ -62,9 +62,9 @@ end
 
 -- LayerTestCascadingOpacityA
 local function LayerTestCascadingOpacityA()
-    local ret = createLayerDemoLayer("LayerRGBA: cascading opacity")
+    local ret = createLayerDemoLayer("Layer: cascading opacity")
     local s = cc.Director:getInstance():getWinSize()
-    local  layer1 = cc.LayerRGBA:create()
+    local  layer1 = cc.Layer:create()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
@@ -165,10 +165,10 @@ end
 
 -- LayerTestCascadingColorA
 local function LayerTestCascadingColorA()
-    local ret = createLayerDemoLayer("LayerRGBA: cascading color")
+    local ret = createLayerDemoLayer("Layer: cascading color")
 
     local s = cc.Director:getInstance():getWinSize()
-    local  layer1 = cc.LayerRGBA:create()
+    local  layer1 = cc.Layer:create()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")

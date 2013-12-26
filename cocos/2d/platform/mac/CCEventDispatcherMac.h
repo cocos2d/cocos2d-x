@@ -37,8 +37,7 @@
 #import "ccConfig.h"
 
 //NS_CC_BEGIN;
-#pragma mark -
-#pragma mark MouseEventDelegate
+#pragma mark - MouseEventDelegate
 
 /** MouseEventDelegate protocol.
  Implement it in your node to receive any of mouse events
@@ -135,8 +134,7 @@
 
 @end
 
-#pragma mark -
-#pragma mark KeyboardEventDelegate
+#pragma mark - KeyboardEventDelegate
 
 /** KeyboardEventDelegate protocol.
  Implement it in your node to receive any of keyboard events
@@ -189,8 +187,7 @@
 @end
 
 
-#pragma mark -
-#pragma mark EventDispatcher
+#pragma mark - EventDispatcher
 
 struct _listEntry;
 

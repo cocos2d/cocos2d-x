@@ -40,6 +40,8 @@ class TextFieldTTF;
 class CC_DLL TextFieldDelegate
 {
 public:
+    virtual ~TextFieldDelegate() {}
+
     /**
     @brief    If the sender doesn't want to attach to the IME, return true;
     */
@@ -180,7 +182,7 @@ protected:
     virtual bool canDetachWithIME() override;
     virtual void insertText(const char * text, int len) override;
     virtual void deleteBackward() override;
-    virtual const char * getContentText() override;
+    virtual const std::string& getContentText() override;
 private:
     class LengthStack;
     LengthStack * _lens;

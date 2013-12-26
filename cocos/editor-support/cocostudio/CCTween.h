@@ -34,6 +34,10 @@ namespace cocostudio {
 class Bone;
 class ArmatureAnimation;
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  Tween : public ProcessBase
 {
 public:
@@ -43,14 +47,7 @@ public:
      */
     static Tween *create(Bone *bone);
 public:
-	/**
-     * @js ctor
-     */
     Tween(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~Tween(void);
 
     /**

@@ -11,40 +11,23 @@ Layer* nextSchedulerTest();
 Layer* backSchedulerTest();
 Layer* restartSchedulerTest();
 
-TESTLAYER_CREATE_FUNC(SchedulerTimeScale)
-TESTLAYER_CREATE_FUNC(TwoSchedulers)
-TESTLAYER_CREATE_FUNC(SchedulerAutoremove)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResume)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAll)
-TESTLAYER_CREATE_FUNC(SchedulerPauseResumeAllUser)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAll)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllHard)
-TESTLAYER_CREATE_FUNC(SchedulerUnscheduleAllUserLevel)
-TESTLAYER_CREATE_FUNC(SchedulerSchedulesAndRemove)
-TESTLAYER_CREATE_FUNC(SchedulerUpdate)
-TESTLAYER_CREATE_FUNC(SchedulerUpdateAndCustom)
-TESTLAYER_CREATE_FUNC(SchedulerUpdateFromCustom)
-TESTLAYER_CREATE_FUNC(RescheduleSelector)
-TESTLAYER_CREATE_FUNC(SchedulerDelayAndRepeat)
-TESTLAYER_CREATE_FUNC(SchedulerIssue2268)
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(SchedulerTimeScale),
-    CF(TwoSchedulers),
-    CF(SchedulerAutoremove),
-    CF(SchedulerPauseResume),
-    CF(SchedulerPauseResumeAll),
-    CF(SchedulerPauseResumeAllUser),
-    CF(SchedulerUnscheduleAll),
-    CF(SchedulerUnscheduleAllHard),
-    CF(SchedulerUnscheduleAllUserLevel),
-    CF(SchedulerSchedulesAndRemove),
-    CF(SchedulerUpdate),
-    CF(SchedulerUpdateAndCustom),
-    CF(SchedulerUpdateFromCustom),
-    CF(RescheduleSelector),
-    CF(SchedulerDelayAndRepeat),
-    CF(SchedulerIssue2268)
+static std::function<Layer*()> createFunctions[] = {
+    CL(SchedulerTimeScale),
+    CL(TwoSchedulers),
+    CL(SchedulerAutoremove),
+    CL(SchedulerPauseResume),
+    CL(SchedulerPauseResumeAll),
+    CL(SchedulerPauseResumeAllUser),
+    CL(SchedulerUnscheduleAll),
+    CL(SchedulerUnscheduleAllHard),
+    CL(SchedulerUnscheduleAllUserLevel),
+    CL(SchedulerSchedulesAndRemove),
+    CL(SchedulerUpdate),
+    CL(SchedulerUpdateAndCustom),
+    CL(SchedulerUpdateFromCustom),
+    CL(RescheduleSelector),
+    CL(SchedulerDelayAndRepeat),
+    CL(SchedulerIssue2268)
 };
 
 #define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -55,9 +38,6 @@ Layer* nextSchedulerTest()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -69,18 +49,12 @@ Layer* backSchedulerTest()
         sceneIdx += total;    
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartSchedulerTest()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -124,12 +98,12 @@ void SchedulerTestLayer::restartCallback(Object* sender)
     scene->release();
 }
 
-std::string SchedulerTestLayer::title()
+std::string SchedulerTestLayer::title() const
 {
     return "No title";
 }
 
-std::string SchedulerTestLayer::subtitle()
+std::string SchedulerTestLayer::subtitle() const
 {
     return "";
 }
@@ -165,12 +139,12 @@ void SchedulerAutoremove::tick(float dt)
     CCLOG("This scheduler should not be removed");
 }
 
-std::string SchedulerAutoremove::title()
+std::string SchedulerAutoremove::title() const
 {
     return "Self-remove an scheduler";
 }
 
-std::string SchedulerAutoremove::subtitle()
+std::string SchedulerAutoremove::subtitle() const
 {
     return "1 scheduler will be autoremoved in 3 seconds. See console";
 }
@@ -204,12 +178,12 @@ void SchedulerPauseResume::pause(float dt)
     Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
-std::string SchedulerPauseResume::title()
+std::string SchedulerPauseResume::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResume::subtitle()
+std::string SchedulerPauseResume::subtitle() const
 {
     return "Scheduler should be paused after 3 seconds. See console";
 }
@@ -221,14 +195,13 @@ std::string SchedulerPauseResume::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAll::SchedulerPauseResumeAll()
-: _pausedTargets(NULL)
 {
     
 }
 
 SchedulerPauseResumeAll::~SchedulerPauseResumeAll()
 {
-    CC_SAFE_RELEASE(_pausedTargets);
+
 }
 
 void SchedulerPauseResumeAll::onEnter()
@@ -253,7 +226,7 @@ void SchedulerPauseResumeAll::update(float delta)
 
 void SchedulerPauseResumeAll::onExit()
 {
-    if(_pausedTargets != NULL)
+    if (!_pausedTargets.empty())
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
@@ -275,9 +248,8 @@ void SchedulerPauseResumeAll::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargets();
-    CC_SAFE_RETAIN(_pausedTargets);
     
-    unsigned int c = _pausedTargets->count();
+    int c = _pausedTargets.size();
     
     if (c > 2)
     {
@@ -291,15 +263,15 @@ void SchedulerPauseResumeAll::resume(float dt)
     log("Resuming");
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
-    CC_SAFE_RELEASE_NULL(_pausedTargets);
+    _pausedTargets.clear();
 }
 
-std::string SchedulerPauseResumeAll::title()
+std::string SchedulerPauseResumeAll::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResumeAll::subtitle()
+std::string SchedulerPauseResumeAll::subtitle() const
 {
     return "Everything will pause after 3s, then resume at 5s. See console";
 }
@@ -311,14 +283,13 @@ std::string SchedulerPauseResumeAll::subtitle()
 //------------------------------------------------------------------
 
 SchedulerPauseResumeAllUser::SchedulerPauseResumeAllUser()
-: _pausedTargets(NULL)
 {
 
 }
 
 SchedulerPauseResumeAllUser::~SchedulerPauseResumeAllUser()
 {
-    CC_SAFE_RELEASE(_pausedTargets);
+
 }
 
 void SchedulerPauseResumeAllUser::onEnter()
@@ -340,7 +311,7 @@ void SchedulerPauseResumeAllUser::onEnter()
 
 void SchedulerPauseResumeAllUser::onExit()
 {
-    if(_pausedTargets != NULL)
+    if (!_pausedTargets.empty())
     {
         Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
     }
@@ -362,7 +333,6 @@ void SchedulerPauseResumeAllUser::pause(float dt)
     log("Pausing");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
-    CC_SAFE_RETAIN(_pausedTargets);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
@@ -370,15 +340,15 @@ void SchedulerPauseResumeAllUser::resume(float dt)
     log("Resuming");
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
-    CC_SAFE_RELEASE_NULL(_pausedTargets);
+    _pausedTargets.clear();
 }
 
-std::string SchedulerPauseResumeAllUser::title()
+std::string SchedulerPauseResumeAllUser::title() const
 {
     return "Pause / Resume";
 }
 
-std::string SchedulerPauseResumeAllUser::subtitle()
+std::string SchedulerPauseResumeAllUser::subtitle() const
 {
     return "Everything will pause after 3s, then resume at 5s. See console";
 }
@@ -425,12 +395,12 @@ void SchedulerUnscheduleAll::unscheduleAll(float dt)
     unscheduleAllSelectors();
 }
 
-std::string SchedulerUnscheduleAll::title()
+std::string SchedulerUnscheduleAll::title() const
 {
     return "Unschedule All selectors";
 }
 
-std::string SchedulerUnscheduleAll::subtitle()
+std::string SchedulerUnscheduleAll::subtitle() const
 {
     return "All scheduled selectors will be unscheduled in 4 seconds. See console";
 }
@@ -497,12 +467,12 @@ void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
     _actionManagerActive = false;
 }
 
-std::string SchedulerUnscheduleAllHard::title()
+std::string SchedulerUnscheduleAllHard::title() const
 {
     return "Unschedule All selectors (HARD)";
 }
 
-std::string SchedulerUnscheduleAllHard::subtitle()
+std::string SchedulerUnscheduleAllHard::subtitle() const
 {
     return "Unschedules all user selectors after 4s. Action will stop. See console";
 }
@@ -555,12 +525,12 @@ void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
     Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
-std::string SchedulerUnscheduleAllUserLevel::title()
+std::string SchedulerUnscheduleAllUserLevel::title() const
 {
     return "Unschedule All user selectors";
 }
 
-std::string SchedulerUnscheduleAllUserLevel::subtitle()
+std::string SchedulerUnscheduleAllUserLevel::subtitle() const
 {
     return "Unschedules all user selectors after 4s. Action should not stop. See console";
 }
@@ -599,12 +569,12 @@ void SchedulerSchedulesAndRemove::tick4(float dt)
     CCLOG("tick4");
 }
 
-std::string SchedulerSchedulesAndRemove::title()
+std::string SchedulerSchedulesAndRemove::title() const
 {
     return "Schedule from Schedule";
 }
 
-std::string SchedulerSchedulesAndRemove::subtitle()
+std::string SchedulerSchedulesAndRemove::subtitle() const
 {
     return "Will unschedule and schedule selectors in 4s. See console";
 }
@@ -624,22 +594,20 @@ void SchedulerSchedulesAndRemove::scheduleAndUnschedule(float dt)
 // TestNode
 //
 //------------------------------------------------------------------
-void TestNode::initWithString(String* pStr, int priority)
+void TestNode::initWithString(const std::string& str, int priority)
 {
-    _pstring = pStr;
-    _pstring->retain();
+    _string = str;
     scheduleUpdateWithPriority(priority);
 }
 
 TestNode::~TestNode()
 {
-    _pstring->release();
 }
 
 void TestNode::update(float dt)
 {
     CC_UNUSED_PARAM(dt);
-    log("%s", _pstring->getCString());
+    log("%s", _string.c_str());
 }
 
 //------------------------------------------------------------------
@@ -652,44 +620,32 @@ void SchedulerUpdate::onEnter()
     SchedulerTestLayer::onEnter();
 
     auto d = new TestNode();
-    auto pStr = new String("---");
-    d->initWithString(pStr, 50);
-    pStr->release();
+    d->initWithString("---", 50);
     addChild(d);
     d->release();
 
     auto b = new TestNode();
-    pStr = new String("3rd");
-    b->initWithString(pStr, 0);
-    pStr->release();
+    b->initWithString("3rd", 0);
     addChild(b);
     b->release();
 
     auto a = new TestNode();
-    pStr = new String("1st");
-    a->initWithString(pStr, -10);
-    pStr->release();
+    a->initWithString("1st", -10);
     addChild(a);
     a->release();
 
     auto c = new TestNode();
-    pStr = new String("4th");
-    c->initWithString(pStr, 10);
-    pStr->release();
+    c->initWithString("4th", 10);
     addChild(c);
     c->release();
 
     auto e = new TestNode();
-    pStr = new String("5th");
-    e->initWithString(pStr, 20);
-    pStr->release();
+    e->initWithString("5th", 20);
     addChild(e);
     e->release();
 
     auto f = new TestNode();
-    pStr = new String("2nd");
-    f->initWithString(pStr, -5);
-    pStr->release();
+    f->initWithString("2nd", -5);
     addChild(f);
     f->release();
 
@@ -698,9 +654,9 @@ void SchedulerUpdate::onEnter()
 
 void SchedulerUpdate::removeUpdates(float dt)
 {
-    auto children = getChildren();
+    auto& children = getChildren();
 
-    for (auto c : *children)
+    for (auto& c : children)
     {
         auto obj = static_cast<Object*>(c);
         auto node = static_cast<Node*>(obj);
@@ -713,12 +669,12 @@ void SchedulerUpdate::removeUpdates(float dt)
     }
 }
 
-std::string SchedulerUpdate::title()
+std::string SchedulerUpdate::title() const
 {
     return "Schedule update with priority";
 }
 
-std::string SchedulerUpdate::subtitle()
+std::string SchedulerUpdate::subtitle() const
 {
     return "3 scheduled updates. Priority should work. Stops in 4s. See console";
 }
@@ -752,12 +708,12 @@ void SchedulerUpdateAndCustom::stopSelectors(float dt)
     unscheduleAllSelectors();
 }
 
-std::string SchedulerUpdateAndCustom::title()
+std::string SchedulerUpdateAndCustom::title() const
 {
     return "Schedule Update + custom selector";
 }
 
-std::string SchedulerUpdateAndCustom::subtitle()
+std::string SchedulerUpdateAndCustom::subtitle() const
 {
     return "Update + custom selector at the same time. Stops in 4s. See console";
 }
@@ -792,12 +748,12 @@ void SchedulerUpdateFromCustom::stopUpdate(float dt)
     unschedule(schedule_selector(SchedulerUpdateFromCustom::stopUpdate));
 }
 
-std::string SchedulerUpdateFromCustom::title()
+std::string SchedulerUpdateFromCustom::title() const
 {
     return "Schedule Update in 2 sec";
 }
 
-std::string SchedulerUpdateFromCustom::subtitle()
+std::string SchedulerUpdateFromCustom::subtitle() const
 {
     return "Update schedules in 2 secs. Stops 2 sec later. See console";
 }
@@ -816,12 +772,12 @@ void RescheduleSelector::onEnter()
     schedule(schedule_selector(RescheduleSelector::schedUpdate), _interval);
 }
 
-std::string RescheduleSelector::title()
+std::string RescheduleSelector::title() const
 {
     return "Reschedule Selector";
 }
 
-std::string RescheduleSelector::subtitle()
+std::string RescheduleSelector::subtitle() const
 {
     return "Interval is 1 second, then 2, then 3...";
 }
@@ -848,12 +804,12 @@ void SchedulerDelayAndRepeat::onEnter()
     CCLOG("update is scheduled should begin after 3 seconds");
 }
 
-std::string SchedulerDelayAndRepeat::title()
+std::string SchedulerDelayAndRepeat::title() const
 {
     return "Schedule with delay of 3 sec, repeat 4 times";
 }
 
-std::string SchedulerDelayAndRepeat::subtitle()
+std::string SchedulerDelayAndRepeat::subtitle() const
 {
     return "After 5 x executed, method unscheduled. See console";
 }
@@ -940,12 +896,12 @@ void SchedulerTimeScale::onExit()
     SchedulerTestLayer::onExit();
 }
 
-std::string SchedulerTimeScale::title()
+std::string SchedulerTimeScale::title() const
 {
     return "Scheduler timeScale Test";
 }
 
-std::string SchedulerTimeScale::subtitle()
+std::string SchedulerTimeScale::subtitle() const
 {
     return "Fast-forward and rewind using scheduler.timeScale";
 }
@@ -1085,12 +1041,12 @@ TwoSchedulers::~TwoSchedulers()
     actionManager2->release();
 }
 
-std::string TwoSchedulers::title()
+std::string TwoSchedulers::title() const
 {
     return "Two custom schedulers";
 }
 
-std::string TwoSchedulers::subtitle()
+std::string TwoSchedulers::subtitle() const
 {
     return "Three schedulers. 2 custom + 1 default. Two different time scales";
 }
@@ -1098,6 +1054,8 @@ std::string TwoSchedulers::subtitle()
 class TestNode2 : public Node
 {
 public:
+    CREATE_FUNC(TestNode2);
+
 	~TestNode2() {
 		cocos2d::log("Delete TestNode (should not crash)");
 		this->unscheduleAllSelectors();
@@ -1111,9 +1069,7 @@ void SchedulerIssue2268::onEnter()
 {
 	SchedulerTestLayer::onEnter();
 
-	testNode = new TestNode2();
-	testNode->init();
-	testNode->autorelease();
+	testNode = TestNode2::create();
 	testNode->retain();
 	testNode->schedule(SEL_SCHEDULE(&TestNode::update));
 	this->addChild(testNode);
@@ -1142,12 +1098,12 @@ SchedulerIssue2268::~SchedulerIssue2268()
 
 }
 
-std::string SchedulerIssue2268::title()
+std::string SchedulerIssue2268::title() const
 {
     return "Issue #2268";
 }
 
-std::string SchedulerIssue2268::subtitle()
+std::string SchedulerIssue2268::subtitle() const
 {
     return "Should not crash";
 }

@@ -27,6 +27,8 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 typedef enum
@@ -35,30 +37,30 @@ typedef enum
     CHECKBOX_STATE_EVENT_UNSELECTED
 }CheckBoxEventType;
 
-typedef void (cocos2d::Object::*SEL_SelectedStateEvent)(cocos2d::Object*,CheckBoxEventType);
+typedef void (Object::*SEL_SelectedStateEvent)(Object*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**
 *   @js NA
 *   @lua NA
 */
-class UICheckBox : public UIWidget
+class CheckBox : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UICheckBox();
+    CheckBox();
     
     /**
      * Default destructor
      */
-    virtual ~UICheckBox();
+    virtual ~CheckBox();
     
     /**
      * Allocates and initializes.
      */
-    static UICheckBox* create();
+    static CheckBox* create();
     
     /**
      * Load textures for checkbox.
@@ -135,62 +137,62 @@ public:
     bool getSelectedState();
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListenerCheckBox(cocos2d::Object* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(Object* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX);
+    virtual void setFlipX(bool flipX) override;
     
     //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY);
+    virtual void setFlipY(bool flipY) override;
     
     //override "isFlipX" method of widget.
-    virtual bool isFlipX();
+    virtual bool isFlipX() override;
     
     //override "isFlipY" method of widget.
-    virtual bool isFlipY();
+    virtual bool isFlipY() override;
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
 
 protected:
-    virtual bool init();
-    virtual void initRenderer();
-    virtual void onPressStateChangedToNormal();
-    virtual void onPressStateChangedToPressed();
-    virtual void onPressStateChangedToDisabled();
+    virtual bool init() override;
+    virtual void initRenderer() override;
+    virtual void onPressStateChangedToNormal() override;
+    virtual void onPressStateChangedToPressed() override;
+    virtual void onPressStateChangedToDisabled() override;
     void selectedEvent();
     void unSelectedEvent();
-    virtual void onSizeChanged();
+    virtual void onSizeChanged() override;
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    cocos2d::Sprite* _backGroundBoxRenderer;
-    cocos2d::Sprite* _backGroundSelectedBoxRenderer;
-    cocos2d::Sprite* _frontCrossRenderer;
-    cocos2d::Sprite* _backGroundBoxDisabledRenderer;
-    cocos2d::Sprite* _frontCrossDisabledRenderer;
+    Sprite* _backGroundBoxRenderer;
+    Sprite* _backGroundSelectedBoxRenderer;
+    Sprite* _frontCrossRenderer;
+    Sprite* _backGroundBoxDisabledRenderer;
+    Sprite* _frontCrossDisabledRenderer;
     bool _isSelected;
 
-    cocos2d::Object*       _checkBoxEventListener;
+    Object*       _checkBoxEventListener;
     SEL_SelectedStateEvent    _checkBoxEventSelector;
     
     TextureResType _backGroundTexType;
@@ -208,4 +210,6 @@ protected:
 
 }
 
-#endif /* defined(__CocoGUI__UICheckBox__) */
+NS_CC_END
+
+#endif /* defined(__CocoGUI__CheckBox__) */

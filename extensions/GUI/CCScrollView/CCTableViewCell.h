@@ -26,32 +26,32 @@
 #ifndef __CCTABLEVIEWCELL_H__
 #define __CCTABLEVIEWCELL_H__
 
-#include "CCNode.h"
-#include "CCSorting.h"
+#include "cocos2d.h"
+#include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 
 /**
  * Abstract class for SWTableView cell node
  */
-class TableViewCell: public Node, public SortableObject
+class TableViewCell: public Node
 {
 public:
     TableViewCell() {}
     /**
      * The index used internally by SWTableView and its subclasses
      */
-    unsigned int getIdx();
-    void setIdx(unsigned int uIdx);
+    long getIdx();
+    void setIdx(long uIdx);
     /**
      * Cleans up any resources linked to this cell and resets <code>idx</code> property.
      */
     void reset();
 
-    void setObjectID(unsigned int uIdx);
-    unsigned int getObjectID();
+    void setObjectID(long uIdx);
+    long getObjectID();
 private:
-    unsigned int _idx;
+    long _idx;
 };
 
 NS_CC_EXT_END

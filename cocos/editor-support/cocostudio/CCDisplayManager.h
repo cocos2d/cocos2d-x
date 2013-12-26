@@ -33,21 +33,17 @@ namespace cocostudio {
 
 class Bone;
 
-//! DisplayManager manages Bone's display
+/**! DisplayManager manages Bone's display
+ *  @js NA
+ *  @lua NA
+ */
 class  DisplayManager : public cocos2d::Object
 {
 public:
     static DisplayManager *create(Bone *bone);
 
 public:
-	/**
-     * @js ctor
-     */
     DisplayManager();
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~DisplayManager();
 
     bool init(Bone *bone);
@@ -76,7 +72,7 @@ public:
 
     void removeDisplay(int index);
 
-    cocos2d::Array *getDecorativeDisplayList() const;
+    const cocos2d::Vector<DecorativeDisplay*>& getDecorativeDisplayList() const;
 
     /**
      * Change display by index. You can just use this method to change display in the display list.
@@ -89,6 +85,7 @@ public:
      */
     void changeDisplayByIndex(int index, bool force);
 
+    void changeDisplayByName(const std::string& name, bool force);
 
     cocos2d::Node *getDisplayRenderNode() const;
     DisplayType getDisplayRenderNodeType() const;
@@ -133,7 +130,7 @@ public:
     virtual void setForceChangeDisplay(bool force) { _forceChangeDisplay = force; }
     virtual bool isForceChangeDisplay() const { return _forceChangeDisplay; }
 protected:
-    cocos2d::Array *_decoDisplayList;
+    cocos2d::Vector<DecorativeDisplay*> _decoDisplayList;
     //! Display render node.
     cocos2d::Node *_displayRenderNode;
     //! Display render node type

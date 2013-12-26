@@ -27,6 +27,7 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
 
 namespace gui {
 
@@ -34,7 +35,7 @@ namespace gui {
  *  @js NA
  *  @lua NA
  */
-class UICCTextField: public cocos2d::TextFieldTTF, public cocos2d::TextFieldDelegate
+class UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     UICCTextField();
@@ -46,10 +47,10 @@ public:
     static UICCTextField* create(const char *placeholder, const char *fontName, float fontSize);
     
     // CCTextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(cocos2d::TextFieldTTF *pSender);
-    virtual bool onTextFieldDetachWithIME(cocos2d::TextFieldTTF * pSender);
-    virtual bool onTextFieldInsertText(cocos2d::TextFieldTTF * pSender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(cocos2d::TextFieldTTF * pSender, const char * delText, int nLen);
+    virtual bool onTextFieldAttachWithIME(TextFieldTTF *pSender);
+    virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender);
+    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen);
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen);
     
     void insertText(const char* text, int len);
     void deleteBackward();
@@ -93,29 +94,29 @@ typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-typedef void (cocos2d::Object::*SEL_TextFieldEvent)(cocos2d::Object*, TextFiledEventType);
+typedef void (Object::*SEL_TextFieldEvent)(Object*, TextFiledEventType);
 #define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
 
-/** class UITextField : public UIWidget
+/** class UITextField : public Widget
 *   @js NA
 *   @lua NA
 */
-class UITextField : public UIWidget
+class TextField : public Widget
 {
 public:
-    UITextField();
-    virtual ~UITextField();
-    static UITextField* create();
-    virtual bool init();
-    virtual void initRenderer();
-    void setTouchSize(const cocos2d::Size &size);
+    TextField();
+    virtual ~TextField();
+    static TextField* create();
+    virtual bool init() override;
+    virtual void initRenderer() override;
+    void setTouchSize(const Size &size);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
     void setFontSize(int size);
     void setFontName(const std::string& name);
     virtual void didNotSelectSelf();
     const std::string& getStringValue();
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
+    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled();
     void setMaxLength(int length);
@@ -123,7 +124,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
     bool getDetachWithIME();
@@ -132,19 +133,17 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListenerTextField(cocos2d::Object* target, SEL_TextFieldEvent selecor);
+    void addEventListenerTextField(Object* target, SEL_TextFieldEvent selecor);
 
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
-    virtual void setColor(const cocos2d::Color3B &color);
-    virtual void setOpacity(int opacity);
+    virtual void setAnchorPoint(const Point &pt) override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
 
-    virtual const cocos2d::Size& getContentSize() const;
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual const Size& getContentSize() const override;
+    virtual Node* getVirtualRenderer() override;
     void attachWithIME();
 protected:
     // event
@@ -152,10 +151,10 @@ protected:
     void detachWithIMEEvent();
     void insertTextEvent();
     void deleteBackwardEvent();
-    virtual void onSizeChanged();
+    virtual void onSizeChanged() override;
     void textfieldRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     UICCTextField* _textFieldRenderer;
 
@@ -163,7 +162,7 @@ protected:
     float _touchHeight;
     bool _useTouchArea;
     
-    cocos2d::Object* _textFieldEventListener;
+    Object* _textFieldEventListener;
     SEL_TextFieldEvent _textFieldEventSelector;
     
     std::string _passwordStyleText;
@@ -171,4 +170,6 @@ protected:
 
 }
 
-#endif /* defined(__CocoGUI__UITextField__) */
+NS_CC_END
+
+#endif /* defined(__TextField__) */

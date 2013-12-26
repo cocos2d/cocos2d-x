@@ -27,6 +27,8 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 typedef enum
@@ -38,23 +40,23 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class UILoadingBar : public UIWidget
+class LoadingBar : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILoadingBar();
+    LoadingBar();
     
     /**
      * Default destructor
      */
-    virtual ~UILoadingBar();
+    virtual ~LoadingBar();
     
     /**
      * Allocates and initializes.
      */
-    static UILoadingBar* create();
+    static LoadingBar* create();
     
     /**
      * Changes the progress direction of loadingbar.
@@ -109,41 +111,41 @@ public:
      *
      * @param capInsets    capinsets for loadingbar
      */
-    void setCapInsets(const cocos2d::Rect &capInsets);
+    void setCapInsets(const Rect &capInsets);
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
+    virtual void initRenderer() override;
+    virtual void onSizeChanged() override;
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     LoadingBarType _barType;
     int _percent;
     float _totalLength;
-    cocos2d::Node* _barRenderer;
+    Node* _barRenderer;
     TextureResType _renderBarTexType;
-    cocos2d::Size _barRendererTextureSize;
+    Size _barRendererTextureSize;
     bool _scale9Enabled;
     bool _prevIgnoreSize;
-    cocos2d::Rect _capInsets;
+    Rect _capInsets;
     std::string _textureFile;
 };
 
 }
-
-#endif /* defined(__CocoGUI__UILoadingBar__) */
+NS_CC_END
+#endif /* defined(__CocoGUI__LoadingBar__) */

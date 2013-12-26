@@ -44,26 +44,31 @@ public:
     static Waves3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /** returns the amplitude of the effect */
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     /** sets the amplitude to the effect */
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** returns the amplitude rate */
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     /** sets the ampliture rate */
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
-
-    /** initializes an action with duration, grid size, waves and amplitude */
-    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
 	// Overrides
 	virtual Waves3D* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    Waves3D() {}
+    virtual ~Waves3D() {}
+    /** initializes an action with duration, grid size, waves and amplitude */
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
+
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Waves3D);
 };
 
 /** @brief FlipX3D action */
@@ -73,25 +78,36 @@ public:
     /** creates the action with duration */
     static FlipX3D* create(float duration);
 
+    // Override
+	virtual FlipX3D* clone() const override;
+    virtual void update(float time) override;
+
+protected:
+    FlipX3D() {}
+    virtual ~FlipX3D() {}
     /** initializes the action with duration */
     bool initWithDuration(float duration);
     virtual bool initWithSize(const Size& gridSize, float duration);
 
-    // Override
-	virtual FlipX3D* clone() const override;
-    virtual void update(float time) override;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FlipX3D);
 };
 
 /** @brief FlipY3D action */
 class CC_DLL FlipY3D : public FlipX3D
 {
 public:
+    FlipY3D() {}
+    virtual ~FlipY3D() {}
     /** creates the action with duration */
     static FlipY3D* create(float duration);
 
     // Overrides
     virtual void update(float time) override;
 	virtual FlipY3D* clone() const override;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FlipY3D);
 };
 
 /** @brief Lens3D action */
@@ -102,23 +118,25 @@ public:
     static Lens3D* create(float duration, const Size& gridSize, const Point& position, float radius);
 
     /** Get lens center position */
-    inline float getLensEffect(void) const { return _lensEffect; }
+    inline float getLensEffect() const { return _lensEffect; }
     /** Set lens center position */
-    inline void setLensEffect(float fLensEffect) { _lensEffect = fLensEffect; }
+    inline void setLensEffect(float lensEffect) { _lensEffect = lensEffect; }
     /** Set whether lens is concave */
-    inline void setConcave(bool bConcave) { _concave = bConcave; }
+    inline void setConcave(bool concave) { _concave = concave; }
   
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     void setPosition(const Point& position);
-
-    /** initializes the action with center position, radius, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius);
 
     // Overrides
 	virtual Lens3D* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    Lens3D() {}
+    virtual ~Lens3D() {}
+    /** initializes the action with center position, radius, a grid size and duration */
+    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius);
+
     /* lens center position */
     Point _position;
     float _radius;
@@ -128,6 +146,9 @@ protected:
     bool _concave;
 
     bool    _dirty;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Lens3D);
 };
 
 /** @brief Ripple3D action */
@@ -138,136 +159,162 @@ public:
     static Ripple3D* create(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
 
     /** get center position */
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     /** set center position */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) const { return _amplitude; }
+    inline float getAmplitude() const { return _amplitude; }
     inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
-
-    /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
 
     // Override
 	virtual Ripple3D* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    Ripple3D() {}
+    virtual ~Ripple3D() {}
+    /** initializes the action with radius, number of waves, amplitude, a grid size and duration */
+    bool initWithDuration(float duration, const Size& gridSize, const Point& position, float radius, unsigned int waves, float amplitude);
+
     /* center position */
     Point _position;
     float _radius;
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Ripple3D);
 };
 
 /** @brief Shaky3D action */
 class CC_DLL Shaky3D : public Grid3DAction
 {
 public:
+    Shaky3D() {}
+    virtual ~Shaky3D() {}
     /** creates the action with a range, shake Z vertices, a grid and duration */
     static Shaky3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
-
-    /** initializes the action with a range, shake Z vertices, a grid and duration */
-    bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Overrides
 	virtual Shaky3D* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    /** initializes the action with a range, shake Z vertices, a grid and duration */
+    bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
+
     int _randrange;
     bool _shakeZ;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Shaky3D);
 };
 
 /** @brief Liquid action */
 class CC_DLL Liquid : public Grid3DAction
 {
 public:
+    Liquid() {}
+    virtual ~Liquid() {}
     /** creates the action with amplitude, a grid and duration */
     static Liquid* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
-
-    /** initializes the action with amplitude, a grid and duration */
-    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Overrides
 	virtual Liquid* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    /** initializes the action with amplitude, a grid and duration */
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude);
+
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Liquid);
 };
 
 /** @brief Waves action */
 class CC_DLL Waves : public Grid3DAction
 {
 public:
+    Waves() {}
+    virtual ~Waves() {}
     /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
     static Waves* create(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
-
-    /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
-    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Overrides
 	virtual Waves* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
+    bool initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude, bool horizontal, bool vertical);
+
     unsigned int _waves;
     float _amplitude;
     float _amplitudeRate;
     bool _vertical;
     bool _horizontal;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Waves);
 };
 
 /** @brief Twirl action */
 class CC_DLL Twirl : public Grid3DAction
 {
 public:
+    Twirl() {}
+    virtual ~Twirl() {}
     /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
     static Twirl* create(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
     /** get twirl center */
-    inline const Point& getPosition(void) const { return _position; }
+    inline const Point& getPosition() const { return _position; }
     /** set twirl center */
     void setPosition(const Point& position);
 
-    inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline float getAmplitude() const { return _amplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
-    inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline float getAmplitudeRate() const { return _amplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
-    /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
 
     // Overrides
 	virtual Twirl* clone() const override;
     virtual void update(float time) override;
 
 protected:
+    /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
+    bool initWithDuration(float duration, const Size& gridSize, Point position, unsigned int twirls, float amplitude);
+
     /* twirl center */
     Point _position;
     unsigned int _twirls;
     float _amplitude;
     float _amplitudeRate;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Twirl);
 };
 
 // end of actions group

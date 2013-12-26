@@ -34,32 +34,20 @@ NS_CC_EXT_BEGIN
 class ControlSwitchSprite : public Sprite, public ActionTweenDelegate
 {
 public:
+    /** creates an autorelease instance of ControlSwitchSprite */
+    static ControlSwitchSprite* create(
+                            Sprite *maskSprite,
+                            Sprite *onSprite,
+                            Sprite *offSprite,
+                            Sprite *thumbSprite,
+                            LabelTTF* onLabel,
+                            LabelTTF* offLabel);
+
     /**
      * @js NA
      * @lua NA
      */
-    ControlSwitchSprite();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ControlSwitchSprite();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    bool initWithMaskSprite(
-        Sprite *maskSprite, 
-        Sprite *onSprite, 
-        Sprite *offSprite,
-        Sprite *thumbSprite,
-        LabelTTF* onLabel, 
-        LabelTTF* offLabel);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void draw();
+    void draw() override;
     /**
      * @js NA
      * @lua NA
@@ -89,7 +77,8 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void updateTweenAction(float value, const char* key);
+    virtual void updateTweenAction(float value, const std::string& key) override;
+
 /** Contains the position (in x-axis) of the slider inside the receiver. */
     float _sliderXPosition;
     CC_SYNTHESIZE(float, _onPosition, OnPosition)
@@ -104,7 +93,46 @@ public:
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _onLabel, OnLabel)
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _offLabel, OffLabel)
+
+protected:
+    /**
+     * @js NA
+     * @lua NA
+     */
+    ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ControlSwitchSprite();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    bool initWithMaskSprite(
+                            Sprite *maskSprite,
+                            Sprite *onSprite,
+                            Sprite *offSprite,
+                            Sprite *thumbSprite,
+                            LabelTTF* onLabel, 
+                            LabelTTF* offLabel);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ControlSwitchSprite);
 };
+
+ControlSwitchSprite* ControlSwitchSprite::create(Sprite *maskSprite,
+                                            Sprite *onSprite,
+                                            Sprite *offSprite,
+                                            Sprite *thumbSprite,
+                                            LabelTTF* onLabel,
+                                            LabelTTF* offLabel)
+{
+    auto ret = new ControlSwitchSprite();
+    ret->initWithMaskSprite(maskSprite, onSprite, offSprite, thumbSprite, onLabel, offLabel);
+    ret->autorelease();
+    return ret;
+}
 
 ControlSwitchSprite::ControlSwitchSprite()
 : _sliderXPosition(0.0f)
@@ -187,9 +215,9 @@ bool ControlSwitchSprite::initWithMaskSprite(
     return false;
 }
 
-void ControlSwitchSprite::updateTweenAction(float value, const char* key)
+void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
 {
-    CCLOG("key = %s, value = %f", key, value);
+    CCLOG("key = %s, value = %f", key.c_str(), value);
     setSliderXPosition(value);
 }
 
@@ -348,13 +376,13 @@ bool ControlSwitch::initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sp
         
         _on = true;
 
-        _switchSprite = new ControlSwitchSprite();
-        _switchSprite->initWithMaskSprite(maskSprite,
-                                            onSprite,
-                                           offSprite,
-                                           thumbSprite,
-                                           onLabel,
-                                           offLabel);
+        _switchSprite = ControlSwitchSprite::create(maskSprite,
+                                        onSprite,
+                                        offSprite,
+                                        thumbSprite,
+                                        onLabel,
+                                        offLabel);
+        _switchSprite->retain();
         _switchSprite->setPosition(Point(_switchSprite->getContentSize().width / 2, _switchSprite->getContentSize().height / 2));
         addChild(_switchSprite);
         

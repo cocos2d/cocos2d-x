@@ -167,6 +167,7 @@ public:
     void resume(Object* sender);
 
     void setTouchEnabled(bool enabled);
+	bool isTouchEnabled() const;
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
@@ -223,9 +224,9 @@ public:
      * @lua NA
      */
     virtual void visit() override;
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node * child) override;
 
 protected:
     /**

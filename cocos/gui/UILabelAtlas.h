@@ -27,13 +27,15 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 /**
  *   @js NA
  *   @lua NA
  */
-class UICCLabelAtlas : public cocos2d::LabelAtlas
+class UICCLabelAtlas : public LabelAtlas
 {
 public:
     /**
@@ -51,33 +53,32 @@ public:
      */
     static UICCLabelAtlas* create();
     void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    void setProperty(const std::string& string, cocos2d::Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void updateDisplayedOpacity(GLubyte opacity);
-    virtual void draw(void);
+    void setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
+    virtual void draw(void) override;
 };
 /**
  *   @js NA
  *   @lua NA
  */
-class UILabelAtlas : public UIWidget
+class LabelAtlas : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILabelAtlas();
+    LabelAtlas();
     
     /**
      * Default destructor
      */
-    virtual ~UILabelAtlas();
+    virtual ~LabelAtlas();
     
     /**
      * Allocates and initializes.
      */
-    static UILabelAtlas* create();
+    static LabelAtlas* create();
     
-    /** initializes the UILabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
+    /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
     void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
     
     //set string value for labelatlas.
@@ -87,27 +88,27 @@ public:
     const std::string& getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const cocos2d::Point &pt);
+    virtual void setAnchorPoint(const Point &pt) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer();
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
     
 protected:
-    virtual void initRenderer();
-    virtual void onSizeChanged();
+    virtual void initRenderer() override;
+    virtual void onSizeChanged() override;
     void labelAtlasScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    UICCLabelAtlas* _laberAtlasRenderer;
+    UICCLabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;
@@ -116,5 +117,6 @@ protected:
 };
 
 }
+NS_CC_END
 
-#endif /* defined(__CocoGUI__UILabelAtlas__) */
+#endif /* defined(__CocoGUI__LabelAtlas__) */

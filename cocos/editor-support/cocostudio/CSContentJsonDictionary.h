@@ -45,7 +45,10 @@ namespace cocostudio {
         EDIC_TYPEARRAY,
         EDIC_TYPEOBJECT
     }DicItemType;
-
+    /**
+     *  @js NA
+     *  @lua NA
+     */
     class JsonDictionary
     {
     public:

@@ -9,7 +9,6 @@
 #include "cocosbuilder/CCBSelectorResolver.h"
 #include "cocosbuilder/CCBSequence.h"
 #include "cocosbuilder/CCBSequenceProperty.h"
-#include "cocosbuilder/CCBValue.h"
 #include "cocosbuilder/CCControlButtonLoader.h"
 #include "cocosbuilder/CCControlLoader.h"
 #include "cocosbuilder/CCLabelBMFontLoader.h"

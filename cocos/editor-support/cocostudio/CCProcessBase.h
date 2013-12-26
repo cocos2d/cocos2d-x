@@ -46,18 +46,14 @@ enum AnimationType
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ProcessBase : public cocos2d::Object
 {
 public:
-	/**
-     * @js ctor
-     */
     ProcessBase(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ProcessBase(void);
 
     /**
@@ -128,8 +124,6 @@ public:
     virtual float getCurrentPercent() const { return _currentPercent; }
     virtual int getRawDuration() const { return _rawDuration; }
 
-    virtual void setAnimationInternal(float animationInternal) { _animationInternal = animationInternal; }
-    virtual float getAnimationInternal() const { return _animationInternal; }
 protected:
 
     virtual void gotoFrame(int frameIndex);

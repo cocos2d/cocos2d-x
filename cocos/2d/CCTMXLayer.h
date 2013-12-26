@@ -137,14 +137,14 @@ public:
     CC_DEPRECATED_ATTRIBUTE Point positionAt(const Point& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
-    String* getProperty(const char *propertyName) const;
-    CC_DEPRECATED_ATTRIBUTE String* propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    Value getProperty(const std::string& propertyName) const;
+    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** Creates the tiles */
     void setupTiles();
 
-    inline const char* getLayerName(){ return _layerName.c_str(); }
-    inline void setLayerName(const char *layerName){ _layerName = layerName; }
+    inline const std::string& getLayerName(){ return _layerName; }
+    inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
 
     /** size of the layer in tiles */
     inline const Size& getLayerSize() const { return _layerSize; };
@@ -174,10 +174,9 @@ public:
     inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
     
     /** properties from the layer. They can be added using Tiled */
-    inline Dictionary* getProperties() const { return _properties; };
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline const ValueMap& getProperties() const { return _properties; };
+    inline ValueMap& getProperties() { return _properties; };
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     //
@@ -186,10 +185,11 @@ public:
     /** TMXLayer doesn't support adding a Sprite manually.
      @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
      */
+    using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;
-
+    virtual std::string getDescription() const override;
 
 private:
     Point getPositionForIsoAt(const Point& pos);
@@ -210,8 +210,8 @@ private:
     int getVertexZForPos(const Point& pos);
 
     // index
-    unsigned int atlasIndexForExistantZ(unsigned int z);
-    unsigned int atlasIndexForNewZ(int z);
+    ssize_t atlasIndexForExistantZ(unsigned int z);
+    ssize_t atlasIndexForNewZ(int z);
     
 protected:
     //! name of the layer
@@ -244,7 +244,7 @@ protected:
     /** Layer orientation, which is the same as the map orientation */
     unsigned int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
-    Dictionary* _properties;
+    ValueMap _properties;
 };
 
 // end of tilemap_parallax_nodes group
