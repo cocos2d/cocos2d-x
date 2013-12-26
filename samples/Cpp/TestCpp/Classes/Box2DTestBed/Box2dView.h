@@ -50,6 +50,8 @@ public:
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);
+protected:
+    void onDraw();
 };
 
 class Box2dTestBedScene : public TestScene
