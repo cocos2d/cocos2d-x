@@ -60,6 +60,8 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -223,6 +225,8 @@ public:
     virtual std::string subtitle() const override;
 private:
     Label *label1;
+protected:
+    void onDraw();
 };
 
 class LabelTTFLongLineWrapping : public AtlasDemoNew
