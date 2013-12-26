@@ -22,97 +22,72 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIPanelTest__
-#define __TestCpp__UIPanelTest__
+#ifndef __TestCpp__UIProgressTimerTest__
+#define __TestCpp__UIProgressTimerTest__
 
 #include "../UIScene.h"
 
-class UIPanelTest : public UIScene
+class UIProgressTimerTest_Radial : public UIScene
 {
 public:
-    UIPanelTest();
-    ~UIPanelTest();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Radial)
 };
 
-class UIPanelTest_Color : public UIScene
+class UIProgressTimerTest_Horizontal : public UIScene
 {
 public:
-    UIPanelTest_Color();
-    ~UIPanelTest_Color();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Color)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Horizontal)
 };
 
-class UIPanelTest_Gradient : public UIScene
+class UIProgressTimerTest_Vertical : public UIScene
 {
 public:
-    UIPanelTest_Gradient();
-    ~UIPanelTest_Gradient();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Gradient)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_Vertical)
 };
 
-class UIPanelTest_BackGroundImage : public UIScene
+class UIProgressTimerTest_RadialMidpointChanged : public UIScene
 {
 public:
-    UIPanelTest_BackGroundImage();
-    ~UIPanelTest_BackGroundImage();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_RadialMidpointChanged)
 };
 
-class UIPanelTest_BackGroundImage_Scale9 : public UIScene
+class UIProgressTimerTest_BarVarious : public UIScene
 {
 public:
-    UIPanelTest_BackGroundImage_Scale9();
-    ~UIPanelTest_BackGroundImage_Scale9();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_BackGroundImage_Scale9)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_BarVarious)
 };
 
-class UIPanelTest_Layout_Linear_Vertical : public UIScene
+class UIProgressTimerTest_BarTintAndFade : public UIScene
 {
 public:
-    UIPanelTest_Layout_Linear_Vertical();
-    ~UIPanelTest_Layout_Linear_Vertical();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Vertical)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_BarTintAndFade)
 };
 
-class UIPanelTest_Layout_Linear_Horizontal : public UIScene
+class UIProgressTimerTest_WithSpriteFrame : public UIScene
 {
 public:
-    UIPanelTest_Layout_Linear_Horizontal();
-    ~UIPanelTest_Layout_Linear_Horizontal();
     bool init();
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Linear_Horizontal)
+    UI_SCENE_CREATE_FUNC(UIProgressTimerTest_WithSpriteFrame)
 };
 
-class UIPanelTest_Layout_Relative : public UIScene
-{
-public:
-    UIPanelTest_Layout_Relative();
-    ~UIPanelTest_Layout_Relative();
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIPanelTest_Layout_Relative)
-};
-
-#endif /* defined(__TestCpp__UIPanelTest__) */
+#endif /* defined(__TestCpp__UIProgressTimerTest__) */

@@ -22,33 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIDragPanelTest__
-#define __TestCpp__UIDragPanelTest__
+#ifndef __TestCpp__UISwitchTest__
+#define __TestCpp__UISwitchTest__
 
 #include "../UIScene.h"
 
-class UIDragPanelTest : public UIScene
+class UISwitchTest_Horizontal : public UIScene
 {
 public:
-    UIDragPanelTest();
-    ~UIDragPanelTest();
+    UISwitchTest_Horizontal();
+    ~UISwitchTest_Horizontal();
     bool init();
+    void switchEvent(Object* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest)
-    UILabel *m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Horizontal)
+    gui::Label* _displayValueLabel;
 };
 
-class UIDragPanelTest_Bounce : public UIScene
+class UISwitchTest_Vertical : public UIScene
 {
 public:
-    UIDragPanelTest_Bounce();
-    ~UIDragPanelTest_Bounce();
+    UISwitchTest_Vertical();
+    ~UISwitchTest_Vertical();
     bool init();
+    void switchEvent(Object* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIDragPanelTest_Bounce)
-    UILabel *m_pDisplayValueLabel;
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Vertical)
+    gui::Label* _displayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UIDragPanelTest__) */
+class UISwitchTest_VerticalAndTitleVertical : public UIScene
+{
+public:
+    UISwitchTest_VerticalAndTitleVertical();
+    ~UISwitchTest_VerticalAndTitleVertical();
+    bool init();
+    void switchEvent(Object* pSender, SwitchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISwitchTest_VerticalAndTitleVertical)
+    gui::Label* _displayValueLabel;
+};
+
+#endif /* defined(__TestCpp__UISwitchTest__) */
