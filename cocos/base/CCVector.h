@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __CCVECTOR_H__
 
 #include "ccMacros.h"
+#include "CCObject.h"
 
 #include <vector>
 #include <functional>
@@ -68,13 +69,18 @@ public:
     Vector<T>()
     : _data()
     {
-        
+#if defined(COCOS2D_DEBUG) &&  COCOS2D_DEBUG > 0
+        EnsureTypeIsObject<T,Object*>();
+#endif
     }
     
     /** Constructor with a capacity */
     explicit Vector<T>(ssize_t capacity)
     : _data()
     {
+#if defined(COCOS2D_DEBUG) &&  COCOS2D_DEBUG > 0
+        EnsureTypeIsObject<T,Object*>();
+#endif
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
@@ -421,6 +427,12 @@ protected:
     }
     
     std::vector<T> _data;
+    
+private:
+    template<class T1, class T2> struct EnsureTypeIsObject {
+        static void constraints(T1 a, T2 b) { T2 c = a; b = a; c = nullptr; }
+        EnsureTypeIsObject() { void(*p)(T1,T2) = constraints; p = nullptr; }
+    };
 };
 
 // end of data_structure group
