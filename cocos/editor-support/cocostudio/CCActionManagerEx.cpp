@@ -1,31 +1,31 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013 cocos2d-x.org
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "cocostudio/CCActionManagerEx.h"
 #include "cocostudio/DictionaryHelper.h"
 
- using namespace cocos2d;
+using namespace cocos2d;
 
 namespace cocostudio {
 
@@ -33,10 +33,10 @@ static ActionManagerEx* sharedActionManager = NULL;
 
 ActionManagerEx* ActionManagerEx::shareManager()
 {
-    if (!sharedActionManager) {
-        sharedActionManager = new ActionManagerEx();
-    }
-    return sharedActionManager;
+	if (!sharedActionManager) {
+		sharedActionManager = new ActionManagerEx();
+	}
+	return sharedActionManager;
 }
 
 void ActionManagerEx::purgeActionManager()
@@ -61,13 +61,13 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 	CCLOG("filename == %s",fileName.c_str());
 	cocos2d::Vector<ActionObject*> actionList;
 	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
-    for (int i=0; i<actionCount; i++) {
-        ActionObject* action = new ActionObject();
+	for (int i=0; i<actionCount; i++) {
+		ActionObject* action = new ActionObject();
 		action->autorelease();
 		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
-        action->initWithDictionary(actionDic,root);
-        actionList.pushBack(action);
-    }
+		action->initWithDictionary(actionDic,root);
+		actionList.pushBack(action);
+	}
 	_pActionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
 }
 
@@ -79,7 +79,7 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 	{
 		return NULL;
 	}
-    auto actionList = iterator->second;
+	auto actionList = iterator->second;
 	for (int i = 0; i < actionList.size(); i++)
 	{
 		ActionObject* action = actionList.at(i);
@@ -113,7 +113,7 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 
 void ActionManagerEx::releaseActions()
 {
-    _pActionDic.clear();
+	_pActionDic.clear();
 }
 
 }
