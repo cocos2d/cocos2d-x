@@ -92,7 +92,7 @@ void NodeGrid::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
+    GroupCommand* groupCommand = new GroupCommand();
     groupCommand->init(0,_vertexZ);
     renderer->addCommand(groupCommand);
     renderer->pushGroup(groupCommand->getRenderQueueID());
@@ -105,7 +105,7 @@ void NodeGrid::visit()
         _nodeGrid->set2DProjection();
     }
 
-    CustomCommand* gridBeginCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* gridBeginCmd = new CustomCommand();
     gridBeginCmd->init(0,_vertexZ);
     gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(gridBeginCmd);
@@ -154,7 +154,7 @@ void NodeGrid::visit()
         director->setProjection(beforeProjectionType);
     }
 
-    CustomCommand* gridEndCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* gridEndCmd = new CustomCommand();
     gridEndCmd->init(0,_vertexZ);
     gridEndCmd->func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
     renderer->addCommand(gridEndCmd);
