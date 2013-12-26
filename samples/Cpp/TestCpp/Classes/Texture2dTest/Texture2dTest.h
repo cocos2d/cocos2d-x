@@ -441,6 +441,8 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
     virtual void draw();
+protected:
+    void onDraw();
 private:
     Texture2D* _tex1, *_Tex2F;
 };
@@ -454,6 +456,8 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter();
     virtual void draw();
+protected:
+    void onDraw();
 private:
     Texture2D* _tex1, *_Tex2F;
 };
