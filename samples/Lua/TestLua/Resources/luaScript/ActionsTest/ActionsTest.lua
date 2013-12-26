@@ -1019,7 +1019,6 @@ local function ActionPause(dt)
 
 	local director = cc.Director:getInstance()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
-    pausedTargets:retain()
 end
 
 local function ActionResume(dt)
@@ -1032,7 +1031,6 @@ local function ActionResume(dt)
 	if pausedTargets ~= nil then
 		-- problem: will crash here. Try fixing me!
 		director:getActionManager():resumeTargets(pausedTargets)
-        pausedTargets:release()
 	end
 end
 
