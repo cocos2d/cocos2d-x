@@ -108,7 +108,6 @@ public:
 
     void pushBackCommand(QuadCommand* ptr)
     {
-        delete ptr;
     }
 };
 
