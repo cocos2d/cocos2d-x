@@ -33,7 +33,11 @@
 
 NS_CC_BEGIN
 
-//TODO make RenderCommand inherent from Object
+//Currently we use 24 bit for depth, so the max is 2^24=16777216
+#define CC_RENDERER_DEPTH_MAX 16777216
+#define CC_RENDERER_DEPTH_HALF 8388608
+#define CC_RENDERER_DEPTH_MIN 0
+
 class RenderCommand
 {
 public:
@@ -47,6 +51,7 @@ public:
     };
 
     virtual int64_t generateID() = 0;
+    void init(int viewport, float depth);
 
     /** Get Render Command Id */
     virtual inline int64_t getID() { return _id; }
@@ -63,6 +68,9 @@ protected:
     //Generated IDs
     int64_t _id; /// used for sorting render commands
     Type _type;
+    
+    int _viewport; /// Which view port it belongs to
+    int32_t _depth; /// Depth of the render command
 };
 
 NS_CC_END

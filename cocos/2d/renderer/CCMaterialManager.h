@@ -48,6 +48,8 @@ public:
     void registerShader(GLuint shaderID);
     void unregisterShader(GLuint shaderID);
 
+    int getBlendFuncID(BlendFunc blendFunc);
+    
 protected:
     MaterialManager();
     virtual ~MaterialManager();
@@ -56,11 +58,10 @@ protected:
 
     int getTextureID(GLuint textureID);
     int getShaderID(GLuint shaderID);
-    int getBlendFuncID(GLint blendFunc);
 
     std::map<GLuint, int> _textureIDMapping;
     std::map<GLuint, int> _shaderIDMapping;
-    std::map<BlendFunc, int> _blendFuncMapping;
+    std::map<int32_t, int> _blendFuncMapping;
 };
 
 NS_CC_END

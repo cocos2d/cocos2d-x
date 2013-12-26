@@ -36,12 +36,6 @@ CustomCommand::CustomCommand()
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
-void CustomCommand::init(int viewport, int32_t depth)
-{
-    _viewport = viewport;
-    _depth = depth;
-}
-
 CustomCommand::~CustomCommand()
 {
 

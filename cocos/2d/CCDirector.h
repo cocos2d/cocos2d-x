@@ -389,6 +389,10 @@ public:
      *  get Frame Rate
      */
     float getFrameRate() const { return _frameRate; }
+    
+    inline float getCameraZ() const { return _cameraZ; }
+    inline float getNearClip() const { return _nearClip; }
+    inline float getFarClip() const { return _farClip; }
 
 protected:
     void purgeDirector();
@@ -498,6 +502,12 @@ protected:
     
     // EGLViewProtocol will recreate stats labels to fit visible rect
     friend class EGLViewProtocol;
+    
+    //TODO move this to camera instead
+    float _cameraZ;
+    
+    float _nearClip;
+    float _farClip;
 };
 
 /** 

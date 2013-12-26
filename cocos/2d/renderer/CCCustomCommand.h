@@ -36,8 +36,6 @@ class CustomCommand : public RenderCommand
 public:
     static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
 
-    void init(int viewport, int32_t depth);
-
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
     // | ViewPort | Transluc |     |      Depth     |                  |

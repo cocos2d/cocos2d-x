@@ -54,8 +54,7 @@ class GroupCommand : public RenderCommand
 {
 public:
     static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
-
-    void init(int viewport, int32_t depth);
+    void init(int viewport, float depth);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -72,8 +71,6 @@ protected:
     GroupCommand();
     ~GroupCommand();
 
-    int _viewport;
-    int32_t _depth;
     int _renderQueueID;
     static RenderCommandPool<GroupCommand> _commandPool;
 
