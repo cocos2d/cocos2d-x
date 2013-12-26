@@ -1025,17 +1025,22 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(JsonDictionary *dat
         Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            if (dynamic_cast<PageView*>(widget))
+            PageView* pageView = dynamic_cast<PageView*>(widget);
+            if (pageView)
             {
-                dynamic_cast<PageView*>(widget)->addPage(static_cast<Layout*>(child));
-            }
-            else if (dynamic_cast<ListView*>(widget))
-            {
-                dynamic_cast<ListView*>(widget)->pushBackCustomItem(child);
+                pageView->addPage(static_cast<Layout*>(child));
             }
             else
             {
-                widget->addChild(child);
+                ListView* listView = dynamic_cast<ListView*>(widget);
+                if (listView)
+                {
+                    listView->pushBackCustomItem(child);
+                }
+                else
+                {
+                    widget->addChild(child);
+                }
             }
         }
         CC_SAFE_DELETE(subData);
@@ -1949,7 +1954,7 @@ void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(Widget* w
 {
     setPropsForLayoutFromJsonDictionary(widget, options);
     
-    ListView* listView = (ListView*)widget;
+    ListView* listView = static_cast<ListView*>(widget);
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
