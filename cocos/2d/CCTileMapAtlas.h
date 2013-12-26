@@ -26,13 +26,12 @@ THE SOFTWARE.
 #ifndef __CCTILE_MAP_ATLAS__
 #define __CCTILE_MAP_ATLAS__
 
-
 #include "CCAtlasNode.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
 struct sImageTGA;
-class Dictionary;
 
 /**
  * @addtogroup tilemap_parallax_nodes
@@ -60,7 +59,7 @@ public:
     /** creates a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
      The tile file will be loaded using the TextureMgr.
      */
-    static TileMapAtlas * create(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    static TileMapAtlas * create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight);
     /**
      * @js ctor
      */
@@ -74,7 +73,7 @@ public:
     /** initializes a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
     The file will be loaded using the TextureMgr.
     */
-    bool initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight);
+    bool initWithTileFile(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight);
     /** returns a tile from position x,y.
     For the moment only channel R is used
     */
@@ -89,15 +88,16 @@ public:
     
     inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
     inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
-private:
-    void loadTGAfile(const char *file);
+
+protected:
+    void loadTGAfile(const std::string& file);
     void calculateItemsToRender();
     void updateAtlasValueAt(const Point& pos, const Color3B& value, int index);
     void updateAtlasValues();
 
-protected:
+
     //! x,y to atlas dictionary
-    Dictionary* _posToAtlasIndex;
+    ValueMap _posToAtlasIndex;
     //! numbers of tiles to render
     int _itemsToRender;
     /** TileMap info */

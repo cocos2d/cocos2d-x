@@ -62,7 +62,7 @@ public:
     {
         Data():bytes(NULL), len(0), isBinary(false){}
         char* bytes;
-        int len;
+        ssize_t len;
         bool isBinary;
     };
     
@@ -143,7 +143,7 @@ private:
     int onSocketCallback(struct libwebsocket_context *ctx,
                          struct libwebsocket *wsi,
                          int reason,
-                         void *user, void *in, size_t len);
+                         void *user, void *in, ssize_t len);
     
 private:
 	State        _readyState;

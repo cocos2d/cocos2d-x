@@ -60,6 +60,8 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCObject.h"
 #include "CCArray.h"
+#include "CCVector.h"
+#include "CCMap.h"
 #include "CCGeometry.h"
 #include "CCSet.h"
 #include "CCAutoreleasePool.h"
@@ -70,6 +72,7 @@ THE SOFTWARE.
 #include "CCString.h"
 #include "CCNS.h"
 #include "CCData.h"
+#include "CCValue.h"
 
 // draw nodes
 #include "CCDrawingPrimitives.h"
@@ -114,6 +117,17 @@ THE SOFTWARE.
 #include "CCParticleSystem.h"
 #include "CCParticleExamples.h"
 #include "CCParticleSystemQuad.h"
+
+// new renderer
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCFrustum.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCMaterialManager.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCRenderCommandPool.h"
+#include "renderer/CCRenderMaterial.h"
+#include "renderer/CCRenderer.h"
 
 // physics
 #include "CCPhysicsBody.h"
@@ -199,6 +213,7 @@ THE SOFTWARE.
 #include "ccUTF8.h"
 #include "CCNotificationCenter.h"
 #include "CCProfiling.h"
+#include "CCConsole.h"
 #include "CCUserDefault.h"
 #include "CCVertex.h"
 
@@ -234,7 +249,6 @@ THE SOFTWARE.
 #include "CCEventListenerCustom.h"
 
 // root
-#include "CCCamera.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "CCScheduler.h"

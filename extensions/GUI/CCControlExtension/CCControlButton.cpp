@@ -45,15 +45,10 @@ ControlButton::ControlButton()
 : _isPushed(false)
 , _parentInited(false)
 , _doesAdjustBackgroundImage(false)
-, _currentTitle(NULL)
 , _currentTitleColor(Color3B::WHITE)
-, _titleLabel(NULL)
-, _backgroundSprite(NULL)
+, _titleLabel(nullptr)
+, _backgroundSprite(nullptr)
 , _zoomOnTouchDown(false)
-, _titleDispatchTable(NULL)
-, _titleColorDispatchTable(NULL)
-, _titleLabelDispatchTable(NULL)
-, _backgroundSpriteDispatchTable(NULL)
 , _marginV(ControlButtonMarginTB)
 , _marginH(ControlButtonMarginLR)
 {
@@ -62,12 +57,7 @@ ControlButton::ControlButton()
 
 ControlButton::~ControlButton()
 {
-    CC_SAFE_RELEASE(_currentTitle);
     CC_SAFE_RELEASE(_titleLabel);
-    CC_SAFE_RELEASE(_backgroundSpriteDispatchTable);
-    CC_SAFE_RELEASE(_titleLabelDispatchTable);
-    CC_SAFE_RELEASE(_titleColorDispatchTable);
-    CC_SAFE_RELEASE(_titleDispatchTable);
     CC_SAFE_RELEASE(_backgroundSprite);
 }
 
@@ -82,24 +72,15 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
 {
     if (Control::init())
     {
-        CCASSERT(node != NULL, "Label must not be nil.");
+        CCASSERT(node != nullptr, "Label must not be nil.");
         LabelProtocol* label = dynamic_cast<LabelProtocol*>(node);
-        RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(node);
-        CCASSERT(backgroundSprite != NULL, "Background sprite must not be nil.");
-        CCASSERT(label != NULL || rgbaLabel!=NULL || backgroundSprite != NULL, "");
+        CCASSERT(backgroundSprite != nullptr, "Background sprite must not be nil.");
+        CCASSERT(label != nullptr || backgroundSprite != nullptr, "");
         
         _parentInited = true;
 
-        // Initialize the button state tables
-        this->setTitleDispatchTable(Dictionary::create());
-        this->setTitleColorDispatchTable(Dictionary::create());
-        this->setTitleLabelDispatchTable(Dictionary::create());
-        this->setBackgroundSpriteDispatchTable(Dictionary::create());
-
         _isPushed = false;
         _zoomOnTouchDown = true;
-
-        _currentTitle=NULL;
 
         // Adjust the background image by default
         setAdjustBackgroundImage(true);
@@ -122,10 +103,8 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         
         // Initialize the dispatch table
         
-        String* tempString = String::create(label->getString());
-        //tempString->autorelease();
-        setTitleForState(tempString, Control::State::NORMAL);
-        setTitleColorForState(rgbaLabel->getColor(), Control::State::NORMAL);
+        setTitleForState(label->getString(), Control::State::NORMAL);
+        setTitleColorForState(node->getColor(), Control::State::NORMAL);
         setTitleLabelForState(node, Control::State::NORMAL);
         setBackgroundSpriteForState(backgroundSprite, Control::State::NORMAL);
         
@@ -151,13 +130,13 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
     return pRet;
 }
 
-bool ControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
+bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    LabelTTF *label = LabelTTF::create(title.c_str(), fontName, fontSize);
+    LabelTTF *label = LabelTTF::create(title, fontName, fontSize);
     return initWithLabelAndBackgroundSprite(label, Scale9Sprite::create());
 }
 
-ControlButton* ControlButton::create(string title, const char * fontName, float fontSize)
+ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
 {
     ControlButton *pRet = new ControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
@@ -237,7 +216,7 @@ bool ControlButton::getZoomOnTouchDown()
     return _zoomOnTouchDown;
 }
 
-void ControlButton::setPreferredSize(Size size)
+void ControlButton::setPreferredSize(const Size& size)
 {
     if(size.width == 0 && size.height == 0)
     {
@@ -246,11 +225,10 @@ void ControlButton::setPreferredSize(Size size)
     else
     {
         _doesAdjustBackgroundImage = false;
-        DictElement * item = NULL;
-        CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
+        
+        for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
         {
-            Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-            sprite->setPreferredSize(size);
+            iter->second->setPreferredSize(size);
         }
     }
 
@@ -258,7 +236,7 @@ void ControlButton::setPreferredSize(Size size)
     needsLayout();
 }
 
-Size ControlButton::getPreferredSize()
+const Size& ControlButton::getPreferredSize() const
 {
     return _preferredSize;
 }
@@ -274,41 +252,40 @@ bool ControlButton::doesAdjustBackgroundImage()
     return _doesAdjustBackgroundImage;
 }
 
-Point ControlButton::getLabelAnchorPoint()
+const Point& ControlButton::getLabelAnchorPoint() const
 {
     return this->_labelAnchorPoint;
 }
 
-void ControlButton::setLabelAnchorPoint(Point labelAnchorPoint)
+void ControlButton::setLabelAnchorPoint(const Point& labelAnchorPoint)
 {
     this->_labelAnchorPoint = labelAnchorPoint;
-    if (_titleLabel != NULL)
+    if (_titleLabel != nullptr)
     {
         this->_titleLabel->setAnchorPoint(labelAnchorPoint);
     }
 }
 
-String* ControlButton::getTitleForState(State state)
+std::string ControlButton::getTitleForState(State state)
 {
-    if (_titleDispatchTable != NULL)
+    auto iter = _titleDispatchTable.find((int)state);
+    if (iter != _titleDispatchTable.end())
     {
-        String* title=(String*)_titleDispatchTable->objectForKey((int)state);
-        if (title)
-        {
-            return title;
-        }
-        return (String*)_titleDispatchTable->objectForKey((int)Control::State::NORMAL);
+        return iter->second;
     }
-    return String::create("");
+    
+    iter = _titleDispatchTable.find((int)Control::State::NORMAL);
+    
+    return iter != _titleDispatchTable.end() ? iter->second : "";
 }
 
-void ControlButton::setTitleForState(String* title, State state)
+void ControlButton::setTitleForState(const std::string& title, State state)
 {
-    _titleDispatchTable->removeObjectForKey((int)state);
+    _titleDispatchTable.erase((int)state);
 
-    if (title)
+    if (!title.empty())
     {
-        _titleDispatchTable->setObject(title, (int)state);
+        _titleDispatchTable[(int)state] = title;
     }
     
     // If the current state if equal to the given state we update the layout
@@ -322,33 +299,28 @@ void ControlButton::setTitleForState(String* title, State state)
 Color3B ControlButton::getTitleColorForState(State state) const
 {
     Color3B returnColor = Color3B::WHITE;
-    do 
-    {
-        CC_BREAK_IF(NULL == _titleColorDispatchTable);
-        Color3bObject* colorObject=(Color3bObject*)_titleColorDispatchTable->objectForKey((int)state);
-        if (colorObject)
-        {
-            returnColor = colorObject->value;
-            break;
-        }
 
-        colorObject = (Color3bObject*)_titleColorDispatchTable->objectForKey((int)Control::State::NORMAL);
-        if (colorObject)
+    auto iter = _titleColorDispatchTable.find((int)state);
+    if (iter != _titleColorDispatchTable.end())
+    {
+        returnColor = iter->second;
+    }
+    else
+    {
+        iter = _titleColorDispatchTable.find((int)Control::State::NORMAL);
+        if (iter != _titleColorDispatchTable.end())
         {
-            returnColor = colorObject->value;
+            returnColor = iter->second;
         }
-    } while (0);
+    }
 
     return returnColor;
 }
 
-void ControlButton::setTitleColorForState(Color3B color, State state)
+void ControlButton::setTitleColorForState(const Color3B& color, State state)
 {
-    //Color3B* colorValue=&color;
-    _titleColorDispatchTable->removeObjectForKey((int)state);
-    Color3bObject* pColor3bObject = new Color3bObject(color);
-    pColor3bObject->autorelease();
-    _titleColorDispatchTable->setObject(pColor3bObject, (int)state);
+    _titleColorDispatchTable.erase((int)state);
+    _titleColorDispatchTable[(int)state] = color;
       
     // If the current state if equal to the given state we update the layout
     if (getState() == state)
@@ -359,24 +331,24 @@ void ControlButton::setTitleColorForState(Color3B color, State state)
 
 Node* ControlButton::getTitleLabelForState(State state)
 {
-    Node* titleLabel = (Node*)_titleLabelDispatchTable->objectForKey((int)state);
+    Node* titleLabel = _titleLabelDispatchTable.at((int)state);
     if (titleLabel)
     {
         return titleLabel;
     }
-    return (Node*)_titleLabelDispatchTable->objectForKey((int)Control::State::NORMAL);
+    return _titleLabelDispatchTable.at((int)Control::State::NORMAL);
 }
 
 void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
 {
-    Node* previousLabel = (Node*)_titleLabelDispatchTable->objectForKey((int)state);
+    Node* previousLabel = _titleLabelDispatchTable.at((int)state);
     if (previousLabel)
     {
         removeChild(previousLabel, true);
-        _titleLabelDispatchTable->removeObjectForKey((int)state);
+        _titleLabelDispatchTable.erase((int)state);
     }
 
-    _titleLabelDispatchTable->setObject(titleLabel, (int)state);
+    _titleLabelDispatchTable.insert((int)state, titleLabel);
     titleLabel->setVisible(false);
     titleLabel->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(titleLabel, 1);
@@ -388,28 +360,23 @@ void ControlButton::setTitleLabelForState(Node* titleLabel, State state)
     }
 }
 
-void ControlButton::setTitleTTFForState(const char * fntFile, State state)
+void ControlButton::setTitleTTFForState(const std::string& fntFile, State state)
 {
-    String * title = this->getTitleForState(state);
-    if (!title)
-    {
-        title = String::create("");
-    }
-    this->setTitleLabelForState(LabelTTF::create(title->getCString(), fntFile, 12), state);
+    std::string title = this->getTitleForState(state);
+    this->setTitleLabelForState(LabelTTF::create(title, fntFile, 12), state);
 }
 
-const char * ControlButton::getTitleTTFForState(State state)
+const std::string& ControlButton::getTitleTTFForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelTTF* labelTTF = dynamic_cast<LabelTTF*>(label);
     if(labelTTF != 0)
     {
-        return labelTTF->getFontName().c_str();
+        return labelTTF->getFontName();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 void ControlButton::setTitleTTFSizeForState(float size, State state)
@@ -439,17 +406,13 @@ float ControlButton::getTitleTTFSizeForState(State state)
     }
 }
 
-void ControlButton::setTitleBMFontForState(const char * fntFile, State state)
+void ControlButton::setTitleBMFontForState(const std::string& fntFile, State state)
 {
-    String * title = this->getTitleForState(state);
-    if (!title)
-    {
-        title = String::create("");
-    }
-    this->setTitleLabelForState(LabelBMFont::create(title->getCString(), fntFile), state);
+    std::string title = this->getTitleForState(state);
+    this->setTitleLabelForState(LabelBMFont::create(title, fntFile), state);
 }
 
-const char * ControlButton::getTitleBMFontForState(State state)
+const std::string& ControlButton::getTitleBMFontForState(State state)
 {
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(this->getTitleLabelForState(state));
     LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(label);
@@ -457,21 +420,20 @@ const char * ControlButton::getTitleBMFontForState(State state)
     {
         return labelBMFont->getFntFile();
     }
-    else
-    {
-        return "";
-    }
+
+    static std::string ret("");
+    return ret;
 }
 
 
 Scale9Sprite* ControlButton::getBackgroundSpriteForState(State state)
 {
-    Scale9Sprite* backgroundSprite = (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey((int)state);
+    auto backgroundSprite = _backgroundSpriteDispatchTable.at((int)state);
     if (backgroundSprite)
     {
         return backgroundSprite;
     }
-    return (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey((int)Control::State::NORMAL);
+    return _backgroundSpriteDispatchTable.at((int)Control::State::NORMAL);
 }
 
 
@@ -479,14 +441,14 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State stat
 {
     Size oldPreferredSize = _preferredSize;
 
-    Scale9Sprite* previousBackgroundSprite = (Scale9Sprite*)_backgroundSpriteDispatchTable->objectForKey((int)state);
+    auto previousBackgroundSprite = _backgroundSpriteDispatchTable.at((int)state);
     if (previousBackgroundSprite)
     {
         removeChild(previousBackgroundSprite, true);
-        _backgroundSpriteDispatchTable->removeObjectForKey((int)state);
+        _backgroundSpriteDispatchTable.erase((int)state);
     }
 
-    _backgroundSpriteDispatchTable->setObject(sprite, (int)state);
+    _backgroundSpriteDispatchTable.insert((int)state, sprite);
     sprite->setVisible(false);
     sprite->setAnchorPoint(Point(0.5f, 0.5f));
     addChild(sprite);
@@ -522,7 +484,7 @@ void ControlButton::needsLayout()
         return;
     }
     // Hide the background and the label
-    if (_titleLabel != NULL) {
+    if (_titleLabel != nullptr) {
         _titleLabel->setVisible(false);
     }
     if (_backgroundSprite) {
@@ -532,40 +494,37 @@ void ControlButton::needsLayout()
     this->setLabelAnchorPoint(this->_labelAnchorPoint);
     
     // Update the label to match with the current state
-    CC_SAFE_RELEASE(_currentTitle);
     _currentTitle = getTitleForState(_state);
-    CC_SAFE_RETAIN(_currentTitle);
 
     _currentTitleColor = getTitleColorForState(_state);
 
     this->setTitleLabel(getTitleLabelForState(_state));
 
     LabelProtocol* label = dynamic_cast<LabelProtocol*>(_titleLabel);
-    if (label && _currentTitle)
+    if (label && !_currentTitle.empty())
     {
-        label->setString(_currentTitle->getCString());
+        label->setString(_currentTitle);
     }
 
-    RGBAProtocol* rgbaLabel = dynamic_cast<RGBAProtocol*>(_titleLabel);
-    if (rgbaLabel)
+    if (_titleLabel)
     {
-        rgbaLabel->setColor(_currentTitleColor);
+        _titleLabel->setColor(_currentTitleColor);
     }
-    if (_titleLabel != NULL)
+    if (_titleLabel != nullptr)
     {
         _titleLabel->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
-    if (_backgroundSprite != NULL)
+    if (_backgroundSprite != nullptr)
     {
         _backgroundSprite->setPosition(Point (getContentSize().width / 2, getContentSize().height / 2));
     }
    
     // Get the title label size
     Size titleLabelSize;
-    if (_titleLabel != NULL)
+    if (_titleLabel != nullptr)
     {
         titleLabelSize = _titleLabel->getBoundingBox().size;
     }
@@ -574,7 +533,7 @@ void ControlButton::needsLayout()
     if (_doesAdjustBackgroundImage)
     {
         // Add the margins
-        if (_backgroundSprite != NULL)
+        if (_backgroundSprite != nullptr)
         {
             _backgroundSprite->setContentSize(Size(titleLabelSize.width + _marginH * 2, titleLabelSize.height + _marginV * 2));
         }
@@ -582,7 +541,7 @@ void ControlButton::needsLayout()
     else
     {        
         //TODO: should this also have margins if one of the preferred sizes is relaxed?
-        if (_backgroundSprite != NULL)
+        if (_backgroundSprite != nullptr)
         {
             Size preferredSize = _backgroundSprite->getPreferredSize();
             if (preferredSize.width <= 0)
@@ -600,12 +559,12 @@ void ControlButton::needsLayout()
     
     // Set the content size
     Rect rectTitle;
-    if (_titleLabel != NULL)
+    if (_titleLabel != nullptr)
     {
         rectTitle = _titleLabel->getBoundingBox();
     }
     Rect rectBackground;
-    if (_backgroundSprite != NULL)
+    if (_backgroundSprite != nullptr)
     {
         rectBackground = _backgroundSprite->getBoundingBox();
     }
@@ -613,14 +572,14 @@ void ControlButton::needsLayout()
     Rect maxRect = ControlUtils::RectUnion(rectTitle, rectBackground);
     setContentSize(Size(maxRect.size.width, maxRect.size.height));        
     
-    if (_titleLabel != NULL)
+    if (_titleLabel != nullptr)
     {
         _titleLabel->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
-    if (_backgroundSprite != NULL)
+    if (_backgroundSprite != nullptr)
     {
         _backgroundSprite->setPosition(Point(getContentSize().width/2, getContentSize().height/2));
         _backgroundSprite->setVisible(true);   
@@ -636,7 +595,7 @@ bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
         return false;
     }
     
-    for (Node *c = this->_parent; c != NULL; c = c->getParent())
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
     {
         if (c->isVisible() == false)
         {
@@ -714,11 +673,10 @@ void ControlButton::setOpacity(GLubyte opacity)
 //            pNode->setOpacity(opacity);
 //        }
 //    }
-    DictElement * item = NULL;
-    CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
+    
+    for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
     {
-        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-        sprite->setOpacity(opacity);
+        iter->second->setOpacity(opacity);
     }
 }
 
@@ -731,11 +689,9 @@ void ControlButton::setColor(const Color3B & color)
 {
 	Control::setColor(color);
 	
-	DictElement * item = NULL;
-    CCDICT_FOREACH(_backgroundSpriteDispatchTable, item)
+    for (auto iter = _backgroundSpriteDispatchTable.begin(); iter != _backgroundSpriteDispatchTable.end(); ++iter)
     {
-        Scale9Sprite* sprite = static_cast<Scale9Sprite*>(item->getObject());
-        sprite->setColor(color);
+        iter->second->setColor(color);
     }
 }
 
@@ -760,7 +716,7 @@ ControlButton* ControlButton::create()
         return pControlButton;
     }
     CC_SAFE_DELETE(pControlButton);
-    return NULL;
+    return nullptr;
 }
 
 NS_CC_EXT_END

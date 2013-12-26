@@ -26,6 +26,9 @@
 #include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
+#include "CCCustomCommand.h"
+#include "CCDirector.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -101,7 +104,7 @@ DrawNode::DrawNode()
 , _vbo(0)
 , _bufferCapacity(0)
 , _bufferCount(0)
-, _buffer(NULL)
+, _buffer(nullptr)
 , _dirty(false)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -110,7 +113,7 @@ DrawNode::DrawNode()
 DrawNode::~DrawNode()
 {
     free(_buffer);
-    _buffer = NULL;
+    _buffer = nullptr;
     
     glDeleteBuffers(1, &_vbo);
     _vbo = 0;
@@ -129,20 +132,20 @@ DrawNode::~DrawNode()
 
 DrawNode* DrawNode::create()
 {
-    DrawNode* pRet = new DrawNode();
-    if (pRet && pRet->init())
+    DrawNode* ret = new DrawNode();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
     
-    return pRet;
+    return ret;
 }
 
-void DrawNode::ensureCapacity(long count)
+void DrawNode::ensureCapacity(int count)
 {
     CCASSERT(count>=0, "capacity must be >= 0");
     
@@ -196,7 +199,7 @@ bool DrawNode::init()
     NotificationCenter::getInstance()->addObserver(this,
                                                    callfuncO_selector(DrawNode::listenBackToForeground),
                                                    EVNET_COME_TO_FOREGROUND,
-                                                   NULL);
+                                                   nullptr);
 #endif
     
     return true;
@@ -238,9 +241,17 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
+    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(DrawNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void DrawNode::onDraw()
+{
     CC_NODE_DRAW_SETUP();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
-
+    
     render();
 }
 
@@ -338,7 +349,7 @@ void DrawNode::drawSegment(const Point &from, const Point &to, float radius, con
 	_dirty = true;
 }
 
-void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
+void DrawNode::drawPolygon(Point *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
     CCASSERT(count >= 0, "invalid count value");
 
@@ -346,7 +357,7 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
 	memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
 	
-	for (long i = 0; i < count; i++)
+	for (int i = 0; i < count; i++)
     {
 		Vertex2F v0 = __v2f(verts[(i-1+count)%count]);
 		Vertex2F v1 = __v2f(verts[i]);
@@ -362,15 +373,15 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 	
 	bool outline = (borderColor.a > 0.0 && borderWidth > 0.0);
 	
-	unsigned int triangle_count = 3*count - 2;
-	unsigned int vertex_count = 3*triangle_count;
+	auto triangle_count = 3*count - 2;
+	auto vertex_count = 3*triangle_count;
     ensureCapacity(vertex_count);
 	
 	V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	V2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	float inset = (outline == false ? 0.5 : 0.0);
-	for (long i = 0; i < count-2; i++)
+	for (int i = 0; i < count-2; i++)
     {
 		Vertex2F v0 = v2fsub(__v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		Vertex2F v1 = v2fsub(__v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
@@ -385,9 +396,9 @@ void DrawNode::drawPolygon(Point *verts, long count, const Color4F &fillColor, f
 		*cursor++ = tmp;
 	}
 	
-	for(long i = 0; i < count; i++)
+	for(int i = 0; i < count; i++)
     {
-		long j = (i+1)%count;
+		int j = (i+1)%count;
 		Vertex2F v0 = __v2f(verts[i]);
 		Vertex2F v1 = __v2f(verts[j]);
 		

@@ -256,15 +256,15 @@ Scheduler::Scheduler(void)
 , _currentTarget(nullptr)
 , _currentTargetSalvaged(false)
 , _updateHashLocked(false)
-, _scriptHandlerEntries(nullptr)
+, _scriptHandlerEntries(20)
 {
-
+    // I don't expect to have more than 30 functions to all per frame
+    _functionsToPerform.reserve(30);
 }
 
 Scheduler::~Scheduler(void)
 {
     unscheduleAll();
-    CC_SAFE_RELEASE(_scriptHandlerEntries);
 }
 
 void Scheduler::removeHashElement(_hashSelectorEntry *element)
@@ -462,12 +462,12 @@ void Scheduler::appendIn(_listEntry **list, Object *target, bool paused)
     DL_APPEND(*list, listElement);
 
     // update hash entry for quicker access
-    tHashUpdateEntry *pHashElement = (tHashUpdateEntry *)calloc(sizeof(*pHashElement), 1);
-    pHashElement->target = target;
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
+    hashElement->target = target;
     target->retain();
-    pHashElement->list = list;
-    pHashElement->entry = listElement;
-    HASH_ADD_PTR(_hashForUpdates, target, pHashElement);
+    hashElement->list = list;
+    hashElement->entry = listElement;
+    HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
 void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool paused)
@@ -629,10 +629,7 @@ void Scheduler::unscheduleAllWithMinPriority(int minPriority)
         }
     }
 
-    if (_scriptHandlerEntries)
-    {
-        _scriptHandlerEntries->removeAllObjects();
-    }
+    _scriptHandlerEntries.clear();
 }
 
 void Scheduler::unscheduleAllForTarget(Object *target)
@@ -674,20 +671,15 @@ void Scheduler::unscheduleAllForTarget(Object *target)
 unsigned int Scheduler::scheduleScriptFunc(unsigned int handler, float interval, bool paused)
 {
     SchedulerScriptHandlerEntry* entry = SchedulerScriptHandlerEntry::create(handler, interval, paused);
-    if (!_scriptHandlerEntries)
-    {
-        _scriptHandlerEntries = Array::createWithCapacity(20);
-        _scriptHandlerEntries->retain();
-    }
-    _scriptHandlerEntries->addObject(entry);
+    _scriptHandlerEntries.pushBack(entry);
     return entry->getEntryId();
 }
 
 void Scheduler::unscheduleScriptEntry(unsigned int scheduleScriptEntryID)
 {
-    for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
+    for (ssize_t i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
     {
-        SchedulerScriptHandlerEntry* entry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
+        SchedulerScriptHandlerEntry* entry = _scriptHandlerEntries.at(i);
         if (entry->getEntryId() == (int)scheduleScriptEntryID)
         {
             entry->markedForDeletion();
@@ -763,22 +755,21 @@ bool Scheduler::isTargetPaused(Object *target)
     return false;  // should never get here
 }
 
-Set* Scheduler::pauseAllTargets()
+Vector<Object*> Scheduler::pauseAllTargets()
 {
     return pauseAllTargetsWithMinPriority(PRIORITY_SYSTEM);
 }
 
-Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
+Vector<Object*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 {
-    Set* idsWithSelectors = new Set();// setWithCapacity:50];
-    idsWithSelectors->autorelease();
+    Vector<Object*> idsWithSelectors(50);
 
     // Custom Selectors
     for(tHashTimerEntry *element = _hashForTimers; element != nullptr;
         element = (tHashTimerEntry*)element->hh.next)
     {
         element->paused = true;
-        idsWithSelectors->addObject(element->target);
+        idsWithSelectors.pushBack(element->target);
     }
 
     // Updates selectors
@@ -790,7 +781,7 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
             if(entry->priority >= minPriority)
             {
                 entry->paused = true;
-                idsWithSelectors->addObject(entry->target);
+                idsWithSelectors.pushBack(entry->target);
             }
         }
     }
@@ -800,7 +791,7 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         DL_FOREACH_SAFE( _updates0List, entry, tmp )
         {
             entry->paused = true;
-            idsWithSelectors->addObject(entry->target);
+            idsWithSelectors.pushBack(entry->target);
         }
     }
 
@@ -809,20 +800,27 @@ Set* Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
         if(entry->priority >= minPriority) 
         {
             entry->paused = true;
-            idsWithSelectors->addObject(entry->target);
+            idsWithSelectors.pushBack(entry->target);
         }
     }
 
     return idsWithSelectors;
 }
 
-void Scheduler::resumeTargets(Set* targetsToResume)
+void Scheduler::resumeTargets(const Vector<Object*>& targetsToResume)
 {
-    SetIterator iter;
-    for (iter = targetsToResume->begin(); iter != targetsToResume->end(); ++iter)
-    {
-        resumeTarget(*iter);
+    for(const auto &obj : targetsToResume) {
+        this->resumeTarget(obj);
     }
+}
+
+void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
+{
+    _performMutex.lock();
+
+    _functionsToPerform.push_back(function);
+
+    _performMutex.unlock();
 }
 
 // main loop
@@ -834,6 +832,10 @@ void Scheduler::update(float dt)
     {
         dt *= _timeScale;
     }
+
+    //
+    // Selector callbacks
+    //
 
     // Iterate over all the Updates' selectors
     tListEntry *entry, *tmp;
@@ -904,23 +906,6 @@ void Scheduler::update(float dt)
         }
     }
 
-    // Iterate over all the script callbacks
-    if (_scriptHandlerEntries)
-    {
-        for (int i = _scriptHandlerEntries->count() - 1; i >= 0; i--)
-        {
-            SchedulerScriptHandlerEntry* eachEntry = static_cast<SchedulerScriptHandlerEntry*>(_scriptHandlerEntries->getObjectAtIndex(i));
-            if (eachEntry->isMarkedForDeletion())
-            {
-                _scriptHandlerEntries->removeObjectAtIndex(i);
-            }
-            else if (!eachEntry->isPaused())
-            {
-                eachEntry->getTimer()->update(dt);
-            }
-        }
-    }
-
     // delete all updates that are marked for deletion
     // updates with priority < 0
     DL_FOREACH_SAFE(_updatesNegList, entry, tmp)
@@ -950,8 +935,43 @@ void Scheduler::update(float dt)
     }
 
     _updateHashLocked = false;
-
     _currentTarget = nullptr;
+
+    //
+    // Script callbacks
+    //
+
+    // Iterate over all the script callbacks
+    if (!_scriptHandlerEntries.empty())
+    {
+        for (auto i = _scriptHandlerEntries.size() - 1; i >= 0; i--)
+        {
+            SchedulerScriptHandlerEntry* eachEntry = _scriptHandlerEntries.at(i);
+            if (eachEntry->isMarkedForDeletion())
+            {
+                _scriptHandlerEntries.erase(i);
+            }
+            else if (!eachEntry->isPaused())
+            {
+                eachEntry->getTimer()->update(dt);
+            }
+        }
+    }
+
+    //
+    // Functions allocated from another thread
+    //
+
+    // Testing size is faster than locking / unlocking.
+    // And almost never there will be functions scheduled to be called.
+    if( !_functionsToPerform.empty() ) {
+        _performMutex.lock();
+        for( const auto &function : _functionsToPerform ) {
+            function();
+        }
+        _functionsToPerform.clear();
+        _performMutex.unlock();
+    }
 }
 
 

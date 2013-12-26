@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCActionInstant.h"
 #include "CCActionGrid.h"
 #include "CCActionPageTurn3D.h"
+#include "CCNodeGrid.h"
 
 NS_CC_BEGIN
 
@@ -37,19 +38,26 @@ float TransitionPageTurn::POLYGON_OFFSET_UNITS = -20.f;
 
 TransitionPageTurn::TransitionPageTurn()
 {
+    _inSceneProxy = NodeGrid::create();
+    _outSceneProxy = NodeGrid::create();
+    
+    _inSceneProxy->retain();
+    _outSceneProxy->retain();
 }
 
 TransitionPageTurn::~TransitionPageTurn()
 {
+    CC_SAFE_RELEASE(_inSceneProxy);
+    CC_SAFE_RELEASE(_outSceneProxy);
 }
 
 /** creates a base transition with duration and incoming scene */
 TransitionPageTurn * TransitionPageTurn::create(float t, Scene *scene, bool backwards)
 {
-    TransitionPageTurn * pTransition = new TransitionPageTurn();
-    pTransition->initWithDuration(t,scene,backwards);
-    pTransition->autorelease();
-    return pTransition;
+    TransitionPageTurn * transition = new TransitionPageTurn();
+    transition->initWithDuration(t,scene,backwards);
+    transition->autorelease();
+    return transition;
 }
 
 /** initializes a transition with duration and incoming scene */
@@ -75,17 +83,17 @@ void TransitionPageTurn::draw()
     Scene::draw();
     
     if( _isInSceneOnTop ) {
-        _outScene->visit();
+        _outSceneProxy->visit();
         glEnable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(POLYGON_OFFSET_FACTOR, POLYGON_OFFSET_UNITS);
-        _inScene->visit();
+        _inSceneProxy->visit();
         glDisable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(0, 0);
     } else {
-        _inScene->visit();
+        _inSceneProxy->visit();
         glEnable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(POLYGON_OFFSET_FACTOR, POLYGON_OFFSET_UNITS);
-        _outScene->visit();
+        _outSceneProxy->visit();
         glDisable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(0, 0);
     }
@@ -94,6 +102,13 @@ void TransitionPageTurn::draw()
 void TransitionPageTurn::onEnter()
 {
     TransitionScene::onEnter();
+
+    _inSceneProxy->setTarget(_inScene);
+    _outSceneProxy->setTarget(_outScene);
+
+    _inSceneProxy->onEnter();
+    _outSceneProxy->onEnter();
+    
     Size s = Director::getInstance()->getWinSize();
     int x,y;
     if (s.width > s.height)
@@ -111,22 +126,22 @@ void TransitionPageTurn::onEnter()
 
     if (! _back )
     {
-        _outScene->runAction
+        _outSceneProxy->runAction
         (
             Sequence::create
             (
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }
     else
     {
         // to prevent initial flicker
-        _inScene->setVisible(false);
-        _inScene->runAction
+        _inSceneProxy->setVisible(false);
+        _inSceneProxy->runAction
         (
             Sequence::create
             (
@@ -134,12 +149,20 @@ void TransitionPageTurn::onEnter()
                 action,
                 CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
                 StopGrid::create(),
-                NULL
+                nullptr
             )
         );
     }
 }
-
+void TransitionPageTurn::onExit()
+{
+    _outSceneProxy->setTarget(nullptr);
+    _outSceneProxy->setTarget(nullptr);
+    _outSceneProxy->onExit();
+    _inSceneProxy->onExit();
+    
+    TransitionScene::onExit();
+}
 
 ActionInterval* TransitionPageTurn:: actionWithSize(const Size& vector)
 {

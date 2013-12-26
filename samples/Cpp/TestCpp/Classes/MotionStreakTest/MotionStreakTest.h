@@ -13,8 +13,8 @@ public:
     MotionStreakTest(void);
     ~MotionStreakTest(void);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
 
     void restartCallback(Object* sender);
@@ -32,9 +32,10 @@ protected:
     Node*        _target;
 
 public:
+    CREATE_FUNC(MotionStreakTest1);
     virtual void onEnter();
     void onUpdate(float delta);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class MotionStreakTest2 : public MotionStreakTest
@@ -44,16 +45,19 @@ protected:
     Node*        _target;
 
 public:
+    CREATE_FUNC(MotionStreakTest2);
     virtual void onEnter();
     void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Issue1358 : public MotionStreakTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(Issue1358);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
     virtual void update(float dt);
 private:

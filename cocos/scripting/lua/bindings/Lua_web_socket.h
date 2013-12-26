@@ -31,6 +31,7 @@ public:
 };
 
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S);
+TOLUA_API int register_web_socket_manual(lua_State* tolua_S);
 
 #endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS ...
 

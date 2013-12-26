@@ -330,7 +330,7 @@ local function ParticleBatchHybrid()
 
 	layer:registerScriptHandler(ParticleBatchHybrid_onEnterOrExit)
 
-	titleLabel:setString("Paticle Batch")
+	titleLabel:setString("Particle Batch")
 	subtitleLabel:setString("Hybrid: batched and non batched every 2 seconds")
 	return layer
 end
@@ -364,7 +364,7 @@ local function ParticleBatchMultipleEmitters()
 
     layer:addChild(batch, 10)
 
-	titleLabel:setString("Paticle Batch")
+	titleLabel:setString("Particle Batch")
 	subtitleLabel:setString("Multiple emitters. One Batch")
 	return layer
 end
@@ -900,7 +900,7 @@ local function RadiusMode1()
     emitter:setTexture(cc.TextureCache:getInstance():addImage("Images/stars-grayscale.png"))
 
     -- duration
-    emitter:setDuration(cc.PARTICLE_DURATION_INFINITY) 
+    emitter:setDuration(cc.PARTICLE_DURATION_INFINITY)
 
     -- radius mode
     emitter:setEmitterMode(cc.PARTICLE_MODE_RADIUS)

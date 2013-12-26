@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,7 +29,7 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #ifndef SPINE_REGIONATTACHMENT_H_
 #define SPINE_REGIONATTACHMENT_H_
@@ -30,15 +38,17 @@
 #include <spine/Atlas.h>
 #include <spine/Slot.h>
 
-namespace spine {
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum {
 	VERTEX_X1 = 0, VERTEX_Y1, VERTEX_X2, VERTEX_Y2, VERTEX_X3, VERTEX_Y3, VERTEX_X4, VERTEX_Y4
-} VertexIndex;
+} spVertexIndex;
 
-typedef struct RegionAttachment RegionAttachment;
-struct RegionAttachment {
-	Attachment super;
+typedef struct spRegionAttachment spRegionAttachment;
+struct spRegionAttachment {
+	spAttachment super;
 	float x, y, scaleX, scaleY, rotation, width, height;
 
 	void* rendererObject;
@@ -50,11 +60,22 @@ struct RegionAttachment {
 	float uvs[8];
 };
 
-RegionAttachment* RegionAttachment_create (const char* name);
-void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);
-void RegionAttachment_updateOffset (RegionAttachment* self);
-void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y, Bone* bone, float* vertices);
+spRegionAttachment* spRegionAttachment_create (const char* name);
+void spRegionAttachment_setUVs (spRegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate);
+void spRegionAttachment_updateOffset (spRegionAttachment* self);
+void spRegionAttachment_computeWorldVertices (spRegionAttachment* self, float x, float y, spBone* bone, float* vertices);
 
-} // namespace spine {
+#ifdef SPINE_SHORT_NAMES
+typedef spVertexIndex VertexIndex;
+typedef spRegionAttachment RegionAttachment;
+#define RegionAttachment_create(...) spRegionAttachment_create(__VA_ARGS__)
+#define RegionAttachment_setUVs(...) spRegionAttachment_setUVs(__VA_ARGS__)
+#define RegionAttachment_updateOffset(...) spRegionAttachment_updateOffset(__VA_ARGS__)
+#define RegionAttachment_computeWorldVertices(...) spRegionAttachment_computeWorldVertices(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPINE_REGIONATTACHMENT_H_ */

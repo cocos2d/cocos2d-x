@@ -51,58 +51,43 @@ class CC_DLL RenderTexture : public Node
 {
 public:
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
+    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
     /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    static RenderTexture * create(int w, int h, Texture2D::PixelFormat eFormat);
+    static RenderTexture * create(int w, int h, Texture2D::PixelFormat format);
 
     /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
     static RenderTexture * create(int w, int h);
-    /**
-     * @js ctor
-     */
-    RenderTexture();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~RenderTexture();
-    
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat);
-
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat);
 
     /** starts grabbing */
-    void begin();
+    virtual void begin();
 
     /** starts rendering to the texture while clearing the texture first.
     This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a);
+    virtual void beginWithClear(float r, float g, float b, float a);
 
     /** starts rendering to the texture while clearing the texture first.
      This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
     /** starts rendering to the texture while clearing the texture first.
      This is more efficient then calling -clear first and then -begin */
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
     /** end is key word of lua, use other name to export to lua. */
     inline void endToLua(){ end();};
 
     /** ends grabbing*/
-    void end();
+    virtual void end();
 
     /** clears the texture with a color */
     void clear(float r, float g, float b, float a);
 
     /** clears the texture with a specified depth value */
-    void clearDepth(float depthValue);
+    virtual void clearDepth(float depthValue);
 
     /** clears the texture with a specified stencil value */
-    void clearStencil(int stencilValue);
+    virtual void clearStencil(int stencilValue);
     /* creates a new Image from with the texture's data.
        Caller is responsible for releasing it by calling delete.
      */
@@ -114,12 +99,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *szFilePath);
+    bool saveToFile(const std::string& filename);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const char *name, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -167,10 +152,20 @@ public:
     virtual void visit() override;
     virtual void draw() override;
 
-private:
-    void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+public:
+    // XXX should be procted.
+    // but due to a bug in PowerVR + Android,
+    // the constructor is public again
+    RenderTexture();
+    virtual ~RenderTexture();
+    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
+    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
 protected:
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+
     GLuint       _FBO;
     GLuint       _depthRenderBufffer;
     GLint        _oldFBO;
@@ -192,6 +187,19 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+protected:
+    //renderer caches and callbacks
+    void onBegin();
+    void onEnd();
+
+    void onClear();
+    void onClearDepth();
+    
+    kmMat4 _oldTransMatrix, _oldProjMatrix;
+    kmMat4 _transformMatrix, _projectionMatrix;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
+
 };
 
 // end of textures group

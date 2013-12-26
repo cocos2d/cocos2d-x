@@ -15,11 +15,12 @@ public:
 };
 
 class Ball;
+class Paddle;
 class PongLayer : public Layer
 {
 private:
     Ball*       _ball;
-    Array*    _paddles;
+    Vector<Paddle*>    _paddles;
     Point     _ballStartingVelocity; 
 public:
     PongLayer();
