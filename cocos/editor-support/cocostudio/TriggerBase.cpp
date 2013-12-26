@@ -29,17 +29,15 @@ using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    cocos2d::Vector<TriggerObj*> *array = TriggerMng::getInstance()->get(event);
+    cocos2d::Vector<TriggerObj*> *_array = TriggerMng::getInstance()->get(event);
     do {
-        CC_BREAK_IF(array == nullptr);
-        cocos2d::Vector<TriggerObj*>::iterator iter = array->begin();
-        while (iter != array->end())
+        CC_BREAK_IF(_array == nullptr);
+        for (const auto& object : *_array)
         {
-            if ((*iter) != nullptr && (*iter)->detect())
+            if(object != nullptr && object->detect())
             {
-                (*iter)->done();
+                object->done();
             }
-            ++iter;
         }
     } while (0);
 }
