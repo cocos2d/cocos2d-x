@@ -209,20 +209,20 @@ void ClippingNode::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
     
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
+    GroupCommand* groupCommand = new GroupCommand();
     groupCommand->init(0,_vertexZ);
     renderer->addCommand(groupCommand);
 
     renderer->pushGroup(groupCommand->getRenderQueueID());
 
-    CustomCommand* beforeVisitCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* beforeVisitCmd = new CustomCommand();
     beforeVisitCmd->init(0,_vertexZ);
     beforeVisitCmd->func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
     renderer->addCommand(beforeVisitCmd);
 
     _stencil->visit();
 
-    CustomCommand* afterDrawStencilCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* afterDrawStencilCmd = new CustomCommand();
     afterDrawStencilCmd->init(0,_vertexZ);
     afterDrawStencilCmd->func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(afterDrawStencilCmd);
@@ -253,7 +253,7 @@ void ClippingNode::visit()
         this->draw();
     }
 
-    CustomCommand* afterVisitCmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* afterVisitCmd = new CustomCommand();
     afterVisitCmd->init(0,_vertexZ);
     afterVisitCmd->func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
     renderer->addCommand(afterVisitCmd);

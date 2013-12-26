@@ -532,7 +532,7 @@ void ProgressTimer::draw()
     if( ! _vertexData || ! _sprite)
         return;
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
+    CustomCommand* cmd = new CustomCommand();
     cmd->init(0, _vertexZ);
     cmd->func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(cmd);
