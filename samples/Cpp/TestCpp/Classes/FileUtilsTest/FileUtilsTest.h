@@ -5,7 +5,6 @@
 #include "../BaseTest.h"
 
 USING_NS_CC;
-using namespace std;
 
 class FileUtilsTestScene : public TestScene
 {
@@ -17,8 +16,8 @@ class FileUtilsDemo : public BaseTest
 {
 public:
     virtual void onEnter();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void backCallback(Object* sender);
     void nextCallback(Object* sender);
     void restartCallback(Object* sender);
@@ -31,11 +30,11 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
-    vector<string> _defaultSearchPathArray;
-    vector<string> _defaultResolutionsOrderArray;
+    std::vector<std::string> _defaultSearchPathArray;
+    std::vector<std::string> _defaultResolutionsOrderArray;
 };
 
 class TestSearchPath : public FileUtilsDemo
@@ -45,11 +44,11 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
-    vector<string> _defaultSearchPathArray;
-    vector<string> _defaultResolutionsOrderArray;
+    std::vector<std::string> _defaultSearchPathArray;
+    std::vector<std::string> _defaultResolutionsOrderArray;
 };
 
 class TestFilenameLookup : public FileUtilsDemo
@@ -59,8 +58,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class TestIsFileExist : public FileUtilsDemo
@@ -70,8 +69,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class TextWritePlist : public FileUtilsDemo
@@ -81,8 +80,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
-    virtual string title();
-    virtual string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif /* __FILEUTILSTEST_H__ */

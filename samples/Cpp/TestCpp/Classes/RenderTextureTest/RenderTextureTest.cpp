@@ -1,6 +1,8 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -74,12 +76,12 @@ void RenderTextureTest::backCallback(Object* sender)
     s->release();
 } 
 
-std::string RenderTextureTest::title()
+std::string RenderTextureTest::title() const
 {
     return "No title";
 }
 
-std::string RenderTextureTest::subtitle()
+std::string RenderTextureTest::subtitle() const
 {
     return "";
 }
@@ -120,12 +122,12 @@ RenderTextureSave::RenderTextureSave()
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
-string RenderTextureSave::title()
+std::string RenderTextureSave::title() const
 {
     return "Touch the screen";
 }
 
-string RenderTextureSave::subtitle()
+std::string RenderTextureSave::subtitle() const
 {
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
@@ -269,12 +271,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     addChild(rend);
 }
 
-std::string RenderTextureIssue937::title()
+std::string RenderTextureIssue937::title() const
 {
     return "Testing issue #937";
 }
 
-std::string RenderTextureIssue937::subtitle()
+std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
 }
@@ -353,12 +355,12 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setColor(Color3B::YELLOW);
 }
 
-string RenderTextureZbuffer::title()
+std::string RenderTextureZbuffer::title() const
 {
     return "Testing Z Buffer in Render Texture";
 }
 
-string RenderTextureZbuffer::subtitle()
+std::string RenderTextureZbuffer::subtitle() const
 {
     return "Touch screen. It should be green";
 }
@@ -468,12 +470,12 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     this->addChild(rend);
 }
 
-std::string RenderTextureTestDepthStencil::title()
+std::string RenderTextureTestDepthStencil::title() const
 {
     return "Testing depthStencil attachment";
 }
 
-std::string RenderTextureTestDepthStencil::subtitle()
+std::string RenderTextureTestDepthStencil::subtitle() const
 {
     return "Circle should be missing 1/4 of its region";
 }
@@ -556,12 +558,12 @@ void RenderTextureTargetNode::update(float dt)
     time += dt;
 }
 
-string RenderTextureTargetNode::title()
+std::string RenderTextureTargetNode::title() const
 {
     return "Testing Render Target Node";
 }
 
-string RenderTextureTargetNode::subtitle()
+std::string RenderTextureTargetNode::subtitle() const
 {
     return "Sprites should be equal and move with each frame";
 }
@@ -587,6 +589,17 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+    Sprite::draw();
+    
+}
+
+void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
+{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
@@ -595,36 +608,6 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
-    
-	CC_NODE_DRAW_SETUP();
-    
-	BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    GL::bindTexture2D(getTexture()->getName());
-    
-	//
-	// Attributes
-	//
-    
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    
-#define kQuadSize sizeof(_quad.bl)
-	long offset = (long)&_quad;
-    
-	// vertex
-	int diff = offsetof( V3F_C4B_T2F, vertices);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-	// texCoods
-	diff = offsetof( V3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-	// color
-	diff = offsetof( V3F_C4B_T2F, colors);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
@@ -681,12 +664,12 @@ void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, 
     }
 }
 
-std::string SpriteRenderTextureBug::title()
+std::string SpriteRenderTextureBug::title() const
 {
     return "SpriteRenderTextureBug";
 }
 
-std::string SpriteRenderTextureBug::subtitle()
+std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
 }

@@ -3,9 +3,9 @@
 
 #include <list>
 
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Matrix.h"
+#include "../math/Vector3.h"
+#include "../math/Quaternion.h"
+#include "../math/Matrix.h"
 
 
 namespace cocos2d

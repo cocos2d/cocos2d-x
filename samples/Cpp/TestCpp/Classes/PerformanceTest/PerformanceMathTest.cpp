@@ -11,7 +11,7 @@
 
 
 #ifdef C3D_MATH
-#include "CocosMath.h"
+#include "math/CocosMath.h"
 #include "CCAction.h"
 #endif
 
@@ -281,7 +281,7 @@ void MatMultiplyTest::update(float dt)
     Matrix c3dmat(m);
     Matrix c3dre;
 
-    string our = "c3d ";
+    std::string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -295,7 +295,7 @@ void MatMultiplyTest::update(float dt)
     kmMat4 kam, rekam;
     kmMat4Fill(&kam, m);
     
-    string strkam = "kazmath ";
+    std::string strkam = "kazmath ";
     strkam += profilerName();
     CC_PROFILER_START(strkam.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -379,7 +379,7 @@ void MatVec4MultiplyTest::update(float dt)
     Vector4 c3du;
     Vector4 c3dv(vec41[0], vec41[1], vec41[2], vec41[3]);
     
-    string our = "c3d ";
+    std::string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -392,7 +392,7 @@ void MatVec4MultiplyTest::update(float dt)
     kmMat4Fill(&kam, m);
     kmVec4 kmv4, rekmv4;
     kmVec4Fill(&kmv4, vec41[0], vec41[1], vec41[2], vec41[3]);
-    string strkaz = "kazmath ";
+    std::string strkaz = "kazmath ";
     
     CC_PROFILER_START(strkaz.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -463,7 +463,7 @@ void Vec3CrossTest::update(float dt)
     Vector3 c3dv2(vec32[0],vec32[1],vec32[2]);
     Vector3 c3dv3;
     
-    string our = "c3d ";
+    std::string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -475,7 +475,7 @@ void Vec3CrossTest::update(float dt)
     kmVec3 kmv1, kmv2, rekmv;
     kmVec3Fill(&kmv1, vec31[0], vec31[1], vec31[2]);
     kmVec3Fill(&kmv2, vec32[0], vec32[1], vec32[2]);
-    string strkaz = "kazmath ";
+    std::string strkaz = "kazmath ";
     strkaz += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -543,7 +543,7 @@ void Mat4AddTest::update(float dt)
     Matrix c3dmat(m);
     Matrix c3dre;
     
-    string our = "c3d ";
+    std::string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -615,7 +615,7 @@ void Vec4AddTest::update(float dt)
     Vector4 c3dv2(vec41);
     Vector4 c3dv3;
     
-    string our = "c3d ";
+    std::string our = "c3d ";
     our += profilerName();
     CC_PROFILER_START(our.c_str());
     for (i = 0; i < g_curRunTimes; i++) {
@@ -627,7 +627,7 @@ void Vec4AddTest::update(float dt)
     kmVec4 kmv1, kmv2, rekmv;
     kmVec4Fill(&kmv1, vec41[0], vec41[1], vec41[2], vec41[3]);
     kmVec4Fill(&kmv2, vec41[0], vec41[1], vec41[2], vec41[3]);
-    string strkm = "kazmath ";
+    std::string strkm = "kazmath ";
     strkm += profilerName();
     CC_PROFILER_START(strkm.c_str());
     for (i = 0; i < g_curRunTimes; i++) {

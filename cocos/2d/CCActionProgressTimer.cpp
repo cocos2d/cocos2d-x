@@ -31,20 +31,20 @@ NS_CC_BEGIN
 
 // implementation of ProgressTo
 
-ProgressTo* ProgressTo::create(float duration, float fPercent)
+ProgressTo* ProgressTo::create(float duration, float percent)
 {
-    ProgressTo *pProgressTo = new ProgressTo();
-    pProgressTo->initWithDuration(duration, fPercent);
-    pProgressTo->autorelease();
+    ProgressTo *progressTo = new ProgressTo();
+    progressTo->initWithDuration(duration, percent);
+    progressTo->autorelease();
 
-    return pProgressTo;
+    return progressTo;
 }
 
-bool ProgressTo::initWithDuration(float duration, float fPercent)
+bool ProgressTo::initWithDuration(float duration, float percent)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _to = fPercent;
+        _to = percent;
 
         return true;
     }
@@ -87,21 +87,21 @@ void ProgressTo::update(float time)
 
 // implementation of ProgressFromTo
 
-ProgressFromTo* ProgressFromTo::create(float duration, float fFromPercentage, float fToPercentage)
+ProgressFromTo* ProgressFromTo::create(float duration, float fromPercentage, float toPercentage)
 {
-    ProgressFromTo *pProgressFromTo = new ProgressFromTo();
-    pProgressFromTo->initWithDuration(duration, fFromPercentage, fToPercentage);
-    pProgressFromTo->autorelease();
+    ProgressFromTo *progressFromTo = new ProgressFromTo();
+    progressFromTo->initWithDuration(duration, fromPercentage, toPercentage);
+    progressFromTo->autorelease();
 
-    return pProgressFromTo;
+    return progressFromTo;
 }
 
-bool ProgressFromTo::initWithDuration(float duration, float fFromPercentage, float fToPercentage)
+bool ProgressFromTo::initWithDuration(float duration, float fromPercentage, float toPercentage)
 {
     if (ActionInterval::initWithDuration(duration))
     {
-        _to = fToPercentage;
-        _from = fFromPercentage;
+        _to = toPercentage;
+        _from = fromPercentage;
 
         return true;
     }

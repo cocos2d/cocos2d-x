@@ -6,9 +6,9 @@
 
 namespace cocosbuilder {
 
-extern cocos2d::Point getAbsolutePosition(const cocos2d::Point &pt, CCBReader::PositionType type, const cocos2d::Size &containerSize, const char *propName);
+extern cocos2d::Point getAbsolutePosition(const cocos2d::Point &pt, CCBReader::PositionType type, const cocos2d::Size &containerSize, const std::string&propName);
 
-extern void setRelativeScale(cocos2d::Node *node, float scaleX, float scaleY, CCBReader::ScaleType type, const char* propName);
+extern void setRelativeScale(cocos2d::Node *node, float scaleX, float scaleY, CCBReader::ScaleType type, const std::string& propName);
 
 }
 

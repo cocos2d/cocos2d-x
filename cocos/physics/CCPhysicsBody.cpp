@@ -555,7 +555,7 @@ void PhysicsBody::setVelocity(const Point& velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set velocity for a static body.");
+        CCLOG("physics warning: your can't set velocity for a static body.");
         return;
     }
     
@@ -581,7 +581,7 @@ void PhysicsBody::setAngularVelocity(float velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set angular velocity for a static body.");
+        CCLOG("physics warning: your can't set angular velocity for a static body.");
         return;
     }
     
@@ -672,7 +672,7 @@ void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = 
         // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
         shape->_body = nullptr;
         shape->setBody(nullptr);
-        _shapes.removeObject(shape);
+        _shapes.eraseObject(shape);
     }
 }
 
@@ -739,7 +739,7 @@ bool PhysicsBody::isResting() const
 void PhysicsBody::update(float delta)
 {
     // damping compute
-    if (_dynamic)
+    if (_dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);

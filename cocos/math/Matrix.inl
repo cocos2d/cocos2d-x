@@ -1,7 +1,6 @@
 #include "Matrix.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 inline const Matrix Matrix::operator+(const Matrix& m) const
 {
@@ -75,4 +74,4 @@ inline const Vector4 operator*(const Matrix& m1, const Vector4& v)
     return x;
 }
 
-}
+NS_CC_END

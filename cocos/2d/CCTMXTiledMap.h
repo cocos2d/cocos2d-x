@@ -122,7 +122,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
@@ -130,7 +130,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -168,7 +168,9 @@ public:
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
-    
+
+    virtual std::string getDescription() const override;
+
 protected:
     /**
      * @js ctor

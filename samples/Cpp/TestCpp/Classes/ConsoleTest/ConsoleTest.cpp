@@ -82,7 +82,7 @@ BaseTestConsole::~BaseTestConsole(void)
 {
 }
 
-std::string BaseTestConsole::title()
+std::string BaseTestConsole::title() const
 {
     return "No title";
 }
@@ -148,10 +148,16 @@ void ConsoleTCP::onEnter()
     _console->listenOnTCP(5678);
 }
 
-std::string ConsoleTCP::title()
+std::string ConsoleTCP::title() const
 {
     return "Console TCP";
 }
+
+std::string ConsoleTCP::subtitle() const
+{
+    return "telnet localhost 5678";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -186,7 +192,12 @@ void ConsoleCustomCommand::onEnter()
     _console->listenOnTCP(5678);
 }
 
-std::string ConsoleCustomCommand::title()
+std::string ConsoleCustomCommand::title() const
 {
     return "Console Custom Commands";
+}
+
+std::string ConsoleCustomCommand::subtitle() const
+{
+    return "telnet localhost 5678";
 }

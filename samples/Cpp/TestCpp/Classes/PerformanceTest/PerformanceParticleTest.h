@@ -14,7 +14,7 @@ class ParticleMainScene : public Scene
 {
 public:
     virtual void initWithSubTest(int subtest, int particles);
-    virtual std::string title();
+    virtual std::string title() const;
 
     void step(float dt);
     void createParticleSystem();
@@ -33,28 +33,28 @@ protected:
 class ParticlePerformTest1 : public ParticleMainScene
 {
 public:
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void doTest();
 };
 
 class ParticlePerformTest2 : public ParticleMainScene
 {
 public:
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void doTest();
 };
 
 class ParticlePerformTest3 : public ParticleMainScene
 {
 public:
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void doTest();
 };
 
 class ParticlePerformTest4 : public ParticleMainScene
 {
 public:
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void doTest();
 };
 
