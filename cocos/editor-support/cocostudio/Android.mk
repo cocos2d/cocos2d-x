@@ -6,7 +6,7 @@ LOCAL_MODULE := cocostudio_static
 LOCAL_MODULE_FILENAME := libcocostudio
 
 LOCAL_SRC_FILES := CCActionFrame.cpp \
-CCActionEaseEx.cpp 
+CCActionEaseEx.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
 CCActionNode.cpp \
