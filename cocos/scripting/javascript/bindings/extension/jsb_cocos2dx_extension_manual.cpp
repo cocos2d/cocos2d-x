@@ -288,15 +288,15 @@ public:
         return NULL;
     }
     
-    virtual long numberOfCellsInTableView(TableView *table)
+    virtual ssize_t numberOfCellsInTableView(TableView *table)
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            long count = 0;
-            JSBool isSucceed = jsval_to_long(cx, ret, &count);
+            ssize_t count = 0;
+            JSBool isSucceed = jsval_to_ssize(cx, ret, &count);
             if (isSucceed) return count;
         }
         return 0;
