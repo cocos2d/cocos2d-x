@@ -155,19 +155,12 @@ void ActionNode::initActionNodeFromRoot(CCObject* root)
 	CCNode* rootNode = dynamic_cast<CCNode*>(root);
 	if (rootNode != NULL)
 	{
-		CCLog("Need a definition of <initActionNodeFromRoot> for gameObject");
-	}
-	else
-	{
-        cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(root);
-		if (rootWidget != NULL)
-		{
-			cocos2d::gui::Widget* widget = cocos2d::gui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
-			if (widget != NULL)
-			{
-				setObject(widget);
-			}
-		}
+        cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(rootNode);
+        cocos2d::gui::Widget* widget = cocos2d::gui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+        if (widget != NULL)
+        {
+            setObject(widget);
+        }
 	}
 }
 
