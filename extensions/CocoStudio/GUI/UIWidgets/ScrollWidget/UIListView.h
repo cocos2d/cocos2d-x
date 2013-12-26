@@ -164,6 +164,8 @@ public:
     virtual void setDirection(SCROLLVIEW_DIR dir) override;
     
     virtual std::string getDescription() const override;
+
+	void refreshView();
     
 protected:
     virtual void addChild(CCNode* child){ScrollView::addChild(child);};
@@ -182,7 +184,7 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model);
     void selectedItemEvent();
     virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
-    void refreshView();
+    
 protected:
     
     Widget* _model;
