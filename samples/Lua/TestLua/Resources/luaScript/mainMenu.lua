@@ -42,6 +42,7 @@ require "luaScript/RenderTextureTest/RenderTextureTest"
 require "luaScript/RotateWorldTest/RotateWorldTest"
 require "luaScript/SpriteTest/SpriteTest"
 require "luaScript/SceneTest/SceneTest"
+require "luaScript/SpineTest/SpineTest"
 require "luaScript/Texture2dTest/Texture2dTest"
 require "luaScript/TileMapTest/TileMapTest"
 require "luaScript/TouchesTest/TouchesTest"
@@ -97,6 +98,7 @@ local _allTests = {
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
+    { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
