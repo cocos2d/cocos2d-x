@@ -72,10 +72,10 @@ public:
 	void removeAllArmatureMovementCallBack();
 
 private:
-    std::map<unsigned int, cocos2d::Vector<TriggerObj*>*> _eventTriggers;
+    std::unordered_map<unsigned int, cocos2d::Vector<TriggerObj*>*> _eventTriggers;
     static TriggerMng *_sharedTriggerMng;
-	std::map<unsigned int, TriggerObj*> _triggerObjs;
-	std::map<Armature*, ArmatureMovementDispatcher*> *_movementDispatches;
+	std::unordered_map<unsigned int, TriggerObj*> _triggerObjs;
+	std::unordered_map<Armature*, ArmatureMovementDispatcher*> *_movementDispatches;
 };
 
 }

@@ -58,7 +58,7 @@ public:
    bool   getBool(const std::string& key, bool def = false) const;
    std::string getCString(const std::string& key, const std::string& def = "") const;
 private:
-   cocos2d::Map<std::string, cocos2d::Object*> _dict;
+   cocos2d::ValueMap _dict;
 };
 
 }

@@ -396,13 +396,25 @@ void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
 {
+    // FIX ME: this is a temporary fix for issue #2920: IPA packed by Xcode5 may crash on iOS7 when switching to voice recognition input method.
+    // This temporary fix is only for ios version aboves 7.0.
+    // I don't know how to fix it, so I changed the keyboard type to hide the dictation button to avoid crash.
+    // Issue #2920 url: http://www.cocos2d-x.org/issues/2920
+    Boolean above7 = NO;
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    if ([currSysVer compare:@"7" options:NSNumericSearch range:NSMakeRange(0, 1)] == 0)
+    {
+        above7 = YES;
+    }
+    
     switch (inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case EditBox::InputMode::NUMERIC:
-            _systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeDecimalPad : UIKeyboardTypeNumberPad);
             break;
         case EditBox::InputMode::PHONE_NUMBER:
             _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
@@ -414,10 +426,10 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::SINGLE_LINE:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
             break;
         default:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
+            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
             break;
     }
 }

@@ -105,6 +105,7 @@ void SceneController::increaseKillCount()
 {
     int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
     
+    CCLOG("------%d---", nProjectilesDestroyed);
     ComAttribute *p = (ComAttribute*)(_owner->getComponent("ComAttribute"));
     p->setInt("KillCount", ++nProjectilesDestroyed);
 

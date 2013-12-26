@@ -35,7 +35,7 @@ TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
 TriggerMng::TriggerMng(void)
     : _movementDispatches(NULL)
 {
-	_movementDispatches = new std::map<Armature*, ArmatureMovementDispatcher*>;
+	_movementDispatches = new std::unordered_map<Armature*, ArmatureMovementDispatcher*>;
 }
 
 TriggerMng::~TriggerMng(void)
@@ -93,7 +93,7 @@ cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 {
     CCAssert(event >= 0, "Argument must be larger than 0");
     
-    std::map<unsigned int, cocos2d::Vector<TriggerObj*>*>::const_iterator iter = _eventTriggers.find(event);
+    std::unordered_map<unsigned int, cocos2d::Vector<TriggerObj*>*>::const_iterator iter = _eventTriggers.find(event);
     if (iter == _eventTriggers.end())
     {
         return nullptr;
@@ -103,7 +103,7 @@ cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 {
-    std::map<unsigned int, TriggerObj*>::const_iterator iter = _triggerObjs.find(id);
+    std::unordered_map<unsigned int, TriggerObj*>::const_iterator iter = _triggerObjs.find(id);
     if (iter == _triggerObjs.end())
     {
         return nullptr;
@@ -139,7 +139,7 @@ bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
 
 void TriggerMng::removeAll(void)
 {
-    std::map<unsigned int, cocos2d::Vector<TriggerObj*>*>::iterator _etIter = _eventTriggers.begin();
+    std::unordered_map<unsigned int, cocos2d::Vector<TriggerObj*>*>::iterator _etIter = _eventTriggers.begin();
     for (;_etIter != _eventTriggers.end(); ++_etIter)
     {
         for (cocos2d::Vector<TriggerObj*>::iterator _toIter = _etIter->second->begin(); _toIter != _etIter->second->end(); ++_toIter)
@@ -230,7 +230,7 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 		return;
 	}
 
-	std::map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
 	ArmatureMovementDispatcher *amd = NULL;
 	if (iter == _movementDispatches->end())
 	{
@@ -254,7 +254,7 @@ void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Object *pTarget, 
 		return;
 	}
 
-	std::map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
 	ArmatureMovementDispatcher *amd = NULL;
 	if (iter == _movementDispatches->end())
 	{
@@ -274,7 +274,7 @@ void TriggerMng::removeArmatureAllMovementCallBack(Armature *pAr)
 		return;
 	}
 
-	std::map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
 	if (iter == _movementDispatches->end())
 	{
 		return;
@@ -288,7 +288,7 @@ void TriggerMng::removeArmatureAllMovementCallBack(Armature *pAr)
 
 void TriggerMng::removeAllArmatureMovementCallBack()
 {
-	std::map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->begin();
+	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->begin();
 	while (iter != _movementDispatches->end())
 	{
 		removeArmatureAllMovementCallBack(iter->first);
