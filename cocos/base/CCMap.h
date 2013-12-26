@@ -26,6 +26,7 @@
 #define __CCMAP_H__
 
 #include "ccMacros.h"
+#include "CCObject.h"
 
 #include <vector>
 #include <unordered_map>
@@ -62,6 +63,9 @@ public:
     Map<K, V>()
     : _data()
     {
+#if defined(COCOS2D_DEBUG) &&  COCOS2D_DEBUG > 0
+        EnsureTypeIsObject<V,Object*>();
+#endif
         CCLOGINFO("In the default constructor of Map!");
     }
     
@@ -69,6 +73,9 @@ public:
     explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
+#if defined(COCOS2D_DEBUG) &&  COCOS2D_DEBUG > 0
+        EnsureTypeIsObject<V,Object*>();
+#endif
         CCLOGINFO("In the constructor with capacity of Map!");
         _data.reserve(capacity);
     }
@@ -327,6 +334,12 @@ protected:
     }
     
     RefMap _data;
+    
+private:
+    template<class T1, class T2> struct EnsureTypeIsObject {
+        static void constraints(T1 a, T2 b) { T2 c = a; b = a; c = nullptr; }
+        EnsureTypeIsObject() { void(*p)(T1,T2) = constraints; p = nullptr; }
+    };
 };
 
 // end of data_structure group
