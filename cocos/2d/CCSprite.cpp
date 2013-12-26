@@ -671,7 +671,7 @@ void Sprite::updateTransform(void)
 void Sprite::draw(void)
 {
     //TODO implement z order
-    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
+    QuadCommand* renderCommand = new QuadCommand();
     renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
 //    if(!culling())
