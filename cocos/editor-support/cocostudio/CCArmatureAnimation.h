@@ -127,7 +127,7 @@ public:
 
     /**
      * Play animation by index, the other param is the same to play.
-     * Deprecated, please use playWithIndex
+     * @deprecated, please use playWithIndex
      * @param  animationIndex  the animation index you want to play
      */
     CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
