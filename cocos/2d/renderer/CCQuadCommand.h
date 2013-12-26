@@ -97,6 +97,21 @@ protected:
     static RenderCommandPool<QuadCommand> _commandPool;
 };
 
+template <>
+class RenderCommandPool<QuadCommand>
+{
+public:
+    QuadCommand* generateCommand()
+    {
+        return new QuadCommand();
+    }
+
+    void pushBackCommand(QuadCommand* ptr)
+    {
+        delete ptr;
+    }
+};
+
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_
