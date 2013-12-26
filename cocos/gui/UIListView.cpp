@@ -26,31 +26,32 @@
 #include "gui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
-UIListView::UIListView():
+ListView::ListView():
 _model(nullptr),
-_items(nullptr),
 _gravity(LISTVIEW_GRAVITY_CENTER_HORIZONTAL),
 _itemsMargin(0.0f),
 _listViewEventListener(nullptr),
 _listViewEventSelector(nullptr),
-_curSelectedIndex(0)
+_curSelectedIndex(0),
+_refreshViewDirty(true)
 {
     
 }
 
-UIListView::~UIListView()
+ListView::~ListView()
 {
-    _items->removeAllObjects();
-    CC_SAFE_RELEASE(_items);
     _listViewEventListener = nullptr;
     _listViewEventSelector = nullptr;
+    _items.clear();
 }
 
-UIListView* UIListView::create()
+ListView* ListView::create()
 {
-    UIListView* widget = new UIListView();
+    ListView* widget = new ListView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -60,19 +61,17 @@ UIListView* UIListView::create()
     return nullptr;
 }
 
-bool UIListView::init()
+bool ListView::init()
 {
-    if (UIScrollView::init())
+    if (ScrollView::init())
     {
-        _items = cocos2d::Array::create();
-        CC_SAFE_RETAIN(_items);
         setLayoutType(LAYOUT_LINEAR_VERTICAL);
         return true;
     }
     return false;
 }
 
-void UIListView::setItemModel(UIWidget *model)
+void ListView::setItemModel(Widget *model)
 {
     if (!model)
     {
@@ -83,29 +82,36 @@ void UIListView::setItemModel(UIWidget *model)
     CC_SAFE_RETAIN(_model);
 }
 
-void UIListView::updateInnerContainerSize()
+void ListView::updateInnerContainerSize()
 {
-    if (!_model)
+    switch (_direction)
     {
-        return;
-    }
-    switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            ssize_t childrenCount = _items->count();
-            float totalHeight = _model->getSize().height * childrenCount + (childrenCount - 1) * _itemsMargin;
+            int length = _items.size();
+            float totalHeight = (length - 1) * _itemsMargin;
+            for (int i=0; i<length; i++)
+            {
+                Widget* item = _items.at(i);
+                totalHeight += item->getSize().height;
+            }
             float finalWidth = _size.width;
             float finalHeight = totalHeight;
-            setInnerContainerSize(cocos2d::Size(finalWidth, finalHeight));
+            setInnerContainerSize(Size(finalWidth, finalHeight));
             break;
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            ssize_t childrenCount = _items->count();
-            float totalWidth = _model->getSize().width * childrenCount + (childrenCount - 1) * _itemsMargin;
+            int length = _items.size();
+            float totalWidth = (length - 1) * _itemsMargin;
+            for (int i=0; i<length; i++)
+            {
+                Widget* item = _items.at(i);
+                totalWidth += item->getSize().width;
+            }
             float finalWidth = totalWidth;
             float finalHeight = _size.height;
-            setInnerContainerSize(cocos2d::Size(finalWidth, finalHeight));
+            setInnerContainerSize(Size(finalWidth, finalHeight));
             break;
         }
         default:
@@ -113,7 +119,7 @@ void UIListView::updateInnerContainerSize()
     }
 }
 
-void UIListView::remedyLayoutParameter(UIWidget *item)
+void ListView::remedyLayoutParameter(Widget *item)
 {
     if (!item)
     {
@@ -122,10 +128,10 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
     switch (_direction) {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            UILinearLayoutParameter* llp = (UILinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                UILinearLayoutParameter* defaultLp = UILinearLayoutParameter::create();
+                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
                         defaultLp->setGravity(LINEAR_GRAVITY_LEFT);
@@ -141,11 +147,11 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(UIMarginZero);
+                    defaultLp->setMargin(MarginZero);
                 }
                 else
                 {
-                    defaultLp->setMargin(UIMargin(0.0f, _itemsMargin, 0.0f, 0.0f));
+                    defaultLp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
                 }
                 item->setLayoutParameter(defaultLp);
             }
@@ -153,11 +159,11 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(UIMarginZero);
+                    llp->setMargin(MarginZero);
                 }
                 else
                 {
-                    llp->setMargin(UIMargin(0.0f, _itemsMargin, 0.0f, 0.0f));
+                    llp->setMargin(Margin(0.0f, _itemsMargin, 0.0f, 0.0f));
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_LEFT:
@@ -177,10 +183,10 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            UILinearLayoutParameter* llp = (UILinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* llp = (LinearLayoutParameter*)(item->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!llp)
             {
-                UILinearLayoutParameter* defaultLp = UILinearLayoutParameter::create();
+                LinearLayoutParameter* defaultLp = LinearLayoutParameter::create();
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
                         defaultLp->setGravity(LINEAR_GRAVITY_TOP);
@@ -196,11 +202,11 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
                 }
                 if (getIndex(item) == 0)
                 {
-                    defaultLp->setMargin(UIMarginZero);
+                    defaultLp->setMargin(MarginZero);
                 }
                 else
                 {
-                    defaultLp->setMargin(UIMargin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+                    defaultLp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
                 }
                 item->setLayoutParameter(defaultLp);
             }
@@ -208,11 +214,11 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
             {
                 if (getIndex(item) == 0)
                 {
-                    llp->setMargin(UIMarginZero);
+                    llp->setMargin(MarginZero);
                 }
                 else
                 {
-                    llp->setMargin(UIMargin(_itemsMargin, 0.0f, 0.0f, 0.0f));
+                    llp->setMargin(Margin(_itemsMargin, 0.0f, 0.0f, 0.0f));
                 }
                 switch (_gravity) {
                     case LISTVIEW_GRAVITY_TOP:
@@ -236,117 +242,109 @@ void UIListView::remedyLayoutParameter(UIWidget *item)
     
 }
 
-void UIListView::pushBackDefaultItem()
+void ListView::pushBackDefaultItem()
 {
     if (!_model)
     {
         return;
     }
-    UIWidget* newItem = _model->clone();
-    _items->addObject(newItem);
+    Widget* newItem = _model->clone();
+    _items.pushBack(newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
+    _refreshViewDirty = true;
 }
 
-void UIListView::insertDefaultItem(int index)
+void ListView::insertDefaultItem(int index)
 {
-    if (!_items)
-    {
-        return;
-    }
     if (!_model)
     {
         return;
     }
-    UIWidget* newItem = _model->clone();
-    _items->insertObject(newItem, index);
+    Widget* newItem = _model->clone();
+    _items.insert(index, newItem);
     remedyLayoutParameter(newItem);
     addChild(newItem);
+    _refreshViewDirty = true;
 }
 
-void UIListView::pushBackCustomItem(UIWidget* item)
+void ListView::pushBackCustomItem(Widget* item)
 {
-    _items->addObject(item);
+    _items.pushBack(item);
     remedyLayoutParameter(item);
     addChild(item);
+    _refreshViewDirty = true;
 }
 
-void UIListView::insertCustomItem(UIWidget* item, int index)
+void ListView::insertCustomItem(Widget* item, int index)
 {
-    _items->insertObject(item, index);
+    _items.insert(index, item);
     remedyLayoutParameter(item);
     addChild(item);
+    _refreshViewDirty = true;
 }
 
-void UIListView::removeItem(int index)
+void ListView::removeItem(int index)
 {
-    if (!_items)
-    {
-        return;
-    }
-    UIWidget* item = getItem(index);
+    Widget* item = getItem(index);
     if (!item)
     {
         return;
-        
     }
-    _items->removeObject(item);
+    _items.eraseObject(item);
     removeChild(item);
+    _refreshViewDirty = true;
 }
 
-void UIListView::removeLastItem()
+void ListView::removeLastItem()
 {
-    removeItem(_items->count() -1);
+    removeItem(_items.size() -1);
 }
 
-UIWidget* UIListView::getItem(unsigned int index)
+Widget* ListView::getItem(unsigned int index)
 {
-    if ((int)index < 0 || index >= _items->count())
+    if ((int)index < 0 || index >= _items.size())
     {
         return nullptr;
     }
-    return (UIWidget*)(_items->data->arr[index]);
+    return _items.at(index);
 }
 
-cocos2d::Array* UIListView::getItems()
+Vector<Widget*>& ListView::getItems()
 {
     return _items;
 }
 
-unsigned int UIListView::getIndex(UIWidget *item) const
+unsigned int ListView::getIndex(Widget *item) const
 {
-    if (!_items)
-    {
-        return -1;
-    }
     if (!item)
     {
         return -1;
     }
-    return _items->getIndexOfObject(item);
+    return _items.getIndex(item);
 }
 
-void UIListView::setGravity(ListViewGravity gravity)
+void ListView::setGravity(ListViewGravity gravity)
 {
     if (_gravity == gravity)
     {
         return;
     }
     _gravity = gravity;
-    refreshView();
+    _refreshViewDirty = true;
 }
 
-void UIListView::setItemsMargin(float margin)
+void ListView::setItemsMargin(float margin)
 {
     if (_itemsMargin == margin)
     {
         return;
     }
     _itemsMargin = margin;
-    refreshView();
+    _refreshViewDirty = true;
 }
 
-void UIListView::setDirection(SCROLLVIEW_DIR dir)
+void ListView::setDirection(SCROLLVIEW_DIR dir)
 {
     switch (dir)
     {
@@ -362,34 +360,38 @@ void UIListView::setDirection(SCROLLVIEW_DIR dir)
             return;
             break;
     }
-    UIScrollView::setDirection(dir);
-    
+    ScrollView::setDirection(dir);
 }
 
-void UIListView::refreshView()
+void ListView::refreshView()
 {
-    if (!_items)
-    {
-        return;
-    }
-    cocos2d::ccArray* arrayItems = _items->data;
-    ssize_t length = arrayItems->num;
+    int length = _items.size();
     for (int i=0; i<length; i++)
     {
-        UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
+        Widget* item = _items.at(i);
         item->setZOrder(i);
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
 }
     
-void UIListView::addEventListenerListView(cocos2d::Object *target, SEL_ListViewEvent selector)
+void ListView::sortAllChildren()
+{
+    ScrollView::sortAllChildren();
+    if (_refreshViewDirty)
+    {
+        refreshView();
+        _refreshViewDirty = false;
+    }
+}
+    
+void ListView::addEventListenerListView(Object *target, SEL_ListViewEvent selector)
 {
     _listViewEventListener = target;
     _listViewEventSelector = selector;
 }
     
-void UIListView::selectedItemEvent()
+void ListView::selectedItemEvent()
 {
     if (_listViewEventListener && _listViewEventSelector)
     {
@@ -397,12 +399,12 @@ void UIListView::selectedItemEvent()
     }
 }
     
-void UIListView::interceptTouchEvent(int handleState, gui::UIWidget *sender, const cocos2d::Point &touchPoint)
+void ListView::interceptTouchEvent(int handleState, Widget *sender, const Point &touchPoint)
 {
-    UIScrollView::interceptTouchEvent(handleState, sender, touchPoint);
+    ScrollView::interceptTouchEvent(handleState, sender, touchPoint);
     if (handleState != 1)
     {
-        UIWidget* parent = sender;
+        Widget* parent = sender;
         while (parent)
         {
             if (parent && parent->getParent() == _innerContainer)
@@ -410,50 +412,51 @@ void UIListView::interceptTouchEvent(int handleState, gui::UIWidget *sender, con
                 _curSelectedIndex = getIndex(parent);
                 break;
             }
-            parent = parent->getParent();
+            parent = dynamic_cast<Widget*>(parent->getParent());
         }
         selectedItemEvent();
     }
 }
     
-int UIListView::getCurSelectedIndex() const
+int ListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;
 }
 
-void UIListView::onSizeChanged()
+void ListView::onSizeChanged()
 {
-    UIScrollView::onSizeChanged();
-    refreshView();
+    ScrollView::onSizeChanged();
+    _refreshViewDirty = true;
 }
 
-const char* UIListView::getDescription() const
+std::string ListView::getDescription() const
 {
     return "ListViewEx";
 }
 
-UIWidget* UIListView::createCloneInstance()
+Widget* ListView::createCloneInstance()
 {
-    return UIListView::create();
+    return ListView::create();
 }
 
-void UIListView::copyClonedWidgetChildren(UIWidget* model)
+void ListView::copyClonedWidgetChildren(Widget* model)
 {
-    cocos2d::ccArray* arrayItems = dynamic_cast<UIListView*>(model)->getItems()->data;
-    int length = arrayItems->num;
+    Vector<Widget*> arrayItems = getItems();
+    
+    int length = arrayItems.size();
     for (int i=0; i<length; i++)
     {
-        UIWidget* item = (UIWidget*)(arrayItems->arr[i]);
+        Widget* item = arrayItems.at(i);
         pushBackCustomItem(item->clone());
     }
 }
 
-void UIListView::copySpecialProperties(UIWidget *widget)
+void ListView::copySpecialProperties(Widget *widget)
 {
-    UIListView* listViewEx = dynamic_cast<UIListView*>(widget);
+    ListView* listViewEx = dynamic_cast<ListView*>(widget);
     if (listViewEx)
     {
-        UIScrollView::copySpecialProperties(widget);
+        ScrollView::copySpecialProperties(widget);
         setItemModel(listViewEx->_model);
         setItemsMargin(listViewEx->_itemsMargin);
         setGravity(listViewEx->_gravity);
@@ -461,3 +464,4 @@ void UIListView::copySpecialProperties(UIWidget *widget)
 }
 
 }
+NS_CC_END

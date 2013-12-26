@@ -34,6 +34,27 @@ using namespace cocos2d;
 using namespace cocos2d::extension;
 using namespace gui;
 
+class CocosGUITestMainLayer : public Layer
+{
+public:
+    virtual void onEnter();
+    
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    
+	Point _beginPos;
+    Menu* _itemMenu;
+    
+	int _testcount;
+};
+
+class CocosGUITestScene : public TestScene
+{
+public:
+    virtual void runThisTest();
+};
+
+/*
 class CocosGUITestScene : public TestScene
 {
 public:
@@ -42,20 +63,19 @@ public:
 	virtual void runThisTest();
     
 	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(Object* sender);
-    
-    void toCocosGUIExampleScene(Object* sender);
+	virtual void MainMenuCallback(Object* sender);    
     
     void load(Object* pSender, int count);
     void loadTextureCallBack(Object *obj);
     
     void menuCallback(Object* pSender);
     
-    UILayer* ul;
+    UILayer* _ul;
     
     LabelTTF* _label;
     
     Menu* _itemMenu;
 };
+ */
 
 #endif /* defined(__TestCpp__CocosGUIScene__) */
