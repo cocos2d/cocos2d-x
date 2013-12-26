@@ -996,6 +996,9 @@ cocos2d::gui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const
         setPropsForPageViewFromJsonDictionary(widget, uiOptions);
     }
     
+
+
+    
     int childrenCount = DICTOOL->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
@@ -1003,7 +1006,18 @@ cocos2d::gui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const
         cocos2d::gui::Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            widget->addChild(child);
+            if (dynamic_cast<PageView*>(widget))
+            {
+                dynamic_cast<PageView*>(widget)->addPage(static_cast<Layout*>(child));
+            }
+            else if (dynamic_cast<ListView*>(widget))
+            {
+                dynamic_cast<ListView*>(widget)->pushBackCustomItem(child);
+            }
+            else
+            {
+                widget->addChild(child);
+            }
         }
     }
     return widget;
@@ -1874,12 +1888,26 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(cocos2
 
 void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
-    
+    setPropsForLayoutFromJsonDictionary(widget, options);
 }
 
 void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(cocos2d::gui::Widget* widget, const rapidjson::Value& options)
 {
+    setPropsForLayoutFromJsonDictionary(widget, options);
     
+    ListView* listView = (ListView*)widget;
+    
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    listView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
+	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	listView->setDirection((SCROLLVIEW_DIR)direction);
+    
+    ListViewGravity gravity = (ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    listView->setGravity(gravity);
+    
+    float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
+    listView->setItemsMargin(itemMargin);
 }
 
 NS_CC_EXT_END
