@@ -1810,14 +1810,28 @@ void TextureDrawInRect::draw()
 {
     TextureDemo::draw();
 
-    auto s = Director::getInstance()->getWinSize();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
+}
+
+void TextureDrawInRect::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    auto s = Director::getInstance()->getWinSize();
+    
     auto rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
     auto rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
-
+    
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);
-
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string TextureDrawInRect::title() const
