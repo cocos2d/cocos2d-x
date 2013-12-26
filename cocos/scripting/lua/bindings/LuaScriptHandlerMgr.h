@@ -126,6 +126,8 @@ public:
         EVENTLISTENER_MOUSE_UP,
         EVENTLISTENER_MOUSE_MOVE,
         EVENTLISTENER_MOUSE_SCROLL,
+        
+        SPINE_EVENT,
     };
     
     typedef int Handler;
