@@ -212,6 +212,8 @@ public:
     virtual void visit();
     
     virtual void sortAllChildren() override;
+    
+    void requestDoLayout();
 protected:
     //override "init" method of widget.
     virtual bool init() override;
