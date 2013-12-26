@@ -45,68 +45,62 @@ bool ComAttribute::init()
 
 void ComAttribute::setInt(const std::string& key, int value)
 {
-    _dict.insert(key, __Integer::create(value));
+    _dict[key] = cocos2d::Value(value);
 }
 
 void ComAttribute::setFloat(const std::string& key, float value)
 {
-    _dict.insert(key, __Float::create(value));
+    _dict[key] = cocos2d::Value(value);
 }
 
 void ComAttribute::setBool(const std::string& key, bool value)
 {
-    _dict.insert(key, __Bool::create(value));
+    _dict[key] = cocos2d::Value(value);
 }
 
 void ComAttribute::setCString(const std::string& key, const std::string& value)
 {
-    _dict.insert(key, __String::create(value));
+    _dict[key] = cocos2d::Value(value);
 }
 
 int ComAttribute::getInt(const std::string& key, int def) const
 {
-    Object *ret = _dict.at(key);
-	if(ret)
+    if (_dict.find(key) == _dict.end())
     {
-		
-		if(__Integer *obj=dynamic_cast<__Integer*>(ret) )
-			return obj->getValue();
-	}
-    return def;
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asInt();
 }
 
 float ComAttribute::getFloat(const std::string& key, float def) const
 {
-    Object *ret =  _dict.at(key);
-    if(ret)
+    if (_dict.find(key) == _dict.end())
     {
-		
-		if( __Float *obj=dynamic_cast<__Float*>(ret) )
-			return obj->getValue();
-	}
-    return def;
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asFloat();
 }
 
 bool ComAttribute::getBool(const std::string& key, bool def) const
 {
-    Object *ret =  _dict.at(key);
-	if(ret) {
-		
-		if(__Bool *obj = dynamic_cast<__Bool*>(ret) )
-			return obj->getValue();
-	}
-    return def;
+    if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asBool();
 }
 
 std::string ComAttribute::getCString(const std::string& key, const std::string& def) const
 {
-   Object *ret =  _dict.at(key);
-	if(ret) {
-		
-		if( __String *obj = dynamic_cast<__String*>(ret) )
-			return obj->getCString();
-	}
-    return def;
+   if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asString();
 }
 
 ComAttribute* ComAttribute::create(void)

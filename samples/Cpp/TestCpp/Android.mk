@@ -81,6 +81,8 @@ Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \

@@ -362,11 +362,8 @@ namespace cocostudio {
                 }
                 else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
                 {
-                    gui::UILayer *pLayer = gui::UILayer::create();
-                    pLayer->scheduleUpdate();
-                    UIWidget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
-                    pLayer->addWidget(widget);
-                    ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
+                    Widget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
+                    ComRender *pRender = ComRender::create(widget, "GUIComponent");
                     if (pComName != nullptr)
                     {
                     pRender->setName(pComName);
@@ -374,7 +371,7 @@ namespace cocostudio {
                     gb->addComponent(pRender);
 					if (_pListener && _pfnSelector)
 					{
-						(_pListener->*_pfnSelector)(pLayer, (void*)(&subDict));
+						(_pListener->*_pfnSelector)(widget, (void*)(&subDict));
 					}
 				}
             }
