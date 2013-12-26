@@ -181,7 +181,7 @@ void PageView::insertPage(Layout* page, int idx)
             page->setSize(pvSize);
         }
         int length = _pages.size();
-        for (int i=(idx+1); i<length; i++) {
+        for (int i=(idx+1); i<length; i++){
             Widget* behindPage = _pages.at(i);
             Point formerPos = behindPage->getPosition();
             behindPage->setPosition(Point(formerPos.x+getSize().width, 0));
@@ -268,10 +268,8 @@ void PageView::onSizeChanged()
 void PageView::updateChildrenSize()
 {
     Size selfSize = getSize();
-    int length = _pages.size();
-    for (long i=0; i<length; i++)
+    for (auto& page : _pages)
     {
-        Layout* page = _pages.at(i);
         page->setSize(selfSize);
     }
 }
@@ -410,13 +408,11 @@ void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void PageView::movePages(float offset)
 {
-    int length = _pages.size();
-    for (int i = 0; i < length; i++)
+    for (auto& page : _pages)
     {
-        Widget* child = _pages.at(i);
-        _movePagePoint.x = child->getPosition().x + offset;
-        _movePagePoint.y = child->getPosition().y;
-        child->setPosition(_movePagePoint);
+        _movePagePoint.x = page->getPosition().x + offset;
+        _movePagePoint.y = page->getPosition().y;
+        page->setPosition(_movePagePoint);
     }
 }
 
@@ -606,11 +602,9 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    Vector<Layout*> modelPages = dynamic_cast<PageView*>(model)->getPages();
-    int length = modelPages.size();
-    for (int i=0; i<length; i++)
+    auto& modelPages = dynamic_cast<PageView*>(model)->getPages();
+    for (auto& page : modelPages)
     {
-        Layout* page = modelPages.at(i);
         addPage(dynamic_cast<Layout*>(page->clone()));
     }
 }
