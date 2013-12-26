@@ -44,7 +44,7 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
 )
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/../..)
+set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
   Classes
