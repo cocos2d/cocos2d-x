@@ -33,6 +33,7 @@ extern "C" {
 #include "CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
+#include "LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 
@@ -117,6 +118,8 @@ public:
     
     virtual int sendEvent(ScriptEvent* message);
     virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
+    virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
     LuaEngine(void)
     : _stack(NULL)
@@ -134,9 +137,6 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
-    int handleTableViewEvent(void* data);
-    int handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray);
-    int handleAssetsManagerEvent(void* data);
     int handleCocoStudioEventListener(void* data);
     int handleArmatureWrapper(void* data);
     int handleEventListenerAcc(void* data);
@@ -145,6 +145,10 @@ private:
     int handleEventListenerTouches(void* data);
     int handleEventListenerMouse(void* data);
     int handleEventListenerCustom(void* data);
+    
+    int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    int handlerTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)> func);
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

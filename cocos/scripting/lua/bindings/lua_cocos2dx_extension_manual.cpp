@@ -877,10 +877,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL);
+                LuaTableViewEventData eventData;
                 BasicScriptData data(view,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL, (void*)&data);
             }
         }
     }
@@ -892,10 +891,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)view, ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM);
+                LuaTableViewEventData eventData;
                 BasicScriptData data(view,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM, (void*)&data);
             }
         }
     }
@@ -907,10 +905,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED,cell);
+                LuaTableViewEventData eventData(cell);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED,(void*)&data);
             }
         }
     }
@@ -922,10 +919,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT,cell);
+                LuaTableViewEventData eventData(cell);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT,(void*)&data);
             }
         }
     }
@@ -937,10 +933,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT,cell);
+                LuaTableViewEventData eventData(cell);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT,(void*)&data);
             }
         }
     }
@@ -952,10 +947,9 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE);
             if (0 != handler)
             {
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE,cell);
+                LuaTableViewEventData eventData(cell);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEvent(&event);
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE,(void*)&data);
             }
         }
     }
@@ -1033,19 +1027,20 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX);
             if (0 != handler)
             {
-                Array resultArray;
-                resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX,&idx);
+                LuaTableViewEventData eventData(&idx);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEventReturnArray(&event, 2, resultArray);
-                CCASSERT(resultArray.count() == 2, "tableCellSizeForIndex Array count error");
-                Double* width  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
-                Double* height = dynamic_cast<Double*>(resultArray.getObjectAtIndex(1));
-                if (nullptr != width && nullptr != height)
-                {
-                    return Size((float)width->getValue(), (float)height->getValue());
-                }
+                float width = 0.0;
+                float height = 0.0;
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX, (void*)&data,2,[&](lua_State* L,int numReturn){
+                    CCASSERT(numReturn == 2, "tableCellSizeForIndex return count error");
+                    ValueVector vec;
+                    width  = (float)tolua_tonumber(L, -1, 0);
+                    lua_pop(L, 1);
+                    height = (float)tolua_tonumber(L, -1, 0);
+                    lua_pop(L, 1);
+                });
+                
+                return Size(width, height);
             }
         }
         
@@ -1059,18 +1054,15 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX);
             if (0 != handler)
             {
-                Array resultArray;
-                resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX,&idx);
+                LuaTableViewEventData eventData(&idx);
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
                 TableViewCell* viewCell = nullptr;
-                if (resultArray.count() > 0)
-                {
-                    viewCell = dynamic_cast<TableViewCell*>(resultArray.getObjectAtIndex(0));
-                }
-                 
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX, (void*)&data, 1, [&](lua_State* L, int numReturn){
+                    CCASSERT(numReturn == 1, "tableCellAtIndex return count error");
+                    viewCell = static_cast<TableViewCell*>(tolua_tousertype(L, -1, nullptr));
+                    lua_pop(L, 1);
+                });
+                
                 return viewCell;
             }
         }
@@ -1085,17 +1077,15 @@ public:
             int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)table, ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS);
             if (0 != handler)
             {
-                Array resultArray;
-                resultArray.initWithCapacity(1);
-                LuaTableViewEventData eventData(ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS);
+                LuaTableViewEventData eventData;
                 BasicScriptData data(table,&eventData);
-                ScriptEvent event(kTableViewEvent,(void*)&data);
-                LuaEngine::getInstance()->sendEventReturnArray(&event, 1, resultArray);
-                Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
-                if (NULL != numbers)
-                {
-                    return (long)numbers->getValue();
-                }
+                long counts = 0;
+                LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS, (void*)&data,1, [&](lua_State* L, int numReturn){
+                    CCASSERT(numReturn == 1, "numberOfCellsInTableView return count error");
+                    counts = (long)tolua_tonumber(L, -1, 0);
+                    lua_pop(L, 1);
+                });
+                return counts;
             }
         }
         return 0;
@@ -1444,10 +1434,9 @@ public:
         int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS);
         if (0 != handler)
         {
-            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS,percent);
+            LuaAssetsManagerEventData eventData(percent);
             BasicScriptData data((void*)this,&eventData);
-            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
-            LuaEngine::getInstance()->sendEvent(&event);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_PROGRESS, (void*)&data);
         }
     }
     
@@ -1456,10 +1445,9 @@ public:
         int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
         if (0 != handler)
         {
-            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS);
+            LuaAssetsManagerEventData eventData;
             BasicScriptData data((void*)this,&eventData);
-            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
-            LuaEngine::getInstance()->sendEvent(&event);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_SUCCESS, (void*)&data);
         }
     }
     
@@ -1468,10 +1456,9 @@ public:
         int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR);
         if (0 != handler)
         {
-            LuaAssetsManagerEventData eventData(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR, (int)errorCode);
+            LuaAssetsManagerEventData eventData((int)errorCode);
             BasicScriptData data((void*)this,&eventData);
-            ScriptEvent event(kAssetsManagerEvent,(void*)&data);
-            LuaEngine::getInstance()->sendEvent(&event);
+            LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ASSETSMANAGER_ERROR, (void*)&data);
         }
     }
 };

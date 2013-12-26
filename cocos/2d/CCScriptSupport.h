@@ -210,8 +210,6 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
-    kTableViewEvent,//Now it's only used in LuaBinding
-    kAssetsManagerEvent,//Now it's only used in Lua Binding
     kCocoStudioEventListener,//Now it's only used in Lua Binding
     kArmatureWrapper,//Now it's only used in Lua Binding
     kEventListenerAcc,//Now it's only used in Lua Binding
