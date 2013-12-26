@@ -34,6 +34,10 @@ NS_CC_BEGIN
 class CustomCommand : public RenderCommand
 {
 public:
+    CustomCommand();
+    ~CustomCommand();
+    
+public:
     static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
 
     void init(int viewport, int32_t depth);
@@ -52,14 +56,26 @@ public:
     std::function<void()> func;
 
 protected:
-    CustomCommand();
-    ~CustomCommand();
-
     int _viewport;
     int32_t _depth;
     static RenderCommandPool<CustomCommand> _commandPool;
 
     friend class RenderCommandPool<CustomCommand>;
+};
+
+template <>
+class RenderCommandPool<CustomCommand>
+{
+public:
+    CustomCommand* generateCommand()
+    {
+        return new CustomCommand();
+    }
+    
+    void pushBackCommand(CustomCommand* ptr)
+    {
+        delete ptr;
+    }
 };
 
 NS_CC_END
