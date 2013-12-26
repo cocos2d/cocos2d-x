@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCCAMERA_ACTION_H__
 
 #include "CCActionInterval.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -48,15 +49,15 @@ public:
      * @js ctor
      */
     ActionCamera()
-		:_centerXOrig(0)
-        ,_centerYOrig(0)
-        ,_centerZOrig(0)
-        ,_eyeXOrig(0)
-        ,_eyeYOrig(0)
-        ,_eyeZOrig(0)
-        ,_upXOrig(0)
-        ,_upYOrig(0)
-        ,_upZOrig(0)
+		:_centerX(0)
+        ,_centerY(0)
+        ,_centerZ(0)
+        ,_eyeX(0)
+        ,_eyeY(0)
+        ,_eyeZ(FLT_EPSILON)
+        ,_upX(0)
+        ,_upY(1)
+        ,_upZ(0)
     {}
     /**
      * @js NA
@@ -70,17 +71,22 @@ public:
 	virtual ActionCamera *clone() const override;
 
 protected:
-    float _centerXOrig;
-    float _centerYOrig;
-    float _centerZOrig;
 
-    float _eyeXOrig;
-    float _eyeYOrig;
-    float _eyeZOrig;
+    void restore();
+    void setEye(float x, float y, float z);
+    void setCenter(float x, float y, float z);
+    void setUp(float x, float y, float z);
+    void updateTransform();
 
-    float _upXOrig;
-    float _upYOrig;
-    float _upZOrig;
+    float _centerX;
+    float _centerY;
+    float _centerZ;
+    float _eyeX;
+    float _eyeY;
+    float _eyeZ;
+    float _upX;
+    float _upY;
+    float _upZ;
 };
 
 /** 
@@ -112,7 +118,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~OrbitCamera(){}
+    virtual ~OrbitCamera(){}
     
     /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);

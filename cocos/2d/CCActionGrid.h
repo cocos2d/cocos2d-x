@@ -31,6 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class GridBase;
+class NodeGrid;
 
 /**
  * @addtogroup actions
@@ -41,8 +42,6 @@ class GridBase;
 class CC_DLL GridAction : public ActionInterval
 {
 public:
-    /** initializes the action with size and duration */
-    bool initWithDuration(float duration, const Size& gridSize);
 
     /** returns the grid */
     virtual GridBase* getGrid();
@@ -53,7 +52,19 @@ public:
     virtual void startWithTarget(Node *target) override;
 
 protected:
+    GridAction() {}
+    virtual ~GridAction() {}
+    /** initializes the action with size and duration */
+    bool initWithDuration(float duration, const Size& gridSize);
+
     Size _gridSize;
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(GridAction);
 };
 
 /** 
@@ -153,18 +164,6 @@ class CC_DLL AccelDeccelAmplitude : public ActionInterval
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
     static AccelDeccelAmplitude* create(Action *action, float duration);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AccelDeccelAmplitude();
-    /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *pAction, float duration);
-
-	/** returns a new clone of the action */
-	virtual AccelDeccelAmplitude* clone() const;
-	/** returns a new reversed action */
-	virtual AccelDeccelAmplitude* reverse() const;
 
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
@@ -174,10 +173,20 @@ public:
     // Overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
+	virtual AccelDeccelAmplitude* clone() const override;
+	virtual AccelDeccelAmplitude* reverse() const override;
 
 protected:
+    AccelDeccelAmplitude() {}
+    virtual ~AccelDeccelAmplitude();
+    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    bool initWithAction(Action *pAction, float duration);
+
     float _rate;
     ActionInterval *_other;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(AccelDeccelAmplitude);
 };
 
 /** @brief AccelAmplitude action */
@@ -186,14 +195,6 @@ class CC_DLL AccelAmplitude : public ActionInterval
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
     static AccelAmplitude* create(Action *action, float duration);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AccelAmplitude();
-
-    /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *action, float duration);
 
     /** get amplitude rate */
     inline float getRate() const { return _rate; }
@@ -207,8 +208,15 @@ public:
 	virtual AccelAmplitude* reverse() const override;
 
 protected:
+    AccelAmplitude() {}
+    virtual ~AccelAmplitude();
+    bool initWithAction(Action *action, float duration);
+
     float _rate;
     ActionInterval *_other;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(AccelAmplitude);
 };
 
 /** @brief DeccelAmplitude action */
@@ -217,13 +225,6 @@ class CC_DLL DeccelAmplitude : public ActionInterval
 public:
     /** creates the action with an inner action that has the amplitude property, and a duration time */
     static DeccelAmplitude* create(Action *action, float duration);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~DeccelAmplitude();
-    /** initializes the action with an inner action that has the amplitude property, and a duration time */
-    bool initWithAction(Action *action, float duration);
 
     /** get amplitude rate */
     inline float getRate(void) const { return _rate; }
@@ -233,18 +234,26 @@ public:
     // overrides
     virtual void startWithTarget(Node *target) override;
     virtual void update(float time) override;
-	virtual DeccelAmplitude* clone() const;
-	virtual DeccelAmplitude* reverse() const;
+	virtual DeccelAmplitude* clone() const override;
+	virtual DeccelAmplitude* reverse() const override;
 
 protected:
+    DeccelAmplitude() {}
+    virtual ~DeccelAmplitude();
+    /** initializes the action with an inner action that has the amplitude property, and a duration time */
+    bool initWithAction(Action *action, float duration);
+
     float _rate;
     ActionInterval *_other;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(DeccelAmplitude);
 };
 
 /** @brief StopGrid action.
  @warning Don't call this action if another grid action is active.
  Call if you want to remove the the grid effect. Example:
- Sequence::actions(Lens::action(...), StopGrid::action(...), NULL);
+ Sequence::actions(Lens::action(...), StopGrid::action(...), nullptr);
  */
 class CC_DLL StopGrid : public ActionInstant
 {
@@ -256,6 +265,17 @@ public:
     virtual void startWithTarget(Node *target) override;
 	virtual StopGrid* clone() const override;
 	virtual StopGrid* reverse() const override;
+
+protected:
+    StopGrid() {}
+    virtual ~StopGrid() {}
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(StopGrid);
 };
 
 /** @brief ReuseGrid action */
@@ -265,16 +285,25 @@ public:
     /** creates an action with the number of times that the current grid will be reused */
     static ReuseGrid* create(int times);
 
-    /** initializes an action with the number of times that the current grid will be reused */
-    bool initWithTimes(int times);
-
     // Override
     virtual void startWithTarget(Node *target) override;
 	virtual ReuseGrid* clone() const override;
 	virtual ReuseGrid* reverse() const override;
 
 protected:
+    ReuseGrid() {}
+    virtual ~ReuseGrid() {}
+    /** initializes an action with the number of times that the current grid will be reused */
+    bool initWithTimes(int times);
+    
+    NodeGrid* _gridNodeTarget;
+    
+    void cacheTargetAsGridNode();
+    
     int _times;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ReuseGrid);
 };
 
 // end of actions group

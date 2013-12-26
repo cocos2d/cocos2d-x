@@ -26,32 +26,22 @@
 
 #include <climits>
 #include <algorithm>
+#include <cmath>
 
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
 #include "chipmunk.h"
-#elif (CC_PHYSICS_ENGINE == CCPHYSICS_BOX2D)
-#include "Box2D.h"
-#endif
 
 #include "CCPhysicsShape.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsWorld.h"
 
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
-#include "box2d/CCPhysicsBodyInfo_box2d.h"
 #include "chipmunk/CCPhysicsJointInfo_chipmunk.h"
-#include "box2d/CCPhysicsJointInfo_box2d.h"
 #include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
-#include "box2d/CCPhysicsWorldInfo_box2d.h"
 #include "chipmunk/CCPhysicsShapeInfo_chipmunk.h"
-#include "box2d/CCPhysicsShapeInfo_box2d.h"
 #include "chipmunk/CCPhysicsHelper_chipmunk.h"
-#include "box2d/CCPhysicsHelper_box2d.h"
 
 NS_CC_BEGIN
-
-
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+extern const float PHYSICS_INFINITY;
 
 namespace
 {
@@ -61,7 +51,6 @@ namespace
 
 PhysicsBody::PhysicsBody()
 : _node(nullptr)
-, _shapes(nullptr)
 , _world(nullptr)
 , _info(nullptr)
 , _dynamic(true)
@@ -261,9 +250,6 @@ bool PhysicsBody::init()
     {
         _info = new PhysicsBodyInfo();
         CC_BREAK_IF(_info == nullptr);
-        _shapes = Array::create();
-        CC_BREAK_IF(_shapes == nullptr);
-        _shapes->retain();
         
         _info->setBody(cpBodyNew(PhysicsHelper::float2cpfloat(_mass), PhysicsHelper::float2cpfloat(_moment)));
         
@@ -359,7 +345,7 @@ void PhysicsBody::setPosition(Point position)
 
 void PhysicsBody::setRotation(float rotation)
 {
-    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation));
+    cpBodySetAngle(_info->getBody(), PhysicsHelper::float2cpfloat(rotation * M_PI / 180.0f));
 }
 
 Point PhysicsBody::getPosition() const
@@ -370,7 +356,7 @@ Point PhysicsBody::getPosition() const
 
 float PhysicsBody::getRotation() const
 {
-    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / 3.14f * 180.0f);
+    return -PhysicsHelper::cpfloat2float(cpBodyGetAngle(_info->getBody()) / M_PI * 180.0f);
 }
 
 PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/* = true*/)
@@ -378,7 +364,7 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
     if (shape == nullptr) return nullptr;
     
     // add shape to body
-    if (_shapes->getIndexOfObject(shape) == CC_INVALID_INDEX)
+    if (_shapes.getIndex(shape) == -1)
     {
         shape->setBody(this);
         
@@ -396,7 +382,7 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
             _world->addShape(shape);
         }
         
-        _shapes->addObject(shape);
+        _shapes.pushBack(shape);
         
         if (_group != CP_NO_GROUP && shape->getGroup() == CP_NO_GROUP)
         {
@@ -526,18 +512,18 @@ void PhysicsBody::addMoment(float moment)
 {
     if (moment == PHYSICS_INFINITY)
     {
-        // if moment is INFINITY, the moment of the body will become INFINITY
+        // if moment is PHYSICS_INFINITY, the moment of the body will become PHYSICS_INFINITY
         _moment = PHYSICS_INFINITY;
         _momentDefault = false;
     }
     else if (moment == -PHYSICS_INFINITY)
     {
-        // if moment is -INFINITY, it won't change
+        // if moment is -PHYSICS_INFINITY, it won't change
         return;
     }
     else
     {
-        // if moment of the body is INFINITY is has no effect
+        // if moment of the body is PHYSICS_INFINITY is has no effect
         if (_moment != PHYSICS_INFINITY)
         {
             if (_momentDefault)
@@ -569,7 +555,7 @@ void PhysicsBody::setVelocity(const Point& velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set velocity for a static body.");
+        CCLOG("physics warning: your can't set velocity for a static body.");
         return;
     }
     
@@ -595,7 +581,7 @@ void PhysicsBody::setAngularVelocity(float velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set angular velocity for a static body.");
+        CCLOG("physics warning: your can't set angular velocity for a static body.");
         return;
     }
     
@@ -641,9 +627,8 @@ void PhysicsBody::setMoment(float moment)
 
 PhysicsShape* PhysicsBody::getShape(int tag) const
 {
-    for (auto child : *_shapes)
+    for (auto& shape : _shapes)
     {
-        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             return shape;
@@ -655,9 +640,8 @@ PhysicsShape* PhysicsBody::getShape(int tag) const
 
 void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 {
-    for (auto child : *_shapes)
+    for (auto& shape : _shapes)
     {
-        PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         if (shape->getTag() == tag)
         {
             removeShape(shape, reduceMassAndMoment);
@@ -668,7 +652,7 @@ void PhysicsBody::removeShape(int tag, bool reduceMassAndMoment/* = true*/)
 
 void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = true*/)
 {
-    if (_shapes->getIndexOfObject(shape) != CC_INVALID_INDEX)
+    if (_shapes.getIndex(shape) != -1)
     {
         // deduce the area, mass and moment
         // area must update before mass, because the density changes depend on it.
@@ -688,13 +672,13 @@ void PhysicsBody::removeShape(PhysicsShape* shape, bool reduceMassAndMoment/* = 
         // set shape->_body = nullptr make the shape->setBody will not trigger the _body->removeShape function call.
         shape->_body = nullptr;
         shape->setBody(nullptr);
-        _shapes->removeObject(shape);
+        _shapes.eraseObject(shape);
     }
 }
 
 void PhysicsBody::removeAllShapes(bool reduceMassAndMoment/* = true*/)
 {
-    for (auto child : *_shapes)
+    for (auto& child : _shapes)
     {
         PhysicsShape* shape = dynamic_cast<PhysicsShape*>(child);
         
@@ -717,7 +701,7 @@ void PhysicsBody::removeAllShapes(bool reduceMassAndMoment/* = true*/)
         shape->setBody(nullptr);
     }
     
-    _shapes->removeAllObjects();
+    _shapes.clear();
 }
 
 void PhysicsBody::removeFromWorld()
@@ -755,7 +739,7 @@ bool PhysicsBody::isResting() const
 void PhysicsBody::update(float delta)
 {
     // damping compute
-    if (_dynamic)
+    if (_dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
@@ -767,9 +751,9 @@ void PhysicsBody::setCategoryBitmask(int bitmask)
 {
     _categoryBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setCategoryBitmask(bitmask);
+        shape->setCategoryBitmask(bitmask);
     }
 }
 
@@ -777,9 +761,9 @@ void PhysicsBody::setContactTestBitmask(int bitmask)
 {
     _contactTestBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setContactTestBitmask(bitmask);
+        shape->setContactTestBitmask(bitmask);
     }
 }
 
@@ -787,17 +771,17 @@ void PhysicsBody::setCollisionBitmask(int bitmask)
 {
     _collisionBitmask = bitmask;
     
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setCollisionBitmask(bitmask);
+        shape->setCollisionBitmask(bitmask);
     }
 }
 
 void PhysicsBody::setGroup(int group)
 {
-    for (auto shape : *_shapes)
+    for (auto& shape : _shapes)
     {
-        ((PhysicsShape*)shape)->setGroup(group);
+        shape->setGroup(group);
     }
 }
 
@@ -810,11 +794,6 @@ Point PhysicsBody::local2World(const Point& point)
 {
     return PhysicsHelper::cpv2point(cpBodyLocal2World(_info->getBody(), PhysicsHelper::point2cpv(point)));
 }
-
-#elif (CC_PHYSICS_ENGINE == CC_PHYSICS_BOX2D)
-
-
-#endif
 
 NS_CC_END
 

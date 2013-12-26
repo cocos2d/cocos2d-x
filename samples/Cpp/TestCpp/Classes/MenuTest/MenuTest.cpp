@@ -88,25 +88,16 @@ MenuLayerMainMenu::MenuLayerMainMenu()
     auto s = Director::getInstance()->getWinSize();
     
     int i=0;
-    Node* child;
-    auto pArray = menu->getChildren();
-    Object* pObject = NULL;
-    CCARRAY_FOREACH(pArray, pObject)
-    {
-        if(pObject == NULL)
-            break;
-
-        child = static_cast<Node*>(pObject);
-
+    for(const auto &child : menu->getChildren()) {
         auto dstPoint = child->getPosition();
         int offset = (int) (s.width/2 + 50);
         if( i % 2 == 0)
             offset = -offset;
         
         child->setPosition( Point( dstPoint.x + offset, dstPoint.y) );
-        child->runAction( 
-                          EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f) 
-                        );
+        child->runAction(
+                         EaseElasticOut::create(MoveBy::create(2, Point(dstPoint.x - offset,0)), 0.35f)
+                         );
         i++;
     }
 
@@ -406,15 +397,10 @@ MenuLayer4::MenuLayer4()
                                                                 MenuItemFont::create( "Off" ), 
                                                                 NULL );
     
-    //auto more_items = UxArray::arrayWithObjects(
-    //                                                 MenuItemFont::create( "33%" ),
-    //                                                 MenuItemFont::create( "66%" ),
-    //                                                 MenuItemFont::create( "100%" ),
-    //                                                 NULL );
     // TIP: you can manipulate the items like any other MutableArray
-    item4->getSubItems()->addObject( MenuItemFont::create( "33%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "66%" ) ); 
-    item4->getSubItems()->addObject( MenuItemFont::create( "100%" ) ); 
+    item4->getSubItems().pushBack( MenuItemFont::create( "33%" ) );
+    item4->getSubItems().pushBack( MenuItemFont::create( "66%" ) );
+    item4->getSubItems().pushBack( MenuItemFont::create( "100%" ) );
     
     // you can change the one of the items by doing this
     item4->setSelectedIndex( 2 );

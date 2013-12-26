@@ -251,7 +251,7 @@ static CCEAGLView *__view = 0;
 - (void) dealloc
 {
     [renderer_ release];
-    self.keyboardShowNotification = NULL; // implicit release
+    self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];
 }
 
@@ -413,7 +413,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -433,7 +433,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -454,7 +454,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (int*)ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -475,7 +475,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (int*)ids, xs, ys);
 }
 
 #pragma mark - UIView - Responder
@@ -861,7 +861,7 @@ static CCEAGLView *__view = 0;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
-    [UIView beginAnimations:nil context:NULL];
+    [UIView beginAnimations:nil context:nullptr];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];

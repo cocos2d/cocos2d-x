@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,44 +29,53 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/spine-cocos2dx.h>
 #include <spine/extension.h>
 
 USING_NS_CC;
 
-namespace spine {
-
-void _AtlasPage_createTexture (AtlasPage* self, const char* path) {
-	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
-	TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
-	textureAtlas->retain();
-	self->rendererObject = textureAtlas;
+void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
+    Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
+    TextureAtlas* textureAtlas = TextureAtlas::createWithTexture(texture, 4);
+    textureAtlas->retain();
+    self->rendererObject = textureAtlas;
     // Using getContentSize to make it supports the strategy of loading resources in cocos2d-x.
-	// self->width = texture->getPixelsWide();
-	// self->height = texture->getPixelsHigh();
+    // self->width = texture->getPixelsWide();
+    // self->height = texture->getPixelsHigh();
     self->width = texture->getContentSize().width;
     self->height = texture->getContentSize().height;
 }
 
-void _AtlasPage_disposeTexture (AtlasPage* self) {
+void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 	((TextureAtlas*)self->rendererObject)->release();
 }
 
-char* _Util_readFile (const char* path, int* length) {
-	long size;
-    char* data = reinterpret_cast<char*>(FileUtils::getInstance()->getFileData(
-		FileUtils::getInstance()->fullPathForFilename(path).c_str(), "r", &size));
-	*length = size;
-	return data;
+char* _spUtil_readFile (const char* path, int* length)
+{
+    char* ret = nullptr;
+    int size = 0;
+    Data data = FileUtils::getInstance()->getDataFromFile(path);
+    
+    if (!data.isNull())
+    {
+        size = static_cast<int>(data.getSize());
+        *length = size;
+        // Allocates one more byte for string terminal, it will be safe when parsing JSON file in Spine runtime.
+        ret = (char*)malloc(size + 1);
+        ret[size] = '\0';
+        memcpy(ret, data.getBytes(), size);
+    }
+    
+    return ret;
 }
 
 /**/
 
-void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, V3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
+void spRegionAttachment_updateQuad (spRegionAttachment* self, spSlot* slot, V3F_C4B_T2F_Quad* quad, bool premultipliedAlpha) {
 	float vertices[8];
-	RegionAttachment_computeVertices(self, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
+	spRegionAttachment_computeWorldVertices(self, slot->skeleton->x, slot->skeleton->y, slot->bone, vertices);
 
 	GLubyte r = slot->skeleton->r * slot->r * 255;
 	GLubyte g = slot->skeleton->g * slot->g * 255;
@@ -105,5 +122,3 @@ void RegionAttachment_updateQuad (RegionAttachment* self, Slot* slot, V3F_C4B_T2
 	quad->br.texCoords.u = self->uvs[VERTEX_X4];
 	quad->br.texCoords.v = self->uvs[VERTEX_Y4];
 }
-
-} // namespace spine {

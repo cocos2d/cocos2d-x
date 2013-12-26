@@ -20,11 +20,11 @@ ccs.WidgetType =
     container = 1, --container
 }
 
--- ccs.TextureResType = 
--- {
---     "local" = 0,
---     "plist" = 1,
--- }
+ccs.TextureResType = 
+{
+    UI_TEX_TYPE_LOCAL = 0,
+    UI_TEX_TYPE_PLIST = 1,
+}
 
 ccs.TouchEventType = 
 {
@@ -138,10 +138,15 @@ ccs.SCROLLVIEW_MOVE_DIR = {
 }
 
 ccs.ScrollviewEventType = {
-    top = 0,
-    bottom = 1,
-    left = 2,
-    right = 3,
+    SCROLL_TO_TOP  = 0,
+    SCROLL_TO_BOTTOM = 1,
+    SCROLL_TO_LEFT  = 2,
+    SCROLL_TO_RIGHT = 3,
+    SCROLLING       = 4,
+    BOUNCE_TOP   = 5,
+    BOUNCE_BOTTOM = 6,
+    BOUNCE_LEFT  = 7,
+    BOUNCE_RIGHT = 8,
 }
 
 ccs.ListViewDirection = {

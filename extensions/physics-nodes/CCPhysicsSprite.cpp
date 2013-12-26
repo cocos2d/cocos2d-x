@@ -342,7 +342,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-const AffineTransform& PhysicsSprite::getNodeToParentTransform() const
+const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
@@ -360,9 +360,16 @@ const AffineTransform& PhysicsSprite::getNodeToParentTransform() const
 		y += _anchorPointInPoints.y;
 	}
 
-	return (_transform = AffineTransformMake(rot.x * _scaleX, rot.y * _scaleX,
-                                             -rot.y * _scaleY, rot.x * _scaleY,
-                                             x,	y));
+    
+    kmScalar mat[] = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
+                        (kmScalar)-rot.y * _scaleY, (kmScalar)rot.x * _scaleY,  0,  0,
+                        0,  0,  1,  0,
+                        x,	y,  0,  1};
+
+
+    kmMat4Fill(&_transform, mat);
+    
+    return _transform;
 
 
 #elif CC_ENABLE_BOX2D_INTEGRATION

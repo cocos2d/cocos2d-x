@@ -130,6 +130,7 @@ static void extendUIWidget(lua_State* L)
     {
         tolua_function(L, "addTouchEventListener", lua_cocos2dx_UIWidget_addTouchEventListener);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UICheckBox_addEventListenerCheckBox(lua_State* L)
@@ -198,6 +199,7 @@ static void extendUICheckBox(lua_State* L)
     {
         tolua_function(L, "addEventListenerCheckBox", lua_cocos2dx_UICheckBox_addEventListenerCheckBox);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UISlider_addEventListenerSlider(lua_State* L)
@@ -266,6 +268,7 @@ static void extendUISlider(lua_State* L)
     {
         tolua_function(L, "addEventListenerSlider", lua_cocos2dx_UISlider_addEventListenerSlider);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UITextField_addEventListenerTextField(lua_State* L)
@@ -334,6 +337,7 @@ static void extendUITextField(lua_State* L)
     {
         tolua_function(L, "addEventListenerTextField", lua_cocos2dx_UITextField_addEventListenerTextField);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UIPageView_addEventListenerPageView(lua_State* L)
@@ -402,6 +406,7 @@ static void extendUIPageView(lua_State* L)
     {
         tolua_function(L, "addEventListenerPageView", lua_cocos2dx_UIPageView_addEventListenerPageView);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UIListView_addEventListenerListView(lua_State* L)
@@ -470,6 +475,7 @@ static void extendUIListView(lua_State* L)
     {
         tolua_function(L, "addEventListenerListView", lua_cocos2dx_UIListView_addEventListenerListView);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_UILayoutParameter_setMargin(lua_State* L)
@@ -608,6 +614,7 @@ static void extendLayoutParameter(lua_State* L)
         tolua_function(L, "setMargin", lua_cocos2dx_UILayoutParameter_setMargin);
         tolua_function(L, "getMargin", lua_cocos2dx_UILayoutParameter_getMargin);
     }
+    lua_pop(L, 1);
 }
 
 class LuaArmatureWrapper:public Object
@@ -806,6 +813,7 @@ static void extendArmatureAnimation(lua_State* L)
         tolua_function(L, "setMovementEventCallFunc", lua_cocos2dx_ArmatureAnimation_setMovementEventCallFunc);
         tolua_function(L, "setFrameEventCallFunc", lua_cocos2dx_ArmatureAnimation_setFrameEventCallFunc);
     }
+    lua_pop(L, 1);
 }
 
 static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua_State* L)
@@ -896,6 +904,7 @@ static void extendArmatureDataManager(lua_State* L)
     {
         tolua_function(L, "addArmatureFileInfoAsync", lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc);
     }
+    lua_pop(L, 1);
 }
 
 int register_all_cocos2dx_coco_studio_manual(lua_State* L)

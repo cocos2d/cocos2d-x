@@ -47,19 +47,16 @@ namespace cocostudio {
 
     cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
     {
-        long size = 0;
-        char* pData = 0;
         cocos2d::Node *pNode = nullptr;
         do 
         {
             CC_BREAK_IF(pszFileName == nullptr);
-            pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pszFileName, "r", &size));
-            CC_BREAK_IF(pData == nullptr || strcmp(pData, "") == 0);
+            std::string fileContent = cocos2d::FileUtils::getInstance()->getStringFromFile(pszFileName);
+            CC_BREAK_IF(fileContent.empty());
             JsonDictionary *jsonDict = new JsonDictionary();
-            jsonDict->initWithDescription(pData);
+            jsonDict->initWithDescription(fileContent.c_str());
             pNode = createObject(jsonDict,nullptr);
             CC_SAFE_DELETE(jsonDict);
-            free(pData);
         } while (0);
         
         return pNode;
@@ -215,11 +212,12 @@ namespace cocostudio {
                     {
                         file_path = reDir.substr(0, pos+1);
                     }
-                    long size = 0;
-                    char *des = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(),"r" , &size));
+
+                    std::string des = cocos2d::FileUtils::getInstance()->getStringFromFile(pPath);
+
                     JsonDictionary *jsonDict = new JsonDictionary();
-                    jsonDict->initWithDescription(des);
-                    if(nullptr == des || strcmp(des, "") == 0)
+                    jsonDict->initWithDescription(des.c_str());
+                    if (des.empty())
                     {
                         CCLOG("read json file[%s] error!\n", pPath.c_str());
                     }
@@ -263,7 +261,6 @@ namespace cocostudio {
 
                     CC_SAFE_DELETE(jsonDict);
                     CC_SAFE_DELETE(subData);
-                    free(des);
                 }
                 else if(comName != nullptr && strcmp(comName, "CCComAudio") == 0)
                 {
@@ -285,14 +282,11 @@ namespace cocostudio {
                     if (nResType == 0)
                     {
                         pAttribute = ComAttribute::create();
-                        long size = 0;
-                        char* pData = 0;
-                        pData = (char*)(cocos2d::FileUtils::getInstance()->getFileData(pPath.c_str(), "r", &size));
-                        if(pData != nullptr && strcmp(pData, "") != 0)
+                        std::string fileContent = cocos2d::FileUtils::getInstance()->getStringFromFile(pPath);
+                        if (!fileContent.empty())
                         {
-                            pAttribute->getDict()->initWithDescription(pData);
+                            pAttribute->getDict()->initWithDescription(fileContent.c_str());
                         }
-                        free(pData);
                     }
                     else
                     {
@@ -321,11 +315,8 @@ namespace cocostudio {
                 }
                 else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
                 {
-                    gui::UILayer *pLayer = gui::UILayer::create();
-                    pLayer->scheduleUpdate();
-                    UIWidget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
-                    pLayer->addWidget(widget);
-                    ComRender *pRender = ComRender::create(pLayer, "GUIComponent");
+                    Widget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
+                    ComRender *pRender = ComRender::create(widget, "GUIComponent");
                     if (pComName != nullptr)
                     {
                     pRender->setName(pComName);

@@ -24,7 +24,7 @@ AccelerometerTest::~AccelerometerTest(void)
     Device::setAccelerometerEnabled(false);
 }
 
-std::string AccelerometerTest::title()
+std::string AccelerometerTest::title() const
 {
     return "AccelerometerTest";
 }

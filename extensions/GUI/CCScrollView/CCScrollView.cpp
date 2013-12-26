@@ -153,25 +153,17 @@ void ScrollView::pause(Object* sender)
 {
     _container->pause();
 
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->pause();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->pause();
     }
 }
 
 void ScrollView::resume(Object* sender)
 {
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->resume();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->resume();
     }
 
     _container->resume();
@@ -493,16 +485,6 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
-void ScrollView::addChild(Node * child, int zOrder)
-{
-    this->addChild(child, zOrder, child->getTag());
-}
-
-void ScrollView::addChild(Node * child)
-{
-    this->addChild(child, child->getZOrder(), child->getTag());
-}
-
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
@@ -557,24 +539,18 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
 
-	if(_children)
+	if (!_children.empty())
     {
 		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -589,9 +565,9 @@ void ScrollView::visit()
 		this->draw();
         
 		// draw children zOrder >= 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			child->visit();
 		}
         
@@ -602,10 +578,6 @@ void ScrollView::visit()
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }

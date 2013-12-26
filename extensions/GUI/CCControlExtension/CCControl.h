@@ -62,7 +62,7 @@ class Invocation;
  *
  * To use the Control you have to subclass it.
  */
-class Control : public LayerRGBA
+class Control : public Layer
 {
 public:
     /** Kinds of possible events for the control objects. */
@@ -89,18 +89,9 @@ public:
         DISABLED       = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
         SELECTED       = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
     };
-    
+
+    /** Creates a Control object */
     static Control* create();
-    /**
-     * @js ctor
-     */
-    Control();
-    virtual bool init(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Control();
 
     /** Tells whether the control is enabled. */
     virtual void setEnabled(bool bEnabled);
@@ -185,6 +176,17 @@ public:
 
 protected:
     /**
+     * @js ctor
+     */
+    Control();
+    virtual bool init(void);
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~Control();
+
+    /**
      * Returns an Invocation object able to construct messages using a given 
      * target-action pair. (The invocation may optionnaly include the sender and
      * the event as parameters, in that order)
@@ -208,8 +210,7 @@ protected:
     *
     * @return the Invocation list for the given control event.
     */
-    //<Invocation*>
-    Array* dispatchListforControlEvent(EventType controlEvent);
+    Vector<Invocation*>& dispatchListforControlEvent(EventType controlEvent);
 
     /**
      * Adds a target and action for a particular event to an internal dispatch 
@@ -240,7 +241,6 @@ protected:
      */
     void removeTargetWithActionForControlEvent(Object* target, Handler action, EventType controlEvent);
 
-protected:
     bool _enabled;
     bool _selected;
     bool _highlighted;
@@ -253,13 +253,16 @@ protected:
      * target-actions pairs. For each ButtonEvents a list of NSInvocation
      * (which contains the target-action pair) is linked.
      */
-    Dictionary* _dispatchTable;
+    std::unordered_map<int, Vector<Invocation*>*> _dispatchTable;
 
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;
 
     /** The current control state constant. */
     CC_SYNTHESIZE_READONLY(State, _state, State);
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Control);
 };
 
 Control::EventType operator|(Control::EventType a, Control::EventType b);

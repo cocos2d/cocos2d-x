@@ -58,7 +58,18 @@ protected:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long * size) override;
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const char* filename, const char* mode, ssize_t * size) override;
+
+    /**
+     *  Gets string from a file.
+     */
+    virtual std::string getStringFromFile(const std::string& filename) override;
+    
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename) override;
 
     /**
      *  Gets full path for filename, resolution directory and search path.
@@ -81,6 +92,7 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
+
 };
 
 // end of platform group

@@ -74,7 +74,7 @@ Parallax1::Parallax1()
     addChild( voidNode );
 }
 
-std::string Parallax1::title()
+std::string Parallax1::title() const
 {
     return "Parallax: parent and 3 children";
 }
@@ -143,7 +143,7 @@ void Parallax2::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event
     node->setPosition(currentPos + diff);
 }
 
-std::string Parallax2::title()
+std::string Parallax2::title() const
 {
     return "Parallax: drag screen";
 }
@@ -210,7 +210,7 @@ ParallaxDemo::~ParallaxDemo(void)
 {
 }
 
-std::string ParallaxDemo::title()
+std::string ParallaxDemo::title() const
 {
     return "No title";
 }

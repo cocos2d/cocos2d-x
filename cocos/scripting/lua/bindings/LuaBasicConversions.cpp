@@ -32,7 +32,7 @@ extern "C" {
 }
 #endif
 
-std::map<long, std::string>  g_luaType;
+std::unordered_map<std::string, std::string>  g_luaType;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
@@ -80,6 +80,30 @@ bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
         return true;
     
     return false;
+}
+
+bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (unsigned short)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
 }
 
 
@@ -283,6 +307,11 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
+{
+    return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
+}
+
 bool luaval_to_long(lua_State* L,int lo, long* outValue)
 {
     if (NULL == L || NULL == outValue)
@@ -302,6 +331,30 @@ bool luaval_to_long(lua_State* L,int lo, long* outValue)
     if (ok)
     {
         *outValue = (long)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
+}
+
+bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (unsigned long)tolua_tonumber(L, lo, 0);
     }
     
     return ok;
@@ -866,7 +919,7 @@ bool luaval_to_dictionary(lua_State* L,int lo, Dictionary** outValue)
                 }
                 else if(lua_isstring(L, -1))
                 {
-                    if(luaval_to_std_string(L, -2, &stringValue))
+                    if(luaval_to_std_string(L, -1, &stringValue))
                     {
                         dict->setObject(String::create(stringValue), stringKey);
                     }
@@ -994,6 +1047,457 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
     }
     
     *ret = array;
+    
+    return ok;
+}
+
+bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret)
+{
+    if (nullptr == L || argc == 0 )
+        return false;
+    
+    for (int i = 0; i < argc; i++)
+    {
+        if(lua_istable(L, i + 2))
+        {
+            lua_pushnumber(L, 1);
+            lua_gettable(L, i + 2);
+            if (lua_isnil(L, -1) )
+            {
+                lua_pop(L,1);
+                ValueMap dictVal;
+                if (luaval_to_ccvaluemap(L, i + 2, &dictVal))
+                {
+                    ret->push_back(Value(dictVal));
+                }
+            }
+            else
+            {
+                lua_pop(L,1);
+                ValueVector arrVal;
+                if(luaval_to_ccvaluevector(L, i + 2, &arrVal))
+                {
+                    ret->push_back(Value(arrVal));
+                }
+            }
+        }
+        else if(lua_isstring(L, i + 2))
+        {
+            std::string stringValue = "";
+            if(luaval_to_std_string(L, i + 2, &stringValue) )
+            {
+                ret->push_back(Value(stringValue));
+            }
+        }
+        else if(lua_isboolean(L, i + 2))
+        {
+            bool boolVal = false;
+            if (luaval_to_boolean(L, i + 2, &boolVal))
+            {
+                ret->push_back(Value(boolVal));
+            }
+        }
+        else if(lua_isnumber(L, i + 2))
+        {
+            ret->push_back(Value(tolua_tonumber(L, i + 2, 0)));
+        }
+        else
+        {
+            CCASSERT(false, "not supported type");
+        }
+    }
+    
+    return true;
+ }
+
+bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret)
+{
+    if ( nullptr == L || nullptr == ret)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    
+    if (tolua_istable(L, lo, 0, &tolua_err))
+    {
+        lua_pushnumber(L,1);
+        lua_gettable(L,lo);
+        
+        if (lua_isnil(L, -1) )                          /** if table[1] = nil,we don't think it is a pure array */
+        {
+            lua_pop(L,1);
+            ValueMap dictVal;
+            if (luaval_to_ccvaluemap(L, lo, &dictVal))
+            {
+                *ret = Value(dictVal);
+            }
+        }
+        else
+        {
+            lua_pop(L,1);
+            ValueVector arrVal;
+            if (luaval_to_ccvaluevector(L, lo, &arrVal))
+            {
+                *ret = Value(arrVal);
+            }
+        }
+    }
+    else if (tolua_isstring(L, lo, 0, &tolua_err))
+    {
+        std::string stringValue = "";
+        if (luaval_to_std_string(L, lo, &stringValue))
+        {
+             *ret = Value(stringValue);
+        }
+    }
+    else if (tolua_isboolean(L, lo, 0, &tolua_err))
+    {
+        bool boolVal = false;
+        if (luaval_to_boolean(L, lo, &boolVal))
+        {
+            *ret = Value(boolVal);
+        }
+    }
+    else if (tolua_isnumber(L, lo, 0, &tolua_err))
+    {
+        *ret = Value(tolua_tonumber(L, lo, 0));
+    }
+    
+    return ok;
+}
+bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret)
+{
+    if ( nullptr == L || nullptr == ret)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        std::string stringKey = "";
+        std::string stringValue = "";
+        bool boolVal = false;
+        ValueMap& dict = *ret;
+        lua_pushnil(L);                                             /* first key L: lotable ..... nil */
+        while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
+        {
+            if (!lua_isstring(L, -2))
+            {
+                lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                continue;
+            }
+            
+            if(luaval_to_std_string(L, -2, &stringKey))
+            {
+
+                if(lua_istable(L, -1))
+                {
+                    lua_pushnumber(L,1);
+                    lua_gettable(L,-2);
+
+                    if (lua_isnil(L, -1) )                          /** if table[1] = nil,we don't think it is a pure array */
+                    {
+                        lua_pop(L,1);
+                        ValueMap dictVal;
+                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        {
+                            dict[stringKey] = Value(dictVal);
+                        }
+                    }
+                    else
+                    {
+                        lua_pop(L,1);
+                        ValueVector arrVal;
+                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        {
+                            dict[stringKey] = Value(arrVal);
+                        }
+                    }
+                }
+                else if(lua_isstring(L, -1))
+                {
+                    if(luaval_to_std_string(L, -1, &stringValue))
+                    {
+                        dict[stringKey] = Value(stringValue);
+                    }
+                }
+                else if(lua_isboolean(L, -1))
+                {
+                    if (luaval_to_boolean(L, -1, &boolVal))
+                    {
+                        dict[stringKey] = Value(boolVal);
+                    }
+                }
+                else if(lua_isnumber(L, -1))
+                {
+                    dict[stringKey] = Value(tolua_tonumber(L, -1, 0));
+                }
+                else
+                {
+                    CCASSERT(false, "not supported type");
+                }
+            }
+            
+            lua_pop(L, 1);                                          /* L: lotable ..... key */
+        }
+    }
+    
+    return ok;
+}
+bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret)
+{
+    if (nullptr == L || nullptr == ret)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        std::string stringKey = "";
+        std::string stringValue = "";
+        int intKey = 0;
+        bool boolVal = false;
+        IntValueMap& dict = *ret;
+        lua_pushnil(L);                                             /* first key L: lotable ..... nil */
+        while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
+        {
+            if (!lua_isstring(L, -2))
+            {
+                lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                continue;
+            }
+            
+            if(luaval_to_std_string(L, -2, &stringKey))
+            {
+                intKey = atoi(stringKey.c_str());
+                if(lua_istable(L, -1))
+                {
+                    lua_pushnumber(L,1);
+                    lua_gettable(L,-2);
+                    
+                    if (lua_isnil(L, -1) )                          /** if table[1] = nil,we don't think it is a pure array */
+                    {
+                        lua_pop(L,1);
+                        ValueMap dictVal;
+                        if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                        {
+                            dict[intKey] = Value(dictVal);
+                        }
+                    }
+                    else
+                    {
+                        lua_pop(L,1);
+                        ValueVector arrVal;
+                        if (luaval_to_ccvaluevector(L, -1, &arrVal))
+                        {
+                            dict[intKey] = Value(arrVal);
+                        }
+                    }
+                }
+                else if(lua_isstring(L, -1))
+                {
+                    if(luaval_to_std_string(L, -1, &stringValue))
+                    {
+                        dict[intKey] = Value(stringValue);
+                    }
+                }
+                else if(lua_isboolean(L, -1))
+                {
+                    if (luaval_to_boolean(L, -1, &boolVal))
+                    {
+                        dict[intKey] = Value(boolVal);
+                    }
+                }
+                else if(lua_isnumber(L, -1))
+                {
+                    dict[intKey] = Value(tolua_tonumber(L, -1, 0));
+                }
+                else
+                {
+                    CCASSERT(false, "not supported type");
+                }
+            }
+            
+            lua_pop(L, 1);                                          /* L: lotable ..... key */
+        }
+    }
+    
+    return ok;
+}
+bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret)
+{
+    if (nullptr == L || nullptr == ret)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L,i + 1);
+            lua_gettable(L,lo);
+            if (lua_isnil(L,-1))
+            {
+                lua_pop(L, 1);
+                continue;
+            }
+            
+            if(lua_istable(L, -1))
+            {
+                lua_pushnumber(L,1);
+                lua_gettable(L,-2);
+                if (lua_isnil(L, -1) )
+                {
+                    lua_pop(L,1);
+                    ValueMap dictVal;
+                    if (luaval_to_ccvaluemap(L, -1, &dictVal))
+                    {
+                        ret->push_back(Value(dictVal));
+                    }
+                }
+                else
+                {
+                    lua_pop(L,1);
+                    ValueVector arrVal;
+                    if(luaval_to_ccvaluevector(L, -1, &arrVal))
+                    {
+                        ret->push_back(Value(arrVal));
+                    }
+                }
+            }
+            else if(lua_isstring(L, -1))
+            {
+                std::string stringValue = "";
+                if(luaval_to_std_string(L, -1, &stringValue) )
+                {
+                    ret->push_back(Value(stringValue));
+                }
+            }
+            else if(lua_isboolean(L, -1))
+            {
+                bool boolVal = false;
+                if (luaval_to_boolean(L, -1, &boolVal))
+                {
+                    ret->push_back(Value(boolVal));
+                }
+            }
+            else if(lua_isnumber(L, -1))
+            {
+                ret->push_back(Value(tolua_tonumber(L, -1, 0)));
+            }
+            else
+            {
+                CCASSERT(false, "not supported type");
+            }
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        std::string value = "";
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isstring(L, -1))
+            {
+                ok = luaval_to_std_string(L, -1, &value);
+                if(ok)
+                    ret->push_back(value);
+            }
+            else
+            {
+                CCASSERT(false, "string type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isnumber(L, -1))
+            {
+                ret->push_back((int)tolua_tonumber(L, -1, 0));
+            }
+            else
+            {
+                CCASSERT(false, "int type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
     
     return ok;
 }
@@ -1203,8 +1707,8 @@ void array_to_luaval(lua_State* L,Array* inValue)
         if (nullptr == obj)
             continue;
         
-        long typeId = typeid(*obj).hash_code();
-        auto iter = g_luaType.find(typeId);
+        std::string typeName = typeid(*obj).name();
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;
@@ -1292,9 +1796,9 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (NULL == element)
             continue;
         
-        long typeId = typeid(element->getObject()).hash_code();
+        std::string typeName = typeid(element->getObject()).name();
         
-        auto iter = g_luaType.find(typeId);
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;
@@ -1349,6 +1853,252 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         else
         {
             CCASSERT(false, "the type isn't suppored.");
+        }
+    }
+}
+
+void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue)
+{
+    const Value& obj = inValue;
+    switch (obj.getType())
+    {
+        case Value::Type::BOOLEAN:
+            lua_pushboolean(L, obj.asBool());
+            break;
+        case Value::Type::FLOAT:
+        case Value::Type::DOUBLE:
+            lua_pushnumber(L, obj.asDouble());
+            break;
+        case Value::Type::INTEGER:
+            lua_pushinteger(L, obj.asInt());
+            break;
+        case Value::Type::STRING:
+            lua_pushstring(L, obj.asString().c_str());
+            break;
+        case Value::Type::VECTOR:
+            ccvaluevector_to_luaval(L, obj.asValueVector());
+            break;
+        case Value::Type::MAP:
+            ccvaluemap_to_luaval(L, obj.asValueMap());
+            break;
+        case Value::Type::INT_KEY_MAP:
+            ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+            break;
+        default:
+            break;
+    }
+}
+void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue)
+{
+    lua_newtable(L);
+    
+    if (nullptr == L)
+        return;
+    
+    for (auto iter = inValue.begin(); iter != inValue.end(); ++iter)
+    {
+        std::string key = iter->first;
+        const Value& obj = iter->second;
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushboolean(L, obj.asBool());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushnumber(L, obj.asDouble());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::INTEGER:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushinteger(L, obj.asInt());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::STRING:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushstring(L, obj.asString().c_str());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::VECTOR:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccvaluevector_to_luaval(L, obj.asValueVector());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::MAP:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccvaluemap_to_luaval(L, obj.asValueMap());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::INT_KEY_MAP:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    lua_rawset(L, -3);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue)
+{
+    lua_newtable(L);
+    
+    if (nullptr == L)
+        return;
+    
+    for (auto iter = inValue.begin(); iter != inValue.end(); ++iter)
+    {
+        std::stringstream keyss;
+        keyss << iter->first;
+        std::string key = keyss.str();
+        
+        const Value& obj = iter->second;
+        
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushboolean(L, obj.asBool());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushnumber(L, obj.asDouble());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::INTEGER:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushinteger(L, obj.asInt());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::STRING:
+                {
+                    lua_pushstring(L, key.c_str());
+                    lua_pushstring(L, obj.asString().c_str());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::VECTOR:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccvaluevector_to_luaval(L, obj.asValueVector());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::MAP:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccvaluemap_to_luaval(L, obj.asValueMap());
+                    lua_rawset(L, -3);
+                }
+                break;
+            case Value::Type::INT_KEY_MAP:
+                {
+                    lua_pushstring(L, key.c_str());
+                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    lua_rawset(L, -3);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
+{
+    lua_newtable(L);
+    
+    if (nullptr == L)
+        return;
+    
+    int index  = 1;
+    for (const auto& obj : inValue)
+    {
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    lua_pushboolean(L, obj.asBool());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    lua_pushnumber(L, obj.asDouble());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::INTEGER:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    lua_pushnumber(L, obj.asInt());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::STRING:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    lua_pushstring(L, obj.asString().c_str());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::VECTOR:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    ccvaluevector_to_luaval(L, obj.asValueVector());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::MAP:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    ccvaluemap_to_luaval(L, obj.asValueMap());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            case Value::Type::INT_KEY_MAP:
+                {
+                    lua_pushnumber(L, (lua_Number)index);
+                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    lua_rawset(L, -3);
+                    ++index;
+                }
+                break;
+            default:
+                break;
         }
     }
 }

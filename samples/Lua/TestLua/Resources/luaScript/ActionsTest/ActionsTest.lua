@@ -835,6 +835,15 @@ local function ActionCallFuncND()
 
 	centerSprites(1)
 
+    local function doRemoveFromParentAndCleanup(sender,table)
+        grossini:removeFromParentAndCleanup(table[1])
+    end
+
+    local action = cc.Sequence:create(
+        cc.MoveBy:create(2, cc.p(200,0)),
+        cc.CallFunc:create(doRemoveFromParentAndCleanup,{true}))
+
+    grossini:runAction(action)
 
 	Helper.titleLabel:setString("CallFuncND + auto remove")
 	Helper.subtitleLabel:setString("CallFuncND + removeFromParent. Grossini dissapears in 2s")
@@ -1010,7 +1019,6 @@ local function ActionPause(dt)
 
 	local director = cc.Director:getInstance()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
-    pausedTargets:retain()
 end
 
 local function ActionResume(dt)
@@ -1023,7 +1031,6 @@ local function ActionResume(dt)
 	if pausedTargets ~= nil then
 		-- problem: will crash here. Try fixing me!
 		director:getActionManager():resumeTargets(pausedTargets)
-        pausedTargets:release()
 	end
 end
 

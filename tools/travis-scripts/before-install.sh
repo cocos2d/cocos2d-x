@@ -21,12 +21,12 @@ install_android_ndk()
     else
         HOST_NAME="linux"
     fi
-    echo "Download android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    curl -O http://dl.google.com/android/ndk/android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
-    echo "Decompress android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    tar xjf android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
+    echo "Download android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2 ..."
+    curl -O http://dl.google.com/android/ndk/android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2
+    echo "Decompress android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2 ..."
+    tar xjf android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2
     # Rename ndk
-    mv android-ndk-r8e android-ndk
+    mv android-ndk-r9b android-ndk
 }
 
 install_llvm()

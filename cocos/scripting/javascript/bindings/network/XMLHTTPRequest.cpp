@@ -114,7 +114,7 @@ void MinXmlHttpRequest::_setRequestHeader(const char* field, const char* value)
     stringstream value_s;
     string header;
     
-    map<string, string>::iterator iter = _requestHeader.find(field);
+    auto iter = _requestHeader.find(field);
     
     // Concatenate values when header exists.
     if (iter != _requestHeader.end())
@@ -200,18 +200,18 @@ void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, netw
     
     /** get the response data **/
     std::vector<char> *buffer = response->getResponseData();
-    char* concatenated = (char*) malloc(buffer->size() + 1);
-    std::string s2(buffer->begin(), buffer->end());
-    
-    strcpy(concatenated, s2.c_str());
     
     if (statusCode == 200)
     {
         //Succeeded
         _status = 200;
         _readyState = DONE;
-        _data << concatenated;
+        
         _dataSize = buffer->size();
+        CC_SAFE_FREE(_data);
+        _data = (char*) malloc(_dataSize + 1);
+        _data[_dataSize] = '\0';
+        memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
     }
     else
     {
@@ -219,7 +219,6 @@ void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, netw
     }
     // Free Memory.
     free((void*) concatHeader);
-    free((void*) concatenated);
     
     js_proxy_t * p;
     void* ptr = (void*)this;
@@ -256,7 +255,10 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx)
  * @brief  Constructor initializes cchttprequest and stuff
  *
  */
-MinXmlHttpRequest::MinXmlHttpRequest() : _onreadystateCallback(NULL), _isNetwork(true)
+MinXmlHttpRequest::MinXmlHttpRequest()
+: _onreadystateCallback(nullptr)
+, _isNetwork(true)
+, _data(nullptr)
 {
     _httpHeader.clear();
     _requestHeader.clear();
@@ -285,6 +287,7 @@ MinXmlHttpRequest::~MinXmlHttpRequest()
 //        _httpRequest->release();
     }
 
+    CC_SAFE_FREE(_data);
 }
 
 /**
@@ -543,7 +546,7 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 {
-    jsval strVal = std_string_to_jsval(cx, _data.str());
+    jsval strVal = std_string_to_jsval(cx, _data);
 
     if (strVal != JSVAL_NULL)
     {
@@ -567,7 +570,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
     {
         JS::RootedValue outVal(cx);
         
-        jsval strVal = std_string_to_jsval(cx, _data.str());
+        jsval strVal = std_string_to_jsval(cx, _data);
         if (JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), _dataSize, &outVal))
         {
             vp.set(outVal);
@@ -578,7 +581,7 @@ JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, response)
     {
         JSObject* tmp = JS_NewArrayBuffer(cx, _dataSize);
         uint8_t* tmpData = JS_GetArrayBufferData(tmp);
-        _data.read((char*)tmpData, _dataSize);
+        memcpy((void*)tmpData, (const void*)_data, _dataSize);
         jsval outVal = OBJECT_TO_JSVAL(tmp);
 
         vp.set(outVal);

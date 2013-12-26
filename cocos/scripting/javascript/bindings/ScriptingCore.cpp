@@ -67,18 +67,18 @@ static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 static char *_js_log_buf = NULL;
 
 static std::vector<sc_register_sth> registrationList;
 
 // name ~> JSScript map
-static std::map<std::string, JSScript*> filename_script;
+static std::unordered_map<std::string, JSScript*> filename_script;
 // port ~> socket map
-static std::map<int,int> ports_sockets;
+static std::unordered_map<int,int> ports_sockets;
 // name ~> globals
-static std::map<std::string, js::RootedObject*> globals;
+static std::unordered_map<std::string, js::RootedObject*> globals;
 
 static void ReportException(JSContext *cx)
 {
@@ -397,11 +397,15 @@ JSBool ScriptingCore::evalString(const char *string, jsval *outVal, const char *
         cx = _cx;
     if (global == NULL)
         global = _global;
+    
+    JSAutoCompartment ac(cx, global);
+    
     JSScript* script = JS_CompileScript(cx, global, string, strlen(string), filename, 1);
-    if (script) {
-        JSAutoCompartment ac(cx, global);
+    if (script)
+    {
         JSBool evaluatedOK = JS_ExecuteScript(cx, global, script, outVal);
-        if (JS_FALSE == evaluatedOK) {
+        if (JS_FALSE == evaluatedOK)
+        {
             fprintf(stderr, "(evaluatedOK == JS_FALSE)\n");
         }
         return evaluatedOK;
@@ -529,18 +533,17 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    long length = 0;
-    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
-                                    "rb",
-                                    &length);
+
+    Data data = futil->getDataFromFile(byteCodePath);
     
-    if (data) {
-        script = JS_DecodeScript(cx, data, length, NULL, NULL);
-        free(data);
+    if (!data.isNull())
+    {
+        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
     }
     
     // b) no jsc file, check js file
-    if (!script) {
+    if (!script)
+    {
         /* Clear any pending exception from previous failed decoding.  */
         ReportException(cx);
         
@@ -549,12 +552,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        String* content = String::createWithContentsOfFile(path);
-        if (content) {
-            // Not supported in SpiderMonkey 19.0
-            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-            const char* contentCStr = content->getCString();
-            script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+        std::string jsFileContent = futil->getStringFromFile(fullPath);
+        if (!jsFileContent.empty())
+        {
+            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
         }
 #else
         script = JS::Compile(cx, obj, options, fullPath.c_str());
@@ -1476,21 +1477,21 @@ JSBool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret)
 
 js_proxy_t* jsb_new_proxy(void* nativeObj, JSObject* jsObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_NEW_PROXY(p, nativeObj, jsObj);
     return p;
 }
 
 js_proxy_t* jsb_get_native_proxy(void* nativeObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_GET_PROXY(p, nativeObj);
     return p;
 }
 
 js_proxy_t* jsb_get_js_proxy(JSObject* jsObj)
 {
-    js_proxy_t* p;
+    js_proxy_t* p = nullptr;
     JS_GET_NATIVE_PROXY(p, jsObj);
     return p;
 }
@@ -1500,58 +1501,4 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
-// JSStringWrapper
-JSStringWrapper::JSStringWrapper()
-: _buffer(nullptr)
-{
-}
-
-JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(str, cx);
-}
-
-JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(val, cx);
-}
-
-JSStringWrapper::~JSStringWrapper()
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-}
-
-void JSStringWrapper::set(jsval val, JSContext* cx)
-{
-    if (val.isString())
-    {
-        this->set(val.toString(), cx);
-    }
-    else
-    {
-        CC_SAFE_DELETE_ARRAY(_buffer);
-    }
-}
-
-void JSStringWrapper::set(JSString* str, JSContext* cx)
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-    
-    if (!cx)
-    {
-        cx = ScriptingCore::getInstance()->getGlobalContext();
-    }
-    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-    //buffer = JS_EncodeString(cx, string);
-    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-    
-    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-}
-
-const char* JSStringWrapper::get()
-{
-    return _buffer ? _buffer : "";
-}
 
