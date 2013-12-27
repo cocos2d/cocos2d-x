@@ -29,7 +29,7 @@ void testScene_callback( Object *sender )
 
     Director::getInstance()->replaceScene(scene);
 
-    cocostudio::ArmatureDataManager::destoryInstance();
+    cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 void TestScene::onEnter()
