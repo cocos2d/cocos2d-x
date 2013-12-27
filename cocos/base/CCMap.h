@@ -114,9 +114,9 @@ public:
     }
     
     /** Returns the number of elements in bucket n. */
-    ssize_t bucketSize() const
+    ssize_t bucketSize(ssize_t n) const
     {
-        return _data.bucket_size();
+        return _data.bucket_size(n);
     }
     
     /** Returns the bucket number where the element with key k is located. */
