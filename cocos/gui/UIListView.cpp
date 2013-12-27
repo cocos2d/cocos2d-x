@@ -440,7 +440,7 @@ void ListView::onSizeChanged()
 
 std::string ListView::getDescription() const
 {
-    return "ListViewEx";
+    return "ListView";
 }
 
 Widget* ListView::createCloneInstance()
@@ -450,7 +450,7 @@ Widget* ListView::createCloneInstance()
 
 void ListView::copyClonedWidgetChildren(Widget* model)
 {
-    auto& arrayItems = getItems();
+    auto& arrayItems = static_cast<ListView*>(model)->getItems();
     for (auto& item : arrayItems)
     {
         pushBackCustomItem(item->clone());

@@ -607,7 +607,7 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    auto& modelPages = dynamic_cast<PageView*>(model)->getPages();
+    auto& modelPages = static_cast<PageView*>(model)->getPages();
     for (auto& page : modelPages)
     {
         addPage(dynamic_cast<Layout*>(page->clone()));
