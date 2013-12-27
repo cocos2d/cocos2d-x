@@ -1173,8 +1173,8 @@
 		508826A3186C2997003AE1BC /* UITextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextFieldTest.h; sourceTree = "<group>"; };
 		508826A5186C2997003AE1BC /* UIWidgetAddNodeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidgetAddNodeTest.cpp; sourceTree = "<group>"; };
 		508826A6186C2997003AE1BC /* UIWidgetAddNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidgetAddNodeTest.h; sourceTree = "<group>"; };
-		50D3611E186AED6100828878 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITouchGroup.cpp; path = ../System/UITouchGroup.cpp; sourceTree = "<group>"; };
-		50D3611F186AED6100828878 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITouchGroup.h; path = ../System/UITouchGroup.h; sourceTree = "<group>"; };
+		50D3611E186AED6100828878 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
+		50D3611F186AED6100828878 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		50D6A4CB17E2C91100523A82 /* GUIReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIReader.cpp; sourceTree = "<group>"; };
 		50D6A4CC17E2C91100523A82 /* GUIReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIReader.h; sourceTree = "<group>"; };
 		50E9E946182A355B00F6FDF1 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
@@ -2886,8 +2886,6 @@
 		37CA1BC917D87A3300A649D0 /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
-				50D3611E186AED6100828878 /* UITouchGroup.cpp */,
-				50D3611F186AED6100828878 /* UITouchGroup.h */,
 				37CA1BCA17D87A3300A649D0 /* UILayout.cpp */,
 				37CA1BCB17D87A3300A649D0 /* UILayout.h */,
 				37CA1BCE17D87A3300A649D0 /* UILayoutParameter.cpp */,
@@ -2901,6 +2899,8 @@
 		37CA1BD217D87A3300A649D0 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				50D3611E186AED6100828878 /* UITouchGroup.cpp */,
+				50D3611F186AED6100828878 /* UITouchGroup.h */,
 				37CA1BD517D87A3300A649D0 /* CocosGUI.cpp */,
 				37CA1BD617D87A3300A649D0 /* CocosGUI.h */,
 				37CA1BD717D87A3300A649D0 /* UIHelper.cpp */,
