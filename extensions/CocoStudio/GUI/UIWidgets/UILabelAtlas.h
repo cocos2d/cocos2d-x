@@ -54,8 +54,8 @@ public:
     static UICCLabelAtlas* create();
     void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
     void setProperty(const std::string& string, CCTexture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void updateDisplayedOpacity(GLubyte opacity) override;
-    virtual void draw(void) override;
+    virtual void updateDisplayedOpacity(GLubyte opacity);
+    virtual void draw(void);
 };
 /**
  *   @js NA
@@ -89,25 +89,25 @@ public:
     const char* getStringValue() const;
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const CCPoint &pt) override;
+    virtual void setAnchorPoint(const CCPoint &pt);
     
     //override "getContentSize" method of widget.
-    virtual const CCSize& getContentSize() const override;
+    virtual const CCSize& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual CCNode* getVirtualRenderer() override;
+    virtual CCNode* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
     
 protected:
-    virtual void initRenderer() override;
-    virtual void onSizeChanged() override;
+    virtual void initRenderer();
+    virtual void onSizeChanged();
     void labelAtlasScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
     UICCLabelAtlas* _laberAtlasRenderer;
     std::string _stringValue;

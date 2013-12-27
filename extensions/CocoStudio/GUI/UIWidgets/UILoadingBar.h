@@ -114,25 +114,25 @@ public:
     void setCapInsets(const CCRect &capInsets);
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore) override;
+    virtual void ignoreContentAdaptWithSize(bool ignore);
     
     //override "getContentSize" method of widget.
-    virtual const CCSize& getContentSize() const override;
+    virtual const CCSize& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual CCNode* getVirtualRenderer() override;
+    virtual CCNode* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
 protected:
-    virtual void initRenderer() override;
-    virtual void onSizeChanged() override;
+    virtual void initRenderer();
+    virtual void onSizeChanged();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
     LoadingBarType _barType;
     int _percent;

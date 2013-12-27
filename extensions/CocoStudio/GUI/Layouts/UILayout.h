@@ -168,7 +168,7 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
     
     /**
      * Sets LayoutType.
@@ -188,7 +188,7 @@ public:
      */
     virtual LayoutType getLayoutType() const;
 
-    virtual void addChild(CCNode * child) override;
+    virtual void addChild(CCNode * child);
     /**
      * Adds a child to the container with a z-order
      *
@@ -197,7 +197,7 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      */
-    virtual void addChild(CCNode * child, int zOrder) override;
+    virtual void addChild(CCNode * child, int zOrder);
     /**
      * Adds a child to the container with z order and tag
      *
@@ -207,28 +207,28 @@ public:
      * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(CCNode* child, int zOrder, int tag) override;
+    virtual void addChild(CCNode* child, int zOrder, int tag);
     
     virtual void visit();
     
-    virtual void sortAllChildren() override;
+    virtual void sortAllChildren();
     
     void requestDoLayout();
     
 protected:
     //override "init" method of widget.
-    virtual bool init() override;
+    virtual bool init();
         
     //override "onSizeChanged" method of widget.
-    virtual void onSizeChanged() override;
+    virtual void onSizeChanged();
     
     //init background image renderer.
     void addBackGroundImage();
     
     void supplyTheLayoutParameterLackToChild(Widget* child);
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
-    virtual void copyClonedWidgetChildren(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
     
     void stencilClippingVisit();
     void scissorClippingVisit();

@@ -83,36 +83,36 @@ public:
     void setCapInsets(const CCRect &capInsets);
     
     //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX) override;
+    virtual void setFlipX(bool flipX);
     
     //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY) override;
+    virtual void setFlipY(bool flipY);
     
     //override "isFlipX" method of widget.
-    virtual bool isFlipX() override;
+    virtual bool isFlipX();
     
     //override "isFlipY" method of widget.
-    virtual bool isFlipY() override;
+    virtual bool isFlipY();
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const CCPoint &pt) override;
+    virtual void setAnchorPoint(const CCPoint &pt);
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore) override;
+    virtual void ignoreContentAdaptWithSize(bool ignore);
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
     
-    virtual const CCSize& getContentSize() const override;
-    virtual CCNode* getVirtualRenderer() override;
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
 protected:
-    virtual void initRenderer() override;
-    virtual void onSizeChanged() override;
+    virtual void initRenderer();
+    virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
     bool _scale9Enabled;
     bool _prevIgnoreSize;

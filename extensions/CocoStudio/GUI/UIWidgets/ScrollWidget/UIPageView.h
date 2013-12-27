@@ -135,7 +135,7 @@ public:
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     //override "update" method of widget.
-    virtual void update(float dt) override;
+    virtual void update(float dt);
     /**
      * Sets LayoutType.
      *
@@ -143,7 +143,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type) override{};
+    virtual void setLayoutType(LayoutType type){};
     
     /**
      * Gets LayoutType.
@@ -152,18 +152,18 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const override{return LAYOUT_ABSOLUTE;};
+    virtual LayoutType getLayoutType() const {return LAYOUT_ABSOLUTE;};
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
     
 protected:
-    virtual void addChild(CCNode * child) override;
-    virtual void addChild(CCNode * child, int zOrder) override;
-    virtual void addChild(CCNode* child, int zOrder, int tag) override;
-    virtual void removeChild(CCNode* widget, bool cleanup = true) override;
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode* child, int zOrder, int tag);
+    virtual void removeChild(CCNode* widget, bool cleanup = true);
     virtual void removeAllChildren();
     virtual CCArray* getChildren(){return Widget::getChildren();};
     virtual bool init();
@@ -184,8 +184,8 @@ protected:
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
-    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
-    virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+    virtual void setClippingEnabled(bool enabled) {Layout::setClippingEnabled(enabled);};
+    virtual void doLayout(){if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
     int _curPageIdx;
     CCArray* _pages;

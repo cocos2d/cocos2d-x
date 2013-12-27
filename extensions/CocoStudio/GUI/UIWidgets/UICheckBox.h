@@ -137,53 +137,53 @@ public:
     bool getSelectedState();
     
     //override "setAnchorPoint" method of widget.
-    virtual void setAnchorPoint(const CCPoint &pt) override;
+    virtual void setAnchorPoint(const CCPoint &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX) override;
+    virtual void setFlipX(bool flipX);
     
     //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY) override;
+    virtual void setFlipY(bool flipY);
     
     //override "isFlipX" method of widget.
-    virtual bool isFlipX() override;
+    virtual bool isFlipX();
     
     //override "isFlipY" method of widget.
-    virtual bool isFlipY() override;
+    virtual bool isFlipY();
     
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
     
     //override "getContentSize" method of widget.
-    virtual const CCSize& getContentSize() const override;
+    virtual const CCSize& getContentSize() const;
     
     //override "getVirtualRenderer" method of widget.
-    virtual CCNode* getVirtualRenderer() override;
+    virtual CCNode* getVirtualRenderer();
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
 
 protected:
-    virtual bool init() override;
-    virtual void initRenderer() override;
-    virtual void onPressStateChangedToNormal() override;
-    virtual void onPressStateChangedToPressed() override;
-    virtual void onPressStateChangedToDisabled() override;
+    virtual bool init();
+    virtual void initRenderer();
+    virtual void onPressStateChangedToNormal();
+    virtual void onPressStateChangedToPressed();
+    virtual void onPressStateChangedToDisabled();
     void selectedEvent();
     void unSelectedEvent();
-    virtual void onSizeChanged() override;
+    virtual void onSizeChanged();
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
     CCSprite* _backGroundBoxRenderer;
     CCSprite* _backGroundSelectedBoxRenderer;
