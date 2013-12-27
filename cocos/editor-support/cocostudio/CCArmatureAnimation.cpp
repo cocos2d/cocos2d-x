@@ -246,8 +246,12 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
     _armature->update(0);
 }
 
-
 void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop)
+{
+    playWithIndex(animationIndex, durationTo, loop);
+}
+
+void ArmatureAnimation::playWithIndex(int animationIndex, int durationTo, int loop)
 {
     std::vector<std::string> &movName = _animationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
@@ -257,7 +261,7 @@ void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop
 }
 
 
-void ArmatureAnimation::play(const std::vector<std::string>& movementNames, int durationTo, bool loop)
+void ArmatureAnimation::playWithNames(const std::vector<std::string>& movementNames, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;
@@ -270,7 +274,7 @@ void ArmatureAnimation::play(const std::vector<std::string>& movementNames, int 
     updateMovementList();
 }
 
-void ArmatureAnimation::playByIndex(const std::vector<int>& movementIndexes, int durationTo, bool loop)
+void ArmatureAnimation::playWithIndexes(const std::vector<int>& movementIndexes, int durationTo, bool loop)
 {
     _movementList.clear();
     _movementListLoop = loop;

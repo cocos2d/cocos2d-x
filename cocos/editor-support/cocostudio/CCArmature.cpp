@@ -181,9 +181,6 @@ bool Armature::init(const std::string& name)
 
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
-        unscheduleUpdate();
-        scheduleUpdate();
-
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
 
@@ -430,6 +427,18 @@ void Armature::draw()
             CC_NODE_DRAW_SETUP();
         }
     }
+}
+
+void Armature::onEnter()
+{
+    Node::onEnter();
+    scheduleUpdate();
+}
+
+void Armature::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
 }
 
 
