@@ -114,7 +114,7 @@ public:
         EVENT_CUSTIOM,
         
         EVENT_KEYBOARD_PRESSED,
-        EVENT_KEYBOARD_RELEASE,
+        EVENT_KEYBOARD_RELEASED,
         
         EVENT_TOUCH_BEGAN,
         EVENT_TOUCH_MOVED,

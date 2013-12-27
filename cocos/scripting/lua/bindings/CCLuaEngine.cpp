@@ -780,7 +780,7 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type,void* data)
             }
             break;
         case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
-        case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASE:
+        case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED:
             {
                 return handleEventKeyboard(type,data);
             }
