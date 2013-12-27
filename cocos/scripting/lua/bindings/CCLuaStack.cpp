@@ -627,31 +627,20 @@ int LuaStack::executeFunction(int handler, int numArgs, int numResults, const st
         }
         
         // get return value,don't pass LUA_MULTRET to numResults,
-        if (numResults <= 0)
-        {
-            if (traceCallback)
-                lua_pop(_state, 1);
+        do {
             
-            return 0;
-        }
-        
-        if (nullptr == func)
-        {
-            if (traceCallback)
-                lua_pop(_state, 1);
+            if (numResults <= 0 || nullptr == func)
+                break;
             
-            return 0;
-        }
-        
-        func(_state,numResults);
+            func(_state, numResults);
+            
+        } while (0);
         
         if (traceCallback)
         {
             lua_pop(_state, 1);                                          // remove __G__TRACKBACK__ from stack      /* L: ... */
         }
     }
-    
-    lua_settop(_state, 0);
     
     return 1;
 }
