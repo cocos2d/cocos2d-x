@@ -502,7 +502,7 @@ void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     if (updatePhysicsTransform())
     {
         setDirty(true);
@@ -711,7 +711,7 @@ bool Sprite::culling() const
 
 void Sprite::updateQuadVertices()
 {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     updatePhysicsTransform();
     setDirty(true);
 #endif

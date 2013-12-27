@@ -158,15 +158,19 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
-    
+
 protected:
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void removeChild(Node* widget, bool cleanup = true) override;
     virtual void removeAllChildren() override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
     virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
+    virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
+    virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
     virtual bool init() override;
     Layout* createPage();
     float getPositionXByIndex(int idx);

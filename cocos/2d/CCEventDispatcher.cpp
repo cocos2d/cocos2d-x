@@ -97,10 +97,10 @@ static EventListener::ListenerID __getListenerID(Event* event)
     return ret;
 }
 
-EventDispatcher::EventListenerVector::EventListenerVector()
-: _sceneGraphListeners(nullptr)
-, _fixedListeners(nullptr)
-, _gt0Index(0)
+EventDispatcher::EventListenerVector::EventListenerVector() :
+ _fixedListeners(nullptr),
+ _sceneGraphListeners(nullptr),
+ _gt0Index(0)
 {
 }
 
@@ -501,11 +501,12 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
     auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
     auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
     
-    int i = 0;
+    ssize_t i = 0;
     // priority < 0
     if (fixedPriorityListeners)
     {
-        for (; !fixedPriorityListeners->empty() && i < listeners->getGt0Index(); ++i)
+        bool isEmpty = fixedPriorityListeners->empty();
+        for (; !isEmpty && i < listeners->getGt0Index(); ++i)
         {
             auto l = fixedPriorityListeners->at(i);
             if (!l->isPaused() && l->isRegistered() && onEvent(l))
@@ -537,7 +538,8 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, s
         if (!shouldStopPropagation)
         {
             // priority > 0
-            for (; i < fixedPriorityListeners->size(); ++i)
+            ssize_t size = fixedPriorityListeners->size();
+            for (; i < size; ++i)
             {
                 auto l = fixedPriorityListeners->at(i);
                 

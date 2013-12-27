@@ -185,6 +185,11 @@ void ShaderCache::reloadDefaultShaders()
     p->reset();
     loadDefaultShader(p, kShaderType_PositionTextureColor);
 
+    // Position Texture Color without MVP shader
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    p->reset();    
+    loadDefaultShader(p, kShaderType_PositionTextureColor_noMVP);
+
     // Position Texture Color alpha test
     p = getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     p->reset();    

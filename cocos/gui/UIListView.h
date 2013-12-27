@@ -112,6 +112,8 @@ public:
      */
     void removeItem(int index);
     
+    void removeAllItems();
+    
     /**
      * Returns a item whose index is same as the parameter.
      *
@@ -173,9 +175,13 @@ protected:
     virtual void addChild(Node* child, int zOrder, int tag) override{ScrollView::addChild(child, zOrder, tag);};
     virtual void removeChild(Node* widget, bool cleanup = true) override{ScrollView::removeChild(widget, cleanup);};
     
-    virtual void removeAllChildren() override{ScrollView::removeAllChildren();};
+    virtual void removeAllChildren() override{removeAllChildrenWithCleanup(true);};
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override {ScrollView::removeAllChildrenWithCleanup(cleanup);};
     virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
     virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
+    virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
+    virtual Node * getChildByTag(int tag) override {return ScrollView::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) override {return ScrollView::getChildByName(name);};
     virtual bool init() override;
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);

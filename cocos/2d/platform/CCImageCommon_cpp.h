@@ -1200,7 +1200,8 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     }
     
     if (! configuration->supportsNPOT() &&
-        (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
+        (static_cast<int>(header->width) != ccNextPOT(header->width)
+            || static_cast<int>(header->height) != ccNextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
