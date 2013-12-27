@@ -339,7 +339,8 @@ void Slider::setPercent(int percent)
         percent = 0;
     }
     _percent = percent;
-    float dis = _barLength*(percent/100.0f);
+    float res = percent/100.0f;
+    float dis = _barLength * res;
     _slidBallRenderer->setPosition(CCPoint(-_barLength/2.0f + dis, 0.0f));
     if (_scale9Enabled)
     {
@@ -347,24 +348,10 @@ void Slider::setPercent(int percent)
     }
     else
     {
-        int x = 0, y = 0;
-        switch (_progressBarTexType)
-        {
-            case UI_TEX_TYPE_PLIST:
-            {
-                CCSprite* barNode = dynamic_cast<CCSprite*>(_progressBarRenderer);
-                if (barNode)
-                {
-                    CCPoint to = barNode->getTextureRect().origin;
-                    x = to.x;
-                    y = to.y;
-                }
-                break;
-            }
-            default:
-                break;
-        }
-        static_cast<CCSprite*>(_progressBarRenderer)->setTextureRect(CCRect(x, y, _progressBarTextureSize.width * (percent/100.0f), _progressBarTextureSize.height));
+        CCSprite* spriteRenderer = static_cast<CCSprite*>(_progressBarRenderer);
+        CCRect rect = spriteRenderer->getTextureRect();
+        rect.size.width = _progressBarTextureSize.width * res;
+        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
 }
 
