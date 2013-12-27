@@ -914,14 +914,14 @@ int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,vo
         case ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX:
             {
                 toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                _stack->pushLong(*((long*)tableViewData->value));
+                _stack->pushLong(*((ssize_t*)tableViewData->value));
                 ret = _stack->executeFunction(handler, 2, 2, func);
             }
             break;
         case ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX:
             {
                 toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                _stack->pushLong(*((long*)tableViewData->value));
+                _stack->pushLong(*((ssize_t*)tableViewData->value));
                 ret = _stack->executeFunction(handler, 2, 1, func);
             }
             break;

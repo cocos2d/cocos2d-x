@@ -28,6 +28,8 @@
 
 #include "gui/UIScrollView.h"
 
+NS_CC_BEGIN
+
 namespace gui{
 
 typedef enum
@@ -46,31 +48,28 @@ typedef enum
     LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
-typedef void (cocos2d::Object::*SEL_ListViewEvent)(cocos2d::Object*,ListViewEventType);
+typedef void (Object::*SEL_ListViewEvent)(Object*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
-class UIListView : public UIScrollView
+class ListView : public ScrollView
 {
     
 public:
     
     /**
      * Default constructor
-     * @js ctor
      */
-    UIListView();
+    ListView();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
-    virtual ~UIListView();
+    virtual ~ListView();
     
     /**
      * Allocates and initializes.
      */
-    static UIListView* create();
+    static ListView* create();
     
     /**
      * Sets a item model for listview
@@ -79,7 +78,7 @@ public:
      *
      * @param model  item model for listview
      */
-    void setItemModel(UIWidget* model);
+    void setItemModel(Widget* model);
     
     /**
      * Push back a default item(create by a cloned model) into listview.
@@ -94,12 +93,12 @@ public:
     /**
      * Push back custom item into listview.
      */
-    void pushBackCustomItem(UIWidget* item);
+    void pushBackCustomItem(Widget* item);
     
     /**
      * Insert custom item into listview.
      */
-    void insertCustomItem(UIWidget* item, int index);
+    void insertCustomItem(Widget* item, int index);
     
     /**
      *  Removes the last item of listview.
@@ -120,12 +119,12 @@ public:
      *
      * @return the item widget.
      */
-    UIWidget* getItem(unsigned int index);
+    Widget* getItem(unsigned int index);
     
     /**
      * Returns the item container.
      */
-    cocos2d::Array* getItems();
+    Vector<Widget*>& getItems();
     
     /**
      * Returns the index of item.
@@ -134,7 +133,7 @@ public:
      *
      * @return the index of item.
      */
-    unsigned int getIndex(UIWidget* item) const;
+    unsigned int getIndex(Widget* item) const;
     
     /**
      * Changes the gravity of listview.
@@ -149,16 +148,11 @@ public:
      */
     void setItemsMargin(float margin);
     
-    /**
-     * Refresh the view of list.
-     *
-     * If you change the data, you need to call this mathod.
-     */
-    void refreshView();
+    virtual void sortAllChildren() override;
     
     int getCurSelectedIndex() const;
     
-    void addEventListenerListView(cocos2d::Object* target, SEL_ListViewEvent selector);
+    void addEventListenerListView(Object* target, SEL_ListViewEvent selector);
     
     /**
      * Changes scroll direction of scrollview.
@@ -169,33 +163,42 @@ public:
      */
     virtual void setDirection(SCROLLVIEW_DIR dir) override;
     
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
+    
+    void requestRefreshView();
     
 protected:
-    virtual bool addChild(UIWidget* widget) override{return UIScrollView::addChild(widget);};
-    virtual bool removeChild(UIWidget* widget) override{return UIScrollView::removeChild(widget);};
-    virtual void removeAllChildren() override{UIScrollView::removeAllChildren();};
-    virtual cocos2d::Array* getChildren() override{return UIScrollView::getChildren();};
+    virtual void addChild(Node* child) override{ScrollView::addChild(child);};
+    virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};
+    virtual void addChild(Node* child, int zOrder, int tag) override{ScrollView::addChild(child, zOrder, tag);};
+    virtual void removeChild(Node* widget, bool cleanup = true) override{ScrollView::removeChild(widget, cleanup);};
+    
+    virtual void removeAllChildren() override{ScrollView::removeAllChildren();};
+    virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
+    virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
     virtual bool init() override;
     void updateInnerContainerSize();
-    void remedyLayoutParameter(UIWidget* item);
+    void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged() override;
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent();
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
+    void refreshView();
 protected:
     
-    UIWidget* _model;
-    cocos2d::Array* _items;
+    Widget* _model;
+    Vector<Widget*> _items;
     ListViewGravity _gravity;
     float _itemsMargin;
-    cocos2d::Object*       _listViewEventListener;
+    Object*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
     int _curSelectedIndex;
+    bool _refreshViewDirty;
 };
 
 }
+NS_CC_END
 
-#endif /* defined(__UIListView__) */
+#endif /* defined(__ListView__) */

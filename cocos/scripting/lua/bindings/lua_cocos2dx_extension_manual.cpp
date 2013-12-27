@@ -1020,7 +1020,7 @@ public:
     LUA_TableViewDataSource(){}
     virtual ~LUA_TableViewDataSource(){}
     
-    virtual Size tableCellSizeForIndex(TableView *table, long idx)
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx)
     {
         if (nullptr != table )
         {
@@ -1047,7 +1047,7 @@ public:
         return Size::ZERO;
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx)
     {
         if (nullptr != table )
         {
@@ -1070,7 +1070,7 @@ public:
         return NULL;
     }
     
-    virtual long numberOfCellsInTableView(TableView *table)
+    virtual ssize_t numberOfCellsInTableView(TableView *table)
     {
         if (nullptr != table )
         {
@@ -1079,10 +1079,10 @@ public:
             {
                 LuaTableViewEventData eventData;
                 BasicScriptData data(table,&eventData);
-                long counts = 0;
+                ssize_t counts = 0;
                 LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS, (void*)&data,1, [&](lua_State* L, int numReturn){
                     CCASSERT(numReturn == 1, "numberOfCellsInTableView return count error");
-                    counts = (long)tolua_tonumber(L, -1, 0);
+                    counts = (ssize_t)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
                 });
                 return counts;

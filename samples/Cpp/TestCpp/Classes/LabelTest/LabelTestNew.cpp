@@ -1,5 +1,7 @@
 #include "LabelTestNew.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagTileMap = 1,
@@ -300,9 +302,24 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
 
 void LabelFNTSpriteActions::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+}
+
+void LabelFNTSpriteActions::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 void LabelFNTSpriteActions::step(float dt)
@@ -897,6 +914,18 @@ std::string LabelFNTBounds::subtitle() const
 
 void LabelFNTBounds::draw()
 {
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void LabelFNTBounds::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
     auto labelSize = label1->getContentSize();
     auto origin    = Director::getInstance()->getWinSize();
     
@@ -911,6 +940,8 @@ void LabelFNTBounds::draw()
         Point(origin.width, labelSize.height + origin.height)
     };
     DrawPrimitives::drawPoly(vertices, 4, true);
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
