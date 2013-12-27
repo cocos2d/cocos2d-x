@@ -26,7 +26,7 @@
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"

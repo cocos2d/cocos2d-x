@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -130,6 +131,8 @@ protected:
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
+    // quad command
+    QuadCommand _quadCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);
