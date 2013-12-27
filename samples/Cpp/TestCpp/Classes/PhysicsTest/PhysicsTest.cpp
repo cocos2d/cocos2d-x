@@ -79,7 +79,7 @@ void PhysicsTestScene::toggleDebug()
 #endif
 }
 
-#ifndef CC_USE_PHYSICS
+#if CC_USE_PHYSICS == 0
 void PhysicsDemoDisabled::onEnter()
 {
     auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",

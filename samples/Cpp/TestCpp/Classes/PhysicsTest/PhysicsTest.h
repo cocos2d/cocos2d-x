@@ -22,7 +22,7 @@ private:
     bool _debugDraw;
 };
 
-#ifndef CC_USE_PHYSICS
+#if CC_USE_PHYSICS == 0
 class PhysicsDemoDisabled : public BaseTest
 {
 public:
