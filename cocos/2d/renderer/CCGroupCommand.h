@@ -57,7 +57,6 @@ public:
     ~GroupCommand();
     
 public:
-    static RenderCommandPool<GroupCommand>& getCommandPool() { return _commandPool; }
 
     void init(int viewport, int32_t depth);
 
@@ -70,30 +69,11 @@ public:
 
     inline bool isTranslucent() {return true;}
     inline int getRenderQueueID() {return _renderQueueID;}
-    virtual void releaseToCommandPool() override;
     
 protected:
     int _viewport;
     int32_t _depth;
     int _renderQueueID;
-    static RenderCommandPool<GroupCommand> _commandPool;
-
-    friend class RenderCommandPool<GroupCommand>;
-};
-
-template <>
-class RenderCommandPool<GroupCommand>
-{
-public:
-    GroupCommand* generateCommand()
-    {
-        return new GroupCommand();
-    }
-    
-    void pushBackCommand(GroupCommand* ptr)
-    {
-        CC_UNUSED_PARAM(ptr);
-    }
 };
 
 NS_CC_END
