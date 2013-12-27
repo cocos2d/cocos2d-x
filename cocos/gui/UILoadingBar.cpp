@@ -217,7 +217,7 @@ void LoadingBar::setPercent(int percent)
         return;
     }
     _percent = percent;
-    float res = _percent/100.0;
+    float res = _percent / 100.0f;
     
     if (_scale9Enabled)
     {
@@ -310,7 +310,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 
 void LoadingBar::setScale9Scale()
 {
-    float width = (float)(_percent) / 100 * _totalLength;
+    float width = (float)(_percent) / 100.0f * _totalLength;
     static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
