@@ -231,7 +231,12 @@ void ScrollView::addChild(CCNode *child, int zOrder, int tag)
 
 void ScrollView::removeAllChildren()
 {
-    _innerContainer->removeAllChildren();
+    removeAllChildrenWithCleanup(true);
+}
+    
+void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    _innerContainer->removeAllChildrenWithCleanup(cleanup);
 }
 
 void ScrollView::removeChild(CCNode* child, bool cleanup)
@@ -243,7 +248,22 @@ CCArray* ScrollView::getChildren()
 {
     return _innerContainer->getChildren();
 }
+
+unsigned int ScrollView::getChildrenCount() const
+{
+    return _innerContainer->getChildrenCount();
+}
     
+CCNode* ScrollView::getChildByTag(int tag)
+{
+    return _innerContainer->getChildByTag(tag);
+}
+    
+Widget* ScrollView::getChildByName(const char *name)
+{
+    return _innerContainer->getChildByName(name);
+}
+
 void ScrollView::moveChildren(float offsetX, float offsetY)
 {
     _moveChildPoint = _innerContainer->getPosition() + CCPoint(offsetX, offsetY);
@@ -1399,9 +1419,9 @@ void ScrollView::handleReleaseLogic(const CCPoint &touchPoint)
     _bePressed = false;
 }    
 
-bool ScrollView::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
+bool ScrollView::onTouchBegan(CCTouch *touch, CCEvent *unusedEvent)
 {
-    bool pass = Layout::onTouchBegan(touch, unused_event);
+    bool pass = Layout::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
         handlePressLogic(_touchStartPos);
@@ -1409,21 +1429,21 @@ bool ScrollView::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
     return pass;
 }
 
-void ScrollView::onTouchMoved(CCTouch *touch, CCEvent *unused_event)
+void ScrollView::onTouchMoved(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchMoved(touch, unused_event);
+    Layout::onTouchMoved(touch, unusedEvent);
     handleMoveLogic(_touchMovePos);
 }
 
-void ScrollView::onTouchEnded(CCTouch *touch, CCEvent *unused_event)
+void ScrollView::onTouchEnded(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchEnded(touch, unused_event);
+    Layout::onTouchEnded(touch, unusedEvent);
     handleReleaseLogic(_touchEndPos);
 }
 
-void ScrollView::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
+void ScrollView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchCancelled(touch, unused_event);
+    Layout::onTouchCancelled(touch, unusedEvent);
     handleReleaseLogic(touch->getLocation());
 }
 

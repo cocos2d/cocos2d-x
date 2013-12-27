@@ -259,16 +259,24 @@ public:
     //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren();
     
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    
     //override "removeChild" method of widget.
 	virtual void removeChild(CCNode* child, bool cleaup = true);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();
     
-    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
+    virtual unsigned int getChildrenCount() const;
+    
+    virtual CCNode * getChildByTag(int tag);
+    
+    virtual Widget* getChildByName(const char* name);
+    
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
     
     //override "onTouchLongClicked" method of widget.
     virtual void onTouchLongClicked(const CCPoint &touchPoint);
@@ -343,7 +351,7 @@ protected:
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
     virtual void doLayout();
 protected:
     Layout* _innerContainer;

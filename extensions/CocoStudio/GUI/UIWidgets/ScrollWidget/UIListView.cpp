@@ -45,10 +45,10 @@ _items(NULL)
 
 ListView::~ListView()
 {
-    _items->removeAllObjects();
-    CC_SAFE_RELEASE(_items);
     _listViewEventListener = NULL;
     _listViewEventSelector = NULL;
+    _items->removeAllObjects();
+    CC_SAFE_RELEASE(_items);
 }
 
 ListView* ListView::create()
@@ -67,9 +67,9 @@ bool ListView::init()
 {
     if (ScrollView::init())
     {
-        setLayoutType(LAYOUT_LINEAR_VERTICAL);
         _items = CCArray::create();
         CC_SAFE_RETAIN(_items);
+        setLayoutType(LAYOUT_LINEAR_VERTICAL);
         return true;
     }
     return false;
@@ -92,11 +92,12 @@ void ListView::updateInnerContainerSize()
     {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            int length = _items->count();
+            ccArray* arrayItems = _items->data;
+            int length = arrayItems->num;
             float totalHeight = (length - 1) * _itemsMargin;
             for (int i=0; i<length; i++)
             {
-                Widget* item = (Widget*)_items->objectAtIndex(i);
+                Widget* item = static_cast<Widget*>(arrayItems->arr[i]);
                 totalHeight += item->getSize().height;
             }
             float finalWidth = _size.width;
@@ -106,11 +107,12 @@ void ListView::updateInnerContainerSize()
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            int length = _items->count();
+            ccArray* arrayItems = _items->data;
+            int length = arrayItems->num;
             float totalWidth = (length - 1) * _itemsMargin;
             for (int i=0; i<length; i++)
             {
-                Widget* item = (Widget*)_items->objectAtIndex(i);
+                Widget* item = static_cast<Widget*>(arrayItems->arr[i]);
                 totalWidth += item->getSize().width;
             }
             float finalWidth = totalWidth;
@@ -304,6 +306,12 @@ void ListView::removeLastItem()
 {
     removeItem(_items->count() -1);
 }
+    
+void ListView::removeAllItems()
+{
+    _items->removeAllObjects();
+    removeAllChildren();
+}
 
 Widget* ListView::getItem(unsigned int index)
 {
@@ -311,7 +319,7 @@ Widget* ListView::getItem(unsigned int index)
     {
         return NULL;
     }
-    return (Widget*)_items->objectAtIndex(index);
+    return static_cast<Widget*>(_items->objectAtIndex(index));
 }
 
 CCArray* ListView::getItems()
@@ -374,10 +382,11 @@ void ListView::requestRefreshView()
 
 void ListView::refreshView()
 {
-    int length = _items->count();
+    ccArray* arrayItems = getItems()->data;
+    int length = arrayItems->num;
     for (int i=0; i<length; i++)
     {
-        Widget* item = (Widget*)_items->objectAtIndex(i);
+        Widget* item = static_cast<Widget*>(arrayItems->arr[i]);
         item->setZOrder(i);
         remedyLayoutParameter(item);
     }
@@ -440,7 +449,7 @@ void ListView::onSizeChanged()
 
 std::string ListView::getDescription() const
 {
-    return "ListViewEx";
+    return "ListView";
 }
 
 Widget* ListView::createCloneInstance()
@@ -450,12 +459,11 @@ Widget* ListView::createCloneInstance()
 
 void ListView::copyClonedWidgetChildren(Widget* model)
 {
-    CCArray* arrayItems = getItems();
-    
-    int length = arrayItems->count();
+    ccArray* arrayModelItems = static_cast<ListView*>(model)->getItems()->data;
+    int length = arrayModelItems->num;
     for (int i=0; i<length; i++)
     {
-        Widget* item = (Widget*)arrayItems->objectAtIndex(i);
+        Widget* item = static_cast<Widget*>(arrayModelItems->arr[i]);
         pushBackCustomItem(item->clone());
     }
 }

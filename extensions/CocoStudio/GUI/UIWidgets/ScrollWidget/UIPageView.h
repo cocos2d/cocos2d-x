@@ -129,10 +129,10 @@ public:
     
 
     
-    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
     
     //override "update" method of widget.
     virtual void update(float dt);
@@ -158,14 +158,18 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const;
-    
+
 protected:
     virtual void addChild(CCNode * child);
     virtual void addChild(CCNode * child, int zOrder);
     virtual void addChild(CCNode* child, int zOrder, int tag);
     virtual void removeChild(CCNode* widget, bool cleanup = true);
     virtual void removeAllChildren();
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
     virtual CCArray* getChildren(){return Widget::getChildren();};
+    virtual unsigned int getChildrenCount() const {return Widget::getChildrenCount();};
+    virtual CCNode * getChildByTag(int tag) {return Widget::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) {return Widget::getChildByName(name);};
     virtual bool init();
     Layout* createPage();
     float getPositionXByIndex(int idx);
@@ -185,7 +189,7 @@ protected:
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void setClippingEnabled(bool enabled) {Layout::setClippingEnabled(enabled);};
-    virtual void doLayout(){if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
+    virtual void doLayout() {if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
     int _curPageIdx;
     CCArray* _pages;
