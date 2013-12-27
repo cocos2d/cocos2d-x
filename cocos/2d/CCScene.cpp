@@ -88,26 +88,22 @@ Scene* Scene::getScene()
     return this;
 }
 
+#if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
-#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
-#endif
 }
 
 void Scene::update(float delta)
 {
     Node::update(delta);
-#if CC_USE_PHYSICS
     if (nullptr != _physicsWorld)
     {
         _physicsWorld->update(delta);
     }
-#endif
 }
 
-#if CC_USE_PHYSICS
 Scene *Scene::createWithPhysics()
 {
     Scene *ret = new Scene();
