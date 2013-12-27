@@ -447,10 +447,11 @@ namespace cocostudio {
 
     void SceneReader::purgeSceneReader()
     {
-        CC_SAFE_DELETE(s_sharedReader);
-        DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+		DictionaryHelper::shareHelper()->purgeDictionaryHelper();
 		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
+		_pListener = NULL;
+		CC_SAFE_DELETE(s_sharedReader);
     }
 
 }
