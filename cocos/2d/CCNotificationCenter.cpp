@@ -190,13 +190,7 @@ void NotificationCenter::postNotification(const std::string& name, Object *sende
         
         if (observer->getName() == name && (observer->getSender() == sender || observer->getSender() == nullptr || sender == nullptr))
         {
-            if (0 != observer->getHandler())
-            {
-                BasicScriptData data(this, (void*)name.c_str());
-                ScriptEvent scriptEvent(kNotificationEvent,(void*)&data);
-                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-            }
-            else
+            if (0 == observer->getHandler())
             {
                 observer->performSelector(sender);
             }
