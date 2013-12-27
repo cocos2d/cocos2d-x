@@ -296,8 +296,13 @@ void PageView::updateChildrenPosition()
 
 void PageView::removeAllChildren()
 {
+    removeAllChildrenWithCleanup(true);
+}
+    
+void PageView::removeAllChildrenWithCleanup(bool cleanup)
+{
     _pages.clear();
-    Layout::removeAllChildren();
+    Layout::removeAllChildrenWithCleanup(cleanup);
 }
 
 void PageView::scrollToPage(int idx)

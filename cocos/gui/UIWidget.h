@@ -232,7 +232,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag) override;
     
     virtual void sortAllChildren() override;
     /**
@@ -259,7 +259,7 @@ public:
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    virtual ssize_t getChildrenCount() const override;
     
     /**
      * Removes this node itself from its parent node with a cleanup.
@@ -313,7 +313,7 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const char* name);
     
     virtual void visit();
     
