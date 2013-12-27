@@ -63,17 +63,8 @@
     <ClInclude Include="..\CocosGUI.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="..\UIInputManager.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UILayer.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="..\UILayoutDefine.h">
       <Filter>Layouts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UIRootWidget.h">
-      <Filter>BaseClasses</Filter>
     </ClInclude>
     <ClInclude Include="..\UIWidget.h">
       <Filter>BaseClasses</Filter>
@@ -128,17 +119,8 @@
     <ClCompile Include="..\CocosGUI.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\UIInputManager.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UILayer.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="..\UILayoutDefine.cpp">
       <Filter>Layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UIRootWidget.cpp">
-      <Filter>BaseClasses</Filter>
     </ClCompile>
     <ClCompile Include="..\UIWidget.cpp">
       <Filter>BaseClasses</Filter>
