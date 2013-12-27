@@ -43,47 +43,47 @@ enum class FrameEaseType
 {
 	Custom = -1,
 
-	Linear = 0,
+	LINERAR = 0,
 
-	Sine_EaseIn,
-	Sine_EaseOut,
-	Sine_EaseInOut,
+    SINE_EASEIN,
+	SINE_EASEOUT,
+	SINE_EASEINOUT,
 
-	Quad_EaseIn,
-	Quad_EaseOut,
-	Quad_EaseInOut,
+    QUAD_EASEIN,
+	QUAD_EASEOUT,
+    QUAD_EASEINOUT,
 
-	Cubic_EaseIn,
-	Cubic_EaseOut,
-	Cubic_EaseInOut,
+    CUBIC_EASEIN,
+    CUBIC_EASEOUT,
+    CUBIC_EASEINOUT,
 
-	Quart_EaseIn,
-	Quart_EaseOut,
-	Quart_EaseInOut,
+    QUART_EASEIN,
+    QUART_EASEOUT,
+    QUART_EASEINOUT,
 
-	Quint_EaseIn,
-	Quint_EaseOut,
-	Quint_EaseInOut,
+    QUINT_EASEIN,
+	QUINT_EASEOUT,
+    QUINT_EASEINOUT,
 
-	Expo_EaseIn,
-	Expo_EaseOut,
-	Expo_EaseInOut,
+    EXPO_EASEIN,
+    EXPO_EASEOUT,
+    EXPO_EASEINOUT,
 
-	Circ_EaseIn,
-	Circ_EaseOut,
-	Circ_EaseInOut,
+    CIRC_EASEIN,
+    CIRC_EASEOUT,
+    CIRC_EASEINOUT,
 
-	Elastic_EaseIn,
-	Elastic_EaseOut,
-	Elastic_EaseInOut,
+    ELASTIC_EASEIN,
+    ELASTIC_EASEOUT,
+    ELASTIC_EASEINOUT,
 
-	Back_EaseIn,
-	Back_EaseOut,
-	Back_EaseInOut,
+    BACK_EASEIN,
+    BACK_EASEOUT,
+    BACK_EASEINOUT,
 
-	Bounce_EaseIn,
-	Bounce_EaseOut,
-	Bounce_EaseInOut,
+    BOUNCE_EASEIN,
+    BOUNCE_EASEOUT,
+    BOUNCE_EASEINOUT,
 
 	TWEEN_EASING_MAX = 10000
 };

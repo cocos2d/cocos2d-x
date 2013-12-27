@@ -57,7 +57,7 @@ void ComAttribute::setBool(const std::string& key, bool value)
     _dict[key] = cocos2d::Value(value);
 }
 
-void ComAttribute::setCString(const std::string& key, const std::string& value)
+void ComAttribute::setString(const std::string& key, const std::string& value)
 {
     _dict[key] = cocos2d::Value(value);
 }
@@ -92,7 +92,7 @@ bool ComAttribute::getBool(const std::string& key, bool def) const
     return v.asBool();
 }
 
-std::string ComAttribute::getCString(const std::string& key, const std::string& def) const
+std::string ComAttribute::getString(const std::string& key, const std::string& def) const
 {
    if (_dict.find(key) == _dict.end())
     {

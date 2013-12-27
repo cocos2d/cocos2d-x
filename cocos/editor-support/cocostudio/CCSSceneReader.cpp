@@ -447,7 +447,7 @@ namespace cocostudio {
 
     void SceneReader::purgeSceneReader()
     {
-		DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+		DICTOOL->destroyInstance();
 		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
 		_pListener = NULL;

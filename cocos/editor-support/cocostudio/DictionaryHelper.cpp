@@ -38,7 +38,7 @@ DictionaryHelper::~DictionaryHelper()
     
 }
 
-DictionaryHelper* DictionaryHelper::shareHelper()
+DictionaryHelper* DictionaryHelper::getInstance()
 {
     if (!sharedHelper) {
         sharedHelper = new DictionaryHelper();
@@ -46,7 +46,7 @@ DictionaryHelper* DictionaryHelper::shareHelper()
     return sharedHelper;
 }
 
-void DictionaryHelper::purgeDictionaryHelper()
+void DictionaryHelper::destroyInstance()
 {
 	 CC_SAFE_DELETE(sharedHelper);
 }

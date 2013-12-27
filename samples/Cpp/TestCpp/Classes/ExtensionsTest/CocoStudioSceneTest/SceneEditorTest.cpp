@@ -14,7 +14,7 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
 {
     ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
-	ActionManagerEx::getInstance()->purgeActionManager();
+	ActionManagerEx::getInstance()->destroyInstance();
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
 }

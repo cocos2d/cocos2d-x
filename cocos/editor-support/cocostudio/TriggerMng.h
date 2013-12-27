@@ -41,7 +41,7 @@ public:
 	void addAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
-	std::map<Object*, SEL_MovementEventCallFunc> *_mapEventAnimation;
+	std::unordered_map<Object*, SEL_MovementEventCallFunc> *_mapEventAnimation;
 
 };
 

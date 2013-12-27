@@ -60,7 +60,7 @@ public:
 	* @js purge
 	* @lua destroyActionManager
 	*/
-	static void purgeActionManager();
+	static void destroyInstance();
 
 	/**
 	* Gets an ActionObject with a name.

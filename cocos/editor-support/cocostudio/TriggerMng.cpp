@@ -28,10 +28,10 @@ using namespace cocos2d;
 
 namespace cocostudio {
     
-TriggerMng* TriggerMng::_sharedTriggerMng = NULL;
+TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 
 TriggerMng::TriggerMng(void)
-    : _movementDispatches(NULL)
+    : _movementDispatches(nullptr)
 {
 	_movementDispatches = new std::unordered_map<Armature*, ArmatureMovementDispatcher*>;
 }
@@ -52,7 +52,7 @@ const char* TriggerMng::triggerMngVersion()
 
 TriggerMng* TriggerMng::getInstance()
 {
-    if (NULL == _sharedTriggerMng)
+    if (nullptr == _sharedTriggerMng)
     {
         _sharedTriggerMng = new TriggerMng();
     }
@@ -112,7 +112,7 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
 {
     bool bRet = false;
-    CCAssert(pObj != NULL, "Argument must be non-nil");
+    CCAssert(pObj != nullptr, "Argument must be non-nil");
     do
     {
         auto iterator = _eventTriggers.find(event);
@@ -159,7 +159,7 @@ bool TriggerMng::remove(unsigned int event)
         auto iterator = _eventTriggers.find(event);
         if(iterator != _eventTriggers.end())
         {
-            for(auto obj : *iterator->second)
+            for(auto &obj : *iterator->second)
             {
                 obj->removeAll();
             }
@@ -184,9 +184,9 @@ bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
         auto iterator = _eventTriggers.find(event);
         if(iterator != _eventTriggers.end())
         {
-            for(auto triobj : *iterator->second)
+            for(auto &triobj : *iterator->second)
             {
-                if (triobj != NULL && triobj == Obj)
+                if (triobj != nullptr && triobj == Obj)
                 {
                     triobj->removeAll();
                     break;
@@ -204,7 +204,7 @@ bool TriggerMng::remove(unsigned int event, TriggerObj *Obj)
 bool TriggerMng::removeTriggerObj(unsigned int id)
 {
 	TriggerObj *obj = getTriggerObj(id);
-	if (obj == NULL)
+	if (obj == nullptr)
 	{
 		return false;
 	}
@@ -223,13 +223,13 @@ bool TriggerMng::isEmpty(void) const
 
 void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
 {
-	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
 		return;
 	}
 
 	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
-	ArmatureMovementDispatcher *amd = NULL;
+	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
 		amd = new ArmatureMovementDispatcher();
@@ -247,13 +247,13 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 
 void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL_MovementEventCallFunc mecf)
 {
-	if (pAr == NULL || _movementDispatches == NULL || pTarget == NULL || mecf == NULL)
+	if (pAr == nullptr || _movementDispatches == nullptr || pTarget == nullptr || mecf == nullptr)
 	{
 		return;
 	}
-
-	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
-	ArmatureMovementDispatcher *amd = NULL;
+    
+    auto iter =_movementDispatches->find(pAr);
+	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
 		return;
@@ -267,12 +267,12 @@ void TriggerMng::removeArmatureMovementCallBack(Armature *pAr, Object *pTarget, 
 
 void TriggerMng::removeArmatureAllMovementCallBack(Armature *pAr)
 {
-	if (pAr == NULL)
+	if (pAr == nullptr)
 	{
 		return;
 	}
 
-	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	auto iter = _movementDispatches->find(pAr);
 	if (iter == _movementDispatches->end())
 	{
 		return;
@@ -286,7 +286,7 @@ void TriggerMng::removeArmatureAllMovementCallBack(Armature *pAr)
 
 void TriggerMng::removeAllArmatureMovementCallBack()
 {
-	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->begin();
+	auto iter = _movementDispatches->begin();
 	while (iter != _movementDispatches->end())
 	{
 		removeArmatureAllMovementCallBack(iter->first);
@@ -297,7 +297,7 @@ void TriggerMng::removeAllArmatureMovementCallBack()
 ArmatureMovementDispatcher::ArmatureMovementDispatcher(void)
 : _mapEventAnimation(nullptr)
 {
-	_mapEventAnimation = new std::map<Object*, SEL_MovementEventCallFunc> ;
+	_mapEventAnimation = new std::unordered_map<Object*, SEL_MovementEventCallFunc> ;
 }
 
 ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
@@ -308,7 +308,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 
  void ArmatureMovementDispatcher::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
  {
-	 for (std::map<Object*, SEL_MovementEventCallFunc> ::iterator iter = _mapEventAnimation->begin(); iter != _mapEventAnimation->end(); ++iter)
+	 for (std::unordered_map<Object*, SEL_MovementEventCallFunc> ::iterator iter = _mapEventAnimation->begin(); iter != _mapEventAnimation->end(); ++iter)
 	 {
 		   (iter->first->*iter->second)(armature, movementType, movementID);
 	 }
@@ -316,7 +316,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 
   void ArmatureMovementDispatcher::addAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
   {
-	  _mapEventAnimation->insert(std::map<Object*, SEL_MovementEventCallFunc>::value_type(pTarget, mecf));
+	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
   }
 
   void ArmatureMovementDispatcher::removeAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
