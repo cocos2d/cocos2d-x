@@ -298,6 +298,12 @@ void ListView::removeLastItem()
 {
     removeItem(_items.size() -1);
 }
+    
+void ListView::removeAllItems()
+{
+    _items.clear();
+    removeAllChildren();
+}
 
 Widget* ListView::getItem(unsigned int index)
 {
