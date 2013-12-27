@@ -96,7 +96,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
     return cell;
 }
 
-long TableViewTestLayer::numberOfCellsInTableView(TableView *table)
+ssize_t TableViewTestLayer::numberOfCellsInTableView(TableView *table)
 {
     return 20;
 }

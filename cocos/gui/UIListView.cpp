@@ -90,9 +90,8 @@ void ListView::updateInnerContainerSize()
         {
             int length = _items.size();
             float totalHeight = (length - 1) * _itemsMargin;
-            for (int i=0; i<length; i++)
+            for (auto& item : _items)
             {
-                Widget* item = _items.at(i);
                 totalHeight += item->getSize().height;
             }
             float finalWidth = _size.width;
@@ -104,9 +103,8 @@ void ListView::updateInnerContainerSize()
         {
             int length = _items.size();
             float totalWidth = (length - 1) * _itemsMargin;
-            for (int i=0; i<length; i++)
+            for (auto& item : _items)
             {
-                Widget* item = _items.at(i);
                 totalWidth += item->getSize().width;
             }
             float finalWidth = totalWidth;
@@ -362,6 +360,11 @@ void ListView::setDirection(SCROLLVIEW_DIR dir)
     }
     ScrollView::setDirection(dir);
 }
+    
+void ListView::requestRefreshView()
+{
+    _refreshViewDirty = true;
+}
 
 void ListView::refreshView()
 {
@@ -441,12 +444,9 @@ Widget* ListView::createCloneInstance()
 
 void ListView::copyClonedWidgetChildren(Widget* model)
 {
-    Vector<Widget*> arrayItems = getItems();
-    
-    int length = arrayItems.size();
-    for (int i=0; i<length; i++)
+    auto& arrayItems = getItems();
+    for (auto& item : arrayItems)
     {
-        Widget* item = arrayItems.at(i);
         pushBackCustomItem(item->clone());
     }
 }
