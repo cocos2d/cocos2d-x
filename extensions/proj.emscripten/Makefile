@@ -103,16 +103,13 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Armature/utils/CCTransformHelp.cpp \
 ../CocoStudio/Armature/utils/CCTweenFunction.cpp \
 ../CocoStudio/Armature/utils/CCUtilMath.cpp \
-../CocoStudio/GUI/BaseClasses/UIRootWidget.cpp \
 ../CocoStudio/GUI/BaseClasses/UIWidget.cpp \
 ../CocoStudio/GUI/Layouts/UILayout.cpp \
 ../CocoStudio/GUI/Layouts/UILayoutParameter.cpp \
 ../CocoStudio/GUI/Layouts/UILayoutDefine.cpp \
 ../CocoStudio/GUI/System/CocosGUI.cpp \
 ../CocoStudio/GUI/System/UIHelper.cpp \
-../CocoStudio/GUI/System/UIInputManager.cpp \
-../CocoStudio/GUI/System/UILayer.cpp \
-../CocoStudio/GUI/UIWidgets/ScrollWidget/UIListViewEx.cpp \
+../CocoStudio/GUI/System/UITouchGroup.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIListView.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIPageView.cpp \
 ../CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollView.cpp \
