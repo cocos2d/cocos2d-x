@@ -72,11 +72,9 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	_fUnitTime = fTime;
-	auto nodeNum = _actionNodeList.size();
-	for ( int i = 0; i < nodeNum; i++ )
+    for(const auto e : _actionNodeList)
 	{
-		auto actionNode = _actionNodeList.at(i);
-		actionNode->setUnitTime(_fUnitTime);
+        e->setUnitTime(_fUnitTime);
 	}
 }
 float ActionObject::getUnitTime()

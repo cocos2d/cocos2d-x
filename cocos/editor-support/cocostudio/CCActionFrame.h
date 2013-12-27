@@ -41,52 +41,51 @@ enum FrameType
 
 enum class FrameEaseType
 {
-	FrameEase_Custom = -1,
+	Custom = -1,
 
-	FrameEase_Linear = 0,
+	Linear = 0,
 
-	FrameEase_Sine_EaseIn,
-	FrameEase_Sine_EaseOut,
-	FrameEase_Sine_EaseInOut,
+	Sine_EaseIn,
+	Sine_EaseOut,
+	Sine_EaseInOut,
 
+	Quad_EaseIn,
+	Quad_EaseOut,
+	Quad_EaseInOut,
 
-	FrameEase_Quad_EaseIn,
-	FrameEase_Quad_EaseOut,
-	FrameEase_Quad_EaseInOut,
+	Cubic_EaseIn,
+	Cubic_EaseOut,
+	Cubic_EaseInOut,
 
-	FrameEase_Cubic_EaseIn,
-	FrameEase_Cubic_EaseOut,
-	FrameEase_Cubic_EaseInOut,
+	Quart_EaseIn,
+	Quart_EaseOut,
+	Quart_EaseInOut,
 
-	FrameEase_Quart_EaseIn,
-	FrameEase_Quart_EaseOut,
-	FrameEase_Quart_EaseInOut,
+	Quint_EaseIn,
+	Quint_EaseOut,
+	Quint_EaseInOut,
 
-	FrameEase_Quint_EaseIn,
-	FrameEase_Quint_EaseOut,
-	FrameEase_Quint_EaseInOut,
+	Expo_EaseIn,
+	Expo_EaseOut,
+	Expo_EaseInOut,
 
-	FrameEase_Expo_EaseIn,
-	FrameEase_Expo_EaseOut,
-	FrameEase_Expo_EaseInOut,
+	Circ_EaseIn,
+	Circ_EaseOut,
+	Circ_EaseInOut,
 
-	FrameEase_Circ_EaseIn,
-	FrameEase_Circ_EaseOut,
-	FrameEase_Circ_EaseInOut,
+	Elastic_EaseIn,
+	Elastic_EaseOut,
+	Elastic_EaseInOut,
 
-	FrameEase_Elastic_EaseIn,
-	FrameEase_Elastic_EaseOut,
-	FrameEase_Elastic_EaseInOut,
+	Back_EaseIn,
+	Back_EaseOut,
+	Back_EaseInOut,
 
-	FrameEase_Back_EaseIn,
-	FrameEase_Back_EaseOut,
-	FrameEase_Back_EaseInOut,
+	Bounce_EaseIn,
+	Bounce_EaseOut,
+	Bounce_EaseInOut,
 
-	FrameEase_Bounce_EaseIn,
-	FrameEase_Bounce_EaseOut,
-	FrameEase_Bounce_EaseInOut,
-
-	FrameEase_TWEEN_EASING_MAX = 10000
+	TWEEN_EASING_MAX = 10000
 };
 /**
 *  @js NA
@@ -164,26 +163,26 @@ public:
 	int getEasingType();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @parame fDuration   the source ActionFrame
+	* @parame duration   the source ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration,ActionFrame* srcFrame);
+	virtual cocos2d::ActionInterval* getAction(float duration,ActionFrame* srcFrame);
 
 	/**
-	*Set the CCAction easing parameter.
+	*Set the ActionInterval easing parameter.
 	*
 	*@parame parameter   the parameter for frame ease
 	*
@@ -195,7 +194,7 @@ protected:
 	*
 	* @parame action   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
 	virtual cocos2d::ActionInterval* getEasingAction(cocos2d::ActionInterval* action);
 protected:
@@ -239,13 +238,13 @@ public:
 	cocos2d::Point getPosition();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	cocos2d::Point _position;
 };
@@ -297,13 +296,13 @@ public:
 	float getScaleY();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	float _scaleX;
 	float _scaleY;
@@ -341,23 +340,23 @@ public:
 	float getRotation();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @parame fDuration   the source ActionFrame
+	* @parame duration   the source ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration,ActionFrame* srcFrame);
+	virtual cocos2d::ActionInterval* getAction(float duration,ActionFrame* srcFrame);
 public:
 	float _rotation;
 };
@@ -394,13 +393,13 @@ public:
 	int getOpacity();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	float _opacity;
 };
@@ -438,13 +437,13 @@ public:
 	cocos2d::Color3B getColor();
 
 	/**
-	* Gets the CCAction of ActionFrame.
+	* Gets the ActionInterval of ActionFrame.
 	*
-	* @parame fDuration   the duration time of ActionFrame
+	* @parame duration   the duration time of ActionFrame
 	*
-	* @return CCAction
+	* @return ActionInterval
 	*/
-	virtual cocos2d::ActionInterval* getAction(float fDuration);
+	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	cocos2d::Color3B _color;
 };

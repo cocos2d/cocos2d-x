@@ -53,7 +53,7 @@ public:
 	* @js getInstance
 	* @lua getInstance
 	*/
-	static ActionManagerEx* shareManager();
+	static ActionManagerEx* getInstance();
 
 	/**
 	* Purges ActionManager point.
@@ -104,7 +104,7 @@ public:
 	void releaseActions();
 
 protected:
-	std::map<std::string, cocos2d::Vector<ActionObject*>> _pActionDic;
+	std::map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
 };
 
 }

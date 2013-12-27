@@ -356,7 +356,7 @@ int ActionNode::getFirstFrameIndex()
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		auto cArray = _frameArray.at(n);
-		if (cArray.size() <= 0)
+		if (cArray.empty())
 		{
 			continue;
 		}
