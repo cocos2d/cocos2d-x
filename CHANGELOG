@@ -15,6 +15,8 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          LabelBMFont string can't be shown integrally.
      [FIX]          Deprecates FileUtils::getFileData, adds FileUtils::getStringFromFile/getDataFromFile.
      [FIX]          GUI refactoring: Removes UI prefix, Widget is inherited from Node, uses new containers(Vector<T>, Map<K,V>).
+     [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
+     [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.

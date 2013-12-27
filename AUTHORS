@@ -677,6 +677,10 @@ Developers:
         
     seobyeongky
         Updates spine runtime.
+        Fixed a potential bug in Data's copy constructor. 
+        
+    luocker
+        Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
         
 Retired Core Developers:
     WenSheng Yang
