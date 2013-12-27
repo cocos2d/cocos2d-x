@@ -39,13 +39,17 @@ _size(0)
     CCLOGINFO("In the empty constructor of Data.");
 }
 
-Data::Data(Data&& other)
+Data::Data(Data&& other) :
+_bytes(nullptr),
+_size(0)
 {
     CCLOGINFO("In the move constructor of Data.");
     move(other);
 }
 
-Data::Data(const Data& other)
+Data::Data(const Data& other) :
+_bytes(nullptr),
+_size(0)
 {
     CCLOGINFO("In the copy constructor of Data.");
     copy(other._bytes, other._size);
