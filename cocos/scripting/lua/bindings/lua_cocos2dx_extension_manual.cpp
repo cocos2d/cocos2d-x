@@ -1026,7 +1026,7 @@ public:
     LUA_TableViewDataSource(){}
     virtual ~LUA_TableViewDataSource(){}
     
-    virtual Size tableCellSizeForIndex(TableView *table, long idx)
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx)
     {
         if (nullptr != table )
         {
@@ -1052,7 +1052,7 @@ public:
         return Size::ZERO;
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, long idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx)
     {
         if (nullptr != table )
         {
@@ -1078,7 +1078,7 @@ public:
         return NULL;
     }
     
-    virtual long numberOfCellsInTableView(TableView *table)
+    virtual ssize_t numberOfCellsInTableView(TableView *table)
     {
         if (nullptr != table )
         {
@@ -1094,7 +1094,7 @@ public:
                 Double* numbers  = dynamic_cast<Double*>(resultArray.getObjectAtIndex(0));
                 if (NULL != numbers)
                 {
-                    return (long)numbers->getValue();
+                    return (ssize_t)numbers->getValue();
                 }
             }
         }
