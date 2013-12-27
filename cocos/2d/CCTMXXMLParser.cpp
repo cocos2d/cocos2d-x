@@ -536,7 +536,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyTile ) 
         {
-            IntValueMap& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asIntKeyMap();
+            ValueMapIntKey& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asIntKeyMap();
 
             int propertyName = attributeDict["name"].asInt();
             dict[propertyName] = attributeDict["value"];

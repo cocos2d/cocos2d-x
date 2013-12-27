@@ -619,7 +619,7 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(Widget*
         const char* cmft = dicHelper->getStringValue_json(options, "charMapFile");
         cmf_tp = tp_c.append(cmft).c_str();
         
-        labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth"),dicHelper->getIntValue_json(options,"itemHeight"),dicHelper->getStringValue_json(options, "startCharMap"));
+        labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR() ,dicHelper->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), dicHelper->getStringValue_json(options, "startCharMap"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -1025,7 +1025,23 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(JsonDictionary *dat
         Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            widget->addChild(child);
+            PageView* pageView = dynamic_cast<PageView*>(widget);
+            if (pageView)
+            {
+                pageView->addPage(static_cast<Layout*>(child));
+            }
+            else
+            {
+                ListView* listView = dynamic_cast<ListView*>(widget);
+                if (listView)
+                {
+                    listView->pushBackCustomItem(child);
+                }
+                else
+                {
+                    widget->addChild(child);
+                }
+            }
         }
         CC_SAFE_DELETE(subData);
     }
@@ -1525,7 +1541,7 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(Widget*
                 std::string tp_c = m_strFilePath;
                 const char* cmfPath = dicHelper->getStringValue_json(cmftDic, "path");
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth"),dicHelper->getIntValue_json(options,"itemHeight"),dicHelper->getStringValue_json(options, "startCharMap"));
+                labelAtlas->setProperty(dicHelper->getStringValue_json(options, "stringValue"),cmf_tp,dicHelper->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),dicHelper->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), dicHelper->getStringValue_json(options, "startCharMap"));
                 break;
             }
             case 1:
@@ -1931,11 +1947,26 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(Widget
 
 void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(Widget*widget,JsonDictionary* options)
 {
-    
+     setPropsForLayoutFromJsonDictionary(widget, options);
 }
 
 void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(Widget* widget, JsonDictionary* options)
 {
+    setPropsForLayoutFromJsonDictionary(widget, options);
     
+    ListView* listView = static_cast<ListView*>(widget);
+    
+    float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
+    float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
+    listView->setInnerContainerSize(Size(innerWidth, innerHeight));
+	int direction = DICTOOL->getFloatValue_json(options, "direction");
+	listView->setDirection((SCROLLVIEW_DIR)direction);
+    
+    ListViewGravity gravity = (ListViewGravity)DICTOOL->getIntValue_json(options, "gravity");
+    listView->setGravity(gravity);
+    
+    float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
+    listView->setItemsMargin(itemMargin);
 }
+    
 }
