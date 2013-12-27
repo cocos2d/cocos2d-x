@@ -168,7 +168,7 @@ protected:
 	cocos2d::Action* _action;
 	cocos2d::Object* _object;
 
-	std::vector<cocos2d::Vector<ActionFrame*>> _frameArray;
+	std::vector<cocos2d::Vector<ActionFrame*>*> _frameArray;
 	int _frameArrayNum;
 
 protected:

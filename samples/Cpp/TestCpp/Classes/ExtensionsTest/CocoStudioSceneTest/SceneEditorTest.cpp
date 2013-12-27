@@ -14,7 +14,7 @@ SceneEditorTestLayer::~SceneEditorTestLayer()
 {
     ArmatureDataManager::getInstance()->destoryInstance();
 	SceneReader::getInstance()->purgeSceneReader();
-	ActionManagerEx::shareManager()->purgeActionManager();
+	ActionManagerEx::getInstance()->purgeActionManager();
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
 }
@@ -131,8 +131,6 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
 
     pNode->addChild(menuBack);
     
-    //ui action
-	//actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
