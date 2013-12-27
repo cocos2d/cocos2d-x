@@ -181,20 +181,20 @@ void __String::appendWithFormat(const char* format, ...)
 __Array* __String::componentsSeparatedByString(const char *delimiter)
 {
     __Array* result = __Array::create();
-    
+    std::string strTmp = _string;
     size_t cutAt;
-    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    while( (cutAt = strTmp.find_first_of(delimiter)) != strTmp.npos )
     {
         if(cutAt > 0)
         {
-            result->addObject(__String::create(_string.substr(0, cutAt)));
+            result->addObject(__String::create(strTmp.substr(0, cutAt)));
         }
-        _string = _string.substr(cutAt + 1);
+        strTmp = strTmp.substr(cutAt + 1);
     }
     
-    if(_string.length() > 0)
+    if(strTmp.length() > 0)
     {
-        result->addObject(__String::create(_string));
+        result->addObject(__String::create(strTmp));
     }
     
     return result;
