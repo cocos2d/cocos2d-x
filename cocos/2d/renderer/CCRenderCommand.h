@@ -52,7 +52,6 @@ public:
     virtual inline int64_t getID() { return _id; }
     
     virtual inline Type getType() { return _type; }
-    void releaseToCommandPool() {}
 
 protected:
     RenderCommand();
