@@ -217,32 +217,17 @@ void LoadingBar::setPercent(int percent)
         return;
     }
     _percent = percent;
-    float res = _percent/100.0;
-    
-    int x = 0, y = 0;
-    switch (_renderBarTexType)
-    {
-        case UI_TEX_TYPE_PLIST:
-        {
-            CCSprite* barNode = dynamic_cast<CCSprite*>(_barRenderer);
-            if (barNode)
-            {
-                CCPoint to = barNode->getTextureRect().origin;
-                x = to.x;
-                y = to.y;
-            }
-            break;
-        }
-        default:
-            break;
-    }
+    float res = _percent / 100.0f;
     if (_scale9Enabled)
     {
         setScale9Scale();
     }
     else
     {
-        static_cast<CCSprite*>(_barRenderer)->setTextureRect(CCRect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
+        CCSprite* spriteRenderer = static_cast<CCSprite*>(_barRenderer);
+        CCRect rect = spriteRenderer->getTextureRect();
+        rect.size.width = _barRendererTextureSize.width * res;
+        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
 }
 
