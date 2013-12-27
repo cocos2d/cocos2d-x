@@ -590,7 +590,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag);
     /**
      * Return an array of children
      *
@@ -615,7 +615,7 @@ public:
      *
      * @return The amount of children.
      */
-    ssize_t getChildrenCount() const;
+    virtual ssize_t getChildrenCount() const;
 
     /**
      * Sets the parent node

@@ -296,8 +296,13 @@ void PageView::updateChildrenPosition()
 
 void PageView::removeAllChildren()
 {
+    removeAllChildrenWithCleanup(true);
+}
+    
+void PageView::removeAllChildrenWithCleanup(bool cleanup)
+{
     _pages.clear();
-    Layout::removeAllChildren();
+    Layout::removeAllChildrenWithCleanup(cleanup);
 }
 
 void PageView::scrollToPage(int idx)
@@ -602,7 +607,7 @@ Widget* PageView::createCloneInstance()
 
 void PageView::copyClonedWidgetChildren(Widget* model)
 {
-    auto& modelPages = dynamic_cast<PageView*>(model)->getPages();
+    auto& modelPages = static_cast<PageView*>(model)->getPages();
     for (auto& page : modelPages)
     {
         addPage(dynamic_cast<Layout*>(page->clone()));
