@@ -309,7 +309,7 @@ void LoadingBar::barRendererScaleChangedWithSize()
 
 void LoadingBar::setScale9Scale()
 {
-    float width = (float)(_percent) / 100 * _totalLength;
+    float width = (float)(_percent) / 100.0f * _totalLength;
     static_cast<extension::CCScale9Sprite*>(_barRenderer)->setPreferredSize(CCSize(width, _size.height));
 }
 
