@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __ActionEaseEx_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "cocostudio/CocoStudio.h"
 
 namespace cocostudio {
 

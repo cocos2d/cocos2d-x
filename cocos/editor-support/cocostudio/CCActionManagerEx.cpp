@@ -29,7 +29,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-static ActionManagerEx* sharedActionManager = NULL;
+static ActionManagerEx* sharedActionManager = nullptr;
 
 ActionManagerEx* ActionManagerEx::getInstance()
 {
@@ -77,7 +77,7 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 	auto iterator = _actionDic.find(jsonName);
 	if (iterator == _actionDic.end())
 	{
-		return NULL;
+		return nullptr;
 	}
 	auto actionList = iterator->second;
 	for (int i = 0; i < actionList.size(); i++)
@@ -88,7 +88,7 @@ ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* 
 			return action;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char* actionName)
