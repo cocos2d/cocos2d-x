@@ -102,7 +102,8 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             continue;
         }
 
-        Vector<AnimationFrame*> frames(static_cast<int>(frameNames.size()));
+        ssize_t frameNameSize = frameNames.size();
+        Vector<AnimationFrame*> frames(frameNameSize);
 
         for (auto& frameName : frameNames)
         {
@@ -118,12 +119,12 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             frames.pushBack(animFrame);
         }
 
-        if ( frames.size() == 0 )
+        if ( frames.empty() )
         {
             CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", iter->first.c_str());
             continue;
         }
-        else if ( frames.size() != frameNames.size() )
+        else if ( frames.size() != frameNameSize )
         {
             CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", iter->first.c_str());
         }
