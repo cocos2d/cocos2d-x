@@ -33,7 +33,7 @@ ActionFrame::ActionFrame()
 : _frameType(0)
 , _frameIndex(0)
 , _fTime(0.0f)
-, _easingType(FrameEaseType::FrameEase_Linear)
+, _easingType(FrameEaseType::Linear)
 {
 
 }
@@ -107,116 +107,116 @@ ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 
 	switch (_easingType)
 	{
-	case FrameEaseType::FrameEase_Custom:
+	case FrameEaseType::Custom:
 		{
 			EaseBezierAction* cAction = EaseBezierAction::create(action);
 			cAction->setBezierParamer(_Parameter[0],_Parameter[1],_Parameter[2],_Parameter[3]);
 			return cAction;
 		}
 		break;
-	case FrameEaseType::FrameEase_Linear:
+	case FrameEaseType::Linear:
 		return action;
 		break;
-	case FrameEaseType::FrameEase_Sine_EaseIn:
+	case FrameEaseType::Sine_EaseIn:
 		return EaseSineIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Sine_EaseOut:
+	case FrameEaseType::Sine_EaseOut:
 		return EaseSineOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Sine_EaseInOut:
+	case FrameEaseType::Sine_EaseInOut:
 		return EaseSineInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quad_EaseIn:
+	case FrameEaseType::Quad_EaseIn:
 		return EaseQuadraticActionIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quad_EaseOut:
+	case FrameEaseType::Quad_EaseOut:
 		return EaseQuadraticActionOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quad_EaseInOut:
+	case FrameEaseType::Quad_EaseInOut:
 		return EaseQuadraticActionInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Cubic_EaseIn:
+	case FrameEaseType::Cubic_EaseIn:
 		return EaseCubicActionIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Cubic_EaseOut:
+	case FrameEaseType::Cubic_EaseOut:
 		return EaseCubicActionOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Cubic_EaseInOut:
+	case FrameEaseType::Cubic_EaseInOut:
 		return EaseCubicActionInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quart_EaseIn:
+	case FrameEaseType::Quart_EaseIn:
 		return EaseQuarticActionIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quart_EaseOut:
+	case FrameEaseType::Quart_EaseOut:
 		return EaseQuadraticActionOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quart_EaseInOut:
+	case FrameEaseType::Quart_EaseInOut:
 		return EaseQuarticActionInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quint_EaseIn:
+	case FrameEaseType::Quint_EaseIn:
 		return EaseQuinticActionIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quint_EaseOut:
+	case FrameEaseType::Quint_EaseOut:
 		return EaseQuinticActionOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Quint_EaseInOut:
+	case FrameEaseType::Quint_EaseInOut:
 		return EaseQuinticActionInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Expo_EaseIn:
+	case FrameEaseType::Expo_EaseIn:
 		return EaseExponentialIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Expo_EaseOut:
+	case FrameEaseType::Expo_EaseOut:
 		return EaseExponentialOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Expo_EaseInOut:
+	case FrameEaseType::Expo_EaseInOut:
 		return EaseExponentialInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Circ_EaseIn:
+	case FrameEaseType::Circ_EaseIn:
 		return EaseCircleActionIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Circ_EaseOut:
+	case FrameEaseType::Circ_EaseOut:
 		return EaseCircleActionOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Circ_EaseInOut:
+	case FrameEaseType::Circ_EaseInOut:
 		return EaseCircleActionInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Elastic_EaseIn:
+	case FrameEaseType::Elastic_EaseIn:
 		{
 			EaseElasticIn* cAction = EaseElasticIn::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEaseType::FrameEase_Elastic_EaseOut:
+	case FrameEaseType::Elastic_EaseOut:
 		{
 			EaseElasticOut* cAction = EaseElasticOut::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEaseType::FrameEase_Elastic_EaseInOut:
+	case FrameEaseType::Elastic_EaseInOut:
 		{
 			EaseElasticInOut* cAction = EaseElasticInOut::create(action);
 			cAction->setPeriod(_Parameter[0]);
 			return cAction;
 		}
 		break;
-	case FrameEaseType::FrameEase_Back_EaseIn:
+	case FrameEaseType::Back_EaseIn:
 		return EaseBackIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Back_EaseOut:
+	case FrameEaseType::Back_EaseOut:
 		return EaseBackOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Back_EaseInOut:
+	case FrameEaseType::Back_EaseInOut:
 		return EaseBackInOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Bounce_EaseIn:
+	case FrameEaseType::Bounce_EaseIn:
 		return EaseBounceIn::create(action);
 		break;
-	case FrameEaseType::FrameEase_Bounce_EaseOut:
+	case FrameEaseType::Bounce_EaseOut:
 		return EaseBounceOut::create(action);
 		break;
-	case FrameEaseType::FrameEase_Bounce_EaseInOut:
+	case FrameEaseType::Bounce_EaseInOut:
 		return EaseBounceInOut::create(action);
 		break;
 	default:
