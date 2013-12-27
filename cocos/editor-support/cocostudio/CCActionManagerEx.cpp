@@ -31,7 +31,7 @@ namespace cocostudio {
 
 static ActionManagerEx* sharedActionManager = NULL;
 
-ActionManagerEx* ActionManagerEx::shareManager()
+ActionManagerEx* ActionManagerEx::getInstance()
 {
 	if (!sharedActionManager) {
 		sharedActionManager = new ActionManagerEx();
@@ -50,7 +50,7 @@ ActionManagerEx::ActionManagerEx()
 
 ActionManagerEx::~ActionManagerEx()
 {
-	_pActionDic.clear();
+	_actionDic.clear();
 }
 
 void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,Object* root)
@@ -68,14 +68,14 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 		action->initWithDictionary(actionDic,root);
 		actionList.pushBack(action);
 	}
-	_pActionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
+	_actionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
 }
 
 
 ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* actionName)
 {
-	auto iterator = _pActionDic.find(jsonName);
-	if (iterator == _pActionDic.end())
+	auto iterator = _actionDic.find(jsonName);
+	if (iterator == _actionDic.end())
 	{
 		return NULL;
 	}
@@ -113,7 +113,7 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 
 void ActionManagerEx::releaseActions()
 {
-	_pActionDic.clear();
+	_actionDic.clear();
 }
 
 }
