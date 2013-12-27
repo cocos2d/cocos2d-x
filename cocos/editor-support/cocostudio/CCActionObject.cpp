@@ -30,15 +30,14 @@ using namespace cocos2d;
 namespace cocostudio {
 
 ActionObject::ActionObject()
-: _actionNodeList(NULL)
-, _name("")
+: _name("")
 , _loop(false)
 , _bPause(false)
 , _bPlaying(false)
 , _fUnitTime(0.1f)
 , _currentTime(0.0f)
-, _pScheduler(NULL)
-, _CallBack(NULL)
+, _pScheduler(nullptr)
+, _CallBack(nullptr)
 , _fTotalTime(0.0f)
 {
 	_pScheduler = Director::getInstance()->getScheduler();
@@ -125,7 +124,7 @@ void ActionObject::initWithDictionary(const rapidjson::Value& dic, Object* root)
 
 void ActionObject::addActionNode(ActionNode* node)
 {
-	if (node == NULL)
+	if (node == nullptr)
 	{
 		return;
 	}
@@ -134,7 +133,7 @@ void ActionObject::addActionNode(ActionNode* node)
 }
 void ActionObject::removeActionNode(ActionNode* node)
 {
-	if (node == NULL)
+	if (node == nullptr)
 	{
 		return;
 	}
@@ -217,7 +216,7 @@ void ActionObject::simulationActionUpdate(float dt)
 
 	if (isEnd)
 	{
-		if (_CallBack != NULL)
+		if (_CallBack != nullptr)
 		{
 			_CallBack->execute();
 		}

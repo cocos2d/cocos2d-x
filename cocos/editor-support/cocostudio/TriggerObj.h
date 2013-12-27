@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "CocoStudio.h"
-#include "TriggerBase.h"
 #include <vector>
 
 namespace cocostudio {

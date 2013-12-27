@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TriggerMng.h"
-#include "TriggerObj.h"
-#include "TriggerBase.h"
 
 using namespace cocos2d;
 

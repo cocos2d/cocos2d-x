@@ -37,23 +37,11 @@
     <Filter Include="json\rapidjson\internal">
       <UniqueIdentifier>{5149f922-cf29-4a4b-b604-f15c6e8856b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="trigger">
+      <UniqueIdentifier>{59eee6d9-bbfd-4193-be1d-6c18fc38f896}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCActionFrameEasing.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionManagerEx.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionNode.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionObject.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionFrame.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCComAttribute.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -138,23 +126,35 @@
     <ClCompile Include="..\CCActionEaseEx.cpp">
       <Filter>action</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCActionFrame.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionFrameEasing.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionManagerEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionNode.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionObject.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ObjectFactory.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerBase.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerMng.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerObj.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CCActionFrameEasing.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionManagerEx.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionNode.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionObject.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionFrame.h">
-      <Filter>action</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCComAttribute.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -268,6 +268,33 @@
     </ClInclude>
     <ClInclude Include="..\CCActionEaseEx.h">
       <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrame.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrameEasing.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionManagerEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionNode.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionObject.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ObjectFactory.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerBase.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerMng.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerObj.h">
+      <Filter>trigger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

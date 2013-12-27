@@ -165,6 +165,8 @@ public:
     
     virtual std::string getDescription() const override;
     
+    void requestRefreshView();
+    
 protected:
     virtual void addChild(Node* child) override{ScrollView::addChild(child);};
     virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};

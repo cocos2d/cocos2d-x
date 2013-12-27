@@ -129,7 +129,7 @@ public:
      *
      * @return number of cells
      */
-    virtual long numberOfCellsInTableView(TableView *table) = 0;
+    virtual ssize_t numberOfCellsInTableView(TableView *table) = 0;
 
 };
 

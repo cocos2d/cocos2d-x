@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
-#include "ExtensionMacros.h"
 #include "TriggerObj.h"
 #include "ObjectFactory.h"
 #include "TriggerMng.h"

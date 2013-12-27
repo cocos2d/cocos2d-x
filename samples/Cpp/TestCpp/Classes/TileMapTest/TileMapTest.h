@@ -135,6 +135,8 @@ public:
 
     virtual void draw();
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class TMXIsoObjectsTest : public TileDemo
@@ -145,6 +147,8 @@ public:
 
     virtual void draw();
     virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class TMXResizeTest : public TileDemo
@@ -279,6 +283,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void draw();
+
+protected:
+    void onDraw();
+    
 };
 
 class TileMapTestScene : public TestScene
