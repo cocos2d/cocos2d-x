@@ -238,6 +238,10 @@
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -380,6 +384,10 @@
     <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h" />
     <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
     <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
