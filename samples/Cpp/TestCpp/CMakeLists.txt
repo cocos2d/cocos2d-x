@@ -59,6 +59,8 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
