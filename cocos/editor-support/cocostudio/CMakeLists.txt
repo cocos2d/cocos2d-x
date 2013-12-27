@@ -1,4 +1,5 @@
 set(CS_SRC
+  CCActionEaseEx.cpp
   CCActionFrame.cpp
   CCActionFrameEasing.cpp
   CCActionManagerEx.cpp
@@ -28,10 +29,13 @@ set(CS_SRC
   CCComController.cpp
   CCComRender.cpp
   CCInputDelegate.cpp
-  CSContentJsonDictionary.cpp
   DictionaryHelper.cpp
   CCSGUIReader.cpp
   CCSSceneReader.cpp
+  ObjectFactory.cpp
+  TriggerBase.cpp
+  TriggerMng.cpp
+  TriggerObj.cpp
 )
 
 include_directories(
@@ -43,7 +47,6 @@ add_library(cocostudio STATIC
 )
 
 target_link_libraries(cocostudio
-  jsoncpp
 )
 
 set_target_properties(cocostudio

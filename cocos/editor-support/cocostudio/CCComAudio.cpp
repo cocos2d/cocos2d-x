@@ -86,16 +86,24 @@ void ComAudio::end()
 void ComAudio::preloadBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic(pszFilePath);
+    setFile(pszFilePath);
+	setLoop(false);
 }
 
 void ComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(pszFilePath, bLoop);
+    
 }
 
 void ComAudio::playBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(pszFilePath);
+}
+
+void ComAudio::playBackgroundMusic()
+{
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(_filePath.c_str(), _loop);
 }
 
 void ComAudio::stopBackgroundMusic(bool bReleaseData)
@@ -163,6 +171,11 @@ unsigned int ComAudio::playEffect(const char* pszFilePath)
     return CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(pszFilePath);
 }
 
+unsigned int ComAudio::playEffect()
+{
+	return CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(_filePath.c_str(), _loop);
+}
+
 void ComAudio::pauseEffect(unsigned int nSoundId)
 {
     return CocosDenshion::SimpleAudioEngine::getInstance()->pauseEffect(nSoundId);
@@ -196,6 +209,8 @@ void ComAudio::stopAllEffects()
 void ComAudio::preloadEffect(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(pszFilePath);
+    setFile(pszFilePath);
+    setLoop(false);
 }
 
 void ComAudio::unloadEffect(const char *pszFilePath)
