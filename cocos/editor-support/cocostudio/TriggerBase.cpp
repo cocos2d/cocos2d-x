@@ -29,10 +29,10 @@ using namespace cocostudio;
 
 void sendEvent(unsigned int event)
 {
-    cocos2d::Vector<TriggerObj*> *_array = TriggerMng::getInstance()->get(event);
+    cocos2d::Vector<TriggerObj*> *array = TriggerMng::getInstance()->get(event);
     do {
-        CC_BREAK_IF(_array == nullptr);
-        for (const auto& object : *_array)
+        CC_BREAK_IF(array == nullptr);
+        for (const auto& object : *array)
         {
             if(object != nullptr && object->detect())
             {

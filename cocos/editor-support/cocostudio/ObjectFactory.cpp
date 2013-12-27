@@ -102,7 +102,7 @@ Object* ObjectFactory::createObject(const char *name)
 
 void ObjectFactory::registerType(const TInfo &t)
 {
-    _typeMap.insert(FactoryMap::value_type(t._class, t));
+    _typeMap.insert(std::make_pair(t._class, t));
 }
 
 }

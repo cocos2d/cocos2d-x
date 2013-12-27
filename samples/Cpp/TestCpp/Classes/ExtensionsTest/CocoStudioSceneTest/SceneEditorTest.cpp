@@ -12,9 +12,9 @@ using namespace gui;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
-	SceneReader::getInstance()->purgeSceneReader();
-	ActionManagerEx::getInstance()->destroyInstance();
+    ArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManagerEx::destroyInstance();
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
 }

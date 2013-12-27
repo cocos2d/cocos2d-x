@@ -53,7 +53,7 @@ public:
      *  @js purge
      *  @lua destroySceneReader
      */
-    void purgeSceneReader();
+    static void destroyInstance();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
 	void setTarget(cocos2d::Object *rec, SEL_CallFuncOD selector);
