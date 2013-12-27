@@ -3820,7 +3820,7 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
                     };
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASE:
+            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     self->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event){
