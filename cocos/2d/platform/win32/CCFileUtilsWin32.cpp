@@ -150,7 +150,7 @@ static Data getData(const std::string& filename, bool forString)
         }
         DWORD sizeRead = 0;
         BOOL successed = FALSE;
-        successed = ::ReadFile(fileHandle, buffer, *size, &sizeRead, NULL);
+        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, NULL);
         ::CloseHandle(fileHandle);
 
         if (!successed)
@@ -180,22 +180,21 @@ static Data getData(const std::string& filename, bool forString)
     return ret;
 }
 
-std::string FileUtilsAndroid::getStringFromFile(const std::string& filename)
+std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
     std::string ret((const char*)data.getBytes());
     return ret;
 }
     
-Data FileUtilsAndroid::getDataFromFile(const std::string& filename)
+Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 {
     return getData(filename, false);
 }
 
-unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, ssize_t* size)
+unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
 {
     unsigned char * pBuffer = NULL;
-    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
     *size = 0;
     do
     {
