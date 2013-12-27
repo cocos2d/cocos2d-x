@@ -404,10 +404,9 @@ NS_CC_EXT_BEGIN
                 }
 				else if(comName != NULL && strcmp(comName, "GUIComponent") == 0)
 				{
-					continue;
 					cocos2d::extension::UILayer *pLayer = cocos2d::extension::UILayer::create();
-                    pLayer->scheduleUpdate();
-                    UIWidget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
+					pLayer->scheduleUpdate();
+					UIWidget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
 					pLayer->addWidget(widget);
 					CCComRender *pRender = CCComRender::create(pLayer, "GUIComponent");
 					if (pComName != NULL)
@@ -499,7 +498,7 @@ NS_CC_EXT_BEGIN
 		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
 		_pListener = NULL;
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
 		CC_SAFE_DELETE(_sharedReader);
     }
 
