@@ -74,7 +74,7 @@ public:
     
     void pushBackCommand(CustomCommand* ptr)
     {
-        delete ptr;
+        CC_UNUSED_PARAM(ptr);
     }
 };
 

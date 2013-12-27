@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCScene.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -360,8 +360,7 @@ void SpriteBatchNode::draw()
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    QuadCommand* cmd = new QuadCommand();
-    cmd->init(0,
+    _quadCommand.init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,
@@ -369,7 +368,7 @@ void SpriteBatchNode::draw()
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)

@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
 #include "CCSprite.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -143,6 +144,8 @@ protected:
     Sprite *_sprite;
     int _vertexDataCount;
     V2F_C4B_T2F *_vertexData;
+    
+    CustomCommand _customCommand;
 
     bool _reverseDirection;
 

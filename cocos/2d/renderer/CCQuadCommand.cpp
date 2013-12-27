@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "ccGLStateCache.h"
 
 NS_CC_BEGIN
