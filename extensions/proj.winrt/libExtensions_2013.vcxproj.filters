@@ -88,6 +88,9 @@
     <Filter Include="CocoStudio\Json\rapidjson\internal">
       <UniqueIdentifier>{d3d8fc4b-4af7-4755-bffa-69e3f011b727}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\Trigger">
+      <UniqueIdentifier>{14d82a64-5f06-4e05-86b6-421399635c63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
@@ -453,6 +456,18 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
       <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -881,6 +896,18 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
       <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h">
+      <Filter>CocoStudio\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

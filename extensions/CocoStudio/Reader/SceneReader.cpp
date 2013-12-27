@@ -492,13 +492,13 @@ NS_CC_EXT_BEGIN
 	}
 
     void SceneReader::purgeSceneReader()
-    {
-		CC_SAFE_DELETE(_sharedReader);
+    {		
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
 		TriggerMng::getInstance()->destroyInstance();
 		_pfnSelector = NULL;
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
-        
+		_pListener = NULL;
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+		CC_SAFE_DELETE(_sharedReader);
     }
 
 NS_CC_EXT_END
