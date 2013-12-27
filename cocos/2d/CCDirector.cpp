@@ -1076,6 +1076,8 @@ void DisplayLinkDirector::startAnimation()
     }
 
     _invalid = false;
+
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 }
 
 void DisplayLinkDirector::mainLoop()
