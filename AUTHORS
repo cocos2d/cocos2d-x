@@ -682,6 +682,9 @@ Developers:
     luocker
         Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
         
+    omersaeed
+        Fix a bug that game will crash if connection breaks during download using AssetManager.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
