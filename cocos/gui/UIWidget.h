@@ -266,7 +266,7 @@ public:
      * If the node orphan, then nothing happens.
      * @see `removeFromParentAndCleanup(bool)`
      */
-    virtual void removeFromParent();
+    virtual void removeFromParent() override;
     /**
      * Removes this node itself from its parent node.
      * If the node orphan, then nothing happens.
@@ -274,7 +274,7 @@ public:
      * @js removeFromParent
      * @lua removeFromParent
      */
-    virtual void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParentAndCleanup(bool cleanup) override;
     
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
@@ -282,7 +282,7 @@ public:
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(Node* child, bool cleanup = true);
+    virtual void removeChild(Node* child, bool cleanup = true) override;
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -290,13 +290,13 @@ public:
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup = true) override;
     /**
      * Removes all children from the container with a cleanup.
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
-    virtual void removeAllChildren();
+    virtual void removeAllChildren() override;
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
@@ -304,7 +304,7 @@ public:
      * @js removeAllChildren
      * @lua removeAllChildren
      */
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     
     /**
      * Gets a child from the container with its name
