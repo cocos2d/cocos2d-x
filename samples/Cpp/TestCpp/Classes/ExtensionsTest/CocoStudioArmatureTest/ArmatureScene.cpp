@@ -147,7 +147,7 @@ void ArmatureTestScene::MainMenuCallback(Object *pSender)
     //TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    ArmatureDataManager::destoryInstance();
+    ArmatureDataManager::destroyInstance();
 }
 
 
@@ -272,7 +272,7 @@ std::string TestAsynchronousLoading::subtitle() const
 
 void TestAsynchronousLoading::restartCallback(Object* pSender)
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)

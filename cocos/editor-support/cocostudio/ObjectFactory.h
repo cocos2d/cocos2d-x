@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "CocoStudio.h"
 #include <string>
-#include <map>
+#include <unordered_map>
 
 namespace cocostudio {
 
@@ -46,14 +46,17 @@ public:
         std::string _class;
         Instance _fun;
     };
-    typedef std::map<std::string, TInfo>  FactoryMap;
-    ObjectFactory(void);
-    virtual ~ObjectFactory(void);
+    typedef std::unordered_map<std::string, TInfo>  FactoryMap;
+
     static ObjectFactory* getInstance();
-    void destroyInstance();
+    static void destroyInstance();
     cocos2d::Object* createObject(const char *name);
     void registerType(const TInfo &t);
     void removeAll();
+
+protected:
+    ObjectFactory(void);
+    virtual ~ObjectFactory(void);
 private:
     static ObjectFactory *_sharedFactory;
     FactoryMap _typeMap;

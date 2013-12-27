@@ -31,13 +31,13 @@ namespace cocostudio {
 TriggerMng* TriggerMng::_sharedTriggerMng = nullptr;
 
 TriggerMng::TriggerMng(void)
-    : _movementDispatches(nullptr)
+: _movementDispatches(new std::unordered_map<Armature*, ArmatureMovementDispatcher*>)
 {
-	_movementDispatches = new std::unordered_map<Armature*, ArmatureMovementDispatcher*>;
 }
 
 TriggerMng::~TriggerMng(void)
 {
+    removeAll();
     _eventTriggers.clear();
 	_triggerObjs.clear();
 
@@ -61,7 +61,6 @@ TriggerMng* TriggerMng::getInstance()
 
 void TriggerMng::destroyInstance()
 {
-    removeAll();
     CC_SAFE_DELETE(_sharedTriggerMng);
 }
 
@@ -75,10 +74,10 @@ void TriggerMng::parse(const rapidjson::Value &root)
                 const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
                 TriggerObj *obj = TriggerObj::create();
                 obj->serialize(subDict);
-				std::vector<int> &_vInt = obj->getEvents();
-				for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+				auto &vInt = obj->getEvents();
+                for (const auto& e : vInt)
 				{
-					add((unsigned int)(*iter), obj);
+					add((unsigned int)e, obj);
 				}
 				
                 _triggerObjs.insert(std::pair<unsigned int, TriggerObj*>(obj->getId(), obj));
@@ -91,7 +90,7 @@ cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 {
     CCAssert(event >= 0, "Argument must be larger than 0");
     
-    std::unordered_map<unsigned int, cocos2d::Vector<TriggerObj*>*>::const_iterator iter = _eventTriggers.find(event);
+    auto iter = _eventTriggers.find(event);
     if (iter == _eventTriggers.end())
     {
         return nullptr;
@@ -101,7 +100,7 @@ cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
 
 TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
 {
-    std::unordered_map<unsigned int, TriggerObj*>::const_iterator iter = _triggerObjs.find(id);
+    auto iter = _triggerObjs.find(id);
     if (iter == _triggerObjs.end())
     {
         return nullptr;
@@ -109,43 +108,43 @@ TriggerObj* TriggerMng::getTriggerObj(unsigned int id) const
     return iter->second;
 }
 
-bool TriggerMng::add(unsigned int event, TriggerObj *pObj)
+bool TriggerMng::add(unsigned int event, TriggerObj *obj)
 {
-    bool bRet = false;
-    CCAssert(pObj != nullptr, "Argument must be non-nil");
+    bool ret = false;
+    CCAssert(obj != nullptr, "Argument must be non-nil");
     do
     {
         auto iterator = _eventTriggers.find(event);
         if (iterator == _eventTriggers.end())
         {
-            cocos2d::Vector<TriggerObj*>* _pArray = new cocos2d::Vector<TriggerObj*>();
-            _pArray->pushBack(pObj);
-            _eventTriggers.insert(std::map<unsigned int, cocos2d::Vector<TriggerObj*>*>::value_type(event, _pArray));
+            auto array = new cocos2d::Vector<TriggerObj*>();
+            array->pushBack(obj);
+            _eventTriggers.insert(std::make_pair(event, array));
         }
         else
         {
             Vector<TriggerObj*>* temp = iterator->second;
-            if(temp->find(pObj) == temp->end())
+            if(temp->find(obj) == temp->end())
             {
-                temp->pushBack(pObj);
+                temp->pushBack(obj);
             }
         }
-        bRet = true;
+        ret = true;
     } while(0);
-    return bRet;
+    return ret;
 }
 
 void TriggerMng::removeAll(void)
 {
-    std::unordered_map<unsigned int, cocos2d::Vector<TriggerObj*>*>::iterator _etIter = _eventTriggers.begin();
-    for (;_etIter != _eventTriggers.end(); ++_etIter)
+    auto etIter = _eventTriggers.begin();
+    for (;etIter != _eventTriggers.end(); ++etIter)
     {
-        for (cocos2d::Vector<TriggerObj*>::iterator _toIter = _etIter->second->begin(); _toIter != _etIter->second->end(); ++_toIter)
+        for (auto toIter = etIter->second->begin(); toIter != etIter->second->end(); ++toIter)
         {
-            (*_toIter)->removeAll();
+            (*toIter)->removeAll();
         }
-        _etIter->second->clear();
-        CC_SAFE_DELETE(_etIter->second);
+        etIter->second->clear();
+        CC_SAFE_DELETE(etIter->second);
     }
     _eventTriggers.clear();
 }
@@ -208,8 +207,8 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	{
 		return false;
 	}
-	std::vector<int> &_vInt = obj->getEvents();
-	for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+	auto &_vInt = obj->getEvents();
+	for (auto iter = _vInt.begin(); iter != _vInt.end(); ++iter)
 	{
 		remove(*iter, obj);
 	}
@@ -228,14 +227,14 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 		return;
 	}
 
-	std::unordered_map<Armature*, ArmatureMovementDispatcher*>::iterator iter = _movementDispatches->find(pAr);
+	auto iter = _movementDispatches->find(pAr);
 	ArmatureMovementDispatcher *amd = nullptr;
 	if (iter == _movementDispatches->end())
 	{
 		amd = new ArmatureMovementDispatcher();
         pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(ArmatureMovementDispatcher::animationEvent, amd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
         amd->addAnnimationEventCallBack(pTarget, mecf);
-		_movementDispatches->insert(std::map<Armature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
+		_movementDispatches->insert(std::make_pair(pAr, amd));
 
 	}
 	else
@@ -308,7 +307,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 
  void ArmatureMovementDispatcher::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
  {
-	 for (std::unordered_map<Object*, SEL_MovementEventCallFunc> ::iterator iter = _mapEventAnimation->begin(); iter != _mapEventAnimation->end(); ++iter)
+	 for (auto iter = _mapEventAnimation->begin(); iter != _mapEventAnimation->end(); ++iter)
 	 {
 		   (iter->first->*iter->second)(armature, movementType, movementID);
 	 }

@@ -41,6 +41,8 @@ public:
 	void addAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
+    
+private:
 	std::unordered_map<Object*, SEL_MovementEventCallFunc> *_mapEventAnimation;
 
 };
@@ -53,8 +55,8 @@ public:
 	
 public:
     static TriggerMng* getInstance();
+    static void destroyInstance();
     static const char* triggerMngVersion();
-    void destroyInstance();
     
 public:
 	void parse(const rapidjson::Value &root);
