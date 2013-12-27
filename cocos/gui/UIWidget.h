@@ -663,36 +663,27 @@ protected:
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     bool _updateEnabled;      ///< is "update" method scheduled
-//    Node* _renderer;        ///< base renderer
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point
-    
     Object*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
-    
-
-    
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
     bool _ignoreSize;
-    Vector<Node*> _widgetChildren;
     bool _affectByClipping;
-    
     SizeType _sizeType;
     Point _sizePercent;
     PositionType _positionType;
     Point _positionPercent;
-    
     bool _reorderWidgetChildDirty;
-    
     bool _hitted;
-    
     EventListenerTouchOneByOne* _touchListener;
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
+    Vector<Node*> _widgetChildren;
 };
 }
 
