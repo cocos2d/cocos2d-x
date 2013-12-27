@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 12/13/13 17:54:46.
+** Generated automatically by tolua++-1.0.92 on 12/26/13 16:55:25.
 */
 
 /****************************************************************************
@@ -1975,9 +1975,9 @@ tolua_lerror:
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: playByIndex of class  CCArmatureAnimation */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArmatureAnimation_playByIndex00
-static int tolua_CocoStudio_CCArmatureAnimation_playByIndex00(lua_State* tolua_S)
+/* method: playWithIndex of class  CCArmatureAnimation */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCArmatureAnimation_playWithIndex00
+static int tolua_CocoStudio_CCArmatureAnimation_playWithIndex00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -2001,16 +2001,16 @@ static int tolua_CocoStudio_CCArmatureAnimation_playByIndex00(lua_State* tolua_S
   int loop = ((int)  tolua_tonumber(tolua_S,5,-1));
   int tweenEasing = ((int)  tolua_tonumber(tolua_S,6,TWEEN_EASING_MAX));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playByIndex'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'playWithIndex'", NULL);
 #endif
   {
-   self->playByIndex(animationIndex,durationTo,durationTween,loop,tweenEasing);
+   self->playWithIndex(animationIndex,durationTo,durationTween,loop,tweenEasing);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'playByIndex'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'playWithIndex'.",&tolua_err);
  return 0;
 #endif
 }
@@ -26219,7 +26219,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"getSpeedScale",tolua_CocoStudio_CCArmatureAnimation_getSpeedScale00);
    tolua_function(tolua_S,"play",tolua_CocoStudio_CCArmatureAnimation_play00);
    tolua_function(tolua_S,"play",tolua_CocoStudio_CCArmatureAnimation_play01);
-   tolua_function(tolua_S,"playByIndex",tolua_CocoStudio_CCArmatureAnimation_playByIndex00);
+   tolua_function(tolua_S,"playWithIndex",tolua_CocoStudio_CCArmatureAnimation_playWithIndex00);
    tolua_function(tolua_S,"gotoAndPlay",tolua_CocoStudio_CCArmatureAnimation_gotoAndPlay00);
    tolua_function(tolua_S,"gotoAndPause",tolua_CocoStudio_CCArmatureAnimation_gotoAndPause00);
    tolua_function(tolua_S,"pause",tolua_CocoStudio_CCArmatureAnimation_pause00);

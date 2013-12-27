@@ -205,9 +205,6 @@ bool CCArmature::init(const char *name)
 
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
-        unscheduleUpdate();
-        scheduleUpdate();
-
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
 
@@ -418,6 +415,18 @@ CCAffineTransform CCArmature::nodeToParentTransform()
     }
 
     return m_sTransform;
+}
+
+void CCArmature::onEnter()
+{
+    CCNode::onEnter();
+    scheduleUpdate();
+}
+
+void CCArmature::onExit()
+{
+    CCNode::onExit();
+    unscheduleUpdate();
 }
 
 void CCArmature::updateOffsetPoint()
