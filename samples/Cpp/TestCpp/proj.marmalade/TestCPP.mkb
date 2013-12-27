@@ -366,12 +366,7 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest)
 	UICheckBoxTest.cpp
-	UICheckBoxTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest)
-	UIDragPanelTest.cpp
-	UIDragPanelTest.h
+	UICheckBoxTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIImageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest)
@@ -401,12 +396,7 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest)
 	UILoadingBarTest.cpp
-	UILoadingBarTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest)
-	UINodeContainerTest.cpp
-	UINodeContainerTest.h
+	UILoadingBarTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIPageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest)
@@ -426,22 +416,17 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UISliderTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest)
 	UISliderTest.cpp
-	UISliderTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UITextAreaTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest)
-	UITextAreaTest.cpp
-	UITextAreaTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UITextButtonTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest)
-	UITextButtonTest.cpp
-	UITextButtonTest.h
+	UISliderTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UITextFieldTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest)
 	UITextFieldTest.cpp
 	UITextFieldTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest)
+	UIWidgetAddNodeTest.cpp
+	UIWidgetAddNodeTest.h
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)
