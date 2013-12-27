@@ -14,6 +14,7 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "CocosGUI.h"
 #include "CocoStudio.h"
+#include "CCLuaEngine.h"
 
 using namespace gui;
 using namespace cocostudio;
@@ -52,14 +53,13 @@ LuaCocoStudioEventListener* LuaCocoStudioEventListener::create()
 
 void LuaCocoStudioEventListener::eventCallbackFunc(Object* sender,int eventType)
 {
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
     
     if (0 != handler)
     {
-        LuaCocoStudioEventListenerData eventData(sender,eventType);
+        LuaStudioEventListenerData eventData(sender,eventType);
         BasicScriptData data(this,(void*)&eventData);
-        ScriptEvent scriptEvent(kCocoStudioEventListener,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER, (void*)&data);
     }
 }
 
@@ -104,7 +104,7 @@ static int lua_cocos2dx_UIWidget_addTouchEventListener(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listener);
         self->addTouchEventListener(listener, toucheventselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -172,7 +172,7 @@ static int lua_cocos2dx_UICheckBox_addEventListenerCheckBox(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listener);        
         self->addEventListenerCheckBox(listener, checkboxselectedeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -241,7 +241,7 @@ static int lua_cocos2dx_UISlider_addEventListenerSlider(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
 
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listener);        
         self->addEventListenerSlider(listener, sliderpercentchangedselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -310,7 +310,7 @@ static int lua_cocos2dx_UITextField_addEventListenerTextField(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
 
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listener);        
         self->addEventListenerTextField(listener, textfieldeventselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -379,7 +379,7 @@ static int lua_cocos2dx_UIPageView_addEventListenerPageView(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
 
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listener, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listener);        
         self->addEventListenerPageView(listener, pagevieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -448,7 +448,7 @@ static int lua_cocos2dx_UIListView_addEventListenerListView(lua_State* L)
         
         LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
         
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::EVENT_LISTENER);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)listern, handler, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
         
         self->setUserObject(listern);
         self->addEventListenerListView(listern, listvieweventselector(LuaCocoStudioEventListener::eventCallbackFunc));
@@ -651,9 +651,7 @@ void LuaArmatureWrapper::movementEventCallback(Armature* armature, MovementEvent
         
         BasicScriptData data(this,(void*)&wrapperData);
         
-        ScriptEvent scriptEvent(kArmatureWrapper,(void*)&data);
-        
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ARMATURE_EVENT, (void*)&data);
     }
 }
 
@@ -671,9 +669,7 @@ void LuaArmatureWrapper::frameEventCallback(Bone* bone, const char* frameEventNa
         
         BasicScriptData data(this,(void*)&wrapperData);
         
-        ScriptEvent scriptEvent(kArmatureWrapper,(void*)&data);
-        
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ARMATURE_EVENT, (void*)&data);
     }
 }
 
@@ -687,9 +683,7 @@ void LuaArmatureWrapper::addArmatureFileInfoAsyncCallback(float percent)
         
         BasicScriptData data(this,(void*)&wrapperData);
         
-        ScriptEvent scriptEvent(kArmatureWrapper,(void*)&data);
-        
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::ARMATURE_EVENT, (void*)&data);
     }
 }
 

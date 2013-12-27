@@ -117,7 +117,6 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
-    virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
@@ -128,7 +127,6 @@ private:
     bool init(void);
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
-    int handleNotificationEvent(void* data);
     int handleCallFuncActionEvent(void* data);
     int handleScheduler(void* data);
     int handleKeypadEvent(void* data);
@@ -137,18 +135,18 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
-    int handleCocoStudioEventListener(void* data);
-    int handleArmatureWrapper(void* data);
-    int handleEventListenerAcc(void* data);
-    int handleEventListenerKeyboard(void* data);
-    int handleEventListenerTouch(void* data);
-    int handleEventListenerTouches(void* data);
-    int handleEventListenerMouse(void* data);
-    int handleEventListenerCustom(void* data);
-    
+    int handleEvenCustom(void* data);
     int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);
     int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data);
-    int handlerTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)> func);
+    int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)>& func);
+    int handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleEventAcc(void* data);
+    int handleEventKeyboard(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleEventTouch(ScriptHandlerMgr::HandlerType type, void* data);
+    int handleEventTouches(ScriptHandlerMgr::HandlerType type, void* data);
+    int handleEventMouse(ScriptHandlerMgr::HandlerType type, void* data);
+    
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;
