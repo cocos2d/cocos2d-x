@@ -35,20 +35,20 @@ static inline float bezieratFunction( float a, float b, float c, float d, float 
 
 EaseBezierAction* EaseBezierAction::create(cocos2d::ActionInterval* action)
 {
-	EaseBezierAction *_ret = new EaseBezierAction();
-	if (_ret)
+	EaseBezierAction *ret = new EaseBezierAction();
+	if (ret)
 	{  
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 void EaseBezierAction::setBezierParamer( float p0, float p1, float p2, float p3)
@@ -87,20 +87,20 @@ EaseBezierAction* EaseBezierAction::reverse() const
 
 EaseQuadraticActionIn* EaseQuadraticActionIn::create(ActionInterval* action)
 {
-	EaseQuadraticActionIn *_ret = new EaseQuadraticActionIn();
-	if (_ret)
+	EaseQuadraticActionIn *ret = new EaseQuadraticActionIn();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuadraticActionIn* EaseQuadraticActionIn::clone() const
@@ -127,20 +127,20 @@ EaseQuadraticActionIn* EaseQuadraticActionIn::reverse() const
 
 EaseQuadraticActionOut* EaseQuadraticActionOut::create(ActionInterval* action)
 {
-	EaseQuadraticActionOut *_ret = new EaseQuadraticActionOut();
-	if (_ret)
+	EaseQuadraticActionOut *ret = new EaseQuadraticActionOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuadraticActionOut* EaseQuadraticActionOut::clone() const
@@ -168,20 +168,20 @@ EaseQuadraticActionOut* EaseQuadraticActionOut::reverse() const
 
 EaseQuadraticActionInOut* EaseQuadraticActionInOut::create(ActionInterval* action)
 {
-	EaseQuadraticActionInOut *_ret = new EaseQuadraticActionInOut();
-	if (_ret)
+	EaseQuadraticActionInOut *ret = new EaseQuadraticActionInOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
@@ -221,20 +221,20 @@ EaseQuadraticActionInOut* EaseQuadraticActionInOut::reverse() const
 
 EaseQuarticActionIn* EaseQuarticActionIn::create(ActionInterval* action)
 {
-	EaseQuarticActionIn *_ret = new EaseQuarticActionIn();
-	if (_ret)
+	EaseQuarticActionIn *ret = new EaseQuarticActionIn();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuarticActionIn* EaseQuarticActionIn::clone() const
@@ -262,20 +262,20 @@ EaseQuarticActionIn* EaseQuarticActionIn::reverse() const
 
 EaseQuarticActionOut* EaseQuarticActionOut::create(ActionInterval* action)
 {
-	EaseQuarticActionOut *_ret = new EaseQuarticActionOut();
-	if (_ret)
+	EaseQuarticActionOut *ret = new EaseQuarticActionOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuarticActionOut* EaseQuarticActionOut::clone() const
@@ -304,20 +304,20 @@ EaseQuarticActionOut* EaseQuarticActionOut::reverse() const
 
 EaseQuarticActionInOut* EaseQuarticActionInOut::create(ActionInterval* action)
 {
-	EaseQuarticActionInOut *_ret = new EaseQuarticActionInOut();
-	if (_ret)
+	EaseQuarticActionInOut *ret = new EaseQuarticActionInOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
@@ -354,20 +354,20 @@ EaseQuarticActionInOut* EaseQuarticActionInOut::reverse() const
 
 EaseQuinticActionIn* EaseQuinticActionIn::create(ActionInterval* action)
 {
-	EaseQuinticActionIn *_ret = new EaseQuinticActionIn();
-	if (_ret)
+	EaseQuinticActionIn *ret = new EaseQuinticActionIn();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuinticActionIn* EaseQuinticActionIn::clone() const
@@ -395,20 +395,20 @@ EaseQuinticActionIn* EaseQuinticActionIn::reverse() const
 
 EaseQuinticActionOut* EaseQuinticActionOut::create(ActionInterval* action)
 {
-	EaseQuinticActionOut *_ret = new EaseQuinticActionOut();
-	if (_ret)
+	EaseQuinticActionOut *ret = new EaseQuinticActionOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuinticActionOut* EaseQuinticActionOut::clone() const
@@ -437,20 +437,20 @@ EaseQuinticActionOut* EaseQuinticActionOut::reverse() const
 
 EaseQuinticActionInOut* EaseQuinticActionInOut::create(ActionInterval* action)
 {
-	EaseQuinticActionInOut *_ret = new EaseQuinticActionInOut();
-	if (_ret)
+	EaseQuinticActionInOut *ret = new EaseQuinticActionInOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseQuinticActionInOut* EaseQuinticActionInOut::clone() const
@@ -487,20 +487,20 @@ EaseQuinticActionInOut* EaseQuinticActionInOut::reverse() const
 
 EaseCircleActionIn* EaseCircleActionIn::create(ActionInterval* action)
 {
-	EaseCircleActionIn *_ret = new EaseCircleActionIn();
-	if (_ret)
+	EaseCircleActionIn *ret = new EaseCircleActionIn();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCircleActionIn* EaseCircleActionIn::clone() const
@@ -528,20 +528,20 @@ EaseCircleActionIn* EaseCircleActionIn::reverse() const
 
 EaseCircleActionOut* EaseCircleActionOut::create(ActionInterval* action)
 {
-	EaseCircleActionOut *_ret = new EaseCircleActionOut();
-	if (_ret)
+	EaseCircleActionOut *ret = new EaseCircleActionOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCircleActionOut* EaseCircleActionOut::clone() const
@@ -570,20 +570,20 @@ EaseCircleActionOut* EaseCircleActionOut::reverse() const
 
 EaseCircleActionInOut* EaseCircleActionInOut::create(ActionInterval* action)
 {
-	EaseCircleActionInOut *_ret = new EaseCircleActionInOut();
-	if (_ret)
+	EaseCircleActionInOut *ret = new EaseCircleActionInOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCircleActionInOut* EaseCircleActionInOut::clone() const
@@ -620,20 +620,20 @@ EaseCircleActionInOut* EaseCircleActionInOut::reverse() const
 
 EaseCubicActionIn* EaseCubicActionIn::create(ActionInterval* action)
 {
-	EaseCubicActionIn *_ret = new EaseCubicActionIn();
-	if (_ret)
+	EaseCubicActionIn *ret = new EaseCubicActionIn();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCubicActionIn* EaseCubicActionIn::clone() const
@@ -661,20 +661,20 @@ EaseCubicActionIn* EaseCubicActionIn::reverse() const
 
 EaseCubicActionOut* EaseCubicActionOut::create(ActionInterval* action)
 {
-	EaseCubicActionOut *_ret = new EaseCubicActionOut();
-	if (_ret)
+	EaseCubicActionOut *ret = new EaseCubicActionOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCubicActionOut* EaseCubicActionOut::clone() const
@@ -702,20 +702,20 @@ EaseCubicActionOut* EaseCubicActionOut::reverse() const
 
 EaseCubicActionInOut* EaseCubicActionInOut::create(ActionInterval* action)
 {
-	EaseCubicActionInOut *_ret = new EaseCubicActionInOut();
-	if (_ret)
+	EaseCubicActionInOut *ret = new EaseCubicActionInOut();
+	if (ret)
 	{
-		if (_ret->initWithAction(action))
+		if (ret->initWithAction(action))
 		{
-			_ret->autorelease();
+			ret->autorelease();
 		}
 		else
 		{
-			CC_SAFE_RELEASE_NULL(_ret);
+			CC_SAFE_RELEASE_NULL(ret);
 		}
 	}
 
-	return _ret; 
+	return ret; 
 }
 
 EaseCubicActionInOut* EaseCubicActionInOut::clone() const

@@ -193,11 +193,11 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     //    widget->setFileDesignSize(Size(fileDesignWidth, fileDesignHeight));
     const rapidjson::Value& actions = DICTOOL->getSubDictionary_json(data, "animation");
     /* *********temp********* */
-    //    ActionManager::shareManager()->releaseActions();
+    //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
     Object* rootWidget = (Object*) widget;
-    ActionManagerEx::shareManager()->initWithDictionary(fileName,actions,rootWidget);
+    ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
 
@@ -893,11 +893,11 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     //    widget->setFileDesignSize(Size(fileDesignWidth, fileDesignHeight));
     const rapidjson::Value& actions = DICTOOL->getSubDictionary_json(data, "animation");
     /* *********temp********* */
-    //    ActionManager::shareManager()->releaseActions();
+    //    ActionManager::getInstance()->releaseActions();
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
     Object* rootWidget = (Object*) widget;
-    ActionManagerEx::shareManager()->initWithDictionary(fileName,actions,rootWidget);
+    ActionManagerEx::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
 
