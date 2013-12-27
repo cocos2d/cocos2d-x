@@ -18,23 +18,23 @@ void skipWhiteSpace(Stream* stream)
 
     do
     {
-		stream->read(&c);
+stream->read(&c);
     } while (isspace(c) && c!=EOF);
 
     // If we are not at the end of the file, then since we found a
     // non-whitespace character, we put the cursor back in front of it.
     if (c != EOF)
-	{
-		if (stream->seek(-1, SEEK_CUR) == false)
+{
+if (stream->seek(-1, SEEK_CUR) == false)
         {
             CCAssert(0, "Failed to seek backwards one character after skipping whitespace.");
         }
-	}       
+}       
 }
 
 char* trimWhiteSpace(char *str)
 {
-    if (str == NULL)
+    if (str == nullptr)
     {
         return str;
     }
@@ -87,7 +87,7 @@ ElementNode::ElementNode(Stream* stream, const char* name, const char* id) : _no
 
 void ElementNode::readContents(Stream* stream, char* name, char* id)
 {
-	if (name)
+if (name)
     {
         _nodeType = name;
     }
@@ -107,47 +107,47 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
         skipWhiteSpace(stream);
 
         // Stop when we have reached the end of the file.
-		if (stream->eof())
+if (stream->eof())
             break;
 
         // Read the next line.
         rc = stream->readLine(2048,line);
-        if (rc == NULL)
+        if (rc == nullptr)
         {
-			//delete line;
-			CCAssert(0, "Error reading line from file.");
+//delete line;
+CCAssert(0, "Error reading line from file.");
             return;
         }
 
-		if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
-		{
-			//delete line;
-			continue;
-		}
+if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
+{
+//delete line;
+continue;
+}
         
     
         // If an '=' appears on this line, parse it as a name/value pair.
         // Note: strchr() has to be called before strtok(), or a backup of line has to be kept.
         rc = strchr(line, '=');
-        if (rc != NULL)
+        if (rc != nullptr)
         {
             // There could be a '}' at the end of the line, ending a namespace.
             rc = strchr(line, '}');
 
             // First token should be the property name.
             name = strtok(line, " =\t");
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: value without name.");
                 return;
             }
 
             // Scan for next token, the property's value.
-            value = strtok(NULL, "=");
-            if (value == NULL)
+            value = strtok(nullptr, "=");
+            if (value == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: name without value.");
             }
 
@@ -157,9 +157,9 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
             // Store name/value pair.
             _elements.push_back(KeyValue(name, value));
 
-            if (rc != NULL)
+            if (rc != nullptr)
             {
-				//delete line;
+//delete line;
                 // End of namespace.
                 return;
             }
@@ -177,33 +177,33 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
             // Get the name of the namespace.
             name = strtok(line, " \t\n{");
             name = trimWhiteSpace(name);
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: unknown error.");
             }
             else if (name[0] == '}')
             {
-				//delete line;
+//delete line;
                 // End of namespace.
                 return;
             }
 
             // Get its ID if it has one.
-            value = strtok(NULL, "{");
+            value = strtok(nullptr, "{");
             value = trimWhiteSpace(value);
             
 
-            if (value != NULL && value[0] == '{')
+            if (value != nullptr && value[0] == '{')
             {
                 // New namespace without an ID.
-                ElementNode* space = new ElementNode(stream, name, NULL);
+                ElementNode* space = new ElementNode(stream, name, nullptr);
                 _childs.push_back(space);
             }
             else
             {
                 // If '{' appears on the same line.
-                if (rc != NULL)
+                if (rc != nullptr)
                 {
                     // Create new namespace.
                     ElementNode* space = new ElementNode(stream, name, value);
@@ -213,10 +213,10 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
                 {
                     // Find out if the next line starts with "{"
                     skipWhiteSpace(stream);
-					stream->read(&c);
+stream->read(&c);
                   //  c = readChar(stream);
 
-					if (c == '{')
+if (c == '{')
                     {
                         // Create new namespace.
                         ElementNode* space = new ElementNode(stream, name, value);
@@ -225,16 +225,16 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
                     else
                     {
                         // Back up from fgetc()                      
-						if(stream->seek(-1,SEEK_CUR) == false)
-						{
-							//delete line;
-							CCAssert(0, "Failed to seek backwards a single character");
-						
-							return;
-						}
+if(stream->seek(-1,SEEK_CUR) == false)
+{
+//delete line;
+CCAssert(0, "Failed to seek backwards a single character");
+
+return;
+}
 
                         // Store "name value" as a name/value pair, or even just "name".
-                        if (value != NULL)
+                        if (value != nullptr)
                         {
                             _elements.push_back(KeyValue(name, value));
                         }
@@ -248,7 +248,7 @@ void ElementNode::readContents(Stream* stream, char* name, char* id)
         }    
     }
     rewind();
-	//delete line;
+//delete line;
 }
 
 
@@ -259,26 +259,26 @@ ElementNode* ElementNode::create(const char* fileName)
     if (!fileName || strlen(fileName) == 0)
     {
         CCAssert(0, "Attempting to create a Properties object from an empty URL!");
-        return NULL;
+        return nullptr;
     }  
       
 
-	Stream* stream = StreamManager::openStream(fileName, "rb");
+Stream* stream = StreamManager::openStream(fileName, "rb");
     if (!stream)
     {
-		CCAssert(0, "Failed to open file");
-        return NULL;
+CCAssert(0, "Failed to open file");
+        return nullptr;
     }
 
     ElementNode* properties = new ElementNode(stream);
-	
+
     CC_SAFE_DELETE(stream);
     return properties;
 }
 
 void ElementNode::readFlag(Stream* stream)
 {
-	char line[2048];
+char line[2048];
    
     char* name;
     char* value;   
@@ -293,46 +293,46 @@ void ElementNode::readFlag(Stream* stream)
             break;
 
         // Read the next line.    
-		
-		 rc = stream->readLine(2048,line);
-        if (rc == NULL)
+
+ rc = stream->readLine(2048,line);
+        if (rc == nullptr)
         {
-			//delete line;
-			CCLOG("Error reading line from file.");
+//delete line;
+CCLOG("Error reading line from file.");
             return;
         }
 
-		if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
-		{
-			//delete line;
-			continue;
-		}
+if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
+{
+//delete line;
+continue;
+}
         
     
         // If an '=' appears on this line, parse it as a name/value pair.
         // Note: strchr() has to be called before strtok(), or a backup of line has to be kept.
         rc = strchr(line, '=');
-        if (rc != NULL)
+        if (rc != nullptr)
         {
             // There could be a '}' at the end of the line, ending a namespace.
             rc = strchr(line, '>');
 
             // First token should be the property name.
             name = strtok(line, " =\t");
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: value without name.");
                 return;
             }
 
             // Scan for next token, the property's value.
-            value = strtok(NULL, "=");
-            if (value == NULL)
+            value = strtok(nullptr, "=");
+            if (value == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: name without value.");
-				return;
+return;
             }
 
             // Remove white-space from value.
@@ -341,9 +341,9 @@ void ElementNode::readFlag(Stream* stream)
             // Store name/value pair.
             _flags.push_back(KeyValue(name, value));
 
-            if (rc != NULL)
+            if (rc != nullptr)
             {
-				//delete line;
+//delete line;
                 // End of namespace.
                 return;
             }
@@ -361,15 +361,15 @@ void ElementNode::readFlag(Stream* stream)
             // Get the name of the namespace.
             name = strtok(line, " \t\n<");
             name = trimWhiteSpace(name);
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//delete line;
+//delete line;
                 CCLOG("Error parsing properties file: unknown error.");
-				return;
+return;
             }
             else if (name[0] == '>')
             {
-				//delete line;
+//delete line;
                 // End of namespace.
                 return;
             }          
@@ -377,7 +377,7 @@ void ElementNode::readFlag(Stream* stream)
 
         }    
     }
-	//delete line;
+//delete line;
 
 }
 
@@ -394,53 +394,53 @@ void ElementNode::read(Stream* stream)
         skipWhiteSpace(stream);
 
         // Stop when we have reached the end of the file.
-		if (stream->eof())
-		{
-			
-			//CC_SAFE_DELETE_ARRAY(line);
+if (stream->eof())
+{
+
+//CC_SAFE_DELETE_ARRAY(line);
             break;
-		}
+}
 
         // Read the next line.
-		 rc = stream->readLine(2048,line);    
-        if (rc == NULL)
+ rc = stream->readLine(2048,line);    
+        if (rc == nullptr)
         {
-			//CC_SAFE_DELETE_ARRAY(line);
-			CCLOG("Error reading line from file.");
+//CC_SAFE_DELETE_ARRAY(line);
+CCLOG("Error reading line from file.");
             return;
         }
 
-		if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
-		{
-			//CC_SAFE_DELETE_ARRAY(line);
-			continue;
-		}
+if (strncmp(line, "//", 2) == 0) // Ignore comment, skip line.
+{
+//CC_SAFE_DELETE_ARRAY(line);
+continue;
+}
         
     
         // If an '=' appears on this line, parse it as a name/value pair.
         // Note: strchr() has to be called before strtok(), or a backup of line has to be kept.
         rc = strchr(line, '=');
-        if (rc != NULL)
+        if (rc != nullptr)
         {
             // There could be a '}' at the end of the line, ending a namespace.
             rc = strchr(line, '}');
 
             // First token should be the property name.
             name = strtok(line, " =\t");
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//CC_SAFE_DELETE_ARRAY(line);
+//CC_SAFE_DELETE_ARRAY(line);
                 CCLOG("Error parsing properties file: value without name.");
                 return;
             }
 
             // Scan for next token, the property's value.
-            value = strtok(NULL, "=");
-            if (value == NULL)
-            {		
-				//CC_SAFE_DELETE_ARRAY(line);
+            value = strtok(nullptr, "=");
+            if (value == nullptr)
+            {
+//CC_SAFE_DELETE_ARRAY(line);
                 CCLOG("Error parsing properties file: name without value.");
-				return;
+return;
             }
 
             // Remove white-space from value.
@@ -449,9 +449,9 @@ void ElementNode::read(Stream* stream)
             // Store name/value pair.
             _elements.push_back(KeyValue(name, value));
 
-            if (rc != NULL)
+            if (rc != nullptr)
             {
-				//CC_SAFE_DELETE_ARRAY(line);
+//CC_SAFE_DELETE_ARRAY(line);
                 // End of namespace.
                 return;
             }
@@ -469,34 +469,34 @@ void ElementNode::read(Stream* stream)
             // Get the name of the namespace.
             name = strtok(line, " \t\n{");
             name = trimWhiteSpace(name);
-            if (name == NULL)
+            if (name == nullptr)
             {
-				//CC_SAFE_DELETE_ARRAY(line);
+//CC_SAFE_DELETE_ARRAY(line);
                 CCLOG("Error parsing properties file: unknown error.");
-				return;
+return;
             }
             else if (name[0] == '}')
             {
-				//CC_SAFE_DELETE_ARRAY(line);
+//CC_SAFE_DELETE_ARRAY(line);
                 // End of namespace.
                 return;
             }
 
             // Get its ID if it has one.
-            value = strtok(NULL, "{");
+            value = strtok(nullptr, "{");
             value = trimWhiteSpace(value);
             
 
-            if (value != NULL && value[0] == '{')
+            if (value != nullptr && value[0] == '{')
             {
                 // New namespace without an ID.
-                ElementNode* space = new ElementNode(stream, name, NULL);
+                ElementNode* space = new ElementNode(stream, name, nullptr);
                 _childs.push_back(space);
             }
             else
             {
                 // If '{' appears on the same line.
-                if (rc != NULL)
+                if (rc != nullptr)
                 {
                     // Create new namespace.
                     ElementNode* space = new ElementNode(stream, name, value);
@@ -506,21 +506,21 @@ void ElementNode::read(Stream* stream)
                 {
                     // Find out if the next line starts with "{"
                     skipWhiteSpace(stream);
-					stream->read(&c);
+stream->read(&c);
 
-					if(c == '<')
-					{
-						//read <.....>						                        // Create new namespace.
+if(c == '<')
+{
+//read <.....>                        // Create new namespace.
                         ElementNode* space = new ElementNode();
-						space->readFlag(stream);
+space->readFlag(stream);
 
-						skipWhiteSpace(stream);
+skipWhiteSpace(stream);
 
-						stream->read(&c);
-						space->readContents(stream, name, value);
-						
+stream->read(&c);
+space->readContents(stream, name, value);
+
                         _childs.push_back(space);
-					}
+}
                     else if (c == '{')
                     {
                         // Create new namespace.
@@ -530,15 +530,15 @@ void ElementNode::read(Stream* stream)
                     else
                     {
                         // Back up from fgetc()
-						// Back up from fgetc()
+// Back up from fgetc()
                         if (stream->seek(-1, SEEK_CUR) == false)
-						{
-							//CC_SAFE_DELETE_ARRAY(line);
+{
+//CC_SAFE_DELETE_ARRAY(line);
                             CCLOG("Failed to seek backwards a single character after testing if the next line starts with '{'.");
-							return;
-						}
+return;
+}
                         // Store "name value" as a name/value pair, or even just "name".
-                        if (value != NULL)
+                        if (value != nullptr)
                         {
                             _elements.push_back(KeyValue(name, value));
                         }
@@ -552,17 +552,17 @@ void ElementNode::read(Stream* stream)
         }    
     }
 
-	//CC_SAFE_DELETE_ARRAY(line);
+//CC_SAFE_DELETE_ARRAY(line);
 }
 
 void ElementNode::empty()
 {
-	_elements.clear();
-	for (size_t i = 0; i < _childs.size(); i++)
-	{
-		CC_SAFE_DELETE(_childs[i]);
-	}
-	_childs.clear();
+_elements.clear();
+for (size_t i = 0; i < _childs.size(); i++)
+{
+CC_SAFE_DELETE(_childs[i]);
+}
+_childs.clear();
 }
 
 ElementNode::~ElementNode()
@@ -600,7 +600,7 @@ const char* ElementNode::getNextElement(char** value)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 ElementNode* ElementNode::getNextChild()
@@ -621,7 +621,7 @@ ElementNode* ElementNode::getNextChild()
         return ns;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void ElementNode::rewind()
@@ -629,12 +629,12 @@ void ElementNode::rewind()
     _elementsItr = _elements.end();
     _childsItr = _childs.end();
 
-	_flagsItr = _flags.end();
+_flagsItr = _flags.end();
 }
 
 ElementNode* ElementNode::getChild(const char* chileName) const
 {
-    ElementNode* ret = NULL;
+    ElementNode* ret = nullptr;
     std::vector<ElementNode*>::const_iterator it;
     
     for (it = _childs.begin(); it < _childs.end(); it++)
@@ -647,7 +647,7 @@ ElementNode* ElementNode::getChild(const char* chileName) const
         
         // Search recursively.
         ret = ret->getChild(chileName);
-        if (ret != NULL)
+        if (ret != nullptr)
         {
             return ret;
         }
@@ -754,12 +754,12 @@ const char* ElementNode::getElement(const char* name) const
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 const char* ElementNode::getElementFlag(const char* flagName)
 {
-	if (flagName)
+if (flagName)
     {
         for (size_t i = 0; i < _flags.size(); ++i)
         {
@@ -775,34 +775,34 @@ const char* ElementNode::getElementFlag(const char* flagName)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 ElementNode* ElementNode::createEmptyNode(const char* name, const char* nodetype)
 {
-	ElementNode* node = new ElementNode();
-	node->_nodeName = name;
-	node->_nodeType = nodetype;
-	return node;
+ElementNode* node = new ElementNode();
+node->_nodeName = name;
+node->_nodeType = nodetype;
+return node;
 }
 
 void ElementNode::addChildNode(ElementNode* child)
 {
-	_childs.push_back(child);
+_childs.push_back(child);
 }
 
 void ElementNode::delChildNode(const char* name, const char* nodetype)
 {
-	std::vector<ElementNode*>::iterator iter = _childs.begin();
-	for (; iter != _childs.end(); iter++)
-	{
-		if (strcmp((*iter)->getNodeName(), name) == 0 && strcmp((*iter)->getNodeType(), nodetype ) == 0)
-		{
-			CC_SAFE_DELETE((*iter));
-			_childs.erase(iter);
-			break;
-		}
-	}
+std::vector<ElementNode*>::iterator iter = _childs.begin();
+for (; iter != _childs.end(); iter++)
+{
+if (strcmp((*iter)->getNodeName(), name) == 0 && strcmp((*iter)->getNodeType(), nodetype ) == 0)
+{
+CC_SAFE_DELETE((*iter));
+_childs.erase(iter);
+break;
+}
+}
 }
 
 /*
@@ -1016,10 +1016,10 @@ bool ElementNode::writeToFile(const char* fileName)
     }
     
     
-	Stream* stream = StreamManager::openStream(fileName, "wb", StreamManager::StreamType_File);
+Stream* stream = StreamManager::openStream(fileName, "wb", StreamManager::StreamType_File);
     if (!stream)
     {
-		CCAssert(0, "Failed to open file");
+CCAssert(0, "Failed to open file");
         return false;
     }
     

@@ -4,7 +4,7 @@ namespace cocos2d
 {
 
 StringTool::StringTool()
-{	
+{
 }
 
 StringTool::~StringTool()
@@ -15,15 +15,15 @@ StringTool::~StringTool()
 std::vector<std::string> StringTool::StringSplitByString(const std::string &str, const std::string &strKey, int IgnoreCase /* = false */)
 {
     std::vector<std::string> Result;
-    const char *cpPos    = NULL;
-    const char *pLastPos = NULL;
+    const char *cpPos    = nullptr;
+    const char *pLastPos = nullptr;
     char *pStart = new char[str.size() + 1];
 
     strncpy(pStart, str.c_str(), str.size() + 1);
 
     Result.clear();
 
-    pLastPos = NULL;
+    pLastPos = nullptr;
     for (unsigned int i = 0; i < str.size(); i++)
     {
         int nCompareResult = 0;
@@ -34,7 +34,7 @@ std::vector<std::string> StringTool::StringSplitByString(const std::string &str,
         }
         else*/
         {
-			nCompareResult = strncmp(pStart + i, strKey.c_str(), strKey.size());
+nCompareResult = strncmp(pStart + i, strKey.c_str(), strKey.size());
         }
 
         if (!nCompareResult)
@@ -44,7 +44,7 @@ std::vector<std::string> StringTool::StringSplitByString(const std::string &str,
             {
                 Result.push_back(std::string(pLastPos) );
                 pLastPos = pStart + i + strKey.size();
-                pLastPos = NULL;
+                pLastPos = nullptr;
             }
             i += strKey.size() - 1;
         }
@@ -59,7 +59,7 @@ std::vector<std::string> StringTool::StringSplitByString(const std::string &str,
     if (pLastPos)
     {
         Result.push_back(std::string(pLastPos) );
-        pLastPos = NULL;
+        pLastPos = nullptr;
     }
 
     delete []pStart;
@@ -69,15 +69,15 @@ std::vector<std::string> StringTool::StringSplitByString(const std::string &str,
 std::vector<std::string> StringTool::StringSplitByChar(const std::string &str, char cKey, int IgnoreCase /* = false */)
 {
     std::vector<std::string> Result;
-    const char *cpPos    = NULL;
-    const char *pLastPos = NULL;
+    const char *cpPos    = nullptr;
+    const char *pLastPos = nullptr;
     char *pStart = new char[str.size() + 1];
 
     strncpy(pStart, str.c_str(), str.size() + 1);
 
     Result.clear();
 
-    pLastPos = NULL;
+    pLastPos = nullptr;
     for (unsigned int i = 0; i < str.size(); i++)
     {
         int nCompareResult = -1;
@@ -100,7 +100,7 @@ std::vector<std::string> StringTool::StringSplitByChar(const std::string &str, c
             {
                 Result.push_back(std::string(pLastPos) );
                 pLastPos = pStart + i + 1;
-                pLastPos = NULL;
+                pLastPos = nullptr;
             }
         }
         else
@@ -114,7 +114,7 @@ std::vector<std::string> StringTool::StringSplitByChar(const std::string &str, c
     if (pLastPos)
     {
         Result.push_back(std::string(pLastPos) );
-        pLastPos = NULL;
+        pLastPos = nullptr;
     }
 
     delete []pStart;
@@ -126,7 +126,7 @@ std::string StringTool::getFileName(const std::string& filepath)
     size_t index1 = filepath.find_last_of('\\');
     size_t index2 = filepath.find_last_of('/');
     size_t index = (index1 != -1 && index1 > index2 ? index1 : index2);
-	size_t length = filepath.length();
+size_t length = filepath.length();
     std::string output = filepath.substr(index + 1, length);
   
     return output;
@@ -137,10 +137,10 @@ std::string StringTool::getFileName(const std::string& filepath,const std::strin
     size_t index1 = filepath.find_last_of('\\');
     size_t index2 = filepath.find_last_of('/');
     size_t index = (index1 != -1 && index1 > index2 ? index1 : index2);
-	size_t length = filepath.length();
+size_t length = filepath.length();
     std::string filename = filepath.substr(index + 1, length);
     length = filename.length();
-	
+
     std::string output = filename.substr(0, (length-expName.length()-1));
     return output;
 }

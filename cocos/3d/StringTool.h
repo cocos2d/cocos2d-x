@@ -16,50 +16,50 @@ class StringTool
 {
 public:
 
-	/**
+    /**
      * Constructor.
      */
-	 StringTool();
+     StringTool();
 
-	 /**
+     /**
      * Destructor.
      */
     ~StringTool();
 
-	/**
+    /**
      * Splits string by given string.
      */
-	static std::vector<std::string> StringSplitByString(const std::string &str, const std::string &strKey, int IgnoreCase = true);
+    static std::vector<std::string> StringSplitByString(const std::string &str, const std::string &strKey, int IgnoreCase = true);
 
-	/**
+    /**
      * Splits string by given char.
      */
-	static std::vector<std::string> StringSplitByChar(const std::string &str, char cKey, int IgnoreCase = true);
+    static std::vector<std::string> StringSplitByChar(const std::string &str, char cKey, int IgnoreCase = true);
 
-	/**
+    /**
      * get file by given file path.
      */
-	static std::string getFileName(const std::string& filepath);
+    static std::string getFileName(const std::string& filepath);
 
-	/**
+    /**
      * get file by given file path.
      */
-	static std::string getFileName(const std::string& filepath,const std::string& expName);
+    static std::string getFileName(const std::string& filepath,const std::string& expName);
 
-	/**
+    /**
      * get file by given file path.
      */
-	static std::string getFilePath(const std::string& filename);
+    static std::string getFilePath(const std::string& filename);
     
-	/**
+    /**
     * convert string and other type
-	*/
+    */
     template<typename T>
     static std::string toString(const T& x);
     
-	/**
+    /**
     * convert other type from string
-	*/
+    */
     template<typename T>
     static void fromString(const std::string& str, T& x);
     
@@ -67,7 +67,7 @@ public:
     static void fromString(const std::string& str, bool& b);
 
 public:
-	
+    
 
 
 };
