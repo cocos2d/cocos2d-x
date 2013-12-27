@@ -269,8 +269,6 @@ endif(BUILD_EDITOR_COCOSBUILDER)
 if(BUILD_EDITOR_COCOSTUDIO)
 # cocostudio
 add_subdirectory(cocos/editor-support/cocostudio)
-# jsoncpp library, cocostuido depends on jsoncpp
-add_subdirectory(external/json)
 endif(BUILD_EDITOR_COCOSTUDIO)
 
 if(BUILD_LIBS_LUA)
