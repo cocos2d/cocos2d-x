@@ -112,6 +112,8 @@ public:
      */
     void removeItem(int index);
     
+    void removeAllItems();
+    
     /**
      * Returns a item whose index is same as the parameter.
      *
@@ -166,20 +168,24 @@ public:
     virtual std::string getDescription() const;
     
     void requestRefreshView();
-
-protected:
-    virtual void addChild(CCNode* child){ScrollView::addChild(child);};
-    virtual void addChild(CCNode * child, int zOrder){ScrollView::addChild(child, zOrder);};
-    virtual void addChild(CCNode* child, int zOrder, int tag){ScrollView::addChild(child, zOrder, tag);};
-    virtual void removeChild(CCNode* widget, bool cleanup = true){ScrollView::removeChild(widget, cleanup);};
     
-    virtual void removeAllChildren(){ScrollView::removeAllChildren();};
-    virtual CCArray* getChildren(){return ScrollView::getChildren();};
+protected:
+    virtual void addChild(CCNode* child) {ScrollView::addChild(child);};
+    virtual void addChild(CCNode * child, int zOrder) {ScrollView::addChild(child, zOrder);};
+    virtual void addChild(CCNode* child, int zOrder, int tag) {ScrollView::addChild(child, zOrder, tag);};
+    virtual void removeChild(CCNode* widget, bool cleanup = true) {ScrollView::removeChild(widget, cleanup);};
+    
+    virtual void removeAllChildren() {removeAllChildrenWithCleanup(true);};
+    virtual void removeAllChildrenWithCleanup(bool cleanup) {ScrollView::removeAllChildrenWithCleanup(cleanup);};
+    virtual CCArray* getChildren() {return ScrollView::getChildren();};
+    virtual unsigned int getChildrenCount() const {return ScrollView::getChildrenCount();};
+    virtual CCNode * getChildByTag(int tag) {return ScrollView::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) {return ScrollView::getChildByName(name);};
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged();
-    virtual Widget* createCloneInstance() ;
+    virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     void selectedItemEvent();

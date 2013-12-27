@@ -232,7 +232,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    CCNode * getChildByTag(int tag);
+    virtual CCNode * getChildByTag(int tag);
     
     virtual void sortAllChildren();
     /**
@@ -258,7 +258,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount() const;
+    virtual unsigned int getChildrenCount() const;
     
     /**
      * Removes this node itself from its parent node with a cleanup.
@@ -312,7 +312,7 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const char* name);
     
     
     virtual void visit();
