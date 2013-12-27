@@ -166,10 +166,10 @@ public:
      */
     void addEventListenerSlider(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
-    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event) override;
-    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event) override;
-    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event) override;
-    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event) override;
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     //override "getContentSize" method of widget.
     virtual const CCSize& getContentSize() const;
@@ -186,17 +186,17 @@ public:
     virtual std::string getDescription() const;
 
 protected:
-    virtual void initRenderer() override;
+    virtual void initRenderer();
     float getPercentWithBallPos(float location);
     void percentChangedEvent();
-    virtual void onPressStateChangedToNormal() override;
-    virtual void onPressStateChangedToPressed() override;
-    virtual void onPressStateChangedToDisabled() override;
-    virtual void onSizeChanged() override;
+    virtual void onPressStateChangedToNormal();
+    virtual void onPressStateChangedToPressed();
+    virtual void onPressStateChangedToDisabled();
+    virtual void onSizeChanged();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
-    virtual Widget* createCloneInstance() override;
-    virtual void copySpecialProperties(Widget* model) override;
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
     CCNode*  _barRenderer;
     CCNode* _progressBarRenderer;

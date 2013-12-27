@@ -235,7 +235,7 @@ public:
      */
     void addEventListenerScrollView(CCObject* target, SEL_ScrollViewEvent selector);
         
-    virtual void addChild(CCNode * child) override;
+    virtual void addChild(CCNode * child);
     /**
      * Adds a child to the container with a z-order
      *
@@ -244,7 +244,7 @@ public:
      * @param child     A child node
      * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      */
-    virtual void addChild(CCNode * child, int zOrder) override;
+    virtual void addChild(CCNode * child, int zOrder);
     /**
      * Adds a child to the container with z order and tag
      *
@@ -290,7 +290,7 @@ public:
      *
      * @param LayoutType
      */
-    virtual void setLayoutType(LayoutType type) override;
+    virtual void setLayoutType(LayoutType type);
     
     /**
      * Gets LayoutType.
@@ -299,15 +299,15 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const override;
+    virtual LayoutType getLayoutType() const;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
 protected:
-    virtual bool init() override;
-    virtual void initRenderer() override;
+    virtual bool init();
+    virtual void initRenderer();
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
@@ -324,11 +324,11 @@ protected:
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
-    virtual void handlePressLogic(const CCPoint &touchPoint) override;
-    virtual void handleMoveLogic(const CCPoint &touchPoint) override;
-    virtual void handleReleaseLogic(const CCPoint &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint) override;
-    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint) override;
+    virtual void handlePressLogic(const CCPoint &touchPoint);
+    virtual void handleMoveLogic(const CCPoint &touchPoint);
+    virtual void handleReleaseLogic(const CCPoint &touchPoint);
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint);
     void recordSlidTime(float dt);
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -344,7 +344,7 @@ protected:
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
-    virtual void doLayout() override;
+    virtual void doLayout();
 protected:
     Layout* _innerContainer;
     

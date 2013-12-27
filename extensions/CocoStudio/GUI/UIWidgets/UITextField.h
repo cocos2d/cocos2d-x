@@ -107,8 +107,8 @@ public:
     TextField();
     virtual ~TextField();
     static TextField* create();
-    virtual bool init() override;
-    virtual void initRenderer() override;
+    virtual bool init();
+    virtual void initRenderer();
     void setTouchSize(const CCSize &size);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
@@ -124,7 +124,7 @@ public:
     void setPasswordEnabled(bool enable);
     bool isPasswordEnabled();
     void setPasswordStyleText(const char* styleText);
-    virtual void update(float dt) override;
+    virtual void update(float dt);
     bool getAttachWithIME();
     void setAttachWithIME(bool attach);
     bool getDetachWithIME();

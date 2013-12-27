@@ -148,7 +148,7 @@ public:
      */
     void setItemsMargin(float margin);
     
-    virtual void sortAllChildren() override;
+    virtual void sortAllChildren();
     
     int getCurSelectedIndex() const;
     
@@ -161,9 +161,9 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    virtual void setDirection(SCROLLVIEW_DIR dir) override;
+    virtual void setDirection(SCROLLVIEW_DIR dir);
     
-    virtual std::string getDescription() const override;
+    virtual std::string getDescription() const;
     
     void requestRefreshView();
 
@@ -174,7 +174,7 @@ protected:
     virtual void removeChild(CCNode* widget, bool cleanup = true){ScrollView::removeChild(widget, cleanup);};
     
     virtual void removeAllChildren(){ScrollView::removeAllChildren();};
-    virtual CCArray* getChildren() override{return ScrollView::getChildren();};
+    virtual CCArray* getChildren(){return ScrollView::getChildren();};
     virtual bool init();
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
