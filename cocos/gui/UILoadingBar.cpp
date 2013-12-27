@@ -219,30 +219,16 @@ void LoadingBar::setPercent(int percent)
     _percent = percent;
     float res = _percent/100.0;
     
-    int x = 0, y = 0;
-    switch (_renderBarTexType)
-    {
-        case UI_TEX_TYPE_PLIST:
-        {
-            Sprite* barNode = dynamic_cast<Sprite*>(_barRenderer);
-            if (barNode)
-            {
-                Point to = barNode->getTextureRect().origin;
-                x = to.x;
-                y = to.y;
-            }
-            break;
-        }
-        default:
-            break;
-    }
     if (_scale9Enabled)
     {
         setScale9Scale();
     }
     else
     {
-        static_cast<Sprite*>(_barRenderer)->setTextureRect(Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
+        Sprite* spriteRenderer = static_cast<Sprite*>(_barRenderer);
+        Rect rect = spriteRenderer->getTextureRect();
+        rect.size.width = _barRendererTextureSize.width * res;
+        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
 }
 
