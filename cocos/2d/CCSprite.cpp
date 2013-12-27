@@ -673,11 +673,7 @@ void Sprite::draw(void)
     //TODO implement z order
     _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
-//    if(!culling())
-//    {
-//        renderCommand->releaseToCommandPool();
-//    }
-//    else
+//    if(culling())
     {
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
