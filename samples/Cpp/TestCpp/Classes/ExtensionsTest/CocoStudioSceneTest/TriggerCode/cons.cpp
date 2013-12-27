@@ -80,7 +80,7 @@ bool ArmatureActionState::init()
 	{
 		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
-		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_ComName.c_str()));
+		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);
@@ -109,7 +109,7 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "componentName")
 		{
-			_ComName = DICTOOL->getStringValue_json(subDict, "value");
+			_comName = DICTOOL->getStringValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "AnimationName")
@@ -131,7 +131,7 @@ void ArmatureActionState::removeAll()
 	{
 		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
-		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_ComName.c_str()));
+		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);
 		CCArmature *pAr = (CCArmature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == NULL);

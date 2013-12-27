@@ -65,6 +65,7 @@ TriggerMng* TriggerMng::getInstance()
 
 void TriggerMng::destroyInstance()
 {
+    removeAll();
     CC_SAFE_DELETE(_sharedTriggerMng);
 }
 
@@ -313,6 +314,7 @@ void TriggerMng::removeAllArmatureMovementCallBack()
 	while (iter != _movementDispatches->end())
 	{
 		removeArmatureAllMovementCallBack(iter->first);
+        ++iter;
 	}
 	_movementDispatches->clear();
 }
