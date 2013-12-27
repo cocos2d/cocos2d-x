@@ -39,7 +39,7 @@ ActionManagerEx* ActionManagerEx::getInstance()
 	return sharedActionManager;
 }
 
-void ActionManagerEx::purgeActionManager()
+void ActionManagerEx::destroyInstance()
 {
 	CC_SAFE_DELETE(sharedActionManager);
 }

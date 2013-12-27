@@ -387,7 +387,7 @@ int ActionNode::getLastFrameIndex()
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		auto cArray = _frameArray.at(n);
-		if (cArray->size() <= 0)
+		if (cArray->empty())
 		{
 			continue;
 		}
@@ -417,7 +417,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	for (int n = 0; n < _frameArrayNum; n++)
 	{
 		auto cArray = _frameArray.at(n);
-		if (cArray->size() <= 0)
+		if (cArray->empty())
 		{
 			continue;
 		}

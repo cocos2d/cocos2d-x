@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 #include "json/document.h"
 
-#define DICTOOL DictionaryHelper::shareHelper()
+#define DICTOOL DictionaryHelper::getInstance()
 
 namespace cocostudio {
 /**
@@ -40,8 +40,8 @@ class DictionaryHelper
 public:
     DictionaryHelper();
     ~DictionaryHelper();
-    static DictionaryHelper* shareHelper();
-	static void purgeDictionaryHelper();
+    static DictionaryHelper* getInstance();
+	static void destroyInstance();
     
 	const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);

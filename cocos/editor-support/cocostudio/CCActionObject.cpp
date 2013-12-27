@@ -71,7 +71,7 @@ bool ActionObject::getLoop()
 void ActionObject::setUnitTime(float fTime)
 {
 	_fUnitTime = fTime;
-    for(const auto e : _actionNodeList)
+    for(const auto &e : _actionNodeList)
 	{
         e->setUnitTime(_fUnitTime);
 	}
@@ -144,11 +144,9 @@ void ActionObject::play()
 {
 	stop();
 	this->updateToFrameByTime(0.0f);
-	auto frameNum = _actionNodeList.size();
-	for ( int i = 0; i < frameNum; i++ )
+    for(const auto &e : _actionNodeList)
 	{
-		auto actionNode = _actionNodeList.at(i);
-		actionNode->playAction();
+		e->playAction();
 	}
 	if (_loop)
 	{
@@ -172,14 +170,10 @@ void ActionObject::pause()
 
 void ActionObject::stop()
 {
-	auto frameNum = _actionNodeList.size();
-
-	for ( int i = 0; i < frameNum; i++ )
+    for(const auto &e : _actionNodeList)
 	{
-		auto actionNode = _actionNodeList.at(i);
-		actionNode->stopAction();
+		e->stopAction();
 	}
-
 	_pScheduler->unscheduleSelector(schedule_selector(ActionObject::simulationActionUpdate), this);
 	_bPause = false;
 }
@@ -187,33 +181,25 @@ void ActionObject::stop()
 void ActionObject::updateToFrameByTime(float fTime)
 {
 	_currentTime = fTime;
-
-	auto nodeNum = _actionNodeList.size();
-
-	for ( int i = 0; i < nodeNum; i++ )
+    for(const auto &e : _actionNodeList)
 	{
-		auto actionNode = _actionNodeList.at(i);
-
-		actionNode->updateActionToTimeLine(fTime);
+		e->updateActionToTimeLine(fTime);
 	}
 }
 
 void ActionObject::simulationActionUpdate(float dt)
 {
 	bool isEnd = true;
-	auto nodeNum = _actionNodeList.size();
-
-	for ( int i = 0; i < nodeNum; i++ )
+    
+    for(const auto &e : _actionNodeList)
 	{
-		auto actionNode = _actionNodeList.at(i);
-
-		if (actionNode->isActionDoneOnce() == false)
+		if (!e->isActionDoneOnce())
 		{
 			isEnd = false;
 			break;
 		}
 	}
-
+    
 	if (isEnd)
 	{
 		if (_CallBack != nullptr)
