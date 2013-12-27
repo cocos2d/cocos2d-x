@@ -22,43 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/UIRootWidget.h"
+#ifndef __TestCpp__UINodeContainerTest__
+#define __TestCpp__UINodeContainerTest__
 
-namespace gui {
+#include "../UIScene.h"
 
-UIRootWidget::UIRootWidget()
+class UIWidgetAddNodeTest : public UIScene
 {
-}
+public:
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
+};
 
-UIRootWidget::~UIRootWidget()
-{
-}
-
-UIRootWidget* UIRootWidget::create()
-{
-    UIRootWidget* widget = new UIRootWidget();
-    if (widget && widget->init())
-    {
-        widget->autorelease();
-        return widget;
-    }
-    CC_SAFE_DELETE(widget);
-    return nullptr;
-}
-
-bool UIRootWidget::init()
-{
-    if (UILayout::init())
-    {
-        setSize(cocos2d::Director::getInstance()->getWinSize());
-        return true;
-    }
-    return false;
-}
-
-const char* UIRootWidget::getDescription() const
-{
-    return "RootWidget";
-}
-
-}
+#endif /* defined(__TestCpp__UINodeContainerTest__) */

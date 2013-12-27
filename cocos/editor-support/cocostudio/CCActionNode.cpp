@@ -152,20 +152,16 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 	Node* rootNode = dynamic_cast<Node*>(root);
 	if (rootNode != NULL)
 	{
-		log("Need a definition of <initActionNodeFromRoot> for gameObject");
-	}
-	else
-	{
-		UIWidget* rootWidget = dynamic_cast<UIWidget*>(root);
+		Widget* rootWidget = dynamic_cast<Widget*>(root);
 		if (rootWidget != NULL)
 		{
-			UIWidget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			Widget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != NULL)
 			{
 				setObject(widget);
 			}
 		}
-	}
+    }
 }
 
 void ActionNode::setUnitTime(float fTime)
@@ -208,10 +204,10 @@ Node* ActionNode::getActionNode()
 	}
 	else
 	{
-		UIWidget* rootWidget = dynamic_cast<UIWidget*>(_object);
+		Widget* rootWidget = dynamic_cast<Widget*>(_object);
 		if (rootWidget != NULL)
 		{
-			return rootWidget->getRenderer();
+			return rootWidget;
 		}
 	}
 	return NULL;
