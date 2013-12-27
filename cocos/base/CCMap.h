@@ -107,10 +107,22 @@ public:
         _data.reserve(capacity);
     }
     
-    /** Returns capacity of the map */
-    ssize_t capacity() const
+    /** Returns the number of buckets in the Map container. */
+    ssize_t bucketCount() const
     {
-        return _data.capacity();
+        return _data.bucket_count();
+    }
+    
+    /** Returns the number of elements in bucket n. */
+    ssize_t bucketSize(ssize_t n) const
+    {
+        return _data.bucket_size(n);
+    }
+    
+    /** Returns the bucket number where the element with key k is located. */
+    ssize_t bucket(const K& k) const
+    {
+        return _data.bucket(k);
     }
     
     /** The number of elements in the map. */

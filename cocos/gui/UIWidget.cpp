@@ -165,7 +165,7 @@ const Vector<Node*>& Widget::getChildren() const
     return _widgetChildren;
 }
     
-long Widget::getChildrenCount() const
+ssize_t Widget::getChildrenCount() const
 {
     return _widgetChildren.size();
 }

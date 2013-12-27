@@ -44,7 +44,7 @@ THE SOFTWARE.
 #include "CCEventTouch.h"
 #include "CCScene.h"
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include "CCPhysicsBody.h"
 #endif
 
@@ -123,7 +123,7 @@ Node::Node(void)
 , _isTransitionFinished(false)
 , _updateScriptHandler(0)
 , _componentContainer(nullptr)
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 , _physicsBody(nullptr)
 #endif
 , _displayedOpacity(255)
@@ -178,7 +178,7 @@ Node::~Node()
     
     CC_SAFE_DELETE(_componentContainer);
     
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     CC_SAFE_RELEASE(_physicsBody);
 #endif
 }
@@ -264,7 +264,7 @@ void Node::setRotation(float newRotation)
     _rotationX = _rotationY = newRotation;
     _transformDirty = _inverseDirty = true;
     
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     if (_physicsBody)
     {
         _physicsBody->setRotation(newRotation);
@@ -354,7 +354,7 @@ void Node::setPosition(const Point& newPosition)
     _position = newPosition;
     _transformDirty = _inverseDirty = true;
     
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     if (_physicsBody)
     {
         _physicsBody->setPosition(newPosition);
@@ -604,7 +604,7 @@ void Node::addChild(Node *child, int zOrder, int tag)
 
     this->insertChild(child, zOrder);
     
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     for (Node* node = this->getParent(); node != nullptr; node = node->getParent())
     {
         if (dynamic_cast<Scene*>(node) != nullptr)
@@ -739,7 +739,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
         child->onExit();
     }
     
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     if (child->_physicsBody != nullptr)
     {
         child->_physicsBody->removeFromWorld();
@@ -848,7 +848,7 @@ void Node::transformAncestors()
 
 void Node::transform()
 {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     updatePhysicsTransform();
 #endif
 
@@ -1170,8 +1170,8 @@ const kmMat4& Node::getNodeToParentTransform() const
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
         {
-            kmMat4 skewMatrix = { 1, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
-                                  tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
+            kmMat4 skewMatrix = { 1, (float)tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0, 0,
+                                  (float)tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1, 0, 0,
                                   0,  0,  1, 0,
                                   0,  0,  0, 1};
 
@@ -1324,7 +1324,7 @@ Point Node::convertTouchToNodeSpaceAR(Touch *touch) const
     return this->convertToNodeSpaceAR(point);
 }
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 bool Node::updatePhysicsTransform()
 {
     if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
@@ -1374,7 +1374,7 @@ void Node::removeAllComponents()
         _componentContainer->removeAll();
 }
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 void Node::setPhysicsBody(PhysicsBody* body)
 {
     if (_physicsBody != nullptr)
