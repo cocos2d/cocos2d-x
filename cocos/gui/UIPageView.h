@@ -73,7 +73,7 @@ public:
      *
      * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
      */
-    void addWidgetToPage(Widget* widget, int pageIdx, bool forceCreate);
+    void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
      * Push back a page to pageview.
@@ -101,7 +101,7 @@ public:
      *
      * @param index    index of page.
      */
-    void removePageAtIndex(int index);
+    void removePageAtIndex(ssize_t index);
     
     void removeAllPages();
     
@@ -110,18 +110,18 @@ public:
      *
      * @param idx    index of page.
      */
-    void scrollToPage(int idx);
+    void scrollToPage(ssize_t idx);
     
     /**
      * Gets current page index.
      *
      * @return current page index.
      */
-    int getCurPageIndex() const;
+    ssize_t getCurPageIndex() const;
     
     Vector<Layout*>& getPages();
     
-    Layout* getPage(int index);
+    Layout* getPage(ssize_t index);
     
     // event
     void addEventListenerPageView(Object *target, SEL_PageViewEvent selector);
@@ -173,7 +173,7 @@ protected:
     virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
     virtual bool init() override;
     Layout* createPage();
-    float getPositionXByIndex(int idx);
+    float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const Point &touchPoint) override;
     virtual void handleMoveLogic(const Point &touchPoint) override;
@@ -192,7 +192,7 @@ protected:
     virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
     virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
-    int _curPageIdx;
+    ssize_t _curPageIdx;
     Vector<Layout*> _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;

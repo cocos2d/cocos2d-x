@@ -291,7 +291,7 @@ CardinalSplineTo* CardinalSplineTo::clone() const
 
 void CardinalSplineTo::update(float time)
 {
-    int p;
+    ssize_t p;
     float lt;
 	
 	// eg.

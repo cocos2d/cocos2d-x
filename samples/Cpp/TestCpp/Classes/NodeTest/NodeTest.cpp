@@ -598,7 +598,7 @@ CameraZoomTest::CameraZoomTest()
     auto s = Director::getInstance()->getWinSize();
     
     Sprite *sprite;
-    Camera *cam;
+//    Camera *cam;
     
     // LEFT
     sprite = Sprite::create(s_pathGrossini);
