@@ -192,7 +192,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseConfigFile(const std::string
         return ret;
     }
 
-    std::string contents((const char*)data.getBytes());
+    std::string contents((const char*)data.getBytes(), data.getSize());
     
     std::set<unsigned int> *validCharsString = new std::set<unsigned int>();
 
