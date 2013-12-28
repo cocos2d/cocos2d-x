@@ -35,8 +35,8 @@ void Effect1::onEnter()
     auto reuse = ReuseGrid::create(1);
     auto delay = DelayTime::create(8);
 
-    auto orbit = OrbitCamera::create(5, 1, 2, 0, 180, 0, -90);
-    auto orbit_back = orbit->reverse();
+//    auto orbit = OrbitCamera::create(5, 1, 2, 0, 180, 0, -90);
+//    auto orbit_back = orbit->reverse();
 
     //_bgNode->runAction( RepeatForever::create( Sequence::create( orbit, orbit_back, NULL)  ) );
     _bgNode->runAction( Sequence::create(lens, delay, reuse, waves, NULL) );
