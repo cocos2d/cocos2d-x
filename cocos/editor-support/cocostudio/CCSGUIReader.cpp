@@ -61,12 +61,12 @@ void GUIReader::purgeGUIReader()
 int GUIReader::getVersionInteger(const char *str)
 {
     std::string strVersion = str;
-    int length = strVersion.length();
+    size_t length = strVersion.length();
     if (length < 7)
     {
         return 0;
     }
-    int pos = strVersion.find_first_of(".");
+    size_t pos = strVersion.find_first_of(".");
     std::string t = strVersion.substr(0,pos);
     strVersion = strVersion.substr(pos+1,strVersion.length()-1);
     
@@ -119,7 +119,7 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 	std::string jsonpath;
 	rapidjson::Document jsonDict;
     jsonpath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
-    int pos = jsonpath.find_last_of('/');
+    size_t pos = jsonpath.find_last_of('/');
 	m_strFilePath = jsonpath.substr(0,pos+1);
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
 	jsonDict.Parse<0>(contentStr.c_str());
@@ -445,7 +445,6 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
 
 void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
-    DictionaryHelper* dicHelper = DICTOOL;
     setPropsForWidgetFromJsonDictionary(widget, options);
     CheckBox* checkBox = static_cast<CheckBox*>(widget);
     const char* backGroundFileName = DICTOOL->getStringValue_json(options, "backGroundBox");

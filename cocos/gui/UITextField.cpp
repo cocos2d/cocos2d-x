@@ -107,7 +107,7 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = TextFieldTTF::getString().size();
+    ssize_t str_len = TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
