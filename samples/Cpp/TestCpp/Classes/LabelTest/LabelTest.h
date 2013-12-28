@@ -429,6 +429,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelBMFontBinaryFormat : public AtlasDemo
+{
+public:
+    CREATE_FUNC(LabelBMFontBinaryFormat);
+
+    LabelBMFontBinaryFormat();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 
 // we don't support linebreak mode
 

@@ -74,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     // should be moved to another test
     CL(Atlas1),
     CL(LabelBMFontCrashTest),
+	CL(LabelBMFontBinaryFormat),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1668,4 +1669,27 @@ std::string LabelBMFontCrashTest::title() const
 std::string LabelBMFontCrashTest::subtitle() const
 {
     return "Should not crash.";
+}
+
+// LabelBMFontBinaryFormat
+LabelBMFontBinaryFormat::LabelBMFontBinaryFormat()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto bmFont = LabelBMFont::create();
+
+    bmFont->setFntFile("fonts/Roboto.bmf.fnt");
+    bmFont->setString("It is working!");
+    this->addChild(bmFont);
+    bmFont->setPosition(Point(s.width/2,s.height/4*2));
+}
+
+std::string LabelBMFontBinaryFormat::title() const
+{
+    return "LabelBMFont Binary FNT File";
+}
+
+std::string LabelBMFontBinaryFormat::subtitle() const
+{
+    return "This label uses font file in AngelCode binary format";
 }
