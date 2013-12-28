@@ -290,7 +290,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 				FREE(unchanged);
 			}
 			spDrawOrderTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), drawOrderArray);
-			FREE(drawOrder);
+			FREE(drawOrderArray);
 		}
 		animation->timelines[animation->timelineCount++] = (spTimeline*)timeline;
 		duration = timeline->frames[drawOrder->size - 1];
