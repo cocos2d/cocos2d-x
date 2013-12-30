@@ -22,38 +22,35 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__CocosGUIExamplesPageScene__
-#define __TestCpp__CocosGUIExamplesPageScene__
+#ifndef __TestCpp__UIGridViewTest__
+#define __TestCpp__UIGridViewTest__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "../../testBasic.h"
+#include "../UIScene.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
-#define PAGE_PAGEVIEW_TAG                           1000
-
-class CocosGUIExamplesPageScene : public CCScene
+class UIGridViewTest_Mode_Column : public UIScene
 {
 public:
-    CocosGUIExamplesPageScene();
-    ~CocosGUIExamplesPageScene();
-    
-    virtual void onEnter();
-    virtual void onExit();
-    
-    virtual void runThisTest();
+    UIGridViewTest_Mode_Column();
+    ~UIGridViewTest_Mode_Column();
+    bool init();
+    void selectedChildEvent(CCObject* pSender, ScrollviewEventType type);
     
 protected:
-    void toCocosGUIExamplesMapScene(CCObject* pSender);
-    
-    // page
-    void PageInit();
-    void pageTurningEvent(CCObject* pSender);
-    
-protected:
-    UILayer* m_pUILayer;
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Column)
+    UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__CocosGUIExamplesPageScene__) */
+class UIGridViewTest_Mode_Row : public UIScene
+{
+public:
+    UIGridViewTest_Mode_Row();
+    ~UIGridViewTest_Mode_Row();
+    bool init();
+    void selectedChildEvent(CCObject* pSender, ScrollviewEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIGridViewTest_Mode_Row)
+    UILabel* m_pDisplayValueLabel;
+};
+
+#endif /* defined(__TestCpp__UIScrollGridTest__) */
