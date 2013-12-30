@@ -61,13 +61,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
-	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesEquipScene.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesMapScene.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesPageScene.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesRegisterScene.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesScene.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIExamplesWeaponScene.cpp \
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \	
 	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \

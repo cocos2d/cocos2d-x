@@ -338,19 +338,7 @@ files
 	SceneController.h
 
 	[Test/ExtensionsTest/CocoStudioGUITest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest)
-	CocosGUIExamplesEquipScene.cpp
-	CocosGUIExamplesEquipScene.h
-	CocosGUIExamplesMapScene.cpp
-	CocosGUIExamplesMapScene.h
-	CocosGUIExamplesPageScene.cpp
-	CocosGUIExamplesPageScene.h
-	CocosGUIExamplesRegisterScene.cpp
-	CocosGUIExamplesRegisterScene.h
-	CocosGUIExamplesScene.cpp
-	CocosGUIExamplesScene.h
-	CocosGUIExamplesWeaponScene.cpp
-	CocosGUIExamplesWeaponScene.h
+	(../Classes/ExtensionsTest/CocoStudioGUITest)	
 	CocosGUIScene.cpp
 	CocosGUIScene.h
 	UIScene.cpp
