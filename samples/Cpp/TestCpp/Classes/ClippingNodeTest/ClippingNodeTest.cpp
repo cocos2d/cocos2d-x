@@ -565,7 +565,10 @@ static const Color4F _planeColor[] = {
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-    CC_SAFE_RELEASE(_sprite);
+    for(auto& element: _sprites)
+    {
+        CC_SAFE_RELEASE(element);
+    }
 }
 
 std::string RawStencilBufferTest::title() const
@@ -584,10 +587,16 @@ void RawStencilBufferTest::setup()
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current GLView.");
     }
-    _sprite = Sprite::create(s_pathGrossini);
-    _sprite->retain();
-    _sprite->setAnchorPoint(  Point(0.5, 0) );
-    _sprite->setScale( 2.5f );
+    
+    _sprites.resize(_planeCount, nullptr);
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites[i] = Sprite::create(s_pathGrossini);
+        _sprites[i]->retain();
+        _sprites[i]->setAnchorPoint(  Point(0.5, 0) );
+        _sprites[i]->setScale( 2.5f );
+    }
+
     Director::getInstance()->setAlphaBlending(true);
 }
 
@@ -621,7 +630,7 @@ void RawStencilBufferTest::draw()
         auto spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
-        _sprite->setPosition( spritePoint );
+        _sprites[i]->setPosition( spritePoint );
         
         iter->init(0, _vertexZ);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
@@ -630,7 +639,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites[i]->visit();
         kmGLPopMatrix();
         
         iter->init(0, _vertexZ);
@@ -640,7 +649,7 @@ void RawStencilBufferTest::draw()
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites[i]->visit();
         kmGLPopMatrix();
     }
     
