@@ -2,6 +2,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 namespace ShaderTest2
 {
@@ -118,6 +120,10 @@ protected:
     virtual void setCustomUniforms() = 0;
 protected:
     std::string _fragSourceFile;
+    
+protected:
+    CustomCommand _renderCommand;
+    void onDraw();
 
 };
 
@@ -176,10 +182,18 @@ void ShaderSprite::initShader()
 
 void ShaderSprite::draw()
 {
+    _renderCommand.init(0, _vertexZ);
+    _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
+    
+}
+
+void ShaderSprite::onDraw()
+{
     CC_NODE_DRAW_SETUP();
-
+    
     setCustomUniforms();
-
+    
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     GL::bindTexture2D( getTexture()->getName());
@@ -204,8 +218,6 @@ void ShaderSprite::draw()
     
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>
