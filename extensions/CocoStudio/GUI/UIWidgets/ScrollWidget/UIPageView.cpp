@@ -30,6 +30,7 @@ namespace gui {
 
 PageView::PageView():
 _curPageIdx(0),
+_pages(NULL),
 _touchMoveDir(PAGEVIEW_TOUCHLEFT),
 _touchStartLocation(0.0f),
 _touchMoveStartLocation(0.0f),
@@ -44,8 +45,7 @@ _autoScrollSpeed(0.0f),
 _autoScrollDir(0),
 _childFocusCancelOffset(5.0f),
 _pageViewEventListener(NULL),
-_pageViewEventSelector(NULL),
-_pages(NULL)
+_pageViewEventSelector(NULL)
 {
 }
 
