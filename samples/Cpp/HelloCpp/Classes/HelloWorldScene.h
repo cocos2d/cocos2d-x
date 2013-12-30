@@ -3,23 +3,6 @@
 
 #include "cocos2d.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-namespace PhoneDirect3DXamlAppComponent
-{
-	public delegate void ShowWebBroswerDelegate();
-	public ref class BroswerEventHelper sealed
-	{
-	public:
-		BroswerEventHelper(void);
-		void SetShowWebBroswerDelegate(ShowWebBroswerDelegate^ delegate);
-		bool ShowWebBroswer();
-	private:
-		property static ShowWebBroswerDelegate^ m_broswerDelegate;
-	};
-
-}
-#endif
-
 class HelloWorld : public cocos2d::CCLayer
 {
 public:
@@ -34,8 +17,6 @@ public:
     
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
-
-	void menuCallPageTest( CCObject* sender );
 };
 
 #endif // __HELLOWORLD_SCENE_H__
