@@ -115,7 +115,7 @@ public:
     void setFontSize(int size);
     void setFontName(const std::string& name);
     virtual void didNotSelectSelf();
-    const std::string& getStringValue();
+    const char* getStringValue();
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled();

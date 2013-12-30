@@ -356,7 +356,7 @@ void TextField::didNotSelectSelf()
     _textFieldRenderer->detachWithIME();
 }
 
-const std::string& TextField::getStringValue()
+const char* TextField::getStringValue()
 {
     return _textFieldRenderer->getString();
 }
