@@ -1886,6 +1886,18 @@
 		B3AF01A31842FBA400A98B85 /* b2MotorJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */; };
 		B3B12A5A17E7F44000026B4A /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */; };
 		B3B12A5B17E7F45C00026B4A /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */; };
+		B6A274C8186D834B002CF6E9 /* StringTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C6186D814D002CF6E9 /* StringTool.cpp */; };
+		B6A274C9186D834B002CF6E9 /* ElementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C2186D80BB002CF6E9 /* ElementNode.cpp */; };
+		B6A274CA186D834B002CF6E9 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C4186D80BB002CF6E9 /* Stream.cpp */; };
+		B6A274CB186D835E002CF6E9 /* StringTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C7186D814D002CF6E9 /* StringTool.h */; };
+		B6A274CC186D835E002CF6E9 /* ElementNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C3186D80BB002CF6E9 /* ElementNode.h */; };
+		B6A274CD186D835E002CF6E9 /* Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C5186D80BB002CF6E9 /* Stream.h */; };
+		B6A274CE186D858A002CF6E9 /* StringTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C7186D814D002CF6E9 /* StringTool.h */; };
+		B6A274CF186D858A002CF6E9 /* ElementNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C3186D80BB002CF6E9 /* ElementNode.h */; };
+		B6A274D0186D858A002CF6E9 /* Stream.h in Headers */ = {isa = PBXBuildFile; fileRef = B6A274C5186D80BB002CF6E9 /* Stream.h */; };
+		B6A274D1186D859E002CF6E9 /* StringTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C6186D814D002CF6E9 /* StringTool.cpp */; };
+		B6A274D2186D859E002CF6E9 /* ElementNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C2186D80BB002CF6E9 /* ElementNode.cpp */; };
+		B6A274D3186D859E002CF6E9 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A274C4186D80BB002CF6E9 /* Stream.cpp */; };
 		B6AE2AB7186ABB6F004C52C2 /* MathUtilty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AE2AA2186AB7BE004C52C2 /* MathUtilty.cpp */; };
 		B6AE2AB8186ABB6F004C52C2 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6AE2AA4186AB7BE004C52C2 /* Matrix.cpp */; };
 		B6AE2AB9186ABB6F004C52C2 /* neonmatriximpl.c in Sources */ = {isa = PBXBuildFile; fileRef = B6AE2AA7186AB7BE004C52C2 /* neonmatriximpl.c */; };
@@ -3046,6 +3058,12 @@
 		B375104F1823AC7B00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorldInfo_chipmunk.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B6A274C2186D80BB002CF6E9 /* ElementNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ElementNode.cpp; path = ../cocos/3d/ElementNode.cpp; sourceTree = "<group>"; };
+		B6A274C3186D80BB002CF6E9 /* ElementNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ElementNode.h; path = ../cocos/3d/ElementNode.h; sourceTree = "<group>"; };
+		B6A274C4186D80BB002CF6E9 /* Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stream.cpp; path = ../cocos/3d/Stream.cpp; sourceTree = "<group>"; };
+		B6A274C5186D80BB002CF6E9 /* Stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stream.h; path = ../cocos/3d/Stream.h; sourceTree = "<group>"; };
+		B6A274C6186D814D002CF6E9 /* StringTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringTool.cpp; path = ../cocos/3d/StringTool.cpp; sourceTree = "<group>"; };
+		B6A274C7186D814D002CF6E9 /* StringTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringTool.h; path = ../cocos/3d/StringTool.h; sourceTree = "<group>"; };
 		B6AE2AA1186AB7BE004C52C2 /* CocosMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosMath.h; sourceTree = "<group>"; };
 		B6AE2AA2186AB7BE004C52C2 /* MathUtilty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtilty.cpp; sourceTree = "<group>"; };
 		B6AE2AA3186AB7BE004C52C2 /* MathUtilty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtilty.h; sourceTree = "<group>"; };
@@ -3197,6 +3215,7 @@
 		1551A334158F2AB200E66CFE = {
 			isa = PBXGroup;
 			children = (
+				B6A274C1186D80A3002CF6E9 /* 3d */,
 				46A15FCC1807A544005B8026 /* AUTHORS */,
 				1A57FFF7180BC5160088DEC7 /* CHANGELOG */,
 				46A15FCE1807A544005B8026 /* README.md */,
@@ -5329,6 +5348,19 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
+		B6A274C1186D80A3002CF6E9 /* 3d */ = {
+			isa = PBXGroup;
+			children = (
+				B6A274C6186D814D002CF6E9 /* StringTool.cpp */,
+				B6A274C7186D814D002CF6E9 /* StringTool.h */,
+				B6A274C2186D80BB002CF6E9 /* ElementNode.cpp */,
+				B6A274C3186D80BB002CF6E9 /* ElementNode.h */,
+				B6A274C4186D80BB002CF6E9 /* Stream.cpp */,
+				B6A274C5186D80BB002CF6E9 /* Stream.h */,
+			);
+			name = 3d;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -5336,6 +5368,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A274CB186D835E002CF6E9 /* StringTool.h in Headers */,
+				B6A274CC186D835E002CF6E9 /* ElementNode.h in Headers */,
+				B6A274CD186D835E002CF6E9 /* Stream.h in Headers */,
 				B6AE2ABE186ABBA5004C52C2 /* CocosMath.h in Headers */,
 				B6AE2ABF186ABBA5004C52C2 /* MathUtilty.h in Headers */,
 				B6AE2AC0186ABBA5004C52C2 /* Matrix.h in Headers */,
@@ -5910,6 +5945,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A274CE186D858A002CF6E9 /* StringTool.h in Headers */,
+				B6A274CF186D858A002CF6E9 /* ElementNode.h in Headers */,
+				B6A274D0186D858A002CF6E9 /* Stream.h in Headers */,
 				B6AE2ACB186ABBC7004C52C2 /* CocosMath.h in Headers */,
 				B6AE2ACC186ABBC7004C52C2 /* MathUtilty.h in Headers */,
 				B6AE2ACD186ABBC7004C52C2 /* Matrix.h in Headers */,
@@ -6712,6 +6750,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A274C8186D834B002CF6E9 /* StringTool.cpp in Sources */,
+				B6A274C9186D834B002CF6E9 /* ElementNode.cpp in Sources */,
+				B6A274CA186D834B002CF6E9 /* Stream.cpp in Sources */,
 				B6AE2AB7186ABB6F004C52C2 /* MathUtilty.cpp in Sources */,
 				B6AE2AB8186ABB6F004C52C2 /* Matrix.cpp in Sources */,
 				B6AE2AB9186ABB6F004C52C2 /* neonmatriximpl.c in Sources */,
@@ -7227,6 +7268,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6A274D1186D859E002CF6E9 /* StringTool.cpp in Sources */,
+				B6A274D2186D859E002CF6E9 /* ElementNode.cpp in Sources */,
+				B6A274D3186D859E002CF6E9 /* Stream.cpp in Sources */,
 				B6AE2AD8186ABBEE004C52C2 /* MathUtilty.cpp in Sources */,
 				B6AE2AD9186ABBEE004C52C2 /* Matrix.cpp in Sources */,
 				B6AE2ADA186ABBEF004C52C2 /* neonmatriximpl.c in Sources */,
@@ -7794,7 +7838,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage $(SRCROOT)/../cocos/math";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/3d";
 			};
 			name = Debug;
 		};
@@ -7827,7 +7871,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage $(SRCROOT)/../cocos/math";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d/platform $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/gui $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../cocos/storage $(SRCROOT)/../cocos/math $(SRCROOT)/../cocos/3d";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
