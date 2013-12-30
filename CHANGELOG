@@ -18,6 +18,7 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
      [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
      [FIX]          Crash if connection breaks during download using AssetManager.
+     [NEW]          AngelCode binary file format support for LabelBMFont.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.
