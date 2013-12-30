@@ -639,6 +639,21 @@ void RenderTexture::begin()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+    
+    Director *director = Director::getInstance();
+    director->setProjection(director->getProjection());
+    
+    const Size& texSize = _texture->getContentSizeInPixels();
+    
+    // Calculate the adjustment ratios based on the old and new projections
+    Size size = director->getWinSizeInPixels();
+    float widthRatio = size.width / texSize.width;
+    float heightRatio = size.height / texSize.height;
+    
+    kmMat4 orthoMatrix;
+    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+                                 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+    kmGLMultMatrix(&orthoMatrix);
 
     _groupCommand.init(0, _vertexZ);
 
