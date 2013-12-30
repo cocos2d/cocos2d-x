@@ -26,7 +26,7 @@
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"
@@ -296,13 +296,13 @@ void Renderer::render()
         }
     }
 
-    //TODO give command back to command pool
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
     {
-        for (const auto &cmd : _renderGroups[j])
-        {
-            cmd->releaseToCommandPool();
-        }
+        //commands are owned by nodes
+        // for (const auto &cmd : _renderGroups[j])
+        // {
+        //     cmd->releaseToCommandPool();
+        // }
         _renderGroups[j].clear();
     }
     

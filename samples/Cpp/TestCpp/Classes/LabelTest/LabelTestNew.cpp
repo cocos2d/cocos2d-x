@@ -1,7 +1,6 @@
 #include "LabelTestNew.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagTileMap = 1,
@@ -302,10 +301,9 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
 
 void LabelFNTSpriteActions::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
     
 }
 
@@ -914,10 +912,9 @@ std::string LabelFNTBounds::subtitle() const
 
 void LabelFNTBounds::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void LabelFNTBounds::onDraw()
