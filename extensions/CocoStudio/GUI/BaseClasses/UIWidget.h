@@ -677,20 +677,22 @@ protected:
 	int _actionTag;
     CCSize _size;
     CCSize _customSize;
-    CCDictionary* _layoutParameterDictionary;
-    
     bool _ignoreSize;
-    CCArray* _widgetChildren;
     bool _affectByClipping;
-    
     SizeType _sizeType;
     CCPoint _sizePercent;
     PositionType _positionType;
     CCPoint _positionPercent;
-    
     bool _reorderWidgetChildDirty;
-    
     bool _hitted;
+    CCArray* _widgetChildren;
+    CCDictionary* _layoutParameterDictionary;
+    
+
+    
+   
+    
+    
     
 //    EventListenerTouchOneByOne* _touchListener;
     friend class TouchGroup;
