@@ -342,7 +342,6 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
             tmxMapInfo->setParentGID(info->_firstGid + attributeDict["id"].asInt());
-            //FIXME:XXX Why insert an empty dict?
             tmxMapInfo->getTileProperties()[tmxMapInfo->getParentGID()] = Value(ValueMap());
             tmxMapInfo->setParentElement(TMXPropertyTile);
         }

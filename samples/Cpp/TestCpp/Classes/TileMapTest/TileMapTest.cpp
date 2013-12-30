@@ -1397,10 +1397,7 @@ Layer* nextTileMapAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createTileMalayer(sceneIdx);
 }
 
 Layer* backTileMapAction()
@@ -1408,20 +1405,14 @@ Layer* backTileMapAction()
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
+        sceneIdx += total;
 
-    return layer;
+    return createTileMalayer(sceneIdx);
 }
 
 Layer* restartTileMapAction()
 {
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createTileMalayer(sceneIdx);
 } 
 
 
