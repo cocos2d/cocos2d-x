@@ -1215,11 +1215,11 @@ std::string TMXOrthoFromXMLTest::title() const
 }
 //------------------------------------------------------------------
 //
-// TMXOrthoFromXMLFormatTest
+// TMXOrthoXMLFormatTest
 //
 //------------------------------------------------------------------
 
-TMXOrthoFromXMLFormatTest::TMXOrthoFromXMLFormatTest()
+TMXOrthoXMLFormatTest::TMXOrthoXMLFormatTest()
 {
     // this test tests for:
     // 1. load xml format tilemap
@@ -1245,9 +1245,9 @@ TMXOrthoFromXMLFormatTest::TMXOrthoFromXMLFormatTest()
     map->runAction(action);
 }
 
-std::string TMXOrthoFromXMLFormatTest::title() const
+std::string TMXOrthoXMLFormatTest::title() const
 {
-    return "TMX created from XML format test";
+    return "you should see blue, green and yellow in console.";
 }
 
 //------------------------------------------------------------------
@@ -1324,42 +1324,42 @@ static int sceneIdx = -1;
 
 #define MAX_LAYER    29
 
+static std::function<Layer*()> createFunctions[] = {
+    CLN(TMXIsoZorder),
+    CLN(TMXOrthoZorder),
+    CLN(TMXIsoVertexZ),
+    CLN(TMXOrthoVertexZ),
+    CLN(TMXOrthoTest),
+    CLN(TMXOrthoTest2),
+    CLN(TMXOrthoTest3),
+    CLN(TMXOrthoTest4),
+    CLN(TMXIsoTest),
+    CLN(TMXIsoTest1),
+    CLN(TMXIsoTest2),
+    CLN(TMXUncompressedTest),
+    CLN(TMXHexTest),
+    CLN(TMXReadWriteTest),
+    CLN(TMXTilesetTest),
+    CLN(TMXOrthoObjectsTest),
+    CLN(TMXIsoObjectsTest),
+    CLN(TMXResizeTest),
+    CLN(TMXIsoMoveLayer),
+    CLN(TMXOrthoMoveLayer),
+    CLN(TMXOrthoFlipTest),
+    CLN(TMXOrthoFlipRunTimeTest),
+    CLN(TMXOrthoFromXMLTest),
+    CLN(TMXOrthoXMLFormatTest),
+    CLN(TileMapTest),
+    CLN(TileMapEditTest),
+    CLN(TMXBug987),
+    CLN(TMXBug787),
+    CLN(TMXGIDObjectsTest),
+    
+};
+
 Layer* createTileMalayer(int nIndex)
 {
-    switch(nIndex)
-    {
-        case 0: return new TMXIsoZorder();
-        case 1: return new TMXOrthoZorder();
-        case 2: return new TMXIsoVertexZ();
-        case 3: return new TMXOrthoVertexZ();    
-        case 4: return new TMXOrthoTest();
-        case 5: return new TMXOrthoTest2();
-        case 6: return new TMXOrthoTest3();
-        case 7: return new TMXOrthoTest4();
-        case 8: return new TMXIsoTest();
-        case 9: return new TMXIsoTest1();
-        case 10: return new TMXIsoTest2();
-        case 11: return new TMXUncompressedTest ();
-        case 12: return new TMXHexTest();
-        case 13: return new TMXReadWriteTest();
-        case 14: return new TMXTilesetTest();
-        case 15: return new TMXOrthoObjectsTest();
-        case 16: return new TMXIsoObjectsTest();
-        case 17: return new TMXResizeTest();
-        case 18: return new TMXIsoMoveLayer();
-        case 19: return new TMXOrthoMoveLayer();
-        case 20: return new TMXOrthoFlipTest();
-        case 21: return new TMXOrthoFlipRunTimeTest();
-        case 22: return new TMXOrthoFromXMLTest();
-        case 23: return new TileMapTest();
-        case 24: return new TileMapEditTest();
-        case 25: return new TMXBug987();
-        case 26: return new TMXBug787();
-        case 27: return new TMXGIDObjectsTest();
-        case 28: return new TMXOrthoFromXMLFormatTest();
-    }
-
-    return NULL;
+    return createFunctions[nIndex]();
 }
 
 Layer* nextTileMapAction()
