@@ -358,10 +358,9 @@ void MotionStreak::draw()
     if(_nuPoints <= 1)
         return;
     kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0,_vertexZ);
-    cmd->func = CC_CALLBACK_0(MotionStreak::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0,_vertexZ);
+    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
 }
 

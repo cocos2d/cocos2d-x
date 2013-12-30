@@ -8,7 +8,6 @@
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 enum {
 	kTagTitleLabel = 1,
@@ -599,11 +598,18 @@ void RawStencilBufferTest::draw()
     auto planeSize = winPoint * (1.0 / _planeCount);
     
     Renderer *renderer = Director::getInstance()->getRenderer();
+    size_t neededCmdSize = _planeCount * 2 + 2;
+    if(_renderCmds.size() != neededCmdSize)
+    {
+        _renderCmds.resize(neededCmdSize);
+    }
     
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
-    renderer->addCommand(cmd);
+    auto iter = _renderCmds.begin();
+    
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
+    renderer->addCommand(&(*iter));
+    ++iter;
     
 
         
@@ -617,20 +623,20 @@ void RawStencilBufferTest::draw()
         spritePoint.y = 0;
         _sprite->setPosition( spritePoint );
         
-        cmd = CustomCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ);
-        cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
-        renderer->addCommand(cmd);
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
         _sprite->visit();
         kmGLPopMatrix();
         
-        cmd = CustomCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ);
-        cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
-        renderer->addCommand(cmd);
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
@@ -638,10 +644,9 @@ void RawStencilBufferTest::draw()
         kmGLPopMatrix();
     }
     
-    cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
-    renderer->addCommand(cmd);
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
+    renderer->addCommand(&(*iter));
 
 }
 

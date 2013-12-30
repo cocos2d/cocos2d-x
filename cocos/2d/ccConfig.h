@@ -268,7 +268,7 @@ To enable set it to a value different than 0. Disabled by default.
 
 /** Use physics integration API */
 #ifndef CC_USE_PHYSICS
-#define CC_USE_PHYSICS
+#define CC_USE_PHYSICS 1
 #endif
 
 #endif // __CCCONFIG_H__

@@ -47,8 +47,8 @@ NodeGrid* NodeGrid::create()
 }
 
 NodeGrid::NodeGrid()
-: _nodeGrid(nullptr)
-, _gridTarget(nullptr)
+: _gridTarget(nullptr)
+, _nodeGrid(nullptr)
 {
 
 }
@@ -92,10 +92,9 @@ void NodeGrid::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0,_vertexZ);
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    _groupCommand.init(0,_vertexZ);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     kmGLPushMatrix();
     Director::Projection beforeProjectionType;
@@ -105,10 +104,9 @@ void NodeGrid::visit()
         _nodeGrid->set2DProjection();
     }
 
-    CustomCommand* gridBeginCmd = CustomCommand::getCommandPool().generateCommand();
-    gridBeginCmd->init(0,_vertexZ);
-    gridBeginCmd->func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
-    renderer->addCommand(gridBeginCmd);
+    _gridBeginCommand.init(0,_vertexZ);
+    _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
+    renderer->addCommand(&_gridBeginCommand);
 
     this->transform();
     
@@ -154,10 +152,9 @@ void NodeGrid::visit()
         director->setProjection(beforeProjectionType);
     }
 
-    CustomCommand* gridEndCmd = CustomCommand::getCommandPool().generateCommand();
-    gridEndCmd->init(0,_vertexZ);
-    gridEndCmd->func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
-    renderer->addCommand(gridEndCmd);
+    _gridEndCommand.init(0,_vertexZ);
+    _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
+    renderer->addCommand(&_gridEndCommand);
 
     renderer->popGroup();
  

@@ -196,10 +196,9 @@ void ShaderNode::setPosition(const Point &newPosition)
 
 void ShaderNode::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ShaderNode::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void ShaderNode::onDraw()
@@ -449,6 +448,8 @@ public:
     GLuint    subLocation;
 protected:
     void onDraw();
+private:
+    CustomCommand _customCommand;
 };
 
 SpriteBlur::~SpriteBlur()
@@ -532,10 +533,9 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void SpriteBlur::onDraw()

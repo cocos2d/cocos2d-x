@@ -137,6 +137,7 @@ private:
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
     std::string _fragFileName;
+    CustomCommand _customCommand;
 };
 
 class ShaderFail : public ShaderTestDemo

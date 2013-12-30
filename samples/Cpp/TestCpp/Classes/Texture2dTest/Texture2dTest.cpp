@@ -2,7 +2,6 @@
 #include "Texture2dTest.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagLabel = 1,
@@ -1768,10 +1767,9 @@ void TextureDrawAtPoint::draw()
 {
     TextureDemo::draw();
     
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 
 }
 
@@ -1810,10 +1808,9 @@ void TextureDrawInRect::draw()
 {
     TextureDemo::draw();
 
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 
 }
 
