@@ -656,11 +656,11 @@ void TriggerState::done()
 	{
 		if (_nState == 0)
 		{
-			obj->setEnable(false);
+			obj->setEnabled(false);
 		}
 		else if (_nState == 1)
 		{
-			obj->setEnable(true);
+			obj->setEnabled(true);
 		}
 		else if (_nState == 2)
 		{
