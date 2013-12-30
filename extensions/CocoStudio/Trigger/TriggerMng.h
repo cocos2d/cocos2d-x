@@ -39,7 +39,7 @@ public:
 	ArmatureMovementDispatcher(void);
 	~ArmatureMovementDispatcher(void);
 public:
-	void addAnnimationEventCallBack(CCObject*pTarget, SEL_MovementEventCallFunc mecf);
+	void addAnimationEventCallBack(CCObject*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(CCObject*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
 	std::map<CCObject*, SEL_MovementEventCallFunc> *_mapEventAnimation;
