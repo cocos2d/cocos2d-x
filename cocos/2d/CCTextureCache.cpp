@@ -89,7 +89,7 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return String::createWithFormat("<TextureCache | Number of textures = %lu>", _textures.size() )->getCString();
+    return StringUtils::format("<TextureCache | Number of textures = %zd>", _textures.size());
 }
 
 void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
@@ -193,13 +193,13 @@ void TextureCache::loadImage()
 
         if (generateImage)
         {
-            const char *filename = asyncStruct->filename.c_str();
+            const std::string& filename = asyncStruct->filename;
             // generate image      
             image = new Image();
             if (image && !image->initWithImageFileThreadSafe(filename))
             {
                 CC_SAFE_RELEASE(image);
-                CCLOG("can not load %s", filename);
+                CCLOG("can not load %s", filename.c_str());
                 continue;
             }
         }    
@@ -245,7 +245,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
         Object *target = asyncStruct->target;
         SEL_CallFuncO selector = asyncStruct->selector;
-        const char* filename = asyncStruct->filename.c_str();
+        const std::string& filename = asyncStruct->filename;
 
         Texture2D *texture = nullptr;
         if (image)
@@ -326,7 +326,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
             {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
-                VolatileTextureMgr::addImageTexture(texture, fullpath.c_str());
+                VolatileTextureMgr::addImageTexture(texture, fullpath);
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
@@ -509,7 +509,7 @@ VolatileTexture::~VolatileTexture()
     CC_SAFE_RELEASE(_uiImage);
 }
 
-void VolatileTextureMgr::addImageTexture(Texture2D *tt, const char* imageFileName)
+void VolatileTextureMgr::addImageTexture(Texture2D *tt, const std::string& imageFileName)
 {
     if (_isReloading)
     {
@@ -629,10 +629,10 @@ void VolatileTextureMgr::reloadAllTextures()
         case VolatileTexture::kImageFile:
             {
                 Image* image = new Image();
-                ssize_t size = 0;
-                unsigned char* pBuffer = FileUtils::getInstance()->getFileData(vt->_fileName.c_str(), "rb", &size);
                 
-                if (image && image->initWithImageData(pBuffer, size))
+                Data data = FileUtils::getInstance()->getDataFromFile(vt->_fileName);
+                
+                if (image && image->initWithImageData(data.getBytes(), data.getSize()))
                 {
                     Texture2D::PixelFormat oldPixelFormat = Texture2D::getDefaultAlphaPixelFormat();
                     Texture2D::setDefaultAlphaPixelFormat(vt->_pixelFormat);
@@ -640,7 +640,6 @@ void VolatileTextureMgr::reloadAllTextures()
                     Texture2D::setDefaultAlphaPixelFormat(oldPixelFormat);
                 }
                 
-                free(pBuffer);
                 CC_SAFE_RELEASE(image);
             }
             break;

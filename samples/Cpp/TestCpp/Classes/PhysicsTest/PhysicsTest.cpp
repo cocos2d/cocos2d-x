@@ -6,7 +6,7 @@ USING_NS_CC;
 namespace
 {
     static std::function<Layer*()> createFunctions[] = {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
         CL(PhysicsDemoLogoSmash),
         CL(PhysicsDemoPyramidStack),
         CL(PhysicsDemoClickAdd),
@@ -55,7 +55,7 @@ namespace
 }
 
 PhysicsTestScene::PhysicsTestScene()
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 : TestScene(false, true)
 #else
 : TestScene()
@@ -73,13 +73,13 @@ void PhysicsTestScene::runThisTest()
 
 void PhysicsTestScene::toggleDebug()
 {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     _debugDraw = !_debugDraw;
     getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
 #endif
 }
 
-#ifndef CC_USE_PHYSICS
+#if CC_USE_PHYSICS == 0
 void PhysicsDemoDisabled::onEnter()
 {
     auto label = LabelTTF::create("Should define CC_USE_PHYSICS\n to run this test case",
@@ -396,7 +396,6 @@ void PhysicsDemo::onTouchMoved(Touch* touch, Event* event)
     
     if (it != _mouses.end())
     {
-        it->second->getPhysicsBody()->setVelocity((touch->getLocation() - it->second->getPosition()) * 60.0f);
         it->second->setPosition(touch->getLocation());
     }
 }

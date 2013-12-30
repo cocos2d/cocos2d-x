@@ -122,7 +122,7 @@ __Array* __Array::createWithCapacity(int capacity)
     return array;
 }
 
-__Array* __Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
     __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
@@ -132,7 +132,7 @@ __Array* __Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-__Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
     return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
 }
@@ -465,7 +465,7 @@ __Array* __Array::createWithCapacity(ssize_t capacity)
     return array;
 }
 
-__Array* __Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
     __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
@@ -475,7 +475,7 @@ __Array* __Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-__Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
     ValueVector arr = FileUtils::getInstance()->getValueVectorFromFile(fileName);
     

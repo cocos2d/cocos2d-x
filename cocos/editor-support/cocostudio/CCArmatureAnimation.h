@@ -44,8 +44,8 @@ enum MovementEventType
 class Armature;
 class Bone;
 
-typedef void (cocos2d::Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const char *);
-typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const char *, int, int);
+typedef void (cocos2d::Object::*SEL_MovementEventCallFunc)(Armature *, MovementEventType, const std::string&);
+typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const std::string&, int, int);
 
 #define movementEvent_selector(_SELECTOR) (cocostudio::SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (cocostudio::SEL_FrameEventCallFunc)(&_SELECTOR)
@@ -53,7 +53,7 @@ typedef void (cocos2d::Object::*SEL_FrameEventCallFunc)(Bone *, const char *, in
 struct FrameEvent
 {
     Bone *bone;
-    const char *frameEventName;
+    std::string frameEventName;
     int originFrameIndex;
     int currentFrameIndex;
 };
@@ -62,7 +62,7 @@ struct MovementEvent
 {
     Armature *armature;
     MovementEventType movementType;
-    const char *movementID;
+    std::string movementID;
 };
 
 class  ArmatureAnimation : public ProcessBase
@@ -123,17 +123,18 @@ public:
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
      */
-    virtual void play(const char *animationName, int durationTo = -1,  int loop = -1);
+    virtual void play(const std::string& animationName, int durationTo = -1,  int loop = -1);
 
     /**
      * Play animation by index, the other param is the same to play.
+     * @deprecated, please use playWithIndex
      * @param  animationIndex  the animation index you want to play
      */
-    virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+    CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+    virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
-
-    virtual void play(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
-    virtual void playByIndex(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
+    virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+    virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * Go to specified frame and play current movement.
@@ -191,8 +192,8 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Object *target, SEL_FrameEventCallFunc callFunc);
     
-    void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> listener);
-    void setFrameEventCallFunc(std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
+    void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
+    void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
 
     virtual void setAnimationData(AnimationData *data) 
     {
@@ -254,12 +255,12 @@ protected:
      * @js NA
      * @lua NA
      */
-    void frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
+    void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex);
 
     /**
      * Emit a movement event
      */
-    void movementEvent(Armature *armature, MovementEventType movementType, const char *movementID);
+    void movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
 
     void updateMovementList();
 
@@ -319,8 +320,8 @@ protected:
     cocos2d::Object *_frameEventTarget;
     
     
-    std::function<void(Armature *armature, MovementEventType movementType, const char *movementID)> _movementEventListener;
-    std::function<void(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)> _frameEventListener;
+    std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> _movementEventListener;
+    std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> _frameEventListener;
 };
 
 }

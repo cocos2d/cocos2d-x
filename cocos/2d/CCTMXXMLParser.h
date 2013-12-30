@@ -193,8 +193,8 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const std::string& xmlString);
 
-    IntValueMap& getTileProperties() { return _tileProperties; };
-    void setTileProperties(const IntValueMap& tileProperties) {
+    ValueMapIntKey& getTileProperties() { return _tileProperties; };
+    void setTileProperties(const ValueMapIntKey& tileProperties) {
         _tileProperties = tileProperties;
     };
 
@@ -309,7 +309,7 @@ protected:
     //! current string
     std::string _currentString;
     //! tile properties
-    IntValueMap _tileProperties;
+    ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;
 };

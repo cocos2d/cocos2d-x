@@ -25,8 +25,8 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "renderer/CCNewSprite.h"
 #include "CCTexture2D.h"
+#include "CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -54,7 +54,7 @@ NS_CC_BEGIN
  * @endcode
  *
  */
-class CC_DLL LabelTTF : public NewSprite, public LabelProtocol
+class CC_DLL LabelTTF : public Sprite, public LabelProtocol
 {
 public:
     /**

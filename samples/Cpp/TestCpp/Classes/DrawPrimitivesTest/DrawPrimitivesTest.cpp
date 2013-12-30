@@ -1,4 +1,6 @@
 #include "DrawPrimitivesTest.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 using namespace std;
 
@@ -114,113 +116,128 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
+    CustomCommand * cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+}
+
+void DrawPrimitivesTest::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
     
-	CHECK_GL_ERROR_DEBUG();
+    //draw
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw a simple line
-	// The default state is:
-	// Line Width: 1
-	// color: 255,255,255,255 (white, non-transparent)
-	// Anti-Aliased
-    //	glEnable(GL_LINE_SMOOTH);
+    // draw a simple line
+    // The default state is:
+    // Line Width: 1
+    // color: 255,255,255,255 (white, non-transparent)
+    // Anti-Aliased
+    //  glEnable(GL_LINE_SMOOTH);
     DrawPrimitives::drawLine( VisibleRect::leftBottom(), VisibleRect::rightTop() );
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// line: color, width, aliased
-	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
-	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
-    //	glDisable(GL_LINE_SMOOTH);
-	glLineWidth( 5.0f );
-	DrawPrimitives::setDrawColor4B(255,0,0,255);
+    // line: color, width, aliased
+    // glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
+    // GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
+    //  glDisable(GL_LINE_SMOOTH);
+    glLineWidth( 5.0f );
+    DrawPrimitives::setDrawColor4B(255,0,0,255);
     DrawPrimitives::drawLine( VisibleRect::leftTop(), VisibleRect::rightBottom() );
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// TIP:
-	// If you are going to use always the same color or width, you don't
-	// need to call it before every draw
-	//
-	// Remember: OpenGL is a state-machine.
+    // TIP:
+    // If you are going to use always thde same color or width, you don't
+    // need to call it before every draw
+    //
+    // Remember: OpenGL is a state-machine.
     
-	// draw big point in the center
-	DrawPrimitives::setPointSize(64);
-	DrawPrimitives::setDrawColor4B(0,0,255,128);
+    // draw big point in the center
+    DrawPrimitives::setPointSize(64);
+    DrawPrimitives::setDrawColor4B(0,0,255,128);
     DrawPrimitives::drawPoint( VisibleRect::center() );
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw 4 small points
-	Point points[] = { Point(60,60), Point(70,70), Point(60,70), Point(70,60) };
-	DrawPrimitives::setPointSize(4);
-	DrawPrimitives::setDrawColor4B(0,255,255,255);
-	DrawPrimitives::drawPoints( points, 4);
+    // draw 4 small points
+    Point points[] = { Point(60,60), Point(70,70), Point(60,70), Point(70,60) };
+    DrawPrimitives::setPointSize(4);
+    DrawPrimitives::setDrawColor4B(0,255,255,255);
+    DrawPrimitives::drawPoints( points, 4);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw a green circle with 10 segments
-	glLineWidth(16);
-	DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
+    // draw a green circle with 10 segments
+    glLineWidth(16);
+    DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
     DrawPrimitives::drawCircle( VisibleRect::center(), 100, 0, 10, false);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw a green circle with 50 segments with line to center
-	glLineWidth(2);
-	DrawPrimitives::setDrawColor4B(0, 255, 255, 255);
+    // draw a green circle with 50 segments with line to center
+    glLineWidth(2);
+    DrawPrimitives::setDrawColor4B(0, 255, 255, 255);
     DrawPrimitives::drawCircle( VisibleRect::center(), 50, CC_DEGREES_TO_RADIANS(90), 50, true);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw a pink solid circle with 50 segments
-	glLineWidth(2);
-	DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
+    // draw a pink solid circle with 50 segments
+    glLineWidth(2);
+    DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
     DrawPrimitives::drawSolidCircle( VisibleRect::center() + Point(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 1.0f, 1.0f);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// open yellow poly
-	DrawPrimitives::setDrawColor4B(255, 255, 0, 255);
-	glLineWidth(10);
-	Point vertices[] = { Point(0,0), Point(50,50), Point(100,50), Point(100,100), Point(50,100) };
-	DrawPrimitives::drawPoly( vertices, 5, false);
+    // open yellow poly
+    DrawPrimitives::setDrawColor4B(255, 255, 0, 255);
+    glLineWidth(10);
+    Point vertices[] = { Point(0,0), Point(50,50), Point(100,50), Point(100,100), Point(50,100) };
+    DrawPrimitives::drawPoly( vertices, 5, false);
     
-	CHECK_GL_ERROR_DEBUG();
-	
-	// filled poly
-	glLineWidth(1);
-	Point filledVertices[] = { Point(0,120), Point(50,120), Point(50,170), Point(25,200), Point(0,170) };
-	DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
+    CHECK_GL_ERROR_DEBUG();
+    
+    // filled poly
+    glLineWidth(1);
+    Point filledVertices[] = { Point(0,120), Point(50,120), Point(50,170), Point(25,200), Point(0,170) };
+    DrawPrimitives::drawSolidPoly(filledVertices, 5, Color4F(0.5f, 0.5f, 1, 1 ) );
     
     
-	// closed purble poly
-	DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
-	glLineWidth(2);
-	Point vertices2[] = { Point(30,130), Point(30,230), Point(50,200) };
-	DrawPrimitives::drawPoly( vertices2, 3, true);
+    // closed purble poly
+    DrawPrimitives::setDrawColor4B(255, 0, 255, 255);
+    glLineWidth(2);
+    Point vertices2[] = { Point(30,130), Point(30,230), Point(50,200) };
+    DrawPrimitives::drawPoly( vertices2, 3, true);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw quad bezier path
+    // draw quad bezier path
     DrawPrimitives::drawQuadBezier(VisibleRect::leftTop(), VisibleRect::center(), VisibleRect::rightTop(), 50);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
-	// draw cubic bezier path
+    // draw cubic bezier path
     DrawPrimitives::drawCubicBezier(VisibleRect::center(), Point(VisibleRect::center().x+30,VisibleRect::center().y+50), Point(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
     
     //draw a solid polygon
-	Point vertices3[] = {Point(60,160), Point(70,190), Point(100,190), Point(90,160)};
+    Point vertices3[] = {Point(60,160), Point(70,190), Point(100,190), Point(90,160)};
     DrawPrimitives::drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
     
-	// restore original values
-	glLineWidth(1);
-	DrawPrimitives::setDrawColor4B(255,255,255,255);
-	DrawPrimitives::setPointSize(1);
+    // restore original values
+    glLineWidth(1);
+    DrawPrimitives::setDrawColor4B(255,255,255,255);
+    DrawPrimitives::setPointSize(1);
     
-	CHECK_GL_ERROR_DEBUG();
+    CHECK_GL_ERROR_DEBUG();
+    
+    //end draw
+    kmGLLoadMatrix(&oldMat);
 }
 
 string DrawPrimitivesTest::title() const
@@ -257,10 +274,10 @@ DrawNodeTest::DrawNodeTest()
         const float w=20;
         const float h=50;
         Point star[] = {
-            Point(o+w,o-h), Point(o+w*2, o),						// lower spike
-            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),		// right spike
-            //				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
-            //				{o -h, o+w}, {o,o},							// left spike
+            Point(o+w,o-h), Point(o+w*2, o),                        // lower spike
+            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),        // right spike
+            //              {o +w, o+w*2+h}, {o,o+w*2},                 // top spike
+            //              {o -h, o+w}, {o,o},                         // left spike
         };
         
         draw->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
@@ -272,9 +289,9 @@ DrawNodeTest::DrawNodeTest()
         const float w=20;
         const float h=50;
         Point star[] = {
-            Point(o,o), Point(o+w,o-h), Point(o+w*2, o),		// lower spike
-            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),	// right spike
-            Point(o +w, o+w*2+h), Point(o,o+w*2),				// top spike
+            Point(o,o), Point(o+w,o-h), Point(o+w*2, o),        // lower spike
+            Point(o + w*2 + h, o+w ), Point(o + w*2, o+w*2),    // right spike
+            Point(o +w, o+w*2+h), Point(o,o+w*2),               // top spike
             Point(o -h, o+w),                                     // left spike
         };
         

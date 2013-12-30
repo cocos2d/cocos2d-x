@@ -120,14 +120,53 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret);
 template <class T>
 bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, T>* ret)
 {
-    // TO BE DONE:
-    return false;
+    if(nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        std::string stringKey = "";
+        lua_pushnil(L);                                             /* first key L: lotable ..... nil */
+        while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
+        {
+            if (!lua_isstring(L, -2))
+            {
+                lua_pop(L, 1);                                      /* removes 'value'; keep 'key' for next iteration*/
+                continue;
+            }
+            
+            if (lua_isnil(L, -1) || !lua_isuserdata(L, -1))
+            {
+                lua_pop(L, 1);
+                continue;
+            }
+            
+            luaval_to_std_string(L, -2, &stringKey);
+            T obj = static_cast<T>(tolua_tousertype(L, -1, NULL) );
+            if (nullptr != obj)
+                ret->insert(stringKey, obj);
+                
+            lua_pop(L, 1);                                          /* L: lotable ..... key */
+        }
+    }
+    
+    return ok;
 }
 
 
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret);
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret);
-extern bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret);
+extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret);
 extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret);
 
 
@@ -179,11 +218,33 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
 template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
 {
-    // TO BE DONE:
+    lua_newtable(L);
+    
+    if(nullptr == L)
+        return;
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        std::string key = iter->first;
+        T obj = iter->second;
+        if (nullptr != dynamic_cast<cocos2d::Object *>(obj))
+        {
+            std::string name = typeid(*obj).name();
+            auto typeIter = g_luaType.find(name);
+            if (g_luaType.end() != typeIter)
+            {
+                lua_pushstring(L, name.c_str());
+                int ID = (obj) ? (int)obj->_ID : -1;
+                int* luaID = (obj) ? &obj->_luaID : NULL;
+                toluafix_pushusertype_ccobject(L, ID, luaID, (void*)obj,typeIter->second.c_str());
+                lua_rawset(L, -3);
+            }
+        }
+    }
 }
 
 void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
 void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
-void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue);
+void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
