@@ -660,6 +660,12 @@ void RenderTexture::end()
     Renderer *renderer = Director::getInstance()->getRenderer();
     renderer->addCommand(&_endCommand);
     renderer->popGroup();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 }
 
 NS_CC_END
