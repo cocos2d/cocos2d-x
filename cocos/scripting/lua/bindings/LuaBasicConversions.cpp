@@ -1253,7 +1253,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret)
     
     return ok;
 }
-bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret)
+bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret)
 {
     if (nullptr == L || nullptr == ret)
         return false;
@@ -1274,7 +1274,7 @@ bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret)
         std::string stringValue = "";
         int intKey = 0;
         bool boolVal = false;
-        IntValueMap& dict = *ret;
+        ValueMapIntKey& dict = *ret;
         lua_pushnil(L);                                             /* first key L: lotable ..... nil */
         while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
         {
@@ -1882,7 +1882,7 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue)
             ccvaluemap_to_luaval(L, obj.asValueMap());
             break;
         case Value::Type::INT_KEY_MAP:
-            ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+            ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
             break;
         default:
             break;
@@ -1947,7 +1947,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushstring(L, key.c_str());
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                 }
                 break;
@@ -1956,7 +1956,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue)
         }
     }
 }
-void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue)
+void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue)
 {
     lua_newtable(L);
     
@@ -2019,7 +2019,7 @@ void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushstring(L, key.c_str());
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                 }
                 break;
@@ -2092,7 +2092,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushnumber(L, (lua_Number)index);
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                     ++index;
                 }

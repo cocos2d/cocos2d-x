@@ -26,9 +26,13 @@
 #define __CCSSCENEREADER_H__
 
 #include "cocos2d.h"
- #include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
+
 
 namespace cocostudio {
+
+typedef void (cocos2d::Object::*SEL_CallFuncOD)(cocos2d::Object*, void*);
+#define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
 
 class SceneReader
 {
@@ -49,16 +53,21 @@ public:
      *  @js purge
      *  @lua destroySceneReader
      */
-    void purgeSceneReader();
+    static void destroyInstance();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
-
+	void setTarget(cocos2d::Object *rec, SEL_CallFuncOD selector);
+	cocos2d::Node* getNodeByTag(int nTag);
 private:
-    cocos2d::Node* createObject(JsonDictionary * inputFiles, cocos2d::Node* parent);
-    void setPropertyFromJsonDict(cocos2d::Node *node, JsonDictionary* dict);
-
+    cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent);
+    void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
+    bool readJson(const char *pszFileName, rapidjson::Document &doc);
+	cocos2d::Node* nodeByTag(cocos2d::Node *pParent, int nTag);
 private:
     static SceneReader* s_sharedReader;
+	cocos2d::Object*    _pListener;
+	SEL_CallFuncOD      _pfnSelector;
+	cocos2d::Node*      _pNode;
 };
 
 

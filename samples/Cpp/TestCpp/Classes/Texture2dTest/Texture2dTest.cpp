@@ -1,6 +1,8 @@
 // local import
 #include "Texture2dTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagLabel = 1,
@@ -1765,12 +1767,25 @@ std::string TextureDrawAtPoint::subtitle() const
 void TextureDrawAtPoint::draw()
 {
     TextureDemo::draw();
+    
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
+}
+
+void TextureDrawAtPoint::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
     auto s = Director::getInstance()->getWinSize();
-
+    
     _tex1->drawAtPoint(Point(s.width/2-50, s.height/2 - 50));
     _Tex2F->drawAtPoint(Point(s.width/2+50, s.height/2 - 50));
-
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 // TextureDrawInRect
@@ -1795,14 +1810,28 @@ void TextureDrawInRect::draw()
 {
     TextureDemo::draw();
 
-    auto s = Director::getInstance()->getWinSize();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 
+}
+
+void TextureDrawInRect::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    auto s = Director::getInstance()->getWinSize();
+    
     auto rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
     auto rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
-
+    
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);
-
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string TextureDrawInRect::title() const

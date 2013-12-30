@@ -28,7 +28,8 @@
 #include "CCPlatformMacros.h"
 #include <stdint.h> // for ssize_t on android
 #include <string>   // for ssize_t on linux
-#include "CCStdC.h"
+#include "CCStdC.h" // for ssize_t on window
+
 NS_CC_BEGIN
 
 class CC_DLL Data

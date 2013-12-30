@@ -1,13 +1,10 @@
 set(GUI_SRC
-  UIRootWidget.cpp
   UIWidget.cpp
   UILayout.cpp
   UILayoutParameter.cpp
   UILayoutDefine.cpp
   CocosGUI.cpp
   UIHelper.cpp
-  UIInputManager.cpp
-  UILayer.cpp
   UIListView.cpp
   UIPageView.cpp
   UIScrollView.cpp

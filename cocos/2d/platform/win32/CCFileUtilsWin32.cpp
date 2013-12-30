@@ -195,7 +195,6 @@ Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
 {
     unsigned char * pBuffer = NULL;
-    //CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
     *size = 0;
     do
     {

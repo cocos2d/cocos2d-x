@@ -847,13 +847,10 @@ void Director::resume()
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (gettimeofday(_lastUpdate, nullptr) != 0)
-    {
-        CCLOG("cocos2d: Director: Error in gettimeofday");
-    }
-
     _paused = false;
     _deltaTime = 0;
+    // fix issue #3509, skip one fps to avoid incorrect time calculation.
+    setNextDeltaTimeZero(true);
 }
 
 // display the FPS using a LabelAtlas
@@ -1076,6 +1073,8 @@ void DisplayLinkDirector::startAnimation()
     }
 
     _invalid = false;
+
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 }
 
 void DisplayLinkDirector::mainLoop()
