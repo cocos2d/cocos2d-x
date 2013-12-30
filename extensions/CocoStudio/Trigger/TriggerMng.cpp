@@ -72,26 +72,23 @@ void TriggerMng::destroyInstance()
 void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
-    do {
-          int count = DICTOOL->getArrayCount_json(root, "Triggers");
-          for (int i = 0; i < count; ++i)
-          {
-                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
-                TriggerObj *obj = TriggerObj::create();
-                obj->serialize(subDict);
-				std::vector<int> &_vInt = obj->getEvents();
-				for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
-				{
-					add((unsigned int)(*iter), obj);
-				}
-				if (_triggerObjs != NULL)
-				{
-					_triggerObjs->setObject(obj, obj->getId());
-				}
-				
-          }
+    int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    for (int i = 0; i < count; ++i)
+    {
+        const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
+        TriggerObj *obj = TriggerObj::create();
+        obj->serialize(subDict);
+        std::vector<int> &_vInt = obj->getEvents();
+        for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+        {
+            add((unsigned int)(*iter), obj);
+        }
+        if (_triggerObjs != NULL)
+        {
+            _triggerObjs->setObject(obj, obj->getId());
+        }
         
-    } while (0);
+    }
 }
 
 CCArray* TriggerMng::get(unsigned int event) const
@@ -259,13 +256,13 @@ void TriggerMng::addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget,
 	{
 		amd = new ArmatureMovementDispatcher();
 		pAr->getAnimation()->setMovementEventCallFunc(amd, movementEvent_selector(ArmatureMovementDispatcher::animationEvent));
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 		_movementDispatches->insert(std::map<CCArmature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
 	}
 	else
 	{
 		amd = iter->second;
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 	}
 }
 
@@ -339,7 +336,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::map<CCObject*, SEL_MovementEventCallFunc>::value_type(pTarget, mecf));
   }
