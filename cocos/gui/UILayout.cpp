@@ -217,11 +217,7 @@ void Layout::stencilClippingVisit()
     kmGLPopMatrix();
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    GLboolean currentAlphaTestEnabled = GL_FALSE;
-    GLenum currentAlphaTestFunc = GL_ALWAYS;
-    GLclampf currentAlphaTestRef = 1;
-#endif
+
     kmGLPushMatrix();
     transform();
     _clippingStencil->visit();
@@ -709,6 +705,11 @@ LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
+    
+void Layout::requestDoLayout()
+{
+    _doLayoutDirty = true;
+}
 
 void Layout::doLayout()
 {
@@ -722,12 +723,12 @@ void Layout::doLayout()
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {
-            int length = _widgetChildren.size();
             Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
-            for (int i=0; i<length; ++i)
+            
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
@@ -762,12 +763,11 @@ void Layout::doLayout()
         }
         case LAYOUT_LINEAR_HORIZONTAL:
         {
-            int length = _widgetChildren.size();
             Size layoutSize = getSize();
             float leftBoundary = 0.0f;
-            for (int i=0; i<length; ++i)
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
@@ -802,22 +802,19 @@ void Layout::doLayout()
         }
         case LAYOUT_RELATIVE:
         {
-            int length = _widgetChildren.size();
-            int unlayoutChildCount = length;
+            ssize_t unlayoutChildCount = _widgetChildren.size();
             Size layoutSize = getSize();
-            
-            for (int i=0; i<length; i++)
+            for (auto& subWidget : _widgetChildren)
             {
-                Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                Widget* child = static_cast<Widget*>(subWidget);
                 RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                 layoutParameter->_put = false;
             }
-            
             while (unlayoutChildCount > 0)
             {
-                for (int i=0; i<length; i++)
+                for (auto& subWidget : _widgetChildren)
                 {
-                    Widget* child = static_cast<Widget*>(_widgetChildren.at(i));
+                    Widget* child = static_cast<Widget*>(subWidget);
                     RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                     
                     if (layoutParameter)

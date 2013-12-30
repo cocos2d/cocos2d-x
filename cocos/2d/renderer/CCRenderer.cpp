@@ -26,7 +26,7 @@
 #include "CCShaderCache.h"
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCNotificationCenter.h"
@@ -41,9 +41,9 @@ using namespace std;
 
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_numQuads(0)
 ,_firstCommand(0)
 ,_lastCommand(0)
+,_numQuads(0)
 ,_glViewAssigned(false)
 {
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
@@ -65,11 +65,14 @@ Renderer::~Renderer()
         glDeleteVertexArrays(1, &_quadVAO);
         GL::bindVAO(0);
     }
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+#endif
 }
 
 void Renderer::initGLView()
 {
-#if 0//CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
     NotificationCenter::getInstance()->addObserver(this,
                                                            callfuncO_selector(Renderer::onBackToForeground),
@@ -293,13 +296,13 @@ void Renderer::render()
         }
     }
 
-    //TODO give command back to command pool
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
     {
-        for (const auto &cmd : _renderGroups[j])
-        {
-            cmd->releaseToCommandPool();
-        }
+        //commands are owned by nodes
+        // for (const auto &cmd : _renderGroups[j])
+        // {
+        //     cmd->releaseToCommandPool();
+        // }
         _renderGroups[j].clear();
     }
     

@@ -88,11 +88,10 @@ void ListView::updateInnerContainerSize()
     {
         case SCROLLVIEW_DIR_VERTICAL:
         {
-            int length = _items.size();
+            size_t length = _items.size();
             float totalHeight = (length - 1) * _itemsMargin;
-            for (int i=0; i<length; i++)
+            for (auto& item : _items)
             {
-                Widget* item = _items.at(i);
                 totalHeight += item->getSize().height;
             }
             float finalWidth = _size.width;
@@ -102,11 +101,10 @@ void ListView::updateInnerContainerSize()
         }
         case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            int length = _items.size();
+            size_t length = _items.size();
             float totalWidth = (length - 1) * _itemsMargin;
-            for (int i=0; i<length; i++)
+            for (auto& item : _items)
             {
-                Widget* item = _items.at(i);
                 totalWidth += item->getSize().width;
             }
             float finalWidth = totalWidth;
@@ -255,7 +253,7 @@ void ListView::pushBackDefaultItem()
     _refreshViewDirty = true;
 }
 
-void ListView::insertDefaultItem(int index)
+void ListView::insertDefaultItem(ssize_t index)
 {
     if (!_model)
     {
@@ -276,7 +274,7 @@ void ListView::pushBackCustomItem(Widget* item)
     _refreshViewDirty = true;
 }
 
-void ListView::insertCustomItem(Widget* item, int index)
+void ListView::insertCustomItem(Widget* item, ssize_t index)
 {
     _items.insert(index, item);
     remedyLayoutParameter(item);
@@ -284,7 +282,7 @@ void ListView::insertCustomItem(Widget* item, int index)
     _refreshViewDirty = true;
 }
 
-void ListView::removeItem(int index)
+void ListView::removeItem(ssize_t index)
 {
     Widget* item = getItem(index);
     if (!item)
@@ -300,10 +298,16 @@ void ListView::removeLastItem()
 {
     removeItem(_items.size() -1);
 }
-
-Widget* ListView::getItem(unsigned int index)
+    
+void ListView::removeAllItems()
 {
-    if ((int)index < 0 || index >= _items.size())
+    _items.clear();
+    removeAllChildren();
+}
+
+Widget* ListView::getItem(ssize_t index)
+{
+    if (index < 0 || index >= _items.size())
     {
         return nullptr;
     }
@@ -315,7 +319,7 @@ Vector<Widget*>& ListView::getItems()
     return _items;
 }
 
-unsigned int ListView::getIndex(Widget *item) const
+ssize_t ListView::getIndex(Widget *item) const
 {
     if (!item)
     {
@@ -362,10 +366,15 @@ void ListView::setDirection(SCROLLVIEW_DIR dir)
     }
     ScrollView::setDirection(dir);
 }
+    
+void ListView::requestRefreshView()
+{
+    _refreshViewDirty = true;
+}
 
 void ListView::refreshView()
 {
-    int length = _items.size();
+    ssize_t length = _items.size();
     for (int i=0; i<length; i++)
     {
         Widget* item = _items.at(i);
@@ -418,7 +427,7 @@ void ListView::interceptTouchEvent(int handleState, Widget *sender, const Point 
     }
 }
     
-int ListView::getCurSelectedIndex() const
+ssize_t ListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;
 }
@@ -431,7 +440,7 @@ void ListView::onSizeChanged()
 
 std::string ListView::getDescription() const
 {
-    return "ListViewEx";
+    return "ListView";
 }
 
 Widget* ListView::createCloneInstance()
@@ -441,12 +450,9 @@ Widget* ListView::createCloneInstance()
 
 void ListView::copyClonedWidgetChildren(Widget* model)
 {
-    Vector<Widget*> arrayItems = getItems();
-    
-    int length = arrayItems.size();
-    for (int i=0; i<length; i++)
+    auto& arrayItems = static_cast<ListView*>(model)->getItems();
+    for (auto& item : arrayItems)
     {
-        Widget* item = arrayItems.at(i);
         pushBackCustomItem(item->clone());
     }
 }

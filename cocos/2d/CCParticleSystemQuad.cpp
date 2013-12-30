@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "CCEventType.h"
 #include "CCConfiguration.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCCustomCommand.h"
 
 // extern
@@ -443,9 +443,8 @@ void ParticleSystemQuad::draw()
 
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-        QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(cmd);
+        _quadCommand.init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 
 }

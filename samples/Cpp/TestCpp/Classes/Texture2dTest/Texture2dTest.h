@@ -3,6 +3,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
 
 
 class TextureDemo : public BaseTest
@@ -442,6 +443,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 private:
     Texture2D* _tex1, *_Tex2F;
@@ -457,6 +459,7 @@ public:
     virtual void onEnter();
     virtual void draw();
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 private:
     Texture2D* _tex1, *_Tex2F;

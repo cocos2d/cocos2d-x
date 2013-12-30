@@ -32,6 +32,7 @@
 
 #include "CCNode.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -105,6 +106,7 @@ protected:
     V2F_C4B_T2F *_buffer;
 
     BlendFunc   _blendFunc;
+    CustomCommand _customCommand;
 
     bool        _dirty;
 

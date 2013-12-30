@@ -112,7 +112,6 @@ target_link_libraries(${APP_NAME}
   rtmp
   spine
   cocostudio
-  jsoncpp
   cocosbuilder
   extensions
   box2d

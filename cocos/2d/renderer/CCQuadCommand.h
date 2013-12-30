@@ -37,7 +37,6 @@ NS_CC_BEGIN
 class QuadCommand : public RenderCommand
 {
 public:
-    static RenderCommandPool<QuadCommand>& getCommandPool() { return _commandPool; }
 
     QuadCommand();
     ~QuadCommand();
@@ -69,8 +68,6 @@ public:
 
     inline BlendFunc getBlendType() const { return _blendType; }
     
-    virtual void releaseToCommandPool() override;
-
 protected:
     int32_t _materialID;
 
@@ -91,12 +88,7 @@ protected:
     V3F_C4B_T2F_Quad* _quad;
     ssize_t _quadCount;
     ssize_t _capacity;
-
-    friend class RenderCommandPool<QuadCommand>;
-
-    static RenderCommandPool<QuadCommand> _commandPool;
 };
-
 NS_CC_END
 
 #endif //_CC_QUADCOMMAND_H_

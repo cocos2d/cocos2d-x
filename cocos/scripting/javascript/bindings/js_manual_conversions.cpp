@@ -1034,7 +1034,7 @@ JSBool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
     return JS_TRUE;
 }
 
-JSBool jsval_to_ccintvaluemap(JSContext* cx, jsval v, cocos2d::IntValueMap* ret)
+JSBool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* ret)
 {
     if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
     {
@@ -1049,7 +1049,7 @@ JSBool jsval_to_ccintvaluemap(JSContext* cx, jsval v, cocos2d::IntValueMap* ret)
     
     JSObject* it = JS_NewPropertyIterator(cx, tmp);
     
-    IntValueMap& dict = *ret;
+    ValueMapIntKey& dict = *ret;
     
     while (true)
     {
@@ -2040,7 +2040,7 @@ jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v)
             ret = ccvaluemap_to_jsval(cx, obj.asValueMap());
             break;
         case Value::Type::INT_KEY_MAP:
-            ret = ccintvaluemap_to_jsval(cx, obj.asIntKeyMap());
+            ret = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
             break;
         default:
             break;
@@ -2082,7 +2082,7 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
                 dictElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
                 break;
             case Value::Type::INT_KEY_MAP:
-                dictElement = ccintvaluemap_to_jsval(cx, obj.asIntKeyMap());
+                dictElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
                 break;
             default:
                 break;
@@ -2096,7 +2096,7 @@ jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-jsval ccintvaluemap_to_jsval(JSContext* cx, const cocos2d::IntValueMap& v)
+jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v)
 {
     JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
     
@@ -2131,7 +2131,7 @@ jsval ccintvaluemap_to_jsval(JSContext* cx, const cocos2d::IntValueMap& v)
                 dictElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
                 break;
             case Value::Type::INT_KEY_MAP:
-                dictElement = ccintvaluemap_to_jsval(cx, obj.asIntKeyMap());
+                dictElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
                 break;
             default:
                 break;
@@ -2176,7 +2176,7 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
                 arrElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
                 break;
             case Value::Type::INT_KEY_MAP:
-                arrElement = ccintvaluemap_to_jsval(cx, obj.asIntKeyMap());
+                arrElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
                 break;
             default:
                 break;
