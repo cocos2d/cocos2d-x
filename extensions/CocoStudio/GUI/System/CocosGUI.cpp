@@ -24,11 +24,11 @@
 
 #include "CocosGUI.h"
 
-NS_CC_EXT_BEGIN
+//NS_CC_EXT_BEGIN
 
 const char* CocosGUIVersion()
 {
     return "CocosGUI v1.0.0.0";
 }
 
-NS_CC_EXT_END
+//NS_CC_EXT_END
