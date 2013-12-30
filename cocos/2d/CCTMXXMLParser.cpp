@@ -543,9 +543,9 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyTile ) 
         {
-            IntValueMap& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asIntKeyMap();
+            ValueMap& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asValueMap();
 
-            int propertyName = attributeDict["name"].asInt();
+            std::string propertyName = attributeDict["name"].asString();
             dict[propertyName] = attributeDict["value"];
         }
     }
