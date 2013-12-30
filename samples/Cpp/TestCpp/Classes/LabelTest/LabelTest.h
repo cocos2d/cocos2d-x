@@ -38,6 +38,8 @@ public:
     virtual void draw();
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class LabelAtlasTest : public AtlasDemo
@@ -106,6 +108,8 @@ public:
     virtual std::string subtitle() const override;
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class Atlas5 : public AtlasDemo
@@ -380,6 +384,7 @@ protected:
     void onDraw();
 private:
     LabelBMFont *label1;
+    CustomCommand _customCommand;
 };
 
 class NewLabelTTFUnicode : public AtlasDemo
@@ -425,6 +430,17 @@ public:
     CREATE_FUNC(LabelBMFontCrashTest);
 
     virtual void onEnter();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelBMFontBinaryFormat : public AtlasDemo
+{
+public:
+    CREATE_FUNC(LabelBMFontBinaryFormat);
+
+    LabelBMFontBinaryFormat();
+
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #define __CC_PARTICLE_SYSTEM_QUAD_H__
 
 #include  "CCParticleSystem.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -151,6 +152,8 @@ protected:
     GLuint                _buffersVBO[2]; //0: vertex  1: indices
 
     kmMat4                _transformMatrix;
+    
+    QuadCommand _quadCommand;     // quad command
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };

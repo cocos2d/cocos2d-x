@@ -3,6 +3,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
 
 
 class AtlasDemoNew : public BaseTest
@@ -61,6 +62,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 
@@ -226,6 +228,7 @@ public:
 private:
     Label *label1;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 

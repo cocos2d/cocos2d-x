@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "kazmath/mat4.h"
 #include "platform/CCImage.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -187,6 +189,13 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beginWithClearCommand;
+    CustomCommand _clearDepthCommand;
+    CustomCommand _clearCommand;
+    CustomCommand _beginCommand;
+    CustomCommand _endCommand;
 protected:
     //renderer caches and callbacks
     void onBegin();

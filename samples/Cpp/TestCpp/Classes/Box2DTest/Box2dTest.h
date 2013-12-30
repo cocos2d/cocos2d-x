@@ -28,6 +28,7 @@ public:
 protected:
     kmMat4 _modelViewMV;
     void onDraw();
+    CustomCommand _customCommand;
 #endif
 } ;
 

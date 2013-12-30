@@ -142,7 +142,7 @@ Color4B BaseData::getColor()
     return Color4B(r, g, b, a);
 }
 
-const std::string& DisplayData::changeDisplayToTexture(const std::string& displayName)
+const std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
@@ -153,7 +153,7 @@ const std::string& DisplayData::changeDisplayToTexture(const std::string& displa
         textureName = textureName.erase(startPos);
     }
 
-    return textureName.c_str();
+    return textureName;
 }
 
 DisplayData::DisplayData(void)

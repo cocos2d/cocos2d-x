@@ -117,6 +117,8 @@ public:
         void onBeforeDraw();
     public:
         RenderTexture *_rt;
+    protected:
+        CustomCommand _customCommand;
     };
         
 public:

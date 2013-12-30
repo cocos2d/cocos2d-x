@@ -74,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     // should be moved to another test
     CL(Atlas1),
     CL(LabelBMFontCrashTest),
+	CL(LabelBMFontBinaryFormat),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -209,10 +210,9 @@ void Atlas1::draw()
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
     
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(Atlas1::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
 //    [textureAtlas drawNumberOfQuads:3];
     
@@ -526,10 +526,9 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(Atlas4::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void Atlas4::onDraw()
@@ -1613,10 +1612,9 @@ std::string LabelBMFontBounds::subtitle() const
 
 void LabelBMFontBounds::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void LabelBMFontBounds::onDraw()
@@ -1668,4 +1666,27 @@ std::string LabelBMFontCrashTest::title() const
 std::string LabelBMFontCrashTest::subtitle() const
 {
     return "Should not crash.";
+}
+
+// LabelBMFontBinaryFormat
+LabelBMFontBinaryFormat::LabelBMFontBinaryFormat()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto bmFont = LabelBMFont::create();
+
+    bmFont->setFntFile("fonts/Roboto.bmf.fnt");
+    bmFont->setString("It is working!");
+    this->addChild(bmFont);
+    bmFont->setPosition(Point(s.width/2,s.height/4*2));
+}
+
+std::string LabelBMFontBinaryFormat::title() const
+{
+    return "LabelBMFont Binary FNT File";
+}
+
+std::string LabelBMFontBinaryFormat::subtitle() const
+{
+    return "This label uses font file in AngelCode binary format";
 }
