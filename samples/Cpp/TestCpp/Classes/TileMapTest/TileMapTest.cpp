@@ -1061,7 +1061,10 @@ TMXTilePropertyTest::TMXTilePropertyTest()
     addChild(map ,0 ,kTagTileMap);
 
     for(int i=1;i<=20;i++){
-        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asString().c_str());
+        for(const auto& value : map->getPropertiesForGID(i).asValueMap())
+        {
+            log("GID:%i, Properties:%s, %s", i, value.first.c_str(), value.second.asString().c_str());
+        }
     }
 }
 
@@ -1210,6 +1213,42 @@ std::string TMXOrthoFromXMLTest::title() const
 {
     return "TMX created from XML test";
 }
+//------------------------------------------------------------------
+//
+// TMXOrthoFromXMLFormatTest
+//
+//------------------------------------------------------------------
+
+TMXOrthoFromXMLFormatTest::TMXOrthoFromXMLFormatTest()
+{
+    // this test tests for:
+    // 1. load xml format tilemap
+    // 2. gid lower than firstgid is ignored
+    // 3. firstgid in tsx is ignored, tile property in tsx loaded correctly.
+    auto map = TMXTiledMap::create("TileMaps/xml-test.tmx");
+    addChild(map, 0, kTagTileMap);
+    
+    auto s = map->getContentSize();
+    log("ContentSize: %f, %f", s.width,s.height);
+    
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
+        auto child = static_cast<SpriteBatchNode*>(node);
+        child->getTexture()->setAntiAliasTexParameters();
+    }
+    
+    for(int i=24;i<=26;i++){
+        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asValueMap()["name"].asString().c_str());
+    }
+    
+    auto action = ScaleBy::create(2, 0.5f);
+    map->runAction(action);
+}
+
+std::string TMXOrthoFromXMLFormatTest::title() const
+{
+    return "TMX created from XML format test";
+}
 
 //------------------------------------------------------------------
 //
@@ -1283,7 +1322,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    29
 
 Layer* createTileMalayer(int nIndex)
 {
@@ -1317,6 +1356,7 @@ Layer* createTileMalayer(int nIndex)
         case 25: return new TMXBug987();
         case 26: return new TMXBug787();
         case 27: return new TMXGIDObjectsTest();
+        case 28: return new TMXOrthoFromXMLFormatTest();
     }
 
     return NULL;

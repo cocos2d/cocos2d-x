@@ -249,10 +249,17 @@ public:
     void flipIt(float dt);
 };
 
-class TMXOrthoFromXMLTest : public TileDemo 
+class TMXOrthoFromXMLTest : public TileDemo
 {
 public:
     TMXOrthoFromXMLTest();
+    virtual std::string title() const override;
+};
+
+class TMXOrthoFromXMLFormatTest : public TileDemo
+{
+public:
+    TMXOrthoFromXMLFormatTest();
     virtual std::string title() const override;
 };
 
