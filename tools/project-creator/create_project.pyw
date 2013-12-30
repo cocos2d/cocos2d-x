@@ -25,6 +25,12 @@ THE SOFTWARE.
 ****************************************************************************"""
 
 import sys
+def commandCreate():
+        from module.core import CocosProject
+        project = CocosProject()
+        name, package, language, path = project.checkParams()
+        project.createPlatformProjects(name, package, language, path)
+
 
 # ------------ main --------------
 if __name__ == '__main__':
@@ -36,11 +42,12 @@ if __name__ == '__main__':
         #create_project.py -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany
     """
     if len(sys.argv)==1:
-        from module.ui import createTkCocosDialog
-        createTkCocosDialog()
+	   try:
+            from module.ui import createTkCocosDialog
+            createTkCocosDialog()
+	   except ImportError:
+            commandCreate()
     else:
-        from module.core import CocosProject
-        project = CocosProject()
-        name, package, language, path = project.checkParams()
-        project.createPlatformProjects(name, package, language, path)
+        commandCreate()
+
 
