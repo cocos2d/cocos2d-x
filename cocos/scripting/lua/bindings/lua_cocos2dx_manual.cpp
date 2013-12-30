@@ -3807,7 +3807,7 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
 #endif
         
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
@@ -3926,7 +3926,7 @@ static int tolua_cocos2dx_EventListenerTouchOneByOne_registerScriptHandler(lua_S
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_BEGAN:
@@ -4068,7 +4068,7 @@ static int tolua_cocos2dx_EventListenerTouchAllAtOnce_registerScriptHandler(lua_
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_BEGAN:
@@ -4210,7 +4210,7 @@ static int tolua_cocos2dx_EventListenerMouse_registerScriptHandler(lua_State* to
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0) ) ;
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0) ) ;
         
         switch (type)
         {
