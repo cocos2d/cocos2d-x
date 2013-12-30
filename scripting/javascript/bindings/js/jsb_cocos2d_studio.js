@@ -201,3 +201,12 @@ if(ccs.Armature){
   ccs.ComController.extend = cc.Class.extend;
   ccs.Armature.extend = cc.Class.extend;
 }
+
+cc.ArmatureAnimation.prototype.playWithNames = function() {
+    return cc.ArmatureAnimation.prototype.playWithArray.apply(this, arguments);
+};
+
+cc.ArmatureAnimation.prototype.playWithIndexes = function() {
+    return cc.ArmatureAnimation.prototype.playWithIndexArray.apply(this, arguments);
+};
+
