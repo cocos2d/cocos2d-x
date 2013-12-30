@@ -256,10 +256,10 @@ public:
     virtual std::string title() const override;
 };
 
-class TMXOrthoFromXMLFormatTest : public TileDemo
+class TMXOrthoXMLFormatTest : public TileDemo
 {
 public:
-    TMXOrthoFromXMLFormatTest();
+    TMXOrthoXMLFormatTest();
     virtual std::string title() const override;
 };
 
