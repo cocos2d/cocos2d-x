@@ -64,7 +64,7 @@ bool UIListViewExTest_Vertical::init()
                                     (backgroundSize.width - listView->getSize().width) / 2,
                                     (widgetSize.height - backgroundSize.height) / 2 +
                                     (backgroundSize.height - listView->getSize().height) / 2));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewExTest_Vertical::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewExTest_Vertical::selectedItemEvent));
         m_pUiLayer->addWidget(listView);
         
         
@@ -161,7 +161,7 @@ bool UIListViewExTest_Vertical::init()
     return false;
 }
 
-void UIListViewExTest_Vertical::selectedItemEvent(CCObject *pSender, ScrollviewEventType type)
+void UIListViewExTest_Vertical::selectedItemEvent(CCObject *pSender, ListViewEventType type)
 {
     switch (type)
     {
@@ -240,7 +240,7 @@ bool UIListViewExTest_Horizontal::init()
                                     (backgroundSize.width - listView->getSize().width) / 2,
                                     (widgetSize.height - backgroundSize.height) / 2 +
                                     (backgroundSize.height - listView->getSize().height) / 2));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewExTest_Horizontal::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewExTest_Horizontal::selectedItemEvent));
         m_pUiLayer->addWidget(listView);
         
         
@@ -337,7 +337,7 @@ bool UIListViewExTest_Horizontal::init()
     return false;
 }
 
-void UIListViewExTest_Horizontal::selectedItemEvent(CCObject *pSender, ScrollviewEventType type)
+void UIListViewExTest_Horizontal::selectedItemEvent(CCObject *pSender, ListViewEventType type)
 {
     switch (type)
     {

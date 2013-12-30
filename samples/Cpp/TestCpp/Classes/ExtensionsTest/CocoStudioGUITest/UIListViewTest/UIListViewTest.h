@@ -33,7 +33,7 @@ public:
     UIListViewExTest_Vertical();
     ~UIListViewExTest_Vertical();
     bool init();
-    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void selectedItemEvent(CCObject* pSender, ListViewEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewExTest_Vertical)
@@ -48,7 +48,7 @@ public:
     UIListViewExTest_Horizontal();
     ~UIListViewExTest_Horizontal();
     bool init();
-    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void selectedItemEvent(CCObject* pSender, ListViewEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewExTest_Horizontal)
