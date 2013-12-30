@@ -221,11 +221,6 @@ void Layout::stencilClippingVisit()
     kmGLPopMatrix();
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    GLboolean currentAlphaTestEnabled = GL_FALSE;
-    GLenum currentAlphaTestFunc = GL_ALWAYS;
-    GLclampf currentAlphaTestRef = 1;
-#endif
     kmGLPushMatrix();
     transform();
     _clippingStencil->visit();
