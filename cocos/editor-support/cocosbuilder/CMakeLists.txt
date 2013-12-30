@@ -20,7 +20,6 @@ set(CCB_SRC
   CCBKeyframe.cpp
   CCBSequence.cpp
   CCBSequenceProperty.cpp
-  CCBValue.cpp
   CCNode+CCBRelativePositioning.cpp
 )
 

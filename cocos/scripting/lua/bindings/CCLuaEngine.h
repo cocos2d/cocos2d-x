@@ -29,14 +29,11 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
-#include "CCTouch.h"
-#include "CCSet.h"
-#include "CCNode.h"
+#include "cocos2d.h"
 #include "CCScriptSupport.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
+#include "LuaScriptHandlerMgr.h"
 
 NS_CC_BEGIN
 
@@ -120,8 +117,8 @@ public:
     virtual bool handleAssert(const char *msg);
     
     virtual int sendEvent(ScriptEvent* message);
-    virtual int sendEventReturnArray(ScriptEvent* message,int numResults,Array& resultArray);
-    void extendLuaObject();
+    virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
     LuaEngine(void)
     : _stack(NULL)
@@ -130,7 +127,6 @@ private:
     bool init(void);
     int handleNodeEvent(void* data);
     int handleMenuClickedEvent(void* data);
-    int handleNotificationEvent(void* data);
     int handleCallFuncActionEvent(void* data);
     int handleScheduler(void* data);
     int handleKeypadEvent(void* data);
@@ -139,13 +135,18 @@ private:
     int handleTouchEvent(void* data);
     int handleTouchesEvent(void* data);
     int handlerControlEvent(void* data);
-    int handleTableViewEvent(void* data);
-    int handleTableViewEventReturnArray(void* data,int numResults,Array& resultArray);
-    int handleAssetsManagerEvent(void* data);
-    int handleCocoStudioEventListener(void* data);
-    int handleArmatureWrapper(void* data);
-    void extendWebsocket(lua_State* lua_S);
-    void extendGLNode(lua_State* lua_S);
+    int handleEvenCustom(void* data);
+    int handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data, int numResults, const std::function<void(lua_State*,int)>& func);
+    int handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleEventAcc(void* data);
+    int handleEventKeyboard(ScriptHandlerMgr::HandlerType type,void* data);
+    int handleEventTouch(ScriptHandlerMgr::HandlerType type, void* data);
+    int handleEventTouches(ScriptHandlerMgr::HandlerType type, void* data);
+    int handleEventMouse(ScriptHandlerMgr::HandlerType type, void* data);
+    
 private:
     static LuaEngine* _defaultEngine;
     LuaStack *_stack;

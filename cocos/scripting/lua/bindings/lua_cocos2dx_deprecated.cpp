@@ -17,6 +17,68 @@ extern "C" {
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+template <class T>
+bool array_to_vector_t_deprecated(Array& array,Vector<T>& vec)
+{
+    if ( 0 == array.count() )
+        return false;
+    
+    vec.clear();
+    
+    for (int i = 0; i < array.count() ; i++)
+    {
+        T obj = dynamic_cast<T>(array.getObjectAtIndex(i));
+        if (nullptr  != obj)
+            vec.pushBack(obj);
+    }
+    
+    return true;
+}
+
+bool array_to_valuevector_deprecated(Array& array,ValueVector& valueVec)
+{
+    if (0 == array.count())
+        return false;
+    
+    valueVec.clear();
+    
+    String* strVal = nullptr;
+    Double* doubleVal = nullptr;
+    Bool* boolVal = nullptr;
+    Float* floatVal = nullptr;
+    Integer* intVal = nullptr;
+    
+    for (int i = 0; i < array.count(); i++)
+    {
+        if( (strVal = dynamic_cast<cocos2d::String *>(array.getObjectAtIndex(i))))
+        {
+            valueVec.push_back(Value(strVal->getCString()));
+        }
+        else if ((doubleVal = dynamic_cast<cocos2d::Double*>(array.getObjectAtIndex(i))))
+        {
+            valueVec.push_back(Value(doubleVal->getValue()));
+        }
+        else if ((floatVal = dynamic_cast<cocos2d::Float*>(array.getObjectAtIndex(i))))
+        {
+            valueVec.push_back(Value(floatVal->getValue()));
+        }
+        else if ((intVal = dynamic_cast<cocos2d::Integer*>(array.getObjectAtIndex(i))))
+        {
+            valueVec.push_back(Value(intVal->getValue()));
+        }
+        else if ((boolVal = dynamic_cast<cocos2d::Bool*>(array.getObjectAtIndex(i))))
+        {
+            valueVec.push_back(Value(boolVal->getValue()));
+        }
+        else
+        {
+            CCASSERT(false, "the type isn't suppored.");
+        }
+    }
+    
+    return true;
+}
+
 #define deprecatedClassTip(className) CCLOG("%s will be not binded in lua,please use the lua's table instead",className)
 #define deprecatedFunctionTip(oldFun,newFun) CCLOG("%s was deprecated please use %s instead ",oldFun, newFun)
 static int tolua_Cocos2d_CCPoint_new00(lua_State* tolua_S)
@@ -1877,13 +1939,14 @@ static int tolua_cocos2d_Animation_createWithSpriteFrames_deprecated00(lua_State
     else
     {
         Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        Vector<SpriteFrame*> vec;
+        array_to_vector_t_deprecated(*arrayOfSpriteFrameNames, vec);
         float delay = ((float)  tolua_tonumber(tolua_S,3,0));
-        {
-            cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames,delay);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Animation");
-        }
+        cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(vec,delay);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Animation");
+    
     }
     return 1;
 tolua_lerror:
@@ -1902,12 +1965,13 @@ static int tolua_cocos2d_Animation_createWithSpriteFrames_deprecated01(lua_State
     else
     {
         Array* arrayOfSpriteFrameNames = ((Array*)  tolua_tousertype(tolua_S,2,0));
-        {
-            cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(arrayOfSpriteFrameNames);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Animation");
-        }
+        Vector<SpriteFrame*> vec;
+        array_to_vector_t_deprecated(*arrayOfSpriteFrameNames, vec);
+        cocos2d::Animation* tolua_ret = (cocos2d::Animation*)  cocos2d::Animation::createWithSpriteFrames(vec);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Animation");
+        
     }
     return 1;
 tolua_lerror:
@@ -1927,6 +1991,7 @@ static void extendAnimationDeprecated(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2d_Animation_createWithSpriteFrames_deprecated01);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2d_Sequence_createWithTwoActions(lua_State* tolua_S)
@@ -1973,12 +2038,12 @@ static int tolua_Cocos2d_Sequence_create_deprecated00(lua_State* tolua_S)
     else
     {
         Array* actions = ((Array*)  tolua_tousertype(tolua_S,2,0));
-        {
-            Sequence* tolua_ret = (Sequence*)  Sequence::create(actions);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Sequence");
-        }
+        Vector<FiniteTimeAction*> vec;
+        array_to_vector_t_deprecated(*actions, vec);
+        Sequence* tolua_ret = (Sequence*)  Sequence::create(vec);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Sequence");
     }
     return 1;
 tolua_lerror:
@@ -1994,6 +2059,7 @@ static int extendSequenceDeprecated(lua_State* tolua_S)
         tolua_function(tolua_S, "createWithTwoActions",tolua_cocos2d_Sequence_createWithTwoActions);
         tolua_function(tolua_S, "create", tolua_Cocos2d_Sequence_create_deprecated00);
     }
+    lua_pop(tolua_S, 1);
     
     return 1;
 }
@@ -2095,7 +2161,7 @@ static int extendSpawnDeprecated(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "createWithTwoActions", tolua_cocos2d_Spawn_createWithTwoActions_deprcated00);
     }
-    
+    lua_pop(tolua_S, 1);
     return 1;
 }
 
@@ -2113,13 +2179,13 @@ static int tolua_cocos2d_Menu_createWithArray00(lua_State* tolua_S)
     else
 #endif
     {
-        Array* pArrayOfItems = ((Array*)  tolua_tousertype(tolua_S,2,0));
-        {
-            Menu* tolua_ret = (Menu*)  Menu::createWithArray(pArrayOfItems);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Menu");
-        }
+        Array* arrayOfItems = ((Array*)  tolua_tousertype(tolua_S,2,0));
+        Vector<MenuItem*> vec;
+        array_to_vector_t_deprecated(*arrayOfItems, vec);
+        Menu* tolua_ret = (Menu*)  Menu::createWithArray(vec);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"Menu");
     }
     return 1;
 #ifndef TOLUA_RELEASE
@@ -2147,9 +2213,9 @@ static int tolua_cocos2d_Menu_alignItemsInColumnsWithArray00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInColumnsWithArray'", NULL);
 #endif
-        {
-            self->alignItemsInColumnsWithArray(rows);
-        }
+        ValueVector valueVector;
+        array_to_valuevector_deprecated(*rows, valueVector);
+        self->alignItemsInColumnsWithArray(valueVector);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -2178,9 +2244,9 @@ static int tolua_cocos2d_Menu_alignItemsInRowsWithArray00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'alignItemsInRowsWithArray'", NULL);
 #endif
-        {
-            self->alignItemsInRowsWithArray(columns);
-        }
+        ValueVector valueVector;
+        array_to_valuevector_deprecated(*columns, valueVector);
+        self->alignItemsInRowsWithArray(valueVector);
     }
     return 0;
 #ifndef TOLUA_RELEASE
@@ -2200,7 +2266,7 @@ static int extendMenuDeprecated(lua_State* tolua_S)
         tolua_function(tolua_S, "alignItemsInColumnsWithArray", tolua_cocos2d_Menu_alignItemsInColumnsWithArray00);
         tolua_function(tolua_S, "alignItemsInRowsWithArray", tolua_cocos2d_Menu_alignItemsInRowsWithArray00);
     }
-    
+    lua_pop(tolua_S, 1);
     return 1;
 }
 
@@ -2218,12 +2284,13 @@ static int tolua_cocos2d_LayerMultiplex_createWithArray00(lua_State* tolua_S)
 #endif
     {
         Array* arrayOfLayers = ((Array*)  tolua_tousertype(tolua_S,2,0));
-        {
-            LayerMultiplex* tolua_ret = (LayerMultiplex*)  LayerMultiplex::createWithArray(arrayOfLayers);
-            int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
-            int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"LayerMultiplex");
-        }
+        Vector<Layer*> vec;
+        array_to_vector_t_deprecated(*arrayOfLayers, vec);
+        LayerMultiplex* tolua_ret = (LayerMultiplex*)  LayerMultiplex::createWithArray(vec);
+        int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
+        int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"LayerMultiplex");
+        
     }
     return 1;
 #ifndef TOLUA_RELEASE
@@ -2241,6 +2308,7 @@ static int extendLayerMultiplexDeprecated(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "createWithArray", tolua_cocos2d_LayerMultiplex_createWithArray00);
     }
+    lua_pop(tolua_S, 1);
     return 1;
 }
 

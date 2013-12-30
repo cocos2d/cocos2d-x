@@ -5,6 +5,7 @@
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
@@ -40,6 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
     sc->addRegisterCallback(jsb_register_chipmunk);
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_system);

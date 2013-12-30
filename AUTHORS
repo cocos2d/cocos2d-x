@@ -666,6 +666,28 @@ Developers:
     hulefei
         Added gui namespace before SEL_TouchEvent.
         
+    zhiqiangxu
+        Fixed a logic error in ControlUtils::RectUnion.
+        
+    yinkaile (2youyouo2)
+        Maintainer of Armature Bone Animation.
+        
+    dmurtagh
+        Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
+        
+    seobyeongky
+        Updates spine runtime.
+        Fixed a potential bug in Data's copy constructor. 
+        
+    luocker
+        Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
+        
+    omersaeed
+        Fix a bug that game will crash if connection breaks during download using AssetManager.
+        
+    SBKarr
+        AngelCode binary file format support for LabelBMFont.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

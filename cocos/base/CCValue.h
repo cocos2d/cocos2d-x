@@ -37,12 +37,15 @@ class Value;
 
 typedef std::vector<Value> ValueVector;
 typedef std::unordered_map<std::string, Value> ValueMap;
-typedef std::unordered_map<int, Value> IntValueMap;
+typedef std::unordered_map<int, Value> ValueMapIntKey;
 
 class Value
 {
 public:
+    static const Value Null;
+    
     Value();
+    explicit Value(unsigned char v);
     explicit Value(int v);
     explicit Value(float v);
     explicit Value(double v);
@@ -56,16 +59,35 @@ public:
     explicit Value(const ValueMap& v);
 	explicit Value(ValueMap&& v);
     
-    explicit Value(const IntValueMap& v);
-    explicit Value(IntValueMap&& v);
+    explicit Value(const ValueMapIntKey& v);
+    explicit Value(ValueMapIntKey&& v);
     
     Value(const Value& other);
     Value(Value&& other);
     ~Value();
     
+    // assignment operator
     Value& operator= (const Value& other);
     Value& operator= (Value&& other);
     
+    Value& operator= (unsigned char v);
+    Value& operator= (int v);
+    Value& operator= (float v);
+    Value& operator= (double v);
+    Value& operator= (bool v);
+    Value& operator= (const char* v);
+    Value& operator= (const std::string& v);
+    
+    Value& operator= (const ValueVector& v);
+    Value& operator= (ValueVector&& v);
+    
+    Value& operator= (const ValueMap& v);
+	Value& operator= (ValueMap&& v);
+    
+    Value& operator= (const ValueMapIntKey& v);
+    Value& operator= (ValueMapIntKey&& v);
+    
+    unsigned char asByte() const;
     int asInt() const;
     float asFloat() const;
     double asDouble() const;
@@ -78,14 +100,15 @@ public:
     inline ValueMap& asValueMap() { return *_mapData; }
     inline const ValueMap& asValueMap() const { return *_mapData; }
     
-    inline IntValueMap& asIntKeyMap() { return *_intKeyMapData; }
-    inline const IntValueMap& asIntKeyMap() const { return *_intKeyMapData; }
+    inline ValueMapIntKey& asIntKeyMap() { return *_intKeyMapData; }
+    inline const ValueMapIntKey& asIntKeyMap() const { return *_intKeyMapData; }
 
     inline bool isNull() const { return _type == Type::NONE; }
     
     enum class Type
     {
         NONE,
+        BYTE,
         INTEGER,
         FLOAT,
         DOUBLE,
@@ -98,9 +121,14 @@ public:
 
     inline Type getType() const { return _type; };
     
+    std::string getDescription();
+    
 private:
+    void clear();
+    
     union
     {
+        unsigned char byteVal;
         int intVal;
         float floatVal;
         double doubleVal;
@@ -110,7 +138,7 @@ private:
     std::string _strData;
     ValueVector* _vectorData;
     ValueMap* _mapData;
-    IntValueMap* _intKeyMapData;
+    ValueMapIntKey* _intKeyMapData;
 
     Type _type;
 };

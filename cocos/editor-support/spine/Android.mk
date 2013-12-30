@@ -24,6 +24,10 @@ SkeletonJson.cpp \
 Skin.cpp \
 Slot.cpp \
 SlotData.cpp \
+BoundingBoxAttachment.cpp \
+Event.cpp \
+EventData.cpp \
+SkeletonBounds.cpp \
 extension.cpp \
 spine-cocos2dx.cpp
 

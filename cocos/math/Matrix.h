@@ -5,8 +5,7 @@
 #include "Vector3.h"
 #include "Vector4.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 /**
  * Defines a 4 x 4 floating point matrix representing a 3D transformation.
@@ -978,7 +977,7 @@ inline std::istream& operator >> (std::istream& stream, Matrix& m)
     return stream;
 }
 
-}
+NS_CC_END
 
 #include "Matrix.inl"
 

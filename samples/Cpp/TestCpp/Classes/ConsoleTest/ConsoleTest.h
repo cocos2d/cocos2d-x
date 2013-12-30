@@ -37,12 +37,12 @@ public:
     BaseTestConsole();
     ~BaseTestConsole();
 
-    virtual std::string title();
-    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual void onEnter() override;
 
-    void restartCallback(Object* sender);
-    void nextCallback(Object* sender);
-    void backCallback(Object* sender);
+    void restartCallback(Object* sender) override;
+    void nextCallback(Object* sender) override;
+    void backCallback(Object* sender) override;
 };
 
 class ConsoleTCP : public BaseTestConsole
@@ -51,7 +51,8 @@ public:
     CREATE_FUNC(ConsoleTCP);
 
     void onEnter() override;
-    virtual std::string title() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     ConsoleTCP();
@@ -69,7 +70,8 @@ public:
     CREATE_FUNC(ConsoleCustomCommand);
 
     void onEnter() override;
-    virtual std::string title() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     ConsoleCustomCommand();

@@ -39,7 +39,7 @@ public:
     virtual ~Box2DView(void);
 
     bool initWithEntryID(int entryId);
-    std::string title();
+    std::string title() const;
     void tick(float dt);
     void draw();
 
@@ -50,6 +50,8 @@ public:
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);
+protected:
+    void onDraw();
 };
 
 class Box2dTestBedScene : public TestScene

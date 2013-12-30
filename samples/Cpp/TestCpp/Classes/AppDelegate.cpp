@@ -16,7 +16,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocostudio::ArmatureDataManager::destoryInstance();
+	cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()

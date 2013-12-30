@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsWorld.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 
@@ -75,14 +75,14 @@ namespace
     typedef struct RectQueryCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsRectQueryCallbackFunc func;
+        PhysicsQueryRectCallbackFunc func;
         void* data;
     }RectQueryCallbackInfo;
     
     typedef struct PointQueryCallbackInfo
     {
         PhysicsWorld* world;
-        PhysicsPointQueryCallbackFunc func;
+        PhysicsQueryPointCallbackFunc func;
         void* data;
     }PointQueryCallbackInfo;
 }
@@ -355,7 +355,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Point& point1,
 }
 
 
-void PhysicsWorld::queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data)
+void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -373,7 +373,7 @@ void PhysicsWorld::queryRect(PhysicsRectQueryCallbackFunc func, const Rect& rect
     }
 }
 
-void PhysicsWorld::queryPoint(PhysicsPointQueryCallbackFunc func, const Point& point, void* data)
+void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Point& point, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -403,7 +403,7 @@ Vector<PhysicsShape*> PhysicsWorld::getShapes(const Point& point) const
                              (cpSpaceNearestPointQueryFunc)PhysicsWorldCallback::getShapesAtPointFunc,
                              &arr);
     
-    return std::move(arr);
+    return arr;
 }
 
 PhysicsShape* PhysicsWorld::getShape(const Point& point) const
@@ -628,20 +628,22 @@ void PhysicsWorld::doAddBody(PhysicsBody* body)
 
 void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
 {
-    if (_delayRemoveBodies.getIndex(body) != CC_INVALID_INDEX)
+    auto removeBodyIter = _delayRemoveBodies.find(body);
+    if (removeBodyIter != _delayRemoveBodies.end())
     {
-        _delayRemoveBodies.removeObject(body);
+        _delayRemoveBodies.erase(removeBodyIter);
         return;
     }
     
     if (_info->isLocked())
     {
-        if (_delayAddBodies.getIndex(body) == CC_INVALID_INDEX)
+        if (_delayAddBodies.find(body) == _delayAddBodies.end())
         {
             _delayAddBodies.pushBack(body);
             _delayDirty = true;
         }
-    }else
+    }
+    else
     {
         doAddBody(body);
     }
@@ -712,7 +714,7 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     body->_joints.clear();
     
     removeBodyOrDelay(body);
-    _bodies.removeObject(body);
+    _bodies.eraseObject(body);
     body->_world = nullptr;
 }
 
@@ -721,7 +723,7 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
     if (_delayAddBodies.getIndex(body) != CC_INVALID_INDEX)
     {
-        _delayAddBodies.removeObject(body);
+        _delayAddBodies.eraseObject(body);
         return;
     }
     
@@ -935,7 +937,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
     // remove shaps
     for (auto& shape : body->getShapes())
     {
-        removeShape(dynamic_cast<PhysicsShape*>(shape));
+        removeShape(shape);
     }
     
     // remove body
@@ -949,9 +951,8 @@ void PhysicsWorld::doRemoveJoint(PhysicsJoint* joint)
 
 void PhysicsWorld::removeAllBodies()
 {
-    for (auto& obj : _bodies)
+    for (auto& child : _bodies)
     {
-        PhysicsBody* child = dynamic_cast<PhysicsBody*>(obj);
         removeBodyOrDelay(child);
         child->_world = nullptr;
     }
@@ -1021,7 +1022,13 @@ void PhysicsWorld::update(float delta)
         body->update(delta);
     }
     
-    _info->step(delta);
+    _updateTime += delta;
+    if (++_updateRateCount >= _updateRate)
+    {
+        _info->step(_updateTime * _speed);
+        _updateRateCount = 0;
+        _updateTime = 0.0f;
+    }
     
     if (_debugDrawMask != DEBUGDRAW_NONE)
     {
@@ -1032,6 +1039,9 @@ void PhysicsWorld::update(float delta)
 PhysicsWorld::PhysicsWorld()
 : _gravity(Point(0.0f, -98.0f))
 , _speed(1.0f)
+, _updateRate(1)
+, _updateRateCount(0)
+, _updateTime(0.0f)
 , _info(nullptr)
 , _scene(nullptr)
 , _delayDirty(false)
