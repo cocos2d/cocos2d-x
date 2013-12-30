@@ -5,7 +5,6 @@
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include <list>
-#include <vector>
 
 class BaseClippingNodeTest : public BaseTest
 {
@@ -165,8 +164,8 @@ protected:
     void onDisableStencil();
     void onBeforeDrawClip(int planeIndex, const Point& pt);
     void onBeforeDrawSprite(int planeIndex, const Point& pt);
-private:
-    std::vector<Sprite*> _sprites;
+protected:
+    Vector<Sprite*> _sprites;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest
