@@ -329,10 +329,9 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     this->begin();
 
     //clear screen
-    CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
-    clearCmd->init(0, _vertexZ);
-    clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
-    Director::getInstance()->getRenderer()->addCommand(clearCmd);
+    _beginWithClearCommand.init(0, _vertexZ);
+    _beginWithClearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
 
 //TODO find a better way to clear the screen, there is no need to rebind render buffer there.
@@ -348,11 +347,10 @@ void RenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
+    _clearDepthCommand.init(0, _vertexZ);
+    _clearDepthCommand.func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
 
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_clearDepthCommand);
 
     this->end();
 }
@@ -614,10 +612,9 @@ void RenderTexture::draw()
         begin();
 
         //clear screen
-        CustomCommand* clearCmd = CustomCommand::getCommandPool().generateCommand();
-        clearCmd->init(0, _vertexZ);
-        clearCmd->func = CC_CALLBACK_0(RenderTexture::onClear, this);
-        Director::getInstance()->getRenderer()->addCommand(clearCmd);
+        _clearCommand.init(0, _vertexZ);
+        _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
+        Director::getInstance()->getRenderer()->addCommand(&_clearCommand);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -643,28 +640,25 @@ void RenderTexture::begin()
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
 
-    GroupCommand* groupCommand = GroupCommand::getCommandPool().generateCommand();
-    groupCommand->init(0, _vertexZ);
+    _groupCommand.init(0, _vertexZ);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
-    renderer->addCommand(groupCommand);
-    renderer->pushGroup(groupCommand->getRenderQueueID());
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    CustomCommand* beginCmd = CustomCommand::getCommandPool().generateCommand();
-    beginCmd->init(0, _vertexZ);
-    beginCmd->func = CC_CALLBACK_0(RenderTexture::onBegin, this);
+    _beginCommand.init(0, _vertexZ);
+    _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
-    Director::getInstance()->getRenderer()->addCommand(beginCmd);
+    Director::getInstance()->getRenderer()->addCommand(&_beginCommand);
 }
 
 void RenderTexture::end()
 {
-    CustomCommand* endCmd = CustomCommand::getCommandPool().generateCommand();
-    endCmd->init(0, _vertexZ);
-    endCmd->func = CC_CALLBACK_0(RenderTexture::onEnd, this);
+    _endCommand.init(0, _vertexZ);
+    _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Renderer *renderer = Director::getInstance()->getRenderer();
-    renderer->addCommand(endCmd);
+    renderer->addCommand(&_endCommand);
     renderer->popGroup();
 }
 

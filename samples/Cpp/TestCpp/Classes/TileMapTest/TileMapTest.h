@@ -3,6 +3,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
 
 class TileDemo : public BaseTest
 {
@@ -136,6 +137,7 @@ public:
     virtual void draw();
     virtual std::string subtitle() const override;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 
@@ -148,6 +150,7 @@ public:
     virtual void draw();
     virtual std::string subtitle() const override;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 
@@ -285,6 +288,7 @@ public:
     virtual void draw();
 
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
     
 };

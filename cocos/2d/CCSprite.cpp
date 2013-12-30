@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "CCProfiling.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCFrustum.h"
 
 // external
@@ -671,16 +671,11 @@ void Sprite::updateTransform(void)
 void Sprite::draw(void)
 {
     //TODO implement z order
-    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
-//    if(!culling())
-//    {
-//        renderCommand->releaseToCommandPool();
-//    }
-//    else
+//    if(culling())
     {
-        Director::getInstance()->getRenderer()->addCommand(renderCommand);
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 }
 
