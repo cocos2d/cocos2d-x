@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCPhysicsContact.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include "chipmunk.h"
 
 #include "CCPhysicsBody.h"

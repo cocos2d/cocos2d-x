@@ -41,9 +41,9 @@ using namespace std;
 
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_numQuads(0)
 ,_firstCommand(0)
 ,_lastCommand(0)
+,_numQuads(0)
 ,_glViewAssigned(false)
 {
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);

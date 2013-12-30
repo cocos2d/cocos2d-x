@@ -47,8 +47,8 @@ NodeGrid* NodeGrid::create()
 }
 
 NodeGrid::NodeGrid()
-: _nodeGrid(nullptr)
-, _gridTarget(nullptr)
+: _gridTarget(nullptr)
+, _nodeGrid(nullptr)
 {
 
 }
