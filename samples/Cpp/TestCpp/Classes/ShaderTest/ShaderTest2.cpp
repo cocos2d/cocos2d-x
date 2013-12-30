@@ -186,7 +186,6 @@ void ShaderSprite::draw()
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
     
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 void ShaderSprite::onDraw()
