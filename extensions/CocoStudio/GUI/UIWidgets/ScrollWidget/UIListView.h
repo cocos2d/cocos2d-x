@@ -194,13 +194,13 @@ protected:
 protected:
     
     Widget* _model;
-    CCArray* _items;
     ListViewGravity _gravity;
     float _itemsMargin;
     CCObject*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
     int _curSelectedIndex;
     bool _refreshViewDirty;
+    CCArray* _items;
 };
 
 }
