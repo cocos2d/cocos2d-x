@@ -28,9 +28,9 @@ NS_CC_BEGIN
 
 CustomCommand::CustomCommand()
 :RenderCommand()
+, func(nullptr)
 , _viewport(0)
 , _depth(0)
-, func(nullptr)
 {
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }

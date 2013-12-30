@@ -7,7 +7,7 @@ TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
 {
     if (physics)
     {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
         TestScene::initWithPhysics();
 #else
         Scene::init();
@@ -29,7 +29,7 @@ void testScene_callback( Object *sender )
 
     Director::getInstance()->replaceScene(scene);
 
-    cocostudio::ArmatureDataManager::destoryInstance();
+    cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 void TestScene::onEnter()

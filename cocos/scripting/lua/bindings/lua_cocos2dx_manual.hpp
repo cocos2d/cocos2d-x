@@ -32,76 +32,58 @@ TOLUA_API int register_all_cocos2dx_manual(lua_State* tolua_S);
 
 TOLUA_API int register_cocos2dx_event_releated(lua_State* tolua_S);
 
-struct LuaEventListenerAccelerationData
+struct LuaEventAccelerationData
 {
     void* acc;
     Event* event;
     
-    LuaEventListenerAccelerationData(void* inAcc,Event* inEvent)
+    LuaEventAccelerationData(void* inAcc,Event* inEvent)
     :acc(inAcc),event(inEvent)
     {
     }
 };
 
-struct LuaEventListenerKeyboarData
+struct LuaEventKeyboarData
 {
-    enum class KeyboardStatus :int
-    {
-        PRESSED = 0,
-        RELEASE,
-    };
     int keyCode;
     Event* event;
-    ScriptHandlerMgr::HandlerType type;
     
-    LuaEventListenerKeyboarData(int inKeyCode,Event* inEvent,ScriptHandlerMgr::HandlerType inType)
-    :keyCode(inKeyCode),event(inEvent),type(inType)
+    LuaEventKeyboarData(int inKeyCode,Event* inEvent)
+    :keyCode(inKeyCode),event(inEvent)
     {
     }
 };
 
-struct LuaEventListenerTouchData
+struct LuaEventTouchData
 {
-    ScriptHandlerMgr::HandlerType type;
-    void* nativeObject;
     Touch* touch;
     Event* event;
     
-    LuaEventListenerTouchData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, Touch* inTouch, Event* inEvent)
-    : type(inType),
-    nativeObject(inNativeObject),
-    touch(inTouch),
+    LuaEventTouchData(Touch* inTouch, Event* inEvent)
+    :touch(inTouch),
     event(inEvent)
     {
     }
 };
 
-struct LuaEventListenerTouchesData
+struct LuaEventTouchesData
 {
-    ScriptHandlerMgr::HandlerType type;
-    void* nativeObject;
     std::vector<Touch*> touches;
     Event* event;
     
-    LuaEventListenerTouchesData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, std::vector<Touch*> inTouches, Event* inEvent)
-    : type(inType),
-    nativeObject(inNativeObject),
-    touches(inTouches),
+    LuaEventTouchesData(std::vector<Touch*> inTouches, Event* inEvent)
+    :touches(inTouches),
     event(inEvent)
     {
     }
 };
 
-struct LuaEventListenerMouseData
+struct LuaEventMouseData
 {
-    ScriptHandlerMgr::HandlerType type;
-    void* nativeObject;
     Event* event;
     
-    LuaEventListenerMouseData(ScriptHandlerMgr::HandlerType inType, void* inNativeObject, Event* inEvent)
-    : type(inType),
-    nativeObject(inNativeObject),
-    event(inEvent)
+    LuaEventMouseData(Event* inEvent)
+    :event(inEvent)
     {
     }
 };

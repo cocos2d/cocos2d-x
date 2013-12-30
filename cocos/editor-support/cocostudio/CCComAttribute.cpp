@@ -28,84 +28,93 @@ using namespace cocos2d;
 namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
-: _jsonDict(nullptr)
 {
     _name = "ComAttribute";
 }
 
 ComAttribute::~ComAttribute(void)
 {
-	CC_SAFE_DELETE(_jsonDict);
+    _dict.clear();
 }
 
 bool ComAttribute::init()
 {
-	_jsonDict = new JsonDictionary();
     return true;
+}
+
+void ComAttribute::setInt(const std::string& key, int value)
+{
+    _dict[key] = cocos2d::Value(value);
+}
+
+void ComAttribute::setFloat(const std::string& key, float value)
+{
+    _dict[key] = cocos2d::Value(value);
+}
+
+void ComAttribute::setBool(const std::string& key, bool value)
+{
+    _dict[key] = cocos2d::Value(value);
+}
+
+void ComAttribute::setString(const std::string& key, const std::string& value)
+{
+    _dict[key] = cocos2d::Value(value);
+}
+
+int ComAttribute::getInt(const std::string& key, int def) const
+{
+    if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asInt();
+}
+
+float ComAttribute::getFloat(const std::string& key, float def) const
+{
+    if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asFloat();
+}
+
+bool ComAttribute::getBool(const std::string& key, bool def) const
+{
+    if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asBool();
+}
+
+std::string ComAttribute::getString(const std::string& key, const std::string& def) const
+{
+   if (_dict.find(key) == _dict.end())
+    {
+        return def;
+    }
+    const cocos2d::Value& v = _dict.at(key);
+    return v.asString();
 }
 
 ComAttribute* ComAttribute::create(void)
 {
-    ComAttribute * pRet = new ComAttribute();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    return pRet;
+	ComAttribute * pRet = new ComAttribute();
+	if (pRet && pRet->init())
+	{
+		pRet->autorelease();
+	}
+	else
+	{
+		CC_SAFE_DELETE(pRet);
+	}
+	return pRet;
 }
 
-void ComAttribute::setInt(const char *key, int value)
-{
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
-}
-
-void ComAttribute::setFloat(const char *key, float value)
-{
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
-}
-
-void ComAttribute::setBool(const char *key, bool value)
-{
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
-}
-
-void ComAttribute::setCString(const char *key, const char *value)
-{
-    CCASSERT(key != NULL, "Argument must be non-nil"); 
-    _jsonDict->insertItem(key, value);
-}
-
-
-int ComAttribute::getInt(const char *key) const
-{
-    return _jsonDict->getItemIntValue(key, -1);
-}
-
-float ComAttribute::getFloat(const char *key) const
-{
-    return _jsonDict->getItemFloatValue(key, -1.0f);
-}
-
-bool ComAttribute::getBool(const char *key) const
-{
-	return _jsonDict->getItemBoolvalue(key, false);
-}
-
-const char* ComAttribute::getCString(const char *key) const
-{
-   return _jsonDict->getItemStringValue(key);
-}
-
-JsonDictionary* ComAttribute::getDict() const
-{
-	return _jsonDict;
-}
 
 }

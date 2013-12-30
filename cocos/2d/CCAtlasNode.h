@@ -63,8 +63,8 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setQuadsToDraw(int quadsToDraw);
-    int getQuadsToDraw() const;
+    void setQuadsToDraw(ssize_t quadsToDraw);
+    ssize_t getQuadsToDraw() const;
 
     
     // Overrides
@@ -126,7 +126,7 @@ protected:
     BlendFunc _blendFunc;
 
     // quads to draw
-    int _quadsToDraw;
+    ssize_t _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.

@@ -47,7 +47,7 @@ ArmatureDataManager *ArmatureDataManager::getInstance()
     return s_sharedArmatureDataManager;
 }
 
-void ArmatureDataManager::destoryInstance()
+void ArmatureDataManager::destroyInstance()
 {
     SpriteFrameCacheHelper::purge();
     DataReaderHelper::purge();

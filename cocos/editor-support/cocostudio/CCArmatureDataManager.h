@@ -49,10 +49,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
     /** @deprecated Use destoryInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destoryInstance(); };
+    CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
     static ArmatureDataManager *getInstance();
-    static void destoryInstance();
+    static void destroyInstance();
     
 private:
 	/**
@@ -199,7 +199,7 @@ private:
 
     bool _autoLoadSpriteFile;
 
-    std::map<std::string, RelativeData> _relativeDatas;
+    std::unordered_map<std::string, RelativeData> _relativeDatas;
 };
 
 
