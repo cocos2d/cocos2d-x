@@ -56,7 +56,7 @@ Armature *Armature::create()
 }
 
 
-Armature *Armature::create(const char *name)
+Armature *Armature::create(const std::string& name)
 {
     Armature *armature = new Armature();
     if (armature && armature->init(name))
@@ -68,7 +68,7 @@ Armature *Armature::create(const char *name)
     return nullptr;
 }
 
-Armature *Armature::create(const char *name, Bone *parentBone)
+Armature *Armature::create(const std::string& name, Bone *parentBone)
 {
     Armature *armature = new Armature();
     if (armature && armature->init(name, parentBone))
@@ -105,7 +105,7 @@ bool Armature::init()
 }
 
 
-bool Armature::init(const char *name)
+bool Armature::init(const std::string& name)
 {
     bool bRet = false;
     do
@@ -121,14 +121,12 @@ bool Armature::init(const char *name)
 
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
-        _name = name == nullptr ? "" : name;
+        _name = name;
 
         ArmatureDataManager *armatureDataManager = ArmatureDataManager::getInstance();
 
-        if(_name.length() != 0)
+        if(!_name.empty())
         {
-            _name = name;
-
             AnimationData *animationData = armatureDataManager->getAnimationData(name);
             CCASSERT(animationData, "AnimationData not exist! ");
 
@@ -183,9 +181,6 @@ bool Armature::init(const char *name)
 
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
-        unscheduleUpdate();
-        scheduleUpdate();
-
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
 
@@ -196,14 +191,14 @@ bool Armature::init(const char *name)
     return bRet;
 }
 
-bool Armature::init(const char *name, Bone *parentBone)
+bool Armature::init(const std::string& name, Bone *parentBone)
 {
     _parentBone = parentBone;
     return init(name);
 }
 
 
-Bone *Armature::createBone(const char *boneName)
+Bone *Armature::createBone(const std::string& boneName)
 {
     Bone *existedBone = getBone(boneName);
     if(existedBone != nullptr)
@@ -233,12 +228,12 @@ Bone *Armature::createBone(const char *boneName)
 }
 
 
-void Armature::addBone(Bone *bone, const char *parentName)
+void Armature::addBone(Bone *bone, const std::string& parentName)
 {
     CCASSERT( bone != nullptr, "Argument must be non-nil");
     CCASSERT(_boneDic.at(bone->getName()) == nullptr, "bone already added. It can't be added again");
 
-    if (nullptr != parentName)
+    if (!parentName.empty())
     {
         Bone *boneParent = _boneDic.at(parentName);
         if (boneParent)
@@ -278,13 +273,13 @@ void Armature::removeBone(Bone *bone, bool recursion)
 }
 
 
-Bone *Armature::getBone(const char *name) const
+Bone *Armature::getBone(const std::string& name) const
 {
     return _boneDic.at(name);
 }
 
 
-void Armature::changeBoneParent(Bone *bone, const char *parentName)
+void Armature::changeBoneParent(Bone *bone, const std::string& parentName)
 {
     CCASSERT(bone != nullptr, "bone must be added to the bone dictionary!");
 
@@ -294,7 +289,7 @@ void Armature::changeBoneParent(Bone *bone, const char *parentName)
         bone->setParentBone(nullptr);
     }
 
-    if (parentName != nullptr)
+    if (!parentName.empty())
     {
         Bone *boneParent = _boneDic.at(parentName);
 
@@ -432,6 +427,18 @@ void Armature::draw()
             CC_NODE_DRAW_SETUP();
         }
     }
+}
+
+void Armature::onEnter()
+{
+    Node::onEnter();
+    scheduleUpdate();
+}
+
+void Armature::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
 }
 
 

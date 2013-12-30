@@ -33,7 +33,7 @@ Use any of these editors to generate BMFonts:
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
-#include "renderer/CCNewSpriteBatchNode.h"
+#include "CCSpriteBatchNode.h"
 #include "uthash.h"
 #include <map>
 #include <sstream>
@@ -151,6 +151,7 @@ public:
     std::set<unsigned int>* getCharacterSet() const;
 private:
     std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
+	std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
@@ -190,7 +191,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public NewSpriteBatchNode, public LabelProtocol
+class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol
 {
 public:
     /**

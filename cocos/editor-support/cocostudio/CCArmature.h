@@ -84,9 +84,9 @@ public:
     * @param  name Armature will use the name to find the ArmatureData to initializes it.
     * @return A initialized armature which is marked as "autorelease".
     */
-    static Armature *create(const char *name);
+    static Armature *create(const std::string& name);
 
-    static Armature *create(const char *name, Bone *parentBone);
+    static Armature *create(const std::string& name, Bone *parentBone);
 
 public:
     /**
@@ -108,29 +108,29 @@ public:
      * Init an armature with specified name
      * @param name Armature name
      */
-    virtual bool init(const char *name);
+    virtual bool init(const std::string& name);
 
-    virtual bool init(const char *name, Bone *parentBone);
+    virtual bool init(const std::string& name, Bone *parentBone);
     /**
      * Add a Bone to this Armature,
      *
      * @param bone  The Bone you want to add to Armature
      * @param parentName   The parent Bone's name you want to add to . If it's  nullptr, then set Armature to its parent
      */
-    virtual void addBone(Bone *bone, const char *parentName);
+    virtual void addBone(Bone *bone, const std::string& parentName);
     /**
      * Get a bone with the specified name
      *
      * @param name The bone's name you want to get
      */
-    virtual Bone *getBone(const char *name) const;
+    virtual Bone *getBone(const std::string& name) const;
     /**
      * Change a bone's parent with the specified parent name.
      *
      * @param bone The bone you want to change parent
      * @param parentName The new parent's name.
      */
-    virtual void changeBoneParent(Bone *bone, const char *parentName);
+    virtual void changeBoneParent(Bone *bone, const std::string& parentName);
     /**
      * Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
      *
@@ -160,6 +160,9 @@ public:
     virtual void visit() override;
     virtual void update(float dt) override;
     virtual void draw() override;
+
+    virtual void onEnter() override;
+    virtual void onExit() override; 
 
     virtual const kmMat4& getNodeToParentTransform() const override;
     /**
@@ -247,7 +250,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    Bone *createBone(const char *boneName );
+    Bone *createBone(const std::string& boneName );
 
 protected:
     ArmatureData *_armatureData;

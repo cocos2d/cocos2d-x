@@ -39,7 +39,6 @@ class __String;
 class __Array;
 class __Dictionary;
 class __Set;
-class Data;
 
 /**
  * @addtogroup data_structures
@@ -80,7 +79,6 @@ public:
     virtual void visit(const __Array *p);
     virtual void visit(const __Dictionary *p);
     virtual void visit(const __Set *p);
-    virtual void visit(const Data *p);
 };
 
 
@@ -101,7 +99,6 @@ public:
     virtual void visit(const __Array *p);
     virtual void visit(const __Dictionary *p);
     virtual void visit(const __Set *p);
-    virtual void visit(const Data *p);
 private:
     void setIndentLevel(int indentLevel);
     int _indentLevel;

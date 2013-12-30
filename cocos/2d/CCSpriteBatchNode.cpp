@@ -42,6 +42,8 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCLayer.h"
 #include "CCScene.h"
+#include "CCRenderer.h"
+#include "CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -64,7 +66,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capa
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -110,7 +112,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, ssize_t capacity)
+bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -342,28 +344,32 @@ void SpriteBatchNode::reorderBatch(bool reorder)
     _reorderChildDirty=reorder;
 }
 
-// draw
-void SpriteBatchNode::draw(void)
+void SpriteBatchNode::draw()
 {
-    CC_PROFILER_START("CCSpriteBatchNode - draw");
-
     // Optimization: Fast Dispatch
     if( _textureAtlas->getTotalQuads() == 0 )
     {
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
-
-    for(const auto &child: _children) {
+    for(const auto &child: _children)
         child->updateTransform();
-    }
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _textureAtlas->drawQuads();
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
+    cmd->init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)

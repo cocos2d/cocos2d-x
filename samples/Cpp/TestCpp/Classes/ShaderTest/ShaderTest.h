@@ -126,6 +126,9 @@ public:
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
 
+protected:
+    void onDraw();
+
 private:
 
     Vertex2F _center;

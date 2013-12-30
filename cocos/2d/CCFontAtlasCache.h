@@ -38,14 +38,14 @@ class CC_DLL FontAtlasCache
     
 public:
     
-    static FontAtlas * getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
-    static FontAtlas * getFontAtlasFNT(const char *fontFileName);
+    static FontAtlas * getFontAtlasTTF(const std::string& fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
+    static FontAtlas * getFontAtlasFNT(const std::string& fontFileName);
     
     static bool releaseFontAtlas(FontAtlas *atlas);
     
 private:
     
-    static std::string generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField);
+    static std::string generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 

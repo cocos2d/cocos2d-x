@@ -2,6 +2,8 @@
 #include "../../testResource.h"
 #include "cocostudio/CocoStudio.h"
 #include "CCNodeGrid.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 using namespace cocos2d;
@@ -145,7 +147,7 @@ void ArmatureTestScene::MainMenuCallback(Object *pSender)
     //TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    ArmatureDataManager::destoryInstance();
+    ArmatureDataManager::destroyInstance();
 }
 
 
@@ -228,11 +230,6 @@ void ArmatureTestLayer::backCallback(Object *pSender)
     Director::getInstance()->replaceScene(s);
     s->release();
 }
-void ArmatureTestLayer::draw()
-{
-    Layer::draw();
-}
-
 
 void TestAsynchronousLoading::onEnter()
 {
@@ -275,7 +272,7 @@ std::string TestAsynchronousLoading::subtitle() const
 
 void TestAsynchronousLoading::restartCallback(Object* pSender)
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
@@ -308,7 +305,7 @@ void TestDirectLoading::onEnter()
     ArmatureDataManager::getInstance()->addArmatureFileInfo("armature/bear.ExportJson");
 
     Armature *armature = Armature::create("bear");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
     addChild(armature);
 }
@@ -323,7 +320,7 @@ void TestCSWithSkeleton::onEnter()
     ArmatureTestLayer::onEnter();
     Armature *armature = nullptr;
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
@@ -344,7 +341,7 @@ void TestDragonBones20::onEnter()
 
     Armature *armature = nullptr;
     armature = Armature::create("Dragon");
-    armature->getAnimation()->playByIndex(1);
+    armature->getAnimation()->playWithIndex(1);
     armature->getAnimation()->setSpeedScale(0.4f);
     armature->setPosition(VisibleRect::center().x, VisibleRect::center().y * 0.3f);
     armature->setScale(0.6f);
@@ -418,7 +415,7 @@ void TestPerformance::addArmature(int number)
         Armature *armature = nullptr;
         armature = new Armature();
         armature->init("Knight_f/Knight");
-        armature->getAnimation()->playByIndex(0);
+        armature->getAnimation()->playWithIndex(0);
         armature->setPosition(50 + armatureCount * 2, 150);
         armature->setScale(0.6f);
         addArmatureToParent(armature);
@@ -473,21 +470,21 @@ void TestChangeZorder::onEnter()
     currentTag = -1;
 
     armature = Armature::create("Knight_f/Knight");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y - 100));
     ++currentTag;
     armature->setScale(0.6f);
     addChild(armature, currentTag, currentTag);
 
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.24f);
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y - 100));
     ++currentTag;
     addChild(armature, currentTag, currentTag);
 
     armature = Armature::create("Dragon");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(Point(VisibleRect::center().x , VisibleRect::center().y - 100));
     ++currentTag;
     armature->setScale(0.6f);
@@ -535,20 +532,18 @@ std::string TestAnimationEvent::title() const
 {
     return "Test Armature Animation Event";
 }
-void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType movementType, const char *movementID)
+void TestAnimationEvent::animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
 {
-    std::string id = movementID;
-
     if (movementType == LOOP_COMPLETE)
     {
-        if (id.compare("Fire") == 0)
+        if (movementID == "Fire")
         {
             ActionInterval *actionToRight = MoveTo::create(2, Point(VisibleRect::right().x - 50, VisibleRect::right().y));
             armature->stopAllActions();
             armature->runAction(Sequence::create(actionToRight,  CallFunc::create( CC_CALLBACK_0(TestAnimationEvent::callback1, this)), nullptr));
             armature->getAnimation()->play("Walk");
         }
-        else if (id.compare("FireMax") == 0)
+        else if (movementID == "FireMax")
         {
             ActionInterval *actionToLeft = MoveTo::create(2, Point(VisibleRect::left().x + 50, VisibleRect::left().y));
             armature->stopAllActions();
@@ -596,9 +591,9 @@ std::string TestFrameEvent::title() const
 {
     return "Test Frame Event";
 }
-void TestFrameEvent::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+void TestFrameEvent::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
-    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
     if (!_gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG) || _gridNode->getActionByTag(FRAME_EVENT_ACTION_TAG)->isDone())
     {
@@ -628,7 +623,7 @@ void TestParticleDisplay::onEnter()
     animationID = 0;
 
     armature = Armature::create("robot");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(VisibleRect::center());
     armature->setScale(0.48f);
     armature->getAnimation()->setSpeedScale(0.5f);
@@ -674,7 +669,7 @@ void TestParticleDisplay::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 {
     ++animationID;
     animationID = animationID % armature->getAnimation()->getMovementCount();
-    armature->getAnimation()->playByIndex(animationID);
+    armature->getAnimation()->playWithIndex(animationID);
 }
 
 void TestUseMutiplePicture::onEnter()
@@ -688,7 +683,7 @@ void TestUseMutiplePicture::onEnter()
     displayIndex = 0;
 
     armature = Armature::create("Knight_f/Knight");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::left().y));
     armature->setScale(1.2f);
     addChild(armature);
@@ -778,9 +773,9 @@ std::string TestColliderDetector::title() const
 {
     return "Test Collider Detector";
 }
-void TestColliderDetector::onFrameEvent(Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex)
+void TestColliderDetector::onFrameEvent(Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex)
 {
-    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt, currentFrameIndex);
+    CCLOG("(%s) emit a frame event (%s) at frame index (%d).", bone->getName().c_str(), evt.c_str(), currentFrameIndex);
 
     /*
     * originFrameIndex is the frame index editted in Action Editor
@@ -1085,7 +1080,7 @@ void TestBoundingBox::onEnter()
     ArmatureTestLayer::onEnter();
 
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(VisibleRect::center());
     armature->setScale(0.2f);
     addChild(armature);
@@ -1099,15 +1094,23 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    CC_NODE_DRAW_SETUP();
+    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
+    cmd->init(0, _vertexZ);
+    cmd->func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(cmd);
+    
+}
 
+void TestBoundingBox::onDraw()
+{
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+    
     rect = armature->getBoundingBox();
-
+    
     DrawPrimitives::setDrawColor4B(100, 100, 100, 255);
     DrawPrimitives::drawRect(rect.origin, Point(rect.getMaxX(), rect.getMaxY()));
 }
-
-
 
 void TestAnchorPoint::onEnter()
 {
@@ -1116,7 +1119,7 @@ void TestAnchorPoint::onEnter()
     for (int i = 0; i < 5; i++)
     {
         Armature *armature = Armature::create("Cowboy");
-        armature->getAnimation()->playByIndex(0);
+        armature->getAnimation()->playWithIndex(0);
         armature->setPosition(VisibleRect::center());
         armature->setScale(0.2f);
         addChild(armature, 0, i);
@@ -1143,7 +1146,7 @@ void TestArmatureNesting::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     armature = Armature::create("cyborg");
-    armature->getAnimation()->playByIndex(1);
+    armature->getAnimation()->playWithIndex(1);
     armature->setPosition(VisibleRect::center());
     armature->setScale(1.2f);
     armature->getAnimation()->setSpeedScale(0.4f);
@@ -1169,8 +1172,8 @@ void TestArmatureNesting::onTouchesEnded(const std::vector<Touch*>& touches, Eve
 
     if(armature != nullptr)
     {
-        armature->getBone("armInside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
-        armature->getBone("armOutside")->getChildArmature()->getAnimation()->playByIndex(weaponIndex);
+        armature->getBone("armInside")->getChildArmature()->getAnimation()->playWithIndex(weaponIndex);
+        armature->getBone("armOutside")->getChildArmature()->getAnimation()->playWithIndex(weaponIndex);
     }
 }
 
@@ -1201,7 +1204,7 @@ void Hero::changeMount(Armature *armature)
     {
         retain();
 
-        playByIndex(0);
+        playWithIndex(0);
         //Remove hero from display list
         m_pMount->getBone("hero")->removeDisplay(0);
         m_pMount->stopAllActions();
@@ -1233,7 +1236,7 @@ void Hero::changeMount(Armature *armature)
 
         setPosition(Point(0,0));
         //Change animation
-        playByIndex(1);
+        playWithIndex(1);
 
         setScale(1);
 
@@ -1242,12 +1245,12 @@ void Hero::changeMount(Armature *armature)
 
 }
 
-void Hero::playByIndex(int index)
+void Hero::playWithIndex(int index)
 {
-    _animation->playByIndex(index);
+    _animation->playWithIndex(index);
     if (m_pMount)
     {
-        m_pMount->getAnimation()->playByIndex(index);
+        m_pMount->getAnimation()->playWithIndex(index);
     }
 }
 
@@ -1274,7 +1277,7 @@ void TestArmatureNesting2::onEnter()
     //Create a hero
     hero = Hero::create("hero");
     hero->setLayer(this);
-    hero->playByIndex(0);
+    hero->playWithIndex(0);
     hero->setPosition(Point(VisibleRect::left().x + 20, VisibleRect::left().y));
     addChild(hero);
 
@@ -1347,7 +1350,7 @@ void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
 Armature * TestArmatureNesting2::createMount(const char *name, Point position)
 {
     Armature *armature = Armature::create(name);
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setPosition(position);
     addChild(armature);
 
@@ -1370,8 +1373,8 @@ void TestPlaySeveralMovement::onEnter()
 
     Armature *armature = NULL;
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->play(names);
-//    armature->getAnimation()->playByIndex(indexes);
+    armature->getAnimation()->playWithNames(names);
+//    armature->getAnimation()->playWithIndexes(indexes);
     armature->setScale(0.2f);
 
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y/*-100*/));
@@ -1399,7 +1402,7 @@ void TestEasing::onEnter()
     animationID = 0;
 
     armature = Armature::create("testEasing");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.8f);
 
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));
@@ -1420,7 +1423,7 @@ void TestEasing::onTouchesEnded(const std::vector<Touch*>& touches, Event* event
 {
     animationID++;
     animationID = animationID % armature->getAnimation()->getMovementCount();
-    armature->getAnimation()->playByIndex(animationID);
+    armature->getAnimation()->playWithIndex(animationID);
 
     updateSubTitle();
 }
@@ -1441,7 +1444,7 @@ void TestChangeAnimationInternal::onEnter()
 
     Armature *armature = NULL;
     armature = Armature::create("Cowboy");
-    armature->getAnimation()->playByIndex(0);
+    armature->getAnimation()->playWithIndex(0);
     armature->setScale(0.2f);
 
     armature->setPosition(Point(VisibleRect::center().x, VisibleRect::center().y));

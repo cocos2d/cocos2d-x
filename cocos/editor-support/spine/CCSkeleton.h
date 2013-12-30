@@ -42,7 +42,7 @@ namespace spine {
 /**
 Draws a skeleton.
 */
-class CCSkeleton: public cocos2d::NodeRGBA, public cocos2d::BlendProtocol {
+class Skeleton: public cocos2d::Node, public cocos2d::BlendProtocol {
 public:
 	spSkeleton* skeleton;
 	spBone* rootBone;
@@ -52,15 +52,15 @@ public:
 	bool premultipliedAlpha;
     cocos2d::BlendFunc blendFunc;
 
-	static CCSkeleton* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	static CCSkeleton* createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
-	static CCSkeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
+	static Skeleton* createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
+	static Skeleton* createWithFile (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
+	static Skeleton* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
 
-	CCSkeleton (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
-	CCSkeleton (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
-	CCSkeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
+	Skeleton (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
+	Skeleton (const char* skeletonDataFile, spAtlas* atlas, float scale = 0);
+	Skeleton (const char* skeletonDataFile, const char* atlasFile, float scale = 0);
 
-	virtual ~CCSkeleton ();
+	virtual ~Skeleton ();
 
 	virtual void update (float deltaTime) override;
 	virtual void draw() override;
@@ -93,7 +93,7 @@ public:
     virtual void setBlendFunc(const cocos2d::BlendFunc& func) override;
 
 protected:
-	CCSkeleton ();
+	Skeleton ();
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual cocos2d::TextureAtlas* getTextureAtlas (spRegionAttachment* regionAttachment) const;
 

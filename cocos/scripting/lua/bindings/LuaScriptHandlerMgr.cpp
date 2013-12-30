@@ -161,7 +161,7 @@ void ScriptHandlerMgr::removeObjectHandler(void* object,ScriptHandlerMgr::Handle
     
     auto iterVec = iterMap->second.begin();
     bool exist  = false;
-    for (; iterVec != iterMap->second.end(); iterVec++)
+    for (; iterVec != iterMap->second.end(); ++iterVec)
     {
         if (iterVec->first == handlerType)
         {
@@ -172,6 +172,7 @@ void ScriptHandlerMgr::removeObjectHandler(void* object,ScriptHandlerMgr::Handle
     
     if (exist)
     {
+        LuaEngine::getInstance()->removeScriptHandler(iterVec->second);
         iterMap->second.erase(iterVec);
     }
 
@@ -206,7 +207,15 @@ void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
     
     if (_mapObjectHandlers.end() != iter)
     {
-        (iter->second).clear();
+        if (!iter->second.empty())
+        {
+            auto iterVec = iter->second.begin();
+            for (; iterVec != iter->second.end(); ++iterVec)
+            {
+                LuaEngine::getInstance()->removeScriptHandler(iterVec->second);
+            }
+            (iter->second).clear();
+        }
         _mapObjectHandlers.erase(iter);
     }
 }

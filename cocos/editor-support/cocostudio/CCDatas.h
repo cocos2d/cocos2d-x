@@ -136,7 +136,7 @@ class  DisplayData : public cocos2d::Object
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
-    static const char *changeDisplayToTexture(const char *displayName);
+    static const std::string changeDisplayToTexture(const std::string& displayName);
 public:
 	/**
      * @js ctor
@@ -279,7 +279,7 @@ public:
 
     bool init();
     void addBoneData(BoneData *boneData);
-    BoneData *getBoneData(const char *boneName);
+    BoneData *getBoneData(const std::string& boneName);
 public:
     std::string name;
     cocos2d::Map<std::string, BoneData*> boneDataDic;
@@ -403,7 +403,7 @@ public:
     ~MovementData(void);
 
     void addMovementBoneData(MovementBoneData *movBoneData);
-    MovementBoneData *getMovementBoneData(const char *boneName);
+    MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
     std::string name;
     int duration;        //! the frames this movement will last
@@ -435,7 +435,7 @@ public:
 
     /**
     * @brief	save movment bone data
-    * @key	const char *
+    * @key	const std::string& 
     * @value	MovementBoneData *
     */
     cocos2d::Map<std::string, MovementBoneData*> movBoneDataDic;
@@ -465,7 +465,7 @@ public:
     ~AnimationData(void);
 
     void addMovement(MovementData *movData);
-    MovementData *getMovement(const char *movementName);
+    MovementData *getMovement(const std::string& movementName);
     ssize_t getMovementCount();
 public:
     std::string name;

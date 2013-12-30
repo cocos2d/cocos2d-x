@@ -62,7 +62,6 @@ public:
     // overrides
     virtual void onEnter() override;
 	virtual void onExit() override;
-	virtual void draw() override;
 
 protected:
 	MenuItemImage *restartItem;
@@ -153,7 +152,7 @@ public:
 
 	virtual void onEnter();
 	virtual std::string title() const override;
-	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const char *movementID);
+	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 	void callback1();
 	void callback2();
 
@@ -166,7 +165,7 @@ class TestFrameEvent : public ArmatureTestLayer
 public:
     virtual void onEnter();
     virtual std::string title() const override;
-    void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
 protected:
     NodeGrid* _gridNode;
@@ -215,7 +214,7 @@ public:
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
@@ -273,7 +272,7 @@ public:
     virtual void update(float delta);
     virtual void draw();
     
-    void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
     void initWorld() {};
     cocostudio::Armature *armature;
@@ -296,6 +295,8 @@ public:
 
 	cocostudio::Armature *armature;
 	Rect rect;
+protected:
+    void onDraw();
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -324,7 +325,7 @@ public:
     Hero();
 
     virtual void changeMount(cocostudio::Armature *armature);
-    virtual void playByIndex(int index);
+    virtual void playWithIndex(int index);
 
     CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
     CC_SYNTHESIZE(cocos2d::Layer*, m_pLayer, Layer);

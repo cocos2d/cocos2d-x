@@ -24,6 +24,8 @@
 
 #include "gui/CocosGUI.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 const char* CocosGUIVersion()
@@ -32,3 +34,4 @@ const char* CocosGUIVersion()
 }
 
 }
+NS_CC_END
