@@ -70,11 +70,10 @@ void TriggerMng::destroyInstance()
 void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
-    
+    int count = DICTOOL->getArrayCount_json(root, "Triggers");
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     bool useBindings = engine != nullptr;
-    
-    int count = DICTOOL->getArrayCount_json(root, "Triggers");
+
     if (useBindings)
     {
         if (count > 0)
@@ -252,14 +251,14 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 	{
 		amd = new ArmatureMovementDispatcher();
         pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(ArmatureMovementDispatcher::animationEvent, amd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-        amd->addAnnimationEventCallBack(pTarget, mecf);
+        amd->addAnimationEventCallBack(pTarget, mecf);
 		_movementDispatches->insert(std::make_pair(pAr, amd));
 
 	}
 	else
 	{
 		amd = iter->second;
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 	}
 }
 
@@ -332,7 +331,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
   }
