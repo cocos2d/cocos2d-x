@@ -427,6 +427,14 @@ public:
      * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    enum class ConfigType
+    {
+        NONE,
+        COCOSTUDIO
+    };
+    /** Parse configuration file */
+    virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
 /**
