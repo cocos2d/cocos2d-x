@@ -184,6 +184,10 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 		this.mIsMultiTouchEnabled = mIsMultiTouchEnabled;
 	}
 	
+	public boolean isMultiTouchEnabled() {
+		return this.mIsMultiTouchEnabled;
+	}
+	
 	@Override
 	public boolean onTouchEvent(final MotionEvent pMotionEvent) {
 		// these data are used in ACTION_MOVE and ACTION_CANCEL
