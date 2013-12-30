@@ -11,8 +11,23 @@ public class Cocos2dxActivity extends NativeActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		//For supports translucency.
-		//You need configure egl attribs of the color buffer size in cocos\2d\platform\android\nativeactivity.cpp on some android versions(eg.4.4) 
-		//getWindow().setFormat(PixelFormat.TRANSLUCENT);
+		//For supports translucency
+		
+		//1.change "attribs" in cocos\2d\platform\android\nativeactivity.cpp
+		/*const EGLint attribs[] = {
+	            EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+	            EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,  
+	            //EGL_BLUE_SIZE, 5,   -->delete 
+	            //EGL_GREEN_SIZE, 6,  -->delete 
+	            //EGL_RED_SIZE, 5,    -->delete 
+	            EGL_BUFFER_SIZE, 32,  //-->new field
+	            EGL_DEPTH_SIZE, 16,
+	            EGL_STENCIL_SIZE, 8,
+	            EGL_NONE
+	    };*/
+		
+		//2.Set the format of window
+		// getWindow().setFormat(PixelFormat.TRANSLUCENT);
+		
 	}
 }
