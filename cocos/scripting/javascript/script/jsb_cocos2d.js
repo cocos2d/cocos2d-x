@@ -614,3 +614,15 @@ cc.Loader.preload = function (resources, selector, target) {
 };
 
 cc.LoaderScene = cc.Loader;
+
+var ConfigType = {
+    NONE: 0,
+    COCOSTUDIO: 1
+};
+
+var __onParseConfig = function(type, str) {
+    if (type === ConfigType.COCOSTUDIO) {
+        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+    }
+};
+
