@@ -346,6 +346,9 @@ public:
 
 protected:
     void onDraw();
+    
+private:
+    CustomCommand _customCommand;
 };
 
 class ActionTargeted : public ActionsDemo
@@ -426,6 +429,7 @@ protected:
 private:
     PointArray* _array1;
     PointArray* _array2;
+    CustomCommand _customCommand;
 };
 
 class ActionCardinalSplineStacked : public ActionsDemo
@@ -444,6 +448,7 @@ protected:
     void onDraw();
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class Issue1305 : public ActionsDemo
@@ -538,6 +543,7 @@ protected:
     void onDraw();
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -557,6 +563,7 @@ protected:
     void onDraw();
     kmMat4 _modelViewMV1;
     kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class PauseResumeActions : public ActionsDemo

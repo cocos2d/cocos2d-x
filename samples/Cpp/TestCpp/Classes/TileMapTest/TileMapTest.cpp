@@ -599,10 +599,9 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
 void TMXOrthoObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXOrthoObjectsTest::onDraw()
@@ -673,10 +672,9 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
 void TMXIsoObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXIsoObjectsTest::onDraw()
@@ -1475,10 +1473,9 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 void TMXGIDObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXGIDObjectsTest::onDraw()

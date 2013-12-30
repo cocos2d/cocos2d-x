@@ -297,6 +297,8 @@ public:
 	Rect rect;
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -325,7 +327,7 @@ public:
     Hero();
 
     virtual void changeMount(cocostudio::Armature *armature);
-    virtual void playByIndex(int index);
+    virtual void playWithIndex(int index);
 
     CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
     CC_SYNTHESIZE(cocos2d::Layer*, m_pLayer, Layer);

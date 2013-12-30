@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include <string>
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
 
@@ -48,23 +48,17 @@ public:
    virtual bool init();
    static ComAttribute* create(void);
    
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
+   void setInt(const std::string& key, int value);
+   void setFloat(const std::string& key, float value);
+   void setBool(const std::string& key, bool value);
+   void setString(const std::string& key, const std::string& value);
    
-   int    getInt(const char *key) const;
-   float  getFloat(const char *key) const;
-   bool   getBool(const char *key) const;
-   const char* getCString(const char *key) const;
-   /**
-    *   @js NA
-    */
-   JsonDictionary* getDict() const;
-   
+   int    getInt(const std::string& key, int def = 0) const;
+   float  getFloat(const std::string& key, float def = 0.0f) const;
+   bool   getBool(const std::string& key, bool def = false) const;
+   std::string getString(const std::string& key, const std::string& def = "") const;
 private:
-   JsonDictionary *_jsonDict;
-   
+   cocos2d::ValueMap _dict;
 };
 
 }

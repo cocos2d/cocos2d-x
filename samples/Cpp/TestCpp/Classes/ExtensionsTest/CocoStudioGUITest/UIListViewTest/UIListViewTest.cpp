@@ -13,14 +13,12 @@ const char* font_UIListViewTest =
 
 UIListViewTest_Vertical::UIListViewTest_Vertical()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
     
 }
 
 UIListViewTest_Vertical::~UIListViewTest_Vertical()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Vertical::init()
@@ -53,12 +51,9 @@ bool UIListViewTest_Vertical::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
         for (int i = 0; i < 20; ++i)
         {
-            String* ccstr = String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            _array.push_back(StringUtils::format("listview_item_%d", i));
         }
         
         
@@ -95,19 +90,19 @@ bool UIListViewTest_Vertical::init()
         listView->setItemModel(default_item);
         
         // add default item
-        int count = _array->count();
-        for (int i = 0; i < count / 4; ++i)
+        size_t count = _array.size();
+        for (size_t i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
         }
         // insert default item
-        for (int i = 0; i < count / 4; ++i)
+        for (size_t i = 0; i < count / 4; ++i)
         {
             listView->insertDefaultItem(0);
         }
         
         // add custom item
-        for (int i = 0; i < count / 4; ++i)
+        for (size_t i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
@@ -125,8 +120,8 @@ bool UIListViewTest_Vertical::init()
         }
         // insert custom item
         Vector<Widget*>& items = listView->getItems();
-        int items_count = items.size();
-        for (int i = 0; i < count / 4; ++i)
+        ssize_t items_count = items.size();
+        for (size_t i = 0; i < count / 4; ++i)
         {
             Button* custom_button = Button::create();
             custom_button->setName("Title Button");
@@ -145,12 +140,12 @@ bool UIListViewTest_Vertical::init()
         
         // set item data
         items_count = items.size();
-        for (int i = 0; i < items_count; ++i)
+        for (ssize_t i = 0; i < items_count; ++i)
         {
             Widget* item = listView->getItem(i);
             Button* button = static_cast<Button*>(item->getChildByName("Title Button"));
             int index = listView->getIndex(item);
-            button->setTitleText(static_cast<String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         
         // remove last item
@@ -194,13 +189,11 @@ void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ScrollviewEvent
 
 UIListViewTest_Horizontal::UIListViewTest_Horizontal()
 : _displayValueLabel(nullptr)
-, _array(nullptr)
 {
 }
 
 UIListViewTest_Horizontal::~UIListViewTest_Horizontal()
 {
-    CC_SAFE_RELEASE(_array);
 }
 
 bool UIListViewTest_Horizontal::init()
@@ -233,12 +226,9 @@ bool UIListViewTest_Horizontal::init()
         
         
         // create list view ex data
-        _array = Array::create();
-        CC_SAFE_RETAIN(_array);
         for (int i = 0; i < 20; ++i)
         {
-            String* ccstr = String::createWithFormat("listview_item_%d", i);
-            _array->addObject(ccstr);
+            _array.push_back(StringUtils::format("listview_item_%d", i));
         }
         
         
@@ -275,7 +265,7 @@ bool UIListViewTest_Horizontal::init()
         listView->setItemModel(default_item);
         
         // add default item
-        int count = _array->count();
+        size_t count = _array.size();
         for (int i = 0; i < count / 4; ++i)
         {
             listView->pushBackDefaultItem();
@@ -330,7 +320,7 @@ bool UIListViewTest_Horizontal::init()
             Widget *item = listView->getItem(i);
             Button *button = static_cast<Button*>(item->getChildByName("Title Button"));
             int index = listView->getIndex(item);
-            button->setTitleText(static_cast<String*>(_array->getObjectAtIndex(index))->getCString());
+            button->setTitleText(_array[index]);
         }
         
         // remove last item

@@ -26,7 +26,7 @@
 #define __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <vector>
 #include "chipmunk.h"

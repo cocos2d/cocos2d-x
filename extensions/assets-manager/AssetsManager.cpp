@@ -51,6 +51,10 @@ NS_CC_EXT_BEGIN;
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
+#define LOW_SPEED_LIMIT 1L
+#define LOW_SPEED_TIME 5L
+
+
 // Message type
 #define ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED                0
 #define ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION     1
@@ -152,6 +156,9 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, &_version);
     if (_connectionTimeout) curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     res = curl_easy_perform(_curl);
     
     if (res != 0)
@@ -514,6 +521,10 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, assetsManagerProgressFunc);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
     if (res != 0)

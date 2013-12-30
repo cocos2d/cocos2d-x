@@ -165,7 +165,7 @@ const Vector<Node*>& Widget::getChildren() const
     return _widgetChildren;
 }
     
-long Widget::getChildrenCount() const
+ssize_t Widget::getChildrenCount() const
 {
     return _widgetChildren.size();
 }
@@ -977,10 +977,11 @@ Widget* Widget::createCloneInstance()
 
 void Widget::copyClonedWidgetChildren(Widget* model)
 {
-    int length = model->getChildren().size();
-    for (int i=0; i<length; i++)
+    auto& modelChildren = model->getChildren();
+    
+    for (auto& subWidget : modelChildren)
     {
-        Widget* child = static_cast<Widget*>(model->getChildren().at(i));
+        Widget* child = static_cast<Widget*>(subWidget);
         addChild(child->clone());
     }
 }
