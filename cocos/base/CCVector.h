@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define __CCVECTOR_H__
 
 #include "ccMacros.h"
-
+#include "CCObject.h"
 #include <vector>
 #include <functional>
-#include <algorithm>    // std::for_each
+#include <algorithm> // for std::find
 
 NS_CC_BEGIN
 
@@ -68,13 +68,14 @@ public:
     Vector<T>()
     : _data()
     {
-        
+        static_assert(std::is_convertible<T, Object*>::value, "Invalid Type for cocos2d::Vector<T>!");
     }
     
     /** Constructor with a capacity */
     explicit Vector<T>(ssize_t capacity)
     : _data()
     {
+        static_assert(std::is_convertible<T, Object*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the default constructor with capacity of Vector.");
         reserve(capacity);
     }
@@ -89,6 +90,7 @@ public:
     /** Copy constructor */
     Vector<T>(const Vector<T>& other)
     {
+        static_assert(std::is_convertible<T, Object*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the copy constructor!");
         _data = other._data;
         addRefForAllObjects();
@@ -97,6 +99,7 @@ public:
     /** Move constructor */
     Vector<T>(Vector<T>&& other)
     {
+        static_assert(std::is_convertible<T, Object*>::value, "Invalid Type for cocos2d::Vector<T>!");
         CCLOGINFO("In the move constructor of Vector!");
         _data = std::move(other._data);
     }
@@ -264,12 +267,12 @@ public:
         object->retain();
     }
     
-    /** Inserts all elements of an existing vector */
-    void insert(const Vector<T>& other)
+    /** Push all elements of an existing vector to the end of current vector. */
+    void pushBack(const Vector<T>& other)
     {
-        for( auto it = other.begin(); it != other.end(); ++it ) {
-            _data.push_back( *it );
-            (*it)->retain();
+        for(const auto &obj : other) {
+            _data.push_back(obj);
+            obj->retain();
         }
     }
 
@@ -410,73 +413,14 @@ public:
         _data.shrink_to_fit();
     }
     
-    /** Traverses through the vector and applys the callback function for each element */
-    void forEach(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** Traverses through the vector and applys the callback function for each element */
-    void forEach(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.cbegin(), _data.cend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-  
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
-    void forEachReverse(const std::function<void(T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** Traverses through the vector in reversed order and applys the callback function for each element */
-    void forEachReverse(const std::function<void(T)>& callback) const
-    {
-        if (empty())
-            return;
-        
-        std::for_each(_data.crbegin(), _data.crend(), [&callback](const T& obj){
-            callback(obj);
-        });
-    }
-    
-    /** @brief Sorts all elements in the vector according the binary callback function.
-     *  @param callback Binary function that accepts two elements in the vector as arguments,
-     *         and returns a value convertible to bool. 
-     *         The value returned indicates whether the element passed as first argument is considered to go before the second in the specific strict weak ordering it defines.
-     */
-    void sort(const std::function<bool(T, T)>& callback)
-    {
-        if (empty())
-            return;
-        
-        std::sort(_data.begin(), _data.end(), [&callback](T a, T b) -> bool{
-            return callback(a, b);
-        });
-    }
-    
 protected:
     
     /** Retains all the objects in the vector */
     void addRefForAllObjects()
     {
-        std::for_each(_data.begin(), _data.end(), [](T obj){
+        for(const auto &obj : _data) {
             obj->retain();
-        });
+        }
     }
     
     std::vector<T> _data;

@@ -67,7 +67,6 @@ public:
     {
         NODE = 0,
         MENU_CLICKED,
-        NOTIFICATION,
         CALLFUNC,
         SCHEDULE,
         TOUCHES,
@@ -108,8 +107,31 @@ public:
         ASSETSMANAGER_SUCCESS,
         ASSETSMANAGER_ERROR,
         
-        EVENT_LISTENER,
+        STUDIO_EVENT_LISTENER,
         ARMATURE_EVENT,
+        
+        EVENT_ACC,
+        EVENT_CUSTIOM,
+        
+        EVENT_KEYBOARD_PRESSED,
+        EVENT_KEYBOARD_RELEASED,
+        
+        EVENT_TOUCH_BEGAN,
+        EVENT_TOUCH_MOVED,
+        EVENT_TOUCH_ENDED,
+        EVENT_TOUCH_CANCELLED,
+        
+        EVENT_TOUCHES_BEGAN,
+        EVENT_TOUCHES_MOVED,
+        EVENT_TOUCHES_ENDED,
+        EVENT_TOUCHES_CANCELLED,
+        
+        EVENT_MOUSE_DOWN,
+        EVENT_MOUSE_UP,
+        EVENT_MOUSE_MOVE,
+        EVENT_MOUSE_SCROLL,
+        
+        EVENT_SPINE,
     };
     
     typedef int Handler;

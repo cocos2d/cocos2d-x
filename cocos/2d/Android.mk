@@ -24,7 +24,6 @@ CCActionTween.cpp \
 CCAnimation.cpp \
 CCAnimationCache.cpp \
 CCAtlasNode.cpp \
-CCCamera.cpp \
 ccCArray.cpp \
 CCClippingNode.cpp \
 CCComponent.cpp \
@@ -60,6 +59,7 @@ CCGLProgram.cpp \
 ccGLStateCache.cpp \
 CCGrabber.cpp \
 CCGrid.cpp \
+CCNodeGrid.cpp \
 CCIMEDispatcher.cpp \
 CCLabel.cpp \
 CCLabelAtlas.cpp \
@@ -117,10 +117,19 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+renderer/CCCustomCommand.cpp \
+renderer/CCFrustum.cpp \
+renderer/CCGroupCommand.cpp \
+renderer/CCMaterialManager.cpp \
+renderer/CCQuadCommand.cpp \
+renderer/CCRenderCommand.cpp \
+renderer/CCRenderer.cpp \
+renderer/CCRenderMaterial.cpp \
 ../base/atitc.cpp \
 ../base/CCAffineTransform.cpp \
 ../base/CCArray.cpp \
 ../base/CCAutoreleasePool.cpp \
+../base/CCConsole.cpp \
 ../base/CCData.cpp \
 ../base/CCDataVisitor.cpp \
 ../base/CCDictionary.cpp \
@@ -132,7 +141,6 @@ platform/CCThread.cpp \
 ../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
-../base/CCConsole.cpp \
 ../math/kazmath/src/aabb.c \
 ../math/kazmath/src/mat3.c \
 ../math/kazmath/src/mat4.c \
@@ -158,10 +166,12 @@ platform/CCThread.cpp \
 ../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
-../../external/unzip/unzip.cpp
+../../external/unzip/unzip.cpp \
+../../external/edtaa3func/edtaa3func.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
@@ -171,13 +181,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/edtaa3func
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -193,6 +205,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_WHOLE_STATIC_LIBRARIES += chipmunk_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
@@ -205,3 +218,4 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,chipmunk)
 $(call import-module,2d/platform/android)
+$(call import-module,editor-support/spine)

@@ -3,6 +3,7 @@
 
 //#include "cocos2d.h"
 #include "../testBasic.h"
+#include "renderer/CCCustomCommand.h"
 
 class MenuLayer : public Layer
 {
@@ -39,7 +40,7 @@ public:
     virtual ~Box2DView(void);
 
     bool initWithEntryID(int entryId);
-    std::string title();
+    std::string title() const;
     void tick(float dt);
     void draw();
 
@@ -50,6 +51,9 @@ public:
     //virtual void accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);
+protected:
+    CustomCommand _customCmd;
+    void onDraw();
 };
 
 class Box2dTestBedScene : public TestScene

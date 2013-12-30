@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -48,7 +49,7 @@ If you are going to render a TextureAtlas consider subclassing AtlasNode (or a s
 All features from Node are valid, plus the following features:
 - opacity and RGB colors
 */
-class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
+class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
@@ -62,8 +63,8 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setQuadsToDraw(int quadsToDraw);
-    int getQuadsToDraw() const;
+    void setQuadsToDraw(ssize_t quadsToDraw);
+    ssize_t getQuadsToDraw() const;
 
     
     // Overrides
@@ -125,11 +126,13 @@ protected:
     BlendFunc _blendFunc;
 
     // quads to draw
-    int _quadsToDraw;
+    ssize_t _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
+    // quad command
+    QuadCommand _quadCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCPhysicsBody.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 #include <algorithm>
@@ -555,7 +555,7 @@ void PhysicsBody::setVelocity(const Point& velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set velocity for a static body.");
+        CCLOG("physics warning: your can't set velocity for a static body.");
         return;
     }
     
@@ -581,7 +581,7 @@ void PhysicsBody::setAngularVelocity(float velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set angular velocity for a static body.");
+        CCLOG("physics warning: your can't set angular velocity for a static body.");
         return;
     }
     

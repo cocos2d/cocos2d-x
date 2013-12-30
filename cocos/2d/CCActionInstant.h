@@ -292,8 +292,8 @@ public:
 
 protected:
     CallFunc()
-    : _selectorTarget(NULL)
-    , _callFunc(NULL)
+    : _selectorTarget(nullptr)
+    , _callFunc(nullptr)
     , _function(nullptr)
     {
     }

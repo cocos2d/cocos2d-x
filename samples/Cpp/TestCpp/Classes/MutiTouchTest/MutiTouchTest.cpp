@@ -71,7 +71,7 @@ bool MutiTouchTestLayer::init()
     return false;
 }
 
-static Dictionary s_dic;
+static Map<int, TouchPoint*> s_map;
 
 void MutiTouchTestLayer::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
@@ -85,7 +85,7 @@ void MutiTouchTestLayer::onTouchesBegan(const std::vector<Touch*>& touches, Even
         touchPoint->setTouchColor(*s_TouchColors[touch->getID()]);
 
         addChild(touchPoint);
-        s_dic.setObject(touchPoint, touch->getID());
+        s_map.insert(touch->getID(), touchPoint);
     }
 }
 
@@ -94,7 +94,7 @@ void MutiTouchTestLayer::onTouchesMoved(const std::vector<Touch*>& touches, Even
     for( auto &item: touches)
     {
         auto touch = item;
-        auto pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
+        auto pTP = s_map.at(touch->getID());
         auto location = touch->getLocation();
         pTP->setTouchPos(location);
     }
@@ -105,9 +105,9 @@ void MutiTouchTestLayer::onTouchesEnded(const std::vector<Touch*>& touches, Even
     for ( auto &item: touches )
     {
         auto touch = item;
-        auto pTP = static_cast<TouchPoint*>(s_dic.objectForKey(touch->getID()));
+        auto pTP = s_map.at(touch->getID());
         removeChild(pTP, true);
-        s_dic.removeObjectForKey(touch->getID());
+        s_map.erase(touch->getID());
     }
 }
 

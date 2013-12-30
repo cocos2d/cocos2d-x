@@ -26,7 +26,6 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
-#include <algorithm>    // std::for_each
 
 using namespace std;
 
@@ -415,8 +414,8 @@ static __Array* visitArray(const ValueVector& array)
 {
     __Array* ret = new __Array();
     ret->init();
-    
-    std::for_each(array.begin(), array.end(), [&ret](const Value& value){
+
+    for(const auto &value : array) {
         if (value.getType() == Value::Type::MAP)
         {
             const ValueMap& subDict = value.asValueMap();
@@ -437,7 +436,7 @@ static __Array* visitArray(const ValueVector& array)
             ret->addObject(str);
             str->release();
         }
-    });
+    }
     
     return ret;
 }

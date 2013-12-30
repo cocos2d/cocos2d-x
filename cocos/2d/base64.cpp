@@ -151,7 +151,7 @@ int base64Decode(const unsigned char *in, unsigned int inLength, unsigned char *
             printf("Base64Utils: error decoding");
 #endif
             free(*out);
-            *out = NULL;            
+            *out = nullptr;            
             outLength = 0;
         }
     }

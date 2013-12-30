@@ -4,6 +4,7 @@
 #include "SceneEditorTest.h"
 #include "cocostudio/CocoStudio.h"
 #include "gui/CocosGUI.h"
+#include "TriggerCode/EventDef.h"
 
 using namespace cocos2d;
 using namespace cocostudio;
@@ -11,14 +12,17 @@ using namespace gui;
 
 SceneEditorTestLayer::~SceneEditorTestLayer()
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
-	SceneReader::getInstance()->purgeSceneReader();
-	ActionManagerEx::shareManager()->purgeActionManager();
+    ArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManagerEx::destroyInstance();
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeEventListener(_touchListener);
 }
 
 SceneEditorTestLayer::SceneEditorTestLayer()
 {
 	_curNode = nullptr;
+    _touchListener = nullptr;
 }
 
 Scene* SceneEditorTestLayer::scene()
@@ -48,16 +52,63 @@ bool SceneEditorTestLayer::init()
 	bool bRet = false;
 	do 
 	{
-        CC_BREAK_IF(! LayerColor::initWithColor(Color4B(0,0,0,255)));
-        
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
+        sendEvent(TRIGGEREVENT_INITSCENE);
+	    this->schedule(schedule_selector(SceneEditorTestLayer::gameLogic));
+	    auto dispatcher = Director::getInstance()->getEventDispatcher();
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->setSwallowTouches(true);
+        listener->onTouchBegan = CC_CALLBACK_2(SceneEditorTestLayer::onTouchBegan, this);
+        listener->onTouchMoved = CC_CALLBACK_2(SceneEditorTestLayer::onTouchMoved, this);
+        listener->onTouchEnded = CC_CALLBACK_2(SceneEditorTestLayer::onTouchEnded, this);
+        listener->onTouchCancelled = CC_CALLBACK_2(SceneEditorTestLayer::onTouchCancelled, this);
+        dispatcher->addEventListenerWithFixedPriority(listener, 1);
+        _touchListener = listener;
 
 		bRet = true;
 	} while (0);
 
 	return bRet;
+}
+
+void SceneEditorTestLayer::onEnter()
+{
+	Layer::onEnter();
+	sendEvent(TRIGGEREVENT_ENTERSCENE);
+}
+
+void SceneEditorTestLayer::onExit()
+{
+	Layer::onExit();
+	sendEvent(TRIGGEREVENT_LEAVESCENE);
+}
+
+bool SceneEditorTestLayer::onTouchBegan(Touch *touch, Event *unused_event)
+{
+    sendEvent(TRIGGEREVENT_TOUCHBEGAN);
+    return true;
+}
+
+void SceneEditorTestLayer::onTouchMoved(Touch *touch, Event *unused_event)
+{
+    sendEvent(TRIGGEREVENT_TOUCHMOVED);
+}
+
+void SceneEditorTestLayer::onTouchEnded(Touch *touch, Event *unused_event)
+{
+    sendEvent(TRIGGEREVENT_TOUCHENDED);
+}
+
+void SceneEditorTestLayer::onTouchCancelled(Touch *touch, Event *unused_event)
+{
+    sendEvent(TRIGGEREVENT_TOUCHCANCELLED);
+}
+
+void SceneEditorTestLayer::gameLogic(float dt)
+{
+    sendEvent(TRIGGEREVENT_UPDATESCENE);
 }
 
 static ActionObject* actionObject = nullptr;
@@ -80,8 +131,6 @@ cocos2d::Node* SceneEditorTestLayer::createGameScene()
 
     pNode->addChild(menuBack);
     
-    //ui action
-	actionObject = ActionManagerEx::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 

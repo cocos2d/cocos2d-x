@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsWorldInfo_chipmunk.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include "CCPhysicsHelper_chipmunk.h"
 #include "CCPhysicsBodyInfo_chipmunk.h"
 #include "CCPhysicsShapeInfo_chipmunk.h"

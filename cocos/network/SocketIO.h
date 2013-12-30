@@ -73,10 +73,8 @@ class SIOClient;
 class SocketIO
 {
 public:
-	SocketIO();
-	virtual ~SocketIO(void);
-
-	static SocketIO *instance();
+	static SocketIO* getInstance();
+    static void destroyInstance();
 
 	/**
      *  @brief The delegate class to process socket.io events
@@ -101,16 +99,20 @@ public:
 	
 private:
 
+    SocketIO();
+	virtual ~SocketIO(void);
+    
 	static SocketIO *_inst;
 
-	cocos2d::Dictionary* _sockets;
+	cocos2d::Map<std::string, SIOClientImpl*> _sockets;
 
 	SIOClientImpl* getSocket(const std::string& uri);
 	void addSocket(const std::string& uri, SIOClientImpl* socket);
 	void removeSocket(const std::string& uri);
 
 	friend class SIOClientImpl;
-	
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(SocketIO)
 };
 
 //c++11 style callbacks entities will be created using CC_CALLBACK (which uses std::bind)
