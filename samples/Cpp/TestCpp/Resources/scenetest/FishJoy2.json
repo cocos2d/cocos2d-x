@@ -9,7 +9,7 @@
   "visible": 1,
   "x": 0,
   "y": 0,
-  "zorder": 0,
+  "zorder": 1,
   "gameobjects": [
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
@@ -148,6 +148,7 @@
             "plistFile": null,
             "resourceType": 0
           },
+          "isShowColliderRect": false,
           "selectedactionname": "Action0"
         }
       ]
@@ -177,6 +178,7 @@
             "plistFile": null,
             "resourceType": 0
           },
+          "isShowColliderRect": false,
           "selectedactionname": "Action0"
         }
       ]
@@ -186,7 +188,102 @@
     "_height": 320,
     "_width": 480
   },
-  "Version": "0.4.0.0",
+  "Triggers": [
+    {
+      "actions": [
+        {
+          "classname": "TScaleTo",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "ScaleX",
+              "value": 0.6
+            },
+            {
+              "key": "ScaleY",
+              "value": 0.6
+            },
+            {
+              "key": "Duration",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 4
+        }
+      ],
+      "id": 0
+    },
+    {
+      "actions": [
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 0
+        }
+      ],
+      "id": 1
+    }
+  ],
+  "Version": "1.2.0.0",
   "components": [
     {
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",

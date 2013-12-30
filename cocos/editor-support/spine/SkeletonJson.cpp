@@ -256,16 +256,16 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 		spDrawOrderTimeline* timeline = spDrawOrderTimeline_create(drawOrder->size, skeletonData->slotCount);
 		for (frame = drawOrder->child, i = 0; frame; frame = frame->next, ++i) {
 			int ii;
-			int* drawOrder = 0;
+			int* drawOrderArray = 0;
 			Json* offsets = Json_getItem(frame, "offsets");
 			if (offsets) {
 				Json* offsetMap;
 				int* unchanged = MALLOC(int, skeletonData->slotCount - offsets->size);
 				int originalIndex = 0, unchangedIndex = 0;
 
-				drawOrder = MALLOC(int, skeletonData->slotCount);
+				drawOrderArray = MALLOC(int, skeletonData->slotCount);
 				for (ii = skeletonData->slotCount - 1; ii >= 0; --ii)
-					drawOrder[ii] = -1;
+					drawOrderArray[ii] = -1;
 
 				for (offsetMap = offsets->child; offsetMap; offsetMap = offsetMap->next) {
 					int slotIndex = spSkeletonData_findSlotIndex(skeletonData, Json_getString(offsetMap, "slot", 0));
@@ -278,7 +278,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					while (originalIndex != slotIndex)
 						unchanged[unchangedIndex++] = originalIndex++;
 					/* Set changed items. */
-					drawOrder[originalIndex + Json_getInt(offsetMap, "offset", 0)] = originalIndex;
+					drawOrderArray[originalIndex + Json_getInt(offsetMap, "offset", 0)] = originalIndex;
 					++originalIndex;
 				}
 				/* Collect remaining unchanged items. */
@@ -286,11 +286,11 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					unchanged[unchangedIndex++] = originalIndex++;
 				/* Fill in unchanged items. */
 				for (ii = skeletonData->slotCount - 1; ii >= 0; ii--)
-					if (drawOrder[ii] == -1) drawOrder[ii] = unchanged[--unchangedIndex];
+					if (drawOrderArray[ii] == -1) drawOrderArray[ii] = unchanged[--unchangedIndex];
 				FREE(unchanged);
 			}
-			spDrawOrderTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), drawOrder);
-			FREE(drawOrder);
+			spDrawOrderTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), drawOrderArray);
+			FREE(drawOrderArray);
 		}
 		animation->timelines[animation->timelineCount++] = (spTimeline*)timeline;
 		duration = timeline->frames[drawOrder->size - 1];
@@ -459,11 +459,11 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						spBoundingBoxAttachment* box = (spBoundingBoxAttachment*)attachment;
 						Json* verticesArray = Json_getItem(attachmentMap, "vertices");
 						Json* vertex;
-						int i;
+						int j = 0;
 						box->verticesCount = verticesArray->size;
 						box->vertices = MALLOC(float, verticesArray->size);
-						for (vertex = verticesArray->child, i = 0; vertex; vertex = vertex->next, ++i)
-							box->vertices[i] = vertex->valueFloat * self->scale;
+						for (vertex = verticesArray->child, j = 0; vertex; vertex = vertex->next, ++j)
+							box->vertices[j] = vertex->valueFloat * self->scale;
 						break;
 					}
 					}
