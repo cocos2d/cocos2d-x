@@ -165,7 +165,7 @@ protected:
     void onBeforeDrawClip(int planeIndex, const Point& pt);
     void onBeforeDrawSprite(int planeIndex, const Point& pt);
 protected:
-    Sprite* _sprite;
+    Vector<Sprite*> _sprites;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest
