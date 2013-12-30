@@ -38,7 +38,7 @@ public:
 	ArmatureMovementDispatcher(void);
 	~ArmatureMovementDispatcher(void);
 public:
-	void addAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
+	void addAnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     

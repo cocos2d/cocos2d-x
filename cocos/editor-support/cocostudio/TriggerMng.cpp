@@ -66,24 +66,20 @@ void TriggerMng::destroyInstance()
 
 void TriggerMng::parse(const rapidjson::Value &root)
 {
-    CCLOG("%s", triggerMngVersion());
-    do {
-          int count = DICTOOL->getArrayCount_json(root, "Triggers");
-          for (int i = 0; i < count; ++i)
-          {
-                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
-                TriggerObj *obj = TriggerObj::create();
-                obj->serialize(subDict);
-				auto &vInt = obj->getEvents();
-                for (const auto& e : vInt)
-				{
-					add((unsigned int)e, obj);
-				}
-				
-                _triggerObjs.insert(std::pair<unsigned int, TriggerObj*>(obj->getId(), obj));
-          }
+    int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    for (int i = 0; i < count; ++i)
+    {
+        const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
+        TriggerObj *obj = TriggerObj::create();
+        obj->serialize(subDict);
+        auto &vInt = obj->getEvents();
+        for (const auto& e : vInt)
+        {
+            add((unsigned int)e, obj);
+        }
         
-    } while (0);
+        _triggerObjs.insert(std::pair<unsigned int, TriggerObj*>(obj->getId(), obj));
+    }
 }
 
 cocos2d::Vector<TriggerObj*>* TriggerMng::get(unsigned int event) const
@@ -233,14 +229,14 @@ void TriggerMng::addArmatureMovementCallBack(Armature *pAr, Object *pTarget, SEL
 	{
 		amd = new ArmatureMovementDispatcher();
         pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(ArmatureMovementDispatcher::animationEvent, amd, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-        amd->addAnnimationEventCallBack(pTarget, mecf);
+        amd->addAnimationEventCallBack(pTarget, mecf);
 		_movementDispatches->insert(std::make_pair(pAr, amd));
 
 	}
 	else
 	{
 		amd = iter->second;
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 	}
 }
 
@@ -313,7 +309,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(Object *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::make_pair(pTarget, mecf));
   }
