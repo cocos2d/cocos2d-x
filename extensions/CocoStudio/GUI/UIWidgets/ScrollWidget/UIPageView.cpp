@@ -428,7 +428,6 @@ void PageView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent)
 
 void PageView::movePages(float offset)
 {
-    CCSize selfSize = getSize();
     ccArray* arrayPages = _pages->data;
     int length = arrayPages->num;
     for (int i=0; i<length; i++)
