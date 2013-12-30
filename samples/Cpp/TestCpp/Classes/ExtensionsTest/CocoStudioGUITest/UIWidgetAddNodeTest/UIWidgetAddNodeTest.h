@@ -22,27 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UISWITCH_H__
-#define __UISWITCH_H__
+#ifndef __TestCpp__UIWidgetAddNodeTest__
+#define __TestCpp__UIWidgetAddNodeTest__
 
-#include "../BaseClasses/UIWidget.h"
+#include "../UIScene.h"
 
-NS_CC_EXT_BEGIN
-/**
-*   @js NA
-*   @lua NA
-*/
-class UISwitch : public UIWidget
+class UIWidgetAddNodeTest : public UIScene
 {
 public:
-    UISwitch();
-    virtual ~UISwitch();
-    static UISwitch* create();
+    UIWidgetAddNodeTest();
+    ~UIWidgetAddNodeTest();
+    bool init();
     
 protected:
-    
+    UI_SCENE_CREATE_FUNC(UIWidgetAddNodeTest)
 };
 
-NS_CC_EXT_END
-
-#endif /* defined(UISwitch__) */
+#endif /* defined(__TestCpp__UIWidgetAddNodeTest__) */
