@@ -144,14 +144,6 @@ bool C3DRay::intersects( const C3DAABB* box ) const
 	return false;
 }
 
-//INLINE
-//Vector3 PlaneEq::intersectRay( const Vector3 & source,
-//	const Vector3 & dir ) const
-//{
-//	return source +
-//		this->intersectRayHalf( source, normal_.dotProduct( dir ) ) * dir;
-//}
-//
 float C3DRay::dist(const C3DPlane* plane) const
 {
 	float ndd = Vector3::dot(plane->getNormal(),this->getDirection());
