@@ -98,7 +98,7 @@ void TableView::reloadData()
 {
     _oldDirection = Direction::NONE;
 
-    _cellsUsed.forEach([this](TableViewCell* cell){
+    for(const auto &cell : _cellsUsed) {
         if(_tableViewDelegate != NULL) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }
@@ -110,7 +110,7 @@ void TableView::reloadData()
         {
             this->getContainer()->removeChild(cell, true);
         }
-    });
+    }
 
     _indices->clear();
     _cellsUsed.clear();
@@ -455,7 +455,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     if (_isUsedCellsDirty)
     {
         _isUsedCellsDirty = false;
-        _cellsUsed.sort([](TableViewCell *a, TableViewCell *b) -> bool{
+        std::sort(_cellsUsed.begin(), _cellsUsed.end(), [](TableViewCell *a, TableViewCell *b) -> bool{
             return a->getIdx() < b->getIdx();
         });
     }

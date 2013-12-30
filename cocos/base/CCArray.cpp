@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCString.h"
 #include "platform/CCFileUtils.h"
-#include <algorithm>    // std::for_each
 
 NS_CC_BEGIN
 
@@ -123,7 +122,7 @@ __Array* __Array::createWithCapacity(int capacity)
     return array;
 }
 
-__Array* __Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
     __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
@@ -133,7 +132,7 @@ __Array* __Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-__Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
     return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
 }
@@ -466,7 +465,7 @@ __Array* __Array::createWithCapacity(ssize_t capacity)
     return array;
 }
 
-__Array* __Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
     __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
@@ -476,15 +475,15 @@ __Array* __Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-__Array* __Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
     ValueVector arr = FileUtils::getInstance()->getValueVectorFromFile(fileName);
     
     __Array* ret = __Array::createWithCapacity(static_cast<int>(arr.size()));
-    
-    std::for_each(arr.cbegin(), arr.cend(), [&ret](const Value& value){
+
+    for(const auto &value : arr) {
         ret->addObject(__String::create(value.asString()));
-    });
+    }
     
     return ret;
 }

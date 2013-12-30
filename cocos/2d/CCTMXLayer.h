@@ -143,8 +143,8 @@ public:
     /** Creates the tiles */
     void setupTiles();
 
-    inline const char* getLayerName(){ return _layerName.c_str(); }
-    inline void setLayerName(const char *layerName){ _layerName = layerName; }
+    inline const std::string& getLayerName(){ return _layerName; }
+    inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
 
     /** size of the layer in tiles */
     inline const Size& getLayerSize() const { return _layerSize; };
@@ -185,6 +185,7 @@ public:
     /** TMXLayer doesn't support adding a Sprite manually.
      @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
      */
+    using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;

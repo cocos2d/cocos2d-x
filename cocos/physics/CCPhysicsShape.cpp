@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsShape.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 

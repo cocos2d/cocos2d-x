@@ -42,7 +42,7 @@ class CC_DLL ProgressTo : public ActionInterval
 {
 public:
     /** Creates and initializes with a duration and a percent */
-    static ProgressTo* create(float duration, float fPercent);
+    static ProgressTo* create(float duration, float percent);
 
     //
     // Overrides
@@ -56,7 +56,7 @@ protected:
     ProgressTo() {}
     virtual ~ProgressTo() {}
     /** Initializes with a duration and a percent */
-    bool initWithDuration(float duration, float fPercent);
+    bool initWithDuration(float duration, float percent);
 
     float _to;
     float _from;
@@ -73,7 +73,7 @@ class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
     /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-    static ProgressFromTo* create(float duration, float fFromPercentage, float fToPercentage);
+    static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
     // Overrides
@@ -87,7 +87,7 @@ protected:
     ProgressFromTo() {}
     virtual ~ProgressFromTo() {}
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
-    bool initWithDuration(float duration, float fFromPercentage, float fToPercentage);
+    bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
     float _to;
     float _from;

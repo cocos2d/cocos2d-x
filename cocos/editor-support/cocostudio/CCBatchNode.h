@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 
+namespace cocos2d {
+    class GroupCommand;
+}
+
 namespace cocostudio {
 
 class BatchNode : public cocos2d::Node
@@ -60,11 +64,11 @@ public:
      *  @js NA
      */
     void draw() override;
-
-    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture) const;
+    
 protected:
-    cocos2d::TextureAtlas *_atlas;
-    cocos2d::Dictionary *_textureAtlasDic;
+    void generateGroupCommand();
+
+    cocos2d::GroupCommand* _groupCommand;
 };
 
 }

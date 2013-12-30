@@ -31,6 +31,7 @@
 
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -105,8 +106,8 @@ public:
     
     // Overrides
     void visit();
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
@@ -140,6 +141,8 @@ private:
 private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
+    // quad command
+    QuadCommand _quadCommand;
 };
 
 // end of particle_nodes group

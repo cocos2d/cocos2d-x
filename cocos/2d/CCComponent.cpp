@@ -28,7 +28,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Component::Component(void)
-: _owner(NULL)
+: _owner(nullptr)
 , _enabled(true)
 {
 }
@@ -60,26 +60,26 @@ void Component::serialize(void *ar)
 
 Component* Component::create(void)
 {
-    Component * pRet = new Component();
-    if (pRet != NULL && pRet->init())
+    Component * ret = new Component();
+    if (ret != nullptr && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-	return pRet;
+	return ret;
 }
 
-const char* Component::getName() const
+const std::string& Component::getName() const
 {
-    return _name.c_str();
+    return _name;
 }
 
-void Component::setName(const char *pName)
+void Component::setName(const std::string& name)
 {
-    _name.assign(pName);
+    _name = name;
 }
 
 Node* Component::getOwner() const
@@ -87,9 +87,9 @@ Node* Component::getOwner() const
     return _owner;
 }
 
-void Component::setOwner(Node *pOwner)
+void Component::setOwner(Node *owner)
 {
-    _owner = pOwner;
+    _owner = owner;
 }
 
 bool Component::isEnabled() const

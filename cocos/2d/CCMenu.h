@@ -48,7 +48,7 @@ NS_CC_BEGIN
 *  - You can add MenuItem objects in runtime using addChild:
 *  - But the only accepted children are MenuItem objects
 */
-class CC_DLL Menu : public LayerRGBA
+class CC_DLL Menu : public Layer
 {
 public:
     enum class State
@@ -125,7 +125,7 @@ protected:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(NULL) {}
+    Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
     /** initializes an empty Menu */

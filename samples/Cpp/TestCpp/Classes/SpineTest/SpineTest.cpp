@@ -47,36 +47,57 @@ void SpineTestScene::runThisTest()
 }
 
 bool SpineTestLayer::init () {
-	if (!Layer::init()) return false;
-
-	skeletonNode = CCSkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
-    skeletonNode->setMix("walk", "jump", 0.4f);
-    skeletonNode->setMix("jump", "walk", 0.4f);    
-    skeletonNode->setAnimation("walk", true);
-
-	skeletonNode->timeScale = 0.3f;
-	skeletonNode->debugBones = true;
-
-	skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1),
-		FadeIn::create(1),
-		DelayTime::create(5),
-		NULL)));
-
-	Size windowSize = Director::getInstance()->getWinSize();
-	skeletonNode->setPosition(Point(windowSize.width / 2, 20));
-	addChild(skeletonNode);
-
-	scheduleUpdate();
-
-	return true;
+    if (!Layer::init()) return false;
+    
+    skeletonNode = SkeletonAnimation::createWithFile("spine/spineboy.json", "spine/spineboy.atlas");
+    skeletonNode->setMix("walk", "jump", 0.2f);
+    skeletonNode->setMix("jump", "walk", 0.4f);
+    
+    skeletonNode->setAnimationListener(this, animationStateEvent_selector(SpineTestLayer::animationStateEvent));
+    skeletonNode->setAnimation(0, "walk", false);
+    skeletonNode->addAnimation(0, "jump", false);
+    skeletonNode->addAnimation(0, "walk", true);
+    skeletonNode->addAnimation(0, "jump", true, 4);
+    // skeletonNode->addAnimation(1, "drawOrder", true);
+    
+    skeletonNode->timeScale = 0.3f;
+    skeletonNode->debugBones = true;
+    skeletonNode->update(0);
+    
+    skeletonNode->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(1),
+                                                                       CCFadeIn::create(1),
+                                                                       CCDelayTime::create(5),
+                                                                       NULL)));
+    
+    Size windowSize = Director::getInstance()->getWinSize();
+    skeletonNode->setPosition(Point(windowSize.width / 2, 20));
+    addChild(skeletonNode);
+    
+    scheduleUpdate();
+    
+    return true;
 }
 
 void SpineTestLayer::update (float deltaTime) {
-    if (skeletonNode->states[0]->loop) {
-        if (skeletonNode->states[0]->time > 2)
-            skeletonNode->setAnimation("jump", false);
-    } else {
-        if (skeletonNode->states[0]->time > 1)
-            skeletonNode->setAnimation("walk", true);
+    
+}
+
+void SpineTestLayer::animationStateEvent (SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount) {
+    spTrackEntry* entry = spAnimationState_getCurrent(node->state, trackIndex);
+    const char* animationName = (entry && entry->animation) ? entry->animation->name : 0;
+    
+    switch (type) {
+        case ANIMATION_START:
+            log("%d start: %s", trackIndex, animationName);
+            break;
+        case ANIMATION_END:
+            log("%d end: %s", trackIndex, animationName);
+            break;
+        case ANIMATION_COMPLETE:
+            log("%d complete: %s, %d", trackIndex, animationName, loopCount);
+            break;
+        case ANIMATION_EVENT:
+            log("%d event: %s, %s: %d, %f, %s", trackIndex, animationName, event->data->name, event->intValue, event->floatValue, event->stringValue);
+            break;
     }
 }

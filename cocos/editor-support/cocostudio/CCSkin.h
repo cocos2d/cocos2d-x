@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
+#include "renderer/CCQuadCommand.h"
 
 namespace cocostudio {
 
@@ -34,8 +35,8 @@ class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static Skin *create(const char *pszFileName);
+    static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
+    static Skin *create(const std::string& pszFileName);
 public:
     /**
      *  @js ctor
@@ -48,8 +49,11 @@ public:
     void updateArmatureTransform();
     void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const override;
-    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
+    kmMat4 getNodeToWorldTransform() const override;
+    kmMat4 getNodeToWorldTransformAR() const;
+    
+    virtual void draw() override;
+    
     /**
      *  @js NA
      *  @lua NA
@@ -69,8 +73,9 @@ protected:
     BaseData _skinData;
     Bone *_bone;
     Armature *_armature;
-    cocos2d::AffineTransform _skinTransform;
+    kmMat4 _skinTransform;
     std::string _displayName;
+    cocos2d::QuadCommand _quadCommand;     // quad command
 };
 
 }

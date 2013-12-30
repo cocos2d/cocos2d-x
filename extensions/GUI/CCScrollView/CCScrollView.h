@@ -224,9 +224,9 @@ public:
      * @lua NA
      */
     virtual void visit() override;
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node * child) override;
 
 protected:
     /**

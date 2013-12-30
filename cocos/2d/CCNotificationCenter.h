@@ -63,18 +63,18 @@ public:
      *  @param target The target which wants to observe notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      */
     void addObserver(Object *target, 
                      SEL_CallFuncO selector,
-                     const char *name,
+                     const std::string& name,
                      Object *sender);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
-    void removeObserver(Object *target,const char *name);
+    void removeObserver(Object *target,const std::string& name);
     
     /** @brief Removes all notifications registered by this target
      *  @param target The target of this notification.
@@ -86,21 +86,21 @@ public:
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(Object *target,int handler,const char* name);
+    void registerScriptObserver(Object *target,int handler,const std::string& name);
 
     /** Unregisters script observer */
-    void unregisterScriptObserver(Object *target,const char* name);
+    void unregisterScriptObserver(Object *target,const std::string& name);
     
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
      */
-    void postNotification(const char *name);
+    void postNotification(const std::string& name);
 
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
-     *  @param sender The object posting the notification. Can be NULL
+     *  @param sender The object posting the notification. Can be nullptr
      */
-    void postNotification(const char *name, Object *sender);
+    void postNotification(const std::string& name, Object *sender);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
@@ -112,12 +112,12 @@ public:
      *  @param name The name of this notification.
      *  @return The observer script handle.
      */
-    int getObserverHandlerByName(const char* name);
+    int getObserverHandlerByName(const std::string& name);
 private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(Object *target,const char *name, Object *sender);
+    bool observerExisted(Object *target,const std::string& name, Object *sender);
     
     // variables
     //
@@ -132,13 +132,13 @@ public:
      *  @param target The target which wants to observer notification events.
      *  @param selector The callback function which will be invoked when the specified notification event was posted.
      *  @param name The name of this notification.
-     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. NULL means that the sender is not used to decide whether to deliver the notification to target.
+     *  @param sender The object whose notifications the target wants to receive. Only notifications sent by this sender are delivered to the target. nullptr means that the sender is not used to decide whether to deliver the notification to target.
      * @js NA
      * @lua NA
      */
     NotificationObserver(Object *target, 
                            SEL_CallFuncO selector,
-                           const char *name,
+                           const std::string& name,
                            Object *sender);
 
     /** NotificationObserver destructor function 
@@ -168,7 +168,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* getName() const;
+    const std::string& getName() const;
     /**
      * @js NA
      * @lua NA

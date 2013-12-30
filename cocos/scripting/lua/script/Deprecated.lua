@@ -300,45 +300,6 @@ end
 rawset(CCLabelAtlas,"create",CCLabelAtlasDeprecated.create)
 --functions of CCLabelAtlas will be deprecated end
 
---functions of CCCamera will be deprecated begin
-local CCCameraDeprecated = {}
-function CCCameraDeprecated.setUpXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setUpXYZ","CCCameraDeprecated:setUp")
-    return self:setUp(...)
-end
-rawset(CCCamera,"setUpXYZ",CCCameraDeprecated.setUpXYZ)
-
-function CCCameraDeprecated.getUpXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getUpXYZ","CCCameraDeprecated:getUp")
-    return self:getUp()
-end
-rawset(CCCamera,"getUpXYZ",CCCameraDeprecated.getUpXYZ)
-
-function CCCameraDeprecated.setEyeXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setEyeXYZ","CCCameraDeprecated:setEye")
-    return self:setEye(...)
-end
-rawset(CCCamera,"setEyeXYZ",CCCameraDeprecated.setEyeXYZ)
-
-function CCCameraDeprecated.getEyeXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getEyeXYZ","CCCameraDeprecated:getEye")
-    return self:getEye()
-end
-rawset(CCCamera,"getEyeXYZ",CCCameraDeprecated.getEyeXYZ)
-
-function CCCameraDeprecated.setCenterXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setCenterXYZ","CCCameraDeprecated:setCenter")
-    return self:setCenter(...)
-end
-rawset(CCCamera,"setCenterXYZ",CCCameraDeprecated.setCenterXYZ)
-
-function CCCameraDeprecated.getCenterXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getCenterXYZ","CCCameraDeprecated:getCenter")
-    return self:getCenter()
-end
-rawset(CCCamera,"getCenterXYZ",CCCameraDeprecated.getCenterXYZ)
---functions of CCCamera will be deprecated end
-
 
 ---------------------------
 --global functions wil be deprecated, begin
@@ -1135,11 +1096,11 @@ function ActionManagerDeprecated.shareManager()
 end
 rawset(ActionManager,"shareManager",ActionManagerDeprecated.shareManager)
 
-function ActionManagerDeprecated.purgeActionManager()
-    deprecatedTip("ActionManager:purgeActionManager","ccs.ActionManagerEx:destroyActionManager")
+function ActionManagerDeprecated.destroyInstance()
+    deprecatedTip("ActionManager:destroyInstance","ccs.ActionManagerEx:destroyActionManager")
     return ccs.ActionManagerEx:destroyActionManager()
 end
-rawset(ActionManager,"purgeActionManager",ActionManagerDeprecated.purgeActionManager)
+rawset(ActionManager,"destroyInstance",ActionManagerDeprecated.destroyInstance)
 --functions of ActionManager will be deprecated end
 
 --functions of CCEGLView will be deprecated begin
