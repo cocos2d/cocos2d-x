@@ -135,6 +135,7 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\cocos2dx_support\LuaCocoStudio.cpp" />
     <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.cpp" />
     <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.cpp" />
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_extensions_CCB.cpp" />
     <ClCompile Include="..\cocos2dx_support\Lua_web_socket.cpp" />
     <ClCompile Include="..\cocos2dx_support\tolua_fix.c" />
@@ -155,6 +156,7 @@ xcopy /Y /Q "$(ProjectDir)..\luajit\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\cocos2dx_support\LuaCocoStudio.h" />
     <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.h" />
     <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.h" />
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_manual.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_extensions_CCB.h" />
     <ClInclude Include="..\cocos2dx_support\Lua_web_socket.h" />
     <ClInclude Include="..\cocos2dx_support\tolua_fix.h" />
