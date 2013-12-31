@@ -561,7 +561,7 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
             {
                 cocos2d::Application::getInstance()->applicationDidEnterBackground();
                 cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&backgroundEvent);
+                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
                 // Also stop animating.
                 engine->animating = 0;
                 engine_draw_frame(engine);
