@@ -447,27 +447,59 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     sprite->setScale(10);
     auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
-    glStencilMask(0xFF);
+    _renderCmds[0].init(0, _vertexZ);
+    _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
+    
     rend->beginWithClear(0, 0, 0, 0, 0, 0);
-
-    //! mark sprite quad into stencil buffer
-    glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_NEVER, 1, 0xFF);
-    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+    
+    _renderCmds[1].init(0, _vertexZ);
+    _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
+    
     sprite->visit();
 
     //! move sprite half width and height, and draw only where not marked
     sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+   
+    _renderCmds[2].init(0, _vertexZ);
+    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
+    
     sprite->visit();
 
     rend->end();
-
-    glDisable(GL_STENCIL_TEST);
+    
+    _renderCmds[3].init(0, _vertexZ);
+    _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
 
     rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
 
     this->addChild(rend);
+}
+
+void RenderTextureTestDepthStencil::onBeforeClear()
+{
+    glStencilMask(0xFF);
+}
+
+void RenderTextureTestDepthStencil::onBeforeStencil()
+{
+    //! mark sprite quad into stencil buffer
+    //glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NEVER, 1, 0xFF);
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+}
+
+void RenderTextureTestDepthStencil::onBeforDraw()
+{
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+}
+
+void RenderTextureTestDepthStencil::onAfterDraw()
+{
+    //glDisable(GL_STENCIL_TEST);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
