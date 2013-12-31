@@ -32,9 +32,9 @@ bool UIScene::init()
         
         Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
         
-        _sceneTitle = dynamic_cast<gui::Label*>(root->getChildByName("UItest"));
+        _sceneTitle = dynamic_cast<gui::Text*>(root->getChildByName("UItest"));
         
-        gui::Label* back_label = dynamic_cast<gui::Label*>(root->getChildByName("back"));
+        gui::Text* back_label = dynamic_cast<gui::Text*>(root->getChildByName("back"));
         back_label->addTouchEventListener(this, toucheventselector(UIScene::toCocosGUITestScene));
         
         Button* left_button = dynamic_cast<Button*>(root->getChildByName("left_Button"));
