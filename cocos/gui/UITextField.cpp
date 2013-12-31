@@ -326,10 +326,21 @@ void TextField::setTouchSize(const Size &size)
 
 void TextField::setText(const std::string& text)
 {
-	if (text.size()==0)
-		return;
-
-    _textFieldRenderer->setString(text);
+    std::string strText(text);
+    if (isMaxLengthEnabled())
+    {
+        strText = strText.substr(0, getMaxLength());
+    }
+    const char* content = strText.c_str();
+    if (isPasswordEnabled())
+    {
+        _textFieldRenderer->setPasswordText(content);
+        _textFieldRenderer->insertText(content, strlen(content));
+    }
+    else
+    {
+        _textFieldRenderer->setString(content);
+    }
     textfieldRendererScaleChangedWithSize();
 }
 

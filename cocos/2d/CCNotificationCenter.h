@@ -31,29 +31,29 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class ScriptHandlerMgr;
-class CC_DLL NotificationCenter : public Object
+class CC_DLL __NotificationCenter : public Object
 {
     friend class ScriptHandlerMgr;
 public:
-    /** NotificationCenter constructor
+    /** __NotificationCenter constructor
      * @js ctor
      */
-    NotificationCenter();
+    __NotificationCenter();
 
-    /** NotificationCenter destructor
+    /** __NotificationCenter destructor
      * @js NA
      * @lua NA
      */
-    ~NotificationCenter();
+    ~__NotificationCenter();
     
-    /** Gets the single instance of NotificationCenter. */
-    static NotificationCenter *getInstance();
+    /** Gets the single instance of __NotificationCenter. */
+    static __NotificationCenter *getInstance();
 
-    /** Destroys the single instance of NotificationCenter. */
+    /** Destroys the single instance of __NotificationCenter. */
     static void destroyInstance();
 
     /** @deprecated use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static NotificationCenter *sharedNotificationCenter(void);
+    CC_DEPRECATED_ATTRIBUTE static __NotificationCenter *sharedNotificationCenter(void);
 
     /** @deprecated use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
