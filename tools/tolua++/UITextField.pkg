@@ -7,21 +7,22 @@ typedef enum
     TEXTFIELD_EVENT_DELETE_BACKWARD,
 }TextFiledEventType;
 
-class UITextField : public UIWidget
+class TextField : public Widget
 {
-    UITextField();
-    virtual ~UITextField();
-    static UITextField* create();
+public:
+    TextField();
+    virtual ~TextField();
+    static TextField* create();
     virtual bool init();
     virtual void initRenderer();
     void setTouchSize(const CCSize &size);
-    void setText(const char* text);
-    void setPlaceHolder(const char* value);
+    void setText(const std::string& text);
+    void setPlaceHolder(const std::string& value);
     void setFontSize(int size);
-    void setFontName(const char* name);
+    void setFontName(const std::string& name);
     virtual void didNotSelectSelf();
     const char* getStringValue();
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
     void setMaxLengthEnabled(bool enable);
     bool isMaxLengthEnabled();
     void setMaxLength(int length);
@@ -38,12 +39,9 @@ class UITextField : public UIWidget
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
+    void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
     virtual void setAnchorPoint(const CCPoint &pt);
-    virtual void setColor(const ccColor3B &color);
-    virtual void setOpacity(int opacity);
-    virtual const char* getDescription() const;
-    void setMaxLengthEnable(bool is);
-    void setPasswordEnable(bool is);
+    virtual std::string getDescription() const;
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
     void attachWithIME();

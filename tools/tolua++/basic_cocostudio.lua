@@ -135,6 +135,7 @@ extern "C" {
 #include "cocos-ext.h"
 
 using namespace cocos2d;
+using namespace cocos2d::gui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;]])
 
@@ -218,9 +219,9 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
     return 0;
 }]],[[]])
 
-    replace([[static int tolua_collect_CCBlendType (lua_State* tolua_S)
+    replace([[static int tolua_collect_LayoutType (lua_State* tolua_S)
 {
- CCBlendType* self = (CCBlendType*) tolua_tousertype(tolua_S,1,0);
+ LayoutType* self = (LayoutType*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }]],[[]])

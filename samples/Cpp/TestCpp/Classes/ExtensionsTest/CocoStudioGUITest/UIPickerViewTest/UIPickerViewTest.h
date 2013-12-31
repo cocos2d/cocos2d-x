@@ -22,43 +22,41 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UIROOTWIDGET_H__
-#define __UIROOTWIDGET_H__
+#ifndef __TestCpp__UIPickViewTest__
+#define __TestCpp__UIPickViewTest__
 
-#include "../Layouts/UILayout.h"
+#include "../UIScene.h"
 
-NS_CC_EXT_BEGIN
-/**
-*   @js NA
-*   @lua NA
-*/
-class UIRootWidget : public UILayout
+class UIPickerViewTest_Vertical : public UIScene
 {
 public:
-    /**
-     * Default constructor
-     */
-    UIRootWidget();
+    UIPickerViewTest_Vertical();
+    ~UIPickerViewTest_Vertical();
+    bool init();
+    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void pickItemEvent(CCObject* pSender, PickerViewEventType type);
     
-    /**
-     * Default destructor
-     */
-    virtual ~UIRootWidget();
-    
-    /**
-     * Allocates and initializes a widget.
-     */
-    static UIRootWidget* create();
-    
-    /**
-     * Returns the "class name" of widget.
-     */
-    virtual const char* getDescription() const;
 protected:
-    //initializes state of widget.
-    virtual bool init();
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Vertical)
+    UILabel* m_pDisplayValueLabel;
+    
+    CCArray* m_array;
 };
 
-NS_CC_EXT_END
+class UIPickerViewTest_Horizontal : public UIScene
+{
+public:
+    UIPickerViewTest_Horizontal();
+    ~UIPickerViewTest_Horizontal();
+    bool init();
+    void selectedItemEvent(CCObject* pSender, ScrollviewEventType type);
+    void pickItemEvent(CCObject* pSender, PickerViewEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UIPickerViewTest_Horizontal)
+    UILabel* m_pDisplayValueLabel;
+    
+    CCArray* m_array;
+};
 
-#endif /* defined(__CocoGUI__RootWidget__) */
+#endif /* defined(__TestCpp__UIPickViewTest__) */
