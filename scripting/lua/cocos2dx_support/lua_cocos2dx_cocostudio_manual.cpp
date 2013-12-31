@@ -17,6 +17,7 @@ extern "C" {
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+using namespace cocos2d::gui;
 
 class LuaCocoStudioEventListener:public CCObject
 {
@@ -68,12 +69,12 @@ void LuaCocoStudioEventListener::eventCallbackFunc(CCObject* sender,int eventTyp
     }
 }
 
-static int tolua_Cocos2dx_UIWidget_addTouchEventListener00(lua_State* tolua_S)
+static int tolua_Cocos2dx_Widget_addTouchEventListener00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UIWidget",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"Widget",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -81,7 +82,7 @@ static int tolua_Cocos2dx_UIWidget_addTouchEventListener00(lua_State* tolua_S)
     else
 #endif
     {
-        UIWidget* self = (UIWidget*)  tolua_tousertype(tolua_S,1,0);
+        Widget* self = (Widget*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addTouchEventListener'", NULL);
 #endif
@@ -106,23 +107,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUIWidget(lua_State* tolua_S)
+static void extendWidget(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UIWidget");
+    lua_pushstring(tolua_S, "Widget");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addTouchEventListener", tolua_Cocos2dx_UIWidget_addTouchEventListener00);
+        tolua_function(tolua_S, "addTouchEventListener", tolua_Cocos2dx_Widget_addTouchEventListener00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UICheckBox_addEventListenerCheckBox00(lua_State* tolua_S)
+static int tolua_Cocos2dx_CheckBox_addEventListenerCheckBox00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UICheckBox",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"CheckBox",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -130,7 +131,7 @@ static int tolua_Cocos2dx_UICheckBox_addEventListenerCheckBox00(lua_State* tolua
     else
 #endif
     {
-        UICheckBox* self = (UICheckBox*)  tolua_tousertype(tolua_S,1,0);
+        CheckBox* self = (CheckBox*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerCheckBox'", NULL);
 #endif
@@ -155,23 +156,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUICheckBox(lua_State* tolua_S)
+static void extendCheckBox(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UICheckBox");
+    lua_pushstring(tolua_S, "CheckBox");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addEventListenerCheckBox", tolua_Cocos2dx_UICheckBox_addEventListenerCheckBox00);
+        tolua_function(tolua_S, "addEventListenerCheckBox", tolua_Cocos2dx_CheckBox_addEventListenerCheckBox00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UISlider_addEventListenerSlider00(lua_State* tolua_S)
+static int tolua_Cocos2dx_Slider_addEventListenerSlider00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UISlider",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"Slider",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -179,7 +180,7 @@ static int tolua_Cocos2dx_UISlider_addEventListenerSlider00(lua_State* tolua_S)
     else
 #endif
     {
-        UISlider* self = (UISlider*)  tolua_tousertype(tolua_S,1,0);
+        Slider* self = (Slider*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerSlider'", NULL);
 #endif
@@ -204,23 +205,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUISlider(lua_State* tolua_S)
+static void extendSlider(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UISlider");
+    lua_pushstring(tolua_S, "Slider");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addEventListenerSlider", tolua_Cocos2dx_UISlider_addEventListenerSlider00);
+        tolua_function(tolua_S, "addEventListenerSlider", tolua_Cocos2dx_Slider_addEventListenerSlider00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UITextField_addEventListenerTextField00(lua_State* tolua_S)
+static int tolua_Cocos2dx_TextField_addEventListenerTextField00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UITextField",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"TextField",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -228,7 +229,7 @@ static int tolua_Cocos2dx_UITextField_addEventListenerTextField00(lua_State* tol
     else
 #endif
     {
-        UITextField* self = (UITextField*)  tolua_tousertype(tolua_S,1,0);
+        TextField* self = (TextField*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerTextField'", NULL);
 #endif
@@ -253,23 +254,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUITextFieldr(lua_State* tolua_S)
+static void extendTextFieldr(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UITextField");
+    lua_pushstring(tolua_S, "TextField");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addEventListenerTextField", tolua_Cocos2dx_UITextField_addEventListenerTextField00);
+        tolua_function(tolua_S, "addEventListenerTextField", tolua_Cocos2dx_TextField_addEventListenerTextField00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UIPageView_addEventListenerPageView00(lua_State* tolua_S)
+static int tolua_Cocos2dx_PageView_addEventListenerPageView00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UIPageView",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"PageView",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -277,7 +278,7 @@ static int tolua_Cocos2dx_UIPageView_addEventListenerPageView00(lua_State* tolua
     else
 #endif
     {
-        UIPageView* self = (UIPageView*)  tolua_tousertype(tolua_S,1,0);
+        PageView* self = (PageView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerPageView'", NULL);
 #endif
@@ -302,23 +303,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUIPageView(lua_State* tolua_S)
+static void extendPageView(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UIPageView");
+    lua_pushstring(tolua_S, "PageView");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addEventListenerPageView", tolua_Cocos2dx_UIPageView_addEventListenerPageView00);
+        tolua_function(tolua_S, "addEventListenerPageView", tolua_Cocos2dx_PageView_addEventListenerPageView00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UIListView_addEventListenerListView00(lua_State* tolua_S)
+static int tolua_Cocos2dx_ListView_addEventListenerListView00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UIListView",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"ListView",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -326,7 +327,7 @@ static int tolua_Cocos2dx_UIListView_addEventListenerListView00(lua_State* tolua
     else
 #endif
     {
-        UIListView* self = (UIListView*)  tolua_tousertype(tolua_S,1,0);
+        ListView* self = (ListView*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addEventListenerListView'", NULL);
 #endif
@@ -351,23 +352,23 @@ tolua_lerror:
 #endif
 }
 
-static void extendUIListView(lua_State* tolua_S)
+static void extendListView(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UIListView");
+    lua_pushstring(tolua_S, "ListView");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "addEventListenerListView", tolua_Cocos2dx_UIListView_addEventListenerListView00);
+        tolua_function(tolua_S, "addEventListenerListView", tolua_Cocos2dx_ListView_addEventListenerListView00);
     }
     lua_pop(tolua_S, 1);
 }
 
-static int tolua_Cocos2dx_UILayoutParameter_setMargin00(lua_State* tolua_S)
+static int tolua_Cocos2dx_LayoutParameter_setMargin00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UILayoutParameter",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"LayoutParameter",0,&tolua_err) ||
         !tolua_istable(tolua_S, 2, 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -375,11 +376,11 @@ static int tolua_Cocos2dx_UILayoutParameter_setMargin00(lua_State* tolua_S)
     else
 #endif
     {
-        UILayoutParameter* self = (UILayoutParameter*)  tolua_tousertype(tolua_S,1,0);
+        LayoutParameter* self = (LayoutParameter*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setMargin'", NULL);
 #endif
-        UIMargin margin;
+        Margin margin;
         lua_pushstring(tolua_S, "left");
         lua_gettable(tolua_S,2);
         margin.left = lua_isnil(tolua_S,-1) ? 0 : lua_tonumber(tolua_S,-1);
@@ -410,23 +411,23 @@ tolua_lerror:
 #endif
 }
 
-static int tolua_Cocos2dx_UILayoutParameter_getMargin00(lua_State* tolua_S)
+static int tolua_Cocos2dx_LayoutParameter_getMargin00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"UILayoutParameter",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"LayoutParameter",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
     else
 #endif
     {
-        UILayoutParameter* self = (UILayoutParameter*)  tolua_tousertype(tolua_S,1,0);
+        LayoutParameter* self = (LayoutParameter*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
         if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getMargin'", NULL);
 #endif
-        UIMargin margin = self->getMargin();
+        Margin margin = self->getMargin();
         
         lua_newtable(tolua_S);
         
@@ -456,14 +457,14 @@ tolua_lerror:
 #endif
 }
 
-static void extendUILayoutParameter(lua_State* tolua_S)
+static void extendLayoutParameter(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "UILayoutParameter");
+    lua_pushstring(tolua_S, "LayoutParameter");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "setMargin", tolua_Cocos2dx_UILayoutParameter_setMargin00);
-        tolua_function(tolua_S, "getMargin", tolua_Cocos2dx_UILayoutParameter_getMargin00);
+        tolua_function(tolua_S, "setMargin", tolua_Cocos2dx_LayoutParameter_setMargin00);
+        tolua_function(tolua_S, "getMargin", tolua_Cocos2dx_LayoutParameter_getMargin00);
     }
     lua_pop(tolua_S, 1);
 }
@@ -721,13 +722,13 @@ static void extendCCArmatureDataManager(lua_State* tolua_S)
 
 int register_all_cocos2dx_studio_manual(lua_State* tolua_S)
 {
-    extendUIWidget(tolua_S);
-    extendUICheckBox(tolua_S);
-    extendUISlider(tolua_S);
-    extendUITextFieldr(tolua_S);
-    extendUIPageView(tolua_S);
-    extendUIListView(tolua_S);
-    extendUILayoutParameter(tolua_S);
+    extendWidget(tolua_S);
+    extendCheckBox(tolua_S);
+    extendSlider(tolua_S);
+    extendTextFieldr(tolua_S);
+    extendPageView(tolua_S);
+    extendListView(tolua_S);
+    extendLayoutParameter(tolua_S);
     extendCCArmatureAnimation(tolua_S);
     extendCCArmatureDataManager(tolua_S);
     return 0;
