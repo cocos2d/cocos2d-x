@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 12/31/13 10:24:41.
+** Generated automatically by tolua++-1.0.92 on Tue Dec 31 16:09:26 2013.
 */
 
 /****************************************************************************
@@ -21881,6 +21881,40 @@ static int tolua_CocoStudio_SceneReader_createNodeWithSceneFile00(lua_State* tol
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getNodeByTag of class  SceneReader */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_SceneReader_getNodeByTag00
+static int tolua_CocoStudio_SceneReader_getNodeByTag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"SceneReader",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  SceneReader* self = (SceneReader*)  tolua_tousertype(tolua_S,1,0);
+  int nTag = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNodeByTag'", NULL);
+#endif
+  {
+   CCNode* tolua_ret = (CCNode*)  self->getNodeByTag(nTag);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCNode");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNodeByTag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  GUIReader */
 #ifndef TOLUA_DISABLE_tolua_CocoStudio_GUIReader_new00
 static int tolua_CocoStudio_GUIReader_new00(lua_State* tolua_S)
@@ -23662,6 +23696,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"purgeSceneReader",tolua_CocoStudio_SceneReader_purgeSceneReader00);
    tolua_function(tolua_S,"sceneReaderVersion",tolua_CocoStudio_SceneReader_sceneReaderVersion00);
    tolua_function(tolua_S,"createNodeWithSceneFile",tolua_CocoStudio_SceneReader_createNodeWithSceneFile00);
+   tolua_function(tolua_S,"getNodeByTag",tolua_CocoStudio_SceneReader_getNodeByTag00);
   tolua_endmodule(tolua_S);
   #ifdef __cplusplus
   tolua_cclass(tolua_S,"GUIReader","GUIReader","CCObject",tolua_collect_GUIReader);
