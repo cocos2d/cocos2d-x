@@ -177,4 +177,4 @@ extern C3DStateBlock::Blend parseBlend(const char* value);
 NS_CC_END
 
 
-#endif
+#endif // RENDERBLOCK_H_

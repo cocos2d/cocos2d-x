@@ -10,7 +10,7 @@ class C3DElementNode;
 class C3DEffect;
 
 /**
-*A materialManager manager material's load£¬preload, and so on.
+* A materialManager manager material's load£¬preload, and so on.
 */
 class C3DMaterialManager : public C3DResourceManager
 {
@@ -31,4 +31,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // MATERIALMANAGER_H_

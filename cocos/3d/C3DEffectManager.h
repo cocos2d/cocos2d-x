@@ -1,5 +1,6 @@
 #ifndef EFFECTMANAGER_H_
 #define EFFECTMANAGER_H_
+
 #include "Base.h"
 
 #include "C3DVector2.h"
@@ -61,4 +62,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // EFFECTMANAGER_H_

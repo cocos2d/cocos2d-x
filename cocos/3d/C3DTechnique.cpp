@@ -10,7 +10,7 @@
 NS_CC_BEGIN
 
 C3DTechnique::C3DTechnique()
-: _id(""), _material(nullptr)
+	: _id(""), _material(nullptr)
 {
 
 	_renderChannel = nullptr;

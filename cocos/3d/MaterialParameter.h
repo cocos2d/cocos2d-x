@@ -12,6 +12,7 @@
 NS_CC_BEGIN
 
 class C3DSamplerCube;
+
 /**
 * Defines a material parameter.
 *
@@ -142,6 +143,7 @@ public:
 	int* getIntPtrValue(){return _value.intPtrValue;}
 	const C3DSampler* getSamplerValue(){return _value.samplerValue;}
 	const C3DTexture* getTextureValue(){return _value.textureValue;}
+
 public:
 	enum
 	{
@@ -158,6 +160,7 @@ public:
 		METHOD,
 		METHOD_PARAM
 	} _type;
+
 private:
 
 	MaterialParameter(const char* name);
@@ -305,4 +308,4 @@ MaterialParameter::MethodBinding* cocos3d::MaterialParameter::MethodArrayBinding
 
 NS_CC_END
 
-#endif
+#endif // MATERIALPARAMETER_H_

@@ -8,8 +8,8 @@
 
 NS_CC_BEGIN
 
-	// Render state override bits
-	enum
+// Render state override bits
+enum
 {
 	RS_BLEND = 1,
 	RS_BLEND_FUNC = 2,
@@ -19,7 +19,6 @@ NS_CC_BEGIN
 };
 
 class C3DNode;
-
 class C3DPass;
 
 /**
@@ -281,4 +280,4 @@ protected:
 NS_CC_END
 
 
-#endif
+#endif // RENDERSTATE_H_

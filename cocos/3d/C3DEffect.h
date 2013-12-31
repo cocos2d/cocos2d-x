@@ -269,4 +269,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // EFFECT_H_

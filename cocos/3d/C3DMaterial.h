@@ -138,4 +138,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // MATERIAL_H_

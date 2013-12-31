@@ -100,4 +100,4 @@ extern const char* textureWrapModeToString(Texture_Wrap wrap);
 
 NS_CC_END
 
-#endif
+#endif // SAMPLE_H_

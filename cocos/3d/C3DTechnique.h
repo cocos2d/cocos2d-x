@@ -71,4 +71,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // TECHNIQUE_H_

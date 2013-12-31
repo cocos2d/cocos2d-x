@@ -93,4 +93,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // PASS_H_

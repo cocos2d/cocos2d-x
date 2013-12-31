@@ -583,7 +583,6 @@ bool C3DRenderState::load(C3DElementNode* nodes)
 bool C3DRenderState::save(C3DElementNode* node)
 {   
 	for (std::list<MaterialParameter*>::iterator iter = _parameters.begin();iter != _parameters.end();++iter)
-		// for (size_t i = 0; i < this->_parameters.size(); i++)
 	{
 		MaterialParameter* parameter = *iter;
 		std::string value;
