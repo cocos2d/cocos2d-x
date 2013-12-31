@@ -15,8 +15,8 @@ public:
     AtlasDemoNew(void);
     ~AtlasDemoNew(void);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
 
     void restartCallback(Object* sender);
@@ -30,8 +30,8 @@ public:
     CREATE_FUNC(LabelTTFAlignmentNew);
 
     LabelTTFAlignmentNew();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTColorAndOpacity : public AtlasDemoNew
@@ -44,8 +44,8 @@ public:
 
     virtual void step(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTSpriteActions : public AtlasDemoNew
@@ -58,8 +58,10 @@ public:
     virtual void step(float dt);
     virtual void draw();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    void onDraw();
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -68,8 +70,8 @@ public:
     CREATE_FUNC(LabelFNTPadding);
 
     LabelFNTPadding();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -79,8 +81,8 @@ public:
     CREATE_FUNC(LabelFNTOffset);
 
     LabelFNTOffset();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTColor : public AtlasDemoNew
@@ -89,9 +91,9 @@ public:
     CREATE_FUNC(LabelFNTColor);
 
     LabelFNTColor();
-    virtual std::string title();
+    virtual std::string title() const override;
 
-    virtual std::string subtitle();
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTHundredLabels : public AtlasDemoNew
@@ -100,8 +102,8 @@ public:
     CREATE_FUNC(LabelFNTHundredLabels);
 
     LabelFNTHundredLabels();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTMultiLine : public AtlasDemoNew
@@ -110,8 +112,8 @@ public:
     CREATE_FUNC(LabelFNTMultiLine);
 
     LabelFNTMultiLine();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTandTTFEmpty : public AtlasDemoNew
@@ -121,8 +123,8 @@ public:
 
     LabelFNTandTTFEmpty();
     void updateStrings(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 private:
     bool setEmpty;
@@ -134,8 +136,8 @@ public:
     CREATE_FUNC(LabelFNTRetina);
 
     LabelFNTRetina();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTGlyphDesigner : public AtlasDemoNew
@@ -144,8 +146,8 @@ public:
     CREATE_FUNC(LabelFNTGlyphDesigner);
 
     LabelFNTGlyphDesigner();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class AtlasTestSceneNew : public TestScene
@@ -162,8 +164,8 @@ public:
     CREATE_FUNC(LabelTTFUnicodeChinese);
 
     LabelTTFUnicodeChinese();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTUnicodeChinese : public AtlasDemoNew
@@ -172,8 +174,8 @@ public:
     CREATE_FUNC(LabelFNTUnicodeChinese);
 
     LabelFNTUnicodeChinese();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTMultiLineAlignment : public AtlasDemoNew
@@ -184,8 +186,8 @@ public:
     LabelFNTMultiLineAlignment();
     ~LabelFNTMultiLineAlignment();
     void snapArrowsToEdge();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void stringChanged(Object *sender);
     void alignmentChanged(Object *sender);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
@@ -207,8 +209,8 @@ public:
 
     LabelFNTUNICODELanguages();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelFNTBounds : public AtlasDemoNew
@@ -219,10 +221,12 @@ public:
     LabelFNTBounds();
     
     virtual void draw();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     Label *label1;
+protected:
+    void onDraw();
 };
 
 class LabelTTFLongLineWrapping : public AtlasDemoNew
@@ -232,8 +236,8 @@ public:
 
     LabelTTFLongLineWrapping();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelTTFColor : public AtlasDemoNew
@@ -243,8 +247,8 @@ public:
 
     LabelTTFColor();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelTTFUnicodeNew : public AtlasDemoNew
@@ -254,8 +258,8 @@ public:
 
     LabelTTFUnicodeNew();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class LabelTTFDynamicAlignment : public AtlasDemoNew
@@ -264,8 +268,8 @@ public:
     CREATE_FUNC(LabelTTFDynamicAlignment);
 
     LabelTTFDynamicAlignment();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
 private:
     
@@ -287,8 +291,8 @@ public:
 
     LabelTTFFontsTestNew();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -299,8 +303,8 @@ public:
 
     LabelBMFontTestNew();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 private:
 };
@@ -312,12 +316,33 @@ public:
 
     LabelFontDefTestNew();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 private:
 };
 
+class LabelTTFDistanceField : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFDistanceField);
+
+    LabelTTFDistanceField();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelTTFDistanceFieldEffect : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFDistanceFieldEffect);
+
+    LabelTTFDistanceFieldEffect();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 
 // we don't support linebreak mode

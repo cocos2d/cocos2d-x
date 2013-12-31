@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,12 +29,10 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/extension.h>
 #include <stdio.h>
-
-namespace spine {
 
 static void* (*mallocFunc) (size_t size) = malloc;
 static void (*freeFunc) (void* ptr) = free;
@@ -35,8 +41,8 @@ void* _malloc (size_t size) {
 	return mallocFunc(size);
 }
 void* _calloc (size_t num, size_t size) {
-	void* ptr = mallocFunc(size);
-	if (ptr) memset(ptr, 0, size);
+	void* ptr = mallocFunc(num * size);
+	if (ptr) memset(ptr, 0, num * size);
 	return ptr;
 }
 void _free (void* ptr) {
@@ -53,22 +59,15 @@ void _setFree (void (*free) (void* ptr)) {
 char* _readFile (const char* path, int* length) {
 	char *data;
 	FILE *file = fopen(path, "rb");
-    int readBytes = 0;
 	if (!file) return 0;
 
 	fseek(file, 0, SEEK_END);
-	*length = ftell(file);
+	*length = (int)ftell(file);
 	fseek(file, 0, SEEK_SET);
 
 	data = MALLOC(char, *length);
-	readBytes = fread(data, 1, *length, file);
+	fread(data, 1, *length, file);
 	fclose(file);
-    if (readBytes != *length)
-    {
-        FREE(data);
-        data = NULL;
-    }
+
 	return data;
 }
-
-} // namespace spine {

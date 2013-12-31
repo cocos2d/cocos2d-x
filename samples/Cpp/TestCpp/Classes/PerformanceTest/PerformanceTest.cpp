@@ -6,7 +6,7 @@
 #include "PerformanceTextureTest.h"
 #include "PerformanceTouchesTest.h"
 #include "PerformanceAllocTest.h"
-#include "PerformanceMathTest.h"
+#include "PerformanceLabelTest.h"
 
 enum
 {
@@ -25,7 +25,7 @@ struct {
 	{ "Sprite Perf Test",[](Object*sender){runSpriteTest();} },
 	{ "Texture Perf Test",[](Object*sender){runTextureTest();} },
 	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
-    { "Math Perf Test",[](Object*sender){runMathPerformanceTest();} },
+    { "Label Perf Test",[](Object*sender){runLabelTest();} },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);

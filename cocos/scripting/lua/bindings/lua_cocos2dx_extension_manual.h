@@ -16,22 +16,20 @@ TOLUA_API int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S);
 
 struct LuaTableViewEventData
 {
-    cocos2d::ScriptHandlerMgr::HandlerType  handlerType;
     void* value;
     
     // Constructor
-    LuaTableViewEventData(cocos2d::ScriptHandlerMgr::HandlerType _handleType,void* _value = nullptr)
-    : handlerType(_handleType),value(_value)
+    LuaTableViewEventData(void* _value = nullptr)
+    :value(_value)
     {
     }
 };
 
 struct LuaAssetsManagerEventData
 {
-    cocos2d::ScriptHandlerMgr::HandlerType handlerType;
     int value;
-    
-    LuaAssetsManagerEventData(cocos2d::ScriptHandlerMgr::HandlerType _handleType, int _value = 0):handlerType(_handleType),value(_value)
+
+    LuaAssetsManagerEventData(int _value = 0):value(_value)
     {
     }
 };

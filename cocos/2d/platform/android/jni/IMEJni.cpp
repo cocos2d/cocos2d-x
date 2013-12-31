@@ -74,7 +74,7 @@ extern "C" {
         if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
             return 0;
         }
-        const char * text = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(text);
+        const std::string& text = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
+        return env->NewStringUTF(text.c_str());
     }
 }

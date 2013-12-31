@@ -173,7 +173,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readNodeGraphFromData(cocos2d::Data *pData, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
+    cocos2d::Node* readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
    
     /**
      @lua NA
@@ -290,16 +290,20 @@ public:
     cocos2d::Vector<cocos2d::Node*>& getOwnerOutletNodes();
     cocos2d::Vector<cocos2d::Node*>& getNodesWithAnimationManagers();
     cocos2d::Vector<CCBAnimationManager*>& getAnimationManagersForNodes();
+    
+    typedef cocos2d::Map<cocos2d::Node*, CCBAnimationManager*> CCBAnimationManagerMap;
+    typedef std::shared_ptr<CCBAnimationManagerMap> CCBAnimationManagerMapPtr;
+    
     /**
      * @js NA
      * @lua NA
      */
-    cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& getAnimationManagers();
+    CCBAnimationManagerMapPtr getAnimationManagers();
     /**
      * @js NA
      * @lua NA
      */
-    void setAnimationManagers(const cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& x);  // weak reference
+    void setAnimationManagers(CCBAnimationManagerMapPtr x);
     /**
      * @js NA
      * @lua NA
@@ -332,7 +336,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, const cocos2d::Map<cocos2d::Node*, CCBAnimationManager*>& am);
+    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am);
     
     void addOwnerOutletName(std::string name);
     void addOwnerOutletNode(cocos2d::Node *node);
@@ -356,7 +360,7 @@ private:
     friend class NodeLoader;
 
 private:
-    cocos2d::Data *_data;
+    std::shared_ptr<cocos2d::Data> _data;
     unsigned char *_bytes;
     int _currentByte;
     int _currentBit;
@@ -366,8 +370,8 @@ private:
     
     cocos2d::Object *_owner;
     
-    CCBAnimationManager *_actionManager; //retain
-    cocos2d::Map<cocos2d::Node*, CCBAnimationManager*> _actionManagers;
+    CCBAnimationManager* _animationManager; //retain
+    CCBAnimationManagerMapPtr _animationManagers;
     
     std::set<std::string> *_animatedProps;
     

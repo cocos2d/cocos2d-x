@@ -90,22 +90,23 @@ FT_Library FontFreeType::getFTLibrary()
 FontFreeType::FontFreeType(bool dynamicGlyphCollection)
 : _fontRef(nullptr),
 _letterPadding(5),
-_ttfData(nullptr),
 _dynamicGlyphCollection(dynamicGlyphCollection)
 {
+    if(_distanceFieldEnabled)
+        _letterPadding += 2 * DistanceMapSpread;
 }
 
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
     FT_Face face;
 
-    ssize_t len = 0;
-    _ttfData = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", &len);
-    if (!_ttfData)
+    _ttfData = FileUtils::getInstance()->getDataFromFile(fontName);
+    
+    if (_ttfData.isNull())
         return false;
 
     // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), _ttfData, len, 0, &face ))          
+    if (FT_New_Memory_Face(getFTLibrary(), _ttfData.getBytes(), _ttfData.getSize(), 0, &face ))
         return false;
 
     //we want to use unicode
@@ -133,11 +134,6 @@ FontFreeType::~FontFreeType()
     if (_fontRef)
     {
         FT_Done_Face(_fontRef);
-    }
-    if (_ttfData)
-    {
-        free(_ttfData);
-        _ttfData = nullptr;
     }
 }
 
@@ -354,23 +350,21 @@ int FontFreeType::getFontMaxHeight() const
     return (static_cast<int>(_fontRef->size->metrics.height >> 6));
 }
 
-unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
+unsigned char * FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
 {
     if (!_fontRef)
         return 0;
     
-    // get the ID to the char we need
-    int glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-    
-    if (!glyphIndex)
-        return 0;
-    
-    // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
-        return 0;
-    
-    if (FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL ))
-        return 0;
+    if (_distanceFieldEnabled)
+    {    
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            return 0;
+    }
+    else
+    {
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER))
+            return 0;
+    }
     
     outWidth  = _fontRef->glyph->bitmap.width;
     outHeight = _fontRef->glyph->bitmap.rows;

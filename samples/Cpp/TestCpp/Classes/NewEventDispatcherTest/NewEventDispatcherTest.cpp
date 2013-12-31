@@ -20,7 +20,8 @@ std::function<Layer*()> createFunctions[] =
     CL(LabelKeyboardEventTest),
     CL(SpriteAccelerationEventTest),
     CL(RemoveAndRetainNodeTest),
-    CL(RemoveListenerAfterAddingTest)
+    CL(RemoveListenerAfterAddingTest),
+    CL(DirectorEventTest),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -104,12 +105,12 @@ void EventDispatcherTestDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-string EventDispatcherTestDemo::title()
+std::string EventDispatcherTestDemo::title() const
 {
     return "No title";
 }
 
-string EventDispatcherTestDemo::subtitle()
+std::string EventDispatcherTestDemo::subtitle() const
 {
     return "";
 }
@@ -206,12 +207,12 @@ void TouchableSpriteTest::onEnter()
     addChild(menu);
 }
 
-std::string TouchableSpriteTest::title()
+std::string TouchableSpriteTest::title() const
 {
     return "Touchable Sprite Test";
 }
 
-std::string TouchableSpriteTest::subtitle()
+std::string TouchableSpriteTest::subtitle() const
 {
     return "Please drag the blocks";
 }
@@ -314,12 +315,12 @@ void FixedPriorityTest::onEnter()
 
 }
 
-std::string FixedPriorityTest::title()
+std::string FixedPriorityTest::title() const
 {
     return "Fixed priority test";
 }
 
-std::string FixedPriorityTest::subtitle()
+std::string FixedPriorityTest::subtitle() const
 {
     return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
 }
@@ -391,12 +392,12 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(menu, -1);
 }
 
-std::string RemoveListenerWhenDispatching::title()
+std::string RemoveListenerWhenDispatching::title() const
 {
     return "Add and remove listener\n when dispatching event";
 }
 
-std::string RemoveListenerWhenDispatching::subtitle()
+std::string RemoveListenerWhenDispatching::subtitle() const
 {
     return "";
 }
@@ -476,12 +477,12 @@ void CustomEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string CustomEventTest::title()
+std::string CustomEventTest::title() const
 {
     return "Send custom event";
 }
 
-std::string CustomEventTest::subtitle()
+std::string CustomEventTest::subtitle() const
 {
     return "";
 }
@@ -516,12 +517,12 @@ void LabelKeyboardEventTest::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
 }
 
-std::string LabelKeyboardEventTest::title()
+std::string LabelKeyboardEventTest::title() const
 {
     return "Label Receives Keyboard Event";
 }
 
-std::string LabelKeyboardEventTest::subtitle()
+std::string LabelKeyboardEventTest::subtitle() const
 {
     return "Please click keyboard\n(Only available on Desktop and Android)";
 }
@@ -570,12 +571,12 @@ void SpriteAccelerationEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string SpriteAccelerationEventTest::title()
+std::string SpriteAccelerationEventTest::title() const
 {
     return "Sprite Receives Acceleration Event";
 }
 
-std::string SpriteAccelerationEventTest::subtitle()
+std::string SpriteAccelerationEventTest::subtitle() const
 {
     return "Please move your device\n(Only available on mobile)";
 }
@@ -652,12 +653,12 @@ void RemoveAndRetainNodeTest::onExit()
     }
 }
 
-std::string RemoveAndRetainNodeTest::title()
+std::string RemoveAndRetainNodeTest::title() const
 {
     return "RemoveAndRetainNodeTest";
 }
 
-std::string RemoveAndRetainNodeTest::subtitle()
+std::string RemoveAndRetainNodeTest::subtitle() const
 {
     return "Sprite should be removed after 5s, add to scene again after 5s";
 }
@@ -734,14 +735,117 @@ void RemoveListenerAfterAddingTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string RemoveListenerAfterAddingTest::title()
+std::string RemoveListenerAfterAddingTest::title() const
 {
     return "RemoveListenerAfterAddingTest";
 }
 
-std::string RemoveListenerAfterAddingTest::subtitle()
+std::string RemoveListenerAfterAddingTest::subtitle() const
 {
     return "Should not crash!";
+}
+
+
+//
+//DirectorEventTest
+//
+void DirectorEventTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+
+    Size s = Director::getInstance()->getWinSize();
+
+    _label1 = Label::createWithTTF("Update: 0", "fonts/arial.ttf", 20);
+    _label1->setPosition(30,s.height/2 + 60);
+    this->addChild(_label1);
+
+    _label2 = Label::createWithTTF("Visit: 0", "fonts/arial.ttf", 20);
+    _label2->setPosition(30,s.height/2 + 20);
+    this->addChild(_label2);
+
+    _label3 = Label::createWithTTF("Draw: 0", "fonts/arial.ttf", 20);
+    _label3->setPosition(30,30);
+    _label3->setPosition(30,s.height/2 - 20);
+    this->addChild(_label3);
+
+    _label4 = Label::createWithTTF("Projection: 0", "fonts/arial.ttf", 20);
+    _label4->setPosition(30,30);
+    _label4->setPosition(30,s.height/2 - 60);
+    this->addChild(_label4);
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+
+    _event1 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&DirectorEventTest::onEvent1, this, std::placeholders::_1));
+    _event2 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_VISIT, std::bind(&DirectorEventTest::onEvent2, this, std::placeholders::_1));
+    _event3 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Draw: %d", _count3++);
+        _label3->setString(buf);
+    });
+    _event4 = dispatcher->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Projection: %d", _count4++);
+        _label4->setString(buf);
+    });
+
+    _event1->retain();
+    _event2->retain();
+    _event3->retain();
+    _event4->retain();
+
+    scheduleUpdate();
+}
+
+void DirectorEventTest::update(float dt)
+{
+    static float time = 0;
+
+    time += dt;
+    if(time > 0.5) {
+        Director::getInstance()->setProjection(Director::Projection::_2D);
+        time = 0;
+    }
+}
+
+void DirectorEventTest::onExit()
+{
+    EventDispatcherTestDemo::onExit();
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeEventListener(_event1);
+    dispatcher->removeEventListener(_event2);
+    dispatcher->removeEventListener(_event3);
+    dispatcher->removeEventListener(_event4);
+
+    _event1->release();
+    _event2->release();
+    _event3->release();
+    _event4->release();
+}
+
+void DirectorEventTest::onEvent1(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Update: %d", _count1++);
+    _label1->setString(buf);
+}
+
+void DirectorEventTest::onEvent2(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Visit: %d", _count2++);
+    _label2->setString(buf);
+}
+
+
+std::string DirectorEventTest::title() const
+{
+    return "Testing Director Events";
+}
+
+std::string DirectorEventTest::subtitle() const
+{
+    return "after visit, after draw, after update, projection changed";
 }
 
 

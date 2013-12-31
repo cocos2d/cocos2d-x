@@ -29,8 +29,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "ccTypes.h"
-#include "CCObject.h"
+#include "cocos2d.h"
 #include "CCLuaValue.h"
 
 NS_CC_BEGIN
@@ -117,6 +116,7 @@ public:
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray);
+    virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
     virtual bool handleAssert(const char *msg);
     

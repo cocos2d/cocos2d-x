@@ -1,12 +1,12 @@
 #include "DataVisitorTest.h"
 #include "../testResource.h"
 
-std::string PrettyPrinterDemo::title()
+std::string PrettyPrinterDemo::title() const
 {
     return "PrettyPrinter Test";
 }
 
-std::string PrettyPrinterDemo::subtitle()
+std::string PrettyPrinterDemo::subtitle() const
 {
     return "Please see log!";
 }
