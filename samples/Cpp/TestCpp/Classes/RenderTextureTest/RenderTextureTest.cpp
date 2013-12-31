@@ -442,41 +442,57 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto sprite = Sprite::create("Images/fire.png");
-    sprite->setPosition(Point(s.width * 0.25f, 0));
-    sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _spriteDS = Sprite::create("Images/fire.png");
+    _spriteDS->retain();
+    _spriteDS->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDS->setScale(10);
+    
+    _spriteDraw = Sprite::create("Images/fire.png");
+    _spriteDraw->retain();
+    _spriteDraw->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDraw->setScale(10);
+    //! move sprite half width and height, and draw only where not marked
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Point(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    
+    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
+    _rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(_rend);
+}
+
+RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
+{
+    CC_SAFE_RELEASE(_spriteDraw);
+    CC_SAFE_RELEASE(_spriteDS);
+}
+
+void RenderTextureTestDepthStencil::draw()
+{
     _renderCmds[0].init(0, _vertexZ);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
     
-    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+    _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
     _renderCmds[1].init(0, _vertexZ);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
     
-    sprite->visit();
-
-    //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
-   
+    _spriteDS->visit();
+    
     _renderCmds[2].init(0, _vertexZ);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
     
-    sprite->visit();
-
-    rend->end();
+    _spriteDraw->visit();
+    
+    _rend->end();
     
     _renderCmds[3].init(0, _vertexZ);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
 
-    rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
-
-    this->addChild(rend);
 }
 
 void RenderTextureTestDepthStencil::onBeforeClear()
@@ -487,7 +503,7 @@ void RenderTextureTestDepthStencil::onBeforeClear()
 void RenderTextureTestDepthStencil::onBeforeStencil()
 {
     //! mark sprite quad into stencil buffer
-    //glEnable(GL_STENCIL_TEST);
+    glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
 }
@@ -499,7 +515,7 @@ void RenderTextureTestDepthStencil::onBeforDraw()
 
 void RenderTextureTestDepthStencil::onAfterDraw()
 {
-    //glDisable(GL_STENCIL_TEST);
+    glDisable(GL_STENCIL_TEST);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
