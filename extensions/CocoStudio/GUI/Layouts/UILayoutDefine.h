@@ -26,14 +26,15 @@
 #define __UILAYOUTDEFINE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 /**
 *   @js NA
 *   @lua NA
 */
-class UIMargin
+class Margin
 {
 public:
     float left;
@@ -42,15 +43,15 @@ public:
     float bottom;
     
 public:
-    UIMargin();
-    UIMargin(float l, float t, float r, float b);
-    UIMargin(const UIMargin& other);
-    UIMargin& operator= (const UIMargin& other);
+    Margin();
+    Margin(float l, float t, float r, float b);
+    Margin(const Margin& other);
+    Margin& operator= (const Margin& other);
     void setMargin(float l, float t, float r, float b);
-    bool equals(const UIMargin& target) const;
+    bool equals(const Margin& target) const;
 };
 
-const UIMargin UIMarginZero = UIMargin();
+const Margin MarginZero = Margin();
 
 typedef enum
 {
@@ -61,7 +62,7 @@ typedef enum
     LINEAR_GRAVITY_BOTTOM,
     LINEAR_GRAVITY_CENTER_VERTICAL,
     LINEAR_GRAVITY_CENTER_HORIZONTAL
-}UILinearGravity;
+}LinearGravity;
 
 typedef enum
 {
@@ -88,8 +89,8 @@ typedef enum
     RELATIVE_LOCATION_BELOW_LEFTALIGN,
     RELATIVE_LOCATION_BELOW_CENTER,
     RELATIVE_LOCATION_BELOW_RIGHTALIGN
-}UIRelativeAlign;
+}RelativeAlign;
 
-NS_CC_EXT_END
-
+}
+NS_CC_END
 #endif /* defined(__UILayoutDefine__) */

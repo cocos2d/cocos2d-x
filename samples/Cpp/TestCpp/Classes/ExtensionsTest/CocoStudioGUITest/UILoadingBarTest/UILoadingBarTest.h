@@ -35,9 +35,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
@@ -52,9 +52,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
@@ -69,9 +69,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
@@ -86,9 +86,9 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(CCObject* sender);
-	virtual void restartCallback(CCObject* sender);
-	virtual void nextCallback(CCObject* sender);
+	virtual void previousCallback(CCObject* sender, TouchEventType type);
+    virtual void restartCallback(CCObject* sender, TouchEventType type);
+    virtual void nextCallback(CCObject* sender, TouchEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)

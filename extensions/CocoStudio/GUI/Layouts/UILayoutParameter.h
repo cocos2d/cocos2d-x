@@ -27,7 +27,9 @@
 
 #include "UILayoutDefine.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -36,48 +38,45 @@ typedef enum
     LAYOUT_PARAMETER_RELATIVE
 }LayoutParameterType;
 /**
- *  @lua NA
- */
-class UILayoutParameter : public CCObject
+*   @js NA
+*   @lua NA
+*/
+class LayoutParameter : public CCObject
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILayoutParameter() : m_margin(UIMargin()){m_eLayoutParameterType = LAYOUT_PARAMETER_NONE;};
+    LayoutParameter() : _margin(Margin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
-     * @lua ctor
      */
-    virtual ~UILayoutParameter(){};
+    virtual ~LayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UILayoutParameter* create();
+    static LayoutParameter* create();
     
     /**
      * Sets Margin parameter for LayoutParameter.
      * 
-     * @see UIMargin
+     * @see Margin
      *
      * @param margin
-     * @js NA
      */
-    void setMargin(const UIMargin& margin);
+    void setMargin(const Margin& margin);
     
     /**
      * Gets Margin parameter of LayoutParameter.
      *
-     * @see UIMargin
+     * @see Margin
      *
-     * @return const UIMargin&
-     * @js NA
+     * @return const Margin&
      */
-    const UIMargin& getMargin() const;
+    const Margin& getMargin() const;
     
     /**
      * Gets LayoutParameterType of LayoutParameter.
@@ -88,93 +87,93 @@ public:
      */
     LayoutParameterType getLayoutType() const;
 protected:
-    UIMargin m_margin;
-    LayoutParameterType m_eLayoutParameterType;
+    Margin _margin;
+    LayoutParameterType _layoutParameterType;
 };
 /**
- *  @lua NA
- */
-class UILinearLayoutParameter : public UILayoutParameter
+*   @js NA
+*   @lua NA
+*/
+class LinearLayoutParameter : public LayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    UILinearLayoutParameter() : m_eLinearGravity(LINEAR_GRAVITY_NONE){m_eLayoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
      */
-    virtual ~UILinearLayoutParameter(){};
+    virtual ~LinearLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UILinearLayoutParameter* create();
+    static LinearLayoutParameter* create();
     
     /**
-     * Sets UILinearGravity parameter for LayoutParameter.
+     * Sets LinearGravity parameter for LayoutParameter.
      *
-     * @see UILinearGravity
+     * @see LinearGravity
      *
-     * @param UILinearGravity
+     * @param LinearGravity
      */
-    void setGravity(UILinearGravity gravity);
+    void setGravity(LinearGravity gravity);
     
     /**
-     * Gets UILinearGravity parameter for LayoutParameter.
+     * Gets LinearGravity parameter for LayoutParameter.
      *
-     * @see UILinearGravity
+     * @see LinearGravity
      *
-     * @return UILinearGravity
+     * @return LinearGravity
      */
-    UILinearGravity getGravity() const;
+    LinearGravity getGravity() const;
 protected:
-    UILinearGravity m_eLinearGravity;
+    LinearGravity _linearGravity;
 };
 /**
- *  @lua NA
- */
+*   @js NA
+*   @lua NA
+*/
 
-class UILayout;
-
-class UIRelativeLayoutParameter : public UILayoutParameter
+class RelativeLayoutParameter : public LayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    UIRelativeLayoutParameter() : m_eRelativeAlign(RELATIVE_ALIGN_NONE),m_strRelativeWidgetName(""),m_strRelativeLayoutName(""),m_bPut(false){m_eLayoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""),_put(false){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
      */
-    virtual ~UIRelativeLayoutParameter(){};
+    virtual ~RelativeLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UIRelativeLayoutParameter* create();
+    static RelativeLayoutParameter* create();
     
     /**
-     * Sets UIRelativeAlign parameter for LayoutParameter.
+     * Sets RelativeAlign parameter for LayoutParameter.
      *
-     * @see UIRelativeAlign
+     * @see RelativeAlign
      *
-     * @param UIRelativeAlign
+     * @param RelativeAlign
      */
-    void setAlign(UIRelativeAlign align);
+    void setAlign(RelativeAlign align);
     
     /**
-     * Gets UIRelativeAlign parameter for LayoutParameter.
+     * Gets RelativeAlign parameter for LayoutParameter.
      *
-     * @see UIRelativeAlign
+     * @see RelativeAlign
      *
-     * @return UIRelativeAlign
+     * @return RelativeAlign
      */
-    UIRelativeAlign getAlign() const;
+    RelativeAlign getAlign() const;
     
     /**
      * Sets a key for LayoutParameter. Witch widget named this is relative to.
@@ -204,13 +203,15 @@ public:
      */
     const char* getRelativeName() const;
 protected:
-    UIRelativeAlign m_eRelativeAlign;
-    std::string m_strRelativeWidgetName;
-    std::string m_strRelativeLayoutName;
-    bool m_bPut;
-    friend class UILayout;
+    RelativeAlign _relativeAlign;
+    std::string _relativeWidgetName;
+    std::string _relativeLayoutName;
+    bool _put;
+    friend class Layout;
 };
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* defined(__LayoutParameter__) */

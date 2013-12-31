@@ -27,29 +27,31 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
+
 /**
- *  @lua NA
- */
-class UIImageView : public UIWidget
+*   @js NA
+*   @lua NA
+*/
+class ImageView : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UIImageView();
+    ImageView();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UIImageView();
+    virtual ~ImageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIImageView* create();
+    static ImageView* create();
     
     /**
      * Load texture for imageview.
@@ -61,7 +63,7 @@ public:
     void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
     
     /**
-     * Updates the texture rect of the UIImageView in points.
+     * Updates the texture rect of the ImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      */
     void setTextureRect(const CCRect& rect);
@@ -95,57 +97,34 @@ public:
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const CCPoint &pt);
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
     
-    void setDoubleClickEnabled(bool able);
-    /**
-     *  @js NA
-     */
-    void doubleClickEvent();
-    void checkDoubleClick(float dt);
-    /*Compatible*/
-    /**
-     * These methods will be removed
-     */
-    void setTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(fileName,texType);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    void setScale9Enable(bool is){setScale9Enabled(is);};
-    /************/
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void imageTextureScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    int m_nClickCount;
-    float m_fClickTimeInterval;
-    bool m_bStartCheckDoubleClick;
-    bool m_touchRelease;
-    bool m_bDoubleClickEnabled;
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    CCRect m_capInsets;
-    CCNode* m_pImageRenderer;
-    std::string m_strTextureFile;
-    TextureResType m_eImageTexType;
-    CCSize m_imageTextureSize;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    CCRect _capInsets;
+    CCNode* _imageRenderer;
+    std::string _textureFile;
+    TextureResType _imageTexType;
+    CCSize _imageTextureSize;
 };
 
-NS_CC_EXT_END
+}
 
-#endif /* defined(__CocoGUI__UIImageView__) */
+NS_CC_END
+
+#endif /* defined(__CocoGUI__ImageView__) */
