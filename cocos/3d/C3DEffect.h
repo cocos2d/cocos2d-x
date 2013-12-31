@@ -7,7 +7,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include "C3DMatrix.h"
+#include "Matrix.h"
 #include "C3DResource.h"
 
 NS_CC_BEGIN
@@ -111,7 +111,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DMatrix& value);
+	void bindValue(Uniform* uniform, const Matrix& value);
 
 	/**
 	* Sets a matrix array uniform value.
@@ -120,7 +120,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DMatrix* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Matrix* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.

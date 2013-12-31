@@ -4,7 +4,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include "C3DMatrix.h"
+#include "Matrix.h"
 
 #include "C3DEffect.h"
 #include "cocos2d.h"
@@ -90,14 +90,14 @@ public:
 	void setValue(const Vector4* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DMatrix value in this parameter.
+	* Stores a copy of the specified Matrix value in this parameter.
 	*/
-	void setValue(const C3DMatrix& value);
+	void setValue(const Matrix& value);
 
 	/**
-	* Stores a pointer/array of C3DMatrix values in this parameter.
+	* Stores a pointer/array of Matrix values in this parameter.
 	*/
-	void setValue(const C3DMatrix* values, unsigned int count = 1);
+	void setValue(const Matrix* values, unsigned int count = 1);
 
 	/**
 	* Sets the value of this parameter to the specified texture sampler.
