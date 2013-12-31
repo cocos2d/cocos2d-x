@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "TriggerMng.h"
 #include "TriggerObj.h"
 #include "TriggerBase.h"
+#include "../Json/rapidjson/prettywriter.h"
+#include "../Json/rapidjson/filestream.h"
+#include "../Json/rapidjson/stringbuffer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -72,26 +75,42 @@ void TriggerMng::destroyInstance()
 void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
-    do {
-          int count = DICTOOL->getArrayCount_json(root, "Triggers");
-          for (int i = 0; i < count; ++i)
-          {
-                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
-                TriggerObj *obj = TriggerObj::create();
-                obj->serialize(subDict);
-				std::vector<int> &_vInt = obj->getEvents();
-				for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
-				{
-					add((unsigned int)(*iter), obj);
-				}
-				if (_triggerObjs != NULL)
-				{
-					_triggerObjs->setObject(obj, obj->getId());
-				}
-				
-          }
-        
-    } while (0);
+    int count = DICTOOL->getArrayCount_json(root, "Triggers");
+    
+    CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+    bool useBindings = engine != NULL;
+    
+    
+    if (useBindings)
+    {
+        if (count > 0 )
+        {
+            const rapidjson::Value& subDict = DICTOOL->getSubDictionary_json(root, "Triggers");
+            rapidjson::StringBuffer buffer;
+            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+            subDict.Accept(writer);
+            
+            engine->parseConfig(CCScriptEngineProtocol::COCOSTUDIO, buffer.GetString());
+        }
+    }
+    else
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
+            TriggerObj *obj = TriggerObj::create();
+            obj->serialize(subDict);
+            std::vector<int> &_vInt = obj->getEvents();
+            for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+            {
+                add((unsigned int)(*iter), obj);
+            }
+            if (_triggerObjs != NULL)
+            {
+                _triggerObjs->setObject(obj, obj->getId());
+            }
+        }
+    }
 }
 
 CCArray* TriggerMng::get(unsigned int event) const

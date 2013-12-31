@@ -248,6 +248,16 @@ public:
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    /**
+     *
+     */
+    enum ConfigType
+    {
+        NONE,
+        COCOSTUDIO,
+    };
+    virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
 /**
