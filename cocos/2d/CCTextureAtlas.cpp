@@ -52,6 +52,9 @@ TextureAtlas::TextureAtlas()
     ,_dirty(false)
     ,_texture(nullptr)
     ,_quads(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ,_backToForegroundlistener(nullptr)
+#endif
 {}
 
 TextureAtlas::~TextureAtlas()
