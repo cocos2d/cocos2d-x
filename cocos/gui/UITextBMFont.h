@@ -22,101 +22,66 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __UILABELATLAS_H__
-#define __UILABELATLAS_H__
+#ifndef __UILABELBMFONT_H__
+#define __UILABELBMFONT_H__
 
 #include "gui/UIWidget.h"
 
 NS_CC_BEGIN
 
 namespace gui {
-
+    
 /**
- *   @js NA
- *   @lua NA
- */
-class UICCLabelAtlas : public LabelAtlas
+*   @js NA
+*   @lua NA
+*/    
+class TextBMFont : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UICCLabelAtlas();
+    TextBMFont();
     
     /**
      * Default destructor
      */
-    virtual ~UICCLabelAtlas();
+    virtual ~TextBMFont();
     
     /**
      * Allocates and initializes.
      */
-    static UICCLabelAtlas* create();
-    void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    void setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void draw(void) override;
-};
-/**
- *   @js NA
- *   @lua NA
- */
-class LabelAtlas : public Widget
-{
-public:
-    /**
-     * Default constructor
-     */
-    LabelAtlas();
+    static TextBMFont* create();
     
-    /**
-     * Default destructor
-     */
-    virtual ~LabelAtlas();
+    /** init a bitmap font atlas with an initial string and the FNT file */
+    void setFntFile(const char* fileName);
     
-    /**
-     * Allocates and initializes.
-     */
-    static LabelAtlas* create();
+    /** set string value for labelbmfont*/
+    void setText(const char* value);
     
-    /** initializes the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    void setProperty(const std::string& stringValue,const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap);
-    
-    //set string value for labelatlas.
-    void setStringValue(const std::string& value);
-    
-    //get string value for labelatlas.
-    const std::string& getStringValue() const;
-    
-    //override "setAnchorPoint" method of widget.
+    /** get string value for labelbmfont*/
+    const char* getStringValue();
     virtual void setAnchorPoint(const Point &pt) override;
-    
-    //override "getContentSize" method of widget.
     virtual const Size& getContentSize() const override;
-    
-    //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
-    
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
-    
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;
-    void labelAtlasScaleChangedWithSize();
+    void labelBMFontScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    UICCLabelAtlas* _labelAtlasRenderer;
+    cocos2d::LabelBMFont* _labelBMFontRenderer;
+    bool _fntFileHasInit;
+    std::string _fntFileName;
     std::string _stringValue;
-    std::string _charMapFileName;
-    int _itemWidth;
-    int _itemHeight;
-    std::string _startCharMap;
 };
-
+    
 }
 NS_CC_END
 
-#endif /* defined(__CocoGUI__LabelAtlas__) */
+#endif /* defined(__LabelBMFont__) */
