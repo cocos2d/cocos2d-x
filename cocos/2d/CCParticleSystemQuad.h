@@ -33,6 +33,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class SpriteFrame;
+class EventCustom;
 
 /**
  * @addtogroup particle_nodes
@@ -81,7 +82,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
     // Overrides
     /**
