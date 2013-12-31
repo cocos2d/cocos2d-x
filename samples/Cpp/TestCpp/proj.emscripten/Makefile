@@ -66,11 +66,11 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \	
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \	
+	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
