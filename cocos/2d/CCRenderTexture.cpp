@@ -498,7 +498,7 @@ void RenderTexture::onBegin()
     float heightRatio = size.height / texSize.height;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+    glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
 
     kmMat4 orthoMatrix;
@@ -631,6 +631,21 @@ void RenderTexture::begin()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_transformMatrix);
+    
+    Director *director = Director::getInstance();
+    director->setProjection(director->getProjection());
+    
+    const Size& texSize = _texture->getContentSizeInPixels();
+    
+    // Calculate the adjustment ratios based on the old and new projections
+    Size size = director->getWinSizeInPixels();
+    float widthRatio = size.width / texSize.width;
+    float heightRatio = size.height / texSize.height;
+    
+    kmMat4 orthoMatrix;
+    kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+                                 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+    kmGLMultMatrix(&orthoMatrix);
 
     _groupCommand.init(0, _vertexZ);
 
@@ -652,6 +667,12 @@ void RenderTexture::end()
     Renderer *renderer = Director::getInstance()->getRenderer();
     renderer->addCommand(&_endCommand);
     renderer->popGroup();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 }
 
 NS_CC_END
