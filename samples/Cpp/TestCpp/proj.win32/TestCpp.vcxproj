@@ -160,6 +160,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp" />
@@ -296,6 +297,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\libwebsockets\win32\lib\*.*" "$(O
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.h" />

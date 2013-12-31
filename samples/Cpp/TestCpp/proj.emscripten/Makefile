@@ -55,7 +55,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp \
 	../Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp \
-	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \	
+	../Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
@@ -68,7 +68,7 @@ SOURCES = ../Classes/AccelerometerTest/AccelerometerTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \	
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
-	../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp \
+	../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
 	../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \	
 	../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
