@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on 12/31/13 09:54:51.
+** Generated automatically by tolua++-1.0.92 on 12/31/13 10:24:41.
 */
 
 /****************************************************************************
@@ -61,12 +61,7 @@ static int tolua_collect_Label (lua_State* tolua_S)
 
 
 
-static int tolua_collect_LayoutType (lua_State* tolua_S)
-{
- LayoutType* self = (LayoutType*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}
+
 
 static int tolua_collect_LabelAtlas (lua_State* tolua_S)
 {
