@@ -7,7 +7,7 @@ typedef enum
     LINEAR_GRAVITY_BOTTOM,
     LINEAR_GRAVITY_CENTER_VERTICAL,
     LINEAR_GRAVITY_CENTER_HORIZONTAL
-}UILinearGravity;
+}LinearGravity;
 
 typedef enum
 {
@@ -34,5 +34,5 @@ typedef enum
     RELATIVE_LOCATION_BELOW_LEFTALIGN,
     RELATIVE_LOCATION_BELOW_CENTER,
     RELATIVE_LOCATION_BELOW_RIGHTALIGN
-}UIRelativeAlign;
+}RelativeAlign;
 
