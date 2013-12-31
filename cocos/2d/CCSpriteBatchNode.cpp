@@ -378,8 +378,8 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // this is likely computationally expensive
     ssize_t quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%zd] to [%zd].",
-        _textureAtlas->getCapacity(),
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
+        static_cast<int>(_textureAtlas->getCapacity()),
         quantity);
 
     if (! _textureAtlas->resizeCapacity(quantity))
