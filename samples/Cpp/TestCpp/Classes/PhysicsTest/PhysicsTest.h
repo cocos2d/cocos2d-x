@@ -26,6 +26,8 @@ private:
 class PhysicsDemoDisabled : public BaseTest
 {
 public:
+    CREATE_FUNC(PhysicsDemoDisabled);
+    
     virtual void onEnter() override;
 };
 #else
