@@ -1,4 +1,6 @@
-require "TriggerBase"
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/acts"
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/cons"
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/eventDef"
 
 local SceneEditorTestLayer = class("SceneEditorTestLayer")
 SceneEditorTestLayer._curNode = nil
