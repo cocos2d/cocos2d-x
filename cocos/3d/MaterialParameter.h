@@ -1,9 +1,9 @@
 #ifndef MATERIALPARAMETER_H_
 #define MATERIALPARAMETER_H_
 
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include "C3DMatrix.h"
 
 #include "C3DEffect.h"
@@ -60,34 +60,34 @@ public:
 	void setValue(const int* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector2 value in this parameter.
+	* Stores a copy of the specified Vector2 value in this parameter.
 	*/
-	void setValue(const C3DVector2& value);
+	void setValue(const Vector2& value);
 
 	/**
-	* Stores a pointer/array of C3DVector2 values in this parameter.
+	* Stores a pointer/array of Vector2 values in this parameter.
 	*/
-	void setValue(const C3DVector2* values, unsigned int count = 1);
+	void setValue(const Vector2* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector3 value in this parameter.
+	* Stores a copy of the specified Vector3 value in this parameter.
 	*/
-	void setValue(const C3DVector3& value);
+	void setValue(const Vector3& value);
 
 	/**
-	* Stores a pointer/array of C3DVector3 values in this parameter.
+	* Stores a pointer/array of Vector3 values in this parameter.
 	*/
-	void setValue(const C3DVector3* values, unsigned int count = 1);
+	void setValue(const Vector3* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector4 value in this parameter.
+	* Stores a copy of the specified Vector4 value in this parameter.
 	*/
-	void setValue(const C3DVector4& value);
+	void setValue(const Vector4& value);
 
 	/**
-	* Stores a pointer/array of C3DVector4 values in this parameter.
+	* Stores a pointer/array of Vector4 values in this parameter.
 	*/
-	void setValue(const C3DVector4* values, unsigned int count = 1);
+	void setValue(const Vector4* values, unsigned int count = 1);
 
 	/**
 	* Stores a copy of the specified C3DMatrix value in this parameter.

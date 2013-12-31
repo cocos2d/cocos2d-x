@@ -3,9 +3,9 @@
 
 #include "Base.h"
 
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include "C3DMatrix.h"
 
 #include <string>

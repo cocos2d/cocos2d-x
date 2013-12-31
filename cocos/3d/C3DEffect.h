@@ -4,9 +4,9 @@
 #include <map>
 
 #include "Base.h"
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include "C3DMatrix.h"
 #include "C3DResource.h"
 
@@ -128,7 +128,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector2& value);
+	void bindValue(Uniform* uniform, const Vector2& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -137,7 +137,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector2* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector2* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.
@@ -145,7 +145,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector3& value);
+	void bindValue(Uniform* uniform, const Vector3& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -154,7 +154,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector3* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector3* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.
@@ -162,7 +162,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector4& value);
+	void bindValue(Uniform* uniform, const Vector4& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -171,7 +171,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector4* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector4* values, unsigned int count = 1);
 
 	/**
 	* Sets a sampler uniform value.

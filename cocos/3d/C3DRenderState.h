@@ -93,12 +93,12 @@ public:
 		INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX,
 
 		/**
-		* Binds the position (C3DVector3) of the active camera for the node's scene.
+		* Binds the position (Vector3) of the active camera for the node's scene.
 		*/
 		CAMERA_WORLD_POSITION,
 
 		/**
-		* Binds the view-space position (C3DVector3) of the active camera for the node's scene.
+		* Binds the view-space position (Vector3) of the active camera for the node's scene.
 		*/
 		CAMERA_VIEW_POSITION,
 
