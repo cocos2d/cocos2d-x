@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
 
 class RenderTextureTest : public BaseTest
 {
@@ -84,6 +85,12 @@ public:
     RenderTextureTestDepthStencil();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+private:
+    CustomCommand _renderCmds[4];
+    void onBeforeClear();
+    void onBeforeStencil();
+    void onBeforDraw();
+    void onAfterDraw();
 };
 
 class RenderTextureTargetNode : public RenderTextureTest
