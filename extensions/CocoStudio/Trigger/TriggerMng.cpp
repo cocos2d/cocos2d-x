@@ -278,13 +278,13 @@ void TriggerMng::addArmatureMovementCallBack(CCArmature *pAr, CCObject *pTarget,
 	{
 		amd = new ArmatureMovementDispatcher();
 		pAr->getAnimation()->setMovementEventCallFunc(amd, movementEvent_selector(ArmatureMovementDispatcher::animationEvent));
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 		_movementDispatches->insert(std::map<CCArmature*, ArmatureMovementDispatcher*>::value_type(pAr, amd));
 	}
 	else
 	{
 		amd = iter->second;
-		amd->addAnnimationEventCallBack(pTarget, mecf);
+		amd->addAnimationEventCallBack(pTarget, mecf);
 	}
 }
 
@@ -358,7 +358,7 @@ ArmatureMovementDispatcher::~ArmatureMovementDispatcher(void)
 	 }
  }
 
-  void ArmatureMovementDispatcher::addAnnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
+  void ArmatureMovementDispatcher::addAnimationEventCallBack(CCObject *pTarget, SEL_MovementEventCallFunc mecf)
   {
 	  _mapEventAnimation->insert(std::map<CCObject*, SEL_MovementEventCallFunc>::value_type(pTarget, mecf));
   }

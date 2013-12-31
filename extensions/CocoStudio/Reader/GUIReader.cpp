@@ -30,7 +30,9 @@
 
 
 NS_CC_EXT_BEGIN
-    
+
+using namespace cocos2d::gui;
+
 static GUIReader* sharedReader = NULL;
 
 GUIReader::GUIReader():
@@ -116,7 +118,7 @@ const cocos2d::CCSize GUIReader::getFileDesignSize(const char* fileName) const
 }
 
 
-UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
+cocos2d::gui::Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 {
 	unsigned char *pBytes = NULL;
 	std::string jsonpath;
@@ -132,15 +134,14 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
 		return NULL;
 	}
 	CCData *data = new CCData(pBytes, size);
-	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() ); 
+	std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
 	CC_SAFE_DELETE(data);
-    CC_SAFE_DELETE_ARRAY(pBytes);
 	jsonDict.Parse<0>(load_str.c_str());
     if (jsonDict.HasParseError())
     {
         CCLOG("GetParseError %s\n",jsonDict.GetParseError());
     }
-    UIWidget* widget = NULL;
+    cocos2d::gui::Widget* widget = NULL;
     const char* fileVersion = DICTOOL->getStringValue_json(jsonDict, "version");
     WidgetPropertiesReader * pReader = NULL;
     if (fileVersion)
@@ -162,18 +163,19 @@ UIWidget* GUIReader::widgetFromJsonFile(const char *fileName)
         pReader = new WidgetPropertiesReader0250();
         widget = pReader->createWidget(jsonDict, m_strFilePath.c_str(), fileName);
     }
-
+    
     CC_SAFE_DELETE(pReader);
+    CC_SAFE_DELETE_ARRAY(pBytes);
     return widget;
 }
 
 
 
-UIWidget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
+cocos2d::gui::Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
 {
     m_strFilePath = fullPath;
     int texturesCount = DICTOOL->getArrayCount_json(data, "textures");
-
+    
     for (int i=0; i<texturesCount; i++)
     {
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
@@ -193,13 +195,12 @@ UIWidget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data,
         GUIReader::shareReader()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
-    UIWidget* widget = widgetFromJsonDictionary(widgetTree);
+    cocos2d::gui::Widget* widget = widgetFromJsonDictionary(widgetTree);
     
     /* *********temp********* */
     if (widget->getContentSize().equals(CCSizeZero))
     {
-        UIContainerWidget* rootWidget = dynamic_cast<UIContainerWidget*>(widget);
-        rootWidget->setSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
+        widget->setSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -208,83 +209,83 @@ UIWidget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data,
     /* *********temp********* */
     //    ActionManager::shareManager()->releaseActions();
     /* ********************** */
-   // CCLOG("file name == [%s]",fileName);
+    // CCLOG("file name == [%s]",fileName);
 	CCObject* rootWidget = (CCObject*) widget;
     ActionManager::shareManager()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
 
-UIWidget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::Value& data)
+cocos2d::gui::Widget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::Value& data)
 {
-    UIWidget* widget = NULL;
+    cocos2d::gui::Widget* widget = NULL;
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
     if (classname && strcmp(classname, "Button") == 0)
     {
-        widget = UIButton::create();
+        widget = cocos2d::gui::Button::create();
         setPropsForButtonFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "CheckBox") == 0)
     {
-        widget = UICheckBox::create();
+        widget = cocos2d::gui::CheckBox::create();
         setPropsForCheckBoxFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Label") == 0)
     {
-        widget = UILabel::create();
+        widget = cocos2d::gui::Label::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelAtlas") == 0)
     {
-        widget = UILabelAtlas::create();
+        widget = cocos2d::gui::LabelAtlas::create();
         setPropsForLabelAtlasFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LoadingBar") == 0)
     {
-        widget = UILoadingBar::create();
+        widget = cocos2d::gui::LoadingBar::create();
         setPropsForLoadingBarFromJsonDictionary(widget, uiOptions);
     }else if (classname && strcmp(classname, "ScrollView") == 0){
-        widget = UIScrollView::create();
+        widget = cocos2d::gui::ScrollView::create();
         setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextArea") == 0)
     {
-        widget = UILabel::create();
+        widget = cocos2d::gui::Label::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextButton") == 0)
     {
-        widget = UIButton::create();
+        widget = cocos2d::gui::Button::create();
         setPropsForButtonFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextField") == 0)
     {
-        widget = UITextField::create();
+        widget = cocos2d::gui::TextField::create();
         setPropsForTextFieldFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "ImageView") == 0)
     {
-        widget = UIImageView::create();
+        widget = cocos2d::gui::ImageView::create();
         setPropsForImageViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Panel") == 0)
     {
-        widget = UILayout::create();
+        widget = cocos2d::gui::Layout::create();
         setPropsForLayoutFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Slider") == 0)
     {
-        widget = UISlider::create();
+        widget = cocos2d::gui::Slider::create();
         setPropsForSliderFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelBMFont") == 0)
     {
-        widget = UILabelBMFont::create();
+        widget = cocos2d::gui::LabelBMFont::create();
         setPropsForLabelBMFontFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "DragPanel") == 0)
     {
-        widget = UIScrollView::create();
+        widget = cocos2d::gui::ScrollView::create();
         setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
     }
     
@@ -292,7 +293,7 @@ UIWidget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::
     for (int i=0;i<childrenCount;i++)
     {
         const rapidjson::Value& subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);
-        UIWidget* child = widgetFromJsonDictionary(subData);
+        cocos2d::gui::Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
             widget->addChild(child);
@@ -301,7 +302,7 @@ UIWidget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::
     return widget;
 }
 
-void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
     if (ignoreSizeExsit)
@@ -346,7 +347,7 @@ void WidgetPropertiesReader0250::setPropsForWidgetFromJsonDictionary(UIWidget*wi
     widget->setZOrder(z);
 }
 
-void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     bool op = DICTOOL->checkObjectExist_json(options, "opacity");
     if (op)
@@ -361,9 +362,9 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(UIWidg
     int colorB = cb ? DICTOOL->getIntValue_json(options, "colorB") : 255;
     widget->setColor(ccc3(colorR, colorG, colorB));
     bool apx = DICTOOL->checkObjectExist_json(options, "anchorPointX");
-    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apxf = apx ? DICTOOL->getFloatValue_json(options, "anchorPointX") : ((widget->getWidgetType() == gui::WidgetTypeWidget) ? 0.5f : 0.0f);
     bool apy = DICTOOL->checkObjectExist_json(options, "anchorPointY");
-    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == WidgetTypeWidget) ? 0.5f : 0.0f);
+    float apyf = apy ? DICTOOL->getFloatValue_json(options, "anchorPointY") : ((widget->getWidgetType() == gui::WidgetTypeWidget) ? 0.5f : 0.0f);
     widget->setAnchorPoint(ccp(apxf, apyf));
     bool flipX = DICTOOL->getBooleanValue_json(options, "flipX");
     bool flipY = DICTOOL->getBooleanValue_json(options, "flipY");
@@ -371,10 +372,10 @@ void WidgetPropertiesReader0250::setColorPropsForWidgetFromJsonDictionary(UIWidg
     widget->setFlipY(flipY);
 }
 
-void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UIButton* button = (UIButton*)widget;
+    cocos2d::gui::Button* button = (cocos2d::gui::Button*)widget;
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
     button->setScale9Enabled(scale9Enable);
     
@@ -399,7 +400,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(UIWidget*wi
         
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,gui::UI_TEX_TYPE_PLIST);
         }
         else
         {
@@ -419,7 +420,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(UIWidget*wi
     {
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,UI_TEX_TYPE_PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,gui::UI_TEX_TYPE_PLIST);
         }
         else
         {
@@ -455,10 +456,10 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UICheckBox* checkBox = (UICheckBox*)widget;
+    cocos2d::gui::CheckBox* checkBox = (cocos2d::gui::CheckBox*)widget;
     const char* backGroundFileName = DICTOOL->getStringValue_json(options, "backGroundBox");
     const char* backGroundSelectedFileName = DICTOOL->getStringValue_json(options, "backGroundBoxSelected");
     const char* frontCrossFileName = DICTOOL->getStringValue_json(options, "frontCross");
@@ -491,11 +492,11 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(UIWidget*
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    UIImageView* imageView = (UIImageView*)widget;
+    cocos2d::gui::ImageView* imageView = (cocos2d::gui::ImageView*)widget;
     const char* imageFileName = DICTOOL->getStringValue_json(options, "fileName");
     bool scale9EnableExist = DICTOOL->checkObjectExist_json(options, "scale9Enable");
     bool scale9Enable = false;
@@ -554,12 +555,12 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(UIWidget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILabel* label = (UILabel*)widget;
+    cocos2d::gui::Label* label = (cocos2d::gui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
-    label->setTouchScaleChangeAble(touchScaleChangeAble);
+    label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
     label->setText(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
@@ -592,10 +593,10 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(UIWidget*wid
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILabelAtlas* labelAtlas = (UILabelAtlas*)widget;
+    cocos2d::gui::LabelAtlas* labelAtlas = (cocos2d::gui::LabelAtlas*)widget;
     bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
     bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
     bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
@@ -608,19 +609,19 @@ void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(UIWidge
         const char* cmft = DICTOOL->getStringValue_json(options, "charMapFile");
         cmf_tp = tp_c.append(cmft).c_str();
         
-        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth"),DICTOOL->getIntValue_json(options,"itemHeight"),DICTOOL->getStringValue_json(options, "startCharMap"));
+        labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UIContainerWidget* containerWidget = (UIContainerWidget*)widget;
-    if (!dynamic_cast<UIScrollView*>(containerWidget)
-        && !dynamic_cast<UIListView*>(containerWidget))
+    Layout* containerWidget = (Layout*)widget;
+    if (!dynamic_cast<cocos2d::gui::ScrollView*>(containerWidget)
+        && !dynamic_cast<ListView*>(containerWidget))
     {
-        containerWidget->setClippingEnable(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        containerWidget->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
     }
     Layout* panel = (Layout*)widget;
     bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
@@ -644,7 +645,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(UIWidget*wi
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
     int colorType = DICTOOL->getIntValue_json(options, "colorType");
-    panel->setBackGroundColorType(PanelColorType(colorType));
+    panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
     panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
     panel->setBackGroundColor(ccc3(cr, cg, cb));
     panel->setBackGroundColorOpacity(co);
@@ -684,10 +685,10 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForScrollViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForLayoutFromJsonDictionary(widget, options);
-    UIScrollView* scrollView = (UIScrollView*)widget;
+    cocos2d::gui::ScrollView* scrollView = (cocos2d::gui::ScrollView*)widget;
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
@@ -697,10 +698,10 @@ void WidgetPropertiesReader0250::setPropsForScrollViewFromJsonDictionary(UIWidge
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UISlider* slider = (UISlider*)widget;
+    cocos2d::gui::Slider* slider = (cocos2d::gui::Slider*)widget;
     
     bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
     slider->setScale9Enabled(barTextureScale9Enable);
@@ -759,7 +760,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
         slider->loadSlidBallTextures(normalFileName_tp,pressedFileName_tp,disabledFileName_tp);
     }
     slider->setPercent(DICTOOL->getIntValue_json(options, "percent"));
-
+    
     std::string tp_b = m_strFilePath;
     const char* imageFileName = DICTOOL->getStringValue_json(options, "progressBarFileName");
     const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():NULL;
@@ -774,10 +775,10 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UITextField* textField = (UITextField*)widget;
+    cocos2d::gui::TextField* textField = (cocos2d::gui::TextField*)widget;
     bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
     if (ph)
     {
@@ -809,14 +810,14 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(UIWidget
     }
 	bool maxLengthEnable = DICTOOL->getBooleanValue_json(options, "maxLengthEnable");
 	textField->setMaxLengthEnabled(maxLengthEnable);
-
+    
 	if (maxLengthEnable)
 	{
 		int maxLength = DICTOOL->getIntValue_json(options, "maxLength");
 		textField->setMaxLength(maxLength);
 	}
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
-    textField->setPasswordEnable(passwordEnable);
+    textField->setPasswordEnabled(passwordEnable);
     if (passwordEnable)
     {
         textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
@@ -824,10 +825,10 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(UIWidget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILoadingBar* loadingBar = (UILoadingBar*)widget;
+    cocos2d::gui::LoadingBar* loadingBar = (cocos2d::gui::LoadingBar*)widget;
     bool useMergedTexture = DICTOOL->getBooleanValue_json(options, "useMergedTexture");
     std::string tp_b = m_strFilePath;
     const char*imageFileName =  DICTOOL->getStringValue_json(options, "texture");
@@ -845,11 +846,11 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(UIWidge
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    UILabelBMFont* labelBMFont = (UILabelBMFont*)widget;
+    cocos2d::gui::LabelBMFont* labelBMFont = (cocos2d::gui::LabelBMFont*)widget;
     
     std::string tp_c = m_strFilePath;
     const char* cmf_tp = NULL;
@@ -866,10 +867,10 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(UIWidg
 
 
 /*0.3.0.0~1.0.0.0*/
-UIWidget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
+cocos2d::gui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, const char* fullPath, const char* fileName)
 {
     m_strFilePath = fullPath;
-
+    
     int texturesCount = DICTOOL->getArrayCount_json(data, "textures");
     
     for (int i=0; i<texturesCount; i++)
@@ -891,13 +892,12 @@ UIWidget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data,
         GUIReader::shareReader()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
-    UIWidget* widget = widgetFromJsonDictionary(widgetTree);
+    cocos2d::gui::Widget* widget = widgetFromJsonDictionary(widgetTree);
     
     /* *********temp********* */
     if (widget->getContentSize().equals(CCSizeZero))
     {
-        UIContainerWidget* rootWidget = dynamic_cast<UIContainerWidget*>(widget);
-        rootWidget->setSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
+        widget->setSize(CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     /* ********************** */
     
@@ -912,121 +912,119 @@ UIWidget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data,
     return widget;
 }
 
-UIWidget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
+cocos2d::gui::Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Value& data)
 {
-    UIWidget* widget = NULL;
+    cocos2d::gui::Widget* widget = NULL;
     const char* classname = DICTOOL->getStringValue_json(data, "classname");
     const rapidjson::Value& uiOptions = DICTOOL->getSubDictionary_json(data, "options");
     if (classname && strcmp(classname, "Button") == 0)
     {
-        widget = UIButton::create();
+        widget = cocos2d::gui::Button::create();
         setPropsForButtonFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "CheckBox") == 0)
     {
-        widget = UICheckBox::create();
+        widget = cocos2d::gui::CheckBox::create();
         setPropsForCheckBoxFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Label") == 0)
     {
-        widget = UILabel::create();
+        widget = cocos2d::gui::Label::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelAtlas") == 0)
     {
-        widget = UILabelAtlas::create();
+        widget = cocos2d::gui::LabelAtlas::create();
         setPropsForLabelAtlasFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LoadingBar") == 0)
     {
-        widget = UILoadingBar::create();
+        widget = cocos2d::gui::LoadingBar::create();
         setPropsForLoadingBarFromJsonDictionary(widget, uiOptions);
     }else if (classname && strcmp(classname, "ScrollView") == 0){
-        widget = UIScrollView::create();
+        widget = cocos2d::gui::ScrollView::create();
         setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextArea") == 0)
     {
-        widget = UILabel::create();
+        widget = cocos2d::gui::Label::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextButton") == 0)
     {
-        widget = UIButton::create();
+        widget = cocos2d::gui::Button::create();
         setPropsForButtonFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextField") == 0)
     {
-        widget = UITextField::create();
+        widget = cocos2d::gui::TextField::create();
         setPropsForTextFieldFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "ImageView") == 0)
     {
-        widget = UIImageView::create();
+        widget = cocos2d::gui::ImageView::create();
         setPropsForImageViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Panel") == 0)
     {
-        widget = UILayout::create();
+        widget = cocos2d::gui::Layout::create();
         setPropsForLayoutFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "Slider") == 0)
     {
-        widget = UISlider::create();
+        widget = cocos2d::gui::Slider::create();
         setPropsForSliderFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelBMFont") == 0)
     {
-        widget = UILabelBMFont::create();
+        widget = cocos2d::gui::LabelBMFont::create();
         setPropsForLabelBMFontFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "DragPanel") == 0)
     {
-        widget = UIScrollView::create();
+        widget = cocos2d::gui::ScrollView::create();
         setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "ListView") == 0)
     {
-        widget = UIListViewEx::create();
+        widget = ListView::create();
         setPropsForListViewFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "PageView") == 0)
     {
-        widget = UIPageView::create();
+        widget = PageView::create();
         setPropsForPageViewFromJsonDictionary(widget, uiOptions);
     }
-    
     int childrenCount = DICTOOL->getArrayCount_json(data, "children");
     for (int i=0;i<childrenCount;i++)
     {
         const rapidjson::Value& subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);
-        UIWidget* child = widgetFromJsonDictionary(subData);
+        cocos2d::gui::Widget* child = widgetFromJsonDictionary(subData);
         if (child)
         {
-            if (dynamic_cast<UIPageView*>(widget) && dynamic_cast<UILayout*>(child))
+            PageView* pageView = dynamic_cast<PageView*>(widget);
+            if (pageView)
             {
-                dynamic_cast<UIPageView*>(widget)->addPage((UILayout*)child);
-            }
-            else if (dynamic_cast<UIListViewEx*>(widget))
-            {
-                dynamic_cast<UIListViewEx*>(widget)->pushBackCustomItem(child);
+                pageView->addPage(static_cast<Layout*>(child));
             }
             else
             {
-                widget->addChild(child);
+                ListView* listView = dynamic_cast<ListView*>(widget);
+                if (listView)
+                {
+                    dynamic_cast<ListView*>(widget)->pushBackCustomItem(child);
+                }
+                else
+                {
+                    widget->addChild(child);
+                }
             }
         }
-    }
-    
-    UILayout* layout = dynamic_cast<UILayout*>(widget);
-    if (layout)
-    {
-        layout->doLayout();
     }
     return widget;
 }
 
-void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     bool ignoreSizeExsit = DICTOOL->checkObjectExist_json(options, "ignoreSize");
     if (ignoreSizeExsit)
@@ -1081,32 +1079,32 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
 	{
 		const rapidjson::Value& layoutParameterDic = DICTOOL->getSubDictionary_json(options, "layoutParameter");
 		int paramType = DICTOOL->getIntValue_json(layoutParameterDic, "type");
-		UILayoutParameter* parameter = NULL;
+		cocos2d::gui::LayoutParameter* parameter = NULL;
 		switch (paramType)
 		{
-		case 0:
-			break;
-		case 1:
+            case 0:
+                break;
+            case 1:
 			{
-				parameter = UILinearLayoutParameter::create();
+				parameter = LinearLayoutParameter::create();
 				int gravity = DICTOOL->getIntValue_json(layoutParameterDic, "gravity");
-				((UILinearLayoutParameter*)parameter)->setGravity((UILinearGravity)gravity);
+				((LinearLayoutParameter*)parameter)->setGravity((LinearGravity)gravity);
 				break;
 			}
-		case 2:
+            case 2:
 			{
-				parameter = UIRelativeLayoutParameter::create();
-				UIRelativeLayoutParameter* rParameter = (UIRelativeLayoutParameter*)parameter;
+				parameter = RelativeLayoutParameter::create();
+				RelativeLayoutParameter* rParameter = (RelativeLayoutParameter*)parameter;
 				const char* relativeName = DICTOOL->getStringValue_json(layoutParameterDic, "relativeName");
 				rParameter->setRelativeName(relativeName);
 				const char* relativeToName = DICTOOL->getStringValue_json(layoutParameterDic, "relativeToName");
 				rParameter->setRelativeToWidgetName(relativeToName);
 				int align = DICTOOL->getIntValue_json(layoutParameterDic, "align");
-				rParameter->setAlign((UIRelativeAlign)align);
+				rParameter->setAlign((RelativeAlign)align);
 				break;
 			}
-		default:
-			break;
+            default:
+                break;
 		}
 		if (parameter)
 		{
@@ -1114,13 +1112,13 @@ void WidgetPropertiesReader0300::setPropsForWidgetFromJsonDictionary(UIWidget*wi
 			float mgt = DICTOOL->getFloatValue_json(layoutParameterDic, "marginTop");
 			float mgr = DICTOOL->getFloatValue_json(layoutParameterDic, "marginRight");
 			float mgb = DICTOOL->getFloatValue_json(layoutParameterDic, "marginDown");
-			parameter->setMargin(UIMargin(mgl, mgt, mgr, mgb));
+			parameter->setMargin(Margin(mgl, mgt, mgr, mgb));
 			widget->setLayoutParameter(parameter);
 		}
 	}
 }
 
-void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     bool op = DICTOOL->checkObjectExist_json(options, "opacity");
     if (op)
@@ -1145,10 +1143,10 @@ void WidgetPropertiesReader0300::setColorPropsForWidgetFromJsonDictionary(UIWidg
     widget->setFlipY(flipY);
 }
 
-void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UIButton* button = (UIButton*)widget;
+    cocos2d::gui::Button* button = (cocos2d::gui::Button*)widget;
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
     button->setScale9Enabled(scale9Enable);
     
@@ -1262,10 +1260,10 @@ void WidgetPropertiesReader0300::setPropsForButtonFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UICheckBox* checkBox = (UICheckBox*)widget;
+    cocos2d::gui::CheckBox* checkBox = (cocos2d::gui::CheckBox*)widget;
     
     const rapidjson::Value& backGroundDic = DICTOOL->getSubDictionary_json(options, "backGroundBoxData");
     int backGroundType = DICTOOL->getIntValue_json(backGroundDic, "resourceType");
@@ -1380,11 +1378,11 @@ void WidgetPropertiesReader0300::setPropsForCheckBoxFromJsonDictionary(UIWidget*
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    UIImageView* imageView = (UIImageView*)widget;
+    cocos2d::gui::ImageView* imageView = (cocos2d::gui::ImageView*)widget;
     
     const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
     int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
@@ -1443,12 +1441,12 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(UIWidget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILabel* label = (UILabel*)widget;
+    cocos2d::gui::Label* label = (cocos2d::gui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
-    label->setTouchScaleChangeAble(touchScaleChangeAble);
+    label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
     label->setText(text);
     bool fs = DICTOOL->checkObjectExist_json(options, "fontSize");
@@ -1481,10 +1479,10 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(UIWidget*wid
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILabelAtlas* labelAtlas = (UILabelAtlas*)widget;
+    cocos2d::gui::LabelAtlas* labelAtlas = (cocos2d::gui::LabelAtlas*)widget;
     bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
     bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
     bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
@@ -1501,7 +1499,7 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(UIWidge
                 std::string tp_c = m_strFilePath;
                 const char* cmfPath = DICTOOL->getStringValue_json(cmftDic, "path");
                 const char* cmf_tp = tp_c.append(cmfPath).c_str();
-                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(),DICTOOL->getStringValue_json(options, "startCharMap"));
+                labelAtlas->setProperty(DICTOOL->getStringValue_json(options, "stringValue"),cmf_tp,DICTOOL->getIntValue_json(options, "itemWidth") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getIntValue_json(options,"itemHeight") / CC_CONTENT_SCALE_FACTOR(), DICTOOL->getStringValue_json(options, "startCharMap"));
                 break;
             }
             case 1:
@@ -1514,14 +1512,14 @@ void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(UIWidge
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     Layout* panel = (Layout*)widget;
-    if (!dynamic_cast<UIScrollView*>(widget)
-        && !dynamic_cast<UIListView*>(widget))
+    if (!dynamic_cast<cocos2d::gui::ScrollView*>(widget)
+        && !dynamic_cast<ListView*>(widget))
     {
-        panel->setClippingEnable(DICTOOL->getBooleanValue_json(options, "clipAble"));
+        panel->setClippingEnabled(DICTOOL->getBooleanValue_json(options, "clipAble"));
     }
     bool backGroundScale9Enable = DICTOOL->getBooleanValue_json(options, "backGroundScale9Enable");
     panel->setBackGroundImageScale9Enabled(backGroundScale9Enable);
@@ -1544,7 +1542,7 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(UIWidget*wi
     int co = DICTOOL->getIntValue_json(options, "bgColorOpacity");
     
     int colorType = DICTOOL->getIntValue_json(options, "colorType");
-    panel->setBackGroundColorType(PanelColorType(colorType));
+    panel->setBackGroundColorType(LayoutBackGroundColorType(colorType));
     panel->setBackGroundColor(ccc3(scr, scg, scb),ccc3(ecr, ecg, ecb));
     panel->setBackGroundColor(ccc3(cr, cg, cb));
     panel->setBackGroundColorOpacity(co);
@@ -1584,10 +1582,10 @@ void WidgetPropertiesReader0300::setPropsForLayoutFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForScrollViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForScrollViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForLayoutFromJsonDictionary(widget, options);
-    UIScrollView* scrollView = (UIScrollView*)widget;
+    cocos2d::gui::ScrollView* scrollView = (cocos2d::gui::ScrollView*)widget;
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
@@ -1597,10 +1595,10 @@ void WidgetPropertiesReader0300::setPropsForScrollViewFromJsonDictionary(UIWidge
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UISlider* slider = (UISlider*)widget;
+    cocos2d::gui::Slider* slider = (cocos2d::gui::Slider*)widget;
     
     bool barTextureScale9Enable = DICTOOL->getBooleanValue_json(options, "barTextureScale9Enable");
     slider->setScale9Enabled(barTextureScale9Enable);
@@ -1753,10 +1751,10 @@ void WidgetPropertiesReader0300::setPropsForSliderFromJsonDictionary(UIWidget*wi
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForTextFieldFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForTextFieldFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UITextField* textField = (UITextField*)widget;
+    cocos2d::gui::TextField* textField = (cocos2d::gui::TextField*)widget;
     bool ph = DICTOOL->checkObjectExist_json(options, "placeHolder");
     if (ph)
     {
@@ -1795,7 +1793,7 @@ void WidgetPropertiesReader0300::setPropsForTextFieldFromJsonDictionary(UIWidget
 		textField->setMaxLength(maxLength);
 	}
     bool passwordEnable = DICTOOL->getBooleanValue_json(options, "passwordEnable");
-    textField->setPasswordEnable(passwordEnable);
+    textField->setPasswordEnabled(passwordEnable);
     if (passwordEnable)
     {
         textField->setPasswordStyleText(DICTOOL->getStringValue_json(options, "passwordStyleText"));
@@ -1803,10 +1801,10 @@ void WidgetPropertiesReader0300::setPropsForTextFieldFromJsonDictionary(UIWidget
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    UILoadingBar* loadingBar = (UILoadingBar*)widget;
+    cocos2d::gui::LoadingBar* loadingBar = (cocos2d::gui::LoadingBar*)widget;
     
     const rapidjson::Value& imageFileNameDic = DICTOOL->getSubDictionary_json(options, "textureData");
     int imageFileNameType = DICTOOL->getIntValue_json(imageFileNameDic, "resourceType");
@@ -1858,11 +1856,11 @@ void WidgetPropertiesReader0300::setPropsForLoadingBarFromJsonDictionary(UIWidge
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(UIWidget *widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(cocos2d::gui::Widget *widget, const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    UILabelBMFont* labelBMFont = (UILabelBMFont*)widget;
+    cocos2d::gui::LabelBMFont* labelBMFont = (cocos2d::gui::LabelBMFont*)widget;
     
     const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
     int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");
@@ -1889,16 +1887,16 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(UIWidg
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
 
-void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(UIWidget*widget,const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForPageViewFromJsonDictionary(cocos2d::gui::Widget*widget,const rapidjson::Value& options)
 {
     setPropsForLayoutFromJsonDictionary(widget, options);
 }
 
-void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(UIWidget* widget, const rapidjson::Value& options)
+void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(cocos2d::gui::Widget* widget, const rapidjson::Value& options)
 {
     setPropsForLayoutFromJsonDictionary(widget, options);
     
-    UIListViewEx* listView = (UIListViewEx*)widget;
+    ListView* listView = (ListView*)widget;
     
     float innerWidth = DICTOOL->getFloatValue_json(options, "innerWidth");
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight");
@@ -1910,7 +1908,7 @@ void WidgetPropertiesReader0300::setPropsForListViewFromJsonDictionary(UIWidget*
     listView->setGravity(gravity);
     
     float itemMargin = DICTOOL->getFloatValue_json(options, "itemMargin");
-    listView->setItemsMargin(itemMargin);        
+    listView->setItemsMargin(itemMargin);
 }
 
 NS_CC_EXT_END

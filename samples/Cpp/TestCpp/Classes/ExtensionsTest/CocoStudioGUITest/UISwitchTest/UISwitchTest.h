@@ -22,36 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UITextButtonTest__
-#define __TestCpp__UITextButtonTest__
+#ifndef __TestCpp__UISwitchTest__
+#define __TestCpp__UISwitchTest__
 
 #include "../UIScene.h"
 
-class UITextButtonTest : public UIScene
+class UISwitchTest_Horizontal : public UIScene
 {
 public:
-    UITextButtonTest();
-    ~UITextButtonTest();
+    UISwitchTest_Horizontal();
+    ~UISwitchTest_Horizontal();
     bool init();
-    void touchEvent(CCObject *pSender, TouchEventType type);
+    void switchEvent(CCObject* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Horizontal)
     UILabel* m_pDisplayValueLabel;
 };
 
-class UITextButtonTest_Scale9 : public UIScene
+class UISwitchTest_Vertical : public UIScene
 {
 public:
-    UITextButtonTest_Scale9();
-    ~UITextButtonTest_Scale9();
+    UISwitchTest_Vertical();
+    ~UISwitchTest_Vertical();
     bool init();
-    void touchEvent(CCObject *pSender, TouchEventType type);    
+    void switchEvent(CCObject* pSender, SwitchEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UITextButtonTest_Scale9)
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF *, m_pDisplayValueLabel, DisplayValueLabel)
+    UI_SCENE_CREATE_FUNC(UISwitchTest_Vertical)
     UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__UITextButtonTest__) */
+class UISwitchTest_VerticalAndTitleVertical : public UIScene
+{
+public:
+    UISwitchTest_VerticalAndTitleVertical();
+    ~UISwitchTest_VerticalAndTitleVertical();
+    bool init();
+    void switchEvent(CCObject* pSender, SwitchEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISwitchTest_VerticalAndTitleVertical)
+    UILabel* m_pDisplayValueLabel;
+};
+
+#endif /* defined(__TestCpp__UISwitchTest__) */

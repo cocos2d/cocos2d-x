@@ -22,36 +22,24 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__CocosGUIExamplesRegisterScene__
-#define __TestCpp__CocosGUIExamplesRegisterScene__
+#ifndef __TestCpp__UIPotentiometerTest__
+#define __TestCpp__UIPotentiometerTest__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "../../testBasic.h"
+#include "../UIScene.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
-class CocosGUIExamplesRegisterScene : public CCScene
+class UIPotentiometerTest : public UIScene
 {
 public:
-    CocosGUIExamplesRegisterScene(bool bPortrait = false);
-    ~CocosGUIExamplesRegisterScene();
+    UIPotentiometerTest();
+    ~UIPotentiometerTest();
+    bool init();
+    void valueChangedEvent(CCObject *pSender, PotentiometerEventType type);
     
-    virtual void onEnter();
-    virtual void onExit();
-    
-	virtual void runThisTest();    	
-    
-    void toCocosGUIScene(CCObject* pSender);
-    void toCocosGUIExamplesEquipScene(CCObject* pSender);
-    
-    void attachWithIMEEvent(CCObject* pSender);
-    void detachWithIMEEvent(CCObject* pSender);
     
 protected:
-    UILayer* m_pUILayer;
-    UILayout* m_pLayout;
+    UI_SCENE_CREATE_FUNC(UIPotentiometerTest)
+    UILabel* m_pDisplayValueLabel;
 };
 
-#endif /* defined(__TestCpp__CocosGUIExamplesRegisterScene__) */
+
+#endif /* defined(__TestCpp__UIPotentiometerTest__) */
