@@ -1,4 +1,4 @@
-require "TriggerBase"
+require "lua_cocos2d_studio"
 
 local TMoveBy = class("TMoveBy")
 TMoveBy._tag = -1
