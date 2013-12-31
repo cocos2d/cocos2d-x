@@ -50,11 +50,6 @@ const char* C3DAnimationClip::getID() const
     return _id.c_str();
 }
 
-//C3DAnimation* C3DAnimationClip::getAnimation() const
-//{
-//    return _animation;
-//}
-
 unsigned long C3DAnimationClip::getStartTime() const
 {
     return _startTime;

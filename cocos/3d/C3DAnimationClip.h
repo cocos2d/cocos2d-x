@@ -29,8 +29,6 @@ public:
      */
     const char* getID() const;
 
-    //C3DAnimation* getAnimation() const;
-
     /**
      * Gets start time.
      */
