@@ -36,7 +36,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Vertical)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_Horizontal : public UIScene
@@ -48,7 +48,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Horizontal)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_Both : public UIScene
@@ -60,7 +60,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_Both)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_ScrollToPercentBothDirection : public UIScene
@@ -72,7 +72,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_ScrollToPercentBothDirection_Bounce : public UIScene
@@ -84,7 +84,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection_Bounce)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest__) */
