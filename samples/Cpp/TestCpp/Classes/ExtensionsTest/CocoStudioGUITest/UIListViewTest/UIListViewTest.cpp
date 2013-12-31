@@ -70,7 +70,7 @@ bool UIListViewTest_Vertical::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewTest_Vertical::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::selectedItemEvent));
         _uiLayer->addChild(listView);
         
         
@@ -167,22 +167,20 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ScrollviewEventType type)
+void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ListViewEventType type)
 {
-    /*
     switch (type)
     {
-        case SCROLLVIEW_EVENT_SELECT_CHILD:
+        case LISTVIEW_ONSELECTEDITEM:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %d", listView->getSelectedChildIndex());
+            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
         }
             break;
             
         default:
             break;
     }
-     */
 }
 
 // UIListViewTest_Horizontal
@@ -245,7 +243,7 @@ bool UIListViewTest_Horizontal::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewTest_Horizontal::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::selectedItemEvent));
         _uiLayer->addChild(listView);
         
         
@@ -342,20 +340,18 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::selectedItemEvent(Object *pSender, ScrollviewEventType type)
+void UIListViewTest_Horizontal::selectedItemEvent(Object *pSender, ListViewEventType type)
 {
-    /*
     switch (type)
     {
-        case SCROLLVIEW_EVENT_SELECT_CHILD:
+        case LISTVIEW_ONSELECTEDITEM:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %d", listView->getSelectedChildIndex());
+            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
         }
             break;
             
         default:
             break;
     }
-     */
 }

@@ -186,6 +186,12 @@ int LuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
+bool LuaEngine::parseConfig(ConfigType type, const std::string& str)
+{
+    // FIXME: TO IMPLEMENT
+    return false;
+}
+
 int LuaEngine::sendEvent(ScriptEvent* evt)
 {
     if (NULL == evt)
