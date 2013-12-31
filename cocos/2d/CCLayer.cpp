@@ -53,11 +53,11 @@ Layer::Layer()
 : _touchEnabled(false)
 , _accelerometerEnabled(false)
 , _keyboardEnabled(false)
-, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
-, _swallowsTouches(true)
 , _touchListener(nullptr)
 , _keyboardListener(nullptr)
 , _accelerationListener(nullptr)
+, _touchMode(Touch::DispatchMode::ALL_AT_ONCE)
+, _swallowsTouches(true)
 {
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Point(0.5f, 0.5f));
@@ -564,10 +564,9 @@ void LayerColor::updateColor()
 
 void LayerColor::draw()
 {
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(LayerColor::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void LayerColor::onDraw()

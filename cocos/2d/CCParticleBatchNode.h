@@ -31,6 +31,7 @@
 
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -140,6 +141,8 @@ private:
 private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
+    // quad command
+    QuadCommand _quadCommand;
 };
 
 // end of particle_nodes group

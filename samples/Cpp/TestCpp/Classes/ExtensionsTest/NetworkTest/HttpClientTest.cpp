@@ -67,7 +67,7 @@ HttpClientTest::HttpClientTest()
 
 HttpClientTest::~HttpClientTest()
 {
-    HttpClient::getInstance()->destroyInstance();
+    HttpClient::destroyInstance();
 }
 
 void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)

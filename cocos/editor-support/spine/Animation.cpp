@@ -260,7 +260,7 @@ void _spRotateTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, 
 	bone = skeleton->bones[self->boneIndex];
 
 	if (time >= self->frames[self->framesLength - 2]) { /* Time is after last frame. */
-		float amount = bone->data->rotation + self->frames[self->framesLength - 1] - bone->rotation;
+		amount = bone->data->rotation + self->frames[self->framesLength - 1] - bone->rotation;
 		while (amount > 180)
 			amount -= 360;
 		while (amount < -180)

@@ -102,16 +102,20 @@ Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int li
 
 Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
 : _reusedLetter(nullptr)
+, _multilineEnable(true)
+, _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
-,_multilineEnable(true)
+, _width(0.0f)
 , _alignment(alignment)
 , _currentUTF16String(0)
 , _originalUTF16String(0)
-, _advances(0)
+, _advances(nullptr)
 , _fontAtlas(atlas)
 , _isOpacityModifyRGB(true)
-,_useDistanceField(useDistanceField)
-,_useA8Shader(useA8Shader)
+, _useDistanceField(useDistanceField)
+, _useA8Shader(useA8Shader)
+, _fontSize(0)
+, _uniformEffectColor(0)
 {
 }
 

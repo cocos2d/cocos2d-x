@@ -107,7 +107,7 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = TextFieldTTF::getString().size();
+    ssize_t str_len = TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
@@ -326,10 +326,21 @@ void TextField::setTouchSize(const Size &size)
 
 void TextField::setText(const std::string& text)
 {
-	if (text.size()==0)
-		return;
-
-    _textFieldRenderer->setString(text);
+    std::string strText(text);
+    if (isMaxLengthEnabled())
+    {
+        strText = strText.substr(0, getMaxLength());
+    }
+    const char* content = strText.c_str();
+    if (isPasswordEnabled())
+    {
+        _textFieldRenderer->setPasswordText(content);
+        _textFieldRenderer->insertText(content, strlen(content));
+    }
+    else
+    {
+        _textFieldRenderer->setString(content);
+    }
     textfieldRendererScaleChangedWithSize();
 }
 

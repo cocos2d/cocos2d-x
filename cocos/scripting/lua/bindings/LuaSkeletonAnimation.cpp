@@ -98,7 +98,7 @@ LuaSkeletonAnimation* LuaSkeletonAnimation::createWithFile (const char* skeleton
 
 void LuaSkeletonAnimation::animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount)
 {
-    int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::SPINE_EVENT);
+    int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::EVENT_SPINE);
     if (0 != nHandler) {
         SendSpineEventToLua(nHandler, node, trackIndex, type, event, loopCount);
     }

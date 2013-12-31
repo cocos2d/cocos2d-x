@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Scene::Scene()
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 : _physicsWorld(nullptr)
 #endif
 {
@@ -44,7 +44,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
 #endif
 }
@@ -88,7 +88,22 @@ Scene* Scene::getScene()
     return this;
 }
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
+void Scene::addChild(Node* child, int zOrder, int tag)
+{
+    Node::addChild(child, zOrder, tag);
+    addChildToPhysicsWorld(child);
+}
+
+void Scene::update(float delta)
+{
+    Node::update(delta);
+    if (nullptr != _physicsWorld)
+    {
+        _physicsWorld->update(delta);
+    }
+}
+
 Scene *Scene::createWithPhysics()
 {
     Scene *ret = new Scene();
@@ -121,13 +136,6 @@ bool Scene::initWithPhysics()
     return ret;
 }
 
-void Scene::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-    
-    addChildToPhysicsWorld(child);
-}
-
 void Scene::addChildToPhysicsWorld(Node* child)
 {
     if (_physicsWorld)
@@ -149,18 +157,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
         addToPhysicsWorldFunc(child);
     }
 }
-
-void Scene::update(float delta)
-{
-    Node::update(delta);
-    
-    if (nullptr != _physicsWorld)
-    {
-        _physicsWorld->update(delta);
-    }
-    
-}
 #endif
-
 
 NS_CC_END

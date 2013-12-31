@@ -147,7 +147,7 @@ void ArmatureTestScene::MainMenuCallback(Object *pSender)
     //TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    ArmatureDataManager::destoryInstance();
+    ArmatureDataManager::destroyInstance();
 }
 
 
@@ -272,7 +272,7 @@ std::string TestAsynchronousLoading::subtitle() const
 
 void TestAsynchronousLoading::restartCallback(Object* pSender)
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
@@ -1094,10 +1094,9 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
 }
 

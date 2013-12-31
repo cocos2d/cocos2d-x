@@ -259,12 +259,20 @@ public:
     //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren() override;
     
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    
     //override "removeChild" method of widget.
 	virtual void removeChild(Node* child, bool cleaup = true) override;
     
     //override "getChildren" method of widget.
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
+    
+    virtual ssize_t getChildrenCount() const override;
+    
+    virtual Node * getChildByTag(int tag) override;
+    
+    virtual Widget* getChildByName(const char* name) override;
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;

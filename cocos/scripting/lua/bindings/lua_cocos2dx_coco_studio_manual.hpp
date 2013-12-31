@@ -13,12 +13,12 @@ extern "C" {
 
 TOLUA_API int register_all_cocos2dx_coco_studio_manual(lua_State* L);
 
-struct LuaCocoStudioEventListenerData
+struct LuaStudioEventListenerData
 {
     cocos2d::Object* objTarget;
     int eventType;
     
-    LuaCocoStudioEventListenerData(cocos2d::Object* _objTarget, int _eventType):objTarget(_objTarget),eventType(_eventType)
+    LuaStudioEventListenerData(cocos2d::Object* _objTarget, int _eventType):objTarget(_objTarget),eventType(_eventType)
     {
     }
 };

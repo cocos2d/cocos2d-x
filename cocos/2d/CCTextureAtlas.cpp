@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCDirector.h"
 #include "CCGL.h"
@@ -39,6 +38,8 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCString.h"
 #include <stdlib.h>
+#include "CCEventDispatcher.h"
+#include "CCEventListenerCustom.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -51,6 +52,9 @@ TextureAtlas::TextureAtlas()
     ,_dirty(false)
     ,_texture(nullptr)
     ,_quads(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ,_backToForegroundlistener(nullptr)
+#endif
 {}
 
 TextureAtlas::~TextureAtlas()
@@ -70,7 +74,7 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 }
 
@@ -185,10 +189,8 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
-    NotificationCenter::getInstance()->addObserver(this,
-                                                           callfuncO_selector(TextureAtlas::listenBackToForeground),
-                                                           EVNET_COME_TO_FOREGROUND,
-                                                           nullptr);
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(TextureAtlas::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
     
     this->setupIndices();
@@ -207,7 +209,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     return true;
 }
 
-void TextureAtlas::listenBackToForeground(Object *obj)
+void TextureAtlas::listenBackToForeground(EventCustom* event)
 {  
     if (Configuration::getInstance()->supportsShareableVAO())
     {

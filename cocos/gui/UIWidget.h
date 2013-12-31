@@ -232,7 +232,7 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag) override;
     
     virtual void sortAllChildren() override;
     /**
@@ -259,14 +259,14 @@ public:
      *
      * @return The amount of children.
      */
-    long getChildrenCount() const;
+    virtual ssize_t getChildrenCount() const override;
     
     /**
      * Removes this node itself from its parent node with a cleanup.
      * If the node orphan, then nothing happens.
      * @see `removeFromParentAndCleanup(bool)`
      */
-    virtual void removeFromParent();
+    virtual void removeFromParent() override;
     /**
      * Removes this node itself from its parent node.
      * If the node orphan, then nothing happens.
@@ -274,7 +274,7 @@ public:
      * @js removeFromParent
      * @lua removeFromParent
      */
-    virtual void removeFromParentAndCleanup(bool cleanup);
+    virtual void removeFromParentAndCleanup(bool cleanup) override;
     
     /**
      * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
@@ -282,7 +282,7 @@ public:
      * @param child     The child node which will be removed.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChild(Node* child, bool cleanup = true);
+    virtual void removeChild(Node* child, bool cleanup = true) override;
     
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
@@ -290,13 +290,13 @@ public:
      * @param tag       An interger number that identifies a child node
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    virtual void removeChildByTag(int tag, bool cleanup = true);
+    virtual void removeChildByTag(int tag, bool cleanup = true) override;
     /**
      * Removes all children from the container with a cleanup.
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
-    virtual void removeAllChildren();
+    virtual void removeAllChildren() override;
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
@@ -304,7 +304,7 @@ public:
      * @js removeAllChildren
      * @lua removeAllChildren
      */
-    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     
     /**
      * Gets a child from the container with its name
@@ -313,7 +313,7 @@ public:
      *
      * @return a Widget object whose name equals to the input parameter
      */
-    Widget* getChildByName(const char* name);
+    virtual Widget* getChildByName(const char* name);
     
     virtual void visit();
     
@@ -663,36 +663,27 @@ protected:
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
     bool _updateEnabled;      ///< is "update" method scheduled
-//    Node* _renderer;        ///< base renderer
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point
-    
     Object*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
-    
-
-    
     std::string _name;
     WidgetType _widgetType;
 	int _actionTag;
     Size _size;
     Size _customSize;
-    Map<int, LayoutParameter*> _layoutParameterDictionary;
     bool _ignoreSize;
-    Vector<Node*> _widgetChildren;
     bool _affectByClipping;
-    
     SizeType _sizeType;
     Point _sizePercent;
     PositionType _positionType;
     Point _positionPercent;
-    
     bool _reorderWidgetChildDirty;
-    
     bool _hitted;
-    
     EventListenerTouchOneByOne* _touchListener;
+    Map<int, LayoutParameter*> _layoutParameterDictionary;
+    Vector<Node*> _widgetChildren;
 };
 }
 
