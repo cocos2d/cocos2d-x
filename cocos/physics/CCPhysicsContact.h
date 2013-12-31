@@ -26,7 +26,7 @@
 #define __CCPHYSICS_CONTACT_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include "CCObject.h"
 #include "CCGeometry.h"

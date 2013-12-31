@@ -2,7 +2,6 @@
 #include "GLES-Render.h"
 #include "Test.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
 
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
@@ -212,10 +211,9 @@ void Box2DView::draw()
 {
     Layer::draw();
 
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(Box2DView::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCmd.init(0, _vertexZ);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCmd);
 }
 
 void Box2DView::onDraw()

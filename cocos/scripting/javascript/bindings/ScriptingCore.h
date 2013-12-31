@@ -88,6 +88,8 @@ public:
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
     virtual int sendEvent(ScriptEvent* message) override;
+    
+    virtual bool parseConfig(ConfigType type, const std::string& str) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
 

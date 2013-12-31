@@ -35,15 +35,16 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
 #include "TransformUtils.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
+#include "CCEventListenerCustom.h"
+#include "CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -74,10 +75,8 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
         
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
-        NotificationCenter::getInstance()->addObserver(this,
-                                                                      callfuncO_selector(ParticleSystemQuad::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
-                                                                      nullptr);
+        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(ParticleSystemQuad::listenBackToForeground, this));
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
 
         return true;
@@ -106,10 +105,6 @@ ParticleSystemQuad::~ParticleSystemQuad()
             GL::bindVAO(0);
         }
     }
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-#endif
 }
 
 // implementation ParticleSystemQuad
@@ -443,9 +438,8 @@ void ParticleSystemQuad::draw()
 
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-        QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-        cmd->init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
-        Director::getInstance()->getRenderer()->addCommand(cmd);
+        _quadCommand.init(0, _vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 
 }
@@ -577,7 +571,7 @@ void ParticleSystemQuad::setupVBO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void ParticleSystemQuad::listenBackToForeground(Object *obj)
+void ParticleSystemQuad::listenBackToForeground(EventCustom* event)
 {
     if (Configuration::getInstance()->supportsShareableVAO())
     {

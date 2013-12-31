@@ -23,11 +23,10 @@
  ****************************************************************************/
 
 
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "ccGLStateCache.h"
 
 NS_CC_BEGIN
-RenderCommandPool<QuadCommand> QuadCommand::_commandPool;
 
 QuadCommand::QuadCommand()
 :RenderCommand()
@@ -170,11 +169,6 @@ void QuadCommand::useMaterial()
 
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
-}
-
-void QuadCommand::releaseToCommandPool()
-{
-    getCommandPool().pushBackCommand(this);
 }
 
 NS_CC_END

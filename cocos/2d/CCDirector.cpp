@@ -37,7 +37,6 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "CCNotificationCenter.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
@@ -768,7 +767,6 @@ void Director::purgeDirector()
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    NotificationCenter::destroyInstance();
     
     GL::invalidateStateCache();
     
@@ -847,13 +845,10 @@ void Director::resume()
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (gettimeofday(_lastUpdate, nullptr) != 0)
-    {
-        CCLOG("cocos2d: Director: Error in gettimeofday");
-    }
-
     _paused = false;
     _deltaTime = 0;
+    // fix issue #3509, skip one fps to avoid incorrect time calculation.
+    setNextDeltaTimeZero(true);
 }
 
 // display the FPS using a LabelAtlas

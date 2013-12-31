@@ -1289,11 +1289,10 @@ void ActionFollow::onEnter()
 
 void ActionFollow::draw()
 {
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ActionFollow::onDraw, this);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
     
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void ActionFollow::onDraw()
@@ -1606,10 +1605,9 @@ void ActionCatmullRomStacked::draw()
     kmGLPopMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void ActionCatmullRomStacked::onDraw()
@@ -1722,10 +1720,9 @@ void ActionCardinalSplineStacked::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
     
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void ActionCardinalSplineStacked::onDraw()
@@ -2085,10 +2082,9 @@ void ActionCatmullRom::draw()
     kmGLPopMatrix();
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
 
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 
@@ -2186,10 +2182,9 @@ void ActionCardinalSpline::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
     
-    CustomCommand* cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 void ActionCardinalSpline::onDraw()

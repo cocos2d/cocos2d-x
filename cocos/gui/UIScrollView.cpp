@@ -231,7 +231,12 @@ void ScrollView::addChild(Node *child, int zOrder, int tag)
 
 void ScrollView::removeAllChildren()
 {
-    _innerContainer->removeAllChildren();
+    removeAllChildrenWithCleanup(true);
+}
+    
+void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    _innerContainer->removeAllChildrenWithCleanup(cleanup);
 }
 
 void ScrollView::removeChild(Node* child, bool cleanup)
@@ -247,6 +252,21 @@ Vector<Node*>& ScrollView::getChildren()
 const Vector<Node*>& ScrollView::getChildren() const
 {
     return _innerContainer->getChildren();
+}
+
+ssize_t ScrollView::getChildrenCount() const
+{
+    return _innerContainer->getChildrenCount();
+}
+    
+Node* ScrollView::getChildByTag(int tag)
+{
+    return _innerContainer->getChildByTag(tag);
+}
+    
+Widget* ScrollView::getChildByName(const char *name)
+{
+    return _innerContainer->getChildByName(name);
 }
 
 void ScrollView::moveChildren(float offsetX, float offsetY)

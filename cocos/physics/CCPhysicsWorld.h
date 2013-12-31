@@ -26,7 +26,7 @@
 #define __CCPHYSICS_WORLD_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include "CCVector.h"
 #include "CCObject.h"

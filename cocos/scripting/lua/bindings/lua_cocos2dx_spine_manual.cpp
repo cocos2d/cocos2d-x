@@ -141,7 +141,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
             int handler = (  toluafix_ref_function(tolua_S,2,0));
-            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::SPINE_EVENT);
+            ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, ScriptHandlerMgr::HandlerType::EVENT_SPINE);
         }
     }
     return 0;
@@ -166,7 +166,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterScriptHandler00(lua_State* tolua
     {
     	LuaSkeletonAnimation* self    = (LuaSkeletonAnimation*)  tolua_tousertype(tolua_S,1,0);
         if (NULL != self ) {
-            ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::SPINE_EVENT);
+            ScriptHandlerMgr::getInstance()->removeObjectHandler((void*)self, ScriptHandlerMgr::HandlerType::EVENT_SPINE);
         }
     }
     return 0;
