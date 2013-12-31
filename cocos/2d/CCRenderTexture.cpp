@@ -506,7 +506,7 @@ void RenderTexture::onBegin()
     float heightRatio = size.height / texSize.height;
 
     // Adjust the orthographic projection and viewport
-    glViewport(0, 0, (GLsizei)texSize.width, (GLsizei)texSize.height);
+    glViewport(0, 0, (GLsizei)size.width, (GLsizei)size.height);
 
 
     kmMat4 orthoMatrix;
