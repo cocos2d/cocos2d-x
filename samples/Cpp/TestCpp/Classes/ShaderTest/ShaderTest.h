@@ -118,7 +118,6 @@ public:
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
-    void listenBackToForeground(Object *obj);
 
     virtual void update(float dt);
     virtual void setPosition(const Point &newPosition);

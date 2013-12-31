@@ -133,21 +133,17 @@ ShaderSprite::ShaderSprite()
 
 ShaderSprite::~ShaderSprite()
 {
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-}
-
-void ShaderSprite::listenBackToForeground(Object *obj)
-{
-    setShaderProgram(NULL);
-    initShader();
 }
 
 void ShaderSprite::setBackgroundNotification()
 {
-    NotificationCenter::getInstance()->addObserver(this,
-                                               callfuncO_selector(ShaderSprite::listenBackToForeground),
-                                               EVNET_COME_TO_FOREGROUND,
-                                               NULL);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+            this->setShaderProgram(nullptr);
+            this->initShader();
+        });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
 }
 
 void ShaderSprite::initShader()

@@ -122,7 +122,6 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
@@ -136,10 +135,14 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const char *vert, const char *frag)
 
 bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 {
-    NotificationCenter::getInstance()->addObserver(this,
-                                                                  callfuncO_selector(ShaderNode::listenBackToForeground),
-                                                                  EVNET_COME_TO_FOREGROUND,
-                                                                  NULL);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+            this->setShaderProgram(NULL);
+            loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
+        });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
 
     loadShaderVertex(vert, frag);
 
@@ -155,12 +158,6 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
     _fragFileName = frag;
 
     return true;
-}
-
-void ShaderNode::listenBackToForeground(Object *obj)
-{
-    this->setShaderProgram(NULL);
-    loadShaderVertex(_vertFileName.c_str(), _fragFileName.c_str());
 }
 
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
@@ -437,7 +434,6 @@ public:
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
     void draw();
     void initProgram();
-    void listenBackToForeground(Object *obj);
 
     static SpriteBlur* create(const char *pszFileName);
 
@@ -454,7 +450,6 @@ private:
 
 SpriteBlur::~SpriteBlur()
 {
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
 }
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
@@ -472,20 +467,18 @@ SpriteBlur* SpriteBlur::create(const char *pszFileName)
     return pRet;
 }
 
-void SpriteBlur::listenBackToForeground(Object *obj)
-{
-    setShaderProgram(NULL);
-    initProgram();
-}
-
 bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     if( Sprite::initWithTexture(texture, rect) ) 
     {
-        NotificationCenter::getInstance()->addObserver(this,
-                                                                      callfuncO_selector(SpriteBlur::listenBackToForeground),
-                                                                      EVNET_COME_TO_FOREGROUND,
-                                                                      NULL);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+                setShaderProgram(NULL);
+                initProgram();
+            });
+
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
         
         auto s = getTexture()->getContentSizeInPixels();
 
