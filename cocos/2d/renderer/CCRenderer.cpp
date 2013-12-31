@@ -47,7 +47,9 @@ Renderer::Renderer()
 ,_lastCommand(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
+#endif
 {
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
