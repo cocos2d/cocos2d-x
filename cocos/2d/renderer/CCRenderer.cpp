@@ -29,7 +29,9 @@
 #include "renderer/CCQuadCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
-#include "CCNotificationCenter.h"
+#include "CCDirector.h"
+#include "CCEventDispatcher.h"
+#include "CCEventListenerCustom.h"
 #include "CCEventType.h"
 #include <algorithm>    // for std::stable_sort
 
@@ -45,6 +47,7 @@ Renderer::Renderer()
 ,_lastCommand(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
+,_cacheTextureListener(nullptr)
 {
     _commandGroupStack.push(DEFAULT_RENDER_QUEUE);
     
@@ -66,18 +69,19 @@ Renderer::~Renderer()
         GL::bindVAO(0);
     }
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
 #endif
 }
 
 void Renderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    // listen the event when app go to background
-    NotificationCenter::getInstance()->addObserver(this,
-                                                           callfuncO_selector(Renderer::onBackToForeground),
-                                                           EVNET_COME_TO_FOREGROUND,
-                                                           nullptr);
+    _cacheTextureListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        /** listen the event that coming to foreground on Android */
+        this->setupBuffer();
+    });
+    
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
 #endif
 
     setupIndices();
@@ -85,12 +89,6 @@ void Renderer::initGLView()
     setupBuffer();
     
     _glViewAssigned = true;
-}
-
-void Renderer::onBackToForeground(Object* obj)
-{
-    CC_UNUSED_PARAM(obj);
-    setupBuffer();
 }
 
 void Renderer::setupIndices()

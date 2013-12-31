@@ -41,7 +41,6 @@ NS_CC_BEGIN
 class Timer;
 class Layer;
 class MenuItem;
-class NotificationCenter;
 class CallFunc;
 class Acceleration;
 

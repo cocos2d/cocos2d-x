@@ -17,7 +17,6 @@
 #include "CCDirector.h"
 #include "CCApplication.h"
 #include "CCEventType.h"
-#include "CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
 #include "jni/JniHelper.h"
 
@@ -28,6 +27,7 @@
 #include "CCEventDispatcher.h"
 #include "CCEventAcceleration.h"
 #include "CCEventKeyboard.h"
+#include "CCEventCustom.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
@@ -140,7 +140,8 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
-        cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Director::getInstance()->setGLDefaultValues(); 
     }
 }
@@ -557,12 +558,14 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
             break;
         case APP_CMD_LOST_FOCUS:
-            cocos2d::Application::getInstance()->applicationDidEnterBackground();
-            cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
-
-            // Also stop animating.
-            engine->animating = 0;
-            engine_draw_frame(engine);
+            {
+                cocos2d::Application::getInstance()->applicationDidEnterBackground();
+                cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+                cocos2d::EventDispatcher::getInstance()->dispatchEvent(&backgroundEvent);
+                // Also stop animating.
+                engine->animating = 0;
+                engine_draw_frame(engine);
+            }
             break;
     }
 }
