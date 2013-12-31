@@ -27,29 +27,31 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
+    
 /**
- *  @lua NA
- */
-class UILabelBMFont : public UIWidget
+*   @js NA
+*   @lua NA
+*/    
+class LabelBMFont : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILabelBMFont();
+    LabelBMFont();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UILabelBMFont();
+    virtual ~LabelBMFont();
     
     /**
      * Allocates and initializes.
      */
-    static UILabelBMFont* create();
+    static LabelBMFont* create();
     
     /** init a bitmap font atlas with an initial string and the FNT file */
     void setFntFile(const char* fileName);
@@ -65,20 +67,21 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void labelBMFontScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    CCLabelBMFont* m_pLabelBMFontRenderer;
-    bool m_bFntFileHasInit;
-    std::string m_strFntFileName;
-    std::string m_strStringValue;
+    cocos2d::CCLabelBMFont* _labelBMFontRenderer;
+    bool _fntFileHasInit;
+    std::string _fntFileName;
+    std::string _stringValue;
 };
     
-NS_CC_EXT_END
+}
+NS_CC_END
 
-#endif /* defined(__UILabelBMFont__) */
+#endif /* defined(__LabelBMFont__) */

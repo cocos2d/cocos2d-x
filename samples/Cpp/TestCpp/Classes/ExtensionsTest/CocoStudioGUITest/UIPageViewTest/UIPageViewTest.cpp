@@ -2,12 +2,6 @@
 
 #include "UIPageViewTest.h"
 
-const char* font_UIPageViewTest =
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-"Marker Felt";
-#else
-"cocosgui/Marker Felt.ttf";
-#endif
 
 // UIPageViewTest
 UIPageViewTest::UIPageViewTest()
@@ -24,12 +18,12 @@ bool UIPageViewTest::init()
 {
     if (UIScene::init())
     {
-        CCSize widgetSize = m_pWidget->getRect().size;
+        CCSize widgetSize = m_pWidget->getSize();
         
         // Add a label in which the dragpanel events will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("Move by horizontal direction");
-        m_pDisplayValueLabel->setFontName(font_UIPageViewTest);
+        m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
@@ -38,23 +32,23 @@ bool UIPageViewTest::init()
         // Add the black background
         UILabel *alert = UILabel::create();
         alert->setText("PageView");
-        alert->setFontName(font_UIPageViewTest);
+        alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
         UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
         
         // Create the page view
         UIPageView* pageView = UIPageView::create();
-        pageView->setTouchEnable(true);
+        pageView->setTouchEnabled(true);
         pageView->setSize(CCSizeMake(240, 130));
         CCSize backgroundSize = background->getContentSize();
         pageView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
-                                  (backgroundSize.width - pageView->getRect().size.width) / 2,
+                                  (backgroundSize.width - pageView->getSize().width) / 2,
                                   (widgetSize.height - backgroundSize.height) / 2 +
-                                  (backgroundSize.height - pageView->getRect().size.height) / 2));
+                                  (backgroundSize.height - pageView->getSize().height) / 2));
         
         for (int i = 0; i < 3; ++i)
         {
@@ -62,19 +56,19 @@ bool UIPageViewTest::init()
             layout->setSize(CCSizeMake(240, 130));
             
             UIImageView* imageView = UIImageView::create();
-            imageView->setTouchEnable(true);
+            imageView->setTouchEnabled(true);
             imageView->setScale9Enabled(true);
             imageView->loadTexture("cocosgui/scrollviewbg.png");
             imageView->setSize(CCSizeMake(240, 130));
-            imageView->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));
+            imageView->setPosition(ccp(layout->getSize().width / 2, layout->getSize().height / 2));
             layout->addChild(imageView);
             
             UILabel* label = UILabel::create();
             label->setText(CCString::createWithFormat("page %d", (i + 1))->getCString());
-            label->setFontName(font_UIPageViewTest);
+            label->setFontName("Marker Felt");
             label->setFontSize(30);
             label->setColor(ccc3(192, 192, 192));
-            label->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));
+            label->setPosition(ccp(layout->getSize().width / 2, layout->getSize().height / 2));
             layout->addChild(label);
             
             pageView->addPage(layout);
@@ -96,7 +90,7 @@ void UIPageViewTest::pageViewEvent(CCObject *pSender, PageViewEventType type)
         {
             UIPageView* pageView = dynamic_cast<UIPageView*>(pSender);
             
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getPage() + 1)->getCString());
+            m_pDisplayValueLabel->setText(CCString::createWithFormat("page = %d", pageView->getCurPageIndex() + 1)->getCString());
         }
             break;
             

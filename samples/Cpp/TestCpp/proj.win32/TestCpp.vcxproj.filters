@@ -292,6 +292,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
       <UniqueIdentifier>{9ed6e130-9446-465b-9e07-15efeb543e7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIlayoutTest">
+      <UniqueIdentifier>{80c2d61a-7f09-463b-8051-78490e9b9bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -689,6 +692,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIlayoutTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1270,6 +1276,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIlayoutTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

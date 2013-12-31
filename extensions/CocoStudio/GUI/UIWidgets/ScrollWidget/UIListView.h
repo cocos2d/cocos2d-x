@@ -22,265 +22,188 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+
 #ifndef __UILISTVIEW_H__
 #define __UILISTVIEW_H__
 
-/* gui mark */
-#include "../../Layouts/UILayout.h"
-/**/
+#include "UIScrollView.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
-/**
- *  list view direction
- */
-typedef enum LISTVIEW_DIR
-{
-    LISTVIEW_DIR_NONE,
-    LISTVIEW_DIR_VERTICAL,
-    LISTVIEW_DIR_HORIZONTAL
-}ListViewDirection;
-
-/**
- *  list view scroll direction
- */
-typedef enum LISTVIEW_MOVE_DIR
-{
-    LISTVIEW_MOVE_DIR_NONE,
-    LISTVIEW_MOVE_DIR_UP,
-    LISTVIEW_MOVE_DIR_DOWN,
-    LISTVIEW_MOVE_DIR_LEFT,
-    LISTVIEW_MOVE_DIR_RIGHT,
-}ListViewMoveDirection;
+namespace gui{
 
 typedef enum
 {
-    LISTVIEW_EVENT_INIT_CHILD,
-    LISTVIEW_EVENT_UPDATE_CHILD,
+    LISTVIEW_GRAVITY_LEFT,
+    LISTVIEW_GRAVITY_RIGHT,
+    LISTVIEW_GRAVITY_CENTER_HORIZONTAL,
+    
+    LISTVIEW_GRAVITY_TOP,
+    LISTVIEW_GRAVITY_BOTTOM,
+    LISTVIEW_GRAVITY_CENTER_VERTICAL,
+}ListViewGravity;
+    
+typedef enum
+{
+    LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
-/**
- *  list view event
- */
-typedef void (CCObject::*SEL_ListViewEvent)(CCObject*, ListViewEventType);
-#define listvieweventselector(_SELECTOR)(SEL_ListViewEvent)(&_SELECTOR)
+typedef void (CCObject::*SEL_ListViewEvent)(CCObject*,ListViewEventType);
+#define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
-/*******Compatible*******/
-typedef void (cocos2d::CCObject::*SEL_ListViewInitChildEvent)(cocos2d::CCObject*);
-typedef void (cocos2d::CCObject::*SEL_ListViewUpdateChildEvent)(cocos2d::CCObject*);
-#define coco_ListView_InitChild_selector(_SELECTOR) (SEL_ListViewInitChildEvent)(&_SELECTOR)
-#define coco_ListView_UpdateChild_selector(_SELECTOR) (SEL_ListViewUpdateChildEvent)(&_SELECTOR)
-/************************/
-
-/**
- *  @lua NA
- */
-class UIListView : public UILayout
+class ListView : public ScrollView
 {
+    
 public:
-    /**
-     *  @js ctor
-     */
-    UIListView();
-    /**
-     *  @js NA
-     */
-    virtual ~UIListView();
-    static UIListView* create();
     
     /**
-     *  add widget child override
+     * Default constructor
      */
-    virtual bool addChild(UIWidget* widget);
-    /**
-     *  remove all widget children override
-     */
-    virtual void removeAllChildren();
-    /**
-     *  remove widget child override
-     */
-    virtual bool removeChild(UIWidget* child);
-    
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
+    ListView();
     
     /**
-     *  set and get direction
+     * Default destructor
      */
-    void setDirection(ListViewDirection dir);
-    ListViewDirection getDirection();
+    virtual ~ListView();
     
     /**
-     *  initialze data length
-     *  and create children with parameter length
+     * Allocates and initializes.
      */
-    void initChildWithDataLength(int length);
-    /**
-     *  get data length
-     */
-    int getDataLength();
+    static ListView* create();
     
     /**
-     *  update child function whetn trigger update child event
+     * Sets a item model for listview
+     *
+     * A model will be cloned for adding default item.
+     *
+     * @param model  item model for listview
      */
-    /**
-     *  get update widget child
-     */
-    UIWidget* getUpdateChild();
-    /**
-     *  get update data index
-     */
-    int getUpdateDataIndex();
-    /**
-     *  get and set update success or not
-     */
-    bool getUpdateSuccess();
-    void setUpdateSuccess(bool sucess);
+    void setItemModel(Widget* model);
     
     /**
-     *  add event call-back function
+     * Push back a default item(create by a cloned model) into listview.
      */
-    /**
-     *  add event
-     */
-    void addEventListenerListView(cocos2d::CCObject* target, SEL_ListViewEvent selector);
-    /*******Compatible*******/
-    /**
-     *  add init child event
-     */
-    void addInitChildEvent(cocos2d::CCObject* target, SEL_ListViewInitChildEvent seletor);
-    /**
-     *  add udpate child event
-     */
-    void addUpdateChildEvent(cocos2d::CCObject* target, SEL_ListViewUpdateChildEvent selector);
-    /**************/
+    void pushBackDefaultItem();
     
     /**
-     *  get and set degree range for checking move or not with scrolling
+     * Insert a default item(create by a cloned model) into listview.
      */
-    /**/
-    virtual void update(float dt);
-    
-    virtual void doLayout(){};
+    void insertDefaultItem(int index);
     
     /**
-     * Returns the "class name" of widget.
+     * Push back custom item into listview.
      */
-    virtual const char* getDescription() const;
+    void pushBackCustomItem(Widget* item);
+    
+    /**
+     * Insert custom item into listview.
+     */
+    void insertCustomItem(Widget* item, int index);
+    
+    /**
+     *  Removes the last item of listview.
+     */
+    void removeLastItem();
+    
+    /**
+     * Removes a item whose index is same as the parameter.
+     *
+     * @param index of item.
+     */
+    void removeItem(int index);
+    
+    void removeAllItems();
+    
+    /**
+     * Returns a item whose index is same as the parameter.
+     *
+     * @param index of item.
+     *
+     * @return the item widget.
+     */
+    Widget* getItem(unsigned int index);
+    
+    /**
+     * Returns the item container.
+     */
+    CCArray* getItems();
+    
+    /**
+     * Returns the index of item.
+     *
+     * @param item  the item which need to be checked.
+     *
+     * @return the index of item.
+     */
+    unsigned int getIndex(Widget* item) const;
+    
+    /**
+     * Changes the gravity of listview.
+     * @see ListViewGravity
+     */
+    void setGravity(ListViewGravity gravity);
+    
+    /**
+     * Changes the margin between each item.
+     *
+     * @param margin
+     */
+    void setItemsMargin(float margin);
+    
+    virtual void sortAllChildren();
+    
+    int getCurSelectedIndex() const;
+    
+    void addEventListenerListView(CCObject* target, SEL_ListViewEvent selector);
+    
+    /**
+     * Changes scroll direction of scrollview.
+     *
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     *
+     * @param SCROLLVIEW_DIR
+     */
+    virtual void setDirection(SCROLLVIEW_DIR dir);
+    
+    virtual std::string getDescription() const;
+    
+    void requestRefreshView();
+    
 protected:
+    virtual void addChild(CCNode* child) {ScrollView::addChild(child);};
+    virtual void addChild(CCNode * child, int zOrder) {ScrollView::addChild(child, zOrder);};
+    virtual void addChild(CCNode* child, int zOrder, int tag) {ScrollView::addChild(child, zOrder, tag);};
+    virtual void removeChild(CCNode* widget, bool cleanup = true) {ScrollView::removeChild(widget, cleanup);};
+    
+    virtual void removeAllChildren() {removeAllChildrenWithCleanup(true);};
+    virtual void removeAllChildrenWithCleanup(bool cleanup) {ScrollView::removeAllChildrenWithCleanup(cleanup);};
+    virtual CCArray* getChildren() {return ScrollView::getChildren();};
+    virtual unsigned int getChildrenCount() const {return ScrollView::getChildrenCount();};
+    virtual CCNode * getChildByTag(int tag) {return ScrollView::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) {return ScrollView::getChildByName(name);};
     virtual bool init();
-    
+    void updateInnerContainerSize();
+    void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged();
-    
-    void setMoveDirection(ListViewMoveDirection dir);
-    ListViewMoveDirection getMoveDirection();
-    
-    virtual void resetProperty();
-    
-    virtual void handlePressLogic(const CCPoint &touchPoint);
-    virtual void handleMoveLogic(const CCPoint &touchPoint);
-    virtual void handleReleaseLogic(const CCPoint &touchPoint);
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const CCPoint &touchPoint);
-    /* gui mark */
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
-    /**/
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
-    
-    void moveChildren(float offset);
-    virtual bool scrollChildren(float touchOffset);
-    void autoScrollChildren(float dt);
-    float getCurAutoScrollDistance(float time);
-    void startAutoScrollChildren(float v);
-    void stopAutoScrollChildren();
-    void recordSlidTime(float dt);
-    void startRecordSlidAction();
-    virtual void endRecordSlidAction();
-    
-    UIWidget* getCheckPositionChild();
-    UIWidget* getChildFromUpdatePool();
-    void pushChildToPool();
-    void getAndCallback();
-    
-    void setUpdateChild(UIWidget* child);
-    void setUpdateDataIndex(int index);
-    void clearCollectOverArray();
-    void collectOverTopChild();
-    void collectOverBottomChild();
-    void collectOverLeftChild();
-    void collectOverRightChild();
-    void setLoopPosition();
-    void updateChild();
-    
-    void initChildEvent();
-    void updateChildEvent();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
-    
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
-    /************/
-    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
+    void selectedItemEvent();
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
+    void refreshView();
 protected:
-    ListViewDirection m_eDirection;
-    ListViewMoveDirection m_eMoveDirection;
     
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;                
-    
-    bool m_bAutoScroll;
-    
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
-    
-    bool m_bBePressed;
-    float m_fSlidTime;
-    CCPoint moveChildPoint;
-    float m_fChildFocusCancelOffset;    
-    
-    
-    
-    CCArray* m_pChildPool;
-    CCArray* m_pUpdatePool;
-    
-    int m_nDataLength;
-    int m_nBegin;
-    int m_nEnd;
-    UIWidget* m_pUpdateChild;
-    int m_nUpdateDataIndex;
-    bool m_bUpdateSuccess;
-    
-    cocos2d::CCArray* m_overTopArray;
-    cocos2d::CCArray* m_overBottomArray;
-    cocos2d::CCArray* m_overLeftArray;
-    cocos2d::CCArray* m_overRightArray;
-    
-    float m_fDisBoundaryToChild_0;
-    float m_fDisBetweenChild;
-    
-    CCObject* m_pListViewEventListener;
-    SEL_ListViewEvent m_pfnListViewEventSelector;
-    
-    /*compatible*/
-    cocos2d::CCObject* m_pInitChildListener;
-    SEL_ListViewInitChildEvent m_pfnInitChildSelector;
-    cocos2d::CCObject* m_pUpdateChildListener;
-    SEL_ListViewUpdateChildEvent m_pfnUpdateChildSelector;
-    /***********/
+    Widget* _model;
+    ListViewGravity _gravity;
+    float _itemsMargin;
+    CCObject*       _listViewEventListener;
+    SEL_ListViewEvent    _listViewEventSelector;
+    int _curSelectedIndex;
+    bool _refreshViewDirty;
+    CCArray* _items;
 };
 
-NS_CC_EXT_END
+}
+NS_CC_END
 
-
-#endif /* defined(__Test__UIListView__) */
+#endif /* defined(__ListView__) */

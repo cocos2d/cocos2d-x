@@ -1,8 +1,8 @@
 
 class UIHelper
 {
-    static UIWidget* seekWidgetByTag(UIWidget* root, int tag);
-    static UIWidget* seekWidgetByName(UIWidget* root, const char* name);
-    static UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
-    static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
+    static Widget* seekWidgetByTag(Widget* root, int tag);
+    static Widget* seekWidgetByName(Widget* root, const char* name);
+    static Widget* seekWidgetByRelativeName(Widget* root, const char* name);
+    static Widget* seekActionWidgetByActionTag(Widget* root, int tag);
 };

@@ -27,7 +27,9 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -35,27 +37,26 @@ typedef enum
     LoadingBarTypeRight
 }LoadingBarType;
 /**
- *  @lua NA
- */
-class UILoadingBar : public UIWidget
+*   @js NA
+*   @lua NA
+*/
+class LoadingBar : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILoadingBar();
+    LoadingBar();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UILoadingBar();
+    virtual ~LoadingBar();
     
     /**
      * Allocates and initializes.
      */
-    static UILoadingBar* create();
+    static LoadingBar* create();
     
     /**
      * Changes the progress direction of loadingbar.
@@ -124,35 +125,27 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
-    /*Compatible*/
-    /**
-     * These methods will be removed
-     */
-    void setTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTexture(texture,texType);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    void setScale9Enable(bool is){setScale9Enabled(is);};
-    /************/
+    virtual std::string getDescription() const;
 protected:
     virtual void initRenderer();
     virtual void onSizeChanged();
     void setScale9Scale();
     void barRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    LoadingBarType m_nBarType;
-    int m_nPercent;
-    float m_fTotalLength;
-    CCNode* m_pBarRenderer;
-    TextureResType m_eRenderBarTexType;
-    CCSize m_barRendererTextureSize;
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    CCRect m_capInsets;
-    std::string m_strTextureFile;
+    LoadingBarType _barType;
+    int _percent;
+    float _totalLength;
+    CCNode* _barRenderer;
+    TextureResType _renderBarTexType;
+    CCSize _barRendererTextureSize;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    CCRect _capInsets;
+    std::string _textureFile;
 };
 
-NS_CC_EXT_END
-
-#endif /* defined(__CocoGUI__UILoadingBar__) */
+}
+NS_CC_END
+#endif /* defined(__CocoGUI__LoadingBar__) */
