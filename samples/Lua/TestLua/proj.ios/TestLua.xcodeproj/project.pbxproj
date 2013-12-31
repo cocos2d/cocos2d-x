@@ -158,7 +158,13 @@
 		15C1569C1683138E00D239F2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156951683138E00D239F2 /* Icon-72.png */; };
 		15C1569D1683138E00D239F2 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156961683138E00D239F2 /* Icon-114.png */; };
 		15C1569E1683138E00D239F2 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156971683138E00D239F2 /* Icon-144.png */; };
+		15C5C70018716EE100670379 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15C5C6FF18716EE100670379 /* json.lua */; };
 		15CA8CE918695D34000032AB /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */; };
+		15CFB6D018725ED300162EE1 /* lua_cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */; };
+		15CFB6D118725ED300162EE1 /* TriggerMng.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CE18725ED300162EE1 /* TriggerMng.lua */; };
+		15CFB6D218725ED300162EE1 /* TriggerObj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CF18725ED300162EE1 /* TriggerObj.lua */; };
+		15CFB6D618729D8500162EE1 /* ObjectFactory.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6D418729D8500162EE1 /* ObjectFactory.lua */; };
+		15CFB6D718729D8500162EE1 /* TriggerBase.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6D518729D8500162EE1 /* TriggerBase.lua */; };
 		15E3EBA71845EBD200629405 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 15E3EBA61845EBD200629405 /* cocosgui */; };
 		1AA88D13171E35AA0023E7B2 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA88D12171E35AA0023E7B2 /* libluajit.a */; };
 		1AD263A2168350490089000C /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A1168350490089000C /* luaScript */; };
@@ -581,8 +587,14 @@
 		15C156951683138E00D239F2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
 		15C156961683138E00D239F2 /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = SOURCE_ROOT; };
 		15C156971683138E00D239F2 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = SOURCE_ROOT; };
+		15C5C6FF18716EE100670379 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.lua; sourceTree = "<group>"; };
 		15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
 		15CA8CE818695D34000032AB /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
+		15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lua_cocos2d.lua; sourceTree = "<group>"; };
+		15CFB6CE18725ED300162EE1 /* TriggerMng.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerMng.lua; sourceTree = "<group>"; };
+		15CFB6CF18725ED300162EE1 /* TriggerObj.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerObj.lua; sourceTree = "<group>"; };
+		15CFB6D418729D8500162EE1 /* ObjectFactory.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ObjectFactory.lua; sourceTree = "<group>"; };
+		15CFB6D518729D8500162EE1 /* TriggerBase.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerBase.lua; sourceTree = "<group>"; };
 		15DB6512184C251E002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		15DB6513184C251E002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		15DB6515184C251E002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -808,6 +820,12 @@
 		159B8976175B9AB30005B47D /* script */ = {
 			isa = PBXGroup;
 			children = (
+				15CFB6D418729D8500162EE1 /* ObjectFactory.lua */,
+				15CFB6D518729D8500162EE1 /* TriggerBase.lua */,
+				15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */,
+				15CFB6CE18725ED300162EE1 /* TriggerMng.lua */,
+				15CFB6CF18725ED300162EE1 /* TriggerObj.lua */,
+				15C5C6FF18716EE100670379 /* json.lua */,
 				159C09241762FC1A004ED7D4 /* AudioEngine.lua */,
 				159B8977175B9AB30005B47D /* CCBReaderLoad.lua */,
 			);
@@ -1914,6 +1932,7 @@
 				15C1569C1683138E00D239F2 /* Icon-72.png in Resources */,
 				15C1569D1683138E00D239F2 /* Icon-114.png in Resources */,
 				15C1569E1683138E00D239F2 /* Icon-144.png in Resources */,
+				15C5C70018716EE100670379 /* json.lua in Resources */,
 				1AD263A2168350490089000C /* luaScript in Resources */,
 				1AD263BB1683506D0089000C /* animations in Resources */,
 				1AD263BC1683506D0089000C /* app.icf in Resources */,
@@ -1945,6 +1964,11 @@
 				15E3EBA71845EBD200629405 /* cocosgui in Resources */,
 				151CDE0B1846EB9C00CA4C23 /* scenetest in Resources */,
 				151CDE121846F2E800CA4C23 /* armature in Resources */,
+				15CFB6D018725ED300162EE1 /* lua_cocos2d.lua in Resources */,
+				15CFB6D118725ED300162EE1 /* TriggerMng.lua in Resources */,
+				15CFB6D218725ED300162EE1 /* TriggerObj.lua in Resources */,
+				15CFB6D618729D8500162EE1 /* ObjectFactory.lua in Resources */,
+				15CFB6D718729D8500162EE1 /* TriggerBase.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
