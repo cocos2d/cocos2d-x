@@ -440,4 +440,20 @@ int CCLuaEngine::executeEventWithArgs(int nHandler, CCArray* pArgs)
     return  m_stack->executeFunctionByHandler(nHandler, nArgNums);
 }
 
+bool CCLuaEngine::parseConfig(CCScriptEngineProtocol::ConfigType type, const std::string& str)
+{
+    lua_getglobal(m_stack->getLuaState(), "__onParseConfig");
+    if (!lua_isfunction(m_stack->getLuaState(), -1))
+    {
+        CCLOG("[LUA ERROR] name '%s' does not represent a Lua function", "__onParseConfig");
+        lua_pop(m_stack->getLuaState(), 1);
+        return false;
+    }
+    
+    m_stack->pushInt((int)type);
+    m_stack->pushString(str.c_str());
+    
+    return m_stack->executeFunction(2);
+}
+
 NS_CC_END
