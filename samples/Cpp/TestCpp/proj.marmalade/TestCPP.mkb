@@ -391,10 +391,10 @@ files
 	UIPageViewTest.cpp
 	UIPageViewTest.h
 	
-	[Test/ExtensionsTest/CocoStudioGUITest/UIPanelTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest)
-	UIPanelTest.cpp
-	UIPanelTest.h
+	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
+	UILayoutTest.cpp
+	UILayoutTest.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest)
