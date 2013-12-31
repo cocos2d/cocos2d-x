@@ -683,6 +683,7 @@ cc.VisibleRect = {
     lazyInit: function(){
         if (!this._isInitialized) {
             this.init();
+            this._isInitialized = true;
         }
     },
     getWidth:function(){
