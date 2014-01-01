@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2012, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -52,6 +52,7 @@
 #endif
 
 /* The include stuff here below is mainly for time_t! */
+#include <sys/select.h>
 #include <sys/types.h>
 #include <time.h>
 
@@ -93,29 +94,21 @@ extern "C" {
 typedef void CURL;
 
 /*
- * Decorate exportable functions for Win32 and Symbian OS DLL linking.
- * This avoids using a .def file for building libcurl.dll.
+ * libcurl external API function linkage decorations.
  */
-#if (defined(WIN32) || defined(_WIN32) || defined(__SYMBIAN32__)) && \
-     !defined(CURL_STATICLIB)
-#if defined(BUILDING_LIBCURL)
-#define CURL_EXTERN  __declspec(dllexport)
-#else
-#define CURL_EXTERN  __declspec(dllimport)
-#endif
-#else
 
-#ifdef CURL_HIDDEN_SYMBOLS
-/*
- * This definition is used to make external definitions visible in the
- * shared library when symbols are hidden by default.  It makes no
- * difference when compiling applications whether this is set or not,
- * only when compiling the library.
- */
-#define CURL_EXTERN CURL_EXTERN_SYMBOL
+#ifdef CURL_STATICLIB
+#  define CURL_EXTERN
+#elif defined(WIN32) || defined(_WIN32) || defined(__SYMBIAN32__)
+#  if defined(BUILDING_LIBCURL)
+#    define CURL_EXTERN  __declspec(dllexport)
+#  else
+#    define CURL_EXTERN  __declspec(dllimport)
+#  endif
+#elif defined(BUILDING_LIBCURL) && defined(CURL_HIDDEN_SYMBOLS)
+#  define CURL_EXTERN CURL_EXTERN_SYMBOL
 #else
-#define CURL_EXTERN
-#endif
+#  define CURL_EXTERN
 #endif
 
 #ifndef curl_socket_typedef
@@ -309,8 +302,9 @@ typedef size_t (*curl_read_callback)(char *buffer,
                                       void *instream);
 
 typedef enum  {
-  CURLSOCKTYPE_IPCXN, /* socket created for a specific IP connection */
-  CURLSOCKTYPE_LAST   /* never use */
+  CURLSOCKTYPE_IPCXN,  /* socket created for a specific IP connection */
+  CURLSOCKTYPE_ACCEPT, /* socket created by accept() call */
+  CURLSOCKTYPE_LAST    /* never use */
 } curlsocktype;
 
 /* The return code from the sockopt_callback can signal information back
@@ -514,6 +508,8 @@ typedef enum {
   CURLE_RTSP_SESSION_ERROR,      /* 86 - mismatch of RTSP Session Ids */
   CURLE_FTP_BAD_FILE_LIST,       /* 87 - unable to parse FTP file list */
   CURLE_CHUNK_FAILED,            /* 88 - chunk callback reported error */
+  CURLE_NO_CONNECTION_AVAILABLE, /* 89 - No connection available, the
+                                    session will be queued */
   CURL_LAST /* never use! */
 } CURLcode;
 
@@ -631,6 +627,7 @@ typedef enum {
 #define CURLSSH_AUTH_PASSWORD  (1<<1) /* password */
 #define CURLSSH_AUTH_HOST      (1<<2) /* host key files */
 #define CURLSSH_AUTH_KEYBOARD  (1<<3) /* keyboard interactive */
+#define CURLSSH_AUTH_AGENT     (1<<4) /* agent (ssh-agent, pageant...) */
 #define CURLSSH_AUTH_DEFAULT CURLSSH_AUTH_ANY
 
 #define CURLGSSAPI_DELEGATION_NONE        0      /* no delegation (default) */
@@ -1045,9 +1042,8 @@ typedef enum {
   /* Set to the Entropy Gathering Daemon socket pathname */
   CINIT(EGDSOCKET, OBJECTPOINT, 77),
 
-  /* Time-out connect operations after this amount of seconds, if connects
-     are OK within this time, then fine... This only aborts the connect
-     phase. [Only works on unix-style/SIGALRM operating systems] */
+  /* Time-out connect operations after this amount of seconds, if connects are
+     OK within this time, then fine... This only aborts the connect phase. */
   CINIT(CONNECTTIMEOUT, LONG, 78),
 
   /* Function that will be called to store headers (instead of fwrite). The
@@ -1221,9 +1217,9 @@ typedef enum {
   CINIT(NETRC_FILE, OBJECTPOINT, 118),
 
   /* Enable SSL/TLS for FTP, pick one of:
-     CURLFTPSSL_TRY     - try using SSL, proceed anyway otherwise
-     CURLFTPSSL_CONTROL - SSL for the control connection or fail
-     CURLFTPSSL_ALL     - SSL for all communication or fail
+     CURLUSESSL_TRY     - try using SSL, proceed anyway otherwise
+     CURLUSESSL_CONTROL - SSL for the control connection or fail
+     CURLUSESSL_ALL     - SSL for all communication or fail
   */
   CINIT(USE_SSL, LONG, 119),
 
@@ -2022,6 +2018,7 @@ typedef enum {
 #define CURL_GLOBAL_ALL (CURL_GLOBAL_SSL|CURL_GLOBAL_WIN32)
 #define CURL_GLOBAL_NOTHING 0
 #define CURL_GLOBAL_DEFAULT CURL_GLOBAL_ALL
+#define CURL_GLOBAL_ACK_EINTR (1<<2)
 
 
 /*****************************************************************************

@@ -8,7 +8,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2011, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2012, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -150,6 +150,13 @@
 #define CURL_PULL_SYS_SOCKET_H 1
 #ifdef CURL_PULL_SYS_SOCKET_H
 #  include <sys/socket.h>
+#endif
+
+/* Configure process defines this to 1 when it finds out that system  */
+/* header file sys/poll.h must be included by the external interface. */
+/* #undef CURL_PULL_SYS_POLL_H */
+#ifdef CURL_PULL_SYS_POLL_H
+#  include <sys/poll.h>
 #endif
 
 /* The size of `long', as computed by sizeof. */

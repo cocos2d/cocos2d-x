@@ -18,6 +18,7 @@ public:
     void onMenuPostBinaryTestClicked(cocos2d::Object *sender);
     void onMenuPutTestClicked(cocos2d::Object *sender);
     void onMenuDeleteTestClicked(cocos2d::Object *sender);
+    void onMenuProgressTestClicked(cocos2d::Object *sender);
     
     //Http Response Callback
     void onHttpRequestCompleted(network::HttpClient *sender, network::HttpResponse *response);

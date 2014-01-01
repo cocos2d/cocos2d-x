@@ -1209,6 +1209,16 @@
 		D6408CAE1806513A00FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D6408CAF1806514400FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D6408CB01806515200FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		E4226620186443E8000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E4226623186443FF000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662418644408000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662518644410000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662618644418000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E42266271864441F000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662818644426000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E42266291864442D000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662A18644434000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
+		E422662B1864443C000F542B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E422661F186443E8000F542B /* Security.framework */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -2887,6 +2897,7 @@
 		B3AF01AB184313DE00A98B85 /* MobileBalanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileBalanced.h; sourceTree = "<group>"; };
 		B3AF01AC184313DE00A98B85 /* MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotorJoint.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		E422661F186443E8000F542B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -2900,6 +2911,7 @@
 				1A8C5668180E8E0700EF57C3 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A8C5669180E8E0700EF57C3 /* libCocosDenshion iOS.a in Frameworks */,
 				1A8C566A180E8E0700EF57C3 /* libluabindings iOS.a in Frameworks */,
+				E422662A18644434000F542B /* Security.framework in Frameworks */,
 				D6408CB01806515200FB5B4C /* CoreMotion.framework in Frameworks */,
 				1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */,
 				1A1197CC1785363400D62A44 /* OpenGLES.framework in Frameworks */,
@@ -2922,6 +2934,7 @@
 				1A8C589B180E8F8F00EF57C3 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A8C589C180E8F8F00EF57C3 /* libCocosDenshion iOS.a in Frameworks */,
 				1A8C589D180E8F8F00EF57C3 /* libluabindings iOS.a in Frameworks */,
+				E422662B1864443C000F542B /* Security.framework in Frameworks */,
 				D60AE43717F9142200757E4B /* CoreMotion.framework in Frameworks */,
 				1A119864178538E400D62A44 /* libz.dylib in Frameworks */,
 				1A119865178538E400D62A44 /* OpenGLES.framework in Frameworks */,
@@ -3007,6 +3020,7 @@
 			files = (
 				460E45DF18080238000CDD6D /* libcocos2dx iOS.a in Frameworks */,
 				460E45E018080238000CDD6D /* libCocosDenshion iOS.a in Frameworks */,
+				E422662418644408000F542B /* Security.framework in Frameworks */,
 				D6408CAB1806510600FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E16881784BDA100B0CA4A /* libz.dylib in Frameworks */,
 				A01E16891784BDA100B0CA4A /* Foundation.framework in Frameworks */,
@@ -3029,6 +3043,7 @@
 				1A9DCA62180E7453007A3AD4 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A9DCA63180E7453007A3AD4 /* libCocosDenshion iOS.a in Frameworks */,
 				1A9DCA64180E7453007A3AD4 /* libjsbindings iOS.a in Frameworks */,
+				E422662518644410000F542B /* Security.framework in Frameworks */,
 				D60AE43817F9143D00757E4B /* CoreMotion.framework in Frameworks */,
 				A01E17661784C06E00B0CA4A /* libz.dylib in Frameworks */,
 				A01E17671784C06E00B0CA4A /* Foundation.framework in Frameworks */,
@@ -3052,6 +3067,7 @@
 				1A3B1E91180E804F00497A22 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A3B1E92180E804F00497A22 /* libCocosDenshion iOS.a in Frameworks */,
 				1A3B1E93180E804F00497A22 /* libjsbindings iOS.a in Frameworks */,
+				E422662618644418000F542B /* Security.framework in Frameworks */,
 				D6408CAC1806511F00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E184B1784C45400B0CA4A /* libz.dylib in Frameworks */,
 				A01E18F91784C59400B0CA4A /* libsqlite3.dylib in Frameworks */,
@@ -3075,6 +3091,7 @@
 				1A3B1E16180E7E2700497A22 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A3B1E17180E7E2700497A22 /* libCocosDenshion iOS.a in Frameworks */,
 				1A3B1E18180E7E2700497A22 /* libjsbindings iOS.a in Frameworks */,
+				E42266271864441F000F542B /* Security.framework in Frameworks */,
 				D6408CAD1806512D00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18801784C4D600B0CA4A /* libz.dylib in Frameworks */,
 				A01E18811784C4D600B0CA4A /* Foundation.framework in Frameworks */,
@@ -3098,6 +3115,7 @@
 				1A3B1F45180E82DC00497A22 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A3B1F46180E82DC00497A22 /* libCocosDenshion iOS.a in Frameworks */,
 				1A3B1F47180E82DC00497A22 /* libjsbindings iOS.a in Frameworks */,
+				E422662818644426000F542B /* Security.framework in Frameworks */,
 				D6408CAE1806513A00FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18B51784C4DC00B0CA4A /* libz.dylib in Frameworks */,
 				A01E18B61784C4DC00B0CA4A /* Foundation.framework in Frameworks */,
@@ -3121,6 +3139,7 @@
 				1A3B1EED180E81B500497A22 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1A3B1EEE180E81B500497A22 /* libCocosDenshion iOS.a in Frameworks */,
 				1A3B1EEF180E81B500497A22 /* libjsbindings iOS.a in Frameworks */,
+				E42266291864442D000F542B /* Security.framework in Frameworks */,
 				D6408CAF1806514400FB5B4C /* CoreMotion.framework in Frameworks */,
 				A01E18EA1784C4E000B0CA4A /* libz.dylib in Frameworks */,
 				A01E18EB1784C4E000B0CA4A /* Foundation.framework in Frameworks */,
@@ -3296,6 +3315,7 @@
 				1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */,
 				1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */,
 				1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */,
+				E4226623186443FF000F542B /* Security.framework in Frameworks */,
 				D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */,
 				A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */,
 				A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */,
@@ -3317,6 +3337,7 @@
 				D6408CA8180650F200FB5B4C /* CoreMotion.framework in Frameworks */,
 				A07A53751784AC9B0073F6A7 /* libz.dylib in Frameworks */,
 				A07A537B1784AC9B0073F6A7 /* OpenGLES.framework in Frameworks */,
+				E4226620186443E8000F542B /* Security.framework in Frameworks */,
 				A07A53761784AC9B0073F6A7 /* Foundation.framework in Frameworks */,
 				A07A53771784AC9B0073F6A7 /* AudioToolbox.framework in Frameworks */,
 				A07A53781784AC9B0073F6A7 /* OpenAL.framework in Frameworks */,
@@ -5123,6 +5144,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E422661F186443E8000F542B /* Security.framework */,
 				D60AE43317F7FFE100757E4B /* CoreMotion.framework */,
 				A035A71117822E9E00987F6C /* libsqlite3.dylib */,
 				1A9F808C177E98A600D9A1CB /* libcurl.dylib */,

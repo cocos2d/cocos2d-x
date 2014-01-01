@@ -99,6 +99,7 @@ private:
      * @return bool
      */
     bool lazyInitThreadSemphore();
+    bool pollCurlEvents();
     void networkThread();
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
