@@ -65,7 +65,7 @@ public:
     virtual void nextCallback(Object* sender, TouchEventType type);
     
     /** Title label of the scene. */    
-    CC_SYNTHESIZE_READONLY(gui::Label*, _sceneTitle, SceneTitle)
+    CC_SYNTHESIZE_READONLY(gui::Text*, _sceneTitle, SceneTitle)
     
     UI_SCENE_CREATE_FUNC(UIScene);
     

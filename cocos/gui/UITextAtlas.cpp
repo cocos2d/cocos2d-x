@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/UILabelAtlas.h"
+#include "gui/UITextAtlas.h"
 
 NS_CC_BEGIN
 
@@ -76,7 +76,7 @@ void UICCLabelAtlas::draw()
 
 
 
-LabelAtlas::LabelAtlas():
+TextAtlas::TextAtlas():
 _labelAtlasRenderer(nullptr),
 _stringValue(""),
 _charMapFileName(""),
@@ -87,14 +87,14 @@ _startCharMap("")
     
 }
 
-LabelAtlas::~LabelAtlas()
+TextAtlas::~TextAtlas()
 {
     
 }
 
-LabelAtlas* LabelAtlas::create()
+TextAtlas* TextAtlas::create()
 {
-    LabelAtlas* widget = new LabelAtlas();
+    TextAtlas* widget = new TextAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -104,13 +104,13 @@ LabelAtlas* LabelAtlas::create()
     return nullptr;
 }
 
-void LabelAtlas::initRenderer()
+void TextAtlas::initRenderer()
 {
     _labelAtlasRenderer = UICCLabelAtlas::create();
     Node::addChild(_labelAtlasRenderer, LABELATLASRENDERERZ, -1);
 }
 
-void LabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
+void TextAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
 {
     _stringValue = stringValue;
     _charMapFileName = charMapFile;
@@ -122,41 +122,41 @@ void LabelAtlas::setProperty(const std::string& stringValue, const std::string& 
     labelAtlasScaleChangedWithSize();
 }
 
-void LabelAtlas::setStringValue(const std::string& value)
+void TextAtlas::setStringValue(const std::string& value)
 {
     _stringValue = value;
     _labelAtlasRenderer->setString(value);
     labelAtlasScaleChangedWithSize();
 }
 
-const std::string& LabelAtlas::getStringValue() const
+const std::string& TextAtlas::getStringValue() const
 {
     return _labelAtlasRenderer->getString();
 }
 
-void LabelAtlas::setAnchorPoint(const Point &pt)
+void TextAtlas::setAnchorPoint(const Point &pt)
 {
     Widget::setAnchorPoint(pt);
     _labelAtlasRenderer->setAnchorPoint(Point(pt.x, pt.y));
 }
 
-void LabelAtlas::onSizeChanged()
+void TextAtlas::onSizeChanged()
 {
     Widget::onSizeChanged();
     labelAtlasScaleChangedWithSize();
 }
 
-const Size& LabelAtlas::getContentSize() const
+const Size& TextAtlas::getContentSize() const
 {
     return _labelAtlasRenderer->getContentSize();
 }
 
-Node* LabelAtlas::getVirtualRenderer()
+Node* TextAtlas::getVirtualRenderer()
 {
     return _labelAtlasRenderer;
 }
 
-void LabelAtlas::labelAtlasScaleChangedWithSize()
+void TextAtlas::labelAtlasScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -178,19 +178,19 @@ void LabelAtlas::labelAtlasScaleChangedWithSize()
     }
 }
 
-std::string LabelAtlas::getDescription() const
+std::string TextAtlas::getDescription() const
 {
-    return "LabelAtlas";
+    return "TextAtlas";
 }
 
-Widget* LabelAtlas::createCloneInstance()
+Widget* TextAtlas::createCloneInstance()
 {
-    return LabelAtlas::create();
+    return TextAtlas::create();
 }
 
-void LabelAtlas::copySpecialProperties(Widget *widget)
+void TextAtlas::copySpecialProperties(Widget *widget)
 {
-    LabelAtlas* labelAtlas = dynamic_cast<LabelAtlas*>(widget);
+    TextAtlas* labelAtlas = dynamic_cast<TextAtlas*>(widget);
     if (labelAtlas)
     {
         setProperty(labelAtlas->_stringValue, labelAtlas->_charMapFileName, labelAtlas->_itemWidth, labelAtlas->_itemHeight, labelAtlas->_startCharMap);

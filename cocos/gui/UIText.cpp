@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/UILabel.h"
+#include "gui/UIText.h"
 
 NS_CC_BEGIN
 
@@ -30,7 +30,7 @@ namespace gui {
 
 #define LABELRENDERERZ (-1)
 
-Label::Label():
+Text::Text():
 _touchScaleChangeEnabled(false),
 _normalScaleValueX(1.0f),
 _normalScaleValueY(1.0f),
@@ -41,14 +41,14 @@ _labelRenderer(nullptr)
 {
 }
 
-Label::~Label()
+Text::~Text()
 {
     
 }
 
-Label* Label::create()
+Text* Text::create()
 {
-    Label* widget = new Label();
+    Text* widget = new Text();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -58,7 +58,7 @@ Label* Label::create()
     return nullptr;
 }
 
-bool Label::init()
+bool Text::init()
 {
     if (Widget::init())
     {
@@ -67,13 +67,13 @@ bool Label::init()
     return false;
 }
 
-void Label::initRenderer()
+void Text::initRenderer()
 {
     _labelRenderer = LabelTTF::create();
     Node::addChild(_labelRenderer, LABELRENDERERZ, -1);
 }
 
-void Label::setText(const std::string& text)
+void Text::setText(const std::string& text)
 {
 	if (text.size()==0)
 		return;
@@ -82,79 +82,79 @@ void Label::setText(const std::string& text)
     labelScaleChangedWithSize();
 }
 
-const std::string& Label::getStringValue()
+const std::string& Text::getStringValue()
 {
     return _labelRenderer->getString();
 }
 
-size_t Label::getStringLength()
+size_t Text::getStringLength()
 {
     return _labelRenderer->getString().size();
 }
 
-void Label::setFontSize(int size)
+void Text::setFontSize(int size)
 {
     _fontSize = size;
     _labelRenderer->setFontSize(size);
     labelScaleChangedWithSize();
 }
 
-void Label::setFontName(const std::string& name)
+void Text::setFontName(const std::string& name)
 {
     _fontName = name;
     _labelRenderer->setFontName(name);
     labelScaleChangedWithSize();
 }
 
-void Label::setTextAreaSize(const Size &size)
+void Text::setTextAreaSize(const Size &size)
 {
     _labelRenderer->setDimensions(size);
     labelScaleChangedWithSize();
 }
 
-void Label::setTextHorizontalAlignment(TextHAlignment alignment)
+void Text::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void Label::setTextVerticalAlignment(TextVAlignment alignment)
+void Text::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _labelRenderer->setVerticalAlignment(alignment);
     labelScaleChangedWithSize();
 }
 
-void Label::setTouchScaleChangeEnabled(bool enable)
+void Text::setTouchScaleChangeEnabled(bool enable)
 {
     _touchScaleChangeEnabled = enable;
     _normalScaleValueX = getScaleX();
     _normalScaleValueY = getScaleY();
 }
     
-void Label::setScale(float fScale)
+void Text::setScale(float fScale)
 {
     Widget::setScale(fScale);
     _normalScaleValueX = _normalScaleValueY = fScale;
 }
     
-void Label::setScaleX(float fScaleX)
+void Text::setScaleX(float fScaleX)
 {
     Widget::setScaleX(fScaleX);
     _normalScaleValueX = fScaleX;
 }
     
-void Label::setScaleY(float fScaleY)
+void Text::setScaleY(float fScaleY)
 {
     Widget::setScaleY(fScaleY);
     _normalScaleValueY = fScaleY;
 }
 
-bool Label::isTouchScaleChangeEnabled()
+bool Text::isTouchScaleChangeEnabled()
 {
     return _touchScaleChangeEnabled;
 }
 
-void Label::onPressStateChangedToNormal()
+void Text::onPressStateChangedToNormal()
 {
     if (!_touchScaleChangeEnabled)
     {
@@ -163,7 +163,7 @@ void Label::onPressStateChangedToNormal()
     clickScale(_normalScaleValueX, _normalScaleValueY);
 }
 
-void Label::onPressStateChangedToPressed()
+void Text::onPressStateChangedToPressed()
 {
     if (!_touchScaleChangeEnabled)
     {
@@ -172,60 +172,60 @@ void Label::onPressStateChangedToPressed()
     clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
-void Label::onPressStateChangedToDisabled()
+void Text::onPressStateChangedToDisabled()
 {
     
 }
 
-void Label::clickScale(float scaleX, float scaleY)
+void Text::clickScale(float scaleX, float scaleY)
 {
     setScaleX(scaleX);
     setScaleY(scaleY);
 }
 
-void Label::setFlipX(bool flipX)
+void Text::setFlipX(bool flipX)
 {
     _labelRenderer->setFlippedX(flipX);
 }
 
-void Label::setFlipY(bool flipY)
+void Text::setFlipY(bool flipY)
 {
     _labelRenderer->setFlippedY(flipY);
 }
 
-bool Label::isFlipX()
+bool Text::isFlipX()
 {
     return _labelRenderer->isFlippedX();
 }
 
-bool Label::isFlipY()
+bool Text::isFlipY()
 {
     return _labelRenderer->isFlippedY();
 }
 
-void Label::setAnchorPoint(const Point &pt)
+void Text::setAnchorPoint(const Point &pt)
 {
     Widget::setAnchorPoint(pt);
     _labelRenderer->setAnchorPoint(pt);
 }
 
-void Label::onSizeChanged()
+void Text::onSizeChanged()
 {
     Widget::onSizeChanged();
     labelScaleChangedWithSize();
 }
 
-const Size& Label::getContentSize() const
+const Size& Text::getContentSize() const
 {
     return _labelRenderer->getContentSize();
 }
 
-Node* Label::getVirtualRenderer()
+Node* Text::getVirtualRenderer()
 {
     return _labelRenderer;
 }
 
-void Label::labelScaleChangedWithSize()
+void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -248,19 +248,19 @@ void Label::labelScaleChangedWithSize()
     
 }
 
-std::string Label::getDescription() const
+std::string Text::getDescription() const
 {
     return "Label";
 }
 
-Widget* Label::createCloneInstance()
+Widget* Text::createCloneInstance()
 {
-    return Label::create();
+    return Text::create();
 }
 
-void Label::copySpecialProperties(Widget *widget)
+void Text::copySpecialProperties(Widget *widget)
 {
-    Label* label = dynamic_cast<Label*>(widget);
+    Text* label = dynamic_cast<Text*>(widget);
     if (label)
     {
         setFontName(label->_fontName.c_str());

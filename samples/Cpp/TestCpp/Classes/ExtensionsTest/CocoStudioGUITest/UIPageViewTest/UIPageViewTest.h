@@ -38,7 +38,7 @@ public:
     
 protected:
     UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest__) */
