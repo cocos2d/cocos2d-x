@@ -20,27 +20,29 @@ print 'pr_num:' + str(pr_num)
 #build for pull request action 'open' and 'synchronize', skip 'close'
 action = payload['action']
 print 'action: ' + action
-if((action != 'open') and (action != 'synchronize')):
-    print 'pull request #' + str(pr_num) + 'is closed, no build triggered'
+if((action != 'opened') and (action != 'synchronize')):
+    print 'pull request #' + str(pr_num) + ' is closed, no build triggered'
     exit(0)
 
 
 pr = payload['pull_request']
 url = pr['html_url']
 print "url:" + url
-pr_desc = '<a href='+ url + '> pr#' + str(pr_num) + '</a>'
+pr_desc = '<h3><a href='+ url + '> pr#' + str(pr_num) + '</a></h3>'
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
 def set_description(desc):
     req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(os.environ['BUILD_URL'] + 'submitDescription', req_data)
-    print(os.environ['BUILD_URL'])
+    #print(os.environ['BUILD_URL'])
     req.add_header('Content-Type', 'application/x-www-form-urlencoded') 
     base64string = base64.encodestring(os.environ['JENKINS_ADMIN']+ ":" + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
     req.add_header("Authorization", "Basic " + base64string)
     urllib2.urlopen(req)
-
-set_description(pr_desc)
+try:
+    set_description(pr_desc)
+except Exception as e:
+    print e
 
 #get statuses url
 statuses_url = pr['statuses_url']
@@ -53,22 +55,26 @@ target_url = os.environ['BUILD_URL']
 data = {"state":"pending", "target_url":target_url}
 acccess_token = os.environ['GITHUB_ACCESS_TOKEN']
 Headers = {"Authorization":"token " + acccess_token} 
-requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+try:
+    requests.post(statuses_url, data=json.dumps(data), headers=Headers)
+    
+    #reset path to workspace root
+    os.system("cd " + os.environ['WORKSPACE']);
 
-#reset path to workspace root
-os.system("cd " + os.environ['WORKSPACE']);
+    #fetch pull request to local repo
+    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
+    os.system(git_fetch_pr)
 
-#fell pull request to local repo
-git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
-os.system(git_fetch_pr)
+    #checkout
+    git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
+    os.system(git_checkout)
 
-#checkout
-git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
-os.system(git_checkout)
+    #update submodule
+    git_update_submodule = "git submodule update --init --force"
+    os.system(git_update_submodule)
+except Exception as e:
+    print e
 
-#update submodule
-git_update_submodule = "git submodule update --init --force"
-os.system(git_update_submodule)
 
 #build
 #TODO: support android-mac build currently
@@ -91,13 +97,15 @@ if ret == 0:
 else:
     exit_code = 1
     data['state'] = "failure"
+try:
+    #set commit status
+    requests.post(statuses_url, data=json.dumps(data), headers=Headers)
 
-#set commit status
-requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-
-#clean workspace
-os.system("cd " + os.environ['WORKSPACE']);
-os.system("git checkout develop")
-os.system("git branch -D pull" + str(pr_num))
+    #clean workspace
+    os.system("cd " + os.environ['WORKSPACE']);
+    os.system("git checkout develop")
+    os.system("git branch -D pull" + str(pr_num))
+except Exception as e:
+    print e 
 exit(exit_code)
 
