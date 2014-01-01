@@ -823,18 +823,18 @@
 		1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */; };
 		1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
 		1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
-		1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
-		1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
-		1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UILabel.h */; };
-		1A8C5913180E92CC00EF57C3 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UILabel.h */; };
-		1A8C5914180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */; };
-		1A8C5915180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */; };
-		1A8C5916180E92CC00EF57C3 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */; };
-		1A8C5917180E92CC00EF57C3 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */; };
-		1A8C5918180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */; };
-		1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */; };
-		1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
-		1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
+		1A8C5910180E92CC00EF57C3 /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UIText.cpp */; };
+		1A8C5911180E92CC00EF57C3 /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UIText.cpp */; };
+		1A8C5912180E92CC00EF57C3 /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UIText.h */; };
+		1A8C5913180E92CC00EF57C3 /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UIText.h */; };
+		1A8C5914180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */; };
+		1A8C5915180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */; };
+		1A8C5916180E92CC00EF57C3 /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */; };
+		1A8C5917180E92CC00EF57C3 /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */; };
+		1A8C5918180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */; };
+		1A8C5919180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */; };
+		1A8C591A180E92CC00EF57C3 /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */; };
+		1A8C591B180E92CC00EF57C3 /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */; };
 		1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */; };
@@ -2458,12 +2458,12 @@
 		1A8C58CC180E92CC00EF57C3 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
 		1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageView.cpp; sourceTree = "<group>"; };
 		1A8C58CE180E92CC00EF57C3 /* UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageView.h; sourceTree = "<group>"; };
-		1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
-		1A8C58D2180E92CC00EF57C3 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
-		1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlas.cpp; sourceTree = "<group>"; };
-		1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlas.h; sourceTree = "<group>"; };
-		1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFont.cpp; sourceTree = "<group>"; };
-		1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFont.h; sourceTree = "<group>"; };
+		1A8C58D1180E92CC00EF57C3 /* UIText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIText.cpp; sourceTree = "<group>"; };
+		1A8C58D2180E92CC00EF57C3 /* UIText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIText.h; sourceTree = "<group>"; };
+		1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextAtlas.cpp; sourceTree = "<group>"; };
+		1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextAtlas.h; sourceTree = "<group>"; };
+		1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBMFont.cpp; sourceTree = "<group>"; };
+		1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextBMFont.h; sourceTree = "<group>"; };
 		1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
 		1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutDefine.h; sourceTree = "<group>"; };
 		1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBar.cpp; sourceTree = "<group>"; };
@@ -4218,12 +4218,12 @@
 				1A8C58CC180E92CC00EF57C3 /* UIHelper.h */,
 				1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */,
 				1A8C58CE180E92CC00EF57C3 /* UIImageView.h */,
-				1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */,
-				1A8C58D2180E92CC00EF57C3 /* UILabel.h */,
-				1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */,
-				1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */,
-				1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */,
-				1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */,
+				1A8C58D1180E92CC00EF57C3 /* UIText.cpp */,
+				1A8C58D2180E92CC00EF57C3 /* UIText.h */,
+				1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */,
+				1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */,
+				1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */,
+				1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */,
 				1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */,
 				1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */,
 				1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */,
@@ -5667,9 +5667,9 @@
 				1A8C58FE180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5906180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */,
-				1A8C5916180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
-				1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
+				1A8C5912180E92CC00EF57C3 /* UIText.h in Headers */,
+				1A8C5916180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
+				1A8C591A180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
 				1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592A180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592E180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -6242,9 +6242,9 @@
 				1A8C58FF180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5907180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C5913180E92CC00EF57C3 /* UILabel.h in Headers */,
-				1A8C5917180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
-				1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
+				1A8C5913180E92CC00EF57C3 /* UIText.h in Headers */,
+				1A8C5917180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
+				1A8C591B180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
 				1A8C5923180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592B180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592F180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -6994,9 +6994,9 @@
 				1A8C58FC180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5904180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5908180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */,
-				1A8C5914180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
-				1A8C5918180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
+				1A8C5910180E92CC00EF57C3 /* UIText.cpp in Sources */,
+				1A8C5914180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */,
+				1A8C5918180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */,
 				59A79D511821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
 				1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5928180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,
@@ -7519,9 +7519,9 @@
 				1A8C58FD180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5905180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */,
-				1A8C5915180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
-				1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
+				1A8C5911180E92CC00EF57C3 /* UIText.cpp in Sources */,
+				1A8C5915180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */,
+				1A8C5919180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */,
 				59A79D521821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
 				1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5929180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,

@@ -35,23 +35,23 @@ namespace gui {
 *   @js NA
 *   @lua NA
 */
-class Label : public Widget
+class Text : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    Label();
+    Text();
     
     /**
      * Default destructor
      */
-    virtual ~Label();
+    virtual ~Text();
     
     /**
      * Allocates and initializes.
      */
-    static Label* create();
+    static Text* create();
     
     /**
      * Changes the string value of label.
