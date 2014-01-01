@@ -19,15 +19,15 @@
  *  MA  02110-1301  USA
  */
 
-#ifndef __LIBWEBSOCKET_H__
-#define __LIBWEBSOCKET_H__
+#ifndef LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
+#define LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
 
 #ifdef __cplusplus
 extern "C" {
 #include <cstddef>
 #endif
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -35,9 +35,9 @@ extern "C" {
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stddef.h>
-#include "../win32port/win32helpers/websock-w32.h"
+#include "websock-w32.h"
 
-#include "../win32port/win32helpers/gettimeofday.h"
+#include "gettimeofday.h"
 
 #define strcasecmp stricmp
 #define getdtablesize() 30000
@@ -127,6 +127,8 @@ LWS_VISIBLE LWS_EXTERN void lwsl_hexdump(void *buf, size_t len);
 
 #endif
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 enum libwebsocket_context_options {
 	LWS_SERVER_OPTION_REQUIRE_VALID_OPENSSL_CLIENT_CERT = 2,
 	LWS_SERVER_OPTION_SKIP_SERVER_CANONICAL_NAME = 4,
@@ -138,6 +140,7 @@ enum libwebsocket_callback_reasons {
 	LWS_CALLBACK_CLIENT_FILTER_PRE_ESTABLISH,
 	LWS_CALLBACK_CLIENT_ESTABLISHED,
 	LWS_CALLBACK_CLOSED,
+	LWS_CALLBACK_CLOSED_HTTP,
 	LWS_CALLBACK_RECEIVE,
 	LWS_CALLBACK_CLIENT_RECEIVE,
 	LWS_CALLBACK_CLIENT_RECEIVE_PONG,
@@ -147,6 +150,7 @@ enum libwebsocket_callback_reasons {
 	LWS_CALLBACK_HTTP_FILE_COMPLETION,
 	LWS_CALLBACK_HTTP_WRITEABLE,
 	LWS_CALLBACK_FILTER_NETWORK_CONNECTION,
+	LWS_CALLBACK_FILTER_HTTP_CONNECTION,
 	LWS_CALLBACK_FILTER_PROTOCOL_CONNECTION,
 	LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS,
 	LWS_CALLBACK_OPENSSL_LOAD_EXTRA_SERVER_VERIFY_CERTS,
@@ -250,6 +254,23 @@ enum lws_token_indexes {
 	WSI_TOKEN_ACCEPT,
 	WSI_TOKEN_NONCE,
 	WSI_TOKEN_HTTP,
+
+	/* http-related */
+	WSI_TOKEN_HTTP_ACCEPT,
+	WSI_TOKEN_HTTP_IF_MODIFIED_SINCE,
+	WSI_TOKEN_HTTP_ACCEPT_ENCODING,
+	WSI_TOKEN_HTTP_ACCEPT_LANGUAGE,
+	WSI_TOKEN_HTTP_PRAGMA,
+	WSI_TOKEN_HTTP_CACHE_CONTROL,
+	WSI_TOKEN_HTTP_AUTHORIZATION,
+	WSI_TOKEN_HTTP_COOKIE,
+	WSI_TOKEN_HTTP_CONTENT_TYPE,
+	WSI_TOKEN_HTTP_DATE,
+	WSI_TOKEN_HTTP_RANGE,
+	WSI_TOKEN_HTTP_REFERER,
+	WSI_TOKEN_HTTP_URI_ARGS,
+
+
 	WSI_TOKEN_MUXURL,
 
 	/* use token storage to stash these */
@@ -376,6 +397,34 @@ enum lws_close_status {
 	LWS_CLOSE_STATUS_TLS_FAILURE = 1015,
 };
 
+enum http_status {
+	HTTP_STATUS_BAD_REQUEST = 400,
+	HTTP_STATUS_UNAUTHORIZED,
+	HTTP_STATUS_PAYMENT_REQUIRED,
+	HTTP_STATUS_FORBIDDEN,
+	HTTP_STATUS_NOT_FOUND,
+	HTTP_STATUS_METHOD_NOT_ALLOWED,
+	HTTP_STATUS_NOT_ACCEPTABLE,
+	HTTP_STATUS_PROXY_AUTH_REQUIRED,
+	HTTP_STATUS_REQUEST_TIMEOUT,
+	HTTP_STATUS_CONFLICT,
+	HTTP_STATUS_GONE,
+	HTTP_STATUS_LENGTH_REQUIRED,
+	HTTP_STATUS_PRECONDITION_FAILED,
+	HTTP_STATUS_REQ_ENTITY_TOO_LARGE,
+	HTTP_STATUS_REQ_URI_TOO_LONG,
+	HTTP_STATUS_UNSUPPORTED_MEDIA_TYPE,
+	HTTP_STATUS_REQ_RANGE_NOT_SATISFIABLE,
+	HTTP_STATUS_EXPECTATION_FAILED,
+
+	HTTP_STATUS_INTERNAL_SERVER_ERROR = 500,
+	HTTP_STATUS_NOT_IMPLEMENTED,
+	HTTP_STATUS_BAD_GATEWAY,
+	HTTP_STATUS_SERVICE_UNAVAILABLE,
+	HTTP_STATUS_GATEWAY_TIMEOUT,
+	HTTP_STATUS_HTTP_VERSION_NOT_SUPPORTED,
+};
+
 struct libwebsocket;
 struct libwebsocket_context;
 /* needed even with extensions disabled for create context */
@@ -418,6 +467,8 @@ struct libwebsocket_extension;
  *				a handshake with the remote server
  *
  *	LWS_CALLBACK_CLOSED: when the websocket session ends
+ *
+ *	LWS_CALLBACK_CLOSED_HTTP: when a HTTP (non-websocket) session ends
  *
  *	LWS_CALLBACK_RECEIVE: data has appeared for this server endpoint from a
  *				remote client, it can be found at *in and is
@@ -473,15 +524,30 @@ struct libwebsocket_extension;
  *		Because this happens immediately after the network connection
  *		from the client, there's no websocket protocol selected yet so
  *		this callback is issued only to protocol 0.
+ * 
+ *	LWS_CALLBACK_FILTER_HTTP_CONNECTION: called when the request has
+ *		been received and parsed from the client, but the response is
+ *		not sent yet.  Return non-zero to disallow the connection.
+ *		@user is a pointer to the connection user space allocation,
+ *		@in is the URI, eg, "/"
+ *		In your handler you can use the public APIs
+ *		lws_hdr_total_length() / lws_hdr_copy() to access all of the
+ *		headers using the header enums lws_token_indexes from
+ *		libwebsockets.h to check for and read the supported header
+ *		presence and content before deciding to allow the http
+ *		connection to proceed or to kill the connection.
  *
  *	LWS_CALLBACK_FILTER_PROTOCOL_CONNECTION: called when the handshake has
  *		been received and parsed from the client, but the response is
  *		not sent yet.  Return non-zero to disallow the connection.
- *		@user is a pointer to an array of struct lws_tokens, you can
- *		use the header enums lws_token_indexes from libwebsockets.h
- *		to check for and read the supported header presence and
- *		content before deciding to allow the handshake to proceed or
- *		to kill the connection.
+ *		@user is a pointer to the connection user space allocation,
+ *		@in is the requested protocol name
+ *		In your handler you can use the public APIs
+ *		lws_hdr_total_length() / lws_hdr_copy() to access all of the
+ *		headers using the header enums lws_token_indexes from
+ *		libwebsockets.h to check for and read the supported header
+ *		presence and content before deciding to allow the handshake
+ *		to proceed or to kill the connection.
  *
  *	LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS: if configured for
  *		including OpenSSL support, this callback allows your user code
@@ -703,6 +769,14 @@ typedef int (extension_callback_function)(struct libwebsocket_context *context,
  *		libwebsockets_remaining_packet_payload().  Notice that you
  *		just talk about frame size here, the LWS_SEND_BUFFER_PRE_PADDING
  *		and post-padding are automatically also allocated on top.
+ * @no_buffer_all_partial_tx:  Leave at zero if you want the library to take
+ *		care of all partial tx for you.  It's useful if you only have
+ *		small tx packets and the chance of any truncated send is small
+ *		enough any additional malloc / buffering overhead is less
+ *		painful than writing the code to deal with partial sends.  For
+ *		protocols where you stream big blocks, set to nonzero and use
+ *		the return value from libwebsocket_write() to manage how much
+ *		got send yourself.
  * @owning_server:	the server init call fills in this opaque pointer when
  *		registering this protocol with the server.
  * @protocol_index: which protocol we are starting from zero
@@ -717,6 +791,7 @@ struct libwebsocket_protocols {
 	callback_function *callback;
 	size_t per_session_data_size;
 	size_t rx_buffer_size;
+	int no_buffer_all_partial_tx;
 
 	/*
 	 * below are filled in on server init and can be left uninitialized,
@@ -815,6 +890,9 @@ lwsl_emit_syslog(int level, const char *line);
 
 LWS_VISIBLE LWS_EXTERN struct libwebsocket_context *
 libwebsocket_create_context(struct lws_context_creation_info *info);
+	
+LWS_VISIBLE LWS_EXTERN int
+libwebsocket_set_proxy(struct libwebsocket_context *context, const char *proxy);
 
 LWS_VISIBLE LWS_EXTERN void
 libwebsocket_context_destroy(struct libwebsocket_context *context);
@@ -828,6 +906,23 @@ libwebsocket_service_fd(struct libwebsocket_context *context,
 
 LWS_VISIBLE LWS_EXTERN void *
 libwebsocket_context_user(struct libwebsocket_context *context);
+
+enum pending_timeout {
+	NO_PENDING_TIMEOUT = 0,
+	PENDING_TIMEOUT_AWAITING_PROXY_RESPONSE,
+	PENDING_TIMEOUT_AWAITING_CONNECT_RESPONSE,
+	PENDING_TIMEOUT_ESTABLISH_WITH_SERVER,
+	PENDING_TIMEOUT_AWAITING_SERVER_RESPONSE,
+	PENDING_TIMEOUT_AWAITING_PING,
+	PENDING_TIMEOUT_CLOSE_ACK,
+	PENDING_TIMEOUT_AWAITING_EXTENSION_CONNECT_RESPONSE,
+	PENDING_TIMEOUT_SENT_CLIENT_HANDSHAKE,
+	PENDING_TIMEOUT_SSL_ACCEPT,
+};
+
+LWS_EXTERN void
+libwebsocket_set_timeout(struct libwebsocket *wsi,
+					 enum pending_timeout reason, int secs);
 
 /*
  * IMPORTANT NOTICE!
@@ -871,10 +966,15 @@ libwebsocket_write(struct libwebsocket *wsi, unsigned char *buf, size_t len,
 LWS_VISIBLE LWS_EXTERN int
 libwebsockets_serve_http_file(struct libwebsocket_context *context,
 			struct libwebsocket *wsi, const char *file,
-						     const char *content_type);
+			const char *content_type, const char *other_headers);
 LWS_VISIBLE LWS_EXTERN int
 libwebsockets_serve_http_file_fragment(struct libwebsocket_context *context,
 			struct libwebsocket *wsi);
+
+LWS_VISIBLE int libwebsockets_return_http_status(
+		struct libwebsocket_context *context,
+			struct libwebsocket *wsi, unsigned int code,
+							const char *html_body);
 
 LWS_VISIBLE LWS_EXTERN const struct libwebsocket_protocols *
 libwebsockets_get_protocol(struct libwebsocket *wsi);
