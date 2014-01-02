@@ -32,7 +32,7 @@
 
 #include "platform/CCFileUtils.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace network {
 
@@ -500,5 +500,7 @@ void HttpClient::dispatchResponseCallbacks()
 }
 
 }
+
+NS_CC_END
 
 
