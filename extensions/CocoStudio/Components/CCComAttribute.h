@@ -60,10 +60,7 @@ public:
    float  getFloat(const char *key, float def = 0.0f) const;
    bool   getBool(const char *key, bool def = false) const;
    const char* getCString(const char *key, const char *def = NULL) const;
-   /**
-    *  @js NA
-    */
-   void parse(const char *data);
+   
 private:
    cocos2d::CCDictionary *_dict;
 };

@@ -1,3 +1,7 @@
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/acts"
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/cons"
+require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/eventDef"
+
 local SceneEditorTestLayer = class("SceneEditorTestLayer")
 SceneEditorTestLayer._curNode = nil
 
@@ -47,7 +51,56 @@ function SceneEditorTestLayer:createGameScene()
 
     ActionManager:shareManager():playActionByName("startMenu_1.json","Animation1")
 
+    local function onNodeEvent(event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end
+
+    self:registerScriptHandler(onNodeEvent)
+
+    local function onTouchEvent(eventType, x, y)
+        if eventType == "began" then
+            return self:onTouchBegan(x, y)
+        elseif eventType == "moved" then
+            self:onTouchMoved(x, y)
+        elseif eventType == "ended" then
+            self:onTouchEnded(x,y)
+        elseif eventType == "cancelled" then
+            self:onTouchCancelled(x, y)
+        end
+    end
+    self:setTouchEnabled(true)
+    self:registerScriptTouchHandler(onTouchEvent)
+
     return node
+end
+
+function SceneEditorTestLayer:onEnter()
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_ENTERSCENE)
+end
+
+function SceneEditorTestLayer:onExit()
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_LEAVESCENE)
+end
+
+function SceneEditorTestLayer:onTouchBegan(x,y)
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHBEGAN)
+    return true
+end
+
+function SceneEditorTestLayer:onTouchMoved(x,y)
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHMOVED)
+end
+
+function SceneEditorTestLayer:onTouchEnded(x,y)
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHENDED)
+end
+
+function SceneEditorTestLayer:onTouchCancelled(x,y)
+    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHCANCELLED)
 end
 
 function SceneEditorTestLayer.create()

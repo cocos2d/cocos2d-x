@@ -606,7 +606,7 @@ public:
      *
      * @return a CCNode object whose tag equals to the input parameter
      */
-    CCNode * getChildByTag(int tag);
+    virtual CCNode * getChildByTag(int tag);
     /**
      * Return an array of children
      *
@@ -630,7 +630,7 @@ public:
      *
      * @return The amount of children.
      */
-    unsigned int getChildrenCount(void) const;
+    virtual unsigned int getChildrenCount(void) const;
     
     /**
      * Sets the parent node

@@ -12,8 +12,7 @@ class CCLabelBMFont : public CCSpriteBatchNode
 	void setString(const char *label, bool fromUpdate);
     void setCString(const char *label);
 	const char* getString(void);
-
-	void setAnchorPoint(const CCPoint & var);
+    
 	void setAlignment(CCTextAlignment alignment);
 	void setWidth(float width);
 	void setLineBreakWithoutSpace(bool breakWithoutSpace);

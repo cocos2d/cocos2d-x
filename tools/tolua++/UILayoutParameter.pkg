@@ -7,10 +7,10 @@ typedef enum
 }LayoutParameterType;
 
 
-class UILayoutParameter : public CCObject
+class LayoutParameter : public CCObject
 {
-    UILayoutParameter();
-    virtual ~UILayoutParameter();
-    static UILayoutParameter* create();
+    LayoutParameter();
+    virtual ~LayoutParameter();
+    static LayoutParameter* create();
     LayoutParameterType getLayoutType() const;
 };

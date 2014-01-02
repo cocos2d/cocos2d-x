@@ -115,17 +115,6 @@ const char* CCComAttribute::getCString(const char *key, const char *def) const
     return def;
 }
 
-void CCComAttribute::parse(const char *data)
-{
-      rapidjson::Document _doc;
-      _doc.Parse<0>(data);
-      if (_doc.HasParseError())
-      {
-         CCLOG("CCComAttribute faled to parse!");
-         return;
-      }
-}
-
 CCComAttribute* CCComAttribute::create(void)
 {
     CCComAttribute * pRet = new CCComAttribute();

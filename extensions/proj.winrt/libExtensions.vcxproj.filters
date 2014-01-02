@@ -88,6 +88,9 @@
     <Filter Include="CocoStudio\Json\rapidjson\internal">
       <UniqueIdentifier>{b03bc55e-2c54-4b1d-98de-6af96b5a2fc9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\Trigger">
+      <UniqueIdentifier>{8e8f5262-1681-4699-8d16-d2ad81ad0ece}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
@@ -450,6 +453,21 @@
     </ClCompile>
     <ClCompile Include="..\CocoStudio\Armature\utils\CCArmatureDefine.cpp">
       <Filter>CocoStudio\Armature\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -875,6 +893,21 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h">
       <Filter>CocoStudio\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h">
+      <Filter>CocoStudio\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

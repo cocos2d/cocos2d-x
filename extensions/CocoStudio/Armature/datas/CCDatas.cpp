@@ -122,8 +122,8 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to, bool limit)
 
     if (to->tweenRotate)
     {
-        skewX += to->tweenRotate;
-        skewY -= to->tweenRotate;
+        skewX += to->tweenRotate * M_PI * 2;
+        skewY -= to->tweenRotate * M_PI * 2;
     }
 }
 

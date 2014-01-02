@@ -349,7 +349,8 @@ void CCDirector::setOpenGLView(CCEGLView *pobOpenGLView)
 		conf->dumpInfo();
 
         // EAGLView is not a CCObject
-        delete m_pobOpenGLView; // [openGLView_ release]
+        if(m_pobOpenGLView)
+            delete m_pobOpenGLView; // [openGLView_ release]
         m_pobOpenGLView = pobOpenGLView;
 
         // set size

@@ -53,6 +53,7 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionManager.cpp" />
@@ -108,6 +109,10 @@
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -181,6 +186,7 @@
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionManager.h" />
@@ -249,6 +255,10 @@
     <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h" />
     <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
     <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
