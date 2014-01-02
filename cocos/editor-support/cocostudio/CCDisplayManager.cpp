@@ -108,7 +108,7 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -193,7 +193,7 @@ void DisplayManager::addDisplay(Node *display, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -213,7 +213,7 @@ const cocos2d::Vector<DecorativeDisplay*>& DisplayManager::getDecorativeDisplayL
     return _decoDisplayList;
 }
 
-void DisplayManager::changeDisplayByIndex(int index, bool force)
+void DisplayManager::changeDisplayWithIndex(int index, bool force)
 {
     CCASSERT( index < (int)_decoDisplayList.size(), "the _index value is out of range");
 
@@ -243,13 +243,13 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::changeDisplayByName(const std::string& name, bool force)
+void CCDisplayManager::changeDisplayWithName(const std::string& name, bool force)
 {
     for (int i = 0; i<_decoDisplayList.size(); i++)
     {
         if (_decoDisplayList.at(i)->getDisplayData()->displayName == name)
         {
-            changeDisplayByIndex(i, force);
+            changeDisplayWithIndex(i, force);
             break;
         }
     }
