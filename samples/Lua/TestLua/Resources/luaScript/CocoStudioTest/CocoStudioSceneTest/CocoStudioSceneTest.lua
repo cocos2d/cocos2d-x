@@ -30,6 +30,7 @@ function SceneEditorTestLayer:createGameScene()
     local function menuCloseCallback( sender )
         SceneReader:sharedSceneReader():purgeSceneReader()
         ActionManager:purgeActionManager()
+        TriggerMng.destroyInstance()
         local scene = CocoStudioTest()
         if scene ~= nil then
             CCDirector:sharedDirector():replaceScene(scene)
