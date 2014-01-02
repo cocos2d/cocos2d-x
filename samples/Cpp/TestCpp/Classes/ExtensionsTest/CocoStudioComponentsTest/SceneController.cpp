@@ -91,9 +91,9 @@ void SceneController::spriteMoveFinished(Node* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
+    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("CCComAttribute")))->getInt("KillCount");
     
-    ComAttribute *p = (ComAttribute*)(_owner->getComponent("ComAttribute"));
+    ComAttribute *p = (ComAttribute*)(_owner->getComponent("CCComAttribute"));
     p->setInt("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)

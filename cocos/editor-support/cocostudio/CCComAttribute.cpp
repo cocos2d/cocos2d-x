@@ -29,7 +29,7 @@ namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
 {
-    _name = "ComAttribute";
+    _name = "CCComAttribute";
 }
 
 ComAttribute::~ComAttribute(void)

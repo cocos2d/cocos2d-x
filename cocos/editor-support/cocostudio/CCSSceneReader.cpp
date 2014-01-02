@@ -24,6 +24,7 @@
 
 #include "cocostudio/CocoStudio.h"
 #include "gui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
 using namespace gui;
@@ -33,9 +34,9 @@ namespace cocostudio {
     SceneReader* SceneReader::s_sharedReader = nullptr;
 
     SceneReader::SceneReader()
-    : _pListener(NULL)
-    , _pfnSelector(NULL)
-    , _pNode(NULL)
+    : _listener(NULL)
+    , _fnSelector(NULL)
+    , _node(NULL)
     {
     }
 
@@ -48,24 +49,23 @@ namespace cocostudio {
         return "1.0.0.0";
     }
 
-    cocos2d::Node* SceneReader::createNodeWithSceneFile(const char* pszFileName)
+    cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName)
     {
         rapidjson::Document jsonDict;
         do {
-			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-              _pNode = createObject(jsonDict, NULL);
+			  CC_BREAK_IF(!readJson(fileName, jsonDict));
+              _node = createObject(jsonDict, NULL);
 			  TriggerMng::getInstance()->parse(jsonDict);
         } while (0);
         
-        return _pNode;
+        return _node;
     }
 
-	bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
+	bool SceneReader::readJson(const std::string &fileName, rapidjson::Document &doc)
 	{
 		bool bRet = false;
 		do {
-			CC_BREAK_IF(pszFileName == NULL);
-			std::string jsonpath = CCFileUtils::getInstance()->fullPathForFilename(pszFileName);
+            std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(fileName);
             std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
 			doc.Parse<0>(contentStr.c_str());
 			CC_BREAK_IF(doc.HasParseError());
@@ -74,26 +74,26 @@ namespace cocostudio {
 		return bRet;
 	}
 
-	Node* SceneReader::nodeByTag(Node *pParent, int nTag)
+	Node* SceneReader::nodeByTag(Node *parent, int tag)
 	{		
-		if (pParent == NULL)
+		if (parent == NULL)
 		{
 			return NULL;
 		}
 		Node *_retNode = NULL;
-		Vector<Node*>& Children = pParent->getChildren();
+		Vector<Node*>& Children = parent->getChildren();
 		Vector<Node*>::iterator iter = Children.begin();
 		while (iter != Children.end())
 		{
 			Node* pNode = *iter;
-			if(pNode != NULL && pNode->getTag() == nTag)
+			if(pNode != NULL && pNode->getTag() == tag)
 			{
 				_retNode =  pNode;
 				break;
 			}
 			else
 			{
-				_retNode = nodeByTag(pNode, nTag);
+				_retNode = nodeByTag(pNode, tag);
 				if (_retNode != NULL)
 				{
 					break;
@@ -200,9 +200,9 @@ namespace cocostudio {
                     }
                     
                     gb->addComponent(pRender);
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(pSprite, (void*)(&subDict));
+						(_listener->*_fnSelector)(pSprite, (void*)(&subDict));
 					}
                 }
                 else if(comName != nullptr && strcmp(comName, "CCTMXTiledMap") == 0)
@@ -227,9 +227,9 @@ namespace cocostudio {
                         pRender->setName(pComName);
                     }
                     gb->addComponent(pRender);
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(pTmx, (void*)(&subDict));
+						(_listener->*_fnSelector)(pTmx, (void*)(&subDict));
 					}
                 }
                 else if(comName != nullptr && strcmp(comName, "CCParticleSystemQuad") == 0)
@@ -257,9 +257,9 @@ namespace cocostudio {
                         pRender->setName(pComName);
                     }
                     gb->addComponent(pRender);
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(pParticle, (void*)(&subDict));
+						(_listener->*_fnSelector)(pParticle, (void*)(&subDict));
 					}
                 }
                 else if(comName != nullptr && strcmp(comName, "CCArmature") == 0)
@@ -301,9 +301,9 @@ namespace cocostudio {
                     {
                         pAr->getAnimation()->play(actionName);
                     }
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(pAr, (void*)(&subDict));
+						(_listener->*_fnSelector)(pAr, (void*)(&subDict));
 					}
                 }
                 else if(comName != nullptr && strcmp(comName, "CCComAudio") == 0)
@@ -318,10 +318,14 @@ namespace cocostudio {
                         continue;
                     }
                     pAudio->preloadEffect(pPath.c_str());
-                    gb->addComponent(pAudio);
-					if (_pListener && _pfnSelector)
+					if (pComName != NULL)
 					{
-						(_pListener->*_pfnSelector)(pAudio, (void*)(&subDict));
+						pAudio->setName(pComName);
+					}
+                    gb->addComponent(pAudio);
+					if (_listener && _fnSelector)
+					{
+						(_listener->*_fnSelector)(pAudio, (void*)(&subDict));
 					}
                 }
                 else if(comName != nullptr && strcmp(comName, "CCComAttribute") == 0)
@@ -337,9 +341,9 @@ namespace cocostudio {
                         continue;
                     }
                     gb->addComponent(pAttribute);
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(pAttribute, (void*)(&subDict));
+						(_listener->*_fnSelector)(pAttribute, (void*)(&subDict));
 					}
                 }
                 else if (comName != nullptr && strcmp(comName, "CCBackgroundAudio") == 0)
@@ -358,6 +362,10 @@ namespace cocostudio {
                     const bool bLoop = (DICTOOL->getIntValue_json(subDict, "loop") != 0);
                     pAudio->setLoop(bLoop);
                     gb->addComponent(pAudio);
+					if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
                 }
                 else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
@@ -369,9 +377,9 @@ namespace cocostudio {
                     pRender->setName(pComName);
                     }
                     gb->addComponent(pRender);
-					if (_pListener && _pfnSelector)
+					if (_listener && _fnSelector)
 					{
-						(_pListener->*_pfnSelector)(widget, (void*)(&subDict));
+						(_listener->*_fnSelector)(widget, (void*)(&subDict));
 					}
 				}
             }
@@ -395,21 +403,21 @@ namespace cocostudio {
 
 	void SceneReader::setTarget(Object *rec, SEL_CallFuncOD selector)
 	{
-		_pListener = rec;
-		_pfnSelector = selector;
+		_listener = rec;
+		_fnSelector = selector;
 	}
 
 	Node* SceneReader::getNodeByTag(int nTag)
 	{
-		if (_pNode == NULL)
+		if (_node == NULL)
 		{
 			return NULL;
 		}
-		if (_pNode->getTag() == nTag)
+		if (_node->getTag() == nTag)
 		{
-			return _pNode;
+			return _node;
 		}
-		return nodeByTag(_pNode, nTag);
+		return nodeByTag(_node, nTag);
 	}
 
     void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::Node *node)
@@ -449,6 +457,9 @@ namespace cocostudio {
     {
         DictionaryHelper::destroyInstance();
 		TriggerMng::destroyInstance();
+        _fnSelector = nullptr;
+		_listener = nullptr;
+        CocosDenshion::SimpleAudioEngine::end();
 		CC_SAFE_DELETE(s_sharedReader);
     }
 
