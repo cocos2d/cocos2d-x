@@ -34,7 +34,7 @@ public:
     LuaMinXmlHttpRequest();
     ~LuaMinXmlHttpRequest();
     
-    void handle_requestResponse(network::HttpClient *sender, network::HttpResponse *response);
+    void handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
     inline void setResponseType(ResponseType type) { _responseType = type; }
     inline ResponseType getResponseType() {return _responseType; }
@@ -48,7 +48,7 @@ public:
     inline void setReadyState(int readyState) { _readyState = readyState; }
     inline int getReadyState() { return _readyState ;}
 
-    inline network::HttpRequest*  getHttpRequest() { return _httpRequest; }
+    inline cocos2d::network::HttpRequest*  getHttpRequest() { return _httpRequest; }
     inline int getStatus() { return _status; }
     inline std::string getStatusText() { return _statusText ;}
 
@@ -88,7 +88,7 @@ private:
     ResponseType                         _responseType;
     unsigned                             _timeout;
     bool                                 _isAsync;
-    network::HttpRequest*                _httpRequest;
+    cocos2d::network::HttpRequest*       _httpRequest;
     bool                                 _isNetwork;
     bool                                 _withCredentialsValue;
     std::map<std::string, std::string>   _httpHeader;
