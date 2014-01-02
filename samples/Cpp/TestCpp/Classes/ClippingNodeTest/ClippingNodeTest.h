@@ -3,6 +3,8 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
+#include <list>
 
 class BaseClippingNodeTest : public BaseTest
 {
@@ -157,7 +159,13 @@ public:
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
 protected:
-    Sprite* _sprite;
+    std::list<CustomCommand> _renderCmds;
+    void onEnableStencil();
+    void onDisableStencil();
+    void onBeforeDrawClip(int planeIndex, const Point& pt);
+    void onBeforeDrawSprite(int planeIndex, const Point& pt);
+protected:
+    Vector<Sprite*> _sprites;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest

@@ -586,21 +586,6 @@
     <ClCompile Include="renderer\CCMaterialManager.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="renderer\CCNewClippingNode.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewRenderTexture.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewSprite.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewSpriteBatchNode.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="renderer\CCNewTextureAtlas.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="renderer\CCQuadCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -1205,21 +1190,6 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCMaterialManager.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewClippingNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewRenderTexture.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewSprite.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewSpriteBatchNode.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\CCNewTextureAtlas.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="renderer\CCQuadCommand.h">

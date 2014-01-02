@@ -1,22 +1,19 @@
 set(GUI_SRC
-  UIRootWidget.cpp
   UIWidget.cpp
   UILayout.cpp
   UILayoutParameter.cpp
   UILayoutDefine.cpp
   CocosGUI.cpp
   UIHelper.cpp
-  UIInputManager.cpp
-  UILayer.cpp
   UIListView.cpp
   UIPageView.cpp
   UIScrollView.cpp
   UIButton.cpp
   UICheckBox.cpp
   UIImageView.cpp
-  UILabel.cpp
-  UILabelAtlas.cpp
-  UILabelBMFont.cpp
+  UIText.cpp
+  UITextAtlas.cpp
+  UITextBMFont.cpp
   UILoadingBar.cpp
   UISlider.cpp
   UITextField.cpp

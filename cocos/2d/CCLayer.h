@@ -35,6 +35,7 @@ THE SOFTWARE.
 #endif // EMSCRIPTEN
 
 #include "CCEventKeyboard.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -296,6 +297,7 @@ protected:
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
+    CustomCommand _customCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);

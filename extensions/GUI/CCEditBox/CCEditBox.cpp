@@ -87,6 +87,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* pP
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
+        _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
         
         this->setZoomOnTouchDown(false);
         this->setPreferredSize(size);

@@ -1096,11 +1096,11 @@ function ActionManagerDeprecated.shareManager()
 end
 rawset(ActionManager,"shareManager",ActionManagerDeprecated.shareManager)
 
-function ActionManagerDeprecated.purgeActionManager()
-    deprecatedTip("ActionManager:purgeActionManager","ccs.ActionManagerEx:destroyActionManager")
+function ActionManagerDeprecated.destroyInstance()
+    deprecatedTip("ActionManager:destroyInstance","ccs.ActionManagerEx:destroyActionManager")
     return ccs.ActionManagerEx:destroyActionManager()
 end
-rawset(ActionManager,"purgeActionManager",ActionManagerDeprecated.purgeActionManager)
+rawset(ActionManager,"destroyInstance",ActionManagerDeprecated.destroyInstance)
 --functions of ActionManager will be deprecated end
 
 --functions of CCEGLView will be deprecated begin

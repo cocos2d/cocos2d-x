@@ -209,7 +209,7 @@ void TextFieldTTF::deleteBackward()
     }
 
     // get the delete byte number
-    int deleteLen = 1;    // default, erase 1 byte
+    size_t deleteLen = 1;    // default, erase 1 byte
 
     while(0x80 == (0xC0 & _inputText.at(len - deleteLen)))
     {
@@ -236,9 +236,9 @@ void TextFieldTTF::deleteBackward()
     setString(text);
 }
 
-const char * TextFieldTTF::getContentText()
+const std::string& TextFieldTTF::getContentText()
 {
-    return _inputText.c_str();
+    return _inputText;
 }
 
 void TextFieldTTF::draw()

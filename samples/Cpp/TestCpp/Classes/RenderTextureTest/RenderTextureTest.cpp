@@ -1,6 +1,8 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -440,32 +442,80 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto sprite = Sprite::create("Images/fire.png");
-    sprite->setPosition(Point(s.width * 0.25f, 0));
-    sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _spriteDS = Sprite::create("Images/fire.png");
+    _spriteDS->retain();
+    _spriteDS->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDS->setScale(10);
+    
+    _spriteDraw = Sprite::create("Images/fire.png");
+    _spriteDraw->retain();
+    _spriteDraw->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDraw->setScale(10);
+    //! move sprite half width and height, and draw only where not marked
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Point(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    
+    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
+    _rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(_rend);
+}
+
+RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
+{
+    CC_SAFE_RELEASE(_spriteDraw);
+    CC_SAFE_RELEASE(_spriteDS);
+}
+
+void RenderTextureTestDepthStencil::draw()
+{
+    _renderCmds[0].init(0, _vertexZ);
+    _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
+    
+    _rend->beginWithClear(0, 0, 0, 0, 0, 0);
+    
+    _renderCmds[1].init(0, _vertexZ);
+    _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
+    
+    _spriteDS->visit();
+    
+    _renderCmds[2].init(0, _vertexZ);
+    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
+    
+    _spriteDraw->visit();
+    
+    _rend->end();
+    
+    _renderCmds[3].init(0, _vertexZ);
+    _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
+
+}
+
+void RenderTextureTestDepthStencil::onBeforeClear()
+{
     glStencilMask(0xFF);
-    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+}
 
+void RenderTextureTestDepthStencil::onBeforeStencil()
+{
     //! mark sprite quad into stencil buffer
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-    sprite->visit();
+}
 
-    //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
+void RenderTextureTestDepthStencil::onBeforDraw()
+{
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    sprite->visit();
+}
 
-    rend->end();
-
+void RenderTextureTestDepthStencil::onAfterDraw()
+{
     glDisable(GL_STENCIL_TEST);
-
-    rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
-
-    this->addChild(rend);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
@@ -587,6 +637,16 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    
+    Sprite::draw();
+    
+}
+
+void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
+{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
@@ -595,36 +655,6 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
-    
-	CC_NODE_DRAW_SETUP();
-    
-	BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    GL::bindTexture2D(getTexture()->getName());
-    
-	//
-	// Attributes
-	//
-    
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    
-#define kQuadSize sizeof(_quad.bl)
-	long offset = (long)&_quad;
-    
-	// vertex
-	int diff = offsetof( V3F_C4B_T2F, vertices);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-	// texCoods
-	diff = offsetof( V3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-	// color
-	diff = offsetof( V3F_C4B_T2F, colors);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()

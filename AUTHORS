@@ -668,6 +668,7 @@ Developers:
         
     zhiqiangxu
         Fixed a logic error in ControlUtils::RectUnion.
+        Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -677,6 +678,22 @@ Developers:
         
     seobyeongky
         Updates spine runtime.
+        Fixed a potential bug in Data's copy constructor. 
+        
+    luocker
+        Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
+        
+    omersaeed
+        Fix a bug that game will crash if connection breaks during download using AssetManager.
+        
+    SBKarr
+        AngelCode binary file format support for LabelBMFont.
+        
+    zarelaky
+        OpenAL context isn't destroyed correctly on mac and ios.
+        
+    kicktheken (Kenneth Chan)
+        Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
         
 Retired Core Developers:
     WenSheng Yang

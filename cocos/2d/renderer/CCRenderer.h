@@ -35,6 +35,8 @@
 
 NS_CC_BEGIN
 
+class EventListenerCustom;
+
 typedef std::vector<RenderCommand*> RenderQueue;
 
 struct RenderStackElement
@@ -43,7 +45,7 @@ struct RenderStackElement
     size_t currentIndex;
 };
 
-class Renderer : public Object
+class Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;
@@ -76,8 +78,6 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
 
-    void onBackToForeground(Object* obj);
-
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;
@@ -96,6 +96,10 @@ protected:
     int _numQuads;
     
     bool _glViewAssigned;
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _cacheTextureListener;
+#endif
 };
 
 NS_CC_END

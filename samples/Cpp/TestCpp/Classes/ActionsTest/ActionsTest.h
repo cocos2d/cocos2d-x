@@ -343,6 +343,12 @@ public:
     virtual void onEnter();
     virtual void draw();
     virtual std::string subtitle() const override;
+
+protected:
+    void onDraw();
+    
+private:
+    CustomCommand _customCommand;
 };
 
 class ActionTargeted : public ActionsDemo
@@ -415,9 +421,15 @@ public:
     virtual void onEnter();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+protected:
+    //cached data and callback
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
+    void onDraw();
 private:
     PointArray* _array1;
     PointArray* _array2;
+    CustomCommand _customCommand;
 };
 
 class ActionCardinalSplineStacked : public ActionsDemo
@@ -432,6 +444,11 @@ public:
     virtual std::string subtitle() const override;
 private:
     PointArray* _array;
+protected:
+    void onDraw();
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class Issue1305 : public ActionsDemo
@@ -522,6 +539,11 @@ public:
 private:
     PointArray *_array1;
     PointArray *_array2;
+protected:
+    void onDraw();
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class ActionCardinalSpline : public ActionsDemo
@@ -537,6 +559,11 @@ public:
     virtual std::string title() const override;
 private:
     PointArray *_array;
+protected:
+    void onDraw();
+    kmMat4 _modelViewMV1;
+    kmMat4 _modelViewMV2;
+    CustomCommand _customCommand;
 };
 
 class PauseResumeActions : public ActionsDemo

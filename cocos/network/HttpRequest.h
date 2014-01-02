@@ -27,6 +27,8 @@
 
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
 namespace network {
 
 class HttpClient;
@@ -230,5 +232,7 @@ protected:
 };
 
 }
+
+NS_CC_END
 
 #endif //__HTTP_REQUEST_H__

@@ -239,9 +239,6 @@ public:
     
 };
 
-
-CC_DEPRECATED_ATTRIBUTE typedef __String String;
-
 // end of data_structure group
 /// @}
 

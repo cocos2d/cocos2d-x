@@ -325,7 +325,7 @@ EGLView::~EGLView()
     s_pEglView = nullptr;
 }
 
-bool EGLView::init(const char *viewName, float width, float height, float frameZoomFactor)
+bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
 {
     if(nullptr != _mainWindow) return true;
     

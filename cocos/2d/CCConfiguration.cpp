@@ -284,7 +284,7 @@ void Configuration::setValue(const std::string& key, const Value& value)
 //
 // load file
 //
-void Configuration::loadConfigFile(const char *filename)
+void Configuration::loadConfigFile(const std::string& filename)
 {
 	ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(filename);
 	CCASSERT(!dict.empty(), "cannot create dictionary");
@@ -312,14 +312,14 @@ void Configuration::loadConfigFile(const char *filename)
 
 	if (! validMetadata)
     {
-		CCLOG("Invalid config format for file: %s", filename);
+		CCLOG("Invalid config format for file: %s", filename.c_str());
 		return;
 	}
 
 	auto dataIter = dict.find("data");
 	if (dataIter == dict.end() || dataIter->second.getType() != Value::Type::MAP)
     {
-		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename);
+		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename.c_str());
 		return;
 	}
 

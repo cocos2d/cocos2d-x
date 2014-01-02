@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "CCData.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
@@ -82,7 +83,7 @@ public:
     {
     }
 
-    ValueMap dictionaryWithContentsOfFile(const char *fileName)
+    ValueMap dictionaryWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -94,7 +95,7 @@ public:
 		return _rootDict;
     }
 
-    ValueVector arrayWithContentsOfFile(const char* fileName)
+    ValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -491,10 +492,73 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ssize_t *size)
+static Data getData(const std::string& filename, bool forString)
+{
+    CCASSERT(!filename.empty(), "Invalid filename!");
+    
+    Data ret;
+    unsigned char* buffer = nullptr;
+    ssize_t size = 0;
+    const char* mode = nullptr;
+    if (forString)
+        mode = "rt";
+    else
+        mode = "rb";
+    
+    do
+    {
+        // Read the file from hardware
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+        FILE *fp = fopen(fullPath.c_str(), mode);
+        CC_BREAK_IF(!fp);
+        fseek(fp,0,SEEK_END);
+        size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        
+        if (forString)
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
+            buffer[size] = '\0';
+        }
+        else
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+        }
+        
+        size = fread(buffer, sizeof(unsigned char), size, fp);
+        fclose(fp);
+    } while (0);
+    
+    if (nullptr == buffer || 0 == size)
+    {
+        std::string msg = "Get data from file(";
+        msg.append(filename).append(") failed!");
+        CCLOG("%s", msg.c_str());
+    }
+    else
+    {
+        ret.fastSet(buffer, size);
+    }
+    
+    return ret;
+}
+
+std::string FileUtils::getStringFromFile(const std::string& filename)
+{
+    Data data = getData(filename, true);
+    std::string ret((const char*)data.getBytes());
+    return ret;
+}
+
+Data FileUtils::getDataFromFile(const std::string& filename)
+{
+    return getData(filename, false);
+}
+
+unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
-    CCASSERT(filename != nullptr && size != nullptr && mode != nullptr, "Invalid parameters.");
+    CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -521,7 +585,7 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ss
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size)
+unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
     unzFile file = nullptr;
@@ -529,13 +593,12 @@ unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char
 
     do 
     {
-        CC_BREAK_IF(!zipFilePath || !filename);
-        CC_BREAK_IF(strlen(zipFilePath) == 0);
+        CC_BREAK_IF(zipFilePath.empty());
 
-        file = unzOpen(zipFilePath);
+        file = unzOpen(zipFilePath.c_str());
         CC_BREAK_IF(!file);
 
-        int ret = unzLocateFile(file, filename, 1);
+        int ret = unzLocateFile(file, filename.c_str(), 1);
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];

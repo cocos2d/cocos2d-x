@@ -107,12 +107,10 @@ public:
     ValueMap           _properties;
     std::string         _name;
     Size                _layerSize;
-    unsigned int        *_tiles;
+    int                 *_tiles;
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
-    unsigned int        _minGID;
-    unsigned int        _maxGID;
     Point               _offset;
 };
 
@@ -130,14 +128,14 @@ class CC_DLL TMXTilesetInfo : public Object
 {
 public:
     std::string     _name;
-    unsigned int    _firstGid;
-    Size          _tileSize;
-    unsigned int    _spacing;
-    unsigned int    _margin;
+    int             _firstGid;
+    Size            _tileSize;
+    int             _spacing;
+    int             _margin;
     //! filename containing the tiles (should be spritesheet / texture atlas)
     std::string     _sourceImage;
     //! size in pixels of the image
-    Size          _imageSize;
+    Size            _imageSize;
 public:
     /**
      * @js ctor
@@ -148,7 +146,7 @@ public:
      * @lua NA
      */
     virtual ~TMXTilesetInfo();
-    Rect rectForGID(unsigned int gid);
+    Rect rectForGID(int gid);
 };
 
 /** @brief TMXMapInfo contains the information about the map like:
@@ -195,8 +193,8 @@ public:
     /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
     bool parseXMLString(const std::string& xmlString);
 
-    IntValueMap& getTileProperties() { return _tileProperties; };
-    void setTileProperties(const IntValueMap& tileProperties) {
+    ValueMapIntKey& getTileProperties() { return _tileProperties; };
+    void setTileProperties(const ValueMapIntKey& tileProperties) {
         _tileProperties = tileProperties;
     };
 
@@ -238,8 +236,8 @@ public:
     inline void setParentElement(int element) { _parentElement = element; };
 
     /// parent GID
-    inline unsigned int getParentGID() const { return _parentGID; };
-    inline void setParentGID(unsigned int gid) { _parentGID = gid; };
+    inline int getParentGID() const { return _parentGID; };
+    inline void setParentGID(int gid) { _parentGID = gid; };
 
     /// layer attribs
     inline int getLayerAttribs() const { return _layerAttribs; };
@@ -296,7 +294,7 @@ protected:
     /// parent element
     int _parentElement;
     /// parent GID
-    unsigned int _parentGID;
+    int _parentGID;
     /// layer attribs
     int _layerAttribs;
     /// is storing characters?
@@ -311,8 +309,9 @@ protected:
     //! current string
     std::string _currentString;
     //! tile properties
-    IntValueMap _tileProperties;
-    unsigned int _currentFirstGID;
+    ValueMapIntKey _tileProperties;
+    int _currentFirstGID;
+    bool _recordFirstGID;
 };
 
 // end of tilemap_parallax_nodes group
