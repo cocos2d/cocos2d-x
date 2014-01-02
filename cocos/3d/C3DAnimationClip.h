@@ -125,7 +125,7 @@ public:
     /**
      *  Adds an action Event.
      */
-    void addActionEvent(C3DActionListener* listener, unsigned long eventTime);
+	void addActionEvent(std::function<void()> listener, unsigned long eventTime);
     void addActionEvent(C3DActionEvent* actionEvent);
 
     void clearActionEvent();
@@ -182,14 +182,14 @@ private:
     */
     unsigned short update(unsigned long elapsedTime);
 
-    unsigned short update_loop(unsigned long elapsedTime);
+    unsigned short updateLoop(unsigned long elapsedTime);
 
-    unsigned short update_once(unsigned long elapsedTime);
+    unsigned short updateOnce(unsigned long elapsedTime);
 
     /**
     * Is have target state
     */
-    bool isState(unsigned short bit) const;
+    bool hasState(unsigned short bit) const;
 
     /**
     * Set state
