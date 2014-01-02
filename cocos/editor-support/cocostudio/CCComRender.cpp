@@ -62,18 +62,23 @@ cocos2d::Node* ComRender::getNode()
     return _render;
 }
 
-ComRender* ComRender::create(cocos2d::Node *pNode, const char *comName)
+void ComRender::setNode(cocos2d::Node *node)
 {
-    ComRender * pRet = new ComRender(pNode, comName);
-    if (pRet != NULL && pRet->init())
+	_render = node;
+}
+
+ComRender* ComRender::create(cocos2d::Node *node, const char *comName)
+{
+    ComRender * ret = new ComRender(node, comName);
+    if (ret != NULL && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-	return pRet;
+	return ret;
 }
 
 }

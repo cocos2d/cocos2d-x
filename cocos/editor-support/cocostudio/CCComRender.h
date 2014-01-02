@@ -55,8 +55,9 @@ public:
      */
     virtual void onExit();
     cocos2d::Node* getNode();
+    void setNode(cocos2d::Node *node);
 
-    static ComRender* create(cocos2d::Node *pNode, const char *comName);
+    static ComRender* create(cocos2d::Node *node, const char *comName);
 
 private:
     cocos2d::Node *_render;

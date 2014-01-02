@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
+#include "cocostudio/CocoStudio.h"
 
 class SceneEditorTestScene : public TestScene
 {
@@ -178,7 +179,6 @@ public:
 	~TriggerTest();
 
     virtual std::string title();
-	virtual bool init();
     virtual void onEnter();
     virtual void onExit();
     

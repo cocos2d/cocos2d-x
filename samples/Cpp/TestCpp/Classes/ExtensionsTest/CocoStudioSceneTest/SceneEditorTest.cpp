@@ -51,7 +51,6 @@ Layer *createTests(int index)
         break;
     case TEST_TRIGGER:
         layer = new TriggerTest();
-		layer->init();
         break;
     default:
         break;
@@ -351,10 +350,10 @@ cocos2d::Node* ArmatureComponentTest::createGameScene()
 	{
 		return nullptr;
 	}
-	Armature *pBlowFish = static_cast<Armature*>(node->getChildByTag(10007)->getComponent("Armature")->getNode());
+	Armature *pBlowFish = static_cast<Armature*>(node->getChildByTag(10007)->getComponent("CCArmature")->getNode());
 	pBlowFish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-	Armature *pButterflyfish = static_cast<Armature*>(node->getChildByTag(10008)->getComponent("Armature")->getNode());
+	Armature *pButterflyfish = static_cast<Armature*>(node->getChildByTag(10008)->getComponent("CCArmature")->getNode());
 	pButterflyfish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
     return node;
@@ -406,25 +405,24 @@ cocos2d::Node* UIComponentTest::createGameScene()
 	}
 	_node = node;
 	
-	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(_node->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
-	UIWidget* widget = static_cast<UIWidget*>(touchGroup->getWidgetByName("Panel_154"));
-	UIButton* button = static_cast<UIButton*>(widget->getChildByName("Button_156"));
+	Widget* widget = static_cast<cocos2d::gui::Widget*>(_node->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
+	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
 
     return node;
 }
 
-void UIComponentTest::touchEvent(CCObject *pSender, TouchEventType type)
+void UIComponentTest::touchEvent(Object *pSender, TouchEventType type)
 {
 	switch (type)
 	{
 	case TOUCH_EVENT_BEGAN:
 		{
 			Armature *pBlowFish = static_cast<Armature*>(_node->getChildByTag(10010)->getComponent("Armature")->getNode());
-			pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+			pBlowFish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
 			Armature *pButterflyfish = static_cast<Armature*>(_node->getChildByTag(10011)->getComponent("Armature")->getNode());
-			pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+			pButterflyfish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -701,25 +699,25 @@ bool AttributeComponentTest::initData()
 	bool bRet = false;
 	unsigned long size = 0;
 	unsigned char *pBytes = nullptr;
-	rapidjson::Document jsonDict;
+	rapidjson::Document doc;
 	do {
 		CC_BREAK_IF(_node == nullptr);
-		ComAttribute *pAttribute = static_cast<ComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
-		CC_BREAK_IF(pAttribute == nullptr);
-		std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(pAttribute->getJsonName());
+		ComAttribute *attribute = static_cast<ComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
+		CC_BREAK_IF(attribute == nullptr);
+		std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(attribute->getJsonName());
         std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
         doc.Parse<0>(contentStr.c_str());
         CC_BREAK_IF(doc.HasParseError());
 
-		std::string playerName = DICTOOL->getStringValue_json(jsonDict, "name");
-		float maxHP = DICTOOL->getFloatValue_json(jsonDict, "maxHP");
-		float maxMP = DICTOOL->getFloatValue_json(jsonDict, "maxMP");
+		std::string playerName = DICTOOL->getStringValue_json(doc, "name");
+		float maxHP = DICTOOL->getFloatValue_json(doc, "maxHP");
+		float maxMP = DICTOOL->getFloatValue_json(doc, "maxMP");
 		
-		pAttribute->setCString("Name", playerName.c_str());
-		pAttribute->setFloat("MaxHP", maxHP);
-		pAttribute->setFloat("MaxMP", maxMP);
+		attribute->setString("Name", playerName);
+		attribute->setFloat("MaxHP", maxHP);
+		attribute->setFloat("MaxMP", maxMP);
 
-		log("Name: %s, HP: %f, MP: %f", pAttribute->getCString("Name"), pAttribute->getFloat("MaxHP"), pAttribute->getFloat("MaxMP"));
+		log("Name: %s, HP: %f, MP: %f", attribute->getString("Name").c_str(), attribute->getFloat("MaxHP"), attribute->getFloat("MaxMP"));
 
 		bRet = true;
 	} while (0);
@@ -757,19 +755,14 @@ std::string TriggerTest::title()
     return "Trigger Test";
 }
 
-bool TriggerTest::init()
-{
-   sendEvent(TRIGGEREVENT_INITSCENE);
-   return true;
-}
 
 // on "init" you need to initialize your instance
-bool SceneEditorTestLayer::onEnter()
+void TriggerTest::onEnter()
 {
 	SceneEditorTestLayer::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
-    this->schedule(schedule_selector(SceneEditorTestLayer::gameLogic));
+    this->schedule(schedule_selector(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -783,7 +776,7 @@ bool SceneEditorTestLayer::onEnter()
 }
 
 
-void SceneEditorTestLayer::onExit()
+void TriggerTest::onExit()
 {
 	sendEvent(TRIGGEREVENT_LEAVESCENE);
     this->unschedule(schedule_selector(TriggerTest::gameLogic));
@@ -797,34 +790,34 @@ void SceneEditorTestLayer::onExit()
     SceneEditorTestLayer::onExit();
 }
 
-bool SceneEditorTestLayer::onTouchBegan(Touch *touch, Event *unused_event)
+bool TriggerTest::onTouchBegan(Touch *touch, Event *unused_event)
 {
     sendEvent(TRIGGEREVENT_TOUCHBEGAN);
     return true;
 }
 
-void SceneEditorTestLayer::onTouchMoved(Touch *touch, Event *unused_event)
+void TriggerTest::onTouchMoved(Touch *touch, Event *unused_event)
 {
     sendEvent(TRIGGEREVENT_TOUCHMOVED);
 }
 
-void SceneEditorTestLayer::onTouchEnded(Touch *touch, Event *unused_event)
+void TriggerTest::onTouchEnded(Touch *touch, Event *unused_event)
 {
     sendEvent(TRIGGEREVENT_TOUCHENDED);
 }
 
-void SceneEditorTestLayer::onTouchCancelled(Touch *touch, Event *unused_event)
+void TriggerTest::onTouchCancelled(Touch *touch, Event *unused_event)
 {
     sendEvent(TRIGGEREVENT_TOUCHCANCELLED);
 }
 
-void SceneEditorTestLayer::gameLogic(float dt)
+void TriggerTest::gameLogic(float dt)
 {
     sendEvent(TRIGGEREVENT_UPDATESCENE);
 }
 
 
-cocos2d::Node* SceneEditorTestLayer::createGameScene()
+cocos2d::Node* TriggerTest::createGameScene()
 {
     Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json");
 	if (node == nullptr)
