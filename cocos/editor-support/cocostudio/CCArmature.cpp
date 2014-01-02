@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCRenderer.h"
 #include "CCGroupCommand.h"
 
@@ -155,7 +155,7 @@ bool Armature::init(const std::string& name)
                     CC_BREAK_IF(!frameData);
 
                     bone->getTweenData()->copy(frameData);
-                    bone->changeDisplayByIndex(frameData->displayIndex, false);
+                    bone->changeDisplayWithIndex(frameData->displayIndex, false);
                 }
                 while (0);
             }
@@ -180,9 +180,6 @@ bool Armature::init(const std::string& name)
         }
 
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
-        unscheduleUpdate();
-        scheduleUpdate();
 
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
@@ -225,7 +222,7 @@ Bone *Armature::createBone(const std::string& boneName)
     }
 
     bone->setBoneData(boneData);
-    bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+    bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
 
     return bone;
 }
@@ -430,6 +427,18 @@ void Armature::draw()
             CC_NODE_DRAW_SETUP();
         }
     }
+}
+
+void Armature::onEnter()
+{
+    Node::onEnter();
+    scheduleUpdate();
+}
+
+void Armature::onExit()
+{
+    Node::onExit();
+    unscheduleUpdate();
 }
 
 

@@ -118,13 +118,15 @@ public:
 
     bool initWithVertex(const char *vert, const char *frag);
     void loadShaderVertex(const char *vert, const char *frag);
-    void listenBackToForeground(Object *obj);
 
     virtual void update(float dt);
     virtual void setPosition(const Point &newPosition);
     virtual void draw();
 
     static ShaderNode* shaderNodeWithVertex(const char *vert, const char *frag);
+
+protected:
+    void onDraw();
 
 private:
 
@@ -134,6 +136,7 @@ private:
     GLuint     _uniformCenter, _uniformResolution, _uniformTime;
     std::string _vertFileName;
     std::string _fragFileName;
+    CustomCommand _customCommand;
 };
 
 class ShaderFail : public ShaderTestDemo

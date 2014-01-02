@@ -40,12 +40,10 @@ ComponentContainer::~ComponentContainer(void)
     CC_SAFE_DELETE(_components);
 }
 
-Component* ComponentContainer::get(const char *name) const
+Component* ComponentContainer::get(const std::string& name) const
 {
     Component* ret = nullptr;
-    CCASSERT(name != nullptr, "Argument must be non-nil");
     do {
-        CC_BREAK_IF(nullptr == name);
         CC_BREAK_IF(nullptr == _components);
         ret = _components->at(name);
         
@@ -77,10 +75,9 @@ bool ComponentContainer::add(Component *com)
     return ret;
 }
 
-bool ComponentContainer::remove(const char *name)
+bool ComponentContainer::remove(const std::string& name)
 {
     bool ret = false;
-    CCASSERT(name != nullptr, "Argument must be non-nil");
     do 
     {        
         CC_BREAK_IF(!_components);

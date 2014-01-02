@@ -28,6 +28,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void draw();
+protected:
+    void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class DrawNodeTest : public BaseLayer

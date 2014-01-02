@@ -51,7 +51,7 @@ TextPageDef::~TextPageDef()
 {
     size_t numLines = _lines.size();
     
-    for( int c = 0; c<numLines; ++c )
+    for( size_t c = 0; c<numLines; ++c )
     {
         delete _lines[c];
     }

@@ -25,6 +25,7 @@
 #include "ccTypes.h"
 
 NS_CC_BEGIN
+const std::string STD_STRING_EMPTY("");
 
 /**
  * Color3B

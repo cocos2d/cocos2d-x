@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -74,7 +75,7 @@ public:
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, ssize_t capacity = DEFAULT_CAPACITY);
+    static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
     /**
      * @js ctor
      */
@@ -95,7 +96,7 @@ public:
      * @js init
      * @lua init
      */
-    bool initWithFile(const char* fileImage, ssize_t capacity);
+    bool initWithFile(const std::string& fileImage, ssize_t capacity);
     bool init();
 
     /** returns the TextureAtlas object */
@@ -187,6 +188,7 @@ protected:
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
+    QuadCommand _quadCommand;     // quad command
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

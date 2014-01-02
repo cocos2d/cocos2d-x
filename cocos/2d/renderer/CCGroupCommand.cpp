@@ -28,7 +28,6 @@
 #include "CCDirector.h"
 
 NS_CC_BEGIN
-RenderCommandPool<GroupCommand> GroupCommand::_commandPool;
 
 static GroupCommandManager* s_instance;
 GroupCommandManager *GroupCommandManager::getInstance()
@@ -118,11 +117,5 @@ int64_t GroupCommand::generateID()
 
     return _id;
 }
-
-void GroupCommand::releaseToCommandPool()
-{
-    getCommandPool().pushBackCommand(this);
-}
-
 
 NS_CC_END

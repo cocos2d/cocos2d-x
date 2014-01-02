@@ -2048,6 +2048,7 @@ int tolua_cocos2d_Node_setContentSize(lua_State* tolua_S)
             return 0;
         
         cobj->setContentSize(size);
+        return 0;
     }
     else if(2 == argc)
     {
@@ -2105,6 +2106,7 @@ int tolua_cocos2d_Node_setAnchorPoint(lua_State* tolua_S)
             return 0;
         
         cobj->setAnchorPoint(pt);
+        return 0;
     }
     else if(2 == argc)
     {
@@ -2701,6 +2703,26 @@ static int tolua_cocos2dx_Sprite_setBlendFunc(lua_State* tolua_S)
     return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S,"Sprite");
 }
 
+static int tolua_cocos2dx_SpriteBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<SpriteBatchNode>(tolua_S,"SpriteBatchNode");
+}
+
+static int tolua_cocos2dx_MotionStreak_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<MotionStreak>(tolua_S,"MotionStreak");
+}
+
+static int tolua_cocos2dx_AtlasNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<AtlasNode>(tolua_S,"AtlasNode");
+}
+
+static int tolua_cocos2dx_ParticleBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<ParticleBatchNode>(tolua_S,"ParticleBatchNode");
+}
+
 static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 {
     return tolua_cocos2dx_setBlendFunc<LayerColor>(tolua_S,"LayerColor");
@@ -2709,6 +2731,11 @@ static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 static int tolua_cocos2dx_ParticleSystem_setBlendFunc(lua_State* tolua_S) 
 {
     return tolua_cocos2dx_setBlendFunc<ParticleSystem>(tolua_S,"ParticleSystem");
+}
+
+static int tolua_cocos2dx_DrawNode_setBlendFunc(lua_State* tolua_S) 
+{
+    return tolua_cocos2dx_setBlendFunc<DrawNode>(tolua_S,"DrawNode");
 }
 
 static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
@@ -3489,6 +3516,10 @@ static void extendDrawNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"drawPolygon");
         lua_pushcfunction(tolua_S,tolua_cocos2d_DrawNode_drawPolygon);
         lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3580,6 +3611,49 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"getDescendants");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
         lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendMotionStreak(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "MotionStreak");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_MotionStreak_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendAtlasNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "AtlasNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_AtlasNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendParticleBatchNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ParticleBatchNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleBatchNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3592,10 +3666,9 @@ EventListenerAcceleration* LuaEventListenerAcceleration::create()
         return nullptr;
     
     if ( eventAcceleration->init([=](Acceleration* acc, Event* event){
-        LuaEventListenerAccelerationData listenerData((void*)acc,event);
+        LuaEventAccelerationData listenerData((void*)acc,event);
         BasicScriptData data(eventAcceleration,(void*)&listenerData);
-        ScriptEvent accEvent(kEventListenerAcc,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::EVENT_ACC, (void*)&data);
     }))
     {
         eventAcceleration->autorelease();
@@ -3615,8 +3688,7 @@ EventListenerCustom* LuaEventListenerCustom::create(const std::string& eventName
     
     if ( eventCustom->init(eventName, [=](EventCustom* event){
         BasicScriptData data((void*)eventCustom,(void*)event);
-        ScriptEvent accEvent(kEventListenerCustom,&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
+        LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::EVENT_CUSTIOM, (void*)&data );
     }))
     {
         eventCustom->autorelease();
@@ -3651,7 +3723,7 @@ static int tolua_cocos2dx_LuaEventListenerAcceleration_create(lua_State* tolua_S
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
         cocos2d::EventListenerAcceleration* tolua_ret = cocos2d::LuaEventListenerAcceleration::create();
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::EVENTLISTENER_ACC);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::EVENT_ACC);
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
         toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"EventListenerAcceleration");
@@ -3694,7 +3766,7 @@ static int tolua_cocos2d_LuaEventListenerCustom_create(lua_State* tolua_S)
         const std::string eventName = ((const std::string)  tolua_tocppstring(tolua_S,2,0));
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,3,0);
         cocos2d::EventListenerCustom* tolua_ret = LuaEventListenerCustom::create(eventName);
-        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::EVENTLISTENER_CUSTIOM);
+        ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::EVENT_CUSTIOM);
         
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
@@ -3807,28 +3879,26 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
 #endif
         
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_KEYBOARD_PRESSED:
+            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     self->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventListenerKeyboarData listenerData((int)keyCode, event ,type);
+                        LuaEventKeyboarData listenerData((int)keyCode, event);
                         BasicScriptData data((void*)self,(void*)&listenerData);
-                        ScriptEvent accEvent(kEventListenerKeyboard,&data);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_KEYBOARD_RELEASE:
+            case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     self->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventListenerKeyboarData listenerData((int)keyCode, event ,type);
+                        LuaEventKeyboarData listenerData((int)keyCode, event);
                         BasicScriptData data((void*)self,(void*)&listenerData);
-                        ScriptEvent accEvent(kEventListenerKeyboard,&data);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&accEvent);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                 }
                 break;
@@ -3928,48 +3998,48 @@ static int tolua_cocos2dx_EventListenerTouchOneByOne_registerScriptHandler(lua_S
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_BEGAN:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_BEGAN:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     
                     self->onTouchBegan = [=](Touch* touch, Event* event){
-                        LuaEventListenerTouchData listenerData(type, (void*)self, touch, event);
-                        ScriptEvent scriptEvent(kEventListenerTouch, &listenerData);
-                        return ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)self,(void*)&touchData);
+                        return LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_MOVED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_MOVED:
                 {
                     self->onTouchMoved = [=](Touch* touch, Event* event){
-                        LuaEventListenerTouchData listenerData(type, (void*)self, touch, event);
-                        ScriptEvent scriptEvent(kEventListenerTouch, &listenerData);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)self,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                     
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_ENDED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_ENDED:
                 {
                     self->onTouchEnded = [=](Touch* touch, Event* event){
-                        LuaEventListenerTouchData listenerData(type, (void*)self, touch, event);
-                        ScriptEvent scriptEvent(kEventListenerTouch, &listenerData);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)self,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                     
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_CANCELLED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_CANCELLED:
                 {
                     self->onTouchCancelled = [=](Touch* touch, Event* event){
-                        LuaEventListenerTouchData listenerData(type, (void*)self, touch, event);
-                        ScriptEvent scriptEvent(kEventListenerTouch, &listenerData);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                        LuaEventTouchData touchData(touch, event);
+                        BasicScriptData data((void*)self,(void*)&touchData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                     
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
@@ -4070,48 +4140,48 @@ static int tolua_cocos2dx_EventListenerTouchAllAtOnce_registerScriptHandler(lua_
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_BEGAN:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_BEGAN:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
                     self->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
-                        LuaEventListenerTouchesData listenerData(type, (void*)self, touches, event);
-                        ScriptEvent scriptEvent(kEventListenerTouches, &listenerData);
-                        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                        LuaEventTouchesData touchesData(touches, event);
+                        BasicScriptData data((void*)self,(void*)&touchesData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
                 }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_MOVED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_MOVED:
             {
                 self->onTouchesMoved = [=](const std::vector<Touch*>& touches, Event* event){
-                    LuaEventListenerTouchesData listenerData(type, (void*)self, touches, event);
-                    ScriptEvent scriptEvent(kEventListenerTouches, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                    LuaEventTouchesData touchesData(touches, event);
+                    BasicScriptData data((void*)self,(void*)&touchesData);
+                    LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                 };
                 
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
             }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_ENDED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_ENDED:
             {
                 self->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
-                    LuaEventListenerTouchesData listenerData(type, (void*)self, touches, event);
-                    ScriptEvent scriptEvent(kEventListenerTouches, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                    LuaEventTouchesData touchesData(touches, event);
+                    BasicScriptData data((void*)self,(void*)&touchesData);
+                    LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                 };
                 
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
             }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_TOUCH_CANCELLED:
+            case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_CANCELLED:
             {
                 self->onTouchesCancelled = [=](const std::vector<Touch*>& touches, Event* event){
-                    LuaEventListenerTouchesData listenerData(type, (void*)self, touches, event);
-                    ScriptEvent scriptEvent(kEventListenerTouches, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+                    LuaEventTouchesData touchesData(touches, event);
+                    BasicScriptData data((void*)self,(void*)&touchesData);
+                    LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                 };
                 
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
@@ -4212,53 +4282,53 @@ static int tolua_cocos2dx_EventListenerMouse_registerScriptHandler(lua_State* to
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0) ) ;
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0) ) ;
         
         switch (type)
         {
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_DOWN:
-            {
-                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_DOWN:
+                {
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onMouseDown = [=](Event* event){
-                    LuaEventListenerMouseData listenerData(type, (void*)self, event);
-                    ScriptEvent scriptEvent(kEventListenerMouse, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-                };
-            }
+                    self->onMouseDown = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)self,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
+                }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_UP:
-            {
-                self->onMouseUp = [=](Event* event){
-                    LuaEventListenerMouseData listenerData(type, (void*)self, event);
-                    ScriptEvent scriptEvent(kEventListenerMouse, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-                };
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_UP:
+                {
+                    self->onMouseUp = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)self,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
                 
-                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
-            }
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_MOVE:
-            {
-                self->onMouseMove = [=](Event* event){
-                    LuaEventListenerMouseData listenerData(type, (void*)self, event);
-                    ScriptEvent scriptEvent(kEventListenerMouse, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-                };
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_MOVE:
+                {
+                    self->onMouseMove = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)self,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
                 
-                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
-            }
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENTLISTENER_MOUSE_SCROLL:
-            {
-                self->onMouseScroll = [=](Event* event){
-                    LuaEventListenerMouseData listenerData(type, (void*)self, event);
-                    ScriptEvent scriptEvent(kEventListenerMouse, &listenerData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-                };
+            case ScriptHandlerMgr::HandlerType::EVENT_MOUSE_SCROLL:
+                {
+                    self->onMouseScroll = [=](Event* event){
+                        LuaEventMouseData mouseData(event);
+                        BasicScriptData data((void*)self,(void*)&mouseData);
+                        LuaEngine::getInstance()->handleEvent(type, (void*)&data);
+                    };
                 
-                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
-            }
+                    ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                }
                 break;
             default:
                 break;
@@ -4284,6 +4354,112 @@ static void extendEventListenerMouse(lua_State* tolua_S)
     {
         tolua_function(tolua_S, "create", tolua_cocos2dx_EventListenerMouse_create);
         tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerMouse_registerScriptHandler);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_cocos2dx_ActionCamera_reverse(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::ActionCamera* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ActionCamera",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::ActionCamera*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2dx_ActionCamera_reverse'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        cocos2d::ActionCamera* reverse = cobj->reverse();
+        toluafix_pushusertype_ccobject(tolua_S, reverse->_ID, &(reverse->_luaID), (void*)(reverse),"ActionCamera");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reverse",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_ActionCamera_reverse'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static void extendActionCamera(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ActionCamera");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "reverse", tolua_cocos2dx_ActionCamera_reverse);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static int tolua_cocos2dx_GridAction_reverse(lua_State* tolua_S)
+{
+    if (NULL == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    cocos2d::GridAction* cobj = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"GridAction",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::GridAction*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2dx_GridAction_reverse'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        cocos2d::GridAction* reverse = cobj->reverse();
+        toluafix_pushusertype_ccobject(tolua_S, reverse->_ID, &(reverse->_luaID), (void*)(reverse),"GridAction");
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "reverse",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_GridAction_reverse'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static void extendGridAction(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "GridAction");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "reverse", tolua_cocos2dx_GridAction_reverse);
     }
     lua_pop(tolua_S, 1);
 }
@@ -4325,5 +4501,11 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerTouchOneByOne(tolua_S);
     extendEventListenerTouchAllAtOnce(tolua_S);
     extendEventListenerMouse(tolua_S);
+    extendActionCamera(tolua_S);
+    extendGridAction(tolua_S);
+    
+    extendMotionStreak(tolua_S);
+    extendAtlasNode(tolua_S);
+    extendParticleBatchNode(tolua_S);
     return 0;
 }

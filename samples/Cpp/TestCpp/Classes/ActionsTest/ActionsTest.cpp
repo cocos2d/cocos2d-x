@@ -2,6 +2,10 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+
 static std::function<Layer*()> createFunctions[] = {
 
     CL(ActionManual),
@@ -1285,13 +1289,21 @@ void ActionFollow::onEnter()
 
 void ActionFollow::draw()
 {
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
+    
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void ActionFollow::onDraw()
+{
     auto winSize = Director::getInstance()->getWinSize();
     
-	float x = winSize.width*2 - 100;
-	float y = winSize.height;
+    float x = winSize.width*2 - 100;
+    float y = winSize.height;
     
-	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	DrawPrimitives::drawPoly(vertices, 4, true);
+    Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
+    DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
 std::string ActionFollow::subtitle() const
@@ -1589,10 +1601,24 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void ActionCatmullRomStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLLoadMatrix(&_modelViewMV2);
     DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCatmullRomStacked::title() const
@@ -1684,15 +1710,30 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void ActionCardinalSplineStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCardinalSplineStacked::title() const
@@ -2036,11 +2077,28 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
+
     kmGLPopMatrix();
-    
-    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
+
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
+
+
+void ActionCatmullRom::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
+}
+
 
 std::string ActionCatmullRom::title() const
 {
@@ -2114,15 +2172,30 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void ActionCardinalSpline::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
 }
 
 std::string ActionCardinalSpline::title() const

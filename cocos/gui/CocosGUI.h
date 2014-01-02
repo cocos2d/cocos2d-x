@@ -28,25 +28,26 @@
 
 #include "gui/UIWidget.h"
 #include "gui/UILayout.h"
-#include "gui/UIRootWidget.h"
 #include "gui/UIButton.h"
 #include "gui/UICheckBox.h"
 #include "gui/UIImageView.h"
-#include "gui/UILabel.h"
-#include "gui/UILabelAtlas.h"
+#include "gui/UIText.h"
+#include "gui/UITextAtlas.h"
 #include "gui/UILoadingBar.h"
 #include "gui/UIScrollView.h"
 #include "gui/UIListView.h"
 #include "gui/UISlider.h"
 #include "gui/UITextField.h"
-#include "gui/UILabelBMFont.h"
+#include "gui/UITextBMFont.h"
 #include "gui/UIPageView.h"
 #include "gui/UIHelper.h"
-#include "gui/UILayer.h"
+
+NS_CC_BEGIN
 namespace gui {
 
 const char* CocosGUIVersion();
 
 }
+NS_CC_END
 
 #endif /* defined(__CocosGUITest__Cocos__) */

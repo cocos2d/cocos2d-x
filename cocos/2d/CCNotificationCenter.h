@@ -31,29 +31,29 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class ScriptHandlerMgr;
-class CC_DLL NotificationCenter : public Object
+class CC_DLL __NotificationCenter : public Object
 {
     friend class ScriptHandlerMgr;
 public:
-    /** NotificationCenter constructor
+    /** __NotificationCenter constructor
      * @js ctor
      */
-    NotificationCenter();
+    __NotificationCenter();
 
-    /** NotificationCenter destructor
+    /** __NotificationCenter destructor
      * @js NA
      * @lua NA
      */
-    ~NotificationCenter();
+    ~__NotificationCenter();
     
-    /** Gets the single instance of NotificationCenter. */
-    static NotificationCenter *getInstance();
+    /** Gets the single instance of __NotificationCenter. */
+    static __NotificationCenter *getInstance();
 
-    /** Destroys the single instance of NotificationCenter. */
+    /** Destroys the single instance of __NotificationCenter. */
     static void destroyInstance();
 
     /** @deprecated use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static NotificationCenter *sharedNotificationCenter(void);
+    CC_DEPRECATED_ATTRIBUTE static __NotificationCenter *sharedNotificationCenter(void);
 
     /** @deprecated use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
@@ -67,14 +67,14 @@ public:
      */
     void addObserver(Object *target, 
                      SEL_CallFuncO selector,
-                     const char *name,
+                     const std::string& name,
                      Object *sender);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
-    void removeObserver(Object *target,const char *name);
+    void removeObserver(Object *target,const std::string& name);
     
     /** @brief Removes all notifications registered by this target
      *  @param target The target of this notification.
@@ -86,21 +86,21 @@ public:
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(Object *target,int handler,const char* name);
+    void registerScriptObserver(Object *target,int handler,const std::string& name);
 
     /** Unregisters script observer */
-    void unregisterScriptObserver(Object *target,const char* name);
+    void unregisterScriptObserver(Object *target,const std::string& name);
     
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
      */
-    void postNotification(const char *name);
+    void postNotification(const std::string& name);
 
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
      *  @param sender The object posting the notification. Can be nullptr
      */
-    void postNotification(const char *name, Object *sender);
+    void postNotification(const std::string& name, Object *sender);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
@@ -112,12 +112,12 @@ public:
      *  @param name The name of this notification.
      *  @return The observer script handle.
      */
-    int getObserverHandlerByName(const char* name);
+    int getObserverHandlerByName(const std::string& name);
 private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(Object *target,const char *name, Object *sender);
+    bool observerExisted(Object *target,const std::string& name, Object *sender);
     
     // variables
     //
@@ -138,7 +138,7 @@ public:
      */
     NotificationObserver(Object *target, 
                            SEL_CallFuncO selector,
-                           const char *name,
+                           const std::string& name,
                            Object *sender);
 
     /** NotificationObserver destructor function 
@@ -168,7 +168,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* getName() const;
+    const std::string& getName() const;
     /**
      * @js NA
      * @lua NA

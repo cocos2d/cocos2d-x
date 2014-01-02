@@ -545,7 +545,8 @@ CC_DEPRECATED_ATTRIBUTE typedef IMEDelegate CCIMEDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef IMEKeyboardNotificationInfo CCIMEKeyboardNotificationInfo;
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldDelegate CCTextFieldDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldTTF CCTextFieldTTF;
-CC_DEPRECATED_ATTRIBUTE typedef NotificationCenter CCNotificationCenter;
+CC_DEPRECATED_ATTRIBUTE typedef __NotificationCenter CCNotificationCenter;
+CC_DEPRECATED_ATTRIBUTE typedef __NotificationCenter NotificationCenter;
 //CC_DEPRECATED_ATTRIBUTE typedef TargetedTouchDelegate CCTargetedTouchDelegate;
 //CC_DEPRECATED_ATTRIBUTE typedef StandardTouchDelegate CCStandardTouchDelegate;
 //CC_DEPRECATED_ATTRIBUTE typedef TouchDelegate CCTouchDelegate;
@@ -1038,7 +1039,7 @@ CC_DEPRECATED_ATTRIBUTE typedef __Integer CCInteger;
 CC_DEPRECATED_ATTRIBUTE typedef __Bool Bool;
 CC_DEPRECATED_ATTRIBUTE typedef __Bool CCBool;
 CC_DEPRECATED_ATTRIBUTE typedef __String CCString;
-//CC_DEPRECATED_ATTRIBUTE typedef __String String;
+CC_DEPRECATED_ATTRIBUTE typedef __String String;
 
 CC_DEPRECATED_ATTRIBUTE typedef __RGBAProtocol RGBAProtocol;
 CC_DEPRECATED_ATTRIBUTE typedef __NodeRGBA NodeRGBA;

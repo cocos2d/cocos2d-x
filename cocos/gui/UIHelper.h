@@ -25,8 +25,14 @@
 #ifndef __UIHELPER_H__
 #define __UIHELPER_H__
 
+NS_CC_BEGIN
+
 namespace gui {
 
+/**
+*   @js NA
+*   @lua NA
+*/
 class UIHelper
 {
 public:
@@ -39,7 +45,7 @@ public:
      *
      * @return finded result.
      */
-    static UIWidget* seekWidgetByTag(UIWidget* root, int tag);
+    static Widget* seekWidgetByTag(Widget* root, int tag);
     
     /**
      * Finds a widget whose name equals to param name from root widget.
@@ -50,7 +56,7 @@ public:
      *
      * @return finded result.
      */
-    static UIWidget* seekWidgetByName(UIWidget* root, const char* name);
+    static Widget* seekWidgetByName(Widget* root, const char* name);
     
     /**
      * Finds a widget whose name equals to param name from root widget.
@@ -63,11 +69,13 @@ public:
      *
      * @return finded result.
      */
-    static UIWidget* seekWidgetByRelativeName(UIWidget* root, const char* name);
+    static Widget* seekWidgetByRelativeName(Widget* root, const char* name);
     
     /*temp action*/
-    static UIWidget* seekActionWidgetByActionTag(UIWidget* root, int tag);
+    static Widget* seekActionWidgetByActionTag(Widget* root, int tag);
 };
 }
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__UISystem__) */

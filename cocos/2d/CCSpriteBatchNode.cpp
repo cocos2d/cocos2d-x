@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCLayer.h"
 #include "CCScene.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -66,7 +66,7 @@ SpriteBatchNode* SpriteBatchNode::createWithTexture(Texture2D* tex, ssize_t capa
 * creation with File Image
 */
 
-SpriteBatchNode* SpriteBatchNode::create(const char *fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
+SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     SpriteBatchNode *batchNode = new SpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -112,7 +112,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const char* fileImage, ssize_t capacity)
+bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -360,8 +360,7 @@ void SpriteBatchNode::draw()
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
+    _quadCommand.init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,
@@ -369,7 +368,7 @@ void SpriteBatchNode::draw()
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)
@@ -379,8 +378,8 @@ void SpriteBatchNode::increaseAtlasCapacity(void)
     // this is likely computationally expensive
     ssize_t quantity = (_textureAtlas->getCapacity() + 1) * 4 / 3;
 
-    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%zd] to [%zd].",
-        _textureAtlas->getCapacity(),
+    CCLOG("cocos2d: SpriteBatchNode: resizing TextureAtlas capacity from [%d] to [%d].",
+        static_cast<int>(_textureAtlas->getCapacity()),
         quantity);
 
     if (! _textureAtlas->resizeCapacity(quantity))

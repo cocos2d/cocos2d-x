@@ -2,16 +2,10 @@
 
 #include "UICheckBoxTest.h"
 
-const char* font_UICheckBoxTest =
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-"Marker Felt";
-#else
-"cocosgui/Marker Felt.ttf";
-#endif
 
 // UICheckBoxTest
 UICheckBoxTest::UICheckBoxTest()
-: m_pDisplayValueLabel(NULL)
+: _displayValueLabel(nullptr)
 {
     
 }
@@ -24,28 +18,28 @@ bool UICheckBoxTest::init()
 {
     if (UIScene::init())
     {
-        Size widgetSize = m_pWidget->getSize();;
+        Size widgetSize = _widget->getSize();;
         
         // Add a label in which the checkbox events will be displayed
-        m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("No Event");
-        m_pDisplayValueLabel->setFontName(font_UICheckBoxTest);
-        m_pDisplayValueLabel->setFontSize(32);
-        m_pDisplayValueLabel->setAnchorPoint(Point(0.5f, -1));
-        m_pDisplayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
-        m_pUiLayer->addWidget(m_pDisplayValueLabel);
+        _displayValueLabel = gui::Text::create();
+        _displayValueLabel->setText("No Event");
+        _displayValueLabel->setFontName("Marker Felt");
+        _displayValueLabel->setFontSize(32);
+        _displayValueLabel->setAnchorPoint(Point(0.5f, -1));
+        _displayValueLabel->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        UILabel *alert = UILabel::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("CheckBox");
-        alert->setFontName(font_UICheckBoxTest);
+        alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75));
-        m_pUiLayer->addWidget(alert);        
+        alert->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 1.75f));
+        _uiLayer->addChild(alert);        
         
         // Create the checkbox
-        UICheckBox* checkBox = UICheckBox::create();
+        CheckBox* checkBox = CheckBox::create();
         checkBox->setTouchEnabled(true);
         checkBox->loadTextures("cocosgui/check_box_normal.png",
                                "cocosgui/check_box_normal_press.png",
@@ -55,9 +49,7 @@ bool UICheckBoxTest::init()
         checkBox->setPosition(Point(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         
         checkBox->addEventListenerCheckBox(this, checkboxselectedeventselector(UICheckBoxTest::selectedEvent));
-        
-//        checkBox->addSelectEvent(this, coco_selectselector(UICheckBoxTest::selectedEvent));
-        m_pUiLayer->addWidget(checkBox);
+        _uiLayer->addChild(checkBox);
         
         return true;
     }
@@ -66,13 +58,16 @@ bool UICheckBoxTest::init()
 
 void UICheckBoxTest::selectedEvent(Object* pSender,CheckBoxEventType type)
 {
-    switch (type) {
-        case gui::CHECKBOX_STATE_EVENT_SELECTED:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Selected")->getCString());
+    switch (type)
+    {
+        case CHECKBOX_STATE_EVENT_SELECTED:
+            _displayValueLabel->setText(String::createWithFormat("Selected")->getCString());
             break;
-        case gui::CHECKBOX_STATE_EVENT_UNSELECTED:
-            m_pDisplayValueLabel->setText(CCString::createWithFormat("Unselected")->getCString());
+            
+        case CHECKBOX_STATE_EVENT_UNSELECTED:
+            _displayValueLabel->setText(String::createWithFormat("Unselected")->getCString());
             break;
+            
         default:
             break;
     }

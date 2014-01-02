@@ -27,6 +27,8 @@
 
 #include "gui/UIWidget.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 typedef enum
@@ -44,30 +46,33 @@ typedef enum
     LAYOUT_RELATIVE
 }LayoutType;
 
-class UILayout : public UIWidget
+typedef enum {
+    LAYOUT_CLIPPING_STENCIL,
+    LAYOUT_CLIPPING_SCISSOR
+}LayoutClippingType;
+
+/**
+ *  @js NA
+ *  @lua NA
+ */
+class Layout : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UILayout();
+    Layout();
     
     /**
      * Default destructor
-     * @js NA
-     * @lua NA
      */
-    virtual ~UILayout();
+    virtual ~Layout();
     
     /**
      * Allocates and initializes a layout.
      */
-    static UILayout* create();
-    
-    //override "hitTest" method of widget.
-    virtual bool hitTest(const cocos2d::Point &pt) override;
-    
+    static Layout* create();
+        
     //background
     /**
      * Sets a background image for layout
@@ -84,7 +89,7 @@ public:
      * @param capinsets of background image.
      *
      */
-    void setBackGroundImageCapInsets(const cocos2d::Rect& capInsets);
+    void setBackGroundImageCapInsets(const Rect& capInsets);
     
     /**
      * Sets Color Type for layout.
@@ -105,7 +110,7 @@ public:
      *
      * @param color
      */
-    void setBackGroundColor(const cocos2d::Color3B &color);
+    void setBackGroundColor(const Color3B &color);
     
     /**
      * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
@@ -114,7 +119,7 @@ public:
      *
      * @param end color
      */
-    void setBackGroundColor(const cocos2d::Color3B &startColor, const cocos2d::Color3B &endColor);
+    void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
     
     /**
      * Sets background opacity layout.
@@ -128,13 +133,7 @@ public:
      *
      * @param vector
      */
-    void setBackGroundColorVector(const cocos2d::Point &vector);
-    
-    //override "setColor" method of widget.
-    virtual void setColor(const cocos2d::Color3B &color) override;
-    
-    //override "setOpacity" method of widget.
-    virtual void setOpacity(int opacity) override;
+    void setBackGroundColorVector(const Point &vector);
     
     /**
      * Remove the background image of layout.
@@ -146,7 +145,7 @@ public:
      *
      * @return background image texture size.
      */
-    const cocos2d::Size& getBackGroundImageTextureSize() const;
+    const Size& getBackGroundImageTextureSize() const;
     
     /**
      * Changes if layout can clip it's content and child.
@@ -157,6 +156,8 @@ public:
      */
     virtual void setClippingEnabled(bool enabled);
     
+    void setClippingType(LayoutClippingType type);
+    
     /**
      * Gets if layout is clipping enabled.
      *
@@ -165,16 +166,9 @@ public:
     virtual bool isClippingEnabled();
     
     /**
-     * Gets the content size of widget.
-     *
-     * Content size is widget's texture size.
-     */
-    virtual const cocos2d::Size& getContentSize() const override;
-    
-    /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
     
     /**
      * Sets LayoutType.
@@ -193,78 +187,82 @@ public:
      * @return LayoutType
      */
     virtual LayoutType getLayoutType() const;
-    
-    virtual void doLayout();
-    
+
+    virtual void addChild(Node * child) override;
     /**
-     * Adds a child to the container.
+     * Adds a child to the container with a z-order
      *
-     * @param child A child widget
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      */
-    virtual bool addChild(UIWidget* child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     */
+    virtual void addChild(Node* child, int zOrder, int tag) override;
     
+    virtual void visit();
+    
+    virtual void sortAllChildren() override;
+    
+    void requestDoLayout();
 protected:
     //override "init" method of widget.
     virtual bool init() override;
-    
-    //override "initRenderer" method of widget.
-    virtual void initRenderer() override;
-    
+        
     //override "onSizeChanged" method of widget.
     virtual void onSizeChanged() override;
     
     //init background image renderer.
     void addBackGroundImage();
     
-    void supplyTheLayoutParameterLackToChild(UIWidget* child);
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    void supplyTheLayoutParameterLackToChild(Widget* child);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    
+    void stencilClippingVisit();
+    void scissorClippingVisit();
+    
+    void setStencilClippingSize(const Size& size);
+    const Rect& getClippingRect();
+    virtual void doLayout();
 protected:
     bool _clippingEnabled;
     
     //background
     bool _backGroundScale9Enabled;
-    cocos2d::Node* _backGroundImage;
+    Node* _backGroundImage;
     std::string _backGroundImageFileName;
-    cocos2d::Rect _backGroundImageCapInsets;
+    Rect _backGroundImageCapInsets;
     LayoutBackGroundColorType _colorType;
     TextureResType _bgImageTexType;
-    cocos2d::LayerColor* _colorRender;
-    cocos2d::LayerGradient* _gradientRender;
-    cocos2d::Color3B _cColor;
-    cocos2d::Color3B _gStartColor;
-    cocos2d::Color3B _gEndColor;
-    cocos2d::Point _alongVector;
+    LayerColor* _colorRender;
+    LayerGradient* _gradientRender;
+    Color3B _cColor;
+    Color3B _gStartColor;
+    Color3B _gEndColor;
+    Point _alongVector;
     int _cOpacity;
-    cocos2d::Size _backGroundImageTextureSize;
+    Size _backGroundImageTextureSize;
     LayoutType _layoutType;
+    LayoutClippingType _clippingType;
+    DrawNode* _clippingStencil;
+    bool _handleScissor;
+    bool _scissorRectDirty;
+    Rect _clippingRect;
+    Layout* _clippingParent;
+    bool _doLayoutDirty;
 };
-/**
- *  @js NA
- *  @lua NA
- */
-class UIRectClippingNode : public cocos2d::ClippingNode
-{
-public:
-    virtual ~UIRectClippingNode();
-    virtual bool init();
-    static UIRectClippingNode* create();
-    void setClippingSize(const cocos2d::Size& size);
-    void setClippingEnabled(bool enabled);
-    virtual void visit();
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
-protected:
-    cocos2d::DrawNode* _innerStencil;
-    bool _enabled;
-private:
-    UIRectClippingNode();
-    cocos2d::Point rect[4];
-    cocos2d::Size _clippingSize;
-    bool _clippingEnabled;
-};
-
+    
 }
-
+NS_CC_END
 #endif /* defined(__Layout__) */

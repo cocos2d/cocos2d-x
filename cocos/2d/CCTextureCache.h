@@ -124,13 +124,13 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     */
     Texture2D* addImage(Image *image, const std::string &key);
-    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const char *key) { return addImage(image,key); }
+    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5
     */
     Texture2D* getTextureForKey(const std::string& key) const;
-    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const char* key) const { return getTextureForKey(key); }
+    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
     /** Purges the dictionary of loaded textures.
     * Call this method if you receive the "Memory Warning"
@@ -250,7 +250,7 @@ protected:
 class VolatileTextureMgr
 {
 public:
-    static void addImageTexture(Texture2D *tt, const char* imageFileName);
+    static void addImageTexture(Texture2D *tt, const std::string& imageFileName);
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);

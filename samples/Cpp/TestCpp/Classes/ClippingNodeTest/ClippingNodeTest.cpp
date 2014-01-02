@@ -7,6 +7,7 @@
 
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
 
 enum {
 	kTagTitleLabel = 1,
@@ -564,7 +565,7 @@ static const Color4F _planeColor[] = {
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-    CC_SAFE_RELEASE(_sprite);
+
 }
 
 std::string RawStencilBufferTest::title() const
@@ -583,10 +584,15 @@ void RawStencilBufferTest::setup()
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current GLView.");
     }
-    _sprite = Sprite::create(s_pathGrossini);
-    _sprite->retain();
-    _sprite->setAnchorPoint(  Point(0.5, 0) );
-    _sprite->setScale( 2.5f );
+    
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        Sprite* sprite = Sprite::create(s_pathGrossini);
+        sprite->setAnchorPoint(  Point(0.5, 0) );
+        sprite->setScale( 2.5f );
+        _sprites.pushBack(sprite);
+    }
+
     Director::getInstance()->setAlphaBlending(true);
 }
 
@@ -596,8 +602,21 @@ void RawStencilBufferTest::draw()
     
     auto planeSize = winPoint * (1.0 / _planeCount);
     
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
+    Renderer *renderer = Director::getInstance()->getRenderer();
+    size_t neededCmdSize = _planeCount * 2 + 2;
+    if(_renderCmds.size() != neededCmdSize)
+    {
+        _renderCmds.resize(neededCmdSize);
+    }
+    
+    auto iter = _renderCmds.begin();
+    
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
+    renderer->addCommand(&(*iter));
+    ++iter;
+    
+
         
     for (int i = 0; i < _planeCount; i++) {
         
@@ -607,31 +626,60 @@ void RawStencilBufferTest::draw()
         auto spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
-        _sprite->setPosition( spritePoint );
-
-        this->setupStencilForClippingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-
-        DrawPrimitives::drawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
+        _sprites.at(i)->setPosition( spritePoint );
+        
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites.at(i)->visit();
         kmGLPopMatrix();
         
-        this->setupStencilForDrawingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-        
-        DrawPrimitives::drawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites.at(i)->visit();
         kmGLPopMatrix();
     }
     
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
+    renderer->addCommand(&(*iter));
+
+}
+
+void RawStencilBufferTest::onEnableStencil()
+{
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onDisableStencil()
+{
     glDisable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Point& pt)
+{
+    this->setupStencilForClippingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, Color4F(1, 1, 1, 1));
+}
+
+void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Point& pt)
+{
+    this->setupStencilForDrawingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, _planeColor[planeIndex]);
 }
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
@@ -711,7 +759,11 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram(program );
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
+    
 #endif
 }
 
@@ -744,7 +796,10 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram( program );
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
 #endif
 }
 
@@ -810,7 +865,10 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram(program);
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
 #endif
     glFlush();
 }
