@@ -114,7 +114,7 @@ public:
     bool containsPoint(const Point& point) const;
     
     /** move the points to the center */
-    static Point* recenterPoints(Point* points, int count, const Point& center = Point::ZERO);
+    static void recenterPoints(Point* points, int count, const Point& center = Point::ZERO);
     /** get center of the polyon points */
     static Point getPolyonCenter(const Point* points, int count);
     
@@ -282,8 +282,8 @@ class PhysicsShapeEdgeBox : public PhysicsShape
 public:
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Point& offset = Point::ZERO);
     virtual Point getOffset() override { return _offset; }
-    void getPoints(const Point* outPoints) const;
-    int getPointsCount() const;
+    void getPoints(Point* outPoints) const;
+    int getPointsCount() const { return 4; }
     
 protected:
     bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 1, const Point& offset = Point::ZERO);

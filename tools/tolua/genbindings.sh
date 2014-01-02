@@ -90,3 +90,6 @@ LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py
 
 echo "Generating bindings for cocos2dx_spine..."
 LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_spine_auto
+
+echo "Generating bindings for cocos2dx_physics..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_physics.ini -s cocos2dx_physics -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_physics_auto
