@@ -236,7 +236,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
             if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
-                bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+                bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
                 tween->stop();
             }
 

@@ -155,7 +155,7 @@ bool Armature::init(const std::string& name)
                     CC_BREAK_IF(!frameData);
 
                     bone->getTweenData()->copy(frameData);
-                    bone->changeDisplayByIndex(frameData->displayIndex, false);
+                    bone->changeDisplayWithIndex(frameData->displayIndex, false);
                 }
                 while (0);
             }
@@ -222,7 +222,7 @@ Bone *Armature::createBone(const std::string& boneName)
     }
 
     bone->setBoneData(boneData);
-    bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+    bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
 
     return bone;
 }
