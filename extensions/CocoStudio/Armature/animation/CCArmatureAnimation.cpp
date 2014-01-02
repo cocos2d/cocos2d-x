@@ -241,7 +241,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
             if(!bone->getIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
-                bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+                bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
                 tween->stop();
             }
 
