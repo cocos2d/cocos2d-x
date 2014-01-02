@@ -692,6 +692,9 @@ Developers:
     zarelaky
         OpenAL context isn't destroyed correctly on mac and ios.
         
+    kicktheken (Kenneth Chan)
+        Fixed a bug that the setBlendFunc method of some classes wasn't exposed to LUA.
+        
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
