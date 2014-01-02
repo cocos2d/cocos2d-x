@@ -37,6 +37,8 @@ struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
+NS_CC_BEGIN
+
 namespace network {
 
 class WsThreadHelper;
@@ -162,5 +164,7 @@ private:
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */
