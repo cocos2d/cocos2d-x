@@ -340,6 +340,7 @@ namespace cocostudio {
                         CCLOG("unknown resourcetype on CCComAttribute!");
                         continue;
                     }
+                    pAttribute->setJsonFile(pPath);
                     gb->addComponent(pAttribute);
 					if (_listener && _fnSelector)
 					{

@@ -587,7 +587,7 @@ cocos2d::Node* EffectComponentTest::createGameScene()
 	}
 	_node = node;
 	Armature *pAr = static_cast<Armature*>(_node->getChildByTag(10015)->getComponent("Armature")->getNode());
-	pAr->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(EffectComponentTest::animationEvent));
+	pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     return node;
 }
 
@@ -697,14 +697,12 @@ void AttributeComponentTest::onExit()
 bool AttributeComponentTest::initData()
 {
 	bool bRet = false;
-	unsigned long size = 0;
-	unsigned char *pBytes = nullptr;
 	rapidjson::Document doc;
 	do {
 		CC_BREAK_IF(_node == nullptr);
 		ComAttribute *attribute = static_cast<ComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
 		CC_BREAK_IF(attribute == nullptr);
-		std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(attribute->getJsonName());
+		std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(attribute->getJsonFile());
         std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
         doc.Parse<0>(contentStr.c_str());
         CC_BREAK_IF(doc.HasParseError());
