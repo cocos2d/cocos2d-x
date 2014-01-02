@@ -32,7 +32,7 @@
           "name": "CCArmature",
           "file": null,
           "fileData": {
-            "path": "Cowboy.ExportJson",
+            "path": "CowBoy/Cowboy.ExportJson",
             "plistFile": null,
             "resourceType": 0
           },

@@ -288,35 +288,9 @@ NS_CC_EXT_BEGIN
                         CCLog("read json file[%s] error!\n", pPath.c_str());
                         continue;
                     }
-                    
-                    
-                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
                     const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
-
-                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-                    for (int i = 0; i < childrenCount; ++i)
-                    {
-                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
-                        if (plist == NULL)
-                        {
-                            continue;
-                        }
-                        std::string plistpath;
-                        plistpath += file_path;
-                        plistpath.append(plist);
-                        cocos2d::CCDictionary *root = CCDictionary::createWithContentsOfFile(plistpath.c_str());
-                        CCDictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
-                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
-
-                        std::string textupath;
-                        textupath += file_path;
-                        textupath.append(textureFileName);
-
-                        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
-                        
-                    }
-                    
+					CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(pPath.c_str());
                     CCArmature *pAr = CCArmature::create(name);
                     CCComRender *pRender = CCComRender::create(pAr, "CCArmature");
                     if (pComName != NULL)
