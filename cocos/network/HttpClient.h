@@ -43,7 +43,7 @@ namespace network {
 /** @brief Singleton that handles asynchrounous http requests
  * Once the request completed, a callback will issued in main thread when it provided during make request
  */
-class HttpClient : public cocos2d::Object
+class HttpClient
 {
 public:
     /** Return the shared instance **/
@@ -106,8 +106,6 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
-    
-    // std::string reqId;
 };
 
 // end of Network group
