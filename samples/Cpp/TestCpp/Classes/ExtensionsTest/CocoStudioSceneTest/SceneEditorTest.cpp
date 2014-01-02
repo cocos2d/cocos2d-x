@@ -213,13 +213,11 @@ std::string loadSceneEdtiorFileTest::title()
 void loadSceneEdtiorFileTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -262,13 +260,11 @@ std::string SpriteComponentTest::title()
 void SpriteComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -319,13 +315,11 @@ std::string ArmatureComponentTest::title()
 void ArmatureComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -372,13 +366,11 @@ std::string UIComponentTest::title()
 void UIComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -444,13 +436,11 @@ std::string TmxMapComponentTest::title()
 void TmxMapComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -502,13 +492,11 @@ std::string ParticleComponentTest::title()
 void ParticleComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -555,13 +543,11 @@ std::string EffectComponentTest::title()
 void EffectComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -618,13 +604,11 @@ std::string BackgroundComponentTest::title()
 void BackgroundComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
@@ -670,14 +654,12 @@ std::string AttributeComponentTest::title()
 void AttributeComponentTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
-	bool bRet = false;
 	do 
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
 		initData();
         this->addChild(root, 0, 1);
-		bRet = true;
 	} while (0);
 }
 
