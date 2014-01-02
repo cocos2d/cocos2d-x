@@ -1,5 +1,5 @@
 
-require "luaScript/extern"
+require "extern"
 require "luaScript/VisibleRect"
 require "luaScript/TouchesTest/Paddle"
 
