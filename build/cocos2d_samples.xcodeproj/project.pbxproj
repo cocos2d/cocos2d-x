@@ -77,10 +77,10 @@
 		15F4C82A18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
 		15F4C82B18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
 		15F4C82C18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
-		15F4C8391875488A0082884F /* Cocos2dStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C8381875488A0082884F /* Cocos2dStudio.lua */; };
-		15F4C83A1875488A0082884F /* Cocos2dStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C8381875488A0082884F /* Cocos2dStudio.lua */; };
-		15F4C83B1875488A0082884F /* Cocos2dStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C8381875488A0082884F /* Cocos2dStudio.lua */; };
-		15F4C83C1875488A0082884F /* Cocos2dStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C8381875488A0082884F /* Cocos2dStudio.lua */; };
+		15F4C847187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		15F4C848187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		15F4C849187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		15F4C84A187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
 		1A087AEE1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
 		1A087AEF1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
 		1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -2091,7 +2091,7 @@
 		15C6482E165F399D007D4F18 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		15F4C82818751B590082884F /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = ../cocos/scripting/lua/script/extern.lua; sourceTree = "<group>"; };
-		15F4C8381875488A0082884F /* Cocos2dStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2dStudio.lua; path = ../cocos/scripting/lua/script/Cocos2dStudio.lua; sourceTree = "<group>"; };
+		15F4C846187551340082884F /* CocoStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoStudio.lua; path = ../cocos/scripting/lua/script/CocoStudio.lua; sourceTree = "<group>"; };
 		1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceLabelTest.cpp; sourceTree = "<group>"; };
 		1A087AED1860418300196EF5 /* PerformanceLabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceLabelTest.h; sourceTree = "<group>"; };
 		1A1197D71785363400D62A44 /* Hello lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3756,7 +3756,7 @@
 		1A8C5595180E8B6500EF57C3 /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
-				15F4C8381875488A0082884F /* Cocos2dStudio.lua */,
+				15F4C846187551340082884F /* CocoStudio.lua */,
 				15F4C82818751B590082884F /* extern.lua */,
 				15394DF2182E8F5D000A418D /* StudioConstants.lua */,
 				1585AB34182299FA00000FB5 /* json.lua */,
@@ -6106,7 +6106,7 @@
 				1585AB37182299FA00000FB5 /* json.lua in Resources */,
 				1A8C55B9180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82B18751B590082884F /* extern.lua in Resources */,
-				15F4C83B1875488A0082884F /* Cocos2dStudio.lua in Resources */,
+				15F4C849187551340082884F /* CocoStudio.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6174,7 +6174,7 @@
 				1A8C58BA180E904800EF57C3 /* Opengl.lua in Resources */,
 				1A8C58BB180E904800EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82C18751B590082884F /* extern.lua in Resources */,
-				15F4C83C1875488A0082884F /* Cocos2dStudio.lua in Resources */,
+				15F4C84A187551340082884F /* CocoStudio.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6213,7 +6213,7 @@
 				1A8C55B6180E8B8400EF57C3 /* Opengl.lua in Resources */,
 				1A8C55B8180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82918751B590082884F /* extern.lua in Resources */,
-				15F4C8391875488A0082884F /* Cocos2dStudio.lua in Resources */,
+				15F4C847187551340082884F /* CocoStudio.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6274,7 +6274,7 @@
 				1A8C58AE180E904700EF57C3 /* Opengl.lua in Resources */,
 				1A8C58AF180E904700EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82A18751B590082884F /* extern.lua in Resources */,
-				15F4C83A1875488A0082884F /* Cocos2dStudio.lua in Resources */,
+				15F4C848187551340082884F /* CocoStudio.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
