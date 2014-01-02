@@ -1,3 +1,5 @@
+require "Cocos2dStudio"
+
 cc = cc or {}
 
 cc.DIRECTOR_PROJECTION_2D = 0
@@ -359,4 +361,16 @@ end
 --AnimationFrameData
 function cc.AnimationFrameData( _texCoords, _delay, _size)
     return { texCoords = _texCoords, delay = _delay, size = _size }
+end
+
+local ConfigType = 
+{
+    NONE = 0,
+    COCOSTUDIO = 1,
+}
+
+function __onParseConfig(configType,jasonStr)
+    if configType == ConfigType.COCOSTUDIO then
+        ccs.TriggerMng.getInstance():parse(jasonStr)
+    end
 end

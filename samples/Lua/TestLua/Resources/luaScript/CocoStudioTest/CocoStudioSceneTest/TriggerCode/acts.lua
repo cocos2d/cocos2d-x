@@ -1,4 +1,4 @@
-require "lua_cocos2d_studio"
+require "Cocos2dStudio"
 
 local TMoveBy = class("TMoveBy")
 TMoveBy._tag = -1
