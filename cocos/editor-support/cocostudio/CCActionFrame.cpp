@@ -182,23 +182,17 @@ ActionInterval* ActionFrame::getEasingAction(ActionInterval* action)
 		break;
 	case FrameEaseType::ELASTIC_EASEIN:
 		{
-			EaseElasticIn* cAction = EaseElasticIn::create(action);
-			cAction->setPeriod(_Parameter[0]);
-			return cAction;
+			return EaseElasticIn::create(action);
 		}
 		break;
 	case FrameEaseType::ELASTIC_EASEOUT:
 		{
-			EaseElasticOut* cAction = EaseElasticOut::create(action);
-			cAction->setPeriod(_Parameter[0]);
-			return cAction;
+			return EaseElasticOut::create(action);
 		}
 		break;
 	case FrameEaseType::ELASTIC_EASEINOUT:
 		{
-			EaseElasticInOut* cAction = EaseElasticInOut::create(action);
-			cAction->setPeriod(_Parameter[0]);
-			return cAction;
+			return EaseElasticInOut::create(action);
 		}
 		break;
 	case FrameEaseType::BACK_EASEIN:
