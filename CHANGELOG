@@ -19,6 +19,8 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
      [FIX]          Crash if connection breaks during download using AssetManager.
      [NEW]          AngelCode binary file format support for LabelBMFont.
+     [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
+     [FIX]          Useless conversion in ScrollView::onTouchBegan.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.

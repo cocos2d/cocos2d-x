@@ -36,13 +36,13 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos\2d\cocos2dx.props" />
-    <Import Project="..\..\..\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos\2d\cocos2dx.props" />
-    <Import Project="..\..\..\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -143,14 +143,14 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\cocos\2d\cocos2d.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\audio\proj.win32\CocosDenshion.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\audio\proj.win32\CocosDenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">
+    <ProjectReference Include="..\cocos2d\external\chipmunk\proj.win32\chipmunk.vcxproj">
       <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
     </ProjectReference>
   </ItemGroup>
