@@ -2329,3 +2329,13 @@ JSBool jsval_to_ccfontdefinition( JSContext *cx, jsval vp, ccFontDefinition *out
     // we are done here
 	return JS_TRUE;
 }
+
+bool ScriptingCore::parseConfig(ConfigType type, const std::string& str)
+{
+    jsval args[2];
+    args[0] = int32_to_jsval(cx_, static_cast<int>(type));
+    args[1] = std_string_to_jsval(cx_, str);
+    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(global_), "__onParseConfig", 2, args));
+}
+
+

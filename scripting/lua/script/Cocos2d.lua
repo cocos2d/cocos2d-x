@@ -1,4 +1,4 @@
-require "TriggerMng"
+require "CocosStudio"
 
 local ConfigType = 
 {

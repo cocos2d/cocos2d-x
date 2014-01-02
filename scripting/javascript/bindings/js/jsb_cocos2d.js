@@ -652,3 +652,120 @@ cc.Loader.preload = function (resources, selector, target) {
 };
 
 cc.LoaderScene = cc.Loader;
+
+var ConfigType = {
+    NONE: 0,
+    COCOSTUDIO: 1
+};
+
+var __onParseConfig = function(type, str) {
+    if (type === ConfigType.COCOSTUDIO) {
+        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+    }
+};
+
+cc.VisibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    _isInitialized: false,
+    init:function(){
+        var director = cc.Director.getInstance();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
+
+        this._width = size.width;
+        this._height = size.height;
+
+        var x = origin.x;
+        var y = origin.y;
+        var w = this._width;
+        var h = this._height;
+
+        var left = origin.x;
+        var right = origin.x + size.width;
+        var middle = origin.x + size.width/2;
+
+        //top
+        this._top.y = this._topLeft.y = this._topRight.y = y + h;
+        this._topLeft.x = left;
+        this._top.x = middle;
+        this._topRight.x = right;
+
+        //bottom
+
+        this._bottom.y = this._bottomRight.y = this._bottomLeft.y = y;
+        this._bottomLeft.x = left
+        this._bottom.x = middle;
+        this._bottomRight.x = right;
+
+        //center
+        this._right.y = this._left.y = this._center.y = y + h/2;
+        this._center.x = middle;
+        
+        //left
+        this._left.x = left;
+
+        //right
+        this._right.x = right;
+    },
+
+    lazyInit: function(){
+        if (!this._isInitialized) {
+            this.init();
+            this._isInitialized = true;
+        }
+    },
+    getWidth:function(){
+        this.lazyInit();
+        return this._width;
+    },
+    getHeight:function(){
+        this.lazyInit();
+        return this._height;
+    },
+    topLeft:function(){
+        this.lazyInit();        
+        return this._topLeft;
+    },
+    topRight:function(){
+        this.lazyInit();        
+        return this._topRight;
+    },
+    top:function(){
+        this.lazyInit();        
+        return this._top;
+    },
+    bottomLeft:function(){
+        this.lazyInit();        
+        return this._bottomLeft;
+    },
+    bottomRight:function(){
+        this.lazyInit();        
+        return this._bottomRight;
+    },
+    bottom:function(){
+        this.lazyInit();        
+        return this._bottom;
+    },
+    center:function(){
+        this.lazyInit();        
+        return this._center;
+    },
+    left:function(){
+        this.lazyInit();        
+        return this._left;
+    },
+    right:function(){
+        this.lazyInit();        
+        return this._right;
+    }
+};

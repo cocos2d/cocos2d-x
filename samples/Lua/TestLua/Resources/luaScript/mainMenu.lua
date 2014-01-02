@@ -1,4 +1,4 @@
-require "lua_cocos2d"
+require "Cocos2d"
 require "luaScript/helper"
 require "luaScript/testResource"
 
