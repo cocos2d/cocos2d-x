@@ -57,7 +57,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool load(C3DElementNode* node);
+	virtual bool load(ElementNode* node);
 
 	/**
 	* save the pass info into the elementnode
@@ -65,7 +65,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool save(C3DElementNode* node);
+	virtual bool save(ElementNode* node);
 
 	std::string getVshPath()const{return _vshPath;}
 	std::string getFshPath()const{return _fshPath;}

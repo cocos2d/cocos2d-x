@@ -9,7 +9,7 @@
 #include "C3DModel.h"
 #include "C3DModelNode.h"
 #include "C3DSkinModel.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "EnumDef_GL.h"
 #include "C3DSampler.h"
 
@@ -372,7 +372,6 @@ void C3DRenderState::setParamMethonAutoUniform(C3DPass* pass)
 	while (rs = getTopmost(rs))
 	{
 		for (std::list<MaterialParameter*>::iterator iter = rs->_parameters.begin();iter != rs->_parameters.end();++iter)
-			// for (unsigned int i = 0, count = rs->_parameters.size(); i < count; ++i)
 		{
 			(*iter)->setParamMethonAutoUniform(effect);
 		}
@@ -484,7 +483,7 @@ C3DRenderState::AutoBinding C3DRenderState::getAutoBindingOfVariable(const char*
 	return NONE;
 }
 
-bool C3DRenderState::load(C3DElementNode* nodes)
+bool C3DRenderState::load(ElementNode* nodes)
 {
 	// Rewind the properties to start reading from the start
 	nodes->rewind();
@@ -497,34 +496,34 @@ bool C3DRenderState::load(C3DElementNode* nodes)
 
 		switch (nodes->getElementType())
 		{
-		case C3DElementNode::NUMBER:
+		case ElementNode::NUMBER:
 			float value;
 			this->getParameter(name)->setValue(nodes->getElement(nullptr,&value));
 			break;
-		case C3DElementNode::VECTOR2:
+		case ElementNode::VECTOR2:
 			{
-				C3DVector2 vector2;
+				Vector2 vector2;
 				nodes->getElement(nullptr, &vector2);
 				this->getParameter(name)->setValue(vector2);
 			}
 			break;
-		case C3DElementNode::VECTOR3:
+		case ElementNode::VECTOR3:
 			{
-				C3DVector3 vector3;
+				Vector3 vector3;
 				nodes->getElement(nullptr, &vector3);
 				this->getParameter(name)->setValue(vector3);
 			}
 			break;
-		case C3DElementNode::VECTOR4:
+		case ElementNode::VECTOR4:
 			{
-				C3DVector4 vector4;
+				Vector4 vector4;
 				nodes->getElement(nullptr, &vector4);
 				this->getParameter(name)->setValue(vector4);
 			}
 			break;
-		case C3DElementNode::MATRIX:
+		case ElementNode::MATRIX:
 			{
-				C3DMatrix matrix;
+				Matrix matrix;
 				nodes->getElement(nullptr, &matrix);
 				this->getParameter(name)->setValue(matrix);
 			}
@@ -539,7 +538,7 @@ bool C3DRenderState::load(C3DElementNode* nodes)
 	}
 
 	// Iterate through all child namespaces searching for samplers and render state blocks
-	C3DElementNode* ns;
+	ElementNode* ns;
 	while (ns = nodes->getNextChild())
 	{
 		if (strcmp(ns->getNodeType(), "sampler") == 0)
@@ -580,7 +579,7 @@ bool C3DRenderState::load(C3DElementNode* nodes)
 	return true;
 }
 
-bool C3DRenderState::save(C3DElementNode* node)
+bool C3DRenderState::save(ElementNode* node)
 {   
 	for (std::list<MaterialParameter*>::iterator iter = _parameters.begin();iter != _parameters.end();++iter)
 	{
@@ -596,20 +595,20 @@ bool C3DRenderState::save(C3DElementNode* node)
 			node->setElement(parameter->_name.c_str(), &parameter->_value.intValue);
 			break;
 		case MaterialParameter::VECTOR2:
-			node->setElement(parameter->_name.c_str(), reinterpret_cast<C3DVector2*>(parameter->_value.floatPtrValue));
+			node->setElement(parameter->_name.c_str(), reinterpret_cast<Vector2*>(parameter->_value.floatPtrValue));
 			break;
 		case MaterialParameter::VECTOR3:
-			node->setElement(parameter->_name.c_str(), reinterpret_cast<C3DVector3*>(parameter->_value.floatPtrValue));
+			node->setElement(parameter->_name.c_str(), reinterpret_cast<Vector3*>(parameter->_value.floatPtrValue));
 			break;
 		case MaterialParameter::VECTOR4:
-			node->setElement(parameter->_name.c_str(), reinterpret_cast<C3DVector4*>(parameter->_value.floatPtrValue));
+			node->setElement(parameter->_name.c_str(), reinterpret_cast<Vector4*>(parameter->_value.floatPtrValue));
 			break;
 		case MaterialParameter::SAMPLER:
 			{
 				C3DSampler* sampler = const_cast<C3DSampler*>(parameter->_value.samplerValue);
 				if(sampler != nullptr)
 				{
-					C3DElementNode* samplerNode = C3DElementNode::createEmptyNode(parameter->_name.c_str(), "sampler");
+					ElementNode* samplerNode = ElementNode::createEmptyNode(parameter->_name.c_str(), "sampler");
 					if(sampler->save(samplerNode) == true)
 					{
 						node->addChildNode(samplerNode);
@@ -633,7 +632,7 @@ bool C3DRenderState::save(C3DElementNode* node)
 
 	if(_stateBlock != nullptr)
 	{
-		C3DElementNode* stateNode = C3DElementNode::createEmptyNode("", "renderState");
+		ElementNode* stateNode = ElementNode::createEmptyNode("", "renderState");
 		if(_stateBlock->save(stateNode) == true)
 		{
 			node->addChildNode(stateNode);
@@ -648,7 +647,7 @@ bool C3DRenderState::save(C3DElementNode* node)
 	return true;
 }
 
-C3DRenderState* C3DRenderState::getParent()
+C3DRenderState* C3DRenderState::getParent() const
 {
 	return _parent;
 }

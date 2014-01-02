@@ -2,7 +2,7 @@
 #include "C3DSampler.h"
 #include "C3DTexture.h"
 #include "C3DStream.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 NS_CC_BEGIN
 
@@ -183,7 +183,7 @@ const char* textureWrapModeToString(Texture_Wrap wrap)
 }
 
 
-bool C3DSampler::load(C3DElementNode* node)
+bool C3DSampler::load(ElementNode* node)
 {
 	// Read the texture uniform name
     const char* name = node->getNodeName();
@@ -210,7 +210,7 @@ bool C3DSampler::load(C3DElementNode* node)
 	return true;
 }
 
-bool C3DSampler::save(C3DElementNode* node)
+bool C3DSampler::save(ElementNode* node)
 {	
     node->setElement("path", this->getPath());
     node->setElement("mipmap", textureFilterModeHasMipmap(this->getMinFilter()) ? "true" : "false");

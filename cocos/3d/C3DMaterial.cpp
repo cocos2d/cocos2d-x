@@ -1,14 +1,14 @@
 #include "C3DMaterial.h"
 #include "C3DStream.h"
 #include "C3DPass.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "C3DTexture.h"
 #include "C3DTechnique.h"
 #include "C3DSampler.h"
 #include "MaterialParameter.h"
 #include "C3DEffect.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
 
 
 NS_CC_BEGIN
@@ -37,14 +37,14 @@ C3DMaterial* C3DMaterial::create(const char* fileName)
 	assert(fileName);	
 
 	// Load the material properties from file
-	C3DElementNode* nodes = C3DElementNode::create(fileName);
+	ElementNode* nodes = ElementNode::create(fileName);
 	assert(nodes);
 	if (nodes == nullptr)
 	{
 		return nullptr;
 	}   
 
-	C3DElementNode* materialNodes = (strlen(nodes->getNodeType()) > 0) ? nodes : nodes->getNextChild();
+	ElementNode* materialNodes = (strlen(nodes->getNodeType()) > 0) ? nodes : nodes->getNextChild();
 	if (!materialNodes || !(strcmp(materialNodes->getNodeType(), "material") == 0))
 	{
 		return nullptr;
@@ -57,7 +57,7 @@ C3DMaterial* C3DMaterial::create(const char* fileName)
 	return material;
 }
 
-C3DMaterial* C3DMaterial::create(C3DElementNode* materialNodes)
+C3DMaterial* C3DMaterial::create(ElementNode* materialNodes)
 {
 	// Check if the Properties is valid and has a valid namespace.
 	assert(materialNodes);
@@ -86,14 +86,14 @@ C3DMaterial* C3DMaterial::create(const char* vshPath, const char* fshPath, const
 	// Create a new material with a single technique and pass for the given effect
 	C3DMaterial* material = new C3DMaterial("");
 
-	cocos3d::C3DElementNode* tpMatNode = cocos3d::C3DElementNode::createEmptyNode("0", "material");
+	ElementNode* tpMatNode = cocos2d::ElementNode::createEmptyNode("0", "material");
 	if (!tpMatNode)
 		return false;
 
-	cocos3d::C3DElementNode* tpNodeTechnique = cocos3d::C3DElementNode::createEmptyNode("0", "technique");
+	cocos2d::ElementNode* tpNodeTechnique = cocos2d::ElementNode::createEmptyNode("0", "technique");
 	tpMatNode->addChildNode(tpNodeTechnique);
 
-	cocos3d::C3DElementNode* tpNodePass = cocos3d::C3DElementNode::createEmptyNode("0", "pass");
+	cocos2d::ElementNode* tpNodePass = cocos2d::ElementNode::createEmptyNode("0", "pass");
 	tpNodeTechnique->addChildNode(tpNodePass);
 	tpNodePass->setElement("vertexShader", (vshPath == nullptr) ? "" : vshPath);
 	tpNodePass->setElement("fragmentShader", (fshPath == nullptr) ? "" : fshPath);
@@ -167,14 +167,14 @@ bool C3DMaterial::setTechnique(TechniqueUsage usage, unsigned int index)
 	return t != nullptr;    
 }
 
-bool C3DMaterial::save(C3DElementNode* nodes)
+bool C3DMaterial::save(ElementNode* nodes)
 {
 	C3DRenderState::save(nodes);
 
 	for (size_t i = 0; i < this->_techniques.size(); i++)
 	{
 		C3DTechnique* technique = this->_techniques[i];
-		C3DElementNode* techNode = C3DElementNode::createEmptyNode(technique->getId(), "technique");
+		ElementNode* techNode = ElementNode::createEmptyNode(technique->getId(), "technique");
 
 		if (technique->save(techNode) == true)
 		{
@@ -216,11 +216,11 @@ C3DMaterial* C3DMaterial::clone() const
 	return other;
 }
 
-bool C3DMaterial::load(C3DElementNode* materialNodes)
+bool C3DMaterial::load(ElementNode* materialNodes)
 {	
 	// Go through all the material properties and create techniques under this material.
 	materialNodes->rewind();
-	C3DElementNode* techniqueNodes = nullptr;
+	ElementNode* techniqueNodes = nullptr;
 	while ((techniqueNodes = materialNodes->getNextChild()))
 	{
 		if (strcmp(techniqueNodes->getNodeType(), "technique") == 0)

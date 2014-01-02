@@ -6,7 +6,7 @@
 
 NS_CC_BEGIN
 
-class C3DElementNode;
+class ElementNode;
 class C3DTechnique;
 class C3DEffect;
 
@@ -61,7 +61,7 @@ public:
 	* 
 	* @return The created material.
 	*/
-	static C3DMaterial* create(C3DElementNode* materialNodes);
+	static C3DMaterial* create(ElementNode* materialNodes);
 
 	/**
 	* create a material from the given vertex and fragment shader source code.
@@ -119,7 +119,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool load(C3DElementNode* nodes);
+	virtual bool load(ElementNode* nodes);
 
 	/**
 	* save the material info into the elementnode
@@ -127,7 +127,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool save(C3DElementNode* nodes);
+	virtual bool save(ElementNode* nodes);
 
 private:
 

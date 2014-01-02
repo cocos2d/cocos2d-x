@@ -5,7 +5,7 @@
 #include "C3DPass.h"
 
 #include "C3DRenderSystem.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 NS_CC_BEGIN
 
@@ -84,7 +84,7 @@ C3DTechnique* C3DTechnique::clone() const
 	return other;
 }
 
-bool C3DTechnique::load(C3DElementNode* techniqueNodes)
+bool C3DTechnique::load(ElementNode* techniqueNodes)
 {
 	// Create a new technique
 	//  C3DTechnique* technique = new C3DTechnique(techniqueNodes->getNodeName(), material);
@@ -92,7 +92,7 @@ bool C3DTechnique::load(C3DElementNode* techniqueNodes)
 
 	// Go through all the properties and create passes under this technique.
 	techniqueNodes->rewind();
-	C3DElementNode* passNodes = nullptr;
+	ElementNode* passNodes = nullptr;
 	while ((passNodes = techniqueNodes->getNextChild()))
 	{
 		if (strcmp(passNodes->getNodeType(), "pass") == 0)
@@ -121,7 +121,7 @@ bool C3DTechnique::load(C3DElementNode* techniqueNodes)
 	return true;
 }
 
-bool C3DTechnique::save(C3DElementNode* node)
+bool C3DTechnique::save(ElementNode* node)
 {
 
 	// Load uniform value parameters for this technique
@@ -130,7 +130,7 @@ bool C3DTechnique::save(C3DElementNode* node)
 	for (size_t i = 0; i < this->_passes.size(); i++)
 	{
 		C3DPass* pass = this->_passes[i];
-		C3DElementNode* passNode = C3DElementNode::createEmptyNode(pass->getId(), "pass");
+		ElementNode* passNode = ElementNode::createEmptyNode(pass->getId(), "pass");
 		if (pass->save(passNode) == true)
 		{
 			node->addChildNode(passNode);

@@ -4,10 +4,10 @@
 #include <map>
 
 #include "Base.h"
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
-#include "C3DMatrix.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
+#include "math/Matrix.h"
 #include "C3DResource.h"
 
 NS_CC_BEGIN
@@ -15,7 +15,7 @@ NS_CC_BEGIN
 class Uniform;
 class C3DTexture;
 class C3DSampler;
-class C3DElementNode;
+class ElementNode;
 class C3DSamplerCube;
 
 /**
@@ -35,7 +35,7 @@ public:
 	/**
 	* load cur effect    
 	*/
-	bool load(C3DElementNode* node);
+	bool load(ElementNode* node);
 
 	/**
 	* Returns the vertex attribute handle for the vertex attribute with the specified name.
@@ -111,7 +111,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DMatrix& value);
+	void bindValue(Uniform* uniform, const Matrix& value);
 
 	/**
 	* Sets a matrix array uniform value.
@@ -120,7 +120,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DMatrix* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Matrix* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.
@@ -128,7 +128,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector2& value);
+	void bindValue(Uniform* uniform, const Vector2& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -137,7 +137,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector2* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector2* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.
@@ -145,7 +145,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector3& value);
+	void bindValue(Uniform* uniform, const Vector3& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -154,7 +154,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector3* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector3* values, unsigned int count = 1);
 
 	/**
 	* Sets a vector uniform value.
@@ -162,7 +162,7 @@ public:
 	* @param uniform The uniform to set.
 	* @param value The value to set.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector4& value);
+	void bindValue(Uniform* uniform, const Vector4& value);
 
 	/**
 	* Sets a vector array uniform value.
@@ -171,7 +171,7 @@ public:
 	* @param values The array to set.
 	* @param count The number of elements in the array.
 	*/
-	void bindValue(Uniform* uniform, const C3DVector4* values, unsigned int count = 1);
+	void bindValue(Uniform* uniform, const Vector4* values, unsigned int count = 1);
 
 	/**
 	* Sets a sampler uniform value.
@@ -227,7 +227,7 @@ public:
 	* 
 	* @return The name of the uniform.
 	*/
-	const char* getName() const;
+	const std::string getName() const;
 
 	/**
 	* Returns the OpenGL uniform type.
