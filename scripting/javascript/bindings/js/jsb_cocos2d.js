@@ -121,45 +121,30 @@ cc.log = cc._cocosplayerLog || cc.log || log;
 //
 // Color 3B
 //
-cc.Color3B = function (r1, g1, b1) {
+cc.c3b = function( r, g, b )
+{
     switch (arguments.length) {
         case 0:
-            this.r = 0;
-            this.g = 0;
-            this.b = 0;
-            break;
+            return {r:0, g:0, b:0 };
         case 1:
-            if (r1 && r1 instanceof cc.Color3B) {
-                this.r = (0 | r1.r) || 0;
-                this.g = (0 | r1.g) || 0;
-                this.b = (0 | r1.b) || 0;
+            if (r && r instanceof cc.c3b) {
+            	  return {r:r.r, g:r.g, b:r.b };
             } else {
-                this.r = 0;
-                this.g = 0;
-                this.b = 0;
+                return {r:0, g:0, b:0 };
             }
-            break;
         case 3:
-            this.r = (0 | r1) || 0;
-            this.g = (0 | g1) || 0;
-            this.b = (0 | b1) || 0;
-            break;
+            return {r:r, g:g, b:b };
         default:
             throw "unknown argument type";
             break;
     }
 };
 
-cc.c3b = function( r, g, b )
-{
-    return new cc.Color3B(r, g, b);
-};
-
 cc.integerToColor3B = function (intValue) {
     intValue = intValue || 0;
 
     var offset = 0xff;
-    var retColor = new cc.Color3B();
+    var retColor = {r:0, g:0, b:0 };
     retColor.r = intValue & (offset);
     retColor.g = (intValue >> 8) & offset;
     retColor.b = (intValue >> 16) & offset;
@@ -179,102 +164,46 @@ cc.c3BEqual = function(color1, color2){
 };
 
 cc.white = function () {
-    return new cc.Color3B(255, 255, 255);
+    return cc.c3b(255, 255, 255);
 };
 
 cc.yellow = function () {
-    return new cc.Color3B(255, 255, 0);
+    return cc.c3b(255, 255, 0);
 };
 
 cc.blue = function () {
-    return new cc.Color3B(0, 0, 255);
+    return cc.c3b(0, 0, 255);
 };
 
 cc.green = function () {
-    return new cc.Color3B(0, 255, 0);
+    return cc.c3b(0, 255, 0);
 };
 
 cc.red = function () {
-    return new cc.Color3B(255, 0, 0);
+    return cc.c3b(255, 0, 0);
 };
 
 cc.magenta = function () {
-    return new cc.Color3B(255, 0, 255);
+    return cc.c3b(255, 0, 255);
 };
 
 cc.black = function () {
-    return new cc.Color3B(0, 0, 0);
+    return cc.c3b(0, 0, 0);
 };
 
 cc.orange = function () {
-    return new cc.Color3B(255, 127, 0);
+    return cc.c3b(255, 127, 0);
 };
 
 cc.gray = function () {
-    return new cc.Color3B(166, 166, 166);
+    return cc.c3b(166, 166, 166);
 };
-
-//ccColor3B predefined colors
-Object.defineProperties(cc, {
-    WHITE: {
-        get: function () {
-            return cc.c3b(255, 255, 255);
-        }
-    },
-    YELLOW: {
-        get: function () {
-            return cc.c3b(255, 255, 0);
-        }
-    },
-    BLUE: {
-        get: function () {
-            return cc.c3b(0, 0, 255);
-        }
-    },
-    GREEN: {
-        get: function () {
-            return cc.c3b(0, 255, 0);
-        }
-    },
-    RED: {
-        get: function () {
-            return cc.c3b(255, 0, 0);
-        }
-    },
-    MAGENTA: {
-        get: function () {
-            return cc.c3b(255, 0, 255);
-        }
-    },
-    BLACK: {
-        get: function () {
-            return cc.c3b(0, 0, 0);
-        }
-    },
-    ORANGE: {
-        get: function () {
-            return cc.c3b(255, 127, 0);
-        }
-    },
-    GRAY: {
-        get: function () {
-            return cc.c3b(166, 166, 166);
-        }
-    }
-});
 
 //
 // Color 4B
 //
-cc.Color4B = function (r1, g1, b1, a1) {
-    this.r = 0 | r1;
-    this.g = 0 | g1;
-    this.b = 0 | b1;
-    this.a = 0 | a1;
-};
-
 cc.c4b = function (r, g, b, a) {
-    return new cc.Color4B(r, g, b, a);
+    return {r:r, g:g, b:b, a:a };
 };
 
 cc._c4b = function( r, g, b, a )
@@ -289,27 +218,20 @@ cc._c4b = function( r, g, b, a )
 cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
 
-cc.Color4F = function (r1, g1, b1, a1) {
-    this.r = r1;
-    this.g = g1;
-    this.b = b1;
-    this.a = a1;
-};
-
 cc.c4f = function (r, g, b, a) {
-    return new cc.Color4F(r, g, b, a);
+    return {r:r, g:g, b:b, a:a };
 };
 
 cc.c4FFromccc3B = function (c) {
-    return new cc.Color4F(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
 };
 
 cc.c4FFromccc4B = function (c) {
-    return new cc.Color4F(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
 };
 
 cc.c4BFromccc4F = function (c) {
-    return new cc.Color4B(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
+    return cc.c4f(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
 };
 
 cc.c4FEqual = function (a, b) {
@@ -328,14 +250,6 @@ cc.convertColor3BtoHexString = function (clr) {
     var hB = clr.b.toString(16);
     var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
     return stClr;
-};
-
-//
-// Color 4F
-//
-cc.c4f = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
 };
 
 //
