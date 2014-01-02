@@ -91,7 +91,7 @@ function SceneEditorTestLayer:onTouchEnded(touch,event)
 end
 
 function SceneEditorTestLayer:onTouchCancelled(touch,event)
-    sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHCANCELLED)
+    ccs.sendTriggerEvent(triggerEventDef.TRIGGEREVENT_TOUCHCANCELLED)
 end
 
 function SceneEditorTestLayer.create()
