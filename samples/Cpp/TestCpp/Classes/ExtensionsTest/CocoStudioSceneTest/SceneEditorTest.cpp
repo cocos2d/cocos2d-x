@@ -355,7 +355,7 @@ cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 }
 
 UIComponentTest::UIComponentTest()
-: _pNode(NULL)
+: _node(NULL)
 {
 	
 }
@@ -398,9 +398,9 @@ cocos2d::CCNode* UIComponentTest::createGameScene()
 	{
 		return NULL;
 	}
-	_pNode = pNode;
+	_node = pNode;
 	
-	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(_pNode->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
+	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(_node->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
 	UIWidget* widget = static_cast<UIWidget*>(touchGroup->getWidgetByName("Panel_154"));
 	UIButton* button = static_cast<UIButton*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
@@ -414,10 +414,10 @@ void UIComponentTest::touchEvent(CCObject *pSender, TouchEventType type)
 	{
 	case TOUCH_EVENT_BEGAN:
 		{
-			CCArmature *pBlowFish = static_cast<CCArmature*>(_pNode->getChildByTag(10010)->getComponent("CCArmature")->getNode());
+			CCArmature *pBlowFish = static_cast<CCArmature*>(_node->getChildByTag(10010)->getComponent("CCArmature")->getNode());
 			pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 
-			CCArmature *pButterflyfish = static_cast<CCArmature*>(_pNode->getChildByTag(10011)->getComponent("CCArmature")->getNode());
+			CCArmature *pButterflyfish = static_cast<CCArmature*>(_node->getChildByTag(10011)->getComponent("CCArmature")->getNode());
 			pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 		}
 		break;
@@ -740,7 +740,7 @@ cocos2d::CCNode* AttributeComponentTest::createGameScene()
 
 TriggerTest::TriggerTest()
 {
-	_pNode = NULL;
+	_node = NULL;
 }
 
 TriggerTest::~TriggerTest()
@@ -816,7 +816,7 @@ cocos2d::CCNode* TriggerTest::createGameScene()
 	{
 		return NULL;
 	}
-	_pNode = pNode;
+	_node = pNode;
     
 	//ui action
 	actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");

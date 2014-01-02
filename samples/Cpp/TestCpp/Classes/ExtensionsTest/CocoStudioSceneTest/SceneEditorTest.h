@@ -101,7 +101,7 @@ public:
     cocos2d::CCNode* createGameScene();
 	void touchEvent(CCObject *pSender, cocos2d::gui::TouchEventType type);
 private:
-	cocos2d::CCNode* _pNode;
+	cocos2d::CCNode* _node;
 };
 
 class TmxMapComponentTest : public SceneEditorTestLayer
@@ -190,7 +190,7 @@ public:
 	void gameLogic(float dt);
     cocos2d::CCNode* createGameScene();
 private:
-	cocos2d::CCNode *_pNode;
+	cocos2d::CCNode *_node;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
