@@ -1,7 +1,6 @@
 
 class TouchGroup : public CCLayer
 {
-public:
     TouchGroup();
     virtual ~TouchGroup();
     static TouchGroup *create(void);

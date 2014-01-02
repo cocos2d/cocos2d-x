@@ -39,9 +39,7 @@ typedef enum
 }PositionType;
 
 class Widget : public CCNodeRGBA
-{
-public:    
-    
+{    
     Widget(void);
     
     

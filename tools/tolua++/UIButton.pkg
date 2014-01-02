@@ -1,7 +1,6 @@
 
 class Button : public Widget
 {
-public:
     Button();
     virtual ~Button();
     static Button* create();
