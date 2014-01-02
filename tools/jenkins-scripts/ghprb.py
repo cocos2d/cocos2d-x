@@ -21,7 +21,6 @@ def set_description(desc):
     req.add_header("Authorization", "Basic " + base64string)
     try:
         urllib2.urlopen(req)
-        raise(12345)
     except:
         traceback.format_exc()
 def main():
@@ -62,7 +61,6 @@ def main():
 
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-        raise(test123)
     except:
         traceback.format_exc()
 
@@ -91,7 +89,6 @@ def main():
     #set commit status
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-        raise(test123)
     except:
         traceback.format_exc()
 
