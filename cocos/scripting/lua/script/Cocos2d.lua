@@ -1,4 +1,4 @@
-require "Cocos2dStudio"
+require "CocoStudio"
 
 cc = cc or {}
 
