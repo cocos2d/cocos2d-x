@@ -132,17 +132,17 @@ public:
 		unsigned int (ClassType::*countMethod)(unsigned int index),unsigned int (ClassType::*indexMethod)());
 
 
-	Uniform* getUniform();
+	Uniform* getUniform() const;
 
 	MaterialParameter* clone() const;
 
-	int getType(){return _type;}
-	float getFloatValue(){return _value.floatValue;}
-	int getIntValue(){return _value.intValue;}
-	float* getFloatPtrValue(){return _value.floatPtrValue;}
-	int* getIntPtrValue(){return _value.intPtrValue;}
-	const C3DSampler* getSamplerValue(){return _value.samplerValue;}
-	const C3DTexture* getTextureValue(){return _value.textureValue;}
+	int getType() const {return _type;}
+	float getFloatValue() const {return _value.floatValue;}
+	int getIntValue() const {return _value.intValue;}
+	float* getFloatPtrValue() const {return _value.floatPtrValue;}
+	int* getIntPtrValue() const {return _value.intPtrValue;}
+	const C3DSampler* getSamplerValue() const {return _value.samplerValue;}
+	const C3DTexture* getTextureValue() const {return _value.textureValue;}
 
 public:
 	enum

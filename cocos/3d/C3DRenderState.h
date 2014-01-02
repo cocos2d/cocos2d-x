@@ -193,7 +193,7 @@ public:
 
 	static const char* getAutoBindingName(AutoBinding autoBinding);
 
-	C3DRenderState* getParent();
+	C3DRenderState* getParent() const;
 
 protected:
 
@@ -234,7 +234,7 @@ protected:
 	/**
 	* Returns the topmost C3DRenderState in the hierarchy below the given C3DRenderState.
 	*/
-	C3DRenderState* getTopmost(C3DRenderState* below);
+	C3DRenderState* getTopmost const(C3DRenderState* below);
 
 private:
 

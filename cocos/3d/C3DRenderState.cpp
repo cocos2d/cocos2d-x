@@ -372,7 +372,6 @@ void C3DRenderState::setParamMethonAutoUniform(C3DPass* pass)
 	while (rs = getTopmost(rs))
 	{
 		for (std::list<MaterialParameter*>::iterator iter = rs->_parameters.begin();iter != rs->_parameters.end();++iter)
-			// for (unsigned int i = 0, count = rs->_parameters.size(); i < count; ++i)
 		{
 			(*iter)->setParamMethonAutoUniform(effect);
 		}
@@ -382,7 +381,7 @@ void C3DRenderState::setParamMethonAutoUniform(C3DPass* pass)
 
 }
 
-C3DRenderState* C3DRenderState::getTopmost(C3DRenderState* below)
+C3DRenderState* C3DRenderState::getTopmost(C3DRenderState* below) const
 {
 	C3DRenderState* rs = this;
 	if (rs == below)
@@ -648,7 +647,7 @@ bool C3DRenderState::save(C3DElementNode* node)
 	return true;
 }
 
-C3DRenderState* C3DRenderState::getParent()
+C3DRenderState* C3DRenderState::getParent() const
 {
 	return _parent;
 }

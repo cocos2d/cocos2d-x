@@ -506,9 +506,9 @@ C3DEffect* Uniform::getEffect() const
 	return _effect;
 }
 
-const char* Uniform::getName() const
+const std::string Uniform::getName() const
 {
-	return _name.c_str();
+	return _name;
 }
 
 const GLenum Uniform::getType() const

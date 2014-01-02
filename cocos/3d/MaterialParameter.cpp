@@ -334,7 +334,7 @@ void MaterialParameter::setParamMethonAutoUniform(C3DEffect* effect)
 	}
 }
 
-Uniform* MaterialParameter::getUniform()
+Uniform* MaterialParameter::getUniform() const
 {
 	return _uniform;
 }
