@@ -198,15 +198,14 @@ if(ccs.Armature){
     return this._setCPBody( b );
   };
   
+  ccs.ArmatureAnimation.prototype.playWithNames = function() {
+    return ccs.ArmatureAnimation.prototype.playWithArray.apply(this, arguments);
+  };
+  
+  ccs.ArmatureAnimation.prototype.playWithIndexes = function() {
+  	return ccs.ArmatureAnimation.prototype.playWithIndexArray.apply(this, arguments);
+  };
+
   ccs.ComController.extend = cc.Class.extend;
   ccs.Armature.extend = cc.Class.extend;
 }
-
-cc.ArmatureAnimation.prototype.playWithNames = function() {
-    return cc.ArmatureAnimation.prototype.playWithArray.apply(this, arguments);
-};
-
-cc.ArmatureAnimation.prototype.playWithIndexes = function() {
-    return cc.ArmatureAnimation.prototype.playWithIndexArray.apply(this, arguments);
-};
-

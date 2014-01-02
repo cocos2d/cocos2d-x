@@ -162,10 +162,7 @@
 		15C5C70018716EE100670379 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15C5C6FF18716EE100670379 /* json.lua */; };
 		15CA8CE918695D34000032AB /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */; };
 		15CFB6D018725ED300162EE1 /* lua_cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */; };
-		15CFB6D118725ED300162EE1 /* TriggerMng.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CE18725ED300162EE1 /* TriggerMng.lua */; };
-		15CFB6D218725ED300162EE1 /* TriggerObj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6CF18725ED300162EE1 /* TriggerObj.lua */; };
-		15CFB6D618729D8500162EE1 /* ObjectFactory.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6D418729D8500162EE1 /* ObjectFactory.lua */; };
-		15CFB6D718729D8500162EE1 /* TriggerBase.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15CFB6D518729D8500162EE1 /* TriggerBase.lua */; };
+		15D29D051872C74E0072E8FD /* lua_cocos2d_studio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15D29D041872C74E0072E8FD /* lua_cocos2d_studio.lua */; };
 		15E3EBA71845EBD200629405 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 15E3EBA61845EBD200629405 /* cocosgui */; };
 		1AA88D13171E35AA0023E7B2 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA88D12171E35AA0023E7B2 /* libluajit.a */; };
 		1AD263A2168350490089000C /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1AD263A1168350490089000C /* luaScript */; };
@@ -590,10 +587,7 @@
 		15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
 		15CA8CE818695D34000032AB /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
 		15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lua_cocos2d.lua; sourceTree = "<group>"; };
-		15CFB6CE18725ED300162EE1 /* TriggerMng.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerMng.lua; sourceTree = "<group>"; };
-		15CFB6CF18725ED300162EE1 /* TriggerObj.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerObj.lua; sourceTree = "<group>"; };
-		15CFB6D418729D8500162EE1 /* ObjectFactory.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ObjectFactory.lua; sourceTree = "<group>"; };
-		15CFB6D518729D8500162EE1 /* TriggerBase.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TriggerBase.lua; sourceTree = "<group>"; };
+		15D29D041872C74E0072E8FD /* lua_cocos2d_studio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lua_cocos2d_studio.lua; sourceTree = "<group>"; };
 		15DB6512184C251E002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		15DB6513184C251E002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		15DB6515184C251E002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -756,8 +750,6 @@
 		ED5314DF18331445008CD8A5 /* UILoadingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoadingBar.h; sourceTree = "<group>"; };
 		ED5314E018331445008CD8A5 /* UISlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISlider.cpp; sourceTree = "<group>"; };
 		ED5314E118331445008CD8A5 /* UISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISlider.h; sourceTree = "<group>"; };
-		ED5314E218331445008CD8A5 /* UISwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UISwitch.cpp; sourceTree = "<group>"; };
-		ED5314E318331445008CD8A5 /* UISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISwitch.h; sourceTree = "<group>"; };
 		ED5314E418331445008CD8A5 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		ED5314E518331445008CD8A5 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		ED5314E918331445008CD8A5 /* DictionaryHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DictionaryHelper.cpp; sourceTree = "<group>"; };
@@ -811,11 +803,8 @@
 		159B8976175B9AB30005B47D /* script */ = {
 			isa = PBXGroup;
 			children = (
-				15CFB6D418729D8500162EE1 /* ObjectFactory.lua */,
-				15CFB6D518729D8500162EE1 /* TriggerBase.lua */,
+				15D29D041872C74E0072E8FD /* lua_cocos2d_studio.lua */,
 				15CFB6CD18725ED300162EE1 /* lua_cocos2d.lua */,
-				15CFB6CE18725ED300162EE1 /* TriggerMng.lua */,
-				15CFB6CF18725ED300162EE1 /* TriggerObj.lua */,
 				15C5C6FF18716EE100670379 /* json.lua */,
 				159C09241762FC1A004ED7D4 /* AudioEngine.lua */,
 				159B8977175B9AB30005B47D /* CCBReaderLoad.lua */,
@@ -1684,8 +1673,6 @@
 				ED5314DF18331445008CD8A5 /* UILoadingBar.h */,
 				ED5314E018331445008CD8A5 /* UISlider.cpp */,
 				ED5314E118331445008CD8A5 /* UISlider.h */,
-				ED5314E218331445008CD8A5 /* UISwitch.cpp */,
-				ED5314E318331445008CD8A5 /* UISwitch.h */,
 				ED5314E418331445008CD8A5 /* UITextField.cpp */,
 				ED5314E518331445008CD8A5 /* UITextField.h */,
 			);
@@ -1950,10 +1937,7 @@
 				151CDE0B1846EB9C00CA4C23 /* scenetest in Resources */,
 				151CDE121846F2E800CA4C23 /* armature in Resources */,
 				15CFB6D018725ED300162EE1 /* lua_cocos2d.lua in Resources */,
-				15CFB6D118725ED300162EE1 /* TriggerMng.lua in Resources */,
-				15CFB6D218725ED300162EE1 /* TriggerObj.lua in Resources */,
-				15CFB6D618729D8500162EE1 /* ObjectFactory.lua in Resources */,
-				15CFB6D718729D8500162EE1 /* TriggerBase.lua in Resources */,
+				15D29D051872C74E0072E8FD /* lua_cocos2d_studio.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
