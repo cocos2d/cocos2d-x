@@ -1,7 +1,6 @@
 
 class ImageView : public Widget
 {
-public:
     ImageView();
     virtual ~ImageView();
     static ImageView* create();

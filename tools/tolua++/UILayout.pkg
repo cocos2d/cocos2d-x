@@ -21,9 +21,7 @@ typedef enum {
 
 
 class Layout : public Widget
-{
-public:
-    
+{    
     Layout();
     
     
@@ -89,6 +87,5 @@ public:
     
     virtual void sortAllChildren();
     
-    void requestDoLayout();
-    
+    void requestDoLayout();  
 };

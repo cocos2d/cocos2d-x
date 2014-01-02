@@ -1,7 +1,6 @@
 
 class Label : public Widget
 {
-public:
     Label();
     virtual ~Label();
     static Label* create();

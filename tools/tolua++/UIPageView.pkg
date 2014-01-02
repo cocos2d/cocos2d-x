@@ -11,7 +11,6 @@ typedef enum {
 
 class PageView : public Layout , public UIScrollInterface
 {
-public:
     PageView();
     virtual ~PageView();
     static PageView* create();
@@ -25,7 +24,6 @@ public:
     int getCurPageIndex() const;
     CCArray* getPages();
     Layout* getPage(int index);
-    void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
 
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
