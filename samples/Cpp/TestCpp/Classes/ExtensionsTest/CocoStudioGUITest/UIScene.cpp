@@ -30,49 +30,93 @@ bool UIScene::init()
         
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
         
-        UILabel *back_label = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("back"));
-        back_label->addReleaseEvent(this, coco_releaseselector(UIScene::toExtensionsMainLayer));
+        UILabel* back_label = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("back"));
+        back_label->addTouchEventListener(this, toucheventselector(UIScene::toCocosGUITestScene));
         
-        UIButton *left_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("left_Button"));
-        left_button->addReleaseEvent(this, coco_releaseselector(UIScene::previousCallback));
+        UIButton* left_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("left_Button"));
+        left_button->addTouchEventListener(this, toucheventselector(UIScene::previousCallback));
         
-        UIButton *middle_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("middle_Button"));
-        middle_button->addReleaseEvent(this, coco_releaseselector(UIScene::restartCallback));
+        UIButton* middle_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("middle_Button"));
+        middle_button->addTouchEventListener(this, toucheventselector(UIScene::restartCallback));
         
-        UIButton *right_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("right_Button"));
-        right_button->addReleaseEvent(this, coco_releaseselector(UIScene::nextCallback));
+        UIButton* right_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("right_Button"));
+        right_button->addTouchEventListener(this, toucheventselector(UIScene::nextCallback));
+        
+        /*
+        for (int i = 0; i < 4; ++i)
+        {
+            CCNode* node = CCNode::create();
+            node->setPosition(VisibleRect::center());
+            CCNode* sprite = CCSprite::create();
+            dynamic_cast<CCSprite*>(sprite)->initWithFile("Hello.png");
+//            dynamic_cast<CCSprite*>(sprite)->initWithFile("cocosgui/UITest/background.png");
+//            sprite->setPosition(VisibleRect::center());
+            node->addChild(sprite);
+            m_pUiLayer->addChild(node);
+        }
+         */
         
         return true;
     }
     return false;
 }
 
-void UIScene::toExtensionsMainLayer(CCObject* sender)
+void UIScene::toCocosGUITestScene(CCObject* sender, TouchEventType type)
 {
-    UISceneManager::purgeUISceneManager();
-    ActionManager::purgeActionManager();
-    SceneReader::sharedSceneReader()->purgeSceneReader();
-    
-    CocosGUITestScene* pScene = new CocosGUITestScene();
-    pScene->runThisTest();
-    pScene->release();
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+        {
+            UISceneManager::purgeUISceneManager();
+            ActionManager::purgeActionManager();
+            
+            CocosGUITestScene* pScene = new CocosGUITestScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+            break;
+            
+        default:
+            break;
+    }
   
 }
 
-void UIScene::previousCallback(CCObject* sender)
+void UIScene::previousCallback(CCObject* sender, TouchEventType type)
 {
-	m_pUiLayer->removeFromParent();
-    CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
+            break;
+            
+        default:
+            break;
+    }
 }
 
-void UIScene::restartCallback(CCObject* sender)
+void UIScene::restartCallback(CCObject* sender, TouchEventType type)
 {
-	m_pUiLayer->removeFromParent();
-    CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
+            break;
+            
+        default:
+            break;
+    }
 }
 
-void UIScene::nextCallback(CCObject* sender)
+void UIScene::nextCallback(CCObject* sender, TouchEventType type)
 {
-	m_pUiLayer->removeFromParent();
-    CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
+    switch (type)
+    {
+        case TOUCH_EVENT_ENDED:
+            CCDirector::sharedDirector()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
+            break;
+            
+        default:
+            break;
+    }
 }

@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "TriggerMng.h"
 #include "TriggerObj.h"
 #include "TriggerBase.h"
+#include "../Json/rapidjson/prettywriter.h"
+#include "../Json/rapidjson/filestream.h"
+#include "../Json/rapidjson/stringbuffer.h"
 
 NS_CC_EXT_BEGIN
 
@@ -73,21 +76,39 @@ void TriggerMng::parse(const rapidjson::Value &root)
 {
     CCLOG("%s", triggerMngVersion());
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
-    for (int i = 0; i < count; ++i)
+    
+    CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
+    bool useBindings = engine != NULL;    
+    
+    if (useBindings)
     {
-        const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
-        TriggerObj *obj = TriggerObj::create();
-        obj->serialize(subDict);
-        std::vector<int> &_vInt = obj->getEvents();
-        for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+        if (count > 0 )
         {
-            add((unsigned int)(*iter), obj);
+            const rapidjson::Value& subDict = DICTOOL->getSubDictionary_json(root, "Triggers");
+            rapidjson::StringBuffer buffer;
+            rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+            subDict.Accept(writer);
+            
+            engine->parseConfig(CCScriptEngineProtocol::COCOSTUDIO, buffer.GetString());
         }
-        if (_triggerObjs != NULL)
+    }
+    else
+    {
+        for (int i = 0; i < count; ++i)
         {
-            _triggerObjs->setObject(obj, obj->getId());
+            const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "Triggers", i);
+            TriggerObj *obj = TriggerObj::create();
+            obj->serialize(subDict);
+            std::vector<int> &_vInt = obj->getEvents();
+            for (std::vector<int>::iterator iter = _vInt.begin(); iter != _vInt.end(); ++iter)
+            {
+                add((unsigned int)(*iter), obj);
+            }
+            if (_triggerObjs != NULL)
+            {
+                _triggerObjs->setObject(obj, obj->getId());
+            }
         }
-        
     }
 }
 

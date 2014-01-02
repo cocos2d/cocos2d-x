@@ -27,7 +27,9 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -37,34 +39,27 @@ typedef enum
 typedef void (CCObject::*SEL_SlidPercentChangedEvent)(CCObject*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
-
-/*compatible*/
-typedef void (CCObject::*SEL_PercentChangedEvent)(CCObject*);
-#define coco_percentchangedselector(_SELECTOR) (SEL_PercentChangedEvent)(&_SELECTOR)
-/************/
-
 /**
- *  @lua NA
- */
-class UISlider : public UIWidget
+*   @js NA
+*   @lua NA
+*/
+class Slider : public Widget
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UISlider();
+    Slider();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UISlider();
+    virtual ~Slider();
     
     /**
      * Allocates and initializes.
      */
-    static UISlider* create();
+    static Slider* create();
     
     /**
      * Load texture for slider bar.
@@ -171,17 +166,10 @@ public:
      */
     void addEventListenerSlider(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
-    
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     //override "getContentSize" method of widget.
     virtual const CCSize& getContentSize() const;
@@ -195,29 +183,8 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
-    
+    virtual std::string getDescription() const;
 
-    
-    /*Compatible*/
-    /**
-     * These methods will be removed
-     */
-    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL){loadBarTexture(fileName,texType);};
-    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextures(normal, pressed, disabled,texType);};
-    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureNormal(normal,texType);};
-    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTexturePressed(pressed,texType);};
-    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadSlidBallTextureDisabled(disabled,texType);};
-    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL){loadProgressBarTexture(fileName,texType);};
-    void setSlidBallPercent(int percent){setPercent(percent);};
-    void setScale9Size(const CCSize& size){setScale9Enabled(true);setSize(size);};
-    void setScale9Enable(bool is){setScale9Enabled(is);};
-    void addPercentChangedEvent(CCObject* target,SEL_PushEvent selector)
-    {
-        m_pPercentListener = target;
-        m_pfnPercentSelector = selector;
-    };
-    /************/
 protected:
     virtual void initRenderer();
     float getPercentWithBallPos(float location);
@@ -228,46 +195,42 @@ protected:
     virtual void onSizeChanged();
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    CCNode*  m_pBarRenderer;
-    CCNode* m_pProgressBarRenderer;
-    CCSize m_ProgressBarTextureSize;
+    CCNode*  _barRenderer;
+    CCNode* _progressBarRenderer;
+    CCSize _progressBarTextureSize;
     
-    CCSprite* m_pSlidBallNormalRenderer;
-    CCSprite* m_pSlidBallPressedRenderer;
-    CCSprite* m_pSlidBallDisabledRenderer;
-    CCNode* m_pSlidBallRenderer;
+    CCSprite* _slidBallNormalRenderer;
+    CCSprite* _slidBallPressedRenderer;
+    CCSprite* _slidBallDisabledRenderer;
+    CCNode* _slidBallRenderer;
     
-    float m_fBarLength;
-    int m_nPercent;
+    float _barLength;
+    int _percent;
     
-    bool m_bScale9Enabled;
-    bool m_bPrevIgnoreSize;
-    std::string m_strTextureFile;
-    std::string m_strProgressBarTextureFile;
-    std::string m_strSlidBallNormalTextureFile;
-    std::string m_strSlidBallPressedTextureFile;
-    std::string m_strSlidBallDisabledTextureFile;
+    bool _scale9Enabled;
+    bool _prevIgnoreSize;
+    std::string _textureFile;
+    std::string _progressBarTextureFile;
+    std::string _slidBallNormalTextureFile;
+    std::string _slidBallPressedTextureFile;
+    std::string _slidBallDisabledTextureFile;
 
-    CCRect m_capInsetsBarRenderer;
-    CCRect m_capInsetsProgressBarRenderer;
+    CCRect _capInsetsBarRenderer;
+    CCRect _capInsetsProgressBarRenderer;
 
-    CCObject*       m_pSliderEventListener;
-    SEL_SlidPercentChangedEvent    m_pfnSliderEventSelector;
-    TextureResType m_eBarTexType;
-    TextureResType m_eProgressBarTexType;
-    TextureResType m_eBallNTexType;
-    TextureResType m_eBallPTexType;
-    TextureResType m_eBallDTexType;
-    
-    /*Compatible*/
-    CCObject*       m_pPercentListener;
-    SEL_PushEvent    m_pfnPercentSelector;
-    /************/
+    CCObject*       _sliderEventListener;
+    SEL_SlidPercentChangedEvent    _sliderEventSelector;
+    TextureResType _barTexType;
+    TextureResType _progressBarTexType;
+    TextureResType _ballNTexType;
+    TextureResType _ballPTexType;
+    TextureResType _ballDTexType;
 };
 
-NS_CC_EXT_END
+}
+NS_CC_END
 
-#endif /* defined(__CocoGUI__UISlider__) */
+#endif /* defined(__CocoGUI__Slider__) */

@@ -10,6 +10,6 @@ class  CCTween : public CCProcessBase
     virtual void gotoAndPlay(int frameIndex);
     virtual void gotoAndPause(int frameIndex);
 
-    inline void setAnimation(CCArmatureAnimation *animation);
-    inline CCArmatureAnimation *getAnimation() const;
+    void setAnimation(CCArmatureAnimation *animation);
+    CCArmatureAnimation *getAnimation() const;
 };

@@ -15,29 +15,29 @@ local CCObjectTypes = {
     "CCTween",
     "CCBaseData",
     "CCDisplayManager",
-    "UILayout",
-    "UIWidget",
-    "UILayer",
-    "UIButton",
-    "UICheckBox",
-    "UIImageView",
-    "UILabel",
-    "UILabelAtlas",
-    "UILoadingBar",
-    "UISlider",
-    "UITextField",
-    "UIScrollView",
-    "UIPageView",
-    "UIListView",
-    "UILayoutParameter",
-    "UILinearLayoutParameter",
+    "Layout",
+    "Widget",
+    "Layer",
+    "Button",
+    "CheckBox",
+    "ImageView",
+    "Label",
+    "LabelAtlas",
+    "LoadingBar",
+    "Slider",
+    "TextField",
+    "ScrollView",
+    "PageView",
+    "ListView",
+    "LayoutParameter",
+    "LinearLayoutParameter",
     "CCComController",
     "CCComAudio",
     "CCComAttribute",
     "CCComRender",
     "ActionManager",
     "GUIReader",
-    "UIRootWidget",
+    "RootWidget",
     "ActionObject",
 }
 
@@ -135,6 +135,7 @@ extern "C" {
 #include "cocos-ext.h"
 
 using namespace cocos2d;
+using namespace cocos2d::gui;
 using namespace cocos2d::extension;
 using namespace CocosDenshion;]])
 
@@ -144,9 +145,6 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
       replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"CCTextAlignment",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
 
       replace([[CCTextAlignment alignment = *((CCTextAlignment*)  tolua_tousertype(tolua_S,2,0));]],[[CCTextAlignment alignment = ((CCTextAlignment) (int)  tolua_tonumber(tolua_S,2,0));]])
-
-      replace([[(tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"UILinearGravity",0,&tolua_err))]],[[!tolua_isnumber(tolua_S,2,0,&tolua_err)]])
-      replace([[UILinearGravity gravity = *((UILinearGravity*)  tolua_tousertype(tolua_S,2,0));]],[[UILinearGravity gravity = ((UILinearGravity) (int)  tolua_tonumber(tolua_S,2,0));]])
 
       replace([[toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret]],
         [[int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
@@ -197,13 +195,6 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
     return 0;
 }]],[[]])
 
-    replace([[static int tolua_collect_UILinearGravity (lua_State* tolua_S)
-{
- UILinearGravity* self = (UILinearGravity*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}]],[[]])
-
     replace([[static int tolua_collect_CCAffineTransform (lua_State* tolua_S)
 {
  CCAffineTransform* self = (CCAffineTransform*) tolua_tousertype(tolua_S,1,0);
@@ -214,13 +205,6 @@ TOLUA_API int  tolua_CocoStudio_open (lua_State* tolua_S);]], [[]])
     replace([[static int tolua_collect_ccBlendFunc (lua_State* tolua_S)
 {
  ccBlendFunc* self = (ccBlendFunc*) tolua_tousertype(tolua_S,1,0);
-    Mtolua_delete(self);
-    return 0;
-}]],[[]])
-
-    replace([[static int tolua_collect_CCBlendType (lua_State* tolua_S)
-{
- CCBlendType* self = (CCBlendType*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }]],[[]])

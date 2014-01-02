@@ -6,5 +6,5 @@ class GUIReader : public CCObject
 
     static GUIReader* shareReader();
     static void purgeGUIReader();
-    UIWidget* widgetFromJsonFile(const char* fileName);
+    Widget* widgetFromJsonFile(const char* fileName);
 };

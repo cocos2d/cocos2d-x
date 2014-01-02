@@ -20,14 +20,14 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-class UIScrollView : public UILayout , public UIScrollInterface
+class ScrollView:public Layout,public UIScrollInterface
 {
-    UIScrollView();
-    virtual ~UIScrollView();
-    static UIScrollView* create();
+    ScrollView();
+    virtual ~ScrollView();
+    static ScrollView* create();
     virtual void setDirection(SCROLLVIEW_DIR dir);
     SCROLLVIEW_DIR getDirection();
-    UILayout* getInnerContainer();
+    Layout* getInnerContainer();
     void scrollToBottom(float time, bool attenuated);
     void scrollToTop(float time, bool attenuated);
     void scrollToLeft(float time, bool attenuated);
@@ -52,22 +52,25 @@ class UIScrollView : public UILayout , public UIScrollInterface
     void jumpToPercentBothDirection(const CCPoint& percent);
     void setInnerContainerSize(const CCSize &size);
     const CCSize& getInnerContainerSize() const;
-    virtual bool addChild(UIWidget* widget);
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode* child, int zOrder, int tag);
     virtual void removeAllChildren();
-    virtual bool removeChild(UIWidget* child);
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeChild(CCNode* child, bool cleaup = true);
     virtual CCArray* getChildren();
+    virtual unsigned int getChildrenCount() const;
+    virtual CCNode * getChildByTag(int tag);
+    virtual Widget* getChildByName(const char* name);
+        
+    virtual void onTouchLongClicked(const CCPoint &touchPoint);
     virtual void update(float dt);
-    
     void setBounceEnabled(bool enabled);
-    
     bool isBounceEnabled() const;
-    
     void setInertiaScrollEnabled(bool enabled);
-    
     bool isInertiaScrollEnabled() const;
     virtual void setLayoutType(LayoutType type);
     virtual LayoutType getLayoutType() const;
-    
-    virtual void doLayout();
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
+
 };

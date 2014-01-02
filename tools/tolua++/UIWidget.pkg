@@ -38,270 +38,217 @@ typedef enum
     POSITION_PERCENT
 }PositionType;
 
-class UIWidget : public CCObject
-{
-
-    UIWidget(void);
+class Widget : public CCNodeRGBA
+{    
+    Widget(void);
     
-    virtual ~UIWidget();
-
-    static UIWidget* create();
+    
+    virtual ~Widget();
+    
+    
+    static Widget* create();
+    
     
     virtual void setEnabled(bool enabled);
     
+    
     bool isEnabled() const;
     
-    void setVisible(bool visible);
-    
-    bool isVisible() const;
     
     void setBright(bool bright);
     
+    
     bool isBright() const;
+    
     
     virtual void setTouchEnabled(bool enabled);
     
+    
     void setBrightStyle(BrightStyle style);
+    
     
     bool isTouchEnabled() const;
     
+    
     bool isFocused() const;
 
+    
     void setFocused(bool fucosed);
     
-    void setZOrder(int z);
     
-    int getZOrder();
-    
-
     float getLeftInParent();
+    
     
     float getBottomInParent();
     
- 
+    
     float getRightInParent();
     
-
+    
     float getTopInParent();
 
-
-    virtual bool addChild(UIWidget* child);
     
-
-    virtual bool removeChild(UIWidget* child);
-
-    virtual void removeFromParent();
+    virtual void addChild(CCNode * child);
     
-    virtual void removeAllChildren();
-        
-    virtual void reorderChild(UIWidget* child);
+    virtual void addChild(CCNode * child, int zOrder);
     
-    UIWidget* getChildByName(const char* name);
+    virtual void addChild(CCNode* child, int zOrder, int tag);
     
-    UIWidget* getChildByTag(int tag);
+    virtual CCNode * getChildByTag(int tag);
+    
+    virtual void sortAllChildren();
     
     virtual CCArray* getChildren();
     
-    CCNode* getRenderer();
     
-    void addRenderer(CCNode* renderer, int zOrder);
+    virtual unsigned int getChildrenCount() const;
     
-    void removeRenderer(CCNode* renderer, bool cleanup);
     
-    void setParent(UIWidget* parent);
+    virtual void removeFromParent();
     
-    UIWidget* getParent();
+    virtual void removeFromParentAndCleanup(bool cleanup);
+    
+    
+    virtual void removeChild(CCNode* child, bool cleanup = true);
+    
+    
+    virtual void removeChildByTag(int tag, bool cleanup = true);
+    
+    virtual void removeAllChildren();
+    
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    
+    
+    virtual Widget* getChildByName(const char* name);
+    
+    
+    virtual void visit();
+    
     
     void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
     
+    
     void setPosition(const CCPoint &pos);
     
-    void setPositionPercent(const CCPoint &percent);
     
-    const CCPoint& getPosition();
+    void setPositionPercent(const CCPoint &percent);
+        
     
     const CCPoint& getPositionPercent();
     
+    
     void setPositionType(PositionType type);
 
+    
     PositionType getPositionType() const;
     
-    virtual void setAnchorPoint(const CCPoint &pt);
     
-    const CCPoint& getAnchorPoint();
-    
-    virtual void setScale(float fScale);
-    
-    float getScale();
-    
-    virtual void setScaleX(float fScaleX);
-    
-    float getScaleX();
-    
-    virtual void setScaleY(float fScaleY);
-    
-    float getScaleY();
-    
-    void setRotation(float rotation);
-    
-    float getRotation();
-    
-    void setRotationX(float rotationX);
-    
-    float getRotationX();
-    
-    void setRotationY(float rotationY);
-    
-    float getRotationY();
-    
-
     virtual void setFlipX(bool flipX){};
     
-    virtual bool isFlipX();
     
-
+    virtual bool isFlipX(){return false;};
+    
+    
     virtual void setFlipY(bool flipY){};
     
-
-    virtual bool isFlipY();
     
-
-    virtual void setColor(const ccColor3B &color);
-    
-
-    virtual const ccColor3B& getColor();
-    
-
-    virtual void setOpacity(int opacity);
-    
- 
-    virtual int getOpacity();
-    virtual bool isCascadeOpacityEnabled();
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual bool isCascadeColorEnabled();
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    void setBlendFunc(ccBlendFunc blendFunc);
+    virtual bool isFlipY(){return false;};
     
     
-    virtual void setActionManager(CCActionManager* actionManager);
-    virtual CCActionManager* getActionManager();
-    CCAction* runAction(CCAction* action);
-    void stopAllActions(void);
-    void stopAction(CCAction* action);
-    void stopActionByTag(int tag);
-    CCAction* getActionByTag(int tag);
-    
- 
     void didNotSelectSelf();
+    
     
     bool clippingParentAreaContainPoint(const CCPoint &pt);
     
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
+    
+    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint);
+    
     
     const CCPoint& getTouchStartPos();
     
+    
     const CCPoint& getTouchMovePos();
+    
     
     const CCPoint& getTouchEndPos();
     
-    void setTag(int tag);
-    
-    int getTag() const;
     
     void setName(const char* name);
     
+    
     const char* getName() const;
+    
     
     WidgetType getWidgetType() const;
     
+    
     virtual void setSize(const CCSize &size);
+    
     
     virtual void setSizePercent(const CCPoint &percent);
     
+    
     void setSizeType(SizeType type);
 
+    
     SizeType getSizeType() const;
+    
     
     const CCSize& getSize() const;
     
+    
     const CCPoint& getSizePercent() const;
+    
     
     virtual bool hitTest(const CCPoint &pt);
     
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
     
     virtual void onTouchLongClicked(const CCPoint &touchPoint);
     
-    void setLayoutParameter(UILayoutParameter* parameter);
     
-    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
+    void setLayoutParameter(LayoutParameter* parameter);
     
-
+    
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    
+    
     virtual void ignoreContentAdaptWithSize(bool ignore);
     
- 
+    
     bool isIgnoreContentAdaptWithSize() const;
     
-
+    
     CCPoint getWorldPosition();
-    
- 
-    CCPoint convertToWorldSpace(const CCPoint& pt);
-    
 
+    
     virtual CCNode* getVirtualRenderer();
     
-
+    
     void setUpdateEnabled(bool enable);
     
-  
+    
     bool isUpdateEnabled();
     
-
+    
     virtual const CCSize& getContentSize() const;
     
-  
-    virtual const char* getDescription() const;
     
-    UIWidget* clone();
+    virtual std::string getDescription() const;
+    
+    Widget* clone();
 
     virtual void onEnter();
     virtual void onExit();
     
-
-    virtual CCObject* getUserObject();
-
-    virtual void setUserObject(CCObject *pUserObject);
-    void setTouchEnable(bool enabled, bool containChildren = false);
-    void disable(bool containChildren = false);
-    void active(bool containChildren = false);
-    bool isActive();
-    void setBright(bool bright, bool containChild);
-    CCRect getRect();
-    CCNode* getValidNode();
-    void setWidgetZOrder(int z);
-    int getWidgetZOrder();
-    float getRelativeLeftPos();
-    float getRelativeBottomPos();
-    float getRelativeRightPos();
-    float getRelativeTopPos();
-    CCNode* getContainerNode();
-    void setWidgetParent(UIWidget* parent);
-    UIWidget* getWidgetParent();
-    void setWidgetTag(int tag);
-    int getWidgetTag();
-    void addCCNode(CCNode* node);
-    bool removeChild(UIWidget* child,bool cleanup);
-    void removeFromParentAndCleanup(bool cleanup);
-    void removeAllChildrenAndCleanUp(bool cleanup);
+    void updateSizeAndPosition();
+    
     
     void setActionTag(int tag);
-    int getActionTag();
-    void updateSizeAndPosition();
+	int getActionTag();
+
 };
