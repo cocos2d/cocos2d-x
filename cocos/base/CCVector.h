@@ -271,7 +271,7 @@ public:
         object->retain();
     }
     
-    void pushBack(const T&& object)
+    void pushBack(T&& object)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         _data.push_back( object );
