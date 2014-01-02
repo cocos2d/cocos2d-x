@@ -1,4 +1,4 @@
-require "luaScript/extern"
+require "extern"
 require "luaScript/VisibleRect"
 
 Paddle = class("Paddle", function(texture)

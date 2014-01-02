@@ -1,7 +1,6 @@
 
 class LabelAtlas : public Widget
 {
-public:
     LabelAtlas();
     virtual ~LabelAtlas();
     static LabelAtlas* create();

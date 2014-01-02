@@ -1,7 +1,6 @@
    
 class LabelBMFont : public Widget
 {
-public:
     LabelBMFont();
     virtual ~LabelBMFont();
     static LabelBMFont* create();

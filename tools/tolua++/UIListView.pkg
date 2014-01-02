@@ -17,7 +17,6 @@ typedef enum
 
 class ListView : public ScrollView
 {
-public:
     ListView();
     virtual ~ListView();
     static ListView* create();
@@ -36,7 +35,6 @@ public:
     void setItemsMargin(float margin);
     virtual void sortAllChildren();
     int getCurSelectedIndex() const;
-    void addEventListenerListView(CCObject* target, SEL_ListViewEvent selector);
     virtual void setDirection(SCROLLVIEW_DIR dir);
     virtual std::string getDescription() const;
     void requestRefreshView();

@@ -1,4 +1,4 @@
-require "luaScript/extern"
+require "extern"
 
 VisibleRect = class("VisibleRect")
 VisibleRect.__index = VisibleRect

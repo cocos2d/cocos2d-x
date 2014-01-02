@@ -1,6 +1,5 @@
 class CCParticleBatchNode : public CCNode, public CCTextureProtocol
 {
-public:
     void addChild(CCNode * child);
     void addChild(CCNode * child, int zOrder);
     void addChild(CCNode * child, int zOrder, int tag);
