@@ -9,7 +9,7 @@ class CCBone : public CCNodeRGBA
     void addDisplay(CCDisplayData *displayData, int index);
     void addDisplay(CCNode *display, int index);
     void removeDisplay(int index);
-    void changeDisplayByIndex(int index, bool force);
+    void changeDisplayWithIndex(int index, bool force);
     void addChildBone(CCBone *child);
     void setParentBone(CCBone *parent);
     CCBone *getParentBone();
