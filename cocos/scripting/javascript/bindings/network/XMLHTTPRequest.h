@@ -102,7 +102,7 @@ private:
     ResponseType                      _responseType;
     unsigned                          _timeout;
     bool                              _isAsync;
-    network::HttpRequest*             _httpRequest;
+    cocos2d::network::HttpRequest*    _httpRequest;
     bool                              _isNetwork;
     bool                              _withCredentialsValue;
     std::unordered_map<std::string, std::string>          _httpHeader;
