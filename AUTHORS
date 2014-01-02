@@ -452,6 +452,9 @@ Developers:
     edwardzhou (Edward Zhou)
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
+        
+    hbbalfred
+        Fixed a bug that cc.BuilderReader.load( path, null, parentSize ); was not allowed.
 
 Retired Core Developers:
     WenSheng Yang
