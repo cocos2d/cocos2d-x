@@ -7,6 +7,7 @@ import urllib2
 import urllib
 import base64
 import requests
+import sys
 
 #get payload from os env
 payload_str = os.environ['payload']
@@ -41,7 +42,8 @@ def set_description(desc):
     urllib2.urlopen(req)
 try:
     set_description(pr_desc)
-except Exception as e:
+except:
+    e = sys.exc_info()[0]
     print e
 
 #get statuses url
@@ -72,7 +74,8 @@ try:
     #update submodule
     git_update_submodule = "git submodule update --init --force"
     os.system(git_update_submodule)
-except Exception as e:
+except:
+    e = sys.exc_info()[0]
     print e
 
 
@@ -105,7 +108,8 @@ try:
     os.system("cd " + os.environ['WORKSPACE']);
     os.system("git checkout develop")
     os.system("git branch -D pull" + str(pr_num))
-except Exception as e:
-    print e 
+except:
+    e = sys.exc_info()[0]
+    print e
 exit(exit_code)
 
