@@ -1,5 +1,4 @@
-
-
+require "lua_cocos2d"
 require "Cocos2d"
 require "Cocos2dConstants"
 require "Opengl"

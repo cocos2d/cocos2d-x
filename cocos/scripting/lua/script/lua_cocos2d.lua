@@ -1,0 +1,13 @@
+require "lua_cocos2d_studio"
+
+local ConfigType = 
+{
+    NONE = 0,
+    COCOSTUDIO = 1,
+}
+
+function __onParseConfig(configType,jasonStr)
+    if configType == ConfigType.COCOSTUDIO then
+        ccs.TriggerMng.getInstance():parse(jasonStr)
+    end
+end
