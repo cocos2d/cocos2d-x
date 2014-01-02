@@ -2,6 +2,8 @@
 #include "C3DAABB.h"
 #include "C3DPlane.h"
 
+#include<numeric>
+
 namespace cocos2d
 {
 C3DAABB::C3DAABB()
@@ -22,7 +24,7 @@ C3DAABB::~C3DAABB()
 {
 }
 
-Vector3 C3DAABB::getCenter()
+Vector3 C3DAABB::getCenter() const
 {
 	Vector3 center;
 	center.x = 0.5f*(_min.x+_max.x);
@@ -32,14 +34,14 @@ Vector3 C3DAABB::getCenter()
 	return center;
 }
 
-Vector3 C3DAABB::getSize()
+Vector3 C3DAABB::getSize() const
 {
 	Vector3 size = _max - _min;
 
 	return size;
 }
 
-float C3DAABB::getLength()
+float C3DAABB::getLength() const
 {
 	Vector3 offset;
 
@@ -104,7 +106,7 @@ bool C3DAABB::containSphere( const Vector3 &center,float radius ) const
 	return true;
 }
 
-float C3DAABB::distance( const Vector3& vPoint)
+float C3DAABB::distance( const Vector3& vPoint) const
 {
 	float fDist = 0;
 	float m = 0;
@@ -125,6 +127,7 @@ float C3DAABB::distance( const Vector3& vPoint)
 	fDist = sqrtf(fDist);
 	return fDist;
 }
+
 void C3DAABB::merge(const C3DAABB& box)
 {
 	// Calculate the new minimum point.
@@ -146,8 +149,10 @@ void C3DAABB::set(const Vector3& min, const Vector3& max)
 
 void C3DAABB::reset()
 {
-	_min.set(99999.0f, 99999.0f, 99999.0f);
-	_max.set(-99999.0f, -99999.0f, -99999.0f);
+	const float minVal = std::numeric_limits<float>::min();
+	const float maxVal = std::numeric_limits<float>::max();
+	_min.set(maxVal, maxVal, maxVal);
+	_max.set(minVal, minVal, minVal);
 }
 
 void updateMinMax(Vector3* point, Vector3* min, Vector3* max)

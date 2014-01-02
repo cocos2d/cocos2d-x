@@ -41,11 +41,11 @@ public:
 	/**
 	* Gets the center point of the bounding box.
 	*/
-	Vector3 getCenter();
+	Vector3 getCenter() const;
 
-	Vector3 getSize();
+	Vector3 getSize() const;
 
-	float getLength();
+	float getLength() const;
 
 	/**
 	* Gets the corners of the bounding box in the specified array.
@@ -60,7 +60,7 @@ public:
 	bool containPoint( const Vector3& point) const;
 	bool containSphere( const Vector3 &center,float radius ) const;
 
-	float distance( const Vector3& vPoint);
+	float distance( const Vector3& vPoint) const;
 
 	/**
 	* Sets this bounding box to the smallest bounding box
