@@ -25,8 +25,8 @@ class CCBone : public CCNodeRGBA
     void updateZOrder();
     virtual void setZOrder(int zOrder);
     CCTween *getTween();
-    virtual inline void setTransformDirty(bool dirty);
-    virtual inline bool isTransformDirty();
+    virtual void setTransformDirty(bool dirty);
+    virtual bool isTransformDirty();
     virtual CCAffineTransform nodeToArmatureTransform();
     virtual CCAffineTransform nodeToWorldTransform();
     CCNode *getDisplayRenderNode();

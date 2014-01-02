@@ -9,7 +9,6 @@ typedef enum
 
 class TextField : public Widget
 {
-public:
     TextField();
     virtual ~TextField();
     static TextField* create();
@@ -39,7 +38,6 @@ public:
     void setInsertText(bool insertText);
     bool getDeleteBackward();
     void setDeleteBackward(bool deleteBackward);
-    void addEventListenerTextField(CCObject* target, SEL_TextFieldEvent selecor);
     virtual void setAnchorPoint(const CCPoint &pt);
     virtual std::string getDescription() const;
     virtual const CCSize& getContentSize() const;

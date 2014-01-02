@@ -7,7 +7,6 @@ typedef enum
 
 class CheckBox : public Widget
 {
-public:
     CheckBox();
     virtual ~CheckBox();
     static CheckBox* create();
@@ -20,7 +19,6 @@ public:
     void setSelectedState(bool selected);
     bool getSelectedState();
     virtual void setAnchorPoint(const CCPoint &pt);
-    void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     virtual void setFlipX(bool flipX);
     virtual void setFlipY(bool flipY);
     virtual bool isFlipX();
