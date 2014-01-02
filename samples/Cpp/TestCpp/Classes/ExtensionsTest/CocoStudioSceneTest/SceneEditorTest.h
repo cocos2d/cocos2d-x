@@ -59,10 +59,7 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
-
 };
 
 
@@ -75,8 +72,6 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
 
 };
@@ -90,8 +85,6 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
 
 };
@@ -105,10 +98,10 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
-
+	void touchEvent(CCObject *pSender, cocos2d::gui::TouchEventType type);
+private:
+	cocos2d::CCNode* _pNode;
 };
 
 class TmxMapComponentTest : public SceneEditorTestLayer
@@ -120,8 +113,6 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
 
 };
@@ -135,10 +126,7 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
-
 };
 
 class EffectComponentTest : public SceneEditorTestLayer
@@ -150,10 +138,10 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
-
+	void animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID);
+private:
+	cocos2d::CCNode* _node;
 };
 
 class BackgroundComponentTest : public SceneEditorTestLayer
@@ -165,10 +153,7 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
     cocos2d::CCNode* createGameScene();
-
 };
 
 class AttributeComponentTest : public SceneEditorTestLayer
@@ -180,10 +165,10 @@ public:
     virtual std::string title();
 	virtual void onEnter();
     virtual void onExit();
-
-    // init scene
+	bool initData();
     cocos2d::CCNode* createGameScene();
-
+private:
+	cocos2d::CCNode* _node;
 };
 
 

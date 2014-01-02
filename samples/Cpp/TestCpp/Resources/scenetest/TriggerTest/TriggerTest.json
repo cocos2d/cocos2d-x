@@ -15,7 +15,7 @@
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
       "name": "BK",
-      "canedit": true,
+      "canedit": false,
       "objecttag": 10003,
       "rotation": 0,
       "scalex": 1,
@@ -42,99 +42,15 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "ui",
-      "canedit": true,
-      "objecttag": 10004,
-      "rotation": 0,
-      "scalex": 0.5,
-      "scaley": 0.5,
-      "visible": 1,
-      "x": 0,
-      "y": 0,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "startMenu/startMenu_1.json",
-            "plistFile": null,
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "LP",
-      "canedit": true,
-      "objecttag": 10005,
-      "rotation": 0,
-      "scalex": -2,
-      "scaley": 2,
-      "visible": 1,
-      "x": 188.35035705566406,
-      "y": 43.945346832275391,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "CCParticleSystemQuad",
-          "name": "CCParticleSystemQuad",
-          "file": null,
-          "fileData": {
-            "path": "Particles/qipao01.plist",
-            "plistFile": null,
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "RP",
-      "canedit": true,
-      "objecttag": 10006,
-      "rotation": 0,
-      "scalex": 2,
-      "scaley": 2,
-      "visible": 1,
-      "x": 289.21835327148438,
-      "y": 45.547077178955078,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "CCParticleSystemQuad",
-          "name": "CCParticleSystemQuad",
-          "file": null,
-          "fileData": {
-            "path": "Particles/qipao01.plist",
-            "plistFile": null,
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
       "name": "blowFish",
       "canedit": true,
       "objecttag": 10007,
       "rotation": 0,
-      "scalex": 0.6,
-      "scaley": 0.6,
+      "scalex": 0.3,
+      "scaley": 0.3,
       "visible": 1,
-      "x": 413.84616088867188,
-      "y": 150,
+      "x": 410.20977783203125,
+      "y": 169.09091186523438,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -160,10 +76,10 @@
       "canedit": true,
       "objecttag": 10008,
       "rotation": 0,
-      "scalex": 0.5,
-      "scaley": 0.5,
+      "scalex": 0.25,
+      "scaley": 0.25,
       "visible": 1,
-      "x": 411.5384521484375,
+      "x": 412.5384521484375,
       "y": 84.6153793334961,
       "zorder": 1,
       "gameobjects": [],
@@ -200,11 +116,11 @@
             },
             {
               "key": "ScaleX",
-              "value": 0.8
+              "value": 0.6
             },
             {
               "key": "ScaleY",
-              "value": 0.8
+              "value": 0.6
             },
             {
               "key": "Duration",
@@ -233,7 +149,7 @@
             },
             {
               "key": "IsReverse",
-              "value": 1
+              "value": 0
             }
           ]
         }
@@ -289,7 +205,7 @@
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
       "classname": "CCScene",
       "name": "CCScene",
-      "scenename": "FishJoy2"
+      "scenename": "TriggerTest"
     },
     {
       "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
@@ -297,7 +213,7 @@
       "name": "CCBackgroundAudio",
       "file": null,
       "fileData": {
-        "path": "Misc/music_logo.mp3",
+        "path": null,
         "plistFile": null,
         "resourceType": 0
       },

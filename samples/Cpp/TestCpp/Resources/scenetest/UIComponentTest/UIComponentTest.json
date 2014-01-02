@@ -49,8 +49,8 @@
       "scalex": 0.5,
       "scaley": 0.5,
       "visible": 1,
-      "x": 434,
-      "y": 257,
+      "x": 421,
+      "y": 255,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -76,11 +76,11 @@
       "canedit": true,
       "objecttag": 10011,
       "rotation": 0,
-      "scalex": -0.3,
-      "scaley": 0.3,
+      "scalex": -0.4,
+      "scaley": 0.4,
       "visible": 1,
-      "x": 45,
-      "y": 144,
+      "x": 52,
+      "y": 152,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -96,6 +96,34 @@
           },
           "isShowColliderRect": false,
           "selectedactionname": "Action0"
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10025,
+      "rotation": 0,
+      "scalex": 0.5,
+      "scaley": 0.5,
+      "visible": 1,
+      "x": 170,
+      "y": 31,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "starMenuButton/starMenuButton.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          }
         }
       ]
     }

@@ -7,6 +7,7 @@
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
+using namespace cocos2d::gui;
 
 CCLayer *Next();
 CCLayer *Back();
@@ -48,6 +49,7 @@ CCLayer *createTests(int index)
         break;
     case TEST_TRIGGER:
         pLayer = new TriggerTest();
+		pLayer->init();
         break;
     default:
         break;
@@ -111,10 +113,10 @@ void SceneEditorTestLayer::onEnter()
     // add title and subtitle
     std::string str = title();
     const char *pTitle = str.c_str();
-    CCLabelTTF *label = CCLabelTTF::create(pTitle, "Arial", 10);
+    CCLabelTTF *label = CCLabelTTF::create(pTitle, "Arial", 18);
     label->setColor(ccc3(255, 255, 255));
     addChild(label, 1, 10000);
-    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 10) );
+    label->setPosition( ccp(VisibleRect::center().x, VisibleRect::top().y - 30) );
 
     std::string strSubtitle = subtitle();
     if( ! strSubtitle.empty() )
@@ -132,7 +134,7 @@ void SceneEditorTestLayer::onEnter()
     
     CCMenu *menu = CCMenu::create(backItem, restartItem, nextItem, NULL);
     
-    float fScale = 0.3f;
+    float fScale = 0.5f;
     
     menu->setPosition(ccp(0, 0));
     backItem->setPosition(ccp(VisibleRect::center().x - restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
@@ -203,6 +205,7 @@ loadSceneEdtiorFileTest::~loadSceneEdtiorFileTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string loadSceneEdtiorFileTest::title()
@@ -225,17 +228,18 @@ void loadSceneEdtiorFileTest::onEnter()
 
 void loadSceneEdtiorFileTest::onExit()
 {
-
+	 SceneEditorTestLayer::onExit();
 }
 
 
 cocos2d::CCNode* loadSceneEdtiorFileTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
     return pNode;
 }
 
@@ -249,6 +253,7 @@ SpriteComponentTest::~SpriteComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string SpriteComponentTest::title()
@@ -276,11 +281,20 @@ void SpriteComponentTest::onExit()
 
 cocos2d::CCNode* SpriteComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/SpriteComponentTest/SpriteComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+
+	CCActionInterval*  action1 = CCBlink::create(2, 10);
+	CCActionInterval*  action2 = CCBlink::create(2, 5);
+
+	CCSprite *pSister1 = static_cast<CCSprite*>(pNode->getChildByTag(10003)->getComponent("CCSprite")->getNode());
+	pSister1->runAction(action1);
+
+	CCSprite *pSister2 = static_cast<CCSprite*>(pNode->getChildByTag(10004)->getComponent("CCSprite")->getNode());
+	pSister2->runAction(action2);
 
     return pNode;
 }
@@ -295,6 +309,7 @@ ArmatureComponentTest::~ArmatureComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string ArmatureComponentTest::title()
@@ -322,16 +337,23 @@ void ArmatureComponentTest::onExit()
 
 cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ArmatureComponentTest/ArmatureComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+	CCArmature *pBlowFish = static_cast<CCArmature*>(pNode->getChildByTag(10007)->getComponent("CCArmature")->getNode());
+	pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+
+	CCArmature *pButterflyfish = static_cast<CCArmature*>(pNode->getChildByTag(10008)->getComponent("CCArmature")->getNode());
+	pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+
 
     return pNode;
 }
 
 UIComponentTest::UIComponentTest()
+: _pNode(NULL)
 {
 	
 }
@@ -341,6 +363,7 @@ UIComponentTest::~UIComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string UIComponentTest::title()
@@ -368,13 +391,37 @@ void UIComponentTest::onExit()
 
 cocos2d::CCNode* UIComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/UIComponentTest/UIComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+	_pNode = pNode;
+	
+	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(_pNode->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
+	UIWidget* widget = static_cast<UIWidget*>(touchGroup->getWidgetByName("Panel_154"));
+	UIButton* button = static_cast<UIButton*>(widget->getChildByName("Button_156"));
+	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
 
     return pNode;
+}
+
+void UIComponentTest::touchEvent(CCObject *pSender, TouchEventType type)
+{
+	switch (type)
+	{
+	case TOUCH_EVENT_BEGAN:
+		{
+			CCArmature *pBlowFish = static_cast<CCArmature*>(_pNode->getChildByTag(10010)->getComponent("CCArmature")->getNode());
+			pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+
+			CCArmature *pButterflyfish = static_cast<CCArmature*>(_pNode->getChildByTag(10011)->getComponent("CCArmature")->getNode());
+			pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 TmxMapComponentTest::TmxMapComponentTest()
@@ -387,6 +434,7 @@ TmxMapComponentTest::~TmxMapComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string TmxMapComponentTest::title()
@@ -414,12 +462,23 @@ void TmxMapComponentTest::onExit()
 
 cocos2d::CCNode* TmxMapComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TmxMapComponentTest/TmxMapComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+	CCTMXTiledMap *tmxMap = static_cast<CCTMXTiledMap*>(pNode->getChildByTag(10015)->getComponent("CCTMXTiledMap")->getNode());
+	CCActionInterval *actionTo = CCSkewTo::create(2, 0.f, 2.f);
+	CCActionInterval *rotateTo = CCRotateTo::create(2, 61.0f);
+	CCActionInterval *actionScaleTo = CCScaleTo::create(2, -0.44f, 0.47f);
 
+	CCActionInterval *actionScaleToBack = CCScaleTo::create(2, 1.0f, 1.0f);
+	CCActionInterval *rotateToBack = CCRotateTo::create(2, 0);
+	CCActionInterval *actionToBack = CCSkewTo::create(2, 0, 0);
+
+	tmxMap->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+	tmxMap->runAction(CCSequence::create(rotateTo, rotateToBack, NULL));
+	tmxMap->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, NULL));
     return pNode;
 }
 
@@ -433,6 +492,7 @@ ParticleComponentTest::~ParticleComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string ParticleComponentTest::title()
@@ -460,16 +520,22 @@ void ParticleComponentTest::onExit()
 
 cocos2d::CCNode* ParticleComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/ParticleComponentTest/ParticleComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+
+	CCParticleSystemQuad* Particle = static_cast<CCParticleSystemQuad*>(pNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad")->getNode());
+	CCActionInterval*  jump = CCJumpBy::create(5, ccp(-500,0), 50, 4);
+	CCFiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), NULL);
+	Particle->runAction(action);
     return pNode;
 }
 
 
 EffectComponentTest::EffectComponentTest()
+: _node(NULL)
 {
 	
 }
@@ -479,6 +545,7 @@ EffectComponentTest::~EffectComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string EffectComponentTest::title()
@@ -506,13 +573,29 @@ void EffectComponentTest::onExit()
 
 cocos2d::CCNode* EffectComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/EffectComponentTest/EffectComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
-
+	_node = pNode;
+	CCArmature *pAr = static_cast<CCArmature*>(_node->getChildByTag(10015)->getComponent("CCArmature")->getNode());
+	pAr->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(EffectComponentTest::animationEvent));
     return pNode;
+}
+
+void EffectComponentTest::animationEvent(cocos2d::extension::CCArmature *armature, cocos2d::extension::MovementEventType movementType, const char *movementID)
+{
+	 std::string id = movementID;
+
+	if (movementType == LOOP_COMPLETE)
+	{
+		if (id.compare("Fire") == 0)
+		{
+			CCComAudio *pAudio = static_cast<CCComAudio*>(_node->getChildByTag(10015)->getComponent("CCComAudio"));
+			pAudio->playEffect();
+		}
+	}
 }
 
 BackgroundComponentTest::BackgroundComponentTest()
@@ -525,6 +608,7 @@ BackgroundComponentTest::~BackgroundComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string BackgroundComponentTest::title()
@@ -552,17 +636,21 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::CCNode* BackgroundComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/BackgroundComponentTest/BackgroundComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
+	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
 
+	CCComAudio *Audio = static_cast<CCComAudio*>(pNode->getComponent("CCBackgroundAudio"));
+	Audio->playBackgroundMusic();
     return pNode;
 }
 
 
 AttributeComponentTest::AttributeComponentTest()
+: _node(NULL)
 {
 	
 }
@@ -572,6 +660,7 @@ AttributeComponentTest::~AttributeComponentTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string AttributeComponentTest::title()
@@ -587,6 +676,7 @@ void AttributeComponentTest::onEnter()
 	{
         CCNode *root = createGameScene();
         CC_BREAK_IF(!root);
+		initData();
         this->addChild(root, 0, 1);
 		bRet = true;
 	} while (0);
@@ -597,14 +687,50 @@ void AttributeComponentTest::onExit()
     SceneEditorTestLayer::onExit();
 }
 
+bool AttributeComponentTest::initData()
+{
+	bool bRet = false;
+	unsigned long size = 0;
+	unsigned char *pBytes = NULL;
+	rapidjson::Document jsonDict;
+	do {
+		CC_BREAK_IF(_node == NULL);
+		CCComAttribute *pAttribute = static_cast<CCComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
+		CC_BREAK_IF(pAttribute == NULL);
+		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAttribute->getJsonName().c_str());
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
+		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+		CCData *data = new CCData(pBytes, size);
+		std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
+		CC_SAFE_DELETE(data);
+		CC_SAFE_DELETE_ARRAY(pBytes);
+		jsonDict.Parse<0>(load_str.c_str());
+		CC_BREAK_IF(jsonDict.HasParseError());
+
+		std::string playerName = DICTOOL->getStringValue_json(jsonDict, "name");
+		float maxHP = DICTOOL->getFloatValue_json(jsonDict, "maxHP");
+		float maxMP = DICTOOL->getFloatValue_json(jsonDict, "maxMP");
+		
+		pAttribute->setCString("Name", playerName.c_str());
+		pAttribute->setFloat("MaxHP", maxHP);
+		pAttribute->setFloat("MaxMP", maxMP);
+
+
+		CCLog("Name: %s, HP: %f, MP: %f", pAttribute->getCString("Name"), pAttribute->getFloat("MaxHP"), pAttribute->getFloat("MaxMP"));
+
+		bRet = true;
+	} while (0);
+	return bRet;
+}
+
 cocos2d::CCNode* AttributeComponentTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/AttributeComponentTest/AttributeComponentTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;
 	}
-
+	_node = pNode;
     return pNode;
 }
 
@@ -619,34 +745,28 @@ TriggerTest::~TriggerTest()
 	CCArmatureDataManager::purge();
 	SceneReader::sharedSceneReader()->purgeSceneReader();
 	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string TriggerTest::title()
 {
-    return "TriggerTest Component Test";
+    return "Trigger Test";
 }
 
 bool TriggerTest::init()
 {
-	bool bRet = false;
-	do 
-	{
-        CCNode *root = createGameScene();
-        CC_BREAK_IF(!root);
-        this->addChild(root, 0, 1);
-        sendEvent(TRIGGEREVENT_INITSCENE);
-	    this->schedule(schedule_selector(TriggerTest::gameLogic));
-	    this->setTouchEnabled(true);
-	    this->setTouchMode(kCCTouchesOneByOne);
-		bRet = true;
-	} while (0);
-
-	return bRet;
+   sendEvent(TRIGGEREVENT_INITSCENE);
+   return true;
 }
 
 void TriggerTest::onEnter()
 {
 	SceneEditorTestLayer::onEnter();
+	CCNode *root = createGameScene();
+	this->addChild(root, 0, 1);
+	this->schedule(schedule_selector(TriggerTest::gameLogic));
+	this->setTouchEnabled(true);
+	this->setTouchMode(kCCTouchesOneByOne);
 	sendEvent(TRIGGEREVENT_ENTERSCENE);
 }
 
@@ -669,7 +789,7 @@ void TriggerTest::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 
 void TriggerTest::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-	sendEvent(TRIGGEREVENT_TOUCHENDED);
+	sendEvent(TRIGGEREVENT_TOUCHENDED); 
 }
 
 void TriggerTest::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
@@ -686,7 +806,7 @@ static ActionObject* actionObject = NULL;
 
 cocos2d::CCNode* TriggerTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/TriggerTest/TriggerTest.json");
 	if (pNode == NULL)
 	{
 		return NULL;

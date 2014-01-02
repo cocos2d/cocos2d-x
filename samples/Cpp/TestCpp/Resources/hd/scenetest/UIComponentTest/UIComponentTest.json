@@ -16,7 +16,7 @@
       "classname": "CCNode",
       "name": null,
       "canedit": true,
-      "objecttag": 10013,
+      "objecttag": 10009,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
@@ -44,13 +44,73 @@
       "classname": "CCNode",
       "name": null,
       "canedit": true,
-      "objecttag": 10014,
+      "objecttag": 10010,
       "rotation": 0,
-      "scalex": 0.500000238,
-      "scaley": 0.5062499,
+      "scalex": 0.5,
+      "scaley": 0.5,
       "visible": 1,
-      "x": -5.0001659393310547,
-      "y": -14.00006103515625,
+      "x": 421,
+      "y": 255,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/blowFish/Blowfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10011,
+      "rotation": 0,
+      "scalex": -0.4,
+      "scaley": 0.4,
+      "visible": 1,
+      "x": 52,
+      "y": 152,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/Butterflyfish/Butterflyfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10025,
+      "rotation": 0,
+      "scalex": 0.5,
+      "scaley": 0.5,
+      "visible": 1,
+      "x": 170,
+      "y": 31,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -60,7 +120,7 @@
           "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "startMenu/startMenu_1.json",
+            "path": "starMenuButton/starMenuButton.ExportJson",
             "plistFile": null,
             "resourceType": 0
           }
@@ -79,7 +139,7 @@
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
       "classname": "CCScene",
       "name": "CCScene",
-      "scenename": "BackgroundComponentTest"
+      "scenename": "UIComponentTest"
     },
     {
       "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
@@ -87,11 +147,11 @@
       "name": "CCBackgroundAudio",
       "file": null,
       "fileData": {
-        "path": "Misc/music_logo.wav",
+        "path": null,
         "plistFile": null,
         "resourceType": 0
       },
-      "loop": 1
+      "loop": 0
     }
   ]
 }
