@@ -341,7 +341,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
                 {
                     if( _elapsedTime>=((counter-1)*(long)_duration + (long)evt->_eventTime))
                     {
-						if (evt->_listener)
+                        if (evt->_listener)
                             evt->_listener();
                     }
                 }
