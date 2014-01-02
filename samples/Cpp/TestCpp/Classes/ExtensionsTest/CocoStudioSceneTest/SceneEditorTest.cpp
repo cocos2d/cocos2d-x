@@ -245,7 +245,6 @@ cocos2d::Node* loadSceneEdtiorFileTest::createGameScene()
 	{
 		return nullptr;
 	}
-	ActionManagerEx::getInstance()->playActionByName("startMenu_1.json","Animation1");
     return node;
 }
 
@@ -474,7 +473,7 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 	{
 		return nullptr;
 	}
-	TMXTiledMap *tmxMap = static_cast<TMXTiledMap*>(node->getChildByTag(10015)->getComponent("TMXTiledMap")->getNode());
+	TMXTiledMap *tmxMap = static_cast<TMXTiledMap*>(node->getChildByTag(10015)->getComponent("CCTMXTiledMap")->getNode());
 	ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
 	ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
 	ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
@@ -586,7 +585,7 @@ cocos2d::Node* EffectComponentTest::createGameScene()
 		return nullptr;
 	}
 	_node = node;
-	Armature *pAr = static_cast<Armature*>(_node->getChildByTag(10015)->getComponent("Armature")->getNode());
+	Armature *pAr = static_cast<Armature*>(_node->getChildByTag(10015)->getComponent("CCArmature")->getNode());
 	pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     return node;
 }
@@ -648,7 +647,6 @@ cocos2d::Node* BackgroundComponentTest::createGameScene()
 	{
 		return nullptr;
 	}
-	ActionManagerEx::getInstance()->playActionByName("startMenu_1.json","Animation1");
 
 	ComAudio *Audio = static_cast<ComAudio*>(node->getComponent("CCBackgroundAudio"));
 	Audio->playBackgroundMusic();

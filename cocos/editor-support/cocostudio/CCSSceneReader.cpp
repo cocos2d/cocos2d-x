@@ -362,6 +362,10 @@ namespace cocostudio {
                     pAudio->setFile(pPath.c_str());
                     const bool bLoop = (DICTOOL->getIntValue_json(subDict, "loop") != 0);
                     pAudio->setLoop(bLoop);
+                    if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     gb->addComponent(pAudio);
 					if (pComName != NULL)
 					{
