@@ -4,11 +4,11 @@ typedef enum
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-class UISlider : public UIWidget
+class Slider : public Widget
 {
-    UISlider();
-    virtual ~UISlider();
-    static UISlider* create();
+    Slider();
+    virtual ~Slider();
+    static Slider* create();
     void loadBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setScale9Enabled(bool able);
     void setCapInsets(const CCRect &capInsets);
@@ -21,17 +21,14 @@ class UISlider : public UIWidget
     void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setPercent(int percent);
     int getPercent();
+    
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
+    
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
     virtual void ignoreContentAdaptWithSize(bool ignore);
-    virtual const char* getDescription() const;
-    void setBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallNormalTexture(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallPressedTexture(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallDisabledTexture(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
-    void setSlidBallPercent(int percent);
-    void setScale9Size(const CCSize& size);
-    void setScale9Enable(bool is);
+    virtual std::string getDescription() const;
 };
