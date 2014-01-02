@@ -108,7 +108,7 @@ void C3DPass::setupParametersFromEffect()
 	for ( unsigned int i = 0; i < _effect->getUniformCount(); i++)
 	{
 		Uniform* uniform = _effect->getUniform(i);
-		MaterialParameter* parameter = findParameter(uniform->getName(), true);
+		MaterialParameter* parameter = findParameter(uniform->getName().c_str(), true);
 		// already in material script, skip
 		if (parameter)
 		{			
@@ -118,16 +118,16 @@ void C3DPass::setupParametersFromEffect()
 		/* if (getAutoBinding(uniform->getName()))
 		continue;*/
 
-		C3DRenderState::AutoBinding binding = C3DRenderState::getAutoBindingOfVariable(uniform->getName());
+		C3DRenderState::AutoBinding binding = C3DRenderState::getAutoBindingOfVariable(uniform->getName().c_str());
 
 		if (binding)
 		{
-			setParameterAutoBinding(uniform->getName(), binding);
+			setParameterAutoBinding(uniform->getName().c_str(), binding);
 		}
 		else
 		{
 			// add parameter in shader but not in material script
-			parameter = new MaterialParameter(uniform->getName());
+			parameter = new MaterialParameter(uniform->getName().c_str());
 			_parameters.push_back(parameter);
 
 			// set default value

@@ -7,8 +7,8 @@
 #include "C3DSampler.h"
 #include "MaterialParameter.h"
 #include "C3DEffect.h"
-#include "Vector3.h"
-#include "Vector4.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
 
 
 NS_CC_BEGIN
