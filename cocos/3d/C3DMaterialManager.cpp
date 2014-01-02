@@ -1,8 +1,8 @@
 #include "Base.h"
 #include "C3DMaterial.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "C3DMaterialManager.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 NS_CC_BEGIN
 
@@ -33,14 +33,14 @@ C3DMaterialManager* C3DMaterialManager::getInstance()
 C3DResource* C3DMaterialManager::createResource(const std::string& name)
 {
 	// Load the material properties from file
-	C3DElementNode* nodes = C3DElementNode::create(name.c_str());
+	ElementNode* nodes = ElementNode::create(name.c_str());
 	assert(nodes);
 	if (nodes == nullptr)
 	{
 		return nullptr;
 	}   
 
-	C3DElementNode* materialNodes = (strlen(nodes->getNodeType()) > 0) ? nodes : nodes->getNextChild();
+	ElementNode* materialNodes = (strlen(nodes->getNodeType()) > 0) ? nodes : nodes->getNextChild();
 	assert(materialNodes);
 	if (!materialNodes || !(strcmp(materialNodes->getNodeType(), "material") == 0))
 	{

@@ -1,8 +1,8 @@
 #include "Base.h"
 #include "C3DEffect.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "C3DEffectManager.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "StringTool.h"
 
 NS_CC_BEGIN
@@ -34,7 +34,7 @@ void C3DEffectManager::preload(const std::string& name)
 {
 	if(name.c_str() != nullptr)
 	{
-		C3DElementNode* doc = C3DElementNode::create(name.c_str());
+		ElementNode* doc = ElementNode::create(name.c_str());
 		if (!doc)
 		{
 			LOG_ERROR_VARG("Error loading effect: Could not load file: %s", name.c_str());
@@ -47,7 +47,7 @@ void C3DEffectManager::preload(const std::string& name)
 }
 
 
-void C3DEffectManager::loadAllEffect(C3DElementNode* effectNodes)
+void C3DEffectManager::loadAllEffect(ElementNode* effectNodes)
 {
 	if( effectNodes != nullptr )
 	{		
@@ -59,7 +59,7 @@ void C3DEffectManager::loadAllEffect(C3DElementNode* effectNodes)
 		else
 		{		
 			effectNodes->rewind();
-			C3DElementNode* effectNode = nullptr;
+			ElementNode* effectNode = nullptr;
 
 			while ((effectNode = effectNodes->getNextChild()))
 			{
@@ -72,7 +72,7 @@ void C3DEffectManager::loadAllEffect(C3DElementNode* effectNodes)
 					assert(fspath);
 					std::vector<std::string> flags;
 					flags.push_back("");
-					C3DElementNode* flagsNode = effectNode->getNextChild();
+					ElementNode* flagsNode = effectNode->getNextChild();
 					if (flagsNode != nullptr && strcmp(flagsNode->getNodeType(), "flags") == 0)
 					{
 						flagsNode->rewind();
@@ -99,7 +99,7 @@ void C3DEffectManager::loadAllEffect(C3DElementNode* effectNodes)
 						}						
 					}	
 
-					C3DElementNode* elementNode = C3DElementNode::createEmptyNode("test", "effect");
+					ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
 					elementNode->setElement("vertexShader", (vspath == nullptr) ? "" : vspath);
 					elementNode->setElement("fragmentShader", (fspath == nullptr) ? "" : fspath);	
 					const char* define;
@@ -132,7 +132,7 @@ C3DResource* C3DEffectManager::createResource(const std::string& name)
 	if(a.size()==3)
 		define = a[2];
 
-	C3DElementNode* elementNode = C3DElementNode::createEmptyNode("test", "effect");
+	ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
 
 	if(elementNode != nullptr)
 	{
@@ -202,7 +202,7 @@ C3DResource* C3DEffectManager::cloneResource(C3DResource* resource)
 
 }
 
-void C3DEffectManager::preload(C3DElementNode* node)
+void C3DEffectManager::preload(ElementNode* node)
 {	
 	const char* vshPath = node->getElement("vertexShader");
 	const char* fshPath = node->getElement("fragmentShader");

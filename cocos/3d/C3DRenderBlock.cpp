@@ -1,7 +1,7 @@
 #include "Base.h"
 #include "C3DRenderBlock.h"
 
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 
 // Render state override bits
@@ -453,7 +453,7 @@ void C3DStateBlock::setDepthWrite(bool enabled)
 	}
 }
 
-bool C3DStateBlock::load(C3DElementNode* node)
+bool C3DStateBlock::load(ElementNode* node)
 {  
 	node->rewind();
 	const char* name;
@@ -465,7 +465,7 @@ bool C3DStateBlock::load(C3DElementNode* node)
 	return true;
 }
 
-bool C3DStateBlock::save(C3DElementNode* node)
+bool C3DStateBlock::save(ElementNode* node)
 {   
 	if (_bits & RS_BLEND)
 		node->setElement("blend", &_blendEnabled);

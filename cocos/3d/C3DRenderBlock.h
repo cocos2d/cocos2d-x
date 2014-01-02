@@ -12,7 +12,7 @@ class C3DNode;
 
 class C3DPass;
 
-class C3DElementNode;
+class ElementNode;
 
 /**
 * Defines the render state of the graphics device.
@@ -129,8 +129,8 @@ public:
 	*/
 	void restoreGLState(bool bforce = false);
 
-	bool load(C3DElementNode* node);
-	bool save(C3DElementNode* node);
+	bool load(ElementNode* node);
+	bool save(ElementNode* node);
 
 	bool getBlendEnable()const{return _blendEnabled;}
 	bool getCullFaceEnable()const{return _cullFaceEnabled;}

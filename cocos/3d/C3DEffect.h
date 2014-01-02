@@ -15,7 +15,7 @@ NS_CC_BEGIN
 class Uniform;
 class C3DTexture;
 class C3DSampler;
-class C3DElementNode;
+class ElementNode;
 class C3DSamplerCube;
 
 /**
@@ -35,7 +35,7 @@ public:
 	/**
 	* load cur effect    
 	*/
-	bool load(C3DElementNode* node);
+	bool load(ElementNode* node);
 
 	/**
 	* Returns the vertex attribute handle for the vertex attribute with the specified name.

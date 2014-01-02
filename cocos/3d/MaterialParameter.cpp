@@ -99,7 +99,7 @@ void MaterialParameter::setValue(const int* values, unsigned int count)
 	_type = MaterialParameter::INT;
 }
 
-void MaterialParameter::setValue(const C3DVector2& value)
+void MaterialParameter::setValue(const Vector2& value)
 {
 	clearValue();
 
@@ -113,7 +113,7 @@ void MaterialParameter::setValue(const C3DVector2& value)
 	_type = MaterialParameter::VECTOR2;
 }
 
-void MaterialParameter::setValue(const C3DVector2* values, unsigned int count)
+void MaterialParameter::setValue(const Vector2* values, unsigned int count)
 {
 	clearValue();
 
@@ -122,7 +122,7 @@ void MaterialParameter::setValue(const C3DVector2* values, unsigned int count)
 	_type = MaterialParameter::VECTOR2;
 }
 
-void MaterialParameter::setValue(const C3DVector3& value)
+void MaterialParameter::setValue(const Vector3& value)
 {
 	clearValue();
 
@@ -136,7 +136,7 @@ void MaterialParameter::setValue(const C3DVector3& value)
 	_type = MaterialParameter::VECTOR3;
 }
 
-void MaterialParameter::setValue(const C3DVector3* values, unsigned int count)
+void MaterialParameter::setValue(const Vector3* values, unsigned int count)
 {
 	clearValue();
 
@@ -145,7 +145,7 @@ void MaterialParameter::setValue(const C3DVector3* values, unsigned int count)
 	_type = MaterialParameter::VECTOR3;
 }
 
-void MaterialParameter::setValue(const C3DVector4& value)
+void MaterialParameter::setValue(const Vector4& value)
 {
 	clearValue();
 
@@ -159,7 +159,7 @@ void MaterialParameter::setValue(const C3DVector4& value)
 	_type = MaterialParameter::VECTOR4;
 }
 
-void MaterialParameter::setValue(const C3DVector4* values, unsigned int count)
+void MaterialParameter::setValue(const Vector4* values, unsigned int count)
 {
 	clearValue();
 
@@ -168,7 +168,7 @@ void MaterialParameter::setValue(const C3DVector4* values, unsigned int count)
 	_type = MaterialParameter::VECTOR4;
 }
 
-void MaterialParameter::setValue(const C3DMatrix& value)
+void MaterialParameter::setValue(const Matrix& value)
 {
 	// If this parameter is already storing a single dynamic matrix, no need to clear it.
 	if (!(_dynamic && _count == 1 && _type == MaterialParameter::MATRIX && _value.floatPtrValue != nullptr))
@@ -186,11 +186,11 @@ void MaterialParameter::setValue(const C3DMatrix& value)
 	_type = MaterialParameter::MATRIX;
 }
 
-void MaterialParameter::setValue(const C3DMatrix* values, unsigned int count)
+void MaterialParameter::setValue(const Matrix* values, unsigned int count)
 {
 	clearValue();
 
-	_value.floatPtrValue = const_cast<C3DMatrix&> (values[0]).m;
+	_value.floatPtrValue = const_cast<Matrix&> (values[0]).m;
 	_count = count;
 	_type = MaterialParameter::MATRIX;
 }
@@ -280,19 +280,19 @@ void MaterialParameter::bind(C3DEffect* effect)
 		break;
 	case MaterialParameter::VECTOR2:
 		assert(_value.floatPtrValue);
-		effect->bindValue(_uniform, reinterpret_cast<C3DVector2*>(_value.floatPtrValue), _count);
+		effect->bindValue(_uniform, reinterpret_cast<Vector2*>(_value.floatPtrValue), _count);
 		break;
 	case MaterialParameter::VECTOR3:
 		assert(_value.floatPtrValue);
-		effect->bindValue(_uniform, reinterpret_cast<C3DVector3*>(_value.floatPtrValue), _count);
+		effect->bindValue(_uniform, reinterpret_cast<Vector3*>(_value.floatPtrValue), _count);
 		break;
 	case MaterialParameter::VECTOR4:
 		assert(_value.floatPtrValue);
-		effect->bindValue(_uniform, reinterpret_cast<C3DVector4*>(_value.floatPtrValue), _count);
+		effect->bindValue(_uniform, reinterpret_cast<Vector4*>(_value.floatPtrValue), _count);
 		break;
 	case MaterialParameter::MATRIX:
 		assert(_value.floatPtrValue);
-		effect->bindValue(_uniform, reinterpret_cast<C3DMatrix*>(_value.floatPtrValue), _count);
+		effect->bindValue(_uniform, reinterpret_cast<Matrix*>(_value.floatPtrValue), _count);
 		break;
 	case MaterialParameter::SAMPLER:
 		assert(_value.samplerValue);

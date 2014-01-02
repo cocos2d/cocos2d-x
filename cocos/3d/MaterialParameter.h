@@ -273,7 +273,7 @@ _parameter(param), _instance(instance), _valueMethod(valueMethod)
 }
 
 template <class ClassType, class ParameterType>
-MaterialParameter::MethodBinding* cocos3d::MaterialParameter::MethodValueBinding<ClassType, ParameterType>::clone() const
+MaterialParameter::MethodBinding* cocos2d::MaterialParameter::MethodValueBinding<ClassType, ParameterType>::clone() const
 {
 	MethodValueBinding<ClassType, ParameterType>* other = new MethodValueBinding<ClassType, ParameterType>(_parameter, _instance, _valueMethod);
 	return other;
@@ -300,7 +300,7 @@ void MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::bindValue(
 }
 
 template <class ClassType, class ParameterType>
-MaterialParameter::MethodBinding* cocos3d::MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::clone() const
+MaterialParameter::MethodBinding* cocos2d::MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::clone() const
 {
 	MethodArrayBinding<ClassType, ParameterType>* other = new MethodArrayBinding<ClassType, ParameterType>(_parameter, _instance, _valueMethod, _countMethod, _indexMethod);
 	return other;

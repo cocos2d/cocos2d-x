@@ -25,7 +25,7 @@ class C3DPass;
 * Defines the render state of the graphics device.
 */
 class MaterialParameter;
-class C3DElementNode;
+class ElementNode;
 class C3DStateBlock;
 
 /**
@@ -181,7 +181,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool load(C3DElementNode* nodes);
+	virtual bool load(ElementNode* nodes);
 
 	/**
 	* save the renderstate info into the elementnode
@@ -189,7 +189,7 @@ public:
 	* @param nodes elementnode which contains the renderstate info.	 
 	*      
 	*/
-	virtual bool save(C3DElementNode* node);
+	virtual bool save(ElementNode* node);
 
 	static const char* getAutoBindingName(AutoBinding autoBinding);
 
@@ -234,7 +234,7 @@ protected:
 	/**
 	* Returns the topmost C3DRenderState in the hierarchy below the given C3DRenderState.
 	*/
-	C3DRenderState* getTopmost const(C3DRenderState* below);
+	C3DRenderState* getTopmost (C3DRenderState* below);
 
 private:
 
