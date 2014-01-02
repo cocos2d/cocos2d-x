@@ -78,8 +78,7 @@ void TriggerMng::parse(const rapidjson::Value &root)
     int count = DICTOOL->getArrayCount_json(root, "Triggers");
     
     CCScriptEngineProtocol* engine = CCScriptEngineManager::sharedManager()->getScriptEngine();
-    bool useBindings = engine != NULL;
-    
+    bool useBindings = engine != NULL;    
     
     if (useBindings)
     {
