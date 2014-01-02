@@ -3616,6 +3616,7 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendMotionStreak(lua_State* tolua_S)
@@ -3628,6 +3629,7 @@ static void extendMotionStreak(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_MotionStreak_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendAtlasNode(lua_State* tolua_S)
@@ -3640,6 +3642,7 @@ static void extendAtlasNode(lua_State* tolua_S)
         lua_pushcfunction(tolua_S,tolua_cocos2dx_AtlasNode_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
+    lua_pop(tolua_S, 1);
 }
 
 static void extendParticleBatchNode(lua_State* tolua_S)
