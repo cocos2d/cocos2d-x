@@ -17,7 +17,7 @@ C3DActionEvent::C3DActionEvent(const C3DActionEvent& actionEvent)
 {
     _finished = actionEvent._finished;
 
-	_listener = actionEvent._listener;
+    _listener = actionEvent._listener;
 
     _eventTime = actionEvent._eventTime; 
 

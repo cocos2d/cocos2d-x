@@ -114,32 +114,32 @@ float C3DAnimationClip::getBlendWeight() const
 
 bool C3DAnimationClip::isPlaying() const
 {
-    return isState(CLIP_IS_PLAYING);
+    return hasState(CLIP_IS_PLAYING);
 }
 
 bool C3DAnimationClip::isPaused() const
 {
-    return isState(CLIP_IS_PAUSED);
+    return hasState(CLIP_IS_PAUSED);
 }
 
 bool C3DAnimationClip::isResumed() const
 {
-    return isState(CLIP_IS_RESTARTED);
+    return hasState(CLIP_IS_RESTARTED);
 }
 
 void C3DAnimationClip::play()
 {
-    if (isState(CLIP_IS_PLAYING))
+    if (hasState(CLIP_IS_PLAYING))
     {
          // If paused, reset the bit and return.
-        if (isState(CLIP_IS_PAUSED))
+        if (hasState(CLIP_IS_PAUSED))
         {
             resetState(CLIP_IS_PAUSED);
             return;
         }
 
         // If the clip is set to be removed, reset the flag.
-        if (isState(CLIP_IS_MARKED_FOR_REMOVAL))
+        if (hasState(CLIP_IS_MARKED_FOR_REMOVAL))
             resetState(CLIP_IS_MARKED_FOR_REMOVAL);
 
         setState(CLIP_IS_RESTARTED);
@@ -161,7 +161,7 @@ void C3DAnimationClip::crossFade(C3DAnimationClip* clip, unsigned long duration)
     assert(clip);
 
 
-    if (clip->isState(CLIP_IS_FADING_OUT) && clip->_crossFadeToClip == this)
+    if (clip->hasState(CLIP_IS_FADING_OUT) && clip->_crossFadeToClip == this)
     {
         clip->resetState(CLIP_IS_FADING_OUT);
         clip->_crossFadeToClip->resetState(CLIP_IS_FADING_IN);
@@ -185,7 +185,7 @@ void C3DAnimationClip::crossFade(C3DAnimationClip* clip, unsigned long duration)
     _crossFadeOutElapsed = 0L;
     _crossFadeOutDuration = duration;
 
-    if (!isState(CLIP_IS_PLAYING))
+    if (!hasState(CLIP_IS_PLAYING))
         play();
     
 
@@ -223,33 +223,33 @@ unsigned short C3DAnimationClip::update(unsigned long elapsedTime)
 
 unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
 {
-    if (isState(CLIP_IS_PAUSED))
+    if (hasState(CLIP_IS_PAUSED))
     {
         return CLIP_IS_PAUSED;
     }
-    else if (isState(CLIP_IS_MARKED_FOR_REMOVAL))
+    else if (hasState(CLIP_IS_MARKED_FOR_REMOVAL))
     {   
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_NONE;
         
         return CLIP_IS_MARKED_FOR_REMOVAL;
     }
-    else if(isState(CLIP_IS_RESTARTED))
+    else if(hasState(CLIP_IS_RESTARTED))
     {
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_PLAYING;
 
         return CLIP_IS_RESTARTED;
     }
-    else if (!isState(CLIP_IS_STARTED))
+    else if (!hasState(CLIP_IS_STARTED))
     {
         _elapsedTime = (C3DLayer::getGameTime() - _timeStarted) * _speed;
         
         setState(CLIP_IS_STARTED);
     }
-    else if (isState(CLIP_IS_FADING_OUT))
+    else if (hasState(CLIP_IS_FADING_OUT))
     {
-        if (isState(CLIP_IS_FADING_OUT_STARTED)) // Calculate elapsed time since the fade out begin.
+        if (hasState(CLIP_IS_FADING_OUT_STARTED)) // Calculate elapsed time since the fade out begin.
         {
             _crossFadeOutElapsed = (C3DLayer::getGameTime() - _crossFadeToClip->_timeStarted) * abs(_speed); 
             resetState(CLIP_IS_FADING_OUT_STARTED);
@@ -342,7 +342,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
                     if( _elapsedTime>=((counter-1)*(long)_duration + (long)evt->_eventTime))
                     {
 						if (evt->_listener)
-						    evt->_listener(); 
+                            evt->_listener();
                     }
                 }
                 else
@@ -352,7 +352,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
                         if( _elapsedTime>=((counter-1)*(long)_duration + (long)evt->_eventTime)/* && evt->_finished == false*/)
                         {
                             if (evt->_listener)
-							    evt->_listener(); 
+                                evt->_listener(); 
                         }                        
                         
                     }
@@ -361,7 +361,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
                         if( _elapsedTime>=(counter*(long)_duration + (long)evt->_eventTime)/* && evt->_finished == false*/)
                         {
                             if (evt->_listener)
-							    evt->_listener(); 
+                                evt->_listener(); 
                         }                        
                     }
                 }                
@@ -383,7 +383,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
                 if( _elapsedTime<=(long)evt->_eventTime && evt->_finished == false)
                 {
                     if (evt->_listener)
-					    evt->_listener(); 
+                        evt->_listener(); 
                 }                
                 iter--;
             }      
@@ -412,7 +412,7 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
         
 
      // When ended. Probably should move to it's own method so we can call it when the clip is ended early.
-    if (!isState(CLIP_IS_STARTED))
+    if (!hasState(CLIP_IS_STARTED))
     {
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_NONE;
@@ -436,33 +436,33 @@ unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
 
 unsigned short C3DAnimationClip::updateOnce(unsigned long elapsedTime)
 {
-    if (isState(CLIP_IS_PAUSED))
+    if (hasState(CLIP_IS_PAUSED))
     {
         return CLIP_IS_PAUSED;
     }
-    else if (isState(CLIP_IS_MARKED_FOR_REMOVAL))
+    else if (hasState(CLIP_IS_MARKED_FOR_REMOVAL))
     {   
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_NONE;
         
         return CLIP_IS_MARKED_FOR_REMOVAL;
     }
-    else if(isState(CLIP_IS_RESTARTED))
+    else if(hasState(CLIP_IS_RESTARTED))
     {
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_PLAYING;
 
         return CLIP_IS_RESTARTED;
     }
-    else if (!isState(CLIP_IS_STARTED))
+    else if (!hasState(CLIP_IS_STARTED))
     {
         _elapsedTime = (C3DLayer::getGameTime() - _timeStarted) * _speed;
         
         setState(CLIP_IS_STARTED);
     }
-    else if (isState(CLIP_IS_FADING_OUT))
+    else if (hasState(CLIP_IS_FADING_OUT))
     {
-        if (isState(CLIP_IS_FADING_OUT_STARTED)) // Calculate elapsed time since the fade out begin.
+        if (hasState(CLIP_IS_FADING_OUT_STARTED)) // Calculate elapsed time since the fade out begin.
         {
             _crossFadeOutElapsed = (C3DLayer::getGameTime() - _crossFadeToClip->_timeStarted) * abs(_speed); 
             resetState(CLIP_IS_FADING_OUT_STARTED);
@@ -550,7 +550,7 @@ unsigned short C3DAnimationClip::updateOnce(unsigned long elapsedTime)
                 if( _elapsedTime>=(long)evt->_eventTime && evt->_finished == false)
                 {
                     if (evt->_listener)
-					    evt->_listener(); 
+                        evt->_listener(); 
                     evt->_finished = true;
                 }                
                 iter++;
@@ -569,7 +569,7 @@ unsigned short C3DAnimationClip::updateOnce(unsigned long elapsedTime)
                 if( _elapsedTime<=(long)evt->_eventTime && evt->_finished == false)
                 {
                     if (evt->_listener)
-					    evt->_listener(); 
+                        evt->_listener();
                     evt->_finished = true;
                 }                
                 iter--;
@@ -598,7 +598,7 @@ unsigned short C3DAnimationClip::updateOnce(unsigned long elapsedTime)
         
 
      // When ended. Probably should move to it's own method so we can call it when the clip is ended early.
-    if (!isState(CLIP_IS_STARTED))
+    if (!hasState(CLIP_IS_STARTED))
     {
         _blendWeight = 1.0f;
         _stateBits = CLIP_IS_NONE;
