@@ -32,6 +32,8 @@
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"
 
+NS_CC_BEGIN
+
 namespace network {
 
 /**
@@ -114,5 +116,7 @@ private:
 /// @}
 
 }
+
+NS_CC_END
 
 #endif //__CCHTTPREQUEST_H__
