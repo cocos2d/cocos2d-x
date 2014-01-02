@@ -117,5 +117,9 @@ function TScaleTo:serialize(value)
     end
 end
 
+function TScaleTo:removeAll()
+    print("TScaleTo::removeAll")
+end
+
 registerTriggerClass("TScaleTo",TScaleTo.new)
 registerTriggerClass("TMoveBy",TMoveBy.new)
