@@ -58,7 +58,8 @@ namespace PhoneDirect3DXamlAppInterop
                 DrawingSurface.SetManipulationHandler(m_d3dInterop);
 
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
-
+                BroswerEventHelper helper = new BroswerEventHelper();
+                helper.SetShowWebBroswerDelegate(ShowWebBroswer);
             }
         }
 
@@ -126,6 +127,15 @@ namespace PhoneDirect3DXamlAppInterop
                         break;
                 }
             });  
+        }
+
+        public void ShowWebBroswer()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                this.NavigationService.Navigate(new Uri("/WebBroswerPage.xaml", UriKind.Relative));
+            });
+            return;
         }
     }
 }
