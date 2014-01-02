@@ -1,5 +1,5 @@
 require "json"
-require "luaScript/extern"
+require "extern"
 
 function sendTriggerEvent(event)
     local triggerObjArr = TriggerMng.getInstance():get(event)
