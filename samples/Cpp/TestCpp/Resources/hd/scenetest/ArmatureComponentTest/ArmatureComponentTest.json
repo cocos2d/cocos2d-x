@@ -101,8 +101,8 @@
     }
   ],
   "CanvasSize": {
-    "_height": 320,
-    "_width": 480
+    "_height": 640,
+    "_width": 960
   },
   "Triggers": null,
   "Version": "1.2.0.0",

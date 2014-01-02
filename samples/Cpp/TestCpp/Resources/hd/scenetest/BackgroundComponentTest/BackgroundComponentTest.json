@@ -46,8 +46,8 @@
       "canedit": true,
       "objecttag": 10014,
       "rotation": 0,
-      "scalex": 0.5,
-      "scaley": 0.5,
+      "scalex": 0.500000238,
+      "scaley": 0.5062499,
       "visible": 1,
       "x": 0,
       "y": 0,
@@ -66,11 +66,67 @@
           }
         }
       ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10005,
+      "rotation": 0,
+      "scalex": -2,
+      "scaley": 2,
+      "visible": 1,
+      "x": 188.35035705566406,
+      "y": 43.945346832275391,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "[Node]",
+      "canedit": true,
+      "objecttag": 10006,
+      "rotation": 0,
+      "scalex": 2,
+      "scaley": 2,
+      "visible": 1,
+      "x": 289.21835327148438,
+      "y": 45.547077178955078,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
     }
   ],
   "CanvasSize": {
-    "_height": 320,
-    "_width": 480
+    "_height": 640,
+    "_width": 960
   },
   "Triggers": null,
   "Version": "1.2.0.0",

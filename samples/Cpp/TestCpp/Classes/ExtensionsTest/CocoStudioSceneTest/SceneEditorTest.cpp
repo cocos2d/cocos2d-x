@@ -202,10 +202,7 @@ loadSceneEdtiorFileTest::loadSceneEdtiorFileTest()
 
 loadSceneEdtiorFileTest::~loadSceneEdtiorFileTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+
 }
 
 std::string loadSceneEdtiorFileTest::title()
@@ -228,6 +225,10 @@ void loadSceneEdtiorFileTest::onEnter()
 
 void loadSceneEdtiorFileTest::onExit()
 {
+	 CCArmatureDataManager::purge();
+	 SceneReader::sharedSceneReader()->purgeSceneReader();
+	 cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	 cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -250,10 +251,7 @@ SpriteComponentTest::SpriteComponentTest()
 
 SpriteComponentTest::~SpriteComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+
 }
 
 std::string SpriteComponentTest::title()
@@ -276,6 +274,10 @@ void SpriteComponentTest::onEnter()
 
 void SpriteComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -306,10 +308,7 @@ ArmatureComponentTest::ArmatureComponentTest()
 
 ArmatureComponentTest::~ArmatureComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	
 }
 
 std::string ArmatureComponentTest::title()
@@ -332,6 +331,10 @@ void ArmatureComponentTest::onEnter()
 
 void ArmatureComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -348,7 +351,6 @@ cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 	CCArmature *pButterflyfish = static_cast<CCArmature*>(pNode->getChildByTag(10008)->getComponent("CCArmature")->getNode());
 	pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 
-
     return pNode;
 }
 
@@ -360,10 +362,6 @@ UIComponentTest::UIComponentTest()
 
 UIComponentTest::~UIComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string UIComponentTest::title()
@@ -386,6 +384,10 @@ void UIComponentTest::onEnter()
 
 void UIComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -431,10 +433,7 @@ TmxMapComponentTest::TmxMapComponentTest()
 
 TmxMapComponentTest::~TmxMapComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+
 }
 
 std::string TmxMapComponentTest::title()
@@ -457,6 +456,10 @@ void TmxMapComponentTest::onEnter()
 
 void TmxMapComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -489,10 +492,6 @@ ParticleComponentTest::ParticleComponentTest()
 
 ParticleComponentTest::~ParticleComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string ParticleComponentTest::title()
@@ -515,6 +514,10 @@ void ParticleComponentTest::onEnter()
 
 void ParticleComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -542,10 +545,6 @@ EffectComponentTest::EffectComponentTest()
 
 EffectComponentTest::~EffectComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string EffectComponentTest::title()
@@ -568,6 +567,10 @@ void EffectComponentTest::onEnter()
 
 void EffectComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -605,10 +608,6 @@ BackgroundComponentTest::BackgroundComponentTest()
 
 BackgroundComponentTest::~BackgroundComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string BackgroundComponentTest::title()
@@ -631,6 +630,10 @@ void BackgroundComponentTest::onEnter()
 
 void BackgroundComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -657,10 +660,6 @@ AttributeComponentTest::AttributeComponentTest()
 
 AttributeComponentTest::~AttributeComponentTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string AttributeComponentTest::title()
@@ -684,6 +683,10 @@ void AttributeComponentTest::onEnter()
 
 void AttributeComponentTest::onExit()
 {
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
     SceneEditorTestLayer::onExit();
 }
 
@@ -742,10 +745,6 @@ TriggerTest::TriggerTest()
 
 TriggerTest::~TriggerTest()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
 }
 
 std::string TriggerTest::title()
@@ -772,8 +771,14 @@ void TriggerTest::onEnter()
 
 void TriggerTest::onExit()
 {
-	SceneEditorTestLayer::onExit();
 	sendEvent(TRIGGEREVENT_LEAVESCENE);
+    this->unschedule(schedule_selector(TriggerTest::gameLogic));
+	this->setTouchEnabled(false);
+	CCArmatureDataManager::purge();
+	SceneReader::sharedSceneReader()->purgeSceneReader();
+	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
+	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneEditorTestLayer::onExit();
 }
 
 bool TriggerTest::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)

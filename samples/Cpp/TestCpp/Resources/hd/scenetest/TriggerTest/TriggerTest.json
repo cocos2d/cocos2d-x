@@ -116,11 +116,11 @@
             },
             {
               "key": "ScaleX",
-              "value": 0.6
+              "value": 1.0
             },
             {
               "key": "ScaleY",
-              "value": 0.6
+              "value": 1.0
             },
             {
               "key": "Duration",
