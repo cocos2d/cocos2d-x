@@ -212,17 +212,14 @@
     <ClCompile Include="..\CocoStudio\Components\CCComController.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UIButton.cpp" />
@@ -233,7 +230,6 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
     <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
@@ -355,6 +351,7 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h" />
