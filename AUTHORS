@@ -668,6 +668,7 @@ Developers:
         
     zhiqiangxu
         Fixed a logic error in ControlUtils::RectUnion.
+        Fixed an issue that there is an useless conversion in ScrollView::onTouchBegan.
         
     yinkaile (2youyouo2)
         Maintainer of Armature Bone Animation.
@@ -687,6 +688,9 @@ Developers:
         
     SBKarr
         AngelCode binary file format support for LabelBMFont.
+        
+    zarelaky
+        OpenAL context isn't destroyed correctly on mac and ios.
         
 Retired Core Developers:
     WenSheng Yang
