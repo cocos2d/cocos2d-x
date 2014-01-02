@@ -1,4 +1,4 @@
-require "TriggerMng"
+require "lua_cocos2d_studio"
 
 local ConfigType = 
 {
