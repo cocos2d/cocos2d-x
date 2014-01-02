@@ -53,7 +53,6 @@ NS_CC_EXT_BEGIN
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               _pNode = createObject(jsonDict, NULL);
 			  TriggerMng::getInstance()->parse(jsonDict);
-			  
         } while (0);
         
         return _pNode;
@@ -347,6 +346,10 @@ NS_CC_EXT_BEGIN
 						continue;
 					}
                     pAudio->preloadEffect(pPath.c_str());
+					if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     gb->addComponent(pAudio);
 					if (_pListener && _pfnSelector)
 					{
@@ -365,6 +368,11 @@ NS_CC_EXT_BEGIN
 						CCLog("unknown resourcetype on CCComAttribute!");
 						continue;
 					}
+					if (pComName != NULL)
+					{
+						pAttribute->setName(pComName);
+					}
+					pAttribute->setJsonName(pPath);
                     gb->addComponent(pAttribute);
 					if (_pListener && _pfnSelector)
 					{
@@ -395,6 +403,10 @@ NS_CC_EXT_BEGIN
 					pAudio->setFile(pPath.c_str());
 					bool bLoop = (bool)(DICTOOL->getIntValue_json(subDict, "loop"));
 					pAudio->setLoop(bLoop);
+					if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     gb->addComponent(pAudio);
 					if (_pListener && _pfnSelector)
 					{

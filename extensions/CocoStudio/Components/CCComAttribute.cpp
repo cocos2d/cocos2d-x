@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 CCComAttribute::CCComAttribute(void)
 : _dict(NULL)
 {
-    m_strName = "ComAttribute";
+    m_strName = "CCComAttribute";
 }
 
 CCComAttribute::~CCComAttribute(void)
@@ -127,6 +127,15 @@ CCComAttribute* CCComAttribute::create(void)
         CC_SAFE_DELETE(pRet);
     }
     return pRet;
+}
+
+void CCComAttribute::setJsonName(const std::string &jsonName)
+{
+	_jsonName = jsonName;
+}
+std::string CCComAttribute::getJsonName()
+{
+	return _jsonName;
 }
 
 NS_CC_EXT_END
