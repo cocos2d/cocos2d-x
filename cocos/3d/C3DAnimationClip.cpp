@@ -212,16 +212,16 @@ unsigned short C3DAnimationClip::update(unsigned long elapsedTime)
 {
     if(_repeatCount != 0)
     {
-        return update_once(elapsedTime);
+        return updateOnce(elapsedTime);
     }
     else
     {
-        return update_loop(elapsedTime);
+        return updateLoop(elapsedTime);
     }    
    
 }
 
-unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
+unsigned short C3DAnimationClip::updateLoop(unsigned long elapsedTime)
 {
     if (isState(CLIP_IS_PAUSED))
     {
@@ -341,8 +341,8 @@ unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
                 {
                     if( _elapsedTime>=((counter-1)*(long)_duration + (long)evt->_eventTime))
                     {
-                        evt->_listener->action();
-                    //    evt->_finished = true;
+						if (evt->_listener)
+						    evt->_listener(); 
                     }
                 }
                 else
@@ -351,8 +351,8 @@ unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
                     {                        
                         if( _elapsedTime>=((counter-1)*(long)_duration + (long)evt->_eventTime)/* && evt->_finished == false*/)
                         {
-                            evt->_listener->action();
-                            //evt->_finished = true;
+                            if (evt->_listener)
+							    evt->_listener(); 
                         }                        
                         
                     }
@@ -360,8 +360,8 @@ unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
                     {                        
                         if( _elapsedTime>=(counter*(long)_duration + (long)evt->_eventTime)/* && evt->_finished == false*/)
                         {
-                            evt->_listener->action();
-                            //evt->_finished = true;
+                            if (evt->_listener)
+							    evt->_listener(); 
                         }                        
                     }
                 }                
@@ -382,8 +382,8 @@ unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
                 evt = *iter;
                 if( _elapsedTime<=(long)evt->_eventTime && evt->_finished == false)
                 {
-                    evt->_listener->action();
-                //    evt->_finished = true;
+                    if (evt->_listener)
+					    evt->_listener(); 
                 }                
                 iter--;
             }      
@@ -434,7 +434,7 @@ unsigned short C3DAnimationClip::update_loop(unsigned long elapsedTime)
 }
 
 
-unsigned short C3DAnimationClip::update_once(unsigned long elapsedTime)
+unsigned short C3DAnimationClip::updateOnce(unsigned long elapsedTime)
 {
     if (isState(CLIP_IS_PAUSED))
     {
@@ -549,7 +549,8 @@ unsigned short C3DAnimationClip::update_once(unsigned long elapsedTime)
                 evt = *iter;
                 if( _elapsedTime>=(long)evt->_eventTime && evt->_finished == false)
                 {
-                    evt->_listener->action();
+                    if (evt->_listener)
+					    evt->_listener(); 
                     evt->_finished = true;
                 }                
                 iter++;
@@ -567,7 +568,8 @@ unsigned short C3DAnimationClip::update_once(unsigned long elapsedTime)
                 evt = *iter;
                 if( _elapsedTime<=(long)evt->_eventTime && evt->_finished == false)
                 {
-                    evt->_listener->action();
+                    if (evt->_listener)
+					    evt->_listener(); 
                     evt->_finished = true;
                 }                
                 iter--;
@@ -617,7 +619,7 @@ unsigned short C3DAnimationClip::update_once(unsigned long elapsedTime)
     return CLIP_IS_PLAYING;
 }
 
-bool C3DAnimationClip::isState(unsigned short bit) const
+bool C3DAnimationClip::hasState(unsigned short bit) const
 {
     return (_stateBits & bit) == bit;
 }
@@ -633,7 +635,7 @@ void C3DAnimationClip::resetState(unsigned short bit)
 }
 
 
-void C3DAnimationClip::addActionEvent(C3DActionListener* listener, unsigned long eventTime)
+void C3DAnimationClip::addActionEvent(std::function<void()> listener, unsigned long eventTime)
 {
     assert(listener);
     assert(eventTime <= _activeDuration);
