@@ -7,7 +7,7 @@ using namespace cocostudio;
 
 IMPLEMENT_CLASS_INFO(PlayMusic)
 PlayMusic::PlayMusic(void)
-:_nTag(-1)
+:_tag(-1)
 {
 }
 
@@ -24,15 +24,15 @@ void PlayMusic::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
 		ComAudio *audio = (ComAudio*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(audio == nullptr);
-		if (_nType == 0)
+		if (_type == 0)
 		{
 			audio->playBackgroundMusic();
 		}
-		else if (_nType == 1)
+		else if (_type == 1)
 		{
 			audio->playEffect();
 		}
@@ -49,7 +49,7 @@ void PlayMusic::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "componentName")
@@ -59,7 +59,7 @@ void PlayMusic::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "type")
 		{
-			_nType = DICTOOL->getIntValue_json(subDict, "value");
+			_type = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 	}
@@ -71,8 +71,8 @@ void PlayMusic::removeAll()
 
 IMPLEMENT_CLASS_INFO(TMoveTo)
 TMoveTo::TMoveTo(void)
-:_nTag(-1)
-,_fDuration(0.0f)
+:_tag(-1)
+,_duration(0.0f)
 {
 }
 
@@ -89,9 +89,9 @@ void TMoveTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionTo = MoveTo::create(_fDuration, _pos);
+		ActionInterval*  actionTo = MoveTo::create(_duration, _pos);
 		CC_BREAK_IF(actionTo == nullptr);
 		pNode->runAction(actionTo);
 	} while (0);
@@ -106,12 +106,12 @@ void TMoveTo::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "x")
@@ -129,13 +129,15 @@ void TMoveTo::serialize(const rapidjson::Value &val)
 
 void TMoveTo::removeAll()
 {
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 IMPLEMENT_CLASS_INFO(TMoveBy)
 TMoveBy::TMoveBy(void)
-:_nTag(-1)
-,_fDuration(0.0f)
-,_bReverse(false)
+:_tag(-1)
+,_duration(0.0f)
+,_reverse(false)
 {
 }
 
@@ -152,11 +154,11 @@ void TMoveBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionBy = MoveBy::create(_fDuration, _pos);
+		ActionInterval*  actionBy = MoveBy::create(_duration, _pos);
 		CC_BREAK_IF(actionBy == nullptr);
-		if (_bReverse == true)
+		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
 			pNode->runAction( CCSequence::create(actionBy, actionByBack, nullptr));
@@ -177,12 +179,12 @@ void TMoveBy::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "x")
@@ -197,7 +199,7 @@ void TMoveBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_bReverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
 			continue;
 		}
 	}
@@ -205,16 +207,17 @@ void TMoveBy::serialize(const rapidjson::Value &val)
 
 void TMoveBy::removeAll()
 {
-	CCLOG("TMoveBy::removeAll");
+    Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TRotateTo)
 TRotateTo::TRotateTo(void)
-: _nTag(-1)
-, _fDuration(0.0f)
-, _fDeltaAngle(0.0f)
+: _tag(-1)
+, _duration(0.0f)
+, _deltaAngle(0.0f)
 {
 }
 
@@ -231,9 +234,9 @@ void TRotateTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionTo = RotateTo::create(_fDuration, _fDeltaAngle);
+		ActionInterval*  actionTo = RotateTo::create(_duration, _deltaAngle);
 		CC_BREAK_IF(actionTo == nullptr);
 		pNode->runAction(actionTo);
 	} while (0);
@@ -248,17 +251,17 @@ void TRotateTo::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "DeltaAngle")
 		{
-			_fDeltaAngle = DICTOOL->getFloatValue_json(subDict, "value");
+			_deltaAngle = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 	}
@@ -266,17 +269,18 @@ void TRotateTo::serialize(const rapidjson::Value &val)
 
 void TRotateTo::removeAll()
 {
-	CCLOG("TRotateTo::removeAll");
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TRotateBy)
 TRotateBy::TRotateBy(void)
-: _nTag(-1)
-, _fDuration(0.0f)
-, _fDeltaAngle(0.0f)
-, _bReverse(false)
+: _tag(-1)
+, _duration(0.0f)
+, _deltaAngle(0.0f)
+, _reverse(false)
 {
 }
 
@@ -293,11 +297,11 @@ void TRotateBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionBy = RotateBy::create(_fDuration, _fDeltaAngle);
+		ActionInterval*  actionBy = RotateBy::create(_duration, _deltaAngle);
 		CC_BREAK_IF(actionBy == nullptr);
-		if (_bReverse == true)
+		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
 			pNode->runAction( Sequence::create(actionBy, actionByBack, nullptr));
@@ -318,22 +322,22 @@ void TRotateBy::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "DeltaAngle")
 		{
-			_fDeltaAngle = DICTOOL->getFloatValue_json(subDict, "value");
+			_deltaAngle = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "IsReverse")
 		{
-			_bReverse = (int)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (int)(DICTOOL->getIntValue_json(subDict, "value"));
 			continue;
 		}
 	}
@@ -341,15 +345,16 @@ void TRotateBy::serialize(const rapidjson::Value &val)
 
 void TRotateBy::removeAll()
 {
-	CCLOG("TRotateBy::removeAll");
+    Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TScaleTo)
 TScaleTo::TScaleTo(void)
-: _nTag(-1)
-, _fDuration(0.0f)
+: _tag(-1)
+, _duration(0.0f)
 {
 }
 
@@ -366,9 +371,9 @@ void TScaleTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionTo = ScaleTo::create(_fDuration, _scale.x, _scale.y);
+		ActionInterval*  actionTo = ScaleTo::create(_duration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionTo == nullptr);
 		pNode->runAction(actionTo);
 	} while (0);
@@ -383,12 +388,12 @@ void TScaleTo::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "ScaleX")
@@ -406,16 +411,17 @@ void TScaleTo::serialize(const rapidjson::Value &val)
 
 void TScaleTo::removeAll()
 {
-	CCLOG("TScaleTo::removeAll");
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TScaleBy)
 TScaleBy::TScaleBy(void)
-: _nTag(-1)
-, _fDuration(0.0f)
-, _bReverse(false)
+: _tag(-1)
+, _duration(0.0f)
+, _reverse(false)
 {
 }
 
@@ -432,11 +438,11 @@ void TScaleBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionBy = ScaleBy::create(_fDuration, _scale.x, _scale.y);
+		ActionInterval*  actionBy = ScaleBy::create(_duration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionBy == nullptr);
-		if (_bReverse == true)
+		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
 			pNode->runAction(Sequence::create(actionBy, actionByBack, nullptr));
@@ -457,12 +463,12 @@ void TScaleBy::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "ScaleX")
@@ -477,7 +483,7 @@ void TScaleBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_bReverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
 			continue;
 		}
 	}
@@ -485,15 +491,16 @@ void TScaleBy::serialize(const rapidjson::Value &val)
 
 void TScaleBy::removeAll()
 {
-	CCLOG("TScaleBy::removeAll");
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TSkewTo)
 TSkewTo::TSkewTo(void)
-: _nTag(-1)
-, _fDuration(0.0f)
+: _tag(-1)
+, _duration(0.0f)
 {
 }
 
@@ -510,9 +517,9 @@ void TSkewTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionTo = SkewTo::create(_fDuration, _skew.x, _skew.y);
+		ActionInterval*  actionTo = SkewTo::create(_duration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionTo == nullptr);
 		pNode->runAction(actionTo);
 	} while (0);
@@ -527,12 +534,12 @@ void TSkewTo::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "SkewX")
@@ -550,16 +557,17 @@ void TSkewTo::serialize(const rapidjson::Value &val)
 
 void TSkewTo::removeAll()
 {
-	CCLOG("TSkewTo::removeAll");
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TSkewBy)
 TSkewBy::TSkewBy(void)
-: _nTag(-1)
-, _fDuration(0.0f)
-, _bReverse(false)
+: _tag(-1)
+, _duration(0.0f)
+, _reverse(false)
 {
 }
 
@@ -576,11 +584,11 @@ void TSkewBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
-		ActionInterval*  actionBy = SkewBy::create(_fDuration, _skew.x, _skew.y);
+		ActionInterval*  actionBy = SkewBy::create(_duration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionBy == nullptr);
-		if (_bReverse == true)
+		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
 			pNode->runAction(Sequence::create(actionBy, actionByBack, nullptr));
@@ -601,12 +609,12 @@ void TSkewBy::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Duration")
 		{
-			_fDuration = DICTOOL->getFloatValue_json(subDict, "value");
+			_duration = DICTOOL->getFloatValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "SKewX")
@@ -621,22 +629,23 @@ void TSkewBy::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "IsReverse")
 		{
-			_bReverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
+			_reverse = (bool)(DICTOOL->getIntValue_json(subDict, "value"));
 		}
 	}
 }
 
 void TSkewBy::removeAll()
 {
-	CCLOG("TSkewBy::removeAll");
+	Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+	node->getActionManager()->removeAllActions();
 }
 
 
 
 IMPLEMENT_CLASS_INFO(TriggerState)
 TriggerState::TriggerState(void)
-:_nID(-1)
-,_nState(0)
+:_id(-1)
+,_state(0)
 {
 }
 
@@ -651,20 +660,20 @@ bool TriggerState::init()
 
 void TriggerState::done()
 {
-    TriggerObj *obj = TriggerMng::getInstance()->getTriggerObj(_nID);
+    TriggerObj *obj = TriggerMng::getInstance()->getTriggerObj(_id);
 	if (obj != nullptr)
 	{
-		if (_nState == 0)
+		if (_state == 0)
 		{
 			obj->setEnabled(false);
 		}
-		else if (_nState == 1)
+		else if (_state == 1)
 		{
 			obj->setEnabled(true);
 		}
-		else if (_nState == 2)
+		else if (_state == 2)
 		{
-			TriggerMng::getInstance()->removeTriggerObj(_nID);
+			TriggerMng::getInstance()->removeTriggerObj(_id);
 		}
 		
 	}
@@ -680,12 +689,12 @@ void TriggerState::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "ID")
 		{
-			_nID = DICTOOL->getIntValue_json(subDict, "value");
+			_id = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "State")
 		{
-			_nState = DICTOOL->getIntValue_json(subDict, "value");
+			_state = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 	}
@@ -698,7 +707,7 @@ void TriggerState::removeAll()
 
 IMPLEMENT_CLASS_INFO(ArmaturePlayAction)
 ArmaturePlayAction::ArmaturePlayAction(void)
-: _nTag(-1)
+: _tag(-1)
 {
 }
 
@@ -715,7 +724,7 @@ void ArmaturePlayAction::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
 		ComRender *pRender = (ComRender*)(pNode->getComponent(_ComName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
@@ -734,7 +743,7 @@ void ArmaturePlayAction::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "componentName")

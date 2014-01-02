@@ -53,21 +53,21 @@ public:
      *  @js purge
      *  @lua destroySceneReader
      */
-    static void destroyInstance();
+    void destroyInstance();
     static const char* sceneReaderVersion();
-    cocos2d::Node* createNodeWithSceneFile(const char *pszFileName);
+    cocos2d::Node* createNodeWithSceneFile(const std::string &fileName);
 	void setTarget(cocos2d::Object *rec, SEL_CallFuncOD selector);
 	cocos2d::Node* getNodeByTag(int nTag);
 private:
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
-    bool readJson(const char *pszFileName, rapidjson::Document &doc);
-	cocos2d::Node* nodeByTag(cocos2d::Node *pParent, int nTag);
+    bool readJson(const std::string &fileName, rapidjson::Document& doc);
+	cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:
     static SceneReader* s_sharedReader;
-	cocos2d::Object*    _pListener;
-	SEL_CallFuncOD      _pfnSelector;
-	cocos2d::Node*      _pNode;
+	cocos2d::Object*    _listener;
+	SEL_CallFuncOD      _fnSelector;
+	cocos2d::Node*      _node;
 };
 
 
