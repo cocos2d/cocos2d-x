@@ -387,7 +387,7 @@ public:
     CREATE_FUNC(TextureAsync);
     virtual ~TextureAsync();
     void loadImages(float dt);
-    void imageLoaded(Object* pObj);
+    void imageLoaded(cocos2d::Texture2D* texture);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter();
