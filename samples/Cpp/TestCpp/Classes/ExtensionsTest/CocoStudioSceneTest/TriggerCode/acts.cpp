@@ -24,9 +24,9 @@ void PlayMusic::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
-		ComAudio *audio = (ComAudio*)(pNode->getComponent(_comName.c_str()));
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
+		ComAudio *audio = (ComAudio*)(node->getComponent(_comName.c_str()));
 		CC_BREAK_IF(audio == nullptr);
 		if (_type == 0)
 		{
@@ -89,11 +89,11 @@ void TMoveTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionTo = MoveTo::create(_duration, _pos);
 		CC_BREAK_IF(actionTo == nullptr);
-		pNode->runAction(actionTo);
+		node->runAction(actionTo);
 	} while (0);
 }
 
@@ -154,18 +154,18 @@ void TMoveBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionBy = MoveBy::create(_duration, _pos);
 		CC_BREAK_IF(actionBy == nullptr);
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			pNode->runAction( CCSequence::create(actionBy, actionByBack, nullptr));
+			node->runAction( CCSequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
-			pNode->runAction(actionBy);
+			node->runAction(actionBy);
 		}
 	} while (0);
 }
@@ -234,11 +234,11 @@ void TRotateTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionTo = RotateTo::create(_duration, _deltaAngle);
 		CC_BREAK_IF(actionTo == nullptr);
-		pNode->runAction(actionTo);
+		node->runAction(actionTo);
 	} while (0);
 }
 
@@ -297,18 +297,18 @@ void TRotateBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionBy = RotateBy::create(_duration, _deltaAngle);
 		CC_BREAK_IF(actionBy == nullptr);
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			pNode->runAction( Sequence::create(actionBy, actionByBack, nullptr));
+			node->runAction( Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
-			pNode->runAction(actionBy);
+			node->runAction(actionBy);
 		}
 	} while (0);
 }
@@ -371,11 +371,11 @@ void TScaleTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionTo = ScaleTo::create(_duration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionTo == nullptr);
-		pNode->runAction(actionTo);
+		node->runAction(actionTo);
 	} while (0);
 }
 
@@ -438,18 +438,18 @@ void TScaleBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionBy = ScaleBy::create(_duration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionBy == nullptr);
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			pNode->runAction(Sequence::create(actionBy, actionByBack, nullptr));
+			node->runAction(Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
-			pNode->runAction(actionBy);
+			node->runAction(actionBy);
 		}
 	} while (0);
 }
@@ -517,11 +517,11 @@ void TSkewTo::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionTo = SkewTo::create(_duration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionTo == nullptr);
-		pNode->runAction(actionTo);
+		node->runAction(actionTo);
 	} while (0);
 }
 
@@ -584,18 +584,18 @@ void TSkewBy::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
 		ActionInterval*  actionBy = SkewBy::create(_duration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionBy == nullptr);
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			pNode->runAction(Sequence::create(actionBy, actionByBack, nullptr));
+			node->runAction(Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{
-			pNode->runAction(actionBy);
+			node->runAction(actionBy);
 		}
 	} while (0);
 }
@@ -644,9 +644,9 @@ void TSkewBy::removeAll()
 
 IMPLEMENT_CLASS_INFO(TriggerState)
 TriggerState::TriggerState(void)
-:_id(-1)
-,_state(0)
 {
+    _id = -1;
+    _state = 0;
 }
 
 TriggerState::~TriggerState(void)
@@ -724,9 +724,9 @@ void ArmaturePlayAction::done()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-		CC_BREAK_IF(pNode == nullptr);
-		ComRender *pRender = (ComRender*)(pNode->getComponent(_ComName.c_str()));
+		Node *node = SceneReader::getInstance()->getNodeByTag(_tag);
+		CC_BREAK_IF(node == nullptr);
+		ComRender *pRender = (ComRender*)(node->getComponent(_ComName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
 		Armature *pAr = (Armature *)(pRender->getNode());
 		CC_BREAK_IF(pAr == nullptr);

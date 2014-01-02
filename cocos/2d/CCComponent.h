@@ -60,6 +60,9 @@ public:
     virtual void setEnabled(bool b);
     static Component* create(void);
     
+    virtual Node* getNode();
+	virtual void setNode(Node *node);
+    
     const std::string& getName() const;
     void setName(const std::string& name);
     
