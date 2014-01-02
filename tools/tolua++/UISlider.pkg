@@ -6,7 +6,6 @@ typedef enum
 
 class Slider : public Widget
 {
-public:
     Slider();
     virtual ~Slider();
     static Slider* create();
@@ -22,7 +21,6 @@ public:
     void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
     void setPercent(int percent);
     int getPercent();
-    void addEventListenerSlider(CCObject* target,SEL_SlidPercentChangedEvent selector);
     
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);

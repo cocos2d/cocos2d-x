@@ -7,7 +7,6 @@ typedef enum
 
 class LoadingBar : public Widget
 {
-public:
     LoadingBar();
     virtual ~LoadingBar();
     

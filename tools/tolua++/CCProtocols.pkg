@@ -1,6 +1,5 @@
 class CCRGBAProtocol
 {
-public:
     virtual void setColor(const ccColor3B& color);
     virtual const ccColor3B& getColor(void);
     virtual const ccColor3B& getDisplayedColor(void);

@@ -1,4 +1,5 @@
 require "json"
+require "extern"
 
 function sendTriggerEvent(event)
     local triggerObjArr = TriggerMng.getInstance():get(event)
@@ -291,12 +292,12 @@ function TriggerMng:add(event,triggerObj)
     end
 end
 
-function TriggerMng:remvoeAll( )
+function TriggerMng:removeAll( )
     for k in pairs(self._eventTriggers) do
         local triObjArr = self._eventTriggers[k]
         for j = 1, table.getn(triObjArr) do
             local  obj = triObjArr[j]
-            obj:remvoeAll()
+            obj:removeAll()
         end
     end
     self._eventTriggers = {}
@@ -321,7 +322,7 @@ function TriggerMng:remove(event, obj)
     for i = 1, table.getn(triObjects) do
         local triObject = triggers[i]
         if nil ~= triObject then
-            triObject:remvoeAll()
+            triObject:removeAll()
         end
     end
 
@@ -343,7 +344,7 @@ function TriggerMng:removeObjByEvent(event, obj)
     for i = 1,table.getn(triObjects) do
         local triObject = triObjects[i]
         if  nil ~= triObject and triObject == obj then
-            triObject:remvoeAll()
+            triObject:removeAll()
             table.remove(triObjects, i)
             return true
         end
