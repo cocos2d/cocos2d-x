@@ -107,18 +107,22 @@ public:
     /** Copy assignment operator */
     Vector<T>& operator=(const Vector<T>& other)
     {
-        CCLOGINFO("In the copy assignment operator!");
-        clear();
-        _data = other._data;
-        addRefForAllObjects();
+        if (this != &other) {
+            CCLOGINFO("In the copy assignment operator!");
+            clear();
+            _data = other._data;
+            addRefForAllObjects();
+        }
         return *this;
     }
     
     /** Move assignment operator */
     Vector<T>& operator=(Vector<T>&& other)
     {
-        CCLOGINFO("In the move assignment operator!");
-        _data = std::move(other._data);
+        if (this != &other) {
+            CCLOGINFO("In the move assignment operator!");
+            _data = std::move(other._data);
+        }
         return *this;
     }
     
