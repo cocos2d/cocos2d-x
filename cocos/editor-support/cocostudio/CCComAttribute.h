@@ -57,8 +57,12 @@ public:
    float  getFloat(const std::string& key, float def = 0.0f) const;
    bool   getBool(const std::string& key, bool def = false) const;
    std::string getString(const std::string& key, const std::string& def = "") const;
+   
+   void setJsonFile(const std::string &jsonName);
+   std::string getJsonFile();
 private:
    cocos2d::ValueMap _dict;
+   std::string _jsonName;
 };
 
 }

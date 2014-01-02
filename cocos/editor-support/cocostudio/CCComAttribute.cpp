@@ -116,5 +116,13 @@ ComAttribute* ComAttribute::create(void)
 	return pRet;
 }
 
+void ComAttribute::setJsonFile(const std::string &jsonName)
+{
+	_jsonName = jsonName;
+}
+std::string ComAttribute::getJsonFile()
+{
+	return _jsonName;
+}
 
 }
