@@ -54,6 +54,8 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+using namespace cocos2d;
+
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;

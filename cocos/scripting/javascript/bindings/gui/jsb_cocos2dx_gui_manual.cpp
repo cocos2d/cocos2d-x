@@ -9,7 +9,8 @@
 #include "cocos2d_specifics.hpp"
 #include "gui/CocosGUI.h"
 
-using namespace gui;
+using namespace cocos2d;
+using namespace cocos2d::gui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
