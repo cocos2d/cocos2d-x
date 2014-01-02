@@ -51,7 +51,7 @@ def main():
     statuses_url = pr['statuses_url']
 
     #get pr target branch
-    branch = pr['head']['ref']
+    branch = pr['base']['ref']
 
     #set commit status to pending
     target_url = os.environ['BUILD_URL']
