@@ -43,8 +43,6 @@ TMXLayerInfo::TMXLayerInfo()
 : _name("")
 , _tiles(nullptr)
 , _ownTiles(true)
-, _minGID(100000)
-, _maxGID(0)        
 , _offset(Point::ZERO)
 {
 }
@@ -83,7 +81,7 @@ TMXTilesetInfo::~TMXTilesetInfo()
     CCLOGINFO("deallocing TMXTilesetInfo: %p", this);
 }
 
-Rect TMXTilesetInfo::rectForGID(unsigned int gid)
+Rect TMXTilesetInfo::rectForGID(int gid)
 {
     Rect rect;
     rect.size = _tileSize;
@@ -141,7 +139,7 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
     _storingCharacters = false;
     _layerAttribs = TMXLayerAttribNone;
     _parentElement = TMXPropertyNone;
-    _currentFirstGID = 0;
+    _currentFirstGID = -1;
 }
 bool TMXMapInfo::initWithXML(const std::string& tmxString, const std::string& resourcePath)
 {
@@ -160,7 +158,8 @@ TMXMapInfo::TMXMapInfo()
 , _tileSize(Size::ZERO)
 , _layerAttribs(0)
 , _storingCharacters(false)
-, _currentFirstGID(0)
+, _currentFirstGID(-1)
+, _recordFirstGID(true)
 {
 }
 
@@ -265,7 +264,12 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             }
             externalTilesetFilename = FileUtils::getInstance()->fullPathForFilename(externalTilesetFilename.c_str());
             
-            _currentFirstGID = (unsigned int)attributeDict["firstgid"].asInt();
+            _currentFirstGID = attributeDict["firstgid"].asInt();
+            if (_currentFirstGID < 0)
+            {
+                _currentFirstGID = 0;
+            }
+            _recordFirstGID = false;
             
             tmxMapInfo->parseXMLFile(externalTilesetFilename.c_str());
         }
@@ -273,17 +277,25 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXTilesetInfo *tileset = new TMXTilesetInfo();
             tileset->_name = attributeDict["name"].asString();
-            if (_currentFirstGID == 0)
+            
+            if (_recordFirstGID)
             {
-                tileset->_firstGid = (unsigned int)attributeDict["firstgid"].asInt();
+                // unset before, so this is tmx file.
+                tileset->_firstGid = attributeDict["firstgid"].asInt();
+                
+                if (tileset->_firstGid < 0)
+                {
+                    tileset->_firstGid = 0;
+                }
             }
             else
             {
                 tileset->_firstGid = _currentFirstGID;
                 _currentFirstGID = 0;
             }
-            tileset->_spacing = (unsigned int)attributeDict["spacing"].asInt();
-            tileset->_margin = (unsigned int)attributeDict["margin"].asInt();
+            
+            tileset->_spacing = attributeDict["spacing"].asInt();
+            tileset->_margin = attributeDict["margin"].asInt();
             Size s;
             s.width = attributeDict["tilewidth"].asFloat();
             s.height = attributeDict["tileheight"].asFloat();
@@ -299,20 +311,17 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXLayerInfo* layer = tmxMapInfo->getLayers().back();
             Size layerSize = layer->_layerSize;
-            unsigned int gid = (unsigned int)attributeDict["gid"].asInt();
+            int gid = attributeDict["gid"].asInt();
             int tilesAmount = layerSize.width*layerSize.height;
             
             do
             {
-                // Check the gid is legal or not
-                CC_BREAK_IF(gid == 0);
-                
                 if (tilesAmount > 1)
                 {
                     // Check the value is all set or not
-                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != 0 && layer->_tiles[tilesAmount - 1] != 0);
+                    CC_BREAK_IF(layer->_tiles[tilesAmount - 2] != -1 && layer->_tiles[tilesAmount - 1] != -1);
                     
-                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 1;
+                    int currentTileIndex = tilesAmount - layer->_tiles[tilesAmount - 1] - 2;
                     layer->_tiles[currentTileIndex] = gid;
                     
                     if (currentTileIndex != tilesAmount - 1)
@@ -322,7 +331,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
                 }
                 else if(tilesAmount == 1)
                 {
-                    if (layer->_tiles[0] == 0)
+                    if (layer->_tiles[0] == -1)
                     {
                         layer->_tiles[0] = gid;
                     }
@@ -333,7 +342,6 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         {
             TMXTilesetInfo* info = tmxMapInfo->getTilesets().back();
             tmxMapInfo->setParentGID(info->_firstGid + attributeDict["id"].asInt());
-            //FIXME:XXX Why insert an empty dict?
             tmxMapInfo->getTileProperties()[tmxMapInfo->getParentGID()] = Value(ValueMap());
             tmxMapInfo->setParentElement(TMXPropertyTile);
         }
@@ -419,10 +427,8 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             int tilesAmount = layerSize.width*layerSize.height;
 
             int *tiles = (int *) malloc(tilesAmount*sizeof(int));
-            for (int i = 0; i < tilesAmount; i++)
-            {
-                tiles[i] = 0;
-            }
+            // set all value to -1
+            memset(tiles, 0xFF, tilesAmount*sizeof(int));
             
             /* Save the special index in tiles[tilesAmount - 1];
              * When we load tiles, we can do this:
@@ -432,10 +438,10 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
              */
             if (tilesAmount > 1)
             {
-                tiles[tilesAmount - 1] = tilesAmount - 1;
+                tiles[tilesAmount - 1] = tilesAmount - 2;
             }
 
-            layer->_tiles = (unsigned int*) tiles;
+            layer->_tiles = tiles;
         }
         else if (encoding == "base64")
         {
@@ -536,9 +542,9 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         }
         else if ( tmxMapInfo->getParentElement() == TMXPropertyTile ) 
         {
-            ValueMapIntKey& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asIntKeyMap();
+            ValueMap& dict = tmxMapInfo->getTileProperties().at(tmxMapInfo->getParentGID()).asValueMap();
 
-            int propertyName = attributeDict["name"].asInt();
+            std::string propertyName = attributeDict["name"].asString();
             dict[propertyName] = attributeDict["value"];
         }
     }
@@ -678,11 +684,11 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
                     return;
                 }
                 
-                layer->_tiles = (unsigned int*) deflated;
+                layer->_tiles = reinterpret_cast<int*>(deflated);
             }
             else
             {
-                layer->_tiles = (unsigned int*) buffer;
+                layer->_tiles = reinterpret_cast<int*>(buffer);
             }
             
             tmxMapInfo->setCurrentString("");
@@ -693,11 +699,19 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             Size layerSize = layer->_layerSize;
             int tilesAmount = layerSize.width * layerSize.height;
             
-            //reset the layer->_tiles[tilesAmount - 1]
-            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == 0)
+            //set all the tiles unseted to 0
+            if (tilesAmount > 1 && layer->_tiles[tilesAmount - 2] == -1)
+            {
+                for (int i = tilesAmount - layer->_tiles[tilesAmount - 1] - 2; i < tilesAmount; ++i)
+                {
+                    layer->_tiles[i] = 0;
+                }
+            }
+            else if (layer->_tiles[tilesAmount - 1] == -1)
             {
                 layer->_tiles[tilesAmount - 1] = 0;
             }
+                
         }
 
     }
@@ -720,6 +734,10 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     {
         // The object element has ended
         tmxMapInfo->setParentElement(TMXPropertyNone);
+    }
+    else if (elementName == "tileset")
+    {
+        _recordFirstGID = true;
     }
 }
 

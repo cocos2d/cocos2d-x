@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 set(APP_NAME HelloLua)
 project (${APP_NAME})
 
-include(../../build/BuildHelpers.CMakeLists.txt)
+include(cocos2d/build/BuildHelpers.CMakeLists.txt)
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
@@ -44,7 +44,7 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
 )
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/../..)
+set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
 
 include_directories(
   Classes

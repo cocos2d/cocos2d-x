@@ -1,0 +1,6 @@
+{
+    "rename":               [],
+    "remove":               [],
+    "replace_package_name": [],
+    "replace_project_name": ["../CMakeLists.txt"]
+}

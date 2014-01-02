@@ -18,9 +18,9 @@ UIScrollView.cpp \
 UIButton.cpp \
 UICheckBox.cpp \
 UIImageView.cpp \
-UILabel.cpp \
-UILabelAtlas.cpp \
-UILabelBMFont.cpp \
+UIText.cpp \
+UITextAtlas.cpp \
+UITextBMFont.cpp \
 UILoadingBar.cpp \
 UISlider.cpp \
 UITextField.cpp

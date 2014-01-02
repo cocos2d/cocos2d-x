@@ -284,4 +284,19 @@ add_subdirectory(cocos/scripting)
 endif(BUILD_LIBS_LUA)
 
 # build samples
-add_subdirectory(samples)
+if(BUILD_HelloCpp)
+add_subdirectory(samples/Cpp/HelloCpp)
+endif(BUILD_HelloCpp)
+
+if(BUILD_TestCpp)
+add_subdirectory(samples/Cpp/TestCpp)
+endif(BUILD_TestCpp)
+
+if(BUILD_HelloLua)
+add_subdirectory(samples/Lua/HelloLua)
+endif(BUILD_HelloLua)
+
+if(BUILD_TestLua)
+add_subdirectory(samples/Lua/TestLua)
+endif(BUILD_TestLua)
+
