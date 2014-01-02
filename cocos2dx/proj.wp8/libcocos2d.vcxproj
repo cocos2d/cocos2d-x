@@ -338,7 +338,6 @@
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp" />
     <ClCompile Include="..\platform\winrt\sha1.cpp" />
     <ClCompile Include="..\platform\wp8\CCEGLView.cpp" />
-    <ClCompile Include="..\platform\wp8\Direct3DBase.cpp" />
     <ClCompile Include="..\platform\wp8\WP8Keyboard.cpp" />
     <ClCompile Include="..\platform\wp8\ModalLayer.cpp" />
     <ClCompile Include="..\script_support\CCScriptSupport.cpp" />
@@ -494,7 +493,6 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h" />
     <ClInclude Include="..\platform\winrt\sha1.h" />
     <ClInclude Include="..\platform\wp8\CCEGLView.h" />
-    <ClInclude Include="..\platform\wp8\Direct3DBase.h" />
     <ClInclude Include="..\platform\wp8\WP8Keyboard.h" />
     <ClInclude Include="..\platform\wp8\ModalLayer.h" />
     <ClInclude Include="..\script_support\CCScriptSupport.h" />

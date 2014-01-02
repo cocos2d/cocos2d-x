@@ -128,6 +128,9 @@ public:
 
     virtual CCAffineTransform nodeToParentTransform();
 
+    virtual void onEnter();
+    virtual void onExit();
+
     /**
      * Set contentsize and Calculate anchor point.
      */

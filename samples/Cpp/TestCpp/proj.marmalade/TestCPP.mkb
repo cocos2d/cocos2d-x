@@ -338,19 +338,7 @@ files
 	SceneController.h
 
 	[Test/ExtensionsTest/CocoStudioGUITest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest)
-	CocosGUIExamplesEquipScene.cpp
-	CocosGUIExamplesEquipScene.h
-	CocosGUIExamplesMapScene.cpp
-	CocosGUIExamplesMapScene.h
-	CocosGUIExamplesPageScene.cpp
-	CocosGUIExamplesPageScene.h
-	CocosGUIExamplesRegisterScene.cpp
-	CocosGUIExamplesRegisterScene.h
-	CocosGUIExamplesScene.cpp
-	CocosGUIExamplesScene.h
-	CocosGUIExamplesWeaponScene.cpp
-	CocosGUIExamplesWeaponScene.h
+	(../Classes/ExtensionsTest/CocoStudioGUITest)	
 	CocosGUIScene.cpp
 	CocosGUIScene.h
 	UIScene.cpp
@@ -366,12 +354,7 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest)
 	UICheckBoxTest.cpp
-	UICheckBoxTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest)
-	UIDragPanelTest.cpp
-	UIDragPanelTest.h
+	UICheckBoxTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIImageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest)
@@ -401,22 +384,17 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest)
 	UILoadingBarTest.cpp
-	UILoadingBarTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest)
-	UINodeContainerTest.cpp
-	UINodeContainerTest.h
+	UILoadingBarTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIPageViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest)
 	UIPageViewTest.cpp
 	UIPageViewTest.h
 	
-	[Test/ExtensionsTest/CocoStudioGUITest/UIPanelTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest)
-	UIPanelTest.cpp
-	UIPanelTest.h
+	[Test/ExtensionsTest/CocoStudioGUITest/UILayoutTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest)
+	UILayoutTest.cpp
+	UILayoutTest.h
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest)
@@ -426,27 +404,31 @@ files
 	[Test/ExtensionsTest/CocoStudioGUITest/UISliderTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest)
 	UISliderTest.cpp
-	UISliderTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UITextAreaTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest)
-	UITextAreaTest.cpp
-	UITextAreaTest.h
-	
-	[Test/ExtensionsTest/CocoStudioGUITest/UITextButtonTest]
-	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest)
-	UITextButtonTest.cpp
-	UITextButtonTest.h
+	UISliderTest.h		
 	
 	[Test/ExtensionsTest/CocoStudioGUITest/UITextFieldTest]
 	(../Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest)
 	UITextFieldTest.cpp
 	UITextFieldTest.h
+
+	[Test/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest]
+	(../Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest)
+	UIWidgetAddNodeTest.cpp
+	UIWidgetAddNodeTest.h
 	
 	[Test/ExtensionsTest/CocoStudioSceneTest]
 	(../Classes/ExtensionsTest/CocoStudioSceneTest)
 	SceneEditorTest.cpp
 	SceneEditorTest.h
+    
+        [Test/ExtensionsTest/CocoStudioSceneTest/TriggerCode]
+	(../Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode)
+	acts.cpp
+	acts.h
+	cons.cpp
+	cons.h
+        eventDef.h
+
 	
 	[Test/FontTest]
 	(../Classes/FontTest)

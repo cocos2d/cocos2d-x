@@ -91,6 +91,9 @@
     <Filter Include="CocoStudio\Json\rapidjson\internal">
       <UniqueIdentifier>{710fdaa4-4b57-4a84-b691-a4802a077fe1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocoStudio\Trigger">
+      <UniqueIdentifier>{808a0d6d-222a-42ab-baad-02d541d666ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp">
@@ -454,6 +457,21 @@
       <Filter>CocoStudio\Reader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp">
+      <Filter>CocoStudio\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -881,6 +899,21 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h">
       <Filter>CocoStudio\Json\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h">
+      <Filter>CocoStudio\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h">
+      <Filter>CocoStudio\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h">
+      <Filter>CocoStudio\Trigger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,11 +26,12 @@
 #define __UIWIDGET_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "../Layouts/UILayoutDefine.h"
 #include "../Layouts/UILayoutParameter.h"
-NS_CC_EXT_BEGIN
 
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -72,40 +73,28 @@ typedef enum
 }PositionType;
 
 typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
-#define toucheventselector(_SELECTOR) (cocos2d::extension::SEL_TouchEvent)(&_SELECTOR)
-
-/*******Compatible*******/
-typedef void (CCObject::*SEL_PushEvent)(CCObject*);
-typedef void (CCObject::*SEL_MoveEvent)(CCObject*);
-typedef void (CCObject::*SEL_ReleaseEvent)(CCObject*);
-typedef void (CCObject::*SEL_CancelEvent)(CCObject*);
-#define coco_pushselector(_SELECTOR) (cocos2d::extension::SEL_PushEvent)(&_SELECTOR)
-#define coco_moveselector(_SELECTOR) (cocos2d::extension::SEL_MoveEvent)(&_SELECTOR)
-#define coco_releaseselector(_SELECTOR) (cocos2d::extension::SEL_ReleaseEvent)(&_SELECTOR)
-#define coco_cancelselector(_SELECTOR) (cocos2d::extension::SEL_CancelEvent)(&_SELECTOR)
-/************************/
+#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 /**
- *  @lua NA
- */
-class UIWidget : public CCObject
+*   @js NA
+*   @lua NA
+*/
+class Widget : public CCNodeRGBA
 {
 public:    
     /**
      * Default constructor
-     * @js ctor
      */
-    UIWidget(void);
+    Widget(void);
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UIWidget();
+    virtual ~Widget();
     
     /**
      * Allocates and initializes a widget.
      */
-    static UIWidget* create();
+    static Widget* create();
     
     /**
      * Sets whether the widget is enabled
@@ -123,22 +112,6 @@ public:
      * @return true if the widget is enabled, false if the widget is disabled.
      */
     bool isEnabled() const;
-    
-    /**
-     * Sets whether the widget is visible
-     *
-     * The default value is true, a widget is default to visible
-     *
-     * @param visible   true if the widget is visible, false if the widget is hidden.
-     */
-    void setVisible(bool visible);
-    
-    /**
-     * Determines if the widget is visible
-     *
-     * @return true if the widget is visible, false if the widget is hidden.
-     */
-    bool isVisible() const;
     
     /**
      * Sets whether the widget is bright
@@ -198,27 +171,6 @@ public:
     void setFocused(bool fucosed);
     
     /**
-     * Sets the Z order which stands for the drawing order, and reorder this widget in its parent's children array.
-     *
-     * The Z order of widget is relative to its "brothers": children of the same parent.
-     * It's nothing to do with OpenGL's z vertex. This one only affects the draw order of widgets in cocos2d.
-     * The larger number it is, the later this widget will be drawn in each message loop.
-     * Please refer to setVertexZ(float) for the difference.
-     *
-     * @param nZOrder   Z order of this widget.
-     */
-    void setZOrder(int z);
-    
-    /**
-     * Gets the Z order of this widget.
-     *
-     * @see setZOrder(int)
-     *
-     * @return The Z order.
-     */
-    int getZOrder();
-    
-    /**
      * Gets the left boundary position of this widget.
      *
      * @return The left boundary position of this widget.
@@ -247,113 +199,123 @@ public:
     float getTopInParent();
 
     /**
-     * Adds a child to the container.
+     * Adds a child to the container with z-order as 0.
      *
-     * @param child A child widget
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child A child node
      */
-    virtual bool addChild(UIWidget* child);
-    
+    virtual void addChild(CCNode * child);
     /**
-     * Removes a child from the container with a cleanup
+     * Adds a child to the container with a z-order
      *
-     * @param child     The child widget which will be removed.
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
-     * @return the result of removing, succeeded or failed.
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
      */
-    virtual bool removeChild(UIWidget* child);
-
+    virtual void addChild(CCNode * child, int zOrder);
     /**
-     * Removes this widget itself from its parent widget.
-     * If the widget orphan, then it will destroy itself.
-     */
-    virtual void removeFromParent();
-    
-    /**
-     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
-     */
-    virtual void removeAllChildren();
-        
-    /**
-     * Reorders a child according to a new z value.
+     * Adds a child to the container with z order and tag
      *
-     * @param child     An already added child node. It MUST be already added.
-     * @param zOrder    Z order for drawing priority and touched priority. Please refer to setZOrder(int)
-     */
-    virtual void reorderChild(UIWidget* child);
-    
-    /**
-     * Gets a child from the container with its name
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
-     * @param name   An key to find the child widget.
-     *
-     * @return a UIWidget object whose name equals to the input parameter
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    UIWidget* getChildByName(const char* name);
-    
+    virtual void addChild(CCNode* child, int zOrder, int tag);
     /**
      * Gets a child from the container with its tag
      *
-     * @param tag   An identifier to find the child widget.
+     * @param tag   An identifier to find the child node.
      *
-     * @return a UIWidget object whose tag equals to the input parameter
+     * @return a Node object whose tag equals to the input parameter
      */
-    UIWidget* getChildByTag(int tag);
+    virtual CCNode * getChildByTag(int tag);
     
+    virtual void sortAllChildren();
     /**
      * Return an array of children
      *
-     * Composing a "tree" structure is a very important feature of UIWidget
+     * Composing a "tree" structure is a very important feature of Node
+     * Here's a sample code of traversing children array:
+     @code
+     Node* node = NULL;
+     CCARRAY_FOREACH(parent->getChildren(), node)
+     {
+     node->setPosition(0,0);
+     }
+     @endcode
+     * This sample code traverses all children nodes, and set their position to (0,0)
      *
      * @return An array of children
      */
     virtual CCArray* getChildren();
     
     /**
-     * Gets the renderer of widget
+     * Get the amount of children.
      *
-     * renderer is a CCNode, it's for drawing
-     *
-     * @return a CCNode object
+     * @return The amount of children.
      */
-    CCNode* getRenderer();
+    virtual unsigned int getChildrenCount() const;
     
     /**
-     * Add a CCNode for rendering.
-     *
-     * renderer is a CCNode, it's for drawing
-     *
-     * @param renderer     A render node
-     *
-     * @param zOrder    Z order for drawing priority. Please refer to CCNode::setZOrder(int)
+     * Removes this node itself from its parent node with a cleanup.
+     * If the node orphan, then nothing happens.
+     * @see `removeFromParentAndCleanup(bool)`
      */
-    void addRenderer(CCNode* renderer, int zOrder);
+    virtual void removeFromParent();
+    /**
+     * Removes this node itself from its parent node.
+     * If the node orphan, then nothing happens.
+     * @param cleanup   true if all actions and callbacks on this node should be removed, false otherwise.
+     * @js removeFromParent
+     * @lua removeFromParent
+     */
+    virtual void removeFromParentAndCleanup(bool cleanup);
     
     /**
-     * Remove a CCNode from widget.
+     * Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
      *
-     * renderer is a CCNode, it's for drawing
-     *
-     * @param renderer     A render node which needs to be removed
-     *
-     * @param cleanup   true if all running actions and callbacks on the render node will be cleanup, false otherwise.
+     * @param child     The child node which will be removed.
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    void removeRenderer(CCNode* renderer, bool cleanup);
+    virtual void removeChild(CCNode* child, bool cleanup = true);
     
     /**
-     * Sets the parent widget
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
      *
-     * @param parent    A pointer to the parnet widget
+     * @param tag       An interger number that identifies a child node
+     * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
-    void setParent(UIWidget* parent);
+    virtual void removeChildByTag(int tag, bool cleanup = true);
+    /**
+     * Removes all children from the container with a cleanup.
+     *
+     * @see `removeAllChildrenWithCleanup(bool)`
+     */
+    virtual void removeAllChildren();
+    /**
+     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+     *
+     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @js removeAllChildren
+     * @lua removeAllChildren
+     */
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
     
     /**
-     * Returns a pointer to the parent widget
+     * Gets a child from the container with its name
      *
-     * @see setParent(UIWidget*)
+     * @param name   An key to find the child widget.
      *
-     * @returns A pointer to the parnet widget
+     * @return a Widget object whose name equals to the input parameter
      */
-    UIWidget* getParent();
+    virtual Widget* getChildByName(const char* name);
+    
+    
+    virtual void visit();
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -366,7 +328,7 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose CCPoint object.
+     * Usually we use p(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
@@ -376,26 +338,17 @@ public:
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
      *
-     * Usually we use ccp(x,y) to compose CCPoint object.
+     * Usually we use p(x,y) to compose Point object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
      * @param percent  The percent (x,y) of the widget in OpenGL coordinates
      */
     void setPositionPercent(const CCPoint &percent);
-    
-    /**
-     * Gets the position (x,y) of the widget in OpenGL coordinates
-     *
-     * @see setPosition(const CCPoint&)
-     *
-     * @return The position (x,y) of the widget in OpenGL coordinates
-     */
-    const CCPoint& getPosition();
-    
+        
     /**
      * Gets the percent (x,y) of the widget in OpenGL coordinates
      *
-     * @see setPosition(const CCPoint&)
+     * @see setPosition(const Point&)
      *
      * @return The percent (x,y) of the widget in OpenGL coordinates
      */
@@ -418,140 +371,6 @@ public:
      * @return type  the position type of widget
      */
     PositionType getPositionType() const;
-    
-    /**
-     * Sets the anchor point in percent.
-     *
-     * anchorPoint is the point around which all transformations and positioning manipulations take place.
-     * It's like a pin in the widget where it is "attached" to its parent.
-     * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
-     * But you can use values higher than (1,1) and lower than (0,0) too.
-     * The default anchorPoint is (0.5,0.5), so it starts in the center of the widget.
-     *
-     * @param anchorPoint   The anchor point of widget.
-     */
-    virtual void setAnchorPoint(const CCPoint &pt);
-    
-    /**
-     * Returns the anchor point in percent.
-     *
-     * @see setAnchorPoint(const CCPoint&)
-     *
-     * @return The anchor point of widget.
-     */
-    const CCPoint& getAnchorPoint();
-    
-    /**
-     * Changes both X and Y scale factor of the widget.
-     *
-     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
-     *
-     * @param scale     The scale factor for both X and Y axis.
-     */
-    virtual void setScale(float fScale);
-    
-    /**
-     * Gets the scale factor of the widget,  when X and Y have the same scale factor.
-     *
-     * @warning Assert when m_fScaleX != m_fScaleY.
-     * @see setScale(float)
-     *
-     * @return The scale factor of the widget.
-     */
-    float getScale();
-    
-    /**
-     * Changes the scale factor on X axis of this widget
-     *
-     * The deafult value is 1.0 if you haven't changed it before
-     *
-     * @param fScaleX   The scale factor on X axis.
-     */
-    virtual void setScaleX(float fScaleX);
-    
-    /**
-     * Returns the scale factor on X axis of this widget
-     *
-     * @see setScaleX(float)
-     *
-     * @return The scale factor on X axis.
-     */
-    float getScaleX();
-    
-    /**
-     * Changes the scale factor on Y axis of this widget
-     *
-     * The Default value is 1.0 if you haven't changed it before.
-     *
-     * @param fScaleY   The scale factor on Y axis.
-     */
-    virtual void setScaleY(float fScaleY);
-    
-    /**
-     * Returns the scale factor on Y axis of this widget
-     *
-     * @see setScaleY(float)
-     *
-     * @return The scale factor on Y axis.
-     */
-    float getScaleY();
-    
-    /**
-     * Sets the rotation (angle) of the widget in degrees.
-     *
-     * 0 is the default rotation angle.
-     * Positive values rotate widget clockwise, and negative values for anti-clockwise.
-     *
-     * @param fRotation     The roration of the widget in degrees.
-     */
-    void setRotation(float rotation);
-    
-    /**
-     * Returns the rotation of the widget in degrees.
-     *
-     * @see setRotation(float)
-     *
-     * @return The rotation of the widget in degrees.
-     */
-    float getRotation();
-    
-    /**
-     * Sets the X rotation (angle) of the widget in degrees which performs a horizontal rotational skew.
-     *
-     * 0 is the default rotation angle.
-     * Positive values rotate widget clockwise, and negative values for anti-clockwise.
-     *
-     * @param fRotationX    The X rotation in degrees which performs a horizontal rotational skew.
-     */
-    void setRotationX(float rotationX);
-    
-    /**
-     * Gets the X rotation (angle) of the widget in degrees which performs a horizontal rotation skew.
-     *
-     * @see setRotationX(float)
-     *
-     * @return The X rotation in degrees.
-     */
-    float getRotationX();
-    
-    /**
-     * Sets the Y rotation (angle) of the widget in degrees which performs a vertical rotational skew.
-     *
-     * 0 is the default rotation angle.
-     * Positive values rotate widget clockwise, and negative values for anti-clockwise.
-     *
-     * @param fRotationY    The Y rotation in degrees.
-     */
-    void setRotationY(float rotationY);
-    
-    /**
-     * Gets the Y rotation (angle) of the widget in degrees which performs a vertical rotational skew.
-     *
-     * @see setRotationY(float)
-     *
-     * @return The Y rotation in degrees.
-     */
-    float getRotationY();
     
     /**
      * Sets whether the widget should be flipped horizontally or not.
@@ -592,52 +411,6 @@ public:
     virtual bool isFlipY(){return false;};
     
     /**
-     * Sets color to widget
-     *
-     * It default change the color of widget's children.
-     *
-     * @param color
-     */
-    virtual void setColor(const ccColor3B &color);
-    
-    /**
-     * Gets color of widget
-     *
-     * @return color
-     */
-    virtual const ccColor3B& getColor();
-    
-    /**
-     * Sets opacity to widget
-     *
-     * It default change the opacity of widget's children.
-     *
-     * @param color
-     */
-    virtual void setOpacity(int opacity);
-    
-    /**
-     * Gets opacity of widget
-     *
-     * @return opacity
-     */
-    virtual int getOpacity();
-    virtual bool isCascadeOpacityEnabled();
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual bool isCascadeColorEnabled();
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
-    void setBlendFunc(ccBlendFunc blendFunc);
-    
-    //cocos action
-    virtual void setActionManager(CCActionManager* actionManager);
-    virtual CCActionManager* getActionManager();
-    CCAction* runAction(CCAction* action);
-    void stopAllActions(void);
-    void stopAction(CCAction* action);
-    void stopActionByTag(int tag);
-    CCAction* getActionByTag(int tag);
-    
-    /**
      * A call back function when widget lost of focus.
      */
     void didNotSelectSelf();
@@ -654,7 +427,7 @@ public:
     /*
      * Sends the touch event to widget's parent
      */
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint);
     
     /*
      * Gets the touch began point of widget when widget is selected.
@@ -676,22 +449,6 @@ public:
      * @return the touch end point.
      */
     const CCPoint& getTouchEndPos();
-    
-    /**
-     * Changes the tag that is used to identify the widget easily.
-     *
-     * @param A interger that indentifies the widget.
-     */
-    void setTag(int tag);
-    
-    /**
-     * Returns a tag that is used to identify the widget easily.
-     *
-     * You can set tags to widget then identify them easily.
-     *
-     * @return A interger that identifies the widget.
-     */
-    int getTag() const;
     
     /**
      * Changes the name that is used to identify the widget easily.
@@ -773,35 +530,10 @@ public:
      */
     virtual bool hitTest(const CCPoint &pt);
     
-    /**
-     * A call back function called when widget is selected, and on touch began.
-     *
-     * @param touch point
-     *
-     * @return true if the event should be pass to parent, flase otherwise.
-     */
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
-    
-    /**
-     * A call back function called when widget is selected, and on touch moved.
-     *
-     * @param touch point
-     */
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    
-    /**
-     * A call back function called when widget is selected, and on touch ended.
-     *
-     * @param touch point
-     */
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    
-    /**
-     * A call back function called when widget is selected, and on touch canceled.
-     *
-     * @param touch point
-     */
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     /**
      * A call back function called when widget is selected, and on touch long clicked.
@@ -819,7 +551,7 @@ public:
      *
      * @param type  Relative or Linear
      */
-    void setLayoutParameter(UILayoutParameter* parameter);
+    void setLayoutParameter(LayoutParameter* parameter);
     
     /**
      * Gets LayoutParameter of widget.
@@ -830,7 +562,7 @@ public:
      *
      * @return LayoutParameter
      */
-    UILayoutParameter* getLayoutParameter(LayoutParameterType type);
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
     
     /**
      * Ignore the widget size
@@ -852,18 +584,13 @@ public:
      * @return world position of widget.
      */
     CCPoint getWorldPosition();
-    
-    /**
-     * Converts a Point to world space coordinates. The result is in Points.
-     */
-    CCPoint convertToWorldSpace(const CCPoint& pt);
-    
+
     /**
      * Gets the Virtual Renderer of widget.
      *
      * For example, a button's Virtual Renderer is it's texture renderer.
      *
-     * @return CCNode pointer.
+     * @return Node pointer.
      */
     virtual CCNode* getVirtualRenderer();
     
@@ -887,132 +614,18 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
     
-    UIWidget* clone();
+    Widget* clone();
 
     virtual void onEnter();
     virtual void onExit();
     
-    /**
-     * Returns a user assigned CCObject
-     *
-     * Similar to userData, but instead of holding a void* it holds an object
-     *
-     * @return A user assigned CCObject
-     * @js NA
-     */
-    virtual CCObject* getUserObject();
-    /**
-     * Returns a user assigned CCObject
-     *
-     * Similar to UserData, but instead of holding a void* it holds an object.
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in CCNode's destructure.
-     *
-     * @param A user assigned CCObject
-     * @js NA
-     */
-    virtual void setUserObject(CCObject *pUserObject);
-    
-    /*******Compatible*******/
-    /**
-     * These methods will be removed
-     */
-    void setTouchEnable(bool enabled, bool containChildren = false)
-    {
-        setTouchEnabled(enabled);
-        if (containChildren)
-        {
-            ccArray* childrenArray = getChildren()->data;
-            int length = childrenArray->num;
-            for (int i=0; i<length; ++i)
-            {
-                UIWidget* child = (UIWidget*)childrenArray->arr[i];
-                child->setTouchEnable(enabled,true);
-            }
-        }
-    };
-    void disable(bool containChildren = false)
-    {
-        setBright(false,containChildren);
-        setTouchEnable(false,containChildren);
-    };
-    void active(bool containChildren = false)
-    {
-        setBright(true,containChildren);
-        setTouchEnable(true,containChildren);
-    };
-    bool isActive()
-    {
-        return isBright();
-    };
-    void setBright(bool bright, bool containChild)
-    {
-        setBright(bright);
-        if (containChild)
-        {
-            ccArray* childrenArray = getChildren()->data;
-            int length = childrenArray->num;
-            for (int i=0; i<length; ++i)
-            {
-                UIWidget* child = (UIWidget*)childrenArray->arr[i];
-                child->setBright(bright,containChild);
-            }
-        }
-    };
-    CCRect getRect()
-    {
-        CCPoint wPos = getWorldPosition();
-        float width = m_size.width;
-        float height = m_size.height;
-        float offset_width = m_anchorPoint.x * width;
-        float offset_height = m_anchorPoint.y * height;
-        return CCRectMake(wPos.x - offset_width, wPos.y - offset_height, width, height);
-    };
-    CCNode* getValidNode(){return getVirtualRenderer();};
-    void setWidgetZOrder(int z){setZOrder(z);};
-    int getWidgetZOrder(){return getZOrder();};
-    float getRelativeLeftPos(){return getLeftInParent();};
-    float getRelativeBottomPos(){return getBottomInParent();};
-    float getRelativeRightPos(){return getRightInParent();};
-    float getRelativeTopPos(){return getTopInParent();};
-    CCNode* getContainerNode(){return getRenderer();};
-    void setWidgetParent(UIWidget* parent){setParent(parent);};
-    UIWidget* getWidgetParent(){return getParent();};
-    void setWidgetTag(int tag){setTag(tag);};
-    int getWidgetTag(){return getTag();};
-    void addCCNode(CCNode* node){addRenderer(node, 0);};
-    void addPushDownEvent(CCObject* target,SEL_PushEvent selector)
-    {
-        m_pPushListener = target;
-        m_pfnPushSelector = selector;
-    };
-    void addMoveEvent(CCObject* target,SEL_MoveEvent selector)
-    {
-        m_pMoveListener = target;
-        m_pfnMoveSelector = selector;
-    };
-    void addReleaseEvent(CCObject* target,SEL_ReleaseEvent selector)
-    {
-        m_pReleaseListener = target;
-        m_pfnReleaseSelector = selector;
-    };
-    void addCancelEvent(CCObject* target,SEL_CancelEvent selector)
-    {
-        m_pCancelListener = target;
-        m_pfnCancelSelector = selector;
-    };
-    bool removeChild(UIWidget* child,bool cleanup){return removeChild(child);};
-    void removeFromParentAndCleanup(bool cleanup){removeFromParent();};
-    void removeAllChildrenAndCleanUp(bool cleanup){removeAllChildren();};
-    /***************************/
+    void updateSizeAndPosition();
     
     /*temp action*/
     void setActionTag(int tag);
 	int getActionTag();
-    void updateSizeAndPosition();
 protected:
     //call back function called when size changed.
     virtual void onSizeChanged();
@@ -1021,7 +634,7 @@ protected:
     virtual bool init();
     
     //initializes renderer of widget.
-    virtual void initRenderer();
+    virtual void initRenderer(){};
     
     //call back function called widget's state changed to normal.
     virtual void onPressStateChangedToNormal();
@@ -1037,80 +650,55 @@ protected:
     void cancelUpEvent();
     void longClickEvent();
     void updateAnchorPoint();
-    void copyProperties(UIWidget* model);
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
+    void copyProperties(Widget* model);
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
+    Widget* getWidgetParent();
 protected:
-    bool m_bEnabled;            ///< Highest control of widget
-    bool m_bVisible;            ///< is this widget visible
-    bool m_bBright;             ///< is this widget bright
-    bool m_bTouchEnabled;       ///< is this widget touch endabled
-    bool m_bTouchPassedEnabled; ///< is the touch event should be passed
-    bool m_bFocus;              ///< is the widget on focus
-    int m_nWidgetZOrder;        ///< z-order value that affects the draw order and touch order
-    CCPoint m_anchorPoint;      ///< anchor point normalized
-    UIWidget* m_pWidgetParent;  ///< parent of widget
-    BrightStyle m_eBrightStyle; ///< bright style
-    bool m_bUpdateEnabled;      ///< is "update" method scheduled
-    CCNode* m_pRenderer;        ///< base renderer
-    CCPoint m_touchStartPos;    ///< touch began point
-    CCPoint m_touchMovePos;     ///< touch moved point
-    CCPoint m_touchEndPos;      ///< touch ended point
+    bool _enabled;            ///< Highest control of widget
+    bool _bright;             ///< is this widget bright
+    bool _touchEnabled;       ///< is this widget touch endabled
+    bool _touchPassedEnabled; ///< is the touch event should be passed
+    bool _focus;              ///< is the widget on focus
+    BrightStyle _brightStyle; ///< bright style
+    bool _updateEnabled;      ///< is "update" method scheduled
+    CCPoint _touchStartPos;    ///< touch began point
+    CCPoint _touchMovePos;     ///< touch moved point
+    CCPoint _touchEndPos;      ///< touch ended point
     
-    CCObject*       m_pTouchEventListener;
-    SEL_TouchEvent    m_pfnTouchEventSelector;
+    CCObject*       _touchEventListener;
+    SEL_TouchEvent    _touchEventSelector;
     
 
     
-    int m_nWidgetTag;
-    std::string m_strName;
-    WidgetType m_WidgetType;
-	int m_nActionTag;
-    CCSize m_size;
-    CCSize m_customSize;
-    CCDictionary* m_pLayoutParameterDictionary;
-    bool m_bIgnoreSize;
-    CCArray* m_children;
-    bool m_bAffectByClipping;
+    std::string _name;
+    WidgetType _widgetType;
+	int _actionTag;
+    CCSize _size;
+    CCSize _customSize;
+    bool _ignoreSize;
+    bool _affectByClipping;
+    SizeType _sizeType;
+    CCPoint _sizePercent;
+    PositionType _positionType;
+    CCPoint _positionPercent;
+    bool _reorderWidgetChildDirty;
+    bool _hitted;
+    CCArray* _widgetChildren;
+    CCDictionary* _layoutParameterDictionary;
     
-    CCScheduler* m_pScheduler;
+
     
-    SizeType m_eSizeType;
-    CCPoint m_sizePercent;
-    PositionType m_ePositionType;
-    CCPoint m_positionPercent;
-    bool m_bIsRunning;
-    CCObject* m_pUserObject;
+   
     
-    /*Compatible*/
-    CCObject*       m_pPushListener;
-    SEL_PushEvent    m_pfnPushSelector;
-    CCObject*       m_pMoveListener;
-    SEL_MoveEvent    m_pfnMoveSelector;
-    CCObject*       m_pReleaseListener;
-    SEL_ReleaseEvent    m_pfnReleaseSelector;
-    CCObject*       m_pCancelListener;
-    SEL_ReleaseEvent    m_pfnCancelSelector;
-    /************/
+    
+    
+//    EventListenerTouchOneByOne* _touchListener;
+    friend class TouchGroup;
 };
-/**
-*   @js NA
-*   @lua NA
-*/
-class GUIRenderer : public CCNodeRGBA
-{
-public:
-    GUIRenderer();
-    virtual ~GUIRenderer();
-    virtual void visit(void);
-    static GUIRenderer* create();
-    void setEnabled(bool enabled);
-    bool isEnabled() const;
-protected:
-    bool m_bEnabled;
-};
+}
 
-NS_CC_EXT_END
+NS_CC_END
 
-#endif /* defined(__UIWidget__) */
+#endif /* defined(__Widget__) */

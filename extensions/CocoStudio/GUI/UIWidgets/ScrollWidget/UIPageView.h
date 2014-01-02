@@ -28,7 +28,9 @@
 #include "../../Layouts/UILayout.h"
 #include "UIScrollInterface.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -38,39 +40,29 @@ typedef enum
 typedef void (CCObject::*SEL_PageViewEvent)(CCObject*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-/*******Compatible*******/
-typedef void (CCObject::*SEL_PageViewPageTurningEvent)(CCObject*);
-#define coco_PageView_PageTurning_selector(_SELECTOR) (SEL_PageViewPageTurningEvent)(&_SELECTOR)
-/************************/
-
 typedef enum {
     PAGEVIEW_TOUCHLEFT,
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
-/**
- *  @lua NA
- */
-class UIPageView : public UILayout , public UIScrollInterface
+class PageView : public Layout , public UIScrollInterface
 {
     
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UIPageView();
+    PageView();
     
     /**
      * Default destructor
-     * @js NA
      */
-    virtual ~UIPageView();
+    virtual ~PageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIPageView* create();
+    static PageView* create();
     
     /**
      * Add a widget to a page of pageview.
@@ -81,28 +73,28 @@ public:
      *
      * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
      */
-    void addWidgetToPage(UIWidget* widget, int pageIdx, bool forceCreate);
+    void addWidgetToPage(Widget* widget, int pageIdx, bool forceCreate);
     
     /**
      * Push back a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
-    void addPage(UILayout* page);
+    void addPage(Layout* page);
     
     /**
      * Inert a page to pageview.
      *
      * @param page    page to be added to pageview.
      */
-    void insertPage(UILayout* page, int idx);
+    void insertPage(Layout* page, int idx);
     
     /**
      * Remove a page of pageview.
      *
      * @param page    page which will be removed.
      */
-    void removePage(UILayout* page);
+    void removePage(Layout* page);
 
     /**
      * Remove a page at index of pageview.
@@ -129,34 +121,21 @@ public:
     
     CCArray* getPages();
     
-    UILayout* getPage(int index);
+    Layout* getPage(int index);
     
     // event
     void addEventListenerPageView(CCObject *target, SEL_PageViewEvent selector);
-    /*******Compatible*******/
-    //Add call back function called when page turning.
-    void addPageTurningEvent(CCObject *target, SEL_PageViewPageTurningEvent selector);
-    /**************/
+
     
 
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
-    
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const CCPoint &touchPoint);
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const CCPoint &touchPoint);
-    
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
     
     //override "update" method of widget.
     virtual void update(float dt);
-    
-    virtual void doLayout(){};
-    
     /**
      * Sets LayoutType.
      *
@@ -173,74 +152,66 @@ public:
      *
      * @return LayoutType
      */
-    virtual LayoutType getLayoutType() const{return LAYOUT_ABSOLUTE;};
+    virtual LayoutType getLayoutType() const {return LAYOUT_ABSOLUTE;};
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
-    
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    int getPage() const{return getCurPageIndex();};
-    void removePage(UILayout* page, bool cleanup){removePage(page);};
-    void removePageAtIndex(int index, bool cleanup){removePageAtIndex(index);};
-    /************/
+    virtual std::string getDescription() const;
+
 protected:
-    virtual bool addChild(UIWidget* widget);
-    virtual bool removeChild(UIWidget* widget);
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode* child, int zOrder, int tag);
+    virtual void removeChild(CCNode* widget, bool cleanup = true);
     virtual void removeAllChildren();
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual CCArray* getChildren(){return Widget::getChildren();};
+    virtual unsigned int getChildrenCount() const {return Widget::getChildrenCount();};
+    virtual CCNode * getChildByTag(int tag) {return Widget::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) {return Widget::getChildByName(name);};
     virtual bool init();
-    UILayout* createPage();
+    Layout* createPage();
     float getPositionXByIndex(int idx);
     void updateBoundaryPages();
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const CCPoint &touchPoint);
-    virtual void checkChildInfo(int handleState, UIWidget* sender, const CCPoint &touchPoint);
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const CCPoint &touchPoint);
+    virtual void checkChildInfo(int handleState, Widget* sender, const CCPoint &touchPoint);
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
     void updateChildrenSize();
     void updateChildrenPosition();
     virtual void onSizeChanged();
-    virtual UIWidget* createCloneInstance();
-    virtual void copySpecialProperties(UIWidget* model);
-    virtual void copyClonedWidgetChildren(UIWidget* model);
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
-    /************/
-    virtual void setClippingEnabled(bool able){UILayout::setClippingEnabled(able);};
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
+    virtual void setClippingEnabled(bool enabled) {Layout::setClippingEnabled(enabled);};
+    virtual void doLayout() {if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
-    int m_nCurPageIdx;
-    CCArray* m_pages;
-    PVTouchDir m_touchMoveDir;
-    float m_fTouchStartLocation;
-    float m_fTouchMoveStartLocation;
-    CCPoint movePagePoint;
-    UIWidget* m_pLeftChild;
-    UIWidget* m_pRightChild;
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
-    bool m_bIsAutoScrolling;
-    float m_fAutoScrollDistance;
-    float m_fAutoScrollSpeed;
-    int m_nAutoScrollDir;
-    float m_fChildFocusCancelOffset;
-    CCObject* m_pPageViewEventListener;
-    SEL_PageViewEvent m_pfnPageViewEventSelector;
-    /*compatible*/
-    CCObject* m_pPageTurningListener;
-    SEL_PageViewPageTurningEvent m_pfnPageTurningSelector;
-    /************/
+    int _curPageIdx;
+    CCArray* _pages;
+    PVTouchDir _touchMoveDir;
+    float _touchStartLocation;
+    float _touchMoveStartLocation;
+    CCPoint _movePagePoint;
+    Widget* _leftChild;
+    Widget* _rightChild;
+    float _leftBoundary;
+    float _rightBoundary;
+    bool _isAutoScrolling;
+    float _autoScrollDistance;
+    float _autoScrollSpeed;
+    int _autoScrollDir;
+    float _childFocusCancelOffset;
+    CCObject* _pageViewEventListener;
+    SEL_PageViewEvent _pageViewEventSelector;
+
 };
 
-NS_CC_EXT_END
+}
+NS_CC_END
 
-#endif /* defined(__UIPageView__) */
+#endif /* defined(__PageView__) */

@@ -128,7 +128,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
         m_pTweenData->scaleY += 1;
     }
 
-    if (m_iRawDuration == 0 )
+    if (m_iRawDuration == 0 || m_pMovementBoneData->frameList.count() == 1)
     {
         m_eLoopType = SINGLE_FRAME;
         if(durationTo == 0)
@@ -265,6 +265,10 @@ void CCTween::updateHandler()
         default:
         {
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+
+            m_iTotalDuration = 0;
+            m_iBetweenDuration = 0;
+            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
@@ -331,7 +335,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
 
         if (!displayManager->getForceChangeDisplay())
         {
-            displayManager->changeDisplayByIndex(displayIndex, false);
+            displayManager->changeDisplayWithIndex(displayIndex, false);
         }
 
         //! Update bone zorder, bone's zorder is determined by frame zorder and bone zorder

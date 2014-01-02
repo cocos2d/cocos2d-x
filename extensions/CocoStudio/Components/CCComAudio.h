@@ -52,6 +52,7 @@ public:
    void preloadBackgroundMusic(const char* pszFilePath);
    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
    void playBackgroundMusic(const char* pszFilePath);
+   void playBackgroundMusic();
    void stopBackgroundMusic(bool bReleaseData);
    void stopBackgroundMusic();
    void pauseBackgroundMusic();
@@ -65,6 +66,7 @@ public:
    void setEffectsVolume(float volume);
    unsigned int playEffect(const char* pszFilePath, bool bLoop);
    unsigned int playEffect(const char* pszFilePath);
+   unsigned int playEffect();
    void pauseEffect(unsigned int nSoundId);
    void pauseAllEffects();
    void resumeEffect(unsigned int nSoundId);

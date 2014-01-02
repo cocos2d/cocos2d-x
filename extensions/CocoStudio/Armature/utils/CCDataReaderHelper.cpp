@@ -83,6 +83,7 @@ static const char *A_EVENT = "evt";
 static const char *A_SOUND = "sd";
 static const char *A_SOUND_EFFECT = "sdE";
 static const char *A_TWEEN_EASING = "twE";
+static const char *A_TWEEN_ROTATION = "twR";
 static const char *A_EASING_PARAM = "twEP";
 static const char *A_IS_ARMATURE = "isArmature";
 static const char *A_DISPLAY_TYPE = "displayType";
@@ -220,6 +221,7 @@ static void addData(AsyncStruct *pAsyncStruct)
     pthread_mutex_lock(&s_GetFileDataMutex);
 	unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
 	CCData data(pBytes, size);
+    CC_SAFE_DELETE_ARRAY(pBytes);
 	pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
     pthread_mutex_unlock(&s_GetFileDataMutex);
 
@@ -364,15 +366,14 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
 
     unsigned long size;
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath);
-    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);;
+    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , "r", &size);
 
     DataInfo dataInfo;
     dataInfo.filename = filePathStr;
     dataInfo.asyncStruct = NULL;
     dataInfo.baseFilePath = basefilePath;
 
-	CCData data(pBytes, size);
-	std::string load_str = std::string((const char*)data.getBytes(), data.getSize());
+	std::string load_str = std::string((const char*)pBytes, size);
     if (str.compare(".xml") == 0)
     {
         CCDataReaderHelper::addDataFromCache(load_str.c_str(), &dataInfo);
@@ -381,6 +382,7 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     {
         CCDataReaderHelper::addDataFromJsonCache(load_str.c_str(), &dataInfo);
     }
+	CC_SAFE_DELETE_ARRAY(pBytes);
 }
 
 void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector)
@@ -1003,8 +1005,8 @@ CCMovementBoneData *CCDataReaderHelper::decodeMovementBone(tinyxml2::XMLElement 
 
 CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData, DataInfo *dataInfo)
 {
-    float x, y, scale_x, scale_y, skew_x, skew_y = 0;
-    int duration, displayIndex, zOrder, tweenEasing, blendType = 0;
+    float x = 0, y = 0, scale_x = 0, scale_y = 0, skew_x = 0, skew_y, tweenRotate = 0;
+    int duration = 0, displayIndex = 0, zOrder = 0, tweenEasing = 0, blendType = 0;
 
     CCFrameData *frameData = new CCFrameData();
 
@@ -1086,6 +1088,10 @@ CCFrameData *CCDataReaderHelper::decodeFrame(tinyxml2::XMLElement *frameXML,  ti
     {
         frameData->zOrder = zOrder;
     }
+	if(  frameXML->QueryFloatAttribute(A_TWEEN_ROTATION, &tweenRotate) == tinyxml2::XML_SUCCESS )
+	{
+		frameData->tweenRotate = tweenRotate;
+	}
     if (  frameXML->QueryIntAttribute(A_BLEND_TYPE, &blendType) == tinyxml2::XML_SUCCESS )
     {
         switch (blendType)

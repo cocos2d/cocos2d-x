@@ -146,4 +146,9 @@ files
     ("../CocoStudio/Action")
     "*.h"
     "*.cpp"
+	
+	["CocoStudio/Trigger"]
+    ("../CocoStudio/Trigger")
+    "*.h"
+    "*.cpp"
 }
