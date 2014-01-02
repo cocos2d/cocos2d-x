@@ -107,18 +107,22 @@ public:
     /** Copy assignment operator */
     Vector<T>& operator=(const Vector<T>& other)
     {
-        CCLOGINFO("In the copy assignment operator!");
-        clear();
-        _data = other._data;
-        addRefForAllObjects();
+        if (this != &other) {
+            CCLOGINFO("In the copy assignment operator!");
+            clear();
+            _data = other._data;
+            addRefForAllObjects();
+        }
         return *this;
     }
     
     /** Move assignment operator */
     Vector<T>& operator=(Vector<T>&& other)
     {
-        CCLOGINFO("In the move assignment operator!");
-        _data = std::move(other._data);
+        if (this != &other) {
+            CCLOGINFO("In the move assignment operator!");
+            _data = std::move(other._data);
+        }
         return *this;
     }
     
@@ -260,7 +264,14 @@ public:
      *        which causes an automatic reallocation of the allocated storage space 
      *        if -and only if- the new vector size surpasses the current vector capacity.
      */
-    void pushBack(T object)
+    void pushBack(const T& object)
+    {
+        CCASSERT(object != nullptr, "The object should not be nullptr");
+        _data.push_back( object );
+        object->retain();
+    }
+    
+    void pushBack(T&& object)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         _data.push_back( object );
