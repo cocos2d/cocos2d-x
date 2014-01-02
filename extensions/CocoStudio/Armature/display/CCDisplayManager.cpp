@@ -106,7 +106,7 @@ void CCDisplayManager::addDisplay(CCDisplayData *displayData, int index)
     if(index == m_iDisplayIndex)
     {
         m_iDisplayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -191,7 +191,7 @@ void CCDisplayManager::addDisplay(CCNode *display, int index)
     if(index == m_iDisplayIndex)
     {
         m_iDisplayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -257,7 +257,7 @@ void CCDisplayManager::changeDisplayWithName(const char *name, bool force)
     {
         if (static_cast<CCDecorativeDisplay*>(m_pDecoDisplayList->objectAtIndex(i))->getDisplayData()->displayName == name)
         {
-            changeDisplayByIndex(i, force);
+            changeDisplayWithIndex(i, force);
             break;
         }
     }
