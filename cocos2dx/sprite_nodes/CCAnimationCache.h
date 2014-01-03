@@ -88,7 +88,7 @@ public:
      Make sure that the frames were previously loaded in the CCSpriteFrameCache.
      @since v1.1
      */
-    void addAnimationsWithDictionary(CCDictionary* dictionary);
+    void addAnimationsWithDictionary(CCDictionary* dictionary,const char* plist = NULL);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the CCSpriteFrameCache.
