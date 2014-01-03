@@ -1,4 +1,4 @@
-cocos2d-x-3.0beta0 ?? 2013
+cocos2d-x-3.0beta ?? 2013
 [All]
      [NEW]          Upgrated Box2D to 2.3.0
      [NEW]          SChedule::performFunctionInCocosThread()
