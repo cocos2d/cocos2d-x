@@ -4,7 +4,8 @@
 
 static std::function<Layer*()> createFunctions[] = {
     CL(TemplateVectorTest),
-    CL(TemplateMapTest)
+    CL(TemplateMapTest),
+    CL(ValueTest)
 };
 
 static int sceneIdx = -1;
@@ -516,3 +517,89 @@ std::string TemplateMapTest::subtitle() const
     return "Map<K, V>, should not crash";
 }
 
+//----------------------------------
+
+void ValueTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+    
+    Value v1;
+    CCASSERT(v1.getType() == Value::Type::NONE, "");
+    CCASSERT(v1.isNull(), "");
+    
+    Value v2(100);
+    CCASSERT(v2.getType() == Value::Type::INTEGER, "");
+    CCASSERT(!v2.isNull(), "");
+    
+    Value v3(101.4f);
+    CCASSERT(v3.getType() == Value::Type::FLOAT, "");
+    CCASSERT(!v3.isNull(), "");
+    
+    Value v4(106.1);
+    CCASSERT(v4.getType() == Value::Type::DOUBLE, "");
+    CCASSERT(!v4.isNull(), "");
+    
+    unsigned char byte = 50;
+    Value v5(byte);
+    CCASSERT(v5.getType() == Value::Type::BYTE, "");
+    CCASSERT(!v5.isNull(), "");
+    
+    Value v6(true);
+    CCASSERT(v6.getType() == Value::Type::BOOLEAN, "");
+    CCASSERT(!v6.isNull(), "");
+    
+    Value v7("string");
+    CCASSERT(v7.getType() == Value::Type::STRING, "");
+    CCASSERT(!v7.isNull(), "");
+    
+    Value v8(std::string("string2"));
+    CCASSERT(v8.getType() == Value::Type::STRING, "");
+    CCASSERT(!v8.isNull(), "");
+
+    auto createValueVector = [&](){
+        ValueVector ret;
+        ret.push_back(v1);
+        ret.push_back(v2);
+        ret.push_back(v3);
+        return ret;
+    };
+    
+    
+    Value v9(createValueVector());
+    CCASSERT(v9.getType() == Value::Type::VECTOR, "");
+    CCASSERT(!v9.isNull(), "");
+
+    auto createValueMap = [&](){
+        ValueMap ret;
+        ret["aaa"] = v1;
+        ret["bbb"] = v2;
+        ret["ccc"] = v3;
+        return ret;
+    };
+    
+    Value v10(createValueMap());
+    CCASSERT(v10.getType() == Value::Type::MAP, "");
+    CCASSERT(!v10.isNull(), "");
+    
+    auto createValueMapIntKey = [&](){
+        ValueMapIntKey ret;
+        ret[111] = v1;
+        ret[222] = v2;
+        ret[333] = v3;
+        return ret;
+    };
+    
+    Value v11(createValueMapIntKey());
+    CCASSERT(v11.getType() == Value::Type::INT_KEY_MAP, "");
+    CCASSERT(!v11.isNull(), "");
+}
+
+std::string ValueTest::subtitle() const
+{
+    return "Value Test, should not crash";
+}
+
+void ValueTest::constFunc(const Value& value) const
+{
+    
+}
