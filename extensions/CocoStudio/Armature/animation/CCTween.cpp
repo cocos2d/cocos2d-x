@@ -128,7 +128,7 @@ void CCTween::play(CCMovementBoneData *movementBoneData, int durationTo, int dur
         m_pTweenData->scaleY += 1;
     }
 
-    if (m_iRawDuration == 0 )
+    if (m_iRawDuration == 0 || m_pMovementBoneData->frameList.count() == 1)
     {
         m_eLoopType = SINGLE_FRAME;
         if(durationTo == 0)
@@ -265,6 +265,10 @@ void CCTween::updateHandler()
         default:
         {
             m_fCurrentFrame = fmodf(m_fCurrentFrame, m_iNextFrameIndex);
+
+            m_iTotalDuration = 0;
+            m_iBetweenDuration = 0;
+            m_iFromIndex = m_iToIndex = 0;
         }
         break;
         }
@@ -339,7 +343,7 @@ void CCTween::arriveKeyFrame(CCFrameData *keyFrameData)
         m_pBone->updateZOrder();
 
         //! Update blend type
-        m_pBone->setBlendType(keyFrameData->blendType);
+        m_pBone->setBlendFunc(keyFrameData->blendFunc);
 
         //! Update child armature's movement
         CCArmature *childAramture = m_pBone->getChildArmature();
@@ -478,7 +482,7 @@ float CCTween::updateFrameData(float currentPercent)
     CCTweenType tweenType = (m_eFrameTweenEasing != Linear) ? m_eFrameTweenEasing : m_eTweenEasing;
     if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !m_bPassLastFrame)
     {
-        currentPercent = CCTweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
+        currentPercent = CCTweenFunction::tweenTo(currentPercent, tweenType, m_pFrom->easingParams);
     }
 
     return currentPercent;

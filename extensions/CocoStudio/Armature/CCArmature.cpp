@@ -205,9 +205,6 @@ bool CCArmature::init(const char *name)
 
         setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
 
-        unscheduleUpdate();
-        scheduleUpdate();
-
         setCascadeOpacityEnabled(true);
         setCascadeColorEnabled(true);
 
@@ -420,6 +417,18 @@ CCAffineTransform CCArmature::nodeToParentTransform()
     return m_sTransform;
 }
 
+void CCArmature::onEnter()
+{
+    CCNode::onEnter();
+    scheduleUpdate();
+}
+
+void CCArmature::onExit()
+{
+    CCNode::onExit();
+    unscheduleUpdate();
+}
+
 void CCArmature::updateOffsetPoint()
 {
     // Set contentsize and Calculate anchor point.
@@ -480,8 +489,8 @@ void CCArmature::draw()
                 CCSkin *skin = (CCSkin *)node;
 
                 CCTextureAtlas *textureAtlas = skin->getTextureAtlas();
-                CCBlendType blendType = bone->getBlendType();
-                if(m_pAtlas != textureAtlas || blendType != BLEND_NORMAL)
+                bool blendDirty = bone->isBlendDirty();
+                if(m_pAtlas != textureAtlas || blendDirty)
                 {
                     if (m_pAtlas)
                     {
@@ -496,12 +505,16 @@ void CCArmature::draw()
 
                 skin->updateTransform();
 
-                if (blendType != BLEND_NORMAL)
+                if (blendDirty)
                 {
-                    updateBlendType(blendType);
+                    ccBlendFunc func = bone->getBlendFunc();
+                    ccGLBlendFunc(func.src, func.dst);
+
                     m_pAtlas->drawQuads();
                     m_pAtlas->removeAllQuads();
+
                     ccGLBlendFunc(m_sBlendFunc.src, m_sBlendFunc.dst);
+                    bone->setBlendDirty(false);
                 }
             }
             break;
@@ -558,47 +571,6 @@ void CCArmature::draw()
         m_pAtlas->removeAllQuads();
     }
 }
-
-
-void CCArmature::updateBlendType(CCBlendType blendType)
-{
-    ccBlendFunc blendFunc;
-    switch (blendType)
-    {
-    case BLEND_NORMAL:
-    {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
-    }
-    break;
-    case BLEND_ADD:
-    {
-        blendFunc.src = GL_SRC_ALPHA;
-        blendFunc.dst = GL_ONE;
-    }
-    break;
-    case BLEND_MULTIPLY:
-    {
-        blendFunc.src = GL_DST_COLOR;
-        blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-    }
-    break;
-    case BLEND_SCREEN:
-    {
-        blendFunc.src = GL_ONE;
-        blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
-    }
-    break;
-    default:
-    {
-        blendFunc.src = CC_BLEND_SRC;
-        blendFunc.dst = CC_BLEND_DST;
-    }
-    break;
-    }
-    ccGLBlendFunc(blendFunc.src, blendFunc.dst);
-}
-
 
 
 void CCArmature::visit()

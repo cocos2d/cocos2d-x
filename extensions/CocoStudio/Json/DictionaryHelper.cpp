@@ -105,7 +105,7 @@ const char* DictionaryHelper::getStringValue(cocos2d::CCDictionary* root,const c
 
 bool DictionaryHelper::getBooleanValue(cocos2d::CCDictionary* root,const char* key)
 {
-    return this->getIntValue(root, key);
+    return 0 == this->getIntValue(root, key) ? false : true;
 }
 
 cocos2d::CCArray* DictionaryHelper::getArrayValue(cocos2d::CCDictionary *root, const char *key)

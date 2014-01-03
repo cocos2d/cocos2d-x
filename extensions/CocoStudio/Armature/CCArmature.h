@@ -128,6 +128,9 @@ public:
 
     virtual CCAffineTransform nodeToParentTransform();
 
+    virtual void onEnter();
+    virtual void onExit();
+
     /**
      * Set contentsize and Calculate anchor point.
      */
@@ -173,11 +176,6 @@ protected:
      */
     CCBone *createBone(const char *boneName );
 
-    /**! Update blend function
-     * @js NA
-     */
-    void updateBlendType(CCBlendType blendType);
-
     CC_SYNTHESIZE(CCArmatureData *, m_pArmatureData, ArmatureData);
 
     CC_SYNTHESIZE(CCBatchNode *, m_pBatchNode, BatchNode);
@@ -198,7 +196,7 @@ protected:
 
     static std::map<int, CCArmature *> m_sArmatureIndexDic;	//! Use to save armature zorder info,
 
-    ccBlendFunc m_sBlendFunc;                    //! It's required for CCTextureProtocol inheritance
+    ccBlendFunc m_sBlendFunc;                    
 
     CCPoint m_pOffsetPoint;
 

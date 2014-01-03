@@ -123,8 +123,34 @@ cc.log = cc._cocosplayerLog || cc.log || log;
 //
 cc.c3b = function( r, g, b )
 {
-    return {r:r, g:g, b:b };
+    switch (arguments.length) {
+        case 0:
+            return {r:0, g:0, b:0 };
+        case 1:
+            if (r && r instanceof cc.c3b) {
+            	  return {r:r.r, g:r.g, b:r.b };
+            } else {
+                return {r:0, g:0, b:0 };
+            }
+        case 3:
+            return {r:r, g:g, b:b };
+        default:
+            throw "unknown argument type";
+            break;
+    }
 };
+
+cc.integerToColor3B = function (intValue) {
+    intValue = intValue || 0;
+
+    var offset = 0xff;
+    var retColor = {r:0, g:0, b:0 };
+    retColor.r = intValue & (offset);
+    retColor.g = (intValue >> 8) & offset;
+    retColor.b = (intValue >> 16) & offset;
+    return retColor;
+};
+
 cc._c3b = function( r, g, b )
 {
     cc._reuse_color3b.r = r;
@@ -133,13 +159,53 @@ cc._c3b = function( r, g, b )
     return cc._reuse_color3b;
 };
 
+cc.c3BEqual = function(color1, color2){
+    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
+};
+
+cc.white = function () {
+    return cc.c3b(255, 255, 255);
+};
+
+cc.yellow = function () {
+    return cc.c3b(255, 255, 0);
+};
+
+cc.blue = function () {
+    return cc.c3b(0, 0, 255);
+};
+
+cc.green = function () {
+    return cc.c3b(0, 255, 0);
+};
+
+cc.red = function () {
+    return cc.c3b(255, 0, 0);
+};
+
+cc.magenta = function () {
+    return cc.c3b(255, 0, 255);
+};
+
+cc.black = function () {
+    return cc.c3b(0, 0, 0);
+};
+
+cc.orange = function () {
+    return cc.c3b(255, 127, 0);
+};
+
+cc.gray = function () {
+    return cc.c3b(166, 166, 166);
+};
+
 //
 // Color 4B
 //
-cc.c4b = function( r, g, b, a )
-{
+cc.c4b = function (r, g, b, a) {
     return {r:r, g:g, b:b, a:a };
 };
+
 cc._c4b = function( r, g, b, a )
 {
     cc._reuse_color4b.r = r;
@@ -151,6 +217,26 @@ cc._c4b = function( r, g, b, a )
 // compatibility
 cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
+
+cc.c4f = function (r, g, b, a) {
+    return {r:r, g:g, b:b, a:a };
+};
+
+cc.c4FFromccc3B = function (c) {
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
+};
+
+cc.c4FFromccc4B = function (c) {
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
+};
+
+cc.c4BFromccc4F = function (c) {
+    return cc.c4f(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
+};
+
+cc.c4FEqual = function (a, b) {
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+};
 
 /**
  * convert Color3B to a string of color for style.
@@ -164,14 +250,6 @@ cc.convertColor3BtoHexString = function (clr) {
     var hB = clr.b.toString(16);
     var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
     return stClr;
-};
-
-//
-// Color 4F
-//
-cc.c4f = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
 };
 
 //
@@ -652,3 +730,120 @@ cc.Loader.preload = function (resources, selector, target) {
 };
 
 cc.LoaderScene = cc.Loader;
+
+var ConfigType = {
+    NONE: 0,
+    COCOSTUDIO: 1
+};
+
+var __onParseConfig = function(type, str) {
+    if (type === ConfigType.COCOSTUDIO) {
+        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+    }
+};
+
+cc.VisibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    _isInitialized: false,
+    init:function(){
+        var director = cc.Director.getInstance();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
+
+        this._width = size.width;
+        this._height = size.height;
+
+        var x = origin.x;
+        var y = origin.y;
+        var w = this._width;
+        var h = this._height;
+
+        var left = origin.x;
+        var right = origin.x + size.width;
+        var middle = origin.x + size.width/2;
+
+        //top
+        this._top.y = this._topLeft.y = this._topRight.y = y + h;
+        this._topLeft.x = left;
+        this._top.x = middle;
+        this._topRight.x = right;
+
+        //bottom
+
+        this._bottom.y = this._bottomRight.y = this._bottomLeft.y = y;
+        this._bottomLeft.x = left
+        this._bottom.x = middle;
+        this._bottomRight.x = right;
+
+        //center
+        this._right.y = this._left.y = this._center.y = y + h/2;
+        this._center.x = middle;
+        
+        //left
+        this._left.x = left;
+
+        //right
+        this._right.x = right;
+    },
+
+    lazyInit: function(){
+        if (!this._isInitialized) {
+            this.init();
+            this._isInitialized = true;
+        }
+    },
+    getWidth:function(){
+        this.lazyInit();
+        return this._width;
+    },
+    getHeight:function(){
+        this.lazyInit();
+        return this._height;
+    },
+    topLeft:function(){
+        this.lazyInit();        
+        return this._topLeft;
+    },
+    topRight:function(){
+        this.lazyInit();        
+        return this._topRight;
+    },
+    top:function(){
+        this.lazyInit();        
+        return this._top;
+    },
+    bottomLeft:function(){
+        this.lazyInit();        
+        return this._bottomLeft;
+    },
+    bottomRight:function(){
+        this.lazyInit();        
+        return this._bottomRight;
+    },
+    bottom:function(){
+        this.lazyInit();        
+        return this._bottom;
+    },
+    center:function(){
+        this.lazyInit();        
+        return this._center;
+    },
+    left:function(){
+        this.lazyInit();        
+        return this._left;
+    },
+    right:function(){
+        this.lazyInit();        
+        return this._right;
+    }
+};

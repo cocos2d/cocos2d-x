@@ -5,7 +5,7 @@
 :: Android ndk version must be at least ndk-r8d.
 
 set PYTHON_ROOT=C:/Python27
-set NDK_ROOT=C:/android-ndk-r8d
+set NDK_ROOT=D:/android_soft/android-ndk-r9
 
 set PATH=%PATH%;%cd%/win32;%PYTHON_ROOT%
 set COCOS2DX_ROOT=%cd%/../..
@@ -15,7 +15,7 @@ set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
 set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/javascript/bindings/generated
 set "OUTPUT_DIR=%OUTPUT_DIR:/=\%"
-set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.1/prebuilt/windows
+set CLANG_ROOT=%NDK_ROOT%/toolchains/llvm-3.3/prebuilt/windows-x86_64
 
 :: write userconf.ini
 
@@ -45,6 +45,11 @@ if %errorlevel% neq 0 goto ERROR
 echo "Generating bindings for cocos2dx_extension..."
 
 python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx_extension.ini -s cocos2dx_extension -o %OUTPUT_DIR% -n jsb_cocos2dx_extension_auto
+if %errorlevel% neq 0 goto ERROR
+
+echo "Generating bindings for cocos2dx_studio..."
+
+python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx_studio.ini -s cocos2dx_studio -o %OUTPUT_DIR% -n jsb_cocos2dx_studio_auto
 if %errorlevel% neq 0 goto ERROR
 
 :: Change the generated file format from DOS to UNIX.

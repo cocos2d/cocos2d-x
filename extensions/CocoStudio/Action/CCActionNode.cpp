@@ -155,14 +155,10 @@ void ActionNode::initActionNodeFromRoot(CCObject* root)
 	CCNode* rootNode = dynamic_cast<CCNode*>(root);
 	if (rootNode != NULL)
 	{
-		CCLog("Need a definition of <initActionNodeFromRoot> for gameObject");
-	}
-	else
-	{
-		UIWidget* rootWidget = dynamic_cast<UIWidget*>(root);
+        cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(root);
 		if (rootWidget != NULL)
 		{
-			UIWidget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			cocos2d::gui::Widget* widget = cocos2d::gui::UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != NULL)
 			{
 				setObject(widget);
@@ -211,10 +207,10 @@ CCNode* ActionNode::getActionNode()
 	}
 	else
 	{
-		UIWidget* rootWidget = dynamic_cast<UIWidget*>(m_Object);
+		cocos2d::gui::Widget* rootWidget = dynamic_cast<cocos2d::gui::Widget*>(m_Object);
 		if (rootWidget != NULL)
 		{
-			return rootWidget->getRenderer();
+			return rootWidget;
 		}
 	}
 	return NULL;
@@ -302,7 +298,7 @@ CCSpawn * ActionNode::refreshActionProperty()
 			{
 				ActionFrame* srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
 				float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex()) * getUnitTime();
-				CCAction* cAction = frame->getAction(duration);
+				CCAction* cAction = frame->getAction(duration,srcFrame);
 				cSequenceArray->addObject(cAction);
 			}
 		}
@@ -340,25 +336,6 @@ void ActionNode::playAction()
 	}
 
 	m_action = CCSequence::create(m_actionSpawn,NULL);
-	m_action->retain();
-
-	this->runAction();
-
-}
-
-void ActionNode::playAction(CCCallFunc* func)
-{
-	if ( m_Object == NULL || m_actionSpawn == NULL)
-	{
-		return;
-	}
-
-	if (m_action!=NULL)
-	{
-		m_action->release();
-	}
-	
-	m_action = CCSequence::create(m_actionSpawn, func, NULL);
 	m_action->retain();
 
 	this->runAction();
@@ -459,7 +436,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 
 			if (frame->getFrameIndex()*getUnitTime() == fTime)
 			{
-				this->easingToFrame(1.0f,1.0f,frame);
+				this->easingToFrame(1.0f,1.0f,NULL,frame);
 				bFindFrame = true;
 				break;
 			}
@@ -467,7 +444,7 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 			{
 				if (i == 0)
 				{
-					this->easingToFrame(1.0f,1.0f,frame);
+					this->easingToFrame(1.0f,1.0f,NULL,frame);
 					bFindFrame = false;
 				}
 				else
@@ -475,9 +452,9 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 					srcFrame = (ActionFrame*)(cArray->objectAtIndex(i-1));
 					float duration = (frame->getFrameIndex() - srcFrame->getFrameIndex())*getUnitTime();
 					float delaytime = fTime - srcFrame->getFrameIndex()*getUnitTime();
-					this->easingToFrame(duration,1.0f,srcFrame);
+					this->easingToFrame(duration,1.0f,NULL,srcFrame);
 					//float easingTime = ActionFrameEasing::bounceTime(delaytime);
-					this->easingToFrame(duration,delaytime/duration,frame);
+					this->easingToFrame(duration,delaytime/duration,srcFrame,frame);
 					bFindFrame = true;
 				}
 				break;
@@ -487,9 +464,9 @@ bool ActionNode::updateActionToTimeLine(float fTime)
 	return bFindFrame;
 }
 
-void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* destFrame)
+void ActionNode::easingToFrame(float duration,float delayTime,ActionFrame* srcFrame,ActionFrame* destFrame)
 {
-	CCAction* cAction = destFrame->getAction(duration);
+	CCAction* cAction = destFrame->getAction(duration,srcFrame);
 	CCNode* cNode = this->getActionNode();
 	if (cAction == NULL || cNode == NULL)
 	{

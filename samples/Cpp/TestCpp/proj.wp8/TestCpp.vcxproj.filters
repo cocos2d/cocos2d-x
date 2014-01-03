@@ -287,6 +287,15 @@
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{de5fceed-11ce-425b-bf27-e11ad05ec462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
+      <UniqueIdentifier>{74da317b-7ccd-4414-b509-6dc7b5468e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest">
+      <UniqueIdentifier>{705209e7-82a6-4f92-b756-64cccd1952f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest">
+      <UniqueIdentifier>{fcdb0f59-7655-478d-9748-cea71263b602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ApplicationIcon.png">
@@ -598,24 +607,6 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesMapScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesPageScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesRegisterScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesWeaponScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest</Filter>
     </ClCompile>
@@ -630,9 +621,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest</Filter>
@@ -652,26 +640,14 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest</Filter>
@@ -688,6 +664,19 @@
     <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp">
       <Filter>Classes\CocosDenshionTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestCpp.h" />
@@ -1246,6 +1235,22 @@
     <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h">
       <Filter>Classes\CocosDenshionTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />

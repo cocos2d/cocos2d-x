@@ -98,6 +98,8 @@ public:
     virtual int executeEvent(int nHandler, const char* pEventName, CCObject* pEventSource = NULL, const char* pEventSourceClassName = NULL) { return 0; }
 
     virtual bool handleAssert(const char *msg) { return false; }
+    
+    virtual bool parseConfig(ConfigType type, const std::string& str);
 
     bool executeFunctionWithObjectData(CCNode *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);

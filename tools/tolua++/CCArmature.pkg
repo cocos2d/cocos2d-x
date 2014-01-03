@@ -34,15 +34,13 @@ class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
 
     virtual void updateOffsetPoint();
 
-    inline void setBlendFunc(ccBlendFunc blendFunc);
-    inline ccBlendFunc getBlendFunc(void);
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccBlendFunc getBlendFunc(void);
 
     virtual void setAnimation(CCArmatureAnimation *animation);
     virtual CCArmatureAnimation *getAnimation();
 
     virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
-
-    virtual void setColliderFilter(CCColliderFilter *filter);
 
     virtual CCArmatureData* getArmatureData(void) const;
     virtual void setArmatureData(CCArmatureData* var);

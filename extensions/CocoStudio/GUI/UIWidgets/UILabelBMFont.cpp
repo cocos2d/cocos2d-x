@@ -24,24 +24,28 @@
 
 #include "UILabelBMFont.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
     
-UILabelBMFont::UILabelBMFont():
-m_pLabelBMFontRenderer(NULL),
-m_bFntFileHasInit(false),
-m_strFntFileName(""),
-m_strStringValue("")
+static const int LABELBMFONT_RENDERER_Z = (-1);
+    
+LabelBMFont::LabelBMFont():
+_labelBMFontRenderer(NULL),
+_fntFileHasInit(false),
+_fntFileName(""),
+_stringValue("")
 {
 }
 
-UILabelBMFont::~UILabelBMFont()
+LabelBMFont::~LabelBMFont()
 {
     
 }
 
-UILabelBMFont* UILabelBMFont::create()
+LabelBMFont* LabelBMFont::create()
 {
-    UILabelBMFont* widget = new UILabelBMFont();
+    LabelBMFont* widget = new LabelBMFont();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -51,108 +55,110 @@ UILabelBMFont* UILabelBMFont::create()
     return NULL;
 }
 
-void UILabelBMFont::initRenderer()
+void LabelBMFont::initRenderer()
 {
-    UIWidget::initRenderer();
-    m_pLabelBMFontRenderer = CCLabelBMFont::create();
-    m_pRenderer->addChild(m_pLabelBMFontRenderer);
+    _labelBMFontRenderer = cocos2d::CCLabelBMFont::create();
+    CCNodeRGBA::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
-void UILabelBMFont::setFntFile(const char *fileName)
+void LabelBMFont::setFntFile(const char *fileName)
 {
-    if (!fileName || std::strcmp(fileName, "") == 0)
+    if (!fileName || strcmp(fileName, "") == 0)
     {
         return;
     }
-    m_strFntFileName = fileName;
-    m_pLabelBMFontRenderer->initWithString("", fileName);
+    _fntFileName = fileName;
+    _labelBMFontRenderer->initWithString("", fileName);
     updateAnchorPoint();
     labelBMFontScaleChangedWithSize();
-    m_bFntFileHasInit = true;
-    setText(m_strStringValue.c_str());
+    _fntFileHasInit = true;
+    setText(_stringValue.c_str());
 }
 
-void UILabelBMFont::setText(const char* value)
+void LabelBMFont::setText(const char* value)
 {
     if (!value)
 	{
 		return;
 	}
-    m_strStringValue = value;
-    if (!m_bFntFileHasInit)
+    _stringValue = value;
+    if (!_fntFileHasInit)
     {
         return;
     }
-    m_pLabelBMFontRenderer->setString(value);
+    _labelBMFontRenderer->setString(value);
     labelBMFontScaleChangedWithSize();
 }
 
-const char* UILabelBMFont::getStringValue()
+const char* LabelBMFont::getStringValue()
 {
-    return m_strStringValue.c_str();
+    return _stringValue.c_str();
 }
 
-void UILabelBMFont::setAnchorPoint(const CCPoint &pt)
+void LabelBMFont::setAnchorPoint(const CCPoint &pt)
 {
-    UIWidget::setAnchorPoint(pt);
-    m_pLabelBMFontRenderer->setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
+    _labelBMFontRenderer->setAnchorPoint(pt);
 }
 
-void UILabelBMFont::onSizeChanged()
+void LabelBMFont::onSizeChanged()
 {
+    Widget::onSizeChanged();
     labelBMFontScaleChangedWithSize();
 }
 
-const CCSize& UILabelBMFont::getContentSize() const
+const CCSize& LabelBMFont::getContentSize() const
 {
-    return m_pLabelBMFontRenderer->getContentSize();
+    return _labelBMFontRenderer->getContentSize();
 }
 
-CCNode* UILabelBMFont::getVirtualRenderer()
+CCNode* LabelBMFont::getVirtualRenderer()
 {
-    return m_pLabelBMFontRenderer;
+    return _labelBMFontRenderer;
 }
 
-void UILabelBMFont::labelBMFontScaleChangedWithSize()
+void LabelBMFont::labelBMFontScaleChangedWithSize()
 {
-    if (m_bIgnoreSize)
+    if (_ignoreSize)
     {
-        m_pLabelBMFontRenderer->setScale(1.0f);
-        m_size = m_pLabelBMFontRenderer->getContentSize();
+        _labelBMFontRenderer->setScale(1.0f);
+        _size = _labelBMFontRenderer->getContentSize();
     }
     else
     {
-        CCSize textureSize = m_pLabelBMFontRenderer->getContentSize();
+        CCSize textureSize = _labelBMFontRenderer->getContentSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
-            m_pLabelBMFontRenderer->setScale(1.0f);
+            _labelBMFontRenderer->setScale(1.0f);
             return;
         }
-        float scaleX = m_size.width / textureSize.width;
-        float scaleY = m_size.height / textureSize.height;
-        m_pLabelBMFontRenderer->setScaleX(scaleX);
-        m_pLabelBMFontRenderer->setScaleY(scaleY);
+        float scaleX = _size.width / textureSize.width;
+        float scaleY = _size.height / textureSize.height;
+        _labelBMFontRenderer->setScaleX(scaleX);
+        _labelBMFontRenderer->setScaleY(scaleY);
     }
 }
 
-const char* UILabelBMFont::getDescription() const
+std::string LabelBMFont::getDescription() const
 {
     return "LabelBMFont";
 }
 
-UIWidget* UILabelBMFont::createCloneInstance()
+Widget* LabelBMFont::createCloneInstance()
 {
-    return UILabelBMFont::create();
+    return LabelBMFont::create();
 }
 
-void UILabelBMFont::copySpecialProperties(UIWidget *widget)
+void LabelBMFont::copySpecialProperties(Widget *widget)
 {
-    UILabelBMFont* labelBMFont = dynamic_cast<UILabelBMFont*>(widget);
+    LabelBMFont* labelBMFont = dynamic_cast<LabelBMFont*>(widget);
     if (labelBMFont)
     {
-        setFntFile(labelBMFont->m_strFntFileName.c_str());
-        setText(labelBMFont->m_strStringValue.c_str());
+        setFntFile(labelBMFont->_fntFileName.c_str());
+        setText(labelBMFont->_stringValue.c_str());
     }
 }
 
-NS_CC_EXT_END
+}
+
+NS_CC_END

@@ -295,6 +295,7 @@ void CCClippingNode::visit()
         CCGLProgram *program = CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColorAlphaTest);
         GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), kCCUniformAlphaTestValue);
         // set our alphaThreshold
+        program->use();
         program->setUniformLocationWith1f(alphaValueLocation, m_fAlphaThreshold);
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this

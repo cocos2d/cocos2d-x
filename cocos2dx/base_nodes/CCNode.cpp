@@ -910,33 +910,33 @@ void CCNode::transform()
 
 void CCNode::onEnter()
 {
+    if (m_eScriptType != kScriptTypeNone)
+    {
+        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
+    }
+    
     arrayMakeObjectsPerformSelector(m_pChildren, onEnter, CCNode*);
 
     this->resumeSchedulerAndActions();
 
     m_bRunning = true;
-
-    if (m_eScriptType != kScriptTypeNone)
-    {
-        CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnter);
-    }
 }
 
 void CCNode::onEnterTransitionDidFinish()
 {
-    arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
-
-    if (m_eScriptType == kScriptTypeJavascript)
+    if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnEnterTransitionDidFinish);
     }
+    
+    arrayMakeObjectsPerformSelector(m_pChildren, onEnterTransitionDidFinish, CCNode*);
 }
 
 void CCNode::onExitTransitionDidStart()
 {
     arrayMakeObjectsPerformSelector(m_pChildren, onExitTransitionDidStart, CCNode*);
 
-    if (m_eScriptType == kScriptTypeJavascript)
+    if (m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExitTransitionDidStart);
     }
@@ -948,12 +948,12 @@ void CCNode::onExit()
 
     m_bRunning = false;
 
+    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);
+    
     if ( m_eScriptType != kScriptTypeNone)
     {
         CCScriptEngineManager::sharedManager()->getScriptEngine()->executeNodeEvent(this, kCCNodeOnExit);
     }
-
-    arrayMakeObjectsPerformSelector(m_pChildren, onExit, CCNode*);    
 }
 
 void CCNode::registerScriptHandler(int nHandler)

@@ -2,97 +2,158 @@
 
 #include "UIListViewTest.h"
 
-const char* font_UIListViewTest =
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-"Marker Felt";
-#else
-"cocosgui/Marker Felt.ttf";
-#endif
+// UIListViewExTest_Vertical
 
-// UIListViewTest_Vertical
-
-UIListViewTest_Vertical::UIListViewTest_Vertical()
-: m_pDisplayValueLabel(NULL)
-, m_nCount(0)
-, m_array(NULL)
+UIListViewExTest_Vertical::UIListViewExTest_Vertical()
 {
+    
 }
 
-UIListViewTest_Vertical::~UIListViewTest_Vertical()
-{   
+UIListViewExTest_Vertical::~UIListViewExTest_Vertical()
+{
+    CC_SAFE_RELEASE(m_array);
 }
 
-bool UIListViewTest_Vertical::init()
+bool UIListViewExTest_Vertical::init()
 {
     if (UIScene::init())
     {
-        CCSize widgetSize = m_pWidget->getRect().size;
+        CCSize widgetSize = m_pWidget->getSize();
         
-        // Add a label in which the button events will be displayed
         m_pDisplayValueLabel = UILabel::create();
         m_pDisplayValueLabel->setText("Move by vertical direction");
-        m_pDisplayValueLabel->setFontName(font_UIListViewTest);
+        m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
-        UILabel *alert = UILabel::create();
-        alert->setText("ListView");
-        alert->setFontName(font_UIListViewTest);
+        
+        UILabel* alert = UILabel::create();
+        alert->setText("ListView vertical");
+        alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout* background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        CCSize backgroundSize = background->getContentSize();
         
-        // Create the list view
-        m_nCount = 0;
+        
+        // create list view data
         m_array = CCArray::create();
-        m_array->retain();
+        CC_SAFE_RETAIN(m_array);
         for (int i = 0; i < 20; ++i)
         {
-            CCString* ccstr = CCString::createWithFormat("object_%d", i);
+            CCString* ccstr = CCString::createWithFormat("listview_item_%d", i);
             m_array->addObject(ccstr);
         }
         
-        UIListView *listView = UIListView::create();
-        listView->setTouchEnable(true);
-        listView->setBackGroundImageScale9Enabled(true);
-        listView->setBackGroundImage("cocosgui/green_edit.png");
-        listView->setSize(CCSizeMake(240, 130));
-        CCSize backgroundSize = background->getContentSize();
-        listView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
-                              (backgroundSize.width - listView->getRect().size.width) / 2,
-                              (widgetSize.height - backgroundSize.height) / 2 +
-                              (backgroundSize.height - listView->getRect().size.height) / 2));                
         
-        float listWidth = listView->getRect().size.width;
-        float listHeight = listView->getRect().size.height;                
-         
-        for (int i = 0; i < 5; ++i)
-        {
-            UITextButton* textButton = UITextButton::create();
-            textButton->setName("TextButton");
-            textButton->setTouchEnable(true);
-            textButton->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
-            
-            UILayout *layout = UILayout::create();
-            layout->setName(CCString::createWithFormat("panel_%i", i)->getCString());
-            layout->setSize(CCSizeMake(textButton->getRect().size.width, textButton->getRect().size.height));
-            textButton->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));            
-            layout->addChild(textButton);
-            
-            CCSize panel_size = layout->getRect().size;
-            layout->setPosition(ccp((listWidth - panel_size.width) / 2,
-                                   (listHeight - (panel_size.height + panel_size.height * 0.25)) - i * (panel_size.height + panel_size.height * 0.25)));
-            
-            listView->addChild(layout);
-        }
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::listViewEvent));
-        listView->initChildWithDataLength(m_array->count());
+        // Create the list view
+        UIListView* listView = UIListView::create();
+        // set list view direction
+        listView->setDirection(SCROLLVIEW_DIR_VERTICAL);
+        listView->setTouchEnabled(true);
+        listView->setBounceEnabled(true);
+        listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setBackGroundImageScale9Enabled(true);
+        listView->setSize(CCSizeMake(240, 130));
+        listView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
+                                    (backgroundSize.width - listView->getSize().width) / 2,
+                                    (widgetSize.height - backgroundSize.height) / 2 +
+                                    (backgroundSize.height - listView->getSize().height) / 2));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewExTest_Vertical::selectedItemEvent));
         m_pUiLayer->addWidget(listView);
+        
+        
+        // create model
+        UIButton* default_button = UIButton::create();
+        default_button->setName("TextButton");
+        default_button->setTouchEnabled(true);
+        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        
+        Layout* default_item = Layout::create();
+        default_item->setTouchEnabled(true);
+        default_item->setSize(default_button->getSize());
+        default_button->setPosition(ccp(default_item->getSize().width / 2, default_item->getSize().height / 2));
+        default_item->addChild(default_button);
+        
+        // set model
+        listView->setItemModel(default_item);
+        
+        // add default item
+        int count = m_array->count();
+        for (int i = 0; i < count / 4; ++i)
+        {
+            listView->pushBackDefaultItem();
+        }
+        // insert default item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            listView->insertDefaultItem(0);
+        }
+        
+        // add custom item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            UIButton* custom_button = UIButton::create();
+            custom_button->setName("TextButton");
+            custom_button->setTouchEnabled(true);
+            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->setScale9Enabled(true);
+            custom_button->setSize(default_button->getSize());
+            
+            Layout *custom_item = Layout::create();
+            custom_item->setSize(custom_button->getSize());
+            custom_button->setPosition(ccp(custom_item->getSize().width / 2, custom_item->getSize().height / 2));
+            custom_item->addChild(custom_button);
+            
+            listView->pushBackCustomItem(custom_item);
+        }
+        // insert custom item
+        CCArray *items = listView->getItems();
+        int items_count = items->count();
+        for (int i = 0; i < count / 4; ++i)
+        {
+            UIButton* custom_button = UIButton::create();
+            custom_button->setName("TextButton");
+            custom_button->setTouchEnabled(true);
+            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->setScale9Enabled(true);
+            custom_button->setSize(default_button->getSize());
+            
+            Layout *custom_item = Layout::create();
+            custom_item->setSize(custom_button->getSize());
+            custom_button->setPosition(ccp(custom_item->getSize().width / 2, custom_item->getSize().height / 2));
+            custom_item->addChild(custom_button);
+            
+            listView->insertCustomItem(custom_item, items_count);
+        }
+        
+        // set item data
+        items_count = items->count();
+        for (int i = 0; i < items_count; ++i)
+        {
+            UIWidget *item = listView->getItem(i);
+            UIButton *button = static_cast<UIButton*>(item->getChildByName("TextButton"));
+            int index = listView->getIndex(item);
+            button->setTitleText(static_cast<CCString*>(m_array->objectAtIndex(index))->getCString());
+        }
+        
+        // remove last item
+        listView->removeLastItem();
+        
+        // remove item by index
+        items_count = items->count();
+        listView->removeItem(items_count - 1);
+        
+        // set all items layout gravity
+        listView->setGravity(LISTVIEW_GRAVITY_CENTER_VERTICAL);
+        
+        // set items margin
+//        listViewEx->setItemsMargin(2);
         
         return true;
     }
@@ -100,39 +161,14 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::listViewEvent(CCObject *pSender, ListViewEventType type)
+void UIListViewExTest_Vertical::selectedItemEvent(CCObject *pSender, ListViewEventType type)
 {
     switch (type)
     {
-        case LISTVIEW_EVENT_INIT_CHILD:
+        case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
         {
-            CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(m_nCount));
-            UIListView* list = dynamic_cast<UIListView*>(pSender);
-            
-            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
-            UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
-            textButton->setText(ccstr->getCString());
-            
-            m_nCount++;
-        }
-            break;
-            
-        case LISTVIEW_EVENT_UPDATE_CHILD:
-        {
-            UIListView* list = dynamic_cast<UIListView*>(pSender);
-            int index = list->getUpdateDataIndex();
-            
-            if (index < 0 || index >= list->getDataLength())           
-            {
-                list->setUpdateSuccess(false);
-                return;
-            }
-            
-            CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(index));
-            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
-            UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
-            textButton->setText(ccstr->getCString());
-            list->setUpdateSuccess(true);
+            UIListView* listViewEx = static_cast<UIListView*>(pSender);
+            CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
         }
             break;
             
@@ -141,90 +177,159 @@ void UIListViewTest_Vertical::listViewEvent(CCObject *pSender, ListViewEventType
     }
 }
 
-// UIListViewTest_Horizontal
 
-UIListViewTest_Horizontal::UIListViewTest_Horizontal()
-: m_pDisplayValueLabel(NULL)
-, m_nCount(0)
-, m_array(NULL)
+// UIListViewExTest_Horizontal
+
+UIListViewExTest_Horizontal::UIListViewExTest_Horizontal()
 {
+    
 }
 
-UIListViewTest_Horizontal::~UIListViewTest_Horizontal()
+UIListViewExTest_Horizontal::~UIListViewExTest_Horizontal()
 {
+    CC_SAFE_RELEASE(m_array);
 }
 
-bool UIListViewTest_Horizontal::init()
+bool UIListViewExTest_Horizontal::init()
 {
     if (UIScene::init())
     {
-        CCSize widgetSize = m_pWidget->getRect().size;
+        CCSize widgetSize = m_pWidget->getSize();
         
-        // Add a label in which the button events will be displayed
         m_pDisplayValueLabel = UILabel::create();
-        m_pDisplayValueLabel->setText("Move by vertical direction");
-        m_pDisplayValueLabel->setFontName(font_UIListViewTest);
+        m_pDisplayValueLabel->setText("Move by horizontal direction");
+        m_pDisplayValueLabel->setFontName("Marker Felt");
         m_pDisplayValueLabel->setFontSize(32);
         m_pDisplayValueLabel->setAnchorPoint(ccp(0.5f, -1));
         m_pDisplayValueLabel->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f + m_pDisplayValueLabel->getContentSize().height * 1.5));
         m_pUiLayer->addWidget(m_pDisplayValueLabel);
         
-        UILabel *alert = UILabel::create();
-        alert->setText("ListView");
-        alert->setFontName(font_UIListViewTest);
+        
+        UILabel* alert = UILabel::create();
+        alert->setText("ListView horizontal");
+        alert->setFontName("Marker Felt");
         alert->setFontSize(30);
         alert->setColor(ccc3(159, 168, 176));
-        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getRect().size.height * 2.925));
+        alert->setPosition(ccp(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getSize().height * 3.075));
         m_pUiLayer->addWidget(alert);
         
-        UILayout *background = dynamic_cast<UILayout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        Layout* background = dynamic_cast<Layout*>(m_pUiLayer->getWidgetByName("background_Panel"));
+        CCSize backgroundSize = background->getContentSize();
         
-        // Create the list view
-        m_nCount = 0;
+        
+        // create list view data
         m_array = CCArray::create();
-        m_array->retain();
+        CC_SAFE_RETAIN(m_array);
         for (int i = 0; i < 20; ++i)
         {
-            CCString* ccstr = CCString::createWithFormat("object_%d", i);
+            CCString* ccstr = CCString::createWithFormat("listview_item_%d", i);
             m_array->addObject(ccstr);
         }
         
-        UIListView *listView = UIListView::create();
-        listView->setDirection(LISTVIEW_DIR_HORIZONTAL);
+        
+        // Create the list view
+        UIListView* listView = UIListView::create();
+        // set list view direction
+        listView->setDirection(SCROLLVIEW_DIR_HORIZONTAL);
         listView->setTouchEnabled(true);
-        listView->setBackGroundImageScale9Enabled(true);
+        listView->setBounceEnabled(true);
         listView->setBackGroundImage("cocosgui/green_edit.png");
+        listView->setBackGroundImageScale9Enabled(true);
         listView->setSize(CCSizeMake(240, 130));
-        CCSize backgroundSize = background->getContentSize();
         listView->setPosition(ccp((widgetSize.width - backgroundSize.width) / 2 +
-                              (backgroundSize.width - listView->getRect().size.width) / 2,
-                              (widgetSize.height - backgroundSize.height) / 2 +
-                              (backgroundSize.height - listView->getRect().size.height) / 2));
-        
-        float listHeight = listView->getRect().size.height;
-        
-        for (int i = 0; i < 3; ++i)
-        {
-            UITextButton* textButton = UITextButton::create();
-            textButton->setName("TextButton");
-            textButton->setTouchEnabled(true);
-            textButton->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
-            
-            UILayout *layout = UILayout::create();
-            layout->setName(CCString::createWithFormat("panel_%i", i)->getCString());
-            layout->setSize(CCSizeMake(textButton->getRect().size.width, textButton->getRect().size.height));
-            textButton->setPosition(ccp(layout->getRect().size.width / 2, layout->getRect().size.height / 2));
-            layout->addChild(textButton);
-            
-            CCSize layout_size = layout->getRect().size;
-            layout->setPosition(ccp(0 + (layout_size.width * 0.2) + i * (layout_size.width + layout_size.width * 0.2),
-                                    (listHeight - layout_size.height) / 2));
-            
-            listView->addChild(layout);
-        }
-        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::listViewEvent));
-        listView->initChildWithDataLength(m_array->count());
+                                    (backgroundSize.width - listView->getSize().width) / 2,
+                                    (widgetSize.height - backgroundSize.height) / 2 +
+                                    (backgroundSize.height - listView->getSize().height) / 2));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewExTest_Horizontal::selectedItemEvent));
         m_pUiLayer->addWidget(listView);
+        
+        
+        // create model
+        UIButton* default_button = UIButton::create();
+        default_button->setName("TextButton");
+        default_button->setTouchEnabled(true);
+        default_button->loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "");
+        
+        Layout* default_item = Layout::create();
+        default_item->setTouchEnabled(true);
+        default_item->setSize(default_button->getSize());
+        default_button->setPosition(ccp(default_item->getSize().width / 2, default_item->getSize().height / 2));
+        default_item->addChild(default_button);
+        
+        // set model
+        listView->setItemModel(default_item);
+        
+        // add default item
+        int count = m_array->count();
+        for (int i = 0; i < count / 4; ++i)
+        {
+            listView->pushBackDefaultItem();
+        }
+        // insert default item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            listView->insertDefaultItem(0);
+        }
+        
+        // add custom item
+        for (int i = 0; i < count / 4; ++i)
+        {
+            UIButton* custom_button = UIButton::create();
+            custom_button->setName("TextButton");
+            custom_button->setTouchEnabled(true);
+            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->setScale9Enabled(true);
+            custom_button->setSize(default_button->getSize());
+            
+            Layout *custom_item = Layout::create();
+            custom_item->setSize(custom_button->getSize());
+            custom_button->setPosition(ccp(custom_item->getSize().width / 2, custom_item->getSize().height / 2));
+            custom_item->addChild(custom_button);
+            
+            listView->pushBackCustomItem(custom_item);
+        }
+        // insert custom item
+        CCArray *items = listView->getItems();
+        int items_count = items->count();
+        for (int i = 0; i < count / 4; ++i)
+        {
+            UIButton* custom_button = UIButton::create();
+            custom_button->setName("TextButton");
+            custom_button->setTouchEnabled(true);
+            custom_button->loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "");
+            custom_button->setScale9Enabled(true);
+            custom_button->setSize(default_button->getSize());
+            
+            Layout *custom_item = Layout::create();
+            custom_item->setSize(custom_button->getSize());
+            custom_button->setPosition(ccp(custom_item->getSize().width / 2, custom_item->getSize().height / 2));
+            custom_item->addChild(custom_button);
+            
+            listView->insertCustomItem(custom_item, items_count);
+        }
+        
+        // set item data
+        items_count = items->count();
+        for (int i = 0; i < items_count; ++i)
+        {
+            UIWidget *item = listView->getItem(i);
+            UIButton *button = static_cast<UIButton*>(item->getChildByName("TextButton"));
+            int index = listView->getIndex(item);
+            button->setTitleText(static_cast<CCString*>(m_array->objectAtIndex(index))->getCString());
+        }
+        
+        // remove last item
+        listView->removeLastItem();
+        
+        // remove item by index
+        items_count = items->count();
+        listView->removeItem(items_count - 1);        
+        
+        // set all items layout gravity
+        listView->setGravity(LISTVIEW_GRAVITY_CENTER_VERTICAL);
+        
+        // set items margin
+        listView->setItemsMargin(2);
         
         return true;
     }
@@ -232,39 +337,15 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::listViewEvent(CCObject *pSender, ListViewEventType type)
+void UIListViewExTest_Horizontal::selectedItemEvent(CCObject *pSender, ListViewEventType type)
 {
     switch (type)
     {
-        case LISTVIEW_EVENT_INIT_CHILD:
-        {
-            CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(m_nCount));
-            UIListView* list = dynamic_cast<UIListView*>(pSender);
-            
-            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
-            UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
-            textButton->setText(ccstr->getCString());
-            
-            m_nCount++;
-        }
-            break;
-            
-        case LISTVIEW_EVENT_UPDATE_CHILD:
-        {
-            UIListView* list = dynamic_cast<UIListView*>(pSender);
-            int index = list->getUpdateDataIndex();
-            
-            if (index < 0 || index >= list->getDataLength())
+        case cocos2d::gui::LISTVIEW_ONSELECTEDITEM:
             {
-                list->setUpdateSuccess(false);
+                UIListView* listViewEx = static_cast<UIListView*>(pSender);
+                CCLOG("select child index = %d", listViewEx->getCurSelectedIndex());
             }
-            
-            CCString* ccstr = static_cast<CCString*>(m_array->objectAtIndex(index));
-            UILayout* layout = dynamic_cast<UILayout*>(list->getUpdateChild());
-            UITextButton* textButton = dynamic_cast<UITextButton*>(layout->getChildByName("TextButton"));
-            textButton->setText(ccstr->getCString());
-            list->setUpdateSuccess(true);
-        }
             break;
             
         default:

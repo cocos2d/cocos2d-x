@@ -144,10 +144,6 @@ protected:
     //! The tween easing effect
     CC_SYNTHESIZE(CCTweenType, m_eTweenEasing, TweenEasing);
 
-    //! The animation update speed
-    CC_SYNTHESIZE(float, m_fAnimationInternal, AnimationInternal);
-
-
 protected:
     //! The durantion frame count will run
     int m_iDurationTween;
@@ -162,6 +158,9 @@ protected:
 
 
     bool m_bIsLoopBack;
+
+    //! The animation update speed
+    float m_fAnimationInternal;
 };
 
 NS_CC_EXT_END
