@@ -88,37 +88,6 @@ private:
    bool m_bLoop;
 };
 
-/**
- *  @lua NA
- */
-class CCComRender : public cocos2d::CCComponent
-{
-	DECLARE_CLASS_COMPONENT_INFO
-public:
-    /**
-     *  @js ctor
-     */
-    CCComRender(void);
-    /**
-     *  @js NA
-     */
-    virtual ~CCComRender(void);
-    
-public:
-   virtual void onEnter();
-   virtual void onExit();
-   virtual bool serialize(void* r);
-   virtual cocos2d::CCNode* getNode();
-   virtual void setNode(cocos2d::CCNode *pNode);
-
-   static CCComRender* create(void);
-private:
-   bool readJson(const char *pszFileName, rapidjson::Document &doc);
-private:
-   cocos2d::CCNode *m_pRender;
-};
-
-
 NS_CC_EXT_END
 
 #endif  // __FUNDATION__CCCOMPONENT_H__
