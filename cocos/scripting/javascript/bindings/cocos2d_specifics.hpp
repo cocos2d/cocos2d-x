@@ -11,20 +11,20 @@ class JSScheduleWrapper;
 // It will prove that i'm right. :)
 typedef struct jsScheduleFunc_proxy {
     JSObject* jsfuncObj;
-    Array*  targets; 
+    cocos2d::Array*  targets;
     UT_hash_handle hh;
 } schedFunc_proxy_t;
 
 typedef struct jsScheduleTarget_proxy {
     JSObject* jsTargetObj;
-    Array*  targets;
+    cocos2d::Array*  targets;
     UT_hash_handle hh;
 } schedTarget_proxy_t;
 
 
 typedef struct jsCallFuncTarget_proxy {
     void * ptr;
-    Array *obj;
+    cocos2d::Array *obj;
     UT_hash_handle hh;
 } callfuncTarget_proxy_t;
 
@@ -93,7 +93,7 @@ jsval anonEvaluate(JSContext *cx, JSObject *thisObj, const char* string);
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* obj);
 
 
-class JSCallbackWrapper: public Object {
+class JSCallbackWrapper: public cocos2d::Object {
 public:
     JSCallbackWrapper();
     virtual ~JSCallbackWrapper();
@@ -118,9 +118,9 @@ public:
     virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(jsval sched, JSScheduleWrapper *target);
-    static Array * getTargetForSchedule(jsval sched);
+    static cocos2d::Array * getTargetForSchedule(jsval sched);
     static void setTargetForJSObject(JSObject* jsTargetObj, JSScheduleWrapper *target);
-    static Array * getTargetForJSObject(JSObject* jsTargetObj);
+    static cocos2d::Array * getTargetForJSObject(JSObject* jsTargetObj);
     
     // Remove all targets.
     static void removeAllTargets();
@@ -157,7 +157,7 @@ protected:
 };
 
 
-class JSTouchDelegate: public Object
+class JSTouchDelegate: public cocos2d::Object
 {
 public:
     JSTouchDelegate();
@@ -178,16 +178,16 @@ public:
 	// So this function need to be binded.
     void unregisterTouchDelegate();
 
-    bool onTouchBegan(Touch *touch, Event *event);
-    void onTouchMoved(Touch *touch, Event *event);
-    void onTouchEnded(Touch *touch, Event *event);
-    void onTouchCancelled(Touch *touch, Event *event);
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
     
     // optional
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
-    void onTouchesCancelled(const std::vector<Touch*>& touches, Event *event);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 private:
     JSObject* _obj;
@@ -195,8 +195,8 @@ private:
     typedef std::pair<JSObject*, JSTouchDelegate*> TouchDelegatePair;
     static TouchDelegateMap sTouchDelegateMap;
     bool _needUnroot;
-    EventListenerTouchOneByOne*  _touchListenerOneByOne;
-    EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
+    cocos2d::EventListenerTouchOneByOne*  _touchListenerOneByOne;
+    cocos2d::EventListenerTouchAllAtOnce* _touchListenerAllAtOnce;
 };
 
 

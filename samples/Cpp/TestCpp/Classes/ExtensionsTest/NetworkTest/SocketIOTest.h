@@ -14,16 +14,16 @@
 
 class SocketIOTestLayer
 	: public cocos2d::Layer
-	, public network::SocketIO::SIODelegate
+	, public cocos2d::network::SocketIO::SIODelegate
 {
 public:
 	SocketIOTestLayer(void);
 	virtual ~SocketIOTestLayer(void);
 
-	virtual void onConnect(network::SIOClient* client);
-    virtual void onMessage(network::SIOClient* client, const std::string& data);
-    virtual void onClose(network::SIOClient* client);
-    virtual void onError(network::SIOClient* client, const std::string& data);
+	virtual void onConnect(cocos2d::network::SIOClient* client);
+    virtual void onMessage(cocos2d::network::SIOClient* client, const std::string& data);
+    virtual void onClose(cocos2d::network::SIOClient* client);
+    virtual void onError(cocos2d::network::SIOClient* client, const std::string& data);
 
 	void toExtensionsMainLayer(cocos2d::Object *sender);
 	
@@ -38,10 +38,10 @@ public:
 	void onMenuTestEndpointDisconnectClicked(cocos2d::Object *sender);
 
 
-	void testevent(network::SIOClient *client, const std::string& data);
-	void echotest(network::SIOClient *client, const std::string& data);
+	void testevent(cocos2d::network::SIOClient *client, const std::string& data);
+	void echotest(cocos2d::network::SIOClient *client, const std::string& data);
 
-	network::SIOClient *_sioClient, *_sioEndpoint;
+	cocos2d::network::SIOClient *_sioClient, *_sioEndpoint;
 
 	cocos2d::LabelTTF *_sioClientStatus;
 };
