@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include <queue>
 #include <string>
 #include <unordered_map>
+#include <functional>
 
 #include "CCObject.h"
 #include "CCTexture2D.h"
@@ -115,7 +116,7 @@ public:
     * Supported image extensions: .png, .jpg
     * @since v0.8
     */
-    virtual void addImageAsync(const std::string &filepath, Object *target, SEL_CallFuncO selector);
+    virtual void addImageAsync(const std::string &filepath, std::function<void(Texture2D*)> callback);
 
     /** Returns a Texture2D object given an Image.
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -175,11 +176,10 @@ public:
     struct AsyncStruct
     {
     public:
-        AsyncStruct(const std::string& fn, Object *t, SEL_CallFuncO s) : filename(fn), target(t), selector(s) {}
+        AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f) {}
 
         std::string filename;
-        Object *target;
-        SEL_CallFuncO selector;
+        std::function<void(Texture2D*)> callback;
     };
 
 protected:

@@ -37,7 +37,7 @@
 
 #include "libwebsockets.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace network {
 
@@ -52,7 +52,7 @@ public:
 /**
  *  @brief Websocket thread helper, it's used for sending message between UI thread and websocket thread.
  */
-class WsThreadHelper : public cocos2d::Object
+class WsThreadHelper : public Object
 {
 public:
     WsThreadHelper();
@@ -648,3 +648,5 @@ void WebSocket::onUIThreadReceiveMessage(WsMessage* msg)
 }
 
 }
+
+NS_CC_END

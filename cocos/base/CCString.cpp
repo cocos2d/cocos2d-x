@@ -58,7 +58,9 @@ __String::~__String()
 
 __String& __String::operator= (const __String& other)
 {
-    _string = other._string;
+    if (this != &other) {
+        _string = other._string;
+    }
     return *this;
 }
 
