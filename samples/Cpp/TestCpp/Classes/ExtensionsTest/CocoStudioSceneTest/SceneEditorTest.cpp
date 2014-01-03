@@ -21,7 +21,7 @@ CCLayer *createTests(int index)
     switch(index)
     {
     case TEST_LOADSCENEEDITORFILE:
-        pLayer = new loadSceneEdtiorFileTest();
+        pLayer = new LoadSceneEdtiorFileTest();
         break;
     case TEST_SPIRTECOMPONENT:
         pLayer = new SpriteComponentTest();
@@ -195,22 +195,22 @@ void SceneEditorTestLayer::draw()
     CCLayer::draw();
 }
 
-loadSceneEdtiorFileTest::loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::LoadSceneEdtiorFileTest()
 {
 	
 }
 
-loadSceneEdtiorFileTest::~loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::~LoadSceneEdtiorFileTest()
 {
 
 }
 
-std::string loadSceneEdtiorFileTest::title()
+std::string LoadSceneEdtiorFileTest::title()
 {
-    return "loadSceneEdtiorFile Test";
+    return "LoadSceneEdtiorFile Test";
 }
 
-void loadSceneEdtiorFileTest::onEnter()
+void LoadSceneEdtiorFileTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
 	do 
@@ -221,7 +221,7 @@ void loadSceneEdtiorFileTest::onEnter()
 	} while (0);
 }
 
-void loadSceneEdtiorFileTest::onExit()
+void LoadSceneEdtiorFileTest::onExit()
 {
 	 CCArmatureDataManager::purge();
 	 SceneReader::purge();
@@ -231,7 +231,7 @@ void loadSceneEdtiorFileTest::onExit()
 }
 
 
-cocos2d::CCNode* loadSceneEdtiorFileTest::createGameScene()
+cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 {
     CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
 	if (pNode == NULL)
@@ -680,34 +680,11 @@ void AttributeComponentTest::onExit()
 bool AttributeComponentTest::initData()
 {
 	bool bRet = false;
-	unsigned long size = 0;
-	unsigned char *pBytes = NULL;
 	rapidjson::Document jsonDict;
 	do {
 		CC_BREAK_IF(_node == NULL);
 		CCComAttribute *pAttribute = static_cast<CCComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
-		CC_BREAK_IF(pAttribute == NULL);
-		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAttribute->getFile().c_str());
-		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-		CCData *data = new CCData(pBytes, size);
-		std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-		CC_SAFE_DELETE(data);
-		CC_SAFE_DELETE_ARRAY(pBytes);
-		jsonDict.Parse<0>(load_str.c_str());
-		CC_BREAK_IF(jsonDict.HasParseError());
-
-		std::string playerName = DICTOOL->getStringValue_json(jsonDict, "name");
-		float maxHP = DICTOOL->getFloatValue_json(jsonDict, "maxHP");
-		float maxMP = DICTOOL->getFloatValue_json(jsonDict, "maxMP");
-		
-		pAttribute->setCString("Name", playerName.c_str());
-		pAttribute->setFloat("MaxHP", maxHP);
-		pAttribute->setFloat("MaxMP", maxMP);
-
-
-		CCLog("Name: %s, HP: %f, MP: %f", pAttribute->getCString("Name"), pAttribute->getFloat("MaxHP"), pAttribute->getFloat("MaxMP"));
-
+		CCLog("Name: %s, HP: %f, MP: %f", pAttribute->getCString("name"), pAttribute->getFloat("maxHP"), pAttribute->getFloat("maxMP"));
 		bRet = true;
 	} while (0);
 	return bRet;
