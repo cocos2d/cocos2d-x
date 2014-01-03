@@ -29,10 +29,10 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define NORMALRENDERERZ (-2)
-#define PRESSEDRENDERERZ (-2)
-#define DISABLEDRENDERERZ (-2)
-#define TITLERENDERERZ (-1)
+static const int NORMAL_RENDERER_Z = (-2);
+static const int PRESSED_RENDERER_Z = (-2);
+static const int DISABLED_RENDERER_Z = (-2);
+static const int TITLE_RENDERER_Z = (-1);
     
 Button::Button():
 _buttonNormalRenderer(nullptr),
@@ -98,10 +98,10 @@ void Button::initRenderer()
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
     
-    Node::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSEDRENDERERZ, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLEDRENDERERZ, -1);
-    Node::addChild(_titleRenderer, TITLERENDERERZ, -1);
+    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
+    Node::addChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
 void Button::setScale9Enabled(bool able)
@@ -134,9 +134,9 @@ void Button::setScale9Enabled(bool able)
     loadTextureNormal(_normalFileName.c_str(), _normalTexType);
     loadTexturePressed(_clickedFileName.c_str(), _pressedTexType);
     loadTextureDisabled(_disabledFileName.c_str(), _disabledTexType);
-    Node::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
-    Node::addChild(_buttonClickedRenderer, PRESSEDRENDERERZ, -1);
-    Node::addChild(_buttonDisableRenderer, DISABLEDRENDERERZ, -1);
+    Node::addChild(_buttonNormalRenderer, NORMAL_RENDERER_Z, -1);
+    Node::addChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
+    Node::addChild(_buttonDisableRenderer, DISABLED_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;

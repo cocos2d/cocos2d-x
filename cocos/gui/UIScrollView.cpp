@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define AUTOSCROLLMAXSPEED 1000.0f
+static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
 const Point SCROLLDIR_UP = Point(0.0f, 1.0f);
 const Point SCROLLDIR_DOWN = Point(0.0f, -1.0f);
