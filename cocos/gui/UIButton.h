@@ -122,7 +122,7 @@ public:
     void setCapInsetsDisabledRenderer(const Rect &capInsets);
     
     //override "setAnchorPoint" of widget.
-    virtual void setAnchorPoint(const Point &pt);
+    virtual void setAnchorPoint(const Point &pt) override;
     
     /**
      * Sets if button is using scale9 renderer.
@@ -132,16 +132,16 @@ public:
     virtual void setScale9Enabled(bool able);
     
     //override "setFlipX" of widget.
-    virtual void setFlipX(bool flipX);
+    virtual void setFlipX(bool flipX) override;
     
     //override "setFlipY" of widget.
-    virtual void setFlipY(bool flipY);
+    virtual void setFlipY(bool flipY) override;
     
     //override "isFlipX" of widget.
-    virtual bool isFlipX();
+    virtual bool isFlipX() override;
     
     //override "isFlipY" of widget.
-    virtual bool isFlipY();
+    virtual bool isFlipY() override;
     
     /**
      * Changes if button can be clicked zoom effect.
@@ -151,13 +151,13 @@ public:
     void setPressedActionEnabled(bool enabled);
     
     //override "ignoreContentAdaptWithSize" method of widget.
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override "getContentSize" method of widget.
-    virtual const Size& getContentSize() const;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual Node* getVirtualRenderer();
+    virtual Node* getVirtualRenderer() override;
     
     /**
      * Sets color to widget
@@ -166,12 +166,12 @@ public:
      *
      * @param color
      */
-    virtual void setColor(const Color3B &color);
+    virtual void setColor(const Color3B &color) override;
     
     /**
      * Returns the "class name" of widget.
      */
-    virtual std::string getDescription() const;
+    virtual std::string getDescription() const override;
     
     void setTitleText(const std::string& text);
     const std::string& getTitleText() const;
@@ -183,18 +183,18 @@ public:
     const char* getTitleFontName() const;
 
 protected:
-    virtual bool init();
-    virtual void initRenderer();
-    virtual void onPressStateChangedToNormal();
-    virtual void onPressStateChangedToPressed();
-    virtual void onPressStateChangedToDisabled();
-    virtual void onSizeChanged();
+    virtual bool init() override;
+    virtual void initRenderer() override;
+    virtual void onPressStateChangedToNormal() override;
+    virtual void onPressStateChangedToPressed() override;
+    virtual void onPressStateChangedToDisabled() override;
+    virtual void onSizeChanged() override;
     
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
-    virtual Widget* createCloneInstance();
-    virtual void copySpecialProperties(Widget* model);
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
     Node* _buttonNormalRenderer;
     Node* _buttonClickedRenderer;
