@@ -330,7 +330,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
 
         if (!displayManager->isForceChangeDisplay())
         {
-            displayManager->changeDisplayByIndex(displayIndex, false);
+            displayManager->changeDisplayWithIndex(displayIndex, false);
         }
 
         //! Update bone zorder, bone's zorder is determined by frame zorder and bone zorder
