@@ -37,7 +37,7 @@ ActionManager* ActionManager::shareManager()
     return sharedActionManager;
 }
 
-void ActionManager::purgeActionManager()
+void ActionManager::purge()
 {
 	CC_SAFE_DELETE(sharedActionManager);
 }
