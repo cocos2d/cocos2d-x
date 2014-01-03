@@ -1088,21 +1088,6 @@ end
 rawset(SceneReader,"purgeSceneReader",SceneReaderDeprecated.purgeSceneReader)
 --functions of SceneReader will be deprecated end
 
---functions of ActionManager will be deprecated begin
-local ActionManagerDeprecated = { }
-function ActionManagerDeprecated.shareManager()
-    deprecatedTip("ActionManager:shareManager","ccs.ActionManagerEx:getInstance")
-    return ccs.ActionManagerEx:getInstance()
-end
-rawset(ActionManager,"shareManager",ActionManagerDeprecated.shareManager)
-
-function ActionManagerDeprecated.destroyInstance()
-    deprecatedTip("ActionManager:destroyInstance","ccs.ActionManagerEx:destroyActionManager")
-    return ccs.ActionManagerEx:destroyActionManager()
-end
-rawset(ActionManager,"destroyInstance",ActionManagerDeprecated.destroyInstance)
---functions of ActionManager will be deprecated end
-
 --functions of CCEGLView will be deprecated begin
 local CCEGLViewDeprecated = { }
 function CCEGLViewDeprecated.sharedOpenGLView()

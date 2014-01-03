@@ -283,7 +283,9 @@ public:
         if (!_data.empty())
         {
             ssize_t randIdx = rand() % _data.size();
-            return (_data.begin() + randIdx)->second;
+            iterator randIter = _data.begin();
+            std::advance(randIter , randIdx);
+            return randIter->second;
         }
         return nullptr;
     }
@@ -316,18 +318,23 @@ public:
     /** Copy assignment operator */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
-        CCLOGINFO("In the copy assignment operator of Map!");
-        clear();
-        _data = other._data;
-        addRefForAllObjects();
+        if (this != &other) {
+            CCLOGINFO("In the copy assignment operator of Map!");
+            clear();
+            _data = other._data;
+            addRefForAllObjects();
+        }
         return *this;
     }
     
     /** Move assignment operator */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
-        CCLOGINFO("In the move assignment operator of Map!");
-        _data = std::move(other._data);
+        if (this != &other) {
+            CCLOGINFO("In the move assignment operator of Map!");
+            clear();
+            _data = std::move(other._data);
+        }
         return *this;
     }
     
