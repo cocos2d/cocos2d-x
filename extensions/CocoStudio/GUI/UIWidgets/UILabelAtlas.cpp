@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define LABELATLASRENDERERZ (-1)
+static const int LABELATLAS_RENDERER_Z = (-1);
 
 UICCLabelAtlas::UICCLabelAtlas()
 {
@@ -112,7 +112,7 @@ LabelAtlas* LabelAtlas::create()
 void LabelAtlas::initRenderer()
 {
     _laberAtlasRenderer = UICCLabelAtlas::create();
-    CCNodeRGBA::addChild(_laberAtlasRenderer, LABELATLASRENDERERZ, -1);
+    CCNodeRGBA::addChild(_laberAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
 void LabelAtlas::setProperty(const std::string& stringValue, const std::string& charMapFile, int itemWidth, int itemHeight, const std::string& startCharMap)
