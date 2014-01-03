@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define LABELBMFONTRENDERERZ (-1)
+static const int LABELBMFONT_RENDERER_Z = (-1);
     
 TextBMFont::TextBMFont():
 _labelBMFontRenderer(nullptr),
@@ -58,7 +58,7 @@ TextBMFont* TextBMFont::create()
 void TextBMFont::initRenderer()
 {
     _labelBMFontRenderer = cocos2d::LabelBMFont::create();
-    Node::addChild(_labelBMFontRenderer, LABELBMFONTRENDERERZ, -1);
+    Node::addChild(_labelBMFontRenderer, LABELBMFONT_RENDERER_Z, -1);
 }
 
 void TextBMFont::setFntFile(const char *fileName)

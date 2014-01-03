@@ -109,7 +109,6 @@ void NodeChildrenMenuLayer::showCurrentTest()
         scene->initWithQuantityOfNodes(nodes);
 
         Director::getInstance()->replaceScene(scene);
-        scene->release();
     }
 }
 

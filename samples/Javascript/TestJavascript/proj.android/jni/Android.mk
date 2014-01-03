@@ -19,6 +19,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += jsb_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_builder_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_gui_static
 LOCAL_WHOLE_STATIC_LIBRARIES += jsb_studio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += jsb_spine_static
 
 
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2
@@ -33,3 +34,4 @@ $(call import-module,scripting/javascript/bindings/network)
 $(call import-module,scripting/javascript/bindings/cocosbuilder)
 $(call import-module,scripting/javascript/bindings/gui)
 $(call import-module,scripting/javascript/bindings/cocostudio)
+$(call import-module,scripting/javascript/bindings/spine)

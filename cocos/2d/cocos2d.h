@@ -111,6 +111,7 @@ THE SOFTWARE.
 #include "CCMotionStreak.h"
 #include "CCProgressTimer.h"
 #include "CCRenderTexture.h"
+#include "CCNodeGrid.h"
 
 // particle_nodes
 #include "CCParticleBatchNode.h"
