@@ -283,7 +283,9 @@ public:
         if (!_data.empty())
         {
             ssize_t randIdx = rand() % _data.size();
-            return (_data.begin() + randIdx)->second;
+            iterator randIter = _data.begin();
+            std::advance(randIter , randIdx);
+            return randIter->second;
         }
         return nullptr;
     }
@@ -330,6 +332,7 @@ public:
     {
         if (this != &other) {
             CCLOGINFO("In the move assignment operator of Map!");
+            clear();
             _data = std::move(other._data);
         }
         return *this;
