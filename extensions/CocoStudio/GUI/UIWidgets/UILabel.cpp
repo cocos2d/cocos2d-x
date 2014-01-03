@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define LABELRENDERERZ (-1)
+static const int LABEL_RENDERER_Z = (-1);
 
 Label::Label():
 _touchScaleChangeEnabled(false),
@@ -70,7 +70,7 @@ bool Label::init()
 void Label::initRenderer()
 {
     _labelRenderer = CCLabelTTF::create();
-    CCNodeRGBA::addChild(_labelRenderer, LABELRENDERERZ, -1);
+    CCNodeRGBA::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Label::setText(const std::string& text)
