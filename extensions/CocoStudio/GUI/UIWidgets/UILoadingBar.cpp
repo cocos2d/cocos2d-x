@@ -29,7 +29,7 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BARRENDERERZ (-1)
+static const int BAR_RENDERER_Z = (-1);
     
 LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
@@ -65,7 +65,7 @@ LoadingBar* LoadingBar::create()
 void LoadingBar::initRenderer()
 {
     _barRenderer = CCSprite::create();
-    CCNodeRGBA::addChild(_barRenderer, BARRENDERERZ, -1);
+    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     _barRenderer->setAnchorPoint(CCPoint(0.0,0.5));
 }
 
@@ -182,7 +182,7 @@ void LoadingBar::setScale9Enabled(bool enabled)
         _barRenderer = CCSprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
-    CCNodeRGBA::addChild(_barRenderer, BARRENDERERZ, -1);
+    CCNodeRGBA::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
