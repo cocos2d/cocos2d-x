@@ -61,11 +61,11 @@ public:
    bool   getBool(const char *key, bool def = false) const;
    const char* getCString(const char *key, const char *def = NULL) const;
    
-   void setJsonName(const std::string &jsonName);
-   std::string getJsonName();
+   void setFile(const std::string &jsonName);
+   const std::string& getFile();
 private:
    cocos2d::CCDictionary *_dict;
-   std::string _jsonName;
+   std::string _jsonFile;
 };
 
 NS_CC_EXT_END

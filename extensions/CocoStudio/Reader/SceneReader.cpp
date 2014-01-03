@@ -29,11 +29,11 @@
 NS_CC_EXT_BEGIN
 
 	SceneReader* SceneReader::_sharedReader = NULL;
+    CCObject*  SceneReader::_pListener = NULL;
+    SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
     SceneReader::SceneReader()
-	:_pListener(NULL)
-	,_pfnSelector(NULL)
-	,_pNode(NULL)
+	:_pNode(NULL)
     {
 	}
 
@@ -346,7 +346,7 @@ NS_CC_EXT_BEGIN
 					{
 						pAttribute->setName(pComName);
 					}
-					pAttribute->setJsonName(pPath);
+					pAttribute->setFile(pPath);
                     gb->addComponent(pAttribute);
 					if (_pListener && _pfnSelector)
 					{
@@ -477,7 +477,7 @@ NS_CC_EXT_BEGIN
 		return _sharedReader;
 	}
 
-    void SceneReader::purgeSceneReader()
+    void SceneReader::purge()
     {		
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
 		TriggerMng::getInstance()->destroyInstance();

@@ -129,13 +129,13 @@ CCComAttribute* CCComAttribute::create(void)
     return pRet;
 }
 
-void CCComAttribute::setJsonName(const std::string &jsonName)
+void CCComAttribute::setFile(const std::string &jsonName)
 {
-	_jsonName = jsonName;
+	_jsonFile = jsonName;
 }
-std::string CCComAttribute::getJsonName()
+const std::string& CCComAttribute::getFile()
 {
-	return _jsonName;
+	return _jsonFile;
 }
 
 NS_CC_EXT_END
