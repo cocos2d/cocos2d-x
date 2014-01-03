@@ -330,19 +330,19 @@ void Widget::removeNode(CCNode* node)
     _nodes->removeObject(node);
 }
     
-void Widget::removeChildByTag(int tag)
+void Widget::removeNodeByTag(int tag)
 {
     CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
     
-    CCNode *child = this->getNodeByTag(tag);
+    CCNode *node = this->getNodeByTag(tag);
     
-    if (child == NULL)
+    if (node == NULL)
     {
         CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
     }
     else
     {
-        this->removeChild(child);
+        this->removeNode(node);
     }
 }
     
