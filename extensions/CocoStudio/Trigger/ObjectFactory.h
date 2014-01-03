@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __TRIGGERFACTORY_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
 #include "ExtensionMacros.h"
 #include <string>
 #include <map>
@@ -52,7 +51,8 @@ public:
     virtual ~ObjectFactory(void);
     static ObjectFactory* getInstance();
     void destroyInstance();
-    CCObject* createObject(const char *name);
+    CCObject* createObject(std::string name);
+	CCComponent* createComponent(std::string name);
     void registerType(const TInfo &t);
     void removeAll();
 private:

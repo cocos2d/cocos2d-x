@@ -22,56 +22,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
-#define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
+#ifndef __CC_EXTENTIONS_CCCOMBASE_H__
+#define __CC_EXTENTIONS_CCCOMBASE_H__
 
 #include "cocos2d.h"
+#include "../Trigger/ObjectFactory.h"
 #include "ExtensionMacros.h"
-#include <string>
-#include "CCComBase.h"
-#include "../Json/DictionaryHelper.h"
-
 
 NS_CC_EXT_BEGIN
-/**
- *  @lua NA
- */
-class CCComAttribute : public cocos2d::CCComponent
-{
-	DECLARE_CLASS_COMPONENT_INFO
-protected:
-    /**
-     *  @js ctor
-     */
-    CCComAttribute(void);
-    /**
-     *  @js NA
-     */
-    virtual ~CCComAttribute(void);
-    
-public:
-   virtual bool init();
-   static CCComAttribute* create(void);
-   
-   void setInt(const char *key, int value);
-   void setFloat(const char *key, float value);
-   void setBool(const char *key, bool value);
-   void setCString(const char *key, const char *value);
-   
-   int    getInt(const char *key, int def = 0) const;
-   float  getFloat(const char *key, float def = 0.0f) const;
-   bool   getBool(const char *key, bool def = false) const;
-   const char* getCString(const char *key, const char *def = NULL) const;
-   
-   void setFile(const std::string &jsonName);
-   std::string getFile() const;
 
-   virtual bool serialize(void* r);
-private:
-   cocos2d::CCDictionary *m_pDict;
-   std::string m_strJsonFile;
-};
+#define DECLARE_CLASS_COMPONENT_INFO \
+	public: \
+	static cocos2d::extension::ObjectFactory::TInfo m_Type; \
+	static cocos2d::CCObject* createInstance(void); \
+
+#define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
+	cocos2d::CCObject* className::createInstance(void) \
+{ \
+	return className::create(); \
+} \
+	cocos2d::extension::ObjectFactory::TInfo className::m_Type(#className, &className::createInstance); \
 
 NS_CC_EXT_END
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif 

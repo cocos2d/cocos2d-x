@@ -682,7 +682,7 @@ bool AttributeComponentTest::initData()
 		CC_BREAK_IF(_node == NULL);
 		CCComAttribute *pAttribute = static_cast<CCComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
 		CC_BREAK_IF(pAttribute == NULL);
-		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAttribute->getJsonName().c_str());
+		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAttribute->getFile().c_str());
 		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
 		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
 		CCData *data = new CCData(pBytes, size);

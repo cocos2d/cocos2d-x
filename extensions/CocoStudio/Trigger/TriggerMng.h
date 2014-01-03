@@ -26,8 +26,9 @@ THE SOFTWARE.
 #define __TRIGGERMNG_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
 #include "ExtensionMacros.h"
+#include "../Json/DictionaryHelper.h"
+#include "../Armature/CCArmature.h"
 
 NS_CC_EXT_BEGIN
 

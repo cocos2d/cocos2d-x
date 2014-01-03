@@ -23,55 +23,53 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
-#include "cocos2d.h"
-#include "../Json/rapidjson/prettywriter.h"
-#include "../Json/rapidjson/filestream.h"
-#include "../Json/rapidjson/stringbuffer.h"
+#include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 
+IMPLEMENT_CLASS_COMPONENT_INFO(CCComAttribute)
 CCComAttribute::CCComAttribute(void)
-: _dict(NULL)
+: m_pDict(NULL)
 {
     m_strName = "CCComAttribute";
 }
 
 CCComAttribute::~CCComAttribute(void)
 {
-    CC_SAFE_RELEASE(_dict);
+    CC_SAFE_RELEASE(m_pDict);
 }
 
 bool CCComAttribute::init()
 {
-    _dict = CCDictionary::create();
-	_dict->retain();
+    m_pDict = CCDictionary::create();
+	m_pDict->retain();
     return true;
 }
 
 void CCComAttribute::setInt(const char *key, int value)
 {
-    _dict->setObject(CCInteger::create(value), key);
+    m_pDict->setObject(CCInteger::create(value), key);
 }
 
 void CCComAttribute::setFloat(const char *key, float value)
 {
-    _dict->setObject(CCFloat::create(value), key);
+    m_pDict->setObject(CCFloat::create(value), key);
 }
 
 void CCComAttribute::setBool(const char *key, bool value)
 {
-    _dict->setObject(CCBool::create(value), key);
+    m_pDict->setObject(CCBool::create(value), key);
 }
 
 void CCComAttribute::setCString(const char *key, const char *value)
 {
-    _dict->setObject(CCString::create(value), key);
+    m_pDict->setObject(CCString::create(value), key);
 }
 
 
 int CCComAttribute::getInt(const char *key, int def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
+    CCObject *ret = m_pDict->objectForKey(key);
 	if(ret)
     {
 		
@@ -83,7 +81,7 @@ int CCComAttribute::getInt(const char *key, int def) const
 
 float CCComAttribute::getFloat(const char *key, float def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
+    CCObject *ret = m_pDict->objectForKey(key);
 	if(ret)
     {
 		
@@ -95,7 +93,7 @@ float CCComAttribute::getFloat(const char *key, float def) const
 
 bool CCComAttribute::getBool(const char *key, bool def) const
 {
-    CCObject *ret = _dict->objectForKey(key);
+    CCObject *ret = m_pDict->objectForKey(key);
 	if(ret) {
 		
 		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
@@ -106,7 +104,7 @@ bool CCComAttribute::getBool(const char *key, bool def) const
 
 const char* CCComAttribute::getCString(const char *key, const char *def) const
 {
-   CCObject *ret = _dict->objectForKey(key);
+   CCObject *ret = m_pDict->objectForKey(key);
 	if(ret) {
 		
 		if( CCString *obj = dynamic_cast<CCString*>(ret) )
@@ -129,13 +127,49 @@ CCComAttribute* CCComAttribute::create(void)
     return pRet;
 }
 
-void CCComAttribute::setJsonName(const std::string &jsonName)
+void CCComAttribute::setFile(const std::string &jsonName)
 {
-	_jsonName = jsonName;
+	m_strJsonFile = jsonName;
 }
-std::string CCComAttribute::getJsonName()
+std::string CCComAttribute::getFile() const
 {
-	return _jsonName;
+	return m_strJsonFile;
+}
+
+bool CCComAttribute::serialize(void* r)
+{
+	bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(r == NULL);
+		rapidjson::Value *v = (rapidjson::Value *)r;
+		const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
+		CC_BREAK_IF(pClassName == NULL);
+		const char *pComName = DICTOOL->getStringValue_json(*v, "name");
+		if (pComName != NULL)
+		{
+			setName(pComName);
+		}
+		else
+		{
+			setName(pClassName);
+		}
+		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+		int nResType = nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+		CC_BREAK_IF(nResType != 0);
+		const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
+		CC_BREAK_IF(pFile == NULL);
+		std::string strFilePath;
+		if (pFile != NULL)
+		{
+			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
+		}
+		setFile(strFilePath);
+		bRet = true;
+	} while (0);
+
+	return bRet;
 }
 
 NS_CC_EXT_END
