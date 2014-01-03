@@ -22,17 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "gui/UIButton.h"
+#include "UIButton.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
 NS_CC_BEGIN
 
 namespace gui {
 
-#define NORMALRENDERERZ (0)
-#define PRESSEDRENDERERZ (0)
-#define DISABLEDRENDERERZ (0)
-#define TITLERENDERERZ (1)
+#define NORMALRENDERERZ (-2)
+#define PRESSEDRENDERERZ (-2)
+#define DISABLEDRENDERERZ (-2)
+#define TITLERENDERERZ (-1)
     
 Button::Button():
 _buttonNormalRenderer(nullptr),
@@ -54,7 +54,14 @@ _normalTextureSize(_size),
 _pressedTextureSize(_size),
 _disabledTextureSize(_size),
 _pressedActionEnabled(false),
-_titleColor(Color3B::WHITE)
+_titleColor(Color3B::WHITE),
+_normalTextureScaleXInSize(1.0f),
+_normalTextureScaleYInSize(1.0f),
+_pressedTextureScaleXInSize(1.0f),
+_pressedTextureScaleYInSize(1.0f),
+_normalTextureLoaded(false),
+_pressedTextureLoaded(false),
+_disabledTextureLoaded(false)
 {
     
 }
@@ -90,6 +97,7 @@ void Button::initRenderer()
     _buttonClickedRenderer = Sprite::create();
     _buttonDisableRenderer = Sprite::create();
     _titleRenderer = LabelTTF::create();
+    
     Node::addChild(_buttonNormalRenderer, NORMALRENDERERZ, -1);
     Node::addChild(_buttonClickedRenderer, PRESSEDRENDERERZ, -1);
     Node::addChild(_buttonDisableRenderer, DISABLEDRENDERERZ, -1);
@@ -104,11 +112,9 @@ void Button::setScale9Enabled(bool able)
     }
     _brightStyle = BRIGHT_NONE;
     _scale9Enabled = able;
-
     Node::removeChild(_buttonNormalRenderer);
     Node::removeChild(_buttonClickedRenderer);
     Node::removeChild(_buttonDisableRenderer);
-    
     _buttonNormalRenderer = nullptr;
     _buttonClickedRenderer = nullptr;
     _buttonDisableRenderer = nullptr;
@@ -207,6 +213,7 @@ void Button::loadTextureNormal(const char* normal,TextureResType texType)
     updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     normalTextureScaleChangedWithSize();
+    _normalTextureLoaded = true;
 }
 
 void Button::loadTexturePressed(const char* selected,TextureResType texType)
@@ -253,6 +260,7 @@ void Button::loadTexturePressed(const char* selected,TextureResType texType)
     updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     pressedTextureScaleChangedWithSize();
+    _pressedTextureLoaded = true;
 }
 
 void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
@@ -299,6 +307,7 @@ void Button::loadTextureDisabled(const char* disabled,TextureResType texType)
     updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     disabledTextureScaleChangedWithSize();
+    _disabledTextureLoaded = true;
 }
 
 void Button::setCapInsets(const Rect &capInsets)
@@ -343,36 +352,49 @@ void Button::onPressStateChangedToNormal()
     _buttonNormalRenderer->setVisible(true);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(false);
-    if (_pressedActionEnabled)
+    if (_pressedTextureLoaded)
+    {
+        if (_pressedActionEnabled)
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonClickedRenderer->stopAllActions();
+            Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
+            _buttonNormalRenderer->runAction(zoomAction);
+            _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
+        }
+    }
+    else
     {
         _buttonNormalRenderer->stopAllActions();
-        _buttonClickedRenderer->stopAllActions();
-        _buttonDisableRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, 1.0f);
-        Action *zoomAction1 = ScaleTo::create(0.05f, 1.0f);
-        Action *zoomAction2 = ScaleTo::create(0.05f, 1.0f);
+        Action *zoomAction = ScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
         _buttonNormalRenderer->runAction(zoomAction);
-        _buttonClickedRenderer->runAction(zoomAction1);
-        _buttonDisableRenderer->runAction(zoomAction2);
     }
 }
 
 void Button::onPressStateChangedToPressed()
 {
-    _buttonNormalRenderer->setVisible(false);
-    _buttonClickedRenderer->setVisible(true);
-    _buttonDisableRenderer->setVisible(false);
-    if (_pressedActionEnabled)
+    if (_pressedTextureLoaded)
     {
+        _buttonNormalRenderer->setVisible(false);
+        _buttonClickedRenderer->setVisible(true);
+        _buttonDisableRenderer->setVisible(false);
+        if (_pressedActionEnabled)
+        {
+            _buttonNormalRenderer->stopAllActions();
+            _buttonClickedRenderer->stopAllActions();
+            Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
+            _buttonClickedRenderer->runAction(zoomAction);
+            _buttonNormalRenderer->setScale(_pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
+        }
+    }
+    else
+    {
+        _buttonNormalRenderer->setVisible(true);
+        _buttonClickedRenderer->setVisible(true);
+        _buttonDisableRenderer->setVisible(false);
         _buttonNormalRenderer->stopAllActions();
-        _buttonClickedRenderer->stopAllActions();
-        _buttonDisableRenderer->stopAllActions();
-        Action *zoomAction = ScaleTo::create(0.05f, 1.1f);
-        Action *zoomAction1 = ScaleTo::create(0.05f, 1.1f);
-        Action *zoomAction2 = ScaleTo::create(0.05f, 1.1f);
+        Action *zoomAction = ScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
         _buttonNormalRenderer->runAction(zoomAction);
-        _buttonClickedRenderer->runAction(zoomAction1);
-        _buttonDisableRenderer->runAction(zoomAction2);
     }
 }
 
@@ -381,6 +403,8 @@ void Button::onPressStateChangedToDisabled()
     _buttonNormalRenderer->setVisible(false);
     _buttonClickedRenderer->setVisible(false);
     _buttonDisableRenderer->setVisible(true);
+    _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
+    _buttonClickedRenderer->setScale(_pressedTextureScaleXInSize, _pressedTextureScaleYInSize);
 }
 
 void Button::setFlipX(bool flipX)
@@ -474,6 +498,7 @@ void Button::normalTextureScaleChangedWithSize()
         if (!_scale9Enabled)
         {
             _buttonNormalRenderer->setScale(1.0f);
+            _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
             _size = _normalTextureSize;
         }
     }
@@ -482,6 +507,7 @@ void Button::normalTextureScaleChangedWithSize()
         if (_scale9Enabled)
         {
             static_cast<extension::Scale9Sprite*>(_buttonNormalRenderer)->setPreferredSize(_size);
+            _normalTextureScaleXInSize = _normalTextureScaleYInSize = 1.0f;
         }
         else
         {
@@ -495,6 +521,8 @@ void Button::normalTextureScaleChangedWithSize()
             float scaleY = _size.height / textureSize.height;
             _buttonNormalRenderer->setScaleX(scaleX);
             _buttonNormalRenderer->setScaleY(scaleY);
+            _normalTextureScaleXInSize = scaleX;
+            _normalTextureScaleYInSize = scaleY;
         }
     }
 }
@@ -506,6 +534,7 @@ void Button::pressedTextureScaleChangedWithSize()
         if (!_scale9Enabled)
         {
             _buttonClickedRenderer->setScale(1.0f);
+            _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
         }
     }
     else
@@ -513,6 +542,7 @@ void Button::pressedTextureScaleChangedWithSize()
         if (_scale9Enabled)
         {
             static_cast<extension::Scale9Sprite*>(_buttonClickedRenderer)->setPreferredSize(_size);
+            _pressedTextureScaleXInSize = _pressedTextureScaleYInSize = 1.0f;
         }
         else
         {
@@ -526,6 +556,8 @@ void Button::pressedTextureScaleChangedWithSize()
             float scaleY = _size.height / _pressedTextureSize.height;
             _buttonClickedRenderer->setScaleX(scaleX);
             _buttonClickedRenderer->setScaleY(scaleY);
+            _pressedTextureScaleXInSize = scaleX;
+            _pressedTextureScaleYInSize = scaleY;
         }
     }
 }
