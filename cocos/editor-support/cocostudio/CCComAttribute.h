@@ -58,11 +58,10 @@ public:
    bool   getBool(const std::string& key, bool def = false) const;
    std::string getString(const std::string& key, const std::string& def = "") const;
    
-   void setJsonFile(const std::string &jsonName);
-   std::string getJsonFile();
+   bool parse(const std::string &jsonFile);
 private:
    cocos2d::ValueMap _dict;
-   std::string _jsonName;
+   rapidjson::Document _doc;
 };
 
 }

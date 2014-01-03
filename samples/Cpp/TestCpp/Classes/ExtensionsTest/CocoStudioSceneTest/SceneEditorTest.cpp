@@ -292,11 +292,11 @@ cocos2d::Node* SpriteComponentTest::createGameScene()
 	ActionInterval*  action1 = CCBlink::create(2, 10);
 	ActionInterval*  action2 = CCBlink::create(2, 5);
 
-	Sprite *pSister1 = static_cast<Sprite*>(node->getChildByTag(10003)->getComponent("CCSprite")->getNode());
-	pSister1->runAction(action1);
+	ComRender *pSister1 = static_cast<ComRender*>(node->getChildByTag(10003)->getComponent("CCSprite"));
+	pSister1->getNode()->runAction(action1);
 
-	Sprite *pSister2 = static_cast<Sprite*>(node->getChildByTag(10004)->getComponent("CCSprite")->getNode());
-	pSister2->runAction(action2);
+	ComRender *pSister2 = static_cast<ComRender*>(node->getChildByTag(10004)->getComponent("CCSprite"));
+	pSister2->getNode()->runAction(action2);
 
     return node;
 }
@@ -343,11 +343,11 @@ cocos2d::Node* ArmatureComponentTest::createGameScene()
 	{
 		return nullptr;
 	}
-	Armature *pBlowFish = static_cast<Armature*>(node->getChildByTag(10007)->getComponent("CCArmature")->getNode());
-	pBlowFish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+	ComRender *pBlowFish = static_cast<ComRender*>(node->getChildByTag(10007)->getComponent("CCArmature"));
+	pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-	Armature *pButterflyfish = static_cast<Armature*>(node->getChildByTag(10008)->getComponent("CCArmature")->getNode());
-	pButterflyfish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+	ComRender *pButterflyfish = static_cast<ComRender*>(node->getChildByTag(10008)->getComponent("CCArmature"));
+	pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
     return node;
 }
@@ -396,7 +396,8 @@ cocos2d::Node* UIComponentTest::createGameScene()
 	}
 	_node = node;
 	
-	Widget* widget = static_cast<cocos2d::gui::Widget*>(_node->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
+    ComRender *render = static_cast<ComRender*>(_node->getChildByTag(10025)->getComponent("GUIComponent"));
+	Widget* widget = static_cast<cocos2d::gui::Widget*>(render->getNode());
 	Button* button = static_cast<Button*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
 
@@ -409,11 +410,11 @@ void UIComponentTest::touchEvent(Object *pSender, TouchEventType type)
 	{
 	case TOUCH_EVENT_BEGAN:
 		{
-			Armature *pBlowFish = static_cast<Armature*>(_node->getChildByTag(10010)->getComponent("Armature")->getNode());
-			pBlowFish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+			ComRender *pBlowFish = static_cast<ComRender*>(_node->getChildByTag(10010)->getComponent("Armature"));
+			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-			Armature *pButterflyfish = static_cast<Armature*>(_node->getChildByTag(10011)->getComponent("Armature")->getNode());
-			pButterflyfish->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
+			ComRender *pButterflyfish = static_cast<ComRender*>(_node->getChildByTag(10011)->getComponent("Armature"));
+			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -463,7 +464,7 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 	{
 		return nullptr;
 	}
-	TMXTiledMap *tmxMap = static_cast<TMXTiledMap*>(node->getChildByTag(10015)->getComponent("CCTMXTiledMap")->getNode());
+	ComRender *tmxMap = static_cast<ComRender*>(node->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
 	ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
 	ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
 	ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
@@ -472,9 +473,9 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 	ActionInterval *rotateToBack = RotateTo::create(2, 0);
 	ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
 
-	tmxMap->runAction(Sequence::create(actionTo, actionToBack, nullptr));
-	tmxMap->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
-	tmxMap->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
     return node;
 }
 
@@ -520,10 +521,10 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 		return nullptr;
 	}
 
-	ParticleSystemQuad* Particle = static_cast<ParticleSystemQuad*>(node->getChildByTag(10020)->getComponent("CCParticleSystemQuad")->getNode());
+	ComRender* Particle = static_cast<ComRender*>(node->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
 	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
 	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
-	Particle->runAction(action);
+	Particle->getNode()->runAction(action);
     return node;
 }
 
@@ -571,7 +572,8 @@ cocos2d::Node* EffectComponentTest::createGameScene()
 		return nullptr;
 	}
 	_node = node;
-	Armature *pAr = static_cast<Armature*>(_node->getChildByTag(10015)->getComponent("CCArmature")->getNode());
+    ComRender *render = static_cast<ComRender*>(_node->getChildByTag(10015)->getComponent("CCArmature"));
+	Armature *pAr = static_cast<Armature*>(render->getNode());
 	pAr->getAnimation()->setMovementEventCallFunc(CC_CALLBACK_0(EffectComponentTest::animationEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     return node;
 }
@@ -682,20 +684,7 @@ bool AttributeComponentTest::initData()
 		CC_BREAK_IF(_node == nullptr);
 		ComAttribute *attribute = static_cast<ComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
 		CC_BREAK_IF(attribute == nullptr);
-		std::string jsonpath = FileUtils::getInstance()->fullPathForFilename(attribute->getJsonFile());
-        std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonpath);
-        doc.Parse<0>(contentStr.c_str());
-        CC_BREAK_IF(doc.HasParseError());
-
-		std::string playerName = DICTOOL->getStringValue_json(doc, "name");
-		float maxHP = DICTOOL->getFloatValue_json(doc, "maxHP");
-		float maxMP = DICTOOL->getFloatValue_json(doc, "maxMP");
-		
-		attribute->setString("Name", playerName);
-		attribute->setFloat("MaxHP", maxHP);
-		attribute->setFloat("MaxMP", maxMP);
-
-		log("Name: %s, HP: %f, MP: %f", attribute->getString("Name").c_str(), attribute->getFloat("MaxHP"), attribute->getFloat("MaxMP"));
+		log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
 
 		bRet = true;
 	} while (0);

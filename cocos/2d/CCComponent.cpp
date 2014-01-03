@@ -102,14 +102,4 @@ void Component::setEnabled(bool b)
     _enabled = b;
 }
 
-Node* Component::getNode()
-{
-	return nullptr;
-}
-
-void Component::setNode(Node *node)
-{
-	CC_UNUSED_PARAM(node);
-}
-
 NS_CC_END

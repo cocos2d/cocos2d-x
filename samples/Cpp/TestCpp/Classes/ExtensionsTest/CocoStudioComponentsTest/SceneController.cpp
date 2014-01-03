@@ -29,7 +29,7 @@ void SceneController::onEnter()
     _fAddTargetTime = 1.0f;
    
     static_cast<ComAudio*>(_owner->getComponent("Audio"))->playBackgroundMusic("background-music-aac.wav", true);
-    static_cast<ComAttribute*>(_owner->getComponent("ComAttribute"))->setInt("KillCount", 0);
+    static_cast<ComAttribute*>(_owner->getComponent("CCComAttribute"))->setInt("KillCount", 0);
 }
 
 void SceneController::onExit()
