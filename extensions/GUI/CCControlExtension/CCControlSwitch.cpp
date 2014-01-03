@@ -47,11 +47,6 @@ public:
      * @js NA
      * @lua NA
      */
-    void draw() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
     void needsLayout();
     /**
      * @js NA
@@ -93,6 +88,8 @@ public:
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _onLabel, OnLabel)
     CC_SYNTHESIZE_RETAIN(LabelTTF*, _offLabel, OffLabel)
+    
+    Sprite* _clipperStencil;
 
 protected:
     /**
@@ -116,7 +113,6 @@ protected:
                             Sprite *thumbSprite,
                             LabelTTF* onLabel, 
                             LabelTTF* offLabel);
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ControlSwitchSprite);
 };
@@ -146,6 +142,7 @@ ControlSwitchSprite::ControlSwitchSprite()
 , _thumbSprite(NULL)
 , _onLabel(NULL)
 , _offLabel(NULL)
+, _clipperStencil(nullptr)
 {
 
 }
@@ -158,6 +155,7 @@ ControlSwitchSprite::~ControlSwitchSprite()
     CC_SAFE_RELEASE(_onLabel);
     CC_SAFE_RELEASE(_offLabel);
     CC_SAFE_RELEASE(_maskTexture);
+    CC_SAFE_RELEASE(_clipperStencil);
 }
 
 bool ControlSwitchSprite::initWithMaskSprite(
@@ -180,8 +178,24 @@ bool ControlSwitchSprite::initWithMaskSprite(
         setThumbSprite(thumbSprite);
         setOnLabel(onLabel);
         setOffLabel(offLabel);
-
-        addChild(_thumbSprite);
+        //setOnSprite(nullptr);
+        //setOffSprite(nullptr);
+        //setOnLabel(nullptr);
+        //setOffLabel(nullptr);
+        ClippingNode* clipper = ClippingNode::create();
+        _clipperStencil = Sprite::createWithTexture(maskSprite->getTexture());
+        _clipperStencil->retain();
+        clipper->setAlphaThreshold(0.1f);
+        
+        clipper->setStencil(_clipperStencil);
+        
+        clipper->addChild(thumbSprite);
+        clipper->addChild(onSprite);
+        clipper->addChild(offSprite);
+        clipper->addChild(onLabel);
+        clipper->addChild(offLabel);
+        
+        addChild(clipper);
 
         // Set up the mask with the Mask shader
         setMaskTexture(maskSprite->getTexture());
@@ -221,45 +235,6 @@ void ControlSwitchSprite::updateTweenAction(float value, const std::string& key)
     setSliderXPosition(value);
 }
 
-void ControlSwitchSprite::draw()
-{
-    CC_NODE_DRAW_SETUP();
-
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    GL::blendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    getShaderProgram()->setUniformsForBuiltins();
-
-    GL::bindTexture2DN(0, getTexture()->getName());
-    glUniform1i(_textureLocation, 0);
-
-    GL::bindTexture2DN(1, _maskTexture->getName());
-    glUniform1i(_maskLocation, 1);
-
-#define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
-    long offset = 0;
-    setGLBufferData(&_quad, 4 * kQuadSize, 0);
-#else
-    long offset = (long)&_quad;
-#endif // EMSCRIPTEN
-
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    GL::bindTexture2DN(0, 0);
-}
-
 void ControlSwitchSprite::needsLayout()
 {
     _onSprite->setPosition(Point(_onSprite->getContentSize().width / 2 + _sliderXPosition,
@@ -268,6 +243,9 @@ void ControlSwitchSprite::needsLayout()
         _offSprite->getContentSize().height / 2));
     _thumbSprite->setPosition(Point(_onSprite->getContentSize().width + _sliderXPosition,
         _maskTexture->getContentSize().height / 2));
+
+    _clipperStencil->setPosition(Point(_maskTexture->getContentSize().width/2,
+                                    _maskTexture->getContentSize().height / 2));
 
     if (_onLabel)
     {
