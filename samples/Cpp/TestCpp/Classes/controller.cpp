@@ -113,11 +113,7 @@ static TestScene* CreateTestScene(int nIdx)
 // bada don't support libcurl
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE && CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
     case TEST_CURL:
-	#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
         pScene = new CurlTestScene(); break;
-    #else
-	    CCMessageBox("CurlTest not yet implemented.","Alert"); break;
-    #endif
 #endif
     case TEST_USERDEFAULT:
         pScene = new UserDefaultTestScene(); break;
