@@ -330,6 +330,7 @@ public:
     {
         if (this != &other) {
             CCLOGINFO("In the move assignment operator of Map!");
+            clear();
             _data = std::move(other._data);
         }
         return *this;
