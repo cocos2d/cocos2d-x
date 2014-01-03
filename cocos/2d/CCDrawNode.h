@@ -32,6 +32,7 @@
 
 #include "CCNode.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -77,12 +78,6 @@ public:
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);
-    
-    /** listen the event that coming to foreground on Android
-    * @js NA
-    * @lua NA
-    */
-    void listenBackToForeground(Object *obj);
 
     void onDraw();
     
@@ -105,6 +100,7 @@ protected:
     V2F_C4B_T2F *_buffer;
 
     BlendFunc   _blendFunc;
+    CustomCommand _customCommand;
 
     bool        _dirty;
 

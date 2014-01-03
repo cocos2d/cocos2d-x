@@ -259,6 +259,7 @@ static BOOL _mixerRateSet = NO;
     device = alcGetContextsDevice(currentContext);
     //Release context
     CDLOGINFO(@"Denshion::CDSoundEngine - destroy context.");
+    alcMakeContextCurrent(NULL);
     alcDestroyContext(currentContext);
     //Close device
     CDLOGINFO(@"Denshion::CDSoundEngine - close device.");

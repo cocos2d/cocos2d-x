@@ -462,6 +462,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
         {
             if (*iter == listener)
             {
+                listener->release();
                 _toAddedListeners.erase(iter);
                 break;
             }
@@ -1070,10 +1071,11 @@ void EventDispatcher::removeEventListenersForListenerID(const EventListener::Lis
         }
     }
     
-    for(auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end();)
+    for (auto iter = _toAddedListeners.begin(); iter != _toAddedListeners.end();)
     {
         if ((*iter)->getListenerID() == listenerID)
         {
+            (*iter)->release();
             iter = _toAddedListeners.erase(iter);
         }
         else

@@ -315,7 +315,7 @@ public:
      */
     virtual Widget* getChildByName(const char* name);
     
-    virtual void visit();
+    virtual void visit() override;
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -333,7 +333,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    void setPosition(const Point &pos);
+    virtual void setPosition(const Point &pos) override;
     
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -618,8 +618,8 @@ public:
     
     Widget* clone();
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void updateSizeAndPosition();
     

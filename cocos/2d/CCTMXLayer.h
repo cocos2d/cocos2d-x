@@ -109,8 +109,8 @@ public:
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
-    unsigned int getTileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE unsigned int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr){
+    int getTileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr);
+    CC_DEPRECATED_ATTRIBUTE int tileGIDAt(const Point& tileCoordinate, ccTMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -118,7 +118,7 @@ public:
     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
     If a tile is already placed at that position, then it will be removed.
     */
-    void setTileGID(unsigned int gid, const Point& tileCoordinate);
+    void setTileGID(int gid, const Point& tileCoordinate);
 
     /** sets the tile gid (gid = tile global id) at a given tile coordinate.
      The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -127,7 +127,7 @@ public:
      Use withFlags if the tile flags need to be changed as well
      */
 
-    void setTileGID(unsigned int gid, const Point& tileCoordinate, ccTMXTileFlags flags);
+    void setTileGID(int gid, const Point& tileCoordinate, ccTMXTileFlags flags);
 
     /** removes a tile at given tile coordinate */
     void removeTileAt(const Point& tileCoordinate);
@@ -158,8 +158,8 @@ public:
      * @js NA
      * @lua NA
      */
-    inline unsigned int* getTiles() const { return _tiles; };
-    inline void setTiles(unsigned int* tiles) { _tiles = tiles; };
+    inline int* getTiles() const { return _tiles; };
+    inline void setTiles(int* tiles) { _tiles = tiles; };
     
     /** Tileset information for the layer */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
@@ -170,8 +170,8 @@ public:
     };
     
     /** Layer orientation, which is the same as the map orientation */
-    inline unsigned int getLayerOrientation() const { return _layerOrientation; };
-    inline void setLayerOrientation(unsigned int orientation) { _layerOrientation = orientation; };
+    inline int getLayerOrientation() const { return _layerOrientation; };
+    inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
     /** properties from the layer. They can be added using Tiled */
     inline const ValueMap& getProperties() const { return _properties; };
@@ -199,18 +199,18 @@ private:
     Point calculateLayerOffset(const Point& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(unsigned int gid, const Point& pos);
-    Sprite* insertTileForGID(unsigned int gid, const Point& pos);
-    Sprite* updateTileForGID(unsigned int gid, const Point& pos);
+    Sprite* appendTileForGID(int gid, const Point& pos);
+    Sprite* insertTileForGID(int gid, const Point& pos);
+    Sprite* updateTileForGID(int gid, const Point& pos);
 
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, Point pos, unsigned int gid);
+    void setupTileSprite(Sprite* sprite, Point pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
     int getVertexZForPos(const Point& pos);
 
     // index
-    ssize_t atlasIndexForExistantZ(unsigned int z);
+    ssize_t atlasIndexForExistantZ(int z);
     ssize_t atlasIndexForNewZ(int z);
     
 protected:
@@ -218,10 +218,7 @@ protected:
     std::string _layerName;
     //! TMX Layer supports opacity
     unsigned char        _opacity;
-
-    unsigned int        _minGID;
-    unsigned int        _maxGID;
-
+    
     //! Only used when vertexZ is used
     int                    _vertexZvalue;
     bool                _useAutomaticVertexZ;
@@ -238,11 +235,11 @@ protected:
     /** size of the map's tile (could be different from the tile's size) */
     Size _mapTileSize;
     /** pointer to the map of tiles */
-    unsigned int* _tiles;
+    int* _tiles;
     /** Tileset information for the layer */
     TMXTilesetInfo* _tileSet;
     /** Layer orientation, which is the same as the map orientation */
-    unsigned int _layerOrientation;
+    int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
 };

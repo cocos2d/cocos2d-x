@@ -27,7 +27,7 @@ bool UIListViewTest_Vertical::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("Move by vertical direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -36,7 +36,7 @@ bool UIListViewTest_Vertical::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("ListView vertical");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -70,7 +70,7 @@ bool UIListViewTest_Vertical::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewTest_Vertical::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Vertical::selectedItemEvent));
         _uiLayer->addChild(listView);
         
         
@@ -167,22 +167,20 @@ bool UIListViewTest_Vertical::init()
     return false;
 }
 
-void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ScrollviewEventType type)
+void UIListViewTest_Vertical::selectedItemEvent(Object *pSender, ListViewEventType type)
 {
-    /*
     switch (type)
     {
-        case SCROLLVIEW_EVENT_SELECT_CHILD:
+        case LISTVIEW_ONSELECTEDITEM:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %d", listView->getSelectedChildIndex());
+            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
         }
             break;
             
         default:
             break;
     }
-     */
 }
 
 // UIListViewTest_Horizontal
@@ -202,7 +200,7 @@ bool UIListViewTest_Horizontal::init()
     {
         Size widgetSize = _widget->getSize();
         
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("Move by horizontal direction");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -211,7 +209,7 @@ bool UIListViewTest_Horizontal::init()
         _uiLayer->addChild(_displayValueLabel);
         
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("ListView horizontal");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -245,7 +243,7 @@ bool UIListViewTest_Horizontal::init()
                                     (backgroundSize.width - listView->getSize().width) / 2.0f,
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getSize().height) / 2.0f));
-        listView->addEventListenerScrollView(this, scrollvieweventselector(UIListViewTest_Horizontal::selectedItemEvent));
+        listView->addEventListenerListView(this, listvieweventselector(UIListViewTest_Horizontal::selectedItemEvent));
         _uiLayer->addChild(listView);
         
         
@@ -342,20 +340,18 @@ bool UIListViewTest_Horizontal::init()
     return false;
 }
 
-void UIListViewTest_Horizontal::selectedItemEvent(Object *pSender, ScrollviewEventType type)
+void UIListViewTest_Horizontal::selectedItemEvent(Object *pSender, ListViewEventType type)
 {
-    /*
     switch (type)
     {
-        case SCROLLVIEW_EVENT_SELECT_CHILD:
+        case LISTVIEW_ONSELECTEDITEM:
         {
             ListView* listView = static_cast<ListView*>(pSender);
-            CCLOG("select child index = %d", listView->getSelectedChildIndex());
+            CCLOG("select child index = %ld", listView->getCurSelectedIndex());
         }
             break;
             
         default:
             break;
     }
-     */
 }

@@ -11,7 +11,7 @@ bool UILabelTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Label");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -20,7 +20,7 @@ bool UILabelTest::init()
         _uiLayer->addChild(alert);        
         
         // Create the label
-        gui::Label* label = gui::Label::create();
+        gui::Text* label = gui::Text::create();
         label->setText("Label");
         label->setFontName("AmericanTypewriter");
         label->setFontSize(30);
@@ -40,7 +40,7 @@ bool UILabelTest_LineWrap::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Label line wrap");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -49,7 +49,7 @@ bool UILabelTest_LineWrap::init()
         _uiLayer->addChild(alert);
         
         // Create the line wrap
-        gui::Label* label = gui::Label::create();
+        gui::Text* label = gui::Text::create();
         label->setTextAreaSize(Size(280, 150));
         label->setTextHorizontalAlignment(TextHAlignment::CENTER);
         label->setText("Label can line wrap");
@@ -170,7 +170,7 @@ bool UILabelTest_TTF::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Label set TTF font");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -179,7 +179,7 @@ bool UILabelTest_TTF::init()
         _uiLayer->addChild(alert);
         
         // Create the label
-        gui::Label* label = gui::Label::create();
+        gui::Text* label = gui::Text::create();
         label->setText("Label");
         label->setFontName("fonts/A Damn Mess.ttf");
         label->setFontSize(30);
