@@ -92,7 +92,7 @@ void UnitTestDemo::backCallback(Object* sender)
 void TemplateVectorTest::onEnter()
 {
     UnitTestDemo::onEnter();
-    
+
     Vector<Node*> vec;
     CCASSERT(vec.empty(), "");
     CCASSERT(vec.capacity() == 0, "");
@@ -116,7 +116,7 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec.at(0)->getTag() == 1, "");
     CCASSERT(vec.at(1)->getTag() == 3, "");
     CCASSERT(vec.at(2)->getTag() == 2, "");
-    
+
     // Test copy constructor
     Vector<Node*> vec2(vec);
     CCASSERT(vec2.size() == vec.size(), "");
@@ -127,7 +127,7 @@ void TemplateVectorTest::onEnter()
         CCASSERT(vec.at(i)->retainCount() == 3, "");
         CCASSERT(vec2.at(i)->retainCount() == 3, "");
     }
-    
+
     // Test copy assignment operator
     Vector<Node*> vec3;
     vec3 = vec2;
@@ -140,26 +140,26 @@ void TemplateVectorTest::onEnter()
         CCASSERT(vec2.at(i)->retainCount() == 4, "");
         CCASSERT(vec.at(i)->retainCount() == 4, "");
     }
-    
+
     // Test move constructor
-    
+
     auto createVector = [](){
         Vector<Node*> ret;
-        
+
         for (int i = 0; i < 20; i++)
         {
             ret.pushBack(Node::create());
         }
-        
+
         int j = 1000;
         for (auto& child : ret)
         {
             child->setTag(j++);
         }
-        
+
         return ret;
     };
-    
+
     Vector<Node*> vec4(createVector());
     for (const auto& child : vec4)
     {
@@ -171,10 +171,10 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec5.capacity() == 10, "");
     vec5.reserve(20);
     CCASSERT(vec5.capacity() == 20, "");
-    
+
     CCASSERT(vec5.size() == 0, "");
     CCASSERT(vec5.empty(), "");
-    
+
     auto toRemovedNode = Node::create();
     vec5.pushBack(toRemovedNode);
     CCASSERT(toRemovedNode->retainCount() == 2, "");
@@ -183,19 +183,19 @@ void TemplateVectorTest::onEnter()
     vec5 = createVector();
     CCASSERT(toRemovedNode->retainCount() == 1, "");
     CCASSERT(vec5.size() == 20, "size should be 20");
-    
+
     for (const auto& child : vec5)
     {
         CCASSERT(child->retainCount() == 2, "");
     }
-    
+
     // Test Vector<T>::find
     CCASSERT(vec.find(node3) == (vec.begin() + 1), "");
     CCASSERT(std::find(std::begin(vec), std::end(vec), node2) == (vec.begin() + 2), "");
-    
+
     CCASSERT(vec.front()->getTag() == 1, "");
     CCASSERT(vec.back()->getTag() == 2, "");
-    
+
     CCASSERT(vec.getRandomObject(), "");
     CCASSERT(!vec.contains(Node::create()), "");
     CCASSERT(vec.contains(node1), "");
@@ -203,7 +203,7 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec.contains(node3), "");
     CCASSERT(vec.equals(vec2), "");
     CCASSERT(vec.equals(vec3), "");
-    
+
     // Insert
     vec5.insert(2, node1);
     CCASSERT(vec5.at(2)->getTag() == 1, "");
@@ -216,7 +216,7 @@ void TemplateVectorTest::onEnter()
     // Erase and clear
     Vector<Node*> vec6 = createVector();
     Vector<Node*> vec7 = vec6;  // Copy for check
-    
+
     CCASSERT(vec6.size() == 20, "");
     vec6.erase(vec6.begin() + 1);  //
     CCASSERT(vec6.size() == 19, "");
@@ -232,32 +232,32 @@ void TemplateVectorTest::onEnter()
     vec6.eraseObject(vec6.at(2));
     CCASSERT(vec6.at(2)->getTag() == 1013, "");
     vec6.clear();
-    
+
     // Check the retain count in vec7
     CCASSERT(vec7.size() == 20, "");
     for (const auto& child : vec7)
     {
         CCASSERT(child->retainCount() == 2, "");
     }
-    
+
     // Sort
     Vector<Node*> vecForSort = createVector();
     std::sort(vecForSort.begin(), vecForSort.end(), [](Node* a, Node* b){
         return a->getTag() >= b->getTag();
     });
-    
+
     for (int i = 0; i < 20; ++i)
     {
         CCASSERT(vecForSort.at(i)->getTag() - 1000 == (19 - i), "");
     }
-    
+
     // Reverse
     vecForSort.reverse();
     for (int i = 0; i < 20; ++i)
     {
         CCASSERT(vecForSort.at(i)->getTag() - 1000 == i, "");
     }
-    
+
     // Swap
     Vector<Node*> vecForSwap = createVector();
     vecForSwap.swap(2, 4);
@@ -266,7 +266,7 @@ void TemplateVectorTest::onEnter()
     vecForSwap.swap(vecForSwap.at(2), vecForSwap.at(4));
     CCASSERT(vecForSwap.at(2)->getTag() == 1002, "");
     CCASSERT(vecForSwap.at(4)->getTag() == 1004, "");
-    
+
     // shrinkToFit
     Vector<Node*> vecForShrink = createVector();
     vecForShrink.reserve(100);
@@ -274,7 +274,7 @@ void TemplateVectorTest::onEnter()
     vecForShrink.pushBack(Node::create());
     vecForShrink.shrinkToFit();
     CCASSERT(vecForShrink.capacity() == 21, "");
-    
+
     // get random object
     // Set the seed by time
     srand(time(nullptr));
@@ -285,25 +285,25 @@ void TemplateVectorTest::onEnter()
         log("Vector: random object tag = %d", vecForRandom.getRandomObject()->getTag());
     }
     log("<---- end  ---->");
-    
+
     // Self assignment
     Vector<Node*> vecSelfAssign = createVector();
     vecSelfAssign = vecSelfAssign;
     CCASSERT(vecSelfAssign.size() == 20, "");
-    
+
     for (const auto& child : vecSelfAssign)
     {
         CCASSERT(child->retainCount() == 2, "");
     }
-    
+
     vecSelfAssign = std::move(vecSelfAssign);
     CCASSERT(vecSelfAssign.size() == 20, "");
-    
+
     for (const auto& child : vecSelfAssign)
     {
         CCASSERT(child->retainCount() == 2, "");
     }
-    
+
     // const at
     Vector<Node*> vecConstAt = createVector();
     constFunc(vecConstAt);
@@ -325,7 +325,7 @@ std::string TemplateVectorTest::subtitle() const
 void TemplateMapTest::onEnter()
 {
     UnitTestDemo::onEnter();
-    
+
     auto createMap = [](){
         Map<std::string, Node*> ret;
         for (int i = 0; i < 20; ++i)
@@ -334,10 +334,10 @@ void TemplateMapTest::onEnter()
             node->setTag(1000 + i);
             ret.insert(StringUtils::toString(i), node);
         }
-        
+
         return ret;
     };
-    
+
     // Default constructor
     Map<std::string, Node*> map1;
     CCASSERT(map1.empty(), "");
@@ -345,7 +345,7 @@ void TemplateMapTest::onEnter()
     CCASSERT(map1.bucketCount() == 0, "");
     CCASSERT(map1.keys().empty(), "");
     CCASSERT(map1.keys(Node::create()).empty(), "");
-    
+
     // Move constructor
     Map<std::string, Node*> map2 = createMap();
     for (const auto& e : map2)
@@ -359,7 +359,7 @@ void TemplateMapTest::onEnter()
     {
         CCASSERT(e.second->retainCount() == 3, "");
     }
-    
+
     // Move assignment operator
     Map<std::string, Node*> map4;
     auto unusedNode = Node::create();
@@ -370,7 +370,7 @@ void TemplateMapTest::onEnter()
     {
         CCASSERT(e.second->retainCount() == 2, "");
     }
-    
+
     // Copy assignment operator
     Map<std::string, Node*> map5;
     map5 = map4;
@@ -378,15 +378,15 @@ void TemplateMapTest::onEnter()
     {
         CCASSERT(e.second->retainCount() == 3, "");
     }
-    
+
     // Check size
     CCASSERT(map4.size() == map5.size(), "");
-    
+
     for (const auto& e : map4)
     {
         CCASSERT(e.second == map5.find(e.first)->second, "");
     }
-    
+
     // bucket_count, bucket_size(n), bucket
     log("--------------");
     log("bucket_count = %d", static_cast<int>(map4.bucketCount()));
@@ -399,21 +399,21 @@ void TemplateMapTest::onEnter()
     {
         log("bucket(\"%s\"), bucket index = %d", e.first.c_str(), static_cast<int>(map4.bucket(e.first)));
     }
-    
+
     log("----- all keys---------");
-    
+
     // keys and at
     auto keys = map4.keys();
     for (const auto& key : keys)
     {
         log("key = %s", key.c_str());
     }
-    
+
     auto node10Key = map4.at("10");
     map4.insert("100", node10Key);
     map4.insert("101", node10Key);
     map4.insert("102", node10Key);
-    
+
     log("------ keys for object --------");
     auto keysForObject = map4.keys(node10Key);
     for (const auto& key : keysForObject)
@@ -421,14 +421,14 @@ void TemplateMapTest::onEnter()
         log("key = %s", key.c_str());
     }
     log("--------------");
-    
+
     // at in const function
     constFunc(map4);
-    
+
     // find
     auto nodeToFind = map4.find("10");
     CCASSERT(nodeToFind->second->getTag() == 1010, "");
-    
+
     // insert
     Map<std::string, Node*> map6;
     auto node1 = Node::create();
@@ -440,14 +440,14 @@ void TemplateMapTest::onEnter()
     map6.insert("insert01", node1);
     map6.insert("insert02", node2);
     map6.insert("insert03", node3);
-    
+
     CCASSERT(node1->retainCount() == 2, "");
     CCASSERT(node2->retainCount() == 2, "");
     CCASSERT(node3->retainCount() == 2, "");
     CCASSERT(map6.at("insert01") == node1, "");
     CCASSERT(map6.at("insert02") == node2, "");
     CCASSERT(map6.at("insert03") == node3, "");
-    
+
     // erase
     Map<std::string, Node*> mapForErase = createMap();
     mapForErase.erase(mapForErase.find("9"));
@@ -457,24 +457,24 @@ void TemplateMapTest::onEnter()
     mapForErase.erase("7");
     CCASSERT(mapForErase.find("7") == mapForErase.end(), "");
     CCASSERT(mapForErase.size() == 18, "");
-    
+
     std::vector<std::string> itemsToRemove;
     itemsToRemove.push_back("2");
     itemsToRemove.push_back("3");
     itemsToRemove.push_back("4");
     mapForErase.erase(itemsToRemove);
     CCASSERT(mapForErase.size() == 15, "");
-    
+
     // clear
     Map<std::string, Node*> mapForClear = createMap();
     auto mapForClearCopy = mapForClear;
     mapForClear.clear();
-    
+
     for (const auto& e : mapForClearCopy)
     {
         CCASSERT(e.second->retainCount() == 2, "");
     }
-    
+
     // get random object
     // Set the seed by time
     srand(time(nullptr));
@@ -485,20 +485,20 @@ void TemplateMapTest::onEnter()
         log("Map: random object tag = %d", mapForRandom.getRandomObject()->getTag());
     }
     log("<---- end  ---->");
-    
+
     // Self assignment
     Map<std::string, Node*> mapForSelfAssign = createMap();
     mapForSelfAssign = mapForSelfAssign;
     CCASSERT(mapForSelfAssign.size() == 20, "");
-    
+
     for (const auto& e : mapForSelfAssign)
     {
         CCASSERT(e.second->retainCount() == 2, "");
     }
-    
+
     mapForSelfAssign = std::move(mapForSelfAssign);
     CCASSERT(mapForSelfAssign.size() == 20, "");
-    
+
     for (const auto& e : mapForSelfAssign)
     {
         CCASSERT(e.second->retainCount() == 2, "");
