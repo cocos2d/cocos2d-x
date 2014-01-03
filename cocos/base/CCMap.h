@@ -282,7 +282,6 @@ public:
     {
         if (!_data.empty())
         {
-            srand(time(NULL));
             ssize_t randIdx = rand() % _data.size();
             iterator randIter = _data.begin();
             std::advance(randIter , randIdx);

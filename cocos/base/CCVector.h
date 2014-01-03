@@ -229,7 +229,6 @@ public:
     {
         if (!_data.empty())
         {
-            srand(time(NULL));
             ssize_t randIdx = rand() % _data.size();
             return *(_data.begin() + randIdx);
         }
