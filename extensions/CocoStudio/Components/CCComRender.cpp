@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "cocos-ext.h"
 
 NS_CC_EXT_BEGIN
-/*
+
 IMPLEMENT_CLASS_COMPONENT_INFO(CCComRender)
 CCComRender::CCComRender(void)
 : m_pRender(NULL)
@@ -210,7 +210,7 @@ bool CCComRender::readJson(const char *pszFileName, rapidjson::Document &doc)
 		bRet = true;
 	} while (0);
 	return bRet;
-}*/
+}
 
 
 NS_CC_EXT_END
