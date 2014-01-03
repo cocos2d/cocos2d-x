@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "external\Box2D\proj.wp8\Box2D.vcxproj", "{79FC91D4-974C-4BC7-8E8C-79E194437DE7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libchipmunk", "external\chipmunk\proj.wp8\chipmunk.vcxproj", "{3AD76EA1-D698-40D2-B04D-D9AB8171F40B}"
@@ -51,6 +49,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloCpp", "samples\Cpp\HelloCpp\proj.wp8-xaml\HelloCpp\HelloCpp\HelloCpp.csproj", "{D90B344F-2FBB-489E-B668-271AE7B196D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCppComponent", "samples\Cpp\HelloCpp\proj.wp8-xaml\HelloCpp\HelloCppComponent\HelloCppComponent.vcxproj", "{A4834EEA-6196-4053-94DB-FE9F3A75F67C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcurl", "cocos2dx\platform\third_party\wp8\libcurl\libcurl.vcxproj", "{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -480,6 +480,26 @@ Global
 		{A4834EEA-6196-4053-94DB-FE9F3A75F67C}.Release|x64.ActiveCfg = Release|Win32
 		{A4834EEA-6196-4053-94DB-FE9F3A75F67C}.Release|x86.ActiveCfg = Release|Win32
 		{A4834EEA-6196-4053-94DB-FE9F3A75F67C}.Release|x86.Build.0 = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|ARM.Build.0 = Debug|ARM
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|Win32.Build.0 = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|x64.ActiveCfg = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|x86.ActiveCfg = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Debug|x86.Build.0 = Debug|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|Any CPU.ActiveCfg = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|ARM.ActiveCfg = Release|ARM
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|ARM.Build.0 = Release|ARM
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|Win32.ActiveCfg = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|Win32.Build.0 = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|x64.ActiveCfg = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|x86.ActiveCfg = Release|Win32
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -491,6 +511,7 @@ Global
 		{F91F8C77-CEAB-4737-A30E-D2677CE66C7C} = {9DDB9F57-4007-4C60-B463-4EFC4C60F0FF}
 		{871AADCE-3905-48EF-AC2B-C67C335B0DCC} = {9DDB9F57-4007-4C60-B463-4EFC4C60F0FF}
 		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2} = {9DDB9F57-4007-4C60-B463-4EFC4C60F0FF}
+		{FCA0FFE5-446B-45C3-9693-BFCCFA7A8B3B} = {9DDB9F57-4007-4C60-B463-4EFC4C60F0FF}
 		{2AC777CA-2D3B-41C8-98AC-B6ED1A4B0988} = {D2A69AE8-35C6-4F2E-B67C-F59260602C88}
 		{E14D2E08-1474-48F5-8815-6F559B07D3C4} = {D2A69AE8-35C6-4F2E-B67C-F59260602C88}
 		{DB8FCE93-1F47-489B-B015-0793CDF3738B} = {D2A69AE8-35C6-4F2E-B67C-F59260602C88}
