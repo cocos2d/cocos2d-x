@@ -84,12 +84,6 @@ public:
      */
     void listenBackToForeground(EventCustom* event);
 
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
     /**
      * @js NA
      * @lua NA
@@ -140,6 +134,13 @@ protected:
 
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
+    
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
     void setupVBOandVAO();
     void setupVBO();

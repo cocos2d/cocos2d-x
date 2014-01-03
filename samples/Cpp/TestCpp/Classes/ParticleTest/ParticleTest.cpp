@@ -1553,8 +1553,7 @@ void MultipleParticleSystemsBatched::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    auto batchNode = new ParticleBatchNode();
-    batchNode->initWithTexture(NULL, 3000);
+    ParticleBatchNode *batchNode = ParticleBatchNode::createWithTexture(nullptr, 3000);
 
     addChild(batchNode, 1, 2);
 
