@@ -240,7 +240,6 @@ void ParticleMainScene::createParticleSystem()
         break;
     }
     addChild(particleSystem, 0, kTagParticleSystem);
-    particleSystem->release();
 
     doTest();
 
