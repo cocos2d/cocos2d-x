@@ -170,6 +170,13 @@ void CCBatchNode::draw()
         CCArmature *armature = dynamic_cast<CCArmature *>(object);
         if (armature)
         {
+            CCTextureAtlas *atlas = armature->getTextureAtlas();
+            if(atlas != m_pAtlas && m_pAtlas)
+            {
+                m_pAtlas->drawQuads();
+                m_pAtlas->removeAllQuads();
+            }
+            
             armature->visit();
             m_pAtlas = armature->getTextureAtlas();
         }
