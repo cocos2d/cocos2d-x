@@ -186,6 +186,22 @@ int LuaEngine::reallocateScriptHandler(int nHandler)
     return nRet;
 }
 
+bool LuaEngine::parseConfig(ConfigType type, const std::string& str)
+{
+    lua_getglobal(_stack->getLuaState(), "__onParseConfig");
+    if (!lua_isfunction(_stack->getLuaState(), -1))
+    {
+        CCLOG("[LUA ERROR] name '%s' does not represent a Lua function", "__onParseConfig");
+        lua_pop(_stack->getLuaState(), 1);
+        return false;
+    }
+    
+    _stack->pushInt((int)type);
+    _stack->pushString(str.c_str());
+    
+    return _stack->executeFunction(2);
+}
+
 int LuaEngine::sendEvent(ScriptEvent* evt)
 {
     if (NULL == evt)

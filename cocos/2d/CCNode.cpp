@@ -867,13 +867,6 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    for( const auto &child: _children)
-        child->onEnter();
-
-    this->resume();
-    
-    _running = true;
-
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
@@ -881,14 +874,18 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    for( const auto &child: _children)
+        child->onEnter();
+
+    this->resume();
+    
+    _running = true;
 }
 
 void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
-
-    for( const auto &child: _children)
-        child->onEnterTransitionDidFinish();
 
     if (_scriptType != kScriptTypeNone)
     {
@@ -897,6 +894,9 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    for( const auto &child: _children)
+        child->onEnterTransitionDidFinish();
 }
 
 void Node::onExitTransitionDidStart()
@@ -918,6 +918,10 @@ void Node::onExit()
     this->pause();
 
     _running = false;
+
+    for( const auto &child: _children)
+        child->onExit();
+    
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
@@ -925,9 +929,6 @@ void Node::onExit()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
-
-    for( const auto &child: _children)
-        child->onExit();
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)

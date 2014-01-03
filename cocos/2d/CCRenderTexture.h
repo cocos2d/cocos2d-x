@@ -29,8 +29,12 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include "kazmath/mat4.h"
 #include "platform/CCImage.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
+
+class EventCustom;
 
 /**
  * @addtogroup textures
@@ -109,12 +113,12 @@ public:
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
      */
-    void listenToBackground(Object *obj);
+    void listenToBackground(EventCustom *event);
     
     /** Listen "come to foreground" message and restore the frame buffer object
      It only has effect on Android.
      */
-    void listenToForeground(Object *obj);
+    void listenToForeground(EventCustom *event);
     
     /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. */
     inline unsigned int getClearFlags() const { return _clearFlags; };
@@ -187,6 +191,13 @@ protected:
      - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
      */
     Sprite* _sprite;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beginWithClearCommand;
+    CustomCommand _clearDepthCommand;
+    CustomCommand _clearCommand;
+    CustomCommand _beginCommand;
+    CustomCommand _endCommand;
 protected:
     //renderer caches and callbacks
     void onBegin();

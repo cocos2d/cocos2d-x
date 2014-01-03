@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCRenderer.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -151,8 +151,7 @@ void AtlasNode::draw(void)
 
     auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
+    _quadCommand.init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,
@@ -161,7 +160,7 @@ void AtlasNode::draw(void)
               _textureAtlas->getTotalQuads(),
               _modelViewTransform);
 
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 
 }
 

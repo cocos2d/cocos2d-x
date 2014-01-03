@@ -316,18 +316,23 @@ public:
     /** Copy assignment operator */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
-        CCLOGINFO("In the copy assignment operator of Map!");
-        clear();
-        _data = other._data;
-        addRefForAllObjects();
+        if (this != &other) {
+            CCLOGINFO("In the copy assignment operator of Map!");
+            clear();
+            _data = other._data;
+            addRefForAllObjects();
+        }
         return *this;
     }
     
     /** Move assignment operator */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
-        CCLOGINFO("In the move assignment operator of Map!");
-        _data = std::move(other._data);
+        if (this != &other) {
+            CCLOGINFO("In the move assignment operator of Map!");
+            clear();
+            _data = std::move(other._data);
+        }
         return *this;
     }
     

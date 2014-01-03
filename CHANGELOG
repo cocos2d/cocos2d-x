@@ -19,6 +19,11 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
      [FIX]          Crash if connection breaks during download using AssetManager.
      [NEW]          AngelCode binary file format support for LabelBMFont.
+     [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
+     [FIX]          Useless conversion in ScrollView::onTouchBegan.
+     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).
+     [NEW]          TextureCache::addImageAsync() uses std::function<> as call back
+     [NEW]          Namespace changed: network -> cocos2d::network, gui -> cocos2d::gui
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.
@@ -30,6 +35,8 @@ cocos2d-x-3.0beta0 ?? 2013
 [Bindings]
      [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
      [NEW]          Adds spine JS binding support.
+     [FIX]          The order of onEnter and onExit is wrong.
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA.
      
 cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]

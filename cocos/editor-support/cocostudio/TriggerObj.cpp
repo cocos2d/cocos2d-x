@@ -81,7 +81,7 @@ void BaseTriggerAction::removeAll()
 
 TriggerObj::TriggerObj(void)
 :_id(UINT_MAX)
-,_bEnable(true)
+,_enabled(true)
 {
 	_vInt.clear();
 }
@@ -112,28 +112,29 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::detect()
 {
-	if (!_bEnable || _cons.size() == 0)
+	if (!_enabled || _cons.empty())
 	{
 		return true;
 	}
-    bool bRet = true;  
+    
+    bool ret = true;
 
-    for(auto con : _cons)
+    for (const auto& con : _cons)
     {
-        bRet = bRet && con->detect();
+        ret = ret && con->detect();
     }
 
-    return bRet;
+    return ret;
 }
 
 void TriggerObj::done()
 {
-	if (!_bEnable || _acts.size() == 0)
+	if (!_enabled || _acts.empty())
 	{
 		return;
 	}
 
-    for(auto act : _acts)
+    for (const auto& act : _acts)
     {
         act->done();
     }
@@ -141,11 +142,12 @@ void TriggerObj::done()
 
 void TriggerObj::removeAll()
 {
-    for(auto con : _cons)
+    for (const auto& con : _cons)
     {
         con->removeAll();
     }
-    for(auto act : _acts)
+    
+    for (const auto& act : _acts)
     {
         act->removeAll();
     }
@@ -167,7 +169,13 @@ void TriggerObj::serialize(const rapidjson::Value &val)
             continue;
         }
         BaseTriggerCondition *con = dynamic_cast<BaseTriggerCondition*>(ObjectFactory::getInstance()->createObject(classname));
-        CCAssert(con != nullptr, "class named classname can not implement!");
+        if(con == nullptr)
+        {
+            CCLOG("class %s can not be implemented!", classname);
+            CCASSERT(con != nullptr, "");
+        }
+        
+        CCASSERT(con != nullptr, "");
         con->serialize(subDict);
 		con->init();
         con->autorelease();
@@ -184,7 +192,11 @@ void TriggerObj::serialize(const rapidjson::Value &val)
 			continue;
 		}
 		BaseTriggerAction *act = dynamic_cast<BaseTriggerAction*>(ObjectFactory::getInstance()->createObject(classname));
-		CCAssert(act != nullptr, "class named classname can not implement!");
+		if(act == nullptr)
+        {
+            CCLOG("class %s can not be implemented!", classname);
+            CCASSERT(act != nullptr, "");
+        }
 		act->serialize(subDict);
 		act->init();
 		act->autorelease();
@@ -209,9 +221,9 @@ unsigned int TriggerObj::getId()
 	return _id;
 }
 
-void TriggerObj::setEnable(bool bEnable)
+void TriggerObj::setEnabled(bool enabled)
 {
-	_bEnable = bEnable;
+	_enabled = enabled;
 }
 
 std::vector<int>& TriggerObj::getEvents()

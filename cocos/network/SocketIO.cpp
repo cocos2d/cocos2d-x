@@ -32,7 +32,7 @@
 #include "HttpClient.h"
 #include <algorithm>
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace network {
 
@@ -688,3 +688,5 @@ void SocketIO::removeSocket(const std::string& uri)
 }
 
 }
+
+NS_CC_END
