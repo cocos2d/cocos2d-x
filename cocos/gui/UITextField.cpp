@@ -335,7 +335,7 @@ void TextField::setText(const std::string& text)
     if (isPasswordEnabled())
     {
         _textFieldRenderer->setPasswordText(content);
-        _textFieldRenderer->insertText(content, strlen(content));
+        _textFieldRenderer->insertText(content, static_cast<int>(strlen(content)));
     }
     else
     {
