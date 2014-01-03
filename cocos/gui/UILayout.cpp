@@ -30,8 +30,8 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BACKGROUNDIMAGEZ (-1)
-#define BCAKGROUNDCOLORRENDERERZ (-2)
+static const int BACKGROUNDIMAGE_Z = (-1);
+static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
 
@@ -428,12 +428,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::Scale9Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
     {
         _backGroundImage = Sprite::create();
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -546,14 +546,14 @@ void Layout::addBackGroundImage()
     {
         _backGroundImage = extension::Scale9Sprite::create();
         _backGroundImage->setZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = Sprite::create();
         _backGroundImage->setZOrder(-1);
-        Node::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
@@ -617,7 +617,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            Node::addChild(_colorRender, BACKGROUNDIMAGEZ, -1);
+            Node::addChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = LayerGradient::create();
@@ -626,7 +626,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            Node::addChild(_gradientRender, BACKGROUNDIMAGEZ, -1);
+            Node::addChild(_gradientRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         default:
             break;
