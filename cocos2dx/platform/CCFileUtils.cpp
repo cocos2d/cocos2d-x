@@ -507,10 +507,13 @@ unsigned char* CCFileUtils::getFileData(const char* pszFileName, const char* psz
     
     if (! pBuffer)
     {
-        std::string msg = "Get data from file(";
-        msg.append(pszFileName).append(") failed!");
+        if ( string( pszFileName ).find( ".jsc" ) == std::string::npos )
+        {
+            std::string msg = "Get data from file(";
+            msg.append(pszFileName).append(") failed!");
         
-        CCLOG("%s", msg.c_str());
+            CCLOG("%s", msg.c_str());
+        }
     }
     return pBuffer;
 }
