@@ -326,7 +326,7 @@ public:
     
     virtual void removeNode(CCNode* node);
     
-    virtual void removeChildByTag(int tag);
+    virtual void removeNodeByTag(int tag);
     
     virtual void removeAllNodes();
     
