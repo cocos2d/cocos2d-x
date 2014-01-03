@@ -121,6 +121,7 @@ public:
     {
         if (this != &other) {
             CCLOGINFO("In the move assignment operator!");
+            clear();
             _data = std::move(other._data);
         }
         return *this;
