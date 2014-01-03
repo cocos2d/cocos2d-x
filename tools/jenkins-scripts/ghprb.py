@@ -64,6 +64,21 @@ def main():
     except:
         traceback.format_exc()
 
+    #reset path to workspace root
+    os.system("cd " + os.environ['WORKSPACE']);
+  
+    #fetch pull request to local repo
+    git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
+    os.system(git_fetch_pr)
+ 
+    #checkout
+    git_checkout = "git checkout -b " + "pull" + str(pr_num) + " FETCH_HEAD"
+    os.system(git_checkout)
+ 
+    #update submodule
+    git_update_submodule = "git submodule update --init --force"
+    os.system(git_update_submodule)
+    
     #build
     #TODO: support android-mac build currently
     #TODO: add android-windows7 build
