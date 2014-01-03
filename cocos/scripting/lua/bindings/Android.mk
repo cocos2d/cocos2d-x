@@ -24,7 +24,7 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
           lua_cocos2dx_coco_studio_manual.cpp \
-          lua_cocos2dx_gui_manual \
+          lua_cocos2dx_gui_manual.cpp \
           lua_cocos2dx_spine_manual.cpp \
           lua_cocos2dx_deprecated.cpp \
           lua_xml_http_request.cpp \
