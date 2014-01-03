@@ -1256,7 +1256,7 @@ kmMat4 Node::getNodeToWorldTransform() const
     kmMat4 t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
-        kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
+        kmMat4Multiply(&t, &p->getNodeToParentTransform(), &t);
 
     return t;
 }
