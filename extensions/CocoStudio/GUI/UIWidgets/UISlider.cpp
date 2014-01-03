@@ -29,9 +29,9 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BASEBARRENDERERZ (-3)
-#define PROGRESSBARRENDERERZ (-2)
-#define SLIDBALLRENDERERZ (-1)
+static const int BASEBAR_RENDERER_Z = (-3);
+static const int PROGRESSBAR_RENDERER_Z = (-2);
+static const int SLIDBALL_RENDERER_Z = (-1);
 
 Slider::Slider():
 _barRenderer(NULL),
@@ -85,8 +85,8 @@ void Slider::initRenderer()
     _barRenderer = CCSprite::create();
     _progressBarRenderer = CCSprite::create();
     _progressBarRenderer->setAnchorPoint(CCPoint(0.0f, 0.5f));
-    CCNodeRGBA::addChild(_barRenderer, BASEBARRENDERERZ, -1);
-    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBARRENDERERZ, -1);
+    CCNodeRGBA::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     _slidBallNormalRenderer = CCSprite::create();
     _slidBallPressedRenderer = CCSprite::create();
     _slidBallPressedRenderer->setVisible(false);
@@ -96,7 +96,7 @@ void Slider::initRenderer()
     _slidBallRenderer->addChild(_slidBallNormalRenderer);
     _slidBallRenderer->addChild(_slidBallPressedRenderer);
     _slidBallRenderer->addChild(_slidBallDisabledRenderer);
-    CCNodeRGBA::addChild(_slidBallRenderer, SLIDBALLRENDERERZ, -1);
+    CCNodeRGBA::addChild(_slidBallRenderer, SLIDBALL_RENDERER_Z, -1);
 }
 
 void Slider::loadBarTexture(const char* fileName, TextureResType texType)
@@ -201,8 +201,8 @@ void Slider::setScale9Enabled(bool able)
     }
     loadBarTexture(_textureFile.c_str(), _barTexType);
     loadProgressBarTexture(_progressBarTextureFile.c_str(), _progressBarTexType);
-    CCNodeRGBA::addChild(_barRenderer, BASEBARRENDERERZ, -1);
-    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBARRENDERERZ, -1);
+    CCNodeRGBA::addChild(_barRenderer, BASEBAR_RENDERER_Z, -1);
+    CCNodeRGBA::addChild(_progressBarRenderer, PROGRESSBAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
