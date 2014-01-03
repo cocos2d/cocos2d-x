@@ -356,12 +356,9 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         textureName = dirname + textureName;
                     }
                 }
-                else
+                else if ( dirname.size()>0 && textureName.empty() == false)
                 {
-                    if (dirname.size()>0)
-                    {
-                        textureName = dirname + textureName;
-                    }
+                	textureName = dirname + textureName;
                 }
                 
                 Texture2D *tex = nullptr;
