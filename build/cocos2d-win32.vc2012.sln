@@ -65,6 +65,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForLocalStorage
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForGui", "..\cocos\scripting\javascript\bindings\gui\libJSBindingForGui.vcxproj", "{9A844C88-97E8-4E2D-B09A-E138C67D338B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libJSBindingForSpine", "..\cocos\scripting\javascript\bindings\spine\libJSBindingForSpine.vcxproj", "{E78CDC6B-F37D-48D2-AD91-1DB549497E32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -195,6 +197,10 @@ Global
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Debug|Win32.Build.0 = Debug|Win32
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Release|Win32.ActiveCfg = Release|Win32
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B}.Release|Win32.Build.0 = Release|Win32
+		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Debug|Win32.Build.0 = Debug|Win32
+		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Release|Win32.ActiveCfg = Release|Win32
+		{E78CDC6B-F37D-48D2-AD91-1DB549497E32}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -208,6 +214,7 @@ Global
 		{21070E58-EEC6-4E16-8B4F-6D083DF55790} = {10F98A57-B9A1-47DA-9FBA-12D328E72ED1}
 		{68F5F371-BD7B-4C30-AE5B-0B08F22E0CDE} = {10F98A57-B9A1-47DA-9FBA-12D328E72ED1}
 		{9A844C88-97E8-4E2D-B09A-E138C67D338B} = {10F98A57-B9A1-47DA-9FBA-12D328E72ED1}
+		{E78CDC6B-F37D-48D2-AD91-1DB549497E32} = {10F98A57-B9A1-47DA-9FBA-12D328E72ED1}
 	EndGlobalSection
 	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
 		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
