@@ -533,8 +533,8 @@ JSBool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, ui
                 if (!tmp) break;
                 JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(contourVertex->x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
                     JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(contourVertex->y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-                
-                if(!ok || !JS_SetElement(cx, jsretArr, i, &OBJECT_TO_JSVAL(tmp)))
+                jsval jstemp = OBJECT_TO_JSVAL(tmp);
+                if(!ok || !JS_SetElement(cx, jsretArr, i, &jstemp))
                 {
                     break;
                 }
