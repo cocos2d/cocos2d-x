@@ -142,127 +142,82 @@ public:
     }
 };
 
-#define MAX_LAYER    41
+#define STRINGIFY(x) #x
 
-static std::string transitions[MAX_LAYER] = {
-    "CCTransitionJumpZoom",
+#define TRANS(__className__) {                                      \
+    [](float t, Scene* s){ return __className__::create(t,s);},     \
+        STRINGIFY(__className__),                                   \
+    }
+struct _transitions {
+    std::function<TransitionScene*(float t, Scene* s)> function;
+    const char * name;
+} transitions[] = {
+    TRANS(TransitionJumpZoom),
+    TRANS(TransitionProgressRadialCCW),
+    TRANS(TransitionProgressRadialCW),
+    TRANS(TransitionProgressHorizontal),
+    TRANS(TransitionProgressVertical),
+    TRANS(TransitionProgressInOut),
+    TRANS(TransitionProgressOutIn),
 
-    "CCTransitionProgressRadialCCW",
-    "CCTransitionProgressRadialCW",
-    "CCTransitionProgressHorizontal",
-    "CCTransitionProgressVertical",
-    "CCTransitionProgressInOut",
-    "CCTransitionProgressOutIn",
+    TRANS(TransitionCrossFade),
 
-    "CCTransitionCrossFade",
-    "TransitionPageForward",
-    "TransitionPageBackward",
-    "CCTransitionFadeTR",
-    "CCTransitionFadeBL",
-    "CCTransitionFadeUp",
-    "CCTransitionFadeDown",
-    "CCTransitionTurnOffTiles",
-    "CCTransitionSplitRows",
-    "CCTransitionSplitCols",
+    TRANS(PageTransitionForward),
+    TRANS(PageTransitionBackward),
+    TRANS(TransitionFadeTR),
+    TRANS(TransitionFadeBL),
+    TRANS(TransitionFadeUp),
+    TRANS(TransitionFadeDown),
 
-    "CCTransitionFade",
-    "FadeWhiteTransition",
+    TRANS(TransitionTurnOffTiles),
 
-    "FlipXLeftOver",
-    "FlipXRightOver",
-    "FlipYUpOver",
-    "FlipYDownOver",
-    "FlipAngularLeftOver",
-    "FlipAngularRightOver",
+    TRANS(TransitionSplitRows),
+    TRANS(TransitionSplitCols),
 
-    "ZoomFlipXLeftOver",
-    "ZoomFlipXRightOver",
-    "ZoomFlipYUpOver",
-    "ZoomFlipYDownOver",
-    "ZoomFlipAngularLeftOver",
-    "ZoomFlipAngularRightOver",
+    TRANS(TransitionFade),
+    TRANS(FadeWhiteTransition),
 
-    "CCTransitionShrinkGrow",
-    "CCTransitionRotoZoom",
+    TRANS(FlipXLeftOver),
+    TRANS(FlipXRightOver),
+    TRANS(FlipYUpOver),
+    TRANS(FlipYDownOver),
+    TRANS(FlipAngularLeftOver),
+    TRANS(FlipAngularRightOver),
 
-    "CCTransitionMoveInL",
-    "CCTransitionMoveInR",
-    "CCTransitionMoveInT",
-    "CCTransitionMoveInB",
-    "CCTransitionSlideInL",
-    "CCTransitionSlideInR",
-    "CCTransitionSlideInT",
-    "CCTransitionSlideInB",
+    TRANS(ZoomFlipXLeftOver),
+    TRANS(ZoomFlipXRightOver),
+    TRANS(ZoomFlipYUpOver),
+    TRANS(ZoomFlipYDownOver),
+    TRANS(ZoomFlipAngularLeftOver),
+    TRANS(ZoomFlipAngularRightOver),
 
+    TRANS(TransitionShrinkGrow),
+    TRANS(TransitionRotoZoom),
 
+    TRANS(TransitionMoveInL),
+    TRANS(TransitionMoveInR),
+    TRANS(TransitionMoveInT),
+    TRANS(TransitionMoveInB),
+
+    TRANS(TransitionSlideInL),
+    TRANS(TransitionSlideInR),
+    TRANS(TransitionSlideInT),
+    TRANS(TransitionSlideInB),
 };
+
+
+#define MAX_LAYER (sizeof(transitions) / sizeof(transitions[0]))
+
+
 static int s_nSceneIdx = 0;
 
-TransitionScene* createTransition(int nIndex, float t, Scene* s)
+TransitionScene* createTransition(int index, float t, Scene* s)
 {
     // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
     Director::getInstance()->setDepthTest(false);
 
-    switch(nIndex)
-    {
-    case 0: return TransitionJumpZoom::create(t, s);
-
-    case 1: return TransitionProgressRadialCCW::create(t, s);
-    case 2: return TransitionProgressRadialCW::create(t, s);
-    case 3: return TransitionProgressHorizontal::create(t, s);
-    case 4: return TransitionProgressVertical::create(t, s);
-    case 5: return TransitionProgressInOut::create(t, s);
-    case 6: return TransitionProgressOutIn::create(t, s);
-
-    case 7: return TransitionCrossFade::create(t,s);
-
-    case 8: return PageTransitionForward::create(t, s);
-    case 9: return PageTransitionBackward::create(t, s);
-    case 10: return TransitionFadeTR::create(t, s);
-    case 11: return TransitionFadeBL::create(t, s);
-    case 12: return TransitionFadeUp::create(t, s);
-    case 13: return TransitionFadeDown::create(t, s);
-
-    case 14: return TransitionTurnOffTiles::create(t, s);
-
-    case 15: return TransitionSplitRows::create(t, s);
-    case 16: return TransitionSplitCols::create(t, s);
-
-    case 17: return TransitionFade::create(t, s);
-    case 18: return FadeWhiteTransition::create(t, s);
-
-    case 19: return FlipXLeftOver::create(t, s);
-    case 20: return FlipXRightOver::create(t, s);
-    case 21: return FlipYUpOver::create(t, s);
-    case 22: return FlipYDownOver::create(t, s);
-    case 23: return FlipAngularLeftOver::create(t, s);
-    case 24: return FlipAngularRightOver::create(t, s);
-
-    case 25: return ZoomFlipXLeftOver::create(t, s);
-    case 26: return ZoomFlipXRightOver::create(t, s);
-    case 27: return ZoomFlipYUpOver::create(t, s);
-    case 28: return ZoomFlipYDownOver::create(t, s);
-    case 29: return ZoomFlipAngularLeftOver::create(t, s);
-    case 30: return ZoomFlipAngularRightOver::create(t, s);
-
-    case 31: return TransitionShrinkGrow::create(t, s);
-    case 32: return TransitionRotoZoom::create(t, s);
-
-    case 33: return TransitionMoveInL::create(t, s);
-    case 34: return TransitionMoveInR::create(t, s);
-    case 35: return TransitionMoveInT::create(t, s);
-    case 36: return TransitionMoveInB::create(t, s);
-
-    case 37: return TransitionSlideInL::create(t, s);
-    case 38: return TransitionSlideInR::create(t, s);
-    case 39: return TransitionSlideInT::create(t, s);
-    case 40: return TransitionSlideInB::create(t, s);
-
-    default: break;
-    }
-
-    return NULL;
-}                            
+    return transitions[index].function(t,s);
+}
 
 
 void TransitionsTestScene::runThisTest()
@@ -286,7 +241,7 @@ TestLayer1::TestLayer1(void)
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = LabelTTF::create( (transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    auto title = LabelTTF::create( (transitions[s_nSceneIdx]).name, "Thonburi", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
@@ -415,7 +370,7 @@ TestLayer2::TestLayer2()
     bg1->setPosition( Point(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = LabelTTF::create((transitions[s_nSceneIdx]).c_str(), "Thonburi", 32 );
+    auto title = LabelTTF::create((transitions[s_nSceneIdx]).name, "Thonburi", 32 );
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Point(x/2, y-100) );
