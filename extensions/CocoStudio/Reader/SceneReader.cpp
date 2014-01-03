@@ -346,7 +346,7 @@ NS_CC_EXT_BEGIN
 					{
 						pAttribute->setName(pComName);
 					}
-					pAttribute->setFile(pPath);
+					pAttribute->parse(pPath);
                     gb->addComponent(pAttribute);
 					if (_pListener && _pfnSelector)
 					{

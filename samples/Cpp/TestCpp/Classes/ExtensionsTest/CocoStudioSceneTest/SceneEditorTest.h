@@ -50,11 +50,11 @@ protected:
 	CCMenuItemImage *backItem;
 };
 
-class loadSceneEdtiorFileTest : public SceneEditorTestLayer
+class LoadSceneEdtiorFileTest : public SceneEditorTestLayer
 {
 public:
-	loadSceneEdtiorFileTest();
-	~loadSceneEdtiorFileTest();
+	LoadSceneEdtiorFileTest();
+	~LoadSceneEdtiorFileTest();
 
     virtual std::string title();
 	virtual void onEnter();
