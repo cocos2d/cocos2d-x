@@ -30,7 +30,6 @@ class TemplateVectorTest : public UnitTestDemo
 {
 public:
     CREATE_FUNC(TemplateVectorTest);
-    TemplateVectorTest(){}
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
     void constFunc(const Vector<Node*>& vec) const;
@@ -40,10 +39,18 @@ class TemplateMapTest : public UnitTestDemo
 {
 public:
     CREATE_FUNC(TemplateMapTest);
-    TemplateMapTest(){}
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
     void constFunc(const Map<std::string, Node*>& map) const;
+};
+
+class ValueTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(ValueTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    void constFunc(const Value& value) const;
 };
 
 #endif /* __UNIT_TEST__ */
