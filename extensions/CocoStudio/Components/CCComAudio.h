@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "cocos2d.h"
 #include "ExtensionMacros.h"
+#include "CCComBase.h"
+#include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 /**
@@ -34,6 +36,7 @@ NS_CC_EXT_BEGIN
  */
 class CCComAudio : public cocos2d::CCComponent
 {
+	DECLARE_CLASS_COMPONENT_INFO
 protected:
     CCComAudio(void);
     virtual ~CCComAudio(void);
@@ -44,6 +47,7 @@ public:
    virtual void onExit();
    virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
+   virtual bool serialize(void* r);
 
    static CCComAudio* create(void);
    
@@ -83,6 +87,37 @@ private:
    std::string m_strFilePath;
    bool m_bLoop;
 };
+
+/**
+ *  @lua NA
+ */
+class CCComRender : public cocos2d::CCComponent
+{
+	DECLARE_CLASS_COMPONENT_INFO
+public:
+    /**
+     *  @js ctor
+     */
+    CCComRender(void);
+    /**
+     *  @js NA
+     */
+    virtual ~CCComRender(void);
+    
+public:
+   virtual void onEnter();
+   virtual void onExit();
+   virtual bool serialize(void* r);
+   virtual cocos2d::CCNode* getNode();
+   virtual void setNode(cocos2d::CCNode *pNode);
+
+   static CCComRender* create(void);
+private:
+   bool readJson(const char *pszFileName, rapidjson::Document &doc);
+private:
+   cocos2d::CCNode *m_pRender;
+};
+
 
 NS_CC_EXT_END
 

@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "ExtensionMacros.h"
-#include "TriggerObj.h"
 #include "ObjectFactory.h"
+#include "TriggerObj.h"
 #include "TriggerMng.h"
 
 NS_CC_EXT_BEGIN
