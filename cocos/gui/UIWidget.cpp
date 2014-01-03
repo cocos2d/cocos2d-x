@@ -128,7 +128,7 @@ void Widget::addChild(Node * child, int zOrder)
     
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
+    CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
     Node::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
@@ -198,7 +198,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     Node *child = getChildByTag(tag);
     
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -265,7 +265,7 @@ void Widget::addNode(Node * node, int zOrder)
 
 void Widget::addNode(Node* node, int zOrder, int tag)
 {
-    CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
+    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
     Node::addChild(node, zOrder, tag);
     _nodes.pushBack(node);
 }
@@ -299,7 +299,7 @@ void Widget::removeNodeByTag(int tag)
     
     Node *node = this->getNodeByTag(tag);
     
-    if (node == NULL)
+    if (node == nullptr)
     {
         CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
     }
