@@ -23,7 +23,7 @@ Layer *createTests(int index)
     switch(index)
     {
     case TEST_LOADSCENEEDITORFILE:
-        layer = new loadSceneEdtiorFileTest();
+        layer = new LoadSceneEdtiorFileTest();
         break;
     case TEST_SPIRTECOMPONENT:
         layer = new SpriteComponentTest();
@@ -200,22 +200,22 @@ void SceneEditorTestLayer::draw()
 }
 
 
-loadSceneEdtiorFileTest::loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::LoadSceneEdtiorFileTest()
 {
 	
 }
 
-loadSceneEdtiorFileTest::~loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::~LoadSceneEdtiorFileTest()
 {
 
 }
 
-std::string loadSceneEdtiorFileTest::title()
+std::string LoadSceneEdtiorFileTest::title()
 {
     return "loadSceneEdtiorFile Test";
 }
 
-void loadSceneEdtiorFileTest::onEnter()
+void LoadSceneEdtiorFileTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
 	do 
@@ -226,7 +226,7 @@ void loadSceneEdtiorFileTest::onEnter()
 	} while (0);
 }
 
-void loadSceneEdtiorFileTest::onExit()
+void LoadSceneEdtiorFileTest::onExit()
 {
 	 ArmatureDataManager::getInstance()->destroyInstance();
 	 SceneReader::getInstance()->destroyInstance();
@@ -236,9 +236,9 @@ void loadSceneEdtiorFileTest::onExit()
 }
 
 
-cocos2d::Node* loadSceneEdtiorFileTest::createGameScene()
+cocos2d::Node* LoadSceneEdtiorFileTest::createGameScene()
 {
-    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
+    Node *node = SceneReader::getInstance()->createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
 	if (node == nullptr)
 	{
 		return nullptr;
