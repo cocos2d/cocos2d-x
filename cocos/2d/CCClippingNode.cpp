@@ -217,7 +217,24 @@ void ClippingNode::visit()
     _beforeVisitCmd.init(0,_vertexZ);
     _beforeVisitCmd.func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
     renderer->addCommand(&_beforeVisitCmd);
+    if (_alphaThreshold < 1)
+    {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WINDOWS || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#else
+        // since glAlphaTest do not exists in OES, use a shader that writes
+        // pixel only if greater than an alpha threshold
+        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+        // set our alphaThreshold
+        program->use();
+        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
+        // we need to recursively apply this shader to all the nodes in the stencil node
+        // XXX: we should have a way to apply shader to all nodes without having to do this
+        setProgram(_stencil, program);
+        
+#endif
 
+    }
     _stencil->visit();
 
     _afterDrawStencilCmd.init(0,_vertexZ);
@@ -380,17 +397,7 @@ void ClippingNode::onBeforeVisit()
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, _alphaThreshold);
 #else
-        // since glAlphaTest do not exists in OES, use a shader that writes
-        // pixel only if greater than an alpha threshold
-        GLProgram *program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-        // set our alphaThreshold
-        program->use();
-        program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-        // we need to recursively apply this shader to all the nodes in the stencil node
-        // XXX: we should have a way to apply shader to all nodes without having to do this
-        setProgram(_stencil, program);
-
+        
 #endif
     }
 
