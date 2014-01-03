@@ -66,7 +66,8 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _widgetChildren.clear();
-    CC_SAFE_RELEASE(_touchListener);
+    setTouchEnabled(false);
+    _nodes.clear();
 }
 
 Widget* Widget::create()
@@ -251,6 +252,75 @@ Widget* Widget::getChildByName(const char *name)
     }
     return nullptr;
 }
+    
+void Widget::addNode(Node* node)
+{
+    addNode(node, node->getZOrder(), node->getTag());
+}
+
+void Widget::addNode(Node * node, int zOrder)
+{
+    addNode(node, zOrder, node->getTag());
+}
+
+void Widget::addNode(Node* node, int zOrder, int tag)
+{
+    CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
+    Node::addChild(node, zOrder, tag);
+    _nodes.pushBack(node);
+}
+
+Node* Widget::getNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    for (auto& node : _nodes)
+    {
+        if(node && node->getTag() == tag)
+            return node;
+    }
+    return nullptr;
+}
+
+Vector<Node*>& Widget::getNodes()
+{
+    return _nodes;
+}
+
+void Widget::removeNode(Node* node)
+{
+    Node::removeChild(node);
+    _nodes.eraseObject(node);
+}
+
+void Widget::removeNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    Node *node = this->getNodeByTag(tag);
+    
+    if (node == NULL)
+    {
+        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeNode(node);
+    }
+}
+
+void Widget::removeAllNodes()
+{
+    for (auto& node : _nodes)
+    {
+        if (node)
+        {
+            Node::removeChild(node);
+        }
+    }
+    _nodes.clear();
+}
+
 
 void Widget::initRenderer()
 {
