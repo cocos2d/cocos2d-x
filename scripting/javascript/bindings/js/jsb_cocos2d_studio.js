@@ -73,13 +73,18 @@ ccs.LayoutType = {
     relative: 3
 };
 
-ccs.UILayoutParameterType = {
+ccs.LayoutClippingType = {
+    stencil: 0,
+    scissor: 1
+};
+
+ccs.LayoutParameterType = {
     none: 0,
     linear: 1,
     relative: 2
 };
 
-ccs.UILinearGravity = {
+ccs.LinearGravity = {
     none: 0,
     left: 1,
     top: 2,
@@ -89,7 +94,7 @@ ccs.UILinearGravity = {
     centerHorizontal: 6
 };
 
-ccs.UIRelativeAlign = {
+ccs.RelativeAlign = {
     alignNone: 0,
     alignParentTopLeft: 1,
     alignParentTopCenterHorizontal: 2,
@@ -138,8 +143,16 @@ ccs.ScrollviewEventType = {
 };
 
 ccs.ListViewEventType = {
-    init_child: 0,
-    update_child: 1
+    listViewOnselectedItem: 0
+};
+
+ccs.ListViewGravity = {
+    left: 0,
+    right: 1,
+    centerHorizontal: 2,
+    top: 3,
+    bottom: 4,
+    centerVertical: 5
 };
 
 ccs.PageViewEventType = {
@@ -151,16 +164,40 @@ ccs.PVTouchDir = {
     touchRight: 1
 };
 
-ccs.UIPanel = ccs.UILayout;
-ccs.UITextArea = ccs.UILabel;
-ccs.UIContainerWidget = ccs.UILayout;
-ccs.UITextButton = ccs.UIButton;
-ccs.UINodeContainer = ccs.UIWidget;
+//CompatibleClasses
+ccs.UIPanel = ccs.Layout;
+ccs.UITextArea = ccs.Label;
+ccs.UIContainerWidget = ccs.Layout;
+ccs.UITextButton = ccs.Button;
+ccs.UINodeContainer = ccs.Widget;
 ccs.PanelColorType = ccs.LayoutBackGroundColorType;
 
-ccs.UILayout = ccs.Layout;
+ccs.UIWidget = ccs.Widget;
 
-ccs.UIMargin = cc.Class.extend({
+ccs.UILayoutParameter = ccs.LayoutParameter;
+ccs.UILinearLayoutParameter = ccs.LinearLayoutParameter;
+ccs.UIRelativeLayoutParameter = ccs.RelativeLayoutParameter;
+
+ccs.UILinearGravity = ccs.LinearGravity;
+ccs.UIRelativeAlign = ccs.RelativeAlign;
+
+ccs.UIMargin = ccs.Margin;
+ccs.UIMarginZero = ccs.MarginZero;
+
+ccs.UIListView = ccs.ListView;
+ccs.UIPageView = ccs.PageView;
+ccs.UIScrollView = ccs.ScrollView;
+ccs.UIButton = ccs.Button;
+ccs.UICheckBox = ccs.CheckBox;
+ccs.UIImageView = ccs.ImageView;
+ccs.UILabel = ccs.Label;
+ccs.UILabelAtlas = ccs.LabelAtlas;
+ccs.UILabelBMFont = ccs.LabelBMFont;
+ccs.UILoadingBar = ccs.LoadingBar;
+ccs.UISlider = ccs.Slider;
+ccs.UITextField = ccs.TextField;
+
+ccs.Margin = cc.Class.extend({
     left: 0,
     top: 0,
     right: 0,
