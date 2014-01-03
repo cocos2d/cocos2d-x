@@ -1511,21 +1511,20 @@ void TextureAsync::loadImages(float dt)
         for( int j=0;j < 8; j++) {
             char szSpriteName[100] = {0};
             sprintf(szSpriteName, "Images/sprites_test/sprite-%d-%d.png", i, j);
-            Director::getInstance()->getTextureCache()->addImageAsync(szSpriteName,this, callfuncO_selector(TextureAsync::imageLoaded));
+            Director::getInstance()->getTextureCache()->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
         }
     }
 
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.jpg",this, callfuncO_selector(TextureAsync::imageLoaded));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.jpg",this, callfuncO_selector(TextureAsync::imageLoaded));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background.png",this, callfuncO_selector(TextureAsync::imageLoaded));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/atlastest.png",this, callfuncO_selector(TextureAsync::imageLoaded));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_atlas.png",this, callfuncO_selector(TextureAsync::imageLoaded));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
 }
 
 
-void TextureAsync::imageLoaded(Object* pObj)
+void TextureAsync::imageLoaded(Texture2D* texture)
 {
-    auto tex = static_cast<Texture2D*>(pObj);
     auto director = Director::getInstance();
 
     //CCASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
@@ -1534,7 +1533,7 @@ void TextureAsync::imageLoaded(Object* pObj)
 
     // This test just creates a sprite based on the Texture
 
-    auto sprite = Sprite::createWithTexture(tex);
+    auto sprite = Sprite::createWithTexture(texture);
     sprite->setAnchorPoint(Point(0,0));
     addChild(sprite, -1);
 
@@ -1544,7 +1543,7 @@ void TextureAsync::imageLoaded(Object* pObj)
 
     _imageOffset++;
 
-    log("Image loaded: %p", tex);
+    log("Image loaded: %p", texture);
 }
 
 std::string TextureAsync::title() const
