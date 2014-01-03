@@ -31,211 +31,206 @@ NS_CC_EXT_BEGIN
 
 	SceneReader* SceneReader::_sharedReader = NULL;
 
-    SceneReader::SceneReader()
+SceneReader::SceneReader()
 	:_pListener(NULL)
 	,_pfnSelector(NULL)
 	,_pNode(NULL)
-    {
-	}
+{
+}
 
-    SceneReader::~SceneReader()
-    {
-    }
+SceneReader::~SceneReader()
+{
+}
 
-	const char* SceneReader::sceneReaderVersion()
+const char* SceneReader::sceneReaderVersion()
+{
+	return "1.2.0.0";
+}
+
+cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
+{
+	rapidjson::Document jsonDict;
+	do {
+		CC_BREAK_IF(!readJson(pszFileName, jsonDict));
+		_pNode = createObject(jsonDict, NULL);
+		TriggerMng::getInstance()->parse(jsonDict);
+	} while (0);
+	return _pNode;
+}
+
+bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
+{
+	bool bRet = false;
+	unsigned long size = 0;
+	unsigned char *pBytes = NULL;
+	do {
+		CC_BREAK_IF(pszFileName == NULL);
+		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
+		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
+		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+		CCData *data = new CCData(pBytes, size);
+		std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
+		CC_SAFE_DELETE(data);
+		CC_SAFE_DELETE_ARRAY(pBytes);
+		doc.Parse<0>(load_str.c_str());
+		CC_BREAK_IF(doc.HasParseError());
+		bRet = true;
+	} while (0);
+	return bRet;
+}
+
+CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
+{		
+	if (pParent == NULL)
 	{
-		return "1.2.0.0";
+		return NULL;
 	}
-
-    cocos2d::CCNode* SceneReader::createNodeWithSceneFile(const char* pszFileName)
-    {
-        rapidjson::Document jsonDict;
-        do {
-			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
-              _pNode = createObject(jsonDict, NULL);
-			  TriggerMng::getInstance()->parse(jsonDict);
-        } while (0);
-        
-        return _pNode;
-	}
-
-    bool SceneReader::readJson(const char *pszFileName, rapidjson::Document &doc)
-    {
-        bool bRet = false;
-        unsigned long size = 0;
-        unsigned char *pBytes = NULL;
-        do {
-			  CC_BREAK_IF(pszFileName == NULL);
-			  std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
-              pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-              CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-              CCData *data = new CCData(pBytes, size);
-	          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-	          CC_SAFE_DELETE(data);
-              CC_SAFE_DELETE_ARRAY(pBytes);
-              doc.Parse<0>(load_str.c_str());
-              CC_BREAK_IF(doc.HasParseError());
-              bRet = true;
-            } while (0);
-        return bRet;
-    }
-
-	CCNode* SceneReader::nodeByTag(CCNode *pParent, int nTag)
-	{		
-		if (pParent == NULL)
+	CCNode *_retNode = NULL;
+	CCArray *pChildren = pParent->getChildren();
+	if(pChildren && pChildren->count() > 0)
+	{
+		CCObject* child;
+		CCARRAY_FOREACH(pChildren, child)
 		{
-			return NULL;
-		}
-		CCNode *_retNode = NULL;
-		CCArray *pChildren = pParent->getChildren();
-		if(pChildren && pChildren->count() > 0)
-		{
-			CCObject* child;
-			CCARRAY_FOREACH(pChildren, child)
+			CCNode* pNode = (CCNode*)child;
+			if(pNode && pNode->getTag() == nTag)
 			{
-				CCNode* pNode = (CCNode*)child;
-				if(pNode && pNode->getTag() == nTag)
+				_retNode =  pNode;
+				break;
+			}
+			else
+			{
+				_retNode = nodeByTag(pNode, nTag);
+				if (_retNode != NULL)
 				{
-					_retNode =  pNode;
 					break;
+				}
+
+			}
+		}
+	}
+	return _retNode;
+}
+
+CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
+{
+	const char *className = DICTOOL->getStringValue_json(root, "classname");
+	if(strcmp(className, "CCNode") == 0)
+	{
+		CCNode* gb = NULL;
+		if(NULL == parent)
+		{
+			gb = CCNode::create();
+		}
+		else
+		{
+			gb = CCNode::create();
+			parent->addChild(gb);
+		}
+		setPropertyFromJsonDict(root, gb);
+		int count = DICTOOL->getArrayCount_json(root, "components");
+		for (int i = 0; i < count; i++)
+		{
+			const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "components", i);
+			if (!DICTOOL->checkObjectExist_json(subDict))
+			{
+				break;
+			}
+			const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
+			CCComponent *pCom = ObjectFactory::getInstance()->createComponent(comName);
+			if (pCom != NULL)
+			{
+				if (pCom->serialize((void*)(&subDict)))
+				{
+					gb->addComponent(pCom);
 				}
 				else
 				{
-					_retNode = nodeByTag(pNode, nTag);
-					if (_retNode != NULL)
-					{
-						break;
-					}
-					
+					CC_SAFE_RELEASE(pCom);
 				}
 			}
+			if (_pListener && _pfnSelector)
+			{
+				(_pListener->*_pfnSelector)(pCom, (void*)(&subDict));
+			}
 		}
-		return _retNode;
-	}
-
-	CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode* parent)
-    {
-        const char *className = DICTOOL->getStringValue_json(root, "classname");
-        if(strcmp(className, "CCNode") == 0)
-        {
-            CCNode* gb = NULL;
-            if(NULL == parent)
-            {
-                gb = CCNode::create();
-            }
-            else
-            {
-                gb = CCNode::create();
-                parent->addChild(gb);
-            }
-            
-            setPropertyFromJsonDict(root, gb);
-            int count = DICTOOL->getArrayCount_json(root, "components");
-            for (int i = 0; i < count; i++)
-            {
-                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "components", i);
-                if (!DICTOOL->checkObjectExist_json(subDict))
-                {
-                    break;
-                }
-                const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
-				CCComponent *pCom = ObjectFactory::getInstance()->createComponent(comName);
-				if (pCom != NULL)
-				{
-					if (pCom->serialize((void*)(&subDict)))
-					{
-						gb->addComponent(pCom);
-					}
-					else
-					{
-						CC_SAFE_RELEASE(pCom);
-					}
-				}
-				if (_pListener && _pfnSelector)
-				{
-					(_pListener->*_pfnSelector)(pCom, (void*)(&subDict));
-				}
-            }
-
-            int length = DICTOOL->getArrayCount_json(root, "gameobjects");
-            for (int i = 0; i < length; ++i)
-            {
-                const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "gameobjects", i);
-                if (!DICTOOL->checkObjectExist_json(subDict))
-                {
-                    break;
-                }
-                createObject(subDict, gb);
-            }
-            
-            return gb;
-        }
-        
-        return NULL;
-    }
-
-	void SceneReader::setTarget(CCObject *rec, SEL_CallFuncOD selector)
-	{
-		_pListener = rec;
-		_pfnSelector = selector;
-	}
-
-	CCNode* SceneReader::getNodeByTag(int nTag)
-	{
-		if (_pNode == NULL)
+		int length = DICTOOL->getArrayCount_json(root, "gameobjects");
+		for (int i = 0; i < length; ++i)
 		{
-			return NULL;
+			const rapidjson::Value &subDict = DICTOOL->getSubDictionary_json(root, "gameobjects", i);
+			if (!DICTOOL->checkObjectExist_json(subDict))
+			{
+				break;
+			}
+			createObject(subDict, gb);
 		}
-		if (_pNode->getTag() == nTag)
-		{
-			return _pNode;
-		}
-		return nodeByTag(_pNode, nTag);
+		return gb;
 	}
+	return NULL;
+}
 
-    void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
-    {
-		float x = DICTOOL->getFloatValue_json(root, "x");
-		float y = DICTOOL->getFloatValue_json(root, "y");
-        
-		node->setPosition(ccp(x, y));
-		
-		bool bVisible = DICTOOL->getIntValue_json(root, "visible", 1) != 0? true:false;
-		node->setVisible(bVisible);
-		
-		int nTag = DICTOOL->getIntValue_json(root, "objecttag", -1);
-        node->setTag(nTag);
-		
-		int nZorder = DICTOOL->getIntValue_json(root, "zorder");
-		node->setZOrder(nZorder);
-		
-		float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
-		float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);
-        node->setScaleX(fScaleX);
-        node->setScaleY(fScaleY);
-        
-		float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); 
-        node->setRotation(fRotationZ);
-    }
+void SceneReader::setTarget(CCObject *rec, SEL_CallFuncOD selector)
+{
+	_pListener = rec;
+	_pfnSelector = selector;
+}
 
-
-	SceneReader* SceneReader::sharedSceneReader()
+CCNode* SceneReader::getNodeByTag(int nTag)
+{
+	if (_pNode == NULL)
 	{
-		if (_sharedReader == NULL)
-		{
-			_sharedReader = new SceneReader();
-		}
-		return _sharedReader;
+		return NULL;
 	}
+	if (_pNode->getTag() == nTag)
+	{
+		return _pNode;
+	}
+	return nodeByTag(_pNode, nTag);
+}
 
-    void SceneReader::purgeSceneReader()
-    {		
-		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-		TriggerMng::getInstance()->destroyInstance();
-		_pfnSelector = NULL;
-		_pListener = NULL;
-		CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
-		CC_SAFE_DELETE(_sharedReader);
-    }
+void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node)
+{
+	float x = DICTOOL->getFloatValue_json(root, "x");
+	float y = DICTOOL->getFloatValue_json(root, "y");
+
+	node->setPosition(ccp(x, y));
+
+	bool bVisible = DICTOOL->getIntValue_json(root, "visible", 1) != 0? true:false;
+	node->setVisible(bVisible);
+
+	int nTag = DICTOOL->getIntValue_json(root, "objecttag", -1);
+	node->setTag(nTag);
+
+	int nZorder = DICTOOL->getIntValue_json(root, "zorder");
+	node->setZOrder(nZorder);
+
+	float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
+	float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);
+	node->setScaleX(fScaleX);
+	node->setScaleY(fScaleY);
+
+	float fRotationZ = DICTOOL->getFloatValue_json(root, "rotation"); 
+	node->setRotation(fRotationZ);
+}
+
+
+SceneReader* SceneReader::sharedSceneReader()
+{
+	if (_sharedReader == NULL)
+	{
+		_sharedReader = new SceneReader();
+	}
+	return _sharedReader;
+}
+
+void SceneReader::purgeSceneReader()
+{		
+	cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+	TriggerMng::getInstance()->destroyInstance();
+	_pfnSelector = NULL;
+	_pListener = NULL;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+	CC_SAFE_DELETE(_sharedReader);
+}
 
 NS_CC_EXT_END
