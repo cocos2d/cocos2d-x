@@ -1,4 +1,4 @@
-require "CocosStudio"
+require "CocoStudio"
 
 local ConfigType = 
 {
