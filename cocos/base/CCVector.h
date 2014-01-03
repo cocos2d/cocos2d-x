@@ -265,14 +265,7 @@ public:
      *        which causes an automatic reallocation of the allocated storage space 
      *        if -and only if- the new vector size surpasses the current vector capacity.
      */
-    void pushBack(const T& object)
-    {
-        CCASSERT(object != nullptr, "The object should not be nullptr");
-        _data.push_back( object );
-        object->retain();
-    }
-    
-    void pushBack(T&& object)
+    void pushBack(T object)
     {
         CCASSERT(object != nullptr, "The object should not be nullptr");
         _data.push_back( object );
