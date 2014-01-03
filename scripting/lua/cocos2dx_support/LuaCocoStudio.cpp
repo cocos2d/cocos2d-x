@@ -22104,7 +22104,7 @@ static int tolua_CocoStudio_ActionManager_purgeActionManager00(lua_State* tolua_
 #endif
  {
   {
-   ActionManager::purgeActionManager();
+   ActionManager::purge();
   }
  }
  return 0;
@@ -22356,7 +22356,7 @@ static int tolua_CocoStudio_SceneReader_purgeSceneReader00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeSceneReader'", NULL);
 #endif
   {
-   self->purgeSceneReader();
+   self->purge();
   }
  }
  return 0;
@@ -22599,7 +22599,7 @@ static int tolua_CocoStudio_GUIReader_purgeGUIReader00(lua_State* tolua_S)
 #endif
  {
   {
-   GUIReader::purgeGUIReader();
+   GUIReader::purge();
   }
  }
  return 0;
