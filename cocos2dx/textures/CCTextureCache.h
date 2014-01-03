@@ -98,7 +98,7 @@ public:
     * If the file image was not previously loaded, it will create a new CCTexture2D
     *  object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
-    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr
     */
     CCTexture2D* addImage(const char* fileimage);
 
