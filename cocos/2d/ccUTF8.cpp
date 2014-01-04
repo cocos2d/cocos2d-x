@@ -318,10 +318,10 @@ std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned short* st
  * Return value: number of bytes written
  **/
 int
-cc_unichar_to_utf8 (unsigned short c,
+cc_unichar_to_utf8 (unsigned int c,
                    char   *outbuf)
 {
-    unsigned int len = 0;
+    int len = 0;
     int first;
     int i;
     
@@ -335,23 +335,21 @@ cc_unichar_to_utf8 (unsigned short c,
         first = 0xc0;
         len = 2;
     }
-    // XXX FIXME
-    // These conditions are alwasy true.
-//    else if (c < 0x10000)
-//    {
-//        first = 0xe0;
-//        len = 3;
-//    }
-//    else if (c < 0x200000)
-//    {
-//        first = 0xf0;
-//        len = 4;
-//    }
-//    else if (c < 0x4000000)
-//    {
-//        first = 0xf8;
-//        len = 5;
-//    }
+    else if (c < 0x10000)
+    {
+        first = 0xe0;
+        len = 3;
+    }
+    else if (c < 0x200000)
+    {
+        first = 0xf0;
+        len = 4;
+    }
+    else if (c < 0x4000000)
+    {
+        first = 0xf8;
+        len = 5;
+    }
     else
     {
         first = 0xfc;
@@ -400,9 +398,9 @@ cc_unichar_to_utf8 (unsigned short c,
  **/
 char *
 cc_utf16_to_utf8 (const unsigned short  *str,
-                 long             len,
-                 long            *items_read,
-                 long            *items_written)
+                 ssize_t             len,
+                 ssize_t            *items_read,
+                 ssize_t            *items_written)
 {
     /* This function and g_utf16_to_ucs4 are almost exactly identical - The lines that differ
      * are marked.
@@ -411,7 +409,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     char *out;
     char *result = nullptr;
     int n_bytes;
-    unsigned short high_surrogate;
+    unsigned int high_surrogate;
     
     if (str == 0) return nullptr;
     
@@ -421,7 +419,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     while ((len < 0 || in - str < len) && *in)
     {
         unsigned short c = *in;
-        unsigned short wc;
+        unsigned int wc;
         
         if (c >= 0xdc00 && c < 0xe000) /* low surrogate */
         {
@@ -454,7 +452,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
         }
         
         /********** DIFFERENT for UTF8/UCS4 **********/
-        n_bytes += UTF8_LENGTH (static_cast<unsigned int>(wc));
+        n_bytes += UTF8_LENGTH (wc);
         
     next1:
         in++;
@@ -477,7 +475,7 @@ cc_utf16_to_utf8 (const unsigned short  *str,
     while (out < result + n_bytes)
     {
         unsigned short c = *in;
-        unsigned short wc;
+        unsigned int wc;
         
         if (c >= 0xdc00 && c < 0xe000) /* low surrogate */
         {
