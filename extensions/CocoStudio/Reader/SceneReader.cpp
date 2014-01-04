@@ -35,6 +35,9 @@ SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 SceneReader::SceneReader()
 :_pNode(NULL)
 {
+    ObjectFactory::getInstance()->registerType(CCComAttribute::Type);
+    ObjectFactory::getInstance()->registerType(CCComAudio::Type);
+    ObjectFactory::getInstance()->registerType(CCComController::Type);
 }
 
 SceneReader::~SceneReader()
