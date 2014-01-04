@@ -1484,10 +1484,6 @@
 		2AFCB8251863D70300EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */; };
 		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
-		373B912B1878920000198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
-		373B912C1878920100198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
-		373B912D1878920600198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
-		373B912E1878920700198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
@@ -5756,7 +5752,6 @@
 				1A3B1F83180E88C300497A22 /* CCLuaEngine.h in Headers */,
 				15CA8D1018697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
 				1A3B1F87180E88C300497A22 /* CCLuaStack.h in Headers */,
-				373B912C1878920100198F86 /* CCComBase.h in Headers */,
 				1A3B1F8B180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8F180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
 				1A3B1F93180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
@@ -5791,7 +5786,6 @@
 				1A3B1F82180E88C300497A22 /* CCLuaEngine.h in Headers */,
 				15CA8D0F18697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
 				1A3B1F86180E88C300497A22 /* CCLuaStack.h in Headers */,
-				373B912D1878920600198F86 /* CCComBase.h in Headers */,
 				1A3B1F8A180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8E180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
 				1A3B1F92180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
@@ -5980,7 +5974,6 @@
 				1A2C7915181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */,
 				1A2C7917181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */,
 				1A2C793B181A1257004E5527 /* js_bindings_core.h in Headers */,
-				373B912E1878920700198F86 /* CCComBase.h in Headers */,
 				1A2C793F181A1257004E5527 /* js_bindings_opengl.h in Headers */,
 				1A2C7945181A1257004E5527 /* jsb_helper.h in Headers */,
 				1A2C7957181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */,
@@ -6474,7 +6467,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A2C7938181A1257004E5527 /* js_bindings_config.h in Headers */,
-				373B912B1878920000198F86 /* CCComBase.h in Headers */,
 				1A2C7910181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */,
 				1A2C7936181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */,
 				1A2C7920181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */,
