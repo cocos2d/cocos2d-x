@@ -179,7 +179,8 @@ class CocosProject:
         self.step = 0
 
         #begin copy engine
-        print("###begin copy engine...")
+        print("###begin copy engine")
+        print("waitting copy cocos2d ...")
         dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
         for index in range(len(fileList)):
             srcfile = os.path.join(self.cocos_root,fileList[index])
@@ -187,7 +188,6 @@ class CocosProject:
             if not os.path.exists(os.path.dirname(dstfile)):
                 os.makedirs(os.path.dirname(dstfile))
 
-            print (fileList[index])
             #copy file or folder
             if os.path.exists(srcfile):
                 if os.path.isdir(srcfile):
@@ -199,9 +199,9 @@ class CocosProject:
                         os.remove(dstfile)
                     shutil.copyfile(srcfile, dstfile)
             self.step = self.step + 1
-            if self.callbackfun and self.step%int(self.totalStep/100) == 0:
+            if self.callbackfun and self.step%int(self.totalStep/50) == 0:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
-
+        print("cocos2d\t\t: Done!")
         # call process_proj from each platform's script folder
         for platform in self.platforms_list:
             self.__processPlatformProjects(platform)
