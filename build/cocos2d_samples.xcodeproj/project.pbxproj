@@ -324,6 +324,8 @@
 		1A6FB7AD1785614200CDF010 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		1A6FB7AE1785614200CDF010 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		1A6FB7AF1785614200CDF010 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
+		1A80519718768FD300C117B5 /* UnitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80519518768FD300C117B5 /* UnitTest.cpp */; };
+		1A80519818768FD300C117B5 /* UnitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A80519518768FD300C117B5 /* UnitTest.cpp */; };
 		1A8C5532180E8B1C00EF57C3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5530180E8B1C00EF57C3 /* AppDelegate.cpp */; };
 		1A8C5533180E8B1C00EF57C3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5530180E8B1C00EF57C3 /* AppDelegate.cpp */; };
 		1A8C554A180E8B3D00EF57C3 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C553A180E8B3D00EF57C3 /* AppController.mm */; };
@@ -2351,6 +2353,8 @@
 		1A6A41E4180BE41100565AC2 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
 		1A6FB56B17854FE400CDF010 /* Hello lua Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A6FB7B31785614200CDF010 /* Test lua Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test lua Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A80519518768FD300C117B5 /* UnitTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitTest.cpp; path = UnitTest/UnitTest.cpp; sourceTree = "<group>"; };
+		1A80519618768FD300C117B5 /* UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitTest.h; path = UnitTest/UnitTest.h; sourceTree = "<group>"; };
 		1A8C5530180E8B1C00EF57C3 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1A8C5531180E8B1C00EF57C3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1A8C5539180E8B3D00EF57C3 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -3804,6 +3808,15 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		1A804EB61876890200C117B5 /* UnitTest */ = {
+			isa = PBXGroup;
+			children = (
+				1A80519518768FD300C117B5 /* UnitTest.cpp */,
+				1A80519618768FD300C117B5 /* UnitTest.h */,
+			);
+			name = UnitTest;
+			sourceTree = "<group>";
+		};
 		1A8C552F180E8B1C00EF57C3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -4182,7 +4195,6 @@
 		1AAF4FA5180E2C17000584C8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				599121E3182C74AC00CE785B /* NewRendererTest */,
 				1AAF4FA6180E2C17000584C8 /* AccelerometerTest */,
 				1AAF4FA9180E2C17000584C8 /* ActionManagerTest */,
 				1AAF4FAC180E2C17000584C8 /* ActionsEaseTest */,
@@ -4212,8 +4224,8 @@
 				1AAF502D180E2C18000584C8 /* ExtensionsTest */,
 				1AAF50D0180E2C19000584C8 /* FileUtilsTest */,
 				1AAF50D3180E2C19000584C8 /* FontTest */,
-				1AAF50D6180E2C19000584C8 /* IntervalTest */,
 				59A79D5A1821E95C00F19697 /* InputTest */,
+				1AAF50D6180E2C19000584C8 /* IntervalTest */,
 				1AAF50D9180E2C19000584C8 /* KeyboardTest */,
 				1AAF50DC180E2C19000584C8 /* KeypadTest */,
 				1AAF50DF180E2C19000584C8 /* LabelTest */,
@@ -4222,6 +4234,7 @@
 				1AAF50EA180E2C19000584C8 /* MotionStreakTest */,
 				1AAF50ED180E2C19000584C8 /* MutiTouchTest */,
 				1AAF50F0180E2C19000584C8 /* NewEventDispatcherTest */,
+				599121E3182C74AC00CE785B /* NewRendererTest */,
 				1AAF50F3180E2C19000584C8 /* NodeTest */,
 				1AAF50F6180E2C1A000584C8 /* ParallaxTest */,
 				1AAF50F9180E2C1A000584C8 /* ParticleTest */,
@@ -4245,6 +4258,7 @@
 				1AAF5135180E2C1A000584C8 /* TileMapTest */,
 				1AAF5138180E2C1A000584C8 /* TouchesTest */,
 				1AAF513F180E2C1A000584C8 /* TransitionsTest */,
+				1A804EB61876890200C117B5 /* UnitTest */,
 				1AAF5142180E2C1A000584C8 /* UserDefaultTest */,
 				1AAF5145180E2C1A000584C8 /* VisibleRect.cpp */,
 				1AAF5146180E2C1A000584C8 /* VisibleRect.h */,
@@ -7148,6 +7162,7 @@
 				1AAF5208180E2C1A000584C8 /* MenuTest.cpp in Sources */,
 				1AAF520A180E2C1A000584C8 /* MotionStreakTest.cpp in Sources */,
 				1AAF520C180E2C1A000584C8 /* MutiTouchTest.cpp in Sources */,
+				1A80519718768FD300C117B5 /* UnitTest.cpp in Sources */,
 				1AAF520E180E2C1A000584C8 /* NewEventDispatcherTest.cpp in Sources */,
 				1ADCE794186BCAFB001B78A4 /* UISceneManager.cpp in Sources */,
 				1AAF5210180E2C1A000584C8 /* NodeTest.cpp in Sources */,
@@ -7423,6 +7438,7 @@
 				1AAF51F5180E2C1A000584C8 /* CustomTableViewCell.cpp in Sources */,
 				1AAF51F7180E2C1A000584C8 /* TableViewTestScene.cpp in Sources */,
 				50D360FD186819DB00828878 /* UIImageViewTest.cpp in Sources */,
+				1A80519818768FD300C117B5 /* UnitTest.cpp in Sources */,
 				1AAF51F9180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,
 				1AAF51FB180E2C1A000584C8 /* FontTest.cpp in Sources */,
 				1AAF51FD180E2C1A000584C8 /* IntervalTest.cpp in Sources */,
