@@ -134,7 +134,7 @@ void PointArray::insertControlPoint(Point &controlPoint, ssize_t index)
 
 Point PointArray::getControlPointAtIndex(ssize_t index)
 {
-    index = static_cast<int>(MIN(_controlPoints->size()-1, MAX(index, 0)));
+    index = MIN(_controlPoints->size()-1, MAX(index, 0));
     return *(_controlPoints->at(index));
 }
 
