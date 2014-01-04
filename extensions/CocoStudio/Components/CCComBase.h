@@ -31,11 +31,10 @@ THE SOFTWARE.
 #include "../Json/DictionaryHelper.h"
 #include <string>
 
-NS_CC_EXT_BEGIN
 
 #define DECLARE_CLASS_COMPONENT_INFO \
 	public: \
-	static ObjectFactory::TInfo Type; \
+	static cocos2d::extension::ObjectFactory::TInfo Type; \
 	static cocos2d::CCObject* createInstance(void); \
 
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
@@ -43,11 +42,10 @@ NS_CC_EXT_BEGIN
     { \
         return className::create(); \
     } \
-	ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+	cocos2d::extension::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 #define CREATE_CLASS_COMPONENT_INFO(className) \
-	ObjectFactory::TInfo(#className, &className::createInstance)
+	cocos2d::extension::ObjectFactory::TInfo(#className, &className::createInstance)
 
-NS_CC_EXT_END
 
 #endif 

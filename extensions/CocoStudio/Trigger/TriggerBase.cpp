@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "TriggerBase.h"
-#include "TriggerObj.h"
-#include "TriggerMng.h"
 
 NS_CC_EXT_BEGIN
 

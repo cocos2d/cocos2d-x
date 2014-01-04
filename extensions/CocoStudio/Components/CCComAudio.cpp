@@ -107,9 +107,9 @@ bool CCComAudio::serialize(void* r)
 			strFilePath.replace(pos, strFilePath.length(), ".wav");
 #endif
 			preloadBackgroundMusic(strFilePath.c_str());
-			setFile(strFilePath.c_str());
 			bool bLoop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
-			playBackgroundMusic(strFilePath.c_str(), bLoop);
+			setLoop(bLoop);
+            playBackgroundMusic(strFilePath.c_str(), bLoop);
 		}
 		else if(strcmp(pClassName, "CCComAudio") == 0)
 		{

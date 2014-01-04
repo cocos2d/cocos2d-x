@@ -104,10 +104,27 @@ CCComponent* ObjectFactory::createComponent(std::string name)
 	{
 		name = "CCComRender";
 	}
-	if (name == "CCComAudio" || name == "CCBackgroundAudio")
+	else if (name == "CCComAudio" || name == "CCBackgroundAudio")
 	{
 		name = "CCComAudio";
 	}
+    else if (name == "CCComController")
+    {
+        name = "CCComController";
+    }
+    else if (name == "CCComAttribute")
+    {
+        name = "CCComAttribute";
+    }
+    else if (name == "CCScene")
+    {
+        name = "CCScene";
+    }
+    else
+    {
+        CCAssert(false, "Unregistered Component!");
+    }
+    
 	CCObject *o = NULL;
 	do 
 	{

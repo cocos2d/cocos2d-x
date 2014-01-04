@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "CCComController.h"
 
 NS_CC_EXT_BEGIN
+
 IMPLEMENT_CLASS_COMPONENT_INFO(CCComController)
 CCComController::CCComController(void)
 {

@@ -34,6 +34,12 @@ CCComRender::CCComRender(void)
 	m_strName = "CCComRender";
 }
 
+CCComRender::CCComRender(cocos2d::CCNode *node, const char *comName)
+{
+    m_pRender = node;
+    m_strName.assign(comName);
+}
+
 CCComRender::~CCComRender(void)
 {
 	m_pRender = NULL;
@@ -176,6 +182,20 @@ bool CCComRender::serialize(void* r)
 	} while (0);
 
 	return bRet;
+}
+
+CCComRender* CCComRender::create(cocos2d::CCNode *pNode, const char *comName)
+{
+    CCComRender * pRet = new CCComRender(pNode, comName);
+    if (pRet != NULL && pRet->init())
+    {
+        pRet->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(pRet);
+    }
+        return pRet;
 }
 
 CCComRender* CCComRender::create(void)
