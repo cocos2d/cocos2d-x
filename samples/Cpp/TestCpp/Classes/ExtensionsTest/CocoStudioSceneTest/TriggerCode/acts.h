@@ -17,9 +17,9 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	 int  _nTag;
+	 int  _tag;
 	 std::string _comName;
-	 int  _nType;
+	 int  _type;
 };
 
 class  TMoveTo: public cocostudio::BaseTriggerAction
@@ -34,8 +34,8 @@ public:
 	virtual void serialize(const rapidjson::Value &val);
 	virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _pos;
 };
 
@@ -52,10 +52,10 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _pos;
-	bool _bReverse;
+	bool _reverse;
 };
 
 
@@ -71,9 +71,9 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
-	float _fDeltaAngle;
+	int  _tag;
+	float _duration;
+	float _deltaAngle;
 };
 
 
@@ -89,10 +89,10 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
-	float _fDeltaAngle;
-	bool _bReverse;
+	int  _tag;
+	float _duration;
+	float _deltaAngle;
+	bool _reverse;
 };
 
 
@@ -108,8 +108,8 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _scale;
 };
 
@@ -126,10 +126,10 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _scale;
-	bool _bReverse;
+	bool _reverse;
 
 };
 
@@ -146,8 +146,8 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _skew;
 };
 
@@ -164,10 +164,10 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	float _fDuration;
+	int  _tag;
+	float _duration;
 	cocos2d::Point _skew;
-	bool _bReverse;
+	bool _reverse;
 };
 
 
@@ -183,8 +183,8 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nID;
-	int _nState;
+	int  _id;
+	int _state;
 };
 
 class ArmaturePlayAction : public cocostudio::BaseTriggerAction
@@ -199,7 +199,7 @@ public:
 	virtual void serialize(const rapidjson::Value &val);
 	virtual void removeAll();
 private:
-	int _nTag;
+	int _tag;
 	std::string _ComName;
 	std::string _aniname;
 };

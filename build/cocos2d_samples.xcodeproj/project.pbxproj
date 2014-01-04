@@ -911,70 +911,6 @@
 		1AAF534D180E2F4E000584C8 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		1AAF534E180E2F4E000584C8 /* libcocos2dx-extensions Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB21807A4F9005B8026 /* libcocos2dx-extensions Mac.a */; };
 		1AAF534F180E2F4E000584C8 /* libCocosDenshion Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB81807A4F9005B8026 /* libCocosDenshion Mac.a */; };
-		1AAF53AF180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
-		1AAF53B0180E363C000584C8 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538D180E363B000584C8 /* animations */; };
-		1AAF53B3180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
-		1AAF53B4180E363C000584C8 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF538F180E363B000584C8 /* armature */; };
-		1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5390180E363B000584C8 /* background-music-aac.wav */; };
-		1AAF53B6180E363C000584C8 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5390180E363B000584C8 /* background-music-aac.wav */; };
-		1AAF53B7180E363C000584C8 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5391180E363B000584C8 /* background.mp3 */; };
-		1AAF53B8180E363C000584C8 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5391180E363B000584C8 /* background.mp3 */; };
-		1AAF53B9180E363C000584C8 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5392180E363B000584C8 /* background.ogg */; };
-		1AAF53BA180E363C000584C8 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5392180E363B000584C8 /* background.ogg */; };
-		1AAF53BB180E363C000584C8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5393180E363B000584C8 /* ccb */; };
-		1AAF53BC180E363C000584C8 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5393180E363B000584C8 /* ccb */; };
-		1AAF53BD180E363C000584C8 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5394180E363B000584C8 /* CocosBuilderExample.ccbproj */; };
-		1AAF53BE180E363C000584C8 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5394180E363B000584C8 /* CocosBuilderExample.ccbproj */; };
-		1AAF53BF180E363C000584C8 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5395180E363B000584C8 /* CocosBuilderExample.ccbresourcelog */; };
-		1AAF53C0180E363C000584C8 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5395180E363B000584C8 /* CocosBuilderExample.ccbresourcelog */; };
-		1AAF53C1180E363C000584C8 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5396180E363B000584C8 /* cocosgui */; };
-		1AAF53C2180E363C000584C8 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5396180E363B000584C8 /* cocosgui */; };
-		1AAF53C3180E363C000584C8 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5397180E363B000584C8 /* components */; };
-		1AAF53C4180E363C000584C8 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5397180E363B000584C8 /* components */; };
-		1AAF53C5180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
-		1AAF53C6180E363C000584C8 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF5398180E363B000584C8 /* configs */; };
-		1AAF53C9180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
-		1AAF53CA180E363C000584C8 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539A180E363B000584C8 /* effect1.raw */; };
-		1AAF53CB180E363C000584C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539B180E363B000584C8 /* effect1.wav */; };
-		1AAF53CC180E363C000584C8 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539B180E363B000584C8 /* effect1.wav */; };
-		1AAF53CD180E363C000584C8 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539C180E363B000584C8 /* effect2.ogg */; };
-		1AAF53CE180E363C000584C8 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539C180E363B000584C8 /* effect2.ogg */; };
-		1AAF53CF180E363C000584C8 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539D180E363B000584C8 /* extensions */; };
-		1AAF53D0180E363C000584C8 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539D180E363B000584C8 /* extensions */; };
-		1AAF53D1180E363C000584C8 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539E180E363B000584C8 /* fileLookup.plist */; };
-		1AAF53D2180E363C000584C8 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539E180E363B000584C8 /* fileLookup.plist */; };
-		1AAF53D3180E363C000584C8 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539F180E363B000584C8 /* fonts */; };
-		1AAF53D4180E363C000584C8 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF539F180E363B000584C8 /* fonts */; };
-		1AAF53D5180E363C000584C8 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A0180E363B000584C8 /* fps_images.png */; };
-		1AAF53D6180E363C000584C8 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A0180E363B000584C8 /* fps_images.png */; };
-		1AAF53D7180E363C000584C8 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A1180E363B000584C8 /* hd */; };
-		1AAF53D8180E363C000584C8 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A1180E363B000584C8 /* hd */; };
-		1AAF53D9180E363C000584C8 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A2180E363C000584C8 /* Hello.png */; };
-		1AAF53DA180E363C000584C8 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A2180E363C000584C8 /* Hello.png */; };
-		1AAF53DB180E363C000584C8 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A3180E363C000584C8 /* Images */; };
-		1AAF53DC180E363C000584C8 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A3180E363C000584C8 /* Images */; };
-		1AAF53DD180E363C000584C8 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A4180E363C000584C8 /* ipad */; };
-		1AAF53DE180E363C000584C8 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A4180E363C000584C8 /* ipad */; };
-		1AAF53DF180E363C000584C8 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A5180E363C000584C8 /* ipadhd */; };
-		1AAF53E0180E363C000584C8 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A5180E363C000584C8 /* ipadhd */; };
-		1AAF53E1180E363C000584C8 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A6180E363C000584C8 /* Misc */; };
-		1AAF53E2180E363C000584C8 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A6180E363C000584C8 /* Misc */; };
-		1AAF53E3180E363C000584C8 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A7180E363C000584C8 /* music.mid */; };
-		1AAF53E4180E363C000584C8 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A7180E363C000584C8 /* music.mid */; };
-		1AAF53E5180E363C000584C8 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A8180E363C000584C8 /* Particles */; };
-		1AAF53E6180E363C000584C8 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A8180E363C000584C8 /* Particles */; };
-		1AAF53E7180E363C000584C8 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A9180E363C000584C8 /* pew-pew-lei.wav */; };
-		1AAF53E8180E363C000584C8 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53A9180E363C000584C8 /* pew-pew-lei.wav */; };
-		1AAF53E9180E363C000584C8 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AA180E363C000584C8 /* scenetest */; };
-		1AAF53EA180E363C000584C8 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AA180E363C000584C8 /* scenetest */; };
-		1AAF53EB180E363C000584C8 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AB180E363C000584C8 /* Shaders */; };
-		1AAF53EC180E363C000584C8 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AB180E363C000584C8 /* Shaders */; };
-		1AAF53ED180E363C000584C8 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AC180E363C000584C8 /* spine */; };
-		1AAF53EE180E363C000584C8 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AC180E363C000584C8 /* spine */; };
-		1AAF53EF180E363C000584C8 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AD180E363C000584C8 /* TileMaps */; };
-		1AAF53F0180E363C000584C8 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AD180E363C000584C8 /* TileMaps */; };
-		1AAF53F1180E363C000584C8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AE180E363C000584C8 /* zwoptex */; };
-		1AAF53F2180E363C000584C8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AAF53AE180E363C000584C8 /* zwoptex */; };
 		1AAF53FE180E39D4000584C8 /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC41807A4F9005B8026 /* libbox2d iOS.a */; };
 		1AAF53FF180E39D4000584C8 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC21807A4F9005B8026 /* libchipmunk iOS.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
@@ -1001,6 +937,198 @@
 		37A61461186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
 		37A61462186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
 		37A61463186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
+		37C819801875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819811875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819821875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819831875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819841875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819851875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		37C819861875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C819871875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C819881875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C819891875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C8198A1875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C8198B1875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		37C8198C1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C8198D1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C8198E1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C8198F1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C819901875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C819911875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		37C819921875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819931875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819941875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819951875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819961875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819971875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		37C819981875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C819991875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C8199A1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C8199B1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C8199C1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C8199D1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		37C8199E1875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C8199F1875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C819A01875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C819A11875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C819A21875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C819A31875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		37C819A41875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819A51875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819A61875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819A71875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819A81875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819A91875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
+		37C819AA1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819AB1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819AC1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819AD1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819AE1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819AF1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
+		37C819B01875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B11875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B21875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B31875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B41875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B51875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		37C819B61875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819B71875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819B81875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819B91875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819BA1875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819BB1875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		37C819BC1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819BD1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819BE1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819BF1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819C01875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819C11875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		37C819C21875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C31875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C41875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C51875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C61875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C71875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		37C819C81875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819C91875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819CA1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819CB1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819CC1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819CD1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		37C819CE1875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819CF1875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819D01875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819D11875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819D21875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819D31875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		37C819D41875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819D51875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819D61875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819D71875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819D81875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819D91875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		37C819DA1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819DB1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819DC1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819DD1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819DE1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819DF1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		37C819E01875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E11875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E21875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E31875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E41875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E51875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		37C819E61875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819E71875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819E81875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819E91875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819EA1875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819EB1875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		37C819EC1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819ED1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819EE1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819EF1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819F01875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819F11875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		37C819F21875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F31875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F41875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F51875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F61875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F71875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		37C819F81875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819F91875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819FA1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819FB1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819FC1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819FD1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		37C819FE1875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C819FF1875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C81A001875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C81A011875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C81A021875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C81A031875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		37C81A041875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A051875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A061875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A071875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A081875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A091875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		37C81A0A1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A0B1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A0C1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A0D1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A0E1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A0F1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		37C81A101875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A111875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A121875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A131875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A141875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A151875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		37C81A161875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A171875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A181875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A191875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A1A1875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A1B1875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		37C81A1C1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A1D1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A1E1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A1F1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A201875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A211875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		37C81A221875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A231875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A241875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A251875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A261875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A271875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		37C81A281875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A291875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A2A1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A2B1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A2C1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A2D1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		37C81A2E1875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A2F1875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A301875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A311875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A321875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A331875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		37C81A341875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A351875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A361875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A371875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A381875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A391875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		37C81A3A1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		37C81A3B1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		37C81A3C1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		37C81A3D1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		37C81A3E1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		37C81A3F1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
 		3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */ = {isa = PBXBuildFile; fileRef = 3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
@@ -2731,44 +2859,44 @@
 		1AAF5283180E2C31000584C8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
-		1AAF538D180E363B000584C8 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../samples/Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		1AAF538F180E363B000584C8 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../samples/Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
-		1AAF5390180E363B000584C8 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../samples/Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
-		1AAF5391180E363B000584C8 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../samples/Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
-		1AAF5392180E363B000584C8 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../samples/Cpp/TestCpp/Resources/background.ogg; sourceTree = "<group>"; };
-		1AAF5393180E363B000584C8 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = ../samples/Cpp/TestCpp/Resources/ccb; sourceTree = "<group>"; };
-		1AAF5394180E363B000584C8 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = ../samples/Cpp/TestCpp/Resources/CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
-		1AAF5395180E363B000584C8 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = ../samples/Cpp/TestCpp/Resources/CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
-		1AAF5396180E363B000584C8 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../samples/Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
-		1AAF5397180E363B000584C8 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../samples/Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
-		1AAF5398180E363B000584C8 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../samples/Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
-		1AAF539A180E363B000584C8 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../samples/Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
-		1AAF539B180E363B000584C8 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../samples/Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
-		1AAF539C180E363B000584C8 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../samples/Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
-		1AAF539D180E363B000584C8 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = extensions; path = ../samples/Cpp/TestCpp/Resources/extensions; sourceTree = "<group>"; };
-		1AAF539E180E363B000584C8 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = ../samples/Cpp/TestCpp/Resources/fileLookup.plist; sourceTree = "<group>"; };
-		1AAF539F180E363B000584C8 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../samples/Cpp/TestCpp/Resources/fonts; sourceTree = "<group>"; };
-		1AAF53A0180E363B000584C8 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../samples/Cpp/TestCpp/Resources/fps_images.png; sourceTree = "<group>"; };
-		1AAF53A1180E363B000584C8 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hd; path = ../samples/Cpp/TestCpp/Resources/hd; sourceTree = "<group>"; };
-		1AAF53A2180E363C000584C8 /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hello.png; path = ../samples/Cpp/TestCpp/Resources/Hello.png; sourceTree = "<group>"; };
-		1AAF53A3180E363C000584C8 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../samples/Cpp/TestCpp/Resources/Images; sourceTree = "<group>"; };
-		1AAF53A4180E363C000584C8 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../samples/Cpp/TestCpp/Resources/ipad; sourceTree = "<group>"; };
-		1AAF53A5180E363C000584C8 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../samples/Cpp/TestCpp/Resources/ipadhd; sourceTree = "<group>"; };
-		1AAF53A6180E363C000584C8 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Misc; path = ../samples/Cpp/TestCpp/Resources/Misc; sourceTree = "<group>"; };
-		1AAF53A7180E363C000584C8 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; name = music.mid; path = ../samples/Cpp/TestCpp/Resources/music.mid; sourceTree = "<group>"; };
-		1AAF53A8180E363C000584C8 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = ../samples/Cpp/TestCpp/Resources/Particles; sourceTree = "<group>"; };
-		1AAF53A9180E363C000584C8 /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "pew-pew-lei.wav"; path = "../samples/Cpp/TestCpp/Resources/pew-pew-lei.wav"; sourceTree = "<group>"; };
-		1AAF53AA180E363C000584C8 /* scenetest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scenetest; path = ../samples/Cpp/TestCpp/Resources/scenetest; sourceTree = "<group>"; };
-		1AAF53AB180E363C000584C8 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../samples/Cpp/TestCpp/Resources/Shaders; sourceTree = "<group>"; };
-		1AAF53AC180E363C000584C8 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spine; path = ../samples/Cpp/TestCpp/Resources/spine; sourceTree = "<group>"; };
-		1AAF53AD180E363C000584C8 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../samples/Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
-		1AAF53AE180E363C000584C8 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../samples/Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A6145B186B21F6007A4638 /* acts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acts.cpp; sourceTree = "<group>"; };
 		37A6145C186B21F6007A4638 /* acts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acts.h; sourceTree = "<group>"; };
 		37A6145D186B21F6007A4638 /* cons.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cons.cpp; sourceTree = "<group>"; };
 		37A6145E186B21F6007A4638 /* cons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cons.h; sourceTree = "<group>"; };
 		37A6145F186B21F6007A4638 /* EventDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDef.h; sourceTree = "<group>"; };
+		37C819601875DF2A00930C57 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../samples/Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
+		37C819611875DF2A00930C57 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../samples/Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
+		37C819621875DF2A00930C57 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../samples/Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
+		37C819631875DF2A00930C57 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../samples/Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
+		37C819641875DF2A00930C57 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../samples/Cpp/TestCpp/Resources/background.ogg; sourceTree = "<group>"; };
+		37C819651875DF2A00930C57 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = ../samples/Cpp/TestCpp/Resources/ccb; sourceTree = "<group>"; };
+		37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = ../samples/Cpp/TestCpp/Resources/CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
+		37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = ../samples/Cpp/TestCpp/Resources/CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
+		37C819681875DF2A00930C57 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../samples/Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
+		37C819691875DF2A00930C57 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../samples/Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
+		37C8196A1875DF2A00930C57 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../samples/Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
+		37C8196B1875DF2A00930C57 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../samples/Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
+		37C8196C1875DF2A00930C57 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../samples/Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
+		37C8196D1875DF2A00930C57 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../samples/Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
+		37C8196E1875DF2A00930C57 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = extensions; path = ../samples/Cpp/TestCpp/Resources/extensions; sourceTree = "<group>"; };
+		37C8196F1875DF2A00930C57 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = ../samples/Cpp/TestCpp/Resources/fileLookup.plist; sourceTree = "<group>"; };
+		37C819701875DF2A00930C57 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../samples/Cpp/TestCpp/Resources/fonts; sourceTree = "<group>"; };
+		37C819711875DF2A00930C57 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../samples/Cpp/TestCpp/Resources/fps_images.png; sourceTree = "<group>"; };
+		37C819721875DF2A00930C57 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hd; path = ../samples/Cpp/TestCpp/Resources/hd; sourceTree = "<group>"; };
+		37C819731875DF2A00930C57 /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hello.png; path = ../samples/Cpp/TestCpp/Resources/Hello.png; sourceTree = "<group>"; };
+		37C819741875DF2B00930C57 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../samples/Cpp/TestCpp/Resources/Images; sourceTree = "<group>"; };
+		37C819751875DF2B00930C57 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../samples/Cpp/TestCpp/Resources/ipad; sourceTree = "<group>"; };
+		37C819761875DF2B00930C57 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../samples/Cpp/TestCpp/Resources/ipadhd; sourceTree = "<group>"; };
+		37C819771875DF2B00930C57 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Misc; path = ../samples/Cpp/TestCpp/Resources/Misc; sourceTree = "<group>"; };
+		37C819781875DF2B00930C57 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; name = music.mid; path = ../samples/Cpp/TestCpp/Resources/music.mid; sourceTree = "<group>"; };
+		37C819791875DF2B00930C57 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = ../samples/Cpp/TestCpp/Resources/Particles; sourceTree = "<group>"; };
+		37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "pew-pew-lei.wav"; path = "../samples/Cpp/TestCpp/Resources/pew-pew-lei.wav"; sourceTree = "<group>"; };
+		37C8197B1875DF2B00930C57 /* scenetest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scenetest; path = ../samples/Cpp/TestCpp/Resources/scenetest; sourceTree = "<group>"; };
+		37C8197C1875DF2B00930C57 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../samples/Cpp/TestCpp/Resources/Shaders; sourceTree = "<group>"; };
+		37C8197D1875DF2B00930C57 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spine; path = ../samples/Cpp/TestCpp/Resources/spine; sourceTree = "<group>"; };
+		37C8197E1875DF2B00930C57 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../samples/Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
+		37C8197F1875DF2B00930C57 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../samples/Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		3EEF8C3C183A01B5005E8A6C /* CocoStudioTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocoStudioTest; path = ../samples/Javascript/Shared/tests/CocoStudioTest; sourceTree = "<group>"; };
 		460E452D1807E712000CDD6D /* AppController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		460E452E1807E712000CDD6D /* AppController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
@@ -5076,38 +5204,38 @@
 		1AAF538C180E3628000584C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1AAF538D180E363B000584C8 /* animations */,
-				1AAF538F180E363B000584C8 /* armature */,
-				1AAF5390180E363B000584C8 /* background-music-aac.wav */,
-				1AAF5391180E363B000584C8 /* background.mp3 */,
-				1AAF5392180E363B000584C8 /* background.ogg */,
-				1AAF5393180E363B000584C8 /* ccb */,
-				1AAF5394180E363B000584C8 /* CocosBuilderExample.ccbproj */,
-				1AAF5395180E363B000584C8 /* CocosBuilderExample.ccbresourcelog */,
-				1AAF5396180E363B000584C8 /* cocosgui */,
-				1AAF5397180E363B000584C8 /* components */,
-				1AAF5398180E363B000584C8 /* configs */,
-				1AAF539A180E363B000584C8 /* effect1.raw */,
-				1AAF539B180E363B000584C8 /* effect1.wav */,
-				1AAF539C180E363B000584C8 /* effect2.ogg */,
-				1AAF539D180E363B000584C8 /* extensions */,
-				1AAF539E180E363B000584C8 /* fileLookup.plist */,
-				1AAF539F180E363B000584C8 /* fonts */,
-				1AAF53A0180E363B000584C8 /* fps_images.png */,
-				1AAF53A1180E363B000584C8 /* hd */,
-				1AAF53A2180E363C000584C8 /* Hello.png */,
-				1AAF53A3180E363C000584C8 /* Images */,
-				1AAF53A4180E363C000584C8 /* ipad */,
-				1AAF53A5180E363C000584C8 /* ipadhd */,
-				1AAF53A6180E363C000584C8 /* Misc */,
-				1AAF53A7180E363C000584C8 /* music.mid */,
-				1AAF53A8180E363C000584C8 /* Particles */,
-				1AAF53A9180E363C000584C8 /* pew-pew-lei.wav */,
-				1AAF53AA180E363C000584C8 /* scenetest */,
-				1AAF53AB180E363C000584C8 /* Shaders */,
-				1AAF53AC180E363C000584C8 /* spine */,
-				1AAF53AD180E363C000584C8 /* TileMaps */,
-				1AAF53AE180E363C000584C8 /* zwoptex */,
+				37C819601875DF2A00930C57 /* animations */,
+				37C819611875DF2A00930C57 /* armature */,
+				37C819621875DF2A00930C57 /* background-music-aac.wav */,
+				37C819631875DF2A00930C57 /* background.mp3 */,
+				37C819641875DF2A00930C57 /* background.ogg */,
+				37C819651875DF2A00930C57 /* ccb */,
+				37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */,
+				37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */,
+				37C819681875DF2A00930C57 /* cocosgui */,
+				37C819691875DF2A00930C57 /* components */,
+				37C8196A1875DF2A00930C57 /* configs */,
+				37C8196B1875DF2A00930C57 /* effect1.raw */,
+				37C8196C1875DF2A00930C57 /* effect1.wav */,
+				37C8196D1875DF2A00930C57 /* effect2.ogg */,
+				37C8196E1875DF2A00930C57 /* extensions */,
+				37C8196F1875DF2A00930C57 /* fileLookup.plist */,
+				37C819701875DF2A00930C57 /* fonts */,
+				37C819711875DF2A00930C57 /* fps_images.png */,
+				37C819721875DF2A00930C57 /* hd */,
+				37C819731875DF2A00930C57 /* Hello.png */,
+				37C819741875DF2B00930C57 /* Images */,
+				37C819751875DF2B00930C57 /* ipad */,
+				37C819761875DF2B00930C57 /* ipadhd */,
+				37C819771875DF2B00930C57 /* Misc */,
+				37C819781875DF2B00930C57 /* music.mid */,
+				37C819791875DF2B00930C57 /* Particles */,
+				37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */,
+				37C8197B1875DF2B00930C57 /* scenetest */,
+				37C8197C1875DF2B00930C57 /* Shaders */,
+				37C8197D1875DF2B00930C57 /* spine */,
+				37C8197E1875DF2B00930C57 /* TileMaps */,
+				37C8197F1875DF2B00930C57 /* zwoptex */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6117,18 +6245,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A0F1875DF2B00930C57 /* Misc in Resources */,
+				37C81A091875DF2B00930C57 /* ipadhd in Resources */,
 				1A8C580D180E8ED400EF57C3 /* animations in Resources */,
+				37C819BB1875DF2B00930C57 /* components in Resources */,
 				1A8C5811180E8ED400EF57C3 /* armature in Resources */,
 				1A8C5813180E8ED400EF57C3 /* background-music-aac.wav in Resources */,
+				37C81A1B1875DF2B00930C57 /* Particles in Resources */,
 				1A8C5815180E8ED400EF57C3 /* background.mp3 in Resources */,
+				37C819D31875DF2B00930C57 /* effect2.ogg in Resources */,
 				1A8C5817180E8ED400EF57C3 /* background.ogg in Resources */,
 				1A8C5819180E8ED400EF57C3 /* ccb in Resources */,
+				37C819971875DF2B00930C57 /* background.mp3 in Resources */,
 				1A8C581B180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */,
+				37C8198B1875DF2B00930C57 /* armature in Resources */,
+				37C819C71875DF2B00930C57 /* effect1.raw in Resources */,
+				37C81A211875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
 				1A8C581D180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1A8C581F180E8ED400EF57C3 /* cocosgui in Resources */,
 				1A8C5821180E8ED400EF57C3 /* components in Resources */,
 				1A8C5823180E8ED400EF57C3 /* configs in Resources */,
 				1A8C5827180E8ED400EF57C3 /* effect1.raw in Resources */,
+				37C819A91875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
 				1A8C5829180E8ED400EF57C3 /* effect1.wav in Resources */,
 				1A8C582B180E8ED400EF57C3 /* effect2.ogg in Resources */,
 				1A8C582D180E8ED400EF57C3 /* extensions in Resources */,
@@ -6136,6 +6274,12 @@
 				1A8C5831180E8ED400EF57C3 /* fonts in Resources */,
 				1A8C5833180E8ED400EF57C3 /* fps_images.png in Resources */,
 				1585AB38182299FA00000FB5 /* json.lua in Resources */,
+				37C819911875DF2B00930C57 /* background-music-aac.wav in Resources */,
+				37C819DF1875DF2B00930C57 /* fileLookup.plist in Resources */,
+				37C81A031875DF2B00930C57 /* ipad in Resources */,
+				37C81A331875DF2B00930C57 /* spine in Resources */,
+				37C819E51875DF2B00930C57 /* fonts in Resources */,
+				37C819C11875DF2B00930C57 /* configs in Resources */,
 				1A8C5835180E8ED400EF57C3 /* hd in Resources */,
 				1A8C5837180E8ED400EF57C3 /* Hello.png in Resources */,
 				1A8C5839180E8ED400EF57C3 /* Images in Resources */,
@@ -6144,18 +6288,29 @@
 				1A8C583F180E8ED400EF57C3 /* Misc in Resources */,
 				1A8C5841180E8ED400EF57C3 /* music.mid in Resources */,
 				1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */,
+				37C81A391875DF2B00930C57 /* TileMaps in Resources */,
 				1A8C5843180E8ED400EF57C3 /* Particles in Resources */,
+				37C8199D1875DF2B00930C57 /* background.ogg in Resources */,
 				1A8C5845180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
 				1A8C5847180E8ED400EF57C3 /* scenetest in Resources */,
 				15394DF6182E8F5D000A418D /* StudioConstants.lua in Resources */,
+				37C819F71875DF2B00930C57 /* Hello.png in Resources */,
 				1A8C5849180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584B180E8ED400EF57C3 /* spine in Resources */,
+				37C819D91875DF2B00930C57 /* extensions in Resources */,
+				37C819FD1875DF2B00930C57 /* Images in Resources */,
+				37C81A271875DF2B00930C57 /* scenetest in Resources */,
 				1A8C584D180E8ED400EF57C3 /* TileMaps in Resources */,
 				1A8C584F180E8ED400EF57C3 /* zwoptex in Resources */,
+				37C81A3F1875DF2B00930C57 /* zwoptex in Resources */,
+				37C819EB1875DF2B00930C57 /* fps_images.png in Resources */,
+				37C819B51875DF2B00930C57 /* cocosgui in Resources */,
 				1A8C5865180E8F0100EF57C3 /* Default-568h@2x.png in Resources */,
 				1A8C5866180E8F0100EF57C3 /* Default.png in Resources */,
 				1A8C5867180E8F0100EF57C3 /* Default@2x.png in Resources */,
+				37C819A31875DF2B00930C57 /* ccb in Resources */,
 				1A8C5868180E8F0100EF57C3 /* Icon-114.png in Resources */,
+				37C819AF1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1A8C5869180E8F0100EF57C3 /* Icon-120.png in Resources */,
 				1A8C586A180E8F0100EF57C3 /* Icon-144.png in Resources */,
 				1A8C586B180E8F0100EF57C3 /* Icon-152.png in Resources */,
@@ -6164,16 +6319,21 @@
 				1A8C586E180E8F0100EF57C3 /* Icon-76.png in Resources */,
 				1A8C58A0180E8FB000EF57C3 /* cocosbuilderRes in Resources */,
 				1A8C58A3180E8FC000EF57C3 /* luaScript in Resources */,
+				37C819851875DF2B00930C57 /* animations in Resources */,
 				1A8C58B0180E904800EF57C3 /* AudioEngine.lua in Resources */,
 				1A8C58B1180E904800EF57C3 /* CCBReaderLoad.lua in Resources */,
 				1A8C58B2180E904800EF57C3 /* Cocos2d.lua in Resources */,
 				1A8C58B3180E904800EF57C3 /* Cocos2dConstants.lua in Resources */,
 				1A8C58B4180E904800EF57C3 /* Deprecated.lua in Resources */,
+				37C81A151875DF2B00930C57 /* music.mid in Resources */,
 				1A8C58B5180E904800EF57C3 /* DeprecatedClass.lua in Resources */,
+				37C819F11875DF2B00930C57 /* hd in Resources */,
 				1A8C58B6180E904800EF57C3 /* DeprecatedEnum.lua in Resources */,
+				37C81A2D1875DF2B00930C57 /* Shaders in Resources */,
 				1A8C58B7180E904800EF57C3 /* DeprecatedOpenglEnum.lua in Resources */,
 				1A8C58B8180E904800EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C58B9180E904800EF57C3 /* luaj.lua in Resources */,
+				37C819CD1875DF2B00930C57 /* effect1.wav in Resources */,
 				1A8C58BA180E904800EF57C3 /* Opengl.lua in Resources */,
 				1A8C58BB180E904800EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82C18751B590082884F /* extern.lua in Resources */,
@@ -6226,12 +6386,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A3C1875DF2B00930C57 /* zwoptex in Resources */,
+				37C81A0C1875DF2B00930C57 /* Misc in Resources */,
 				1A8C580C180E8ED400EF57C3 /* animations in Resources */,
 				1A8C5810180E8ED400EF57C3 /* armature in Resources */,
 				1A8C5812180E8ED400EF57C3 /* background-music-aac.wav in Resources */,
 				1A8C5814180E8ED400EF57C3 /* background.mp3 in Resources */,
 				1A8C5816180E8ED400EF57C3 /* background.ogg in Resources */,
 				1A8C5818180E8ED400EF57C3 /* ccb in Resources */,
+				37C819CA1875DF2B00930C57 /* effect1.wav in Resources */,
 				1A8C581A180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */,
 				1A8C581C180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1A8C581E180E8ED400EF57C3 /* cocosgui in Resources */,
@@ -6242,44 +6405,73 @@
 				1A8C582A180E8ED400EF57C3 /* effect2.ogg in Resources */,
 				1A8C582C180E8ED400EF57C3 /* extensions in Resources */,
 				1A8C582E180E8ED400EF57C3 /* fileLookup.plist in Resources */,
+				37C819B81875DF2B00930C57 /* components in Resources */,
 				1A8C5830180E8ED400EF57C3 /* fonts in Resources */,
+				37C81A361875DF2B00930C57 /* TileMaps in Resources */,
 				1A8C5832180E8ED400EF57C3 /* fps_images.png in Resources */,
 				1A8C5834180E8ED400EF57C3 /* hd in Resources */,
+				37C81A061875DF2B00930C57 /* ipadhd in Resources */,
+				37C81A241875DF2B00930C57 /* scenetest in Resources */,
 				1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */,
 				1A8C5836180E8ED400EF57C3 /* Hello.png in Resources */,
+				37C819D61875DF2B00930C57 /* extensions in Resources */,
 				1A8C5838180E8ED400EF57C3 /* Images in Resources */,
+				37C819FA1875DF2B00930C57 /* Images in Resources */,
+				37C819EE1875DF2B00930C57 /* hd in Resources */,
+				37C819821875DF2B00930C57 /* animations in Resources */,
+				37C819E21875DF2B00930C57 /* fonts in Resources */,
 				1A8C583A180E8ED400EF57C3 /* ipad in Resources */,
+				37C81A181875DF2B00930C57 /* Particles in Resources */,
+				37C819AC1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1A8C583C180E8ED400EF57C3 /* ipadhd in Resources */,
+				37C81A1E1875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
 				1A8C583E180E8ED400EF57C3 /* Misc in Resources */,
 				1A8C5840180E8ED400EF57C3 /* music.mid in Resources */,
+				37C81A001875DF2B00930C57 /* ipad in Resources */,
 				1A8C5842180E8ED400EF57C3 /* Particles in Resources */,
+				37C819F41875DF2B00930C57 /* Hello.png in Resources */,
 				1A8C5844180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
 				1A8C5846180E8ED400EF57C3 /* scenetest in Resources */,
+				37C819A61875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
 				1A8C5848180E8ED400EF57C3 /* Shaders in Resources */,
 				1A8C584A180E8ED400EF57C3 /* spine in Resources */,
+				37C819BE1875DF2B00930C57 /* configs in Resources */,
 				1585AB36182299FA00000FB5 /* json.lua in Resources */,
 				15394DF4182E8F5D000A418D /* StudioConstants.lua in Resources */,
+				37C819DC1875DF2B00930C57 /* fileLookup.plist in Resources */,
 				1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */,
 				1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */,
+				37C819D01875DF2B00930C57 /* effect2.ogg in Resources */,
 				1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */,
+				37C81A2A1875DF2B00930C57 /* Shaders in Resources */,
 				1A8C587C180E8F0C00EF57C3 /* MainMenu.xib in Resources */,
+				37C819B21875DF2B00930C57 /* cocosgui in Resources */,
 				1A8C587D180E8F0C00EF57C3 /* Icon.icns in Resources */,
+				37C819A01875DF2B00930C57 /* ccb in Resources */,
+				37C81A301875DF2B00930C57 /* spine in Resources */,
 				1A8C589F180E8FB000EF57C3 /* cocosbuilderRes in Resources */,
 				1A8C58A2180E8FC000EF57C3 /* luaScript in Resources */,
 				1A8C58A4180E904700EF57C3 /* AudioEngine.lua in Resources */,
+				37C819941875DF2B00930C57 /* background.mp3 in Resources */,
 				1A8C58A5180E904700EF57C3 /* CCBReaderLoad.lua in Resources */,
 				1A8C58A6180E904700EF57C3 /* Cocos2d.lua in Resources */,
 				1A8C58A7180E904700EF57C3 /* Cocos2dConstants.lua in Resources */,
 				1A8C58A8180E904700EF57C3 /* Deprecated.lua in Resources */,
+				37C819C41875DF2B00930C57 /* effect1.raw in Resources */,
 				1A8C58A9180E904700EF57C3 /* DeprecatedClass.lua in Resources */,
 				1A8C58AA180E904700EF57C3 /* DeprecatedEnum.lua in Resources */,
+				37C8199A1875DF2B00930C57 /* background.ogg in Resources */,
 				1A8C58AB180E904700EF57C3 /* DeprecatedOpenglEnum.lua in Resources */,
+				37C819881875DF2B00930C57 /* armature in Resources */,
+				37C8198E1875DF2B00930C57 /* background-music-aac.wav in Resources */,
 				1A8C58AC180E904700EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C58AD180E904700EF57C3 /* luaj.lua in Resources */,
 				1A8C58AE180E904700EF57C3 /* Opengl.lua in Resources */,
+				37C81A121875DF2B00930C57 /* music.mid in Resources */,
 				1A8C58AF180E904700EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82A18751B590082884F /* extern.lua in Resources */,
 				15F4C848187551340082884F /* CocoStudio.lua in Resources */,
+				37C819E81875DF2B00930C57 /* fps_images.png in Resources */,
 				15982CE3187656CD00625972 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6288,41 +6480,41 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A2E1875DF2B00930C57 /* spine in Resources */,
+				37C81A3A1875DF2B00930C57 /* zwoptex in Resources */,
+				37C81A0A1875DF2B00930C57 /* Misc in Resources */,
+				37C81A041875DF2B00930C57 /* ipadhd in Resources */,
+				37C81A341875DF2B00930C57 /* TileMaps in Resources */,
+				37C819A41875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
+				37C8199E1875DF2B00930C57 /* ccb in Resources */,
+				37C819D41875DF2B00930C57 /* extensions in Resources */,
 				1AAF5286180E2C31000584C8 /* InfoPlist.strings in Resources */,
+				37C81A161875DF2B00930C57 /* Particles in Resources */,
+				37C819F81875DF2B00930C57 /* Images in Resources */,
+				37C819981875DF2B00930C57 /* background.ogg in Resources */,
+				37C819E61875DF2B00930C57 /* fps_images.png in Resources */,
+				37C819B01875DF2B00930C57 /* cocosgui in Resources */,
+				37C819C81875DF2B00930C57 /* effect1.wav in Resources */,
+				37C819FE1875DF2B00930C57 /* ipad in Resources */,
+				37C819C21875DF2B00930C57 /* effect1.raw in Resources */,
+				37C819CE1875DF2B00930C57 /* effect2.ogg in Resources */,
+				37C819801875DF2B00930C57 /* animations in Resources */,
+				37C819AA1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				37C81A281875DF2B00930C57 /* Shaders in Resources */,
+				37C81A1C1875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
+				37C81A221875DF2B00930C57 /* scenetest in Resources */,
+				37C819EC1875DF2B00930C57 /* hd in Resources */,
+				37C819E01875DF2B00930C57 /* fonts in Resources */,
+				37C819B61875DF2B00930C57 /* components in Resources */,
+				37C8198C1875DF2B00930C57 /* background-music-aac.wav in Resources */,
+				37C819F21875DF2B00930C57 /* Hello.png in Resources */,
+				37C819DA1875DF2B00930C57 /* fileLookup.plist in Resources */,
 				1AAF5287180E2C31000584C8 /* MainMenu.xib in Resources */,
+				37C819861875DF2B00930C57 /* armature in Resources */,
+				37C819921875DF2B00930C57 /* background.mp3 in Resources */,
+				37C819BC1875DF2B00930C57 /* configs in Resources */,
+				37C81A101875DF2B00930C57 /* music.mid in Resources */,
 				1AAF5288180E2C31000584C8 /* Icon.icns in Resources */,
-				1AAF53AF180E363C000584C8 /* animations in Resources */,
-				1AAF53B3180E363C000584C8 /* armature in Resources */,
-				1AAF53B5180E363C000584C8 /* background-music-aac.wav in Resources */,
-				1AAF53B7180E363C000584C8 /* background.mp3 in Resources */,
-				1AAF53B9180E363C000584C8 /* background.ogg in Resources */,
-				1AAF53BB180E363C000584C8 /* ccb in Resources */,
-				1AAF53BD180E363C000584C8 /* CocosBuilderExample.ccbproj in Resources */,
-				1AAF53BF180E363C000584C8 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1AAF53C1180E363C000584C8 /* cocosgui in Resources */,
-				1AAF53C3180E363C000584C8 /* components in Resources */,
-				1AAF53C5180E363C000584C8 /* configs in Resources */,
-				1AAF53C9180E363C000584C8 /* effect1.raw in Resources */,
-				1AAF53CB180E363C000584C8 /* effect1.wav in Resources */,
-				1AAF53CD180E363C000584C8 /* effect2.ogg in Resources */,
-				1AAF53CF180E363C000584C8 /* extensions in Resources */,
-				1AAF53D1180E363C000584C8 /* fileLookup.plist in Resources */,
-				1AAF53D3180E363C000584C8 /* fonts in Resources */,
-				1AAF53D5180E363C000584C8 /* fps_images.png in Resources */,
-				1AAF53D7180E363C000584C8 /* hd in Resources */,
-				1AAF53D9180E363C000584C8 /* Hello.png in Resources */,
-				1AAF53DB180E363C000584C8 /* Images in Resources */,
-				1AAF53DD180E363C000584C8 /* ipad in Resources */,
-				1AAF53DF180E363C000584C8 /* ipadhd in Resources */,
-				1AAF53E1180E363C000584C8 /* Misc in Resources */,
-				1AAF53E3180E363C000584C8 /* music.mid in Resources */,
-				1AAF53E5180E363C000584C8 /* Particles in Resources */,
-				1AAF53E7180E363C000584C8 /* pew-pew-lei.wav in Resources */,
-				1AAF53E9180E363C000584C8 /* scenetest in Resources */,
-				1AAF53EB180E363C000584C8 /* Shaders in Resources */,
-				1AAF53ED180E363C000584C8 /* spine in Resources */,
-				1AAF53EF180E363C000584C8 /* TileMaps in Resources */,
-				1AAF53F1180E363C000584C8 /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6352,24 +6544,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A0E1875DF2B00930C57 /* Misc in Resources */,
 				1A3B1DA4180E7A9700497A22 /* main.js in Resources */,
 				1A3B1DA5180E7A9700497A22 /* tests_resources-html5.js in Resources */,
 				1A3B1DA6180E7A9700497A22 /* tests_resources-jsb.js in Resources */,
+				37C819A81875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
+				37C81A261875DF2B00930C57 /* scenetest in Resources */,
 				1A3B1DA7180E7A9700497A22 /* tests-boot-html5.js in Resources */,
+				37C819D21875DF2B00930C57 /* effect2.ogg in Resources */,
 				1A3B1DA8180E7A9700497A22 /* tests-boot-jsb-for-obfuscation.js in Resources */,
 				1A3B1DA9180E7A9700497A22 /* tests-boot-jsb.js in Resources */,
 				1A3B1DAA180E7A9700497A22 /* tests-main.js in Resources */,
+				37C819BA1875DF2B00930C57 /* components in Resources */,
+				37C81A021875DF2B00930C57 /* ipad in Resources */,
+				37C819F61875DF2B00930C57 /* Hello.png in Resources */,
 				1A9DC2C9180E668B007A3AD4 /* Default-568h@2x.png in Resources */,
 				3EEF8C3E183A01B5005E8A6C /* CocoStudioTest in Resources */,
+				37C819C61875DF2B00930C57 /* effect1.raw in Resources */,
 				1A9DC2CA180E668B007A3AD4 /* Default.png in Resources */,
+				37C819CC1875DF2B00930C57 /* effect1.wav in Resources */,
 				1A9DC2CB180E668B007A3AD4 /* Default@2x.png in Resources */,
+				37C81A381875DF2B00930C57 /* TileMaps in Resources */,
 				1A9DC2CC180E668B007A3AD4 /* Icon-114.png in Resources */,
+				37C81A3E1875DF2B00930C57 /* zwoptex in Resources */,
 				1A9DC2CD180E668B007A3AD4 /* Icon-120.png in Resources */,
 				1A9DC2CE180E668B007A3AD4 /* Icon-144.png in Resources */,
 				1A9DC2CF180E668B007A3AD4 /* Icon-152.png in Resources */,
 				1A9DC2D0180E668B007A3AD4 /* Icon-57.png in Resources */,
 				1A9DC2D1180E668B007A3AD4 /* Icon-72.png in Resources */,
 				1A9DC2D2180E668B007A3AD4 /* Icon-76.png in Resources */,
+				37C81A141875DF2B00930C57 /* music.mid in Resources */,
+				37C819E41875DF2B00930C57 /* fonts in Resources */,
 				1A9DC977180E66FF007A3AD4 /* ActionManagerTest in Resources */,
 				1A9DC979180E66FF007A3AD4 /* ActionsTest in Resources */,
 				1A9DC97B180E66FF007A3AD4 /* AdvanceCompiler in Resources */,
@@ -6377,19 +6582,30 @@
 				1A9DC97F180E66FF007A3AD4 /* Box2dTest in Resources */,
 				1A9DC981180E66FF007A3AD4 /* build.xml in Resources */,
 				1A9DC983180E66FF007A3AD4 /* ChipmunkTest in Resources */,
+				37C81A321875DF2B00930C57 /* spine in Resources */,
 				1A9DC985180E66FF007A3AD4 /* ClickAndMoveTest in Resources */,
+				37C819961875DF2B00930C57 /* background.mp3 in Resources */,
+				37C819A21875DF2B00930C57 /* ccb in Resources */,
 				1A9DC987180E66FF007A3AD4 /* ClippingNodeTest in Resources */,
 				1A9DC989180E66FF007A3AD4 /* CocosDenshionTest in Resources */,
 				1A9DC98B180E66FF007A3AD4 /* CocosNodeTest in Resources */,
 				1A9DC98D180E66FF007A3AD4 /* CurrentLanguageTest in Resources */,
 				1A9DC98F180E66FF007A3AD4 /* DrawPrimitivesTest in Resources */,
+				37C819D81875DF2B00930C57 /* extensions in Resources */,
 				1A9DC991180E66FF007A3AD4 /* EaseActionsTest in Resources */,
+				37C81A2C1875DF2B00930C57 /* Shaders in Resources */,
+				37C819901875DF2B00930C57 /* background-music-aac.wav in Resources */,
 				1A9DC993180E66FF007A3AD4 /* EffectsAdvancedTest in Resources */,
 				1A9DC995180E66FF007A3AD4 /* EffectsTest in Resources */,
 				1A9DC997180E66FF007A3AD4 /* EventTest in Resources */,
+				37C819C01875DF2B00930C57 /* configs in Resources */,
 				1A9DC999180E66FF007A3AD4 /* ExtensionsTest in Resources */,
+				37C819EA1875DF2B00930C57 /* fps_images.png in Resources */,
 				1A9DC99B180E66FF007A3AD4 /* FileUtils in Resources */,
 				1A9DC99D180E66FF007A3AD4 /* FontTest in Resources */,
+				37C819F01875DF2B00930C57 /* hd in Resources */,
+				37C819FC1875DF2B00930C57 /* Images in Resources */,
+				37C81A1A1875DF2B00930C57 /* Particles in Resources */,
 				1A9DC99F180E66FF007A3AD4 /* index.html in Resources */,
 				1A9DC9A1180E66FF007A3AD4 /* IntervalTest in Resources */,
 				1A9DC9A3180E66FF007A3AD4 /* LabelTest in Resources */,
@@ -6398,24 +6614,32 @@
 				1A9DC9AB180E66FF007A3AD4 /* MotionStreakTest in Resources */,
 				1A9DC9AD180E66FF007A3AD4 /* OpenGLTest in Resources */,
 				1A9DC9AF180E66FF007A3AD4 /* ParallaxTest in Resources */,
+				37C81A201875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
 				1A9DC9B1180E66FF007A3AD4 /* ParticleTest in Resources */,
 				1A9DC9B3180E66FF007A3AD4 /* PerformanceTest in Resources */,
 				1A9DC9B5180E66FF007A3AD4 /* Presentation in Resources */,
+				37C81A081875DF2B00930C57 /* ipadhd in Resources */,
 				1A9DC9B7180E66FF007A3AD4 /* ProgressActionsTest in Resources */,
 				1A9DC9B9180E66FF007A3AD4 /* RenderTextureTest in Resources */,
+				37C819B41875DF2B00930C57 /* cocosgui in Resources */,
 				1A9DC9BB180E66FF007A3AD4 /* res in Resources */,
 				1A9DC9BD180E66FF007A3AD4 /* RotateWorldTest in Resources */,
 				1A9DC9BF180E66FF007A3AD4 /* SceneTest in Resources */,
 				1A9DC9C1180E66FF007A3AD4 /* SchedulerTest in Resources */,
+				37C819DE1875DF2B00930C57 /* fileLookup.plist in Resources */,
 				1A9DC9C3180E66FF007A3AD4 /* SpriteTest in Resources */,
+				37C819841875DF2B00930C57 /* animations in Resources */,
 				1A90D10A1868646A00CFB4B6 /* SpineTest in Resources */,
+				37C819AE1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1A9DC9C5180E66FF007A3AD4 /* SysTest in Resources */,
 				1A9DC9D3180E66FF007A3AD4 /* TextInputTest in Resources */,
 				1A9DC9D5180E66FF007A3AD4 /* TextureCacheTest in Resources */,
+				37C8198A1875DF2B00930C57 /* armature in Resources */,
 				1A9DC9D7180E66FF007A3AD4 /* TileMapTest in Resources */,
 				1A9DC9D9180E66FF007A3AD4 /* TouchesTest in Resources */,
 				1A9DC9DB180E66FF007A3AD4 /* TransitionsTest in Resources */,
 				1A9DC9DD180E66FF007A3AD4 /* UnitTest in Resources */,
+				37C8199C1875DF2B00930C57 /* background.ogg in Resources */,
 				1A9DC9DF180E66FF007A3AD4 /* XHRTest in Resources */,
 				1A9DC9E6180E6742007A3AD4 /* script in Resources */,
 			);
@@ -6515,11 +6739,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A3B1875DF2B00930C57 /* zwoptex in Resources */,
+				37C819F31875DF2B00930C57 /* Hello.png in Resources */,
 				1A9DCA4F180E7237007A3AD4 /* main.js in Resources */,
 				1A9DCA50180E7237007A3AD4 /* tests_resources-html5.js in Resources */,
 				1A9DCA51180E7237007A3AD4 /* tests_resources-jsb.js in Resources */,
+				37C8199F1875DF2B00930C57 /* ccb in Resources */,
 				1A9DCA52180E7237007A3AD4 /* tests-boot-html5.js in Resources */,
 				1A9DCA53180E7237007A3AD4 /* tests-boot-jsb-for-obfuscation.js in Resources */,
+				37C819871875DF2B00930C57 /* armature in Resources */,
 				1A9DCA54180E7237007A3AD4 /* tests-boot-jsb.js in Resources */,
 				1A9DCA55180E7237007A3AD4 /* tests-main.js in Resources */,
 				1A9DC2AF180E6681007A3AD4 /* InfoPlist.strings in Resources */,
@@ -6527,48 +6755,76 @@
 				1A9DC2B0180E6681007A3AD4 /* MainMenu.xib in Resources */,
 				1A9DC2B1180E6681007A3AD4 /* Icon.icns in Resources */,
 				1A9DC2B2180E6681007A3AD4 /* Info-obfuscated.plist in Resources */,
+				37C81A231875DF2B00930C57 /* scenetest in Resources */,
+				37C819B71875DF2B00930C57 /* components in Resources */,
 				1A9DC976180E66FF007A3AD4 /* ActionManagerTest in Resources */,
 				1A9DC978180E66FF007A3AD4 /* ActionsTest in Resources */,
 				1A9DC97A180E66FF007A3AD4 /* AdvanceCompiler in Resources */,
 				1A9DC97C180E66FF007A3AD4 /* BaseTestLayer in Resources */,
 				1A9DC97E180E66FF007A3AD4 /* Box2dTest in Resources */,
+				37C81A291875DF2B00930C57 /* Shaders in Resources */,
+				37C819B11875DF2B00930C57 /* cocosgui in Resources */,
 				1A9DC980180E66FF007A3AD4 /* build.xml in Resources */,
 				1A9DC982180E66FF007A3AD4 /* ChipmunkTest in Resources */,
+				37C81A0B1875DF2B00930C57 /* Misc in Resources */,
 				1A9DC984180E66FF007A3AD4 /* ClickAndMoveTest in Resources */,
+				37C819BD1875DF2B00930C57 /* configs in Resources */,
 				1A9DC986180E66FF007A3AD4 /* ClippingNodeTest in Resources */,
 				1A9DC988180E66FF007A3AD4 /* CocosDenshionTest in Resources */,
+				37C81A1D1875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
+				37C819AB1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				37C81A171875DF2B00930C57 /* Particles in Resources */,
 				1A9DC98A180E66FF007A3AD4 /* CocosNodeTest in Resources */,
 				1A9DC98C180E66FF007A3AD4 /* CurrentLanguageTest in Resources */,
+				37C81A2F1875DF2B00930C57 /* spine in Resources */,
 				1A9DC98E180E66FF007A3AD4 /* DrawPrimitivesTest in Resources */,
 				1A9DC990180E66FF007A3AD4 /* EaseActionsTest in Resources */,
+				37C819DB1875DF2B00930C57 /* fileLookup.plist in Resources */,
 				3EEF8C3D183A01B5005E8A6C /* CocoStudioTest in Resources */,
 				1A9DC992180E66FF007A3AD4 /* EffectsAdvancedTest in Resources */,
 				1A9DC994180E66FF007A3AD4 /* EffectsTest in Resources */,
+				37C81A051875DF2B00930C57 /* ipadhd in Resources */,
 				1A9DC996180E66FF007A3AD4 /* EventTest in Resources */,
 				1A9DC998180E66FF007A3AD4 /* ExtensionsTest in Resources */,
 				1A9DC99A180E66FF007A3AD4 /* FileUtils in Resources */,
 				1A9DC99C180E66FF007A3AD4 /* FontTest in Resources */,
 				1A9DC99E180E66FF007A3AD4 /* index.html in Resources */,
 				1A9DC9A0180E66FF007A3AD4 /* IntervalTest in Resources */,
+				37C819991875DF2B00930C57 /* background.ogg in Resources */,
 				1A9DC9A2180E66FF007A3AD4 /* LabelTest in Resources */,
+				37C819C91875DF2B00930C57 /* effect1.wav in Resources */,
 				1A9DC9A4180E66FF007A3AD4 /* LayerTest in Resources */,
 				1A9DC9A8180E66FF007A3AD4 /* MenuTest in Resources */,
 				1A9DC9AA180E66FF007A3AD4 /* MotionStreakTest in Resources */,
+				37C819ED1875DF2B00930C57 /* hd in Resources */,
 				1A9DC9AC180E66FF007A3AD4 /* OpenGLTest in Resources */,
 				1A9DC9AE180E66FF007A3AD4 /* ParallaxTest in Resources */,
 				1A9DC9B0180E66FF007A3AD4 /* ParticleTest in Resources */,
 				1A9DC9B2180E66FF007A3AD4 /* PerformanceTest in Resources */,
+				37C819931875DF2B00930C57 /* background.mp3 in Resources */,
+				37C819E71875DF2B00930C57 /* fps_images.png in Resources */,
 				1A9DC9B4180E66FF007A3AD4 /* Presentation in Resources */,
 				1A9DC9B6180E66FF007A3AD4 /* ProgressActionsTest in Resources */,
+				37C81A111875DF2B00930C57 /* music.mid in Resources */,
+				37C819811875DF2B00930C57 /* animations in Resources */,
 				1A9DC9B8180E66FF007A3AD4 /* RenderTextureTest in Resources */,
+				37C819FF1875DF2B00930C57 /* ipad in Resources */,
+				37C819D51875DF2B00930C57 /* extensions in Resources */,
 				1A9DC9BA180E66FF007A3AD4 /* res in Resources */,
+				37C819A51875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
 				1A9DC9BC180E66FF007A3AD4 /* RotateWorldTest in Resources */,
+				37C819CF1875DF2B00930C57 /* effect2.ogg in Resources */,
 				1A9DC9BE180E66FF007A3AD4 /* SceneTest in Resources */,
 				1A9DC9C0180E66FF007A3AD4 /* SchedulerTest in Resources */,
 				1A9DC9C2180E66FF007A3AD4 /* SpriteTest in Resources */,
+				37C8198D1875DF2B00930C57 /* background-music-aac.wav in Resources */,
+				37C81A351875DF2B00930C57 /* TileMaps in Resources */,
+				37C819E11875DF2B00930C57 /* fonts in Resources */,
+				37C819F91875DF2B00930C57 /* Images in Resources */,
 				1A9DC9C4180E66FF007A3AD4 /* SysTest in Resources */,
 				1A9DC9D2180E66FF007A3AD4 /* TextInputTest in Resources */,
 				1A9DC9D4180E66FF007A3AD4 /* TextureCacheTest in Resources */,
+				37C819C31875DF2B00930C57 /* effect1.raw in Resources */,
 				1A9DC9D6180E66FF007A3AD4 /* TileMapTest in Resources */,
 				1A9DC9D8180E66FF007A3AD4 /* TouchesTest in Resources */,
 				1A9DC9DA180E66FF007A3AD4 /* TransitionsTest in Resources */,
@@ -6670,55 +6926,55 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37C81A071875DF2B00930C57 /* ipadhd in Resources */,
 				1AAF526B180E2C26000584C8 /* Default-568h@2x.png in Resources */,
 				1AAF526C180E2C26000584C8 /* Default.png in Resources */,
+				37C819EF1875DF2B00930C57 /* hd in Resources */,
 				1AAF526D180E2C26000584C8 /* Default@2x.png in Resources */,
+				37C819FB1875DF2B00930C57 /* Images in Resources */,
+				37C819D11875DF2B00930C57 /* effect2.ogg in Resources */,
 				1AAF526E180E2C26000584C8 /* Icon-100.png in Resources */,
 				1AAF526F180E2C26000584C8 /* Icon-114.png in Resources */,
 				1AAF5270180E2C26000584C8 /* Icon-120.png in Resources */,
+				37C819A11875DF2B00930C57 /* ccb in Resources */,
 				1AAF5271180E2C26000584C8 /* Icon-144.png in Resources */,
+				37C819C51875DF2B00930C57 /* effect1.raw in Resources */,
 				1AAF5272180E2C26000584C8 /* Icon-152.png in Resources */,
+				37C819E31875DF2B00930C57 /* fonts in Resources */,
+				37C81A1F1875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
+				37C81A0D1875DF2B00930C57 /* Misc in Resources */,
 				1AAF5273180E2C26000584C8 /* Icon-29.png in Resources */,
+				37C819CB1875DF2B00930C57 /* effect1.wav in Resources */,
+				37C81A251875DF2B00930C57 /* scenetest in Resources */,
+				37C8199B1875DF2B00930C57 /* background.ogg in Resources */,
+				37C819831875DF2B00930C57 /* animations in Resources */,
+				37C81A3D1875DF2B00930C57 /* zwoptex in Resources */,
+				37C819DD1875DF2B00930C57 /* fileLookup.plist in Resources */,
+				37C819BF1875DF2B00930C57 /* configs in Resources */,
 				1AAF5274180E2C26000584C8 /* Icon-40.png in Resources */,
+				37C819E91875DF2B00930C57 /* fps_images.png in Resources */,
 				1AAF5275180E2C26000584C8 /* Icon-50.png in Resources */,
+				37C819B31875DF2B00930C57 /* cocosgui in Resources */,
+				37C81A131875DF2B00930C57 /* music.mid in Resources */,
+				37C8198F1875DF2B00930C57 /* background-music-aac.wav in Resources */,
 				1AAF5276180E2C26000584C8 /* Icon-57.png in Resources */,
 				1AAF5277180E2C26000584C8 /* Icon-58.png in Resources */,
+				37C81A191875DF2B00930C57 /* Particles in Resources */,
+				37C81A2B1875DF2B00930C57 /* Shaders in Resources */,
 				1AAF5278180E2C26000584C8 /* Icon-72.png in Resources */,
 				1AAF5279180E2C26000584C8 /* Icon-76.png in Resources */,
 				1AAF527A180E2C26000584C8 /* Icon-80.png in Resources */,
+				37C81A311875DF2B00930C57 /* spine in Resources */,
+				37C819891875DF2B00930C57 /* armature in Resources */,
+				37C81A371875DF2B00930C57 /* TileMaps in Resources */,
+				37C819D71875DF2B00930C57 /* extensions in Resources */,
+				37C819B91875DF2B00930C57 /* components in Resources */,
+				37C819951875DF2B00930C57 /* background.mp3 in Resources */,
+				37C819AD1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
+				37C81A011875DF2B00930C57 /* ipad in Resources */,
+				37C819F51875DF2B00930C57 /* Hello.png in Resources */,
+				37C819A71875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
 				1AAF527C180E2C26000584C8 /* Test-Info.plist in Resources */,
-				1AAF53B0180E363C000584C8 /* animations in Resources */,
-				1AAF53B4180E363C000584C8 /* armature in Resources */,
-				1AAF53B6180E363C000584C8 /* background-music-aac.wav in Resources */,
-				1AAF53B8180E363C000584C8 /* background.mp3 in Resources */,
-				1AAF53BA180E363C000584C8 /* background.ogg in Resources */,
-				1AAF53BC180E363C000584C8 /* ccb in Resources */,
-				1AAF53BE180E363C000584C8 /* CocosBuilderExample.ccbproj in Resources */,
-				1AAF53C0180E363C000584C8 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1AAF53C2180E363C000584C8 /* cocosgui in Resources */,
-				1AAF53C4180E363C000584C8 /* components in Resources */,
-				1AAF53C6180E363C000584C8 /* configs in Resources */,
-				1AAF53CA180E363C000584C8 /* effect1.raw in Resources */,
-				1AAF53CC180E363C000584C8 /* effect1.wav in Resources */,
-				1AAF53CE180E363C000584C8 /* effect2.ogg in Resources */,
-				1AAF53D0180E363C000584C8 /* extensions in Resources */,
-				1AAF53D2180E363C000584C8 /* fileLookup.plist in Resources */,
-				1AAF53D4180E363C000584C8 /* fonts in Resources */,
-				1AAF53D6180E363C000584C8 /* fps_images.png in Resources */,
-				1AAF53D8180E363C000584C8 /* hd in Resources */,
-				1AAF53DA180E363C000584C8 /* Hello.png in Resources */,
-				1AAF53DC180E363C000584C8 /* Images in Resources */,
-				1AAF53DE180E363C000584C8 /* ipad in Resources */,
-				1AAF53E0180E363C000584C8 /* ipadhd in Resources */,
-				1AAF53E2180E363C000584C8 /* Misc in Resources */,
-				1AAF53E4180E363C000584C8 /* music.mid in Resources */,
-				1AAF53E6180E363C000584C8 /* Particles in Resources */,
-				1AAF53E8180E363C000584C8 /* pew-pew-lei.wav in Resources */,
-				1AAF53EA180E363C000584C8 /* scenetest in Resources */,
-				1AAF53EC180E363C000584C8 /* Shaders in Resources */,
-				1AAF53EE180E363C000584C8 /* spine in Resources */,
-				1AAF53F0180E363C000584C8 /* TileMaps in Resources */,
-				1AAF53F2180E363C000584C8 /* zwoptex in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

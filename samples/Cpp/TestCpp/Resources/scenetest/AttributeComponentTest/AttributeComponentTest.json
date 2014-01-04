@@ -1,0 +1,80 @@
+{
+  "classname": "CCNode",
+  "name": null,
+  "canedit": true,
+  "objecttag": 10000,
+  "rotation": 0,
+  "scalex": 1,
+  "scaley": 1,
+  "visible": 1,
+  "x": 0,
+  "y": 0,
+  "zorder": 1,
+  "gameobjects": [
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10015,
+      "rotation": 0.0009690023,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 230.99998474121094,
+      "y": 177.50001525878906,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "grossinis_sister1.png",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        },
+        {
+          "__type": "ComPropertySurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCComAttribute",
+          "name": "CCComAttribute",
+          "fileData": {
+            "path": "PlayerAttribute.json",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "keyvalues": null
+        }
+      ]
+    }
+  ],
+  "CanvasSize": {
+    "_height": 320,
+    "_width": 480
+  },
+  "Triggers": null,
+  "Version": "1.2.0.0",
+  "components": [
+    {
+      "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCScene",
+      "name": "CCScene",
+      "scenename": "AttributeComponentTest"
+    },
+    {
+      "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCBackgroundAudio",
+      "name": "CCBackgroundAudio",
+      "file": null,
+      "fileData": {
+        "path": null,
+        "plistFile": null,
+        "resourceType": 0
+      },
+      "loop": 0
+    }
+  ]
+}
