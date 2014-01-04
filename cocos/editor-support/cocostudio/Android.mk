@@ -8,7 +8,6 @@ LOCAL_MODULE_FILENAME := libcocostudio
 LOCAL_SRC_FILES := CCActionFrame.cpp \
 CCActionEaseEx.cpp \
 CCActionFrameEasing.cpp \
-CCActionEaseEx.cpp \
 CCActionManagerEx.cpp \
 CCActionNode.cpp \
 CCActionObject.cpp \
