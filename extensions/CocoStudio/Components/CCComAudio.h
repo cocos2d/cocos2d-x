@@ -26,9 +26,8 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 #include "CCComBase.h"
-#include "../Json/DictionaryHelper.h"
+#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 /**

@@ -26,8 +26,10 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMBASE_H__
 
 #include "cocos2d.h"
-#include "../Trigger/ObjectFactory.h"
 #include "ExtensionMacros.h"
+#include "../Trigger/ObjectFactory.h"
+#include "../Json/DictionaryHelper.h"
+#include <string>
 
 NS_CC_EXT_BEGIN
 

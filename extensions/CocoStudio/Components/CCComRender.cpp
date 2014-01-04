@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCComRender.h"
 #include "cocos-ext.h"
+#include "CCComRender.h"
 
 NS_CC_EXT_BEGIN
 
@@ -109,6 +109,7 @@ bool CCComRender::serialize(void* r)
 			else if(strcmp(pClassName, "CCParticleSystemQuad") == 0 && strFilePath.find(".plist") != strFilePath.npos)
 			{
 				m_pRender = CCParticleSystemQuad::create(strFilePath.c_str());
+                m_pRender->setPosition(ccp(0.0f, 0.0f));
 			}
 			else if(strcmp(pClassName, "CCArmature") == 0)
 			{
@@ -130,7 +131,7 @@ bool CCComRender::serialize(void* r)
 				CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
 				CCArmature *pAr = CCArmature::create(name);
 				m_pRender = pAr;
-				const char *actionName = DICTOOL->getStringValue_json(doc, "selectedactionname"); 
+				const char *actionName = DICTOOL->getStringValue_json(*v, "selectedactionname");
 				if (actionName != NULL && pAr->getAnimation() != NULL)
 				{
 					pAr->getAnimation()->play(actionName);

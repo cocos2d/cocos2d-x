@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "cocos-ext.h"
 #include "CCComAudio.h"
 #include "SimpleAudioEngine.h"
-#include "cocos-ext.h"
 
 NS_CC_EXT_BEGIN
 

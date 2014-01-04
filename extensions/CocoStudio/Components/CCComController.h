@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 
 #include "cocos2d.h"
-#include "cocos-ext.h"
+#include "CCComBase.h"
 #include "CCInputDelegate.h"
 
 NS_CC_EXT_BEGIN
