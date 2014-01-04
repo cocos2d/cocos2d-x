@@ -234,7 +234,7 @@ public:
 
     virtual const std::string& getString() const override;
     virtual void setCString(const char *label);
-    virtual void setAnchorPoint(const Point& var);
+    virtual void setAnchorPoint(const Point& var) override;
     virtual void updateLabel();
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
