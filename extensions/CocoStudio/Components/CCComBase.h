@@ -35,15 +35,18 @@ NS_CC_EXT_BEGIN
 
 #define DECLARE_CLASS_COMPONENT_INFO \
 	public: \
-	static cocos2d::extension::ObjectFactory::TInfo Type; \
+	static ObjectFactory::TInfo Type; \
 	static cocos2d::CCObject* createInstance(void); \
 
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
 	cocos2d::CCObject* className::createInstance(void) \
-{ \
-	return className::create(); \
-} \
-	cocos2d::extension::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+    { \
+        return className::create(); \
+    } \
+	ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+
+#define CREATE_CLASS_COMPONENT_INFO(className) \
+	ObjectFactory::TInfo(#className, &className::createInstance)
 
 NS_CC_EXT_END
 
