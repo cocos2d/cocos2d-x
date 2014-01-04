@@ -283,7 +283,7 @@ public:
         if (!_data.empty())
         {
             ssize_t randIdx = rand() % _data.size();
-            iterator randIter = _data.begin();
+            const_iterator randIter = _data.begin();
             std::advance(randIter , randIdx);
             return randIter->second;
         }
