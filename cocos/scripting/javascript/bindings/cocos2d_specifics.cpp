@@ -3024,8 +3024,15 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
     
     auto dispatcher = layer->getEventDispatcher();
-    dispatcher->removeEventListener(touchListenerAllAtOnce);
-    dispatcher->removeEventListener(touchListenerOneByOne);
+    if (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr)
+    {
+        dispatcher->removeEventListener(touchListenerAllAtOnce);
+        dispatcher->removeEventListener(touchListenerOneByOne);
+        dict->removeObjectForKey("touchListenerAllAtOnce");
+        dict->removeObjectForKey("touchListenerOneByOne");
+        touchListenerAllAtOnce = nullptr;
+        touchListenerOneByOne = nullptr;
+    }
     
     if (enabled)
     {
