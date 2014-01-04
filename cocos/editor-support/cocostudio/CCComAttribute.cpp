@@ -29,7 +29,7 @@ namespace cocostudio {
 
 ComAttribute::ComAttribute(void)
 {
-    _name = "ComAttribute";
+    _name = "CCComAttribute";
 }
 
 ComAttribute::~ComAttribute(void)
@@ -64,42 +64,65 @@ void ComAttribute::setString(const std::string& key, const std::string& value)
 
 int ComAttribute::getInt(const std::string& key, int def) const
 {
-    if (_dict.find(key) == _dict.end())
+    if (_dict.find(key) != _dict.end())
+    {
+        const cocos2d::Value& v = _dict.at(key);
+        return v.asInt();
+    }
+   
+    if (!DICTOOL->checkObjectExist_json(_doc, key.c_str()))
     {
         return def;
     }
-    const cocos2d::Value& v = _dict.at(key);
-    return v.asInt();
+  
+    return DICTOOL->getIntValue_json(_doc, key.c_str());
 }
 
 float ComAttribute::getFloat(const std::string& key, float def) const
 {
-    if (_dict.find(key) == _dict.end())
+    if (_dict.find(key) != _dict.end())
+    {
+        const cocos2d::Value& v = _dict.at(key);
+        return v.asFloat();
+    }
+
+    if (!DICTOOL->checkObjectExist_json(_doc, key.c_str()))
     {
         return def;
     }
-    const cocos2d::Value& v = _dict.at(key);
-    return v.asFloat();
+    return DICTOOL->getFloatValue_json(_doc, key.c_str());
 }
 
 bool ComAttribute::getBool(const std::string& key, bool def) const
 {
-    if (_dict.find(key) == _dict.end())
+    if (_dict.find(key) != _dict.end())
+    {
+        const cocos2d::Value& v = _dict.at(key);
+        return v.asBool();
+    }
+    
+    if (!DICTOOL->checkObjectExist_json(_doc, key.c_str()))
     {
         return def;
     }
-    const cocos2d::Value& v = _dict.at(key);
-    return v.asBool();
+  
+    return DICTOOL->getBooleanValue_json(_doc, key.c_str());
 }
 
 std::string ComAttribute::getString(const std::string& key, const std::string& def) const
 {
-   if (_dict.find(key) == _dict.end())
+    if (_dict.find(key) != _dict.end())
+    {
+        const cocos2d::Value& v = _dict.at(key);
+        return v.asString();
+    }
+    
+    if (!DICTOOL->checkObjectExist_json(_doc, key.c_str()))
     {
         return def;
     }
-    const cocos2d::Value& v = _dict.at(key);
-    return v.asString();
+  
+    return DICTOOL->getStringValue_json(_doc, key.c_str());
 }
 
 ComAttribute* ComAttribute::create(void)
@@ -116,5 +139,16 @@ ComAttribute* ComAttribute::create(void)
 	return pRet;
 }
 
+bool ComAttribute::parse(const std::string &jsonFile)
+{
+    bool ret = false;
+    do {
+        std::string contentStr = FileUtils::getInstance()->getStringFromFile(jsonFile);
+        _doc.Parse<0>(contentStr.c_str());
+        CC_BREAK_IF(_doc.HasParseError());
+        ret = true;
+    } while (0);
+    return ret;
+}
 
 }

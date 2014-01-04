@@ -28,7 +28,7 @@ namespace cocostudio {
 
 ComController::ComController(void)
 {
-    _name = "Constoller";
+    _name = "CCComController";
 }
 
 ComController::~ComController(void)
