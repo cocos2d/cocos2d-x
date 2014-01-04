@@ -57,7 +57,7 @@ GUIReader* GUIReader::shareReader()
     return sharedReader;
 }
 
-void GUIReader::purgeGUIReader()
+void GUIReader::purge()
 {
 	CC_SAFE_DELETE(sharedReader);
 }

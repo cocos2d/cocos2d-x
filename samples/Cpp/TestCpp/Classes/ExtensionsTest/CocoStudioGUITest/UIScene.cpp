@@ -70,7 +70,7 @@ void UIScene::toCocosGUITestScene(CCObject* sender, TouchEventType type)
         case TOUCH_EVENT_ENDED:
         {
             UISceneManager::purgeUISceneManager();
-            ActionManager::purgeActionManager();
+            ActionManager::purge();
             
             CocosGUITestScene* pScene = new CocosGUITestScene();
             pScene->runThisTest();

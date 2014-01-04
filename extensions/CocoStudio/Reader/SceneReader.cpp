@@ -29,11 +29,11 @@
 NS_CC_EXT_BEGIN
 
 	SceneReader* SceneReader::_sharedReader = NULL;
+    CCObject*  SceneReader::_pListener = NULL;
+    SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
     SceneReader::SceneReader()
-	:_pListener(NULL)
-	,_pfnSelector(NULL)
-	,_pNode(NULL)
+	:_pNode(NULL)
     {
 	}
 
@@ -53,7 +53,6 @@ NS_CC_EXT_BEGIN
 			  CC_BREAK_IF(!readJson(pszFileName, jsonDict));
               _pNode = createObject(jsonDict, NULL);
 			  TriggerMng::getInstance()->parse(jsonDict);
-			  
         } while (0);
         
         return _pNode;
@@ -289,35 +288,9 @@ NS_CC_EXT_BEGIN
                         CCLog("read json file[%s] error!\n", pPath.c_str());
                         continue;
                     }
-                    
-                    
-                    int childrenCount = DICTOOL->getArrayCount_json(jsonDict, "armature_data");
                     const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
                     const char *name = DICTOOL->getStringValue_json(subData, "name");
-
-                    childrenCount = DICTOOL->getArrayCount_json(jsonDict, "config_file_path");
-                    for (int i = 0; i < childrenCount; ++i)
-                    {
-                        const char* plist = DICTOOL->getStringValueFromArray_json(jsonDict, "config_file_path", i);
-                        if (plist == NULL)
-                        {
-                            continue;
-                        }
-                        std::string plistpath;
-                        plistpath += file_path;
-                        plistpath.append(plist);
-                        cocos2d::CCDictionary *root = CCDictionary::createWithContentsOfFile(plistpath.c_str());
-                        CCDictionary* metadata = DICTOOL->getSubDictionary(root, "metadata");
-                        const char* textureFileName = DICTOOL->getStringValue(metadata, "textureFileName");
-
-                        std::string textupath;
-                        textupath += file_path;
-                        textupath.append(textureFileName);
-
-                        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(textupath.c_str(), plistpath.c_str(), pPath.c_str());
-                        
-                    }
-                    
+					CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(pPath.c_str());
                     CCArmature *pAr = CCArmature::create(name);
                     CCComRender *pRender = CCComRender::create(pAr, "CCArmature");
                     if (pComName != NULL)
@@ -347,6 +320,10 @@ NS_CC_EXT_BEGIN
 						continue;
 					}
                     pAudio->preloadEffect(pPath.c_str());
+					if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     gb->addComponent(pAudio);
 					if (_pListener && _pfnSelector)
 					{
@@ -365,6 +342,11 @@ NS_CC_EXT_BEGIN
 						CCLog("unknown resourcetype on CCComAttribute!");
 						continue;
 					}
+					if (pComName != NULL)
+					{
+						pAttribute->setName(pComName);
+					}
+					pAttribute->parse(pPath);
                     gb->addComponent(pAttribute);
 					if (_pListener && _pfnSelector)
 					{
@@ -395,6 +377,10 @@ NS_CC_EXT_BEGIN
 					pAudio->setFile(pPath.c_str());
 					bool bLoop = (bool)(DICTOOL->getIntValue_json(subDict, "loop"));
 					pAudio->setLoop(bLoop);
+					if (pComName != NULL)
+					{
+						pAudio->setName(pComName);
+					}
                     gb->addComponent(pAudio);
 					if (_pListener && _pfnSelector)
 					{
@@ -491,7 +477,7 @@ NS_CC_EXT_BEGIN
 		return _sharedReader;
 	}
 
-    void SceneReader::purgeSceneReader()
+    void SceneReader::purge()
     {		
 		cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
 		TriggerMng::getInstance()->destroyInstance();

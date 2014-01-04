@@ -47,10 +47,10 @@ public:
 
 public:
 	static SceneReader* sharedSceneReader();
-	void purgeSceneReader();
+	static void purge();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName);
-	void setTarget(CCObject *rec, SEL_CallFuncOD selector);
+	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
 	cocos2d::CCNode* getNodeByTag(int nTag);
 private:
     cocos2d::CCNode* createObject(const rapidjson::Value &root, cocos2d::CCNode* parent);
@@ -59,8 +59,8 @@ private:
 	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
 private:
 	static SceneReader* _sharedReader;
-	CCObject*       _pListener;
-	SEL_CallFuncOD  _pfnSelector;
+	static CCObject*       _pListener;
+	static SEL_CallFuncOD  _pfnSelector;
 	cocos2d::CCNode *_pNode;
 };
 
