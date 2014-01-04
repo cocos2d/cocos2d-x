@@ -144,7 +144,7 @@ void TemplateVectorTest::onEnter()
 
     // Test move constructor
 
-    auto createVector = [](){
+    auto createVector = [this](){
         Vector<Node*> ret;
 
         for (int i = 0; i < 20; i++)
@@ -327,7 +327,7 @@ void TemplateMapTest::onEnter()
 {
     UnitTestDemo::onEnter();
 
-    auto createMap = [](){
+    auto createMap = [this](){
         Map<std::string, Node*> ret;
         for (int i = 0; i < 20; ++i)
         {
