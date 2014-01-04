@@ -435,12 +435,22 @@ void CCBone::removeDisplay(int index)
 
 void CCBone::changeDisplayByIndex(int index, bool force)
 {
-    m_pDisplayManager->changeDisplayByIndex(index, force);
+    changeDisplayWithIndex(index, force);
 }
 
 void CCBone::changeDisplayByName(const char *name, bool force)
 {
-    m_pDisplayManager->changeDisplayByName(name, force);
+    changeDisplayWithName(name, force);
+}
+
+void CCBone::changeDisplayWithIndex(int index, bool force)
+{
+    m_pDisplayManager->changeDisplayWithIndex(index, force);
+}
+
+void CCBone::changeDisplayWithName(const char *name, bool force)
+{
+    m_pDisplayManager->changeDisplayWithName(name, force);
 }
 
 
