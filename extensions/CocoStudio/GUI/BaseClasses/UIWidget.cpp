@@ -57,7 +57,8 @@ _positionPercent(CCPointZero),
 _reorderWidgetChildDirty(true),
 _hitted(false),
 _widgetChildren(NULL),
-_layoutParameterDictionary(NULL)
+_layoutParameterDictionary(NULL),
+_nodes(NULL)
 {
     
 }
@@ -70,6 +71,8 @@ Widget::~Widget()
     CC_SAFE_RELEASE(_widgetChildren);
     _layoutParameterDictionary->removeAllObjects();
     CC_SAFE_RELEASE(_layoutParameterDictionary);
+    _nodes->removeAllObjects();
+    CC_SAFE_RELEASE(_nodes);
 }
 
 Widget* Widget::create()
@@ -92,6 +95,8 @@ bool Widget::init()
         CC_SAFE_RETAIN(_widgetChildren);
         _layoutParameterDictionary = CCDictionary::create();
         CC_SAFE_RETAIN(_layoutParameterDictionary);
+        _nodes = CCArray::create();
+        CC_SAFE_RETAIN(_nodes);
         initRenderer();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
@@ -278,6 +283,81 @@ Widget* Widget::getChildByName(const char *name)
         }
     }
     return NULL;
+}
+    
+void Widget::addNode(CCNode* node)
+{
+    addNode(node, node->getZOrder(), node->getTag());
+}
+    
+void Widget::addNode(CCNode * node, int zOrder)
+{
+    addNode(node, zOrder, node->getTag());
+}
+    
+void Widget::addNode(CCNode* node, int zOrder, int tag)
+{
+    CCAssert(dynamic_cast<Widget*>(node) == NULL, "Widget only supports Nodes as renderer");
+    CCNodeRGBA::addChild(node, zOrder, tag);
+    _nodes->addObject(node);
+}
+    
+CCNode* Widget::getNodeByTag(int tag)
+{
+    CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
+    
+    if(_nodes && _nodes->count() > 0)
+    {
+        CCObject* renderer;
+        CCARRAY_FOREACH(_nodes, renderer)
+        {
+            CCNode* pNode = (CCNode*) renderer;
+            if(pNode && pNode->getTag() == tag)
+                return pNode;
+        }
+    }
+    return NULL;
+}
+    
+CCArray* Widget::getNodes()
+{
+    return _nodes;
+}
+    
+void Widget::removeNode(CCNode* node)
+{
+    CCNodeRGBA::removeChild(node);
+    _nodes->removeObject(node);
+}
+    
+void Widget::removeNodeByTag(int tag)
+{
+    CCAssert( tag != kCCNodeTagInvalid, "Invalid tag");
+    
+    CCNode *node = this->getNodeByTag(tag);
+    
+    if (node == NULL)
+    {
+        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeNode(node);
+    }
+}
+    
+void Widget::removeAllNodes()
+{
+    if(_nodes && _nodes->count() > 0)
+    {
+        CCObject* renderer;
+        CCARRAY_FOREACH(_nodes, renderer)
+        {
+            CCNode* pNode = (CCNode*) renderer;
+            CCNodeRGBA::removeChild(pNode);
+        }
+        _nodes->removeAllObjects();
+    }
 }
 
 void Widget::setSize(const CCSize &size)

@@ -87,6 +87,8 @@ bool Layout::init()
         CC_SAFE_RETAIN(_widgetChildren);
         _layoutParameterDictionary = CCDictionary::create();
         CC_SAFE_RETAIN(_layoutParameterDictionary);
+        _nodes = CCArray::create();
+        CC_SAFE_RETAIN(_nodes);
         initRenderer();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);

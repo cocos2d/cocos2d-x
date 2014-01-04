@@ -407,11 +407,6 @@ void PageView::onTouchMoved(CCTouch *touch, CCEvent *unusedEvent)
         widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
     moveEvent();
-    if (!hitTest(_touchMovePos))
-    {
-        setFocused(false);
-        onTouchEnded(touch, unusedEvent);
-    }
 }
 
 void PageView::onTouchEnded(CCTouch *touch, CCEvent *unusedEvent)
@@ -574,7 +569,7 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const CCPoin
         case 2:
             handleReleaseLogic(touchPoint);
             break;
-            
+            handleReleaseLogic(touchPoint);
         case 3:
             break;
     }
