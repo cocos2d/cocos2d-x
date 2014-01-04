@@ -446,7 +446,6 @@ local function CameraOrbitTest()
     sprite:setScale(0.5)
     p:addChild(sprite, 0)
     sprite:setPosition(cc.p(s.width / 4 * 1, s.height / 2))
-    local cam = sprite:getCamera()
     local orbit = cc.OrbitCamera:create(2, 1, 0, 0, 360, 0, 0)
     sprite:runAction(cc.RepeatForever:create(orbit))
 
@@ -488,12 +487,12 @@ local function CameraZoomTest_update(dt)
 	z = z + dt * 100
 
     local sprite = CameraZoomTest_layer:getChildByTag(20)
-    local cam = sprite:getCamera()
-    cam:setEye(0, 0, z)
+    -- local cam = sprite:getCamera()
+    -- cam:setEye(0, 0, z)
 
     sprite = CameraZoomTest_layer:getChildByTag(40)
-    cam = sprite:getCamera()
-    cam:setEye(0, 0, -z)
+    -- cam = sprite:getCamera()
+    -- cam:setEye(0, 0, -z)
 end
 
 local function CameraZoomTest_onEnterOrExit(tag)
@@ -515,9 +514,9 @@ local function CameraZoomTest()
     local sprite = cc.Sprite:create(s_pPathGrossini)
     CameraZoomTest_layer:addChild(sprite, 0)
     sprite:setPosition(cc.p(s.width / 4 * 1, s.height / 2))
-    local cam = sprite:getCamera()
-    cam:setEye(0, 0, 415 / 2)
-    cam:setCenter(0, 0, 0)
+    -- local cam = sprite:getCamera()
+    -- cam:setEye(0, 0, 415 / 2)
+    -- cam:setCenter(0, 0, 0)
 
     -- CENTER
     sprite = cc.Sprite:create(s_pPathGrossini)
