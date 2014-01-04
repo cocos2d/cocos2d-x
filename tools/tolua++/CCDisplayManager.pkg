@@ -14,7 +14,7 @@ class  CCDisplayManager : public CCObject
 
     CCArray *getDecorativeDisplayList();
 
-    void changeDisplayByIndex(int index, bool force);
+    void changeDisplayWithIndex(int index, bool force);
 
 
     CCNode *getDisplayRenderNode();

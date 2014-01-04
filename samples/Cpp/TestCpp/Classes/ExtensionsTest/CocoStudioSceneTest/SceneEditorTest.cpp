@@ -21,7 +21,7 @@ CCLayer *createTests(int index)
     switch(index)
     {
     case TEST_LOADSCENEEDITORFILE:
-        pLayer = new loadSceneEdtiorFileTest();
+        pLayer = new LoadSceneEdtiorFileTest();
         break;
     case TEST_SPIRTECOMPONENT:
         pLayer = new SpriteComponentTest();
@@ -195,22 +195,22 @@ void SceneEditorTestLayer::draw()
     CCLayer::draw();
 }
 
-loadSceneEdtiorFileTest::loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::LoadSceneEdtiorFileTest()
 {
 	
 }
 
-loadSceneEdtiorFileTest::~loadSceneEdtiorFileTest()
+LoadSceneEdtiorFileTest::~LoadSceneEdtiorFileTest()
 {
 
 }
 
-std::string loadSceneEdtiorFileTest::title()
+std::string LoadSceneEdtiorFileTest::title()
 {
-    return "loadSceneEdtiorFile Test";
+    return "LoadSceneEdtiorFile Test";
 }
 
-void loadSceneEdtiorFileTest::onEnter()
+void LoadSceneEdtiorFileTest::onEnter()
 {
     SceneEditorTestLayer::onEnter();
 	do 
@@ -221,17 +221,17 @@ void loadSceneEdtiorFileTest::onEnter()
 	} while (0);
 }
 
-void loadSceneEdtiorFileTest::onExit()
+void LoadSceneEdtiorFileTest::onExit()
 {
 	 CCArmatureDataManager::purge();
-	 SceneReader::sharedSceneReader()->purgeSceneReader();
-	 cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	 cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	 SceneReader::purge();
+	 ActionManager::purge();
+	 GUIReader::purge();
 	 SceneEditorTestLayer::onExit();
 }
 
 
-cocos2d::CCNode* loadSceneEdtiorFileTest::createGameScene()
+cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 {
     CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
 	if (pNode == NULL)
@@ -271,9 +271,9 @@ void SpriteComponentTest::onEnter()
 void SpriteComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -288,11 +288,11 @@ cocos2d::CCNode* SpriteComponentTest::createGameScene()
 	CCActionInterval*  action1 = CCBlink::create(2, 10);
 	CCActionInterval*  action2 = CCBlink::create(2, 5);
 
-	CCSprite *pSister1 = static_cast<CCSprite*>(pNode->getChildByTag(10003)->getComponent("CCSprite")->getNode());
-	pSister1->runAction(action1);
+	CCComRender *pSister1 = static_cast<CCComRender*>(pNode->getChildByTag(10003)->getComponent("CCSprite"));
+	pSister1->getNode()->runAction(action1);
 
-	CCSprite *pSister2 = static_cast<CCSprite*>(pNode->getChildByTag(10004)->getComponent("CCSprite")->getNode());
-	pSister2->runAction(action2);
+	CCComRender *pSister2 = static_cast<CCComRender*>(pNode->getChildByTag(10004)->getComponent("CCSprite"));
+	pSister2->getNode()->runAction(action2);
 
     return pNode;
 }
@@ -326,9 +326,9 @@ void ArmatureComponentTest::onEnter()
 void ArmatureComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -339,11 +339,11 @@ cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 	{
 		return NULL;
 	}
-	CCArmature *pBlowFish = static_cast<CCArmature*>(pNode->getChildByTag(10007)->getComponent("CCArmature")->getNode());
-	pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+	CCComRender *pBlowFish = static_cast<CCComRender*>(pNode->getChildByTag(10007)->getComponent("CCArmature"));
+	pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 
-	CCArmature *pButterflyfish = static_cast<CCArmature*>(pNode->getChildByTag(10008)->getComponent("CCArmature")->getNode());
-	pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+	CCComRender *pButterflyfish = static_cast<CCComRender*>(pNode->getChildByTag(10008)->getComponent("CCArmature"));
+	pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 
     return pNode;
 }
@@ -377,9 +377,9 @@ void UIComponentTest::onEnter()
 void UIComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -392,7 +392,9 @@ cocos2d::CCNode* UIComponentTest::createGameScene()
 	}
 	_node = pNode;
 	
-	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(_node->getChildByTag(10025)->getComponent("GUIComponent")->getNode());
+    
+    CCComRender *render = static_cast<CCComRender*>(_node->getChildByTag(10025)->getComponent("GUIComponent"));
+	cocos2d::gui::TouchGroup* touchGroup = static_cast<cocos2d::gui::TouchGroup*>(render->getNode());
 	UIWidget* widget = static_cast<UIWidget*>(touchGroup->getWidgetByName("Panel_154"));
 	UIButton* button = static_cast<UIButton*>(widget->getChildByName("Button_156"));
 	button->addTouchEventListener(this, toucheventselector(UIComponentTest::touchEvent));
@@ -406,11 +408,11 @@ void UIComponentTest::touchEvent(CCObject *pSender, TouchEventType type)
 	{
 	case TOUCH_EVENT_BEGAN:
 		{
-			CCArmature *pBlowFish = static_cast<CCArmature*>(_node->getChildByTag(10010)->getComponent("CCArmature")->getNode());
-			pBlowFish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+			CCComRender *pBlowFish = static_cast<CCComRender*>(_node->getChildByTag(10010)->getComponent("CCArmature"));
+			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 
-			CCArmature *pButterflyfish = static_cast<CCArmature*>(_node->getChildByTag(10011)->getComponent("CCArmature")->getNode());
-			pButterflyfish->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
+			CCComRender *pButterflyfish = static_cast<CCComRender*>(_node->getChildByTag(10011)->getComponent("CCArmature"));
+			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, ccp(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -447,9 +449,9 @@ void TmxMapComponentTest::onEnter()
 void TmxMapComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -460,7 +462,8 @@ cocos2d::CCNode* TmxMapComponentTest::createGameScene()
 	{
 		return NULL;
 	}
-	CCTMXTiledMap *tmxMap = static_cast<CCTMXTiledMap*>(pNode->getChildByTag(10015)->getComponent("CCTMXTiledMap")->getNode());
+    
+	CCComRender *tmxMap = static_cast<CCComRender*>(pNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
 	CCActionInterval *actionTo = CCSkewTo::create(2, 0.f, 2.f);
 	CCActionInterval *rotateTo = CCRotateTo::create(2, 61.0f);
 	CCActionInterval *actionScaleTo = CCScaleTo::create(2, -0.44f, 0.47f);
@@ -469,9 +472,9 @@ cocos2d::CCNode* TmxMapComponentTest::createGameScene()
 	CCActionInterval *rotateToBack = CCRotateTo::create(2, 0);
 	CCActionInterval *actionToBack = CCSkewTo::create(2, 0, 0);
 
-	tmxMap->runAction(CCSequence::create(actionTo, actionToBack, NULL));
-	tmxMap->runAction(CCSequence::create(rotateTo, rotateToBack, NULL));
-	tmxMap->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, NULL));
+	tmxMap->getNode()->runAction(CCSequence::create(actionTo, actionToBack, NULL));
+	tmxMap->getNode()->runAction(CCSequence::create(rotateTo, rotateToBack, NULL));
+	tmxMap->getNode()->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, NULL));
     return pNode;
 }
 
@@ -503,9 +506,9 @@ void ParticleComponentTest::onEnter()
 void ParticleComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -517,10 +520,10 @@ cocos2d::CCNode* ParticleComponentTest::createGameScene()
 		return NULL;
 	}
 
-	CCParticleSystemQuad* Particle = static_cast<CCParticleSystemQuad*>(pNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad")->getNode());
+	CCComRender* Particle = static_cast<CCComRender*>(pNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
 	CCActionInterval*  jump = CCJumpBy::create(5, ccp(-500,0), 50, 4);
 	CCFiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), NULL);
-	Particle->runAction(action);
+	Particle->getNode()->runAction(action);
     return pNode;
 }
 
@@ -554,9 +557,9 @@ void EffectComponentTest::onEnter()
 void EffectComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -568,7 +571,9 @@ cocos2d::CCNode* EffectComponentTest::createGameScene()
 		return NULL;
 	}
 	_node = pNode;
-	CCArmature *pAr = static_cast<CCArmature*>(_node->getChildByTag(10015)->getComponent("CCArmature")->getNode());
+    
+	CCComRender *pRender = static_cast<CCComRender*>(_node->getChildByTag(10015)->getComponent("CCArmature"));
+	CCArmature *pAr = static_cast<CCArmature*>(pRender->getNode());
 	pAr->getAnimation()->setMovementEventCallFunc(this, movementEvent_selector(EffectComponentTest::animationEvent));
     return pNode;
 }
@@ -615,9 +620,9 @@ void BackgroundComponentTest::onEnter()
 void BackgroundComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
@@ -666,43 +671,20 @@ void AttributeComponentTest::onEnter()
 void AttributeComponentTest::onExit()
 {
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
     SceneEditorTestLayer::onExit();
 }
 
 bool AttributeComponentTest::initData()
 {
 	bool bRet = false;
-	unsigned long size = 0;
-	unsigned char *pBytes = NULL;
 	rapidjson::Document jsonDict;
 	do {
 		CC_BREAK_IF(_node == NULL);
 		CCComAttribute *pAttribute = static_cast<CCComAttribute*>(_node->getChildByTag(10015)->getComponent("CCComAttribute"));
-		CC_BREAK_IF(pAttribute == NULL);
-		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAttribute->getFile().c_str());
-		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
-		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-		CCData *data = new CCData(pBytes, size);
-		std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-		CC_SAFE_DELETE(data);
-		CC_SAFE_DELETE_ARRAY(pBytes);
-		jsonDict.Parse<0>(load_str.c_str());
-		CC_BREAK_IF(jsonDict.HasParseError());
-
-		std::string playerName = DICTOOL->getStringValue_json(jsonDict, "name");
-		float maxHP = DICTOOL->getFloatValue_json(jsonDict, "maxHP");
-		float maxMP = DICTOOL->getFloatValue_json(jsonDict, "maxMP");
-		
-		pAttribute->setCString("Name", playerName.c_str());
-		pAttribute->setFloat("MaxHP", maxHP);
-		pAttribute->setFloat("MaxMP", maxMP);
-
-
-		CCLog("Name: %s, HP: %f, MP: %f", pAttribute->getCString("Name"), pAttribute->getFloat("MaxHP"), pAttribute->getFloat("MaxMP"));
-
+		CCLog("Name: %s, HP: %f, MP: %f", pAttribute->getCString("name"), pAttribute->getFloat("maxHP"), pAttribute->getFloat("maxMP"));
 		bRet = true;
 	} while (0);
 	return bRet;
@@ -757,9 +739,9 @@ void TriggerTest::onExit()
     this->unschedule(schedule_selector(TriggerTest::gameLogic));
 	this->setTouchEnabled(false);
 	CCArmatureDataManager::purge();
-	SceneReader::sharedSceneReader()->purgeSceneReader();
-	cocos2d::extension::ActionManager::shareManager()->purgeActionManager();
-	cocos2d::extension::GUIReader::shareReader()->purgeGUIReader();
+	SceneReader::purge();
+	ActionManager::purge();
+	GUIReader::purge();
 	SceneEditorTestLayer::onExit();
 }
 

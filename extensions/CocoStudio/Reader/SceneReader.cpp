@@ -29,6 +29,8 @@
 NS_CC_EXT_BEGIN
 
 SceneReader* SceneReader::_sharedReader = NULL;
+CCObject*  SceneReader::_pListener = NULL;
+SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
 	:_pListener(NULL)
@@ -193,7 +195,7 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
 	float y = DICTOOL->getFloatValue_json(root, "y");
 
 	node->setPosition(ccp(x, y));
-
+    
 	bool bVisible = DICTOOL->getIntValue_json(root, "visible", 1) != 0? true:false;
 	node->setVisible(bVisible);
 
@@ -222,14 +224,14 @@ SceneReader* SceneReader::sharedSceneReader()
 	return _sharedReader;
 }
 
-void SceneReader::purgeSceneReader()
+void SceneReader::purge()
 {		
-	cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-	TriggerMng::getInstance()->destroyInstance();
-	_pfnSelector = NULL;
-	_pListener = NULL;
-	CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
-	CC_SAFE_DELETE(_sharedReader);
+    cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
+    TriggerMng::getInstance()->destroyInstance();
+    _pfnSelector = NULL;
+    _pListener = NULL;
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+    CC_SAFE_DELETE(_sharedReader);
 }
 
 NS_CC_EXT_END

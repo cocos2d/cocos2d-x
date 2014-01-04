@@ -676,6 +676,7 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestCpp.h" />
@@ -1249,6 +1250,7 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
