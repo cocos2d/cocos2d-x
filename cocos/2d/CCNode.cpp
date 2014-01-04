@@ -854,11 +854,8 @@ void Node::transform()
 
     kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
-    // Update Z vertex manually
-    transfrom4x4.mat[14] = _vertexZ;
-
-
     kmGLMultMatrix( &transfrom4x4 );
+
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 }
@@ -1188,15 +1185,18 @@ const kmMat4& Node::getNodeToParentTransform() const
             }
         }
 
+        // vertex Z
+        _transform.mat[14] = _vertexZ;
+
         if (_additionalTransformDirty)
         {
             kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
             _additionalTransformDirty = false;
         }
-        
+
         _transformDirty = false;
     }
-    
+
     return _transform;
 }
 
