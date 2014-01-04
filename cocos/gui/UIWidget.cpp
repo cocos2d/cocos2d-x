@@ -66,7 +66,8 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _widgetChildren.clear();
-    CC_SAFE_RELEASE(_touchListener);
+    setTouchEnabled(false);
+    _nodes.clear();
 }
 
 Widget* Widget::create()
@@ -127,7 +128,7 @@ void Widget::addChild(Node * child, int zOrder)
     
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
+    CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
     Node::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
@@ -197,7 +198,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     Node *child = getChildByTag(tag);
     
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -251,6 +252,75 @@ Widget* Widget::getChildByName(const char *name)
     }
     return nullptr;
 }
+    
+void Widget::addNode(Node* node)
+{
+    addNode(node, node->getZOrder(), node->getTag());
+}
+
+void Widget::addNode(Node * node, int zOrder)
+{
+    addNode(node, zOrder, node->getTag());
+}
+
+void Widget::addNode(Node* node, int zOrder, int tag)
+{
+    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
+    Node::addChild(node, zOrder, tag);
+    _nodes.pushBack(node);
+}
+
+Node* Widget::getNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    for (auto& node : _nodes)
+    {
+        if(node && node->getTag() == tag)
+            return node;
+    }
+    return nullptr;
+}
+
+Vector<Node*>& Widget::getNodes()
+{
+    return _nodes;
+}
+
+void Widget::removeNode(Node* node)
+{
+    Node::removeChild(node);
+    _nodes.eraseObject(node);
+}
+
+void Widget::removeNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    Node *node = this->getNodeByTag(tag);
+    
+    if (node == nullptr)
+    {
+        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeNode(node);
+    }
+}
+
+void Widget::removeAllNodes()
+{
+    for (auto& node : _nodes)
+    {
+        if (node)
+        {
+            Node::removeChild(node);
+        }
+    }
+    _nodes.clear();
+}
+
 
 void Widget::initRenderer()
 {
