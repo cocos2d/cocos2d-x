@@ -31,7 +31,7 @@ ComAudio::ComAudio(void)
 : _filePath("")
 , _loop(false)
 {
-    _name = "Audio";
+    _name = "CCComAudio";
 }
 
 ComAudio::~ComAudio(void)
