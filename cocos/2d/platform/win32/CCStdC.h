@@ -108,7 +108,16 @@ NS_CC_END
 
 #else
 
-#include <winsock.h>
+#include <winsock2.h>
+inline int vsnprintf_s(char *buffer, size_t sizeOfBuffer, size_t count,
+                 const char *format, va_list argptr) {
+  return vsnprintf(buffer, sizeOfBuffer, format, argptr);
+}
+inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
+        const char *strSource) {
+    strcpy(strDestination, strSource);
+    return 0;
+}
 
 #endif // __MINGW32__
 
