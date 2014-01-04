@@ -196,7 +196,7 @@ EaseQuadraticActionInOut* EaseQuadraticActionInOut::clone() const
 void EaseQuadraticActionInOut::update(float time)
 {
 	float resultTime = time;
-	time = time*0.5f;
+	time = time*2;
 	if (time < 1)
 	{
 		resultTime = time * time * 0.5f;
@@ -331,7 +331,7 @@ EaseQuarticActionInOut* EaseQuarticActionInOut::clone() const
 
 void EaseQuarticActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,4.0f) * 0.5f;
 	else
@@ -464,7 +464,7 @@ EaseQuinticActionInOut* EaseQuinticActionInOut::clone() const
 
 void EaseQuinticActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,5.0f) * 0.5f;
 	else
@@ -597,13 +597,13 @@ EaseCircleActionInOut* EaseCircleActionInOut::clone() const
 
 void EaseCircleActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  (1- sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
 	else
 	{
 		tempTime -= 2;
-		tempTime = (1+ sqrt(1 - powf(tempTime,2.0f)));
+		tempTime = (1+ sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
 	}
 
 	_inner->update(time);
@@ -688,6 +688,7 @@ EaseCubicActionOut* EaseCubicActionOut::clone() const
 
 void EaseCubicActionOut::update(float time)
 {
+	time -= 1;
 	_inner->update(1+powf(time,3.0f));
 }
 
@@ -729,7 +730,7 @@ EaseCubicActionInOut* EaseCubicActionInOut::clone() const
 
 void EaseCubicActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,3.0f) * 0.5f;
 	else
