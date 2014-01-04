@@ -44,7 +44,7 @@ GUIReader::~GUIReader()
 {
 }
 
-GUIReader* GUIReader::shareReader()
+GUIReader* GUIReader::getInstance()
 {
     if (!sharedReader)
     {
@@ -53,7 +53,7 @@ GUIReader* GUIReader::shareReader()
     return sharedReader;
 }
 
-void GUIReader::purgeGUIReader()
+void GUIReader::destroyInstance()
 {
     CC_SAFE_DELETE(sharedReader);
 }
@@ -171,13 +171,13 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
-        printf("Read design size error!\n");
+        CCLOGERROR("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     Widget* widget = widgetFromJsonDictionary(widgetTree);
@@ -870,13 +870,13 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
-        printf("Read design size error!\n");
+        CCLOGERROR("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     Widget* widget = widgetFromJsonDictionary(widgetTree);

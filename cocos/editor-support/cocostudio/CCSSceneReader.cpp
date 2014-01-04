@@ -374,7 +374,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             }
             else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
             {
-                Widget* widget= GUIReader::shareReader()->widgetFromJsonFile(pPath.c_str());
+                Widget* widget= GUIReader::getInstance()->widgetFromJsonFile(pPath.c_str());
                 ComRender *pRender = ComRender::create(widget, "GUIComponent");
                 if (pComName != nullptr)
                 {
@@ -460,7 +460,6 @@ void SceneReader::destroyInstance()
 {
     DictionaryHelper::destroyInstance();
     TriggerMng::destroyInstance();
-    _fnSelector = nullptr;
     CocosDenshion::SimpleAudioEngine::end();
     CC_SAFE_DELETE(s_sharedReader);
 }
