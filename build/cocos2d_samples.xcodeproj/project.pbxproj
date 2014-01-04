@@ -1100,7 +1100,6 @@
 		37C81A201875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
 		37C81A211875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
 		37C81A221875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
-		37C81A231875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
 		37C81A241875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
 		37C81A251875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
 		37C81A261875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
@@ -6755,7 +6754,6 @@
 				1A9DC2B0180E6681007A3AD4 /* MainMenu.xib in Resources */,
 				1A9DC2B1180E6681007A3AD4 /* Icon.icns in Resources */,
 				1A9DC2B2180E6681007A3AD4 /* Info-obfuscated.plist in Resources */,
-				37C81A231875DF2B00930C57 /* scenetest in Resources */,
 				37C819B71875DF2B00930C57 /* components in Resources */,
 				1A9DC976180E66FF007A3AD4 /* ActionManagerTest in Resources */,
 				1A9DC978180E66FF007A3AD4 /* ActionsTest in Resources */,
