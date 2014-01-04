@@ -57,6 +57,7 @@
 
 #include "CocoStudio/Trigger/TriggerBase.h"
 
+#include "CocoStudio/Components/CCComBase.h"
 #include "CocoStudio/Components/CCComAttribute.h"
 #include "CocoStudio/Components/CCComAudio.h"
 #include "CocoStudio/Components/CCComController.h"
