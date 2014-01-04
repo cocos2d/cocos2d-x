@@ -1482,6 +1482,12 @@
 		2AFCB8231863D6B200EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
 		2AFCB8241863D6F600EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
 		2AFCB8251863D70300EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */; };
+		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912B1878920000198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912C1878920100198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912D1878920600198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912E1878920700198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
@@ -4266,7 +4272,7 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
-				373B910718787C0B00198F86 /* CCComBase.h */,
+				06CAAAC1186AD63B0012A414 /* TriggerObj.h */,
 				06CAAABA186AD63B0012A414 /* ObjectFactory.cpp */,
 				06CAAABB186AD63B0012A414 /* ObjectFactory.h */,
 				06CAAABC186AD63B0012A414 /* TriggerBase.cpp */,
@@ -4274,7 +4280,6 @@
 				06CAAABE186AD63B0012A414 /* TriggerMng.cpp */,
 				06CAAABF186AD63B0012A414 /* TriggerMng.h */,
 				06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */,
-				06CAAAC1186AD63B0012A414 /* TriggerObj.h */,
 				3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */,
 				37936A401869B7B200E974DD /* CCActionEaseEx.h */,
 				1A8C5948180E930E00EF57C3 /* CCActionFrame.cpp */,
@@ -4301,6 +4306,7 @@
 				1A8C595D180E930E00EF57C3 /* CCBone.h */,
 				1A8C595E180E930E00EF57C3 /* CCColliderDetector.cpp */,
 				1A8C595F180E930E00EF57C3 /* CCColliderDetector.h */,
+				373B910718787C0B00198F86 /* CCComBase.h */,
 				1A8C5960180E930E00EF57C3 /* CCComAttribute.cpp */,
 				1A8C5961180E930E00EF57C3 /* CCComAttribute.h */,
 				1A8C5962180E930E00EF57C3 /* CCComAudio.cpp */,
@@ -5661,6 +5667,7 @@
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
+				373B9129187891F400198F86 /* CCComBase.h in Headers */,
 				1AAF5378180E3374000584C8 /* WebSocket.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A9DCA13180E6955007A3AD4 /* ccConfig.h in Headers */,
@@ -5749,6 +5756,7 @@
 				1A3B1F83180E88C300497A22 /* CCLuaEngine.h in Headers */,
 				15CA8D1018697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
 				1A3B1F87180E88C300497A22 /* CCLuaStack.h in Headers */,
+				373B912C1878920100198F86 /* CCComBase.h in Headers */,
 				1A3B1F8B180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8F180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
 				1A3B1F93180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
@@ -5783,6 +5791,7 @@
 				1A3B1F82180E88C300497A22 /* CCLuaEngine.h in Headers */,
 				15CA8D0F18697A56000032AB /* lua_cocos2dx_spine_manual.hpp in Headers */,
 				1A3B1F86180E88C300497A22 /* CCLuaStack.h in Headers */,
+				373B912D1878920600198F86 /* CCComBase.h in Headers */,
 				1A3B1F8A180E88C300497A22 /* CCLuaValue.h in Headers */,
 				1A3B1F8E180E88C300497A22 /* Cocos2dxLuaLoader.h in Headers */,
 				1A3B1F92180E88C300497A22 /* lua_cocos2dx_deprecated.h in Headers */,
@@ -5971,6 +5980,7 @@
 				1A2C7915181A1257004E5527 /* js_bindings_chipmunk_functions.h in Headers */,
 				1A2C7917181A1257004E5527 /* js_bindings_chipmunk_functions_registration.h in Headers */,
 				1A2C793B181A1257004E5527 /* js_bindings_core.h in Headers */,
+				373B912E1878920700198F86 /* CCComBase.h in Headers */,
 				1A2C793F181A1257004E5527 /* js_bindings_opengl.h in Headers */,
 				1A2C7945181A1257004E5527 /* jsb_helper.h in Headers */,
 				1A2C7957181A1257004E5527 /* js_bindings_system_functions_registration.h in Headers */,
@@ -6117,6 +6127,7 @@
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
+				373B912A187891FB00198F86 /* CCComBase.h in Headers */,
 				1A570228180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022C180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
@@ -6463,6 +6474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A2C7938181A1257004E5527 /* js_bindings_config.h in Headers */,
+				373B912B1878920000198F86 /* CCComBase.h in Headers */,
 				1A2C7910181A1257004E5527 /* js_bindings_chipmunk_auto_classes.h in Headers */,
 				1A2C7936181A1257004E5527 /* jsb_cocos2dx_extension_manual.h in Headers */,
 				1A2C7920181A1257004E5527 /* js_bindings_chipmunk_registration.h in Headers */,
