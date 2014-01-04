@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __TRIGGERFACTORY_H__
 
 #include "cocos2d.h"
-#include "CocoStudio.h"
 #include <string>
 #include <unordered_map>
 
@@ -50,7 +49,8 @@ public:
 
     static ObjectFactory* getInstance();
     static void destroyInstance();
-    cocos2d::Object* createObject(const char *name);
+    cocos2d::Object* createObject(const std::string &name);
+    cocos2d::Component* createComponent(std::string name);
     void registerType(const TInfo &t);
     void removeAll();
 

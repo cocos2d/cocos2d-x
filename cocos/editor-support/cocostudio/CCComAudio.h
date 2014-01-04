@@ -25,12 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "cocos2d.h"
+#include "CCComBase.h"
 
 namespace cocostudio {
 
 class ComAudio : public cocos2d::Component
 {
+
+    DECLARE_CLASS_COMPONENT_INFO
 protected:
     /**
      * @js ctor
@@ -56,6 +58,7 @@ public:
     virtual void onExit();
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
+    virtual bool serialize(void* r);
 
     static ComAudio* create(void);
    

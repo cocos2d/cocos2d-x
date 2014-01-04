@@ -410,10 +410,10 @@ void UIComponentTest::touchEvent(Object *pSender, TouchEventType type)
 	{
 	case TOUCH_EVENT_BEGAN:
 		{
-			ComRender *pBlowFish = static_cast<ComRender*>(_node->getChildByTag(10010)->getComponent("Armature"));
+			ComRender *pBlowFish = static_cast<ComRender*>(_node->getChildByTag(10010)->getComponent("CCArmature"));
 			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 
-			ComRender *pButterflyfish = static_cast<ComRender*>(_node->getChildByTag(10011)->getComponent("Armature"));
+			ComRender *pButterflyfish = static_cast<ComRender*>(_node->getChildByTag(10011)->getComponent("CCArmature"));
 			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Point(-1000.0f, 0)));
 		}
 		break;

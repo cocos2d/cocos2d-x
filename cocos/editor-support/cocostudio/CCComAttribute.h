@@ -25,14 +25,13 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 #define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
-#include "cocos2d.h"
-#include <string>
-#include "cocostudio/DictionaryHelper.h"
+#include "CCComBase.h"
 
 namespace cocostudio {
 
 class ComAttribute : public cocos2d::Component
 {
+    DECLARE_CLASS_COMPONENT_INFO
 protected:
     /**
      * @js ctor
@@ -47,6 +46,7 @@ protected:
 public:
    virtual bool init();
    static ComAttribute* create(void);
+   virtual bool serialize(void* r);
    
    void setInt(const std::string& key, int value);
    void setFloat(const std::string& key, float value);
