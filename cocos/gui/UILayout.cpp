@@ -312,7 +312,7 @@ const Rect& Layout::getClippingRect()
 {
     _handleScissor = true;
     Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = nodeToWorldTransform();
+    AffineTransform t = getNodeToWorldAffineTransform();
     float scissorWidth = _size.width*t.a;
     float scissorHeight = _size.height*t.d;
     Rect parentClippingRect;
