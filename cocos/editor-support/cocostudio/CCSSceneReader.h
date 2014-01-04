@@ -31,22 +31,8 @@
 
 namespace cocostudio {
 
-typedef void (cocos2d::Object::*SEL_CallFuncOD)(cocos2d::Object*, void*);
-#define callfuncOD_selector(_SELECTOR) (SEL_CallFuncOD)(&_SELECTOR)
-
 class SceneReader
 {
-public:
-    /**
-     * @js ctor
-     */
-    SceneReader(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~SceneReader(void);
-
 public:
     static SceneReader* getInstance();
     /**
@@ -56,9 +42,13 @@ public:
     void destroyInstance();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const std::string &fileName);
-	void setTarget(std::function<void(cocos2d::Object* obj, void* doc)> selector);
+	void setTarget(const std::function<void(cocos2d::Object* obj, void* doc)>& selector);
 	cocos2d::Node* getNodeByTag(int nTag);
+    
 private:
+    SceneReader(void);
+    virtual ~SceneReader(void);
+    
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
     bool readJson(const std::string &fileName, rapidjson::Document& doc);
