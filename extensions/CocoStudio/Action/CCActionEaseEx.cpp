@@ -249,7 +249,7 @@ CCObject* CCEaseQuadraticActionInOut::copyWithZone(CCZone *pZone)
 void CCEaseQuadraticActionInOut::update(float time)
 {
 	float resultTime = time;
-	time = time*0.5f;
+	time = time*2;
 	if (time < 1)
 	{
 		resultTime = time * time * 0.5f;
@@ -420,7 +420,7 @@ CCObject* CCEaseQuarticActionInOut::copyWithZone(CCZone *pZone)
 
 void CCEaseQuarticActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,4.0f) * 0.5f;
 	else
@@ -589,7 +589,7 @@ CCObject* CCEaseQuinticActionInOut::copyWithZone(CCZone *pZone)
 
 void CCEaseQuinticActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,5.0f) * 0.5f;
 	else
@@ -758,13 +758,13 @@ CCObject* CCEaseCircleActionInOut::copyWithZone(CCZone *pZone)
 
 void CCEaseCircleActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  (1- sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
 	else
 	{
 		tempTime -= 2;
-		tempTime = (1+ sqrt(1 - powf(tempTime,2.0f)));
+		tempTime = (1+ sqrt(1 - powf(tempTime,2.0f))) * 0.5f;
 	}
 
 	m_pInner->update(time);
@@ -873,6 +873,7 @@ CCObject* CCEaseCubicActionOut::copyWithZone(CCZone *pZone)
 
 void CCEaseCubicActionOut::update(float time)
 {
+    time -= 1;
 	m_pInner->update(1+powf(time,3.0f));
 }
 
@@ -926,7 +927,7 @@ CCObject* CCEaseCubicActionInOut::copyWithZone(CCZone *pZone)
 
 void CCEaseCubicActionInOut::update(float time)
 {
-	float tempTime = time * 0.5f;
+	float tempTime = time * 2;
 	if (tempTime < 1)
 		tempTime =  powf(tempTime,3.0f) * 0.5f;
 	else

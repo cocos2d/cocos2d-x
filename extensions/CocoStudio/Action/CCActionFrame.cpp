@@ -180,23 +180,17 @@ CCActionInterval* ActionFrame::getEasingAction(CCActionInterval* action)
 		break;
 	case FrameEase_Elastic_EaseIn:
 		{
-			CCEaseElasticIn* cAction = CCEaseElasticIn::create(action);
-			cAction->setPeriod(m_Parameter[0]);
-			return cAction;
+			return CCEaseElasticIn::create(action);
 		}
 		break;
 	case FrameEase_Elastic_EaseOut:
 		{
-			CCEaseElasticOut* cAction = CCEaseElasticOut::create(action);
-			cAction->setPeriod(m_Parameter[0]);
-			return cAction;
+			return CCEaseElasticOut::create(action);
 		}
 		break;
 	case FrameEase_Elastic_EaseInOut:
 		{
-			CCEaseElasticInOut* cAction = CCEaseElasticInOut::create(action);
-			cAction->setPeriod(m_Parameter[0]);
-			return cAction;
+			return CCEaseElasticInOut::create(action);
 		}
 		break;
 	case FrameEase_Back_EaseIn:
