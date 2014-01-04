@@ -51,25 +51,17 @@
 
 /* Begin PBXBuildFile section */
 		15394DF3182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
-		15394DF4182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
 		15394DF5182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
-		15394DF6182E8F5D000A418D /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
 		1585AAC81821F8D900000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AAC71821F8D900000FB5 /* LuaObjectCBridgeTest.mm */; };
 		1585AB111821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
-		1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
 		1585AB131821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
-		1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
 		1585AB181821FF4C00000FB5 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB171821FF4C00000FB5 /* LuaObjectCBridgeTest.mm */; };
 		1585AB35182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
-		1585AB36182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
 		1585AB37182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
-		1585AB38182299FA00000FB5 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
 		1585AB4B1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		15982CE2187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
-		15982CE3187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
 		15982CE4187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
-		15982CE5187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -78,13 +70,109 @@
 		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		15F4C82918751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
-		15F4C82A18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
 		15F4C82B18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
-		15F4C82C18751B590082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
 		15F4C847187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
-		15F4C848187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
 		15F4C849187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
-		15F4C84A187551340082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		1A0800BE18780B2A00E62F93 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1A0800BC18780B2A00E62F93 /* cocosbuilderRes */; };
+		1A0800BF18780B2A00E62F93 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1A0800BC18780B2A00E62F93 /* cocosbuilderRes */; };
+		1A0800C018780B2A00E62F93 /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1A0800BD18780B2A00E62F93 /* luaScript */; };
+		1A0800C118780B2A00E62F93 /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1A0800BD18780B2A00E62F93 /* luaScript */; };
+		1A0800C418780B5E00E62F93 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
+		1A0800C518780B5E00E62F93 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		1A0800C618780B5E00E62F93 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
+		1A0800C718780B5E00E62F93 /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
+		1A0800C818780B5E00E62F93 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1A0800C918780B5E00E62F93 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1A0800CA18780B5E00E62F93 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */; };
+		1A0800CB18780B5E00E62F93 /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */; };
+		1A0800CC18780B5E00E62F93 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5598180E8B8400EF57C3 /* Cocos2d.lua */; };
+		1A0800CD18780B5E00E62F93 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5599180E8B8400EF57C3 /* Cocos2dConstants.lua */; };
+		1A0800CE18780B5E00E62F93 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559A180E8B8400EF57C3 /* Deprecated.lua */; };
+		1A0800CF18780B5E00E62F93 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559B180E8B8400EF57C3 /* DeprecatedClass.lua */; };
+		1A0800D018780B5E00E62F93 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559C180E8B8400EF57C3 /* DeprecatedEnum.lua */; };
+		1A0800D118780B5E00E62F93 /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559D180E8B8400EF57C3 /* DeprecatedOpenglEnum.lua */; };
+		1A0800D218780B5E00E62F93 /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559E180E8B8400EF57C3 /* DrawPrimitives.lua */; };
+		1A0800D318780B5E00E62F93 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559F180E8B8400EF57C3 /* luaj.lua */; };
+		1A0800D418780B5E00E62F93 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A0180E8B8400EF57C3 /* Opengl.lua */; };
+		1A0800D518780B5E00E62F93 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */; };
+		1A0800D618780B6100E62F93 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
+		1A0800D718780B6100E62F93 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C846187551340082884F /* CocoStudio.lua */; };
+		1A0800D818780B6100E62F93 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C82818751B590082884F /* extern.lua */; };
+		1A0800D918780B6100E62F93 /* StudioConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15394DF2182E8F5D000A418D /* StudioConstants.lua */; };
+		1A0800DA18780B6100E62F93 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB34182299FA00000FB5 /* json.lua */; };
+		1A0800DB18780B6100E62F93 /* luaoc.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1585AB101821FA1A00000FB5 /* luaoc.lua */; };
+		1A0800DC18780B6100E62F93 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */; };
+		1A0800DD18780B6100E62F93 /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */; };
+		1A0800DE18780B6100E62F93 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5598180E8B8400EF57C3 /* Cocos2d.lua */; };
+		1A0800DF18780B6100E62F93 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5599180E8B8400EF57C3 /* Cocos2dConstants.lua */; };
+		1A0800E018780B6100E62F93 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559A180E8B8400EF57C3 /* Deprecated.lua */; };
+		1A0800E118780B6100E62F93 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559B180E8B8400EF57C3 /* DeprecatedClass.lua */; };
+		1A0800E218780B6100E62F93 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559C180E8B8400EF57C3 /* DeprecatedEnum.lua */; };
+		1A0800E318780B6100E62F93 /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559D180E8B8400EF57C3 /* DeprecatedOpenglEnum.lua */; };
+		1A0800E418780B6100E62F93 /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559E180E8B8400EF57C3 /* DrawPrimitives.lua */; };
+		1A0800E518780B6100E62F93 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559F180E8B8400EF57C3 /* luaj.lua */; };
+		1A0800E618780B6100E62F93 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A0180E8B8400EF57C3 /* Opengl.lua */; };
+		1A0800E718780B6100E62F93 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */; };
+		1A0800E818780BD400E62F93 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		1A0800E918780BD400E62F93 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		1A0800EA18780BD400E62F93 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		1A0800EB18780BD400E62F93 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		1A0800EC18780BD400E62F93 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		1A0800ED18780BD400E62F93 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		1A0800EE18780BD400E62F93 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		1A0800EF18780BD400E62F93 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		1A0800F018780BD400E62F93 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		1A0800F118780BD400E62F93 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		1A0800F218780BD400E62F93 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		1A0800F318780BD400E62F93 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		1A0800F418780BD400E62F93 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		1A0800F518780BD400E62F93 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		1A0800F618780BD400E62F93 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		1A0800F718780BD400E62F93 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		1A0800F818780BD400E62F93 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		1A0800F918780BD400E62F93 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		1A0800FA18780BD400E62F93 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		1A08010E18780BD600E62F93 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
+		1A08010F18780BD600E62F93 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
+		1A08011018780BD600E62F93 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
+		1A08011118780BD600E62F93 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
+		1A08011218780BD600E62F93 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
+		1A08011318780BD600E62F93 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
+		1A08011418780BD600E62F93 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
+		1A08011518780BD600E62F93 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
+		1A08011618780BD600E62F93 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
+		1A08011718780BD600E62F93 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
+		1A08011818780BD600E62F93 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
+		1A08011918780BD600E62F93 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
+		1A08011A18780BD600E62F93 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
+		1A08011B18780BD600E62F93 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
+		1A08011C18780BD600E62F93 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
+		1A08011D18780BD600E62F93 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
+		1A08011E18780BD600E62F93 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
+		1A08011F18780BD600E62F93 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
+		1A08012018780BD600E62F93 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
+		1A08013418780C0700E62F93 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		1A08013518780C0700E62F93 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		1A08013618780C0700E62F93 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		1A08013718780C0B00E62F93 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
+		1A08013818780C0B00E62F93 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
+		1A08013918780C0B00E62F93 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
+		1A08013A18780C1B00E62F93 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		1A08013B18780C1B00E62F93 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		1A08013C18780C1B00E62F93 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		1A08013D18780C1B00E62F93 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		1A08013E18780C1B00E62F93 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		1A08013F18780C1B00E62F93 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		1A08014018780C1B00E62F93 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		1A08014118780C1B00E62F93 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
+		1A08014218780C1D00E62F93 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
+		1A08014318780C1D00E62F93 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
+		1A08014418780C1D00E62F93 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
+		1A08014518780C1D00E62F93 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
+		1A08014618780C1D00E62F93 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
+		1A08014718780C1D00E62F93 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
+		1A08014818780C1D00E62F93 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
+		1A08014918780C1D00E62F93 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
 		1A087AEE1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
 		1A087AEF1860418300196EF5 /* PerformanceLabelTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */; };
 		1A1197CB1785363400D62A44 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -400,86 +488,9 @@
 		1A8C566A180E8E0700EF57C3 /* libluabindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FCA1807A4F9005B8026 /* libluabindings iOS.a */; };
 		1A8C566F180E8E9600EF57C3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C566D180E8E9600EF57C3 /* AppDelegate.cpp */; };
 		1A8C5670180E8E9600EF57C3 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C566D180E8E9600EF57C3 /* AppDelegate.cpp */; };
-		1A8C580C180E8ED400EF57C3 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EA180E8ED400EF57C3 /* animations */; };
-		1A8C580D180E8ED400EF57C3 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EA180E8ED400EF57C3 /* animations */; };
-		1A8C5810180E8ED400EF57C3 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EC180E8ED400EF57C3 /* armature */; };
-		1A8C5811180E8ED400EF57C3 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EC180E8ED400EF57C3 /* armature */; };
-		1A8C5812180E8ED400EF57C3 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57ED180E8ED400EF57C3 /* background-music-aac.wav */; };
-		1A8C5813180E8ED400EF57C3 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57ED180E8ED400EF57C3 /* background-music-aac.wav */; };
-		1A8C5814180E8ED400EF57C3 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EE180E8ED400EF57C3 /* background.mp3 */; };
-		1A8C5815180E8ED400EF57C3 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EE180E8ED400EF57C3 /* background.mp3 */; };
-		1A8C5816180E8ED400EF57C3 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EF180E8ED400EF57C3 /* background.ogg */; };
-		1A8C5817180E8ED400EF57C3 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57EF180E8ED400EF57C3 /* background.ogg */; };
-		1A8C5818180E8ED400EF57C3 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F0180E8ED400EF57C3 /* ccb */; };
-		1A8C5819180E8ED400EF57C3 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F0180E8ED400EF57C3 /* ccb */; };
-		1A8C581A180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F1180E8ED400EF57C3 /* CocosBuilderExample.ccbproj */; };
-		1A8C581B180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F1180E8ED400EF57C3 /* CocosBuilderExample.ccbproj */; };
-		1A8C581C180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F2180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog */; };
-		1A8C581D180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F2180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog */; };
-		1A8C581E180E8ED400EF57C3 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F3180E8ED400EF57C3 /* cocosgui */; };
-		1A8C581F180E8ED400EF57C3 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F3180E8ED400EF57C3 /* cocosgui */; };
-		1A8C5820180E8ED400EF57C3 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F4180E8ED400EF57C3 /* components */; };
-		1A8C5821180E8ED400EF57C3 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F4180E8ED400EF57C3 /* components */; };
-		1A8C5822180E8ED400EF57C3 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F5180E8ED400EF57C3 /* configs */; };
-		1A8C5823180E8ED400EF57C3 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F5180E8ED400EF57C3 /* configs */; };
-		1A8C5826180E8ED400EF57C3 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F7180E8ED400EF57C3 /* effect1.raw */; };
-		1A8C5827180E8ED400EF57C3 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F7180E8ED400EF57C3 /* effect1.raw */; };
-		1A8C5828180E8ED400EF57C3 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F8180E8ED400EF57C3 /* effect1.wav */; };
-		1A8C5829180E8ED400EF57C3 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F8180E8ED400EF57C3 /* effect1.wav */; };
-		1A8C582A180E8ED400EF57C3 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F9180E8ED400EF57C3 /* effect2.ogg */; };
-		1A8C582B180E8ED400EF57C3 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57F9180E8ED400EF57C3 /* effect2.ogg */; };
-		1A8C582C180E8ED400EF57C3 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FA180E8ED400EF57C3 /* extensions */; };
-		1A8C582D180E8ED400EF57C3 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FA180E8ED400EF57C3 /* extensions */; };
-		1A8C582E180E8ED400EF57C3 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FB180E8ED400EF57C3 /* fileLookup.plist */; };
-		1A8C582F180E8ED400EF57C3 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FB180E8ED400EF57C3 /* fileLookup.plist */; };
-		1A8C5830180E8ED400EF57C3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FC180E8ED400EF57C3 /* fonts */; };
-		1A8C5831180E8ED400EF57C3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FC180E8ED400EF57C3 /* fonts */; };
-		1A8C5832180E8ED400EF57C3 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FD180E8ED400EF57C3 /* fps_images.png */; };
-		1A8C5833180E8ED400EF57C3 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FD180E8ED400EF57C3 /* fps_images.png */; };
-		1A8C5834180E8ED400EF57C3 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FE180E8ED400EF57C3 /* hd */; };
-		1A8C5835180E8ED400EF57C3 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FE180E8ED400EF57C3 /* hd */; };
-		1A8C5836180E8ED400EF57C3 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FF180E8ED400EF57C3 /* Hello.png */; };
-		1A8C5837180E8ED400EF57C3 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C57FF180E8ED400EF57C3 /* Hello.png */; };
-		1A8C5838180E8ED400EF57C3 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5800180E8ED400EF57C3 /* Images */; };
-		1A8C5839180E8ED400EF57C3 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5800180E8ED400EF57C3 /* Images */; };
-		1A8C583A180E8ED400EF57C3 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5801180E8ED400EF57C3 /* ipad */; };
-		1A8C583B180E8ED400EF57C3 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5801180E8ED400EF57C3 /* ipad */; };
-		1A8C583C180E8ED400EF57C3 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5802180E8ED400EF57C3 /* ipadhd */; };
-		1A8C583D180E8ED400EF57C3 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5802180E8ED400EF57C3 /* ipadhd */; };
-		1A8C583E180E8ED400EF57C3 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5803180E8ED400EF57C3 /* Misc */; };
-		1A8C583F180E8ED400EF57C3 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5803180E8ED400EF57C3 /* Misc */; };
-		1A8C5840180E8ED400EF57C3 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5804180E8ED400EF57C3 /* music.mid */; };
-		1A8C5841180E8ED400EF57C3 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5804180E8ED400EF57C3 /* music.mid */; };
-		1A8C5842180E8ED400EF57C3 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5805180E8ED400EF57C3 /* Particles */; };
-		1A8C5843180E8ED400EF57C3 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5805180E8ED400EF57C3 /* Particles */; };
-		1A8C5844180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5806180E8ED400EF57C3 /* pew-pew-lei.wav */; };
-		1A8C5845180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5806180E8ED400EF57C3 /* pew-pew-lei.wav */; };
-		1A8C5846180E8ED400EF57C3 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5807180E8ED400EF57C3 /* scenetest */; };
-		1A8C5847180E8ED400EF57C3 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5807180E8ED400EF57C3 /* scenetest */; };
-		1A8C5848180E8ED400EF57C3 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5808180E8ED400EF57C3 /* Shaders */; };
-		1A8C5849180E8ED400EF57C3 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5808180E8ED400EF57C3 /* Shaders */; };
-		1A8C584A180E8ED400EF57C3 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5809180E8ED400EF57C3 /* spine */; };
-		1A8C584B180E8ED400EF57C3 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5809180E8ED400EF57C3 /* spine */; };
-		1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C580A180E8ED400EF57C3 /* TileMaps */; };
-		1A8C584D180E8ED400EF57C3 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C580A180E8ED400EF57C3 /* TileMaps */; };
-		1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C580B180E8ED400EF57C3 /* zwoptex */; };
-		1A8C584F180E8ED400EF57C3 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C580B180E8ED400EF57C3 /* zwoptex */; };
 		1A8C5864180E8F0100EF57C3 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5854180E8F0100EF57C3 /* AppController.mm */; };
-		1A8C5865180E8F0100EF57C3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5855180E8F0100EF57C3 /* Default-568h@2x.png */; };
-		1A8C5866180E8F0100EF57C3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5856180E8F0100EF57C3 /* Default.png */; };
-		1A8C5867180E8F0100EF57C3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5857180E8F0100EF57C3 /* Default@2x.png */; };
-		1A8C5868180E8F0100EF57C3 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5858180E8F0100EF57C3 /* Icon-114.png */; };
-		1A8C5869180E8F0100EF57C3 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5859180E8F0100EF57C3 /* Icon-120.png */; };
-		1A8C586A180E8F0100EF57C3 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C585A180E8F0100EF57C3 /* Icon-144.png */; };
-		1A8C586B180E8F0100EF57C3 /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C585B180E8F0100EF57C3 /* Icon-152.png */; };
-		1A8C586C180E8F0100EF57C3 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C585C180E8F0100EF57C3 /* Icon-57.png */; };
-		1A8C586D180E8F0100EF57C3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C585D180E8F0100EF57C3 /* Icon-72.png */; };
-		1A8C586E180E8F0100EF57C3 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C585E180E8F0100EF57C3 /* Icon-76.png */; };
 		1A8C5870180E8F0100EF57C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5860180E8F0100EF57C3 /* main.m */; };
 		1A8C5871180E8F0100EF57C3 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5862180E8F0100EF57C3 /* RootViewController.mm */; };
-		1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5873180E8F0C00EF57C3 /* InfoPlist.strings */; };
-		1A8C587C180E8F0C00EF57C3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5875180E8F0C00EF57C3 /* MainMenu.xib */; };
-		1A8C587D180E8F0C00EF57C3 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5877180E8F0C00EF57C3 /* Icon.icns */; };
 		1A8C587F180E8F0C00EF57C3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C5879180E8F0C00EF57C3 /* main.cpp */; };
 		1A8C588A180E8F7600EF57C3 /* libchipmunk Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB41807A4F9005B8026 /* libchipmunk Mac.a */; };
 		1A8C588B180E8F7600EF57C3 /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
@@ -491,34 +502,6 @@
 		1A8C589B180E8F8F00EF57C3 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1A8C589C180E8F8F00EF57C3 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
 		1A8C589D180E8F8F00EF57C3 /* libluabindings iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FCA1807A4F9005B8026 /* libluabindings iOS.a */; };
-		1A8C589F180E8FB000EF57C3 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C589E180E8FB000EF57C3 /* cocosbuilderRes */; };
-		1A8C58A0180E8FB000EF57C3 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C589E180E8FB000EF57C3 /* cocosbuilderRes */; };
-		1A8C58A2180E8FC000EF57C3 /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C58A1180E8FC000EF57C3 /* luaScript */; };
-		1A8C58A3180E8FC000EF57C3 /* luaScript in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C58A1180E8FC000EF57C3 /* luaScript */; };
-		1A8C58A4180E904700EF57C3 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */; };
-		1A8C58A5180E904700EF57C3 /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */; };
-		1A8C58A6180E904700EF57C3 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5598180E8B8400EF57C3 /* Cocos2d.lua */; };
-		1A8C58A7180E904700EF57C3 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5599180E8B8400EF57C3 /* Cocos2dConstants.lua */; };
-		1A8C58A8180E904700EF57C3 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559A180E8B8400EF57C3 /* Deprecated.lua */; };
-		1A8C58A9180E904700EF57C3 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559B180E8B8400EF57C3 /* DeprecatedClass.lua */; };
-		1A8C58AA180E904700EF57C3 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559C180E8B8400EF57C3 /* DeprecatedEnum.lua */; };
-		1A8C58AB180E904700EF57C3 /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559D180E8B8400EF57C3 /* DeprecatedOpenglEnum.lua */; };
-		1A8C58AC180E904700EF57C3 /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559E180E8B8400EF57C3 /* DrawPrimitives.lua */; };
-		1A8C58AD180E904700EF57C3 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559F180E8B8400EF57C3 /* luaj.lua */; };
-		1A8C58AE180E904700EF57C3 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A0180E8B8400EF57C3 /* Opengl.lua */; };
-		1A8C58AF180E904700EF57C3 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */; };
-		1A8C58B0180E904800EF57C3 /* AudioEngine.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5596180E8B8400EF57C3 /* AudioEngine.lua */; };
-		1A8C58B1180E904800EF57C3 /* CCBReaderLoad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5597180E8B8400EF57C3 /* CCBReaderLoad.lua */; };
-		1A8C58B2180E904800EF57C3 /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5598180E8B8400EF57C3 /* Cocos2d.lua */; };
-		1A8C58B3180E904800EF57C3 /* Cocos2dConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C5599180E8B8400EF57C3 /* Cocos2dConstants.lua */; };
-		1A8C58B4180E904800EF57C3 /* Deprecated.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559A180E8B8400EF57C3 /* Deprecated.lua */; };
-		1A8C58B5180E904800EF57C3 /* DeprecatedClass.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559B180E8B8400EF57C3 /* DeprecatedClass.lua */; };
-		1A8C58B6180E904800EF57C3 /* DeprecatedEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559C180E8B8400EF57C3 /* DeprecatedEnum.lua */; };
-		1A8C58B7180E904800EF57C3 /* DeprecatedOpenglEnum.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559D180E8B8400EF57C3 /* DeprecatedOpenglEnum.lua */; };
-		1A8C58B8180E904800EF57C3 /* DrawPrimitives.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559E180E8B8400EF57C3 /* DrawPrimitives.lua */; };
-		1A8C58B9180E904800EF57C3 /* luaj.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C559F180E8B8400EF57C3 /* luaj.lua */; };
-		1A8C58BA180E904800EF57C3 /* Opengl.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A0180E8B8400EF57C3 /* Opengl.lua */; };
-		1A8C58BB180E904800EF57C3 /* OpenglConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */; };
 		1A9141A1180BEB6A00CFC31F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419A180BEB6A00CFC31F /* InfoPlist.strings */; };
 		1A9141A2180BEB6A00CFC31F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419C180BEB6A00CFC31F /* MainMenu.xib */; };
 		1A9141A3180BEB6A00CFC31F /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A91419E180BEB6A00CFC31F /* Icon.icns */; };
@@ -820,133 +803,69 @@
 		37A61462186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
 		37A61463186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
 		37C819801875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
-		37C819821875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
 		37C819831875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
-		37C819851875DF2B00930C57 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 37C819601875DF2A00930C57 /* animations */; };
 		37C819861875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
-		37C819881875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
 		37C819891875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
-		37C8198B1875DF2B00930C57 /* armature in Resources */ = {isa = PBXBuildFile; fileRef = 37C819611875DF2A00930C57 /* armature */; };
 		37C8198C1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
-		37C8198E1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
 		37C8198F1875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
-		37C819911875DF2B00930C57 /* background-music-aac.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C819621875DF2A00930C57 /* background-music-aac.wav */; };
 		37C819921875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
-		37C819941875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
 		37C819951875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
-		37C819971875DF2B00930C57 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 37C819631875DF2A00930C57 /* background.mp3 */; };
 		37C819981875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
-		37C8199A1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
 		37C8199B1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
-		37C8199D1875DF2B00930C57 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C819641875DF2A00930C57 /* background.ogg */; };
 		37C8199E1875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
-		37C819A01875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
 		37C819A11875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
-		37C819A31875DF2B00930C57 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 37C819651875DF2A00930C57 /* ccb */; };
 		37C819A41875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
-		37C819A61875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
 		37C819A71875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
-		37C819A91875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 37C819661875DF2A00930C57 /* CocosBuilderExample.ccbproj */; };
 		37C819AA1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
-		37C819AC1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
 		37C819AD1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
-		37C819AF1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 37C819671875DF2A00930C57 /* CocosBuilderExample.ccbresourcelog */; };
 		37C819B01875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
-		37C819B21875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
 		37C819B31875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
-		37C819B51875DF2B00930C57 /* cocosgui in Resources */ = {isa = PBXBuildFile; fileRef = 37C819681875DF2A00930C57 /* cocosgui */; };
 		37C819B61875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
-		37C819B81875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
 		37C819B91875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
-		37C819BB1875DF2B00930C57 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 37C819691875DF2A00930C57 /* components */; };
 		37C819BC1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
-		37C819BE1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
 		37C819BF1875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
-		37C819C11875DF2B00930C57 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196A1875DF2A00930C57 /* configs */; };
 		37C819C21875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
-		37C819C41875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
 		37C819C51875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
-		37C819C71875DF2B00930C57 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196B1875DF2A00930C57 /* effect1.raw */; };
 		37C819C81875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
-		37C819CA1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
 		37C819CB1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
-		37C819CD1875DF2B00930C57 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196C1875DF2A00930C57 /* effect1.wav */; };
 		37C819CE1875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
-		37C819D01875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
 		37C819D11875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
-		37C819D31875DF2B00930C57 /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196D1875DF2A00930C57 /* effect2.ogg */; };
 		37C819D41875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
-		37C819D61875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
 		37C819D71875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
-		37C819D91875DF2B00930C57 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196E1875DF2A00930C57 /* extensions */; };
 		37C819DA1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
-		37C819DC1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
 		37C819DD1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
-		37C819DF1875DF2B00930C57 /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37C8196F1875DF2A00930C57 /* fileLookup.plist */; };
 		37C819E01875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
-		37C819E21875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
 		37C819E31875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
-		37C819E51875DF2B00930C57 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 37C819701875DF2A00930C57 /* fonts */; };
 		37C819E61875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
-		37C819E81875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
 		37C819E91875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
-		37C819EB1875DF2B00930C57 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819711875DF2A00930C57 /* fps_images.png */; };
 		37C819EC1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
-		37C819EE1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
 		37C819EF1875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
-		37C819F11875DF2B00930C57 /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819721875DF2A00930C57 /* hd */; };
 		37C819F21875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
-		37C819F41875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
 		37C819F51875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
-		37C819F71875DF2B00930C57 /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 37C819731875DF2A00930C57 /* Hello.png */; };
 		37C819F81875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
-		37C819FA1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
 		37C819FB1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
-		37C819FD1875DF2B00930C57 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 37C819741875DF2B00930C57 /* Images */; };
 		37C819FE1875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
-		37C81A001875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
 		37C81A011875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
-		37C81A031875DF2B00930C57 /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 37C819751875DF2B00930C57 /* ipad */; };
 		37C81A041875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
-		37C81A061875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
 		37C81A071875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
-		37C81A091875DF2B00930C57 /* ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = 37C819761875DF2B00930C57 /* ipadhd */; };
 		37C81A0A1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
-		37C81A0C1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
 		37C81A0D1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
-		37C81A0F1875DF2B00930C57 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 37C819771875DF2B00930C57 /* Misc */; };
 		37C81A101875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
-		37C81A121875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
 		37C81A131875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
-		37C81A151875DF2B00930C57 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 37C819781875DF2B00930C57 /* music.mid */; };
 		37C81A161875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
-		37C81A181875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
 		37C81A191875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
-		37C81A1B1875DF2B00930C57 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 37C819791875DF2B00930C57 /* Particles */; };
 		37C81A1C1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
-		37C81A1E1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
 		37C81A1F1875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
-		37C81A211875DF2B00930C57 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197A1875DF2B00930C57 /* pew-pew-lei.wav */; };
 		37C81A221875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
-		37C81A241875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
 		37C81A251875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
-		37C81A271875DF2B00930C57 /* scenetest in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197B1875DF2B00930C57 /* scenetest */; };
 		37C81A281875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
-		37C81A2A1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
 		37C81A2B1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
-		37C81A2D1875DF2B00930C57 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197C1875DF2B00930C57 /* Shaders */; };
 		37C81A2E1875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
-		37C81A301875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
 		37C81A311875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
-		37C81A331875DF2B00930C57 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197D1875DF2B00930C57 /* spine */; };
 		37C81A341875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
-		37C81A361875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
 		37C81A371875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
-		37C81A391875DF2B00930C57 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197E1875DF2B00930C57 /* TileMaps */; };
 		37C81A3A1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
-		37C81A3C1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
 		37C81A3D1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
-		37C81A3F1875DF2B00930C57 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 37C8197F1875DF2B00930C57 /* zwoptex */; };
 		460E44BB1807DDC2000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		460E44FD1807E413000CDD6D /* libcocos2dx Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2dx Mac.a */; };
 		460E45691807E767000CDD6D /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460E452E1807E712000CDD6D /* AppController.mm */; };
@@ -2041,6 +1960,8 @@
 		15C64832165F3AFD007D4F18 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		15F4C82818751B590082884F /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = ../cocos/scripting/lua/script/extern.lua; sourceTree = "<group>"; };
 		15F4C846187551340082884F /* CocoStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoStudio.lua; path = ../cocos/scripting/lua/script/CocoStudio.lua; sourceTree = "<group>"; };
+		1A0800BC18780B2A00E62F93 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosbuilderRes; sourceTree = "<group>"; };
+		1A0800BD18780B2A00E62F93 /* luaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luaScript; sourceTree = "<group>"; };
 		1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceLabelTest.cpp; sourceTree = "<group>"; };
 		1A087AED1860418300196EF5 /* PerformanceLabelTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceLabelTest.h; sourceTree = "<group>"; };
 		1A1197D71785363400D62A44 /* Hello lua iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hello lua iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2222,38 +2143,6 @@
 		1A8C55A1180E8B8400EF57C3 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../cocos/scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
 		1A8C566D180E8E9600EF57C3 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1A8C566E180E8E9600EF57C3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1A8C57EA180E8ED400EF57C3 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = ../../../Cpp/TestCpp/Resources/animations; sourceTree = "<group>"; };
-		1A8C57EC180E8ED400EF57C3 /* armature */ = {isa = PBXFileReference; lastKnownFileType = folder; name = armature; path = ../../../Cpp/TestCpp/Resources/armature; sourceTree = "<group>"; };
-		1A8C57ED180E8ED400EF57C3 /* background-music-aac.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "background-music-aac.wav"; path = "../../../Cpp/TestCpp/Resources/background-music-aac.wav"; sourceTree = "<group>"; };
-		1A8C57EE180E8ED400EF57C3 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../../../Cpp/TestCpp/Resources/background.mp3; sourceTree = "<group>"; };
-		1A8C57EF180E8ED400EF57C3 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../../../Cpp/TestCpp/Resources/background.ogg; sourceTree = "<group>"; };
-		1A8C57F0180E8ED400EF57C3 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = ../../../Cpp/TestCpp/Resources/ccb; sourceTree = "<group>"; };
-		1A8C57F1180E8ED400EF57C3 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = ../../../Cpp/TestCpp/Resources/CocosBuilderExample.ccbproj; sourceTree = "<group>"; };
-		1A8C57F2180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = ../../../Cpp/TestCpp/Resources/CocosBuilderExample.ccbresourcelog; sourceTree = "<group>"; };
-		1A8C57F3180E8ED400EF57C3 /* cocosgui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosgui; path = ../../../Cpp/TestCpp/Resources/cocosgui; sourceTree = "<group>"; };
-		1A8C57F4180E8ED400EF57C3 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = ../../../Cpp/TestCpp/Resources/components; sourceTree = "<group>"; };
-		1A8C57F5180E8ED400EF57C3 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = ../../../Cpp/TestCpp/Resources/configs; sourceTree = "<group>"; };
-		1A8C57F7180E8ED400EF57C3 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = ../../../Cpp/TestCpp/Resources/effect1.raw; sourceTree = "<group>"; };
-		1A8C57F8180E8ED400EF57C3 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = ../../../Cpp/TestCpp/Resources/effect1.wav; sourceTree = "<group>"; };
-		1A8C57F9180E8ED400EF57C3 /* effect2.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect2.ogg; path = ../../../Cpp/TestCpp/Resources/effect2.ogg; sourceTree = "<group>"; };
-		1A8C57FA180E8ED400EF57C3 /* extensions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = extensions; path = ../../../Cpp/TestCpp/Resources/extensions; sourceTree = "<group>"; };
-		1A8C57FB180E8ED400EF57C3 /* fileLookup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fileLookup.plist; path = ../../../Cpp/TestCpp/Resources/fileLookup.plist; sourceTree = "<group>"; };
-		1A8C57FC180E8ED400EF57C3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../../../Cpp/TestCpp/Resources/fonts; sourceTree = "<group>"; };
-		1A8C57FD180E8ED400EF57C3 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../../../Cpp/TestCpp/Resources/fps_images.png; sourceTree = "<group>"; };
-		1A8C57FE180E8ED400EF57C3 /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hd; path = ../../../Cpp/TestCpp/Resources/hd; sourceTree = "<group>"; };
-		1A8C57FF180E8ED400EF57C3 /* Hello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hello.png; path = ../../../Cpp/TestCpp/Resources/Hello.png; sourceTree = "<group>"; };
-		1A8C5800180E8ED400EF57C3 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = ../../../Cpp/TestCpp/Resources/Images; sourceTree = "<group>"; };
-		1A8C5801180E8ED400EF57C3 /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../../../Cpp/TestCpp/Resources/ipad; sourceTree = "<group>"; };
-		1A8C5802180E8ED400EF57C3 /* ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadhd; path = ../../../Cpp/TestCpp/Resources/ipadhd; sourceTree = "<group>"; };
-		1A8C5803180E8ED400EF57C3 /* Misc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Misc; path = ../../../Cpp/TestCpp/Resources/Misc; sourceTree = "<group>"; };
-		1A8C5804180E8ED400EF57C3 /* music.mid */ = {isa = PBXFileReference; lastKnownFileType = audio.midi; name = music.mid; path = ../../../Cpp/TestCpp/Resources/music.mid; sourceTree = "<group>"; };
-		1A8C5805180E8ED400EF57C3 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = ../../../Cpp/TestCpp/Resources/Particles; sourceTree = "<group>"; };
-		1A8C5806180E8ED400EF57C3 /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "pew-pew-lei.wav"; path = "../../../Cpp/TestCpp/Resources/pew-pew-lei.wav"; sourceTree = "<group>"; };
-		1A8C5807180E8ED400EF57C3 /* scenetest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scenetest; path = ../../../Cpp/TestCpp/Resources/scenetest; sourceTree = "<group>"; };
-		1A8C5808180E8ED400EF57C3 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = ../../../Cpp/TestCpp/Resources/Shaders; sourceTree = "<group>"; };
-		1A8C5809180E8ED400EF57C3 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spine; path = ../../../Cpp/TestCpp/Resources/spine; sourceTree = "<group>"; };
-		1A8C580A180E8ED400EF57C3 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = ../../../Cpp/TestCpp/Resources/TileMaps; sourceTree = "<group>"; };
-		1A8C580B180E8ED400EF57C3 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = ../../../Cpp/TestCpp/Resources/zwoptex; sourceTree = "<group>"; };
 		1A8C5853180E8F0100EF57C3 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		1A8C5854180E8F0100EF57C3 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		1A8C5855180E8F0100EF57C3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -2277,8 +2166,6 @@
 		1A8C5878180E8F0C00EF57C3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A8C5879180E8F0C00EF57C3 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1A8C587A180E8F0C00EF57C3 /* TestLua_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLua_Prefix.pch; sourceTree = "<group>"; };
-		1A8C589E180E8FB000EF57C3 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cocosbuilderRes; sourceTree = "<group>"; };
-		1A8C58A1180E8FC000EF57C3 /* luaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = luaScript; sourceTree = "<group>"; };
 		1A91419B180BEB6A00CFC31F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		1A91419D180BEB6A00CFC31F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		1A91419E180BEB6A00CFC31F /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Icon.icns; path = proj.mac/Icon.icns; sourceTree = "<group>"; };
@@ -3706,40 +3593,8 @@
 		1A8C5671180E8EA400EF57C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1A8C57EA180E8ED400EF57C3 /* animations */,
-				1A8C57EC180E8ED400EF57C3 /* armature */,
-				1A8C57ED180E8ED400EF57C3 /* background-music-aac.wav */,
-				1A8C57EE180E8ED400EF57C3 /* background.mp3 */,
-				1A8C57EF180E8ED400EF57C3 /* background.ogg */,
-				1A8C57F0180E8ED400EF57C3 /* ccb */,
-				1A8C57F1180E8ED400EF57C3 /* CocosBuilderExample.ccbproj */,
-				1A8C57F2180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog */,
-				1A8C589E180E8FB000EF57C3 /* cocosbuilderRes */,
-				1A8C57F3180E8ED400EF57C3 /* cocosgui */,
-				1A8C57F4180E8ED400EF57C3 /* components */,
-				1A8C57F5180E8ED400EF57C3 /* configs */,
-				1A8C57F7180E8ED400EF57C3 /* effect1.raw */,
-				1A8C57F8180E8ED400EF57C3 /* effect1.wav */,
-				1A8C57F9180E8ED400EF57C3 /* effect2.ogg */,
-				1A8C57FA180E8ED400EF57C3 /* extensions */,
-				1A8C57FB180E8ED400EF57C3 /* fileLookup.plist */,
-				1A8C57FC180E8ED400EF57C3 /* fonts */,
-				1A8C57FD180E8ED400EF57C3 /* fps_images.png */,
-				1A8C57FE180E8ED400EF57C3 /* hd */,
-				1A8C57FF180E8ED400EF57C3 /* Hello.png */,
-				1A8C5800180E8ED400EF57C3 /* Images */,
-				1A8C5801180E8ED400EF57C3 /* ipad */,
-				1A8C5802180E8ED400EF57C3 /* ipadhd */,
-				1A8C58A1180E8FC000EF57C3 /* luaScript */,
-				1A8C5803180E8ED400EF57C3 /* Misc */,
-				1A8C5804180E8ED400EF57C3 /* music.mid */,
-				1A8C5805180E8ED400EF57C3 /* Particles */,
-				1A8C5806180E8ED400EF57C3 /* pew-pew-lei.wav */,
-				1A8C5807180E8ED400EF57C3 /* scenetest */,
-				1A8C5808180E8ED400EF57C3 /* Shaders */,
-				1A8C5809180E8ED400EF57C3 /* spine */,
-				1A8C580A180E8ED400EF57C3 /* TileMaps */,
-				1A8C580B180E8ED400EF57C3 /* zwoptex */,
+				1A0800BC18780B2A00E62F93 /* cocosbuilderRes */,
+				1A0800BD18780B2A00E62F93 /* luaScript */,
 			);
 			name = Resources;
 			path = ../samples/Lua/TestLua/Resources;
@@ -5965,100 +5820,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37C81A0F1875DF2B00930C57 /* Misc in Resources */,
-				37C81A091875DF2B00930C57 /* ipadhd in Resources */,
-				1A8C580D180E8ED400EF57C3 /* animations in Resources */,
-				37C819BB1875DF2B00930C57 /* components in Resources */,
-				1A8C5811180E8ED400EF57C3 /* armature in Resources */,
-				1A8C5813180E8ED400EF57C3 /* background-music-aac.wav in Resources */,
-				37C81A1B1875DF2B00930C57 /* Particles in Resources */,
-				1A8C5815180E8ED400EF57C3 /* background.mp3 in Resources */,
-				37C819D31875DF2B00930C57 /* effect2.ogg in Resources */,
-				1A8C5817180E8ED400EF57C3 /* background.ogg in Resources */,
-				1A8C5819180E8ED400EF57C3 /* ccb in Resources */,
-				37C819971875DF2B00930C57 /* background.mp3 in Resources */,
-				1A8C581B180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */,
-				37C8198B1875DF2B00930C57 /* armature in Resources */,
-				37C819C71875DF2B00930C57 /* effect1.raw in Resources */,
-				37C81A211875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
-				1A8C581D180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1A8C581F180E8ED400EF57C3 /* cocosgui in Resources */,
-				1A8C5821180E8ED400EF57C3 /* components in Resources */,
-				1A8C5823180E8ED400EF57C3 /* configs in Resources */,
-				1A8C5827180E8ED400EF57C3 /* effect1.raw in Resources */,
-				37C819A91875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
-				1A8C5829180E8ED400EF57C3 /* effect1.wav in Resources */,
-				1A8C582B180E8ED400EF57C3 /* effect2.ogg in Resources */,
-				1A8C582D180E8ED400EF57C3 /* extensions in Resources */,
-				1A8C582F180E8ED400EF57C3 /* fileLookup.plist in Resources */,
-				1A8C5831180E8ED400EF57C3 /* fonts in Resources */,
-				1A8C5833180E8ED400EF57C3 /* fps_images.png in Resources */,
-				1585AB38182299FA00000FB5 /* json.lua in Resources */,
-				37C819911875DF2B00930C57 /* background-music-aac.wav in Resources */,
-				37C819DF1875DF2B00930C57 /* fileLookup.plist in Resources */,
-				37C81A031875DF2B00930C57 /* ipad in Resources */,
-				37C81A331875DF2B00930C57 /* spine in Resources */,
-				37C819E51875DF2B00930C57 /* fonts in Resources */,
-				37C819C11875DF2B00930C57 /* configs in Resources */,
-				1A8C5835180E8ED400EF57C3 /* hd in Resources */,
-				1A8C5837180E8ED400EF57C3 /* Hello.png in Resources */,
-				1A8C5839180E8ED400EF57C3 /* Images in Resources */,
-				1A8C583B180E8ED400EF57C3 /* ipad in Resources */,
-				1A8C583D180E8ED400EF57C3 /* ipadhd in Resources */,
-				1A8C583F180E8ED400EF57C3 /* Misc in Resources */,
-				1A8C5841180E8ED400EF57C3 /* music.mid in Resources */,
-				1585AB141821FA1A00000FB5 /* luaoc.lua in Resources */,
-				37C81A391875DF2B00930C57 /* TileMaps in Resources */,
-				1A8C5843180E8ED400EF57C3 /* Particles in Resources */,
-				37C8199D1875DF2B00930C57 /* background.ogg in Resources */,
-				1A8C5845180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
-				1A8C5847180E8ED400EF57C3 /* scenetest in Resources */,
-				15394DF6182E8F5D000A418D /* StudioConstants.lua in Resources */,
-				37C819F71875DF2B00930C57 /* Hello.png in Resources */,
-				1A8C5849180E8ED400EF57C3 /* Shaders in Resources */,
-				1A8C584B180E8ED400EF57C3 /* spine in Resources */,
-				37C819D91875DF2B00930C57 /* extensions in Resources */,
-				37C819FD1875DF2B00930C57 /* Images in Resources */,
-				37C81A271875DF2B00930C57 /* scenetest in Resources */,
-				1A8C584D180E8ED400EF57C3 /* TileMaps in Resources */,
-				1A8C584F180E8ED400EF57C3 /* zwoptex in Resources */,
-				37C81A3F1875DF2B00930C57 /* zwoptex in Resources */,
-				37C819EB1875DF2B00930C57 /* fps_images.png in Resources */,
-				37C819B51875DF2B00930C57 /* cocosgui in Resources */,
-				1A8C5865180E8F0100EF57C3 /* Default-568h@2x.png in Resources */,
-				1A8C5866180E8F0100EF57C3 /* Default.png in Resources */,
-				1A8C5867180E8F0100EF57C3 /* Default@2x.png in Resources */,
-				37C819A31875DF2B00930C57 /* ccb in Resources */,
-				1A8C5868180E8F0100EF57C3 /* Icon-114.png in Resources */,
-				37C819AF1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1A8C5869180E8F0100EF57C3 /* Icon-120.png in Resources */,
-				1A8C586A180E8F0100EF57C3 /* Icon-144.png in Resources */,
-				1A8C586B180E8F0100EF57C3 /* Icon-152.png in Resources */,
-				1A8C586C180E8F0100EF57C3 /* Icon-57.png in Resources */,
-				1A8C586D180E8F0100EF57C3 /* Icon-72.png in Resources */,
-				1A8C586E180E8F0100EF57C3 /* Icon-76.png in Resources */,
-				1A8C58A0180E8FB000EF57C3 /* cocosbuilderRes in Resources */,
-				1A8C58A3180E8FC000EF57C3 /* luaScript in Resources */,
-				37C819851875DF2B00930C57 /* animations in Resources */,
-				1A8C58B0180E904800EF57C3 /* AudioEngine.lua in Resources */,
-				1A8C58B1180E904800EF57C3 /* CCBReaderLoad.lua in Resources */,
-				1A8C58B2180E904800EF57C3 /* Cocos2d.lua in Resources */,
-				1A8C58B3180E904800EF57C3 /* Cocos2dConstants.lua in Resources */,
-				1A8C58B4180E904800EF57C3 /* Deprecated.lua in Resources */,
-				37C81A151875DF2B00930C57 /* music.mid in Resources */,
-				1A8C58B5180E904800EF57C3 /* DeprecatedClass.lua in Resources */,
-				37C819F11875DF2B00930C57 /* hd in Resources */,
-				1A8C58B6180E904800EF57C3 /* DeprecatedEnum.lua in Resources */,
-				37C81A2D1875DF2B00930C57 /* Shaders in Resources */,
-				1A8C58B7180E904800EF57C3 /* DeprecatedOpenglEnum.lua in Resources */,
-				1A8C58B8180E904800EF57C3 /* DrawPrimitives.lua in Resources */,
-				1A8C58B9180E904800EF57C3 /* luaj.lua in Resources */,
-				37C819CD1875DF2B00930C57 /* effect1.wav in Resources */,
-				1A8C58BA180E904800EF57C3 /* Opengl.lua in Resources */,
-				1A8C58BB180E904800EF57C3 /* OpenglConstants.lua in Resources */,
-				15F4C82C18751B590082884F /* extern.lua in Resources */,
-				15F4C84A187551340082884F /* CocoStudio.lua in Resources */,
-				15982CE5187656CD00625972 /* GuiConstants.lua in Resources */,
+				1A08014718780C1D00E62F93 /* Hello.png in Resources */,
+				1A08010E18780BD600E62F93 /* animations in Resources */,
+				1A08011618780BD600E62F93 /* hd in Resources */,
+				1A0800E218780B6100E62F93 /* DeprecatedEnum.lua in Resources */,
+				1A0800D918780B6100E62F93 /* StudioConstants.lua in Resources */,
+				1A08011518780BD600E62F93 /* fonts in Resources */,
+				1A08011E18780BD600E62F93 /* spine in Resources */,
+				1A0800C118780B2A00E62F93 /* luaScript in Resources */,
+				1A08011118780BD600E62F93 /* cocosgui in Resources */,
+				1A08014518780C1D00E62F93 /* fileLookup.plist in Resources */,
+				1A08014218780C1D00E62F93 /* effect1.raw in Resources */,
+				1A0800E318780B6100E62F93 /* DeprecatedOpenglEnum.lua in Resources */,
+				1A0800DF18780B6100E62F93 /* Cocos2dConstants.lua in Resources */,
+				1A08011D18780BD600E62F93 /* Shaders in Resources */,
+				1A08014618780C1D00E62F93 /* fps_images.png in Resources */,
+				1A08011018780BD600E62F93 /* ccb in Resources */,
+				1A08013718780C0B00E62F93 /* background-music-aac.wav in Resources */,
+				1A08011718780BD600E62F93 /* Images in Resources */,
+				1A08011F18780BD600E62F93 /* TileMaps in Resources */,
+				1A0800D818780B6100E62F93 /* extern.lua in Resources */,
+				1A08011B18780BD600E62F93 /* Particles in Resources */,
+				1A08011A18780BD600E62F93 /* Misc in Resources */,
+				1A08011218780BD600E62F93 /* components in Resources */,
+				1A08014418780C1D00E62F93 /* effect2.ogg in Resources */,
+				1A0800DA18780B6100E62F93 /* json.lua in Resources */,
+				1A08011418780BD600E62F93 /* extensions in Resources */,
+				1A0800BF18780B2A00E62F93 /* cocosbuilderRes in Resources */,
+				1A08014918780C1D00E62F93 /* pew-pew-lei.wav in Resources */,
+				1A08011918780BD600E62F93 /* ipadhd in Resources */,
+				1A0800E618780B6100E62F93 /* Opengl.lua in Resources */,
+				1A0800E118780B6100E62F93 /* DeprecatedClass.lua in Resources */,
+				1A0800DC18780B6100E62F93 /* AudioEngine.lua in Resources */,
+				1A0800DB18780B6100E62F93 /* luaoc.lua in Resources */,
+				1A0800DE18780B6100E62F93 /* Cocos2d.lua in Resources */,
+				1A0800E018780B6100E62F93 /* Deprecated.lua in Resources */,
+				1A08010F18780BD600E62F93 /* armature in Resources */,
+				1A0800E418780B6100E62F93 /* DrawPrimitives.lua in Resources */,
+				1A08013918780C0B00E62F93 /* background.ogg in Resources */,
+				1A0800D718780B6100E62F93 /* CocoStudio.lua in Resources */,
+				1A0800DD18780B6100E62F93 /* CCBReaderLoad.lua in Resources */,
+				1A08013818780C0B00E62F93 /* background.mp3 in Resources */,
+				1A08014818780C1D00E62F93 /* music.mid in Resources */,
+				1A08011C18780BD600E62F93 /* scenetest in Resources */,
+				1A08014318780C1D00E62F93 /* effect1.wav in Resources */,
+				1A08012018780BD600E62F93 /* zwoptex in Resources */,
+				1A08011318780BD600E62F93 /* configs in Resources */,
+				1A0800E718780B6100E62F93 /* OpenglConstants.lua in Resources */,
+				1A0800E518780B6100E62F93 /* luaj.lua in Resources */,
+				1A08011818780BD600E62F93 /* ipad in Resources */,
+				1A0800D618780B6100E62F93 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6106,93 +5917,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37C81A3C1875DF2B00930C57 /* zwoptex in Resources */,
-				37C81A0C1875DF2B00930C57 /* Misc in Resources */,
-				1A8C580C180E8ED400EF57C3 /* animations in Resources */,
-				1A8C5810180E8ED400EF57C3 /* armature in Resources */,
-				1A8C5812180E8ED400EF57C3 /* background-music-aac.wav in Resources */,
-				1A8C5814180E8ED400EF57C3 /* background.mp3 in Resources */,
-				1A8C5816180E8ED400EF57C3 /* background.ogg in Resources */,
-				1A8C5818180E8ED400EF57C3 /* ccb in Resources */,
-				37C819CA1875DF2B00930C57 /* effect1.wav in Resources */,
-				1A8C581A180E8ED400EF57C3 /* CocosBuilderExample.ccbproj in Resources */,
-				1A8C581C180E8ED400EF57C3 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1A8C581E180E8ED400EF57C3 /* cocosgui in Resources */,
-				1A8C5820180E8ED400EF57C3 /* components in Resources */,
-				1A8C5822180E8ED400EF57C3 /* configs in Resources */,
-				1A8C5826180E8ED400EF57C3 /* effect1.raw in Resources */,
-				1A8C5828180E8ED400EF57C3 /* effect1.wav in Resources */,
-				1A8C582A180E8ED400EF57C3 /* effect2.ogg in Resources */,
-				1A8C582C180E8ED400EF57C3 /* extensions in Resources */,
-				1A8C582E180E8ED400EF57C3 /* fileLookup.plist in Resources */,
-				37C819B81875DF2B00930C57 /* components in Resources */,
-				1A8C5830180E8ED400EF57C3 /* fonts in Resources */,
-				37C81A361875DF2B00930C57 /* TileMaps in Resources */,
-				1A8C5832180E8ED400EF57C3 /* fps_images.png in Resources */,
-				1A8C5834180E8ED400EF57C3 /* hd in Resources */,
-				37C81A061875DF2B00930C57 /* ipadhd in Resources */,
-				37C81A241875DF2B00930C57 /* scenetest in Resources */,
-				1585AB121821FA1A00000FB5 /* luaoc.lua in Resources */,
-				1A8C5836180E8ED400EF57C3 /* Hello.png in Resources */,
-				37C819D61875DF2B00930C57 /* extensions in Resources */,
-				1A8C5838180E8ED400EF57C3 /* Images in Resources */,
-				37C819FA1875DF2B00930C57 /* Images in Resources */,
-				37C819EE1875DF2B00930C57 /* hd in Resources */,
-				37C819821875DF2B00930C57 /* animations in Resources */,
-				37C819E21875DF2B00930C57 /* fonts in Resources */,
-				1A8C583A180E8ED400EF57C3 /* ipad in Resources */,
-				37C81A181875DF2B00930C57 /* Particles in Resources */,
-				37C819AC1875DF2B00930C57 /* CocosBuilderExample.ccbresourcelog in Resources */,
-				1A8C583C180E8ED400EF57C3 /* ipadhd in Resources */,
-				37C81A1E1875DF2B00930C57 /* pew-pew-lei.wav in Resources */,
-				1A8C583E180E8ED400EF57C3 /* Misc in Resources */,
-				1A8C5840180E8ED400EF57C3 /* music.mid in Resources */,
-				37C81A001875DF2B00930C57 /* ipad in Resources */,
-				1A8C5842180E8ED400EF57C3 /* Particles in Resources */,
-				37C819F41875DF2B00930C57 /* Hello.png in Resources */,
-				1A8C5844180E8ED400EF57C3 /* pew-pew-lei.wav in Resources */,
-				1A8C5846180E8ED400EF57C3 /* scenetest in Resources */,
-				37C819A61875DF2B00930C57 /* CocosBuilderExample.ccbproj in Resources */,
-				1A8C5848180E8ED400EF57C3 /* Shaders in Resources */,
-				1A8C584A180E8ED400EF57C3 /* spine in Resources */,
-				37C819BE1875DF2B00930C57 /* configs in Resources */,
-				1585AB36182299FA00000FB5 /* json.lua in Resources */,
-				15394DF4182E8F5D000A418D /* StudioConstants.lua in Resources */,
-				37C819DC1875DF2B00930C57 /* fileLookup.plist in Resources */,
-				1A8C584C180E8ED400EF57C3 /* TileMaps in Resources */,
-				1A8C584E180E8ED400EF57C3 /* zwoptex in Resources */,
-				37C819D01875DF2B00930C57 /* effect2.ogg in Resources */,
-				1A8C587B180E8F0C00EF57C3 /* InfoPlist.strings in Resources */,
-				37C81A2A1875DF2B00930C57 /* Shaders in Resources */,
-				1A8C587C180E8F0C00EF57C3 /* MainMenu.xib in Resources */,
-				37C819B21875DF2B00930C57 /* cocosgui in Resources */,
-				1A8C587D180E8F0C00EF57C3 /* Icon.icns in Resources */,
-				37C819A01875DF2B00930C57 /* ccb in Resources */,
-				37C81A301875DF2B00930C57 /* spine in Resources */,
-				1A8C589F180E8FB000EF57C3 /* cocosbuilderRes in Resources */,
-				1A8C58A2180E8FC000EF57C3 /* luaScript in Resources */,
-				1A8C58A4180E904700EF57C3 /* AudioEngine.lua in Resources */,
-				37C819941875DF2B00930C57 /* background.mp3 in Resources */,
-				1A8C58A5180E904700EF57C3 /* CCBReaderLoad.lua in Resources */,
-				1A8C58A6180E904700EF57C3 /* Cocos2d.lua in Resources */,
-				1A8C58A7180E904700EF57C3 /* Cocos2dConstants.lua in Resources */,
-				1A8C58A8180E904700EF57C3 /* Deprecated.lua in Resources */,
-				37C819C41875DF2B00930C57 /* effect1.raw in Resources */,
-				1A8C58A9180E904700EF57C3 /* DeprecatedClass.lua in Resources */,
-				1A8C58AA180E904700EF57C3 /* DeprecatedEnum.lua in Resources */,
-				37C8199A1875DF2B00930C57 /* background.ogg in Resources */,
-				1A8C58AB180E904700EF57C3 /* DeprecatedOpenglEnum.lua in Resources */,
-				37C819881875DF2B00930C57 /* armature in Resources */,
-				37C8198E1875DF2B00930C57 /* background-music-aac.wav in Resources */,
-				1A8C58AC180E904700EF57C3 /* DrawPrimitives.lua in Resources */,
-				1A8C58AD180E904700EF57C3 /* luaj.lua in Resources */,
-				1A8C58AE180E904700EF57C3 /* Opengl.lua in Resources */,
-				37C81A121875DF2B00930C57 /* music.mid in Resources */,
-				1A8C58AF180E904700EF57C3 /* OpenglConstants.lua in Resources */,
-				15F4C82A18751B590082884F /* extern.lua in Resources */,
-				15F4C848187551340082884F /* CocoStudio.lua in Resources */,
-				37C819E81875DF2B00930C57 /* fps_images.png in Resources */,
-				15982CE3187656CD00625972 /* GuiConstants.lua in Resources */,
+				1A08013F18780C1B00E62F93 /* Hello.png in Resources */,
+				1A0800E818780BD400E62F93 /* animations in Resources */,
+				1A0800F018780BD400E62F93 /* hd in Resources */,
+				1A0800D018780B5E00E62F93 /* DeprecatedEnum.lua in Resources */,
+				1A0800C718780B5E00E62F93 /* StudioConstants.lua in Resources */,
+				1A0800EF18780BD400E62F93 /* fonts in Resources */,
+				1A0800F818780BD400E62F93 /* spine in Resources */,
+				1A0800C018780B2A00E62F93 /* luaScript in Resources */,
+				1A0800EB18780BD400E62F93 /* cocosgui in Resources */,
+				1A08013D18780C1B00E62F93 /* fileLookup.plist in Resources */,
+				1A08013A18780C1B00E62F93 /* effect1.raw in Resources */,
+				1A0800D118780B5E00E62F93 /* DeprecatedOpenglEnum.lua in Resources */,
+				1A0800CD18780B5E00E62F93 /* Cocos2dConstants.lua in Resources */,
+				1A0800F718780BD400E62F93 /* Shaders in Resources */,
+				1A08013E18780C1B00E62F93 /* fps_images.png in Resources */,
+				1A0800EA18780BD400E62F93 /* ccb in Resources */,
+				1A08013418780C0700E62F93 /* background-music-aac.wav in Resources */,
+				1A0800F118780BD400E62F93 /* Images in Resources */,
+				1A0800F918780BD400E62F93 /* TileMaps in Resources */,
+				1A0800C618780B5E00E62F93 /* extern.lua in Resources */,
+				1A0800F518780BD400E62F93 /* Particles in Resources */,
+				1A0800F418780BD400E62F93 /* Misc in Resources */,
+				1A0800EC18780BD400E62F93 /* components in Resources */,
+				1A08013C18780C1B00E62F93 /* effect2.ogg in Resources */,
+				1A0800C818780B5E00E62F93 /* json.lua in Resources */,
+				1A0800EE18780BD400E62F93 /* extensions in Resources */,
+				1A0800BE18780B2A00E62F93 /* cocosbuilderRes in Resources */,
+				1A08014118780C1B00E62F93 /* pew-pew-lei.wav in Resources */,
+				1A0800F318780BD400E62F93 /* ipadhd in Resources */,
+				1A0800D418780B5E00E62F93 /* Opengl.lua in Resources */,
+				1A0800CF18780B5E00E62F93 /* DeprecatedClass.lua in Resources */,
+				1A0800CA18780B5E00E62F93 /* AudioEngine.lua in Resources */,
+				1A0800C918780B5E00E62F93 /* luaoc.lua in Resources */,
+				1A0800CC18780B5E00E62F93 /* Cocos2d.lua in Resources */,
+				1A0800CE18780B5E00E62F93 /* Deprecated.lua in Resources */,
+				1A0800E918780BD400E62F93 /* armature in Resources */,
+				1A0800D218780B5E00E62F93 /* DrawPrimitives.lua in Resources */,
+				1A08013618780C0700E62F93 /* background.ogg in Resources */,
+				1A0800C518780B5E00E62F93 /* CocoStudio.lua in Resources */,
+				1A0800CB18780B5E00E62F93 /* CCBReaderLoad.lua in Resources */,
+				1A08013518780C0700E62F93 /* background.mp3 in Resources */,
+				1A08014018780C1B00E62F93 /* music.mid in Resources */,
+				1A0800F618780BD400E62F93 /* scenetest in Resources */,
+				1A08013B18780C1B00E62F93 /* effect1.wav in Resources */,
+				1A0800FA18780BD400E62F93 /* zwoptex in Resources */,
+				1A0800ED18780BD400E62F93 /* configs in Resources */,
+				1A0800D518780B5E00E62F93 /* OpenglConstants.lua in Resources */,
+				1A0800D318780B5E00E62F93 /* luaj.lua in Resources */,
+				1A0800F218780BD400E62F93 /* ipad in Resources */,
+				1A0800C418780B5E00E62F93 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
