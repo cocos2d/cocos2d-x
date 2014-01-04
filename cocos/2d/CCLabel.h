@@ -29,6 +29,7 @@
 #include "CCSpriteBatchNode.h"
 #include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -119,6 +120,7 @@ public:
 
     virtual std::string getDescription() const override;
     virtual void draw(void) override;
+    virtual void onDraw();
 
 private:
     /**
@@ -172,7 +174,8 @@ private:
     Color3B                     _effectColor;
 
     GLuint                      _uniformEffectColor;
-    
+
+    CustomCommand               _customCommand;
 };
 
 
