@@ -49,6 +49,7 @@
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCTweenFunction.h"
 #include "cocostudio/CCUtilMath.h"
+#include "cocostudio/CCComBase.h"
 #include "cocostudio/CCComAttribute.h"
 #include "cocostudio/CCComAudio.h"
 #include "cocostudio/CCComController.h"
