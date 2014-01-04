@@ -186,7 +186,6 @@ bool ComRender::serialize(void* r)
 	return bRet;
 }
 
-
 ComRender* ComRender::create(void)
 {
     ComRender * ret = new ComRender();
@@ -199,6 +198,20 @@ ComRender* ComRender::create(void)
         CC_SAFE_DELETE(ret);
     }
 	return ret;
+}
+
+ComRender* ComRender::create(cocos2d::Node *node, const char *comName)
+{
+    ComRender * ret = new ComRender(node, comName);
+    if (ret != nullptr && ret->init())
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+        return ret;
 }
 
 bool ComRender::readJson(const std::string &fileName, rapidjson::Document &doc)

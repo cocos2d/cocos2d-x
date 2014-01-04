@@ -60,6 +60,7 @@ public:
     virtual void setNode(cocos2d::Node *node);
 
     static ComRender* create(void);
+    static ComRender* create(cocos2d::Node *node, const char *comName);
 private:
    bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
