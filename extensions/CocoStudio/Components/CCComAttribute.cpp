@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
-#include "../Json/DictionaryHelper.h"
 
 NS_CC_EXT_BEGIN
 
