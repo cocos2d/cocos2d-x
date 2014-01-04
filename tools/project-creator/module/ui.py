@@ -66,7 +66,7 @@ class ThreadedTask(threading.Thread):
         """
         #delete exist project.
         if os.path.exists(os.path.join(self.projectPath, self.projectName)):
-            print ("###begin remove... " + self.projectName)
+            print ("###begin remove:  " + self.projectName)
             try:
                 shutil.rmtree(os.path.join(self.projectPath, self.projectName))
                 print ("###remove finish:  " + self.projectName)
