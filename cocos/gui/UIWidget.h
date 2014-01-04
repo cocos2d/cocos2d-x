@@ -315,6 +315,22 @@ public:
      */
     virtual Widget* getChildByName(const char* name);
     
+    virtual void addNode(Node* node);
+    
+    virtual void addNode(Node * node, int zOrder);
+    
+    virtual void addNode(Node* node, int zOrder, int tag);
+    
+    virtual Node * getNodeByTag(int tag);
+    
+    virtual Vector<Node*>& getNodes();
+    
+    virtual void removeNode(Node* node);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual void removeAllNodes();
+    
     virtual void visit() override;
     
     /**
@@ -684,6 +700,7 @@ protected:
     EventListenerTouchOneByOne* _touchListener;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
     Vector<Node*> _widgetChildren;
+    Vector<Node*> _nodes;
 };
 }
 
