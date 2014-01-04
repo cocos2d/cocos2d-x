@@ -30,8 +30,8 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BACKGROUNDIMAGEZ (-1)
-#define BACKGROUNDCOLORRENDERERZ (-2)
+static const int BACKGROUNDIMAGE_Z = (-1);
+static const int BACKGROUNDCOLOR_RENDERER_Z = (-2);
 
 static GLint g_sStencilBits = -1;
 
@@ -87,6 +87,8 @@ bool Layout::init()
         CC_SAFE_RETAIN(_widgetChildren);
         _layoutParameterDictionary = CCDictionary::create();
         CC_SAFE_RETAIN(_layoutParameterDictionary);
+        _nodes = CCArray::create();
+        CC_SAFE_RETAIN(_nodes);
         initRenderer();
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
@@ -431,12 +433,12 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::CCScale9Sprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
     {
         _backGroundImage = CCSprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
@@ -548,13 +550,13 @@ void Layout::addBackGroundImage()
     if (_backGroundScale9Enabled)
     {
         _backGroundImage = extension::CCScale9Sprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
         static_cast<extension::CCScale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
         _backGroundImage = CCSprite::create();
-        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGEZ, -1);
+        CCNodeRGBA::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     _backGroundImage->setPosition(CCPoint(_size.width/2.0f, _size.height/2.0f));
 }
@@ -618,7 +620,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            CCNodeRGBA::addChild(_colorRender, BACKGROUNDCOLORRENDERERZ, -1);
+            CCNodeRGBA::addChild(_colorRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
             _gradientRender = CCLayerGradient::create();
@@ -627,7 +629,7 @@ void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            CCNodeRGBA::addChild(_gradientRender, BACKGROUNDCOLORRENDERERZ, -1);
+            CCNodeRGBA::addChild(_gradientRender, BACKGROUNDCOLOR_RENDERER_Z, -1);
             break;
         default:
             break;

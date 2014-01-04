@@ -632,7 +632,7 @@ void TestParticleDisplay::onEnter()
 
     cocos2d::extension::CCBone *bone  = cocos2d::extension::CCBone::create("p1");
     bone->addDisplay(p1, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -640,7 +640,7 @@ void TestParticleDisplay::onEnter()
 
     bone  = cocos2d::extension::CCBone::create("p2");
     bone->addDisplay(p2, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -724,7 +724,7 @@ bool TestUseMutiplePicture::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     ++displayIndex;
     displayIndex = (displayIndex) % 8;
-    armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
+    armature->getBone("weapon")->changeDisplayWithIndex(displayIndex, true);
     return false;
 }
 void TestUseMutiplePicture::registerWithTouchDispatcher()
@@ -1229,7 +1229,7 @@ void Hero::changeMount(CCArmature *armature)
         //Add hero as a display to this bone
         bone->addDisplay(this, 0);
         //Change this bone's display
-        bone->changeDisplayByIndex(0, true);
+        bone->changeDisplayWithIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
         setPosition(ccp(0,0));

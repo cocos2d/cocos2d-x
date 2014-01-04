@@ -23,92 +23,129 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
+#include "cocos2d.h"
+#include "../Json/rapidjson/prettywriter.h"
+#include "../Json/rapidjson/filestream.h"
+#include "../Json/rapidjson/stringbuffer.h"
 
 NS_CC_EXT_BEGIN
 
-IMPLEMENT_CLASS_COMPONENT_INFO(CCComAttribute)
 CCComAttribute::CCComAttribute(void)
-: m_pDict(NULL)
+: _dict(NULL)
 {
     m_strName = "CCComAttribute";
 }
 
 CCComAttribute::~CCComAttribute(void)
 {
-    CC_SAFE_RELEASE(m_pDict);
+    CC_SAFE_RELEASE(_dict);
 }
 
 bool CCComAttribute::init()
 {
-    m_pDict = CCDictionary::create();
-	m_pDict->retain();
+    _dict = CCDictionary::create();
+	_dict->retain();
     return true;
 }
 
 void CCComAttribute::setInt(const char *key, int value)
 {
-    m_pDict->setObject(CCInteger::create(value), key);
+    _dict->setObject(CCInteger::create(value), key);
 }
 
 void CCComAttribute::setFloat(const char *key, float value)
 {
-    m_pDict->setObject(CCFloat::create(value), key);
+    _dict->setObject(CCFloat::create(value), key);
 }
 
 void CCComAttribute::setBool(const char *key, bool value)
 {
-    m_pDict->setObject(CCBool::create(value), key);
+    _dict->setObject(CCBool::create(value), key);
 }
 
 void CCComAttribute::setCString(const char *key, const char *value)
 {
-    m_pDict->setObject(CCString::create(value), key);
+    _dict->setObject(CCString::create(value), key);
 }
-
 
 int CCComAttribute::getInt(const char *key, int def) const
 {
-    CCObject *ret = m_pDict->objectForKey(key);
-	if(ret)
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret != NULL)
     {
-		
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getIntValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 float CCComAttribute::getFloat(const char *key, float def) const
 {
-    CCObject *ret = m_pDict->objectForKey(key);
-	if(ret)
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret != NULL)
     {
 		
 		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getFloatValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 bool CCComAttribute::getBool(const char *key, bool def) const
 {
-    CCObject *ret = m_pDict->objectForKey(key);
-	if(ret) {
-		
+    CCObject *ret = _dict->objectForKey(key);
+	if(ret != NULL)
+    {
 		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getBooleanValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 const char* CCComAttribute::getCString(const char *key, const char *def) const
 {
-   CCObject *ret = m_pDict->objectForKey(key);
-	if(ret) {
-		
-		if( CCString *obj = dynamic_cast<CCString*>(ret) )
+    CCObject *ret = _dict->objectForKey(key);
+    if (ret != NULL)
+    {
+        if( CCString *obj = dynamic_cast<CCString*>(ret) )
+        {
 			return obj->getCString();
-	}
+        }
+    }
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getStringValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
@@ -126,49 +163,23 @@ CCComAttribute* CCComAttribute::create(void)
     return pRet;
 }
 
-void CCComAttribute::setFile(const std::string &jsonName)
+bool CCComAttribute::parse(const std::string &jsonPath)
 {
-	m_strJsonFile = jsonName;
-}
-std::string CCComAttribute::getFile() const
-{
-	return m_strJsonFile;
-}
-
-bool CCComAttribute::serialize(void* r)
-{
-	bool bRet = false;
-	do 
-	{
-		CC_BREAK_IF(r == NULL);
-		rapidjson::Value *v = (rapidjson::Value *)r;
-		const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
-		CC_BREAK_IF(pClassName == NULL);
-		const char *pComName = DICTOOL->getStringValue_json(*v, "name");
-		if (pComName != NULL)
-		{
-			setName(pComName);
-		}
-		else
-		{
-			setName(pClassName);
-		}
-		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
-		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
-		int nResType = nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
-		CC_BREAK_IF(nResType != 0);
-		const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
-		CC_BREAK_IF(pFile == NULL);
-		std::string strFilePath;
-		if (pFile != NULL)
-		{
-			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
-		}
-		setFile(strFilePath);
-		bRet = true;
-	} while (0);
-
-	return bRet;
+    bool bRet = false;
+    unsigned long size = 0;
+    unsigned char *pBytes = NULL;
+    do {
+          pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonPath.c_str(), "r", &size);
+          CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+          CCData *data = new CCData(pBytes, size);
+          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
+          CC_SAFE_DELETE(data);
+          CC_SAFE_DELETE_ARRAY(pBytes);
+          _doc.Parse<0>(load_str.c_str());
+          CC_BREAK_IF(_doc.HasParseError());
+          bRet = true;
+        } while (0);
+    return bRet;
 }
 
 NS_CC_EXT_END

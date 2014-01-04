@@ -1,6 +1,6 @@
 /*
 ** Lua binding: CocoStudio
-** Generated automatically by tolua++-1.0.92 on Wed Jan  1 23:26:28 2014.
+** Generated automatically by tolua++-1.0.92 on 01/02/14 14:07:29.
 */
 
 /****************************************************************************
@@ -3227,9 +3227,9 @@ static int tolua_CocoStudio_CCBone_removeDisplay00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: changeDisplayByIndex of class  CCBone */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCBone_changeDisplayByIndex00
-static int tolua_CocoStudio_CCBone_changeDisplayByIndex00(lua_State* tolua_S)
+/* method: changeDisplayWithIndex of class  CCBone */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCBone_changeDisplayWithIndex00
+static int tolua_CocoStudio_CCBone_changeDisplayWithIndex00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -3247,16 +3247,16 @@ static int tolua_CocoStudio_CCBone_changeDisplayByIndex00(lua_State* tolua_S)
   int index = ((int)  tolua_tonumber(tolua_S,2,0));
   bool force = ((bool)  tolua_toboolean(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeDisplayByIndex'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeDisplayWithIndex'", NULL);
 #endif
   {
-   self->changeDisplayByIndex(index,force);
+   self->changeDisplayWithIndex(index,force);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'changeDisplayByIndex'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'changeDisplayWithIndex'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5664,9 +5664,9 @@ static int tolua_CocoStudio_CCDisplayManager_getDecorativeDisplayList00(lua_Stat
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: changeDisplayByIndex of class  CCDisplayManager */
-#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCDisplayManager_changeDisplayByIndex00
-static int tolua_CocoStudio_CCDisplayManager_changeDisplayByIndex00(lua_State* tolua_S)
+/* method: changeDisplayWithIndex of class  CCDisplayManager */
+#ifndef TOLUA_DISABLE_tolua_CocoStudio_CCDisplayManager_changeDisplayWithIndex00
+static int tolua_CocoStudio_CCDisplayManager_changeDisplayWithIndex00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -5684,16 +5684,16 @@ static int tolua_CocoStudio_CCDisplayManager_changeDisplayByIndex00(lua_State* t
   int index = ((int)  tolua_tonumber(tolua_S,2,0));
   bool force = ((bool)  tolua_toboolean(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeDisplayByIndex'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'changeDisplayWithIndex'", NULL);
 #endif
   {
-   self->changeDisplayByIndex(index,force);
+   self->changeDisplayWithIndex(index,force);
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'changeDisplayByIndex'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'changeDisplayWithIndex'.",&tolua_err);
  return 0;
 #endif
 }
@@ -22104,7 +22104,7 @@ static int tolua_CocoStudio_ActionManager_purgeActionManager00(lua_State* tolua_
 #endif
  {
   {
-   ActionManager::purgeActionManager();
+   ActionManager::purge();
   }
  }
  return 0;
@@ -22356,7 +22356,7 @@ static int tolua_CocoStudio_SceneReader_purgeSceneReader00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'purgeSceneReader'", NULL);
 #endif
   {
-   self->purgeSceneReader();
+   self->purge();
   }
  }
  return 0;
@@ -22599,7 +22599,7 @@ static int tolua_CocoStudio_GUIReader_purgeGUIReader00(lua_State* tolua_S)
 #endif
  {
   {
-   GUIReader::purgeGUIReader();
+   GUIReader::purge();
   }
  }
  return 0;
@@ -23415,7 +23415,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"addDisplay",tolua_CocoStudio_CCBone_addDisplay00);
    tolua_function(tolua_S,"addDisplay",tolua_CocoStudio_CCBone_addDisplay01);
    tolua_function(tolua_S,"removeDisplay",tolua_CocoStudio_CCBone_removeDisplay00);
-   tolua_function(tolua_S,"changeDisplayByIndex",tolua_CocoStudio_CCBone_changeDisplayByIndex00);
+   tolua_function(tolua_S,"changeDisplayWithIndex",tolua_CocoStudio_CCBone_changeDisplayWithIndex00);
    tolua_function(tolua_S,"addChildBone",tolua_CocoStudio_CCBone_addChildBone00);
    tolua_function(tolua_S,"setParentBone",tolua_CocoStudio_CCBone_setParentBone00);
    tolua_function(tolua_S,"getParentBone",tolua_CocoStudio_CCBone_getParentBone00);
@@ -23524,7 +23524,7 @@ TOLUA_API int tolua_CocoStudio_open (lua_State* tolua_S)
    tolua_function(tolua_S,"addDisplay",tolua_CocoStudio_CCDisplayManager_addDisplay01);
    tolua_function(tolua_S,"removeDisplay",tolua_CocoStudio_CCDisplayManager_removeDisplay00);
    tolua_function(tolua_S,"getDecorativeDisplayList",tolua_CocoStudio_CCDisplayManager_getDecorativeDisplayList00);
-   tolua_function(tolua_S,"changeDisplayByIndex",tolua_CocoStudio_CCDisplayManager_changeDisplayByIndex00);
+   tolua_function(tolua_S,"changeDisplayWithIndex",tolua_CocoStudio_CCDisplayManager_changeDisplayWithIndex00);
    tolua_function(tolua_S,"getDisplayRenderNode",tolua_CocoStudio_CCDisplayManager_getDisplayRenderNode00);
    tolua_function(tolua_S,"getDisplayRenderNodeType",tolua_CocoStudio_CCDisplayManager_getDisplayRenderNodeType00);
    tolua_function(tolua_S,"getCurrentDisplayIndex",tolua_CocoStudio_CCDisplayManager_getCurrentDisplayIndex00);

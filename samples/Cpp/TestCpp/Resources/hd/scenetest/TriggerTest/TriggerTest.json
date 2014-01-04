@@ -197,6 +197,102 @@
         }
       ],
       "id": 1
+    },
+    {
+      "actions": [
+        {
+          "classname": "TScaleTo",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "ScaleX",
+              "value": -0.6
+            },
+            {
+              "key": "ScaleY",
+              "value": 0.6
+            },
+            {
+              "key": "Duration",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "x",
+              "value": 1000
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "classname": "TriggerState",
+          "dataitems": [
+            {
+              "key": "ID",
+              "value": 2
+            },
+            {
+              "key": "State",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "classname": "NodeInRect",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "originX",
+              "value": 112
+            },
+            {
+              "key": "originY",
+              "value": 153
+            },
+            {
+              "key": "sizeWidth",
+              "value": 10
+            },
+            {
+              "key": "sizeHeight",
+              "value": 320
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": 3
+        }
+      ],
+      "id": 2
     }
   ],
   "Version": "1.2.0.0",

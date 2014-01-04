@@ -60,13 +60,11 @@ public:
    bool   getBool(const char *key, bool def = false) const;
    const char* getCString(const char *key, const char *def = NULL) const;
    
-   void setFile(const std::string &jsonName);
-   std::string getFile() const;
-
-   virtual bool serialize(void* r);
+   bool parse(const std::string &jsonPath);
 private:
-   cocos2d::CCDictionary *m_pDict;
-   std::string m_strJsonFile;
+   cocos2d::CCDictionary *_dict;
+   rapidjson::Document _doc;
+>>>>>>> master
 };
 
 NS_CC_EXT_END

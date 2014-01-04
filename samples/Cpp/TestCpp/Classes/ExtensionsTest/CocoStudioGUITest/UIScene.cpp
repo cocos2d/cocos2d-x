@@ -22,12 +22,14 @@ bool UIScene::init()
     if (CCLayer::init())
     {
         m_pUiLayer = UILayer::create();
-        m_pUiLayer->scheduleUpdate();
         addChild(m_pUiLayer);
         
         m_pWidget = dynamic_cast<UILayout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
         m_pUiLayer->addWidget(m_pWidget);
-        
+        CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+        CCSize rootSize = m_pWidget->getSize();
+        m_pUiLayer->setPosition(CCPoint((screenSize.width - rootSize.width) / 2,
+                                    (screenSize.height - rootSize.height) / 2));
         m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
         
         UILabel* back_label = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("back"));
@@ -68,7 +70,7 @@ void UIScene::toCocosGUITestScene(CCObject* sender, TouchEventType type)
         case TOUCH_EVENT_ENDED:
         {
             UISceneManager::purgeUISceneManager();
-            ActionManager::purgeActionManager();
+            ActionManager::purge();
             
             CocosGUITestScene* pScene = new CocosGUITestScene();
             pScene->runThisTest();

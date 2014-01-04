@@ -78,22 +78,6 @@ void CocosGUITestMainLayer::onEnter()
 {
     CCLayer::onEnter();
     
-    /*
-    UILayer* uiLayer = UILayer::create();
-    uiLayer->scheduleUpdate();
-    addChild(uiLayer);
-    
-    
-    CCNode* node = CCNode::create();
-    node->setPosition(VisibleRect::center());
-    CCNode* sprite = CCSprite::create();
-    dynamic_cast<CCSprite*>(sprite)->initWithFile("cocosgui/UITest/background.png");
-//    sprite->setPosition(VisibleRect::center());
-    node->addChild(sprite);
-    uiLayer->addChild(node);
-     */
-    
-//    /*
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
     m_pItemMenu = CCMenu::create();

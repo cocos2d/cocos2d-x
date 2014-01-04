@@ -512,6 +512,49 @@ static JSBool js_cocos2dx_LayoutParameter_getMargin(JSContext *cx, uint32_t argc
     return JS_FALSE;
 }
 
+JSBool js_cocos2dx_studio_ColliderBody_getCalculatedVertexList(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::extension::ColliderBody* cobj = (cocos2d::extension::ColliderBody *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::CCArray* ret = cobj->getCalculatedVertexList();
+        JSObject *jsretArr = JS_NewArrayObject(cx, 0, nullptr);
+        jsval jsret;
+        CCObject* obj;
+        int i = 0;
+        CCARRAY_FOREACH(ret, obj)
+        {
+            CCContourVertex2* contourVertex = static_cast<CCContourVertex2*>(obj);
+            if (contourVertex)
+            {
+                JSObject *tmp = JS_NewObject(cx, NULL, NULL, NULL);
+                if (!tmp) break;
+                JSBool ok = JS_DefineProperty(cx, tmp, "x", DOUBLE_TO_JSVAL(contourVertex->x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+                    JS_DefineProperty(cx, tmp, "y", DOUBLE_TO_JSVAL(contourVertex->y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+                jsval jsTmp = OBJECT_TO_JSVAL(tmp);
+                if(!ok || !JS_SetElement(cx, jsretArr, i, &jsTmp))
+                {
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+            ++i;
+        }
+        jsret = OBJECT_TO_JSVAL(jsretArr);
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+    return JS_FALSE;
+}
+
+
 extern JSObject* jsb_Widget_prototype;
 extern JSObject* jsb_CheckBox_prototype;
 extern JSObject* jsb_Slider_prototype;
@@ -522,9 +565,12 @@ extern JSObject* jsb_ListView_prototype;
 extern JSObject* jsb_CCArmatureAnimation_prototype;
 extern JSObject* jsb_CCArmatureDataManager_prototype;
 extern JSObject* jsb_CCArmature_prototype;
+extern JSObject* jsb_ColliderBody_prototype;
 
 void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
 {
+    JS_DefineFunction(cx, jsb_ColliderBody_prototype, "getCalculatedVertexList", js_cocos2dx_studio_ColliderBody_getCalculatedVertexList, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, jsb_Widget_prototype, "addTouchEventListener", js_cocos2dx_Widget_addTouchEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_CheckBox_prototype, "addEventListenerCheckBox", js_cocos2dx_CheckBox_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);

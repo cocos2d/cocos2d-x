@@ -33,7 +33,7 @@ namespace gui {
 #define STATIC_CAST_CCSPRITE static_cast<CCSprite*>(_imageRenderer)
 #define STATIC_CAST_SCALE9SPRITE static_cast<extension::CCScale9Sprite*>(_imageRenderer)
     
-#define IMAGERENDERERZ (-1)
+static const int IMAGE_RENDERER_Z = (-1);
 
 ImageView::ImageView():
 _scale9Enabled(false),
@@ -67,7 +67,7 @@ ImageView* ImageView::create()
 void ImageView::initRenderer()
 {
     _imageRenderer = CCSprite::create();
-    CCNodeRGBA::addChild(_imageRenderer, IMAGERENDERERZ, -1);
+    CCNodeRGBA::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
 void ImageView::loadTexture(const char *fileName, TextureResType texType)
@@ -201,7 +201,7 @@ void ImageView::setScale9Enabled(bool able)
         _imageRenderer = CCSprite::create();
     }
     loadTexture(_textureFile.c_str(),_imageTexType);
-    CCNodeRGBA::addChild(_imageRenderer, IMAGERENDERERZ, -1);
+    CCNodeRGBA::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
