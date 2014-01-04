@@ -23,13 +23,12 @@
  ****************************************************************************/
 
 #include "SceneReader.h"
-#include "cocos-ext.h"
 #include "SimpleAudioEngine.h"
 #include "../Trigger/ObjectFactory.h"
 
 NS_CC_EXT_BEGIN
 
-	SceneReader* SceneReader::_sharedReader = NULL;
+SceneReader* SceneReader::_sharedReader = NULL;
 
 SceneReader::SceneReader()
 	:_pListener(NULL)
