@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "TriggerMng.h"
-#include "TriggerObj.h"
 #include "TriggerBase.h"
 #include "../Json/rapidjson/prettywriter.h"
 #include "../Json/rapidjson/filestream.h"

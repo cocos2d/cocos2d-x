@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMREND_H__
-#define __CC_EXTENTIONS_CCCOMREND_H__
+#ifndef __CC_EXTENTIONS_CCCOMRENDER_H__
+#define __CC_EXTENTIONS_CCCOMRENDER_H__
 
 #include "CCComBase.h"
 
@@ -40,6 +40,7 @@ public:
      *  @js ctor
      */
     CCComRender(void);
+    CCComRender(cocos2d::CCNode *node, const char *comName);
     /**
      *  @js NA
      */
@@ -52,6 +53,7 @@ public:
    virtual cocos2d::CCNode* getNode();
    virtual void setNode(cocos2d::CCNode *pNode);
 
+   static CCComRender* create(cocos2d::CCNode *pNode, const char *comName);
    static CCComRender* create(void);
 private:
    bool readJson(const char *pszFileName, rapidjson::Document &doc);
