@@ -392,7 +392,7 @@ public:
 
 protected:
     void purgeDirector();
-    bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene();
     
