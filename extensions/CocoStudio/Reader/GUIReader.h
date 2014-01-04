@@ -54,7 +54,7 @@ public:
     /**
      *  @js pure
      */
-	static void purgeGUIReader();
+	static void purge();
     
     cocos2d::gui::Widget* widgetFromJsonFile(const char* fileName);
     int getVersionInteger(const char* str);

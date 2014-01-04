@@ -61,8 +61,10 @@ public:
    bool   getBool(const char *key, bool def = false) const;
    const char* getCString(const char *key, const char *def = NULL) const;
    
+   bool parse(const std::string &jsonPath);
 private:
    cocos2d::CCDictionary *_dict;
+   rapidjson::Document _doc;
 };
 
 NS_CC_EXT_END

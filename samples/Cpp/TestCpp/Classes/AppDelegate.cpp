@@ -65,12 +65,30 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         CCSize resourceSize = CCSizeMake(960, 640);
         searchPaths.push_back("hd");
-		searchPaths.push_back("hd/scenetest");
+		searchPaths.push_back("hd/scenetest/ArmatureComponentTest");
+		searchPaths.push_back("hd/scenetest/AttributeComponentTest");
+		searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
+		searchPaths.push_back("hd/scenetest/EffectComponentTest");
+		searchPaths.push_back("hd/scenetest/loadSceneEdtiorFileTest");
+		searchPaths.push_back("hd/scenetest/ParticleComponentTest");
+		searchPaths.push_back("hd/scenetest/SpriteComponentTest");
+		searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
+		searchPaths.push_back("hd/scenetest/UIComponentTest");
+		searchPaths.push_back("hd/scenetest/TriggerTest");
         pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
     }
 	else
 	{
-		searchPaths.push_back("scenetest");
+		searchPaths.push_back("scenetest/ArmatureComponentTest");
+		searchPaths.push_back("scenetest/AttributeComponentTest");
+		searchPaths.push_back("scenetest/BackgroundComponentTest");
+		searchPaths.push_back("scenetest/EffectComponentTest");
+		searchPaths.push_back("scenetest/loadSceneEdtiorFileTest");
+		searchPaths.push_back("scenetest/ParticleComponentTest");
+		searchPaths.push_back("scenetest/SpriteComponentTest");
+		searchPaths.push_back("scenetest/TmxMapComponentTest");
+		searchPaths.push_back("scenetest/UIComponentTest");
+		searchPaths.push_back("scenetest/TriggerTest");
 	}
 	pFileUtils->setSearchPaths(searchPaths);
 

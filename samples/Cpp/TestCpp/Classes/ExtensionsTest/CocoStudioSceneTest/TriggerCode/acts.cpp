@@ -129,6 +129,8 @@ void TMoveTo::serialize(const rapidjson::Value &val)
 
 void TMoveTo::removeAll()
 {
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 IMPLEMENT_CLASS_INFO(TMoveBy)
@@ -205,7 +207,8 @@ void TMoveBy::serialize(const rapidjson::Value &val)
 
 void TMoveBy::removeAll()
 {
-	CCLOG("TMoveBy::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -266,7 +269,8 @@ void TRotateTo::serialize(const rapidjson::Value &val)
 
 void TRotateTo::removeAll()
 {
-	CCLOG("TRotateTo::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -341,7 +345,8 @@ void TRotateBy::serialize(const rapidjson::Value &val)
 
 void TRotateBy::removeAll()
 {
-	CCLOG("TRotateBy::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -355,6 +360,7 @@ TScaleTo::TScaleTo(void)
 
 TScaleTo::~TScaleTo(void)
 {
+
 }
 
 bool TScaleTo::init()
@@ -406,7 +412,8 @@ void TScaleTo::serialize(const rapidjson::Value &val)
 
 void TScaleTo::removeAll()
 {
-	CCLOG("TScaleTo::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -485,7 +492,8 @@ void TScaleBy::serialize(const rapidjson::Value &val)
 
 void TScaleBy::removeAll()
 {
-	CCLOG("TScaleBy::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -550,7 +558,8 @@ void TSkewTo::serialize(const rapidjson::Value &val)
 
 void TSkewTo::removeAll()
 {
-	CCLOG("TSkewTo::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 
@@ -628,7 +637,8 @@ void TSkewBy::serialize(const rapidjson::Value &val)
 
 void TSkewBy::removeAll()
 {
-	CCLOG("TSkewBy::removeAll");
+	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	pNode->getActionManager()->removeAllActions();
 }
 
 

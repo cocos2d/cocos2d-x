@@ -58,7 +58,7 @@ public:
 	/**
 	* Purges ActionManager point.
 	*/
-	static void purgeActionManager();
+	static void purge();
 
 	/**
 	* Gets an ActionObject with a name.

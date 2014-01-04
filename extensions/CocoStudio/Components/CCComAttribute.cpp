@@ -33,7 +33,7 @@ NS_CC_EXT_BEGIN
 CCComAttribute::CCComAttribute(void)
 : _dict(NULL)
 {
-    m_strName = "ComAttribute";
+    m_strName = "CCComAttribute";
 }
 
 CCComAttribute::~CCComAttribute(void)
@@ -68,50 +68,84 @@ void CCComAttribute::setCString(const char *key, const char *value)
     _dict->setObject(CCString::create(value), key);
 }
 
-
 int CCComAttribute::getInt(const char *key, int def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret)
+	if(ret != NULL)
     {
-		
 		if( CCInteger *obj=dynamic_cast<CCInteger*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getIntValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 float CCComAttribute::getFloat(const char *key, float def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret)
+	if(ret != NULL)
     {
 		
 		if( CCFloat *obj=dynamic_cast<CCFloat*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getFloatValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 bool CCComAttribute::getBool(const char *key, bool def) const
 {
     CCObject *ret = _dict->objectForKey(key);
-	if(ret) {
-		
+	if(ret != NULL)
+    {
 		if( CCBool *obj = dynamic_cast<CCBool*>(ret) )
+        {
 			return obj->getValue();
+        }
 	}
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getBooleanValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
 const char* CCComAttribute::getCString(const char *key, const char *def) const
 {
-   CCObject *ret = _dict->objectForKey(key);
-	if(ret) {
-		
-		if( CCString *obj = dynamic_cast<CCString*>(ret) )
+    CCObject *ret = _dict->objectForKey(key);
+    if (ret != NULL)
+    {
+        if( CCString *obj = dynamic_cast<CCString*>(ret) )
+        {
 			return obj->getCString();
-	}
+        }
+    }
+    else
+    {
+        if (DICTOOL->checkObjectExist_json(_doc, key))
+        {
+            return DICTOOL->getStringValue_json(_doc, key);
+        }
+    }
     return def;
 }
 
@@ -127,6 +161,25 @@ CCComAttribute* CCComAttribute::create(void)
         CC_SAFE_DELETE(pRet);
     }
     return pRet;
+}
+
+bool CCComAttribute::parse(const std::string &jsonPath)
+{
+    bool bRet = false;
+    unsigned long size = 0;
+    unsigned char *pBytes = NULL;
+    do {
+          pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonPath.c_str(), "r", &size);
+          CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
+          CCData *data = new CCData(pBytes, size);
+          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
+          CC_SAFE_DELETE(data);
+          CC_SAFE_DELETE_ARRAY(pBytes);
+          _doc.Parse<0>(load_str.c_str());
+          CC_BREAK_IF(_doc.HasParseError());
+          bRet = true;
+        } while (0);
+    return bRet;
 }
 
 NS_CC_EXT_END
