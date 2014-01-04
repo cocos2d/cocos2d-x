@@ -23,13 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCComAttribute.h"
-#include "cocos2d.h"
-#include "../Json/rapidjson/prettywriter.h"
-#include "../Json/rapidjson/filestream.h"
-#include "../Json/rapidjson/stringbuffer.h"
+#include "cocos-ext.h"
 
 NS_CC_EXT_BEGIN
 
+IMPLEMENT_CLASS_COMPONENT_INFO(CCComAttribute)
 CCComAttribute::CCComAttribute(void)
 : _dict(NULL)
 {
@@ -161,6 +159,42 @@ CCComAttribute* CCComAttribute::create(void)
         CC_SAFE_DELETE(pRet);
     }
     return pRet;
+}
+
+bool CCComAttribute::serialize(void* r)
+{
+    bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(r == NULL);
+		rapidjson::Value *v = (rapidjson::Value *)r;
+		const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
+		CC_BREAK_IF(pClassName == NULL);
+		const char *pComName = DICTOOL->getStringValue_json(*v, "name");
+		if (pComName != NULL)
+		{
+			setName(pComName);
+		}
+		else
+		{
+			setName(pClassName);
+		}
+		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+		const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
+		CC_BREAK_IF(pFile == NULL);
+		std::string strFilePath;
+		if (pFile != NULL)
+		{
+			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
+		}
+		int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+		CC_BREAK_IF(nResType != 0);
+        parse(strFilePath.c_str());
+		bRet = true;
+	} while (0);
+
+	return bRet;
 }
 
 bool CCComAttribute::parse(const std::string &jsonPath)

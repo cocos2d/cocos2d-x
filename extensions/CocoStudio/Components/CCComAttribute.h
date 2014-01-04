@@ -25,9 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 #define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
-#include "cocos2d.h"
 #include "CCComBase.h"
-#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 /**
@@ -49,6 +47,7 @@ protected:
 public:
    virtual bool init();
    static CCComAttribute* create(void);
+   virtual bool serialize(void* r);
    
    void setInt(const char *key, int value);
    void setFloat(const char *key, float value);
@@ -64,7 +63,6 @@ public:
 private:
    cocos2d::CCDictionary *_dict;
    rapidjson::Document _doc;
->>>>>>> master
 };
 
 NS_CC_EXT_END

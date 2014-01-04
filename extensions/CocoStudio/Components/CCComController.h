@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 #define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 
-#include "cocos2d.h"
 #include "CCComBase.h"
 #include "CCInputDelegate.h"
 
