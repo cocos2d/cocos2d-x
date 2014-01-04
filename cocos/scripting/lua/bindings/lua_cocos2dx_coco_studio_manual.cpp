@@ -295,12 +295,110 @@ static void extendArmatureDataManager(lua_State* L)
     lua_pop(L, 1);
 }
 
+static int lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocostudio::Bone* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_isboolean(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        bool ignore = (bool)tolua_toboolean(L, 2, 0);
+        self->setIgnoreMovementBoneData(ignore);
+        return 0;
+    }
+    
+    CCLOG("'setIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'setIgnoreMovementBoneData'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static int lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    cocostudio::Bone* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+	if (!tolua_isusertype(L,1,"Bone",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<cocostudio::Bone*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+	if (nullptr == self) {
+		tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData'\n", NULL);
+		return 0;
+	}
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        tolua_pushboolean(L, self->getIgnoreMovementBoneData());
+        return 1;
+    }
+    
+    CCLOG("'getIgnoreMovementBoneData' function of Bone  has wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'getIgnoreMovementBoneData'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendBone(lua_State* L)
+{
+    lua_pushstring(L, "Bone");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "setIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_setIgnoreMovementBoneData);
+        tolua_function(L, "getIgnoreMovementBoneData", lua_cocos2dx_extension_Bone_getIgnoreMovementBoneData);
+    }
+    lua_pop(L, 1);
+}
+
 int register_all_cocos2dx_coco_studio_manual(lua_State* L)
 {
     if (nullptr == L)
         return 0;
     extendArmatureAnimation(L);
     extendArmatureDataManager(L);
+    extendBone(L);
     
     return 0;
 }
