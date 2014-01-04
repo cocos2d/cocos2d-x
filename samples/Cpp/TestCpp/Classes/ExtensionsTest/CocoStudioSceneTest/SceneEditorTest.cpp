@@ -228,10 +228,10 @@ void LoadSceneEdtiorFileTest::onEnter()
 
 void LoadSceneEdtiorFileTest::onExit()
 {
-	 ArmatureDataManager::getInstance()->destroyInstance();
-	 SceneReader::getInstance()->destroyInstance();
-	 ActionManagerEx::getInstance()->destroyInstance();
-	 GUIReader::shareReader()->purgeGUIReader();
+	 ArmatureDataManager::destroyInstance();
+	 SceneReader::destroyInstance();
+	 ActionManagerEx::destroyInstance();
+	 GUIReader::destroyInstance();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -274,10 +274,10 @@ void SpriteComponentTest::onEnter()
 
 void SpriteComponentTest::onExit()
 {
-	 ArmatureDataManager::getInstance()->destroyInstance();
-	 SceneReader::getInstance()->destroyInstance();
-	 ActionManagerEx::getInstance()->destroyInstance();
-	 GUIReader::shareReader()->purgeGUIReader();
+	 ArmatureDataManager::destroyInstance();
+	 SceneReader::destroyInstance();
+	 ActionManagerEx::destroyInstance();
+	 GUIReader::destroyInstance();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -329,10 +329,10 @@ void ArmatureComponentTest::onEnter()
 
 void ArmatureComponentTest::onExit()
 {
-	 ArmatureDataManager::getInstance()->destroyInstance();
-	 SceneReader::getInstance()->destroyInstance();
-	 ActionManagerEx::getInstance()->destroyInstance();
-	 GUIReader::shareReader()->purgeGUIReader();
+	 ArmatureDataManager::destroyInstance();
+	 SceneReader::destroyInstance();
+	 ActionManagerEx::destroyInstance();
+	 GUIReader::destroyInstance();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -380,10 +380,10 @@ void UIComponentTest::onEnter()
 
 void UIComponentTest::onExit()
 {
-	 ArmatureDataManager::getInstance()->destroyInstance();
-	 SceneReader::getInstance()->destroyInstance();
-	 ActionManagerEx::getInstance()->destroyInstance();
-	 GUIReader::shareReader()->purgeGUIReader();
+	 ArmatureDataManager::destroyInstance();
+	 SceneReader::destroyInstance();
+	 ActionManagerEx::destroyInstance();
+	 GUIReader::destroyInstance();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -450,10 +450,10 @@ void TmxMapComponentTest::onEnter()
 
 void TmxMapComponentTest::onExit()
 {
-    ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+    ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -506,10 +506,10 @@ void ParticleComponentTest::onEnter()
 
 void ParticleComponentTest::onExit()
 {
-	ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+	ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -557,10 +557,10 @@ void EffectComponentTest::onEnter()
 
 void EffectComponentTest::onExit()
 {
-	ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+	ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -619,10 +619,10 @@ void BackgroundComponentTest::onEnter()
 
 void BackgroundComponentTest::onExit()
 {
-	ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+	ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -669,10 +669,10 @@ void AttributeComponentTest::onEnter()
 
 void AttributeComponentTest::onExit()
 {
-	ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+	ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -746,10 +746,10 @@ void TriggerTest::onExit()
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);
-	ArmatureDataManager::getInstance()->destroyInstance();
-    SceneReader::getInstance()->destroyInstance();
-    ActionManagerEx::getInstance()->destroyInstance();
-    GUIReader::shareReader()->purgeGUIReader();
+	ArmatureDataManager::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManagerEx::destroyInstance();
+    GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 

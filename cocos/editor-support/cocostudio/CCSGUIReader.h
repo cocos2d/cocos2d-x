@@ -31,27 +31,15 @@
 namespace cocostudio {
 
 #define kCCSVersion 1.0
+
 class GUIReader : public cocos2d::Object
 {
 public:
-    /**
-     *  @js ctor
-     */
-    GUIReader();
-    /**
-     *  @js NA
-     *  @lua NA
-     */
-    ~GUIReader();
-    /**
-     *  @js getInstance
-     *  @lua getInstance
-     */
-    static GUIReader* shareReader();
-    /**
-     *  @js purge
-     */
-    static void purgeGUIReader();
+    CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
+    CC_DEPRECATED_ATTRIBUTE static void purgeGUIReader() { GUIReader::destroyInstance(); };
+    
+    static GUIReader* getInstance();
+    static void destroyInstance();
     
     cocos2d::gui::Widget* widgetFromJsonFile(const char* fileName);
     int getVersionInteger(const char* str);
@@ -63,7 +51,11 @@ public:
      *  @js NA
      */
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
+    
 protected:
+    GUIReader();
+    ~GUIReader();
+    
     std::string m_strFilePath;
     cocos2d::ValueMap _fileDesignSizes;
     

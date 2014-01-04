@@ -39,7 +39,7 @@ public:
      *  @js purge
      *  @lua destroySceneReader
      */
-    void destroyInstance();
+    static void destroyInstance();
     static const char* sceneReaderVersion();
     cocos2d::Node* createNodeWithSceneFile(const std::string &fileName);
 	void setTarget(const std::function<void(cocos2d::Object* obj, void* doc)>& selector);
