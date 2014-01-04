@@ -33,9 +33,7 @@ CCObject*  SceneReader::_pListener = NULL;
 SEL_CallFuncOD  SceneReader::_pfnSelector = NULL;
 
 SceneReader::SceneReader()
-	:_pListener(NULL)
-	,_pfnSelector(NULL)
-	,_pNode(NULL)
+:_pNode(NULL)
 {
 }
 

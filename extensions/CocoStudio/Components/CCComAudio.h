@@ -25,9 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "cocos2d.h"
 #include "CCComBase.h"
-#include "ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN
 /**
