@@ -22,50 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMRENDER_H__
-#define __CC_EXTENTIONS_CCCOMRENDER_H__
+#ifndef __CC_EXTENTIONS_CCCOMBASE_H__
+#define __CC_EXTENTIONS_CCCOMBASE_H__
 
-#include "CCComBase.h"
+#include "cocos2d.h"
+#include "ObjectFactory.h"
+#include "DictionaryHelper.h"
+#include <string>
 
-namespace cocostudio {
 
-class ComRender : public cocos2d::Component
-{
-    DECLARE_CLASS_COMPONENT_INFO
-protected:
-    /**
-     *  @js ctor
-     */
-    ComRender(void);
-    ComRender(cocos2d::Node *node, const char *comName);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComRender(void);
-    
-public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onEnter();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onExit();
-    virtual bool serialize(void* r);
-    virtual cocos2d::Node* getNode();
-    virtual void setNode(cocos2d::Node *node);
+#define DECLARE_CLASS_COMPONENT_INFO \
+    public: \
+        static cocostudio::ObjectFactory::TInfo Type; \
+        static cocos2d::Object* createInstance(void); \
+        
+#define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
+        cocos2d::Object* className::createInstance(void) \
+        { \
+            return className::create(); \
+        } \
+        cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
-    static ComRender* create(void);
-private:
-   bool readJson(const std::string &fileName, rapidjson::Document &doc);
+#define CREATE_CLASS_COMPONENT_INFO(className) \
+        cocostudio::ObjectFactory::TInfo(#className, &className::createInstance)
 
-private:
-    cocos2d::Node *_render;
-};
 
-}
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif
