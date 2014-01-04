@@ -32,7 +32,7 @@ namespace cocostudio {
 
 #define kCCSVersion 1.0
 
-class GUIReader
+class GUIReader : public cocos2d::Object
 {
 public:
     CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
