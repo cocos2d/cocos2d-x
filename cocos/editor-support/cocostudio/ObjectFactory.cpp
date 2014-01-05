@@ -121,7 +121,7 @@ Component* ObjectFactory::createComponent(const std::string &name)
     }
     else if (name == "CCScene")
     {
-        comName = "CCScene";
+        comName = "Scene";
     }
     else
     {
