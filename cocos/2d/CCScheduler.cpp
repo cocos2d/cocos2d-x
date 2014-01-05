@@ -477,9 +477,11 @@ void Scheduler::scheduleUpdateForTarget(Object *target, int priority, bool pause
     HASH_FIND_PTR(_hashForUpdates, &target, hashElement);
     if (hashElement)
     {
-#if COCOS2D_DEBUG >= 1
-        CCASSERT(hashElement->entry->markedForDeletion,"");
-#endif
+        // Why need this assert? If an object invoke this function twice, it will cause error,
+        // because default value of "markedForDeletion" is false
+//#if COCOS2D_DEBUG >= 1
+//        CCASSERT(hashElement->entry->markedForDeletion,"");
+//#endif
         // TODO: check if priority has changed!
 
         hashElement->entry->markedForDeletion = false;
