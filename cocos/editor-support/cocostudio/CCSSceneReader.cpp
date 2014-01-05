@@ -25,6 +25,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "gui/CocosGUI.h"
 #include "SimpleAudioEngine.h"
+#include "ObjectFactory.h"
 
 using namespace cocos2d;
 using namespace gui;
@@ -37,6 +38,10 @@ SceneReader::SceneReader()
 : _fnSelector(nullptr)
 , _node(nullptr)
 {
+    ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComAttribute));
+    ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComRender));
+    ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComAudio));
+	ObjectFactory::getInstance()->registerType(CREATE_CLASS_COMPONENT_INFO(ComController));
 }
 
 SceneReader::~SceneReader()
@@ -132,259 +137,21 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
                 break;
             }
             const char *comName = DICTOOL->getStringValue_json(subDict, "classname");
-            const char *pComName = DICTOOL->getStringValue_json(subDict, "name");
-            
-            const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(subDict, "fileData");
-            std::string pPath;
-            std::string pPlistFile;
-            int nResType = 0;
-            if (DICTOOL->checkObjectExist_json(fileData))
+            Component *com = ObjectFactory::getInstance()->createComponent(comName);
+			if (com != NULL)
+			{
+				if (com->serialize((void*)(&subDict)))
+				{
+					gb->addComponent(com);
+				}
+				else
+				{
+					CC_SAFE_RELEASE(com);
+				}
+			}
+            if(_fnSelector != nullptr)
             {
-                const char *file = DICTOOL->getStringValue_json(fileData, "path");
-                nResType = DICTOOL->getIntValue_json(fileData, "resourceType", - 1);
-                const char *plistFile = DICTOOL->getStringValue_json(fileData, "plistFile");
-                if (file != nullptr)
-                {
-                    pPath.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(file));
-                }
-
-                if (plistFile != nullptr)
-                {
-                    pPlistFile.assign(cocos2d::FileUtils::getInstance()->fullPathForFilename(plistFile));
-                }
-                
-                if (file == nullptr && plistFile == nullptr)
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                continue;
-            }
-
-            if (comName != nullptr && strcmp(comName, "CCSprite") == 0)
-            {
-                cocos2d::Sprite *pSprite = nullptr;
-
-                if (nResType == 0)
-                {
-                    if (pPath.find(".png") == pPath.npos)
-                    {
-                        continue;
-                    }
-                    pSprite = Sprite::create(pPath.c_str());
-                }
-                else if (nResType == 1)
-                {
-                    std::string pngFile = pPlistFile;
-                    std::string::size_type pos = pngFile.find(".plist");
-                    if (pos  == pPath.npos)
-                    {
-                        continue;
-                    }
-                    pngFile.replace(pos, pngFile.length(), ".png");
-                    CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(pPlistFile.c_str(), pngFile.c_str());
-                    pSprite = Sprite::createWithSpriteFrameName(pPath.c_str());
-                }
-                else
-                {
-                    continue;
-                }
-                
-                ComRender *pRender = ComRender::create(pSprite, "CCSprite");
-                if (pComName != nullptr)
-                {
-                    pRender->setName(pComName);
-                }
-                
-                gb->addComponent(pRender);
-                if (_fnSelector != nullptr)
-                {
-                    _fnSelector(pSprite, (void*)(&subDict));
-                }
-            }
-            else if(comName != nullptr && strcmp(comName, "CCTMXTiledMap") == 0)
-            {
-                cocos2d::TMXTiledMap *pTmx = nullptr;
-                if (nResType == 0)
-                {
-                    if (pPath.find(".tmx") == pPath.npos)
-                    {
-                        continue;
-                    }
-                    pTmx = TMXTiledMap::create(pPath.c_str());
-                }
-                else
-                {
-                    continue;
-                }
-
-                ComRender *pRender = ComRender::create(pTmx, "CCTMXTiledMap");
-                if (pComName != nullptr)
-                {
-                    pRender->setName(pComName);
-                }
-                gb->addComponent(pRender);
-                if (_fnSelector != nullptr)
-                {
-                    _fnSelector(pTmx, (void*)(&subDict));
-                }
-            }
-            else if(comName != nullptr && strcmp(comName, "CCParticleSystemQuad") == 0)
-            {
-                std::string::size_type pos =  pPath.find(".plist");
-                if (pos  == pPath.npos)
-                {
-                    continue;
-                }
-
-                cocos2d::ParticleSystemQuad *pParticle = nullptr;
-                if (nResType == 0)
-                {
-                    pParticle = ParticleSystemQuad::create(pPath.c_str());
-                }
-                else
-                {
-                    CCLOG("unknown resourcetype on CCParticleSystemQuad!");
-                }
-
-                pParticle->setPosition(0, 0);
-                ComRender *pRender = ComRender::create(pParticle, "CCParticleSystemQuad");
-                if (pComName != nullptr)
-                {
-                    pRender->setName(pComName);
-                }
-                gb->addComponent(pRender);
-                if(_fnSelector != nullptr)
-                {
-                    _fnSelector(pParticle, (void*)(&subDict));
-                }
-            }
-            else if(comName != nullptr && strcmp(comName, "CCArmature") == 0)
-            {
-                if (nResType != 0)
-                {
-                    continue;
-                }
-                std::string reDir = pPath;
-                std::string file_path = "";
-                size_t pos = reDir.find_last_of('/');
-                if (pos != std::string::npos)
-                {
-                    file_path = reDir.substr(0, pos+1);
-                }
-
-                rapidjson::Document jsonDict;
-                if(!readJson(pPath.c_str(), jsonDict))
-                {
-                    log("read json file[%s] error!\n", pPath.c_str());
-                    continue;
-                }
-                
-                const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(jsonDict, "armature_data", 0);
-                const char *name = DICTOOL->getStringValue_json(subData, "name");
-
-                ArmatureDataManager::getInstance()->addArmatureFileInfo(pPath.c_str());
-
-                Armature *pAr = Armature::create(name);
-                ComRender *pRender = ComRender::create(pAr, "CCArmature");
-                if (pComName != nullptr)
-                {
-                    pRender->setName(pComName);
-                }
-                gb->addComponent(pRender);
-
-                const char *actionName = DICTOOL->getStringValue_json(subDict, "selectedactionname"); 
-                if (actionName != nullptr && pAr->getAnimation() != nullptr)
-                {
-                    pAr->getAnimation()->play(actionName);
-                }
-                if (_fnSelector != nullptr)
-                {
-                    _fnSelector(pAr, (void*)(&subDict));
-                }
-            }
-            else if(comName != nullptr && strcmp(comName, "CCComAudio") == 0)
-            {
-                ComAudio *pAudio = nullptr;
-                if (nResType == 0)
-                {
-                    pAudio = ComAudio::create();
-                }
-                else
-                {
-                    continue;
-                }
-                pAudio->preloadEffect(pPath.c_str());
-                if (pComName != nullptr)
-                {
-                    pAudio->setName(pComName);
-                }
-                gb->addComponent(pAudio);
-                if(_fnSelector != nullptr)
-                {
-                    _fnSelector(pAudio, (void*)(&subDict));
-                }
-            }
-            else if(comName != nullptr && strcmp(comName, "CCComAttribute") == 0)
-            {
-                ComAttribute *pAttribute = nullptr;
-                if (nResType == 0)
-                {
-                    pAttribute = ComAttribute::create();
-                }
-                else
-                {
-                    CCLOG("unknown resourcetype on CCComAttribute!");
-                    continue;
-                }
-                pAttribute->parse(pPath);
-                gb->addComponent(pAttribute);
-                if(_fnSelector != nullptr)
-                {
-                    _fnSelector(pAttribute, (void*)(&subDict));
-                }
-            }
-            else if (comName != nullptr && strcmp(comName, "CCBackgroundAudio") == 0)
-            {
-                ComAudio *pAudio = nullptr;
-                if (nResType == 0)
-                {
-                    pAudio = ComAudio::create();
-                }
-                else
-                {
-                    continue;
-                }
-                pAudio->preloadBackgroundMusic(pPath.c_str());
-                pAudio->setFile(pPath.c_str());
-                const bool bLoop = (DICTOOL->getIntValue_json(subDict, "loop") != 0);
-                pAudio->setLoop(bLoop);
-                if (pComName != nullptr)
-                {
-                    pAudio->setName(pComName);
-                }
-                gb->addComponent(pAudio);
-                if (pComName != nullptr)
-                {
-                    pAudio->setName(pComName);
-                }
-                pAudio->playBackgroundMusic(pPath.c_str(), bLoop);
-            }
-            else if(comName != nullptr && strcmp(comName, "GUIComponent") == 0)
-            {
-                Widget* widget= GUIReader::getInstance()->widgetFromJsonFile(pPath.c_str());
-                ComRender *pRender = ComRender::create(widget, "GUIComponent");
-                if (pComName != nullptr)
-                {
-                pRender->setName(pComName);
-                }
-                gb->addComponent(pRender);
-                if(_fnSelector != nullptr)
-                {
-                    _fnSelector(widget, (void*)(&subDict));
-                }
+                _fnSelector(com, (void*)(&subDict));
             }
         }
 

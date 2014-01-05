@@ -22,48 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMCONTROLLER_H__
-#define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
+#ifndef __CC_EXTENTIONS_CCCOMBASE_H__
+#define __CC_EXTENTIONS_CCCOMBASE_H__
 
-#include "CCComBase.h"
-#include "cocostudio/CCInputDelegate.h"
+#include "cocos2d.h"
+#include "ObjectFactory.h"
+#include "DictionaryHelper.h"
+#include <string>
 
-namespace cocostudio {
 
-class ComController : public cocos2d::Component, public InputDelegate
-{
+#define DECLARE_CLASS_COMPONENT_INFO \
+    public: \
+        static cocostudio::ObjectFactory::TInfo Type; \
+        static cocos2d::Object* createInstance(void); \
+        
+#define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
+        cocos2d::Object* className::createInstance(void) \
+        { \
+            return className::create(); \
+        } \
+        cocostudio::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
-    DECLARE_CLASS_COMPONENT_INFO
-public:
-    /**
-     *  @js ctor
-     */
-    ComController(void);
-    
-public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComController(void);
-    virtual bool init() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onEnter() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual void onExit() override;
-    virtual void update(float delta) override;
-    virtual bool isEnabled() const override;
-    virtual void setEnabled(bool b) override;
-    
-    static ComController* create(void);
-};
+#define CREATE_CLASS_COMPONENT_INFO(className) \
+        cocostudio::ObjectFactory::TInfo(#className, &className::createInstance)
 
-}
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif
