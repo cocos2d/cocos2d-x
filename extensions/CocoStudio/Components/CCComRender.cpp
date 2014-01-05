@@ -222,9 +222,7 @@ bool CCComRender::readJson(const char *pszFileName, rapidjson::Document &doc)
 		std::string jsonpath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFileName);
 		pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonpath.c_str(), "r", &size);
 		CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-		CCData *data = new CCData(pBytes, size);
-		std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-		CC_SAFE_DELETE(data);
+		std::string load_str((const char*)pBytes, size);
 		CC_SAFE_DELETE_ARRAY(pBytes);
 		doc.Parse<0>(load_str.c_str());
 		CC_BREAK_IF(doc.HasParseError());
