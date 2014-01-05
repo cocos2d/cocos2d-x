@@ -932,7 +932,7 @@ void LayerMultiplex::switchToAndReleaseMe(int n)
 
 std::string LayerMultiplex::getDescription() const
 {
-    return StringUtils::format("<LayerMultiplex | Tag = %d, Layers = %zd", _tag, _children.size());
+    return StringUtils::format("<LayerMultiplex | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
 NS_CC_END

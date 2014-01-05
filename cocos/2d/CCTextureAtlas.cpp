@@ -226,7 +226,7 @@ void TextureAtlas::listenBackToForeground(EventCustom* event)
 
 std::string TextureAtlas::getDescription() const
 {
-    return StringUtils::format("<TextureAtlas | totalQuads = %zd>", _totalQuads);
+    return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_totalQuads));
 }
 
 
