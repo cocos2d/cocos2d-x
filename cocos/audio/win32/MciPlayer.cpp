@@ -27,7 +27,7 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
 
 	if (_scr==NULL)
 	{
-		if (!cocos2d::CCFileUtils::getInstance()->isFileExist(_fileName))
+		if (!cocos2d::CCFileUtils::getInstance()->isFileExist(pFileName))
 		{
 			assert(_scr!=NULL && "File not exist!");
 		}
