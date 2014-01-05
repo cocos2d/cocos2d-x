@@ -205,9 +205,7 @@ bool CCComAttribute::parse(const std::string &jsonPath)
     do {
           pBytes = cocos2d::CCFileUtils::sharedFileUtils()->getFileData(jsonPath.c_str(), "r", &size);
           CC_BREAK_IF(pBytes == NULL || strcmp((char*)pBytes, "") == 0);
-          CCData *data = new CCData(pBytes, size);
-          std::string load_str = std::string((const char *)data->getBytes(), data->getSize() );
-          CC_SAFE_DELETE(data);
+          std::string load_str((const char*)pBytes, size);
           CC_SAFE_DELETE_ARRAY(pBytes);
           _doc.Parse<0>(load_str.c_str());
           CC_BREAK_IF(_doc.HasParseError());
