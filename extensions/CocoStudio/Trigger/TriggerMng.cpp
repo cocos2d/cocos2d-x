@@ -43,7 +43,8 @@ TriggerMng::TriggerMng(void)
 
 TriggerMng::~TriggerMng(void)
 {
-    CC_SAFE_RELEASE(_eventTriggers);
+    removeAll();
+    CC_SAFE_DELETE(_eventTriggers);
 	CC_SAFE_RELEASE(_triggerObjs);
 
 	removeAllArmatureMovementCallBack();
@@ -66,7 +67,6 @@ TriggerMng* TriggerMng::getInstance()
 
 void TriggerMng::destroyInstance()
 {
-    removeAll();
     CC_SAFE_DELETE(_sharedTriggerMng);
 }
 
@@ -175,6 +175,7 @@ void TriggerMng::removeAll(void)
                     triobj->removeAll();
                 }
             }
+            CC_SAFE_RELEASE(pElement->getObject());
             CC_SAFE_DELETE(pElement);
         }
     }
@@ -248,6 +249,7 @@ bool TriggerMng::removeTriggerObj(unsigned int id)
 	{
 		remove(*iter, obj);
 	}
+    _triggerObjs->removeObjectForKey(id);
 	return true;
 }
 

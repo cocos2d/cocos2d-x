@@ -91,6 +91,8 @@ TriggerObj::TriggerObj(void)
 TriggerObj::~TriggerObj(void)
 {
 	_vInt.clear();
+    CC_SAFE_RELEASE(_cons);
+    CC_SAFE_RELEASE(_acts);
 }
 
 bool TriggerObj::init()
