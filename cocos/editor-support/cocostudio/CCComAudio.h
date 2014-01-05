@@ -45,20 +45,20 @@ protected:
     virtual ~ComAudio(void);
     
 public:
-    virtual bool init();
+    virtual bool init() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
-    virtual bool serialize(void* r);
+    virtual void onExit() override;
+    virtual bool isEnabled() const override;
+    virtual void setEnabled(bool b) override;
+    virtual bool serialize(void* r) override;
 
     static ComAudio* create(void);
    

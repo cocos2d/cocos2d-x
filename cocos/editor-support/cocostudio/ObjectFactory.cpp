@@ -100,27 +100,28 @@ Object* ObjectFactory::createObject(const std::string &name)
     return o;
 }
 
-Component* ObjectFactory::createComponent(std::string name)
+Component* ObjectFactory::createComponent(const std::string &name)
 {
+    std::string comName;
 	if (name == "CCSprite" || name == "CCTMXTiledMap" || name == "CCParticleSystemQuad" || name == "CCArmature" || name == "GUIComponent")
 	{
-		name = "ComRender";
+		comName = "ComRender";
 	}
 	else if (name == "CCComAudio" || name == "CCBackgroundAudio")
 	{
-		name = "ComAudio";
+		comName = "ComAudio";
 	}
     else if (name == "CCComController")
     {
-        name = "ComController";
+        comName = "ComController";
     }
     else if (name == "CCComAttribute")
     {
-        name = "ComAttribute";
+        comName = "ComAttribute";
     }
     else if (name == "CCScene")
     {
-        name = "CCScene";
+        comName = "CCScene";
     }
     else
     {
@@ -129,7 +130,7 @@ Component* ObjectFactory::createComponent(std::string name)
 	Object *o = NULL;
 	do 
 	{
-		const TInfo t = _typeMap[name];
+		const TInfo t = _typeMap[comName];
 		CC_BREAK_IF(t._fun == NULL);
 		o = t._fun();
 	} while (0);

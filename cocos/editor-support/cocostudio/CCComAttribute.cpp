@@ -141,7 +141,7 @@ ComAttribute* ComAttribute::create(void)
 	return pRet;
 }
 
-bool ComAttribute::serialize(void* r)
+bool ComAttribute::serialize(void* r) 
 {
     bool bRet = false;
 	do 

@@ -50,7 +50,7 @@ public:
     static ObjectFactory* getInstance();
     static void destroyInstance();
     cocos2d::Object* createObject(const std::string &name);
-    cocos2d::Component* createComponent(std::string name);
+    cocos2d::Component* createComponent(const std::string &name);
     void registerType(const TInfo &t);
     void removeAll();
 

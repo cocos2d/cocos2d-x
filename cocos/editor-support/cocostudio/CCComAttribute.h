@@ -44,21 +44,19 @@ protected:
     virtual ~ComAttribute(void);
     
 public:
-   virtual bool init();
-   static ComAttribute* create(void);
-   virtual bool serialize(void* r);
-   
-   void setInt(const std::string& key, int value);
-   void setFloat(const std::string& key, float value);
-   void setBool(const std::string& key, bool value);
-   void setString(const std::string& key, const std::string& value);
-   
-   int    getInt(const std::string& key, int def = 0) const;
-   float  getFloat(const std::string& key, float def = 0.0f) const;
-   bool   getBool(const std::string& key, bool def = false) const;
-   std::string getString(const std::string& key, const std::string& def = "") const;
-   
-   bool parse(const std::string &jsonFile);
+    static ComAttribute* create(void);
+    virtual bool init() override;
+    virtual bool serialize(void* r) override;
+    
+    void setInt(const std::string& key, int value);
+    void setFloat(const std::string& key, float value);
+    void setBool(const std::string& key, bool value);
+    void setString(const std::string& key, const std::string& value);
+    int getInt(const std::string& key, int def = 0) const;
+    float getFloat(const std::string& key, float def = 0.0f) const;
+    bool getBool(const std::string& key, bool def = false) const;
+    std::string getString(const std::string& key, const std::string& def = "") const;
+    bool parse(const std::string &jsonFile);
 private:
    cocos2d::ValueMap _dict;
    rapidjson::Document _doc;
