@@ -49,20 +49,20 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
-    virtual bool serialize(void* r);
+    virtual void onExit() override;
+    virtual bool serialize(void* r) override;
     virtual cocos2d::Node* getNode();
     virtual void setNode(cocos2d::Node *node);
 
     static ComRender* create(void);
     static ComRender* create(cocos2d::Node *node, const char *comName);
 private:
-   bool readJson(const std::string &fileName, rapidjson::Document &doc);
+    bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
 private:
     cocos2d::Node *_render;

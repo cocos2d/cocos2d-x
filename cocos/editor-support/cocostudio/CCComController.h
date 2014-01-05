@@ -46,12 +46,12 @@ public:
      * @lua NA
      */
     virtual ~ComController(void);
-    virtual bool init();
+    virtual bool init() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
