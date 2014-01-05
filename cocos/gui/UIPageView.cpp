@@ -96,7 +96,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
         {
             if (pageIdx > pageCount)
             {
-                CCLOG("pageIdx is %zd, it will be added as page id [%zd]",pageIdx,pageCount);
+                CCLOG("pageIdx is %d, it will be added as page id [%d]",static_cast<int>(pageIdx),static_cast<int>(pageCount));
             }
             Layout* newPage = createPage();
             newPage->addChild(widget);

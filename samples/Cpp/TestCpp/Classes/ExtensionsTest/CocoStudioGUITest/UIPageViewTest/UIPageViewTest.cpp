@@ -92,7 +92,7 @@ void UIPageViewTest::pageViewEvent(Object *pSender, PageViewEventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setText(StringUtils::format("page = %zd", pageView->getCurPageIndex() + 1));
+            _displayValueLabel->setText(StringUtils::format("page = %d", static_cast<int>(pageView->getCurPageIndex() + 1)));
         }
             break;
             
