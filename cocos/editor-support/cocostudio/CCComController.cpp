@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+IMPLEMENT_CLASS_COMPONENT_INFO(ComController)
 ComController::ComController(void)
 {
     _name = "CCComController";

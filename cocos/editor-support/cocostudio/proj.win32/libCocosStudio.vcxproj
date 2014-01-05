@@ -75,6 +75,7 @@
     <ClInclude Include="..\CCColliderDetector.h" />
     <ClInclude Include="..\CCComAttribute.h" />
     <ClInclude Include="..\CCComAudio.h" />
+    <ClInclude Include="..\CCComBase.h" />
     <ClInclude Include="..\CCComController.h" />
     <ClInclude Include="..\CCComRender.h" />
     <ClInclude Include="..\CCDataReaderHelper.h" />
