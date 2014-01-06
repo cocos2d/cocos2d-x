@@ -1568,8 +1568,6 @@ void MultipleParticleSystemsBatched::onEnter()
         batchNode->addChild(particleSystem);
     }
 
-    batchNode->release();
-
     _emitter = NULL;
 }
 
