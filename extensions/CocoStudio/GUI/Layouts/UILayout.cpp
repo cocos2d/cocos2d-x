@@ -65,6 +65,7 @@ _doLayoutDirty(true)
 
 Layout::~Layout()
 {
+    setClippingEnabled(false);
 }
 
 Layout* Layout::create()
