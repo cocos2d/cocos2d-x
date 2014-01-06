@@ -65,6 +65,7 @@ _doLayoutDirty(true)
 
 Layout::~Layout()
 {
+    CC_SAFE_RELEASE(_clippingStencil);
 }
 
 Layout* Layout::create()
