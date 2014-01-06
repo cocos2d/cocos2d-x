@@ -85,6 +85,7 @@ _currentAlphaTestRef(1)
 
 Layout::~Layout()
 {
+    setClippingEnabled(false);
 }
     
 void Layout::onEnter()
