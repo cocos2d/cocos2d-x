@@ -87,7 +87,10 @@ public:
     /** Sets user infomation */
     void setUserInfo(const ValueMap& userInfo)
     {
-        _userInfo = userInfo;
+        if (&userInfo)
+        {
+            _userInfo = userInfo;
+        }       
     }
     
     // Overrides
