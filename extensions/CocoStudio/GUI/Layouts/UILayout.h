@@ -215,6 +215,8 @@ public:
     
     void requestDoLayout();
     
+    virtual void onEnter();
+    virtual void onExit();
 protected:
     //override "init" method of widget.
     virtual bool init();
