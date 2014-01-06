@@ -19,13 +19,13 @@
 #include "C3DScene.h"
 #include "C3DCamera.h"
 #include "C3DResourceLoader.h"
-
 #include "C3DSprite.h"
 #include "C3DStaticObj.h"
 
 NS_CC_BEGIN
 
-C3DRenderNode::C3DRenderNode(const char* id):C3DNode(id)
+C3DRenderNode::C3DRenderNode(const char* id)
+:C3DNode(id)
 {
 	_scene = nullptr;		
 
@@ -52,8 +52,6 @@ C3DRenderNode::~C3DRenderNode()
 	}
 
 }
-
-
 
 C3DRenderNode* C3DRenderNode::create(const char* id,const char* fileName)
 {	
@@ -160,7 +158,6 @@ AttachNode * C3DRenderNode::attachNode( const std::string & nodeName )
 
 	AttachNode * pAttachNode = this->accessNode( pNode );
 
-
 	return pAttachNode;
 }
 
@@ -186,10 +183,7 @@ void C3DRenderNode::detach(const char* nodeName,C3DNode* attachment)
 void C3DRenderNode::transformChanged()
 {
 	C3DNode::transformChanged();   
-
-
 }
-
 
 void C3DRenderNode::copyFrom(const Transform* other, C3DNode::CloneContext& context)
 {
@@ -248,8 +242,6 @@ void C3DRenderNode::setMaterial(const std::string& modelName, const std::string&
 		return;	
 
 	static_cast<C3DModelNode*>(node)->getModel()->setMaterial(matName.c_str());		
-
-
 }
 
 void C3DRenderNode::setMaterial(const std::string& matName)
@@ -300,7 +292,6 @@ void C3DRenderNode::removeMaterial(const std::string& matName)
 	}
 }
 
-
 unsigned int C3DRenderNode::getTriangleCount() const
 {
 	int nTriangle = 0;
@@ -317,6 +308,5 @@ unsigned int C3DRenderNode::getTriangleCount() const
 	}
 	return nTriangle;
 }
-
 
 NS_CC_END

@@ -88,8 +88,8 @@ public:
 
 	struct CloneContext
 	{
-		bool cloneChildren;                                            // clone all child nodes
-		std::map<const C3DNode*, C3DNode*> cloneMap;                // record all cloned nodes to avoid duplicate clone
+		bool cloneChildren;                                          // clone all child nodes
+		std::map<const C3DNode*, C3DNode*> cloneMap;				 // record all cloned nodes to avoid duplicate clone
 		std::string idSuffix;                                        // suffix to avoid id conflict
 		std::map<const C3DAnimation*, C3DAnimation*> clonedAnim;     // cloned animation
 		std::map<const C3DMeshSkin*, C3DMeshSkin*> clonedMeshSkin;   // cloned mesh skin
@@ -475,8 +475,6 @@ protected:
 
 	bool _showAABB;
 	bool _showOBB;
-
-
 };
 
 

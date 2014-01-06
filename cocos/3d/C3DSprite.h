@@ -1,18 +1,16 @@
 #ifndef C3DSPRITE_H_
 #define C3DSPRITE_H_
+
 #include <list>
 #include <vector>
 #include <map>
 #include <string>
 #include "EnumDef.h"
-
 #include "C3DNode.h"
-
 #include <string>
 #include "cocos2d.h"
 #include "C3DRenderNode.h"
 #include "C3DResource.h"
-
 
 NS_CC_BEGIN	
 
@@ -23,7 +21,6 @@ class AttachNode;
 class C3DNode;
 class C3DActionListener;
 class C3DBatchMesh;
-
 class C3DAnimation;
 class C3DAnimationClip;
 class C3DCamera;
@@ -33,7 +30,6 @@ class C3DNode;
 class C3DSprite;
 class C3DSkeleton;
 class C3DBone;
-
 class C3DActionListener;
 
 /**
@@ -130,16 +126,10 @@ public:
 protected:
 	virtual void copyFrom(const Transform* other, C3DNode::CloneContext& context);
 		
-
 private:	
-
-		 	
 	C3DSkeleton* _skeleton;
 	C3DAnimation* _animation;
-  
-
 };
-
 
 NS_CC_END
 

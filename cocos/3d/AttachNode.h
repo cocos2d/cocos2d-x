@@ -22,7 +22,7 @@ public:
 
     ~AttachNode(); 	
 
-	C3DNode*		node()				{ return _node; }
+	C3DNode* node(){ return _node;}
 	
 	void attach( C3DNode* pAttachment );
 
@@ -32,14 +32,11 @@ public:
 
 	void draw();
 
-
 private:
 
 	C3DNode* _owner;
 	C3DNode* _node;
 	std::vector<C3DNode*> _attachments;		
-
-
 };
 
 NS_CC_END

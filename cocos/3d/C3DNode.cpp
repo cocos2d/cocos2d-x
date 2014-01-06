@@ -13,39 +13,39 @@
 NS_CC_BEGIN
 
 C3DNode::C3DNode()   
-	: _scene(nullptr),_parent(nullptr),_active(true),
-	_dirtyBits(NODE_DIRTY_ALL), _notifyHierarchyChanged(true), _listeners(nullptr)
+:_scene(nullptr)
+,_parent(nullptr)
+,_active(true)
+,_dirtyBits(NODE_DIRTY_ALL)
+,_notifyHierarchyChanged(true)
+,_listeners(nullptr)
 {
 	_id = "";
-
 	_showAABB = false;
 	_showOBB = false;
-
 	_bb = nullptr;
 	_bbOrigin = nullptr;
-
 	_obb.clear();
-
 }
 
 C3DNode::C3DNode(const char* id)
-	: _scene(nullptr),_parent(nullptr),_active(true),
-	_dirtyBits(NODE_DIRTY_ALL), _notifyHierarchyChanged(true), _listeners(nullptr)
+:_scene(nullptr)
+,_parent(nullptr)
+,_active(true)
+,_dirtyBits(NODE_DIRTY_ALL)
+,_notifyHierarchyChanged(true)
+,_listeners(nullptr)
 {
 	if (id)
 	{
 		_id = id;
 	}
 
-
 	_showAABB = false;
 	_showOBB = false;
-
 	_bb = nullptr;
 	_bbOrigin = nullptr;
-
 	_obb.clear();
-
 }
 
 C3DNode::~C3DNode()
@@ -69,7 +69,6 @@ C3DNode::~C3DNode()
 
 	SAFE_DELETE(_bb);
 	SAFE_DELETE(_bbOrigin);
-
 }
 
 C3DNode* C3DNode::create(const char* id)
@@ -174,8 +173,6 @@ void C3DNode::removeAllChildren()
 			SAFE_RELEASE(child);
 			iter = _children.erase(iter);
 		}
-
-
 	}
 	_children.clear();    
 
@@ -292,7 +289,7 @@ const  Matrix& C3DNode::getWorldMatrix()
 	return _world;
 }
 
-const     Matrix& C3DNode::getWorldViewMatrix()
+const Matrix& C3DNode::getWorldViewMatrix()
 {
 	static     Matrix worldView;
 
@@ -301,7 +298,7 @@ const     Matrix& C3DNode::getWorldViewMatrix()
 	return worldView;
 }
 
-const     Matrix& C3DNode::getInverseTransposeWorldViewMatrix()
+const Matrix& C3DNode::getInverseTransposeWorldViewMatrix()
 {
 	static     Matrix invTransWorldView;
 	Matrix::multiply(getViewMatrix(), getWorldMatrix(), &invTransWorldView);
@@ -310,7 +307,7 @@ const     Matrix& C3DNode::getInverseTransposeWorldViewMatrix()
 	return invTransWorldView;
 }
 
-const     Matrix& C3DNode::getInverseTransposeWorldMatrix()
+const Matrix& C3DNode::getInverseTransposeWorldMatrix()
 {
 	static     Matrix invTransWorld;
 	invTransWorld = getWorldMatrix();
@@ -319,7 +316,7 @@ const     Matrix& C3DNode::getInverseTransposeWorldMatrix()
 	return invTransWorld;
 }
 
-const     Matrix& C3DNode::getViewMatrix()
+const Matrix& C3DNode::getViewMatrix()
 {
 	C3DScene* scene = getScene();
 	C3DCamera* camera = scene ? scene->getActiveCamera() : nullptr;
@@ -333,7 +330,7 @@ const     Matrix& C3DNode::getViewMatrix()
 	}
 }
 
-const     Matrix& C3DNode::getInverseViewMatrix()
+const Matrix& C3DNode::getInverseViewMatrix()
 {
 	C3DScene* scene = getScene();
 	C3DCamera* camera = scene ? scene->getActiveCamera() : nullptr;
@@ -347,7 +344,7 @@ const     Matrix& C3DNode::getInverseViewMatrix()
 	}
 }
 
-const     Matrix& C3DNode::getProjectionMatrix()
+const Matrix& C3DNode::getProjectionMatrix()
 {
 	C3DScene* scene = getScene();
 	C3DCamera* camera = scene ? scene->getActiveCamera() : nullptr;
@@ -371,7 +368,7 @@ void C3DNode::setScene(C3DScene* scene)
 	}
 }
 
-const     Matrix& C3DNode::getViewProjectionMatrix()
+const Matrix& C3DNode::getViewProjectionMatrix()
 {
 	C3DScene* scene = getScene();
 
@@ -385,7 +382,7 @@ const     Matrix& C3DNode::getViewProjectionMatrix()
 	}
 }
 
-const     Matrix& C3DNode::getInverseViewProjectionMatrix()
+const Matrix& C3DNode::getInverseViewProjectionMatrix()
 {
 	C3DScene* scene = getScene();
 	C3DCamera* camera = scene ? scene->getActiveCamera() : nullptr;
@@ -397,7 +394,7 @@ const     Matrix& C3DNode::getInverseViewProjectionMatrix()
 	return     Matrix::identity();
 }
 
-const     Matrix& C3DNode::getWorldViewProjectionMatrix()
+const Matrix& C3DNode::getWorldViewProjectionMatrix()
 {
 	static     Matrix worldViewProj;
 
@@ -488,7 +485,7 @@ void C3DNode::setForwardVectorWorld( Vector3& forwardVector)
 	setRotation(m);
 }
 
-const     Vector3& C3DNode::getActiveCameraTranslationWorld()
+const Vector3& C3DNode::getActiveCameraTranslationWorld()
 {
 	C3DScene* scene = getScene();
 	if (scene)
@@ -500,10 +497,10 @@ const     Vector3& C3DNode::getActiveCameraTranslationWorld()
 		}
 	}
 
-	return     Vector3::zero();
+	return Vector3::zero();
 }
 
-const     Vector3& C3DNode::getActiveCameraTranslationView()
+const Vector3& C3DNode::getActiveCameraTranslationView()
 {
 	C3DScene* scene = getScene();
 	if (scene)
@@ -515,7 +512,7 @@ const     Vector3& C3DNode::getActiveCameraTranslationView()
 		}
 	}
 
-	return     Vector3::zero();
+	return Vector3::zero();
 }
 
 void C3DNode::hierarchyChanged()
@@ -603,7 +600,6 @@ bool C3DNode::active()
 void C3DNode::active(bool active)
 {
 	_active = active;
-
 }
 
 void C3DNode::copyFrom(const Transform* other, C3DNode::CloneContext& context)
@@ -711,8 +707,8 @@ void C3DNode::calculateBoundingBox_()
 {
 	C3DAABB box;
 
-	box._min =     Vector3(-1.0f, -1.0f, -1.0f);
-	box._max =     Vector3(1.0f, 1.0f, 1.0f);
+	box._min = Vector3(-1.0f, -1.0f, -1.0f);
+	box._max = Vector3(1.0f, 1.0f, 1.0f);
 
 	if (!_bbOrigin)
 		_bbOrigin = new C3DAABB();

@@ -87,7 +87,6 @@ public:
 
 	unsigned int getTriangleCount() const;
 
-
 protected:
 
 	virtual void copyFrom(const Transform* other, C3DNode::CloneContext& context);
@@ -103,10 +102,8 @@ protected:
 	bool _castShadowMap;
 
 	std::string _fileName;	
-
-
 };
 
 NS_CC_END
 
-#endif
+#endif // COMPOUNDMODEL_H_

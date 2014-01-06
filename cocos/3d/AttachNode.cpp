@@ -18,14 +18,11 @@ AttachNode::~AttachNode()
 	_owner = nullptr;
 }
 
-
 void AttachNode::attach( C3DNode* pAttachment )
 {
 	pAttachment->scale(1.0f/_owner->getScaleX(),1.0f/_owner->getScaleY(),1.0f/_owner->getScaleZ());
-
 	_node->addChild(pAttachment);
 	_owner->getScene()->removeChild(pAttachment);
-
 	_attachments.push_back(pAttachment);
 }
 
@@ -52,9 +49,7 @@ void AttachNode::update(long elapsedTime)
 	for (nit = _attachments.begin(); nit != _attachments.end(); nit++)
 	{
 		(*nit)->update(elapsedTime);
-
 	}	
-
 }
 
 void AttachNode::draw()
@@ -63,8 +58,7 @@ void AttachNode::draw()
 	for (nit = _attachments.begin(); nit != _attachments.end(); nit++)
 	{		
 		(*nit)->draw();
-	}	
-
+	}
 }
 
 NS_CC_END

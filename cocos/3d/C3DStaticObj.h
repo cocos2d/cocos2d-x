@@ -35,10 +35,7 @@ private:
 	C3DStaticObj(const char* id);
 
 	~C3DStaticObj();
-
-
 };
-
 
 NS_CC_END
 

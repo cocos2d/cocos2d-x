@@ -12,17 +12,30 @@
 NS_CC_BEGIN
 
 C3DPass::C3DPass() :
-	_id(""), _technique(nullptr), _effect(nullptr),_vaBinding(nullptr), _nMaxDirLight(0), _nMaxPointLight(0), _nMaxSpotLight(0), _nMaxShadowMap(0)
+_id("")
+,_technique(nullptr)
+,_effect(nullptr)
+,_vaBinding(nullptr)
+,_nMaxDirLight(0)
+,_nMaxPointLight(0)
+,_nMaxSpotLight(0)
+,_nMaxShadowMap(0)
 {
 	_id = "";
 }
 
 
-C3DPass::C3DPass(const char* id, C3DTechnique* technique, C3DEffect* effect) :
-	_id(id ? id : ""), _technique(technique), _effect(effect), _vaBinding(nullptr), _nMaxDirLight(0), _nMaxPointLight(0), _nMaxSpotLight(0), _nMaxShadowMap(0)
+C3DPass::C3DPass(const char* id, C3DTechnique* technique, C3DEffect* effect)
+:_id(id ? id : "")
+,_technique(technique)
+,_effect(effect)
+,_vaBinding(nullptr)
+,_nMaxDirLight(0)
+,_nMaxPointLight(0)
+,_nMaxSpotLight(0)
+,_nMaxShadowMap(0)
 {
 	assert(technique);
-
 	C3DRenderState::_parent = _technique;
 }
 
@@ -103,7 +116,6 @@ C3DPass* C3DPass::clone() const
 void C3DPass::setupParametersFromEffect()
 {
 	static int zeros[4] = {0};
-
 
 	for ( unsigned int i = 0; i < _effect->getUniformCount(); i++)
 	{

@@ -48,7 +48,8 @@ void C3DScene::removeAllNode()
 }
    
     
-C3DScene::C3DScene(const char* str) : C3DNode(str)
+C3DScene::C3DScene(const char* str) 
+:C3DNode(str)
 {
 	_ambientColor = new Vector3();
 
@@ -173,7 +174,6 @@ void C3DScene::draw()
 // update routine
 void C3DScene::update(long elapsedTime)
 {
-
 	size_t i;
     for (i = 0; i < _children.size(); ++i) 
 	{
@@ -291,7 +291,6 @@ const Matrix& C3DScene::getViewProjectionMatrix() const
         return _activeCamera->getViewProjectionMatrix();
     else
         return Matrix::identity();
-   
 }
 
 
@@ -316,15 +315,11 @@ void C3DScene::setLayer(C3DLayer* layer)
 void C3DScene::addChild(C3DNode* child)
 {
 	C3DNode::addChild(child);
-
- 
 }
 
 void C3DScene::removeChild(C3DNode* child)
 {
-
 	C3DNode::removeChild(child);
-
 }
 
 NS_CC_END

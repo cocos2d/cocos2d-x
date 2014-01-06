@@ -25,7 +25,9 @@
 
 NS_CC_BEGIN
 
-C3DSprite::C3DSprite(const char* id) :C3DRenderNode(id),C3DResource(id)
+C3DSprite::C3DSprite(const char* id) 
+:C3DRenderNode(id)
+,C3DResource(id)
 {
 	_active = true;	
 
@@ -38,18 +40,13 @@ C3DSprite::C3DSprite(const char* id) :C3DRenderNode(id),C3DResource(id)
 
 C3DSprite::~C3DSprite()
 {	
-
 	_animation = nullptr;
-
-
 	SAFE_DELETE(_skeleton);
-
 }
 
 C3DSprite* C3DSprite::create(const char* id)
 {
 	C3DSprite* pRet = new C3DSprite(id);
-
 	pRet->autorelease();
 	return pRet;
 }
@@ -126,15 +123,11 @@ C3DAnimation* C3DSprite::createAnimation()
 	C3DResourceLoader* bundle = C3DResourceLoader::create(_fileName.c_str());   
 	CCAssert(bundle, "Can not load bundle!");
 
-	//C3DAnimation* animation = C3DAnimation::create("movements");
-
 	bundle->loadAnimation(this);
 
 	SAFE_RELEASE(bundle);
 
 	return _animation;
-
-
 }
 
 C3DAnimationClip* C3DSprite::addAnimationClip(const char* name,unsigned int startFrame,unsigned int endFrame,float repeatCount,float speed)
@@ -145,7 +138,6 @@ C3DAnimationClip* C3DSprite::addAnimationClip(const char* name,unsigned int star
 	if(_animation == nullptr)
 		return nullptr;
 
-	//_animation = _skeleton->getAnimation("movements");
 	return _animation->addClip(name,startFrame,endFrame,repeatCount,speed);
 }
 
@@ -165,7 +157,6 @@ bool C3DSprite::loadMesh(const char* meshName)
 	return false;
 }
 
-
 void C3DSprite::update(long elapsedTime)
 {
 	if(_active == false)
@@ -175,7 +166,6 @@ void C3DSprite::update(long elapsedTime)
 
 	if(_animation != nullptr)
 		_animation ->update(elapsedTime);
-
 }
 
 
@@ -218,7 +208,6 @@ C3DNode::Type C3DSprite::getType() const
 	return C3DNode::NodeType_SuperModel;
 }
 
-
 void C3DSprite::playAnimationClip(const char* name)
 {
 	if( _animation == nullptr)
@@ -231,6 +220,7 @@ void C3DSprite::stopAnimationClip(const char* name)
 {
 	if( _animation == nullptr)
 		return;
+
 	_animation->stop(name);
 }
 
@@ -238,6 +228,7 @@ void C3DSprite::pauseAnimationClip(const char* name)
 {
 	if( _animation == nullptr)
 		return;
+
 	_animation->pause(name);
 }
 
@@ -245,8 +236,8 @@ void C3DSprite::resumeAnimationClip(const char* name)
 {
 	if( _animation == nullptr)
 		return;
-	_animation->resume(name);
 
+	_animation->resume(name);
 }
 
 bool C3DSprite::isAnimationClipPlaying(const char* clipName)
@@ -254,20 +245,18 @@ bool C3DSprite::isAnimationClipPlaying(const char* clipName)
 	return false;
 }
 
-
-
 void C3DSprite::setSkeleton(C3DBone* joint)
 {
 	if(_skeleton == nullptr)
 		_skeleton = new C3DSkeleton();
 	_skeleton->set(joint);
-
 }
 
 C3DBone* C3DSprite::getSkeletonRootBone()const
 {
 	if (_skeleton)
 		return _skeleton->getRootBone();
+
 	return nullptr;
 }
 
@@ -275,6 +264,7 @@ C3DBone* C3DSprite::getBone(const char* name)const
 {
 	if (_skeleton)
 		return _skeleton->getBone(name);
+
 	return nullptr;
 }
 
@@ -293,7 +283,6 @@ C3DAnimationClip* C3DSprite::getCurAnimationClip()
 
 	return _animation->getCurAnimationClip();
 }
-
 
 int C3DSprite::getAnimationFrameCount()
 {
@@ -318,7 +307,6 @@ void C3DSprite::copyFrom(const Transform* other, C3DNode::CloneContext& context)
 
 	_fileName = otherNode->_fileName;
 
-
 	if (otherNode->_skeleton)
 	{
 		C3DBone* bone = (C3DBone*)context.cloneMap[otherNode->_skeleton->getRootBone()];
@@ -328,8 +316,6 @@ void C3DSprite::copyFrom(const Transform* other, C3DNode::CloneContext& context)
 			_animation = _skeleton->getAnimation("movements");
 		}
 	}
-
-
 }
 
 C3DNode* C3DSprite::clone(C3DNode::CloneContext& context) const

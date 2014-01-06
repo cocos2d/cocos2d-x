@@ -13,7 +13,9 @@ NS_CC_BEGIN
 
 static C3DEffect* __currentEffect = nullptr;
 
-C3DEffect::C3DEffect(const std::string& name) : C3DResource(name),_program(0)
+C3DEffect::C3DEffect(const std::string& name)
+:C3DResource(name)
+,_program(0)
 {
 }
 

@@ -4,7 +4,6 @@
 #include "C3DMaterial.h"
 #include "C3DModel.h"
 #include "C3DNode.h"
-
 #include "C3DMesh.h"
 #include "C3DAABB.h"
 #include "C3DMeshSkin.h"
@@ -17,28 +16,25 @@ NS_CC_BEGIN
 
 C3DStaticObj* C3DStaticObj::create(const char* id)
 {  
-
 	C3DStaticObj* pRet = new C3DStaticObj(id);
-
 	pRet->autorelease();
 	return pRet;
-
 }
 
-C3DStaticObj::C3DStaticObj(const char* id):C3DRenderNode(id)
+C3DStaticObj::C3DStaticObj(const char* id)
+:C3DRenderNode(id)
 {
 
 }
-
 
 C3DStaticObj::~C3DStaticObj()
 {
 }
+
 C3DNode::Type C3DStaticObj::getType() const
 {
 	return C3DNode::NodeType_SceneModel;
 }
-
 
 bool C3DStaticObj::loadFromFile(const char* fileName,bool isLoadAll)
 {	
@@ -54,11 +50,8 @@ bool C3DStaticObj::loadFromFile(const char* fileName,bool isLoadAll)
 
 	getAABB();
 
-
 	return true;
-
 }
-
 
 void C3DStaticObj::calculateBoundingBox_()
 {
@@ -81,8 +74,7 @@ void C3DStaticObj::calculateBoundingBox_()
 			worldSpaceBox.transform(node->getWorldMatrix());            
 
 			box.merge(worldSpaceBox);
-		}	
-
+		}
 	}	
 
 	Matrix mat = getWorldMatrix();
@@ -103,7 +95,6 @@ void C3DStaticObj::copyFrom(const Transform* other, C3DNode::CloneContext& conte
 {
 	const C3DStaticObj* otherNode = static_cast<const C3DStaticObj*>(other);
 	C3DRenderNode::copyFrom(other, context);
-
 }
 
 C3DNode* C3DStaticObj::clone(C3DNode::CloneContext& context) const

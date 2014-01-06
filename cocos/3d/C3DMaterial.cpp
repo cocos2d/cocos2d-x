@@ -13,7 +13,8 @@
 
 NS_CC_BEGIN
 
-C3DMaterial::C3DMaterial(const std::string& name) : C3DResource(name)
+C3DMaterial::C3DMaterial(const std::string& name)
+:C3DResource(name)
 {
 	memset(_techniqueChannel, 0, sizeof(_techniqueChannel));
 }

@@ -1,7 +1,7 @@
 #ifndef SPRITEMANAGER_H_
 #define SPRITEMANAGER_H_
-#include "Base.h"
 
+#include "Base.h"
 #include "C3DResourceManager.h"
 
 NS_CC_BEGIN
