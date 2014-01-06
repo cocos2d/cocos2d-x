@@ -212,6 +212,7 @@ public:
     virtual float calculateDefaultMoment() override;
     
     void getPoints(Point* outPoints) const;
+    int getPointsCount() const { return 4; }
     Size getSize() const;
     virtual Point getOffset() override { return _offset; }
     

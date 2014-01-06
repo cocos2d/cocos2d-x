@@ -51,6 +51,7 @@ require "luaScript/UserDefaultTest/UserDefaultTest"
 require "luaScript/ZwoptexTest/ZwoptexTest"
 require "luaScript/LuaBridgeTest/LuaBridgeTest"
 require "luaScript/XMLHttpRequestTest/XMLHttpRequestTest"
+require "luaScript/PhysicsTest/PhysicsTest"
 
 
 local LINE_SPACE = 40
@@ -95,6 +96,7 @@ local _allTests = {
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
+	{ isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
