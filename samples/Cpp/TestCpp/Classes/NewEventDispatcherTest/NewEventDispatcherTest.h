@@ -117,6 +117,7 @@ class DirectorEventTest : public EventDispatcherTestDemo
 {
 public:
     CREATE_FUNC(DirectorEventTest);
+    DirectorEventTest();
     virtual void onEnter() override;
     virtual void onExit() override;
 

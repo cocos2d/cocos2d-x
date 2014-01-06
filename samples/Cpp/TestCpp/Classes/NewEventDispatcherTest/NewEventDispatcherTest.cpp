@@ -749,6 +749,15 @@ std::string RemoveListenerAfterAddingTest::subtitle() const
 //
 //DirectorEventTest
 //
+DirectorEventTest::DirectorEventTest()
+:_count1(0)
+,_count2(0)
+,_count3(0)
+,_count4(0)
+{
+
+}
+
 void DirectorEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
