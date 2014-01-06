@@ -85,6 +85,7 @@ _currentAlphaTestRef(1)
 
 Layout::~Layout()
 {
+    CC_SAFE_RELEASE(_clippingStencil);
 }
     
 void Layout::onEnter()
