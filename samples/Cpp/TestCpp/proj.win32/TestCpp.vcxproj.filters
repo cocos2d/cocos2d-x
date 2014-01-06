@@ -304,6 +304,9 @@
     <Filter Include="Classes\UnitTest">
       <UniqueIdentifier>{1821914f-c088-4946-8c1e-19ab57b5eabc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
+      <UniqueIdentifier>{5ff3af4e-0610-480b-b297-8f407e12f369}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -627,9 +630,6 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp">
       <Filter>Classes\NewEventDispatcherTest</Filter>
@@ -705,6 +705,15 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UnitTest\UnitTest.cpp">
       <Filter>Classes\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1206,9 +1215,6 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
       <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h">
       <Filter>Classes\NewEventDispatcherTest</Filter>
@@ -1299,6 +1305,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UnitTest\UnitTest.h">
       <Filter>Classes\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
+      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
