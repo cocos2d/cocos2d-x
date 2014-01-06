@@ -410,7 +410,7 @@ void Layout::setStencilClippingSize(const Size &size)
 const Rect& Layout::getClippingRect()
 {
     Point worldPos = convertToWorldSpace(Point::ZERO);
-    AffineTransform t = nodeToWorldTransform();
+    AffineTransform t = getNodeToWorldAffineTransform();
     float scissorWidth = _size.width*t.a;
     float scissorHeight = _size.height*t.d;
     Rect parentClippingRect;

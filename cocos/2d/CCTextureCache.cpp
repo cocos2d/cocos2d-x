@@ -89,7 +89,7 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return StringUtils::format("<TextureCache | Number of textures = %zd>", _textures.size());
+    return StringUtils::format("<TextureCache | Number of textures = %d>", static_cast<int>(_textures.size()));
 }
 
 void TextureCache::addImageAsync(const std::string &path, std::function<void(Texture2D*)> callback)

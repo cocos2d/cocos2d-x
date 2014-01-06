@@ -500,7 +500,7 @@ void Label::setFontSize(int fontSize)
     Node::setScale(1.0f*_fontSize/DISTANCEFIELD_ATLAS_FONTSIZE);
 }
 
-void Label::draw()
+void Label::onDraw()
 {
     CC_PROFILER_START("CCSpriteBatchNode - draw");
 
@@ -525,6 +525,13 @@ void Label::draw()
     _textureAtlas->drawQuads();
 
     CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+}
+
+void Label::draw()
+{
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 ///// PROTOCOL STUFF

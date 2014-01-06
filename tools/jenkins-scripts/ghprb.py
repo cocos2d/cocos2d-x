@@ -22,7 +22,7 @@ def set_description(desc):
     try:
         urllib2.urlopen(req)
     except:
-        traceback.format_exc()
+        traceback.print_exc()
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
@@ -56,13 +56,13 @@ def main():
     #set commit status to pending
     target_url = os.environ['BUILD_URL']
     data = {"state":"pending", "target_url":target_url}
-    acccess_token = os.environ['GITHUB_ACCESS_TOKEN']
-    Headers = {"Authorization":"token " + acccess_token} 
+    access_token = os.environ['GITHUB_ACCESS_TOKEN']
+    Headers = {"Authorization":"token " + access_token} 
 
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers)
     except:
-        traceback.format_exc()
+        traceback.print_exc()
 
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
@@ -93,6 +93,7 @@ def main():
 
     #get build result
     print "build finished and return " + str(ret)
+    exit_code = 1
     if ret == 0:
         exit_code = 0
         data['state'] = "success"
@@ -105,7 +106,7 @@ def main():
     try:
         requests.post(statuses_url, data=json.dumps(data), headers=Headers)
     except:
-        traceback.format_exc()
+        traceback.print_exc()
 
     #clean workspace
     os.system("cd " + os.environ['WORKSPACE']);
@@ -119,5 +120,5 @@ if __name__ == '__main__':
     try:    
         main()
     except:
-        traceback.format_exc()
+        traceback.print_exc()
         exit(1)

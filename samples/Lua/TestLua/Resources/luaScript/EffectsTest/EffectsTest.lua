@@ -11,17 +11,16 @@ local MAX_LAYER      = 22
 local testLayer  = nil
 local titleLabel = nil
 local entry      = nil
+local gridNodeTarget = nil
 
 local function checkAnim(dt)
-    local s2 = testLayer:getChildByTag(kTagBackground)
-    if s2 == nil then
+
+    if nil == gridNodeTarget then
         return
     end
 
-    if s2:getNumberOfRunningActions() == 0 then
-        if s2:getGrid() ~= nil then
-            s2:setGrid(nil)
-        end
+    if gridNodeTarget:getNumberOfRunningActions() == 0 and nil ~=gridNodeTarget:getGrid() then
+        gridNodeTarget:setGrid(nil)
     end
 end
 
@@ -85,14 +84,14 @@ end
 --  Shaky3DDemo
 --------------------------------------
 local function Shaky3DDemo(t)
-    return cc.Shaky3D:create(t, cc.size(15,10), 5, false);
+    return cc.Shaky3D:create(t, cc.size(15,10), 5, false)
 end
 
 --------------------------------------
 --  Waves3DDemo
 --------------------------------------
 local function Waves3DDemo(t)
-    return cc.Waves3D:create(t, cc.size(15,10), 5, 40);
+    return cc.Waves3D:create(t, cc.size(15,10), 5, 40)
 end
 
 --------------------------------------
@@ -121,56 +120,56 @@ end
 --  Lens3DDemo
 --------------------------------------
 local function Lens3DDemo(t)
-    return cc.Lens3D:create(t, cc.size(15,10), cc.p(size.width/2,size.height/2), 240);
+    return cc.Lens3D:create(t, cc.size(15,10), cc.p(size.width/2,size.height/2), 240)
 end
 
 --------------------------------------
 --  Ripple3DDemo
 --------------------------------------
 local function Ripple3DDemo(t)
-    return cc.Ripple3D:create(t, cc.size(32,24), cc.p(size.width/2,size.height/2), 240, 4, 160);
+    return cc.Ripple3D:create(t, cc.size(32,24), cc.p(size.width/2,size.height/2), 240, 4, 160)
 end
 
 --------------------------------------
 --  LiquidDemo
 --------------------------------------
 local function LiquidDemo(t)
-    return cc.Liquid:create(t, cc.size(16,12), 4, 20);
+    return cc.Liquid:create(t, cc.size(16,12), 4, 20)
 end
 
 --------------------------------------
 --  WavesDemo
 --------------------------------------
 local function WavesDemo(t)
-    return cc.Waves:create(t, cc.size(16,12), 4, 20, true, true);
+    return cc.Waves:create(t, cc.size(16,12), 4, 20, true, true)
 end
 
 --------------------------------------
 --  TwirlDemo
 --------------------------------------
 local function TwirlDemo(t)
-    return cc.Twirl:create(t, cc.size(12,8), cc.p(size.width/2, size.height/2), 1, 2.5);
+    return cc.Twirl:create(t, cc.size(12,8), cc.p(size.width/2, size.height/2), 1, 2.5)
 end
 
 --------------------------------------
 --  ShakyTiles3DDemo
 --------------------------------------
 local function ShakyTiles3DDemo(t)
-    return cc.ShakyTiles3D:create(t, cc.size(16,12), 5, false);
+    return cc.ShakyTiles3D:create(t, cc.size(16,12), 5, false)
 end
 
 --------------------------------------
 --  ShatteredTiles3DDemo
 --------------------------------------
 local function ShatteredTiles3DDemo(t)
-    return cc.ShatteredTiles3D:create(t, cc.size(16,12), 5, false);
+    return cc.ShatteredTiles3D:create(t, cc.size(16,12), 5, false)
 end
 
 --------------------------------------
 --  ShuffleTilesDemo
 --------------------------------------
 local function ShuffleTilesDemo(t)
-    local shuffle = cc.ShuffleTiles:create(t, cc.size(16,12), 25);
+    local shuffle = cc.ShuffleTiles:create(t, cc.size(16,12), 25)
     local shuffle_back = shuffle:reverse()
     local delay = cc.DelayTime:create(2)
 
@@ -181,7 +180,7 @@ end
 --  FadeOutTRTilesDemo
 --------------------------------------
 local function FadeOutTRTilesDemo(t)
-    local fadeout = cc.FadeOutTRTiles:create(t, cc.size(16,12));
+    local fadeout = cc.FadeOutTRTiles:create(t, cc.size(16,12))
     local back = fadeout:reverse()
     local delay = cc.DelayTime:create(0.5)
 
@@ -192,7 +191,7 @@ end
 --  FadeOutBLTilesDemo
 --------------------------------------
 local function FadeOutBLTilesDemo(t)
-    local fadeout = cc.FadeOutBLTiles:create(t, cc.size(16,12));
+    local fadeout = cc.FadeOutBLTiles:create(t, cc.size(16,12))
     local back = fadeout:reverse()
     local delay = cc.DelayTime:create(0.5)
 
@@ -203,7 +202,7 @@ end
 --  FadeOutUpTilesDemo
 --------------------------------------
 local function FadeOutUpTilesDemo(t)
-    local fadeout = cc.FadeOutUpTiles:create(t, cc.size(16,12));
+    local fadeout = cc.FadeOutUpTiles:create(t, cc.size(16,12))
     local back = fadeout:reverse()
     local delay = cc.DelayTime:create(0.5)
 
@@ -214,7 +213,7 @@ end
 --  FadeOutDownTilesDemo
 --------------------------------------
 local function FadeOutDownTilesDemo(t)
-    local fadeout = cc.FadeOutDownTiles:create(t, cc.size(16,12));
+    local fadeout = cc.FadeOutDownTiles:create(t, cc.size(16,12))
     local back = fadeout:reverse()
     local delay = cc.DelayTime:create(0.5)
 
@@ -225,7 +224,7 @@ end
 --  TurnOffTilesDemo
 --------------------------------------
 local function TurnOffTilesDemo(t)
-    local fadeout = cc.TurnOffTiles:create(t, cc.size(48,32), 25);
+    local fadeout = cc.TurnOffTiles:create(t, cc.size(48,32), 25)
     local back = fadeout:reverse()
     local delay = cc.DelayTime:create(0.5)
 
@@ -236,28 +235,28 @@ end
 --  WavesTiles3DDemo
 --------------------------------------
 local function WavesTiles3DDemo(t)
-    return cc.WavesTiles3D:create(t, cc.size(15,10), 4, 120);
+    return cc.WavesTiles3D:create(t, cc.size(15,10), 4, 120)
 end
 
 --------------------------------------
 --  JumpTiles3DDemo
 --------------------------------------
 local function JumpTiles3DDemo(t)
-    return cc.JumpTiles3D:create(t, cc.size(15,10), 2, 30);
+    return cc.JumpTiles3D:create(t, cc.size(15,10), 2, 30)
 end
 
 --------------------------------------
 --  SplitRowsDemo
 --------------------------------------
 local function SplitRowsDemo(t)
-    return cc.SplitRows:create(t, 9);
+    return cc.SplitRows:create(t, 9)
 end
 
 --------------------------------------
 --  SplitColsDemo
 --------------------------------------
 local function SplitColsDemo(t)
-    return cc.SplitCols:create(t, 9);
+    return cc.SplitCols:create(t, 9)
 end
 
 --------------------------------------
@@ -265,7 +264,7 @@ end
 --------------------------------------
 local function PageTurn3DDemo(t)
     cc.Director:getInstance():setDepthTest(true)
-    return cc.PageTurn3D:create(t, cc.size(15,10));
+    return cc.PageTurn3D:create(t, cc.size(15,10))
 end
 
 --------------------------------------
@@ -327,30 +326,31 @@ end
 function CreateEffectsTestLayer()
     testLayer = cc.LayerColor:create(cc.c4b(32,128,32,255))
 
-    local x, y = size.width, size.height
 
-    local node = cc.Node:create()
+    gridNodeTarget = cc.NodeGrid:create()
     local effect = createEffect(ActionIdx, 3)
-    node:runAction(effect)
-    testLayer:addChild(node, 0, kTagBackground)
-
+    gridNodeTarget:runAction(effect)
+    testLayer:addChild(gridNodeTarget, 0, kTagBackground)
+    
     local bg = cc.Sprite:create(s_back3)
-    node:addChild(bg, 0)
-    bg:setPosition(cc.p(size.width / 2, size.height / 2))
+    gridNodeTarget:addChild(bg, 0)
+    bg:setPosition(VisibleRect:center())
 
     local grossini = cc.Sprite:create(s_pPathSister2)
-    node:addChild(grossini, 1)
-    grossini:setPosition( cc.p(x / 3, y / 2) )
+    gridNodeTarget:addChild(grossini, 1)
+    grossini:setPosition( cc.p(VisibleRect:left().x+VisibleRect:getVisibleRect().width/3,VisibleRect:center().y) )
     local sc = cc.ScaleBy:create(2, 5)
     local sc_back = sc:reverse()
-    grossini:runAction(cc.RepeatForever:create(cc.Sequence:create(sc, sc_back)))
+    grossini:runAction( cc.RepeatForever:create(cc.Sequence:create(sc, sc_back) ) )
 
     local tamara = cc.Sprite:create(s_pPathSister1)
-    node:addChild(tamara, 1)
-    tamara:setPosition(cc.p(2 * x / 3, y / 2))
+    gridNodeTarget:addChild(tamara, 1)
+    tamara:setPosition( cc.p(VisibleRect:left().x+2*VisibleRect:getVisibleRect().width/3,VisibleRect:center().y) )
     local sc2 = cc.ScaleBy:create(2, 5)
     local sc2_back = sc2:reverse()
-    tamara:runAction(cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)))
+    tamara:runAction( cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)) )
+
+    local x, y = size.width, size.height
 
     titleLabel = cc.LabelTTF:create(EffectsList[ActionIdx], "Marker Felt", 32)
     titleLabel:setPosition(x / 2, y - 80)

@@ -700,6 +700,9 @@ Developers:
         Fixed a bug that move assignment operator doesn't clear previous content bug.
         Fixed the compile error of Map's getRandomObject.
         
+    daltomi
+        Fixed a typo in Director class.
+    
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

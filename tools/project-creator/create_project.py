@@ -42,10 +42,10 @@ if __name__ == '__main__':
         #create_project.py -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany
     """
     if len(sys.argv)==1:
-	   try:
+        try:
             from module.ui import createTkCocosDialog
             createTkCocosDialog()
-	   except ImportError:
+        except ImportError:
             commandCreate()
     else:
         commandCreate()
