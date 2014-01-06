@@ -140,13 +140,11 @@ void Text::setScale(float fScale)
 void Text::setScaleX(float fScaleX)
 {
     Widget::setScaleX(fScaleX);
-    _normalScaleValueX = fScaleX;
 }
     
 void Text::setScaleY(float fScaleY)
 {
     Widget::setScaleY(fScaleY);
-    _normalScaleValueY = fScaleY;
 }
 
 bool Text::isTouchScaleChangeEnabled()
@@ -169,6 +167,8 @@ void Text::onPressStateChangedToPressed()
     {
         return;
     }
+    _normalScaleValueX = getScaleX();
+    _normalScaleValueY = getScaleY();
     clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
