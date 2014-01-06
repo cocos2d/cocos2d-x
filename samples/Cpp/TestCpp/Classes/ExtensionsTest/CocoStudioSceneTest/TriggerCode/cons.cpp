@@ -255,7 +255,7 @@ void NodeVisible::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "Visible")
 		{
-			_bVisible = DICTOOL->getIntValue_json(subDict, "value");
+			_bVisible = DICTOOL->getIntValue_json(subDict, "value") != 0? true:false;
 			continue;
 		}
 	}

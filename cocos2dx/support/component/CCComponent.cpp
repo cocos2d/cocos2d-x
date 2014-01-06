@@ -55,8 +55,9 @@ void CCComponent::update(float delta)
 {
 }
 
-void CCComponent::serialize(void *ar)
+bool CCComponent::serialize(void *ar)
 {
+	return true;
 }
 
 CCComponent* CCComponent::create(void)
