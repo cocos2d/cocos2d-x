@@ -16,7 +16,7 @@ function SceneEditorTestLayer.extend(target)
 end
 
 function SceneEditorTestLayer:createGameScene()
-    local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/FishJoy2.json")
+    local node = ccs.SceneReader:getInstance():createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json")
     if nil == node then
         return
     end

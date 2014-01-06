@@ -61,11 +61,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     searchPaths.insert(searchPaths.begin(), "cocosbuilderRes");
     if (screenSize.height > 320)
     {
-        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
+        searchPaths.insert(searchPaths.begin(), "hd/scenetest/loadSceneEdtiorFileTest");
     }
     else
     {
-        searchPaths.insert(searchPaths.begin(), "scenetest");
+        searchPaths.insert(searchPaths.begin(), "scenetest/loadSceneEdtiorFileTest");
     }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
