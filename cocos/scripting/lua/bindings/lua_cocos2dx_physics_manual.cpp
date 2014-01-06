@@ -14,6 +14,10 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 
+#ifndef CC_SAFE_FREE
+#define CC_SAFE_FREE(p) { if(p) free(p); p = nullptr; }
+#endif
+
 int lua_cocos2dx_physics_PhysicsBody_getJoints(lua_State* tolua_S)
 {
     int argc = 0;
@@ -172,15 +176,15 @@ int lua_cocos2dx_physics_PhysicsWorld_rayCast(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 4)
+    if (argc == 3)
     {
         std::function<bool (cocos2d::PhysicsWorld &, const cocos2d::PhysicsRayCastInfo &, void *)> arg0;
         cocos2d::Point arg1;
         cocos2d::Point arg2;
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         do {
-            arg0 = [tolua_S](cocos2d::PhysicsWorld &world, const cocos2d::PhysicsRayCastInfo &info, void * data) -> bool
+            arg0 = [handler, tolua_S](cocos2d::PhysicsWorld &world, const cocos2d::PhysicsRayCastInfo &info, void * data) -> bool
             {
-                LuaStack* stack = LuaStack::create();
                 std::string hashName = typeid(&world).name();
                 auto iter = g_luaType.find(hashName);
                 std::string className = "";
@@ -191,19 +195,17 @@ int lua_cocos2dx_physics_PhysicsWorld_rayCast(lua_State* tolua_S)
                 }
                 
                 tolua_pushusertype(tolua_S, (void*)(&world), className.c_str());
-                tolua_pushusertype(tolua_S, (void*)(&info), "PhysicsRayCastInfo");
-                bool ret = stack->executeFunction(2);
-                stack->clean();
-                return ret;
+                physics_raycastinfo_to_luaval(tolua_S, info);
+                return LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
             };
-		} while(0)
-            ;
+		} while(0);
+        
         ok &= luaval_to_point(tolua_S, 3, &arg1);
         ok &= luaval_to_point(tolua_S, 4, &arg2);
-#pragma warning NO CONVERSION TO NATIVE FOR void*;
         if(!ok)
             return 0;
         cobj->rayCast(arg0, arg1, arg2, nullptr);
+        toluafix_remove_function_by_refid(tolua_S, handler);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "rayCast",argc, 4);
@@ -241,14 +243,14 @@ int lua_cocos2dx_physics_PhysicsWorld_queryRect(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 3)
+    if (argc == 2)
     {
         std::function<bool (cocos2d::PhysicsWorld &, cocos2d::PhysicsShape &, void *)> arg0;
         cocos2d::Rect arg1;
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         do {
-            arg0 = [tolua_S](cocos2d::PhysicsWorld &world, cocos2d::PhysicsShape &shape, void * data) -> bool
+            arg0 = [handler, tolua_S](cocos2d::PhysicsWorld &world, cocos2d::PhysicsShape &shape, void * data) -> bool
             {
-                LuaStack* stack = LuaStack::create();
                 std::string hashName = typeid(&world).name();
                 auto iter = g_luaType.find(hashName);
                 std::string className = "";
@@ -259,18 +261,25 @@ int lua_cocos2dx_physics_PhysicsWorld_queryRect(lua_State* tolua_S)
                 }
                 
                 tolua_pushusertype(tolua_S, (void*)(&world), className.c_str());
-                stack->pushObject(&shape, "PhysicsShape");
-                bool ret = stack->executeFunction(2);
-                stack->clean();
-                return ret;
+                
+                hashName = typeid(&shape).name();
+                iter = g_luaType.find(hashName);
+                className = "";
+                if(iter != g_luaType.end()){
+                    className = iter->second.c_str();
+                } else {
+                    className = "PhysicsShape";
+                }
+                toluafix_pushusertype_ccobject(tolua_S, shape._ID, &shape._luaID, (void*)(&shape), className.c_str());
+                return LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
             };
 		} while(0);
         
         ok &= luaval_to_rect(tolua_S, 3, &arg1);
-#pragma warning NO CONVERSION TO NATIVE FOR void*;
         if(!ok)
             return 0;
         cobj->queryRect(arg0, arg1, nullptr);
+        toluafix_remove_function_by_refid(tolua_S, handler);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "queryRect",argc, 3);
@@ -310,14 +319,14 @@ int lua_cocos2dx_physics_PhysicsWorld_queryPoint(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 3)
+    if (argc == 2)
     {
         std::function<bool (cocos2d::PhysicsWorld &, cocos2d::PhysicsShape &, void *)> arg0;
         cocos2d::Point arg1;
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         do {
-            arg0 = [tolua_S](cocos2d::PhysicsWorld &world, cocos2d::PhysicsShape &shape, void * data) -> bool
+            arg0 = [handler, tolua_S](cocos2d::PhysicsWorld &world, cocos2d::PhysicsShape &shape, void * data) -> bool
             {
-                LuaStack* stack = LuaStack::create();
                 std::string hashName = typeid(&world).name();
                 auto iter = g_luaType.find(hashName);
                 std::string className = "";
@@ -328,19 +337,26 @@ int lua_cocos2dx_physics_PhysicsWorld_queryPoint(lua_State* tolua_S)
                 }
                 
                 tolua_pushusertype(tolua_S, (void*)(&world), className.c_str());
-                stack->pushObject(&shape, "PhysicsShape");
-                bool ret = stack->executeFunction(2);
-                stack->clean();
-                return ret;
+                
+                hashName = typeid(&shape).name();
+                iter = g_luaType.find(hashName);
+                className = "";
+                if(iter != g_luaType.end()){
+                    className = iter->second.c_str();
+                } else {
+                    className = "PhysicsShape";
+                }
+                toluafix_pushusertype_ccobject(tolua_S, shape._ID, &shape._luaID, (void*)(&shape), className.c_str());
+                return LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 2);
             };
 			assert(false);
 		} while(0)
             ;
         ok &= luaval_to_point(tolua_S, 3, &arg1);
-#pragma warning NO CONVERSION TO NATIVE FOR void*;
         if(!ok)
             return 0;
         cobj->queryPoint(arg0, arg1, nullptr);
+        toluafix_remove_function_by_refid(tolua_S, handler);
         return 0;
     }
     CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "queryPoint",argc, 3);
@@ -354,6 +370,779 @@ tolua_lerror:
     return 0;
 }
 
+int lua_cocos2dx_physics_PhysicsBody_createPolygon(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"PhysicsBody",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::Point* arg0 = nullptr;
+        int arg1 = 0;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Point* arg0;
+        int arg1 = 0;
+        cocos2d::PhysicsMaterial arg2;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1, arg2);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 3)
+    {
+        cocos2d::Point* arg0;
+        int arg1 = 0;
+        cocos2d::PhysicsMaterial arg2;
+        cocos2d::Point arg3;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        ok &= luaval_to_point(tolua_S, 4, &arg3);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createPolygon(arg0, arg1, arg2, arg3);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createPolygon",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsBody_createPolygon'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsBody_createEdgePolygon(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"PhysicsBody",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        cocos2d::PhysicsMaterial arg2;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 3)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        cocos2d::PhysicsMaterial arg2;
+        double arg3;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        ok &= luaval_to_number(tolua_S, 4,&arg3);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgePolygon(arg0, arg1, arg2, arg3);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createEdgePolygon",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsBody_createEdgePolygon'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsBody_createEdgeChain(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"PhysicsBody",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        cocos2d::PhysicsMaterial arg2;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    if (argc == 3)
+    {
+        cocos2d::Point* arg0;
+        int arg1;
+        cocos2d::PhysicsMaterial arg2;
+        double arg3;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_physics_material(tolua_S, 3, &arg2);
+        ok &= luaval_to_number(tolua_S, 4,&arg3);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsBody* ret = cocos2d::PhysicsBody::createEdgeChain(arg0, arg1, arg2, arg3);
+        CC_SAFE_FREE(arg0);
+        do {
+			if (NULL != ret){
+				std::string hashName = typeid(*ret).name();
+				auto iter = g_luaType.find(hashName);
+				std::string className = "";
+				if(iter != g_luaType.end()){
+					className = iter->second.c_str();
+				} else {
+					className = "PhysicsBody";
+				}
+				cocos2d::Object *dynObject = dynamic_cast<cocos2d::Object *>((cocos2d::PhysicsBody*)ret);
+				if (NULL != dynObject) {
+					int ID = ret ? (int)(dynObject->_ID) : -1;
+					int* luaID = ret ? &(dynObject->_luaID) : NULL;
+					toluafix_pushusertype_ccobject(tolua_S,ID, luaID, (void*)ret,className.c_str());
+				} else {
+                    tolua_pushusertype(tolua_S,(void*)ret,className.c_str());
+                }} else {
+                    lua_pushnil(tolua_S);
+                }
+		} while (0);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "createEdgeChain",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsBody_createEdgeChain'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"PhysicsShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::Point* arg0;
+        int arg1 = 0;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsShape::recenterPoints(arg0, arg1);
+        points_to_luaval(tolua_S, arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        
+        return 0;
+    }
+    if (argc == 2)
+    {
+        cocos2d::Point* arg0;
+        int arg1 = 0;
+        cocos2d::Point arg2;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_point(tolua_S, 3, &arg2);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::PhysicsShape::recenterPoints(arg0, arg1, arg2);
+        points_to_luaval(tolua_S, arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "recenterPoints",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_recenterPoints'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"PhysicsShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        cocos2d::Point* arg0;
+        int arg1 = 0;
+        do {
+            ok = luaval_to_array_of_Point(tolua_S, 2, &arg0, &arg1);
+            if (nullptr == arg0){
+                LUA_PRECONDITION( arg0, "Invalid Native Object");
+            }} while (0);
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
+        if(!ok)
+        {
+            CC_SAFE_FREE(arg0);
+            return 0;
+        }
+        cocos2d::Point ret = cocos2d::PhysicsShape::getPolyonCenter(arg0, arg1);
+        CC_SAFE_FREE(arg0);
+        point_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "getPolyonCenter",argc, 2);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_getPolyonCenter'.",&tolua_err);
+#endif
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShapeBox* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"PhysicsShapeBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::PhysicsShapeBox*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeBox_getPoints'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        cocos2d::Point arg0[4];
+        cobj->getPoints(arg0);
+        points_to_luaval(tolua_S, arg0, 4);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShapeBox_getPoints'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShapePolygon* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"PhysicsShapePolygon",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::PhysicsShapePolygon*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPoints'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        int count = cobj->getPointsCount();
+        cocos2d::Point* arg0 = new cocos2d::Point[count];
+        cobj->getPoints(arg0);
+        points_to_luaval(tolua_S, arg0, count);
+        CC_SAFE_FREE(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShapePolygon_getPoints'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShapeEdgeBox* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"PhysicsShapeEdgeBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::PhysicsShapeEdgeBox*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        int count = cobj->getPointsCount();
+        cocos2d::Point* arg0 = new cocos2d::Point[count];
+        cobj->getPoints(arg0);
+        points_to_luaval(tolua_S, arg0, count);
+        CC_SAFE_FREE(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShapeEdgePolygon* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"PhysicsShapeEdgePolygon",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::PhysicsShapeEdgePolygon*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        int count = cobj->getPointsCount();
+        cocos2d::Point* arg0 = new cocos2d::Point[count];
+        cobj->getPoints(arg0);
+        points_to_luaval(tolua_S, arg0, count);
+        CC_SAFE_FREE(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShapeEdgeChain* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"PhysicsShapeEdgeChain",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::PhysicsShapeEdgeChain*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints'", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        int count = cobj->getPointsCount();
+        cocos2d::Point* arg0 = new cocos2d::Point[count];
+        cobj->getPoints(arg0);
+        points_to_luaval(tolua_S, arg0, count);
+        CC_SAFE_FREE(arg0);
+        return 0;
+    }
+    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
 int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "PhysicsBody");
@@ -362,6 +1151,78 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"getJoints");
         lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsBody_getJoints );
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"createPolygon");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsBody_createPolygon );
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"createEdgeChain");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsBody_createEdgeChain );
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"createEdgePolygon");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsBody_createEdgePolygon );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShape");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"recenterPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_recenterPoints );
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"getPolyonCenter");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShape_getPolyonCenter );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShapeBox");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShapeBox_getPoints );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShapeEdgeBox");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShapePolygon");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShapePolygon_getPoints );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShapeEdgePolygon");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints );
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "PhysicsShapeEdgeChain");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"getPoints");
+        lua_pushcfunction(tolua_S,lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints);
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -382,8 +1243,27 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
         lua_pushstring(tolua_S,"rayCast");
         lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_rayCast );
         lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S, "DEBUGDRAW_NONE");
+        lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_NONE);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S, "DEBUGDRAW_SHAPE");
+        lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_SHAPE);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S, "DEBUGDRAW_JOINT");
+        lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_JOINT);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S, "DEBUGDRAW_CONTACT");
+        lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_CONTACT);
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S, "DEBUGDRAW_ALL");
+        lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_ALL);
+        lua_rawset(tolua_S,-3);
     }
+    
     lua_pop(tolua_S, 1);
+    
+    tolua_constant(tolua_S, "PHYSICS_INFINITY", PHYSICS_INFINITY);
+    
     return 0;
 }
 

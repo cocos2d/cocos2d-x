@@ -351,4 +351,7 @@ cc.EVENT_KEYBOARD              = 3
 cc.EVENT_MOUSE                 = 4
 cc.EVENT_ACCELERATION          = 5
 cc.EVENT_CUSTOM                = 6
- 
+
+cc.PHYSICSSHAPE_MATERIAL_DEFAULT = {0.0, 0.5, 0.5}
+cc.PHYSICSBODY_MATERIAL_DEFAULT = {0.1, 0.5, 0.5}
+
