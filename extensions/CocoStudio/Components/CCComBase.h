@@ -22,25 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "TriggerBase.h"
+#ifndef __CC_EXTENTIONS_CCCOMBASE_H__
+#define __CC_EXTENTIONS_CCCOMBASE_H__
 
-NS_CC_EXT_BEGIN
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+#include "../Trigger/ObjectFactory.h"
+#include "../Json/DictionaryHelper.h"
+#include <string>
 
-void sendEvent(unsigned int event)
-{
-    CCArray *array = TriggerMng::getInstance()->get(event);
-    do {
-        CC_BREAK_IF(array == NULL);
-        CCObject* pObj = NULL;
-        CCARRAY_FOREACH(array, pObj)
-        {
-            TriggerObj* triobj = dynamic_cast<TriggerObj*>(pObj);
-            if (triobj != NULL && triobj->detect())
-            {
-                triobj->done();
-            }
-        }
-    } while (0);
-}
 
-NS_CC_EXT_END
+#define DECLARE_CLASS_COMPONENT_INFO \
+	public: \
+	static cocos2d::extension::ObjectFactory::TInfo Type; \
+	static cocos2d::CCObject* createInstance(void); \
+
+#define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
+	cocos2d::CCObject* className::createInstance(void) \
+    { \
+        return className::create(); \
+    } \
+	cocos2d::extension::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
+
+#define CREATE_CLASS_COMPONENT_INFO(className) \
+	cocos2d::extension::ObjectFactory::TInfo(#className, &className::createInstance)
+
+
+#endif 

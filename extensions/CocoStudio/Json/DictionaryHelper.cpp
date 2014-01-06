@@ -165,7 +165,7 @@ bool DictionaryHelper::objectToBooleanValue(cocos2d::CCObject *obj)
     {
         return 0;
     }
-    return this->objectToIntValue(obj);
+    return this->objectToIntValue(obj) != 0? true:false;
 }
 
 cocos2d::CCArray* DictionaryHelper::objectToCCArray(cocos2d::CCObject *obj)

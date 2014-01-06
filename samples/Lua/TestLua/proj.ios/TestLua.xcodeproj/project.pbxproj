@@ -631,6 +631,7 @@
 		1AD263B81683506C0089000C /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
 		1AD263B91683506C0089000C /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TileMaps; sourceTree = "<group>"; };
 		1AD263BA1683506C0089000C /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; path = zwoptex; sourceTree = "<group>"; };
+		373B910A18788CEE00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD4AC186840C10024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD4AD186840C10024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
 		375BD4AE186840C10024609E /* TriggerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriggerBase.cpp; sourceTree = "<group>"; };
@@ -1595,6 +1596,7 @@
 		ED5314A418331444008CD8A5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				373B910A18788CEE00198F86 /* CCComBase.h */,
 				ED5314A518331444008CD8A5 /* CCComAttribute.cpp */,
 				ED5314A618331444008CD8A5 /* CCComAttribute.h */,
 				ED5314A718331444008CD8A5 /* CCComAudio.cpp */,

@@ -25,11 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 #define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
-#include "../Json/rapidjson/document.h"
-#include <string>
+#include "CCComBase.h"
 
 NS_CC_EXT_BEGIN
 /**
@@ -37,6 +33,7 @@ NS_CC_EXT_BEGIN
  */
 class CCComAttribute : public cocos2d::CCComponent
 {
+	DECLARE_CLASS_COMPONENT_INFO
 protected:
     /**
      *  @js ctor
@@ -50,6 +47,7 @@ protected:
 public:
    virtual bool init();
    static CCComAttribute* create(void);
+   virtual bool serialize(void* r);
    
    void setInt(const char *key, int value);
    void setFloat(const char *key, float value);

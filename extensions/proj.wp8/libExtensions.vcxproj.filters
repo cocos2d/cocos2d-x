@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="AssetsManager">
@@ -906,5 +906,9 @@
     <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h">
       <Filter>CocoStudio\GUI\System</Filter>
     </ClInclude>
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
+      <Filter>CocoStudio\Components</Filter>
+    </ClInclude>
+
   </ItemGroup>
 </Project>
