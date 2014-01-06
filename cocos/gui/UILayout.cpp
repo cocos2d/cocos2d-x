@@ -269,7 +269,7 @@ void Layout::onBeforeVisitStencil()
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
     glDepthMask(GL_FALSE);
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(!false ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
+    glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPushMatrix();
     kmGLLoadIdentity();
@@ -285,7 +285,7 @@ void Layout::onBeforeVisitStencil()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLPopMatrix();
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(!false ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
 
 void Layout::onAfterDrawStencil()
