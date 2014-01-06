@@ -506,7 +506,7 @@ C3DEffect* Uniform::getEffect() const
 	return _effect;
 }
 
-const std::string Uniform::getName() const
+const std::string& Uniform::getName() const
 {
 	return _name;
 }

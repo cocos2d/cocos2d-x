@@ -227,7 +227,7 @@ public:
 	* 
 	* @return The name of the uniform.
 	*/
-	const std::string getName() const;
+	const std::string& getName() const;
 
 	/**
 	* Returns the OpenGL uniform type.
