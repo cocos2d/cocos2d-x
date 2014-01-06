@@ -233,7 +233,7 @@ void LoadSceneEdtiorFileTest::onExit()
 
 cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 {
-    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/loadSceneEdtiorFileTest/FishJoy2.json");
+    CCNode *pNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json");
 	if (pNode == NULL)
 	{
 		return NULL;
