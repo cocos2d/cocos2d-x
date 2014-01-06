@@ -1,4 +1,4 @@
-package org.cocos2dx.hellolua;
+package org.cocos2dx.lua;
 
 import android.app.NativeActivity;
 import android.os.Bundle;
