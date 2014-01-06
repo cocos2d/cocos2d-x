@@ -1,5 +1,5 @@
-#ifndef C3DSprite_H_
-#define C3DSprite_H_
+#ifndef C3DSPRITE_H_
+#define C3DSPRITE_H_
 #include <list>
 #include <vector>
 #include <map>
@@ -16,8 +16,8 @@
 
 NS_CC_BEGIN	
 
-class C3DVector2;
-class C3DVector3;
+class Vector2;
+class Vector3;
 class C3DScene;
 class AttachNode;
 class C3DNode;
@@ -143,4 +143,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // C3DSPRITE_H_

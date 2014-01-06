@@ -85,7 +85,7 @@ void C3DStaticObj::calculateBoundingBox_()
 
 	}	
 
-	C3DMatrix mat = getWorldMatrix();
+	Matrix mat = getWorldMatrix();
 	mat.invertOrthMat();
 	box.transform(mat);
 	if (!_bbOrigin)

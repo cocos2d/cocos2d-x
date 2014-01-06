@@ -9,8 +9,8 @@
 #include "C3DOBB.h"
 #include "C3DAABB.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
+
 // TODO: replace below macro to class's const static member.
 // C3DNode dirty flags
 #define NODE_DIRTY_WORLD 1
@@ -30,456 +30,456 @@ class C3DOBB;
 
 // TODO: It is better not use multiple inheritance, use composition instead.
 /**
- * Defines a basic hierachial structure of transformation spaces.
- */
+* Defines a basic hierachial structure of transformation spaces.
+*/
 class C3DNode : public Transform, public virtual cocos2d::CCObject
 {
-    friend class C3DStaticObj;
-    friend class C3DRenderNode;
-    friend class C3DScene;   
-    friend class C3DMeshSkin;
-    friend class C3DSkeleton;
-    friend class C3DParticleSystem;
-        
+	friend class C3DStaticObj;
+	friend class C3DRenderNode;
+	friend class C3DScene;   
+	friend class C3DMeshSkin;
+	friend class C3DSkeleton;
+	friend class C3DParticleSystem;
+
 
 public:
-    C3DNode();
-    C3DNode(const char* id);
+	C3DNode();
+	C3DNode(const char* id);
 
-    virtual ~C3DNode();
+	virtual ~C3DNode();
 
-    /**
-     * Listener interface for Transform events.
-     */
-    class  Listener
-    {
-    public:
+	/**
+	* Listener interface for Transform events.
+	*/
+	class  Listener
+	{
+	public:
 
-        virtual ~Listener() { }
+		virtual ~Listener() { }
 
-        /**
-         * Handles when an transform has changed.
-         *
-         * @param transform The Transform object that was changed.
-         * @param cookie Cookie value that was specified when the listener was registered.
-         */
-        virtual void transformChanged(Transform* transform) = 0;
-    };
+		/**
+		* Handles when an transform has changed.
+		*
+		* @param transform The Transform object that was changed.
+		* @param cookie Cookie value that was specified when the listener was registered.
+		*/
+		virtual void transformChanged(Transform* transform) = 0;
+	};
 
 	// TODO: Use enum class instead later
-    /**
-     * Defines the types of nodes.
-     */
-    enum Type
-    {
-        NodeType_Model = 1,
-        NodeType_SuperModel = 2,
-        NodeType_SceneModel = 3,
-        NodeType_Camera = 4,
-        NodeType_Light = 5,        
-        NodeType_Bone = 6,        
-        NodeType_Normal = 7,
-        NodeType_ParticleSystem = 8,
-        NodeType_ShadowMap = 9,
-        NodeType_PostProcess = 10,
-        NodeType_Scene = 100,
-        NodeType_EditorNode = 101
-    };
+	/**
+	* Defines the types of nodes.
+	*/
+	enum Type
+	{
+		NodeType_Model = 1,
+		NodeType_SuperModel = 2,
+		NodeType_SceneModel = 3,
+		NodeType_Camera = 4,
+		NodeType_Light = 5,        
+		NodeType_Bone = 6,        
+		NodeType_Normal = 7,
+		NodeType_ParticleSystem = 8,
+		NodeType_ShadowMap = 9,
+		NodeType_PostProcess = 10,
+		NodeType_Scene = 100,
+		NodeType_EditorNode = 101
+	};
 
-    struct CloneContext
-    {
-        bool cloneChildren;                                            // clone all child nodes
-        std::map<const C3DNode*, C3DNode*> cloneMap;                // record all cloned nodes to avoid duplicate clone
-        std::string idSuffix;                                        // suffix to avoid id conflict
-        std::map<const C3DAnimation*, C3DAnimation*> clonedAnim;     // cloned animation
-        std::map<const C3DMeshSkin*, C3DMeshSkin*> clonedMeshSkin;   // cloned mesh skin
-    };
+	struct CloneContext
+	{
+		bool cloneChildren;                                            // clone all child nodes
+		std::map<const C3DNode*, C3DNode*> cloneMap;                // record all cloned nodes to avoid duplicate clone
+		std::string idSuffix;                                        // suffix to avoid id conflict
+		std::map<const C3DAnimation*, C3DAnimation*> clonedAnim;     // cloned animation
+		std::map<const C3DMeshSkin*, C3DMeshSkin*> clonedMeshSkin;   // cloned mesh skin
+	};
 
-    /**
-     * Creates a new node with the specified ID.
-     *
-     * @param id The ID for the new node.
-     */
-    static C3DNode* create(const char* id = NULL);
+	/**
+	* Creates a new node with the specified ID.
+	*
+	* @param id The ID for the new node.
+	*/
+	static C3DNode* create(const char* id = NULL);
 
-    /**
-     * Sets C3DScene.
-     */
-    void setScene(C3DScene* scene);
+	/**
+	* Sets C3DScene.
+	*/
+	void setScene(C3DScene* scene);
 
-    /**
-     * Gets C3DScene.
-     */
-    C3DScene* getScene();
+	/**
+	* Gets C3DScene.
+	*/
+	C3DScene* getScene();
 
-    /**
-     * Gets the identifier for the node.
-     *
-     * @return The node identifier.
-     */
-    const char* getId();
+	/**
+	* Gets the identifier for the node.
+	*
+	* @return The node identifier.
+	*/
+	const char* getId();
 
-    /**
-     * Sets the identifier for the node.
-     *
-     * @param id The identifier to set for the node.
-     */
-    void setId(const char* id);
+	/**
+	* Sets the identifier for the node.
+	*
+	* @param id The identifier to set for the node.
+	*/
+	void setId(const char* id);
 
-    /**
-     * Returns the type of the node.
-     */
-    virtual Type getType() const;
+	/**
+	* Returns the type of the node.
+	*/
+	virtual Type getType() const;
 
-     /**
-     * Adds a transform listener.
-     *
-     * @param listener The listener to add.
-     * @param cookie An optional long value that is passed to the specified listener when it is called.
-     */
-    void addListener(C3DNode::Listener* listener);
+	/**
+	* Adds a transform listener.
+	*
+	* @param listener The listener to add.
+	* @param cookie An optional long value that is passed to the specified listener when it is called.
+	*/
+	void addListener(C3DNode::Listener* listener);
 
-    /**
-     * Removes a transform listener.
-     */
-    void removeListener(C3DNode::Listener* listener);
+	/**
+	* Removes a transform listener.
+	*/
+	void removeListener(C3DNode::Listener* listener);
 
-    /**
-     * Adds a child node.
-     *
-     * @param child The child to add.
-     */
-    virtual void addChild(C3DNode* child);
+	/**
+	* Adds a child node.
+	*
+	* @param child The child to add.
+	*/
+	virtual void addChild(C3DNode* child);
 
-    /**
-     * Removes a child node.
-     *
-     * @param child The child to remove.
-     */
-    virtual void removeChild(C3DNode* child);
+	/**
+	* Removes a child node.
+	*
+	* @param child The child to remove.
+	*/
+	virtual void removeChild(C3DNode* child);
 
-    /**
-     * Removes all child nodes.
-     */
-    virtual void removeAllChildren();
-    
-    /**
-     * Update routine
-     */
-    virtual void update(long elapsedTime);
+	/**
+	* Removes all child nodes.
+	*/
+	virtual void removeAllChildren();
 
-    virtual void draw();
+	/**
+	* Update routine
+	*/
+	virtual void update(long elapsedTime);
 
-    /**
-    * draw debug info, override this
-    */
-    virtual void drawDebug();
+	virtual void draw();
 
-    virtual unsigned int getTriangleCount() const;
- 
-    /**
-     * Returns the parent of this node.
-     *
-     * @return The parent.
-     */
-    C3DNode* getParent();
-    
-    /**
-     * Find the C3DNode by the specified id.
-     */
-    C3DNode* findNode(const char* id, bool recursive = true);
+	/**
+	* draw debug info, override this
+	*/
+	virtual void drawDebug();
 
-    /**
-     * Gets root node.
-     */
-    C3DNode* getRootNode();
+	virtual unsigned int getTriangleCount() const;
 
-    /**
-     * Gets the world matrix corresponding to this node.
-     *
-     * @return The world matrix of this node.
-     */
-    virtual const Matrix& getWorldMatrix();
+	/**
+	* Returns the parent of this node.
+	*
+	* @return The parent.
+	*/
+	C3DNode* getParent();
 
-    /**
-     * Gets the world view matrix corresponding to this node.
-     *
-     * @return The world view matrix of this node.
-     */
-    const Matrix& getWorldViewMatrix();
+	/**
+	* Find the C3DNode by the specified id.
+	*/
+	C3DNode* findNode(const char* id, bool recursive = true);
 
-    /**
-     * Gets the inverse transpose world matrix corresponding to this node.
-     *
-     * This matrix is typically used to transform normal vectors into world space.
-     *
-     * @return The inverse world matrix of this node.
-     */
-    const Matrix& getInverseTransposeWorldMatrix();
+	/**
+	* Gets root node.
+	*/
+	C3DNode* getRootNode();
 
-    /**
-     * Gets the inverse transpose world view matrix corresponding to this node.
-     *
-     * This matrix is typically used to transform normal vectors into view space.
-     *
-     * @return The inverse world view matrix of this node.
-     */
-    const Matrix& getInverseTransposeWorldViewMatrix();
+	/**
+	* Gets the world matrix corresponding to this node.
+	*
+	* @return The world matrix of this node.
+	*/
+	virtual const Matrix& getWorldMatrix();
 
-    /**
-     * Gets the view matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The view matrix of this node.
-     */
-    const Matrix& getViewMatrix();
+	/**
+	* Gets the world view matrix corresponding to this node.
+	*
+	* @return The world view matrix of this node.
+	*/
+	const Matrix& getWorldViewMatrix();
 
-    /**
-     * Gets the inverse view matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The inverse view matrix of this node.
-     */
-    const Matrix& getInverseViewMatrix();
+	/**
+	* Gets the inverse transpose world matrix corresponding to this node.
+	*
+	* This matrix is typically used to transform normal vectors into world space.
+	*
+	* @return The inverse world matrix of this node.
+	*/
+	const Matrix& getInverseTransposeWorldMatrix();
 
-    /**
-     * Gets the projection matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The projection matrix of this node.
-     */
-    const Matrix& getProjectionMatrix();
+	/**
+	* Gets the inverse transpose world view matrix corresponding to this node.
+	*
+	* This matrix is typically used to transform normal vectors into view space.
+	*
+	* @return The inverse world view matrix of this node.
+	*/
+	const Matrix& getInverseTransposeWorldViewMatrix();
 
-    /**
-     * Gets the view * projection matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The view * projection matrix of this node.
-     */
-    const Matrix& getViewProjectionMatrix();
+	/**
+	* Gets the view matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The view matrix of this node.
+	*/
+	const Matrix& getViewMatrix();
 
-    /**
-     * Gets the inverse view * projection matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The inverse view * projection matrix of this node.
-     */
-    const Matrix& getInverseViewProjectionMatrix();
+	/**
+	* Gets the inverse view matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The inverse view matrix of this node.
+	*/
+	const Matrix& getInverseViewMatrix();
 
-    /**
-     * Gets the world * view * projection matrix corresponding to this node based
-     * on the scene's active camera.
-     *
-     * @return The world * view * projection matrix of this node.
-     */
-    const Matrix& getWorldViewProjectionMatrix();
+	/**
+	* Gets the projection matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The projection matrix of this node.
+	*/
+	const Matrix& getProjectionMatrix();
 
-    /**
-     * Gets the translation vector (or position) of this C3DNode in world space.
-     *
-     * @return The world translation vector.
-     */
-        Vector3 getTranslationWorld();
+	/**
+	* Gets the view * projection matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The view * projection matrix of this node.
+	*/
+	const Matrix& getViewProjectionMatrix();
 
-    /**
-     * Gets the translation vector (or position) of this C3DNode in view space.
-     *
-     * @return The view space translation vector.
-     */
-        Vector3 getTranslationView();
+	/**
+	* Gets the inverse view * projection matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The inverse view * projection matrix of this node.
+	*/
+	const Matrix& getInverseViewProjectionMatrix();
 
-    const Quaternion getRotationWorld();
+	/**
+	* Gets the world * view * projection matrix corresponding to this node based
+	* on the scene's active camera.
+	*
+	* @return The world * view * projection matrix of this node.
+	*/
+	const Matrix& getWorldViewProjectionMatrix();
 
-    /**
-     * Returns the forward vector of the C3DNode in world space.
-     */
-        Vector3 getRightVectorWorld();
+	/**
+	* Gets the translation vector (or position) of this C3DNode in world space.
+	*
+	* @return The world translation vector.
+	*/
+	Vector3 getTranslationWorld();
 
-    /**
-     *  Returns the forward vector of the C3DNode in view space.
-     */
-        Vector3 getRightVectorView();
+	/**
+	* Gets the translation vector (or position) of this C3DNode in view space.
+	*
+	* @return The view space translation vector.
+	*/
+	Vector3 getTranslationView();
 
-        /**
-     * Returns the up vector of the C3DNode in world space.
-     */
-        Vector3 getUpVectorWorld();
+	const Quaternion getRotationWorld();
 
-    /**
-     *  Returns the up vector of the C3DNode in view space.
-     */
-        Vector3 getUpVectorView();
+	/**
+	* Returns the forward vector of the C3DNode in world space.
+	*/
+	Vector3 getRightVectorWorld();
 
-        /**
-     * Returns the forward vector of the C3DNode in world space.
-     */
-        Vector3 getForwardVectorWorld();
+	/**
+	*  Returns the forward vector of the C3DNode in view space.
+	*/
+	Vector3 getRightVectorView();
 
-    /**
-     *  Returns the forward vector of the C3DNode in view space.
-     */
-        Vector3 getForwardVectorView();
+	/**
+	* Returns the up vector of the C3DNode in world space.
+	*/
+	Vector3 getUpVectorWorld();
 
-    void setForwardVectorWorld(    Vector3& forwardVector);
+	/**
+	*  Returns the up vector of the C3DNode in view space.
+	*/
+	Vector3 getUpVectorView();
 
-    /**
-     * Returns the translation vector of the currently active camera for this node's scene.
-     *
-     * @return The translation vector of the scene's active camera.
-     */
-    const     Vector3& getActiveCameraTranslationWorld();
+	/**
+	* Returns the forward vector of the C3DNode in world space.
+	*/
+	Vector3 getForwardVectorWorld();
 
-    /**
-     * Returns the view-space translation vector of the currently active camera for this node's scene.
-     *
-     * @return The translation vector of the scene's active camera, in view-space.
-     */
-    const     Vector3& getActiveCameraTranslationView();    
+	/**
+	*  Returns the forward vector of the C3DNode in view space.
+	*/
+	Vector3 getForwardVectorView();
 
-    /**
-     * Called when this Node's transform changes.
-     */
-    void transformChanged();
+	void setForwardVectorWorld(    Vector3& forwardVector);
 
-    /**
-     * Called when this Node's hierarchy changes.
-     */
-    void hierarchyChanged();
+	/**
+	* Returns the translation vector of the currently active camera for this node's scene.
+	*
+	* @return The translation vector of the scene's active camera.
+	*/
+	const     Vector3& getActiveCameraTranslationWorld();
 
-    /**
-     * Marks the bounding volume of the node as dirty.
-     */
-    void setBoundsDirty();
+	/**
+	* Returns the view-space translation vector of the currently active camera for this node's scene.
+	*
+	* @return The translation vector of the scene's active camera, in view-space.
+	*/
+	const     Vector3& getActiveCameraTranslationView();    
 
-    /**
-     *  Set screen position, screen coordinate(x, y)
-     *  depth 0-1, 0 near plane, 1 far plane
-     *  
-     */
-    void setScreenPos(int x, int y, float depthZ);
-    
-    /**
-     *  Set screen position, screen coordinate(x, y)
-     *  use default depthZ of scene
-     *
-     */
-    void setScreenPos(int x, int y);
+	/**
+	* Called when this Node's transform changes.
+	*/
+	void transformChanged();
 
-    /**
-     *  Set active
-     */
-    virtual void active(bool active);
+	/**
+	* Called when this Node's hierarchy changes.
+	*/
+	void hierarchyChanged();
 
-    /**
-     *  Checks active
-     */
-    virtual bool active();
-    
-    /**
-     *  Gets child list
-     */
-    std::vector< C3DNode * >& getChildrenList(){return _children;}
+	/**
+	* Marks the bounding volume of the node as dirty.
+	*/
+	void setBoundsDirty();
 
-    /**
-     * clone this node
-     * @return New node
-     */
-    virtual C3DNode* clone(CloneContext& context) const;
-    
-    /**
-     * clone this node
-     * @return New node
-     */
-    C3DNode* clone(const char* idSuffix) const;    
-    
-    // compute aabb
-    virtual void calculateBoundingBox();
-    // compute obb, init obb from aabb by default, may import obb from model or mesh latter
-    virtual void calculateOrientedBoundingBox();
-    
-    // just comput aabb
-    virtual void calculateBoundingBox_();
+	/**
+	*  Set screen position, screen coordinate(x, y)
+	*  depth 0-1, 0 near plane, 1 far plane
+	*  
+	*/
+	void setScreenPos(int x, int y, float depthZ);
 
-    // build obb from aabb
-    virtual void calculateOrientedBoundingBox_();
+	/**
+	*  Set screen position, screen coordinate(x, y)
+	*  use default depthZ of scene
+	*
+	*/
+	void setScreenPos(int x, int y);
 
-    virtual C3DAABB* getAABB();
-    
-    
+	/**
+	*  Set active
+	*/
+	virtual void active(bool active);
 
-    void setParent(C3DNode* parent)
-    {
-        _parent = parent;
-    }
-        
+	/**
+	*  Checks active
+	*/
+	virtual bool active();
+
+	/**
+	*  Gets child list
+	*/
+	std::vector< C3DNode * >& getChildrenList(){return _children;}
+
+	/**
+	* clone this node
+	* @return New node
+	*/
+	virtual C3DNode* clone(CloneContext& context) const;
+
+	/**
+	* clone this node
+	* @return New node
+	*/
+	C3DNode* clone(const char* idSuffix) const;    
+
+	// compute aabb
+	virtual void calculateBoundingBox();
+	// compute obb, init obb from aabb by default, may import obb from model or mesh latter
+	virtual void calculateOrientedBoundingBox();
+
+	// just comput aabb
+	virtual void calculateBoundingBox_();
+
+	// build obb from aabb
+	virtual void calculateOrientedBoundingBox_();
+
+	virtual C3DAABB* getAABB();
+
+
+
+	void setParent(C3DNode* parent)
+	{
+		_parent = parent;
+	}
+
 
 protected:
-    /**
-     * clone from other
-     */
-    virtual void copyFrom(const Transform* other, CloneContext& context);
-    
-    /**
-     * Change event type
-     */
-    enum ChangeEvent
-    {
-        ADD, REMOVE
-    };
+	/**
+	* clone from other
+	*/
+	virtual void copyFrom(const Transform* other, CloneContext& context);
 
-    /**
-     * notify when child node changed
-     * @return New node
-     */
-    virtual void onChildChanged(ChangeEvent eventType, C3DNode* child);
+	/**
+	* Change event type
+	*/
+	enum ChangeEvent
+	{
+		ADD, REMOVE
+	};
+
+	/**
+	* notify when child node changed
+	* @return New node
+	*/
+	virtual void onChildChanged(ChangeEvent eventType, C3DNode* child);
 
 
 
-    
+
 protected:
 
-    C3DScene* _scene;
-    
-    std::string _id;
+	C3DScene* _scene;
 
-    C3DNode* _parent;
+	std::string _id;
 
-    std::vector< C3DNode * >  _children;  // Child nodes    
+	C3DNode* _parent;
 
-    /** 
-     * List of TransformListener's on the Transform.
-    */
-    std::list<Listener*>* _listeners;
-                
-    /**
-     * World Matrix representation of the C3DNode.
-     */
-    mutable Matrix _world;
+	std::vector< C3DNode * >  _children;  // Child nodes    
 
-    /**
-     * Dirty bits flag for the C3DNode.
-     */
-    mutable int _dirtyBits;
-    
-    /**
-     * A flag indicating if the Node's hierarchy has changed.
-     */ 
-    bool _notifyHierarchyChanged;
-    bool _active;
+	/** 
+	* List of TransformListener's on the Transform.
+	*/
+	std::list<Listener*>* _listeners;
 
-    C3DAABB* _bb;
-    C3DAABB* _bbOrigin; // original bounding box
-    
-    C3DOBB _obb;
-    C3DOBB _obbOrigin;// original obb
+	/**
+	* World Matrix representation of the C3DNode.
+	*/
+	mutable Matrix _world;
 
-    bool _showAABB;
-    bool _showOBB;
-    
+	/**
+	* Dirty bits flag for the C3DNode.
+	*/
+	mutable int _dirtyBits;
+
+	/**
+	* A flag indicating if the Node's hierarchy has changed.
+	*/ 
+	bool _notifyHierarchyChanged;
+	bool _active;
+
+	C3DAABB* _bb;
+	C3DAABB* _bbOrigin; // original bounding box
+
+	C3DOBB _obb;
+	C3DOBB _obbOrigin;// original obb
+
+	bool _showAABB;
+	bool _showOBB;
+
 
 };
 
 
-}
+NS_CC_END
 
-#endif
+#endif // NODE_H_

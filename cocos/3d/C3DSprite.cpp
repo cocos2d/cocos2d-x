@@ -1,5 +1,5 @@
 #include "Base.h"
-#include "C3DVector3.h"
+#include "math/Vector3.h"
 #include "C3DSprite.h"
 
 #include "StringTool.h"
@@ -28,41 +28,41 @@ NS_CC_BEGIN
 C3DSprite::C3DSprite(const char* id) :C3DRenderNode(id),C3DResource(id)
 {
 	_active = true;	
-	
+
 	_skeleton = nullptr;
-	
+
 	_animation = nullptr;
-				
+
 }
 
 
 C3DSprite::~C3DSprite()
 {	
-		
+
 	_animation = nullptr;
-	
-	
-    SAFE_DELETE(_skeleton);
-		
+
+
+	SAFE_DELETE(_skeleton);
+
 }
 
 C3DSprite* C3DSprite::create(const char* id)
 {
 	C3DSprite* pRet = new C3DSprite(id);
 
-    pRet->autorelease();
-    return pRet;
+	pRet->autorelease();
+	return pRet;
 }
 
 
 bool C3DSprite::loadFromFile(const char* fileName,bool isLoadAll)
 {
 	_fileName = fileName;
-			
+
 	// Load mesh/scene from file
 	C3DResourceLoader* bundle = C3DResourceLoader::create(_fileName.c_str());   	
 	if (bundle == nullptr)
-        return false;
+		return false;
 	if(isLoadAll==true)
 	{  
 		bundle->loadSuperModel(this);
@@ -74,29 +74,29 @@ bool C3DSprite::loadFromFile(const char* fileName,bool isLoadAll)
 	{
 		bundle->loadSkeleton(this,"Bip01");
 	}
-	
-    SAFE_RELEASE(bundle);
 
-    return true;
+	SAFE_RELEASE(bundle);
+
+	return true;
 }
 
 bool C3DSprite::load(const std::string& fileName)
 {
 	_fileName = fileName;
-			
+
 	// Load mesh/scene from file
 	C3DResourceLoader* bundle = C3DResourceLoader::create(_fileName.c_str());   	
 	if (bundle == nullptr)
-        return false;
-	 
+		return false;
+
 	bundle->loadSuperModel(this);
 	this->setDefaultMaterial(StringTool::getFilePath(fileName));
 
 	getAABB();
-			
-    SAFE_RELEASE(bundle);
 
-    return true;
+	SAFE_RELEASE(bundle);
+
+	return true;
 }
 
 void C3DSprite::loadNode(const std::string& nodeName)
@@ -113,7 +113,7 @@ void C3DSprite::loadNodes(std::list<std::string>* models)
 {
 	// Load mesh/scene from file
 	C3DResourceLoader* bundle = C3DResourceLoader::create(_fileName.c_str());   
-	
+
 	bundle->loadSuperModel(this,models);
 	SAFE_RELEASE(bundle);
 
@@ -125,9 +125,9 @@ C3DAnimation* C3DSprite::createAnimation()
 	// Load mesh/scene from file
 	C3DResourceLoader* bundle = C3DResourceLoader::create(_fileName.c_str());   
 	CCAssert(bundle, "Can not load bundle!");
-	
+
 	//C3DAnimation* animation = C3DAnimation::create("movements");
-	
+
 	bundle->loadAnimation(this);
 
 	SAFE_RELEASE(bundle);
@@ -144,7 +144,7 @@ C3DAnimationClip* C3DSprite::addAnimationClip(const char* name,unsigned int star
 
 	if(_animation == nullptr)
 		return nullptr;
-	
+
 	//_animation = _skeleton->getAnimation("movements");
 	return _animation->addClip(name,startFrame,endFrame,repeatCount,speed);
 }
@@ -162,7 +162,7 @@ bool C3DSprite::replaceAnimationClip(const char* name,unsigned int startFrame,un
 bool C3DSprite::loadMesh(const char* meshName)
 {
 	loadNode(meshName);
-    return false;
+	return false;
 }
 
 
@@ -175,7 +175,7 @@ void C3DSprite::update(long elapsedTime)
 
 	if(_animation != nullptr)
 		_animation ->update(elapsedTime);
-	
+
 }
 
 
@@ -193,7 +193,7 @@ void C3DSprite::calculateBoundingBox_()
 			continue;
 		C3DModel* model = static_cast<C3DModelNode*>(node)->getModel();
 
-		
+
 		if (model)
 		{
 			C3DAABB worldSpaceBox(*model->getMesh()->getBoundingBox());				
@@ -246,14 +246,14 @@ void C3DSprite::resumeAnimationClip(const char* name)
 	if( _animation == nullptr)
 		return;
 	_animation->resume(name);
-	
+
 }
 
 bool C3DSprite::isAnimationClipPlaying(const char* clipName)
 {
 	return false;
 }
-	
+
 
 
 void C3DSprite::setSkeleton(C3DBone* joint)
@@ -280,18 +280,18 @@ C3DBone* C3DSprite::getBone(const char* name)const
 
 C3DAnimationClip* C3DSprite::getAnimationClip(const char* strClip)
 {
-    if (_animation == nullptr)
-        return nullptr;
-        
-    return _animation->getClip(strClip);
+	if (_animation == nullptr)
+		return nullptr;
+
+	return _animation->getClip(strClip);
 }
-    
+
 C3DAnimationClip* C3DSprite::getCurAnimationClip()
 {
-    if (_animation == nullptr)
-        return nullptr;
-        
-    return _animation->getCurAnimationClip();
+	if (_animation == nullptr)
+		return nullptr;
+
+	return _animation->getCurAnimationClip();
 }
 
 
@@ -299,7 +299,7 @@ int C3DSprite::getAnimationFrameCount()
 {
 	if( _animation == nullptr )
 		createAnimation();
-	
+
 	_animation = _skeleton->getAnimation("movements");
 	if (_animation)
 		return _animation->getFrameCount();
@@ -310,26 +310,26 @@ int C3DSprite::getAnimationFrameCount()
 void C3DSprite::copyFrom(const Transform* other, C3DNode::CloneContext& context)
 {
 	const C3DSprite* otherNode = static_cast<const C3DSprite*>(other);	
-		
+
 	C3DRenderNode::copyFrom(other, context);	
-	
+
 	C3DSkeleton* ske = otherNode->_skeleton;
 	_skeleton = ske ? ske->clone() : nullptr;
-	      
-    _fileName = otherNode->_fileName;
-	      	
-    
-    if (otherNode->_skeleton)
-    {
-        C3DBone* bone = (C3DBone*)context.cloneMap[otherNode->_skeleton->getRootBone()];
-        if (bone != nullptr)
-        {
-            setSkeleton(bone);
-            _animation = _skeleton->getAnimation("movements");
-        }
-    }
-	
-       
+
+	_fileName = otherNode->_fileName;
+
+
+	if (otherNode->_skeleton)
+	{
+		C3DBone* bone = (C3DBone*)context.cloneMap[otherNode->_skeleton->getRootBone()];
+		if (bone != nullptr)
+		{
+			setSkeleton(bone);
+			_animation = _skeleton->getAnimation("movements");
+		}
+	}
+
+
 }
 
 C3DNode* C3DSprite::clone(C3DNode::CloneContext& context) const

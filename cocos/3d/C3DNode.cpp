@@ -10,8 +10,8 @@
 #include "C3DOBB.h"
 
 
-namespace cocos2d
-{
+NS_CC_BEGIN
+
 C3DNode::C3DNode()   
 	: _scene(nullptr),_parent(nullptr),_active(true),
 	_dirtyBits(NODE_DIRTY_ALL), _notifyHierarchyChanged(true), _listeners(nullptr)
@@ -778,5 +778,6 @@ C3DAABB* C3DNode::getAABB()
 
 	return _bb;
 }
-}
+
+NS_CC_END
 

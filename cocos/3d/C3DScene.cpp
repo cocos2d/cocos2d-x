@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "C3DScene.h"
-#include "C3DVector3.h"
+#include "math/Vector3.h"
 #include "C3DRenderNode.h"
 #include "C3DCamera.h"
 
@@ -17,8 +17,7 @@
 #include "C3DRenderSystem.h"
 #include "C3DViewport.h"
 
-namespace cocos2d
-{
+NS_CC_BEGIN
     
 C3DNode* C3DScene::findNode(const char* strId)
 {
@@ -51,7 +50,7 @@ void C3DScene::removeAllNode()
     
 C3DScene::C3DScene(const char* str) : C3DNode(str)
 {
-	_ambientColor = new C3DVector3();
+	_ambientColor = new Vector3();
 
 	_showBoundingBox = false;
 	
@@ -130,7 +129,7 @@ void C3DScene::setViewAspectRatio(float aspectRatio)
 }
 
 
-const C3DVector3* C3DScene::getAmbientColor() const
+const Vector3* C3DScene::getAmbientColor() const
 {
     return _ambientColor;
 }
@@ -286,12 +285,12 @@ void C3DScene::onChildChanged(ChangeEvent eventType, C3DNode* child)
 	}
 }
 
-const C3DMatrix& C3DScene::getViewProjectionMatrix() const
+const Matrix& C3DScene::getViewProjectionMatrix() const
 {     
     if (_activeCamera)
         return _activeCamera->getViewProjectionMatrix();
     else
-        return C3DMatrix::identity();
+        return Matrix::identity();
    
 }
 
@@ -328,9 +327,4 @@ void C3DScene::removeChild(C3DNode* child)
 
 }
 
-
-
-
-
-
-}
+NS_CC_END

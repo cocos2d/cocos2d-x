@@ -9,7 +9,7 @@
 #include "C3DMeshSkin.h"
 #include "C3DSkinModel.h"
 #include "C3DBone.h"
-#include "C3DVector3.h"
+#include "math/Vector3.h"
 #include "C3DScene.h"
 #include "C3DTechnique.h"
 #include "C3DRay.h"

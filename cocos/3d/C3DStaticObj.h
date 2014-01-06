@@ -42,4 +42,4 @@ private:
 
 NS_CC_END
 
-#endif
+#endif // SCENEMODEL_H_

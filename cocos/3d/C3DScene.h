@@ -6,14 +6,11 @@
 #include "C3DNode.h"
 #include <vector>
 
-
-
-namespace cocos2d
-{
+NS_CC_BEGIN
 
 class C3DCamera;
 class C3DRenderNode;
-class C3DVector3;
+class Vector3;
 class RenderChannelManager;
 class C3DLight;
 
@@ -70,7 +67,7 @@ public:
 
 	void setViewAspectRatio(float aspectRatio);
 
-	const C3DVector3* getAmbientColor() const;
+	const Vector3* getAmbientColor() const;
 
     void setAmbientColor(float red, float green, float blue);
 
@@ -111,7 +108,7 @@ protected:
 
 private:
 	    
-    C3DVector3* _ambientColor;    
+    Vector3* _ambientColor;    
    
     std::vector<C3DCamera*> _cameras;   
 	
@@ -132,6 +129,6 @@ private:
 };
 
 
-}
+NS_CC_END
 
-#endif
+#endif // SCENE_H_

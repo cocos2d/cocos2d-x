@@ -29,12 +29,8 @@ private:
 	C3DSpriteManager();
 
 	virtual ~C3DSpriteManager();
-
-
-
-
 };
 
 NS_CC_END
 
-#endif
+#endif // SPRITEMANAGER_H_
