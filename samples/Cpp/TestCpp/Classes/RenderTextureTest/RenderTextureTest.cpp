@@ -101,12 +101,6 @@ RenderTextureSave::RenderTextureSave()
     // note that the render texture is a Node, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
-
-    // create a brush image to draw into the texture with
-    _brush = Sprite::create("Images/fire.png");
-    _brush->retain();
-    _brush->setColor(Color3B::RED);
-    _brush->setOpacity(20);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
@@ -170,7 +164,6 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
 
 RenderTextureSave::~RenderTextureSave()
 {
-    _brush->release();
     _target->release();
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
@@ -190,20 +183,28 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
     if (distance > 1)
     {
         int d = (int)distance;
+        _brushs.clear();
+        for(int i = 0; i < d; ++i)
+        {
+            Sprite * sprite = Sprite::create("Images/fire.png");
+            sprite->setColor(Color3B::RED);
+            sprite->setOpacity(20);
+            _brushs.pushBack(sprite);
+        }
         for (int i = 0; i < d; i++)
         {
             float difx = end.x - start.x;
             float dify = end.y - start.y;
             float delta = (float)i / distance;
-            _brush->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
-            _brush->setRotation(rand() % 360);
+            _brushs.at(i)->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
+            _brushs.at(i)->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            _brush->setScale(r);
+            _brushs.at(i)->setScale(r);
             /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brush->setColor(Color3B(rand() % 127 + 128, 255, 255));
+            _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            _brush->visit();
+            _brushs.at(i)->visit();
         }
     }
 
