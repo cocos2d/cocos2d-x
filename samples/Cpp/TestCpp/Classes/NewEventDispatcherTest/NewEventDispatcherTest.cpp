@@ -753,6 +753,10 @@ void DirectorEventTest::onEnter()
 {
     EventDispatcherTestDemo::onEnter();
 
+    _count1 = 0;
+    _count2 = 0;
+    _count3 = 0;
+    _count4 = 0;
     Size s = Director::getInstance()->getWinSize();
 
     _label1 = Label::createWithTTF("Update: 0", "fonts/arial.ttf", 20);
