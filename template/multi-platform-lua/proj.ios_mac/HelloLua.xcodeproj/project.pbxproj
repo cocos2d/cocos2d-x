@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A8D331187A504A001CC002 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32E187A5049001CC002 /* CocoStudio.lua */; };
+		01A8D332187A504A001CC002 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32E187A5049001CC002 /* CocoStudio.lua */; };
+		01A8D333187A504A001CC002 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32F187A504A001CC002 /* extern.lua */; };
+		01A8D334187A504A001CC002 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32F187A504A001CC002 /* extern.lua */; };
+		01A8D335187A504A001CC002 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D330187A504A001CC002 /* GuiConstants.lua */; };
+		01A8D336187A504A001CC002 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D330187A504A001CC002 /* GuiConstants.lua */; };
 		15A8A4441834C43700142BE0 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4291834BDA200142BE0 /* libchipmunk iOS.a */; };
 		15A8A4451834C43700142BE0 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4251834BDA200142BE0 /* libcocos2dx iOS.a */; };
 		15A8A4461834C43700142BE0 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4271834BDA200142BE0 /* libcocos2dx-extensions iOS.a */; };
@@ -219,6 +225,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01A8D32E187A5049001CC002 /* CocoStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoStudio.lua; path = ../cocos2d/cocos/scripting/lua/script/CocoStudio.lua; sourceTree = "<group>"; };
+		01A8D32F187A504A001CC002 /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = ../cocos2d/cocos/scripting/lua/script/extern.lua; sourceTree = "<group>"; };
+		01A8D330187A504A001CC002 /* GuiConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GuiConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/GuiConstants.lua; sourceTree = "<group>"; };
 		15A8A4031834BDA200142BE0 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		15A8A4551834C6AD00142BE0 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AudioEngine.lua; path = ../cocos2d/cocos/scripting/lua/script/AudioEngine.lua; sourceTree = "<group>"; };
 		15A8A4561834C6AD00142BE0 /* CCBReaderLoad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CCBReaderLoad.lua; path = ../cocos2d/cocos/scripting/lua/script/CCBReaderLoad.lua; sourceTree = "<group>"; };
@@ -370,6 +379,9 @@
 		1A0227A417A3AA1A00B867AD /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				01A8D32E187A5049001CC002 /* CocoStudio.lua */,
+				01A8D32F187A504A001CC002 /* extern.lua */,
+				01A8D330187A504A001CC002 /* GuiConstants.lua */,
 				15A8A4551834C6AD00142BE0 /* AudioEngine.lua */,
 				15A8A4561834C6AD00142BE0 /* CCBReaderLoad.lua */,
 				15A8A4571834C6AD00142BE0 /* Cocos2d.lua */,
@@ -722,6 +734,9 @@
 				5023815717EBBCE400990C9B /* menu2.png in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
 				15A8A4651834C6AD00142BE0 /* AudioEngine.lua in Resources */,
+				01A8D332187A504A001CC002 /* CocoStudio.lua in Resources */,
+				01A8D334187A504A001CC002 /* extern.lua in Resources */,
+				01A8D336187A504A001CC002 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +787,9 @@
 				5023811A17EBBCAC00990C9B /* Default.png in Resources */,
 				5091733817ECE17A00D62437 /* Icon-50.png in Resources */,
 				5023812117EBBCAC00990C9B /* Icon-72.png in Resources */,
+				01A8D331187A504A001CC002 /* CocoStudio.lua in Resources */,
+				01A8D333187A504A001CC002 /* extern.lua in Resources */,
+				01A8D335187A504A001CC002 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
