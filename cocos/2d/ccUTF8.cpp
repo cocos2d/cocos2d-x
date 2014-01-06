@@ -399,8 +399,8 @@ cc_unichar_to_utf8 (unsigned int c,
 char *
 cc_utf16_to_utf8 (const unsigned short  *str,
                  int             len,
-                 int            *items_read,
-                 int            *items_written)
+                 long            *items_read,
+                 long            *items_written)
 {
     /* This function and g_utf16_to_ucs4 are almost exactly identical - The lines that differ
      * are marked.
