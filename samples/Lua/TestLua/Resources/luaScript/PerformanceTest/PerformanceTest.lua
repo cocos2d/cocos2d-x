@@ -733,7 +733,7 @@ local function runParticleTest()
     		--remove the "fire.png" from the TextureCache cache. 
     		local pTexture = cc.TextureCache:getInstance():addImage("Images/fire.png")
     		cc.TextureCache:getInstance():removeTexture(pTexture)
-    		local pParticleSystem = cc.ParticleSystemQuad:new()
+    		local pParticleSystem = cc.ParticleSystemQuad:createWithTotalParticles(nQuantityParticles)
     		if 1 == nSubtestNumber then
     		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     		elseif 2 == nSubtestNumber then
@@ -752,7 +752,6 @@ local function runParticleTest()
     		end
     		
     		if nil ~= pParticleSystem then
-    			pParticleSystem:initWithTotalParticles(nQuantityParticles)
         		pParticleSystem:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
     		end
     		

@@ -87,7 +87,7 @@ void ObjectFactory::destroyInstance()
     CC_SAFE_DELETE(_sharedFactory);
 }
 
-Object* ObjectFactory::createObject(const char *name)
+Object* ObjectFactory::createObject(const std::string &name)
 {
 	Object *o = nullptr;
 	do 
@@ -98,6 +98,45 @@ Object* ObjectFactory::createObject(const char *name)
 	} while (0);
    
     return o;
+}
+
+Component* ObjectFactory::createComponent(const std::string &name)
+{
+    std::string comName;
+	if (name == "CCSprite" || name == "CCTMXTiledMap" || name == "CCParticleSystemQuad" || name == "CCArmature" || name == "GUIComponent")
+	{
+		comName = "ComRender";
+	}
+	else if (name == "CCComAudio" || name == "CCBackgroundAudio")
+	{
+		comName = "ComAudio";
+	}
+    else if (name == "CCComController")
+    {
+        comName = "ComController";
+    }
+    else if (name == "CCComAttribute")
+    {
+        comName = "ComAttribute";
+    }
+    else if (name == "CCScene")
+    {
+        comName = "Scene";
+    }
+    else
+    {
+        CCASSERT(false, "Unregistered Component!");
+    }
+	Object *o = NULL;
+	do 
+	{
+		const TInfo t = _typeMap[comName];
+		CC_BREAK_IF(t._fun == NULL);
+		o = t._fun();
+	} while (0);
+
+	return (Component*)o;
+
 }
 
 void ObjectFactory::registerType(const TInfo &t)

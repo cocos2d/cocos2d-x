@@ -66,9 +66,14 @@ class ThreadedTask(threading.Thread):
         """
         #delete exist project.
         if os.path.exists(os.path.join(self.projectPath, self.projectName)):
-            print ("###begin remove... " + self.projectName)
-            shutil.rmtree(os.path.join(self.projectPath, self.projectName))
-            print ("###remove finish:  " + self.projectName)
+            print ("###begin remove:  " + self.projectName)
+            try:
+                shutil.rmtree(os.path.join(self.projectPath, self.projectName))
+                print ("###remove finish:  " + self.projectName)
+            except:
+                print ("###remove folder failure %s" %self.projectName)
+                putMsg = "end@%d@%d@%s" %(100, 100, "create failure")
+                self.queue.put(putMsg)
         putMsg = "begin@%d@%d@%s" %(0, 100, "begin create")
         self.queue.put(putMsg)
 

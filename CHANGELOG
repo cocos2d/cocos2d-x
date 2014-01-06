@@ -24,6 +24,8 @@ cocos2d-x-3.0beta ?? 2013
      [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).
      [NEW]          TextureCache::addImageAsync() uses std::function<> as call back
      [NEW]          Namespace changed: network -> cocos2d::network, gui -> cocos2d::gui
+     [NEW]          Added more CocoStudioSceneTest samples.
+     [NEW]          Added UnitTest for Vector<T>, Map<K, V>, Value.
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
      [FIX]          XMLHttpRequest receives wrong binary array.

@@ -55,7 +55,7 @@ public:
      */
     virtual void onExit();
     virtual void update(float delta);
-    virtual void serialize(void* r);
+    virtual bool serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
     static Component* create(void);

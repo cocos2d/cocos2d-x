@@ -3024,8 +3024,15 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto swallowTouches = static_cast<Bool*>(dict->objectForKey("swallowTouches"));
     
     auto dispatcher = layer->getEventDispatcher();
-    dispatcher->removeEventListener(touchListenerAllAtOnce);
-    dispatcher->removeEventListener(touchListenerOneByOne);
+    if (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr)
+    {
+        dispatcher->removeEventListener(touchListenerAllAtOnce);
+        dispatcher->removeEventListener(touchListenerOneByOne);
+        dict->removeObjectForKey("touchListenerAllAtOnce");
+        dict->removeObjectForKey("touchListenerOneByOne");
+        touchListenerAllAtOnce = nullptr;
+        touchListenerOneByOne = nullptr;
+    }
     
     if (enabled)
     {
@@ -3871,6 +3878,35 @@ JSBool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, 
 	return JS_FALSE;
 }
 
+JSBool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::NodeGrid* cobj = (cocos2d::NodeGrid *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_cocos2dx_NodeGrid_setGrid : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::GridBase* arg0;
+        do {
+            if(argv[0].isNull()) { arg0 = nullptr; break;}
+            if (!argv[0].isObject()) { ok = JS_FALSE; break; }
+            js_proxy_t *proxy;
+            JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
+            proxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::GridBase*)(proxy ? proxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, JS_FALSE, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_cocos2dx_NodeGrid_setGrid : Error processing arguments");
+        cobj->setGrid(arg0);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -3889,6 +3925,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;
+    JS_DefineFunction(cx, jsb_cocos2d_NodeGrid_prototype, "setGrid", js_cocos2dx_NodeGrid_setGrid, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);

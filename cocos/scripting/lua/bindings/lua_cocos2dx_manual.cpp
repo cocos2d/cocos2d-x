@@ -538,10 +538,14 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto priority  = static_cast<Integer*>(dict->objectForKey("priority"));
     
     auto dispatcher = layer->getEventDispatcher();
-    if (nullptr != dispatcher)
+    if (nullptr != dispatcher && (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr))
     {
         dispatcher->removeEventListener(touchListenerAllAtOnce);
         dispatcher->removeEventListener(touchListenerOneByOne);
+        dict->removeObjectForKey("touchListenerAllAtOnce");
+        dict->removeObjectForKey("touchListenerOneByOne");
+        touchListenerAllAtOnce = nullptr;
+        touchListenerOneByOne = nullptr;
     }
 
     if (enabled)
