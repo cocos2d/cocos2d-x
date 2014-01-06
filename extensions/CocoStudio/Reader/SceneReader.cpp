@@ -147,7 +147,7 @@ CCNode* SceneReader::createObject(const rapidjson::Value &root, cocos2d::CCNode*
 				}
 				else
 				{
-					CC_SAFE_RELEASE(pCom);
+					CC_SAFE_RELEASE_NULL(pCom);
 				}
 			}
 			if (_pListener && _pfnSelector)
