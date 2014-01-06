@@ -43,7 +43,6 @@ PongLayer::PongLayer()
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
-    _ball->retain();
     
     auto paddleTexture = Director::getInstance()->getTextureCache()->addImage(s_Paddle);
     
@@ -77,7 +76,6 @@ PongLayer::PongLayer()
 
 PongLayer::~PongLayer()
 {
-    _ball->release();
 }
 
 void PongLayer::resetAndScoreBallForPlayer(int player)
@@ -102,7 +100,6 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kLowPlayer );
     else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
-    _ball->draw();
 } 
 
 void PongScene::runThisTest()
