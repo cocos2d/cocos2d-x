@@ -107,7 +107,7 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = TextFieldTTF::getString().size();
+    ssize_t str_len = TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
@@ -269,7 +269,7 @@ bool UICCTextField::getDeleteBackward()
     return _deleteBackward;
 }
 
-#define TEXTFIELDRENDERERZ (-1)
+static const int TEXTFIELD_RENDERER_Z = (-1);
 
     
 TextField::TextField():
@@ -314,7 +314,7 @@ bool TextField::init()
 void TextField::initRenderer()
 {
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    Node::addChild(_textFieldRenderer, TEXTFIELDRENDERERZ, -1);
+    Node::addChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 
 void TextField::setTouchSize(const Size &size)
@@ -326,10 +326,21 @@ void TextField::setTouchSize(const Size &size)
 
 void TextField::setText(const std::string& text)
 {
-	if (text.size()==0)
-		return;
-
-    _textFieldRenderer->setString(text);
+    std::string strText(text);
+    if (isMaxLengthEnabled())
+    {
+        strText = strText.substr(0, getMaxLength());
+    }
+    const char* content = strText.c_str();
+    if (isPasswordEnabled())
+    {
+        _textFieldRenderer->setPasswordText(content);
+        _textFieldRenderer->insertText(content, static_cast<int>(strlen(content)));
+    }
+    else
+    {
+        _textFieldRenderer->setString(content);
+    }
     textfieldRendererScaleChangedWithSize();
 }
 

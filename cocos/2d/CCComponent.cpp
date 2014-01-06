@@ -54,8 +54,9 @@ void Component::update(float delta)
 {
 }
 
-void Component::serialize(void *ar)
+bool Component::serialize(void *ar)
 {
+    return true;
 }
 
 Component* Component::create(void)

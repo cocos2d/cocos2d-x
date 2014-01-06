@@ -1,0 +1,307 @@
+{
+  "classname": "CCNode",
+  "name": null,
+  "canedit": true,
+  "objecttag": 10000,
+  "rotation": 0,
+  "scalex": 1,
+  "scaley": 1,
+  "visible": 1,
+  "x": 0,
+  "y": 0,
+  "zorder": 1,
+  "gameobjects": [
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "BK",
+      "canedit": true,
+      "objecttag": 10003,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 240,
+      "y": 160,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "Images/startMenuBG.png",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "ui",
+      "canedit": true,
+      "objecttag": 10004,
+      "rotation": 0,
+      "scalex": 0.5,
+      "scaley": 0.5,
+      "visible": 1,
+      "x": 0,
+      "y": 0,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
+          "file": null,
+          "fileData": {
+            "path": "startMenu/startMenu_1.json",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "LP",
+      "canedit": true,
+      "objecttag": 10005,
+      "rotation": 0,
+      "scalex": -1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 188.35035705566406,
+      "y": 43.945346832275391,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "RP",
+      "canedit": true,
+      "objecttag": 10006,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 289.21835327148438,
+      "y": 45.547077178955078,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComParticleSystemSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCParticleSystemQuad",
+          "name": "CCParticleSystemQuad",
+          "file": null,
+          "fileData": {
+            "path": "Particles/qipao01.plist",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "blowFish",
+      "canedit": true,
+      "objecttag": 10007,
+      "rotation": 0,
+      "scalex": 0.3,
+      "scaley": 0.3,
+      "visible": 1,
+      "x": 413.84616088867188,
+      "y": 150,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/blowFish/Blowfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": "Butterflyfish",
+      "canedit": true,
+      "objecttag": 10008,
+      "rotation": 0,
+      "scalex": 0.25,
+      "scaley": 0.25,
+      "visible": 1,
+      "x": 411.5384521484375,
+      "y": 84.6153793334961,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCArmature",
+          "name": "CCArmature",
+          "file": null,
+          "fileData": {
+            "path": "fishes/Butterflyfish/Butterflyfish.ExportJson",
+            "plistFile": null,
+            "resourceType": 0
+          },
+          "isShowColliderRect": false,
+          "selectedactionname": "Action0"
+        }
+      ]
+    }
+  ],
+  "CanvasSize": {
+    "_height": 320,
+    "_width": 480
+  },
+  "Triggers": [
+    {
+      "actions": [
+        {
+          "classname": "TScaleTo",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "ScaleX",
+              "value": 0.6
+            },
+            {
+              "key": "ScaleY",
+              "value": 0.6
+            },
+            {
+              "key": "Duration",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10008
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 4
+        }
+      ],
+      "id": 0
+    },
+    {
+      "actions": [
+        {
+          "classname": "TMoveBy",
+          "dataitems": [
+            {
+              "key": "Tag",
+              "value": 10007
+            },
+            {
+              "key": "x",
+              "value": -500
+            },
+            {
+              "key": "y",
+              "value": 0
+            },
+            {
+              "key": "Duration",
+              "value": 10
+            },
+            {
+              "key": "IsReverse",
+              "value": 0
+            }
+          ]
+        }
+      ],
+      "conditions": [],
+      "events": [
+        {
+          "id": 0
+        }
+      ],
+      "id": 1
+    }
+  ],
+  "Version": "1.2.0.0",
+  "components": [
+    {
+      "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCScene",
+      "name": "CCScene",
+      "scenename": "FishJoy2"
+    },
+    {
+      "__type": "ComSimpleAudioSurrogate:#EditorCommon.JsonModel.Component",
+      "classname": "CCBackgroundAudio",
+      "name": "CCBackgroundAudio",
+      "file": null,
+      "fileData": {
+        "path": "Misc/music_logo.mp3",
+        "plistFile": null,
+        "resourceType": 0
+      },
+      "loop": 0
+    }
+  ]
+}

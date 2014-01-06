@@ -218,28 +218,28 @@ function TouchableSpriteTest:onEnter()
 
     local listener1 = cc.EventListenerTouchOneByOne:create()
     listener1:setSwallowTouches(true)
-    listener1:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN )
-    listener1:registerScriptHandler(onTouchMoved,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_MOVED )
-    listener1:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED )
+    listener1:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener1:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener1:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
 
     local listener2 = listener1:clone()
-    listener2:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN)
-    listener2:registerScriptHandler(onTouchMoved,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_MOVED)
-    listener2:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED )
+    listener2:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    listener2:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED)
+    listener2:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener2, sprite2)
 
 
     local listener3 = listener1:clone()
-    listener3:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN )
-    listener3:registerScriptHandler(onTouchMoved,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_MOVED )
-    listener3:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED )
+    listener3:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener3:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener3:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener3, sprite3)
 
     local function removeAllTouchItem(tag, sender)
         sender:setString("Only Next item could be clicked")
-        eventDispatcher:removeEventListeners(cc.EVENTLISTENER_TOUCH_ONE_BY_ONE)
+        eventDispatcher:removeEventListeners(cc.EVENT_TOUCH_ONE_BY_ONE)
 
         local nextMenuItem = cc.MenuItemFont:create("Next")
         nextMenuItem:setFontSizeObj(16)
@@ -321,9 +321,9 @@ function TouchableSpriteWithFixedPriority:onEnter()
     self._listener = listener
     listener:setSwallowTouches(true)
     
-    listener:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN )
-    listener:registerScriptHandler(onTouchMoved,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_MOVED )
-    listener:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED )
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
 
     local eventDispatcher = self:getEventDispatcher()
     if self._useNodePriority then
@@ -457,8 +457,8 @@ function RemoveListenerWhenDispatchingTest:onEnter()
     listener1:setSwallowTouches(true)
     self:setUserObject(listener1)
 
-    listener1:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN )
-    listener1:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED )
+    listener1:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener1:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
 
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener1, sprite1)
@@ -643,8 +643,8 @@ function LabelKeyboardEventTest:onEnter()
     end
 
     local listener = cc.EventListenerKeyboard:create()
-    listener:registerScriptHandler(onKeyPressed, cc.HANDLERTYPE_EVENTLISTENER_KEYBOARD_PRESSED )
-    listener:registerScriptHandler(onKeyReleased, cc.HANDLERTYPE_EVENTLISTENER_KEYBOARD_RELEASE )
+    listener:registerScriptHandler(onKeyPressed, cc.Handler.EVENT_KEYBOARD_PRESSED )
+    listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED )
 
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, statusLabel)
@@ -795,9 +795,9 @@ function RemoveAndRetainNodeTest:onEnter()
 
     local listener1 = cc.EventListenerTouchOneByOne:create()
     listener1:setSwallowTouches(true)
-    listener1:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN)
-    listener1:registerScriptHandler(onTouchMoved,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_MOVED)
-    listener1:registerScriptHandler(onTouchEnded,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_ENDED)
+    listener1:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
+    listener1:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED)
+    listener1:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED)
     self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listener1, sprite)
 
     local function retainSprite()
@@ -869,7 +869,7 @@ function RemoveListenerAfterAddingTest:onEnter()
         end
 
         local listener = cc.EventListenerTouchOneByOne:create()
-        listener:registerScriptHandler(onTouchBegan, cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN)
+        listener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN)
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
         eventDispatcher:removeEventListener(listener)
     end
@@ -902,10 +902,10 @@ function RemoveListenerAfterAddingTest:onEnter()
         end
 
         local listener = cc.EventListenerTouchOneByOne:create()
-        listener:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN)
+        listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
         
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
-        eventDispatcher:removeEventListeners(cc.EVENTLISTENER_TOUCH_ONE_BY_ONE)
+        eventDispatcher:removeEventListeners(cc.EVENT_TOUCH_ONE_BY_ONE)
         
         addNextButton()
 
@@ -923,7 +923,7 @@ function RemoveListenerAfterAddingTest:onEnter()
         end
 
         local listener = cc.EventListenerTouchOneByOne:create()
-        listener:registerScriptHandler(onTouchBegan,cc.HANDLERTYPE_EVENTLISTENER_TOUCH_BEGAN)
+        listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
         
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
         eventDispatcher:removeAllEventListeners()

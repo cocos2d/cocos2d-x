@@ -35,6 +35,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Texture2D;
+class EventCustom;
+class EventListenerCustom;
 
 /**
  * @addtogroup textures
@@ -184,7 +186,7 @@ public:
     void drawQuads();
     /** listen the event that coming to foreground on Android
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
     /** whether or not the array buffer of the VBO needs to be updated*/
     inline bool isDirty(void) { return _dirty; }
@@ -235,6 +237,10 @@ protected:
     Texture2D* _texture;
     /** Quads that are going to be rendered */
     V3F_C4B_T2F_Quad* _quads;
+    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundlistener;
+#endif
 };
 
 // end of textures group

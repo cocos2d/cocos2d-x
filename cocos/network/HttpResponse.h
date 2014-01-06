@@ -28,6 +28,8 @@
 #include "cocos2d.h"
 #include "network/HttpRequest.h"
 
+NS_CC_BEGIN
+
 namespace network {
 
 /** 
@@ -178,5 +180,7 @@ protected:
 };
 
 }
+
+NS_CC_END
 
 #endif //__HTTP_RESPONSE_H__

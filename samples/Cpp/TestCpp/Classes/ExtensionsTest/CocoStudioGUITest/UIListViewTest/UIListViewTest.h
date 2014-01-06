@@ -33,13 +33,13 @@ public:
     UIListViewTest_Vertical();
     ~UIListViewTest_Vertical();
     bool init();
-    void selectedItemEvent(Object* pSender, ScrollviewEventType type);
+    void selectedItemEvent(Object* pSender, ListViewEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
     
-    __Array* _array;
+    std::vector<std::string> _array;
 };
 
 class UIListViewTest_Horizontal : public UIScene
@@ -48,13 +48,13 @@ public:
     UIListViewTest_Horizontal();
     ~UIListViewTest_Horizontal();
     bool init();
-    void selectedItemEvent(Object* pSender, ScrollviewEventType type);
+    void selectedItemEvent(Object* pSender, ListViewEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
-    gui::Label* _displayValueLabel;
+    gui::Text* _displayValueLabel;
     
-    __Array* _array;
+    std::vector<std::string> _array;
 };
 
 #endif /* defined(__TestCpp__UIListViewTest__) */

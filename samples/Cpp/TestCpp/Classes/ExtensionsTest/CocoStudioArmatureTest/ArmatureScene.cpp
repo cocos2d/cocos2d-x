@@ -147,7 +147,7 @@ void ArmatureTestScene::MainMenuCallback(Object *pSender)
     //TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    ArmatureDataManager::destoryInstance();
+    ArmatureDataManager::destroyInstance();
 }
 
 
@@ -272,7 +272,7 @@ std::string TestAsynchronousLoading::subtitle() const
 
 void TestAsynchronousLoading::restartCallback(Object* pSender)
 {
-    ArmatureDataManager::getInstance()->destoryInstance();
+    ArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
@@ -635,7 +635,7 @@ void TestParticleDisplay::onEnter()
 
     Bone *bone  = Bone::create("p1");
     bone->addDisplay(p1, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -643,7 +643,7 @@ void TestParticleDisplay::onEnter()
 
     bone  = Bone::create("p2");
     bone->addDisplay(p2, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -727,7 +727,7 @@ void TestUseMutiplePicture::onTouchesEnded(const std::vector<Touch*>&  touches, 
 {
     ++displayIndex;
     displayIndex = (displayIndex) % 8;
-    armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
+    armature->getBone("weapon")->changeDisplayWithIndex(displayIndex, true);
 }
 
 TestColliderDetector::~TestColliderDetector()
@@ -1094,10 +1094,9 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
 }
 
@@ -1231,7 +1230,7 @@ void Hero::changeMount(Armature *armature)
         //Add hero as a display to this bone
         bone->addDisplay(this, 0);
         //Change this bone's display
-        bone->changeDisplayByIndex(0, true);
+        bone->changeDisplayWithIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
         setPosition(Point(0,0));

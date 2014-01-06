@@ -31,6 +31,7 @@
 
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -72,21 +73,12 @@ public:
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
-    /**
-     * @js ctor
-     */
-    ParticleBatchNode();
+
     /**
      * @js NA
      * @lua NA
      */
     virtual ~ParticleBatchNode();
-
-    /** initializes the particle system with Texture2D, a capacity of particles */
-    bool initWithTexture(Texture2D *tex, int capacity);
-
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    bool initWithFile(const std::string& fileImage, int capacity);
 
     /** Inserts a child into the ParticleBatchNode */
     void insertChild(ParticleSystem* system, int index);
@@ -126,6 +118,18 @@ public:
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc(void) const override;
+    
+protected:
+    /**
+     * @js ctor
+     */
+    ParticleBatchNode();
+    
+    /** initializes the particle system with Texture2D, a capacity of particles */
+    bool initWithTexture(Texture2D *tex, int capacity);
+    
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
+    bool initWithFile(const std::string& fileImage, int capacity);
 
 private:
     void updateAllAtlasIndexes();
@@ -140,6 +144,8 @@ private:
 private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
+    // quad command
+    QuadCommand _quadCommand;
 };
 
 // end of particle_nodes group

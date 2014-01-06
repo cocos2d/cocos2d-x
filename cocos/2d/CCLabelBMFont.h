@@ -151,6 +151,7 @@ public:
     std::set<unsigned int>* getCharacterSet() const;
 private:
     std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
+	std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
@@ -233,7 +234,7 @@ public:
 
     virtual const std::string& getString() const override;
     virtual void setCString(const char *label);
-    virtual void setAnchorPoint(const Point& var);
+    virtual void setAnchorPoint(const Point& var) override;
     virtual void updateLabel();
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);

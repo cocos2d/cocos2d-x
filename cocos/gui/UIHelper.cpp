@@ -39,8 +39,8 @@ Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
         return root;
     }
     const auto& arrayRootChildren = root->getChildren();
-    int length = arrayRootChildren.size();
-    for (int i=0;i<length;i++)
+    ssize_t length = arrayRootChildren.size();
+    for (ssize_t i=0;i<length;i++)
     {
         Widget* child = static_cast<Widget*>(arrayRootChildren.at(i));
         Widget* res = seekWidgetByTag(child,tag);

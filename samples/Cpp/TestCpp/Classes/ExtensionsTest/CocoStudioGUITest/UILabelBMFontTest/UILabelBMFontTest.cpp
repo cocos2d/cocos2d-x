@@ -11,7 +11,7 @@ bool UILabelBMFontTest::init()
     {
         Size widgetSize = _widget->getSize();
         
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("LabelBMFont");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -20,7 +20,7 @@ bool UILabelBMFontTest::init()
         _uiLayer->addChild(alert);
         
         // Create the LabelBMFont
-        gui::LabelBMFont* labelBMFont = gui::LabelBMFont::create();
+        gui::TextBMFont* labelBMFont = gui::TextBMFont::create();
         labelBMFont->setFntFile("cocosgui/bitmapFontTest2.fnt");
         labelBMFont->setText("BMFont");
         labelBMFont->setPosition(Point(widgetSize.width / 2, widgetSize.height / 2.0f + labelBMFont->getSize().height / 8.0f));

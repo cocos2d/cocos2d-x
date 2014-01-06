@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
+#include "renderer/CCQuadCommand.h"
 
 namespace cocostudio {
 
@@ -74,6 +75,7 @@ protected:
     Armature *_armature;
     kmMat4 _skinTransform;
     std::string _displayName;
+    cocos2d::QuadCommand _quadCommand;     // quad command
 };
 
 }

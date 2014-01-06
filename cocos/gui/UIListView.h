@@ -88,7 +88,7 @@ public:
     /**
      * Insert a default item(create by a cloned model) into listview.
      */
-    void insertDefaultItem(int index);
+    void insertDefaultItem(ssize_t index);
     
     /**
      * Push back custom item into listview.
@@ -98,7 +98,7 @@ public:
     /**
      * Insert custom item into listview.
      */
-    void insertCustomItem(Widget* item, int index);
+    void insertCustomItem(Widget* item, ssize_t index);
     
     /**
      *  Removes the last item of listview.
@@ -110,7 +110,7 @@ public:
      *
      * @param index of item.
      */
-    void removeItem(int index);
+    void removeItem(ssize_t index);
     
     void removeAllItems();
     
@@ -121,7 +121,7 @@ public:
      *
      * @return the item widget.
      */
-    Widget* getItem(unsigned int index);
+    Widget* getItem(ssize_t index);
     
     /**
      * Returns the item container.
@@ -135,7 +135,7 @@ public:
      *
      * @return the index of item.
      */
-    unsigned int getIndex(Widget* item) const;
+    ssize_t getIndex(Widget* item) const;
     
     /**
      * Changes the gravity of listview.
@@ -152,7 +152,7 @@ public:
     
     virtual void sortAllChildren() override;
     
-    int getCurSelectedIndex() const;
+    ssize_t getCurSelectedIndex() const;
     
     void addEventListenerListView(Object* target, SEL_ListViewEvent selector);
     
@@ -200,7 +200,7 @@ protected:
     float _itemsMargin;
     Object*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
-    int _curSelectedIndex;
+    ssize_t _curSelectedIndex;
     bool _refreshViewDirty;
 };
 

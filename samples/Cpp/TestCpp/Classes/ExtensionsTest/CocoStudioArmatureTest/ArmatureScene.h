@@ -297,6 +297,8 @@ public:
 	Rect rect;
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer

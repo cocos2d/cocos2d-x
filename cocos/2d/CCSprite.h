@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
+#include "renderer/CCQuadCommand.h"
 #include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
@@ -229,8 +230,8 @@ public:
     /**
      * Sets a new SpriteFrame to the Sprite.
      */
-    virtual void setSpriteFrame(SpriteFrame* newFrame);
     virtual void setSpriteFrame(const std::string &spriteFrameName);
+    virtual void setSpriteFrame(SpriteFrame* newFrame);
 
     /** @deprecated Use `setSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
@@ -545,6 +546,7 @@ protected:
     //
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
+    QuadCommand      _quadCommand;          /// quad command
 
     //
     // Shared data

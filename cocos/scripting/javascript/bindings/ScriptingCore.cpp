@@ -54,6 +54,8 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+using namespace cocos2d;
+
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;
@@ -1158,6 +1160,14 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     }
     
     return 0;
+}
+
+bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
+{
+    jsval args[2];
+    args[0] = int32_to_jsval(_cx, static_cast<int>(type));
+    args[1] = std_string_to_jsval(_cx, str);
+    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
 }
 
 #pragma mark - Debug

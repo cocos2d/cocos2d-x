@@ -41,7 +41,6 @@ NS_CC_BEGIN
 class Timer;
 class Layer;
 class MenuItem;
-class NotificationCenter;
 class CallFunc;
 class Acceleration;
 
@@ -201,7 +200,6 @@ enum ScriptEventType
 {
     kNodeEvent = 0,
     kMenuClickedEvent,
-    kNotificationEvent,
     kCallFuncEvent,
     kScheduleEvent,
     kTouchEvent,
@@ -210,16 +208,6 @@ enum ScriptEventType
     kAccelerometerEvent,
     kControlEvent,
     kCommonEvent,
-    kTableViewEvent,//Now it's only used in LuaBinding
-    kAssetsManagerEvent,//Now it's only used in Lua Binding
-    kCocoStudioEventListener,//Now it's only used in Lua Binding
-    kArmatureWrapper,//Now it's only used in Lua Binding
-    kEventListenerAcc,//Now it's only used in Lua Binding
-    kEventListenerKeyboard,//Now it's only used in Lua Binding
-    kEventListenerTouch,//Now it's only used in Lua Binding
-    kEventListenerTouches,//Now it's only used in Lua Binding
-    kEventListenerMouse,//Now it's only used in Lua Binding
-    kEventListenerCustom,////Now it's only used in Lua Binding
 };
 
 struct BasicScriptData
@@ -438,6 +426,14 @@ public:
      * @lua NA
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    enum class ConfigType
+    {
+        NONE,
+        COCOSTUDIO
+    };
+    /** Parse configuration file */
+    virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
 /**

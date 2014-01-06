@@ -37,7 +37,6 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "CCNotificationCenter.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
@@ -133,7 +132,7 @@ bool Director::init(void)
     _paused = false;
    
     // purge ?
-    _purgeDirecotorInNextLoop = false;
+    _purgeDirectorInNextLoop = false;
 
     _winSizeInPoints = Size::ZERO;    
 
@@ -719,7 +718,7 @@ void Director::popToSceneStackLevel(int level)
 
 void Director::end()
 {
-    _purgeDirecotorInNextLoop = true;
+    _purgeDirectorInNextLoop = true;
 }
 
 void Director::purgeDirector()
@@ -768,7 +767,6 @@ void Director::purgeDirector()
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    NotificationCenter::destroyInstance();
     
     GL::invalidateStateCache();
     
@@ -1079,9 +1077,9 @@ void DisplayLinkDirector::startAnimation()
 
 void DisplayLinkDirector::mainLoop()
 {
-    if (_purgeDirecotorInNextLoop)
+    if (_purgeDirectorInNextLoop)
     {
-        _purgeDirecotorInNextLoop = false;
+        _purgeDirectorInNextLoop = false;
         purgeDirector();
     }
     else if (! _invalid)

@@ -3,6 +3,7 @@
 
 //#include "cocos2d.h"
 #include "../testBasic.h"
+#include "renderer/CCCustomCommand.h"
 
 class MenuLayer : public Layer
 {
@@ -51,6 +52,7 @@ public:
 
     static Box2DView* viewWithEntryID(int entryId);
 protected:
+    CustomCommand _customCmd;
     void onDraw();
 };
 

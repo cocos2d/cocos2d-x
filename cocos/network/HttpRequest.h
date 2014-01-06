@@ -27,12 +27,14 @@
 
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
 namespace network {
 
 class HttpClient;
 class HttpResponse;
 typedef void (cocos2d::Object::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
-#define httpresponse_selector(_SELECTOR) (network::SEL_HttpResponse)(&_SELECTOR)
+#define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
 /** 
  @brief defines the object which users must packed for HttpClient::send(HttpRequest*) method.
@@ -230,5 +232,7 @@ protected:
 };
 
 }
+
+NS_CC_END
 
 #endif //__HTTP_REQUEST_H__

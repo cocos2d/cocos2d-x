@@ -26,7 +26,7 @@
 #define __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 
 #include "ccConfig.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <vector>
 #include "chipmunk.h"
@@ -49,7 +49,7 @@ public:
     void addJoint(PhysicsJointInfo& joint);
     void removeJoint(PhysicsJointInfo& joint);
     void setGravity(const Vect& gravity);
-    inline bool isLocked() { return static_cast<bool>(_space->locked_private); }
+    inline bool isLocked() { return 0 == _space->locked_private ? false : true; }
     inline void step(float delta) { cpSpaceStep(_space, delta); }
     
 private:

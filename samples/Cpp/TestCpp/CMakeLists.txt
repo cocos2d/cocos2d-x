@@ -59,6 +59,8 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
@@ -125,6 +127,7 @@ set(SAMPLE_SRC
   Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
+  Classes/UnitTest/UnitTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   Classes/AppDelegate.cpp
@@ -163,4 +166,3 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
   )
-

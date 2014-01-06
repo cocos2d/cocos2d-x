@@ -58,6 +58,8 @@ extern "C" {
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_spine_auto.hpp"
 #include "lua_cocos2dx_spine_manual.hpp"
+#include "lua_cocos2dx_gui_auto.hpp"
+#include "lua_cocos2dx_gui_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -148,11 +150,13 @@ bool LuaStack::init(void)
     register_cocos2dx_extension_CCBProxy(_state);
     register_cocos2dx_event_releated(_state);
     tolua_opengl_open(_state);
+    register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     register_all_cocos2dx_coco_studio_manual(_state);
+    register_all_cocos2dx_gui_manual(_state);
     register_all_cocos2dx_spine(_state);
     register_all_cocos2dx_spine_manual(_state);
     register_glnode_manual(_state);
@@ -574,6 +578,74 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
         }
     }
     lua_settop(_state, 0);
+    return 1;
+}
+
+int LuaStack::executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func)
+{
+    if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
+    {
+        if (numArgs > 0)
+        {
+            lua_insert(_state, -(numArgs + 1));                        /* L: ... func arg1 arg2 ... */
+        }
+        
+        int functionIndex = -(numArgs + 1);
+        
+        if (!lua_isfunction(_state, functionIndex))
+        {
+            CCLOG("value at stack [%d] is not function", functionIndex);
+            lua_pop(_state, numArgs + 1); // remove function and arguments
+            return 0;
+        }
+        
+        int traceCallback = 0;
+        lua_getglobal(_state, "__G__TRACKBACK__");                        /* L: ... func arg1 arg2 ... G */
+        if (!lua_isfunction(_state, -1))
+        {
+            lua_pop(_state, 1);                                           /* L: ... func arg1 arg2 ... */
+        }
+        else
+        {
+            lua_insert(_state, functionIndex - 1);                         /* L: ... G func arg1 arg2 ... */
+            traceCallback = functionIndex - 1;
+        }
+        
+        int error = 0;
+        ++_callFromLua;
+        error = lua_pcall(_state, numArgs, numResults, traceCallback);     /* L: ... [G] ret1 ret2 ... retResults*/
+        --_callFromLua;
+        
+        if (error)
+        {
+            if (traceCallback == 0)
+            {
+                CCLOG("[LUA ERROR] %s", lua_tostring(_state, - 1));        /* L: ... error */
+                lua_pop(_state, 1);                                        // remove error message from stack
+            }
+            else                                                           /* L: ... G error */
+            {
+                lua_pop(_state, 2);                                        // remove __G__TRACKBACK__ and error message from stack
+            }
+            return 0;
+        }
+        
+        // get return value,don't pass LUA_MULTRET to numResults,
+        do {
+            
+            if (numResults <= 0 || nullptr == func)
+                break;
+            
+            func(_state, numResults);
+            
+        } while (0);
+        
+        if (traceCallback)
+        {
+            lua_pop(_state, 1);                                          // remove __G__TRACKBACK__ from stack      /* L: ... */
+        }
+    }
+    
     return 1;
 }
 
