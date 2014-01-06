@@ -26,5 +26,6 @@ payload['pull_request']=pr
 jenkins_trigger_url="http://ci.cocos2d-x.org:8000/job/cocos-2dx-pull-request-build/buildWithParameters?token="+access_token
 
 #send trigger and payload
-post_data = "payload:"+json.dumps(payload
+post_data = {'payload':""}
+post_data['payload']=json.dumps(payload)
 requests.post(jenkins_trigger_url, data=post_data)
