@@ -187,12 +187,6 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
@@ -205,13 +199,7 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp">
@@ -232,9 +220,6 @@
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
@@ -242,24 +227,6 @@
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesWeaponScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesRegisterScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesPageScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesMapScene.cpp">
-      <Filter>Classes\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIExamplesEquipScene.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
@@ -386,6 +353,12 @@
       <Filter>Classes\Tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
+      <Filter>Classes\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
       <Filter>Classes\Tests</Filter>
     </ClCompile>
   </ItemGroup>

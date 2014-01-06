@@ -275,7 +275,6 @@
     <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\controller.h" />
-    <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
@@ -425,7 +424,6 @@
     <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\controller.cpp" />
-    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
@@ -527,9 +525,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
       <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos2dx\platform\third_party\wp8\libcurl\libcurl.vcxproj">
-      <Project>{fca0ffe5-446b-45c3-9693-bfccfa7a8b3b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
