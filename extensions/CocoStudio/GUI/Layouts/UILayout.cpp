@@ -78,6 +78,24 @@ Layout* Layout::create()
     CC_SAFE_DELETE(layout);
     return NULL;
 }
+    
+void Layout::onEnter()
+{
+    Widget::onEnter();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onEnter();
+    }
+}
+
+void Layout::onExit()
+{
+    Widget::onExit();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onExit();
+    }
+}
 
 bool Layout::init()
 {
@@ -270,13 +288,19 @@ void Layout::setClippingEnabled(bool able)
             {
                 glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
                 _clippingStencil = CCDrawNode::create();
-                _clippingStencil->onEnter();
+                if (m_bRunning)
+                {
+                    _clippingStencil->onEnter();
+                }
                 _clippingStencil->retain();
                 setStencilClippingSize(_size);
             }
             else
             {
-                _clippingStencil->onExit();
+                if (m_bRunning)
+                {
+                    _clippingStencil->onExit();
+                }
                 _clippingStencil->release();
                 _clippingStencil = NULL;
             }
