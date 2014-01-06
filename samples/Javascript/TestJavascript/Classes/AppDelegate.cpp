@@ -59,7 +59,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         "res/scenetest/AttributeComponentTest",
         "res/scenetest/BackgroundComponentTest",
         "res/scenetest/EffectComponentTest",
-        "res/scenetest/loadSceneEdtiorFileTest",
+        "res/scenetest/LoadSceneEdtiorFileTest",
         "res/scenetest/ParticleComponentTest",
         "res/scenetest/SpriteComponentTest",
         "res/scenetest/TmxMapComponentTest",
