@@ -1,6 +1,6 @@
-require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/acts"
-require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/cons"
-require "luascript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/eventDef"
+require "luaScript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/acts"
+require "luaScript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/cons"
+require "luaScript/CocoStudioTest/CocoStudioSceneTest/TriggerCode/eventDef"
 
 local SceneEditorTestLayer = class("SceneEditorTestLayer")
 SceneEditorTestLayer._curNode = nil
@@ -16,7 +16,7 @@ function SceneEditorTestLayer.extend(target)
 end
 
 function SceneEditorTestLayer:createGameScene()
-    local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/FishJoy2.json")
+    local node = SceneReader:sharedSceneReader():createNodeWithSceneFile("scenetest/LoadSceneEdtiorFileTest/FishJoy2.json")
     if nil == node then
         return
     end
