@@ -477,5 +477,4 @@ void runAllocPerformanceTest()
     scene->initWithQuantityOfNodes(kNodesIncrease);
     
     Director::getInstance()->replaceScene(scene);
-    scene->release();
 }
