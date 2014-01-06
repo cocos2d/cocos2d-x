@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/AttributeComponentTest");
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/BackgroundComponentTest");
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/EffectComponentTest");
-    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/loadSceneEdtiorFileTest");
+    CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/LoadSceneEdtiorFileTest");
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/ParticleComponentTest");
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/SpriteComponentTest");
     CCFileUtils::sharedFileUtils()->addSearchPath("res/scenetest/TmxMapComponentTest");
