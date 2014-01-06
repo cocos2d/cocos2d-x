@@ -702,6 +702,7 @@ Developers:
         
     daltomi
         Fixed a typo in Director class.
+        Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
     
 Retired Core Developers:
     WenSheng Yang
