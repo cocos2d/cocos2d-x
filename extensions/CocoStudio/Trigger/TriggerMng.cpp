@@ -45,7 +45,7 @@ TriggerMng::~TriggerMng(void)
 {
     removeAll();
     CC_SAFE_DELETE(_eventTriggers);
-	CC_SAFE_RELEASE(_triggerObjs);
+	CC_SAFE_RELEASE_NULL(_triggerObjs);
 
 	removeAllArmatureMovementCallBack();
 	CC_SAFE_DELETE(_movementDispatches);
