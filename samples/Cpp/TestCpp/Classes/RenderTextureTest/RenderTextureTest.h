@@ -32,7 +32,7 @@ public:
 
 private:
     RenderTexture *_target;
-    Sprite *_brush;
+    Vector<Sprite*> _brushs;
 };
 
 class RenderTextureIssue937 : public RenderTextureTest

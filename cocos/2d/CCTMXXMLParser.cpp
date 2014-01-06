@@ -57,7 +57,7 @@ TMXLayerInfo::~TMXLayerInfo()
     }
 }
 
-ValueMap TMXLayerInfo::getProperties()
+ValueMap& TMXLayerInfo::getProperties()
 {
     return _properties;
 }
