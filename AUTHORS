@@ -455,6 +455,9 @@ Developers:
         
     hbbalfred
         Fixed a bug that cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+        
+    seagullua
+        Fixes the font rendering on Windows
 
 Retired Core Developers:
     WenSheng Yang
