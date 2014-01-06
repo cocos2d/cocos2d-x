@@ -11,8 +11,8 @@
 
 namespace cocos2d
 {
-
-    // C3DNode dirty flags
+// TODO: replace below macro to class's const static member.
+// C3DNode dirty flags
 #define NODE_DIRTY_WORLD 1
 #define NODE_DIRTY_BOUNDS_AABB 2
 #define NODE_DIRTY_BOUNDS_OBB 4
@@ -28,6 +28,7 @@ class C3DMeshSkin;
 class C3DAABB;
 class C3DOBB;
 
+// TODO: It is better not use multiple inheritance, use composition instead.
 /**
  * Defines a basic hierachial structure of transformation spaces.
  */
@@ -65,6 +66,7 @@ public:
         virtual void transformChanged(Transform* transform) = 0;
     };
 
+	// TODO: Use enum class instead later
     /**
      * Defines the types of nodes.
      */

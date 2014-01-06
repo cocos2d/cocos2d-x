@@ -4,7 +4,7 @@
 #include "C3DTexture.h"
 #include "C3DSampler.h"
 #include "C3DRenderState.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 
 #define OPENGL_ES_DEFINE  "#define OPENGL_ES"
@@ -115,7 +115,7 @@ void replaceIncludes(const char* source, std::string& out)
 	}
 }
 
-bool C3DEffect::load(C3DElementNode* node)
+bool C3DEffect::load(ElementNode* node)
 {
 	C3DResource::load(node);
 
@@ -409,42 +409,42 @@ void C3DEffect::bindValue(Uniform* uniform, const int* values, unsigned int coun
 	GL_ASSERT( glUniform1iv(uniform->_location, count, values) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DMatrix& value)
+void C3DEffect::bindValue(Uniform* uniform, const Matrix& value)
 {
 	GL_ASSERT( glUniformMatrix4fv(uniform->_location, 1, GL_FALSE, value.m) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DMatrix* values, unsigned int count)
+void C3DEffect::bindValue(Uniform* uniform, const Matrix* values, unsigned int count)
 {
 	GL_ASSERT( glUniformMatrix4fv(uniform->_location, count, GL_FALSE, (GLfloat*)values) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector2& value)
+void C3DEffect::bindValue(Uniform* uniform, const Vector2& value)
 {
 	GL_ASSERT( glUniform2f(uniform->_location, value.x, value.y) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector2* values, unsigned int count)
+void C3DEffect::bindValue(Uniform* uniform, const Vector2* values, unsigned int count)
 {
 	GL_ASSERT( glUniform2fv(uniform->_location, count, (GLfloat*)values) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector3& value)
+void C3DEffect::bindValue(Uniform* uniform, const Vector3& value)
 {
 	GL_ASSERT( glUniform3f(uniform->_location, value.x, value.y, value.z) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector3* values, unsigned int count)
+void C3DEffect::bindValue(Uniform* uniform, const Vector3* values, unsigned int count)
 {
 	GL_ASSERT( glUniform3fv(uniform->_location, count, (GLfloat*)values) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector4& value)
+void C3DEffect::bindValue(Uniform* uniform, const Vector4& value)
 {
 	GL_ASSERT( glUniform4f(uniform->_location, value.x, value.y, value.z, value.w) );
 }
 
-void C3DEffect::bindValue(Uniform* uniform, const C3DVector4* values, unsigned int count)
+void C3DEffect::bindValue(Uniform* uniform, const Vector4* values, unsigned int count)
 {
 	GL_ASSERT( glUniform4fv(uniform->_location, count, (GLfloat*)values) );
 }
@@ -506,9 +506,9 @@ C3DEffect* Uniform::getEffect() const
 	return _effect;
 }
 
-const char* Uniform::getName() const
+const std::string Uniform::getName() const
 {
-	return _name.c_str();
+	return _name;
 }
 
 const GLenum Uniform::getType() const

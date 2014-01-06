@@ -6,7 +6,7 @@
 
 NS_CC_BEGIN
 
-class C3DElementNode;
+class ElementNode;
 class C3DEffect;
 
 /**

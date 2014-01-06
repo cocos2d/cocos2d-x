@@ -3,7 +3,7 @@
 #include "C3DVertexDeclaration.h"
 #include "C3DEffect.h"
 #include "MaterialParameter.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 #include "C3DSampler.h"
 #include "C3DRenderBlock.h"
 
@@ -108,7 +108,7 @@ void C3DPass::setupParametersFromEffect()
 	for ( unsigned int i = 0; i < _effect->getUniformCount(); i++)
 	{
 		Uniform* uniform = _effect->getUniform(i);
-		MaterialParameter* parameter = findParameter(uniform->getName(), true);
+		MaterialParameter* parameter = findParameter(uniform->getName().c_str(), true);
 		// already in material script, skip
 		if (parameter)
 		{			
@@ -118,16 +118,16 @@ void C3DPass::setupParametersFromEffect()
 		/* if (getAutoBinding(uniform->getName()))
 		continue;*/
 
-		C3DRenderState::AutoBinding binding = C3DRenderState::getAutoBindingOfVariable(uniform->getName());
+		C3DRenderState::AutoBinding binding = C3DRenderState::getAutoBindingOfVariable(uniform->getName().c_str());
 
 		if (binding)
 		{
-			setParameterAutoBinding(uniform->getName(), binding);
+			setParameterAutoBinding(uniform->getName().c_str(), binding);
 		}
 		else
 		{
 			// add parameter in shader but not in material script
-			parameter = new MaterialParameter(uniform->getName());
+			parameter = new MaterialParameter(uniform->getName().c_str());
 			_parameters.push_back(parameter);
 
 			// set default value
@@ -137,16 +137,16 @@ void C3DPass::setupParametersFromEffect()
 				parameter->setValue(0.0f);
 				break;
 			case GL_FLOAT_VEC2:
-				parameter->setValue(C3DVector2(1.0f, 1.0f));
+				parameter->setValue(Vector2(1.0f, 1.0f));
 				break;
 			case GL_FLOAT_VEC3:
-				parameter->setValue(C3DVector3(1.0f, 1.0f, 1.0f));
+				parameter->setValue(Vector3(1.0f, 1.0f, 1.0f));
 				break;
 			case GL_FLOAT_VEC4:
-				parameter->setValue(C3DVector4(1.0f, 1.0f, 1.0f, 1.0f));
+				parameter->setValue(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 				break;
 			case GL_FLOAT_MAT4:
-				parameter->setValue(C3DMatrix::identity());
+				parameter->setValue(Matrix::identity());
 				break;
 			case GL_INT:
 				parameter->setValue((int)0);
@@ -196,7 +196,7 @@ void C3DPass::setupParametersFromEffect()
 
 }
 
-bool C3DPass::load(C3DElementNode* node)
+bool C3DPass::load(ElementNode* node)
 {
 	this->_id = node->getNodeName();
 	// Fetch shader info required to create the effect of this technique.
@@ -263,7 +263,7 @@ bool C3DPass::load(C3DElementNode* node)
 	return true;
 }
 
-bool C3DPass::save(C3DElementNode* node)
+bool C3DPass::save(ElementNode* node)
 {  
 	node->setElement("vertexShader", &this->_vshPath);
 	node->setElement("fragmentShader", &this->_fshPath);

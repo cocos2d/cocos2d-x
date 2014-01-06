@@ -7,7 +7,7 @@
 NS_CC_BEGIN
 
 class C3DTexture;
-class C3DElementNode;
+class ElementNode;
 
 /**
 * Defnies a texture sampler.
@@ -80,8 +80,8 @@ public:
 
 	void setTexture(const char* path, bool generateMipmaps = false);
 
-	bool load(C3DElementNode* node);
-	bool save(C3DElementNode* node);
+	bool load(ElementNode* node);
+	bool save(ElementNode* node);
 
 private:
 	

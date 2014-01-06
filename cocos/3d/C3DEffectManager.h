@@ -3,10 +3,10 @@
 
 #include "Base.h"
 
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
-#include "C3DMatrix.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
+#include "math/Matrix.h"
 
 #include <string>
 #include <map>
@@ -15,7 +15,7 @@
 
 NS_CC_BEGIN
 
-class C3DElementNode;
+class ElementNode;
 class C3DEffect;
 
 /**
@@ -45,7 +45,7 @@ public:
 	* @param fshPath The path to the fragment shader file.
 	* @param defines The precompile defines.
 	*/
-	void preload(C3DElementNode* node);
+	void preload(ElementNode* node);
 
 	static std::string generateID( std::string& vshPath, std::string& fshPath, std::string& defines);
 private:
@@ -54,7 +54,7 @@ private:
 
 	~C3DEffectManager();	
 
-	void loadAllEffect(C3DElementNode* effectNodes);	
+	void loadAllEffect(ElementNode* effectNodes);	
 
 
 

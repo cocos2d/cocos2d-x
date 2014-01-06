@@ -1,10 +1,10 @@
 #ifndef MATERIALPARAMETER_H_
 #define MATERIALPARAMETER_H_
 
-#include "C3DVector2.h"
-#include "C3DVector3.h"
-#include "C3DVector4.h"
-#include "C3DMatrix.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
+#include "math/Matrix.h"
 
 #include "C3DEffect.h"
 #include "cocos2d.h"
@@ -60,44 +60,44 @@ public:
 	void setValue(const int* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector2 value in this parameter.
+	* Stores a copy of the specified Vector2 value in this parameter.
 	*/
-	void setValue(const C3DVector2& value);
+	void setValue(const Vector2& value);
 
 	/**
-	* Stores a pointer/array of C3DVector2 values in this parameter.
+	* Stores a pointer/array of Vector2 values in this parameter.
 	*/
-	void setValue(const C3DVector2* values, unsigned int count = 1);
+	void setValue(const Vector2* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector3 value in this parameter.
+	* Stores a copy of the specified Vector3 value in this parameter.
 	*/
-	void setValue(const C3DVector3& value);
+	void setValue(const Vector3& value);
 
 	/**
-	* Stores a pointer/array of C3DVector3 values in this parameter.
+	* Stores a pointer/array of Vector3 values in this parameter.
 	*/
-	void setValue(const C3DVector3* values, unsigned int count = 1);
+	void setValue(const Vector3* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DVector4 value in this parameter.
+	* Stores a copy of the specified Vector4 value in this parameter.
 	*/
-	void setValue(const C3DVector4& value);
+	void setValue(const Vector4& value);
 
 	/**
-	* Stores a pointer/array of C3DVector4 values in this parameter.
+	* Stores a pointer/array of Vector4 values in this parameter.
 	*/
-	void setValue(const C3DVector4* values, unsigned int count = 1);
+	void setValue(const Vector4* values, unsigned int count = 1);
 
 	/**
-	* Stores a copy of the specified C3DMatrix value in this parameter.
+	* Stores a copy of the specified Matrix value in this parameter.
 	*/
-	void setValue(const C3DMatrix& value);
+	void setValue(const Matrix& value);
 
 	/**
-	* Stores a pointer/array of C3DMatrix values in this parameter.
+	* Stores a pointer/array of Matrix values in this parameter.
 	*/
-	void setValue(const C3DMatrix* values, unsigned int count = 1);
+	void setValue(const Matrix* values, unsigned int count = 1);
 
 	/**
 	* Sets the value of this parameter to the specified texture sampler.
@@ -132,17 +132,17 @@ public:
 		unsigned int (ClassType::*countMethod)(unsigned int index),unsigned int (ClassType::*indexMethod)());
 
 
-	Uniform* getUniform();
+	Uniform* getUniform() const;
 
 	MaterialParameter* clone() const;
 
-	int getType(){return _type;}
-	float getFloatValue(){return _value.floatValue;}
-	int getIntValue(){return _value.intValue;}
-	float* getFloatPtrValue(){return _value.floatPtrValue;}
-	int* getIntPtrValue(){return _value.intPtrValue;}
-	const C3DSampler* getSamplerValue(){return _value.samplerValue;}
-	const C3DTexture* getTextureValue(){return _value.textureValue;}
+	int getType() const {return _type;}
+	float getFloatValue() const {return _value.floatValue;}
+	int getIntValue() const {return _value.intValue;}
+	float* getFloatPtrValue() const {return _value.floatPtrValue;}
+	int* getIntPtrValue() const {return _value.intPtrValue;}
+	const C3DSampler* getSamplerValue() const {return _value.samplerValue;}
+	const C3DTexture* getTextureValue() const {return _value.textureValue;}
 
 public:
 	enum
@@ -273,7 +273,7 @@ _parameter(param), _instance(instance), _valueMethod(valueMethod)
 }
 
 template <class ClassType, class ParameterType>
-MaterialParameter::MethodBinding* cocos3d::MaterialParameter::MethodValueBinding<ClassType, ParameterType>::clone() const
+MaterialParameter::MethodBinding* cocos2d::MaterialParameter::MethodValueBinding<ClassType, ParameterType>::clone() const
 {
 	MethodValueBinding<ClassType, ParameterType>* other = new MethodValueBinding<ClassType, ParameterType>(_parameter, _instance, _valueMethod);
 	return other;
@@ -300,7 +300,7 @@ void MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::bindValue(
 }
 
 template <class ClassType, class ParameterType>
-MaterialParameter::MethodBinding* cocos3d::MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::clone() const
+MaterialParameter::MethodBinding* cocos2d::MaterialParameter::MethodArrayBinding<ClassType, ParameterType>::clone() const
 {
 	MethodArrayBinding<ClassType, ParameterType>* other = new MethodArrayBinding<ClassType, ParameterType>(_parameter, _instance, _valueMethod, _countMethod, _indexMethod);
 	return other;
