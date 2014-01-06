@@ -168,6 +168,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
@@ -311,6 +313,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
