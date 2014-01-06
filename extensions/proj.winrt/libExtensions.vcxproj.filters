@@ -909,7 +909,7 @@
     <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h">
       <Filter>CocoStudio\Trigger</Filter>
     </ClInclude>
-    <ClInclude Include=“..\CocoStudio\Components\CCComBase.h">
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h">
       <Filter>CocoStudio\Components</Filter>
     </ClInclude>
   </ItemGroup>
