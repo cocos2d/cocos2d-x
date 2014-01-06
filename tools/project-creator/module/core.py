@@ -197,7 +197,7 @@ class CocosProject:
                 else:
                     if os.path.exists(dstfile):
                         os.remove(dstfile)
-                    shutil.copyfile(srcfile, dstfile)
+                    shutil.copy(srcfile, dstfile)
             self.step = self.step + 1
             if self.callbackfun and self.step%int(self.totalStep/50) == 0:
                 self.callbackfun(self.step,self.totalStep,fileList[index])
