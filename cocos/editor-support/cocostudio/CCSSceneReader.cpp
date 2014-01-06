@@ -146,7 +146,7 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 				}
 				else
 				{
-					CC_SAFE_RELEASE(com);
+					CC_SAFE_RELEASE_NULL(com);
 				}
 			}
             if(_fnSelector != nullptr)
