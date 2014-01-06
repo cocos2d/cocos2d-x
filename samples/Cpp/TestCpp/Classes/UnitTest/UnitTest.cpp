@@ -343,7 +343,9 @@ void TemplateMapTest::onEnter()
     Map<std::string, Node*> map1;
     CCASSERT(map1.empty(), "");
     CCASSERT(map1.size() == 0, "");
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     CCASSERT(map1.bucketCount() == 0, "");
+#endif
     CCASSERT(map1.keys().empty(), "");
     CCASSERT(map1.keys(Node::create()).empty(), "");
 
