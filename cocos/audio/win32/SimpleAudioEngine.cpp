@@ -1,7 +1,15 @@
+/****************************************************************************
+http://www.openaudioengine.com/
+
+http://post.justbilt.com/2013/11/29/cocos2dx_simpleaudio/
+****************************************************************************/
+
+
 #include "SimpleAudioEngine.h"
 
 #include <map>
 #include <cstdlib>
+
 
 #include "MciPlayer.h"
 #include "cocos2d.h"
@@ -12,31 +20,53 @@ using namespace std;
 namespace CocosDenshion {
 
 typedef map<unsigned int, MciPlayer *> EffectList;
+typedef EffectList::iterator EffectListIt;
 typedef pair<unsigned int, MciPlayer *> Effect;
 
-static char     s_szRootPath[MAX_PATH];
-static DWORD    s_dwRootLen;
-static char     s_szFullPath[MAX_PATH];
-
 static std::string _FullPath(const char * szPath);
-static unsigned int _Hash(const char *key);
+static unsigned int _StreameID();
 
 #define BREAK_IF(cond)  if (cond) break;
 
 static EffectList& sharedList()
 {
-    static EffectList s_List;
-    return s_List;
+    static EffectList _effectList;
+    return _effectList;
 }
 
 static MciPlayer& sharedMusic()
 {
-    static MciPlayer s_Music;
-    return s_Music;
+    static MciPlayer _music;
+    return _music;
 }
+
 
 SimpleAudioEngine::SimpleAudioEngine()
 {
+	HINSTANCE lib = LoadLibrary("OpenAE.dll"); //Load Engine   
+
+
+	// Get entry-function pointer for render device
+	oae::Renderer* (*driver)(const char*,const unsigned&) = nullptr;
+	driver = (oae::Renderer*(*)(const char*,const unsigned&)) 
+		GetProcAddress(lib, "GetRenderDevice"); 
+
+	unsigned choice=0; 
+
+	// Get entry-function pointer for enum device
+	const char* (*available)(unsigned int&) = nullptr;
+	available = (const char*(*)(unsigned int&)) GetProcAddress(lib, "GetDeviceName"); 
+
+	//enumerate and display device
+	for(unsigned j=0; available(j)!=nullptr; j++)
+	{
+		log(available(j));
+	} 
+
+	MciPlayer::_device = driver(available(choice), 48000);
+	oae::Listener* lis = MciPlayer::_device->GetListener();
+
+	MciPlayer::_lib=lib;
 }
 
 SimpleAudioEngine::~SimpleAudioEngine()
@@ -61,6 +91,9 @@ void SimpleAudioEngine::end()
         p++;
     }   
     sharedList().clear();
+
+	MciPlayer::_device->ReleaseRenderer(); // release device
+	FreeLibrary(MciPlayer::_lib); // release engine
     return;
 }
 
@@ -75,7 +108,16 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedMusic().Open(_FullPath(pszFilePath).c_str(), _Hash(pszFilePath));
+	if (sharedMusic()._fileName!=_FullPath(pszFilePath))
+	{
+		sharedMusic().Close();
+	}
+	
+	if (sharedMusic()._scr==NULL)
+	{
+		sharedMusic().Open(_FullPath(pszFilePath).c_str(), _StreameID());
+	}
+	
     sharedMusic().Play((bLoop) ? -1 : 1);
 }
 
@@ -123,15 +165,34 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop,
                                            float pitch, float pan, float gain)
 {
-    unsigned int nRet = _Hash(pszFilePath);
+	if (!pszFilePath)
+	{
+		return 0;
+	}
 
-    preloadEffect(pszFilePath);
+	//Find in buffet
+	for (EffectListIt it=sharedList().begin();it!=sharedList().end();++it)
+	{
+		MciPlayer* pTempPlayer=it->second;
+		if (!pTempPlayer->IsPlaying() && pTempPlayer->_fileName==_FullPath(pszFilePath))
+		{
+			pTempPlayer->Play((bLoop) ? -1 : 1);
+			return pTempPlayer->_nSoundID;
+		}
+	}
+	
+	//create new
+    unsigned int nRet = _StreameID();
 
-    EffectList::iterator p = sharedList().find(nRet);
-    if (p != sharedList().end())
-    {
-        p->second->Play((bLoop) ? -1 : 1);
-    }
+	MciPlayer* pPlayer=new MciPlayer();
+	if (!pPlayer)
+	{
+		return 0;
+	}
+	
+	pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
+	sharedList().insert(Effect(nRet, pPlayer));
+    pPlayer->Play((bLoop) ? -1 : 1);
 
     return nRet;
 }
@@ -147,25 +208,7 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-    int nRet = 0;
-    do 
-    {
-        BREAK_IF(! pszFilePath);
 
-        nRet = _Hash(pszFilePath);
-
-        BREAK_IF(sharedList().end() != sharedList().find(nRet));
-
-        sharedList().insert(Effect(nRet, new MciPlayer()));
-        MciPlayer * pPlayer = sharedList()[nRet];
-        pPlayer->Open(_FullPath(pszFilePath).c_str(), nRet);
-
-        BREAK_IF(nRet == pPlayer->GetSoundID());
-
-        delete pPlayer;
-        sharedList().erase(nRet);
-        nRet = 0;
-    } while (0);
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
@@ -220,15 +263,15 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-    unsigned int nID = _Hash(pszFilePath);
-
-    EffectList::iterator p = sharedList().find(nID);
-    if (p != sharedList().end())
-    {
-        delete p->second;
-        p->second = NULL;
-        sharedList().erase(nID);
-    }    
+	for (EffectListIt it=sharedList().begin();it!=sharedList().end();++it)
+	{
+		if (it->second->_fileName==pszFilePath)
+		{
+			delete it->second;
+			it->second = NULL;
+			it=sharedList().erase(it);
+		}		
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -262,18 +305,34 @@ static std::string _FullPath(const char * szPath)
     return FileUtils::getInstance()->fullPathForFilename(szPath);
 }
 
-unsigned int _Hash(const char *key)
-{
-    unsigned int len = strlen(key);
-    const char *end=key+len;
-    unsigned int hash;
+#define MAX_SOUND 256
 
-    for (hash = 0; key < end; key++)
-    {
-        hash *= 16777619;
-        hash ^= (unsigned int) (unsigned char) toupper(*key);
-    }
-    return (hash);
+unsigned int _StreameID()
+{
+	static unsigned int nSteameID=0;
+	++nSteameID;
+	log("%d",nSteameID);
+
+	//Multi-Channel 256 simultaneous sources
+	if (sharedList().size()>=MAX_SOUND)
+	{
+		for (EffectListIt it=sharedList().begin();it!=sharedList().end();)
+		{
+			if (!it->second->_scr->GetSourceState())
+			{
+				it->second->Close();
+				delete it->second;
+				it->second = NULL;
+				it=sharedList().erase(it);
+			}	
+			else
+			{
+				++it;
+			}
+		}
+	}
+    
+    return nSteameID;
 }
 
 } // end of namespace CocosDenshion
