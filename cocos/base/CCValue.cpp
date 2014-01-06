@@ -594,6 +594,51 @@ std::string Value::asString() const
     return ret.str();
 }
 
+ValueVector& Value::asValueVector()
+{
+	if (nullptr == _vectorData)
+		_vectorData = new ValueVector();
+	return *_vectorData;
+}
+
+const ValueVector& Value::asValueVector() const
+{
+	static const ValueVector EMPTY_VALUEVECTOR;
+	if (nullptr == _vectorData)
+		return EMPTY_VALUEVECTOR;
+	return *_vectorData; 
+}
+
+ValueMap& Value::asValueMap()
+{
+	if (nullptr == _mapData)
+		_mapData = new ValueMap();
+	return *_mapData;
+}
+
+const ValueMap& Value::asValueMap() const
+{
+	static const ValueMap EMPTY_VALUEMAP;
+	if (nullptr == _mapData)
+		return EMPTY_VALUEMAP;
+	return *_mapData;
+}
+
+ValueMapIntKey& Value::asIntKeyMap()
+{
+	if (nullptr == _intKeyMapData)
+		_intKeyMapData = new ValueMapIntKey();
+	return *_intKeyMapData;
+}
+
+const ValueMapIntKey& Value::asIntKeyMap() const
+{
+	static const ValueMapIntKey EMPTY_VALUEMAP_INT_KEY;
+	if (nullptr == _intKeyMapData)
+		return EMPTY_VALUEMAP_INT_KEY;
+	return *_intKeyMapData;
+}
+
 static std::string getTabs(int depth)
 {
     std::string tabWidth;
