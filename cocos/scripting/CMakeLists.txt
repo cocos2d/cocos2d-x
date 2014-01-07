@@ -4,6 +4,7 @@ set(LUABINDING_SRC
   auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp
   auto-generated/lua-bindings/lua_cocos2dx_gui_auto.cpp
   auto-generated/lua-bindings/lua_cocos2dx_spine_auto.cpp
+  auto-generated/lua-bindings/lua_cocos2dx_physics_auto.cpp
   lua/bindings/tolua_fix.c
   lua/bindings/CCLuaBridge.cpp
   lua/bindings/CCLuaEngine.cpp
@@ -19,6 +20,7 @@ set(LUABINDING_SRC
   lua/bindings/lua_cocos2dx_coco_studio_manual.cpp
   lua/bindings/lua_cocos2dx_gui_manual.cpp
   lua/bindings/lua_cocos2dx_spine_manual.cpp
+  lua/bindings/lua_cocos2dx_physics_manual.cpp
   lua/bindings/lua_cocos2dx_deprecated.cpp
   lua/bindings/lua_xml_http_request.cpp
   lua/bindings/LuaSkeletonAnimation.cpp
@@ -48,6 +50,6 @@ target_link_libraries(luabinding
 
 set_target_properties(luabinding
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
