@@ -23,6 +23,7 @@
 	- [Improved LabelTTF / LabelBMFont](#improved-labelttf--labelbmfont)
 	- [New EventDispatcher](#new-eventdispatcher)
 		- [Adding Touch Event Listener](#adding-touch-event-listener)
+        - [Adding Mouse Event Listener](#adding-mouse-event-listener)
 		- [Adding A Keyboard Event Listener](#adding-a-keyboard-event-listener)
 		- [Adding An Acceleration Event Listener](#adding-an-acceleration-event-listener)
 		- [Adding A Custom Event Listener](#adding-a-custom-event-listener)
@@ -30,8 +31,10 @@
 		- [Setting Fixed Priority For A Listener](#setting-fixed-priority-for-a-listener)
 		- [Removing Event Listener](#removing-event-listener)
 			- [Removing A Specified Event Listener](#removing-a-specified-event-listener)
-			- [Removing All Listeners For An Event Type](#removing-all-listeners-for-an-event-type)
+            - [Removing Custom Event Listener](#removing-custom-listener)
+			- [Removing All Listeners For Specified Event Listener Type](#removing-all-listeners-for-an-event-type)
 			- [Removing All Listeners](#removing-all-listeners)
+
 	- [Physics Integration](#physics-integration)
 		- [PhysicsWorld](#physicsworld)
 		- [PhysicsBody](#physicsbody)
@@ -146,7 +149,7 @@ auto item = MenuItemLabel::create(label, CC_CALLBACK_1(MyClass::callback, this))
 auto item = MenuItemLabel::create(label, std::bind(&MyClass::callback, this, std::placeholders::_1));
 
 // in v3.0 you can use lambdas or any other "Function" object
-auto item = MenuItemLabel::create(label, 
+auto item = MenuItemLabel::create(label,
                  [&](Object *sender) {
                      // do something. Item "sender" clicked
                   });
@@ -304,7 +307,7 @@ void setTexParameters(const ccTexParams& texParams);
 
 _Feature added in v3.0-beta_
 
-The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object. 
+The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object.
 
 Auto-batching and auto-culling support has been added.
 
@@ -323,19 +326,44 @@ All events like touch event, keyboard event, acceleration event and custom event
 
 ### Adding Touch Event Listener
 
+For TouchOneByOne:
 ```c++
 auto sprite = Sprite::create("file.png");
 ...
-auto listener = EventListenerTouch::create(Touch::DispatchMode::ONE_BY_ONE);
+auto listener = EventListenerTouchOneByOne::create();
 listener->setSwallowTouch(true);
-listener->onTouchBegan = [](Touch* touch, Event* event) { do_some_thing();  return true;  };
-listener->onTouchMoved = [](Touch* touch, Event* event) { do_some_thing();  };
-listener->onTouchEnded = [](Touch* touch, Event* event) { do_some_thing();  };
+listener->onTouchBegan     = [](Touch* touch, Event* event) { do_some_thing();  return true;  };
+listener->onTouchMoved     = [](Touch* touch, Event* event) { do_some_thing();  };
+listener->onTouchEnded     = [](Touch* touch, Event* event) { do_some_thing();  };
 listener->onTouchCancelled = [](Touch* touch, Event* event) { do_some_thing();  };
 // The priority of the touch listener is based on the draw order of sprite
 EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, sprite);
 // Or the priority of the touch listener is a fixed value
 EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 100); // 100 is a fixed value
+```
+
+For TouchAllAtOnce
+```c++
+auto sprite = Sprite::create("file.png");
+...
+auto listener = EventListenerTouchAllAtOnce::create();
+listener->onTouchesBegan     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  return true;  };
+listener->onTouchesMoved     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
+listener->onTouchesEnded     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
+listener->onTouchesCancelled = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
+// The priority of the touch listener is based on the draw order of sprite
+EventDispatcher::getInstance()->addEventListenerWithSceneGraphPriority(listener, sprite);
+// Or the priority of the touch listener is a fixed value
+EventDispatcher::getInstance()->addEventListenerWithFixedPriority(listener, 100); // 100 is a fixed value
+```
+
+### Adding Mouse Event Listener  ###
+```c++
+auto mouseListener = EventListenerMouse::create();
+mouseListener->onMouseScroll = [](Event* event) { EventMouse* e = static_cast<EventMouse*>(event); do_some_thing(); };
+mouseListener->onMouseUp     = [](Event* event) { EventMouse* e = static_cast<EventMouse*>(event); do_some_thing(); };
+mouseListener->onMouseDown   = [](Event* event) { EventMouse* e = static_cast<EventMouse*>(event); do_some_thing(); };
+dispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 ```
 
 ### Adding A Keyboard Event Listener
@@ -386,10 +414,16 @@ dispatcher->setPriority(fixedPriorityListener, 200);
 dispatcher->removeEventListener(listener);
 ```
 
-#### Removing All Listeners For An Event Type
+#### Removing Custom Event Listener ####
 
 ```c++
-dispatcher->removeListenersForEventType("event_name");
+dispatcher->removeCustomEventListener("my_custom_event_listener_name");
+```
+
+#### Removing All Listeners For An Event Listener Type
+
+```c++
+dispatcher->removeEventListeners(EventListener::Type::TOUCH_ONE_BY_ONE);
 ```
 
 #### Removing All Listeners
@@ -443,7 +477,7 @@ world->addJoint(joint);
 
 ### PhysicsContact
 
-A `PhysicsContact` object is created automatically to describes a contact between two physical bodies in a `PhysicsWorld`. you can control the contact behavior from the physics contact event listener. 
+A `PhysicsContact` object is created automatically to describes a contact between two physical bodies in a `PhysicsWorld`. you can control the contact behavior from the physics contact event listener.
 Other classes contain the contact information: `PhysicsContactPreSolve`, `PhysicsContactPostSolve`.
 The event listener for physics: `EventListenerPhysicsContact`, `EventListenerPhysicsContactWithBodies`, `EventListenerPhysicsContactWithShapes`, `EventListenerPhysicsContactWithGroup`.
 ```c++
@@ -675,4 +709,3 @@ Through the funtions of the LuaBasicConversion file,they can be converted the Lu
 ## Known issues
 
 You can find all the known issues "here":http://www.cocos2d-x.org/projects/native/issues
-
