@@ -51,9 +51,9 @@
 
 # Misc Information
 
-* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.0alpha1.zip
-* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0alph1/CHANGELOG
-* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.0alpha1/index.html
+* Download: http://cdn.cocos2d-x.org/cocos2d-x-3.0beta.zip
+* Full Changelog: https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0beta/CHANGELOG
+* API Reference: http://www.cocos2d-x.org/reference/native-cpp/V3.0beta/index.html
 
 # Requirements
 
