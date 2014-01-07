@@ -1197,9 +1197,13 @@ JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
     return JS_TRUE;
 }
 
-JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret)
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* size)
 {
-    return jsval_to_long(cx, vp, reinterpret_cast<long*>(ret));
+    JSBool ret = JS_FALSE;
+    int32_t sizeInt32 = 0;
+    ret = jsval_to_int32(cx, vp, &sizeInt32);
+    *size = sizeInt32;
+    return ret;
 }
 
 JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret)
@@ -2192,5 +2196,6 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
 
 jsval ssize_to_jsval(JSContext *cx, ssize_t v)
 {
-    return long_to_jsval(cx, v);
+    CCASSERT(v < INT_MAX, "The size should not bigger than 32 bit (int32_t).");
+    return int32_to_jsval(cx, static_cast<int>(v));
 }
