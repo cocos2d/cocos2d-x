@@ -159,16 +159,17 @@ _Feature added in v3.0-pre-alpha0_
 Constants and enums that started with `k`, and that usually were defined as `int` or as simple `enum` where replaced with strongly typed enums ( `enum class` ) to prevent collisions and type errors.
 The new format is:
 
-| *v2.1*       | *v3.0*        |
-| `kTypeValue` | `Type::VALUE` |
+    | v2.1       | v3.0        |
+    | kTypeValue | Type::VALUE |
 
 Examples:
-| *v2.1*                             | *v3.0*                             |
-| `kCCTexture2DPixelFormat_RGBA8888` | `Texture2D::PixelFormat::RGBA8888` |
-| `kCCDirectorProjectionCustom`      | `Director::Projection::CUSTOM`     |
-| `ccGREEN`                          | `Color3B::GREEN`                   |
-| `CCPointZero`                      | `Point::ZERO`                      |
-| `CCSizeZero`                       | `Size::ZERO`                       |
+
+	| v2.1                             | v3.0                             |
+	| kCCTexture2DPixelFormat_RGBA8888 | Texture2D::PixelFormat::RGBA8888 |
+	| kCCDirectorProjectionCustom      | Director::Projection::CUSTOM     |
+	| ccGREEN                          | Color3B::GREEN                   |
+	| CCPointZero                      | Point::ZERO                      |
+	| CCSizeZero                       | Size::ZERO                       |
 
 The old values can still be used, but are not deprecated.
 
@@ -201,11 +202,11 @@ Since cocos2d-x already uses the `cocos2d` namespace, there is not need to add t
 
 Examples:
 
-| *v2.1*       | *v3.0*     |
-| `CCSprite`   | `Sprite`   |
-| `CCNode`     | `Node`     |
-| `CCDirector` | `Director` |
-| etc...                    |
+	| v2.1       | v3.0     |
+	| CCSprite   | Sprite   |
+	| CCNode     | Node     |
+	| CCDirector | Director |
+	| etc...                |
 
 v2.1 class names are still available, but they were tagged as deprecated.
 
@@ -220,12 +221,13 @@ For the *gl proxy functions*:
 * The `ccGL` prefix was removed
 
 Examples:
-| *v2.1*                | *v3.0*     |
-| `ccDrawPoint()`       | `DrawPrimitives::drawPoint()`  |
-| `ccDrawCircle()`      | `DrawPrimitives::drawCircle()` |
-| `ccGLBlendFunc()`     | `GL::blendFunc()`              |
-| `ccGLBindTexture2D()` | `GL::bindTexture2D()`          |
-| etc...                       |
+
+	| v2.1                | v3.0                         |
+	| ccDrawPoint()       | DrawPrimitives::drawPoint()  |
+	| ccDrawCircle()      | DrawPrimitives::drawCircle() |
+	| ccGLBlendFunc()     | GL::blendFunc()              |
+	| ccGLBindTexture2D() | GL::bindTexture2D()          |
+	| etc...                       						 |
 
 v2.1 free functions are still available, but they were tagged as deprecated.
 
@@ -253,10 +255,10 @@ All singletons use `getInstance()` and `destroyInstance()` (if applicable) to ge
 
 Examples:
 
-| *v2.1*                          |   *v3.0*                      |
-| `CCDirector->sharedDirector()`  | `Director->getInstance()`     |
-| `CCDirector->endDirector()`     | `Director->destroyInstance()` |
-| etc...                                                          |
+	| v2.1                          | v3.0                        |
+	| CCDirector->sharedDirector()  | Director->getInstance()     |
+	| CCDirector->endDirector()     | Director->destroyInstance() |
+	| etc...                                                      |
 
 
 v2.1 methods are still available, but they were tagged as deprecated.
@@ -267,10 +269,10 @@ Getters now use the `get` prefix.
 
 Examples:
 
-| *v2.1*                            | *v3.0*  |
-| `node->boundingBox()`             | `node->getBoundingBox()` |
-| `sprite->nodeToParentTransform()` | `sprite->getNodeToParentTransform()` |
-| etc...                                                                   |
+	| v2.1                            | v3.0* 				 		       |
+	| node->boundingBox()             | node->getBoundingBox() 			   |
+	| sprite->nodeToParentTransform() | sprite->getNodeToParentTransform() |
+	| etc...                                                               |
 
 And getters were also tagged as `const` in their declaration. Example:
 
@@ -461,26 +463,26 @@ _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 Remove *cc* prefix for structure names in ccTypes.h, move global functions into static member functions, and move global constants into const static member variables.
 
-| *structure name before changing* | *structure name after changing* |
-| `ccColor3B` | `Color3B` |
-| `ccColor4B` | `Color4B` |
-| `ccColor4F` | `Color4F` |
-| `ccVertex2F` | `Vertex2F` |
-| `ccVertex3F` | `Vertex3F` |
-| `ccTex2F` | `Tex2F` |
-| `ccPointSprite` | `PointSprite` |
-| `ccQuad2` | `Quad2` |
-| `ccQuad3` | `Quad3` |
-| `ccV2F_C4B_T2F` | `V2F_C4B_T2F` |
-| `ccV2F_C4F_T2F` | `V2F_C4F_T2F` |
-| `ccV3F_C4B_T2F` | `V3F_C4B_T2F` |
-| `ccV2F_C4B_T2F_Triangle` | `V2F_C4B_T2F_Triangle` |
-| `ccV2F_C4B_T2F_Quad` | `V2F_C4B_T2F_Quad` |
-| `ccV3F_C4B_T2F_Quad` | `V3F_C4B_T2F_Quad` |
-| `ccV2F_C4F_T2F_Quad` | `V2F_C4F_T2F_Quad` |
-| `ccBlendFunc` | `BlendFunc` |
-| `ccT2F_Quad` | `T2F_Quad` |
-| `ccAnimationFrameData` | `AnimationFrameData` |
+	| v2.1 struct names | v3.0 struct names |
+	| ccColor3B 	    | Color3B |
+	| ccColor4B 		| Color4B |
+	| ccColor4F 		| Color4F |
+	| ccVertex2F 		| Vertex2F |
+	| ccVertex3F 		| Vertex3F |
+	| ccTex2F 			| Tex2F |
+	| ccPointSprite 	| PointSprite |
+	| ccQuad2 			| Quad2 |
+	| ccQuad3 			| Quad3 |
+	| ccV2F_C4B_T2F 	| V2F_C4B_T2F |
+	| ccV2F_C4F_T2F 	| V2F_C4F_T2F |
+	| ccV3F_C4B_T2F 	| V3F_C4B_T2F |
+	| ccV2F_C4B_T2F_Triangle | V2F_C4B_T2F_Triangle |
+	| ccV2F_C4B_T2F_Quad | V2F_C4B_T2F_Quad |
+	| ccV3F_C4B_T2F_Quad | V3F_C4B_T2F_Quad |
+	| ccV2F_C4F_T2F_Quad | V2F_C4F_T2F_Quad |
+	| ccBlendFunc 		| BlendFunc |
+	| ccT2F_Quad 		| T2F_Quad |
+	| ccAnimationFrameData | AnimationFrameData |
 
 Global functions changed example
 ```c++
@@ -511,89 +513,89 @@ color3B = Color3B::WHITE;
 
 ## deprecated functions and  global variables
 
-|*old name*|*new name*|
-| `ccp` | `Point` |
-| `ccpNeg` | `Point::-` |
-| `ccpAdd` | `Point::+` |
-| `ccpSub` | `Point::-` |
-| `ccpMult` | `Point::*` |
-| `ccpMidpoint` | `Point::getMidpoint` |
-| `ccpDot` | `Point::dot` |
-| `ccpCrosss` | `Point::cross` |
-| `ccpPerp` | `Point::getPerp` |
-| `ccpRPerp` | `Point::getRPerp` |
-| `ccpProject` | `Point::project` |
-| `ccpRotate` | `Point::rotate` |
-| `ccpUnrotate` | `Point::unrotate` |
-| `ccpLengthSQ` | `Point::getLengthSq()` |
-| `ccpDistanceSQ` | `Point::getDistanceSq` |
-| `ccpLength` | `Point::getLength` |
-| `ccpDistance` | `Point::getDistance` |
-| `ccpNormalize` | `Point::normalize` |
-| `ccpForAngle` | `Point::forAngle` |
-| `ccpToAngle` | `Point::getAngle` |
-| `ccpClamp` | `Point::getClampPoint` |
-| `ccpFromSize` | `Point::Point` |
-| `ccpCompOp` | `Point::compOp` |
-| `ccpLerp` | `Point::lerp` |
-| `ccpFuzzyEqual` | `Point::fuzzyEqual` |
-| `ccpCompMult` | `Point::Point` |
-| `ccpAngleSigned` | `Point::getAngle` |
-| `ccpAngle` | `Point::getAngle` |
-| `ccpRotateByAngle` | `Point::rotateByAngle` |
-| `ccpLineInersect` | `Point::isLineIntersect` |
-| `ccpSegmentIntersect` | `Point::isSegmentIntersect` |
-| `ccpIntersectPoint` | `Point::getIntersectPoint` |
-| `CCPointMake` | `Point::Point` |
-| `CCSizeMake` | `Size::Size` |
-| `CCRectMake` | `Rect::Rect` |
-| `PointZero` | `Point::ZERO` |
-| `SizeZero` | `Size::ZERO` |
-| `RectZero` | `Rect::ZERO` |
-| `TiledGrid3DAction::tile` | `TiledGrid3DAction::getTile` |
-| `TiledGrid3DAction::originalTile` | `TiledGrid3DAction::getOriginalTile` |
-| `TiledGrid3D::tile` | `TiledGrid3D::getTile` |
-| `TiledGrid3D::originalTile` | `TiledGrid3D::getOriginalTile` |
-| `Grid3DAction::vertex` | `Grid3DAction::getVertex` |
-| `Grid3DAction::originalVertex` | `Grid3DAction::getOriginalVertex` |
-| `Grid3D::vertex` | `Grid3D::getVertex` |
-| `Grid3D::originalVertex` | `Grid3D::getOriginalVertex` |
-| `Configuration::sharedConfiguration` | `Configuration::getInstance` |
-| `Configuration::purgeConfiguration` | `Configuration::destroyInstance()` |
-| `Director::sharedDirector()` | `Director::getInstance()` |
-| `FileUtils::sharedFileUtils` | `FileUtils::getInstance` |
-| `FileUtils::purgeFileUtils` | `FileUtils::destroyInstance` |
-| `EGLView::sharedOpenGLView` | `EGLView::getInstance` |
-| `ShaderCache::sharedShaderCache` | `ShaderCache::getInstance` |
-| `ShaderCache::purgeSharedShaderCache` | `ShaderCache::destroyInstance` |
-| `AnimationCache::sharedAnimationCache` | `AnimationCache::getInstance` |
-| `AnimationCache::purgeSharedAnimationCache` | `AnimationCache::destroyInstance` |
-| `SpriteFrameCache::sharedSpriteFrameCache` | `SpriteFrameCache::getInstance` |
-| `SpriteFrameCache:: purgeSharedSpriteFrameCache` | `SpriteFrameCache::destroyInstance` |
-| `NotificationCenter::sharedNotificationCenter` | `NotificationCenter::getInstance` |
-| `NotificationCenter:: purgeNotificationCenter` | `NotificationCenter::destroyInstance` |
-| `Profiler::sharedProfiler` | `Profiler::getInstance` |
-| `UserDefault::sharedUserDefault` | `UserDefault::getInstance` |
-| `UserDefault::purgeSharedUserDefault` | `UserDefault::destroyInstance` |
-| `Application::sharedApplication` | `Application::getInstance` |
-| `ccc3()` | `Color3B()` |
-| `ccc3BEqual()` | `Color3B::equals()` |
-| `ccc4()` | `Color4B()` |
-| `ccc4FFromccc3B()` | `Color4F()` |
-| `ccc4f()` | `Color4F()` |
-| `ccc4FFromccc4B()` | `Color4F()` |
-| `ccc4BFromccc4F()` | `Color4B()` |
-| `ccc4FEqual()` | `Color4F::equals()` |
-| `ccWHITE` | `Color3B::WHITE` |
-| `ccYELLOW` | `Color3B::YELLOW` |
-| `ccBLUE` | `Color3B::BLUE` |
-| `ccGREEN` | `Color3B::GREEN` |
-| `ccRED` | `Color3B::RED` |
-| `ccMAGENTA` | `Color3B::MAGENTA` |
-| `ccBLACK` | `Color3B::BLACK` |
-| `ccORANGE` | `Color3B::ORANGE` |
-| `ccGRAY` | `Color3B::GRAY` |
-| `kBlendFuncDisable` | `BlendFunc::BLEND_FUNC_DISABLE` |
+	| v2.1 names 	| v3.0 names |
+	| ccp 			| Point |
+	| ccpNeg 		| Point::- |
+	| ccpAdd 		| Point::+ |
+	| ccpSub 		| Point::- |
+	| ccpMult 		| Point::* |
+	| ccpMidpoint 	| Point::getMidpoint |
+	| ccpDot 		| Point::dot |
+	| ccpCrosss 	| Point::cross |
+	| ccpPerp 		| Point::getPerp |
+	| ccpRPerp 		| Point::getRPerp |
+	| ccpProject 	| Point::project |
+	| ccpRotate 	| Point::rotate |
+	| ccpUnrotate 	| Point::unrotate |
+	| ccpLengthSQ 	| Point::getLengthSq() |
+	| ccpDistanceSQ | Point::getDistanceSq |
+	| ccpLength 	| Point::getLength |
+	| ccpDistance 	| Point::getDistance |
+	| ccpNormalize 	| Point::normalize |
+	| ccpForAngle 	| Point::forAngle |
+	| ccpToAngle 	| Point::getAngle |
+	| ccpClamp 		| Point::getClampPoint |
+	| ccpFromSize 	| Point::Point |
+	| ccpCompOp		| Point::compOp |
+	| ccpLerp 		| Point::lerp |
+	| ccpFuzzyEqual | Point::fuzzyEqual |
+	| ccpCompMult 	| Point::Point |
+	| ccpAngleSigned | Point::getAngle |
+	| ccpAngle 		| Point::getAngle |
+	| ccpRotateByAngle | Point::rotateByAngle |
+	| ccpLineInersect | Point::isLineIntersect |
+	| ccpSegmentIntersect | Point::isSegmentIntersect |
+	| ccpIntersectPoint | Point::getIntersectPoint |
+	| CCPointMake	| Point::Point |
+	| CCSizeMake	| Size::Size |
+	| CCRectMake 	| Rect::Rect |
+	| PointZero 	| Point::ZERO |
+	| SizeZero 		| Size::ZERO |
+	| RectZero 		| Rect::ZERO |
+	| TiledGrid3DAction::tile | TiledGrid3DAction::getTile |
+	| TiledGrid3DAction::originalTile | TiledGrid3DAction::getOriginalTile |
+	| TiledGrid3D::tile | TiledGrid3D::getTile |
+	| TiledGrid3D::originalTile | TiledGrid3D::getOriginalTile |
+	| Grid3DAction::vertex | Grid3DAction::getVertex |
+	| Grid3DAction::originalVertex | Grid3DAction::getOriginalVertex |
+	| Grid3D::vertex | Grid3D::getVertex |
+	| Grid3D::originalVertex | Grid3D::getOriginalVertex |
+	| Configuration::sharedConfiguration | Configuration::getInstance |
+	| Configuration::purgeConfiguration | Configuration::destroyInstance() |
+	| Director::sharedDirector() | Director::getInstance() |
+	| FileUtils::sharedFileUtils | FileUtils::getInstance |
+	| FileUtils::purgeFileUtils | FileUtils::destroyInstance |
+	| EGLView::sharedOpenGLView | EGLView::getInstance |
+	| ShaderCache::sharedShaderCache | ShaderCache::getInstance |
+	| ShaderCache::purgeSharedShaderCache | ShaderCache::destroyInstance |
+	| AnimationCache::sharedAnimationCache | AnimationCache::getInstance |
+	| AnimationCache::purgeSharedAnimationCache | AnimationCache::destroyInstance |
+	| SpriteFrameCache::sharedSpriteFrameCache | SpriteFrameCache::getInstance |
+	| SpriteFrameCache:: purgeSharedSpriteFrameCache | SpriteFrameCache::destroyInstance |
+	| NotificationCenter::sharedNotificationCenter | NotificationCenter::getInstance |
+	| NotificationCenter:: purgeNotificationCenter | NotificationCenter::destroyInstance |
+	| Profiler::sharedProfiler | Profiler::getInstance |
+	| UserDefault::sharedUserDefault | UserDefault::getInstance |
+	| UserDefault::purgeSharedUserDefault | UserDefault::destroyInstance |
+	| Application::sharedApplication | Application::getInstance |
+	| ccc3() 		| Color3B() |
+	| ccc3BEqual() 	| Color3B::equals() |
+	| ccc4() 		| Color4B() |
+	| ccc4FFromccc3B() | Color4F() |
+	| ccc4f() 		| Color4F() |
+	| ccc4FFromccc4B() | Color4F() |
+	| ccc4BFromccc4F() | Color4B() |
+	| ccc4FEqual() 	| Color4F::equals() |
+	| ccWHITE 		| Color3B::WHITE |
+	| ccYELLOW 		| Color3B::YELLOW |
+	| ccBLUE 		| Color3B::BLUE |
+	| ccGREEN 		| Color3B::GREEN |
+	| ccRED 		| Color3B::RED |
+	| ccMAGENTA 	| Color3B::MAGENTA |
+	| ccBLACK 		| Color3B::BLACK |
+	| ccORANGE 		| Color3B::ORANGE |
+	| ccGRAY 		| Color3B::GRAY |
+	| kBlendFuncDisable | BlendFunc::BLEND_FUNC_DISABLE |
 
 ## Changes in the Lua bindings
 
@@ -673,3 +675,4 @@ Through the funtions of the LuaBasicConversion file,they can be converted the Lu
 ## Known issues
 
 You can find all the known issues "here":http://www.cocos2d-x.org/projects/native/issues
+
