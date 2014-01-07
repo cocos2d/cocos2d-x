@@ -126,7 +126,15 @@ void Skeleton::update (float deltaTime) {
 	spSkeleton_update(skeleton, deltaTime * timeScale);
 }
 
-void Skeleton::draw () {
+void Skeleton::draw()
+{
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+    
+void Skeleton::onDraw ()
+{
 	CC_NODE_DRAW_SETUP();
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
