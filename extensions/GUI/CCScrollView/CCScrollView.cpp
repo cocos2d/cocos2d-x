@@ -485,10 +485,17 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
+void ScrollView::beforeDraw()
+{
+    _beforeDrawCommand.init(0, _vertexZ);
+    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
+}
+
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
-void ScrollView::beforeDraw()
+void ScrollView::onBeforeDraw()
 {
     if (_clippingToBounds)
     {
@@ -513,11 +520,18 @@ void ScrollView::beforeDraw()
     }
 }
 
+void ScrollView::afterDraw()
+{
+    _afterDrawCommand.init(0, _vertexZ);
+    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
+}
+
 /**
  * retract what's done in beforeDraw so that there's no side effect to
  * other nodes.
  */
-void ScrollView::afterDraw()
+void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
