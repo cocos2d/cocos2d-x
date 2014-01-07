@@ -363,6 +363,11 @@ function cc.AnimationFrameData( _texCoords, _delay, _size)
     return { texCoords = _texCoords, delay = _delay, size = _size }
 end
 
+--PhysicsMaterial
+function cc.PhysicsMaterial(_density, _restitution, _friction)
+	return { density = _density, restitution = _restitution, friction = _friction }
+end
+
 local ConfigType = 
 {
     NONE = 0,
