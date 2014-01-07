@@ -143,7 +143,7 @@ function cc.pUnrotate(pt1, pt2)
 end
 --Calculates the square length of pt
 function cc.pLengthSQ(pt)
-    return cc.pDot(pt)
+    return cc.pDot(pt,pt)
 end
 --Calculates the square distance between pt1 and pt2
 function cc.pDistanceSQ(pt1,pt2)
