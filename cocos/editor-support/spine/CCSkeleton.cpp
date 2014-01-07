@@ -128,6 +128,9 @@ void Skeleton::update (float deltaTime) {
 
 void Skeleton::draw()
 {
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
+    
     _customCommand.init(0, _vertexZ);
     _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
@@ -135,6 +138,10 @@ void Skeleton::draw()
     
 void Skeleton::onDraw ()
 {
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_oldTransMatrix);
+    
 	CC_NODE_DRAW_SETUP();
 
     GL::blendFunc(blendFunc.src, blendFunc.dst);
@@ -228,6 +235,9 @@ void Skeleton::onDraw ()
 			if (i == 0) DrawPrimitives::setDrawColor4B(0, 255, 0, 255);
 		}
 	}
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
 }
 
 TextureAtlas* Skeleton::getTextureAtlas (spRegionAttachment* regionAttachment) const {
