@@ -73,7 +73,12 @@ def main():
 
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE']);
-  
+    os.system("git checkout develop")
+    os.system("git branch -D pull" + str(pr_num))
+    #clean workspace
+    print "git clean -xdf"
+    os.system("git clean -xdf")
+    
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     os.system(git_fetch_pr)
@@ -86,16 +91,22 @@ def main():
     git_update_submodule = "git submodule update --init --force"
     os.system(git_update_submodule)
 
+    #make temp dir
+    print "current dir is" + os.environ['WORKSPACE']
+    os.system("cd " + os.environ['WORKSPACE']);
+    os.mkdir("android_build_objs")
     #add symbol link
     PROJECTS=["Cpp/HelloCpp","Cpp/TestCpp","Cpp/SimpleGame","Cpp/AssetsManagerTest",
             "Javascript/TestJavascript","Javascript/CocosDragonJS","Javascript/CrystalCraze",
             "Javascript/MoonWarriors","Javascript/WatermelonWithMe","Lua/HelloLua","Lua/TestLua"]
-    if(platform.system == 'Darwin'):
+    print platform.system()
+    if(platform.system() == 'Darwin'):
         for item in PROJECTS:
-          os.System("ln -s "+os.environ['WORKSPACE']+"/android_build_objs " + os.environ['WORKSPACE']+"/samples/"+item+"/proj.android/obj")
-    elif(platform.system == 'Windows'):
+          cmd = "ln -s " + os.environ['WORKSPACE']+"/android_build_objs/ " + os.environ['WORKSPACE']+"/samples/"+item+"/proj.android/obj"  
+          os.system(cmd)
+    elif(platform.system() == 'Windows'):
         for item in PROJECTS:
-          os.System("mklink /J "+os.environ['WORKSPACE']+os.sep+"samples"+os.sep +item+os.sep+"proj.android/obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs")
+          os.system("mklink /J "+os.environ['WORKSPACE']+os.sep+"samples"+os.sep +item+os.sep+"proj.android/obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs")
  
     #build
     #TODO: support android-mac build currently
