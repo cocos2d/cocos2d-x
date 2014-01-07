@@ -31,8 +31,8 @@
 		- [Setting Fixed Priority For A Listener](#setting-fixed-priority-for-a-listener)
 		- [Removing Event Listener](#removing-event-listener)
 			- [Removing A Specified Event Listener](#removing-a-specified-event-listener)
-			- [Removing Custom Event Listener](#removing-custom-listener)
-			- [Removing All Listeners For Specified Event Listener Type](#removing-all-listeners-for-an-event-type)
+			- [Removing Custom Event Listener](#removing-custom-event-listener)
+			- [Removing All Listeners For Specified Event Listener Type](#removing-all-listeners-for-specified-event-listener-type)
 			- [Removing All Listeners](#removing-all-listeners)
 
 	- [Physics Integration](#physics-integration)
