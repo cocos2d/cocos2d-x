@@ -79,7 +79,6 @@ include_directories(
 
 link_directories(
   /usr/local/lib
-  ${COCOS2D_ROOT}/lib
   ${COCOS2D_ROOT}/external/jpeg/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/tiff/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/webp/prebuilt/linux/${ARCH_DIR}
@@ -87,6 +86,60 @@ link_directories(
   ${COCOS2D_ROOT}/external/curl/prebuilt/linux/${ARCH_DIR}
   ${COCOS2D_ROOT}/external/linux-specific/fmod/prebuilt/${ARCH_DIR}
 )
+
+# kazmath
+add_subdirectory(${COCOS2D_ROOT}/cocos/math/kazmath)
+
+# chipmunk library
+add_subdirectory(${COCOS2D_ROOT}/external/chipmunk/src)
+
+# box2d library
+add_subdirectory(${COCOS2D_ROOT}/external/Box2D)
+
+# unzip library
+add_subdirectory(${COCOS2D_ROOT}/external/unzip)
+
+# tinyxml2 library
+add_subdirectory(${COCOS2D_ROOT}/external/tinyxml2)
+
+# audio
+add_subdirectory(${COCOS2D_ROOT}/cocos/audio)
+
+# cocos base library
+add_subdirectory(${COCOS2D_ROOT}/cocos/base)
+
+# cocos 2d library
+add_subdirectory(${COCOS2D_ROOT}/cocos/2d)
+
+# gui
+add_subdirectory(${COCOS2D_ROOT}/cocos/gui)
+
+# network
+add_subdirectory(${COCOS2D_ROOT}/cocos/network)
+
+# extensions
+add_subdirectory(${COCOS2D_ROOT}/extensions)
+
+## Editor Support
+
+# spine
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/spine)
+
+# cocosbuilder
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocosbuilder)
+
+# cocostudio
+add_subdirectory(${COCOS2D_ROOT}/cocos/editor-support/cocostudio)
+
+## Scripting
+# lua
+add_subdirectory(${COCOS2D_ROOT}/external/lua/lua)
+
+# tolua
+add_subdirectory(${COCOS2D_ROOT}/external/lua/tolua)
+
+# luabinding
+add_subdirectory(${COCOS2D_ROOT}/cocos/scripting)
 
 # add the executable
 add_executable(${APP_NAME}
@@ -101,41 +154,14 @@ endif()
 
 target_link_libraries(${APP_NAME}
   luabinding
-  tolua
-  lua
   gui
   network
-  curl
-  ldap
-  lber
-  idn
-  rtmp
   spine
   cocostudio
   cocosbuilder
   extensions
-  box2d
   audio
-  ${FMOD_LIB}
   cocos2d
-  cocosbase
-  chipmunk
-  tinyxml2
-  kazmath
-  unzip
-  jpeg
-  webp
-  tiff
-  freetype
-  fontconfig
-  png
-  pthread
-  glfw
-  GLEW
-  GL
-  X11
-  rt
-  z
   )
 
 set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
@@ -146,5 +172,6 @@ set_target_properties(${APP_NAME} PROPERTIES
 pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua/script ${APP_BIN_DIR}/Resources
   )
 
