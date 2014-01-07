@@ -265,7 +265,6 @@ private:
     Stream* _stream;
     std::vector<MeshSkinData*>* _meshSkins;
     bool _isSkin;
-
 };
 
 }

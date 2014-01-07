@@ -36,7 +36,6 @@ C3DMesh::~C3DMesh()
 
     SAFE_DELETE_ARRAY(_vertexData);
     SAFE_DELETE(_boundingBox);
-
 }
 
 C3DMesh* C3DMesh::createMesh(C3DVertexFormat* vertexFormat, unsigned int vertexCount, bool dynamic)
@@ -68,12 +67,8 @@ C3DMesh* C3DMesh::createMesh(C3DVertexFormat* vertexFormat, unsigned int vertexC
     mesh->_vertexCount = vertexCount;
     mesh->_vertexBuffer = vbo;
     mesh->_dynamic = dynamic;
-
     return mesh;
 }
-
-
-
 
 const std::string& C3DMesh::getUrl() const
 {
@@ -105,7 +100,6 @@ bool C3DMesh::isDynamic() const
     return _dynamic;
 }
 
-
 PrimitiveType C3DMesh::getPrimitiveType() const
 {
     return _primitiveType;
@@ -135,7 +129,6 @@ void C3DMesh::setVertexData(void* vertexData, unsigned int vertexStart, unsigned
     }    
 
     GL_ASSERT( glBindBuffer(GL_ARRAY_BUFFER, 0) );
-
 }
 
 void C3DMesh::setVertexData(unsigned char* vertexData)
