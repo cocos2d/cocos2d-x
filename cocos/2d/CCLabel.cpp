@@ -145,7 +145,8 @@ bool Label::init()
         setLabelEffect(LabelEffect::NORMAL,Color3B::BLACK);
     else if(_useA8Shader)
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR));
-
+    else
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
