@@ -10,5 +10,6 @@
                              "PROJECT_NAME.vcxproj.user",
                              "PROJECT_NAME.sln",
                              "game.rc",
-                             "main.cpp"]
+                             "main.cpp",
+							 "../Classes/RuntimeConfig.cpp"]
 }

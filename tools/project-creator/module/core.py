@@ -58,7 +58,8 @@ class CocosProject:
         self.platforms= {
             "cpp" : ["ios_mac", "android", "win32", "linux"],
             "lua" : ["ios_mac", "android", "win32", "linux"],
-            "javascript" : ["ios_mac", "android", "win32"]
+            "javascript" : ["ios_mac", "android", "win32"],
+            "jsruntime" : ["ios_mac", "android", "win32"]
         }
         self.context = {
             "language": None,
@@ -68,6 +69,7 @@ class CocosProject:
             "dst_package_name": None,
             "src_project_path": None,
             "dst_project_path": None,
+            "dst_project_runtime_path": None,
             "cocos_file_list":None,
             "script_dir": None
         }
@@ -84,15 +86,15 @@ class CocosProject:
         # set the parser to parse input params
         # the correspond variable name of "-x, --xxx" is parser.xxx
         parser = OptionParser(
-            usage="Usage: %prog -n <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript> -p <PROJECT_PATH>\n\
+            usage="Usage: %prog -n <PROJECT_NAME> -k <PACKAGE_NAME> -l <cpp|lua|javascript|jsruntime> -p <PROJECT_PATH>\n\
             Sample: %prog -n MyGame -k com.MyCompany.AwesomeGame -l javascript -p c:/mycompany"
         )
         parser.add_option("-n", "--name", metavar="PROJECT_NAME",help="Set a project name")
         parser.add_option("-k", "--package", metavar="PACKAGE_NAME",help="Set a package name for project")
         parser.add_option("-l", "--language",metavar="PROGRAMMING_NAME",
                             type="choice",
-                            choices=["cpp", "lua", "javascript"],
-                            help="Major programming language you want to use, should be [cpp | lua | javascript]")
+                            choices=["cpp", "lua", "javascript", "jsruntime"],
+                            help="Major programming language you want to use, should be [cpp | lua | javascript | jsruntime]")
         parser.add_option("-p", "--path", metavar="PROJECT_PATH",help="Set generate project path for project")
 
         # parse the params
@@ -116,7 +118,7 @@ class CocosProject:
         Arg:
             projectName: Project name, like this: "helloworld".
             packageName: It's used for android platform,like this:"com.cocos2dx.helloworld".
-            language: There have three languages can be choice: [cpp | lua | javascript], like this:"javascript".
+            language: There have three languages can be choice: [cpp | lua | javascript | jsruntime], like this:"javascript".
             projectPath: The path of generate project.
             callbackfun: It's new project callback function.There have four Params.
                         As follow:
@@ -134,6 +136,7 @@ class CocosProject:
         self.context["dst_package_name"] = packageName
         self.context["language"] = language
         self.context["dst_project_path"] = os.path.join(projectPath,projectName)
+        self.context["dst_project_runtime_path"] = self.context["dst_project_path"]
         self.context["script_dir"] = os.path.abspath(os.path.dirname(__file__))
         self.context["cocos_file_list"] = os.path.join(self.context["script_dir"], "cocos_files.json")
 
@@ -151,6 +154,10 @@ class CocosProject:
             self.context["src_project_name"] = "HelloJavascript"
             self.context["src_package_name"] = "org.cocos2dx.hellojavascript"
             self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-js")
+        elif ("jsruntime" == self.context["language"]):
+            self.context["src_project_name"] = "HelloJavascript"
+            self.context["src_package_name"] = "org.cocos2dx.hellojavascript"
+            self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-js-runtime")
         else:
             print ("Your language parameter doesn\'t exist." \
                 "Check correct language option\'s parameter")
@@ -164,6 +171,8 @@ class CocosProject:
         else:
             shutil.copytree(self.context["src_project_path"], self.context["dst_project_path"], True)
 
+        if "jsruntime" == self.context["language"]:
+            self.context["dst_project_runtime_path"] = os.path.join(self.context["dst_project_path"], "framework")
         # check cocos engine exist
 
         if not os.path.exists(self.context["cocos_file_list"]):
@@ -181,7 +190,7 @@ class CocosProject:
         #begin copy engine
         print("###begin copy engine")
         print("waitting copy cocos2d ...")
-        dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
+        dstPath = os.path.join(self.context["dst_project_runtime_path"],"cocos2d")
         for index in range(len(fileList)):
             srcfile = os.path.join(self.cocos_root,fileList[index])
             dstfile = os.path.join(dstPath,fileList[index])
@@ -218,7 +227,7 @@ class CocosProject:
         """
 
         # determine proj_path
-        proj_path = os.path.join(self.context["dst_project_path"], "proj." + platform)
+        proj_path = os.path.join(self.context["dst_project_runtime_path"], "proj." + platform)
         java_package_path = ""
 
         # read json config file for the current platform
