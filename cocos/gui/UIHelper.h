@@ -33,7 +33,7 @@ namespace gui {
 *   @js NA
 *   @lua NA
 */
-class UIHelper
+class Helper
 {
 public:
     /**
