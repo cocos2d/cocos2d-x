@@ -2,20 +2,26 @@
 #include "C3DSampler.h"
 #include "C3DTexture.h"
 #include "C3DStream.h"
-#include "C3DElementNode.h"
+#include "ElementNode.h"
 
 NS_CC_BEGIN
 
 C3DSampler::C3DSampler()
-    : _texture(nullptr), _wrapS(Texture_Wrap_REPEAT), _wrapT(Texture_Wrap_REPEAT), _magFilter(Texture_Filter_LINEAR)
+:_texture(nullptr)
+,_wrapS(Texture_Wrap_REPEAT)
+,_wrapT(Texture_Wrap_REPEAT)
+,_magFilter(Texture_Filter_LINEAR)
 {
     _minFilter = Texture_Filter_LINEAR;
 }
 
 C3DSampler::C3DSampler(C3DTexture* texture)
-    : _texture(texture), _wrapS(Texture_Wrap_REPEAT), _wrapT(Texture_Wrap_REPEAT), _magFilter(Texture_Filter_LINEAR)
+:_texture(texture)
+,_wrapS(Texture_Wrap_REPEAT)
+,_wrapT(Texture_Wrap_REPEAT)
+,_magFilter(Texture_Filter_LINEAR)
 {
-	texture->retain();
+    texture->retain();
     _minFilter = texture->isMipmapped() ? Texture_Filter_LINEAR_MIPMAP_LINEAR : Texture_Filter_LINEAR;
 }
 
@@ -28,7 +34,7 @@ C3DSampler* C3DSampler::create(C3DTexture* texture)
 {
     assert(texture != nullptr);    
 
-	C3DSampler* sample = new C3DSampler(texture);
+    C3DSampler* sample = new C3DSampler(texture);
 
     return sample;
 }
@@ -37,22 +43,22 @@ C3DSampler* C3DSampler::create(const char* path, bool generateMipmaps)
 {
     C3DTexture* texture = C3DTexture::create(path, generateMipmaps);
 
-	assert(texture != nullptr);	
+    assert(texture != nullptr);    
 
-	C3DSampler* sample = new C3DSampler(texture);
+    C3DSampler* sample = new C3DSampler(texture);
 
     return sample;
 }
 
 void C3DSampler::setTexture(const char* path, bool generateMipmaps)
 {
-	SAFE_RELEASE(_texture);
+    SAFE_RELEASE(_texture);
     C3DTexture* texture = C3DTexture::create(path, generateMipmaps);
 
-	assert(texture != nullptr);	
-	
-    _texture = texture;	
-	_texture->retain();	
+    assert(texture != nullptr);    
+    
+    _texture = texture;    
+    _texture->retain();    
    
 }
 
@@ -75,8 +81,8 @@ C3DTexture* C3DSampler::getTexture() const
 
 void C3DSampler::bind()
 {
-	if(_texture == nullptr)
-		return;
+    if(_texture == nullptr)
+        return;
 
     GL_ASSERT( glBindTexture(GL_TEXTURE_2D, _texture->getHandle()) );
     GL_ASSERT( glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLenum)_wrapS) );
@@ -183,9 +189,9 @@ const char* textureWrapModeToString(Texture_Wrap wrap)
 }
 
 
-bool C3DSampler::load(C3DElementNode* node)
+bool C3DSampler::load(ElementNode* node)
 {
-	// Read the texture uniform name
+    // Read the texture uniform name
     const char* name = node->getNodeName();
     if (strlen(name) == 0)
         return false; // missing texture uniform name
@@ -201,24 +207,24 @@ bool C3DSampler::load(C3DElementNode* node)
     Texture_Wrap wrapT = parseTextureWrapMode(node->getElement("wrapT"), Texture_Wrap_REPEAT);
     Texture_Filter minFilter = parseTextureFilterMode(node->getElement("minFilter"), mipmap ? Texture_Filter_NEAREST_MIPMAP_LINEAR : Texture_Filter_LINEAR);
     Texture_Filter magFilter = parseTextureFilterMode(node->getElement("magFilter"), Texture_Filter_LINEAR);
-		
-	this->setTexture(path,mipmap);
+        
+    this->setTexture(path,mipmap);
    
     this->setWrapMode(wrapS, wrapT);
     this->setFilterMode(minFilter, magFilter);
   
-	return true;
+    return true;
 }
 
-bool C3DSampler::save(C3DElementNode* node)
-{	
+bool C3DSampler::save(ElementNode* node)
+{    
     node->setElement("path", this->getPath());
     node->setElement("mipmap", textureFilterModeHasMipmap(this->getMinFilter()) ? "true" : "false");
     node->setElement("wrapS", textureWrapModeToString(this->getWrapS()));
     node->setElement("wrapT", textureWrapModeToString(this->getWrapS()));
     node->setElement("minFilter", textureFilterModeToString(this->getMinFilter()));
     node->setElement("magFilter", textureFilterModeToString(this->getMagFilter()));
-	return true;
+    return true;
 }
 
 NS_CC_END

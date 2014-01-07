@@ -7,7 +7,7 @@
 NS_CC_BEGIN
 
 class C3DTexture;
-class C3DElementNode;
+class ElementNode;
 
 /**
 * Defnies a texture sampler.
@@ -22,8 +22,8 @@ class C3DSampler : public cocos2d::CCObject
     friend class C3DTexture;
 
 public:
-	C3DSampler();
-	C3DSampler(C3DTexture* texture);
+    C3DSampler();
+    C3DSampler(C3DTexture* texture);
     ~C3DSampler();
 
     /**
@@ -78,13 +78,13 @@ public:
     Texture_Filter getMinFilter() const { return _minFilter; }
     Texture_Filter getMagFilter() const { return _magFilter; }
 
-	void setTexture(const char* path, bool generateMipmaps = false);
+    void setTexture(const char* path, bool generateMipmaps = false);
 
-	bool load(C3DElementNode* node);
-	bool save(C3DElementNode* node);
+    bool load(ElementNode* node);
+    bool save(ElementNode* node);
 
 private:
-	
+    
     C3DTexture* _texture;
     Texture_Wrap _wrapS;
     Texture_Wrap _wrapT;
