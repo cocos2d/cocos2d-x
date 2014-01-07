@@ -328,7 +328,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-long ArmatureAnimation::getMovementCount() const
+ssize_t ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }

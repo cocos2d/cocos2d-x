@@ -170,7 +170,7 @@ public:
     /**
      * Get movement count
      */
-    long getMovementCount() const;
+    ssize_t getMovementCount() const;
 
     void update(float dt);
 
