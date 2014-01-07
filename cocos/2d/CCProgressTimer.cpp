@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc
 
 http://www.cocos2d-x.org
 
@@ -225,6 +226,28 @@ void ProgressTimer::setAnchorPoint(const Point& anchorPoint)
 Point ProgressTimer::getMidpoint() const
 {
     return _midpoint;
+}
+
+void ProgressTimer::setColor(const Color3B &color)
+{
+    _sprite->setColor(color);
+    updateColor();
+}
+
+const Color3B& ProgressTimer::getColor() const
+{
+    return _sprite->getColor();
+}
+
+void ProgressTimer::setOpacity(GLubyte opacity)
+{
+    _sprite->setOpacity(opacity);
+    updateColor();
+}
+
+GLubyte ProgressTimer::getOpacity() const
+{
+    return _sprite->getOpacity();
 }
 
 void ProgressTimer::setMidpoint(const Point& midPoint)
