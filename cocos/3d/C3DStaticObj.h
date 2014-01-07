@@ -16,25 +16,25 @@ class MeshBatch;
 */
 class C3DStaticObj : public C3DRenderNode
 {
-	friend class C3DScene; 
+    friend class C3DScene; 
 public:
 
-	static C3DStaticObj* create(const char* id); 
+    static C3DStaticObj* create(const char* id); 
 
-	virtual bool loadFromFile(const char* fileName,bool isLoadAll=false);
+    virtual bool loadFromFile(const char* fileName,bool isLoadAll=false);
 
-	C3DNode::Type getType() const;
+    C3DNode::Type getType() const;
 
-	void calculateBoundingBox_();
+    void calculateBoundingBox_();
 
-	virtual void copyFrom(const Transform* other, C3DNode::CloneContext& context);
-	virtual C3DNode* clone(CloneContext& context) const;
+    virtual void copyFrom(const Transform* other, C3DNode::CloneContext& context);
+    virtual C3DNode* clone(CloneContext& context) const;
 
 private:
 
-	C3DStaticObj(const char* id);
+    C3DStaticObj(const char* id);
 
-	~C3DStaticObj();
+    ~C3DStaticObj();
 };
 
 NS_CC_END

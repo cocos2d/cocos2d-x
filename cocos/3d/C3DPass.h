@@ -17,78 +17,78 @@ class C3DEffect;
 */
 class C3DPass : public C3DRenderState
 {
-	friend class C3DTechnique;
-	friend class C3DMaterial;
-	friend class C3DRenderState;
+    friend class C3DTechnique;
+    friend class C3DMaterial;
+    friend class C3DRenderState;
 
 public:
-	C3DPass();
-	C3DPass(const char* id, C3DTechnique* technique, C3DEffect* effect);
+    C3DPass();
+    C3DPass(const char* id, C3DTechnique* technique, C3DEffect* effect);
 
-	~C3DPass();
+    ~C3DPass();
 
-	const char* getId() const;
+    const char* getId() const;
 
-	C3DEffect* getEffect() const;
+    C3DEffect* getEffect() const;
 
-	const std::vector<std::string>* getAutoBindProperties() const;
+    const std::vector<std::string>* getAutoBindProperties() const;
 
-	void setVertexAttributeBinding(C3DVertexDeclaration* binding);
+    void setVertexAttributeBinding(C3DVertexDeclaration* binding);
 
-	void bind();
-	void setParamMethonAutoUniform();
+    void bind();
+    void setParamMethonAutoUniform();
 
-	void unbind();
+    void unbind();
 
-	// get max support lights each type
-	int getMaxDirLight() const { return _nMaxDirLight; }
-	int getMaxPointLight() const  { return _nMaxPointLight; }
-	int getMaxSpotLight() const { return _nMaxSpotLight; }
-	int getMaxAnimLight() const { return _nMaxAnimLight; }
-	int getMaxShadowMap() const { return _nMaxShadowMap; }
+    // get max support lights each type
+    int getMaxDirLight() const { return _nMaxDirLight; }
+    int getMaxPointLight() const  { return _nMaxPointLight; }
+    int getMaxSpotLight() const { return _nMaxSpotLight; }
+    int getMaxAnimLight() const { return _nMaxAnimLight; }
+    int getMaxShadowMap() const { return _nMaxShadowMap; }
 
-	C3DPass* clone() const;
+    C3DPass* clone() const;
 
-	void setupParametersFromEffect();
+    void setupParametersFromEffect();
 
-	/**
-	* load info from the elementnode
-	*
-	* @param nodes elementnode which contains the renderstate info.	 
-	*      
-	*/
-	virtual bool load(ElementNode* node);
+    /**
+    * load info from the elementnode
+    *
+    * @param nodes elementnode which contains the renderstate info.     
+    *      
+    */
+    virtual bool load(ElementNode* node);
 
-	/**
-	* save the pass info into the elementnode
-	*
-	* @param nodes elementnode which contains the renderstate info.	 
-	*      
-	*/
-	virtual bool save(ElementNode* node);
+    /**
+    * save the pass info into the elementnode
+    *
+    * @param nodes elementnode which contains the renderstate info.     
+    *      
+    */
+    virtual bool save(ElementNode* node);
 
-	std::string getVshPath()const{return _vshPath;}
-	std::string getFshPath()const{return _fshPath;}
-	std::string getDefines()const{return _defines;}
+    std::string getVshPath()const{return _vshPath;}
+    std::string getFshPath()const{return _fshPath;}
+    std::string getDefines()const{return _defines;}
 
-private:	
+private:    
 
-	std::string _id;
-	C3DTechnique* _technique;
-	C3DEffect* _effect;
-	C3DVertexDeclaration* _vaBinding;
+    std::string _id;
+    C3DTechnique* _technique;
+    C3DEffect* _effect;
+    C3DVertexDeclaration* _vaBinding;
 
-	std::string _vshPath;
-	std::string _fshPath;
-	std::string _defines;
+    std::string _vshPath;
+    std::string _fshPath;
+    std::string _defines;
 
-	//max support lights
-	int _nMaxDirLight;
-	int _nMaxPointLight;
-	int _nMaxSpotLight;
-	int _nMaxAnimLight;
+    //max support lights
+    int _nMaxDirLight;
+    int _nMaxPointLight;
+    int _nMaxSpotLight;
+    int _nMaxAnimLight;
 
-	int _nMaxShadowMap;
+    int _nMaxShadowMap;
 };
 
 NS_CC_END

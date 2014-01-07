@@ -26,9 +26,9 @@ C3DNode* C3DScene::findNode(const char* strId)
     
 void C3DScene::removeAllNode()
 {
-	
-	SAFE_RELEASE(_activeCamera);
-	
+    
+    SAFE_RELEASE(_activeCamera);
+    
     removeAllChildren();
 
     size_t i;
@@ -38,44 +38,44 @@ void C3DScene::removeAllNode()
         SAFE_RELEASE(_cameras[i]);
     }
     _cameras.clear();
-			
+            
 
-	for (i = 0; i < _postDrawNode.size(); i++) {
-		SAFE_RELEASE(_postDrawNode[i]);
-	}
-	_postDrawNode.clear();
-		
+    for (i = 0; i < _postDrawNode.size(); i++) {
+        SAFE_RELEASE(_postDrawNode[i]);
+    }
+    _postDrawNode.clear();
+        
 }
    
     
 C3DScene::C3DScene(const char* str) 
 :C3DNode(str)
 {
-	_ambientColor = new Vector3();
+    _ambientColor = new Vector3();
 
-	_showBoundingBox = false;
-	
-	_activeCamera = NULL;
-	    
+    _showBoundingBox = false;
+    
+    _activeCamera = NULL;
+        
     _defDepthZ = 0.5f;
     _inShadowPass = false;
    
     _layer = NULL;
-	
+    
     setScene(this);
-		
+        
 }
 
 
 C3DScene::~C3DScene()
 {
-	SAFE_RELEASE(_activeCamera);
-	
-		
-	SAFE_DELETE(_ambientColor);
+    SAFE_RELEASE(_activeCamera);
+    
+        
+    SAFE_DELETE(_ambientColor);
 
     removeAllNode();    
-	
+    
 }
 
 C3DScene* C3DScene::createScene(C3DLayer* layer)
@@ -89,7 +89,7 @@ C3DScene* C3DScene::createScene(C3DLayer* layer)
 
 C3DCamera* C3DScene::getActiveCamera() const
 {
-	return _activeCamera;
+    return _activeCamera;
 }
     
 //set active camera by index
@@ -103,9 +103,9 @@ bool C3DScene::setActiveCamera(int index)
             _activeCamera->release();
             _activeCamera = _cameras[index];
             _activeCamera->retain();
-								
-			_activeCamera->setAspectRatio((float)C3DRenderSystem::getInstance()->getViewport()->width/(float)C3DRenderSystem::getInstance()->getViewport()->height);
-							
+                                
+            _activeCamera->setAspectRatio((float)C3DRenderSystem::getInstance()->getViewport()->width/(float)C3DRenderSystem::getInstance()->getViewport()->height);
+                            
         }
             
         return true;
@@ -122,11 +122,11 @@ int C3DScene::getCameraCount() const
 
 void C3DScene::setViewAspectRatio(float aspectRatio)
 {
-	if(getActiveCamera() != NULL)
-	{
-		getActiveCamera()->setAspectRatio(aspectRatio);
-	}
-	
+    if(getActiveCamera() != NULL)
+    {
+        getActiveCamera()->setAspectRatio(aspectRatio);
+    }
+    
 }
 
 
@@ -142,147 +142,147 @@ void C3DScene::setAmbientColor(float red, float green, float blue)
 
 void C3DScene::showBoundingBox(bool show)
 {
-	_showBoundingBox = show;
+    _showBoundingBox = show;
 }
 
 
 void C3DScene::drawDebug()
-{	
-	for (size_t i = 0; i < _children.size(); i++) 
-	{
-		_children[i]->drawDebug();
-	}	
+{    
+    for (size_t i = 0; i < _children.size(); i++) 
+    {
+        _children[i]->drawDebug();
+    }    
 }
 
 
 void C3DScene::draw()
 {
-	
-	size_t i;
-	for (i = 0; i < _children.size(); ++i) 
-	{
-		C3DNode* node = _children[i];
-		if(node->active())
-		{			
-			node->draw();			
+    
+    size_t i;
+    for (i = 0; i < _children.size(); ++i) 
+    {
+        C3DNode* node = _children[i];
+        if(node->active())
+        {            
+            node->draw();            
 
-		}
-	}
+        }
+    }
 }
  
     
 // update routine
 void C3DScene::update(long elapsedTime)
 {
-	size_t i;
+    size_t i;
     for (i = 0; i < _children.size(); ++i) 
-	{
-		C3DNode* node = _children[i];
-		if(node->active())
-			node->update(elapsedTime);
+    {
+        C3DNode* node = _children[i];
+        if(node->active())
+            node->update(elapsedTime);
     }
-	
-	
+    
+    
 }
    
 
 C3DNode::Type C3DScene::getType() const
 {
-	return C3DNode::NodeType_Scene;
+    return C3DNode::NodeType_Scene;
 }
 
 void C3DScene::addNodeToRenderList(C3DNode* node)
 {
-	node->setScene(this);
+    node->setScene(this);
 
-	C3DNode::Type type = node->getType();
-	switch (type) 
-	{
+    C3DNode::Type type = node->getType();
+    switch (type) 
+    {
 
-	case C3DNode::NodeType_Camera:
-		{
-			bool found = false;
-			for (std::vector<C3DCamera*>::iterator iter=_cameras.begin(); iter!=_cameras.end(); ++iter)
-			{
-				if (*iter == node)
-				{
-					found = true;
-					break;
-				}
-			}
-			if (found == false)
-			{
-				_cameras.push_back((C3DCamera*)node);
-				node->retain();
-			}
-			else
-			{
-				assert(false && "Duplicated camera node!");
-			}
-		}
+    case C3DNode::NodeType_Camera:
+        {
+            bool found = false;
+            for (std::vector<C3DCamera*>::iterator iter=_cameras.begin(); iter!=_cameras.end(); ++iter)
+            {
+                if (*iter == node)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (found == false)
+            {
+                _cameras.push_back((C3DCamera*)node);
+                node->retain();
+            }
+            else
+            {
+                assert(false && "Duplicated camera node!");
+            }
+        }
 
-		break; 
-	 
+        break; 
+     
 
-	default:
-		break;
-	}
+    default:
+        break;
+    }
 
-	for (size_t i = 0; i < node->_children.size(); i++)
-	{
-	//	addNodeToRenderList(node->_children[i]);
-	}
-	
+    for (size_t i = 0; i < node->_children.size(); i++)
+    {
+    //    addNodeToRenderList(node->_children[i]);
+    }
+    
 }
 
 void C3DScene::removeNodeFromRenderList(C3DNode* node)
 {
    // node->setScene(NULL);
-	for (size_t i = 0; i < node->_children.size(); i++)
-	{
-	//	removeNodeFromRenderList(node->_children[i]);
-	}
+    for (size_t i = 0; i < node->_children.size(); i++)
+    {
+    //    removeNodeFromRenderList(node->_children[i]);
+    }
 
-	C3DNode::Type type = node->getType();
-	switch (type) 
-	{
-	
-	case C3DNode::NodeType_Camera:
-		{
-			if ( _activeCamera == node)
-			{
-				assert(false && "removing active camera");
-			}
-			std::vector<C3DCamera*>::iterator it = find(_cameras.begin(), _cameras.end(), (C3DCamera*)node);
-			if (it != _cameras.end())
-			{
-				_cameras.erase(it);
-				node->release();
-			}
-			else
-			{
-				assert(false && "unrefereed node");
-			}
-		}
+    C3DNode::Type type = node->getType();
+    switch (type) 
+    {
+    
+    case C3DNode::NodeType_Camera:
+        {
+            if ( _activeCamera == node)
+            {
+                assert(false && "removing active camera");
+            }
+            std::vector<C3DCamera*>::iterator it = find(_cameras.begin(), _cameras.end(), (C3DCamera*)node);
+            if (it != _cameras.end())
+            {
+                _cameras.erase(it);
+                node->release();
+            }
+            else
+            {
+                assert(false && "unrefereed node");
+            }
+        }
 
-		break;
-	
-	default:
-		break;
-	}
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void C3DScene::onChildChanged(ChangeEvent eventType, C3DNode* child)
 {
-	switch (eventType)
-	{
-	case C3DNode::ADD:
-		addNodeToRenderList(child);
-		break;
-	case C3DNode::REMOVE:
-		removeNodeFromRenderList(child);
-		break;
-	}
+    switch (eventType)
+    {
+    case C3DNode::ADD:
+        addNodeToRenderList(child);
+        break;
+    case C3DNode::REMOVE:
+        removeNodeFromRenderList(child);
+        break;
+    }
 }
 
 const Matrix& C3DScene::getViewProjectionMatrix() const
@@ -314,12 +314,12 @@ void C3DScene::setLayer(C3DLayer* layer)
 
 void C3DScene::addChild(C3DNode* child)
 {
-	C3DNode::addChild(child);
+    C3DNode::addChild(child);
 }
 
 void C3DScene::removeChild(C3DNode* child)
 {
-	C3DNode::removeChild(child);
+    C3DNode::removeChild(child);
 }
 
 NS_CC_END

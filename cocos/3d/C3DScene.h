@@ -33,7 +33,7 @@ class  C3DScene : public C3DNode
 {
 friend class C3DNode;
 public:
-	
+    
     static C3DScene* createScene(C3DLayer* layer);
     
     void setLayer(C3DLayer* layer);
@@ -42,10 +42,10 @@ public:
     C3DNode* findNode(const char* strId);
     
     void removeAllNode();
-	
+    
     
     C3DCamera* getActiveCamera() const;
-	
+    
     //set active camera by index
     bool setActiveCamera(int index);
     //get number of cameras in the scene
@@ -63,20 +63,20 @@ public:
      *  get default depth
      */
     float getDefDepthZ() { return _defDepthZ; }
-	
+    
 
-	void setViewAspectRatio(float aspectRatio);
+    void setViewAspectRatio(float aspectRatio);
 
-	const Vector3* getAmbientColor() const;
+    const Vector3* getAmbientColor() const;
 
     void setAmbientColor(float red, float green, float blue);
 
     void draw();
-	
-	void drawDebug();
-	void showBoundingBox(bool show);
+    
+    void drawDebug();
+    void showBoundingBox(bool show);
 
-	    
+        
     // update routine
     virtual void update(long elapsedTime);
     
@@ -86,46 +86,46 @@ public:
     virtual ~C3DScene();
     
     //void EnalbeFrustumCull(bool bEnable, bool )
-	
-	virtual Type getType() const;
-	
+    
+    virtual Type getType() const;
+    
     const Matrix& getViewProjectionMatrix() const;
-	   
+       
 
     bool isInShadowPass() const { return _inShadowPass; }
-		
-	
-	virtual void addChild(C3DNode* child);
+        
+    
+    virtual void addChild(C3DNode* child);
 
-	virtual void removeChild(C3DNode* child);
-	
+    virtual void removeChild(C3DNode* child);
+    
 
-	void addNodeToRenderList(C3DNode* node);
-	void removeNodeFromRenderList(C3DNode* node);
+    void addNodeToRenderList(C3DNode* node);
+    void removeNodeFromRenderList(C3DNode* node);
 
 protected:
-	virtual void onChildChanged(ChangeEvent eventType, C3DNode* child);
+    virtual void onChildChanged(ChangeEvent eventType, C3DNode* child);
 
 private:
-	    
+        
     Vector3* _ambientColor;    
    
     std::vector<C3DCamera*> _cameras;   
-	
-	std::vector<C3DNode*> _postDrawNode;
+    
+    std::vector<C3DNode*> _postDrawNode;
 
-	bool _showBoundingBox;
-	   
+    bool _showBoundingBox;
+       
 
     float _defDepthZ;//default depth z. 
 
     bool _inShadowPass;
 
-	C3DCamera* _activeCamera;
-		
-    C3DLayer* _layer;	
-	
-	
+    C3DCamera* _activeCamera;
+        
+    C3DLayer* _layer;    
+    
+    
 };
 
 
