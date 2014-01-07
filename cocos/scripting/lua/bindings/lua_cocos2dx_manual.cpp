@@ -1707,8 +1707,9 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
     
     int argc = 0;
     
+    tolua_Error tolua_err;
+    
 #if COCOS2D_DEBUG >= 1
-	tolua_Error tolua_err;
 	if (!tolua_isusertable(tolua_S,1,"Sequence",0,&tolua_err)) goto tolua_lerror;
 #endif
     
@@ -2196,8 +2197,8 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
     
     int argc = 0;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
+#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"Spawn",0,&tolua_err)) goto tolua_lerror;
 #endif
     
