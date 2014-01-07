@@ -101,7 +101,7 @@ Armature::~Armature(void)
 
 bool Armature::init()
 {
-    return init(nullptr);
+    return init("");
 }
 
 
