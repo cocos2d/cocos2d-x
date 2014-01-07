@@ -81,8 +81,8 @@ CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, in
 CC_DLL char *
 cc_utf16_to_utf8 (const unsigned short  *str,
                   int             len,
-                  int            *items_read,
-                  int            *items_written);
+                  long            *items_read,
+                  long            *items_written);
 
 NS_CC_END
 
