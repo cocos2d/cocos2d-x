@@ -307,6 +307,43 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
     return ok;
 }
 
+bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    
+    if (ok)
+    {
+        lua_pushstring(L, "density");
+        lua_gettable(L, lo);
+        outValue->density = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "restitution");
+        lua_gettable(L, lo);
+        outValue->restitution = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "friction");
+        lua_gettable(L, lo);
+        outValue->friction = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
 {
     return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
@@ -1502,6 +1539,19 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
     return ok;
 }
 
+void points_to_luaval(lua_State* L,const Point* pt, int count)
+{
+    if (NULL  == L)
+        return;
+    lua_newtable(L);
+    for (int i = 1; i <= count; ++i)
+    {
+        lua_pushnumber(L, i);
+        point_to_luaval(L, pt[i-1]);
+        lua_rawset(L, -3);
+    }
+}
+
 void point_to_luaval(lua_State* L,const Point& pt)
 {
     if (NULL  == L)
@@ -1512,6 +1562,72 @@ void point_to_luaval(lua_State* L,const Point& pt)
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     lua_pushstring(L, "y");                             /* L: table key */
     lua_pushnumber(L, (lua_Number) pt.y);               /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
+{
+    if (NULL  == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "density");                       /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.density);         /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "restitution");                   /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.restitution);     /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "friction");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.friction);        /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
+{
+    if (NULL  == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    
+    lua_pushstring(L, "shape");                       /* L: table key */
+    PhysicsShape* shape = info.shape;
+    if (shape == nullptr)
+    {
+        lua_pushnil(L);
+    }else
+    {
+        std::string hashName = typeid(*shape).name();
+        auto iter = g_luaType.find(hashName);
+        std::string className = "";
+        if(iter != g_luaType.end()){
+            className = iter->second.c_str();
+        } else {
+            className = "PhysicsShape";
+        }
+        
+        int ID =  (int)(shape->_ID);
+        int* luaID = &(shape->_luaID);
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)shape,className.c_str());
+    }
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "start");                   /* L: table key */
+    point_to_luaval(L, info.start);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "end");                   /* L: table key */
+    point_to_luaval(L, info.end);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "contact");                   /* L: table key */
+    point_to_luaval(L, info.contact);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "normal");                   /* L: table key */
+    point_to_luaval(L, info.normal);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "fraction");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) info.fraction);        /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
 }
 
