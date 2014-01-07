@@ -152,7 +152,7 @@ Point Point::rotateByAngle(const Point& pivot, float angle) const
     return pivot + (*this - pivot).rotate(Point::forAngle(angle));
 }
 
-bool Point::isOneDemensionSegmentOverlap(float A, float B, float C, float D, float *S, float *E)
+bool Point::isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, float *E)
 {
     float ABmin = MIN(A, B);
     float ABmax = MAX(A, B);
@@ -258,8 +258,8 @@ bool Point::isSegmentOverlap(const Point& A, const Point& B, const Point& C, con
     
     if (isLineOverlap(A, B, C, D))
     {
-        return isOneDemensionSegmentOverlap(A.x, B.x, C.x, D.x, &S->x, &E->x) &&
-        isOneDemensionSegmentOverlap(A.y, B.y, C.y, D.y, &S->y, &E->y);
+        return isOneDimensionSegmentOverlap(A.x, B.x, C.x, D.x, &S->x, &E->x) &&
+        isOneDimensionSegmentOverlap(A.y, B.y, C.y, D.y, &S->y, &E->y);
     }  
     
     return false;
