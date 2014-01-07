@@ -927,7 +927,7 @@ void Layout::doLayout()
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = Helper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
                                 relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
