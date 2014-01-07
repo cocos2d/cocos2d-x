@@ -1,4 +1,4 @@
-package org.cocos2dx.hellocpp;
+package org.cocos2dx.javascript;
 
 import android.app.NativeActivity;
 import android.os.Bundle;
