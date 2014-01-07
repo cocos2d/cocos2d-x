@@ -150,7 +150,7 @@ target_link_libraries(${APP_NAME}
   cocos2d
   )
 
-set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
+set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
