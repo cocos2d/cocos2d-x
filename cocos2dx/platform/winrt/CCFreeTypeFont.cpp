@@ -263,16 +263,10 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
             if (i < 0 || j < 0 || i >= m_width || j >= m_height)
                 continue;
 
-            unsigned char value =  bitmap->buffer[q * bitmap->width + p];
-
-            if(value > 0)
-            {
-                FT_Int index = (j * m_width * 4) + (i * 4);
-                pBuffer[index++] = value;
-                pBuffer[index++] = value;
-                pBuffer[index++] = value;
-                pBuffer[index++] = 0xff;
-           }
+            unsigned char value = bitmap->buffer[q * bitmap->width + p];
+            FT_Int index = j * m_width + i;
+            FT_ULong* lpBuffer = (FT_ULong*)pBuffer;
+            lpBuffer[index] = max(lpBuffer[index], (FT_ULong)(value << 24) | 0xffffff);
         }
     }  
 }
