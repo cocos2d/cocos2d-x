@@ -37,6 +37,7 @@ enum {
     kShaderType_PositionTextureColor_noMVP,
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionColor,
+    kShaderType_PositionColor_noMVP,
     kShaderType_PositionTexture,
     kShaderType_PositionTexture_uColor,
     kShaderType_PositionTextureA8Color,
@@ -126,6 +127,13 @@ void ShaderCache::loadDefaultShaders()
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR, p) );
 
     //
+    // Position, Color shader no MVP
+    //
+    p = new GLProgram();
+    loadDefaultShader(p, kShaderType_PositionColor_noMVP);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP, p) );
+
+    //
     // Position Texture shader
     //
     p = new GLProgram();
@@ -203,6 +211,12 @@ void ShaderCache::reloadDefaultShaders()
     p->reset();
     loadDefaultShader(p, kShaderType_PositionColor);
     
+    //
+    // Position, Color shader no MVP
+    //
+    p = getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP);
+    loadDefaultShader(p, kShaderType_PositionColor_noMVP);
+
     //
     // Position Texture shader
     //
@@ -289,6 +303,12 @@ void ShaderCache::loadDefaultShader(GLProgram *p, int type)
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
             p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
 
+            break;
+        case kShaderType_PositionColor_noMVP:
+            p->initWithVertexShaderByteArray(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
+            
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+            p->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
             break;
         case kShaderType_PositionTexture:
             p->initWithVertexShaderByteArray(ccPositionTexture_vert ,ccPositionTexture_frag);
