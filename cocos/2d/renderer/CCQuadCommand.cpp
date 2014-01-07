@@ -119,9 +119,9 @@ int64_t QuadCommand::generateID()
 
     //Generate Material ID
     //TODO fix shader ID generation
-    CCASSERT(_shader->getProgram() < 64, "ShaderID is greater than 64");
+    CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
     //TODO fix texture ID generation
-    CCASSERT(_textureID < 1024, "TextureID is greater than 1024");
+    CCASSERT(_textureID < pow(2,18), "TextureID is greater than 2^18");
 
     //TODO fix blend id generation
     int blendID = 0;
@@ -146,9 +146,17 @@ int64_t QuadCommand::generateID()
         blendID = 4;
     }
 
-    _materialID = (int32_t)_shader->getProgram() << 28
-            | (int32_t)blendID << 24
-            | (int32_t)_textureID << 14;
+    //TODO Material ID should be part of the ID
+    //
+    // Temporal hack (later, these 32-bits should be packed in 24-bits
+    //
+    // +---------------------+-------------------+----------------------+
+    // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
+    // +---------------------+-------------------+----------------------+
+
+    _materialID = (int32_t)_shader->getProgram() << 22
+            | (int32_t)blendID << 18
+            | (int32_t)_textureID << 0;
 
     //Generate RenderCommandID
     _id = (int64_t)_viewport << 61
