@@ -119,6 +119,7 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="TestCpp_2014_01_06_11_14_48.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="SplashScreenImage.jpg" />
