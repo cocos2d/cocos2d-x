@@ -8,7 +8,6 @@ cocos2d-x-2.2.2 ???
      [FIX]    A memory leak fix when loading JSC(JS bytecode) file.
      [NEW]    WP8 XAML support
      [FIX]    cc.BuilderReader.load( path, null, parentSize ); was not allowed.
-     [NEW]    support libcurl
      [FIX]    Fixes the font rendering on Windows
 
 cocos2d-x-2.2.1 @Nov.19 2013
