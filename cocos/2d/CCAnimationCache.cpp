@@ -187,7 +187,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
     }
 }
 
-void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
+void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist)
 {
     if ( dictionary.find("animations") == dictionary.end() )
     {
@@ -205,7 +205,8 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
         for(const auto &value : spritesheets) {
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
+            std::string path = FileUtils::getInstance()->fullPathFromRelativeFile(value.asString(),plist);
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(path);
         }
     }
 
@@ -231,7 +232,7 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 
-    addAnimationsWithDictionary(dict);
+    addAnimationsWithDictionary(dict,plist);
 }
 
 
