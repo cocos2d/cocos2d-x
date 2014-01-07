@@ -650,8 +650,12 @@ cc.Class.extend = function (prop) {
     // The dummy class constructor
     function Class() {
         // All construction is actually done in the init method
-        if (!initializing && this.ctor)
-            this.ctor.apply(this, arguments);
+        if (!initializing) {
+            if (!this.ctor)
+                cc.log("No ctor function found, please set `classes_need_extend` section at `ini` file as `tools/tojs/cocos2dx.ini`");
+            else
+                this.ctor.apply(this, arguments);
+        }
     }
 
     // Populate our constructed prototype object
