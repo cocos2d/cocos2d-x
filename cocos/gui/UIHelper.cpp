@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
+Widget* Helper::seekWidgetByTag(Widget* root, int tag)
 {
     if (!root)
     {
@@ -52,7 +52,7 @@ Widget* UIHelper::seekWidgetByTag(Widget* root, int tag)
     return nullptr;
 }
 
-Widget* UIHelper::seekWidgetByName(Widget* root, const char *name)
+Widget* Helper::seekWidgetByName(Widget* root, const char *name)
 {
     if (!root)
     {
@@ -75,7 +75,7 @@ Widget* UIHelper::seekWidgetByName(Widget* root, const char *name)
     return nullptr;
 }
 
-Widget* UIHelper::seekWidgetByRelativeName(Widget *root, const char *name)
+Widget* Helper::seekWidgetByRelativeName(Widget *root, const char *name)
 {
     if (!root)
     {
@@ -95,7 +95,7 @@ Widget* UIHelper::seekWidgetByRelativeName(Widget *root, const char *name)
 }
 
 /*temp action*/
-Widget* UIHelper::seekActionWidgetByActionTag(Widget* root, int tag)
+Widget* Helper::seekActionWidgetByActionTag(Widget* root, int tag)
 {
 	if (!root)
 	{
