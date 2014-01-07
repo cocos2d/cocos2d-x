@@ -37,6 +37,8 @@ NS_CC_EXT_BEGIN
 class TableViewCell: public Node
 {
 public:
+    CREATE_FUNC(TableViewCell);
+    
     TableViewCell() {}
     /**
      * The index used internally by SWTableView and its subclasses
