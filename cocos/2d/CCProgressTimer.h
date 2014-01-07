@@ -111,8 +111,12 @@ public:
     inline Point getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw(void) override;
-    void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void draw() override;
+    virtual void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setColor(const Color3B &color) override;
+    virtual const Color3B& getColor() const override;
+    virtual void setOpacity(GLubyte opacity) override;
+    virtual GLubyte getOpacity() const;
     
 protected:
     /**
