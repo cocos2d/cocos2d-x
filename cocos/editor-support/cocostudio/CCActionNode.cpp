@@ -154,7 +154,7 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 		Widget* rootWidget = dynamic_cast<Widget*>(root);
 		if (rootWidget != nullptr)
 		{
-			Widget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			Widget* widget = Helper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != nullptr)
 			{
 				setObject(widget);
