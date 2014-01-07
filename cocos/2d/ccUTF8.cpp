@@ -3,8 +3,9 @@
  *
  * gutf8.c - Operations on UTF-8 strings.
  *
- * Copyright (C) 1999 Tom Tromey
- * Copyright (C) 2000 Red Hat, Inc.
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
