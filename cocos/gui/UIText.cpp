@@ -87,7 +87,7 @@ const std::string& Text::getStringValue()
     return _labelRenderer->getString();
 }
 
-size_t Text::getStringLength()
+ssize_t Text::getStringLength()
 {
     return _labelRenderer->getString().size();
 }
