@@ -33,7 +33,7 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(ScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view) override
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -42,7 +42,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "scrollViewDidScroll", 1, &arg, NULL);
     }
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view) override
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -119,32 +119,32 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(ScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view) override
     {
         callJSDelegate(view, "scrollViewDidScroll");
     }
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view) override
     {
         callJSDelegate(view, "scrollViewDidZoom");
     }
     
-    virtual void tableCellTouched(TableView* table, TableViewCell* cell)
+    virtual void tableCellTouched(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellTouched");
     }
     
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell)
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellHighlight");
     }
     
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell)
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellUnhighlight");
     }
     
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell)
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellWillRecycle");
     }
@@ -248,7 +248,7 @@ public:
         }
     }
     
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx)
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
@@ -268,7 +268,7 @@ public:
         
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
@@ -288,7 +288,7 @@ public:
         return NULL;
     }
     
-    virtual ssize_t numberOfCellsInTableView(TableView *table)
+    virtual ssize_t numberOfCellsInTableView(TableView *table) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
@@ -508,7 +508,7 @@ public:
         }
     }
     
-    virtual void editBoxEditingDidBegin(EditBox* editBox)
+    virtual void editBoxEditingDidBegin(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -517,7 +517,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidBegin", 1, &arg, NULL);
     }
     
-    virtual void editBoxEditingDidEnd(EditBox* editBox)
+    virtual void editBoxEditingDidEnd(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -526,7 +526,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidEnd", 1, &arg, NULL);
     }
     
-    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text)
+    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -539,7 +539,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxTextChanged", 2, dataVal, NULL);
     }
     
-    virtual void editBoxReturn(EditBox* editBox)
+    virtual void editBoxReturn(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;

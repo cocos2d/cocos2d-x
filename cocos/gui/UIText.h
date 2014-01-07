@@ -72,7 +72,7 @@ public:
      *
      * @return  string length.
      */
-    size_t getStringLength();
+    ssize_t getStringLength();
     
     /**
      * Sets the font size of label.
