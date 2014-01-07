@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org  http://cocos2d-x.org
  Copyright (c) 2010 Максим Аксенов
+ Copyright (c) 2010 cocos2d-x.org  
  Copyright (c) 2013 Martell Malone
  
  Permission is hereby granted, free of charge, to any person obtaining a copy

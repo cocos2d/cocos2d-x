@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc. 
  
  http://www.cocos2d-x.org
  
