@@ -106,6 +106,8 @@ private:
     void setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture);
     
     cocos2d::CustomCommand _customCommand;
+    
+    kmMat4 _oldTransMatrix;
 };
 
 }
