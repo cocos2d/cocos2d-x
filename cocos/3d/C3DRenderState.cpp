@@ -66,7 +66,9 @@ static const char* AUTO_BINDING_VARIABLES[C3DRenderState::AUTO_BINDING_NUM] =
 GLint C3DRenderState::_activeTexture = 0;
 
 C3DRenderState::C3DRenderState()
-    : _nodeBinding(nullptr), _stateBlock(nullptr), _parent(nullptr)
+: _nodeBinding(nullptr)
+, _stateBlock(nullptr)
+, _parent(nullptr)
 {
 }
 

@@ -7,13 +7,19 @@
 NS_CC_BEGIN
 
 C3DSampler::C3DSampler()
-    : _texture(nullptr), _wrapS(Texture_Wrap_REPEAT), _wrapT(Texture_Wrap_REPEAT), _magFilter(Texture_Filter_LINEAR)
+:_texture(nullptr)
+,_wrapS(Texture_Wrap_REPEAT)
+,_wrapT(Texture_Wrap_REPEAT)
+,_magFilter(Texture_Filter_LINEAR)
 {
     _minFilter = Texture_Filter_LINEAR;
 }
 
 C3DSampler::C3DSampler(C3DTexture* texture)
-    : _texture(texture), _wrapS(Texture_Wrap_REPEAT), _wrapT(Texture_Wrap_REPEAT), _magFilter(Texture_Filter_LINEAR)
+:_texture(texture)
+,_wrapS(Texture_Wrap_REPEAT)
+,_wrapT(Texture_Wrap_REPEAT)
+,_magFilter(Texture_Filter_LINEAR)
 {
     texture->retain();
     _minFilter = texture->isMipmapped() ? Texture_Filter_LINEAR_MIPMAP_LINEAR : Texture_Filter_LINEAR;

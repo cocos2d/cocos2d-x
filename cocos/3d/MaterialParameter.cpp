@@ -5,8 +5,12 @@
 
 NS_CC_BEGIN
 
-MaterialParameter::MaterialParameter(const char* name) :
-_type(MaterialParameter::NONE), _count(1), _dynamic(false), _name(name), _uniform(nullptr)
+MaterialParameter::MaterialParameter(const char* name)
+:_type(MaterialParameter::NONE)
+,_count(1)
+,_dynamic(false)
+,_name(name)
+,_uniform(nullptr)
 {
     clearValue();
 }
