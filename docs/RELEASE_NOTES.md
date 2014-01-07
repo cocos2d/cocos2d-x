@@ -23,7 +23,7 @@
 	- [Improved LabelTTF / LabelBMFont](#improved-labelttf--labelbmfont)
 	- [New EventDispatcher](#new-eventdispatcher)
 		- [Adding Touch Event Listener](#adding-touch-event-listener)
-        - [Adding Mouse Event Listener](#adding-mouse-event-listener)
+		- [Adding Mouse Event Listener](#adding-mouse-event-listener)
 		- [Adding A Keyboard Event Listener](#adding-a-keyboard-event-listener)
 		- [Adding An Acceleration Event Listener](#adding-an-acceleration-event-listener)
 		- [Adding A Custom Event Listener](#adding-a-custom-event-listener)
@@ -347,7 +347,7 @@ For TouchAllAtOnce
 auto sprite = Sprite::create("file.png");
 ...
 auto listener = EventListenerTouchAllAtOnce::create();
-listener->onTouchesBegan     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  return true;  };
+listener->onTouchesBegan     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
 listener->onTouchesMoved     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
 listener->onTouchesEnded     = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
 listener->onTouchesCancelled = [](const std::vector<Touch*>& touches, Event* event) { do_some_thing();  };
