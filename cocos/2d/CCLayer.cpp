@@ -513,7 +513,7 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
         return true;
     }
     return false;
@@ -568,6 +568,20 @@ void LayerColor::draw()
     _customCommand.init(0, _vertexZ);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    
+    kmMat4 p, mvp;
+    kmGLGetMatrix(KM_GL_PROJECTION, &p);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mvp);
+    kmMat4Multiply(&mvp, &p, &mvp);
+    
+    for(int i = 0; i < 4; ++i)
+    {
+        kmVec3 pos;
+        pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _vertexZ;
+        kmVec3TransformCoord(&pos, &pos, &mvp);
+        _noMVPVertices[i] = Vertex3F(pos.x,pos.y,pos.z);
+    }
+    
 }
 
 void LayerColor::onDraw()
@@ -575,18 +589,17 @@ void LayerColor::onDraw()
     CC_NODE_DRAW_SETUP();
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
-
     //
     // Attributes
     //
 #ifdef EMSCRIPTEN
-    setGLBufferData(_squareVertices, 4 * sizeof(Vertex2F), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    setGLBufferData(_noMVPVertices, 4 * sizeof(Vertex3F), 0);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 #endif // EMSCRIPTEN
 
