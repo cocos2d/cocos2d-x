@@ -89,6 +89,14 @@
 		15D6E846182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */; };
 		15D6E847182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */; };
 		15D6E848182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */; };
+		15F4C8821875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */; };
+		15F4C8831875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */; };
+		15F4C8841875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */; };
+		15F4C8851875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */; };
+		15F4CA1F1875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */; };
+		15F4CA201875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */; };
+		15F4CA211875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */; };
+		15F4CA221875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */; };
 		1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A087AE61860400400196EF5 /* edtaa3func.cpp */; };
 		1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A087AE71860400400196EF5 /* edtaa3func.h */; };
@@ -823,18 +831,18 @@
 		1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */; };
 		1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
 		1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58CE180E92CC00EF57C3 /* UIImageView.h */; };
-		1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
-		1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */; };
-		1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UILabel.h */; };
-		1A8C5913180E92CC00EF57C3 /* UILabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UILabel.h */; };
-		1A8C5914180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */; };
-		1A8C5915180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */; };
-		1A8C5916180E92CC00EF57C3 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */; };
-		1A8C5917180E92CC00EF57C3 /* UILabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */; };
-		1A8C5918180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */; };
-		1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */; };
-		1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
-		1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */; };
+		1A8C5910180E92CC00EF57C3 /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UIText.cpp */; };
+		1A8C5911180E92CC00EF57C3 /* UIText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D1180E92CC00EF57C3 /* UIText.cpp */; };
+		1A8C5912180E92CC00EF57C3 /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UIText.h */; };
+		1A8C5913180E92CC00EF57C3 /* UIText.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D2180E92CC00EF57C3 /* UIText.h */; };
+		1A8C5914180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */; };
+		1A8C5915180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */; };
+		1A8C5916180E92CC00EF57C3 /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */; };
+		1A8C5917180E92CC00EF57C3 /* UITextAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */; };
+		1A8C5918180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */; };
+		1A8C5919180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */; };
+		1A8C591A180E92CC00EF57C3 /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */; };
+		1A8C591B180E92CC00EF57C3 /* UITextBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */; };
 		1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */; };
 		1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */; };
@@ -1474,6 +1482,8 @@
 		2AFCB8231863D6B200EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
 		2AFCB8241863D6F600EB4B5C /* jsb_cocos2dx_spine_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */; };
 		2AFCB8251863D70300EB4B5C /* jsb_cocos2dx_spine_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */; };
+		373B9129187891F400198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
+		373B912A187891FB00198F86 /* CCComBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 373B910718787C0B00198F86 /* CCComBase.h */; };
 		3774879F1869BA8C00EDF837 /* CCActionEaseEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */; };
 		3EEF8BD31839FFAF005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
@@ -2087,6 +2097,10 @@
 		15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaSkeletonAnimation.h; sourceTree = "<group>"; };
 		15D6E843182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_coco_studio_manual.cpp; sourceTree = "<group>"; };
 		15D6E844182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_coco_studio_manual.hpp; sourceTree = "<group>"; };
+		15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_gui_auto.cpp; sourceTree = "<group>"; };
+		15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_gui_auto.hpp; sourceTree = "<group>"; };
+		15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_gui_manual.cpp; sourceTree = "<group>"; };
+		15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_gui_manual.hpp; sourceTree = "<group>"; };
 		1A087AE61860400400196EF5 /* edtaa3func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edtaa3func.cpp; sourceTree = "<group>"; };
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
@@ -2466,12 +2480,12 @@
 		1A8C58CC180E92CC00EF57C3 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
 		1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIImageView.cpp; sourceTree = "<group>"; };
 		1A8C58CE180E92CC00EF57C3 /* UIImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageView.h; sourceTree = "<group>"; };
-		1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabel.cpp; sourceTree = "<group>"; };
-		1A8C58D2180E92CC00EF57C3 /* UILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabel.h; sourceTree = "<group>"; };
-		1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelAtlas.cpp; sourceTree = "<group>"; };
-		1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelAtlas.h; sourceTree = "<group>"; };
-		1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILabelBMFont.cpp; sourceTree = "<group>"; };
-		1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILabelBMFont.h; sourceTree = "<group>"; };
+		1A8C58D1180E92CC00EF57C3 /* UIText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIText.cpp; sourceTree = "<group>"; };
+		1A8C58D2180E92CC00EF57C3 /* UIText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIText.h; sourceTree = "<group>"; };
+		1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextAtlas.cpp; sourceTree = "<group>"; };
+		1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextAtlas.h; sourceTree = "<group>"; };
+		1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextBMFont.cpp; sourceTree = "<group>"; };
+		1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextBMFont.h; sourceTree = "<group>"; };
 		1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILayoutDefine.cpp; sourceTree = "<group>"; };
 		1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutDefine.h; sourceTree = "<group>"; };
 		1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UILoadingBar.cpp; sourceTree = "<group>"; };
@@ -2703,6 +2717,7 @@
 		2AC795DA18628689005EC8E1 /* SkeletonBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkeletonBounds.h; sourceTree = "<group>"; };
 		2AFCB81F1863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_auto.cpp; sourceTree = "<group>"; };
 		2AFCB8201863D65D00EB4B5C /* jsb_cocos2dx_spine_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_spine_auto.hpp; sourceTree = "<group>"; };
+		373B910718787C0B00198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionEaseEx.cpp; sourceTree = "<group>"; };
 		37936A341869B76800E974DD /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		37936A351869B76800E974DD /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
@@ -3324,6 +3339,8 @@
 			children = (
 				B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */,
 				B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */,
+				15F4C8801875637D0082884F /* lua_cocos2dx_gui_auto.cpp */,
+				15F4C8811875637D0082884F /* lua_cocos2dx_gui_auto.hpp */,
 				15CA8D1118697AE1000032AB /* lua_cocos2dx_spine_auto.cpp */,
 				15CA8D1218697AE1000032AB /* lua_cocos2dx_spine_auto.hpp */,
 				1585AB591828D74F00000FB5 /* lua_cocos2dx_studio_auto.cpp */,
@@ -3450,6 +3467,8 @@
 			children = (
 				B362C3A41872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.cpp */,
 				B362C3A51872B4E900F0BDF4 /* lua_cocos2dx_physics_manual.hpp */,
+				15F4CA1D1875885A0082884F /* lua_cocos2dx_gui_manual.cpp */,
+				15F4CA1E1875885A0082884F /* lua_cocos2dx_gui_manual.hpp */,
 				15CA8D1718697BE5000032AB /* LuaSkeletonAnimation.cpp */,
 				15CA8D1818697BE5000032AB /* LuaSkeletonAnimation.h */,
 				15CA8D0B18697A56000032AB /* lua_cocos2dx_spine_manual.cpp */,
@@ -4234,12 +4253,12 @@
 				1A8C58CC180E92CC00EF57C3 /* UIHelper.h */,
 				1A8C58CD180E92CC00EF57C3 /* UIImageView.cpp */,
 				1A8C58CE180E92CC00EF57C3 /* UIImageView.h */,
-				1A8C58D1180E92CC00EF57C3 /* UILabel.cpp */,
-				1A8C58D2180E92CC00EF57C3 /* UILabel.h */,
-				1A8C58D3180E92CC00EF57C3 /* UILabelAtlas.cpp */,
-				1A8C58D4180E92CC00EF57C3 /* UILabelAtlas.h */,
-				1A8C58D5180E92CC00EF57C3 /* UILabelBMFont.cpp */,
-				1A8C58D6180E92CC00EF57C3 /* UILabelBMFont.h */,
+				1A8C58D1180E92CC00EF57C3 /* UIText.cpp */,
+				1A8C58D2180E92CC00EF57C3 /* UIText.h */,
+				1A8C58D3180E92CC00EF57C3 /* UITextAtlas.cpp */,
+				1A8C58D4180E92CC00EF57C3 /* UITextAtlas.h */,
+				1A8C58D5180E92CC00EF57C3 /* UITextBMFont.cpp */,
+				1A8C58D6180E92CC00EF57C3 /* UITextBMFont.h */,
 				1A8C58D9180E92CC00EF57C3 /* UILayoutDefine.cpp */,
 				1A8C58DA180E92CC00EF57C3 /* UILayoutDefine.h */,
 				1A8C58DD180E92CC00EF57C3 /* UILoadingBar.cpp */,
@@ -4265,6 +4284,7 @@
 		1A8C5946180E930E00EF57C3 /* cocostudio */ = {
 			isa = PBXGroup;
 			children = (
+				06CAAAC1186AD63B0012A414 /* TriggerObj.h */,
 				06CAAABA186AD63B0012A414 /* ObjectFactory.cpp */,
 				06CAAABB186AD63B0012A414 /* ObjectFactory.h */,
 				06CAAABC186AD63B0012A414 /* TriggerBase.cpp */,
@@ -4272,7 +4292,6 @@
 				06CAAABE186AD63B0012A414 /* TriggerMng.cpp */,
 				06CAAABF186AD63B0012A414 /* TriggerMng.h */,
 				06CAAAC0186AD63B0012A414 /* TriggerObj.cpp */,
-				06CAAAC1186AD63B0012A414 /* TriggerObj.h */,
 				3774879E1869BA8C00EDF837 /* CCActionEaseEx.cpp */,
 				37936A401869B7B200E974DD /* CCActionEaseEx.h */,
 				1A8C5948180E930E00EF57C3 /* CCActionFrame.cpp */,
@@ -4299,6 +4318,7 @@
 				1A8C595D180E930E00EF57C3 /* CCBone.h */,
 				1A8C595E180E930E00EF57C3 /* CCColliderDetector.cpp */,
 				1A8C595F180E930E00EF57C3 /* CCColliderDetector.h */,
+				373B910718787C0B00198F86 /* CCComBase.h */,
 				1A8C5960180E930E00EF57C3 /* CCComAttribute.cpp */,
 				1A8C5961180E930E00EF57C3 /* CCComAttribute.h */,
 				1A8C5962180E930E00EF57C3 /* CCComAudio.cpp */,
@@ -5659,6 +5679,7 @@
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
 				1AAF5374180E3374000584C8 /* SocketIO.h in Headers */,
+				373B9129187891F400198F86 /* CCComBase.h in Headers */,
 				1AAF5378180E3374000584C8 /* WebSocket.h in Headers */,
 				1AAF5851180E40B9000584C8 /* LocalStorage.h in Headers */,
 				1A9DCA13180E6955007A3AD4 /* ccConfig.h in Headers */,
@@ -5683,9 +5704,9 @@
 				1A8C58FE180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5906180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590A180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C5912180E92CC00EF57C3 /* UILabel.h in Headers */,
-				1A8C5916180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
-				1A8C591A180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
+				1A8C5912180E92CC00EF57C3 /* UIText.h in Headers */,
+				1A8C5916180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
+				1A8C591A180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
 				1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592A180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592E180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -5769,6 +5790,8 @@
 				B362C3AF1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */,
 				1585AB5E1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */,
 				15D6E848182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */,
+				15F4C8851875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */,
+				15F4CA221875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5803,6 +5826,8 @@
 				B362C3B11872BABC00F0BDF4 /* lua_cocos2dx_physics_auto.hpp in Headers */,
 				1585AB5D1828D74F00000FB5 /* lua_cocos2dx_studio_auto.hpp in Headers */,
 				15D6E847182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.hpp in Headers */,
+				15F4C8841875637D0082884F /* lua_cocos2dx_gui_auto.hpp in Headers */,
+				15F4CA211875885A0082884F /* lua_cocos2dx_gui_manual.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6115,6 +6140,7 @@
 				B37510821823ACA100B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				1A570217180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A570224180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
+				373B912A187891FB00198F86 /* CCComBase.h in Headers */,
 				1A570228180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022C180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
@@ -6262,9 +6288,9 @@
 				1A8C58FF180E92CC00EF57C3 /* UICheckBox.h in Headers */,
 				1A8C5907180E92CC00EF57C3 /* UIHelper.h in Headers */,
 				1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */,
-				1A8C5913180E92CC00EF57C3 /* UILabel.h in Headers */,
-				1A8C5917180E92CC00EF57C3 /* UILabelAtlas.h in Headers */,
-				1A8C591B180E92CC00EF57C3 /* UILabelBMFont.h in Headers */,
+				1A8C5913180E92CC00EF57C3 /* UIText.h in Headers */,
+				1A8C5917180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
+				1A8C591B180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
 				1A8C5923180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592B180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592F180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -7014,9 +7040,9 @@
 				1A8C58FC180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5904180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5908180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C5910180E92CC00EF57C3 /* UILabel.cpp in Sources */,
-				1A8C5914180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
-				1A8C5918180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
+				1A8C5910180E92CC00EF57C3 /* UIText.cpp in Sources */,
+				1A8C5914180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */,
+				1A8C5918180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */,
 				59A79D511821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
 				1A8C5920180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5928180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,
@@ -7101,6 +7127,8 @@
 				1A8C5651180E8D0D00EF57C3 /* tolua_push.c in Sources */,
 				1A8C5653180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				15D6E846182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
+				15F4C8831875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,
+				15F4CA201875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7138,6 +7166,8 @@
 				1A8C5650180E8D0D00EF57C3 /* tolua_push.c in Sources */,
 				1A8C5652180E8D0D00EF57C3 /* tolua_to.c in Sources */,
 				15D6E845182B81710003C5B1 /* lua_cocos2dx_coco_studio_manual.cpp in Sources */,
+				15F4C8821875637D0082884F /* lua_cocos2dx_gui_auto.cpp in Sources */,
+				15F4CA1F1875885A0082884F /* lua_cocos2dx_gui_manual.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7543,9 +7573,9 @@
 				1A8C58FD180E92CC00EF57C3 /* UICheckBox.cpp in Sources */,
 				1A8C5905180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5909180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
-				1A8C5911180E92CC00EF57C3 /* UILabel.cpp in Sources */,
-				1A8C5915180E92CC00EF57C3 /* UILabelAtlas.cpp in Sources */,
-				1A8C5919180E92CC00EF57C3 /* UILabelBMFont.cpp in Sources */,
+				1A8C5911180E92CC00EF57C3 /* UIText.cpp in Sources */,
+				1A8C5915180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */,
+				1A8C5919180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */,
 				59A79D521821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
 				1A8C5921180E92CC00EF57C3 /* UILayoutDefine.cpp in Sources */,
 				1A8C5929180E92CC00EF57C3 /* UILoadingBar.cpp in Sources */,

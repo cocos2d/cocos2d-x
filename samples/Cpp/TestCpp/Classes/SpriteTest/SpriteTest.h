@@ -37,7 +37,7 @@ protected:
 
 public:
     SpriteTestDemo(void);
-    ~SpriteTestDemo(void);
+    virtual ~SpriteTestDemo(void);
 
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
@@ -383,7 +383,7 @@ class SpriteOffsetAnchorSkew : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorSkew);
     SpriteOffsetAnchorSkew();
-    ~SpriteOffsetAnchorSkew();
+    virtual ~SpriteOffsetAnchorSkew();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -393,7 +393,7 @@ class SpriteOffsetAnchorRotationalSkew : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorRotationalSkew);
     SpriteOffsetAnchorRotationalSkew();
-    ~SpriteOffsetAnchorRotationalSkew();
+    virtual ~SpriteOffsetAnchorRotationalSkew();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -403,7 +403,7 @@ class SpriteBatchNodeOffsetAnchorSkew : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkew);
     SpriteBatchNodeOffsetAnchorSkew();
-    ~SpriteBatchNodeOffsetAnchorSkew();
+    virtual ~SpriteBatchNodeOffsetAnchorSkew();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -413,7 +413,7 @@ class SpriteOffsetAnchorRotationalSkewScale : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorRotationalSkewScale);
     SpriteOffsetAnchorRotationalSkewScale();
-    ~SpriteOffsetAnchorRotationalSkewScale();
+    virtual ~SpriteOffsetAnchorRotationalSkewScale();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -423,7 +423,7 @@ class SpriteBatchNodeOffsetAnchorRotationalSkew : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkew);
     SpriteBatchNodeOffsetAnchorRotationalSkew();
-    ~SpriteBatchNodeOffsetAnchorRotationalSkew();
+    virtual ~SpriteBatchNodeOffsetAnchorRotationalSkew();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -433,7 +433,7 @@ class SpriteOffsetAnchorSkewScale : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorSkewScale);
     SpriteOffsetAnchorSkewScale();
-    ~SpriteOffsetAnchorSkewScale();
+    virtual ~SpriteOffsetAnchorSkewScale();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -443,7 +443,7 @@ class SpriteBatchNodeOffsetAnchorSkewScale : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorSkewScale);
     SpriteBatchNodeOffsetAnchorSkewScale();
-    ~SpriteBatchNodeOffsetAnchorSkewScale();
+    virtual ~SpriteBatchNodeOffsetAnchorSkewScale();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -453,7 +453,7 @@ class SpriteBatchNodeOffsetAnchorRotationalSkewScale : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorRotationalSkewScale);
     SpriteBatchNodeOffsetAnchorRotationalSkewScale();
-    ~SpriteBatchNodeOffsetAnchorRotationalSkewScale();
+    virtual ~SpriteBatchNodeOffsetAnchorRotationalSkewScale();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -463,7 +463,7 @@ class SpriteOffsetAnchorFlip : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteOffsetAnchorFlip);
     SpriteOffsetAnchorFlip();
-    ~SpriteOffsetAnchorFlip();
+    virtual ~SpriteOffsetAnchorFlip();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -473,7 +473,7 @@ class SpriteBatchNodeOffsetAnchorFlip : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeOffsetAnchorFlip);
     SpriteBatchNodeOffsetAnchorFlip();
-    ~SpriteBatchNodeOffsetAnchorFlip();
+    virtual ~SpriteBatchNodeOffsetAnchorFlip();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -533,7 +533,7 @@ class SpriteChildrenVisibilityIssue665 : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteChildrenVisibilityIssue665);
     SpriteChildrenVisibilityIssue665();
-    ~SpriteChildrenVisibilityIssue665();
+    virtual ~SpriteChildrenVisibilityIssue665();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -668,7 +668,7 @@ class SpriteBatchNodeSkewNegativeScaleChildren : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeSkewNegativeScaleChildren);
     SpriteBatchNodeSkewNegativeScaleChildren();
-    ~SpriteBatchNodeSkewNegativeScaleChildren();
+    virtual ~SpriteBatchNodeSkewNegativeScaleChildren();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -678,7 +678,7 @@ class SpriteBatchNodeRotationalSkewNegativeScaleChildren : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteBatchNodeRotationalSkewNegativeScaleChildren);
     SpriteBatchNodeRotationalSkewNegativeScaleChildren();
-    ~SpriteBatchNodeRotationalSkewNegativeScaleChildren();
+    virtual ~SpriteBatchNodeRotationalSkewNegativeScaleChildren();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -688,7 +688,7 @@ class SpriteSkewNegativeScaleChildren : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteSkewNegativeScaleChildren);
     SpriteSkewNegativeScaleChildren();
-    ~SpriteSkewNegativeScaleChildren();
+    virtual ~SpriteSkewNegativeScaleChildren();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -698,7 +698,7 @@ class SpriteRotationalSkewNegativeScaleChildren : public SpriteTestDemo
 public:
     CREATE_FUNC(SpriteRotationalSkewNegativeScaleChildren);
     SpriteRotationalSkewNegativeScaleChildren();
-    ~SpriteRotationalSkewNegativeScaleChildren();
+    virtual ~SpriteRotationalSkewNegativeScaleChildren();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

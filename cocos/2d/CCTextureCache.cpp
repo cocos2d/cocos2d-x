@@ -89,10 +89,10 @@ void TextureCache::purgeSharedTextureCache()
 
 std::string TextureCache::getDescription() const
 {
-    return StringUtils::format("<TextureCache | Number of textures = %zd>", _textures.size());
+    return StringUtils::format("<TextureCache | Number of textures = %d>", static_cast<int>(_textures.size()));
 }
 
-void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_CallFuncO selector)
+void TextureCache::addImageAsync(const std::string &path, std::function<void(Texture2D*)> callback)
 {
     Texture2D *texture = nullptr;
 
@@ -102,9 +102,9 @@ void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_Ca
     if( it != _textures.end() )
         texture = it->second;
 
-    if (texture != nullptr && target && selector)
+    if (texture != nullptr)
     {
-        (target->*selector)(texture);
+        callback(texture);
         return;
     }
 
@@ -127,13 +127,8 @@ void TextureCache::addImageAsync(const std::string &path, Object *target, SEL_Ca
 
     ++_asyncRefCount;
 
-    if (target)
-    {
-        target->retain();
-    }
-
     // generate async struct
-    AsyncStruct *data = new AsyncStruct(fullpath, target, selector);
+    AsyncStruct *data = new AsyncStruct(fullpath, callback);
 
     // add async struct into queue
     _asyncStructQueueMutex.lock();
@@ -243,8 +238,6 @@ void TextureCache::addImageAsyncCallBack(float dt)
         AsyncStruct *asyncStruct = imageInfo->asyncStruct;
         Image *image = imageInfo->image;
 
-        Object *target = asyncStruct->target;
-        SEL_CallFuncO selector = asyncStruct->selector;
         const std::string& filename = asyncStruct->filename;
 
         Texture2D *texture = nullptr;
@@ -272,11 +265,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 texture = it->second;
         }
         
-        if (target && selector)
-        {
-            (target->*selector)(texture);
-            target->release();
-        }        
+        asyncStruct->callback(texture);
         if(image)
         {
             image->release();

@@ -99,6 +99,12 @@
     <ClCompile Include="LuaSkeletonAnimation.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.cpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_cocos2dx_gui_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp">
@@ -185,6 +191,12 @@
     <ClInclude Include="LuaSkeletonAnimation.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.hpp">
+      <Filter>cocos2dx_support\generated</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_cocos2dx_gui_manual.hpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js">
@@ -194,6 +206,9 @@
       <Filter>cocos2dx_support\generated</Filter>
     </None>
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto_api.js">
+      <Filter>cocos2dx_support\generated</Filter>
+    </None>
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto_api.js">
       <Filter>cocos2dx_support\generated</Filter>
     </None>
   </ItemGroup>

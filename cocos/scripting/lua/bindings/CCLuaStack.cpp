@@ -60,6 +60,8 @@ extern "C" {
 #include "lua_cocos2dx_spine_manual.hpp"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
+#include "lua_cocos2dx_gui_auto.hpp"
+#include "lua_cocos2dx_gui_manual.hpp"
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -150,11 +152,13 @@ bool LuaStack::init(void)
     register_cocos2dx_extension_CCBProxy(_state);
     register_cocos2dx_event_releated(_state);
     tolua_opengl_open(_state);
+    register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_extension_manual(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     register_all_cocos2dx_coco_studio_manual(_state);
+    register_all_cocos2dx_gui_manual(_state);
     register_all_cocos2dx_spine(_state);
     register_all_cocos2dx_spine_manual(_state);
     register_glnode_manual(_state);

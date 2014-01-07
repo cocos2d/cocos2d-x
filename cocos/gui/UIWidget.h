@@ -315,7 +315,23 @@ public:
      */
     virtual Widget* getChildByName(const char* name);
     
-    virtual void visit();
+    virtual void addNode(Node* node);
+    
+    virtual void addNode(Node * node, int zOrder);
+    
+    virtual void addNode(Node* node, int zOrder, int tag);
+    
+    virtual Node * getNodeByTag(int tag);
+    
+    virtual Vector<Node*>& getNodes();
+    
+    virtual void removeNode(Node* node);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual void removeAllNodes();
+    
+    virtual void visit() override;
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -333,7 +349,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    void setPosition(const Point &pos);
+    virtual void setPosition(const Point &pos) override;
     
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -618,8 +634,8 @@ public:
     
     Widget* clone();
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void updateSizeAndPosition();
     
@@ -684,6 +700,7 @@ protected:
     EventListenerTouchOneByOne* _touchListener;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
     Vector<Node*> _widgetChildren;
+    Vector<Node*> _nodes;
 };
 }
 

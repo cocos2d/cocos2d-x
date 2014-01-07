@@ -214,6 +214,9 @@ public:
     virtual void sortAllChildren() override;
     
     void requestDoLayout();
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
 protected:
     //override "init" method of widget.
     virtual bool init() override;
@@ -235,6 +238,14 @@ protected:
     void setStencilClippingSize(const Size& size);
     const Rect& getClippingRect();
     virtual void doLayout();
+    
+    //clipping
+    void onBeforeVisitStencil();
+    void onAfterDrawStencil();
+    void onAfterVisitStencil();
+    
+    void onBeforeVisitScissor();
+    void onAfterVisitScissor();
 protected:
     bool _clippingEnabled;
     
@@ -256,11 +267,35 @@ protected:
     LayoutType _layoutType;
     LayoutClippingType _clippingType;
     DrawNode* _clippingStencil;
-    bool _handleScissor;
     bool _scissorRectDirty;
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+    
+    //clipping
+
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+    
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+    
+    GLint _mask_layer_le;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beforeVisitCmdStencil;
+    CustomCommand _afterDrawStencilCmd;
+    CustomCommand _afterVisitCmdStencil;
+    CustomCommand _beforeVisitCmdScissor;
+    CustomCommand _afterVisitCmdScissor;
 };
     
 }

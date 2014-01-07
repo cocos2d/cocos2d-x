@@ -103,20 +103,18 @@ std::string FontAtlasCache::generateFontName(const std::string& fontFileName, in
 
 bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
 {
-    if (atlas)
+    if (nullptr != atlas)
     {
         for( auto &item: _atlasMap )
         {
             if ( item.second == atlas )
             {
-                bool removeFromList = false;
-                if(item.second->isSingleReference())
-                    removeFromList = true;
+                if( atlas->isSingleReference() )
+                {
+                  _atlasMap.erase(item.first);
+                }
                 
-                item.second->release();
-                
-                if (removeFromList)
-                    _atlasMap.erase(item.first);
+                atlas->release();
                 
                 return true;
             }

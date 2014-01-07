@@ -18,49 +18,51 @@ function UIScene.extend(target)
 end
 
 function UIScene:init()
-    self._uiLayer = ccs.UILayer:create()
+    self._uiLayer = cc.Layer:create()
     self:addChild(self._uiLayer)
 
     self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
-    self._uiLayer:addWidget(self._widget)
+    self._uiLayer:addChild(self._widget)
 
-    self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
+    local root = self._uiLayer:getChildByTag(81)
 
-    local back_label = self._uiLayer:getWidgetByName("back")
+    self._sceneTitle = root:getChildByName("UItest")
+
+    local back_label = root:getChildByName("back")--getWidgetByName
     back_label:setVisible(false)
 
     local function previousCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
 
-    local left_button = self._uiLayer:getWidgetByName("left_Button")
+    local left_button = root:getChildByName("left_Button")
     left_button:addTouchEventListener(previousCallback)
 
     local function restartCallback(sender, eventType)
-         if eventType == ccs.TouchEventType.ended then
+         if eventType == ccui.TouchEventType.ended then
              self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
 
-    local middle_button = self._uiLayer:getWidgetByName("middle_Button")
+    local middle_button = root:getChildByName("middle_Button")
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
 
-    local right_button = self._uiLayer:getWidgetByName("right_Button")
+    local right_button = root:getChildByName("right_Button")
     right_button:addTouchEventListener(nextCallback)
 
     local function menuCloseCallback( sender,eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
             if scene ~= nil then
@@ -69,14 +71,15 @@ function UIScene:init()
         end
     end
 
-    local backMenuLabel = ccs.UILabel:create()
+    local backMenuLabel = ccui.Text:create()
     backMenuLabel:setText("Back")
     backMenuLabel:setFontSize(20)
     backMenuLabel:setTouchScaleChangeEnabled(true)
     backMenuLabel:setPosition(cc.p(430,30))
     backMenuLabel:setTouchEnabled(true)
     backMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(backMenuLabel) 
+    self._uiLayer:addChild(backMenuLabel) 
+
 end
 
 function UIScene.create()
@@ -105,40 +108,40 @@ function UIButtonTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)        
+    self._uiLayer:addChild(self._displayValueLabel)        
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Button")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)        
     alert:setColor(cc.c3b(159, 168, 176))                
         
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)        
+    self._uiLayer:addChild(alert)        
     
     local function touchEvent(sender,eventType)
-        if eventType == ccs.TouchEventType.began then
+        if eventType == ccui.TouchEventType.began then
             self._displayValueLabel:setText("Touch Down")
-        elseif eventType == ccs.TouchEventType.moved then
+        elseif eventType == ccui.TouchEventType.moved then
             self._displayValueLabel:setText("Touch Move")
-        elseif eventType == ccs.TouchEventType.ended then
+        elseif eventType == ccui.TouchEventType.ended then
             self._displayValueLabel:setText("Touch Up")
-        elseif eventType == ccs.TouchEventType.canceled then
+        elseif eventType == ccui.TouchEventType.canceled then
             self._displayValueLabel:setText("Touch Cancelled")
         end
     end    
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))        
     button:addTouchEventListener(touchEvent)
-    self._uiLayer:addWidget(button)
+    self._uiLayer:addChild(button)
 end
 
 function UIButtonTest.create()
@@ -169,42 +172,42 @@ function UIButtonScale9Test:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Button scale9 render")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
-        if eventType == ccs.TouchEventType.began then
+        if eventType == ccui.TouchEventType.began then
             self._displayValueLabel:setText("Touch Down")
-        elseif eventType == ccs.TouchEventType.moved then
+        elseif eventType == ccui.TouchEventType.moved then
             self._displayValueLabel:setText("Touch Move")
-        elseif eventType == ccs.TouchEventType.ended then
+        elseif eventType == ccui.TouchEventType.ended then
             self._displayValueLabel:setText("Touch Up")
-        elseif eventType == ccs.TouchEventType.canceled then
+        elseif eventType == ccui.TouchEventType.canceled then
             self._displayValueLabel:setText("Touch Cancelled")
         end
     end         
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:setScale9Enabled(true)
     button:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     button:setSize(cc.size(150, button:getContentSize().height * 1.5))
     button:addTouchEventListener(touchEvent)
-    self._uiLayer:addWidget(button)
+    self._uiLayer:addChild(button)
 end
 
 function UIButtonScale9Test.create()
@@ -235,41 +238,41 @@ function UIButtonPressedActionTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Button Pressed Action")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
-        if eventType == ccs.TouchEventType.began then
+        if eventType == ccui.TouchEventType.began then
             self._displayValueLabel:setText("Touch Down")
-        elseif eventType == ccs.TouchEventType.moved then
+        elseif eventType == ccui.TouchEventType.moved then
             self._displayValueLabel:setText("Touch Move")
-        elseif eventType == ccs.TouchEventType.ended then
+        elseif eventType == ccui.TouchEventType.ended then
             self._displayValueLabel:setText("Touch Up")
-        elseif eventType == ccs.TouchEventType.canceled then
+        elseif eventType == ccui.TouchEventType.canceled then
             self._displayValueLabel:setText("Touch Cancelled")
         end
     end  
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:setPressedActionEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     button:addTouchEventListener(touchEvent)        
-    self._uiLayer:addWidget(button)
+    self._uiLayer:addChild(button)
 end
 
 function UIButtonPressedActionTest.create()
@@ -300,41 +303,41 @@ function UITextButtonTest:initExtend()
     local widgetSize = self._widget:getSize()
         
     
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextButton")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
-        if eventType == ccs.TouchEventType.began then
+        if eventType == ccui.TouchEventType.began then
             self._displayValueLabel:setText("Touch Down")
-        elseif eventType == ccs.TouchEventType.moved then
+        elseif eventType == ccui.TouchEventType.moved then
             self._displayValueLabel:setText("Touch Move")
-        elseif eventType == ccs.TouchEventType.ended then
+        elseif eventType == ccui.TouchEventType.ended then
             self._displayValueLabel:setText("Touch Up")
-        elseif eventType == ccs.TouchEventType.canceled then
+        elseif eventType == ccui.TouchEventType.canceled then
             self._displayValueLabel:setText("Touch Cancelled")
         end
     end  
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textButton:addTouchEventListener(touchEvent)        
-    self._uiLayer:addWidget(textButton)
+    self._uiLayer:addChild(textButton)
 end
 
 function UITextButtonTest.create()
@@ -364,35 +367,35 @@ function UITextButtonScale9Test:initExtend()
 
     local widgetSize = self._widget:getSize()
           
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextButton scale9 render")
     alert:setFontName(font_UIButtonTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
-        if eventType == ccs.TouchEventType.began then
+        if eventType == ccui.TouchEventType.began then
             self._displayValueLabel:setText("Touch Down")
-        elseif eventType == ccs.TouchEventType.moved then
+        elseif eventType == ccui.TouchEventType.moved then
             self._displayValueLabel:setText("Touch Move")
-        elseif eventType == ccs.TouchEventType.ended then
+        elseif eventType == ccui.TouchEventType.ended then
             self._displayValueLabel:setText("Touch Up")
-        elseif eventType == ccs.TouchEventType.canceled then
+        elseif eventType == ccui.TouchEventType.canceled then
             self._displayValueLabel:setText("Touch Cancelled")
         end
     end  
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:setScale9Enabled(true)
     textButton:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
@@ -400,7 +403,7 @@ function UITextButtonScale9Test:initExtend()
     textButton:setTitleText("Text Button scale9 render")
     textButton:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textButton:addTouchEventListener(touchEvent)        
-    self._uiLayer:addWidget(textButton)
+    self._uiLayer:addChild(textButton)
 end
 
 function UITextButtonScale9Test.create()
@@ -430,31 +433,31 @@ function UICheckBoxTest:initExtend()
 
     local widgetSize = self._widget:getSize()
           
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIButtonTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("CheckBox")
     alert:setFontName(font_UICheckBoxTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function selectedEvent(sender,eventType)
-        if eventType == ccs.CheckBoxEventType.selected then
+        if eventType == ccui.CheckBoxEventType.selected then
             self._displayValueLabel:setText("Selected")
-        elseif eventType == ccs.CheckBoxEventType.unselected then
+        elseif eventType == ccui.CheckBoxEventType.unselected then
             self._displayValueLabel:setText("Unselected")
         end
     end  
         
-    local checkBox = ccs.UICheckBox:create()
+    local checkBox = ccui.CheckBox:create()
     checkBox:setTouchEnabled(true)
     checkBox:loadTextures("cocosgui/check_box_normal.png",
                                "cocosgui/check_box_normal_press.png",
@@ -465,7 +468,7 @@ function UICheckBoxTest:initExtend()
         
     checkBox:addEventListenerCheckBox(selectedEvent)  
 
-    self._uiLayer:addWidget(checkBox)
+    self._uiLayer:addChild(checkBox)
 end
 
 function UICheckBoxTest.create()
@@ -495,31 +498,31 @@ function UISliderTest:initExtend()
 
     local widgetSize = self._widget:getSize()
           
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move the slider thumb")
     self._displayValueLabel:setFontName(font_UISliderTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Slider")
     alert:setFontName(font_UISliderTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function percentChangedEvent(sender,eventType)
-        if eventType == ccs.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"UISlider")
+        if eventType == ccui.SliderEventType.percent_changed then
+            local slider = tolua.cast(sender,"Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end
     end  
         
-    local slider = ccs.UISlider:create()
+    local slider = ccui.Slider:create()
     slider:setTouchEnabled(true)
     slider:loadBarTexture("cocosgui/sliderTrack.png")
     slider:loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "")
@@ -527,7 +530,7 @@ function UISliderTest:initExtend()
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     slider:addEventListenerSlider(percentChangedEvent)
 
-    self._uiLayer:addWidget(slider)
+    self._uiLayer:addChild(slider)
 end
 
 function UISliderTest.create()
@@ -557,31 +560,31 @@ function UISliderScale9Test:initExtend()
 
     local widgetSize = self._widget:getSize()
           
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move the slider thumb")
     self._displayValueLabel:setFontName(font_UISliderTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Slider scale9 render")
     alert:setFontName(font_UISliderTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function percentChangedEvent(sender,eventType)
-        if eventType == ccs.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"UISlider")
+        if eventType == ccui.SliderEventType.percent_changed then
+            local slider = tolua.cast(sender,"Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end
     end  
         
-    local slider = ccs.UISlider:create()
+    local slider = ccui.Slider:create()
     slider:setTouchEnabled(true)
     slider:loadBarTexture("cocosgui/sliderTrack2.png")
     slider:loadSlidBallTextures("cocosgui/sliderThumb.png", "cocosgui/sliderThumb.png", "")
@@ -592,7 +595,7 @@ function UISliderScale9Test:initExtend()
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     slider:addEventListenerSlider(percentChangedEvent)
 
-    self._uiLayer:addWidget(slider)
+    self._uiLayer:addChild(slider)
 end
 
 function UISliderScale9Test.create()
@@ -621,18 +624,18 @@ function UIImageViewTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ImageView")
     alert:setFontName(font_UIImageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local imageView = ccs.UIImageView:create()
+    local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosgui/ccicon.png")
     imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getSize().height / 4.0))
-    self._uiLayer:addWidget(imageView)
+    self._uiLayer:addChild(imageView)
 end
 
 function UIImageViewTest.create()
@@ -662,20 +665,20 @@ function UIImageViewScale9Test:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ImageView scale9 render")
     alert:setFontName(font_UIImageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local imageView = ccs.UIImageView:create()
+    local imageView = ccui.ImageView:create()
     imageView:setScale9Enabled(true)
     imageView:loadTexture("cocosgui/buttonHighlighted.png")
     imageView:setSize(cc.size(200, 85))
     imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getSize().height / 4.0))
-    self._uiLayer:addWidget(imageView)
+    self._uiLayer:addChild(imageView)
 end
 
 function UIImageViewScale9Test.create()
@@ -701,34 +704,36 @@ end
 
 function UILoadingBarLeftTest:initExtend()
 
-    self._uiLayer = ccs.UILayer:create()
+    self._uiLayer = cc.Layer:create()
     self:addChild(self._uiLayer)
 
     self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
-    self._uiLayer:addWidget(self._widget)
+    self._uiLayer:addChild(self._widget)
 
-    self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
+    local root = self._uiLayer:getChildByTag(81)
+    self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = self._uiLayer:getWidgetByName("back")
+    local back_label = root:getChildByName("back")
     back_label:setVisible(false)
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LoadingBar")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local loadingBar = ccs.UILoadingBar:create()
+    local loadingBar = ccui.LoadingBar:create()
+    loadingBar:setTag(0)
     loadingBar:setName("LoadingBar")
     loadingBar:loadTexture("cocosgui/sliderProgress.png")
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
-    self._uiLayer:addWidget(loadingBar)
+    self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
         self._count = self._count + 1
@@ -737,7 +742,7 @@ function UILoadingBarLeftTest:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getWidgetByName("LoadingBar"), "UILoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -753,40 +758,40 @@ function UILoadingBarLeftTest:initExtend()
     self:registerScriptHandler(onNodeEvent)
 
     local function previousCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
 
-    local left_button = self._uiLayer:getWidgetByName("left_Button")
+    local left_button = root:getChildByName("left_Button")
     left_button:addTouchEventListener(previousCallback)
 
     local function restartCallback(sender, eventType)
-         if eventType == ccs.TouchEventType.ended then
+         if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
              self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
 
-    local middle_button = self._uiLayer:getWidgetByName("middle_Button")
+    local middle_button = root:getChildByName("middle_Button")
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
 
-    local right_button = self._uiLayer:getWidgetByName("right_Button")
+    local right_button = root:getChildByName("right_Button")
     right_button:addTouchEventListener(nextCallback)
 
     local function menuCloseCallback( sender,eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
@@ -796,14 +801,14 @@ function UILoadingBarLeftTest:initExtend()
         end
     end
 
-    local mainMenuLabel = ccs.UILabel:create()
-    mainMenuLabel:setText("MainMenu")
+    local mainMenuLabel = ccui.Text:create()
+    mainMenuLabel:setText("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
     mainMenuLabel:setTouchEnabled(true)
     mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(mainMenuLabel)  
+    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarLeftTest.create()
@@ -829,35 +834,37 @@ end
 
 function UILoadingBarRightTest:initExtend()
 
-    self._uiLayer = ccs.UILayer:create()
+    self._uiLayer = cc.Layer:create()
     self:addChild(self._uiLayer)
 
     self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
-    self._uiLayer:addWidget(self._widget)
+    self._uiLayer:addChild(self._widget)
 
-    self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
+    local root = self._uiLayer:getChildByTag(81)
+    self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = self._uiLayer:getWidgetByName("back")
+    local back_label = root:getChildByName("back")
     back_label:setVisible(false)
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LoadingBar")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local loadingBar = ccs.UILoadingBar:create()
+    local loadingBar = ccui.LoadingBar:create()
+    loadingBar:setTag(0)
     loadingBar:setName("LoadingBar")
     loadingBar:loadTexture("cocosgui/sliderProgress.png")
-    loadingBar:setDirection(ccs.LoadingBarType.right)
+    loadingBar:setDirection(ccui.LoadingBarType.right)
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
-    self._uiLayer:addWidget(loadingBar)
+    self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
         self._count = self._count + 1
@@ -866,7 +873,7 @@ function UILoadingBarRightTest:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getWidgetByName("LoadingBar"), "UILoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -882,40 +889,40 @@ function UILoadingBarRightTest:initExtend()
     self:registerScriptHandler(onNodeEvent)
 
     local function previousCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
 
-    local left_button = self._uiLayer:getWidgetByName("left_Button")
+    local left_button = root:getChildByName("left_Button")
     left_button:addTouchEventListener(previousCallback)
 
     local function restartCallback(sender, eventType)
-         if eventType == ccs.TouchEventType.ended then
+         if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
              self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
 
-    local middle_button = self._uiLayer:getWidgetByName("middle_Button")
+    local middle_button = root:getChildByName("middle_Button")
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
 
-    local right_button = self._uiLayer:getWidgetByName("right_Button")
+    local right_button = root:getChildByName("right_Button")
     right_button:addTouchEventListener(nextCallback)
 
     local function menuCloseCallback( sender,eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
@@ -925,14 +932,14 @@ function UILoadingBarRightTest:initExtend()
         end
     end
 
-    local mainMenuLabel = ccs.UILabel:create()
-    mainMenuLabel:setText("MainMenu")
+    local mainMenuLabel = ccui.Text:create()
+    mainMenuLabel:setText("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
     mainMenuLabel:setTouchEnabled(true)
     mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(mainMenuLabel)  
+    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarRightTest.create()
@@ -958,28 +965,30 @@ end
 
 function UILoadingBarLeftScale9Test:initExtend()
 
-    self._uiLayer = ccs.UILayer:create()
+    self._uiLayer = cc.Layer:create()
     self:addChild(self._uiLayer)
 
     self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
-    self._uiLayer:addWidget(self._widget)
+    self._uiLayer:addChild(self._widget)
 
-    self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
+    local root = self._uiLayer:getChildByTag(81)
+    self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = self._uiLayer:getWidgetByName("back")
+    local back_label = root:getChildByName("back")
     back_label:setVisible(false)
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LoadingBar Scale9 Render")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local loadingBar = ccs.UILoadingBar:create()
+    local loadingBar = ccui.LoadingBar:create()
+    loadingBar:setTag(0)
     loadingBar:setName("LoadingBar")
     loadingBar:loadTexture("cocosgui/slider_bar_active_9patch.png")
     loadingBar:setScale9Enabled(true)
@@ -988,7 +997,7 @@ function UILoadingBarLeftScale9Test:initExtend()
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
-    self._uiLayer:addWidget(loadingBar)
+    self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
         self._count = self._count + 1
@@ -997,7 +1006,7 @@ function UILoadingBarLeftScale9Test:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getWidgetByName("LoadingBar"), "UILoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -1013,40 +1022,40 @@ function UILoadingBarLeftScale9Test:initExtend()
     self:registerScriptHandler(onNodeEvent)
 
     local function previousCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
 
-    local left_button = self._uiLayer:getWidgetByName("left_Button")
+    local left_button = root:getChildByName("left_Button")
     left_button:addTouchEventListener(previousCallback)
 
     local function restartCallback(sender, eventType)
-         if eventType == ccs.TouchEventType.ended then
+         if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
              self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
 
-    local middle_button = self._uiLayer:getWidgetByName("middle_Button")
+    local middle_button = root:getChildByName("middle_Button")
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
 
-    local right_button = self._uiLayer:getWidgetByName("right_Button")
+    local right_button = root:getChildByName("right_Button")
     right_button:addTouchEventListener(nextCallback)
 
     local function menuCloseCallback( sender,eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
@@ -1056,14 +1065,14 @@ function UILoadingBarLeftScale9Test:initExtend()
         end
     end
 
-    local mainMenuLabel = ccs.UILabel:create()
-    mainMenuLabel:setText("MainMenu")
+    local mainMenuLabel = ccui.Text:create()
+    mainMenuLabel:setText("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
     mainMenuLabel:setTouchEnabled(true)
     mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(mainMenuLabel)  
+    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarLeftScale9Test.create()
@@ -1089,38 +1098,40 @@ end
 
 function UILoadingBarRightScale9Test:initExtend()
 
-    self._uiLayer = ccs.UILayer:create()
+    self._uiLayer = cc.Layer:create()
     self:addChild(self._uiLayer)
 
     self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosgui/UITest/UITest.json")
-    self._uiLayer:addWidget(self._widget)
+    self._uiLayer:addChild(self._widget)
 
-    self._sceneTitle = self._uiLayer:getWidgetByName("UItest")
+    local root = self._uiLayer:getChildByTag(81)
+    self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = self._uiLayer:getWidgetByName("back")
+    local back_label = root:getChildByName("back")
     back_label:setVisible(false)
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LoadingBar Scale9 Render")
     alert:setFontName(font_UILoadingBarTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local loadingBar = ccs.UILoadingBar:create()
+    local loadingBar = ccui.LoadingBar:create()
+    loadingBar:setTag(0)
     loadingBar:setName("LoadingBar")
     loadingBar:loadTexture("cocosgui/slider_bar_active_9patch.png")
     loadingBar:setScale9Enabled(true)
     loadingBar:setCapInsets(cc.rect(0, 0, 0, 0))
     loadingBar:setSize(cc.size(300, 30))
-    loadingBar:setDirection(ccs.LoadingBarType.right)
+    loadingBar:setDirection(ccui.LoadingBarType.right)
     loadingBar:setPercent(0)
         
     loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
-    self._uiLayer:addWidget(loadingBar)
+    self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
         self._count = self._count + 1
@@ -1129,7 +1140,7 @@ function UILoadingBarRightScale9Test:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getWidgetByName("LoadingBar"), "UILoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -1145,40 +1156,40 @@ function UILoadingBarRightScale9Test:initExtend()
     self:registerScriptHandler(onNodeEvent)
 
     local function previousCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
         end
     end
 
-    local left_button = self._uiLayer:getWidgetByName("left_Button")
+    local left_button = root:getChildByName("left_Button")
     left_button:addTouchEventListener(previousCallback)
 
     local function restartCallback(sender, eventType)
-         if eventType == ccs.TouchEventType.ended then
+         if eventType == ccui.TouchEventType.ended then
              self:unscheduleUpdate()
              self._uiLayer:removeFromParent()
              cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
          end
     end
 
-    local middle_button = self._uiLayer:getWidgetByName("middle_Button")
+    local middle_button = root:getChildByName("middle_Button")
     middle_button:addTouchEventListener(restartCallback)
 
     local function nextCallback(sender, eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
         end
     end
 
-    local right_button = self._uiLayer:getWidgetByName("right_Button")
+    local right_button = root:getChildByName("right_Button")
     right_button:addTouchEventListener(nextCallback)
 
     local function menuCloseCallback( sender,eventType)
-        if eventType == ccs.TouchEventType.ended then
+        if eventType == ccui.TouchEventType.ended then
             self:unscheduleUpdate()
             self._uiLayer:removeFromParent()
             local scene = CocoStudioTestMain()
@@ -1188,14 +1199,14 @@ function UILoadingBarRightScale9Test:initExtend()
         end
     end
 
-    local mainMenuLabel = ccs.UILabel:create()
-    mainMenuLabel:setText("MainMenu")
+    local mainMenuLabel = ccui.Text:create()
+    mainMenuLabel:setText("Back")
     mainMenuLabel:setFontSize(20)
     mainMenuLabel:setTouchScaleChangeEnabled(true)
     mainMenuLabel:setPosition(cc.p(430,30))
     mainMenuLabel:setTouchEnabled(true)
     mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addWidget(mainMenuLabel)  
+    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarRightScale9Test.create()
@@ -1223,20 +1234,20 @@ function UILabelAtlasTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LabelAtlas")
     alert:setFontName(font_UILabelAtlasTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
 
-    local labelAtlas = ccs.UILabelAtlas:create()
+    local labelAtlas = ccui.TextAtlas:create()
     labelAtlas:setProperty("1234567890", "cocosgui/labelatlas.png", 17, 22, "0")
     labelAtlas:setPosition(cc.p((widgetSize.width) / 2, widgetSize.height / 2.0))        
         
-    self._uiLayer:addWidget(labelAtlas) 
+    self._uiLayer:addChild(labelAtlas) 
 end
 
 function UILabelAtlasTest.create()
@@ -1264,21 +1275,21 @@ function UILabelBMFontTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("LabelBMFont")
     alert:setFontName(font_UILabelBMFontTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
 
-    local labelBMFont = ccs.UILabelBMFont:create()
+    local labelBMFont = ccui.TextBMFont:create()
     labelBMFont:setFntFile("cocosgui/bitmapFontTest2.fnt")
     labelBMFont:setText("BMFont")
     labelBMFont:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2.0 + labelBMFont:getSize().height / 8.0))        
         
-    self._uiLayer:addWidget(labelBMFont) 
+    self._uiLayer:addChild(labelBMFont) 
 end
 
 function UILabelBMFontTest.create()
@@ -1306,20 +1317,20 @@ function UILabelTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Label")
     alert:setFontName(font_UILabelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local label = ccs.UILabel:create()
+    local label = ccui.Text:create()
     label:setText("Label")
     label:setFontName("AmericanTypewriter")
     label:setFontSize(30)
     label:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + label:getSize().height / 4))    
-    self._uiLayer:addWidget(label) 
+    self._uiLayer:addChild(label) 
 end
 
 function UILabelTest.create()
@@ -1347,22 +1358,22 @@ function UITextAreaTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextArea")
     alert:setFontName(font_UITextAreaTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local textArea = ccs.UILabel:create()
+    local textArea = ccui.Text:create()
     textArea:setTextAreaSize(cc.size(280, 150))
     textArea:setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER)
     textArea:setText("TextArea widget can line wrap")
     textArea:setFontName("AmericanTypewriter")
     textArea:setFontSize(32)
     textArea:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - textArea:getSize().height / 8))  
-    self._uiLayer:addWidget(textArea) 
+    self._uiLayer:addChild(textArea) 
 end
 
 function UITextAreaTest.create()
@@ -1391,48 +1402,48 @@ function UITextFieldTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
 
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)  
+    self._uiLayer:addChild(self._displayValueLabel)  
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextField")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
-        if eventType == ccs.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        if eventType == ccui.TextFiledEventType.attach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             self._displayValueLabel:setText("attach with IME")
-        elseif eventType == ccs.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        elseif eventType == ccui.TextFiledEventType.detach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME")
-        elseif eventType == ccs.TextFiledEventType.insert_text then
+        elseif eventType == ccui.TextFiledEventType.insert_text then
             self._displayValueLabel:setText("insert words")
-        elseif eventType == ccs.TextFiledEventType.delete_backward then
+        elseif eventType == ccui.TextFiledEventType.delete_backward then
             self._displayValueLabel:setText("delete word")
         end
     end
         
-    local textField = ccs.UITextField:create()
+    local textField = ccui.TextField:create()
     textField:setTouchEnabled(true)
     textField:setFontName(font_UITextFieldTest)
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textField:addEventListenerTextField(textFieldEvent) 
-    self._uiLayer:addWidget(textField) 
+    self._uiLayer:addChild(textField) 
 end
 
 function UITextFieldTest.create()
@@ -1461,47 +1472,47 @@ function UITextFieldMaxLengthTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
 
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)  
+    self._uiLayer:addChild(self._displayValueLabel)  
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextField max length")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
-        if eventType == ccs.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        if eventType == ccui.TextFiledEventType.attach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             local info = string.format("attach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
-        elseif eventType == ccs.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        elseif eventType == ccui.TextFiledEventType.detach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             local info = string.format("detach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
-        elseif eventType == ccs.TextFiledEventType.insert_text then
-            local textField = tolua.cast(sender,"UITextField")
+        elseif eventType == ccui.TextFiledEventType.insert_text then
+            local textField = tolua.cast(sender,"TextField")
             local info = string.format("insert words max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
-        elseif eventType == ccs.TextFiledEventType.delete_backward then
-            local textField = tolua.cast(sender,"UITextField")
+        elseif eventType == ccui.TextFiledEventType.delete_backward then
+            local textField = tolua.cast(sender,"TextField")
             local info = string.format("delete word max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         end
     end
         
-    local textField = ccs.UITextField:create()
+    local textField = ccui.TextField:create()
     textField:setMaxLengthEnabled(true)
     textField:setMaxLength(3)
     textField:setTouchEnabled(true)
@@ -1510,7 +1521,7 @@ function UITextFieldMaxLengthTest:initExtend()
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textField:addEventListenerTextField(textFieldEvent) 
-    self._uiLayer:addWidget(textField) 
+    self._uiLayer:addChild(textField) 
 end
 
 function UITextFieldMaxLengthTest.create()
@@ -1539,41 +1550,41 @@ function UITextFieldPasswordTest:initExtend()
     self:init()
     local widgetSize = self._widget:getSize()
 
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UITextFieldTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)  
+    self._uiLayer:addChild(self._displayValueLabel)  
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("TextField password")
     alert:setFontName(font_UITextFieldTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
-        if eventType == ccs.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        if eventType == ccui.TextFiledEventType.attach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
-        elseif eventType == ccs.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"UITextField")
+        elseif eventType == ccui.TextFiledEventType.detach_with_ime then
+            local textField = tolua.cast(sender,"TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
-        elseif eventType == ccs.TextFiledEventType.insert_text then
+        elseif eventType == ccui.TextFiledEventType.insert_text then
             self._displayValueLabel:setText("insert words password")
-        elseif eventType == ccs.TextFiledEventType.delete_backward then
+        elseif eventType == ccui.TextFiledEventType.delete_backward then
             self._displayValueLabel:setText("delete word password")
         end
     end
         
-    local textField = ccs.UITextField:create()
+    local textField = ccui.TextField:create()
     textField:setPasswordEnabled(true)
     textField:setPasswordStyleText("*")
     textField:setTouchEnabled(true)
@@ -1582,7 +1593,7 @@ function UITextFieldPasswordTest:initExtend()
     textField:setPlaceHolder("input password here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textField:addEventListenerTextField(textFieldEvent) 
-    self._uiLayer:addWidget(textField) 
+    self._uiLayer:addChild(textField) 
 end
 
 function UITextFieldPasswordTest.create()
@@ -1611,39 +1622,40 @@ function UIPanelTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
+    local layout = ccui.Layout:create()
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
     layout:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
     layout:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
@@ -1678,18 +1690,19 @@ function UIPanelColorTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel color render")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
-    layout:setBackGroundColorType(ccs.LayoutBackGroundColorType.solid)
+    local layout = ccui.Layout:create()
+    layout:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
     layout:setBackGroundColor(cc.c3b(128, 128, 128))
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
@@ -1697,22 +1710,22 @@ function UIPanelColorTest:initExtend()
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
     layout:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
     layout:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
@@ -1747,18 +1760,19 @@ function UIPanelGradientTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel color Gradient")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
-    layout:setBackGroundColorType(ccs.LayoutBackGroundColorType.gradient)
+    local layout = ccui.Layout:create()
+    layout:setBackGroundColorType(ccui.LayoutBackGroundColorType.gradient)
     layout:setBackGroundColor(cc.c3b(64, 64, 64), cc.c3b(192, 192, 192))
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
@@ -1766,22 +1780,22 @@ function UIPanelGradientTest:initExtend()
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
     layout:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
     layout:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
@@ -1816,17 +1830,18 @@ function UIPanelBackGroundImageTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel background image")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
         
-    local layout = ccs.UILayout:create()
+    local layout = ccui.Layout:create()
     layout:setClippingEnabled(true)
     layout:setBackGroundImage("cocosgui/Hello.png")
     layout:setSize(cc.size(280, 150))
@@ -1835,22 +1850,22 @@ function UIPanelBackGroundImageTest:initExtend()
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
     layout:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
     layout:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
@@ -1885,17 +1900,18 @@ function UIPanelBackGroundImageScale9Test:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel background image scale9")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
+    local layout = ccui.Layout:create()
     layout:setBackGroundImageScale9Enabled(true)
     layout:setBackGroundImage("cocosgui/green_edit.png")
     layout:setSize(cc.size(280, 150))
@@ -1904,22 +1920,22 @@ function UIPanelBackGroundImageScale9Test:initExtend()
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
     layout:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
     layout:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
@@ -1954,62 +1970,61 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel Layout Linear Vertical")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
-    layout:setLayoutType(ccs.LayoutType.linearVertical)
+    local layout = ccui.Layout:create()
+    layout:setLayoutType(ccui.LayoutType.linearVertical)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     layout:addChild(button)
         
-    local lp1 = ccs.UILinearLayoutParameter:create()
+    local lp1 = ccui.LinearLayoutParameter:create()
     button:setLayoutParameter(lp1)
-    lp1:setGravity(ccs.UILinearGravity.centerHorizontal)
+    lp1:setGravity(ccui.LinearGravity.centerHorizontal)
     lp1:setMargin({ left = 0, top = 5, right = 0, bottom = 10 })
         
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     layout:addChild(textButton)
         
-    local lp2 = ccs.UILinearLayoutParameter:create()
+    local lp2 = ccui.LinearLayoutParameter:create()
     textButton:setLayoutParameter(lp2)
-    lp2:setGravity(ccs.UILinearGravity.centerHorizontal)
+    lp2:setGravity(ccui.LinearGravity.centerHorizontal)
     lp2:setMargin({left = 0, top = 10, right = 0, bottom  = 10} )
         
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
     button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
     layout:addChild(button_scale9)
         
-    local lp3 = ccs.UILinearLayoutParameter:create()
+    local lp3 = ccui.LinearLayoutParameter:create()
     button_scale9:setLayoutParameter(lp3)
-    lp3:setGravity(ccs.UILinearGravity.centerHorizontal)
+    lp3:setGravity(ccui.LinearGravity.centerHorizontal)
     lp3:setMargin({ left = 0, top = 10, right = 0, bottom  = 10 } )
-        
-    layout:doLayout()
 end
 
 function UIPanelLayoutLinearVerticalTest.create()
@@ -2038,18 +2053,19 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("Panel Layout Linear Horizontal")
     alert:setFontName(font_UIPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
 
-    local background = self._uiLayer:getWidgetByName("background_Panel")
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
     
-    local layout = ccs.UILayout:create()
-    layout:setLayoutType(ccs.LayoutType.linearHorizontal)
+    local layout = ccui.Layout:create()
+    layout:setLayoutType(ccui.LayoutType.linearHorizontal)
     layout:setClippingEnabled(true)
     layout:setSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
@@ -2057,44 +2073,42 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
                                 (backgroundSize.width - layout:getSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
                                 (backgroundSize.height - layout:getSize().height) / 2))
-    self._uiLayer:addWidget(layout)
+    self._uiLayer:addChild(layout)
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     layout:addChild(button)
         
-    local lp1 = ccs.UILinearLayoutParameter:create()
+    local lp1 = ccui.LinearLayoutParameter:create()
     button:setLayoutParameter(lp1)
-    lp1:setGravity(ccs.UILinearGravity.centerVertical)
+    lp1:setGravity(ccui.LinearGravity.centerVertical)
     lp1:setMargin({left = 0, top  = 10, right = 0, bottom = 10} )
         
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     layout:addChild(textButton)
         
-    local lp2 = ccs.UILinearLayoutParameter:create()
+    local lp2 = ccui.LinearLayoutParameter:create()
     textButton:setLayoutParameter(lp2)
-    lp2:setGravity(ccs.UILinearGravity.centerVertical)
+    lp2:setGravity(ccui.LinearGravity.centerVertical)
     lp2:setMargin({left = 0,top = 10,right = 0,bottom = 10})
         
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
     button_scale9:setSize(cc.size(100, button_scale9:getContentSize().height))
     layout:addChild(button_scale9)
         
-    local lp3 = ccs.UILinearLayoutParameter:create()
+    local lp3 = ccui.LinearLayoutParameter:create()
     button_scale9:setLayoutParameter(lp3)
-    lp3:setGravity(ccs.UILinearGravity.centerVertical)
+    lp3:setGravity(ccui.LinearGravity.centerVertical)
     lp3:setMargin({left = 0, top = 10, right = 0, bottom = 10})
-        
-    layout:doLayout()
 end
 
 function UIPanelLayoutLinearHorizontalTest.create()
@@ -2124,25 +2138,26 @@ function UIScrollViewVerticalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIScrollViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ScrollView")
     alert:setFontName(font_UIScrollViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
+    
+    local root = self._uiLayer:getChildByTag(81)  
+    local background = root:getChildByName("background_Panel")
         
-    local background = self._uiLayer:getWidgetByName("background_Panel")
-        
-    local scrollView = ccs.UIScrollView:create()
+    local scrollView = ccui.ScrollView:create()
     scrollView:setTouchEnabled(true)
     scrollView:setSize(cc.size(280, 150))        
     local backgroundSize = background:getContentSize()
@@ -2150,9 +2165,9 @@ function UIScrollViewVerticalTest:initExtend()
                                (backgroundSize.width - scrollView:getSize().width) / 2,
                                (widgetSize.height - backgroundSize.height) / 2 +
                                (backgroundSize.height - scrollView:getSize().height) / 2))
-    self._uiLayer:addWidget(scrollView)
+    self._uiLayer:addChild(scrollView)
         
-    local imageView = ccs.UIImageView:create()
+    local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosgui/ccicon.png")
         
     local innerWidth = scrollView:getSize().width
@@ -2160,20 +2175,20 @@ function UIScrollViewVerticalTest:initExtend()
         
     scrollView:setInnerContainerSize(cc.size(innerWidth, innerHeight))                
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(innerWidth / 2, scrollView:getInnerContainerSize().height - button:getSize().height / 2))
     scrollView:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
     textButton:setPosition(cc.p(innerWidth / 2, button:getBottomInParent() - button:getSize().height))
     scrollView:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
@@ -2212,27 +2227,28 @@ function UIScrollViewHorizontalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move by horizontal direction")
     self._displayValueLabel:setFontName(font_UIScrollViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)            
+    self._uiLayer:addChild(self._displayValueLabel)            
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ScrollView")
     alert:setFontName(font_UIScrollViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
+    
+    local root = self._uiLayer:getChildByTag(81)      
+    local background = root:getChildByName("background_Panel")
         
-    local background = self._uiLayer:getWidgetByName("background_Panel")
-        
-    local scrollView = ccs.UIScrollView:create()
+    local scrollView = ccui.ScrollView:create()
     scrollView:setBounceEnabled(true)
-    scrollView:setDirection(ccs.SCROLLVIEW_DIR.horizontal)
+    scrollView:setDirection(ccui.ScrollViewDir.horizontal)
     scrollView:setTouchEnabled(true)
     scrollView:setSize(cc.size(280, 150))
     scrollView:setInnerContainerSize(scrollView:getSize())
@@ -2241,9 +2257,9 @@ function UIScrollViewHorizontalTest:initExtend()
                                     (backgroundSize.width - scrollView:getSize().width) / 2,
                                     (widgetSize.height - backgroundSize.height) / 2 +
                                     (backgroundSize.height - scrollView:getSize().height) / 2))
-    self._uiLayer:addWidget(scrollView)
+    self._uiLayer:addChild(scrollView)
         
-    local imageView = ccs.UIImageView:create()
+    local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosgui/ccicon.png")
         
     local innerWidth = scrollView:getSize().width + imageView:getSize().width
@@ -2251,14 +2267,14 @@ function UIScrollViewHorizontalTest:initExtend()
         
     scrollView:setInnerContainerSize(cc.size(innerWidth, innerHeight))
         
-    local button = ccs.UIButton:create()
+    local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
     button:setPosition(cc.p(button:getSize().width / 2,
                                 scrollView:getInnerContainerSize().height - button:getSize().height / 2))
     scrollView:addChild(button)
         
-    local textButton = ccs.UIButton:create()
+    local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosgui/backtotopnormal.png", "cocosgui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
@@ -2266,7 +2282,7 @@ function UIScrollViewHorizontalTest:initExtend()
                                     button:getBottomInParent() - button:getSize().height / 2))
     scrollView:addChild(textButton)
         
-    local button_scale9 = ccs.UIButton:create()
+    local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
@@ -2307,25 +2323,26 @@ function UIPageViewTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move by horizontal direction")
     self._displayValueLabel:setFontName(font_UIPageViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("PageView")
     alert:setFontName(font_UIPageViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
+     
+    local root = self._uiLayer:getChildByTag(81)      
+    local background = root:getChildByName("background_Panel")   
         
-    local background = self._uiLayer:getWidgetByName("background_Panel")
-        
-    local pageView = ccs.UIPageView:create()
+    local pageView = ccui.PageView:create()
     pageView:setTouchEnabled(true)
     pageView:setSize(cc.size(240, 130))
     local backgroundSize = background:getContentSize()
@@ -2335,10 +2352,10 @@ function UIPageViewTest:initExtend()
                                   (backgroundSize.height - pageView:getSize().height) / 2))
       
     for i = 1 , 3 do
-        local layout = ccs.UILayout:create()
+        local layout = ccui.Layout:create()
         layout:setSize(cc.size(240, 130))
             
-        local imageView = ccs.UIImageView:create()
+        local imageView = ccui.ImageView:create()
         imageView:setTouchEnabled(true)
         imageView:setScale9Enabled(true)
         imageView:loadTexture("cocosgui/scrollviewbg.png")
@@ -2346,7 +2363,7 @@ function UIPageViewTest:initExtend()
         imageView:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
         layout:addChild(imageView)
             
-        local label = ccs.UILabel:create()
+        local label = ccui.Text:create()
         local pageInfo = string.format("page %d", i)
         label:setText(pageInfo)
         label:setFontName(font_UIPageViewTest)
@@ -2360,8 +2377,8 @@ function UIPageViewTest:initExtend()
     end 
 
     local function pageViewEvent(sender, eventType)
-        if eventType == ccs.PageViewEventType.turning then
-            local pageView = tolua.cast(sender, "UIPageView")
+        if eventType == ccui.PageViewEventType.turning then
+            local pageView = tolua.cast(sender, "PageView")
             local pageInfo = string.format("page %d " , pageView:getCurPageIndex() + 1)
             self._displayValueLabel:setText(pageInfo)
         end
@@ -2369,7 +2386,7 @@ function UIPageViewTest:initExtend()
 
     pageView:addEventListenerPageView(pageViewEvent)
         
-    self._uiLayer:addWidget(pageView)
+    self._uiLayer:addChild(pageView)
   
 end
 
@@ -2400,39 +2417,137 @@ function UIListViewVerticalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIListViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ListView")
     alert:setFontName(font_UIListViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
-        
-        
-    local lv = ccs.UIListView:create()
-    local model = ccs.UIButton:create()
-    model:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
-    lv:setItemModel(model)
+    self._uiLayer:addChild(alert)
 
-    for i = 1, 20 do
-        lv:pushBackDefaultItem()
-    end
+    local root = self._uiLayer:getChildByTag(81)
         
-    lv:setItemsMargin(10)
-    lv:setGravity(ccs.ListViewGravity.center_horizontal)
-    lv:setSize(cc.size(100, 100))
-    lv:setBackGroundColorType(ccs.LayoutBackGroundColorType.solid)
-    lv:setBackGroundColor(cc.c3b(0,255,0))
-    lv:setPosition(cc.p(100, 100))
-    self._uiLayer:addWidget(lv)
+    local background = root:getChildByName("background_Panel")
+    local backgroundSize = background:getContentSize()
+
+    local array = {}
+    for i = 0,19 do
+        array[i] = string.format("ListView_item_%d",i)
+    end
+
+    local function listViewEvent(sender, eventType)
+        if eventType == ccui.ListViewEventType.onsSelectedItem then
+            print("select child index = ",sender:getCurSelectedIndex())
+        end
+    end
+
+    local listView = ccui.ListView:create()
+    -- set list view ex direction
+    listView:setDirection(ccui.ScrollViewDir.vertical)
+    listView:setTouchEnabled(true)
+    listView:setBounceEnabled(true)
+    listView:setBackGroundImage("cocosgui/green_edit.png")
+    listView:setBackGroundImageScale9Enabled(true)
+    listView:setSize(cc.size(240, 130))
+    listView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
+                              (backgroundSize.width - listView:getSize().width) / 2.0,
+                              (widgetSize.height - backgroundSize.height) / 2.0 +
+                              (backgroundSize.height - listView:getSize().height) / 2.0))
+    listView:addEventListenerListView(listViewEvent)
+    self._uiLayer:addChild(listView)
+
+
+    -- create model
+    local default_button = ccui.Button:create()
+    default_button:setName("Title Button")
+    default_button:setTouchEnabled(true)
+    default_button:loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "")
+    
+    local default_item = ccui.Layout:create()
+    default_item:setTouchEnabled(true)
+    default_item:setSize(default_button:getSize())
+    default_button:setPosition(cc.p(default_item:getSize().width / 2.0, default_item:getSize().height / 2.0))
+    default_item:addChild(default_button)
+
+    --set model
+    listView:setItemModel(default_item)
+    
+    --add default item
+    local count = table.getn(array) + 1
+    print(math.floor(count / 4))
+    for i = 1,math.floor(count / 4) do
+        listView:pushBackDefaultItem()
+    end
+    --insert default item
+    for i = 1,math.floor(count / 4) do
+        listView:insertDefaultItem(0)
+    end
+      
+    --add custom item
+    for i = 1,math.floor(count / 4) do
+        local custom_button = ccui.Button:create()
+        custom_button:setName("Title Button")
+        custom_button:setTouchEnabled(true)
+        custom_button:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
+        custom_button:setScale9Enabled(true)
+        custom_button:setSize(default_button:getSize())
+        
+        local custom_item = ccui.Layout:create()
+        custom_item:setSize(custom_button:getSize())
+        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:addChild(custom_button)
+        
+        listView:pushBackCustomItem(custom_item) 
+    end
+
+    --insert custom item
+    local items = listView:getItems()
+    local items_count = table.getn(items)
+    for i = 1, math.floor(count / 4) do
+        local custom_button = ccui.Button:create()
+        custom_button:setName("Title Button")
+        custom_button:setTouchEnabled(true)
+        custom_button:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
+        custom_button:setScale9Enabled(true)
+        custom_button:setSize(default_button:getSize())
+        
+        local custom_item = ccui.Layout:create()
+        custom_item:setSize(custom_button:getSize())
+        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:addChild(custom_button)
+        
+        listView:insertCustomItem(custom_item, items_count)
+    end
+    
+    -- set item data
+    items_count = table.getn(listView:getItems())
+    for i = 1,items_count do
+        local item = listView:getItem(i - 1)
+        local button = item:getChildByName("Title Button")
+        local index = listView:getIndex(item)
+        button:setTitleText(array[index])
+    end
+    
+    -- remove last item
+    listView:removeLastItem()
+    
+    -- remove item by index
+    items_count = table.getn(items)
+    listView:removeItem(items_count - 1)
+    
+    -- set all items layout gravity
+    listView:setGravity(ccui.ListViewGravity.centerVertical)
+    
+    --set items margin
+    listView:setItemsMargin(2.0)
 end
 
 function UIListViewVerticalTest.create()
@@ -2462,40 +2577,137 @@ function UIListViewHorizontalTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("Move by vertical direction")
     self._displayValueLabel:setFontName(font_UIListViewTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("ListView")
     alert:setFontName(font_UIListViewTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
 
-    local lv = ccs.UIListView:create()
-    lv:setDirection(ccs.SCROLLVIEW_DIR.horizontal)
-    local model = ccs.UIButton:create()
-    model:loadTextures("cocosgui/animationbuttonnormal.png", "cocosgui/animationbuttonpressed.png", "")
-    lv:setItemModel(model)
+    local root = self._uiLayer:getChildByTag(81)
+        
+    local background = root:getChildByName("background_Panel")
+    local backgroundSize = background:getContentSize()
 
-    for i = 1,20 do
-        lv:pushBackDefaultItem()
+    local array = {}
+    for i = 0,19 do
+        array[i] = string.format("ListView_item_%d",i)
     end
+
+    local function listViewEvent(sender, eventType)
+        if eventType == ccui.ListViewEventType.ons_selected_item then
+            print("select child index = ",sender:getCurSelectedIndex())
+        end
+    end
+
+    local listView = ccui.ListView:create()
+    -- set list view ex direction
+    listView:setDirection(ccui.ScrollViewDir.horizontal)
+    listView:setTouchEnabled(true)
+    listView:setBounceEnabled(true)
+    listView:setBackGroundImage("cocosgui/green_edit.png")
+    listView:setBackGroundImageScale9Enabled(true)
+    listView:setSize(cc.size(240, 130))
+    listView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
+                              (backgroundSize.width - listView:getSize().width) / 2.0,
+                              (widgetSize.height - backgroundSize.height) / 2.0 +
+                              (backgroundSize.height - listView:getSize().height) / 2.0))
+    listView:addEventListenerListView(listViewEvent)
+    self._uiLayer:addChild(listView)
+
+
+    -- create model
+    local default_button = ccui.Button:create()
+    default_button:setName("Title Button")
+    default_button:setTouchEnabled(true)
+    default_button:loadTextures("cocosgui/backtotoppressed.png", "cocosgui/backtotopnormal.png", "")
+    
+    local default_item = ccui.Layout:create()
+    default_item:setTouchEnabled(true)
+    default_item:setSize(default_button:getSize())
+    default_button:setPosition(cc.p(default_item:getSize().width / 2.0, default_item:getSize().height / 2.0))
+    default_item:addChild(default_button)
+
+    --set model
+    listView:setItemModel(default_item)
+    
+    --add default item
+    local count = table.getn(array) + 1
+    for i = 1,math.floor(count / 4) do
+        listView:pushBackDefaultItem()
+    end
+    --insert default item
+    for i = 1,math.floor(count / 4) do
+        listView:insertDefaultItem(0)
+    end
+      
+    --add custom item
+    for i = 1,math.floor(count / 4) do
+        local custom_button = ccui.Button:create()
+        custom_button:setName("Title Button")
+        custom_button:setTouchEnabled(true)
+        custom_button:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
+        custom_button:setScale9Enabled(true)
+        custom_button:setSize(default_button:getSize())
         
-    lv:setItemsMargin(10)
-    lv:setGravity(ccs.ListViewGravity.center_vertical)
-    lv:setSize(cc.size(100, 100))
-    lv:setBackGroundColorType(ccs.LayoutBackGroundColorType.solid)
-    lv:setBackGroundColor( cc.c3b(0,255,0) )
-    lv:setPosition(cc.p(100, 100))
-    self._uiLayer:addWidget(lv) 
+        local custom_item = ccui.Layout:create()
+        custom_item:setSize(custom_button:getSize())
+        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:addChild(custom_button)
+        
+        listView:pushBackCustomItem(custom_item) 
+    end
+
+    --insert custom item
+    local items = listView:getItems()
+    local items_count = table.getn(items)
+    for i = 1, math.floor(count / 4) do
+        local custom_button = ccui.Button:create()
+        custom_button:setName("Title Button")
+        custom_button:setTouchEnabled(true)
+        custom_button:loadTextures("cocosgui/button.png", "cocosgui/buttonHighlighted.png", "")
+        custom_button:setScale9Enabled(true)
+        custom_button:setSize(default_button:getSize())
+        
+        local custom_item = ccui.Layout:create()
+        custom_item:setSize(custom_button:getSize())
+        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:addChild(custom_button)
+        
+        listView:insertCustomItem(custom_item, items_count)
+    end
+    
+    -- set item data
+    items_count = table.getn(listView:getItems())
+    for i = 1,items_count do
+        local item = listView:getItem(i - 1)
+        local button = item:getChildByName("Title Button")
+        local index = listView:getIndex(item)
+        button:setTitleText(array[index])
+    end
+    
+    -- remove last item
+    listView:removeLastItem()
+    
+    -- remove item by index
+    items_count = table.getn(items)
+    listView:removeItem(items_count - 1)
+    
+    -- set all items layout gravity
+    listView:setGravity(ccui.ListViewGravity.centerVertical)
+    
+    --set items margin
+    listView:setItemsMargin(2.0)
 end
 
 function UIListViewHorizontalTest.create()
@@ -2525,35 +2737,35 @@ function UIDragPanelTest:initExtend()
 
     local widgetSize = self._widget:getSize()
         
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIDragPanelTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("DragPanel")
     alert:setFontName(font_UIDragPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local sc = ccs.UIScrollView:create()
+    local sc = ccui.ScrollView:create()
     sc:setBackGroundColor(cc.c3b(0,255,0))
-    sc:setBackGroundColorType(ccs.LayoutBackGroundColorType.solid)
-    sc:setDirection(ccs.SCROLLVIEW_DIR.both)
+    sc:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
+    sc:setDirection(ccui.ScrollViewDir.both)
     sc:setInnerContainerSize(cc.size(480, 320))
     sc:setSize(cc.size(100,100))
     sc:setPosition(cc.p(100,100))
     sc:scrollToPercentBothDirection(cc.p(50, 50), 1, true)
-    local iv = ccs.UIImageView:create()
+    local iv = ccui.ImageView:create()
     iv:loadTexture("cocosgui/Hello.png")
     iv:setPosition(cc.p(240, 160))
     sc:addChild(iv)
-    self._uiLayer:addWidget(sc)
+    self._uiLayer:addChild(sc)
 
 end
 
@@ -2584,37 +2796,37 @@ function UIDragPanelBounceTest:initExtend()
 
     local widgetSize = self._widget:getSize()
 
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("No Event")
     self._displayValueLabel:setFontName(font_UIDragPanelTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)        
+    self._uiLayer:addChild(self._displayValueLabel)        
         
 
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("DragPanel Bounce")
     alert:setFontName(font_UIDragPanelTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local sc = ccs.UIScrollView:create()
+    local sc = ccui.ScrollView:create()
     sc:setBackGroundColor(cc.c3b(0, 255 , 0))
-    sc:setBackGroundColorType(ccs.LayoutBackGroundColorType.solid)
+    sc:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
     sc:setBounceEnabled(true)
-    sc:setDirection(ccs.SCROLLVIEW_DIR.both)
+    sc:setDirection(ccui.ScrollViewDir.both)
     sc:setInnerContainerSize(cc.size(480, 320))
     sc:setSize(cc.size(100,100))
     sc:setPosition(cc.p(100,100))
     sc:scrollToPercentBothDirection(cc.p(50, 50), 1, true)
-    local iv = ccs.UIImageView:create()
+    local iv = ccui.ImageView:create()
     iv:loadTexture("cocosgui/Hello.png")
     iv:setPosition(cc.p(240, 160))
     sc:addChild(iv)
-    self._uiLayer:addWidget(sc)
+    self._uiLayer:addChild(sc)
 end
 
 function UIDragPanelBounceTest.create()
@@ -2644,29 +2856,28 @@ function UINodeContainerTest:initExtend()
 
     local widgetSize = self._widget:getSize()
 
-    self._displayValueLabel = ccs.UILabel:create()
+    self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setText("NodeContainer Add CCNode")
     self._displayValueLabel:setFontName(font_UINodeContainerTest)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
-    self._uiLayer:addWidget(self._displayValueLabel)
+    self._uiLayer:addChild(self._displayValueLabel)
         
-    local alert = ccs.UILabel:create()
+    local alert = ccui.Text:create()
     alert:setText("NodeContainer")
     alert:setFontName(font_UINodeContainerTest)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
     alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
-    self._uiLayer:addWidget(alert)
+    self._uiLayer:addChild(alert)
         
-    local nodeContainer = ccs.UIWidget:create()
+    local nodeContainer = ccui.Widget:create()
     nodeContainer:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    self._uiLayer:addWidget(nodeContainer)
+    self._uiLayer:addChild(nodeContainer)
         
     local sprite = cc.Sprite:create("cocosgui/ccicon.png")
     sprite:setPosition(cc.p(0, sprite:getBoundingBox().height / 4))
-    nodeContainer:addRenderer(sprite, 0)
 end
 
 function UINodeContainerTest.create()
