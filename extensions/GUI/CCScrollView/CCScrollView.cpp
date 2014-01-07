@@ -46,10 +46,10 @@ ScrollView::ScrollView()
 : _zoomScale(0.0f)
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
-, _container(NULL)
+, _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
 , _clippingToBounds(false)
@@ -104,8 +104,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
+            _container->ignoreAnchorPointForPosition(false);
+            _container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
