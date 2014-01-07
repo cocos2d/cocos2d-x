@@ -15,224 +15,224 @@ C3DEffectManager::C3DEffectManager()
 
 C3DEffectManager::~C3DEffectManager()
 {
-	__effectManagerInstance = nullptr;
+    __effectManagerInstance = nullptr;
 
 }
 
 C3DEffectManager* C3DEffectManager::getInstance()
-{	   
-	if (!__effectManagerInstance)
-	{
-		__effectManagerInstance = new C3DEffectManager();
-		__effectManagerInstance->autorelease();
-	}
-	return __effectManagerInstance;
+{       
+    if (!__effectManagerInstance)
+    {
+        __effectManagerInstance = new C3DEffectManager();
+        __effectManagerInstance->autorelease();
+    }
+    return __effectManagerInstance;
 
 }
 
 void C3DEffectManager::preload(const std::string& name)
 {
-	if(name.c_str() != nullptr)
-	{
-		ElementNode* doc = ElementNode::create(name.c_str());
-		if (!doc)
-		{
-			LOG_ERROR_VARG("Error loading effect: Could not load file: %s", name.c_str());
-			return;
-		}
+    if(name.c_str() != nullptr)
+    {
+        ElementNode* doc = ElementNode::create(name.c_str());
+        if (!doc)
+        {
+            LOG_ERROR_VARG("Error loading effect: Could not load file: %s", name.c_str());
+            return;
+        }
 
-		loadAllEffect((strlen(doc->getNodeType()) > 0) ? doc : doc->getNextChild());
-		SAFE_DELETE(doc);
-	}	
+        loadAllEffect((strlen(doc->getNodeType()) > 0) ? doc : doc->getNextChild());
+        SAFE_DELETE(doc);
+    }    
 }
 
 
 void C3DEffectManager::loadAllEffect(ElementNode* effectNodes)
 {
-	if( effectNodes != nullptr )
-	{		
-		if (strcmp(effectNodes->getNodeType(), "Effects") != 0)
-		{
-			LOG_ERROR("Error proLoading Effects: No 'Effects' namespace found");
-			return;
-		}
-		else
-		{		
-			effectNodes->rewind();
-			ElementNode* effectNode = nullptr;
+    if( effectNodes != nullptr )
+    {        
+        if (strcmp(effectNodes->getNodeType(), "Effects") != 0)
+        {
+            LOG_ERROR("Error proLoading Effects: No 'Effects' namespace found");
+            return;
+        }
+        else
+        {        
+            effectNodes->rewind();
+            ElementNode* effectNode = nullptr;
 
-			while ((effectNode = effectNodes->getNextChild()))
-			{
-				if (strcmp(effectNode->getNodeType(), "Effect") == 0)
-				{
-					const char* vspath = effectNode->getElement("vertexShader");
-					assert(vspath);
+            while ((effectNode = effectNodes->getNextChild()))
+            {
+                if (strcmp(effectNode->getNodeType(), "Effect") == 0)
+                {
+                    const char* vspath = effectNode->getElement("vertexShader");
+                    assert(vspath);
 
-					const char* fspath = effectNode->getElement("fragmentShader");
-					assert(fspath);
-					std::vector<std::string> flags;
-					flags.push_back("");
-					ElementNode* flagsNode = effectNode->getNextChild();
-					if (flagsNode != nullptr && strcmp(flagsNode->getNodeType(), "flags") == 0)
-					{
-						flagsNode->rewind();
-						const char* defines = nullptr;
-						const char* value = nullptr;
-						while (defines = flagsNode->getNextElement())
-						{
-							value = flagsNode->getElement();
+                    const char* fspath = effectNode->getElement("fragmentShader");
+                    assert(fspath);
+                    std::vector<std::string> flags;
+                    flags.push_back("");
+                    ElementNode* flagsNode = effectNode->getNextChild();
+                    if (flagsNode != nullptr && strcmp(flagsNode->getNodeType(), "flags") == 0)
+                    {
+                        flagsNode->rewind();
+                        const char* defines = nullptr;
+                        const char* value = nullptr;
+                        while (defines = flagsNode->getNextElement())
+                        {
+                            value = flagsNode->getElement();
 
-							std::string flag;
-							if (defines != nullptr)
-							{
-								flag = value;
-								flag.insert(0, "#define ");
-								unsigned int pos;
-								while ((pos = flag.find(';')) != std::string::npos)
-								{
-									flag.replace(pos, 1, "\n#define ");
-								}
-								flag += "\n";
-							}							
+                            std::string flag;
+                            if (defines != nullptr)
+                            {
+                                flag = value;
+                                flag.insert(0, "#define ");
+                                unsigned int pos;
+                                while ((pos = flag.find(';')) != std::string::npos)
+                                {
+                                    flag.replace(pos, 1, "\n#define ");
+                                }
+                                flag += "\n";
+                            }                            
 
-							flags.push_back(flag);
-						}						
-					}	
+                            flags.push_back(flag);
+                        }                        
+                    }    
 
-					ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
-					elementNode->setElement("vertexShader", (vspath == nullptr) ? "" : vspath);
-					elementNode->setElement("fragmentShader", (fspath == nullptr) ? "" : fspath);	
-					const char* define;
+                    ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
+                    elementNode->setElement("vertexShader", (vspath == nullptr) ? "" : vspath);
+                    elementNode->setElement("fragmentShader", (fspath == nullptr) ? "" : fspath);    
+                    const char* define;
 
-					for(std::vector<std::string>::iterator iter = flags.begin();iter!=flags.end();++iter)
-					{		
-						define = (*iter).c_str();
-						if(define != nullptr)
-							elementNode->setElement("defines", define);
+                    for(std::vector<std::string>::iterator iter = flags.begin();iter!=flags.end();++iter)
+                    {        
+                        define = (*iter).c_str();
+                        if(define != nullptr)
+                            elementNode->setElement("defines", define);
 
-						preload(elementNode);
-					}
-					SAFE_DELETE(elementNode);
-				}				
-			}
-		}	
-	}	
+                        preload(elementNode);
+                    }
+                    SAFE_DELETE(elementNode);
+                }                
+            }
+        }    
+    }    
 
 }
 
 C3DResource* C3DEffectManager::createResource(const std::string& name)
 {
-	std::vector<std::string> a = StringTool::StringSplitByChar(name,';');
-	if(a.size() < 2)
-		return nullptr;
+    std::vector<std::string> a = StringTool::StringSplitByChar(name,';');
+    if(a.size() < 2)
+        return nullptr;
 
-	std::string vshpath = a[0];
-	std::string fshpath = a[1];
-	std::string define;
-	if(a.size()==3)
-		define = a[2];
+    std::string vshpath = a[0];
+    std::string fshpath = a[1];
+    std::string define;
+    if(a.size()==3)
+        define = a[2];
 
-	ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
+    ElementNode* elementNode = ElementNode::createEmptyNode("test", "effect");
 
-	if(elementNode != nullptr)
-	{
-		elementNode->setElement("vertexShader", vshpath.c_str());
-		elementNode->setElement("fragmentShader", fshpath.c_str());			
-		if(define.c_str() != nullptr)
-			elementNode->setElement("defines", define.c_str());
-	} 				
+    if(elementNode != nullptr)
+    {
+        elementNode->setElement("vertexShader", vshpath.c_str());
+        elementNode->setElement("fragmentShader", fshpath.c_str());            
+        if(define.c_str() != nullptr)
+            elementNode->setElement("defines", define.c_str());
+    }                 
 
-	C3DResource* effect = new C3DEffect(name);
-	effect->autorelease();
+    C3DResource* effect = new C3DEffect(name);
+    effect->autorelease();
 
-	if(effect->load(elementNode) == true)
-	{	
-		this->setResourceState(effect,C3DResource::State_Used);
-	}
-	effect->retain();
+    if(effect->load(elementNode) == true)
+    {    
+        this->setResourceState(effect,C3DResource::State_Used);
+    }
+    effect->retain();
 
-	SAFE_DELETE(elementNode);
+    SAFE_DELETE(elementNode);
 
-	return effect;    
+    return effect;    
 }
 
 std::string C3DEffectManager::generateID( std::string& vshPath, std::string& fshPath, std::string& defines )
-{	 
-	assert(vshPath.c_str());
+{     
+    assert(vshPath.c_str());
 
-	assert(fshPath.c_str());
+    assert(fshPath.c_str());
 
-	std::string define;
-	if (defines.size() != 0)
-	{
-		define = defines;
-		define.insert(0, "#define ");
-		unsigned int pos;
-		while ((pos = define.find(';')) != std::string::npos)
-		{
-			define.replace(pos, 1, "\n#define ");
-		}
-		define += "\n";
-	}
+    std::string define;
+    if (defines.size() != 0)
+    {
+        define = defines;
+        define.insert(0, "#define ");
+        unsigned int pos;
+        while ((pos = define.find(';')) != std::string::npos)
+        {
+            define.replace(pos, 1, "\n#define ");
+        }
+        define += "\n";
+    }
 
-	std::string uniqueId = vshPath;
-	uniqueId += ';';
-	uniqueId += fshPath;
-	uniqueId += ';';
-	if (define.c_str() != 0)
-	{
-		uniqueId += define;
-	}
+    std::string uniqueId = vshPath;
+    uniqueId += ';';
+    uniqueId += fshPath;
+    uniqueId += ';';
+    if (define.c_str() != 0)
+    {
+        uniqueId += define;
+    }
 
-	return uniqueId;
+    return uniqueId;
 
 }
 
 
 C3DResource* C3DEffectManager::cloneResource(C3DResource* resource)
 {
-	if(resource != nullptr)
-	{
-		resource->retain();		
-		this->setResourceState(resource,C3DResource::State_Used);
-		return resource;		
-	}
-	else
-		return nullptr;
+    if(resource != nullptr)
+    {
+        resource->retain();        
+        this->setResourceState(resource,C3DResource::State_Used);
+        return resource;        
+    }
+    else
+        return nullptr;
 
 }
 
 void C3DEffectManager::preload(ElementNode* node)
-{	
-	const char* vshPath = node->getElement("vertexShader");
-	const char* fshPath = node->getElement("fragmentShader");
-	const char* defines = node->getElement("defines");
+{    
+    const char* vshPath = node->getElement("vertexShader");
+    const char* fshPath = node->getElement("fragmentShader");
+    const char* defines = node->getElement("defines");
 
-	std::string uniqueId = vshPath;
-	uniqueId += ';';
-	uniqueId += fshPath;
-	uniqueId += ';';
-	if (defines != 0)
-	{
-		uniqueId += defines;
-	}
+    std::string uniqueId = vshPath;
+    uniqueId += ';';
+    uniqueId += fshPath;
+    uniqueId += ';';
+    if (defines != 0)
+    {
+        uniqueId += defines;
+    }
 
-	C3DResource* effect = this->findResource(uniqueId);
+    C3DResource* effect = this->findResource(uniqueId);
 
-	if(effect != nullptr)
-		return; 
-	else
-	{
-		C3DEffect* effect = new C3DEffect(uniqueId);
+    if(effect != nullptr)
+        return; 
+    else
+    {
+        C3DEffect* effect = new C3DEffect(uniqueId);
 
-		effect->autorelease();
+        effect->autorelease();
 
-		if(effect->load(node) == true)
-		{			
-			this->setResourceState(effect,C3DResource::State_Used);
+        if(effect->load(node) == true)
+        {            
+            this->setResourceState(effect,C3DResource::State_Used);
 
-		}	
-	}
+        }    
+    }
 
 }
 
