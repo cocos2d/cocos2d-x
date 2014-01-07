@@ -132,6 +132,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.cpp" />
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.cpp" />
+    <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto.cpp" />
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="CCBProxy.cpp" />
@@ -149,6 +150,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClCompile Include="lua_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="lua_cocos2dx_gui_manual.cpp" />
     <ClCompile Include="lua_cocos2dx_manual.cpp" />
+    <ClCompile Include="lua_cocos2dx_physics_manual.cpp" />
     <ClCompile Include="lua_cocos2dx_spine_manual.cpp" />
     <ClCompile Include="Lua_web_socket.cpp" />
     <ClCompile Include="lua_xml_http_request.cpp" />
@@ -164,6 +166,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto.hpp" />
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto.hpp" />
+    <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto.hpp" />
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="CCBProxy.h" />
@@ -181,6 +184,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <ClInclude Include="lua_cocos2dx_extension_manual.h" />
     <ClInclude Include="lua_cocos2dx_gui_manual.hpp" />
     <ClInclude Include="lua_cocos2dx_manual.hpp" />
+    <ClInclude Include="lua_cocos2dx_physics_manual.hpp" />
     <ClInclude Include="lua_cocos2dx_spine_manual.hpp" />
     <ClInclude Include="Lua_web_socket.h" />
     <ClInclude Include="lua_xml_http_request.h" />
@@ -190,6 +194,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\lua\luajit\prebuilt\win32\*.*" "$
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_auto_api.js" />
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_extension_auto_api.js" />
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_gui_auto_api.js" />
+    <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_physics_auto_api.js" />
     <None Include="..\..\auto-generated\lua-bindings\lua_cocos2dx_spine_auto_api.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
