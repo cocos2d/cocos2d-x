@@ -76,10 +76,9 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     cd linux-build
     cmake ../..
     make -j10
-    cd ..
     # build template
     echo "Building template projects for linux ..."
-    cd tools/project-creator
+    cd $COCOS2DX_ROOT/tools/project-creator
     ./create_project.py -n MyGameCpp -k com.MyCompany.AwesomeGameCpp -l cpp -p $HOME
     ./create_project.py -n MyGameLua -k com.MyCompany.AwesomeGameLua -l lua -p $HOME
     cd $HOME/MyGameCpp
