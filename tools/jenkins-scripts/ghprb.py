@@ -106,7 +106,10 @@ def main():
           os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in PROJECTS:
-          os.system("mklink /J "+os.environ['WORKSPACE']+os.sep+"samples"+os.sep +item+os.sep+"proj.android/obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs")
+          p = item.replace("/", os.sep)
+          cmd = "mklink /J "+os.environ['WORKSPACE']+os.sep+"samples"+os.sep +p+os.sep+"proj.android"+os.sep+"obj " + os.environ['WORKSPACE']+os.sep+"android_build_objs"
+          print cmd
+          os.system(cmd)
  
     #build
     #TODO: support android-mac build currently
