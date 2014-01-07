@@ -1,10 +1,9 @@
-
-
 require "Cocos2d"
 require "Cocos2dConstants"
 require "Opengl"
 require "OpenglConstants"
 require "StudioConstants"
+require "GuiConstants"
 require "luaScript/helper"
 require "luaScript/testResource"
 require "luaScript/VisibleRect"

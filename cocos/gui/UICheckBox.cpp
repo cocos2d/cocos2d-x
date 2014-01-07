@@ -28,11 +28,11 @@ NS_CC_BEGIN
 
 namespace gui {
     
-#define BACKGROUNDBOXRENDERERZ (-1)
-#define BACKGROUNDSELECTEDBOXRENDERERZ (-1)
-#define FRONTCROSSRENDERERZ (-1)
-#define BACKGROUNDBOXDISABLEDRENDERERZ (-1)
-#define FRONTCROSSDISABLEDRENDERERZ (-1)
+static const int BACKGROUNDBOX_RENDERER_Z = (-1);
+static const int BACKGROUNDSELECTEDBOX_RENDERER_Z = (-1);
+static const int FRONTCROSS_RENDERER_Z = (-1);
+static const int BACKGROUNDBOXDISABLED_RENDERER_Z = (-1);
+static const int FRONTCROSSDISABLED_RENDERER_Z = (-1);
 
 CheckBox::CheckBox():
 _backGroundBoxRenderer(nullptr),
@@ -92,11 +92,11 @@ void CheckBox::initRenderer()
     _backGroundBoxDisabledRenderer = Sprite::create();
     _frontCrossDisabledRenderer = Sprite::create();
         
-    Node::addChild(_backGroundBoxRenderer, BACKGROUNDBOXRENDERERZ, -1);
-    Node::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOXRENDERERZ, -1);
-    Node::addChild(_frontCrossRenderer, FRONTCROSSRENDERERZ, -1);
-    Node::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLEDRENDERERZ, -1);
-    Node::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLEDRENDERERZ, -1);
+    Node::addChild(_backGroundBoxRenderer, BACKGROUNDBOX_RENDERER_Z, -1);
+    Node::addChild(_backGroundSelectedBoxRenderer, BACKGROUNDSELECTEDBOX_RENDERER_Z, -1);
+    Node::addChild(_frontCrossRenderer, FRONTCROSS_RENDERER_Z, -1);
+    Node::addChild(_backGroundBoxDisabledRenderer, BACKGROUNDBOXDISABLED_RENDERER_Z, -1);
+    Node::addChild(_frontCrossDisabledRenderer, FRONTCROSSDISABLED_RENDERER_Z, -1);
 }
 
 void CheckBox::loadTextures(const char *backGround, const char *backGroundSelected, const char *cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType)

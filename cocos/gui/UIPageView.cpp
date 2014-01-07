@@ -96,7 +96,7 @@ void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate
         {
             if (pageIdx > pageCount)
             {
-                CCLOG("pageIdx is %zd, it will be added as page id [%zd]",pageIdx,pageCount);
+                CCLOG("pageIdx is %d, it will be added as page id [%d]",static_cast<int>(pageIdx),static_cast<int>(pageCount));
             }
             Layout* newPage = createPage();
             newPage->addChild(widget);
@@ -392,11 +392,6 @@ void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
         widgetParent->checkChildInfo(1,this,_touchMovePos);
     }
     moveEvent();
-    if (!hitTest(_touchMovePos))
-    {
-        setFocused(false);
-        onTouchEnded(touch, unusedEvent);
-    }
 }
 
 void PageView::onTouchEnded(Touch *touch, Event *unusedEvent)
@@ -558,6 +553,7 @@ void PageView::interceptTouchEvent(int handleState, Widget *sender, const Point 
             break;
             
         case 3:
+            handleReleaseLogic(touchPoint);
             break;
     }
 }

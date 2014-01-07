@@ -44,7 +44,7 @@ GUIReader::~GUIReader()
 {
 }
 
-GUIReader* GUIReader::shareReader()
+GUIReader* GUIReader::getInstance()
 {
     if (!sharedReader)
     {
@@ -53,7 +53,7 @@ GUIReader* GUIReader::shareReader()
     return sharedReader;
 }
 
-void GUIReader::purgeGUIReader()
+void GUIReader::destroyInstance()
 {
     CC_SAFE_DELETE(sharedReader);
 }
@@ -171,13 +171,13 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
-        printf("Read design size error!\n");
+        CCLOGERROR("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     Widget* widget = widgetFromJsonDictionary(widgetTree);
@@ -218,12 +218,12 @@ Widget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "Label") == 0)
     {
-        widget = cocos2d::gui::Label::create();
+        widget = cocos2d::gui::Text::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelAtlas") == 0)
     {
-        widget = cocos2d::gui::LabelAtlas::create();
+        widget = cocos2d::gui::TextAtlas::create();
         setPropsForLabelAtlasFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LoadingBar") == 0)
@@ -236,7 +236,7 @@ Widget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "TextArea") == 0)
     {
-        widget = cocos2d::gui::Label::create();
+        widget = cocos2d::gui::Text::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextButton") == 0)
@@ -266,7 +266,7 @@ Widget* WidgetPropertiesReader0250::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "LabelBMFont") == 0)
     {
-        widget = cocos2d::gui::LabelBMFont::create();
+        widget = cocos2d::gui::TextBMFont::create();
         setPropsForLabelBMFontFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "DragPanel") == 0)
@@ -543,7 +543,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
 void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    cocos2d::gui::Label* label = static_cast<cocos2d::gui::Label*>(widget);
+    cocos2d::gui::Text* label = static_cast<cocos2d::gui::Text*>(widget);
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
@@ -581,7 +581,7 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
 void WidgetPropertiesReader0250::setPropsForLabelAtlasFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    cocos2d::gui::LabelAtlas* labelAtlas = static_cast<cocos2d::gui::LabelAtlas*>(widget);
+    cocos2d::gui::TextAtlas* labelAtlas = static_cast<cocos2d::gui::TextAtlas*>(widget);
     bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
     bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
     bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
@@ -837,7 +837,7 @@ void WidgetPropertiesReader0250::setPropsForLabelBMFontFromJsonDictionary(Widget
     
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    cocos2d::gui::LabelBMFont* labelBMFont = static_cast<cocos2d::gui::LabelBMFont*>(widget);
+    cocos2d::gui::TextBMFont* labelBMFont = static_cast<cocos2d::gui::TextBMFont*>(widget);
     
     std::string tp_c = m_strFilePath;
     const char* cmf_tp = nullptr;
@@ -870,13 +870,13 @@ Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::Value& data, c
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
-        printf("Read design size error!\n");
+        CCLOGERROR("Read design size error!\n");
         Size winSize = Director::getInstance()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, Size(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     Widget* widget = widgetFromJsonDictionary(widgetTree);
@@ -917,12 +917,12 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "Label") == 0)
     {
-        widget = cocos2d::gui::Label::create();
+        widget = cocos2d::gui::Text::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LabelAtlas") == 0)
     {
-        widget = cocos2d::gui::LabelAtlas::create();
+        widget = cocos2d::gui::TextAtlas::create();
         setPropsForLabelAtlasFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "LoadingBar") == 0)
@@ -935,7 +935,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "TextArea") == 0)
     {
-        widget = cocos2d::gui::Label::create();
+        widget = cocos2d::gui::Text::create();
         setPropsForLabelFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "TextButton") == 0)
@@ -965,7 +965,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     }
     else if (classname && strcmp(classname, "LabelBMFont") == 0)
     {
-        widget = cocos2d::gui::LabelBMFont::create();
+        widget = cocos2d::gui::TextBMFont::create();
         setPropsForLabelBMFontFromJsonDictionary(widget, uiOptions);
     }
     else if (classname && strcmp(classname, "DragPanel") == 0)
@@ -1434,7 +1434,7 @@ void WidgetPropertiesReader0300::setPropsForImageViewFromJsonDictionary(Widget*w
 void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    cocos2d::gui::Label* label = static_cast<cocos2d::gui::Label*>(widget);
+    cocos2d::gui::Text* label = static_cast<cocos2d::gui::Text*>(widget);
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
     const char* text = DICTOOL->getStringValue_json(options, "text");
@@ -1472,7 +1472,7 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widge
 void WidgetPropertiesReader0300::setPropsForLabelAtlasFromJsonDictionary(Widget*widget,const rapidjson::Value& options)
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
-    cocos2d::gui::LabelAtlas* labelAtlas = static_cast<cocos2d::gui::LabelAtlas*>(widget);
+    cocos2d::gui::TextAtlas* labelAtlas = static_cast<cocos2d::gui::TextAtlas*>(widget);
     bool sv = DICTOOL->checkObjectExist_json(options, "stringValue");
     bool cmf = DICTOOL->checkObjectExist_json(options, "charMapFile");
     bool iw = DICTOOL->checkObjectExist_json(options, "itemWidth");
@@ -1850,7 +1850,7 @@ void WidgetPropertiesReader0300::setPropsForLabelBMFontFromJsonDictionary(Widget
 {
     setPropsForWidgetFromJsonDictionary(widget, options);
     
-    cocos2d::gui::LabelBMFont* labelBMFont = static_cast<cocos2d::gui::LabelBMFont*>(widget);
+    cocos2d::gui::TextBMFont* labelBMFont = static_cast<cocos2d::gui::TextBMFont*>(widget);
     
     const rapidjson::Value& cmftDic = DICTOOL->getSubDictionary_json(options, "fileNameData");
     int cmfType = DICTOOL->getIntValue_json(cmftDic, "resourceType");

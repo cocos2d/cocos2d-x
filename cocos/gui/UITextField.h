@@ -47,10 +47,10 @@ public:
     static UICCTextField* create(const char *placeholder, const char *fontName, float fontSize);
     
     // CCTextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(TextFieldTTF *pSender);
-    virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender);
-    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen);
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen);
+    virtual bool onTextFieldAttachWithIME(TextFieldTTF *pSender) override;
+    virtual bool onTextFieldDetachWithIME(TextFieldTTF * pSender) override;
+    virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, int nLen) override;
+    virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, int nLen) override;
     
     void insertText(const char* text, int len);
     void deleteBackward();

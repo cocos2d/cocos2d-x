@@ -81,7 +81,7 @@ void BaseTriggerAction::removeAll()
 
 TriggerObj::TriggerObj(void)
 :_id(UINT_MAX)
-,_bEnable(true)
+,_enabled(true)
 {
 	_vInt.clear();
 }
@@ -112,28 +112,29 @@ TriggerObj* TriggerObj::create()
 
 bool TriggerObj::detect()
 {
-	if (!_bEnable || _cons.size() == 0)
+	if (!_enabled || _cons.empty())
 	{
 		return true;
 	}
-    bool bRet = true;  
+    
+    bool ret = true;
 
-    for(auto con : _cons)
+    for (const auto& con : _cons)
     {
-        bRet = bRet && con->detect();
+        ret = ret && con->detect();
     }
 
-    return bRet;
+    return ret;
 }
 
 void TriggerObj::done()
 {
-	if (!_bEnable || _acts.size() == 0)
+	if (!_enabled || _acts.empty())
 	{
 		return;
 	}
 
-    for(auto act : _acts)
+    for (const auto& act : _acts)
     {
         act->done();
     }
@@ -141,11 +142,12 @@ void TriggerObj::done()
 
 void TriggerObj::removeAll()
 {
-    for(auto con : _cons)
+    for (const auto& con : _cons)
     {
         con->removeAll();
     }
-    for(auto act : _acts)
+    
+    for (const auto& act : _acts)
     {
         act->removeAll();
     }
@@ -219,9 +221,9 @@ unsigned int TriggerObj::getId()
 	return _id;
 }
 
-void TriggerObj::setEnable(bool bEnable)
+void TriggerObj::setEnabled(bool enabled)
 {
-	_bEnable = bEnable;
+	_enabled = enabled;
 }
 
 std::vector<int>& TriggerObj::getEvents()

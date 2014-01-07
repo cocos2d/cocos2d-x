@@ -33,6 +33,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class SpriteFrame;
+class EventCustom;
 
 /**
  * @addtogroup particle_nodes
@@ -81,14 +82,8 @@ public:
      * @js NA
      * @lua NA
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
     /**
      * @js NA
      * @lua NA
@@ -139,6 +134,13 @@ protected:
 
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
+    
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
     void setupVBOandVAO();
     void setupVBO();
