@@ -1,3 +1,5 @@
+# cocos2d-x v3.0 Release Notes #
+
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [cocos2d-x v3.0 Release Notes](#cocos2d-x-v30-release-notes)
@@ -47,9 +49,6 @@
 		- [Use the lua table instead of the some structs and classes binding](#use-the-lua-table-instead-of-the-some-structs-and-classes-binding)
 	- [Known issues](#known-issues)
 
-# cocos2d-x v3.0 Release Notes #
-
-
 # Misc Information
 
 * Download: http://cdn.cocos2d-x.org/cocos2d-x-3.0alpha1.zip
@@ -76,7 +75,7 @@
 * gcc 4.7 for Linux or Android. For Android ndk-r9 or newer is required.
 * Visual Studio 2012 (for Windows)
 
-# Highlights of v3.0.0
+# Highlights of v3.0
 
 * Replaced Objective-C patters with C++ (C++11) patterns and best practices
 * Improved Labels
@@ -84,10 +83,10 @@
 * New Event Dispatcher
 * Physics integration
 * New GUI
-* Javascript remote debugger
-* Console module
+* JavaScript remote debugger
+* Remote Console support
 * Refactor Image - release memory in time and uniform the api of supported file format
-* Automatically generated lua bindings, add LuaJavaBridge and LuaObjcBridge
+* Automatically generated Lua bindings, add LuaJavaBridge and LuaObjcBridge
 * Templated containers
 
 # Features in detail
@@ -299,9 +298,15 @@ void setTexParameters(const ccTexParams& texParams);
 ```
 
 
-## New renderer
+## New Renderer
 
-NOT ADDED YET
+_Feature added in v3.0-beta_
+
+The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object. 
+
+Auto-batching and auto-culling support has been added.
+
+Please, see this document for detail information about its internal funcitonality: https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit
 
 ## Improved LabelTTF / LabelBMFont
 
@@ -596,9 +601,9 @@ color3B = Color3B::WHITE;
 
 Only configurating the *.ini files in the tools/tolua folder,not to write a lot of *.pkg files
 
-### Use ScriptHandlerMgr to manage the register and unregister of lua function
+### Use ScriptHandlerMgr to manage the register and unregister of Lua function
 
-When we want to add register and unregister functions of lua function for class, we need to change the declarative and defined files and then bind to Lua.
+When we want to add register and unregister functions of Lua function for class, we need to change the declarative and defined files and then bind to Lua.
 In v3.0, we use the `ScriptHandlerMgr`. As an example, lets see the `MenuItem` class:
 In the 2.x version, we needed to add a declaration in the MenuItem header file:
 ```c++
@@ -636,7 +641,7 @@ ccs.UILayer:create()
 Add a lot of deprecate funtions、table and classes to support 2.x version as far as possible
 Note: `Rect does not support the origin and size member variables`
 
-### Use the lua table instead of the some structs and classes binding
+### Use the Lua table instead of the some structs and classes binding
 
 Point、Size、Rect、Color3b、Color4b、Color4F、AffineTransform、FontDefinition、Array、Dictionary、PointArray are not bound.
 The difference is as follow:
@@ -662,7 +667,7 @@ local color3B = cc.c3b(0,0,0)
 local color4B = cc.c4b(0,0,0,0)
 ```
 
-Through the funtions of the LuaBasicConversion file,they can be converted the lua table when they are as a parameter in the bindings generator.
+Through the funtions of the LuaBasicConversion file,they can be converted the Lua table when they are as a parameter in the bindings generator.
 
 
 ## Known issues
