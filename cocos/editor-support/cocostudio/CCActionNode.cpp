@@ -101,7 +101,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeScale);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -113,7 +113,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setRotation(rotation);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeRotate);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -125,7 +125,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setOpacity(opacity);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeTint);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -139,7 +139,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setColor(Color3B(colorR,colorG,colorB));
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeFade);
 			cActionArray->pushBack(actionFrame);
 		}
 	}
