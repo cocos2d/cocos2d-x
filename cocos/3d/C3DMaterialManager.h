@@ -15,17 +15,17 @@ class C3DEffect;
 class C3DMaterialManager : public C3DResourceManager
 {
 public:
-	static C3DMaterialManager* getInstance();
+    static C3DMaterialManager* getInstance();
 
-	virtual C3DResource* createResource(const std::string& name);	
+    virtual C3DResource* createResource(const std::string& name);    
 
-	virtual C3DResource* cloneResource(C3DResource* resource);		
+    virtual C3DResource* cloneResource(C3DResource* resource);        
 
 private:
 
-	C3DMaterialManager();
+    C3DMaterialManager();
 
-	~C3DMaterialManager();
+    ~C3DMaterialManager();
 
 };
 
