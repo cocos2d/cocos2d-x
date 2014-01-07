@@ -41,17 +41,15 @@ public:
     /**
      * The index used internally by SWTableView and its subclasses
      */
-    long getIdx();
-    void setIdx(long uIdx);
+    ssize_t getIdx();
+    void setIdx(ssize_t uIdx);
     /**
      * Cleans up any resources linked to this cell and resets <code>idx</code> property.
      */
     void reset();
 
-    void setObjectID(long uIdx);
-    long getObjectID();
 private:
-    long _idx;
+    ssize_t _idx;
 };
 
 NS_CC_EXT_END
