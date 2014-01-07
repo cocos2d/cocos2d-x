@@ -57,6 +57,10 @@ Then
     $ cd build
     $ cmake ..
     $ make -j4
+    
+Run
+
+    $ bin/mygame
 
 ### Build new project for win32 ###
 
@@ -130,6 +134,14 @@ $ cd cocos2d-x/build
 $ ./install-deps-linux.sh
 $ cmake ..
 $ make
+```
+
+Run Samples
+
+```
+$ bin/hellocpp/hellocpp
+or
+$ bin/testlua/testlua
 ```
 
       You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
