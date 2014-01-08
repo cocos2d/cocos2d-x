@@ -174,14 +174,14 @@ local function TMXOrthoTest()
         child:getTexture():setAntiAliasTexParameters()
     end
 
-    local x = 0
-    local y = 0
-    local z = 0
-    x, y, z = map:getCamera():getEye()
-    cclog("before eye x="..x..",y="..y..",z="..z)
-    map:getCamera():setEye(x-200, y, z+300)
-    x, y, z = map:getCamera():getEye()
-    cclog("after eye x="..x..",y="..y..",z="..z)
+    -- local x = 0
+    -- local y = 0
+    -- local z = 0
+    -- x, y, z = map:getCamera():getEye()
+    -- cclog("before eye x="..x..",y="..y..",z="..z)
+    -- map:getCamera():setEye(x-200, y, z+300)
+    -- x, y, z = map:getCamera():getEye()
+    -- cclog("after eye x="..x..",y="..y..",z="..z)
 
 
     local function onNodeEvent(event)

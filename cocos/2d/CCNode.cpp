@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -854,11 +855,8 @@ void Node::transform()
 
     kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
-    // Update Z vertex manually
-    transfrom4x4.mat[14] = _vertexZ;
-
-
     kmGLMultMatrix( &transfrom4x4 );
+
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 }
@@ -1188,15 +1186,18 @@ const kmMat4& Node::getNodeToParentTransform() const
             }
         }
 
+        // vertex Z
+        _transform.mat[14] = _vertexZ;
+
         if (_additionalTransformDirty)
         {
             kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
             _additionalTransformDirty = false;
         }
-        
+
         _transformDirty = false;
     }
-    
+
     return _transform;
 }
 
@@ -1256,7 +1257,7 @@ kmMat4 Node::getNodeToWorldTransform() const
     kmMat4 t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
-        kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
+        kmMat4Multiply(&t, &p->getNodeToParentTransform(), &t);
 
     return t;
 }

@@ -130,6 +130,7 @@ set(SAMPLE_SRC
   Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
+  Classes/UnitTest/UnitTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   Classes/AppDelegate.cpp
@@ -159,7 +160,7 @@ target_link_libraries(${APP_NAME}
   box2d
 )
 
-set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
+set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
@@ -168,4 +169,3 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
   )
-

@@ -68,6 +68,7 @@ class CocosProject:
             "dst_package_name": None,
             "src_project_path": None,
             "dst_project_path": None,
+            "cocos_file_list":None,
             "script_dir": None
         }
         self.platforms_list = []
@@ -134,6 +135,7 @@ class CocosProject:
         self.context["language"] = language
         self.context["dst_project_path"] = os.path.join(projectPath,projectName)
         self.context["script_dir"] = os.path.abspath(os.path.dirname(__file__))
+        self.context["cocos_file_list"] = os.path.join(self.context["script_dir"], "cocos_files.json")
 
         # fill in src_project_name and src_package_name according to "language"
         template_dir = os.path.abspath(os.path.join(self.cocos_root, "template"))
@@ -163,68 +165,50 @@ class CocosProject:
             shutil.copytree(self.context["src_project_path"], self.context["dst_project_path"], True)
 
         # check cocos engine exist
-        dirlist = os.listdir(self.cocos_root)
-        if (not "cocos" in dirlist) or (not "extensions" in dirlist):
-            print ("The Cocos2d Engine doesn\'t exist." \
-                "Check engine path, please")
+
+        if not os.path.exists(self.context["cocos_file_list"]):
+            print ("cocos_file_list.json doesn\'t exist." \
+                "generate it, please")
             return False
 
-        # call process_proj from each platform's script folder
+        f = open(self.context["cocos_file_list"])
+        fileList = json.load(f)
+        f.close()
         self.platforms_list = self.platforms.get(self.context["language"], [])
-        self.totalStep = len(self.platforms_list) + len(dirlist)
+        self.totalStep = len(self.platforms_list) + len(fileList)
         self.step = 0
+
+        #begin copy engine
+        print("###begin copy engine")
+        print("waitting copy cocos2d ...")
+        dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
+        for index in range(len(fileList)):
+            srcfile = os.path.join(self.cocos_root,fileList[index])
+            dstfile = os.path.join(dstPath,fileList[index])
+            if not os.path.exists(os.path.dirname(dstfile)):
+                os.makedirs(os.path.dirname(dstfile))
+
+            #copy file or folder
+            if os.path.exists(srcfile):
+                if os.path.isdir(srcfile):
+                    if os.path.exists(dstfile):
+                        shutil.rmtree(dstfile)
+                    shutil.copytree(srcfile, dstfile)
+                else:
+                    if os.path.exists(dstfile):
+                        os.remove(dstfile)
+                    shutil.copy(srcfile, dstfile)
+            self.step = self.step + 1
+            if self.callbackfun and self.step%int(self.totalStep/50) == 0:
+                self.callbackfun(self.step,self.totalStep,fileList[index])
+        print("cocos2d\t\t: Done!")
+        # call process_proj from each platform's script folder
         for platform in self.platforms_list:
             self.__processPlatformProjects(platform)
-
-        # copy cocos2d engine.
-        if not self.__copyCocos2dEngine():
-            print ("New project Failure")
-            if os.path.exists(self.context["dst_project_path"]):
-                shutil.rmtree(self.context["dst_project_path"])
-            return False
 
         print ("###New project has been created in this path: ")
         print (self.context["dst_project_path"].replace("\\", "/"))
         print ("Have Fun!")
-        return True
-
-    def __copyCocos2dEngine(self):
-        """Copy cocos2d engine to dst_project_path.
-        Arg:
-            empty
-        """
-
-        ignoreList={
-            "samples": None,
-            "docs": None,
-            "licenses": None,
-            "template": None,
-            ".git":None
-        }
-
-        # create "cocos2d" folder
-        dstPath = os.path.join(self.context["dst_project_path"],"cocos2d")
-        if not os.path.exists(dstPath):
-            os.makedirs(dstPath)
-
-        # begin copy
-        print("###begin copy engine...")
-        # list engine root dir.
-        dirlist = os.listdir(self.cocos_root)
-        for line in dirlist:
-            filepath = os.path.join(self.cocos_root,line)
-            showMsg = "%s\t\t\t: Done!" % line
-            self.step += 1
-            if ignoreList.has_key(line):
-                continue
-            if os.path.isdir(filepath):
-                shutil.copytree(filepath, os.path.join(dstPath,line), True)
-                print (showMsg)
-            else:
-                shutil.copyfile(filepath, os.path.join(dstPath,line))
-
-            if self.callbackfun:
-                self.callbackfun(self.step,self.totalStep,showMsg)
         return True
 
     def __processPlatformProjects(self, platform):

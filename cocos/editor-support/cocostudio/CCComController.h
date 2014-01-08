@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,13 +25,15 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 #define __CC_EXTENTIONS_CCCOMCONTROLLER_H__
 
-#include "cocos2d.h"
+#include "CCComBase.h"
 #include "cocostudio/CCInputDelegate.h"
 
 namespace cocostudio {
 
 class ComController : public cocos2d::Component, public InputDelegate
 {
+
+    DECLARE_CLASS_COMPONENT_INFO
 public:
     /**
      *  @js ctor
@@ -44,12 +46,12 @@ public:
      * @lua NA
      */
     virtual ~ComController(void);
-    virtual bool init();
+    virtual bool init() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA

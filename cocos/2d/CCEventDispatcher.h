@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -155,8 +155,17 @@ protected:
         ssize_t _gt0Index;
     };
     
-    /** Adds event listener with item */
+    /** Adds an event listener with item
+     *  @note if it is dispatching event, the added operation will be delayed to the end of current dispatch
+     *  @see forceAddEventListener
+     */
     void addEventListener(EventListener* listener);
+    
+    /** Force adding an event listener
+     *  @note force add an event listener which will ignore whether it's in dispatching.
+     *  @see addEventListener
+     */
+    void forceAddEventListener(EventListener* listener);
     
     /** Gets event the listener list for the event listener type. */
     EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);

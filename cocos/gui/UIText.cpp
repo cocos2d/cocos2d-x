@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIText.h"
 
@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace gui {
 
-#define LABELRENDERERZ (-1)
+static const int LABEL_RENDERER_Z = (-1);
 
 Text::Text():
 _touchScaleChangeEnabled(false),
@@ -70,7 +70,7 @@ bool Text::init()
 void Text::initRenderer()
 {
     _labelRenderer = LabelTTF::create();
-    Node::addChild(_labelRenderer, LABELRENDERERZ, -1);
+    Node::addChild(_labelRenderer, LABEL_RENDERER_Z, -1);
 }
 
 void Text::setText(const std::string& text)
@@ -87,7 +87,7 @@ const std::string& Text::getStringValue()
     return _labelRenderer->getString();
 }
 
-size_t Text::getStringLength()
+ssize_t Text::getStringLength()
 {
     return _labelRenderer->getString().size();
 }
@@ -140,13 +140,11 @@ void Text::setScale(float fScale)
 void Text::setScaleX(float fScaleX)
 {
     Widget::setScaleX(fScaleX);
-    _normalScaleValueX = fScaleX;
 }
     
 void Text::setScaleY(float fScaleY)
 {
     Widget::setScaleY(fScaleY);
-    _normalScaleValueY = fScaleY;
 }
 
 bool Text::isTouchScaleChangeEnabled()
@@ -169,6 +167,8 @@ void Text::onPressStateChangedToPressed()
     {
         return;
     }
+    _normalScaleValueX = getScaleX();
+    _normalScaleValueY = getScaleY();
     clickScale(_normalScaleValueX + _onSelectedScaleOffset, _normalScaleValueY + _onSelectedScaleOffset);
 }
 
@@ -267,6 +267,9 @@ void Text::copySpecialProperties(Widget *widget)
         setFontSize(label->_labelRenderer->getFontSize());
         setText(label->getStringValue());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
+        setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());
+        setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
+        setTextAreaSize(label->_labelRenderer->getDimensions());
     }
 }
 

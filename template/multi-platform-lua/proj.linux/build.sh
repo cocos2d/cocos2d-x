@@ -12,7 +12,7 @@ cd ../cocos2d
 sudo ./build/install-deps-linux.sh
 mkdir -p linux-build
 cd linux-build
-cmake .. -DBUILD_LIBS_LUA=OFF -DBUILD_HelloCpp=OFF -DBUILD_TestCpp=OFF -DBUILD_HelloLua=OFF -DBUILD_TestLua=OFF
+cmake .. -DBUILD_HelloCpp=OFF -DBUILD_TestCpp=OFF -DBUILD_HelloLua=OFF -DBUILD_TestLua=OFF
 make -j4
 
 #make bin
@@ -24,3 +24,4 @@ cmake  ../..
 make -j4
 cd ..
 mv ../bin bin
+cp ../cocos2d/cocos/scripting/lua/script/* bin/Resources

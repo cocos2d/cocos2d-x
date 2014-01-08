@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -328,7 +328,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-long ArmatureAnimation::getMovementCount() const
+ssize_t ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }

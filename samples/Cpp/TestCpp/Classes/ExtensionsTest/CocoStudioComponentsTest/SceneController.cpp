@@ -29,7 +29,7 @@ void SceneController::onEnter()
     _fAddTargetTime = 1.0f;
    
     static_cast<ComAudio*>(_owner->getComponent("Audio"))->playBackgroundMusic("background-music-aac.wav", true);
-    static_cast<ComAttribute*>(_owner->getComponent("ComAttribute"))->setInt("KillCount", 0);
+    static_cast<ComAttribute*>(_owner->getComponent("CCComAttribute"))->setInt("KillCount", 0);
 }
 
 void SceneController::onExit()
@@ -91,9 +91,9 @@ void SceneController::spriteMoveFinished(Node* sender)
 
 void SceneController::increaseKillCount()
 {
-    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("ComAttribute")))->getInt("KillCount");
+    int nProjectilesDestroyed = ((ComAttribute*)(_owner->getComponent("CCComAttribute")))->getInt("KillCount");
     
-    ComAttribute *p = (ComAttribute*)(_owner->getComponent("ComAttribute"));
+    ComAttribute *p = (ComAttribute*)(_owner->getComponent("CCComAttribute"));
     p->setInt("KillCount", ++nProjectilesDestroyed);
 
     if (nProjectilesDestroyed >= 5)

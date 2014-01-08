@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -145,7 +146,8 @@ bool Label::init()
         setLabelEffect(LabelEffect::NORMAL,Color3B::BLACK);
     else if(_useA8Shader)
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR));
-
+    else
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return ret;
 }
 
@@ -500,7 +502,7 @@ void Label::setFontSize(int fontSize)
     Node::setScale(1.0f*_fontSize/DISTANCEFIELD_ATLAS_FONTSIZE);
 }
 
-void Label::draw()
+void Label::onDraw()
 {
     CC_PROFILER_START("CCSpriteBatchNode - draw");
 
@@ -525,6 +527,13 @@ void Label::draw()
     _textureAtlas->drawQuads();
 
     CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+}
+
+void Label::draw()
+{
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
 ///// PROTOCOL STUFF
