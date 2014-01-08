@@ -24,7 +24,7 @@
 
 #include "CCPhysicsSprite.h"
 
-#if defined(CC_ENABLE_CHIPMUNK_INTEGRATION) && defined(CC_ENABLE_BOX2D_INTEGRATION)
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION) && (CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
 #endif
 
