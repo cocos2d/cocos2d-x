@@ -1,6 +1,7 @@
 set(NETWORK_SRC
   HttpClient.cpp
   SocketIO.cpp
+  WebSocket.cpp
 )
 
 add_library(network STATIC
@@ -9,10 +10,7 @@ add_library(network STATIC
 
 target_link_libraries(network
   curl
-  ldap
-  lber
-  idn
-  rtmp
+  websockets
 )
 
 set_target_properties(network

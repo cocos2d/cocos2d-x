@@ -50,7 +50,10 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
   Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
+  Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+  Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+  Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp
