@@ -44,8 +44,6 @@ pushd "$GENERATED_WORKTREE"
 
 echo "Delete all directories and files except '.git' and 'README.md'."
 ls -a | grep -E -v ^\[.\]\{1,2\}$ | grep -E -v ^\.git$ | grep -E -v ^README\.md$ | xargs -I{} rm -rf {}
-echo "Show files in ${GENERATED_WORKTREE} folder."
-ls -a
 popd
 
 
