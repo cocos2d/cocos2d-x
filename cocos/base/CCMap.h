@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2012 - 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -283,7 +283,9 @@ public:
         if (!_data.empty())
         {
             ssize_t randIdx = rand() % _data.size();
-            return (_data.begin() + randIdx)->second;
+            const_iterator randIter = _data.begin();
+            std::advance(randIter , randIdx);
+            return randIter->second;
         }
         return nullptr;
     }

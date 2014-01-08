@@ -501,7 +501,7 @@ void CCBAnimationManager::setAnimatedProperty(const std::string& propName, Node 
             }
             else if (propName == "displayFrame")
             {
-                static_cast<Sprite*>(pNode)->setDisplayFrame(static_cast<SpriteFrame*>(obj));
+                static_cast<Sprite*>(pNode)->setSpriteFrame(static_cast<SpriteFrame*>(obj));
             }
             else if (propName == "color")
             {
@@ -1002,7 +1002,7 @@ CCBSetSpriteFrame* CCBSetSpriteFrame::reverse() const
 
 void CCBSetSpriteFrame::update(float time)
 {
-    ((Sprite*)_target)->setDisplayFrame(_spriteFrame);
+    static_cast<Sprite*>(_target)->setSpriteFrame(_spriteFrame);
 }
 
 
