@@ -9,7 +9,7 @@ class  RuntimeConfig
 public:
 	static RuntimeConfig* getInstance();
 	void setSearchPath();
-
+	void waitConnect();
 private:
     RuntimeConfig();
     virtual ~RuntimeConfig();

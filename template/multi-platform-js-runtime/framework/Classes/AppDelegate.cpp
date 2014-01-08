@@ -60,12 +60,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->start();
 	
-#ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->setSearchPath();
-#endif
-
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
+#endif
+
+#ifdef ISRUNTIME
+	RuntimeConfig::getInstance()->setSearchPath();
+	RuntimeConfig::getInstance()->waitConnect();
 #endif
 
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
