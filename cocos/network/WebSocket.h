@@ -153,6 +153,10 @@ private:
     unsigned int _port;
     std::string  _path;
     
+    size_t _pending_frame_data_len;
+    unsigned int _current_data_len;
+    char *_current_data;
+    
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
     
