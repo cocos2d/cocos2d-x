@@ -327,12 +327,9 @@ bool CCParticleSystem::initWithDictionary(CCDictionary *dictionary, const char *
                         textureName = string(dirname) + textureName;
                     }
                 }
-                else
+                else if (dirname != NULL && textureName.empty() == false)
                 {
-                    if (dirname != NULL)
-                    {
-                        textureName = string(dirname) + textureName;
-                    }
+                    textureName = string(dirname) + textureName;
                 }
                 
                 CCTexture2D *tex = NULL;
