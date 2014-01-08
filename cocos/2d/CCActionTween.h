@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009      lhunath (Maarten Billemont)
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright 2009 lhunath (Maarten Billemont)
-
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

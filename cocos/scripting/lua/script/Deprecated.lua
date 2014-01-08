@@ -1088,21 +1088,6 @@ end
 rawset(SceneReader,"purgeSceneReader",SceneReaderDeprecated.purgeSceneReader)
 --functions of SceneReader will be deprecated end
 
---functions of ActionManager will be deprecated begin
-local ActionManagerDeprecated = { }
-function ActionManagerDeprecated.shareManager()
-    deprecatedTip("ActionManager:shareManager","ccs.ActionManagerEx:getInstance")
-    return ccs.ActionManagerEx:getInstance()
-end
-rawset(ActionManager,"shareManager",ActionManagerDeprecated.shareManager)
-
-function ActionManagerDeprecated.destroyInstance()
-    deprecatedTip("ActionManager:destroyInstance","ccs.ActionManagerEx:destroyActionManager")
-    return ccs.ActionManagerEx:destroyActionManager()
-end
-rawset(ActionManager,"destroyInstance",ActionManagerDeprecated.destroyInstance)
---functions of ActionManager will be deprecated end
-
 --functions of CCEGLView will be deprecated begin
 local CCEGLViewDeprecated = { }
 function CCEGLViewDeprecated.sharedOpenGLView()
@@ -1111,18 +1096,4 @@ function CCEGLViewDeprecated.sharedOpenGLView()
 end
 rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
 --functions of CCEGLView will be deprecated end
-
---Enums of CCTableView will be deprecated begin
-rawset(CCTableView, "kTableViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
-rawset(CCTableView,"kTableViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
-rawset(CCTableView,"kTableCellTouched",cc.TABLECELL_TOUCHED)
-rawset(CCTableView,"kTableCellSizeForIndex",cc.TABLECELL_SIZE_FOR_INDEX)
-rawset(CCTableView,"kTableCellSizeAtIndex",cc.TABLECELL_SIZE_AT_INDEX)
-rawset(CCTableView,"kNumberOfCellsInTableView",cc.NUMBER_OF_CELLS_IN_TABLEVIEW)
---Enums of CCTableView will be deprecated end
-
---Enums of CCScrollView will be deprecated begin
-rawset(CCScrollView, "kScrollViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
-rawset(CCScrollView,"kScrollViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
---Enums of CCScrollView will be deprecated end
 

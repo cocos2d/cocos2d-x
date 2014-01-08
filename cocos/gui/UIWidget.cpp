@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIWidget.h"
 #include "gui/UILayout.h"
@@ -66,7 +66,8 @@ Widget::~Widget()
     _touchEventListener = nullptr;
     _touchEventSelector = nullptr;
     _widgetChildren.clear();
-    CC_SAFE_RELEASE(_touchListener);
+    setTouchEnabled(false);
+    _nodes.clear();
 }
 
 Widget* Widget::create()
@@ -127,7 +128,7 @@ void Widget::addChild(Node * child, int zOrder)
     
 void Widget::addChild(Node* child, int zOrder, int tag)
 {
-    CCASSERT(dynamic_cast<Widget*>(child) != NULL, "Widget only supports Widgets as children");
+    CCASSERT(dynamic_cast<Widget*>(child) != nullptr, "Widget only supports Widgets as children");
     Node::addChild(child, zOrder, tag);
     _widgetChildren.pushBack(child);
 }
@@ -197,7 +198,7 @@ void Widget::removeChildByTag(int tag, bool cleanup)
     
     Node *child = getChildByTag(tag);
     
-    if (child == NULL)
+    if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByTag(tag = %d): child not found!", tag);
     }
@@ -251,6 +252,75 @@ Widget* Widget::getChildByName(const char *name)
     }
     return nullptr;
 }
+    
+void Widget::addNode(Node* node)
+{
+    addNode(node, node->getZOrder(), node->getTag());
+}
+
+void Widget::addNode(Node * node, int zOrder)
+{
+    addNode(node, zOrder, node->getTag());
+}
+
+void Widget::addNode(Node* node, int zOrder, int tag)
+{
+    CCAssert(dynamic_cast<Widget*>(node) == nullptr, "Widget only supports Nodes as renderer");
+    Node::addChild(node, zOrder, tag);
+    _nodes.pushBack(node);
+}
+
+Node* Widget::getNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    for (auto& node : _nodes)
+    {
+        if(node && node->getTag() == tag)
+            return node;
+    }
+    return nullptr;
+}
+
+Vector<Node*>& Widget::getNodes()
+{
+    return _nodes;
+}
+
+void Widget::removeNode(Node* node)
+{
+    Node::removeChild(node);
+    _nodes.eraseObject(node);
+}
+
+void Widget::removeNodeByTag(int tag)
+{
+    CCAssert( tag != Node::INVALID_TAG, "Invalid tag");
+    
+    Node *node = this->getNodeByTag(tag);
+    
+    if (node == nullptr)
+    {
+        CCLOG("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+    }
+    else
+    {
+        this->removeNode(node);
+    }
+}
+
+void Widget::removeAllNodes()
+{
+    for (auto& node : _nodes)
+    {
+        if (node)
+        {
+            Node::removeChild(node);
+        }
+    }
+    _nodes.clear();
+}
+
 
 void Widget::initRenderer()
 {

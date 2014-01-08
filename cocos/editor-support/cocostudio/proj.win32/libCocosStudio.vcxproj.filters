@@ -296,5 +296,8 @@
     <ClInclude Include="..\TriggerObj.h">
       <Filter>trigger</Filter>
     </ClInclude>
+    <ClInclude Include="..\CCComBase.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

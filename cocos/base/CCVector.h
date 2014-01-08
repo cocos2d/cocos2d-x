@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -340,7 +341,7 @@ public:
      *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
      *          This is the container end if the operation erased the last element in the sequence.
      */
-    iterator erase(const_iterator first, const_iterator last)
+    iterator erase(iterator first, iterator last)
     {
         for (auto iter = first; iter != last; ++iter)
         {

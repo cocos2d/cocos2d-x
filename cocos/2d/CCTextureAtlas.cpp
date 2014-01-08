@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -226,7 +227,7 @@ void TextureAtlas::listenBackToForeground(EventCustom* event)
 
 std::string TextureAtlas::getDescription() const
 {
-    return StringUtils::format("<TextureAtlas | totalQuads = %zd>", _totalQuads);
+    return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_totalQuads));
 }
 
 

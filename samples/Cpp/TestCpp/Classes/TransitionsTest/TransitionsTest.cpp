@@ -145,14 +145,13 @@ public:
 #define STRINGIFY(x) #x
 
 #define TRANS(__className__) {                                      \
-    { [](float t, Scene* s){ return __className__::create(t,s);} }, \
+    [](float t, Scene* s){ return __className__::create(t,s);},     \
         STRINGIFY(__className__),                                   \
     }
-
 struct _transitions {
     std::function<TransitionScene*(float t, Scene* s)> function;
     const char * name;
-} transitions[] {
+} transitions[] = {
     TRANS(TransitionJumpZoom),
     TRANS(TransitionProgressRadialCCW),
     TRANS(TransitionProgressRadialCW),
