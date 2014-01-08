@@ -351,13 +351,13 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     string textureDir = textureName.substr(0, rPos + 1);
                     
-                    if (dirname.size()>0 && textureDir != dirname)
+                    if (!dirname.empty() && textureDir != dirname)
                     {
                         textureName = textureName.substr(rPos+1);
                         textureName = dirname + textureName;
                     }
                 }
-                else if ( dirname.size()>0 && textureName.empty() == false)
+                else if (!dirname.empty() && !textureName.empty())
                 {
                 	textureName = dirname + textureName;
                 }
@@ -369,7 +369,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     // set not pop-up message box when load image failed
                     bool notify = FileUtils::getInstance()->isPopupNotify();
                     FileUtils::getInstance()->setPopupNotify(false);
-                    tex = Director::getInstance()->getTextureCache()->addImage(textureName.c_str());
+                    tex = Director::getInstance()->getTextureCache()->addImage(textureName);
                     // reset the value of UIImage notify
                     FileUtils::getInstance()->setPopupNotify(notify);
                 }
@@ -406,10 +406,12 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         image->release();
                     }
                 }
-                if (_configName.length()>0)
+                
+                if (!_configName.empty())
                 {
-                  _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
+                    _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
                 }
+                
                 CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
             }
             ret = true;
