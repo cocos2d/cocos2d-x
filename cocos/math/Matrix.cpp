@@ -169,33 +169,6 @@ void Matrix::createLookAt(float eyePositionX, float eyePositionY, float eyePosit
     dst->m[14] = -Vector3::dot(zaxis, eye);
     dst->m[15] = 1.0f;
 }
-//
-//void Matrix::createAxis(Vector3& position, Vector3& xaxis, Vector3& yaxis, Vector3& zaxis, Matrix* dst)
-//{
-//    zaxis.normalize();
-//    xaxis.normalize();
-//    yaxis.normalize();
-//
-//    dst->m[0] = xaxis.x;
-//    dst->m[1] = yaxis.x;
-//    dst->m[2] = zaxis.x;
-//    dst->m[3] = 0.0f;
-//
-//    dst->m[4] = xaxis.y;
-//    dst->m[5] = yaxis.y;
-//    dst->m[6] = zaxis.y;
-//    dst->m[7] = 0.0f;
-//
-//    dst->m[8] = xaxis.z;
-//    dst->m[9] = yaxis.z;
-//    dst->m[10] = zaxis.z;
-//    dst->m[11] = 0.0f;
-//
-//    dst->m[12] = -Vector3::dot(xaxis, position);
-//    dst->m[13] = -Vector3::dot(yaxis, position);
-//    dst->m[14] = -Vector3::dot(zaxis, position);
-//    dst->m[15] = 1.0f;
-//}
 
 void Matrix::createPerspective(float fieldOfView, float aspectRatio,
                                      float zNearPlane, float zFarPlane, Matrix* dst)
@@ -917,9 +890,18 @@ void Matrix::rotateZ(float angle, Matrix* dst) const
 {
     assert(dst);
 
+#if defined(__ARM_NEON__) && !defined(__arm64__) 
+     float d[2] {
+            cosf(angle),
+            sinf(angle)
+        };
+    NEON_Matrix4Copy(m, dst->m);
+    NEON_Matrix4RotateZ(dst->m, d);  
+#else
     Matrix r;
     createRotationZ(angle, &r);
     multiply(*this, r, dst);
+#endif
 }
 
 void Matrix::scale(float value)
@@ -985,13 +967,20 @@ void Matrix::set(float m11, float m12, float m13, float m14, float m21, float m2
 
 void Matrix::set(const float* m1)
 {
-    assert(m1);
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+    NEON_Matrix4Copy(m1, m);
+#else
     memcpy(this->m, m1, MATRIX_SIZE);
+#endif
 }
 
 void Matrix::set(const Matrix& m1)
 {
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+    NEON_Matrix4Copy(m1.m, m);
+#else
     memcpy(this->m, m1.m, MATRIX_SIZE);
+#endif
 }
 
 void Matrix::setCol(int idx, const Vector3& col)
@@ -1079,12 +1068,17 @@ void Matrix::transformVector(const Vector3& vector, Vector3* dst) const
 
 void Matrix::transformVector(float x, float y, float z, float w, Vector3* dst) const
 {
-    assert(dst);
-    
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+    float d[4];
+    float v[4] {x, y, z, w};
+    NEON_Matrix4Vector4Mul(m, v, d);
+    dst->set(d[0], d[1], d[2]);
+#else
     dst->set(
         x * m[0] + y * m[4] + z * m[8] + w * m[12],
         x * m[1] + y * m[5] + z * m[9] + w * m[13],
         x * m[2] + y * m[6] + z * m[10] + w * m[14] );
+#endif
 }
     
 void Matrix::transformVector(float x, float y, float z, Vector3* dst) const
@@ -1121,9 +1115,15 @@ void Matrix::translate(float x, float y, float z, Matrix* dst) const
 {
     assert(dst);
 
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+    float d[3] {x, y, z};
+    NEON_Matrix4Copy(m, dst->m);
+    NEON_Matrix4Translate(dst->m, d);
+#else
     Matrix t;
     createTranslation(x, y, z, &t);
     multiply(*this, t, dst);
+#endif
 }
 
 void Matrix::translate(const Vector3& t)
