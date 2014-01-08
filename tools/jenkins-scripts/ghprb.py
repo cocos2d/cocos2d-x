@@ -94,8 +94,6 @@ def main():
 
     # Generate binding glue codes
     if(platform.system() == 'Darwin'):
-      #cd $COCOS2DX_ROOT/tools/travis-scripts
-      os.system("chmod 777 tools/jenkins-scripts/gen_jsb.sh")
       os.system("tools/jenkins-scripts/gen_jsb.sh")
 
     #make temp dir
