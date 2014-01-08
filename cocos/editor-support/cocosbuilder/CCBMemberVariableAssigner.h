@@ -6,9 +6,9 @@
 namespace cocosbuilder {
 
 #define CCB_MEMBERVARIABLEASSIGNER_GLUE(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
-    if (pTarget == TARGET && 0 == strcmp(pMemberVariableName, (MEMBERVARIABLENAME))) { \
+    if (target == TARGET && 0 == strcmp(memberVariableName, (MEMBERVARIABLENAME))) { \
         MEMBERVARIABLETYPE pOldVar = MEMBERVARIABLE; \
-        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
+        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(node); \
         CC_ASSERT(MEMBERVARIABLE); \
         if (pOldVar != MEMBERVARIABLE) { \
             CC_SAFE_RELEASE(pOldVar); \
@@ -18,8 +18,8 @@ namespace cocosbuilder {
     }
 
 #define CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(TARGET, MEMBERVARIABLENAME, MEMBERVARIABLETYPE, MEMBERVARIABLE) \
-    if (pTarget == TARGET && 0 == strcmp(pMemberVariableName, MEMBERVARIABLENAME)) { \
-        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(pNode); \
+    if (target == TARGET && 0 == strcmp(memberVariableName, MEMBERVARIABLENAME)) { \
+        MEMBERVARIABLE = dynamic_cast<MEMBERVARIABLETYPE>(node); \
         CC_ASSERT(MEMBERVARIABLE); \
         return true; \
     }
