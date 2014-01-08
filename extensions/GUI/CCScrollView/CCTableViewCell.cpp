@@ -33,24 +33,14 @@ void TableViewCell::reset()
     _idx = CC_INVALID_INDEX;
 }
 
-void TableViewCell::setObjectID(long uIdx)
-{
-    _idx = uIdx;
-}
-
-long TableViewCell::getObjectID()
+ssize_t TableViewCell::getIdx()
 {
     return _idx;
 }
 
-long TableViewCell::getIdx()
+void TableViewCell::setIdx(ssize_t idx)
 {
-    return _idx;
-}
-
-void TableViewCell::setIdx(long uIdx)
-{
-    _idx = uIdx;
+    _idx = idx;
 }
 
 NS_CC_EXT_END

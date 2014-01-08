@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -132,7 +133,7 @@ bool Director::init(void)
     _paused = false;
    
     // purge ?
-    _purgeDirecotorInNextLoop = false;
+    _purgeDirectorInNextLoop = false;
 
     _winSizeInPoints = Size::ZERO;    
 
@@ -718,7 +719,7 @@ void Director::popToSceneStackLevel(int level)
 
 void Director::end()
 {
-    _purgeDirecotorInNextLoop = true;
+    _purgeDirectorInNextLoop = true;
 }
 
 void Director::purgeDirector()
@@ -1077,9 +1078,9 @@ void DisplayLinkDirector::startAnimation()
 
 void DisplayLinkDirector::mainLoop()
 {
-    if (_purgeDirecotorInNextLoop)
+    if (_purgeDirectorInNextLoop)
     {
-        _purgeDirecotorInNextLoop = false;
+        _purgeDirectorInNextLoop = false;
         purgeDirector();
     }
     else if (! _invalid)

@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -392,7 +393,7 @@ public:
 
 protected:
     void purgeDirector();
-    bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene();
     

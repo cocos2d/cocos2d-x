@@ -1197,9 +1197,13 @@ JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
     return JS_TRUE;
 }
 
-JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* ret)
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* size)
 {
-    return jsval_to_long(cx, vp, reinterpret_cast<long*>(ret));
+    JSBool ret = JS_FALSE;
+    int32_t sizeInt32 = 0;
+    ret = jsval_to_int32(cx, vp, &sizeInt32);
+    *size = sizeInt32;
+    return ret;
 }
 
 JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret)
@@ -1270,7 +1274,7 @@ JSBool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret)
 
 // native --> jsval
 
-jsval ccarray_to_jsval(JSContext* cx, Array *arr)
+jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
@@ -1286,27 +1290,27 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
         else {
-            String* strVal = NULL;
-            Dictionary* dictVal = NULL;
-            Array* arrVal = NULL;
-            Double* doubleVal = NULL;
-            Bool* boolVal = NULL;
-            Float* floatVal = NULL;
-            Integer* intVal = NULL;
+            __String* strVal = NULL;
+            __Dictionary* dictVal = NULL;
+            __Array* arrVal = NULL;
+            __Double* doubleVal = NULL;
+            __Bool* boolVal = NULL;
+            __Float* floatVal = NULL;
+            __Integer* intVal = NULL;
             
-            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 arrElement = c_string_to_jsval(cx, strVal->getCString());
-            } else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj))) {
+            } else if ((dictVal = dynamic_cast<cocos2d::__Dictionary*>(obj))) {
                 arrElement = ccdictionary_to_jsval(cx, dictVal);
-            } else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj))) {
+            } else if ((arrVal = dynamic_cast<cocos2d::__Array*>(obj))) {
                 arrElement = ccarray_to_jsval(cx, arrVal);
-            } else if ((doubleVal = dynamic_cast<Double*>(obj))) {
+            } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
                 arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-            } else if ((floatVal = dynamic_cast<Float*>(obj))) {
+            } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
                 arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-            } else if ((intVal = dynamic_cast<Integer*>(obj))) {
+            } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
                 arrElement = INT_TO_JSVAL(intVal->getValue());
-            }  else if ((boolVal = dynamic_cast<Bool*>(obj))) {
+            }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
                 CCASSERT(false, "the type isn't suppored.");
@@ -1320,7 +1324,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
-jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
+jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
 {
     JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
     DictElement* pElement = NULL;
@@ -1334,27 +1338,27 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
             dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
         else {
-            String* strVal = NULL;
-            Dictionary* dictVal = NULL;
-            Array* arrVal = NULL;
-            Double* doubleVal = NULL;
-            Bool* boolVal = NULL;
-            Float* floatVal = NULL;
-            Integer* intVal = NULL;
+            __String* strVal = NULL;
+            __Dictionary* dictVal = NULL;
+            __Array* arrVal = NULL;
+            __Double* doubleVal = NULL;
+            __Bool* boolVal = NULL;
+            __Float* floatVal = NULL;
+            __Integer* intVal = NULL;
             
-            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 dictElement = c_string_to_jsval(cx, strVal->getCString());
-            } else if ((dictVal = dynamic_cast<Dictionary*>(obj))) {
+            } else if ((dictVal = dynamic_cast<__Dictionary*>(obj))) {
                 dictElement = ccdictionary_to_jsval(cx, dictVal);
-            } else if ((arrVal = dynamic_cast<Array*>(obj))) {
+            } else if ((arrVal = dynamic_cast<__Array*>(obj))) {
                 dictElement = ccarray_to_jsval(cx, arrVal);
-            } else if ((doubleVal = dynamic_cast<Double*>(obj))) {
+            } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
                 dictElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-            } else if ((floatVal = dynamic_cast<Float*>(obj))) {
+            } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
                 dictElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-            } else if ((intVal = dynamic_cast<Integer*>(obj))) {
+            } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
                 dictElement = INT_TO_JSVAL(intVal->getValue());
-            } else if ((boolVal = dynamic_cast<Bool*>(obj))) {
+            } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
                 CCASSERT(false, "the type isn't suppored.");
@@ -1369,7 +1373,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, __Dictionary** ret)
 {
     if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
     {
@@ -1384,7 +1388,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
     }
     
     JSObject* it = JS_NewPropertyIterator(cx, tmp);
-    Dictionary* dict = NULL;
+    __Dictionary* dict = NULL;
     
     while (true)
     {
@@ -1404,7 +1408,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
         
         JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
         if (!dict) {
-            dict = Dictionary::create();
+            dict = __Dictionary::create();
         }
         
         JS::RootedValue value(cx);
@@ -1423,7 +1427,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
             }
             else if (!JS_IsArrayObject(cx, tmp)){
                 // It's a normal js object.
-                Dictionary* dictVal = NULL;
+                __Dictionary* dictVal = NULL;
                 JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                 if (ok) {
                     dict->setObject(dictVal, keyWrapper.get());
@@ -1431,7 +1435,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
             }
             else {
                 // It's a js array object.
-                Array* arrVal = NULL;
+                __Array* arrVal = NULL;
                 JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                 if (ok) {
                     dict->setObject(arrVal, keyWrapper.get());
@@ -2192,5 +2196,6 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
 
 jsval ssize_to_jsval(JSContext *cx, ssize_t v)
 {
-    return long_to_jsval(cx, v);
+    CCASSERT(v < INT_MAX, "The size should not bigger than 32 bit (int32_t).");
+    return int32_to_jsval(cx, static_cast<int>(v));
 }

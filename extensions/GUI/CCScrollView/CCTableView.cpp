@@ -29,6 +29,10 @@
 
 NS_CC_EXT_BEGIN
 
+TableView* TableView::create()
+{
+    return TableView::create(nullptr, Size::ZERO);
+}
 
 TableView* TableView::create(TableViewDataSource* dataSource, Size size)
 {
@@ -51,6 +55,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
 {
     if (ScrollView::initWithViewSize(size,container))
     {
+        CC_SAFE_DELETE(_indices);
         _indices        = new std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);

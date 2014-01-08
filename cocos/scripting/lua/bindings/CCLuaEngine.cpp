@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -32,6 +33,7 @@
 #include "lua_cocos2dx_manual.hpp"
 #include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_coco_studio_manual.hpp"
+#include "lua_cocos2dx_gui_manual.hpp"
 
 NS_CC_BEGIN
 
@@ -857,101 +859,14 @@ int LuaEngine::handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int n
 
 int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType type,void* data)
 {
-    if (nullptr == data)
-        return 0;
-    
-    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
-    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
-        return 0;
-    
-    LuaTableViewEventData* tableViewData = static_cast<LuaTableViewEventData*>(eventData->value);
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, type);
-    
-    if (0 == handler)
-        return 0;
-    
-    Object* obj = static_cast<Object*>(eventData->nativeObject);
-    if (nullptr == obj)
-        return 0;
-    
-    int ret = 0;
-    switch (type)
-    {
-        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_SCROLL:
-        case ScriptHandlerMgr::HandlerType::SCROLLVIEW_ZOOM:
-            {
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                ret = _stack->executeFunctionByHandler(handler, 1);
-            }
-            break;
-        case ScriptHandlerMgr::HandlerType::TABLECELL_TOUCHED:
-        case ScriptHandlerMgr::HandlerType::TABLECELL_HIGHLIGHT:
-        case ScriptHandlerMgr::HandlerType::TABLECELL_UNHIGHLIGHT:
-        case ScriptHandlerMgr::HandlerType::TABLECELL_WILL_RECYCLE:
-            {
-                Object* cellObject = static_cast<Object*>(tableViewData->value);
-                if (nullptr == cellObject) {
-                    break;
-                }
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), cellObject->_ID, &(cellObject->_luaID), (void*)(cellObject),"TableViewCell");
-                ret = _stack->executeFunctionByHandler(handler, 2);
-            }
-            break;
-        default:
-            break;
-    }
-    
-    return ret;
+    CCASSERT(0, "TableView is not bound yet");
+    return 0;
 }
 
 int LuaEngine::handleTableViewEvent(ScriptHandlerMgr::HandlerType handlerType,void* data, int numResults, const std::function<void(lua_State*,int)>& func)
 {
-    if (nullptr == data || numResults <= 0)
-        return 0;
-    
-    BasicScriptData* eventData = static_cast<BasicScriptData*>(data);
-    if (nullptr == eventData->nativeObject || nullptr == eventData->value)
-        return 0;
-    
-    LuaTableViewEventData* tableViewData = static_cast<LuaTableViewEventData*>(eventData->value);
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)eventData->nativeObject, handlerType);
-    
-    if (0 == handler)
-        return 0;
-    
-    Object* obj = static_cast<Object*>(eventData->nativeObject);
-    if (nullptr == obj)
-        return 0;
-    
-    int ret = 0;
-    switch (handlerType)
-    {
-        case ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX:
-            {
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                _stack->pushLong(*((ssize_t*)tableViewData->value));
-                ret = _stack->executeFunction(handler, 2, 2, func);
-            }
-            break;
-        case ScriptHandlerMgr::HandlerType::TABLECELL_AT_INDEX:
-            {
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                _stack->pushLong(*((ssize_t*)tableViewData->value));
-                ret = _stack->executeFunction(handler, 2, 1, func);
-            }
-            break;
-        case ScriptHandlerMgr::HandlerType::TABLEVIEW_NUMS_OF_CELLS:
-            {
-                toluafix_pushusertype_ccobject(_stack->getLuaState(), obj->_ID, &(obj->_luaID), (void*)(obj),"TableView");
-                ret = _stack->executeFunction(handler, 1, 1, func);
-            }
-            break;
-        default:
-            break;
-    }
-    
-    return ret;
+    CCASSERT(0, "TableView is not bound yet");
+    return 0;
 }
 
 int LuaEngine::handleAssetsManagerEvent(ScriptHandlerMgr::HandlerType type,void* data)

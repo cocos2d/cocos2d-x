@@ -366,45 +366,45 @@ public:
     void setReturnType(EditBox::KeyboardReturnType returnType);
     
     /* override functions */
-    virtual void setPosition(const Point& pos);
-    virtual void setVisible(bool visible);
-    virtual void setContentSize(const Size& size);
-	virtual void setAnchorPoint(const Point& anchorPoint);
+    virtual void setPosition(const Point& pos) override;
+    virtual void setVisible(bool visible) override;
+    virtual void setContentSize(const Size& size) override;
+	virtual void setAnchorPoint(const Point& anchorPoint) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void visit(void) override;
     /**
      * @js NA
      * @lua NA
      */
-	virtual void onEnter(void);
+	virtual void onEnter(void) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit(void);
+    virtual void onExit(void) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidShow(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillHide(IMEKeyboardNotificationInfo& info) override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
     
     /* callback funtions
      * @js NA

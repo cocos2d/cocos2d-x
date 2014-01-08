@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -102,7 +103,7 @@ public:
     virtual ~TMXLayerInfo();
 
     void setProperties(ValueMap properties);
-    ValueMap getProperties();
+    ValueMap& getProperties();
 
     ValueMap           _properties;
     std::string         _name;
