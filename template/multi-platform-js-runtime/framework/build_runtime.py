@@ -38,7 +38,7 @@ class BuildRuntime:
     def __init__(self, platform):
         self.projectPath = None
         if platform == 'win32':
-            self.projectPath = "./proj.win32"
+            self.projectPath = os.path.abspath(os.path.dirname(__file__)) + "\proj.win32"
         self.projectName = None
         self.runtimePlatform = platform
     
@@ -94,7 +94,6 @@ class BuildRuntime:
         files = os.listdir(self.projectPath)
         for file in files:
             name, extention = os.path.splitext(file)
-            print name, extention
             if extention == '.sln':
                 self.projectName = name
                 return True
