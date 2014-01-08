@@ -46,7 +46,20 @@ void NEON_Matrix4Mul(const float* a, const float* b, float* output );
 // Multiplies a 4x4 matrix (m) with a vector 4 (v), outputting a vector 4
 void NEON_Matrix4Vector4Mul(const float* m, const float* v, float* output);
 
-    
+// the following functions added by Xiao Yang 
+//ref to https://github.com/manucorporat/FORZE2D/blob/master/FORZE/Optimized/neon_support.h
+// copy matrix4 from src to dsts, 
+void NEON_Matrix4Copy(const float * src, float* dst);
+
+//rotate matrix4 by z axis, values[0] = cos(angle), values[1] = sin(angle)
+void NEON_Matrix4RotateZ(float *mat, const float * values);
+
+//translate matrix4, values[0] = x, values[1] = y, values[2] = z;
+void NEON_Matrix4Translate(float* mat, const float* values);
+
+//matrix4 multiply vec2
+void NEON_Matrix4Vec2(const float* m1, const float* v1, float* vOut);
+
 #ifdef __cplusplus
 }
 #endif
