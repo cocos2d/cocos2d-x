@@ -60,13 +60,13 @@ LabelAtlas* LabelAtlas::create()
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    LabelAtlas *pRet = new LabelAtlas();
-    if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
+    LabelAtlas* ret = new LabelAtlas();
+    if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
