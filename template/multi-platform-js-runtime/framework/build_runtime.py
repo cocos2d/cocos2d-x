@@ -80,10 +80,10 @@ class BuildRuntime:
                         
                         msbuildPath = r"C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
                         slnPath = "%s\%s.sln" % (self.projectPath, self.projectName)
-                        buildCommand = "%s %s /t:rebuild /p:configuration=Debug" % (msbuildPath, slnPath)
+                        buildCommand = "%s %s /t:build /p:configuration=Debug" % (msbuildPath, slnPath)
                         
                         os.system(buildCommand)
-                        print buildCommand
+                        #print buildCommand
                 except:
                     pass
                 i += 1
