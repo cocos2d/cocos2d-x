@@ -852,6 +852,7 @@ public:
 
 protected:
     CustomCommand _customCommand;
+    
 };
 
 void MySprite::draw()
@@ -928,7 +929,7 @@ std::string CameraTest2::title() const
 
 std::string CameraTest2::subtitle() const
 {
-    return "Background image should be rotated in 3D";
+    return "Both images should look the same";
 }
 
 void CameraTest2::update(float dt)
@@ -948,6 +949,7 @@ void CameraTest2::update(float dt)
 }
 
 ///
+/// main
 ///
 void CocosNodeTestScene::runThisTest()
 {
