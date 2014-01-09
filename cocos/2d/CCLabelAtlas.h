@@ -86,16 +86,10 @@ public:
 #endif
 
 protected:
-    /**
-     * @js ctor
-     */
     LabelAtlas()
     :_string("")
     {}
-    /**
-     * @js NA
-     * @lua NA
-     */
+
     virtual ~LabelAtlas()
     {
         _string.clear();
