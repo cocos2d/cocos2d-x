@@ -490,6 +490,7 @@ const Rect& Layout::getClippingRect()
 void Layout::onSizeChanged()
 {
     Widget::onSizeChanged();
+    setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
     if (_backGroundImage)
