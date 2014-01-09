@@ -80,13 +80,13 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
         _parentInited = true;
 
         _isPushed = false;
-        _zoomOnTouchDown = true;
 
         // Adjust the background image by default
         setAdjustBackgroundImage(true);
         setPreferredSize(Size::ZERO);
         // Zooming button by default
         _zoomOnTouchDown = true;
+        _scaleRatio = 1.1f;
         
         // Set the default anchor point
         ignoreAnchorPointForPosition(false);
@@ -199,7 +199,7 @@ void ControlButton::setHighlighted(bool enabled)
     needsLayout();
     if( _zoomOnTouchDown )
     {
-        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? 1.1f : 1.0f;
+        float scaleValue = (isHighlighted() && isEnabled() && !isSelected()) ? _scaleRatio : 1.0f;
         Action *zoomAction = ScaleTo::create(0.05f, scaleValue);
         zoomAction->setTag(kZoomActionTag);
         runAction(zoomAction);
