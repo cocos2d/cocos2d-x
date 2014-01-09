@@ -989,6 +989,8 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
             }
         }
     }
+
+    CC_SAFE_RELEASE(ccbReader);
     return ccbFileNode;
 }
 
