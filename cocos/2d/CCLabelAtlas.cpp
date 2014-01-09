@@ -43,6 +43,21 @@ NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
 
+LabelAtlas* LabelAtlas::create()
+{
+    LabelAtlas* ret = new LabelAtlas();
+    if (ret)
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(ret);
+    }
+    
+    return ret;
+}
+
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     LabelAtlas *pRet = new LabelAtlas();
