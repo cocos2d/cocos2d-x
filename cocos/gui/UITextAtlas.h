@@ -83,7 +83,6 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    // UICCLabelAtlas* _labelAtlasRenderer;
     LabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
