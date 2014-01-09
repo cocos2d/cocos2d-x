@@ -183,9 +183,7 @@ void TextureCache::loadImage()
                    break;
            }
            _imageInfoMutex.unlock();
-           if(infoSize == 0)
-               generateImage = true;
-           else if(pos < infoSize)
+           if(infoSize == 0 || pos < infoSize)
                generateImage = true;
         }
 
