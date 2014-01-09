@@ -3,7 +3,7 @@ env:
   matrix:
   - GEN_JSB=YES
   - PLATFORM=linux DEBUG=1
-  - PLATFORM=linux DEBUG=1 CLANG=1
+  - PLATFORM=linux DEBUG=1 CC=/usr/bin/clang CXX=/usr/bin/clang++
   # Since switching to C++11 only the ARM version of the nactive client
   # port currently builds.  TODO(sbc): Re-enable all architectures.
   # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
