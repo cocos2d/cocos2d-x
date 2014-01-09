@@ -97,7 +97,7 @@ ScrollView* ScrollView::create()
 void ScrollView::onEnter()
 {
     Layout::onEnter();
-    setUpdateEnabled(true);
+    scheduleUpdate();
 }
 
 bool ScrollView::init()
@@ -1455,11 +1455,6 @@ void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
     handleReleaseLogic(touch->getLocation());
-}
-
-void ScrollView::onTouchLongClicked(const Point &touchPoint)
-{
-    
 }
 
 void ScrollView::update(float dt)
