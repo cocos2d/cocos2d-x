@@ -1,7 +1,16 @@
+if(WIN32)
+  set(PLATFORM_SRC
+    WebSocket.cpp
+  )
+  set(PLATFORM_LINK
+    websockets
+  )
+endif()
+
 set(NETWORK_SRC
   HttpClient.cpp
   SocketIO.cpp
-  WebSocket.cpp
+  ${PLATFORM_SRC}
 )
 
 add_library(network STATIC
@@ -10,7 +19,7 @@ add_library(network STATIC
 
 target_link_libraries(network
   curl
-  websockets
+  ${PLATFORM_LINK}
 )
 
 set_target_properties(network
