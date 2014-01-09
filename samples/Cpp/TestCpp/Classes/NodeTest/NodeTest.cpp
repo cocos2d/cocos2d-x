@@ -25,6 +25,7 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
     CL(Test4),
@@ -827,6 +828,127 @@ std::string NodeNonOpaqueTest::subtitle() const
     return "Node rendered with GL_BLEND enabled";
 }
 
+//------------------------------------------------------------------
+//
+// CameraTest2
+//
+//------------------------------------------------------------------
+
+class MySprite : public Sprite
+{
+public:
+    static MySprite* create(const std::string &spritefilename)
+    {
+        auto sprite = new MySprite;
+        sprite->initWithFile(spritefilename);
+        sprite->autorelease();
+
+        auto shader = CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        sprite->setShaderProgram(shader);
+        return sprite;
+    }
+    virtual void draw() override;
+    void onDraw();
+
+protected:
+    CustomCommand _customCommand;
+};
+
+void MySprite::draw()
+{
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void MySprite::onDraw()
+{
+    CC_NODE_DRAW_SETUP();
+
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+
+    GL::bindTexture2D( _texture->getName() );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+
+#define kQuadSize sizeof(_quad.bl)
+    long offset = (long)&_quad;
+
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    CHECK_GL_ERROR_DEBUG();
+    CC_INCREMENT_GL_DRAWS(1);
+}
+void CameraTest2::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setDepthTest(true);
+}
+
+void CameraTest2::onExit()
+{
+    Director::getInstance()->setProjection(Director::Projection::_2D);
+    TestCocosNodeDemo::onExit();
+}
+
+CameraTest2::CameraTest2()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    _sprite1 = MySprite::create(s_back3);
+    addChild( _sprite1 );
+    _sprite1->setPosition( Point(1*s.width/4, s.height/2) );
+    _sprite1->setScale(0.5);
+
+    _sprite2 = Sprite::create(s_back3);
+    addChild( _sprite2 );
+    _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
+    _sprite2->setScale(0.5);
+
+    scheduleUpdate();
+}
+
+std::string CameraTest2::title() const
+{
+    return "Camera Test 2";
+}
+
+std::string CameraTest2::subtitle() const
+{
+    return "Background image should be rotated in 3D";
+}
+
+void CameraTest2::update(float dt)
+{
+    kmVec3 eye, center, up;
+
+    kmVec3Fill(&eye, 150, 0, 200);
+    kmVec3Fill(&center, 0, 0, 0);
+    kmVec3Fill(&up, 0, 1, 0);
+
+
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+
+    _sprite1->setAdditionalTransform(lookupMatrix);
+    _sprite2->setAdditionalTransform(lookupMatrix);
+}
+
+///
+///
 void CocosNodeTestScene::runThisTest()
 {
     auto layer = nextCocosNodeAction();
