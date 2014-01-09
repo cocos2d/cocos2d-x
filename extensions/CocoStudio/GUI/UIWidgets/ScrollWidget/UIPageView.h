@@ -159,6 +159,7 @@ public:
      */
     virtual std::string getDescription() const;
 
+    virtual void onEnter();
 protected:
     virtual void addChild(CCNode * child);
     virtual void addChild(CCNode * child, int zOrder);

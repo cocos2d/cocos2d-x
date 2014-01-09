@@ -107,8 +107,6 @@ public:
     TextField();
     virtual ~TextField();
     static TextField* create();
-    virtual bool init();
-    virtual void initRenderer();
     void setTouchSize(const CCSize &size);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
@@ -145,7 +143,9 @@ public:
     virtual const CCSize& getContentSize() const;
     virtual CCNode* getVirtualRenderer();
     void attachWithIME();
+    virtual void onEnter();
 protected:
+    virtual void initRenderer();
     // event
     void attachWithIMEEvent();
     void detachWithIMEEvent();

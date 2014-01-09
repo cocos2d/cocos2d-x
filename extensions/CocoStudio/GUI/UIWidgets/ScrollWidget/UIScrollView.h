@@ -313,6 +313,8 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const;
+    
+    virtual void onEnter();
 protected:
     virtual bool init();
     virtual void initRenderer();
