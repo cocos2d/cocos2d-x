@@ -705,6 +705,9 @@ Developers:
     daltomi
         Fixed a typo in Director class.
         Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
+        
+    v1ctor
+        ControlSlider supports setting selected thumb sprite.
     
 Retired Core Developers:
     WenSheng Yang
