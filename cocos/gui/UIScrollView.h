@@ -314,6 +314,8 @@ public:
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+    
+    virtual void onEnter() override;
 protected:
     virtual bool init() override;
     virtual void initRenderer() override;
