@@ -30,52 +30,6 @@ namespace gui {
     
 static const int LABELATLAS_RENDERER_Z = (-1);
 
-
-UICCLabelAtlas::UICCLabelAtlas()
-{
-    
-}
-
-UICCLabelAtlas::~UICCLabelAtlas()
-{
-    
-}
-
-UICCLabelAtlas* UICCLabelAtlas::create()
-{
-    UICCLabelAtlas *pRet = new UICCLabelAtlas();
-    if(pRet)
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    
-    return nullptr;
-}
-
-void UICCLabelAtlas::setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
-{
-    initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap);
-}
-
-void UICCLabelAtlas::setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap)
-{
-    initWithString(string, texture, itemWidth, itemHeight, startCharMap);
-}
-
-void UICCLabelAtlas::draw()
-{
-    if (!_textureAtlas)
-    {
-        return;
-    }
-    
-    AtlasNode::draw();
-}
-
-
-
 TextAtlas::TextAtlas():
 _labelAtlasRenderer(nullptr),
 _stringValue(""),
@@ -84,7 +38,6 @@ _itemWidth(0),
 _itemHeight(0),
 _startCharMap("")
 {
-    
 }
 
 TextAtlas::~TextAtlas()
@@ -106,7 +59,7 @@ TextAtlas* TextAtlas::create()
 
 void TextAtlas::initRenderer()
 {
-    _labelAtlasRenderer = UICCLabelAtlas::create();
+    _labelAtlasRenderer = LabelAtlas::create();
     Node::addChild(_labelAtlasRenderer, LABELATLAS_RENDERER_Z, -1);
 }
 
@@ -117,7 +70,7 @@ void TextAtlas::setProperty(const std::string& stringValue, const std::string& c
     _itemWidth = itemWidth;
     _itemHeight = itemHeight;
     _startCharMap = startCharMap;
-    _labelAtlasRenderer->setProperty(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
+    _labelAtlasRenderer->initWithString(stringValue, charMapFile, itemWidth, itemHeight, (int)(startCharMap[0]));
     updateAnchorPoint();
     labelAtlasScaleChangedWithSize();
 }
