@@ -1,7 +1,7 @@
 #include "Base.h"
 #include "C3DSampler.h"
 #include "C3DTexture.h"
-#include "C3DStream.h"
+#include "Stream.h"
 #include "ElementNode.h"
 
 NS_CC_BEGIN

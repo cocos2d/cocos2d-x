@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "C3DOBB.h"
-#include "math/Quaternion.h"
+#include "Quaternion.h"
 #include "cocos2d.h"
 
 namespace cocos2d

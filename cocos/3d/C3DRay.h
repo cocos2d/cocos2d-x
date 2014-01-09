@@ -1,7 +1,7 @@
 #ifndef RAY_H_
 #define RAY_H_
 
-#include "math/Vector3.h"
+#include "Vector3.h"
 
 namespace cocos2d
 {

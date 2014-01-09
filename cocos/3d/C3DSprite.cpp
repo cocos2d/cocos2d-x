@@ -1,5 +1,5 @@
 #include "Base.h"
-#include "math/Vector3.h"
+#include "Vector3.h"
 #include "C3DSprite.h"
 
 #include "StringTool.h"

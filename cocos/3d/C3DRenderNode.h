@@ -3,10 +3,9 @@
 
 #include <map>
 #include <string>
-#include "EnumDef.h"
 
-#include "math/Matrix.h"
-#include "math/Vector3.h"
+#include "Matrix.h"
+#include "Vector3.h"
 
 #include "C3DNode.h"
 #include "cocos2d.h"

@@ -5,7 +5,7 @@
 
 namespace cocos2d
 {
-class C3DElementNode;
+class ElementNode;
 class C3DResourcePool;
 
 /**
@@ -42,14 +42,14 @@ public:
     *
     * @param nodes elementnode which contains the resource info.
     */
-    virtual bool load(C3DElementNode* node);
+    virtual bool load(ElementNode* node);
 
     /**
     * save the resource info into the elementnode
     *
     * @param nodes elementnode which contains the renderstate info.
     */
-    virtual bool save(C3DElementNode* node);
+    virtual bool save(ElementNode* node);
 
     virtual void unload(){};
 

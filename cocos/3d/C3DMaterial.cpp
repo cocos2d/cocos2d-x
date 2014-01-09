@@ -1,5 +1,5 @@
 #include "C3DMaterial.h"
-#include "C3DStream.h"
+#include "Stream.h"
 #include "C3DPass.h"
 #include "ElementNode.h"
 #include "C3DTexture.h"
@@ -7,8 +7,8 @@
 #include "C3DSampler.h"
 #include "MaterialParameter.h"
 #include "C3DEffect.h"
-#include "math/Vector3.h"
-#include "math/Vector4.h"
+#include "Vector3.h"
+#include "Vector4.h"
 
 
 NS_CC_BEGIN

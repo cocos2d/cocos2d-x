@@ -4,10 +4,10 @@
 #include "cocos3d.h"
 #include "cocos2d.h"
 
-#include "base_nodes/CCNode.h"
-#include "touch_dispatcher/CCTouchDelegateProtocol.h"
+#include "CCNode.h"
+//#include "touch_dispatcher/CCTouchDelegateProtocol.h"
 
-#include "EnumDef.h"
+//#include "EnumDef.h"
 #include <string>
 
 #include "C3DRenderState.h"
@@ -43,10 +43,16 @@ public:
     virtual void onExit();
 
     // optional
-    virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
-    virtual void ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
-    virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
-    virtual void ccTouchesCancelled(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
+	virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event){};
+	virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event){};
+	virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event){};
+	virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event){};
+
+
+   // virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
+  //  virtual void ccTouchesMoved(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
+  //  virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
+  //  virtual void ccTouchesCancelled(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent){};
 
     enum State //The game states.
     {
@@ -95,7 +101,7 @@ public:
      * 
      * @return The game main scene.
      */
-    cocos3d::C3DScene* getScene() { return _scene; };
+    cocos2d::C3DScene* getScene3D() { return _scene; };
 
     void showBoundingBox(bool bShow);
 

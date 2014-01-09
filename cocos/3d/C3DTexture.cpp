@@ -1,6 +1,6 @@
 #include "Base.h"
 #include "C3DTexture.h"
-#include "C3DStream.h"
+#include "Stream.h"
 #include "cocos2d.h"
 #include "CCTexture2D.h"
 #include "CCTextureCache.h"
