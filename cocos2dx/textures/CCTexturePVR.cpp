@@ -635,7 +635,7 @@ bool CCTexturePVR::initWithContentsOfFile(const char* path)
         pvrdata = CCFileUtils::sharedFileUtils()->getFileData(path, "rb", (unsigned long *)(&pvrlen));
     }
     
-    if (pvrlen < 0)
+    if (pvrlen <= 0)
     {
         this->release();
         return false;
