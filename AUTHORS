@@ -707,7 +707,8 @@ Developers:
         Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
         
     v1ctor
-        ControlSlider supports setting selected thumb sprite.
+        ControlSlider supports to set selected thumb sprite.
+        ControlButton supports to set scale ratio of touchdown state
     
 Retired Core Developers:
     WenSheng Yang
