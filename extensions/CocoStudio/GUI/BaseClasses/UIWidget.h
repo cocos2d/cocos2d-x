@@ -610,16 +610,6 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /**
-     * Schedules the "update" method.
-     */
-    void setUpdateEnabled(bool enable);
-    
-    /**
-     * is the "update" method scheduled.
-     */
-    bool isUpdateEnabled();
-    
-    /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
@@ -677,7 +667,6 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    bool _updateEnabled;      ///< is "update" method scheduled
     CCPoint _touchStartPos;    ///< touch began point
     CCPoint _touchMovePos;     ///< touch moved point
     CCPoint _touchEndPos;      ///< touch ended point

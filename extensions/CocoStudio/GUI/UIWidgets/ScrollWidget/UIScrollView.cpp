@@ -97,7 +97,7 @@ ScrollView* ScrollView::create()
 void ScrollView::onEnter()
 {
     Layout::onEnter();
-    setUpdateEnabled(true);
+    scheduleUpdate();
 }
 
 bool ScrollView::init()

@@ -72,7 +72,7 @@ PageView* PageView::create()
 void PageView::onEnter()
 {
     Layout::onEnter();
-    setUpdateEnabled(true);
+    scheduleUpdate();
 }
 
 bool PageView::init()
