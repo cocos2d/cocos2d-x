@@ -58,14 +58,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     
-    sc->start();
+#ifdef ISRUNTIME
+	RuntimeConfig::getInstance()->setSearchPath();
+#endif
 	
+	sc->start();
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
 #endif
-
+  
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->setSearchPath();
 	RuntimeConfig::getInstance()->waitConnect();
 #endif
 
