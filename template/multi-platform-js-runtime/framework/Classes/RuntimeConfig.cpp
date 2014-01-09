@@ -43,8 +43,10 @@ void RuntimeConfig::setSearchPath()
 		extern std::string GetCurAppPath(void);
 		string searchPath = GetCurAppPath();
 		searchPath += "/../..";
+		string searchPathRes = GetCurAppPath();
+		searchPathRes += "/HelloJavascriptRes";
 		FileUtils::getInstance()->addSearchPath(searchPath.c_str());
-		FileUtils::getInstance()->addSearchPath("HelloJavascriptRes");
+		FileUtils::getInstance()->addSearchPath(searchPathRes.c_str());
 #endif
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
