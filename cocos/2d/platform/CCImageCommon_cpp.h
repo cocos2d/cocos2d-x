@@ -376,7 +376,7 @@ namespace
 //////////////////////////////////////////////////////////////////////////
 
 Image::Image()
-: _data(0)
+: _data(nullptr)
 , _dataLen(0)
 , _width(0)
 , _height(0)
