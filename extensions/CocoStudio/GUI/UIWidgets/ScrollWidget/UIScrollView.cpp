@@ -1452,11 +1452,6 @@ void ScrollView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent)
     handleReleaseLogic(touch->getLocation());
 }
 
-void ScrollView::onTouchLongClicked(const CCPoint &touchPoint)
-{
-    
-}
-
 void ScrollView::update(float dt)
 {
     if (_autoScroll)

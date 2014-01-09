@@ -115,8 +115,8 @@ void Widget::onEnter()
 
 void Widget::onExit()
 {
-    CCNodeRGBA::onExit();
     unscheduleUpdate();
+    CCNodeRGBA::onExit();
 }
     
 void Widget::visit()
@@ -789,11 +789,6 @@ void Widget::onTouchCancelled(CCTouch *touch, CCEvent *unused_event)
     cancelUpEvent();
 }
 
-void Widget::onTouchLongClicked(const CCPoint &touchPoint)
-{
-    longClickEvent();
-}
-
 void Widget::pushDownEvent()
 {
     if (_touchEventListener && _touchEventSelector)
@@ -824,11 +819,6 @@ void Widget::cancelUpEvent()
     {
         (_touchEventListener->*_touchEventSelector)(this,TOUCH_EVENT_CANCELED);
     }
-}
-
-void Widget::longClickEvent()
-{
-    
 }
 
 void Widget::addTouchEventListener(CCObject *target, SEL_TouchEvent selector)
