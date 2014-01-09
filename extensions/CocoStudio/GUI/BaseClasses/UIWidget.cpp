@@ -37,7 +37,6 @@ _touchEnabled(false),
 _touchPassedEnabled(false),
 _focus(false),
 _brightStyle(BRIGHT_NONE),
-_updateEnabled(false),
 _touchStartPos(CCPointZero),
 _touchMovePos(CCPointZero),
 _touchEndPos(CCPointZero),
@@ -117,6 +116,7 @@ void Widget::onEnter()
 void Widget::onExit()
 {
     CCNodeRGBA::onExit();
+    unscheduleUpdate();
 }
     
 void Widget::visit()
@@ -643,28 +643,6 @@ bool Widget::isTouchEnabled() const
     return _touchEnabled;
 }
 
-void Widget::setUpdateEnabled(bool enable)
-{
-    if (enable == _updateEnabled)
-    {
-        return;
-    }
-    _updateEnabled = enable;
-    if (enable)
-    {
-        scheduleUpdate();
-    }
-    else
-    {
-        unscheduleUpdate();
-    }
-}
-
-bool Widget::isUpdateEnabled()
-{
-    return _updateEnabled;
-}
-
 bool Widget::isFocused() const
 {
     return _focus;
@@ -750,11 +728,12 @@ void Widget::didNotSelectSelf()
 
 bool Widget::onTouchBegan(CCTouch *touch, CCEvent *unused_event)
 {
+    _hitted = false;
     _touchStartPos = touch->getLocation();
-    _hitted = isEnabled()
-            & isTouchEnabled()
-            & hitTest(_touchStartPos)
-            & clippingParentAreaContainPoint(_touchStartPos);
+    if (isEnabled() && isTouchEnabled() && hitTest(_touchStartPos) && clippingParentAreaContainPoint(_touchStartPos))
+    {
+        _hitted = true;
+    }
     if (!_hitted)
     {
         return false;
@@ -1089,7 +1068,6 @@ void Widget::copyProperties(Widget *widget)
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
     setZOrder(widget->getZOrder());
-    setUpdateEnabled(widget->isUpdateEnabled());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());
