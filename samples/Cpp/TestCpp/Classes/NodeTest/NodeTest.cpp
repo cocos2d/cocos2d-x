@@ -25,6 +25,7 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(CameraTest1),
     CL(CameraTest2),
     CL(CameraCenterTest),
     CL(Test2),
@@ -34,6 +35,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(StressTest1),
     CL(StressTest2),
     CL(NodeToWorld),
+    CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
     CL(CameraZoomTest),
@@ -494,6 +496,56 @@ std::string NodeToWorld::title() const
 
 //------------------------------------------------------------------
 //
+// NodeToWorld3D
+//
+//------------------------------------------------------------------
+NodeToWorld3D::NodeToWorld3D()
+{
+    //
+    // This code tests that nodeToParent works OK:
+    //  - It tests different anchor Points
+    //  - It tests different children anchor points
+
+    Size s = Director::getInstance()->getWinSize();
+    auto parent = Node::create();
+    parent->setContentSize(s);
+    parent->setAnchorPoint(Point(0.5, 0.5));
+    parent->setPosition(s.width/2, s.height/2);
+    this->addChild(parent);
+
+    auto back = Sprite::create(s_back3);
+    parent->addChild( back, -10);
+    back->setAnchorPoint( Point(0,0) );
+    auto backSize = back->getContentSize();
+
+    auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
+    auto menu = Menu::create(item, NULL);
+    menu->alignItemsVertically();
+    menu->setPosition( Point(backSize.width/2, backSize.height/2));
+    back->addChild(menu);
+
+    auto rot = RotateBy::create(5, 360);
+    auto fe = RepeatForever::create( rot);
+    item->runAction( fe );
+
+    auto move = MoveBy::create(3, Point(200,0));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create( move, move_back, NULL);
+    auto fe2 = RepeatForever::create(seq);
+    back->runAction(fe2);
+
+    auto orbit = OrbitCamera::create(10, 0, 1, 0, 360, 0, 90);
+    parent->runAction(orbit);
+}
+
+std::string NodeToWorld3D::title() const
+{
+    return "nodeToParent transform in 3D";
+}
+
+
+//------------------------------------------------------------------
+//
 // CameraOrbitTest
 //
 //------------------------------------------------------------------
@@ -828,12 +880,10 @@ std::string NodeNonOpaqueTest::subtitle() const
     return "Node rendered with GL_BLEND enabled";
 }
 
-//------------------------------------------------------------------
-//
-// CameraTest2
-//
-//------------------------------------------------------------------
 
+//
+// MySprite: Used by CameraTest1 and CameraTest2
+//
 class MySprite : public Sprite
 {
 public:
@@ -852,6 +902,7 @@ public:
 
 protected:
     CustomCommand _customCommand;
+
 };
 
 void MySprite::draw()
@@ -891,6 +942,58 @@ void MySprite::onDraw()
     CHECK_GL_ERROR_DEBUG();
     CC_INCREMENT_GL_DRAWS(1);
 }
+//------------------------------------------------------------------
+//
+// CameraTest1
+//
+//------------------------------------------------------------------
+
+void CameraTest1::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setDepthTest(true);
+}
+
+void CameraTest1::onExit()
+{
+    Director::getInstance()->setProjection(Director::Projection::_2D);
+    TestCocosNodeDemo::onExit();
+}
+
+CameraTest1::CameraTest1()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    _sprite1 = MySprite::create(s_back3);
+    addChild( _sprite1 );
+    _sprite1->setPosition( Point(1*s.width/4, s.height/2) );
+    _sprite1->setScale(0.5);
+
+    _sprite2 = Sprite::create(s_back3);
+    addChild( _sprite2 );
+    _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
+    _sprite2->setScale(0.5);
+
+    auto camera = OrbitCamera::create(10, 0, 1, 0, 360, 0, 0);
+    _sprite1->runAction( camera );
+    _sprite2->runAction( camera->clone() );
+}
+
+std::string CameraTest1::title() const
+{
+    return "Camera Test 1";
+}
+
+std::string CameraTest1::subtitle() const
+{
+    return "Both images should rotate with a 3D effect";
+}
+//------------------------------------------------------------------
+//
+// CameraTest2
+//
+//------------------------------------------------------------------
 void CameraTest2::onEnter()
 {
     TestCocosNodeDemo::onEnter();
@@ -928,7 +1031,7 @@ std::string CameraTest2::title() const
 
 std::string CameraTest2::subtitle() const
 {
-    return "Background image should be rotated in 3D";
+    return "Both images should look the same";
 }
 
 void CameraTest2::update(float dt)
@@ -948,6 +1051,7 @@ void CameraTest2::update(float dt)
 }
 
 ///
+/// main
 ///
 void CocosNodeTestScene::runThisTest()
 {
