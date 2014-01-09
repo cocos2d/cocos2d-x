@@ -519,6 +519,7 @@ Developers:
         Correcting the type detecting order for Lua CCBProxy::getNodeTypeName.
         Casting variables to their own type, and print warning info if no corresponding lua callback function instead of crash.
         fix of WebSocket url parse error for 'ws://domain.com/websocket' pattern.
+        Fixed a bug that Websocket doesn't support send/receive data which larger than 4096 bytes.
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
@@ -707,7 +708,8 @@ Developers:
         Removed an unnecessary boolean flag in CCFontAtlasCache.cpp.
         
     v1ctor
-        ControlSlider supports setting selected thumb sprite.
+        ControlSlider supports to set selected thumb sprite.
+        ControlButton supports to set scale ratio of touchdown state
     
 Retired Core Developers:
     WenSheng Yang
