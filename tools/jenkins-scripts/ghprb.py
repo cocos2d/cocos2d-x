@@ -38,9 +38,8 @@ def main():
     action = payload['action']
     print 'action: ' + action
 
-
-
     pr = payload['pull_request']
+    
     url = pr['html_url']
     print "url:" + url
     pr_desc = '<h3><a href='+ url + '> pr#' + str(pr_num) + ' is '+ action +'</a></h3>'
@@ -61,7 +60,18 @@ def main():
     if((action != 'opened') and (action != 'synchronize')):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
+  
+    r = requests.get(pr['url']+"/commits")
+    commits = r.json()
+    last_commit = commits[len(commits)-1]
+    message = last_commit['commit']['message']
 
+    pattern = re.compile("\[ci(\s+)skip\]", re.I)
+    result = pattern.search(message)
+    if result is not None:
+        print 'skip build for pull request #' + str(pr_num)
+        return(0)
+    
     data = {"state":"pending", "target_url":target_url}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
     Headers = {"Authorization":"token " + access_token} 
@@ -79,6 +89,7 @@ def main():
     print "git clean -xdf"
     os.system("git clean -xdf")
     
+   
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     os.system(git_fetch_pr)
@@ -90,6 +101,10 @@ def main():
     #update submodule
     git_update_submodule = "git submodule update --init --force"
     os.system(git_update_submodule)
+
+    # Generate binding glue codes
+    if(platform.system() == 'Darwin'):
+      os.system("tools/jenkins-scripts/gen_jsb.sh")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']

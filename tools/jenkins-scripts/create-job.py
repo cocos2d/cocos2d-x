@@ -19,7 +19,7 @@ r = requests.get(api_get_pr)
 pr = r.json()
 
 #forge a payload
-payload = {"action":"open","number":"","pull_request":""}
+payload = {"action":"opened","number":"","pull_request":""}
 payload['number']=pr_num
 payload['pull_request']=pr
 
