@@ -79,6 +79,7 @@ def main():
     print "git clean -xdf"
     os.system("git clean -xdf")
     
+   
     #fetch pull request to local repo
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     os.system(git_fetch_pr)
@@ -90,6 +91,10 @@ def main():
     #update submodule
     git_update_submodule = "git submodule update --init --force"
     os.system(git_update_submodule)
+
+    # Generate binding glue codes
+    if(platform.system() == 'Darwin'):
+      os.system("tools/jenkins-scripts/gen_jsb.sh")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
