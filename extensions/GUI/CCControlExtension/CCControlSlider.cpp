@@ -109,7 +109,7 @@ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressS
     Sprite* selectedThumbSprite = Sprite::createWithTexture(thumbSprite->getTexture(),
         thumbSprite->getTextureRect());
     selectedThumbSprite->setColor(Color3B::GRAY);
-    this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
+    return this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
 }
 
  bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
