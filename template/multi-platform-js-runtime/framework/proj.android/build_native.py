@@ -53,7 +53,7 @@ def select_toolchain_version():
 
 def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode):
 
-    ndk_path = os.path.join(ndk_root, "ndk-build")
+    ndk_path = os.path.join(ndk_root, "ndk-build -j 4")
 
     # windows should use ";" to seperate module paths
     platform = sys.platform
