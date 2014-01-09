@@ -391,10 +391,7 @@ Image::Image()
 
 Image::~Image()
 {
-    if (_data != nullptr)
-    {
-        free(_data);
-    }
+    CC_SAFE_FREE(_data);
 }
 
 bool Image::initWithImageFile(const std::string& path)
@@ -1539,7 +1536,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         
     }while(false);
     
-    if (!ret)
+    if (ret)
     {
         const unsigned char tgaSuffix[] = ".tga";
         for(int i = 0; i < 4; ++i)
@@ -1556,6 +1553,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         if (tgaData->imageData != nullptr)
         {
             free(tgaData->imageData);
+            _data = nullptr;
         }
     }
     
