@@ -348,9 +348,8 @@ bool MenuItemAtlasFont::initWithString(const std::string& value, const std::stri
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
     CCASSERT( value.size() != 0, "value length must be greater than 0");
-    LabelAtlas *label = new LabelAtlas();
+    LabelAtlas *label = LabelAtlas::create();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
-    label->autorelease();
     if (MenuItemLabel::initWithLabel(label, callback))
     {
         // do something ?
