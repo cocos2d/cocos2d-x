@@ -148,6 +148,24 @@ protected:
     CameraCenterTest();
 };
 
+class CameraTest2 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(CameraTest2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    virtual void update(float dt) override;
+    CameraTest2();
+
+    Sprite *_sprite1;
+    Sprite *_sprite2;
+
+};
+
 class ConvertToNode : public TestCocosNodeDemo
 {
 public:
