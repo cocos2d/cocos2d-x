@@ -356,6 +356,7 @@ Developers:
 
     ThePickleMan
         Adding 'rotationIsDir' property to ParticleSystem.
+        DrawNode supports to draw triangle, quad bezier, cubic bezier.
 
     Jianghua (jxhgzs)
         Adding an additional transform for CCNode.
