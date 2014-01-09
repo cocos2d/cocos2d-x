@@ -102,9 +102,7 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
     srcaddr.sin_family = af;
     if (WSAAddressToString((struct sockaddr*) &srcaddr, sizeof(struct sockaddr_in), 0, dst, (LPDWORD) &cnt) != 0)
     {
-        DWORD rv = WSAGetLastError();
-        printf("WSAAddressToString() : %d\n",rv);
-        return NULL;
+        return nullptr;
     }
     return dst;
 }
