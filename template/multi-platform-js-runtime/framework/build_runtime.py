@@ -37,10 +37,15 @@ class BuildRuntime:
     
     def __init__(self, platform):
         self.projectPath = None
-        if platform == 'win32':
-            self.projectPath = os.path.abspath(os.path.dirname(__file__)) + "\proj.win32"
         self.projectName = None
         self.runtimePlatform = platform
+        
+        scriptPath = os.path.abspath(os.path.dirname(__file__))
+        if platform == 'win32':
+            self.projectPath = os.path.join(scriptPath, "proj.win32")
+        elif platform == 'android':
+            self.projectPath = os.path.join(scriptPath, "proj.android")
+        
     
     def buildRuntime(self):
         if self.runtimePlatform == 'win32':
@@ -49,7 +54,9 @@ class BuildRuntime:
             self.androidRuntime()
             
     def androidRuntime(self):
-        buildCommand = "python -p 16"
+        buildNative = os.path.join(self.projectPath, "build_native.py")
+        buildCommand = "python %s -p 16" % (buildNative)
+        #print buildCommand
         os.system(buildCommand)
     
     def win32Runtime(self):
