@@ -62,9 +62,9 @@ public:
      */
     struct Data
     {
-        Data():bytes(NULL), len(0), isBinary(false){}
+        Data():bytes(nullptr), len(0), issued(0), isBinary(false){}
         char* bytes;
-        ssize_t len;
+        ssize_t len, issued;
         bool isBinary;
     };
     
@@ -112,7 +112,7 @@ public:
      */
     bool init(const Delegate& delegate,
               const std::string& url,
-              const std::vector<std::string>* protocols = NULL);
+              const std::vector<std::string>* protocols = nullptr);
     
     /**
      *  @brief Sends string data to websocket server.
@@ -153,6 +153,10 @@ private:
     unsigned int _port;
     std::string  _path;
     
+    size_t _pendingFrameDataLen;
+    unsigned int _currentDataLen;
+    char *_currentData;
+
     friend class WsThreadHelper;
     WsThreadHelper* _wsHelper;
     
