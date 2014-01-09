@@ -30,32 +30,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace gui {
-
-/**
- *   @js NA
- *   @lua NA
- */
-class UICCLabelAtlas : public LabelAtlas
-{
-public:
-    /**
-     * Default constructor
-     */
-    UICCLabelAtlas();
     
-    /**
-     * Default destructor
-     */
-    virtual ~UICCLabelAtlas();
-    
-    /**
-     * Allocates and initializes.
-     */
-    static UICCLabelAtlas* create();
-    void setProperty(const std::string& string, const std::string& charMapFile, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    void setProperty(const std::string& string, Texture2D *texture, unsigned int itemWidth, unsigned int itemHeight, unsigned int startCharMap);
-    virtual void draw(void) override;
-};
 /**
  *   @js NA
  *   @lua NA
@@ -108,7 +83,7 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
-    UICCLabelAtlas* _labelAtlasRenderer;
+    LabelAtlas* _labelAtlasRenderer;
     std::string _stringValue;
     std::string _charMapFileName;
     int _itemWidth;
