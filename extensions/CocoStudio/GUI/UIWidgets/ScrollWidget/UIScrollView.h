@@ -277,10 +277,7 @@ public:
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
-    
-    //override "onTouchLongClicked" method of widget.
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
+        
     virtual void update(float dt);
     
     void setBounceEnabled(bool enabled);

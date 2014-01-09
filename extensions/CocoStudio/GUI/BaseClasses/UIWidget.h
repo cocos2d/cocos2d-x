@@ -551,13 +551,6 @@ public:
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     /**
-     * A call back function called when widget is selected, and on touch long clicked.
-     *
-     * @param touch point
-     */
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
-    /**
      * Sets a LayoutParameter to widget. 
      *
      * @see LayoutParameter
@@ -653,7 +646,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void longClickEvent();
     void updateAnchorPoint();
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
