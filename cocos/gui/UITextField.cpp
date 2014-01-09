@@ -304,7 +304,7 @@ TextField* TextField::create()
 void TextField::onEnter()
 {
     Widget::onEnter();
-    setUpdateEnabled(true);
+    scheduleUpdate();
 }
 
 void TextField::initRenderer()

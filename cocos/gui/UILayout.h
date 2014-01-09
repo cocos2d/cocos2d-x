@@ -217,6 +217,8 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
+    
+    virtual bool hitTest(const Point &pt);
 protected:
     //override "init" method of widget.
     virtual bool init() override;

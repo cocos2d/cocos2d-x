@@ -279,9 +279,6 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
-    //override "onTouchLongClicked" method of widget.
-    virtual void onTouchLongClicked(const Point &touchPoint) override;
-    
     virtual void update(float dt) override;
     
     void setBounceEnabled(bool enabled);
