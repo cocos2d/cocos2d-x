@@ -102,18 +102,22 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
         if (data.isBinary) {
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != nHandler) {
-                SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
+            if (0 != handler) {
+                SendBinaryMessageToLua(handler, (const unsigned char*)data.bytes, data.len);
             }
         }
         else{
                 
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != nHandler) {
-                    CommonScriptData commonData(nHandler,data.bytes);
-                    ScriptEvent event(kCommonEvent,(void*)&commonData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
+            if (0 != handler)
+            {
+                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                if (nullptr != stack)
+                {
+                    stack->pushString(data.bytes,data.len);
+                    stack->executeFunctionByHandler(handler,  1);
+                }
             }
         }
     }
