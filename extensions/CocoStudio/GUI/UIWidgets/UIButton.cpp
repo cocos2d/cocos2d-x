@@ -366,8 +366,7 @@ void Button::onPressStateChangedToNormal()
     else
     {
         _buttonNormalRenderer->stopAllActions();
-        CCAction *zoomAction = CCScaleTo::create(0.05f, _normalTextureScaleXInSize, _normalTextureScaleYInSize);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize, _normalTextureScaleYInSize);
     }
 }
 
@@ -393,8 +392,7 @@ void Button::onPressStateChangedToPressed()
         _buttonClickedRenderer->setVisible(true);
         _buttonDisableRenderer->setVisible(false);
         _buttonNormalRenderer->stopAllActions();
-        CCAction *zoomAction = CCScaleTo::create(0.05f, _pressedTextureScaleXInSize + 0.1f, _pressedTextureScaleYInSize + 0.1f);
-        _buttonNormalRenderer->runAction(zoomAction);
+        _buttonNormalRenderer->setScale(_normalTextureScaleXInSize + 0.1f, _normalTextureScaleYInSize + 0.1f);
     }
 }
 
