@@ -558,12 +558,16 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     {
         label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
     }
-    bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
-    bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
-    if (aw && ah)
+    bool handleDimensions = DICTOOL->getBooleanValue_json(options, "handleDimensions");
+    if (handleDimensions)
     {
-        Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
-        label->setTextAreaSize(size);
+        bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
+        bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
+        if (aw && ah)
+        {
+            Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
+            label->setTextAreaSize(size);
+        }
     }
     bool ha = DICTOOL->checkObjectExist_json(options, "hAlignment");
     if (ha)
@@ -1449,12 +1453,16 @@ void WidgetPropertiesReader0300::setPropsForLabelFromJsonDictionary(Widget*widge
     {
         label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
     }
-    bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
-    bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
-    if (aw && ah)
+    bool handleDimensions = DICTOOL->getBooleanValue_json(options, "handleDimensions");
+    if (handleDimensions)
     {
-        Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
-        label->setTextAreaSize(size);
+        bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
+        bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
+        if (aw && ah)
+        {
+            Size size = Size(DICTOOL->getFloatValue_json(options, "areaWidth"),DICTOOL->getFloatValue_json(options,"areaHeight"));
+            label->setTextAreaSize(size);
+        }
     }
     bool ha = DICTOOL->checkObjectExist_json(options, "hAlignment");
     if (ha)
