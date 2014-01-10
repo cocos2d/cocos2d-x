@@ -633,11 +633,41 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
     // Clean up header map. New request, new headers!
     http_header.clear();
     if (argc == 1) {
-        if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
-            return JS_FALSE;
-        };
-        JSStringWrapper strWrap(str);
-        data = strWrap.get();
+        jsval *argv = JS_ARGV(cx, vp);
+        if (JSVAL_IS_STRING(argv[0]))
+        {
+            jsval_to_std_string(cx, argv[0], &data);
+        }
+        
+        if (argv[0].isObject())
+        {
+            uint8_t *bufdata = NULL;
+            uint32_t len = 0;
+            
+            JSObject* jsobj = JSVAL_TO_OBJECT(argv[0]);
+            if (JS_IsArrayBufferObject(jsobj))
+            {
+                bufdata = JS_GetArrayBufferData(jsobj);
+                len = JS_GetArrayBufferByteLength(jsobj);
+            }
+            else if (JS_IsArrayBufferViewObject(jsobj))
+            {
+                bufdata = (uint8_t*)JS_GetArrayBufferViewData(jsobj);
+                len = JS_GetArrayBufferViewByteLength(jsobj);
+            }
+            
+            if (bufdata && len > 0)
+            {
+                data = *(new std::string((char *)bufdata));
+            }
+        }
+
+//        if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
+//            return JS_FALSE;
+//        };
+//        JSStringWrapper strWrap(str);
+//        data = strWrap.get();
+
     }
 
 
