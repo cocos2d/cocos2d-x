@@ -63,7 +63,6 @@ class ScrollView:public Layout,public UIScrollInterface
     virtual CCNode * getChildByTag(int tag);
     virtual Widget* getChildByName(const char* name);
         
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
     virtual void update(float dt);
     void setBounceEnabled(bool enabled);
     bool isBounceEnabled() const;
