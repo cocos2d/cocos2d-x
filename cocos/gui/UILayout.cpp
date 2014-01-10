@@ -156,6 +156,17 @@ bool Layout::isClippingEnabled()
     return _clippingEnabled;
 }
     
+bool Layout::hitTest(const Point &pt)
+{
+    Point nsp = convertToNodeSpace(pt);
+    Rect bb = Rect(0.0f, 0.0f, _size.width, _size.height);
+    if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
+    {
+        return true;
+    }
+    return false;
+}
+    
 void Layout::visit()
 {
     if (!_enabled)
@@ -490,6 +501,7 @@ const Rect& Layout::getClippingRect()
 void Layout::onSizeChanged()
 {
     Widget::onSizeChanged();
+    setContentSize(_size);
     setStencilClippingSize(_size);
     _doLayoutDirty = true;
     if (_backGroundImage)

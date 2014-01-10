@@ -202,6 +202,19 @@ private:
     LayerColor* _layer[3];
 };
 
+class LayerColorOccludeBug : public LayerTest
+{
+public:
+    CREATE_FUNC(LayerColorOccludeBug);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    LayerColor* _layer;
+};
+
 class LayerTestScene : public TestScene
 {
 public:
