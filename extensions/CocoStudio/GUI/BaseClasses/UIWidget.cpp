@@ -251,7 +251,7 @@ void Widget::removeAllChildrenWithCleanup(bool cleanup)
         CCObject* child;
         CCARRAY_FOREACH(_widgetChildren, child)
         {
-            removeChild((CCNode*)child, cleanup);
+            CCNodeRGBA::removeChild((CCNode*)child, cleanup);
         }
     }
     _widgetChildren->removeAllObjects();
