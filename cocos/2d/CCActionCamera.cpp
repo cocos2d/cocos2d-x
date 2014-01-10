@@ -182,11 +182,11 @@ void OrbitCamera::startWithTarget(Node *target)
 
     float r, zenith, azimuth;
     this->sphericalRadius(&r, &zenith, &azimuth);
-    if( std::isnan(_radius) )
+    if( isnan(_radius) )
         _radius = r;
-    if( std::isnan(_angleZ) )
+    if( isnan(_angleZ) )
         _angleZ = (float)CC_RADIANS_TO_DEGREES(zenith);
-    if( std::isnan(_angleX) )
+    if( isnan(_angleX) )
         _angleX = (float)CC_RADIANS_TO_DEGREES(azimuth);
 
     _radZ = (float)CC_DEGREES_TO_RADIANS(_angleZ);
