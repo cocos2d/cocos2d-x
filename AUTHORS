@@ -711,6 +711,9 @@ Developers:
     v1ctor
         ControlSlider supports to set selected thumb sprite.
         ControlButton supports to set scale ratio of touchdown state
+        
+    akof1314
+        TestCpp works by using CMake and mingw on Windows.
     
 Retired Core Developers:
     WenSheng Yang

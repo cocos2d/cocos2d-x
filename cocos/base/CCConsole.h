@@ -26,7 +26,7 @@
 #ifndef __CCCONSOLE_H__
 #define __CCCONSOLE_H__
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW32__)
 #include <BaseTsd.h>
 //typedef SSIZE_T ssize_t;
 // ssize_t was redefined as int in libwebsockets.h.
