@@ -68,6 +68,12 @@ PageView* PageView::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
+    
+void PageView::onEnter()
+{
+    Layout::onEnter();
+    scheduleUpdate();
+}
 
 bool PageView::init()
 {
@@ -76,7 +82,6 @@ bool PageView::init()
         _pages = CCArray::create();
         CC_SAFE_RETAIN(_pages);
         setClippingEnabled(true);
-        setUpdateEnabled(true);
         setTouchEnabled(true);
         return true;
     }

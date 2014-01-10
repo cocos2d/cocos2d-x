@@ -551,13 +551,6 @@ public:
     virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
     
     /**
-     * A call back function called when widget is selected, and on touch long clicked.
-     *
-     * @param touch point
-     */
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
-    /**
      * Sets a LayoutParameter to widget. 
      *
      * @see LayoutParameter
@@ -610,16 +603,6 @@ public:
     virtual CCNode* getVirtualRenderer();
     
     /**
-     * Schedules the "update" method.
-     */
-    void setUpdateEnabled(bool enable);
-    
-    /**
-     * is the "update" method scheduled.
-     */
-    bool isUpdateEnabled();
-    
-    /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
@@ -663,7 +646,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void longClickEvent();
     void updateAnchorPoint();
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
@@ -677,7 +659,6 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    bool _updateEnabled;      ///< is "update" method scheduled
     CCPoint _touchStartPos;    ///< touch began point
     CCPoint _touchMovePos;     ///< touch moved point
     CCPoint _touchEndPos;      ///< touch ended point
