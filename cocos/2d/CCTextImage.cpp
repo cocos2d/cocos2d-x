@@ -90,7 +90,7 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
         return false;
     
     int  dataLenght     = (_width * _height * 1);
-    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::A8, _width, _height, imageSize);
+    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::A8, imageSize);
     
     // release the page data if requested
     if (releasePageData && textureCreated)

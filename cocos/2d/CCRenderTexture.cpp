@@ -195,22 +195,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
-        // textures must be power of two squared
-        int powW = 0;
-        int powH = 0;
-
-        if (Configuration::getInstance()->supportsNPOT())
-        {
-            powW = w;
-            powH = h;
-        }
-        else
-        {
-            powW = ccNextPOT(w);
-            powH = ccNextPOT(h);
-        }
-
-        auto dataLen = powW * powH * 4;
+        auto dataLen = w * h * 4;
         data = malloc(dataLen);
         CC_BREAK_IF(! data);
 
@@ -220,7 +205,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         _texture = new Texture2D();
         if (_texture)
         {
-            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+            _texture->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, Size(static_cast<float>(w), static_cast<float>(h)));
         }
         else
         {
@@ -234,7 +219,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _textureCopy = new Texture2D();
             if (_textureCopy)
             {
-                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, powW, powH, Size((float)w, (float)h));
+                _textureCopy->initWithData(data, dataLen, (Texture2D::PixelFormat)_pixelFormat, Size(static_cast<float>(w), static_cast<float>(h)));
             }
             else
             {
@@ -254,7 +239,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             //create and attach depth buffer
             glGenRenderbuffers(1, &_depthRenderBufffer);
             glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
-            glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+            glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, (GLsizei)w, (GLsizei)h);
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
 
             // if depth format is the one with stencil part, bind same render buffer as stencil attachment
