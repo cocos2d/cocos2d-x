@@ -110,6 +110,16 @@ protected:
     NodeToWorld();
 };
 
+class NodeToWorld3D : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeToWorld3D);
+    virtual std::string title() const override;
+
+protected:
+    NodeToWorld3D();
+};
+
 class CameraOrbitTest : public TestCocosNodeDemo
 {
 public:
@@ -146,6 +156,39 @@ public:
 
 protected:
     CameraCenterTest();
+};
+
+class CameraTest1 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(CameraTest1);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    CameraTest1();
+
+    Sprite *_sprite1;
+    Sprite *_sprite2;
+};
+
+class CameraTest2 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(CameraTest2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    virtual void update(float dt) override;
+    CameraTest2();
+
+    Sprite *_sprite1;
+    Sprite *_sprite2;
 };
 
 class ConvertToNode : public TestCocosNodeDemo

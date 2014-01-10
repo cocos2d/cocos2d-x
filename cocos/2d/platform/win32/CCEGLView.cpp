@@ -374,9 +374,12 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action || GLFW_REPEAT == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
