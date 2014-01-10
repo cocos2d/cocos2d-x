@@ -569,16 +569,11 @@ void LayerColor::draw()
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
-    kmMat4 p, mvp;
-    kmGLGetMatrix(KM_GL_PROJECTION, &p);
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mvp);
-    kmMat4Multiply(&mvp, &p, &mvp);
-    
     for(int i = 0; i < 4; ++i)
     {
         kmVec3 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _vertexZ;
-        kmVec3TransformCoord(&pos, &pos, &mvp);
+        kmVec3TransformCoord(&pos, &pos, &_modelViewTransform);
         _noMVPVertices[i] = Vertex3F(pos.x,pos.y,pos.z);
     }
     
