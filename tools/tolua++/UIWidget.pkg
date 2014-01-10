@@ -205,11 +205,7 @@ class Widget : public CCNodeRGBA
     virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
     virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
     virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
-    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
-    
-    
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);    
     
     void setLayoutParameter(LayoutParameter* parameter);
     
@@ -226,14 +222,7 @@ class Widget : public CCNodeRGBA
     CCPoint getWorldPosition();
 
     
-    virtual CCNode* getVirtualRenderer();
-    
-    
-    void setUpdateEnabled(bool enable);
-    
-    
-    bool isUpdateEnabled();
-    
+    virtual CCNode* getVirtualRenderer();    
     
     virtual const CCSize& getContentSize() const;
     
