@@ -13,7 +13,6 @@ class TextField : public Widget
     virtual ~TextField();
     static TextField* create();
     virtual bool init();
-    virtual void initRenderer();
     void setTouchSize(const CCSize &size);
     void setText(const std::string& text);
     void setPlaceHolder(const std::string& value);
