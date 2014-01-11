@@ -45,7 +45,7 @@ typedef int ssize_t;
 #include <stdarg.h>
 
 #include "ccMacros.h"
-#include "ccPlatformMacros.h"
+#include "CCPlatformMacros.h"
 
 
 NS_CC_BEGIN
