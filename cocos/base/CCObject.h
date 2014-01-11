@@ -107,7 +107,6 @@ public:
      */
     inline void release()
     {
-        cocos2d::log("carlos");
         CCASSERT(_reference > 0, "reference count should greater than 0");
         --_reference;
 
