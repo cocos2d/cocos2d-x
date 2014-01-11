@@ -29,6 +29,8 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <stdio.h>
 #import "EAGLView.h"
+#include "CCConsole.h"
+#include "CCDirector.h"
 
 
 NS_CC_BEGIN
@@ -57,9 +59,11 @@ void log(const char * format, ...)
     va_start(ap, format);
     vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
+    strcat(buf, "\n");
     printf("%s", buf);
-    printf("\n");
     fflush(stdout);
+
+    Director::getInstance()->getConsole()->log(buf);
 }
 
 
