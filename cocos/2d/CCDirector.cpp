@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "CCRenderer.h"
+#include "CCConsole.h"
 #include "renderer/CCFrustum.h"
 /**
  Position of the FPS
@@ -116,9 +117,6 @@ bool Director::init(void)
 
     _scenesStack.reserve(15);
 
-    // projection delegate if "Custom" projection is used
-    _projectionDelegate = nullptr;
-
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
@@ -163,8 +161,8 @@ bool Director::init(void)
     //init TextureCache
     initTextureCache();
 
-    // Renderer
     _renderer = new Renderer;
+    _console = new Console;
 
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
@@ -192,6 +190,7 @@ Director::~Director(void)
     delete _eventProjectionChanged;
 
     delete _renderer;
+    delete _console;
 
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
@@ -483,9 +482,8 @@ void Director::setProjection(Projection projection)
         }
             
         case Projection::CUSTOM:
-            if (_projectionDelegate)
-                _projectionDelegate->updateProjection();
-            
+            // Projection Delegate is no longer needed
+            // since the event "PROJECTION CHANGED" is emitted
             break;
             
         default:
@@ -973,11 +971,6 @@ void Director::createStatsLabel()
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
-float Director::getContentScaleFactor() const
-{
-    return _contentScaleFactor;
-}
-
 void Director::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != _contentScaleFactor)
@@ -987,26 +980,11 @@ void Director::setContentScaleFactor(float scaleFactor)
     }
 }
 
-Node* Director::getNotificationNode() 
-{ 
-    return _notificationNode; 
-}
-
 void Director::setNotificationNode(Node *node)
 {
     CC_SAFE_RELEASE(_notificationNode);
     _notificationNode = node;
     CC_SAFE_RETAIN(_notificationNode);
-}
-
-DirectorDelegate* Director::getDelegate() const
-{
-    return _projectionDelegate;
-}
-
-void Director::setDelegate(DirectorDelegate* delegate)
-{
-    _projectionDelegate = delegate;
 }
 
 void Director::setScheduler(Scheduler* scheduler)
@@ -1019,11 +997,6 @@ void Director::setScheduler(Scheduler* scheduler)
     }
 }
 
-Scheduler* Director::getScheduler() const
-{
-    return _scheduler;
-}
-
 void Director::setActionManager(ActionManager* actionManager)
 {
     if (_actionManager != actionManager)
@@ -1032,16 +1005,6 @@ void Director::setActionManager(ActionManager* actionManager)
         CC_SAFE_RELEASE(_actionManager);
         _actionManager = actionManager;
     }    
-}
-
-ActionManager* Director::getActionManager() const
-{
-    return _actionManager;
-}
-
-EventDispatcher* Director::getEventDispatcher() const
-{
-    return _eventDispatcher;
 }
 
 void Director::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1053,12 +1016,6 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         _eventDispatcher = dispatcher;
     }
 }
-
-Renderer* Director::getRenderer() const
-{
-    return _renderer;
-}
-
 
 /***************************************************
 * implementation of DisplayLinkDirector

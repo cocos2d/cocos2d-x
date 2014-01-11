@@ -25,6 +25,7 @@
 
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
