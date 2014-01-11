@@ -190,18 +190,6 @@ public:
     Node* getNotificationNode() const { return _notificationNode; }
     void setNotificationNode(Node *node);
     
-    /** Director delegate. It shall implement the DirectorDelegate protocol
-     @since v0.99.5
-     * @js NA
-     * @lua NA
-     */
-    DirectorDelegate* getDelegate() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void setDelegate(DirectorDelegate* delegate);
-
     // window size
 
     /** returns the size of the OpenGL view in points.
