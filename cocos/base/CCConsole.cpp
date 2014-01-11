@@ -316,7 +316,7 @@ bool Console::parseCommand(int fd)
         }
     }
 
-    if(!found) {
+    if(!found && strcmp(_buffer, "\r\n")!=0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
         write(fd, err, sizeof(err));
     }
