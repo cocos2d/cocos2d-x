@@ -112,14 +112,6 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 // Console code
 //
 
-Console* Console::create()
-{
-    auto ret = new Console;
-
-    ret->autorelease();
-    return ret;
-}
-
 Console::Console()
 : _listenfd(-1)
 , _running(false)
@@ -152,7 +144,7 @@ Console::Console()
 
 Console::~Console()
 {
-    cancel();
+    stop();
 }
 
 bool Console::listenOnTCP(int port)
@@ -226,14 +218,18 @@ bool Console::listenOnTCP(int port)
 
 bool Console::listenOnFileDescriptor(int fd)
 {
-    CCASSERT(!_running, "already running");
+    if(_running) {
+        cocos2d::log("Console already started. 'stop' it before calling 'listen' again");
+        return false;
+    }
+
     _listenfd = fd;
     _thread = std::thread( std::bind( &Console::loop, this) );
 
     return true;
 }
 
-void Console::cancel()
+void Console::stop()
 {
     if( _running ) {
         _endThread = true;
