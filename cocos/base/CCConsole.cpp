@@ -116,27 +116,35 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
-, _maxCommands(5)
 , _userCommands(nullptr)
 , _maxUserCommands(0)
+, _sendDebugStrings(false)
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
-	{ "fps on", [](int fd, const char* command) {
-        Director *dir = Director::getInstance();
-        Scheduler *sched = dir->getScheduler();
-        sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
-    } },
-    { "fps off", [](int fd, const char* command) {
-        Director *dir = Director::getInstance();
-        Scheduler *sched = dir->getScheduler();
-        sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
-    } },
-    { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
-    { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
-    { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) } };
+        { "debug msg on", [&](int fd, const char* command) {
+            _sendDebugStrings = true;
+        } },
+        { "debug msg off", [&](int fd, const char* command) {
+            _sendDebugStrings = false;
+        } },
+        { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
+        { "fps on", [](int fd, const char* command) {
+            Director *dir = Director::getInstance();
+            Scheduler *sched = dir->getScheduler();
+            sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, true));
+        } },
+        { "fps off", [](int fd, const char* command) {
+            Director *dir = Director::getInstance();
+            Scheduler *sched = dir->getScheduler();
+            sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, false));
+        } },
+        { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
+        { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+    };
 
-	for (size_t i = 0; i < sizeof(commands)/sizeof(commands[0]) && i < sizeof(_commands)/sizeof(_commands[0]); ++i)
+    _maxCommands = sizeof(commands)/sizeof(commands[0]);
+	for (size_t i = 0; i < _maxCommands; ++i)
 	{
 		_commands[i] = commands[i];
 	}
@@ -198,14 +206,14 @@ bool Console::listenOnTCP(int port)
         char buf[INET_ADDRSTRLEN] = "";
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != NULL )
-            log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
         char buf[INET6_ADDRSTRLEN] = "";
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != NULL )
-            log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
     }
@@ -372,6 +380,15 @@ void Console::addClient()
     }
 }
 
+void Console::log(const char* buf)
+{
+    if( _sendDebugStrings ) {
+        _DebugStringsMutex.lock();
+        _DebugStrings.push_back(buf);
+        _DebugStringsMutex.unlock();
+    }
+}
+
 //
 // Main Loop
 //
@@ -398,40 +415,55 @@ void Console::loop()
         timeout_copy = timeout;
         int nready = select(_maxfd+1, &copy_set, NULL, NULL, &timeout_copy);
 
-        if( nready == -1 ) {
-            /* error ?*/
+        if( nready == -1 )
+        {
+            /* error */
             if(errno != EINTR)
                 log("Abnormal error in select()\n");
             continue;
-
-        } else if( nready == 0 ) {
-            /* timeout ? */
-            continue;
         }
-
-        // new client
-        if(FD_ISSET(_listenfd, &copy_set)) {
-            addClient();
-            if(--nready <= 0)
-                continue;
+        else if( nready == 0 )
+        {
+            /* timeout. do somethig ? */
         }
-
-        // data from client
-        std::vector<int> to_remove;
-        for(const auto &fd: _fds) {
-            if(FD_ISSET(fd,&copy_set)) {
-                if( ! parseCommand(fd) ) {
-                    to_remove.push_back(fd);
-                }
+        else
+        {
+            /* new client */
+            if(FD_ISSET(_listenfd, &copy_set)) {
+                addClient();
                 if(--nready <= 0)
-                    break;
+                    continue;
+            }
+
+            /* data from client */
+            std::vector<int> to_remove;
+            for(const auto &fd: _fds) {
+                if(FD_ISSET(fd,&copy_set)) {
+                    if( ! parseCommand(fd) ) {
+                        to_remove.push_back(fd);
+                    }
+                    if(--nready <= 0)
+                        break;
+                }
+            }
+
+            /* remove closed conections */
+            for(int fd: to_remove) {
+                FD_CLR(fd, &_read_set);
+                _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
             }
         }
 
-        // remove closed conections
-        for(int fd: to_remove) {
-            FD_CLR(fd, &_read_set);
-            _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
+        /* Any message for the remote console ? send it! */
+        if( !_DebugStrings.empty() ) {
+            _DebugStringsMutex.lock();
+            for(const auto &str : _DebugStrings) {
+                for(const auto &fd : _fds) {
+                    write(fd, str.c_str(), str.length());
+                }
+            }
+            _DebugStrings.clear();
+            _DebugStringsMutex.unlock();
         }
     }
 
