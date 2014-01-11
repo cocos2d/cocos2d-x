@@ -3,7 +3,7 @@
 # msys2 Pacman Manager for cocos2d-x
 
 #/****************************************************************************
-# Copyright (c) 2012-2013 Martell Malone
+# Copyright (c) 2013-2014 Martell Malone
 # 
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,18 +40,18 @@ fi
 
 if [ "${OSTYPE}" = "msys" ]; then
 
-  CC=${HOST_ARCH}-w64-mingw32-gcc
-  CXX=${HOST_ARCH}-w64-mingw32-g++
+  CC=clang
+  CXX=clang++
   PP=mingw-w64-${HOST_ARCH}
   
   MINGW_PACKAGES=(glfw glew libwebp libjpeg-turbo libpng freetype libiconv zlib curl
-                  make gcc binutils headers cmake)
+                  make clang binutils headers cmake)
 
   MINGW_PACKAGES=(${MINGW_PACKAGES[@]/#/${PP}-})
 
   pacman -S --force --noconfirm --needed ${MINGW_PACKAGES[@]}
 
-  mkdir -p mingw${BITS} && cd mingw${BITS}
+  mkdir -p mingw${BITS}-clang && cd mingw${BITS}-clang
 
   export PATH=/mingw${BITS}/bin:${PATH}
 
