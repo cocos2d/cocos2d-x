@@ -29,43 +29,9 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <stdio.h>
 #import "EAGLView.h"
-#include "CCConsole.h"
-#include "CCDirector.h"
 
 
 NS_CC_BEGIN
-
-// XXX deprecated
-void CCLog(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-    fflush(stdout);
-}
-
-void log(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    strcat(buf, "\n");
-    printf("%s", buf);
-    fflush(stdout);
-
-    Director::getInstance()->getConsole()->log(buf);
-}
-
 
 void LuaLog(const char * format)
 {

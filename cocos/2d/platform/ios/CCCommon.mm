@@ -34,33 +34,6 @@
 
 NS_CC_BEGIN
 
-// XXX deprecated
-void CCLog(const char * format, ...)
-{
-    printf("cocos2d: ");
-    char buf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-}
-
-void log(const char * format, ...)
-{
-    printf("cocos2d: ");
-    char buf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    strcat(buf, "\n");
-    printf("%s", buf);
-
-    Director::getInstance()->getConsole()->log(buf);
-}
-
 // ios no MessageBox, use log instead
 void MessageBox(const char * msg, const char * title)
 {

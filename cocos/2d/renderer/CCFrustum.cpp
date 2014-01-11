@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCFrustum.h"
-#include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 #include <stdlib.h>
 
