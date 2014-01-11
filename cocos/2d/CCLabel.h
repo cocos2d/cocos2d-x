@@ -54,23 +54,44 @@ enum class LabelEffect {
 struct FontLetterDefinition;
 class FontAtlas;
 
+typedef struct _ttfConfig
+{
+    std::string fontFilePath;
+    int fontSize;
+    GlyphCollection glyphs;
+    const char *customGlyphs;
+    bool distanceFieldEnable;
 
+    _ttfConfig(const char* filePath,int fontSize = 36, const GlyphCollection& glyphs = GlyphCollection::NEHE,
+        const char *customGlyphs = nullptr,bool useDistanceField = false)
+        :fontFilePath(filePath)
+        ,fontSize(fontSize)
+        ,glyphs(glyphs)
+        ,customGlyphs(customGlyphs)
+        ,distanceFieldEnable(useDistanceField)
+    {}
+}TTFConfig;
 
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
 {
 public:
-    
-    // static create
-    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
-    
-    static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
-    
-    bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+    static Label* create();
 
+    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    
+    static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    
+    bool setTTFConfig(const TTFConfig& ttfConfig);
+
+    bool setBMFontFilePath(const std::string& bmfontFilePath);
+
+    bool setText(const std::string& text, const TextHAlignment& alignment = TextHAlignment::LEFT, float lineWidth = 0, bool lineBreakWithoutSpaces = false);
+
+    //only support for TTF
     void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
-    virtual void setString(const std::string &stringToRender) override;
-    void setString(const std::string &stringToRender,bool multilineEnable);
+    virtual void setString(const std::string &text) override;
+    void setString(const std::string &text,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -127,15 +148,13 @@ private:
     /**
      * @js NA
      */
-    Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField = false,bool useA8Shader = false);
+    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::CENTER, bool useDistanceField = false,bool useA8Shader = false);
     /**
      * @js NA
      * @lua NA
      */
    ~Label();
     
-    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0, bool useDistanceField = false,bool useA8Shader = false);
-
     void setFontSize(int fontSize);
     
     bool init();
@@ -151,7 +170,6 @@ private:
 
     virtual void updateColor() override;
 
-    
     //! used for optimization
     Sprite              *_reusedLetter;
     std::vector<LetterInfo>     _lettersInfo;       
