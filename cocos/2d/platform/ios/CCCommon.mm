@@ -29,6 +29,8 @@
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
+#include "CCDirector.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -53,8 +55,10 @@ void log(const char * format, ...)
     va_start(ap, format);
     vsnprintf(buf, kMaxLogLen, format, ap);
     va_end(ap);
+    strcat(buf, "\n");
     printf("%s", buf);
-    printf("\n");
+
+    Director::getInstance()->getConsole()->log(buf);
 }
 
 // ios no MessageBox, use log instead
