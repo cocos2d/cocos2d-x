@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCDataVisitor.h"
 #include "ccMacros.h"
+#include "CCConsole.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -106,6 +107,7 @@ public:
      */
     inline void release()
     {
+        cocos2d::log("carlos");
         CCASSERT(_reference > 0, "reference count should greater than 0");
         --_reference;
 

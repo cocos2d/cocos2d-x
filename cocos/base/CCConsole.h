@@ -42,11 +42,22 @@ typedef int ssize_t;
 #include <string>
 #include <mutex>
 
+#include <stdarg.h>
+
 #include "ccMacros.h"
-#include "CCObject.h"
+#include "ccPlatformMacros.h"
 
 
 NS_CC_BEGIN
+
+/// The max length of CCLog message.
+static const int MAX_LOG_LENGTH = 16*1024;
+
+/**
+ @brief Output Debug message.
+ */
+void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
+void CC_DLL log(const char * format, va_list args);
 
 /** Console is helper class that lets the developer control the game from TCP connection.
  Console will spawn a new thread that will listen to a specified TCP port.
