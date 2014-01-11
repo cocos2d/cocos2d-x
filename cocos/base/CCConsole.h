@@ -55,17 +55,19 @@ NS_CC_BEGIN
  scheduler->performFunctionInCocosThread( ... );
  ```
  */
-class CC_DLL Console : public Object
+class CC_DLL Console
 {
 public:
-
     struct Command {
         const char *name;
         std::function<void(int, const char*)> callback;
     };
 
-    /** creates a new instnace of the Console */
-    static Console* create();
+    /** Constructor */
+    Console();
+
+    /** Destructor */
+    virtual ~Console();
 
     /** starts listening to specifed TCP port */
     bool listenOnTCP(int port);
@@ -73,18 +75,14 @@ public:
     /** starts listening to specifed file descriptor */
     bool listenOnFileDescriptor(int fd);
 
-    /** cancels the Console. Cancel will be called at destruction time as well */
-    void cancel();
+    /** stops the Console. 'stop' will be called at destruction time as well */
+    void stop();
 
     /** sets user tokens */
     void setUserCommands( Command* commands, int numberOfCommands);
 
 protected:
-    Console();
-    virtual ~Console();
-
     void loop();
-
     ssize_t readline(int fd);
     bool parseCommand(int fd);
     void sendPrompt(int fd);
@@ -108,7 +106,7 @@ protected:
 
     char _buffer[512];
 
-    struct Command _commands[15];
+    struct Command _commands[64];
     int _maxCommands;
     struct Command *_userCommands;
     int _maxUserCommands;
