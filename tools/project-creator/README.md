@@ -3,9 +3,9 @@
 First you need to install the Python environment.
 
 There are two ways to create a new cocos project.
-Notice: The best of generate path is an English path without spaces.
+Notice: The best project path is an English path without spaces.
 ##1.UI
-* Windows: double click "create_project.py" file
+* Windows: double click the "create_project.py" file
 * Mac: use `./create_project.py`
 * Linux: The Tkinter library was not installed automatically in Linux, therefore, in order to use the GUI to operate, you have to install Tkinter manually (see http://tkinter.unpythonic.net/wiki/How_to_install_Tkinter). There is another way to create projects by command line. See below for details.
 
