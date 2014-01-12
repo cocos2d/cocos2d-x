@@ -16,7 +16,7 @@ cmake .. -DBUILD_HelloCpp=OFF -DBUILD_TestCpp=OFF -DBUILD_HelloLua=OFF -DBUILD_T
 make -j4
 
 #make bin
-cd $DIR
+cd "$DIR"
 rm -rf bin
 mkdir -p build
 cd build
