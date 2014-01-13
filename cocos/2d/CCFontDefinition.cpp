@@ -215,13 +215,15 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
     
     // set the common line height
     retAtlas->setCommonLineHeight(_commonLineHeight * 0.8);
-    
+    auto yDelta = _commonLineHeight * 0.7;
+
     for( auto &item: _fontLettersDefinitionUTF16 )
     {
         if ( item.second.validDefinition )
         {
             FontLetterDefinition tempDefinition = item.second;
             tempDefinition.offsetX = 0;
+			tempDefinition.offsetY += yDelta;
             tempDefinition.anchorX = 0.0f;
             tempDefinition.anchorY = 1.0f;
             retAtlas->addLetterDefinition(tempDefinition);

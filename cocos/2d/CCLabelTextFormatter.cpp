@@ -241,8 +241,6 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                 continue;
             }
             int index = static_cast<int>(i + lineLength - 1 + lineNumber);
-            if(currentChar == 0)
-                index -= 1;
             if (index < 0) continue;
             
             LetterInfo* info = &leterInfo->at( index );
