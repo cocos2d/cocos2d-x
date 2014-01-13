@@ -28,6 +28,7 @@
 
 #if defined(_MSC_VER) || defined(__MINGW32__)
 #include <BaseTsd.h>
+#include <WinSock2.h>
 //typedef SSIZE_T ssize_t;
 // ssize_t was redefined as int in libwebsockets.h.
 // Therefore, to avoid conflict, we needs the same definition.
