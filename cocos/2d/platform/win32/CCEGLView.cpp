@@ -281,6 +281,7 @@ public:
     static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
     static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
+	static void OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height);
 };
 
 bool EGLViewEventHandler::s_captured = false;
@@ -385,11 +386,24 @@ void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int ch
 
 void EGLViewEventHandler::OnGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
 {
-    if(Director::getInstance())
-    {
-        Director::getInstance()->setViewport();
-    }
+//     if(Director::getInstance())
+//     {
+//         Director::getInstance()->setViewport();
+//     }
 }
+
+void EGLViewEventHandler::OnGLFWWindowSizeFunCallback(GLFWwindow *windows, int width, int height)
+{	
+	if(Director::getInstance()->getOpenGLView())
+	{
+		Size resSize=EGLView::getInstance()->getDesignResolutionSize();
+		ResolutionPolicy resPolicy=EGLView::getInstance()->getResolutionPolicy();
+		EGLView::getInstance()->setFrameSize(width, height);
+ 		EGLView::getInstance()->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
+		Director::getInstance()->setViewport();
+	}
+}
+
 
 //end EGLViewEventHandler
 
@@ -443,7 +457,8 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
     glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
     glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
-    
+    glfwSetWindowSizeCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowSizeFunCallback);
+
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     CCLOG("OpenGL version = %s", glVersion);
@@ -554,8 +569,8 @@ void EGLView::setFrameSize(float width, float height)
 
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
-    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
+    float frameZoomFactorX = 1.0f;//_frameBufferSize[0]/_screenSize.width;
+    float frameZoomFactorY = 1.0f;//_frameBufferSize[1]/_screenSize.height;
     glViewport((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
                (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
                (GLsizei)(w * _scaleX * frameZoomFactorX),
@@ -564,8 +579,8 @@ void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 
 void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
-    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
+    float frameZoomFactorX = 1.0f;//_frameBufferSize[0]/_screenSize.width;
+    float frameZoomFactorY = 1.0f;//_frameBufferSize[1]/_screenSize.height;
     glScissor((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
                (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
                (GLsizei)(w * _scaleX * frameZoomFactorX),

@@ -108,6 +108,8 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
+	virtual const ResolutionPolicy& getResolutionPolicy() const;
+
     /** Set touch delegate */
     virtual void setTouchDelegate(EGLTouchDelegate * delegate);
 
