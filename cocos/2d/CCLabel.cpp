@@ -194,6 +194,8 @@ bool Label::setText(const std::string& stringToRender, float lineWidth, TextHAli
     // align text
     alignText();
     
+	updateColor();
+
     // done here
     return true;
 }
@@ -438,6 +440,8 @@ bool Label::recordLetterInfo(const cocos2d::Point& point,unsigned short int theC
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
         LetterInfo tmpInfo;
+
+		memset(&tmpInfo, 0, sizeof(tmpInfo));
         _lettersInfo.push_back(tmpInfo);
     }    
        
@@ -454,6 +458,8 @@ bool Label::recordPlaceholderInfo(int spriteIndex)
     if (static_cast<std::size_t>(spriteIndex) >= _lettersInfo.size())
     {
         LetterInfo tmpInfo;
+
+		memset(&tmpInfo, 0, sizeof(tmpInfo));
         _lettersInfo.push_back(tmpInfo);
     }
 
