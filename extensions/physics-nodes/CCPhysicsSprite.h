@@ -22,6 +22,8 @@
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
+#if CC_USE_PHYSICS
+
 #include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 
@@ -130,5 +132,7 @@ protected:
 };
 
 NS_CC_EXT_END
+
+#endif // CC_USE_PHYSICS
 
 #endif // __PHYSICSNODES_CCPHYSICSSPRITE_H__
