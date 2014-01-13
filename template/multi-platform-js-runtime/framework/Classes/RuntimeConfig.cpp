@@ -64,24 +64,31 @@ void RuntimeConfig::setSearchPath()
 
 void RuntimeConfig::waitConnect()
 {
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+	char szwaitFile[512]={0};
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
+	extern std::string GetCurAppPath(void);
+	string searchPath = GetCurAppPath();
+	sprintf(szwaitFile,"%s/.wait",searchPath.c_str());
+#endif
 
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID )
 	extern std::string getPackageNameJNI();
 	string searchPath = getPackageNameJNI();
-	char szwaitFile[512]={0};
-	char szwaitEndFile[512] ={0};
-	sprintf(szwaitFile,"/mnt/sdcard/%s/wait",searchPath.c_str());
-	sprintf(szwaitEndFile,"/mnt/sdcard/%s/waitend",searchPath.c_str());
+	sprintf(szwaitFile,"/mnt/sdcard/%s/.wait",searchPath.c_str());
+#endif	
+
 	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
 		return;
 
 	while (true)
 	{
-		if (FileUtils::getInstance()->isFileExist(szwaitEndFile))
+		if (!FileUtils::getInstance()->isFileExist(szwaitFile))
 			break;
 		Usleep(10);
 	}	
+
 #endif
 
 }

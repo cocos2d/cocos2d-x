@@ -49,5 +49,11 @@ director.setAnimationInterval(1.0 / 60);
 var myScene = new MyScene();
 
 // run
-director.runWithScene(myScene);
-
+if (director.getRunningScene())
+{
+	director.replaceScene(myScene);
+}
+else
+{
+	director.runWithScene(myScene);
+}

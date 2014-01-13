@@ -23,9 +23,13 @@ using namespace CocosDenshion;
 #include "RuntimeConfig.h"
 #endif // ISRUNTIME
 
-
-
-
+void resetPurage()
+{
+	FileUtils::sharedFileUtils()->purgeCachedEntries();
+	Director::getInstance()->purgeCachedData();
+	ScriptingCore::getInstance()->reset();
+	ScriptingCore::getInstance()->runScript("main.js");
+}
 AppDelegate::AppDelegate()
 {
 }
@@ -40,10 +44,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     Director *director = Director::getInstance();
     director->setOpenGLView(EGLView::getInstance());
-    
+
     // turn on display FPS
     director->setDisplayStats(true);
-    
+	auto designSize = Size(480, 320);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::EXACT_FIT);
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
