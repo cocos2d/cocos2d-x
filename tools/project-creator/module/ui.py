@@ -125,7 +125,7 @@ class TkCocosDialog(Frame):
         self.strName.set("MyGame")
         self.editName = Entry(self, textvariable=self.strName)
         self.labName.grid(sticky=W, pady=4, padx=5)
-        self.editName.grid(row=0, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
+        self.editName.grid(row=0, column=1, columnspan=4,padx=5, pady=2,sticky=E+W)
 
         # package name frame
         self.labPackage = Label(self, text="Package Name:")
@@ -133,7 +133,7 @@ class TkCocosDialog(Frame):
         self.strPackage.set("com.MyCompany.AwesomeGame")
         self.editPackage = Entry(self, textvariable=self.strPackage)
         self.labPackage.grid(row=1, column=0,sticky=W, padx=5)
-        self.editPackage.grid(row=1, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
+        self.editPackage.grid(row=1, column=1, columnspan=4,padx=5, pady=2,sticky=E+W)
 
         # project path frame
         self.labPath = Label(self, text="Project Path:")
@@ -158,13 +158,13 @@ class TkCocosDialog(Frame):
         # show progress
         self.progress = Scale(self, state= DISABLED, from_=0, to=100, orient=HORIZONTAL)
         self.progress.set(0)
-        self.progress.grid(row=4, column=0, columnspan=4,padx=5, pady=2,sticky=E+W+S+N)
+        self.progress.grid(row=4, column=0, columnspan=5,padx=5, pady=2,sticky=E+W+S+N)
 
         # msg text frame
         self.text=Text(self,background = '#d9efff')
         self.text.bind("<KeyPress>", lambda e : "break")
-        self.text.grid(row=5, column=0, columnspan=4, rowspan=1, padx=5, sticky=E+W+S+N)
-        self.text.config(state=DISABLED)
+        self.text.grid(row=5, column=0, columnspan=5, rowspan=1, padx=5, sticky=E+W+S+N)
+
         # new project button
         self.btnCreate = Button(self, text="create", command = self.createBtnCallback)
         self.btnCreate.grid(row=7, column=3, columnspan=1, rowspan=1,pady=2,ipadx=15,ipady =10, sticky=W)
