@@ -66,6 +66,12 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     }
 }
 
+Label* Label::createWithTTF(const std::string& text, const std::string& fontFilePath, int fontSize, int lineSize /* = 0 */, TextHAlignment alignment /* = TextHAlignment::CENTER */, GlyphCollection glyphs /* = GlyphCollection::NEHE */, const char *customGlyphs /* = 0 */, bool useDistanceField /* = false */)
+{
+    TTFConfig ttfConfig(fontFilePath.c_str(),fontSize,glyphs,customGlyphs,useDistanceField);
+    return createWithTTF(ttfConfig,text,alignment,lineSize);
+}
+
 Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
 {
     Label *ret = new Label();
