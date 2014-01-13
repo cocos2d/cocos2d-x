@@ -114,7 +114,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     std::unordered_map<unsigned short, FontLetterDefinition> fontDefs;
     int length = cc_wcslen(utf16String);
 
-	auto yDelta = _currentPageLineHeight * 0.7;
+    auto yDelta = _currentPageLineHeight * 0.7;
 
     //find out new letter
     for (int i = 0; i < length; ++i)
