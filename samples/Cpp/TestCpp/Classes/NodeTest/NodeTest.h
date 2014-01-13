@@ -184,7 +184,6 @@ public:
     virtual void onExit() override;
 
 protected:
-    virtual void update(float dt) override;
     CameraTest2();
 
     Sprite *_sprite1;
