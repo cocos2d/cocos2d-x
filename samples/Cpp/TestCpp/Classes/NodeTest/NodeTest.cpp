@@ -1021,7 +1021,18 @@ CameraTest2::CameraTest2()
     _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
     _sprite2->setScale(0.5);
 
-    scheduleUpdate();
+    kmVec3 eye, center, up;
+
+    kmVec3Fill(&eye, 150, 0, 200);
+    kmVec3Fill(&center, 0, 0, 0);
+    kmVec3Fill(&up, 0, 1, 0);
+
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+
+    _sprite1->setAdditionalTransform(lookupMatrix);
+    _sprite2->setAdditionalTransform(lookupMatrix);
+
 }
 
 std::string CameraTest2::title() const
@@ -1032,22 +1043,6 @@ std::string CameraTest2::title() const
 std::string CameraTest2::subtitle() const
 {
     return "Both images should look the same";
-}
-
-void CameraTest2::update(float dt)
-{
-    kmVec3 eye, center, up;
-
-    kmVec3Fill(&eye, 150, 0, 200);
-    kmVec3Fill(&center, 0, 0, 0);
-    kmVec3Fill(&up, 0, 1, 0);
-
-
-    kmMat4 lookupMatrix;
-    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
-
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
 }
 
 ///
