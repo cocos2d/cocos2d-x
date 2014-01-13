@@ -129,16 +129,16 @@ bool Director::init(void)
 
     // paused ?
     _paused = false;
-   
+
     // purge ?
     _purgeDirectorInNextLoop = false;
 
-    _winSizeInPoints = Size::ZERO;    
+    _winSizeInPoints = Size::ZERO;
 
     _openGLView = nullptr;
-    
+
     _cullingFrustum = new Frustum();
-    
+
     _contentScaleFactor = 1.0f;
 
     // scheduler
@@ -169,7 +169,7 @@ bool Director::init(void)
 
     return true;
 }
-    
+
 Director::~Director(void)
 {
     CCLOGINFO("deallocing Director: %p", this);
@@ -177,7 +177,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
     CC_SAFE_RELEASE(_drawsLabel);
-    
+
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
@@ -283,17 +283,17 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-    
+
     //construct the frustum
     {
         kmMat4 view;
         kmMat4 projection;
         kmGLGetMatrix(KM_GL_PROJECTION, &projection);
         kmGLGetMatrix(KM_GL_MODELVIEW, &view);
-        
+
         _cullingFrustum->setupFromMatrix(view, projection);
     }
-    
+
     // draw the scene
     if (_runningScene)
     {
@@ -306,7 +306,7 @@ void Director::drawScene()
     {
         _notificationNode->visit();
     }
-    
+
     if (_displayStats)
     {
         showStats();
@@ -324,7 +324,7 @@ void Director::drawScene()
     {
         _openGLView->swapBuffers();
     }
-    
+
     if (_displayStats)
     {
         calculateMPF();
@@ -385,16 +385,16 @@ void Director::setOpenGLView(EGLView *openGLView)
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
-        
+
         createStatsLabel();
-        
+
         if (_openGLView)
         {
             setGLDefaultValues();
-        }  
-        
+        }
+
         _renderer->initGLView();
-        
+
         CHECK_GL_ERROR_DEBUG();
 
 //        _touchDispatcher->setDispatchEvents(true);
@@ -480,12 +480,12 @@ void Director::setProjection(Projection projection)
             kmGLMultMatrix(&matrixLookup);
             break;
         }
-            
+
         case Projection::CUSTOM:
             // Projection Delegate is no longer needed
             // since the event "PROJECTION CHANGED" is emitted
             break;
-            
+
         default:
             CCLOG("cocos2d: Director: unrecognized projection");
             break;
@@ -547,10 +547,10 @@ static void GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
+
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
+
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
@@ -558,19 +558,19 @@ Point Director::convertToGL(const Point& uiPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-	
+
 	kmMat4 transformInv;
 	kmMat4Inverse(&transformInv, &transform);
-	
+
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	kmScalar zClip = transform.mat[14]/transform.mat[15];
-	
+
     Size glSize = _openGLView->getDesignResolutionSize();
 	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
-	
+
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
+
 	return Point(glCoord.x, glCoord.y);
 }
 
@@ -578,12 +578,12 @@ Point Director::convertToUI(const Point& glPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-    
+
 	kmVec3 clipCoord;
 	// Need to calculate the zero depth from the transform.
 	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
-	
+
 	Size glSize = _openGLView->getDesignResolutionSize();
 	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
@@ -604,7 +604,7 @@ Size Director::getVisibleSize() const
     {
         return _openGLView->getVisibleSize();
     }
-    else 
+    else
     {
         return Size::ZERO;
     }
@@ -616,7 +616,7 @@ Point Director::getVisibleOrigin() const
     {
         return _openGLView->getVisibleOrigin();
     }
-    else 
+    else
     {
         return Point::ZERO;
     }
