@@ -16,7 +16,7 @@ public:
 class ParticleDemo : public BaseTest
 {
 protected:
-    ParticleSystem*    _emitter;
+    ParticleSystemQuad*    _emitter;
     Sprite*            _background;
 	LayerColor*		 _color;
 
@@ -25,8 +25,8 @@ public:
 
     virtual void onEnter(void);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
@@ -45,112 +45,112 @@ class DemoFirework : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoFire : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoSun : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoGalaxy : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoFlower : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoBigFlower : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoRotFlower : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoMeteor : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoSpiral : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoExplosion : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoSmoke : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoSnow : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoRain : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoModernArt : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoRing : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class ParallaxParticle : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class DemoParticleFromFile : public ParticleDemo
@@ -162,7 +162,7 @@ public:
         _title = file;
     }
     virtual void onEnter();
-    virtual std::string title()
+    virtual std::string title() const override
     {
         return _title;
     }
@@ -172,30 +172,30 @@ class RadiusMode1 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class RadiusMode2 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Issue704 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class Issue870 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void updateQuads(float dt);
 
 private:
@@ -206,8 +206,8 @@ class Issue1201 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class ParticleBatchHybrid : public ParticleDemo
@@ -215,8 +215,8 @@ class ParticleBatchHybrid : public ParticleDemo
 public:
     virtual void onEnter();
     void switchRender(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     Node* _parent1;
     Node* _parent2;
@@ -226,8 +226,8 @@ class ParticleBatchMultipleEmitters : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class ParticleReorder : public ParticleDemo
@@ -235,8 +235,8 @@ class ParticleReorder : public ParticleDemo
 public:
     virtual void onEnter();
     void reorderParticles(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     unsigned int _order;
 };
@@ -245,8 +245,8 @@ class MultipleParticleSystems : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void update(float dt);
 };
 
@@ -255,8 +255,8 @@ class MultipleParticleSystemsBatched : public ParticleDemo
 public:
     virtual void onEnter();
     virtual void update(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     ParticleBatchNode* _batchNode;
 };
@@ -267,8 +267,8 @@ public:
     virtual void onEnter();
     virtual void update(float dt);
     void removeSystem(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     ParticleBatchNode* _batchNode;
 };
@@ -279,8 +279,8 @@ public:
     virtual void onEnter();
     void reorderSystem(float time);
     virtual void update(float dt);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 private:
     ParticleBatchNode* _batchNode;
 };
@@ -289,16 +289,16 @@ class PremultipliedAlphaTest : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class PremultipliedAlphaTest2 : public ParticleDemo
 {
 public:
     virtual void onEnter();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 #endif

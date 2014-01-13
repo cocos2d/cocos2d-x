@@ -19,7 +19,7 @@ ComponentsTestLayer::ComponentsTestLayer()
 
 Scene* ComponentsTestLayer::scene()
 {
-	Scene * scene = NULL;
+	Scene * scene = nullptr;
 	do 
 	{
 		// 'scene' is an autorelease object
@@ -65,7 +65,7 @@ bool ComponentsTestLayer::init()
 
 cocos2d::Node* ComponentsTestLayer::createGameScene()
 {
-    Node *root = NULL;
+    Node *root = nullptr;
     do 
 	{
         auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -89,7 +89,7 @@ cocos2d::Node* ComponentsTestLayer::createGameScene()
         
         itemBack->setColor(Color3B(0, 0, 0));
         itemBack->setPosition(Point(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        auto menuBack = Menu::create(itemBack, NULL);
+        auto menuBack = Menu::create(itemBack, nullptr);
         menuBack->setPosition(Point::ZERO);
         addChild(menuBack);
         

@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "ActionsEaseTest.h"
 #include "../testResource.h"
 
@@ -57,7 +82,7 @@ void SpriteEase::testStopAction(float dt)
     _grossini->stopActionByTag(1);
 }
 
-std::string SpriteEase::title()
+std::string SpriteEase::title() const
 {
     return "EaseIn - EaseOut - Stop";
 }
@@ -97,7 +122,7 @@ void SpriteEaseInOut::onEnter()
 }
 
 
-std::string SpriteEaseInOut::title()
+std::string SpriteEaseInOut::title() const
 {
     return "EaseInOut and rates";
 }
@@ -134,7 +159,7 @@ void SpriteEaseExponential::onEnter()
 }
 
 
-std::string SpriteEaseExponential::title()
+std::string SpriteEaseExponential::title() const
 {
     return "ExpIn - ExpOut actions";
 }
@@ -167,7 +192,7 @@ void SpriteEaseExponentialInOut::onEnter()
 }
 
 
-std::string SpriteEaseExponentialInOut::title()
+std::string SpriteEaseExponentialInOut::title() const
 {
     return "EaseExponentialInOut action";
 }
@@ -204,7 +229,7 @@ void SpriteEaseSine::onEnter()
 }
 
 
-std::string SpriteEaseSine::title()
+std::string SpriteEaseSine::title() const
 {
     return "EaseSineIn - EaseSineOut";
 }
@@ -236,7 +261,7 @@ void SpriteEaseSineInOut::onEnter()
 }
 
 
-std::string SpriteEaseSineInOut::title()
+std::string SpriteEaseSineInOut::title() const
 {
     return "EaseSineInOut action";
 }
@@ -271,7 +296,7 @@ void SpriteEaseElastic::onEnter()
 }
 
 
-std::string SpriteEaseElastic::title()
+std::string SpriteEaseElastic::title() const
 {
     return "Elastic In - Out actions";
 }
@@ -309,7 +334,7 @@ void SpriteEaseElasticInOut::onEnter()
 }
 
 
-std::string SpriteEaseElasticInOut::title()
+std::string SpriteEaseElasticInOut::title() const
 {
     return "EaseElasticInOut action";
 }
@@ -346,7 +371,7 @@ void SpriteEaseBounce::onEnter()
 }
 
 
-std::string SpriteEaseBounce::title()
+std::string SpriteEaseBounce::title() const
 {
     return "Bounce In - Out actions";
 }
@@ -380,7 +405,7 @@ void SpriteEaseBounceInOut::onEnter()
 }
 
 
-std::string SpriteEaseBounceInOut::title()
+std::string SpriteEaseBounceInOut::title() const
 {
     return "EaseBounceInOut action";
 }
@@ -416,7 +441,7 @@ void SpriteEaseBack::onEnter()
 }
 
 
-std::string SpriteEaseBack::title()
+std::string SpriteEaseBack::title() const
 {
     return "Back In - Out actions";
 }
@@ -449,7 +474,7 @@ void SpriteEaseBackInOut::onEnter()
 }
 
 
-std::string SpriteEaseBackInOut::title()
+std::string SpriteEaseBackInOut::title() const
 {
     return "EaseBackInOut action";
 }
@@ -502,7 +527,7 @@ void SpeedTest::altertime(float dt)
     action3->setSpeed( CCRANDOM_MINUS1_1() * 2 );
 }
 
-std::string SpeedTest::title()
+std::string SpeedTest::title() const
 {
     return "Speed action";
 }
@@ -599,7 +624,7 @@ void EaseSpriteDemo::positionForTwo()
 }
 
 
-std::string EaseSpriteDemo::title()
+std::string EaseSpriteDemo::title() const
 {
     return "No title";
 }

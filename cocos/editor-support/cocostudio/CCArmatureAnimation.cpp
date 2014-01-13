@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,33 +43,39 @@ ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
         return pArmatureAnimation;
     }
     CC_SAFE_DELETE(pArmatureAnimation);
-    return NULL;
+    return nullptr;
 }
 
 
 ArmatureAnimation::ArmatureAnimation()
-    : _animationData(NULL)
+    : _animationData(nullptr)
     , _speedScale(1)
-    , _movementData(NULL)
-    , _armature(NULL)
+    , _movementData(nullptr)
+    , _armature(nullptr)
     , _movementID("")
     , _toIndex(0)
+    , _ignoreFrameEvent(false)
+    , _onMovementList(false)
+    , _movementListLoop(false)
+    , _movementListDurationTo(-1)
+    , _userObject(nullptr)
 
-    , _movementEventCallFunc(NULL)
-    , _frameEventCallFunc(NULL)
-    , _movementEventTarget(NULL)
-    , _frameEventTarget(NULL)
+    , _movementEventCallFunc(nullptr)
+    , _frameEventCallFunc(nullptr)
+    , _movementEventTarget(nullptr)
+    , _frameEventTarget(nullptr)
+    
+    , _movementEventListener(nullptr)
+    , _frameEventListener(nullptr)
 {
 
 }
 
 ArmatureAnimation::~ArmatureAnimation(void)
 {
-    CC_SAFE_RELEASE_NULL(_tweenList);
     CC_SAFE_RELEASE_NULL(_animationData);
 
-    CC_SAFE_RELEASE_NULL(_movementEventTarget);
-    CC_SAFE_RELEASE_NULL(_frameEventTarget);
+    CC_SAFE_RELEASE_NULL(_userObject);
 }
 
 bool ArmatureAnimation::init(Armature *armature)
@@ -79,8 +85,7 @@ bool ArmatureAnimation::init(Armature *armature)
     {
         _armature = armature;
 
-        _tweenList = new Array();
-        _tweenList->init();
+        _tweenList.clear();
 
         bRet = true;
     }
@@ -90,34 +95,31 @@ bool ArmatureAnimation::init(Armature *armature)
 }
 
 
-void ArmatureAnimation:: pause()
+void ArmatureAnimation::pause()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for (const auto& tween : _tweenList)
     {
-		static_cast<Tween*>(object)->pause();
+        tween->pause();
     }
     ProcessBase::pause();
 }
 
 void ArmatureAnimation::resume()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for (const auto& tween : _tweenList)
     {
-        static_cast<Tween*>(object)->resume();
+        tween->resume();
     }
     ProcessBase::resume();
 }
 
 void ArmatureAnimation::stop()
 {
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    for (const auto& tween : _tweenList)
     {
-        static_cast<Tween*>(object)->stop();
+        tween->stop();
     }
-    _tweenList->removeAllObjects();
+    _tweenList.clear();
     ProcessBase::stop();
 }
 
@@ -143,11 +145,10 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
 
     _processScale = !_movementData ? _speedScale : _speedScale * _movementData->scale;
 
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
-    CCDICT_FOREACH(dict, element)
+    const Map<std::string, Bone*>& map = _armature->getBoneDic();
+    for(auto& element : map)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
+        Bone *bone = element.second;
 
         bone->getTween()->setProcessScale(_processScale);
         if (bone->getChildArmature())
@@ -162,34 +163,12 @@ float ArmatureAnimation::getSpeedScale() const
     return _speedScale;
 }
 
-void ArmatureAnimation::setAnimationInternal(float animationInternal)
-{
-    if(animationInternal == _animationInternal)
-    {
-        return;
-    }
 
-    _animationInternal = animationInternal;
-
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
-    CCDICT_FOREACH(dict, element)
-    {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        bone->getTween()->setAnimationInternal(_animationInternal);
-        if (bone->getChildArmature())
-        {
-            bone->getChildArmature()->getAnimation()->setAnimationInternal(_animationInternal);
-        }
-    }
-}
-
-
-void ArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::play(const std::string& animationName, int durationTo,  int loop)
 {
     CCASSERT(_animationData, "_animationData can not be null");
 
-    _movementData = _animationData->getMovement(animationName);
+    _movementData = _animationData->getMovement(animationName.c_str());
     CCASSERT(_movementData, "_movementData can not be null");
 
     //! Get key frame count
@@ -202,14 +181,14 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
     //! Further processing parameters
     durationTo = (durationTo == -1) ? _movementData->durationTo : durationTo;
 
-    durationTween = (durationTween == -1) ? _movementData->durationTween : durationTween;
-    durationTween = (durationTween == 0) ? _movementData->duration : durationTween;
+    int durationTween = _movementData->durationTween == 0 ? _rawDuration : _movementData->durationTween;
 
-    tweenEasing	= (tweenEasing == TWEEN_EASING_MAX) ? _movementData->tweenEasing : tweenEasing;
+    TweenType tweenEasing = _movementData->tweenEasing;
     loop = (loop < 0) ? _movementData->loop : loop;
 
+    _onMovementList = false;
 
-    ProcessBase::play((void *)animationName, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
 
     if (_rawDuration == 0)
@@ -225,64 +204,131 @@ void ArmatureAnimation::play(const char *animationName, int durationTo, int dura
         else
         {
             _loopType = ANIMATION_NO_LOOP;
-            _rawDuration --;
         }
         _durationTween = durationTween;
     }
 
-    MovementBoneData *movementBoneData = NULL;
-    _tweenList->removeAllObjects();
+    MovementBoneData *movementBoneData = nullptr;
+    _tweenList.clear();
 
-    DictElement *element = NULL;
-    Dictionary *dict = _armature->getBoneDic();
-
-    CCDICT_FOREACH(dict, element)
+    const Map<std::string, Bone*>& map = _armature->getBoneDic();
+    for(auto& element : map)
     {
-        Bone *bone = static_cast<Bone*>(element->getObject());
-        movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.objectForKey(bone->getName()));
+        Bone *bone = element.second;
+        movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.at(bone->getName()));
 
         Tween *tween = bone->getTween();
-        if(movementBoneData && movementBoneData->frameList.count() > 0)
+        if(movementBoneData && movementBoneData->frameList.size() > 0)
         {
-            _tweenList->addObject(tween);
+            _tweenList.pushBack(tween);
             movementBoneData->duration = _movementData->duration;
             tween->play(movementBoneData, durationTo, durationTween, loop, tweenEasing);
 
             tween->setProcessScale(_processScale);
-            tween->setAnimationInternal(_animationInternal);
 
             if (bone->getChildArmature())
             {
                 bone->getChildArmature()->getAnimation()->setProcessScale(_processScale);
-                bone->getChildArmature()->getAnimation()->setAnimationInternal(_animationInternal);
             }
         }
         else
         {
-            if(!bone->getIgnoreMovementBoneData())
+            if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
-                bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+                bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
                 tween->stop();
             }
 
         }
     }
+
+    _armature->update(0);
 }
 
+void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int loop)
+{
+    playWithIndex(animationIndex, durationTo, loop);
+}
 
-void ArmatureAnimation::playByIndex(int animationIndex, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ArmatureAnimation::playWithIndex(int animationIndex, int durationTo, int loop)
 {
     std::vector<std::string> &movName = _animationData->movementNames;
     CC_ASSERT((animationIndex > -1) && ((unsigned int)animationIndex < movName.size()));
 
     std::string animationName = movName.at(animationIndex);
-    play(animationName.c_str(), durationTo, durationTween, loop, tweenEasing);
+    play(animationName.c_str(), durationTo, loop);
 }
 
 
+void ArmatureAnimation::playWithNames(const std::vector<std::string>& movementNames, int durationTo, bool loop)
+{
+    _movementList.clear();
+    _movementListLoop = loop;
+    _movementListDurationTo = durationTo;
+    _onMovementList = true;
+    _movementIndex = 0;
 
-int ArmatureAnimation::getMovementCount()
+    _movementList = movementNames;
+
+    updateMovementList();
+}
+
+void ArmatureAnimation::playWithIndexes(const std::vector<int>& movementIndexes, int durationTo, bool loop)
+{
+    _movementList.clear();
+    _movementListLoop = loop;
+    _movementListDurationTo = durationTo;
+    _onMovementList = true;
+    _movementIndex = 0;
+
+    std::vector<std::string> &movName = _animationData->movementNames;
+
+    for(auto& index : movementIndexes)
+    {
+        std::string name = movName.at(index);
+        _movementList.push_back(name);
+    }
+
+    updateMovementList();
+}
+
+void ArmatureAnimation::gotoAndPlay(int frameIndex)
+{
+    if (!_movementData || frameIndex < 0 || frameIndex >= _movementData->duration)
+    {
+        CCLOG("Please ensure you have played a movement, and the frameIndex is in the range.");
+        return;
+    }
+
+    bool ignoreFrameEvent = _ignoreFrameEvent;
+    _ignoreFrameEvent = true;
+
+    _isPlaying = true;
+    _isComplete = _isPause = false;
+
+    ProcessBase::gotoFrame(frameIndex);
+    _currentPercent = (float)_curFrameIndex / ((float)_movementData->duration-1);
+    _currentFrame = _nextFrameIndex * _currentPercent;
+
+    
+    for (const auto &tween : _tweenList)
+    {
+        tween->gotoAndPlay(frameIndex);
+    }
+
+    _armature->update(0);
+
+    _ignoreFrameEvent = ignoreFrameEvent;
+}
+
+void ArmatureAnimation::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
+}
+
+ssize_t ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }
@@ -290,10 +336,51 @@ int ArmatureAnimation::getMovementCount()
 void ArmatureAnimation::update(float dt)
 {
     ProcessBase::update(dt);
-    Object *object = NULL;
-    CCARRAY_FOREACH(_tweenList, object)
+    
+    for (const auto &tween : _tweenList)
     {
-		static_cast<Tween *>(object)->update(dt);
+        tween->update(dt);
+    }
+
+    while (_frameEventQueue.size() > 0)
+    {
+        FrameEvent *event = _frameEventQueue.front();
+        _frameEventQueue.pop();
+
+        _ignoreFrameEvent = true;
+        
+        if(_frameEventTarget)
+        {
+            (_frameEventTarget->*_frameEventCallFunc)(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        }
+        
+        if (_frameEventListener)
+        {
+            _frameEventListener(event->bone, event->frameEventName, event->originFrameIndex, event->currentFrameIndex);
+        }
+        
+        
+        _ignoreFrameEvent = false;
+
+        CC_SAFE_DELETE(event);
+    }
+
+    while (_movementEventQueue.size() > 0)
+    {
+        MovementEvent *event = _movementEventQueue.front();
+        _movementEventQueue.pop();
+        
+        if(_movementEventTarget)
+        {
+            (_movementEventTarget->*_movementEventCallFunc)(event->armature, event->movementType, event->movementID);
+        }
+        
+        if (_movementEventListener)
+        {
+            _movementEventListener(event->armature, event->movementType, event->movementID);
+        }
+        
+        CC_SAFE_DELETE(event);
     }
 }
 
@@ -316,10 +403,7 @@ void ArmatureAnimation::updateHandler()
             {
                 _nextFrameIndex = _durationTween;
 
-                if (_movementEventTarget && _movementEventCallFunc)
-                {
-                    (_movementEventTarget->*_movementEventCallFunc)(_armature, START, _movementID.c_str());
-                }
+                movementEvent(_armature, START, _movementID.c_str());
 
                 break;
             }
@@ -332,10 +416,9 @@ void ArmatureAnimation::updateHandler()
             _isComplete = true;
             _isPlaying = false;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, COMPLETE, _movementID.c_str());
-            }
+            movementEvent(_armature, COMPLETE, _movementID.c_str());
+
+            updateMovementList();
         }
         break;
         case ANIMATION_TO_LOOP_FRONT:
@@ -345,10 +428,7 @@ void ArmatureAnimation::updateHandler()
             _currentFrame = _nextFrameIndex == 0 ? 0 : fmodf(_currentFrame, _nextFrameIndex);
             _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, START, _movementID.c_str());
-            }
+            movementEvent(_armature, START, _movementID.c_str());
         }
         break;
         default:
@@ -357,17 +437,14 @@ void ArmatureAnimation::updateHandler()
             _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
             _toIndex = 0;
 
-            if (_movementEventTarget && _movementEventCallFunc)
-            {
-                (_movementEventTarget->*_movementEventCallFunc)(_armature, LOOP_COMPLETE, _movementID.c_str());
-            }
+            movementEvent(_armature, LOOP_COMPLETE, _movementID.c_str());
         }
         break;
         }
     }
 }
 
-std::string ArmatureAnimation::getCurrentMovementID()
+std::string ArmatureAnimation::getCurrentMovementID() const
 {
     if (_isComplete)
     {
@@ -378,31 +455,89 @@ std::string ArmatureAnimation::getCurrentMovementID()
 
 void ArmatureAnimation::setMovementEventCallFunc(Object *target, SEL_MovementEventCallFunc callFunc)
 {
-    if (target != _movementEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_movementEventTarget);
-        _movementEventTarget = target;
-    }
+    _movementEventTarget = target;
     _movementEventCallFunc = callFunc;
 }
 
 void ArmatureAnimation::setFrameEventCallFunc(Object *target, SEL_FrameEventCallFunc callFunc)
 {
-    if (target != _frameEventTarget)
-    {
-        CC_SAFE_RETAIN(target);
-        CC_SAFE_RELEASE_NULL(_frameEventTarget);
-        _frameEventTarget = target;
-    }
+    _frameEventTarget = target;
     _frameEventCallFunc = callFunc;
 }
 
-void ArmatureAnimation::frameEvent(Bone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex)
+void ArmatureAnimation::setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener)
 {
-    if (_frameEventTarget && _frameEventCallFunc)
+    _movementEventListener = listener;
+}
+void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener)
+{
+    _frameEventListener = listener;
+}
+
+void ArmatureAnimation::setUserObject(Object *pUserObject)
+{
+    CC_SAFE_RETAIN(pUserObject);
+    CC_SAFE_RELEASE(_userObject);
+    _userObject = pUserObject;
+}
+
+void ArmatureAnimation::frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)
+{
+    if ((_frameEventTarget && _frameEventCallFunc) || _frameEventListener)
     {
-        (_frameEventTarget->*_frameEventCallFunc)(bone, frameEventName, originFrameIndex, currentFrameIndex);
+        FrameEvent *frameEvent = new FrameEvent();
+        frameEvent->bone = bone;
+        frameEvent->frameEventName = frameEventName;
+        frameEvent->originFrameIndex = originFrameIndex;
+        frameEvent->currentFrameIndex = currentFrameIndex;
+
+        _frameEventQueue.push(frameEvent);
     }
 }
+
+
+void ArmatureAnimation::movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID)
+{
+    if ((_movementEventTarget && _movementEventCallFunc) || _movementEventListener)
+    {
+        MovementEvent *movementEvent = new MovementEvent();
+        movementEvent->armature = armature;
+        movementEvent->movementType = movementType;
+        movementEvent->movementID = movementID;
+        _movementEventQueue.push(movementEvent);
+    }
+}
+
+
+void ArmatureAnimation::updateMovementList()
+{
+    if (_onMovementList)
+    {
+        if (_movementListLoop)
+        {
+            play(_movementList.at(_movementIndex).c_str(), _movementListDurationTo, 0);
+            _movementIndex++;
+
+            if (_movementIndex >= _movementList.size())
+             {
+                 _movementIndex = 0;
+            }
+        }
+        else
+        {
+            if (_movementIndex < _movementList.size())
+            {
+                play(_movementList.at(_movementIndex).c_str(), _movementListDurationTo, 0);
+                _movementIndex++;
+            }
+            else
+            {
+                _onMovementList = false;
+            }
+        }
+
+        _onMovementList = true;
+    }
+}
+
 }

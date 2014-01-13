@@ -153,7 +153,7 @@
 #endif
 
 /* The size of `long', as computed by sizeof. */
-#define CURL_SIZEOF_LONG 4
+#define CURL_SIZEOF_LONG sizeof(long)
 
 /* Integral data type used for curl_socklen_t. */
 #define CURL_TYPEOF_CURL_SOCKLEN_T socklen_t

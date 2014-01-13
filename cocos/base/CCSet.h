@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -35,35 +36,35 @@ NS_CC_BEGIN
  * @{
  */
 
-typedef std::set<Object *>::iterator SetIterator;
+typedef std::set<Object *>::iterator __SetIterator;
 
-class CC_DLL Set : public Object
+class CC_DLL __Set : public Object
 {
 public:
     /**
      * @js ctor
      */
-    Set(void);
-    Set(const Set &rSetObject);
+    __Set(void);
+    __Set(const __Set &rSetObject);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Set(void);
+    virtual ~__Set(void);
 
     /**
     * @brief Create and return a new empty set.
     */
-    static Set * create();
+    static __Set * create();
 
     /**
     *@brief Return a copy of the Set, it will copy all the elements.
     */
-    Set* copy();
+    __Set* copy();
     /**
     *@brief It is the same as copy().
     */
-    Set* mutableCopy();
+    __Set* mutableCopy();
     /**
     *@brief Return the number of elements the Set contains.
     */
@@ -89,13 +90,13 @@ public:
     * @js NA
     * @lua NA
     */
-    SetIterator begin();
+    __SetIterator begin();
     /**
     *@brief Return the iterator that points to the position after the last element.
     * @js NA
     * @lua NA
     */
-    SetIterator end();
+    __SetIterator end();
     /**
     *@brief Return the first element if it contains elements, or null if it doesn't contain any element.
     */

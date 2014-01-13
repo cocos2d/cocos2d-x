@@ -100,8 +100,11 @@ bool HelloWorld::init()
 
 		this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
 
-		this->setTouchEnabled(true);
-
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesEnded = CC_CALLBACK_2(HelloWorld::onTouchesEnded, this);
+        dispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
 		_targets = new Array();
         _targets->init();
         

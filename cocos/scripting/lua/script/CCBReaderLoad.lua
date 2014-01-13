@@ -2,7 +2,7 @@ ccb = ccb or {}
 
 function CCBReaderLoad(strFilePath,proxy,owner)
     if nil == proxy then
-        return
+        return nil
     end
 
     local ccbReader = proxy:createCCBReader()
@@ -112,3 +112,10 @@ function CCBReaderLoad(strFilePath,proxy,owner)
 
     return node
 end
+
+
+local function CCBuilderReaderLoad(strFilePath,proxy,owner)
+    print("\n********** \n".."CCBuilderReaderLoad(strFilePath,proxy,owner)".." was deprecated please use ".. "CCBReaderLoad(strFilePath,proxy,owner)" .. " instead.\n**********")
+    return CCBReaderLoad(strFilePath,proxy,owner)
+end
+rawset(_G,"CCBuilderReaderLoad",CCBuilderReaderLoad)

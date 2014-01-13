@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,9 @@ THE SOFTWARE.
 #include "cocostudio/CCBatchNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCArmature.h"
+#include "cocostudio/CCSkin.h"
+#include "CCRenderer.h"
+#include "CCGroupCommand.h"
 
 using namespace cocos2d;
 
@@ -39,29 +42,60 @@ BatchNode *BatchNode::create()
         return batchNode;
     }
     CC_SAFE_DELETE(batchNode);
-    return NULL;
+    return nullptr;
 }
 
 BatchNode::BatchNode()
-    : _atlas(NULL)
+: _groupCommand(nullptr)
 {
+}
+
+BatchNode::~BatchNode()
+{
+    CC_SAFE_DELETE(_groupCommand);
 }
 
 bool BatchNode::init()
 {
     bool ret = Node::init();
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
     return ret;
+}
+
+void BatchNode::addChild(Node *pChild)
+{
+    Node::addChild(pChild);
+}
+
+void BatchNode::addChild(Node *child, int zOrder)
+{
+    Node::addChild(child, zOrder);
 }
 
 void BatchNode::addChild(Node *child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
     Armature *armature = dynamic_cast<Armature *>(child);
-    if (armature != NULL)
+    if (armature != nullptr)
     {
         armature->setBatchNode(this);
+        if (_groupCommand == nullptr)
+        {
+            _groupCommand = new GroupCommand();
+        }
     }
+}
+
+void BatchNode::removeChild(Node* child, bool cleanup)
+{
+    Armature *armature = dynamic_cast<Armature *>(child);
+    if (armature != nullptr)
+    {
+        armature->setBatchNode(nullptr);
+    }
+
+    Node::removeChild(child, cleanup);
 }
 
 void BatchNode::visit()
@@ -73,11 +107,6 @@ void BatchNode::visit()
     }
     kmGLPushMatrix();
 
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-    }
-
     transform();
     sortAllChildren();
     draw();
@@ -85,37 +114,49 @@ void BatchNode::visit()
     // reset for next frame
     _orderOfArrival = 0;
 
-    if (_grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
-
     kmGLPopMatrix();
 }
 
 void BatchNode::draw()
 {
+    if (_children.empty())
+    {
+        return;
+    }
+
     CC_NODE_DRAW_SETUP();
-    Object *object = NULL;
-    CCARRAY_FOREACH(_children, object)
+
+    bool pushed = false;
+    for(auto object : _children)
     {
         Armature *armature = dynamic_cast<Armature *>(object);
         if (armature)
         {
+            if (!pushed)
+            {
+                generateGroupCommand();
+                pushed = true;
+            }
+        
             armature->visit();
-            _atlas = armature->getTextureAtlas();
         }
         else
         {
+            Director::getInstance()->getRenderer()->popGroup();
+            pushed = false;
+            
             ((Node *)object)->visit();
         }
     }
+}
 
-    if (_atlas)
-    {
-        _atlas->drawQuads();
-        _atlas->removeAllQuads();
-    }
+void BatchNode::generateGroupCommand()
+{
+    Renderer* renderer = Director::getInstance()->getRenderer();
+    _groupCommand->init(0,_vertexZ);
+    renderer->addCommand(_groupCommand);
+
+    renderer->pushGroup(_groupCommand->getRenderQueueID());
 }
 
 }

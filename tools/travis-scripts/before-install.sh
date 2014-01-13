@@ -21,12 +21,12 @@ install_android_ndk()
     else
         HOST_NAME="linux"
     fi
-    echo "Download android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    curl -O http://dl.google.com/android/ndk/android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
-    echo "Decompress android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2 ..."
-    tar xjf android-ndk-r8e-${HOST_NAME}-x86_64.tar.bz2
+    echo "Download android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2 ..."
+    curl -O http://dl.google.com/android/ndk/android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2
+    echo "Decompress android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2 ..."
+    tar xjf android-ndk-r9b-${HOST_NAME}-x86_64.tar.bz2
     # Rename ndk
-    mv android-ndk-r8e android-ndk
+    mv android-ndk-r9b android-ndk
 }
 
 install_llvm()
@@ -102,8 +102,7 @@ elif [ "$PLATFORM"x = "linux"x ]; then
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 90 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
     g++ --version
-    bash $COCOS2DX_ROOT/install-deps-linux.sh
-    bash $DIR/install_glfw.sh
+    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     install_android_ndk
     install_llvm
 elif [ "$PLATFORM"x = "nacl"x ]; then

@@ -14,6 +14,13 @@ struct {
 	const char *test_name;
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
+
+    //
+    // TESTS MUST BE ORDERED ALPHABETICALLY
+    //     violators will be prosecuted
+    //
+    { "AUnitTest", []() { return new UnitTestScene(); }},
+    { "ANewRenderTest", []() { return new NewRendererTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -31,6 +38,7 @@ struct {
 #endif
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
+	{ "ConsoleTest", []() { return new ConsoleTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
@@ -58,6 +66,7 @@ struct {
 	{ "LayerTest", [](){return new LayerTestScene();} },
 	{ "MenuTest", [](){return new MenuTestScene();} },
 	{ "MotionStreakTest", [](){return new MotionStreakTestScene();} },
+    { "MouseTest", []() { return new MouseTestScene(); } },
 	{ "MutiTouchTest", []() { return new MutiTouchTestScene(); } },
 	{ "NodeTest", [](){return new CocosNodeTestScene();} },
 	{ "ParallaxTest", [](){return new ParallaxTestScene(); } },
@@ -130,6 +139,10 @@ TestController::TestController()
     listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseScroll = CC_CALLBACK_1(TestController::onMouseScroll, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 }
 
 TestController::~TestController()
@@ -148,7 +161,7 @@ void TestController::menuCallback(Object * sender)
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();
 
-    if (scene && scene->initTest())
+    if (scene)
     {
         scene->runThisTest();
         scene->release();
@@ -191,5 +204,29 @@ void TestController::onTouchMoved(Touch* touch, Event  *event)
 
     _itemMenu->setPosition(nextPos);
     _beginPos = touchLocation;
+    s_tCurPos   = nextPos;
+}
+
+void TestController::onMouseScroll(Event *event)
+{
+    auto mouseEvent = static_cast<EventMouse*>(event);
+    float nMoveY = mouseEvent->getScrollY() * 6;
+
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(Point::ZERO);
+        return;
+    }
+
+    if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(Point(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+
+    _itemMenu->setPosition(nextPos);
     s_tCurPos   = nextPos;
 }

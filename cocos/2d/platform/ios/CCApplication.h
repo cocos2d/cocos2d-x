@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -75,6 +76,13 @@ public:
      @brief Get target platform
      */
     virtual Platform getTargetPlatform();
+
+	/**
+	@brief  This function will be called when the application screen size is changed.
+	@param new width
+	@param new height
+	*/
+	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 
 protected:
     static Application * sm_pSharedApplication;

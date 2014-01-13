@@ -167,6 +167,7 @@ public:
     void resume(Object* sender);
 
     void setTouchEnabled(bool enabled);
+	bool isTouchEnabled() const;
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
@@ -223,9 +224,9 @@ public:
      * @lua NA
      */
     virtual void visit() override;
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    virtual void addChild(Node * child, int zOrder) override;
-    virtual void addChild(Node * child) override;
 
 protected:
     /**
@@ -253,11 +254,13 @@ protected:
      * clip this view so that outside of the visible bounds can be hidden.
      */
     void beforeDraw();
+    void onBeforeDraw();
     /**
      * retract what's done in beforeDraw so that there's no side effect to
      * other nodes.
      */
     void afterDraw();
+    void onAfterDraw();
     /**
      * Zoom handling
      */
@@ -350,6 +353,9 @@ protected:
     
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
+    
+    CustomCommand _beforeDrawCommand;
+    CustomCommand _afterDrawCommand;
 };
 
 // end of GUI group

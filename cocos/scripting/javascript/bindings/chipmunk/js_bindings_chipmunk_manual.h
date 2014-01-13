@@ -27,7 +27,6 @@
 #define __js_bindings_chipmunk_manual
 
 #include "js_bindings_config.h"
-#include "cocosjs_manual_conversions.h"
 #include "js_manual_conversions.h"
 #include "ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK

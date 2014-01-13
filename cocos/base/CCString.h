@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -31,6 +32,8 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include <string>
 #include <functional>
+#include <sstream>
+
 #include "CCObject.h"
 
 NS_CC_BEGIN
@@ -40,40 +43,40 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL String : public Object, public Clonable
+class CC_DLL __String : public Object, public Clonable
 {
 public:
     /**
      * @js NA
      * @lua NA
      */
-    String();
+    __String();
     /**
      * @js NA
      * @lua NA
      */
-    String(const char* str);
+    __String(const char* str);
     /**
      * @js NA
      * @lua NA
      */
-    String(const std::string& str);
+    __String(const std::string& str);
     /**
      * @js NA
      * @lua NA
      */
-    String(const String& str);
+    __String(const __String& str);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~String();
+    virtual ~__String();
     
     /* override assignment operator 
      * @js NA
      * @lua NA
      */
-    String& operator= (const String& other);
+    __String& operator= (const __String& other);
 
     /** init a string with format, it's similar with the c function 'sprintf' 
      * @js NA
@@ -114,7 +117,7 @@ public:
     /** get the length of string 
      * @js NA
      */
-    unsigned int length() const;
+    int length() const;
 
     /** compare to a c string 
      * @js NA
@@ -137,7 +140,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Array* componentsSeparatedByString(const char *delimiter);
+    __Array* componentsSeparatedByString(const char *delimiter);
     
     /* override functions 
      * @js NA
@@ -149,29 +152,29 @@ public:
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* create(const std::string& str);
+    static __String* create(const std::string& str);
 
     /** create a string with format, it's similar with the c function 'sprintf', the default buffer size is (1024*100) bytes,
-     *  if you want to change it, you should modify the kMaxStringLen macro in String.cpp file.
+     *  if you want to change it, you should modify the kMax__StringLen macro in __String.cpp file.
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
+    static __String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
     /** create a string with binary data 
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* createWithData(const unsigned char* pData, unsigned long nLen);
+    static __String* createWithData(const unsigned char* pData, int nLen);
 
     /** create a string with a file, 
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
-    static String* createWithContentsOfFile(const char* filename);
+    static __String* createWithContentsOfFile(const char* filename);
     /**
      * @js NA
      * @lua NA
@@ -181,7 +184,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual String* clone() const;
+    virtual __String* clone() const;
     
 private:
 
@@ -192,15 +195,50 @@ public:
     std::string _string;
 };
 
-struct StringCompare : public std::binary_function<String *, String *, bool> {
+struct StringCompare : public std::binary_function<__String *, __String *, bool> {
     public:
-        bool operator() (String * a, String * b) const {
+        bool operator() (__String * a, __String * b) const {
             return strcmp(a->getCString(), b->getCString()) < 0;
         }
 };
 
 #define StringMake(str) String::create(str)
-#define ccs               StringMake
+#define ccs             StringMake
+
+class StringUtils
+{
+public:
+    
+    template<typename T>
+    static std::string toString(T arg)
+    {
+        std::stringstream ss;
+        ss << arg;
+        return ss.str();
+    }
+    
+    static std::string format(const char* format, ...) CC_FORMAT_PRINTF(1, 2)
+    {
+        #define CC_MAX_STRING_LENGTH (1024*100)
+        
+        std::string ret;
+        
+        va_list ap;
+        va_start(ap, format);
+        
+        char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
+        if (buf != nullptr)
+        {
+            vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
+            ret = buf;
+            free(buf);
+        }
+        va_end(ap);
+        
+        return ret;
+    }
+    
+};
 
 // end of data_structure group
 /// @}

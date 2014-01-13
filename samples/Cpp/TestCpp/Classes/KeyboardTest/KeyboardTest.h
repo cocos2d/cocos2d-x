@@ -10,8 +10,8 @@ public:
     KeyboardTest();
     ~KeyboardTest();
 
-    virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-    virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+    void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
 private:
     LabelTTF*            _label;

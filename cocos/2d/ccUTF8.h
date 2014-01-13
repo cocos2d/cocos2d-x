@@ -1,9 +1,23 @@
-//
-//  ccUTF8.h
-//  cocos2dx
-//
-//  Created by James Chen on 2/27/13.
-//
+/*
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
 
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
@@ -33,7 +47,7 @@ CC_DLL bool isspace_unicode(unsigned short ch);
  * @param p     pointer to the start of a UTF-8 encoded string.
  * @param max   the maximum number of bytes to examine. If \p max is less than
  *              0, then the string is assumed to be null-terminated. If \p max
- *              is 0, \p p will not be examined and my be %NULL.
+ *              is 0, \p p will not be examined and my be %nullptr.
  *
  * @returns the length of the string in characters
  **/
@@ -59,7 +73,7 @@ CC_DLL std::vector<unsigned short> cc_utf16_vec_from_utf16_str(const unsigned sh
  *
  * @returns the newly created utf8 string.
  * */
-CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = NULL);
+CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, int* rUtf16Size = nullptr);
 
 /**
  * Convert a string from UTF-16 to UTF-8. The result will be null terminated.
@@ -67,20 +81,20 @@ CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, in
  * @param str   a UTF-16 encoded string
  * @param len   the maximum length of \p str to use. If \p len < 0, then the
  *              string is null terminated.
- * @param items_read    location to store number of words read, or %NULL.
- *                      If %NULL, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
+ * @param items_read    location to store number of words read, or %nullptr.
+ *                      If %nullptr, then %G_CONVERT_ERROR_PARTIAL_INPUT will be
  *                      returned in case \p str contains a trailing partial
  *                      character. If an error occurs then the index of the
  *                      invalid input is stored here.
- * @param items_written location to store number of bytes written, or %NULL.
+ * @param items_written location to store number of bytes written, or %nullptr.
  *                      The value stored here does not include the trailing null.
  *
  * @returns a pointer to a newly allocated UTF-8 string. This value must be
- *          freed with free(). If an error occurs, %NULL will be returned.
+ *          freed with free(). If an error occurs, %nullptr will be returned.
  **/
 CC_DLL char *
 cc_utf16_to_utf8 (const unsigned short  *str,
-                  long             len,
+                  int             len,
                   long            *items_read,
                   long            *items_written);
 

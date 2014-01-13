@@ -2,10 +2,6 @@
 # android-build.py
 # Build android samples
 
-# You can use
-
-
-# begin
 import sys
 import os, os.path
 import shutil
@@ -15,15 +11,6 @@ CPP_SAMPLES = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
 LUA_SAMPLES = ['hellolua', 'testlua']
 JSB_SAMPLES = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
-
-
-def usage():
-
-    print "%prog [-n ndk-build-parameter] target\n\
-    valid target are [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon\
-|crystalcraze|moonwarriors|testjavascript|watermelonwithme], of course you can use 'cpp'\
-to build all cpp samples, 'lua' to build all lua samples, 'jsb' to build all javascript samples,\
- and 'all' for all samples" 
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -36,6 +23,18 @@ def check_environment_variables():
         sys.exit(1)
 
     return NDK_ROOT
+    
+def check_environment_variables_sdk():
+    ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
+    '''
+
+    try:
+        SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+    except Exception:
+        print "ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment"
+        sys.exit(1)
+
+    return SDK_ROOT
 
 def select_toolchain_version():
     '''Because ndk-r8e uses gcc4.6 as default. gcc4.6 doesn't support c++11. So we should select gcc4.7 when
@@ -84,7 +83,7 @@ def caculate_built_samples(args):
     targets = set(targets)
     return list(targets)
 
-def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
+def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode):
 
     ndk_path = os.path.join(ndk_root, "ndk-build")
 
@@ -99,7 +98,20 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param):
         command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
-    os.system(command)
+    if os.system(command) != 0:
+        raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
+    elif android_platform is not None:
+    	  sdk_tool_path = os.path.join(sdk_root, "tools/android")
+    	  cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
+    	  command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path) 
+    	  if os.system(command) != 0:
+    	  	  raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")  	  
+    	  command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
+    	  if os.system(command) != 0:
+    	  	  raise Exception("update project [ " + app_android_root + " ] fails!")    	  	  
+    	  buildfile_path = os.path.join(app_android_root, "build.xml")
+    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
+    	  os.system(command)
 
 def copy_files(src, dst):
 
@@ -127,7 +139,7 @@ def copy_resources(target, app_android_root):
         copy_files(resources_dir, assets_dir)
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES or target == "assetsmanager":
+    if target in JSB_SAMPLES:
         resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
 
@@ -135,13 +147,26 @@ def copy_resources(target, app_android_root):
             resources_dir = os.path.join(app_android_root, "../../Shared/games/CocosDragonJS/Published files Android")
         if target == "crystalcraze":
             resources_dir = os.path.join(app_android_root, "../../Shared/games/CrystalCraze/Published-Android")
-        if target == "moonwarriors":
-            resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
         if target == "testjavascript":
             resources_dir = os.path.join(app_android_root, "../../Shared/tests/")
         if target == "watermelonwithme":
             resources_dir = os.path.join(app_android_root, "../../Shared/games/WatermelonWithMe")
-        copy_files(resources_dir, assets_dir)
+        if target != "moonwarriors":
+            copy_files(resources_dir, assets_dir)
+        else:
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
+        	  dst_dir = os.path.join(assets_dir, "res")
+        	  os.mkdir(dst_dir)
+        	  copy_files(resources_dir, dst_dir)
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/src")
+        	  dst_dir = os.path.join(assets_dir, "src")
+        	  os.mkdir(dst_dir)
+        	  copy_files(resources_dir, dst_dir)
+        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors")
+        	  for item in os.listdir(resources_dir):
+        	  	  path = os.path.join(resources_dir, item)
+        	  	  if item.endswith('.js') and os.path.isfile(path):
+        	  	  	  shutil.copy(path, assets_dir)
 
     # AssetsManager test should also copy javascript files
     if target == "assetsmanager":
@@ -158,15 +183,29 @@ def copy_resources(target, app_android_root):
             resources_dir = os.path.join(app_android_root, "../../../Cpp/TestCpp/Resources")
             copy_files(resources_dir, assets_dir)
 
-def build_samples(target,ndk_build_param):
+def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     ndk_root = check_environment_variables()
+    sdk_root = None
     select_toolchain_version()
     build_targets = caculate_built_samples(target)
 
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
-
+    
+    if android_platform is not None:
+				sdk_root = check_environment_variables_sdk()
+				if android_platform.isdigit():
+						android_platform = 'android-'+android_platform
+				else:
+						print 'please use vaild android platform'
+						exit(1)
+    	  
+    if build_mode is None:
+    	  build_mode = 'debug'
+    elif build_mode != 'release':
+        build_mode = 'debug'
+       
     app_android_root = ''
     for target in build_targets:
         if target == 'hellocpp':
@@ -176,37 +215,52 @@ def build_samples(target,ndk_build_param):
         elif target == 'simplegame':
             app_android_root = os.path.join(cocos_root, 'samples/Cpp/SimpleGame/proj.android')
         elif target == 'assetsmanager':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManager/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManagerTest/proj.android')
         elif target == 'hellolua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/HelloLua/proj.android')
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'samples/Lua/TestLua/proj.android')
         elif target == 'cocosdragon':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CocosDragonJS/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CocosDragonJS/proj.android')
         elif target == 'crystalcraze':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/CrystalCraze/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CrystalCraze/proj.android')
         elif target == 'moonwarriors':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/MoonWarriors/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/MoonWarriors/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/TestJavascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/TestJavascript/proj.android')
         elif target == 'watermelonwithme':
-            app_android_root = os.path.join(cocos_root, 'samples/JavaScript/WatermelonWithMe/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/Javascript/WatermelonWithMe/proj.android')
         else:
-            print 'unknown target %s, pass it', target
+            print 'unknown target: %s' % target
             continue
 
         copy_resources(target, app_android_root)
-        do_build(cocos_root, ndk_root, app_android_root, ndk_build_param)
+        do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
 
     #parse the params
-    parser = OptionParser()
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
+    usage = """usage: %prog [options] target
+    
+  Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+
+  You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely."""
+
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", 
+    help='parameter for ndk-build')
+    parser.add_option("-p", "--platform", dest="android_platform", 
+    help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    parser.add_option("-b", "--build", dest="build_mode", 
+    help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
-        usage()
+        parser.print_help()
     else:
-        build_samples(args, opts.ndk_build_param)
+        try:
+            build_samples(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)
+        except Exception as e:
+            print e
+            sys.exit(1)

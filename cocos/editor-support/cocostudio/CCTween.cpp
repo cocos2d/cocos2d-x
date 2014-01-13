@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,24 +43,25 @@ Tween *Tween::create(Bone *bone)
         return pTween;
     }
     CC_SAFE_DELETE(pTween);
-    return NULL;
+    return nullptr;
 
 }
 
 
 
 Tween::Tween()
-    : _movementBoneData(NULL)
-    , _tweenData(NULL)
-    , _from(NULL)
-    , _to(NULL)
-    , _between(NULL)
-    , _bone(NULL)
+    : _movementBoneData(nullptr)
+    , _tweenData(nullptr)
+    , _from(nullptr)
+    , _to(nullptr)
+    , _between(nullptr)
+    , _bone(nullptr)
 
     , _frameTweenEasing(Linear)
     , _fromIndex(0)
     , _toIndex(0)
-    , _animation(NULL)
+    , _animation(nullptr)
+    , _passLastFrame(false)
 {
 
 }
@@ -85,7 +86,7 @@ bool Tween::init(Bone *bone)
         _tweenData = _bone->getTweenData();
         _tweenData->displayIndex = -1;
 
-        _animation = _bone->getArmature() != NULL ? _bone->getArmature()->getAnimation() : NULL;
+        _animation = _bone->getArmature() != nullptr ? _bone->getArmature()->getAnimation() : nullptr;
 
         bRet = true;
     }
@@ -97,9 +98,16 @@ bool Tween::init(Bone *bone)
 
 void Tween::play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    ProcessBase::play(NULL, durationTo, durationTween, loop, tweenEasing);
+    ProcessBase::play(durationTo, durationTween, loop, tweenEasing);
 
-    _loopType = (AnimationType)loop;
+    if (loop)
+    {
+        _loopType = ANIMATION_TO_LOOP_FRONT;
+    }
+    else
+    {
+        _loopType = ANIMATION_NO_LOOP;
+    }
 
     _totalDuration = 0;
     _betweenDuration = 0;
@@ -133,17 +141,8 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
         }
         _frameTweenEasing = Linear;
     }
-    else if (_movementBoneData->frameList.count() > 1)
+    else if (_movementBoneData->frameList.size() > 1)
     {
-        if (loop)
-        {
-            _loopType = ANIMATION_TO_LOOP_BACK;
-        }
-        else
-        {
-            _loopType = ANIMATION_NO_LOOP;
-        }
-
         _durationTween = durationTween * _movementBoneData->scale;
 
         if (loop && _movementBoneData->delay != 0)
@@ -164,6 +163,27 @@ void Tween::play(MovementBoneData *movementBoneData, int durationTo, int duratio
     }
 
     tweenNodeTo(0);
+}
+
+void Tween::gotoAndPlay(int frameIndex)
+{
+    ProcessBase::gotoFrame(frameIndex);
+
+    _totalDuration = 0;
+    _betweenDuration = 0;
+    _fromIndex = _toIndex = 0;
+
+    _isPlaying = true;
+    _isComplete = _isPause = false;
+
+    _currentPercent = (float)_curFrameIndex / ((float)_rawDuration-1);
+    _currentFrame = _nextFrameIndex * _currentPercent;
+}
+
+void Tween::gotoAndPause(int frameIndex)
+{
+    gotoAndPlay(frameIndex);
+    pause();
 }
 
 void Tween::updateHandler()
@@ -211,9 +231,9 @@ void Tween::updateHandler()
             }
         }
         break;
-        case ANIMATION_TO_LOOP_BACK:
+        case ANIMATION_TO_LOOP_FRONT:
         {
-            _loopType = ANIMATION_LOOP_BACK;
+            _loopType = ANIMATION_LOOP_FRONT;
 
             _nextFrameIndex = _durationTween > 0 ? _durationTween : 1;
 
@@ -244,10 +264,6 @@ void Tween::updateHandler()
         default:
         {
             _currentFrame = fmodf(_currentFrame, _nextFrameIndex);
-
-            _totalDuration = 0;
-            _betweenDuration = 0;
-            _fromIndex = _toIndex = 0;
         }
         break;
         }
@@ -312,9 +328,9 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         //! Change bone's display
         int displayIndex = keyFrameData->displayIndex;
 
-        if (!displayManager->getForceChangeDisplay())
+        if (!displayManager->isForceChangeDisplay())
         {
-            displayManager->changeDisplayByIndex(displayIndex, false);
+            displayManager->changeDisplayWithIndex(displayIndex, false);
         }
 
         //! Update bone zorder, bone's zorder is determined by frame zorder and bone zorder
@@ -322,7 +338,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
         _bone->updateZOrder();
 
         //! Update blend type
-        _bone->setBlendType(keyFrameData->blendType);
+        _bone->setBlendFunc(keyFrameData->blendFunc);
 
         //! Update child armature's movement
         Armature *childAramture = _bone->getChildArmature();
@@ -338,11 +354,11 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
 
 FrameData *Tween::tweenNodeTo(float percent, FrameData *node)
 {
-    node = node == NULL ? _tweenData : node;
+    node = node == nullptr ? _tweenData : node;
 
     if (!_from->isTween)
     {
-        return _from;
+        percent = 0;
     }
 
     node->x = _from->x + percent * _between->x;
@@ -378,7 +394,7 @@ float Tween::updateFrameData(float currentPercent)
         currentPercent = fmodf(currentPercent, 1);
     }
 
-    float playedTime = (float)_rawDuration * currentPercent;
+    float playedTime = ((float)_rawDuration-1) * currentPercent;
 
 
     //! If play to current frame's front or back, then find current frame again
@@ -388,46 +404,57 @@ float Tween::updateFrameData(float currentPercent)
          *  Get frame length, if _toIndex >= _length, then set _toIndex to 0, start anew.
          *  _toIndex is next index will play
          */
-        int length = _movementBoneData->frameList.count();
-        FrameData **frames = (FrameData **)_movementBoneData->frameList.data->arr;
+        long length = _movementBoneData->frameList.size();
+        cocos2d::Vector<FrameData *> &frames = _movementBoneData->frameList;
 
-        FrameData *from = NULL;
-        FrameData *to = NULL;
+        FrameData *from = nullptr;
+        FrameData *to = nullptr;
 
-        if (playedTime < frames[0]->frameID)
+        if (playedTime < frames.at(0)->frameID)
         {
-            from = to = frames[0];
+            from = to = frames.at(0);
             setBetween(from, to);
-            return currentPercent;
+            return _currentPercent;
         }
-        else if(playedTime >= frames[length - 1]->frameID)
+        
+        if(playedTime >= frames.at(length - 1)->frameID)
         {
-            from = to = frames[length - 1];
-            setBetween(from, to);
-            return currentPercent;
+            // If _passLastFrame is true and playedTime >= frames[length - 1]->frameID, then do not need to go on. 
+            if (_passLastFrame)
+            {
+                from = to = frames.at(length - 1);
+                setBetween(from, to);
+                return _currentPercent;
+            }
+            _passLastFrame = true;
+        }
+        else
+        {
+            _passLastFrame = false;
         }
 
 
         do
         {
-            from = frames[_fromIndex];
+            _fromIndex = _toIndex;
+            from = frames.at(_fromIndex);
             _totalDuration  = from->frameID;
 
-            if (++_toIndex >= length)
+            _toIndex = _fromIndex + 1;
+            if (_toIndex >= length)
             {
                 _toIndex = 0;
             }
 
-            _fromIndex = _toIndex;
-            to = frames[_toIndex];
+            to = frames.at(_toIndex);
 
             //! Guaranteed to trigger frame event
-            if(from->strEvent.length() != 0)
+            if(from->strEvent.length() != 0 && !_animation->isIgnoreFrameEvent())
             {
                 _animation->frameEvent(_bone, from->strEvent.c_str(), from->frameID, playedTime);
             }
 
-            if (playedTime == from->frameID)
+            if (playedTime == from->frameID || (_passLastFrame && _fromIndex == length-1))
             {
                 break;
             }
@@ -447,16 +474,10 @@ float Tween::updateFrameData(float currentPercent)
     /*
      *  If frame tween easing equal to TWEEN_EASING_MAX, then it will not do tween.
      */
-
-    CCTweenType tweenType;
-
-    if ( _frameTweenEasing != TWEEN_EASING_MAX)
+    TweenType tweenType = (_frameTweenEasing != Linear) ? _frameTweenEasing : _tweenEasing;
+    if (tweenType != TWEEN_EASING_MAX && tweenType != Linear && !_passLastFrame)
     {
-        tweenType = (_tweenEasing == TWEEN_EASING_MAX) ? _frameTweenEasing : _tweenEasing;
-        if (tweenType != TWEEN_EASING_MAX && tweenType != Linear)
-        {
-            currentPercent = TweenFunction::tweenTo(0, 1, currentPercent, 1, tweenType);
-        }
+        currentPercent = TweenFunction::tweenTo(currentPercent, tweenType, _from->easingParams);
     }
 
     return currentPercent;

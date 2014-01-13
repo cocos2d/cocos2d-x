@@ -1,42 +1,41 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UILoadingBar.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
- using namespace cocos2d;
- using namespace cocos2d::extension;
+NS_CC_BEGIN
 
 namespace gui {
-
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_barRenderer)
-
-UILoadingBar::UILoadingBar():
+    
+static const int BAR_RENDERER_Z = (-1);
+    
+LoadingBar::LoadingBar():
 _barType(LoadingBarTypeLeft),
 _percent(100),
 _totalLength(0),
-_barRenderer(NULL),
+_barRenderer(nullptr),
 _renderBarTexType(UI_TEX_TYPE_LOCAL),
 _barRendererTextureSize(Size::ZERO),
 _scale9Enabled(false),
@@ -46,32 +45,31 @@ _textureFile("")
 {
 }
 
-UILoadingBar::~UILoadingBar()
+LoadingBar::~LoadingBar()
 {
     
 }
 
-UILoadingBar* UILoadingBar::create()
+LoadingBar* LoadingBar::create()
 {
-    UILoadingBar* widget = new UILoadingBar();
+    LoadingBar* widget = new LoadingBar();
     if (widget && widget->init())
     {
         widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
 
-void UILoadingBar::initRenderer()
+void LoadingBar::initRenderer()
 {
-    UIWidget::initRenderer();
-    _barRenderer = CCSprite::create();
-    _renderer->addChild(_barRenderer);
-    _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
+    _barRenderer = Sprite::create();
+    Node::addChild(_barRenderer, BAR_RENDERER_Z, -1);
+    _barRenderer->setAnchorPoint(Point(0.0,0.5));
 }
 
-void UILoadingBar::setDirection(LoadingBarType dir)
+void LoadingBar::setDirection(LoadingBarType dir)
 {
     if (_barType == dir)
     {
@@ -86,7 +84,7 @@ void UILoadingBar::setDirection(LoadingBarType dir)
             _barRenderer->setPosition(Point(-_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+                static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
             }
             break;
         case LoadingBarTypeRight:
@@ -94,18 +92,18 @@ void UILoadingBar::setDirection(LoadingBarType dir)
             _barRenderer->setPosition(Point(_totalLength*0.5f,0.0f));
             if (!_scale9Enabled)
             {
-                dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+                static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
             }
             break;
     }
 }
 
-int UILoadingBar::getDirection()
+int LoadingBar::getDirection()
 {
     return _barType;
 }
 
-void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
+void LoadingBar::loadTexture(const char* texture,TextureResType texType)
 {
     if (!texture || strcmp(texture, "") == 0)
     {
@@ -118,38 +116,33 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                dynamic_cast<Scale9Sprite*>(_barRenderer)->initWithFile(texture);
+                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                barRendererScale9->initWithFile(texture);
+                barRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->initWithFile(texture);
+                static_cast<Sprite*>(_barRenderer)->setTexture(texture);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                dynamic_cast<Scale9Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
+                extension::Scale9Sprite* barRendererScale9 = static_cast<extension::Scale9Sprite*>(_barRenderer);
+                barRendererScale9->initWithSpriteFrameName(texture);
+                barRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                dynamic_cast<Sprite*>(_barRenderer)->initWithSpriteFrameName(texture);
+                static_cast<Sprite*>(_barRenderer)->setSpriteFrame(texture);
             }
             break;
         default:
             break;
     }
-    if (_scale9Enabled)
-    {
-        dynamic_cast<Scale9Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<Scale9Sprite*>(_barRenderer)->setOpacity(getOpacity());
-    }
-    else
-    {
-        dynamic_cast<Sprite*>(_barRenderer)->setColor(getColor());
-        dynamic_cast<Sprite*>(_barRenderer)->setOpacity(getOpacity());
-    }
-    _barRendererTextureSize.width = _barRenderer->getContentSize().width;
-    _barRendererTextureSize.height = _barRenderer->getContentSize().height;
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
+    _barRendererTextureSize = _barRenderer->getContentSize();
     
     switch (_barType)
     {
@@ -157,39 +150,39 @@ void UILoadingBar::loadTexture(const char* texture,TextureResType texType)
         _barRenderer->setAnchorPoint(Point(0.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(false);
+            static_cast<Sprite*>(_barRenderer)->setFlippedX(false);
         }
         break;
     case LoadingBarTypeRight:
         _barRenderer->setAnchorPoint(Point(1.0f,0.5f));
         if (!_scale9Enabled)
         {
-            dynamic_cast<Sprite*>(_barRenderer)->setFlippedX(true);
+            static_cast<Sprite*>(_barRenderer)->setFlippedX(true);
         }
         break;
     }
     barRendererScaleChangedWithSize();
 }
 
-void UILoadingBar::setScale9Enabled(bool enabled)
+void LoadingBar::setScale9Enabled(bool enabled)
 {
     if (_scale9Enabled == enabled)
     {
         return;
     }
     _scale9Enabled = enabled;
-    _renderer->removeChild(_barRenderer, true);
-    _barRenderer = NULL;
+    Node::removeChild(_barRenderer);
+    _barRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _barRenderer = Scale9Sprite::create();
+        _barRenderer = extension::Scale9Sprite::create();
     }
     else
     {
-        _barRenderer = CCSprite::create();
+        _barRenderer = Sprite::create();
     }
     loadTexture(_textureFile.c_str(),_renderBarTexType);
-    _renderer->addChild(_barRenderer);
+    Node::addChild(_barRenderer, BAR_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -203,17 +196,17 @@ void UILoadingBar::setScale9Enabled(bool enabled)
     setCapInsets(_capInsets);
 }
 
-void UILoadingBar::setCapInsets(const Rect &capInsets)
+void LoadingBar::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    dynamic_cast<Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
+    static_cast<extension::Scale9Sprite*>(_barRenderer)->setCapInsets(capInsets);
 }
 
-void UILoadingBar::setPercent(int percent)
+void LoadingBar::setPercent(int percent)
 {
     if ( percent < 0 || percent > 100)
     {
@@ -224,65 +217,52 @@ void UILoadingBar::setPercent(int percent)
         return;
     }
     _percent = percent;
-    float res = _percent/100.0;
+    float res = _percent / 100.0f;
     
-    int x = 0, y = 0;
-    switch (_renderBarTexType)
-    {
-        case UI_TEX_TYPE_PLIST:
-        {
-            Sprite* barNode = DYNAMIC_CAST_CCSPRITE;
-            if (barNode)
-            {
-                Point to = barNode->getTextureRect().origin;
-                x = to.x;
-                y = to.y;
-            }
-            break;
-        }
-        default:
-            break;
-    }
     if (_scale9Enabled)
     {
         setScale9Scale();
     }
     else
     {
-        dynamic_cast<Sprite*>(_barRenderer)->setTextureRect(Rect(x, y, _barRendererTextureSize.width * res, _barRendererTextureSize.height));
+        Sprite* spriteRenderer = static_cast<Sprite*>(_barRenderer);
+        Rect rect = spriteRenderer->getTextureRect();
+        rect.size.width = _barRendererTextureSize.width * res;
+        spriteRenderer->setTextureRect(rect, spriteRenderer->isTextureRectRotated(), rect.size);
     }
 }
 
-int UILoadingBar::getPercent()
+int LoadingBar::getPercent()
 {
     return _percent;
 }
 
-void UILoadingBar::onSizeChanged()
+void LoadingBar::onSizeChanged()
 {
+    Widget::onSizeChanged();
     barRendererScaleChangedWithSize();
 }
 
-void UILoadingBar::ignoreContentAdaptWithSize(bool ignore)
+void LoadingBar::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
-        UIWidget::ignoreContentAdaptWithSize(ignore);
+        Widget::ignoreContentAdaptWithSize(ignore);
         _prevIgnoreSize = ignore;
     }
 }
 
-const Size& UILoadingBar::getContentSize() const
+const Size& LoadingBar::getContentSize() const
 {
     return _barRendererTextureSize;
 }
 
-Node* UILoadingBar::getVirtualRenderer()
+Node* LoadingBar::getVirtualRenderer()
 {
     return _barRenderer;
 }
 
-void UILoadingBar::barRendererScaleChangedWithSize()
+void LoadingBar::barRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -303,7 +283,7 @@ void UILoadingBar::barRendererScaleChangedWithSize()
         else
         {
             
-            Size textureSize = _barRenderer->getContentSize();
+            Size textureSize = _barRendererTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _barRenderer->setScale(1.0f);
@@ -328,15 +308,35 @@ void UILoadingBar::barRendererScaleChangedWithSize()
     }
 }
 
-void UILoadingBar::setScale9Scale()
+void LoadingBar::setScale9Scale()
 {
-    float width = (float)(_percent) / 100 * _totalLength;
-    dynamic_cast<Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _barRendererTextureSize.height));
+    float width = (float)(_percent) / 100.0f * _totalLength;
+    static_cast<extension::Scale9Sprite*>(_barRenderer)->setPreferredSize(Size(width, _size.height));
 }
 
-const char* UILoadingBar::getDescription() const
+std::string LoadingBar::getDescription() const
 {
     return "LoadingBar";
 }
 
+Widget* LoadingBar::createCloneInstance()
+{
+    return LoadingBar::create();
 }
+
+void LoadingBar::copySpecialProperties(Widget *widget)
+{
+    LoadingBar* loadingBar = dynamic_cast<LoadingBar*>(widget);
+    if (loadingBar)
+    {
+        _prevIgnoreSize = loadingBar->_prevIgnoreSize;
+        setScale9Enabled(loadingBar->_scale9Enabled);
+        loadTexture(loadingBar->_textureFile.c_str(), loadingBar->_renderBarTexType);
+        setCapInsets(loadingBar->_capInsets);
+        setPercent(loadingBar->_percent);
+    }
+}
+
+}
+
+NS_CC_END

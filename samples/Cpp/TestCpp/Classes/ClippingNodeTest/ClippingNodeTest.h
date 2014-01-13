@@ -3,15 +3,19 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
+#include <list>
 
 class BaseClippingNodeTest : public BaseTest
 {
 public:
+    CREATE_FUNC(BaseClippingNodeTest);
+
     ~BaseClippingNodeTest();
     virtual bool init();
 
-	virtual std::string title();
-	virtual std::string subtitle();
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
     virtual void setup();
 
 	void backCallback(Object* sender);
@@ -22,8 +26,10 @@ public:
 class BasicTest : public BaseClippingNodeTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(BasicTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void setup();
 
 	virtual Action* actionRotate();
@@ -40,8 +46,10 @@ public:
 class ShapeTest : public BasicTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(ShapeTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     virtual Node* stencil();
     virtual Node* content();
@@ -50,16 +58,20 @@ public:
 class ShapeInvertedTest : public ShapeTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(ShapeInvertedTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual ClippingNode* clipper();
 };
 
 class SpriteTest : public BasicTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(SpriteTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     virtual Node* stencil();
     virtual ClippingNode* clipper();
@@ -69,34 +81,42 @@ public:
 class SpriteNoAlphaTest : public SpriteTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(SpriteNoAlphaTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual ClippingNode* clipper();
 };
 
 class SpriteInvertedTest : public SpriteTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(SpriteInvertedTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual ClippingNode* clipper();
 };
 
 class NestedTest : public BaseClippingNodeTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(NestedTest);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void setup();
 };
 
 class HoleDemo : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(HoleDemo);
+
     ~HoleDemo();
     virtual void setup();
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     void pokeHoleAtPoint(Point point);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 private:
@@ -108,8 +128,10 @@ private:
 class ScrollViewDemo : public BaseClippingNodeTest
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    CREATE_FUNC(ScrollViewDemo);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void setup();
 	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
@@ -124,10 +146,12 @@ private:
 class RawStencilBufferTest : public BaseClippingNodeTest
 {
 public:
+    CREATE_FUNC(RawStencilBufferTest);
+
     ~RawStencilBufferTest();
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void setup();
     virtual void draw();
 
@@ -135,13 +159,21 @@ public:
 	virtual void setupStencilForDrawingOnPlane(GLint plane);
 
 protected:
-    Sprite* _sprite;
+    std::list<CustomCommand> _renderCmds;
+    void onEnableStencil();
+    void onDisableStencil();
+    void onBeforeDrawClip(int planeIndex, const Point& pt);
+    void onBeforeDrawSprite(int planeIndex, const Point& pt);
+protected:
+    Vector<Sprite*> _sprites;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest
 {
 public:
-    virtual std::string subtitle();
+    CREATE_FUNC(RawStencilBufferTest2);
+
+    virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
 };
@@ -149,7 +181,9 @@ public:
 class RawStencilBufferTest3 : public RawStencilBufferTest
 {
 public:
-    virtual std::string subtitle();
+    CREATE_FUNC(RawStencilBufferTest3);
+
+    virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
 };
@@ -157,7 +191,9 @@ public:
 class RawStencilBufferTest4 : public RawStencilBufferTest
 {
 public:
-    virtual std::string subtitle();
+    CREATE_FUNC(RawStencilBufferTest4);
+
+    virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
 };
@@ -165,7 +201,9 @@ public:
 class RawStencilBufferTest5 : public RawStencilBufferTest
 {
 public:
-    virtual std::string subtitle();
+    CREATE_FUNC(RawStencilBufferTest5);
+
+    virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
 };
@@ -173,7 +211,9 @@ public:
 class RawStencilBufferTest6 : public RawStencilBufferTest
 {
 public:
-    virtual std::string subtitle();
+    CREATE_FUNC(RawStencilBufferTest6);
+
+    virtual std::string subtitle() const override;
     virtual void setup();
     virtual void setupStencilForClippingOnPlane(GLint plane);
     virtual void setupStencilForDrawingOnPlane(GLint plane);
@@ -184,6 +224,8 @@ public:
 class ClippingNodeTestScene : public TestScene
 {
 public:
+    CREATE_FUNC(ClippingNodeTestScene);
+
     virtual void runThisTest();
 };
 

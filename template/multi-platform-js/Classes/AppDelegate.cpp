@@ -47,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("main.js");
+    ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
        
     return true;
 }

@@ -19,6 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
+
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
@@ -111,7 +113,7 @@ public:
     virtual void setPosition(const Point &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual const AffineTransform& getNodeToParentTransform() const override;
+    virtual const kmMat4& getNodeToParentTransform() const override;
 
 protected:
     const Point& getPosFromPhysics() const;
@@ -132,3 +134,4 @@ protected:
 NS_CC_EXT_END
 
 #endif // __PHYSICSNODES_CCPHYSICSSPRITE_H__
+#endif //(CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)

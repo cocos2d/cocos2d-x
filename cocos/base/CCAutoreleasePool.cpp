@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,19 +31,17 @@ static PoolManager* s_pPoolManager = NULL;
 
 AutoreleasePool::AutoreleasePool()
 {
-    _managedObjectArray = new Array();
-    _managedObjectArray->initWithCapacity(150);
+    _managedObjectArray.reserve(150);
 }
 
 AutoreleasePool::~AutoreleasePool()
 {
     CCLOGINFO("deallocing AutoreleasePool: %p", this);
-    CC_SAFE_DELETE(_managedObjectArray);
 }
 
 void AutoreleasePool::addObject(Object* object)
 {
-    _managedObjectArray->addObject(object);
+    _managedObjectArray.pushBack(object);
 
     CCASSERT(object->_reference > 1, "reference count should be greater than 1");
     ++(object->_autoReleaseCount);
@@ -53,26 +52,21 @@ void AutoreleasePool::removeObject(Object* object)
 {
     for (unsigned int i = 0; i < object->_autoReleaseCount; ++i)
     {
-        _managedObjectArray->removeObject(object, false);
+       _managedObjectArray.eraseObject(object, false);
     }
 }
 
 void AutoreleasePool::clear()
 {
-    if(_managedObjectArray->count() > 0)
+    if (!_managedObjectArray.empty())
     {
         //CCAutoreleasePool* pReleasePool;
 #ifdef _DEBUG
-        int nIndex = _managedObjectArray->count() - 1;
+        int nIndex = _managedObjectArray.size() - 1;
 #endif
 
-        Object* pObj = NULL;
-        CCARRAY_FOREACH_REVERSE(_managedObjectArray, pObj)
-        {
-            if(!pObj)
-                break;
-
-            --(pObj->_autoReleaseCount);
+        for(const auto &obj : _managedObjectArray) {
+            --(obj->_autoReleaseCount);
             //(*it)->release();
             //delete (*it);
 #ifdef _DEBUG
@@ -80,7 +74,7 @@ void AutoreleasePool::clear()
 #endif
         }
 
-        _managedObjectArray->removeAllObjects();
+        _managedObjectArray.clear();
     }
 }
 
@@ -107,8 +101,7 @@ void PoolManager::purgePoolManager()
 
 PoolManager::PoolManager()
 {
-    _releasePoolStack = new Array();    
-    _releasePoolStack->initWithCapacity(150);
+    _releasePoolStack.reserve(150);
     _curReleasePool = 0;
 }
 
@@ -119,35 +112,27 @@ PoolManager::~PoolManager()
  
      // we only release the last autorelease pool here 
     _curReleasePool = 0;
-    _releasePoolStack->removeObjectAtIndex(0);
- 
-    CC_SAFE_DELETE(_releasePoolStack);
+    _releasePoolStack.erase(0);
 }
 
 void PoolManager::finalize()
 {
-    if(_releasePoolStack->count() > 0)
+    if (!_releasePoolStack.empty())
     {
-        //CCAutoreleasePool* pReleasePool;
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(_releasePoolStack, pObj)
-        {
-            if(!pObj)
-                break;
-            AutoreleasePool* pPool = static_cast<AutoreleasePool*>(pObj);
-            pPool->clear();
+        for(const auto &pool : _releasePoolStack) {
+            pool->clear();
         }
     }
 }
 
 void PoolManager::push()
 {
-    AutoreleasePool* pPool = new AutoreleasePool();       //ref = 1
-    _curReleasePool = pPool;
+    AutoreleasePool* pool = new AutoreleasePool();       //ref = 1
+    _curReleasePool = pool;
 
-    _releasePoolStack->addObject(pPool);                   //ref = 2
+    _releasePoolStack.pushBack(pool);                   //ref = 2
 
-    pPool->release();                                       //ref = 1
+    pool->release();                                       //ref = 1
 }
 
 void PoolManager::pop()
@@ -157,20 +142,20 @@ void PoolManager::pop()
         return;
     }
 
-    int nCount = _releasePoolStack->count();
+    ssize_t count = _releasePoolStack.size();
 
     _curReleasePool->clear();
  
-    if (nCount > 1)
+    if (count > 1)
     {
-        _releasePoolStack->removeObjectAtIndex(nCount-1);
+        _releasePoolStack.erase(count-1);
 
 //         if(nCount > 1)
 //         {
-//             _curReleasePool = _releasePoolStack->getObjectAtIndex(nCount - 2);
+//             _curReleasePool = _releasePoolStack.at(count - 2);
 //             return;
 //         }
-        _curReleasePool = (AutoreleasePool*)_releasePoolStack->getObjectAtIndex(nCount - 2);
+        _curReleasePool = _releasePoolStack.at(count - 2);
     }
 
     /*_curReleasePool = NULL;*/

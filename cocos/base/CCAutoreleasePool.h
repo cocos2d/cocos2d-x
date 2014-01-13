@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +26,7 @@ THE SOFTWARE.
 #define __AUTORELEASEPOOL_H__
 
 #include "CCObject.h"
-#include "CCArray.h"
+#include "CCVector.h"
 
 NS_CC_BEGIN
 
@@ -45,7 +46,7 @@ class CC_DLL AutoreleasePool : public Object
      * be destructed properly by calling Object::release() even if the object
      * is in the pool.
      */
-    Array   *_managedObjectArray;
+    Vector<Object*> _managedObjectArray;
 public:
     /**
      * @js NA
@@ -93,7 +94,7 @@ public:
 
 class CC_DLL PoolManager
 {
-    Array           *_releasePoolStack;
+    Vector<AutoreleasePool*> _releasePoolStack;
     AutoreleasePool *_curReleasePool;
 
     AutoreleasePool *getCurReleasePool();

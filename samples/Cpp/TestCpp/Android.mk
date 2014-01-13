@@ -38,6 +38,7 @@ Classes/ClickAndMoveTest/ClickAndMoveTest.cpp \
 Classes/ClippingNodeTest/ClippingNodeTest.cpp \
 Classes/CocosDenshionTest/CocosDenshionTest.cpp \
 Classes/ConfigurationTest/ConfigurationTest.cpp \
+Classes/ConsoleTest/ConsoleTest.cpp \
 Classes/CurlTest/CurlTest.cpp \
 Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
 Classes/DataVisitorTest/DataVisitorTest.cpp \
@@ -64,22 +65,21 @@ Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
-Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest/UIDragPanelTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp \
-Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp \
-Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp \
-Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp \
-Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp \
 Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp \
+Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp \
 Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp \
+Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlSceneManager.cpp \
 Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp \
@@ -98,6 +98,7 @@ Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 Classes/FileUtilsTest/FileUtilsTest.cpp \
 Classes/FontTest/FontTest.cpp \
+Classes/InputTest/MouseTest.cpp \
 Classes/IntervalTest/IntervalTest.cpp \
 Classes/KeyboardTest/KeyboardTest.cpp \
 Classes/KeypadTest/KeypadTest.cpp \
@@ -108,6 +109,7 @@ Classes/MenuTest/MenuTest.cpp \
 Classes/MotionStreakTest/MotionStreakTest.cpp \
 Classes/MutiTouchTest/MutiTouchTest.cpp \
 Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
+Classes/NewRendererTest/NewRendererTest.cpp \
 Classes/NodeTest/NodeTest.cpp \
 Classes/ParallaxTest/ParallaxTest.cpp \
 Classes/ParticleTest/ParticleTest.cpp \
@@ -118,6 +120,7 @@ Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
+Classes/PerformanceTest/PerformanceLabelTest.cpp \
 Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \
@@ -136,6 +139,7 @@ Classes/TouchesTest/Ball.cpp \
 Classes/TouchesTest/Paddle.cpp \
 Classes/TouchesTest/TouchesTest.cpp \
 Classes/TransitionsTest/TransitionsTest.cpp \
+Classes/UnitTest/UnitTest.cpp \
 Classes/UserDefaultTest/UserDefaultTest.cpp \
 Classes/ZwoptexTest/ZwoptexTest.cpp
 

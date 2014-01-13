@@ -14,9 +14,6 @@
     <ClCompile Include="..\CCBSequenceProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\CCBValue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCControlButtonLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -119,9 +116,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\CCBSequenceProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCBValue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\CCControlButtonLoader.h">

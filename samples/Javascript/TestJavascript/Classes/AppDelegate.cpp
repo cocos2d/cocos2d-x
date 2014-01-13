@@ -7,8 +7,11 @@
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "jsb_cocos2dx_studio_auto.hpp"
+#include "jsb_cocos2dx_gui_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
+#include "gui/jsb_cocos2dx_gui_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "cocosbuilder/cocosbuilder_specifics.hpp"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
@@ -45,9 +48,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    FileUtils::getInstance()->addSearchPath("res");
-    FileUtils::getInstance()->addSearchPath("script");
+    auto fileUtils = FileUtils::getInstance();
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("script");
     
+    const char* paths[] = {
+        "res",
+        "res/scenetest",
+        "res/scenetest/ArmatureComponentTest",
+        "res/scenetest/AttributeComponentTest",
+        "res/scenetest/BackgroundComponentTest",
+        "res/scenetest/EffectComponentTest",
+        "res/scenetest/LoadSceneEdtiorFileTest",
+        "res/scenetest/ParticleComponentTest",
+        "res/scenetest/SpriteComponentTest",
+        "res/scenetest/TmxMapComponentTest",
+        "res/scenetest/UIComponentTest",
+        "res/scenetest/TriggerTest",
+    };
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string testFolder = "tests/";
+    searchPaths.push_back(testFolder);
+    
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(testFolder + path);
+    }
+#else
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(path);
+    }
+#endif
+    
+    fileUtils->setSearchPaths(searchPaths);
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -62,8 +98,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_builder);
     sc->addRegisterCallback(register_CCBuilderReader);
 
+    sc->addRegisterCallback(register_all_cocos2dx_gui);
+    sc->addRegisterCallback(register_all_cocos2dx_gui_manual);
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+    
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
     
     sc->start();
     

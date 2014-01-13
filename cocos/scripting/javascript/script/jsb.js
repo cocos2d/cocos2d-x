@@ -6,6 +6,8 @@
 require('jsb_cocos2d_constants.js');
 require('jsb_cocos2d.js');
 require('jsb_cocos2d_extension.js');
+require('jsb_cocos2d_studio.js');
+require('jsb_cocos2d_gui.js');
 require('jsb_chipmunk_constants.js');
 require('jsb_chipmunk.js');
 require('jsb_opengl_constants.js');

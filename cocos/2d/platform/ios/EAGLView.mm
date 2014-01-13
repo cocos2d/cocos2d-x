@@ -75,7 +75,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static CCEAGLView *view = 0;
+static CCEAGLView *__view = 0;
 
 @interface CCEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -117,7 +117,7 @@ static CCEAGLView *view = 0;
 
 + (id) sharedEGLView
 {
-    return view;
+    return __view;
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -147,14 +147,14 @@ static CCEAGLView *view = 0;
         }
 
         
-        view = self;
+        __view = self;
         
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
 		
-		if ([view respondsToSelector:@selector(setContentScaleFactor:)])
+		if ([__view respondsToSelector:@selector(setContentScaleFactor:)])
 		{
-			view.contentScaleFactor = [[UIScreen mainScreen] scale];
+			__view.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
     }
         
@@ -180,7 +180,7 @@ static CCEAGLView *view = 0;
         }
     }
     
-    view = self;
+    __view = self;
     return self;
 }
 
@@ -205,13 +205,13 @@ static CCEAGLView *view = 0;
 -(int) getWidth
 {
     CGSize bound = [self bounds].size;
-    return bound.width * self.contentScaleFactor;
+    return (int)bound.width * self.contentScaleFactor;
 }
 
 -(int) getHeight
 {
     CGSize bound = [self bounds].size;
-    return bound.height * self.contentScaleFactor;
+    return (int)bound.height * self.contentScaleFactor;
 }
 
 
@@ -237,8 +237,11 @@ static CCEAGLView *view = 0;
     
     context_ = [renderer_ context];
     
-
-    //discardFramebufferSupported_ = [[Configuration sharedConfiguration] supportsDiscardFramebuffer];
+    #if GL_EXT_discard_framebuffer == 1
+        discardFramebufferSupported_ = YES;
+    #else
+        discardFramebufferSupported_ = NO;
+    #endif
     
     CHECK_GL_ERROR();
     
@@ -248,7 +251,7 @@ static CCEAGLView *view = 0;
 - (void) dealloc
 {
     [renderer_ release];
-    self.keyboardShowNotification = NULL; // implicit release
+    self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];
 }
 
@@ -288,7 +291,7 @@ static CCEAGLView *view = 0;
         glResolveMultisampleFramebufferAPPLE();
     }
     
-    if( discardFramebufferSupported_)
+    if(discardFramebufferSupported_)
     {    
         if (multiSampling_)
         {
@@ -399,18 +402,18 @@ static CCEAGLView *view = 0;
         return;
     }
     
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
+        ids[i] = touch;
+        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -419,18 +422,18 @@ static CCEAGLView *view = 0;
     {
         return;
     }
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
+        ids[i] = touch;
+        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -440,18 +443,18 @@ static CCEAGLView *view = 0;
         return;
     }
     
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
+        ids[i] = touch;
+        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (int*)ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -461,22 +464,21 @@ static CCEAGLView *view = 0;
         return;
     }
     
-    int ids[IOS_MAX_TOUCHES_COUNT] = {0};
+    UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     
     int i = 0;
     for (UITouch *touch in touches) {
-        ids[i] = (int)touch;
-        xs[i] = [touch locationInView: [touch view]].x * view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * view.contentScaleFactor;;
+        ids[i] = touch;
+        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (int*)ids, xs, ys);
 }
 
-#pragma mark -
-#pragma mark UIView - Responder
+#pragma mark - UIView - Responder
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -503,8 +505,7 @@ static CCEAGLView *view = 0;
     return [super resignFirstResponder];
 }
 
-#pragma mark -
-#pragma mark UIKeyInput protocol
+#pragma mark - UIKeyInput protocol
 
 
 - (BOOL)hasText
@@ -531,16 +532,14 @@ static CCEAGLView *view = 0;
     cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
-#pragma mark -
-#pragma mark UITextInputTrait protocol
+#pragma mark - UITextInputTrait protocol
 
 -(UITextAutocapitalizationType) autocapitalizationType
 {
     return UITextAutocapitalizationTypeNone;
 }
 
-#pragma mark -
-#pragma mark UITextInput protocol
+#pragma mark - UITextInput protocol
 
 #pragma mark UITextInput - properties
 
@@ -724,8 +723,7 @@ static CCEAGLView *view = 0;
     return nil;
 }
 
-#pragma mark -
-#pragma mark UIKeyboard notification
+#pragma mark - UIKeyboard notification
 
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {
@@ -863,7 +861,7 @@ static CCEAGLView *view = 0;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
-    [UIView beginAnimations:nil context:NULL];
+    [UIView beginAnimations:nil context:nullptr];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];

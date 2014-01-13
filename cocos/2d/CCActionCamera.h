@@ -1,7 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,6 +29,7 @@ THE SOFTWARE.
 #define __CCCAMERA_ACTION_H__
 
 #include "CCActionInterval.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -47,17 +50,7 @@ public:
     /**
      * @js ctor
      */
-    ActionCamera()
-		:_centerXOrig(0)
-        ,_centerYOrig(0)
-        ,_centerZOrig(0)
-        ,_eyeXOrig(0)
-        ,_eyeYOrig(0)
-        ,_eyeZOrig(0)
-        ,_upXOrig(0)
-        ,_upYOrig(0)
-        ,_upZOrig(0)
-    {}
+    ActionCamera();
     /**
      * @js NA
      * @lua NA
@@ -69,18 +62,28 @@ public:
     virtual ActionCamera * reverse() const override;
 	virtual ActionCamera *clone() const override;
 
+    /* sets the Eye value of the Camera */
+    void setEye(const kmVec3 &eye);
+    void setEye(float x, float y, float z);
+    /* returns the Eye value of the Camera */
+    const kmVec3& getEye() const { return _eye; }
+    /* sets the Center value of the Camera */
+    void setCenter(const kmVec3 &center);
+    /* returns the Center value of the Camera */
+    const kmVec3& getCenter() const { return _center; }
+    /* sets the Up value of the Camera */
+    void setUp(const kmVec3 &up);
+    /* Returns the Up value of the Camera */
+    const kmVec3& getUp() const { return _up; }
+
 protected:
-    float _centerXOrig;
-    float _centerYOrig;
-    float _centerZOrig;
 
-    float _eyeXOrig;
-    float _eyeYOrig;
-    float _eyeZOrig;
+    void restore();
+    void updateTransform();
 
-    float _upXOrig;
-    float _upYOrig;
-    float _upZOrig;
+    kmVec3 _center;
+    kmVec3 _eye;
+    kmVec3 _up;
 };
 
 /** 
@@ -112,7 +115,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~OrbitCamera(){}
+    virtual ~OrbitCamera(){}
     
     /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);

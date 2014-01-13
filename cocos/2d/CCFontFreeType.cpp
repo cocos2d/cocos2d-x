@@ -1,28 +1,30 @@
 /****************************************************************************
- Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include <stdio.h>
+#include <algorithm>
 
 #include "ccUTF8.h"
 #include "CCFontFreeType.h"
@@ -38,14 +40,12 @@ bool       FontFreeType::_FTInitialized = false;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    if( glyphs == GlyphCollection::DYNAMIC )
-    {
-        log("ERROR: GlyphCollection::DYNAMIC is not supported yet!");
-        return nullptr;
-    }
+    bool  dynamicGlyphCollection = false;
+    if(glyphs == GlyphCollection::DYNAMIC)
+        dynamicGlyphCollection = true;
     
-    FontFreeType *tempFont =  new FontFreeType();
-    
+    FontFreeType *tempFont =  new FontFreeType(dynamicGlyphCollection);
+
     if (!tempFont)
         return nullptr;
     
@@ -56,7 +56,6 @@ FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, G
         delete tempFont;
         return nullptr;
     }
-    
     return tempFont;
 }
 
@@ -79,6 +78,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        _FTInitialized = false;
     }
 }
 
@@ -88,34 +88,36 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType() : _letterPadding(5)
+FontFreeType::FontFreeType(bool dynamicGlyphCollection)
+: _fontRef(nullptr),
+_letterPadding(5),
+_dynamicGlyphCollection(dynamicGlyphCollection)
 {
+    if(_distanceFieldEnabled)
+        _letterPadding += 2 * DistanceMapSpread;
 }
 
 bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 {
-    int dpi = 72;
-    
-    int len = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(fontName.c_str(), "rb", (unsigned long *)(&len));
-    
-    if (!data)
-        return false;
-    
-    // create the new face
     FT_Face face;
+
+    _ttfData = FileUtils::getInstance()->getDataFromFile(fontName);
     
-    // create the face from the data
-    if (FT_New_Memory_Face(getFTLibrary(), data, len, 0, &face ))
+    if (_ttfData.isNull())
         return false;
-    
+
+    // create the face from the data
+    if (FT_New_Memory_Face(getFTLibrary(), _ttfData.getBytes(), _ttfData.getSize(), 0, &face ))
+        return false;
+
     //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
         return false;
-    
+
     // set the requested font size
-	int fontSizePoints = (int)(64.f * fontSize);
-	if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
+    int dpi = 72;
+    int fontSizePoints = (int)(64.f * fontSize);
+    if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
     
     // store the face globally
@@ -130,22 +132,31 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
 FontFreeType::~FontFreeType()
 {
-    // release the font
-    // TO DO 
+    if (_fontRef)
+    {
+        FT_Done_Face(_fontRef);
+    }
 }
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontDefinitionTTF *def = FontDefinitionTTF::create(this);
-    
-    if (!def)
-        return nullptr;
-    
-    FontAtlas *atlas = def->createFontAtlas();
-    
-    // release the font definition, we don't need it anymore
-    def->release();
-    return atlas;
+    if (_dynamicGlyphCollection)
+    {
+        FontAtlas *atlas = new FontAtlas(*this);
+        this->release();
+        return atlas;
+    } 
+    else
+    {
+        FontDefinitionTTF *def = FontDefinitionTTF::create(this);
+
+        if (!def)
+            return nullptr;
+
+        FontAtlas *atlas = def->createFontAtlas();
+
+        return atlas;
+    }   
 }
 
 bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
@@ -283,7 +294,7 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar) const
         return 0;
     
     // get to the advance for this glyph
-    return (_fontRef->glyph->advance.x >> 6);
+    return (static_cast<int>(_fontRef->glyph->advance.x >> 6));
 }
 
 int FontFreeType::getBearingXForChar(unsigned short theChar) const
@@ -302,7 +313,7 @@ int FontFreeType::getBearingXForChar(unsigned short theChar) const
     if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
         return 0;
     
-    return (_fontRef->glyph->metrics.horiBearingX >>6);
+    return (static_cast<int>(_fontRef->glyph->metrics.horiBearingX >>6));
 }
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const
@@ -332,31 +343,29 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     if (FT_Get_Kerning( _fontRef, glyphIndex1, glyphIndex2,  FT_KERNING_DEFAULT,  &kerning))
         return 0;
     
-    return (kerning.x >> 6);
+    return (static_cast<int>(kerning.x >> 6));
 }
 
 int FontFreeType::getFontMaxHeight() const
 {
-    return (_fontRef->size->metrics.height >> 6);
+    return (static_cast<int>(_fontRef->size->metrics.height >> 6));
 }
 
-unsigned char *   FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
+unsigned char * FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const
 {
     if (!_fontRef)
         return 0;
     
-    // get the ID to the char we need
-    int glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-    
-    if (!glyphIndex)
-        return 0;
-    
-    // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
-        return 0;
-    
-    if (FT_Render_Glyph( _fontRef->glyph, FT_RENDER_MODE_NORMAL ))
-        return 0;
+    if (_distanceFieldEnabled)
+    {    
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            return 0;
+    }
+    else
+    {
+        if (FT_Load_Char(_fontRef,theChar,FT_LOAD_RENDER))
+            return 0;
+    }
     
     outWidth  = _fontRef->glyph->bitmap.width;
     outHeight = _fontRef->glyph->bitmap.rows;

@@ -48,7 +48,7 @@ void EnemyController::onEnter()
 	FiniteTimeAction* actionMoveDone = CallFuncN::create(
                                          CC_CALLBACK_1(SceneController::spriteMoveFinished, static_cast<SceneController*>( getOwner()->getParent()->getComponent("SceneController") )));
 
-	_owner->runAction( Sequence::create(actionMove, actionMoveDone, NULL) );
+	_owner->runAction( Sequence::create(actionMove, actionMoveDone, nullptr) );
 }
 
 void EnemyController::onExit()
@@ -77,9 +77,9 @@ EnemyController* EnemyController::create(void)
 void EnemyController::die()
 {
     auto com = _owner->getParent()->getComponent("SceneController");
-    auto _targets = ((SceneController*)com)->getTargets();
-    _targets->removeObject(_owner);
+    auto& targets = static_cast<SceneController*>(com)->getTargets();
+    targets.eraseObject(_owner);
     _owner->removeFromParentAndCleanup(true);
-    ((SceneController*)com)->increaseKillCount();
+    static_cast<SceneController*>(com)->increaseKillCount();
 }
 

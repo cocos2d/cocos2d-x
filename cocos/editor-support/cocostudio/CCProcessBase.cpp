@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,16 +38,12 @@ ProcessBase::ProcessBase(void)
     , _rawDuration(0)
     , _loopType(ANIMATION_LOOP_BACK)
     , _tweenEasing(Linear)
+    , _animationInternal(1/60.0f)
     , _durationTween(0)
     , _currentFrame(0)
     , _curFrameIndex(0)
     , _isLoopBack(false)
 {
-    /*
-     *  set _animationInternal defualt value to Director::getInstance()
-     *  ->getAnimationInterval(), in line with game update speed
-     */
-    _animationInternal = CCDirector::getInstance()->getAnimationInterval();
 }
 
 
@@ -73,11 +69,9 @@ void ProcessBase::stop()
 {
     _isComplete = true;
     _isPlaying = false;
-    _currentFrame = 0;
-    _currentPercent = 0;
 }
 
-void ProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void ProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     _isComplete = false;
     _isPause = false;
@@ -89,7 +83,7 @@ void ProcessBase::play(void *animation, int durationTo, int durationTween,  int 
      *  When changing end, m_iTotalFrames will be setted to _durationTween
      */
     _nextFrameIndex = durationTo;
-    _tweenEasing = (CCTweenType)tweenEasing;
+    _tweenEasing = (TweenType)tweenEasing;
 
 }
 
@@ -141,13 +135,23 @@ void ProcessBase::update(float dt)
 
 void ProcessBase::gotoFrame(int frameIndex)
 {
+    if (_loopType == ANIMATION_NO_LOOP)
+    {
+        _loopType = ANIMATION_MAX;
+    }
+    else if (_loopType == ANIMATION_TO_LOOP_FRONT)
+    {
+        _loopType = ANIMATION_LOOP_FRONT;
+    }
+
     _curFrameIndex = frameIndex;
-    pause();
+    
+    _nextFrameIndex = _durationTween;
 }
 
 int ProcessBase::getCurrentFrameIndex()
 {
-    _curFrameIndex = _rawDuration * _currentPercent;
+    _curFrameIndex = (_rawDuration-1) * _currentPercent;
     return _curFrameIndex;
 }
 

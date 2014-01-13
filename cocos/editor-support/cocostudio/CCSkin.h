@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
+#include "renderer/CCQuadCommand.h"
 
 namespace cocostudio {
 
@@ -34,26 +35,47 @@ class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static Skin *create(const char *pszFileName);
+    static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
+    static Skin *create(const std::string& pszFileName);
 public:
+    /**
+     *  @js ctor
+     */
     Skin();
 
-    bool initWithSpriteFrameName(const char *pszSpriteFrameName);
-    bool initWithFile(const char *pszFilename);
+    virtual bool initWithSpriteFrameName(const std::string& spriteFrameName) override;
+    virtual bool initWithFile(const std::string& filename) override;
 
     void updateArmatureTransform();
-    void updateTransform();
+    void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const;
-    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
+    kmMat4 getNodeToWorldTransform() const override;
+    kmMat4 getNodeToWorldTransformAR() const;
+    
+    virtual void draw() override;
+    
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual void setSkinData(const BaseData &data);
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    virtual const BaseData &getSkinData() const;
 
-    CC_PROPERTY_PASS_BY_REF(BaseData, _skinData, SkinData);
-    CC_SYNTHESIZE(Bone *, _bone, Bone);
+    virtual void setBone(Bone *bone);
+    virtual Bone *getBone() const;
 
+    virtual const std::string &getDisplayName() const { return _displayName; }
 protected:
-    cocos2d::AffineTransform _skinTransform;
-    CC_SYNTHESIZE_READONLY(std::string, _displayName, DisplayName)
+    BaseData _skinData;
+    Bone *_bone;
+    Armature *_armature;
+    kmMat4 _skinTransform;
+    std::string _displayName;
+    cocos2d::QuadCommand _quadCommand;     // quad command
 };
 
 }

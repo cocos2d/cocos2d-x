@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -264,6 +265,11 @@ To enable set it to a value different than 0. Disabled by default.
 /** Enable Lua engine debug log */
 #ifndef CC_LUA_ENGINE_DEBUG
 #define CC_LUA_ENGINE_DEBUG 0
+#endif
+
+/** Use physics integration API */
+#ifndef CC_USE_PHYSICS
+#define CC_USE_PHYSICS 1
 #endif
 
 #endif // __CCCONFIG_H__

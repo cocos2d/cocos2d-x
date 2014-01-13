@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -83,7 +84,7 @@ public:
     float getHeight() const   { return _height;   }
     
     void  addGlyph(GlyphDef theGlyph)               { _glyphs.push_back(theGlyph);  }
-    int   getNumGlyph()  const                      { return _glyphs.size();        }
+    int   getNumGlyph()  const                      { return  static_cast<int>(_glyphs.size()); }
     const GlyphDef & getGlyphAt(int index) const    { return _glyphs[index];        }
     
 private:
@@ -115,7 +116,7 @@ public:
     ~TextPageDef();
     
     void addLine(TextLineDef *theLine)      { _lines.push_back(theLine); }
-    int  getNumLines() const                { return _lines.size();      }
+    int  getNumLines() const                { return  static_cast<int>(_lines.size());      }
     TextLineDef * getLineAt(int index) const        { return _lines[index];      }
     int getWidth() const                            { return _width;             }
     int getHeight() const                           { return _height;            }
@@ -156,7 +157,7 @@ public:
    ~TextFontPagesDef();
     
     void addPage(TextPageDef *newPage)         { _pages.push_back(newPage);    }
-    int  getNumPages()  const                  { return _pages.size();         }
+    int  getNumPages()  const                  { return static_cast<int>(_pages.size());         }
     TextPageDef* getPageAt(int index) const    { return _pages[index];         }
     
 private:
@@ -191,13 +192,12 @@ private:
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool generateTextGlyphs(const char * text);
-    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize);
+    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
     unsigned char * preparePageGlyphData(TextPageDef *thePage);
     
     // glyph rendering
     unsigned char * renderGlyphData(TextPageDef *thePage);
-    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
     
     std::map<unsigned short int, GlyphDef>      _textGlyphs;
     TextFontPagesDef *                          _fontPages;

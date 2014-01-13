@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2008-2010 Ricardo Quesada
+ Copyright (c) 2010-2013 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +33,7 @@ THE SOFTWARE.
 #include "CCObject.h"
 #include "ccTypes.h"
 #include "CCGeometry.h"
-#include "CCArray.h"
+#include "CCVector.h"
 #include "CCGL.h"
 #include "kazmath/mat4.h"
 #include "CCLabelAtlas.h"
@@ -54,6 +55,12 @@ class Node;
 class Scheduler;
 class ActionManager;
 class EventDispatcher;
+class EventCustom;
+class EventListenerCustom;
+class TextureCache;
+class Frustum;
+class Renderer;
+class Console;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -78,6 +85,12 @@ and when to execute the Scenes.
 class CC_DLL Director : public Object
 {
 public:
+    static const char *EVENT_PROJECTION_CHANGED;
+    static const char* EVENT_AFTER_UPDATE;
+    static const char* EVENT_AFTER_VISIT;
+    static const char* EVENT_AFTER_DRAW;
+
+
     /** @typedef ccDirectorProjection
      Possible OpenGL projections used by director
      */
@@ -120,7 +133,7 @@ public:
     /** Get the FPS value */
     inline double getAnimationInterval() { return _animationInterval; }
     /** Set the FPS value. */
-    virtual void setAnimationInterval(double dValue) = 0;
+    virtual void setAnimationInterval(double interval) = 0;
 
     /** Whether or not to display the FPS on the bottom-left corner */
     inline bool isDisplayStats() { return _displayStats; }
@@ -135,7 +148,9 @@ public:
     * @lua NA
     */
     inline EGLView* getOpenGLView() { return _openGLView; }
-    void setOpenGLView(EGLView *pobOpenGLView);
+    void setOpenGLView(EGLView *openGLView);
+
+    TextureCache* getTextureCache() const;
 
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
@@ -172,21 +187,9 @@ public:
      Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    Node* getNotificationNode();
+    Node* getNotificationNode() const { return _notificationNode; }
     void setNotificationNode(Node *node);
     
-    /** Director delegate. It shall implement the DirectorDelegate protocol
-     @since v0.99.5
-     * @js NA
-     * @lua NA
-     */
-    DirectorDelegate* getDelegate() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void setDelegate(DirectorDelegate* delegate);
-
     // window size
 
     /** returns the size of the OpenGL view in points.
@@ -326,13 +329,18 @@ public:
     @since v0.99.4
     */
     void setContentScaleFactor(float scaleFactor);
-    float getContentScaleFactor() const;
+    float getContentScaleFactor() const { return _contentScaleFactor; }
+    
+    /**
+     Get the Culling Frustum
+     */
+    
+    Frustum* getFrustum() const { return _cullingFrustum; }
 
-public:
     /** Gets the Scheduler associated with this director
      @since v2.0
      */
-    Scheduler* getScheduler() const;
+    Scheduler* getScheduler() const { return _scheduler; }
     
     /** Sets the Scheduler associated with this director
      @since v2.0
@@ -342,7 +350,7 @@ public:
     /** Gets the ActionManager associated with this director
      @since v2.0
      */
-    ActionManager* getActionManager() const;
+    ActionManager* getActionManager() const { return _actionManager; }
     
     /** Sets the ActionManager associated with this director
      @since v2.0
@@ -352,13 +360,23 @@ public:
     /** Gets the EventDispatcher associated with this director 
      @since v3.0
      */
-    EventDispatcher* getEventDispatcher() const;
+    EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
     /** Sets the EventDispatcher associated with this director 
      @since v3.0
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
-    
+
+    /** Returns the Renderer
+     @since v3.0
+     */
+    Renderer* getRenderer() const { return _renderer; }
+
+    /** Returns the Console 
+     @since v3.0
+     */
+    Console* getConsole() const { return _console; }
+
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
     
@@ -369,39 +387,46 @@ public:
 
 protected:
     void purgeDirector();
-    bool _purgeDirecotorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
     
     void setNextScene();
     
     void showStats();
     void createStatsLabel();
     void calculateMPF();
-    void getFPSImageData(unsigned char** datapointer, unsigned int* length);
+    void getFPSImageData(unsigned char** datapointer, ssize_t* length);
     
     /** calculates delta time since last time it was called */    
     void calculateDeltaTime();
 
-protected:
+    //textureCache creation or release
+    void initTextureCache();
+    void destroyTextureCache();
+
     /** Scheduler associated with this director
      @since v2.0
      */
-    Scheduler* _scheduler;
+    Scheduler *_scheduler;
     
     /** ActionManager associated with this director
      @since v2.0
      */
-    ActionManager* _actionManager;
+    ActionManager *_actionManager;
     
     /** EventDispatcher associated with this director
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
+    EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
     
     /* The EGLView, where everything is rendered */
-    EGLView    *_openGLView;
+    EGLView *_openGLView;
+
+    //texture cache belongs to this director
+    TextureCache *_textureCache;
 
     double _animationInterval;
     double _oldAnimationInterval;
@@ -424,6 +449,8 @@ protected:
     unsigned int _totalFrames;
     unsigned int _frames;
     float _secondsPerFrame;
+    
+    Frustum *_cullingFrustum;
      
     /* The running scene */
     Scene *_runningScene;
@@ -433,10 +460,10 @@ protected:
     Scene *_nextScene;
     
     /* If true, then "old" scene will receive the cleanup message */
-    bool    _sendCleanupToScene;
+    bool _sendCleanupToScene;
 
     /* scheduled scenes */
-    Array* _scenesStack;
+    Vector<Scene*> _scenesStack;
     
     /* last time the main loop was updated */
     struct timeval *_lastUpdate;
@@ -448,10 +475,10 @@ protected:
     Projection _projection;
 
     /* window size in points */
-    Size    _winSizeInPoints;
+    Size _winSizeInPoints;
     
     /* content scale factor */
-    float    _contentScaleFactor;
+    float _contentScaleFactor;
 
     /* store the fps string */
     char *_FPS;
@@ -459,8 +486,11 @@ protected:
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;
 
-    /* Projection protocol delegate */
-    DirectorDelegate *_projectionDelegate;
+    /* Renderer for the Director */
+    Renderer *_renderer;
+
+    /* Console for the director */
+    Console *_console;
     
     // EGLViewProtocol will recreate stats labels to fit visible rect
     friend class EGLViewProtocol;

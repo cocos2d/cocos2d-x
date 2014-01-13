@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +38,7 @@ THE SOFTWARE.
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
 #import "CCWindow.h"
-#import "CCEventDispatcher.h"
+#import "CCEventDispatcherMac.h"
 #import "CCEGLView.h"
 
 
@@ -327,7 +328,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 	
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -335,7 +336,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, (int*)ids, xs, ys);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -351,7 +352,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -359,7 +360,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(1, (int*)ids, xs, ys);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
@@ -370,7 +371,7 @@ static CCEAGLView *view;
 	float x = local_point.x;
 	float y = [self getHeight] - local_point.y;
 
-    int ids[1] = {0};
+    NSInteger ids[1] = {0};
     float xs[1] = {0.0f};
     float ys[1] = {0.0f};
     
@@ -378,7 +379,7 @@ static CCEAGLView *view;
 	xs[0] = x / frameZoomFactor_;
 	ys[0] = y / frameZoomFactor_;
 
-	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, ids, xs, ys);
+	cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, (int*)ids, xs, ys);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -39,7 +40,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
     {
         // Step 1: Make multiline
         vector<unsigned short> strWhole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
-        unsigned int stringLength        = strWhole.size();
+        size_t stringLength        = strWhole.size();
         
         vector<unsigned short> multiline_string;
         multiline_string.reserve( stringLength );
@@ -53,23 +54,24 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         float  startOfLine = -1, startOfWord   = -1;
         
         int skip = 0;
-        
-        Array* children = theLabel->getChildrenLetters();
-        
-        for (int j = 0; j < children->count(); j++)
-        {
-            Sprite* characterSprite;
-            unsigned int justSkipped = 0;
+                
+        int strLen = theLabel->getStringLenght();
+        std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
+        int tIndex = 0;
+
+        for (int j = 0; j+skip < strLen; j++)
+        {            
+            LetterInfo* info = &leterInfo->at(j+skip);
+
+            unsigned int justSkipped = 0;                                  
             
-            while (!(characterSprite = theLabel->getSpriteChild(j + skip + justSkipped)))
+            while (info->def.validDefinition == false)
             {
                 justSkipped++;
+                info = &leterInfo->at( j+skip+justSkipped );
             }
-            
             skip += justSkipped;
-            
-            if (!characterSprite->isVisible())
-                continue;
+            tIndex = j + skip;
             
             if (i >= stringLength)
                 break;
@@ -78,7 +80,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             
             if (!isStartOfWord)
             {
-                startOfWord = theLabel->getLetterPosXLeft( characterSprite );
+                startOfWord = theLabel->getLetterPosXLeft( tIndex );
                 isStartOfWord = true;
             }
             
@@ -110,7 +112,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                 
                 if (!startOfWord)
                 {
-                    startOfWord = theLabel->getLetterPosXLeft( characterSprite );
+                    startOfWord = theLabel->getLetterPosXLeft( tIndex );
                     isStartOfWord = true;
                 }
                 if (!startOfLine)
@@ -133,7 +135,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
             }
             
             // Out of bounds.
-            if (theLabel->getLetterPosXRight( characterSprite ) - startOfLine > theLabel->getMaxLineWidth())
+            if (theLabel->getLetterPosXRight( tIndex ) - startOfLine > theLabel->getMaxLineWidth())
             {
                 if (!theLabel->breakLineWithoutSpace())
                 {
@@ -171,7 +173,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
                     
                     if (!startOfWord)
                     {
-                        startOfWord = theLabel->getLetterPosXLeft( characterSprite );
+                        startOfWord = theLabel->getLetterPosXLeft( tIndex );
                         isStartOfWord = true;
                     }
                     if (!startOfLine)
@@ -196,12 +198,12 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
         
-        int size = multiline_string.size();
+        size_t size = multiline_string.size();
         unsigned short* strNew = new unsigned short[size + 1];
         
-        for (int i = 0; i < size; ++i)
+        for (size_t j = 0; j < size; ++j)
         {
-            strNew[i] = multiline_string[i];
+            strNew[j] = multiline_string[j];
         }
         
         strNew[size] = 0;
@@ -222,14 +224,15 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
     int lineNumber = 0;
     int strLen = cc_wcslen(theLabel->getUTF8String());
     vector<unsigned short> lastLine;
+    std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
     for (int ctr = 0; ctr <= strLen; ++ctr)
     {
-        unsigned short int currentChar = theLabel->getCharAtStringPosition(ctr);
+        unsigned short int currentChar = theLabel->getCharAtStringPosition(ctr);      
         
         if (currentChar == '\n' || currentChar == 0)
         {
             float lineWidth = 0.0f;
-            unsigned int lineLength = lastLine.size();
+            size_t lineLength = lastLine.size();
             
             // if last line is empty we must just increase lineNumber and work with next line
             if (lineLength == 0)
@@ -237,14 +240,15 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                 lineNumber++;
                 continue;
             }
-            int index = i + lineLength - 1 + lineNumber;
+            int index = static_cast<int>(i + lineLength - 1 + lineNumber);
+            if(currentChar == 0)
+                index -= 1;
             if (index < 0) continue;
             
-            Sprite* lastChar = theLabel->getSpriteChild(index);
-            if (lastChar == nullptr)
+            LetterInfo* info = &leterInfo->at( index );
+            if(info->def.validDefinition == false)
                 continue;
-            
-            lineWidth = lastChar->getPosition().x + lastChar->getContentSize().width / 2.0f;
+            lineWidth = info->position.x + info->contentSize.width /2.0f;
             
             float shift = 0;
             switch (theLabel->getTextAlignment())
@@ -266,10 +270,11 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                     index = i + j + lineNumber;
                     if (index < 0) continue;
                     
-                    Sprite* characterSprite = theLabel->getSpriteChild(index);
-                    
-                    if (characterSprite)
-                        characterSprite->setPosition( characterSprite->getPosition() + Point(shift, 0.0f));
+                    info = &leterInfo->at( index );
+                    if(info)
+                    {
+                        info->position = info->position + Point(shift, 0.0f);
+                    }
                 }
             }
             
@@ -336,15 +341,8 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         {
             nextFontPositionX  = 0;
             nextFontPositionY -= commonLineHeight;
-            continue;
-        }
-        
-        // get the sprite to this letter
-        Sprite *letterSprite = theLabel->getSpriteForChar(c, i);
-        
-        if (!letterSprite)
-        {
-            log("WARNING: can't find letter definition in font file for letter: %c", c);
+            
+            theLabel->recordPlaceholderInfo(i);
             continue;
         }
         
@@ -354,10 +352,13 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         
         Point fontPos = Point((float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
                              (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f);
-        
-        // set the sprite position
-        letterSprite->setPosition(CC_POINT_PIXELS_TO_POINTS(fontPos));
-        
+               
+        if( theLabel->recordLetterInfo(CC_POINT_PIXELS_TO_POINTS(fontPos),c,i) == false)
+        {
+            log("WARNING: can't find letter definition in font file for letter: %c", c);
+            continue;
+        }
+
         // update kerning
         nextFontPositionX += charAdvance + kerningAmount;
         prev = c;

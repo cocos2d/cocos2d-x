@@ -23,7 +23,8 @@
 
 #include "kazmath/neon_matrix_impl.h"
 
-#if defined(__ARM_NEON__)
+#if defined(__ARM_NEON__) && !defined(__arm64__)
+
 
 void NEON_Matrix4Mul(const float* a, const float* b, float* output )
 {

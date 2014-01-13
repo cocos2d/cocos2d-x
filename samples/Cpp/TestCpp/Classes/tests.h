@@ -1,6 +1,9 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#include "UnitTest/UnitTest.h"
+#include "NewRendererTest/NewRendererTest.h"
+#include "ConsoleTest/ConsoleTest.h"
 #include "NewEventDispatcherTest/NewEventDispatcherTest.h"
 #include "ActionsTest/ActionsTest.h"
 #include "TransitionsTest/TransitionsTest.h"
@@ -32,6 +35,7 @@
 #include "AccelerometerTest/AccelerometerTest.h"
 #include "KeypadTest/KeypadTest.h"
 #include "KeyboardTest/KeyboardTest.h"
+#include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"

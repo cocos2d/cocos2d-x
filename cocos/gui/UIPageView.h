@@ -1,32 +1,34 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
-#include "gui/Layout.h"
+#include "gui/UILayout.h"
 #include "gui/UIScrollInterface.h"
+
+NS_CC_BEGIN
 
 namespace gui {
 
@@ -35,7 +37,7 @@ typedef enum
     PAGEVIEW_EVENT_TURNING,
 }PageViewEventType;
 
-typedef void (cocos2d::Object::*SEL_PageViewEvent)(cocos2d::Object*, PageViewEventType);
+typedef void (Object::*SEL_PageViewEvent)(Object*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 typedef enum {
@@ -43,24 +45,24 @@ typedef enum {
     PAGEVIEW_TOUCHRIGHT
 }PVTouchDir;
 
-class UIPageView : public Layout , public UIScrollInterface
+class PageView : public Layout , public UIScrollInterface
 {
     
 public:
     /**
      * Default constructor
      */
-    UIPageView();
+    PageView();
     
     /**
      * Default destructor
      */
-    virtual ~UIPageView();
+    virtual ~PageView();
     
     /**
      * Allocates and initializes.
      */
-    static UIPageView* create();
+    static PageView* create();
     
     /**
      * Add a widget to a page of pageview.
@@ -71,7 +73,7 @@ public:
      *
      * @param forceCreate   if force create and there is no page exsit, pageview would create a default page for adding widget.
      */
-    void addWidgetToPage(UIWidget* widget, int pageIdx, bool forceCreate);
+    void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
      * Push back a page to pageview.
@@ -99,81 +101,107 @@ public:
      *
      * @param index    index of page.
      */
-    void removePageAtIndex(int index);
+    void removePageAtIndex(ssize_t index);
+    
+    void removeAllPages();
     
     /**
      * scroll pageview to index.
      *
      * @param idx    index of page.
      */
-    void scrollToPage(int idx);
+    void scrollToPage(ssize_t idx);
     
     /**
      * Gets current page index.
      *
      * @return current page index.
      */
-    int getCurPageIndex() const;
+    ssize_t getCurPageIndex() const;
+    
+    Vector<Layout*>& getPages();
+    
+    Layout* getPage(ssize_t index);
     
     // event
-    void addEventListener(cocos2d::Object *target, SEL_PageViewEvent selector);
+    void addEventListenerPageView(Object *target, SEL_PageViewEvent selector);
+
     
-    //override "removeChild" method of widget.
-    virtual bool removeChild(UIWidget* widget);
+
     
-    //override "removeAllChildrenAndCleanUp" method of widget.
-    virtual void removeAllChildren();
-    
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint);
-    
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint);
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint);
-    
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint);
+    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
     //override "update" method of widget.
-    virtual void update(float dt);
+    virtual void update(float dt) override;
+    /**
+     * Sets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @param LayoutType
+     */
+    virtual void setLayoutType(LayoutType type) override{};
     
-    virtual void doLayout(){};
-
+    /**
+     * Gets LayoutType.
+     *
+     * @see LayoutType
+     *
+     * @return LayoutType
+     */
+    virtual LayoutType getLayoutType() const override{return LAYOUT_ABSOLUTE;};
+    
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const override;
+
+    virtual void onEnter() override;
+
 protected:
-    virtual bool addChild(UIWidget* widget);
-    virtual bool init();
+    virtual void addChild(Node * child) override;
+    virtual void addChild(Node * child, int zOrder) override;
+    virtual void addChild(Node* child, int zOrder, int tag) override;
+    virtual void removeChild(Node* widget, bool cleanup = true) override;
+    virtual void removeAllChildren() override;
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    virtual Vector<Node*>& getChildren() override{return Widget::getChildren();};
+    virtual const Vector<Node*>& getChildren() const override{return Widget::getChildren();};
+    virtual ssize_t getChildrenCount() const override {return Widget::getChildrenCount();};
+    virtual Node * getChildByTag(int tag) override {return Widget::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) override {return Widget::getChildByName(name);};
+    virtual bool init() override;
     Layout* createPage();
-    float getPositionXByIndex(int idx);
+    float getPositionXByIndex(ssize_t idx);
     void updateBoundaryPages();
-    virtual void handlePressLogic(const cocos2d::Point &touchPoint);
-    virtual void handleMoveLogic(const cocos2d::Point &touchPoint);
-    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint);
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint);
-    virtual void checkChildInfo(int handleState, UIWidget* sender, const cocos2d::Point &touchPoint);
+    virtual void handlePressLogic(const Point &touchPoint) override;
+    virtual void handleMoveLogic(const Point &touchPoint) override;
+    virtual void handleReleaseLogic(const Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState, Widget* sender, const Point &touchPoint) override;
     virtual bool scrollPages(float touchOffset);
     void movePages(float offset);
     void pageTurningEvent();
     void updateChildrenSize();
     void updateChildrenPosition();
-    virtual void onSizeChanged();
-
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual void onSizeChanged() override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    virtual void setClippingEnabled(bool enabled) override {Layout::setClippingEnabled(enabled);};
+    virtual void doLayout() override{if (!_doLayoutDirty){return;} _doLayoutDirty = false;};
 protected:
-    int _curPageIdx;
-    cocos2d::Array* _pages;
+    ssize_t _curPageIdx;
+    Vector<Layout*> _pages;
     PVTouchDir _touchMoveDir;
     float _touchStartLocation;
-    float _touchEndLocation;
     float _touchMoveStartLocation;
-    cocos2d::Point _movePagePoint;
-    UIWidget* _leftChild;
-    UIWidget* _rightChild;
+    Point _movePagePoint;
+    Widget* _leftChild;
+    Widget* _rightChild;
     float _leftBoundary;
     float _rightBoundary;
     bool _isAutoScrolling;
@@ -181,10 +209,12 @@ protected:
     float _autoScrollSpeed;
     int _autoScrollDir;
     float _childFocusCancelOffset;
-    cocos2d::Object* _eventListener;
-    SEL_PageViewEvent _eventSelector;
+    Object* _pageViewEventListener;
+    SEL_PageViewEvent _pageViewEventSelector;
+
 };
 
 }
+NS_CC_END
 
-#endif /* defined(__UIPageView__) */
+#endif /* defined(__PageView__) */

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -35,36 +35,36 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Integer : public Object, public Clonable
+class CC_DLL __Integer : public Object, public Clonable
 {
 public:
-    static Integer* create(int v)
+    static __Integer* create(int v)
     {
-        Integer* pRet = new Integer(v);
+        __Integer* pRet = new __Integer(v);
         pRet->autorelease();
         return pRet;
     }
     /**
      * @js NA
      */
-    Integer(int v)
+    __Integer(int v)
         : _value(v) {}
     int getValue() const {return _value;}
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~Integer() {
-        CCLOGINFO("deallocing ~Integer: %p", this);
+    virtual ~__Integer() {
+        CCLOGINFO("deallocing ~__Integer: %p", this);
     }
 
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
     // overrides
-    virtual Integer* clone() const override
+    virtual __Integer* clone() const override
     {
-        return Integer::create(_value);
+        return __Integer::create(_value);
     }
     
 private:

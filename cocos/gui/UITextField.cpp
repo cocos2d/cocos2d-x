@@ -1,42 +1,42 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UITextField.h"
 
- using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace gui {
 
 UICCTextField::UICCTextField()
-: m_bMaxLengthEnabled(false)
-, m_nMaxLength(0)
-, m_bPasswordEnabled(false)
-, m_strPasswordStyleText("*")
-, m_bAttachWithIME(false)
-, m_bDetachWithIME(false)
-, m_bInsertText(false)
-, m_bDeleteBackward(false)
+: _maxLengthEnabled(false)
+, _maxLength(0)
+, _passwordEnabled(false)
+, _passwordStyleText("*")
+, _attachWithIME(false)
+, _detachWithIME(false)
+, _insertText(false)
+, _deleteBackward(false)
 {
 }
 
@@ -59,12 +59,12 @@ UICCTextField * UICCTextField::create(const char *placeholder, const char *fontN
     }
     CC_SAFE_DELETE(pRet);
     
-    return NULL;
+    return nullptr;
 }
 
 void UICCTextField::onEnter()
 {
-    CCTextFieldTTF::setDelegate(this);
+    TextFieldTTF::setDelegate(this);
 }
 
 
@@ -81,9 +81,9 @@ bool UICCTextField::onTextFieldInsertText(TextFieldTTF *pSender, const char *tex
         return false;
     }
     setInsertText(true);
-    if (m_bMaxLengthEnabled)
+    if (_maxLengthEnabled)
     {
-        if (CCTextFieldTTF::getCharCount() >= m_nMaxLength)
+        if (TextFieldTTF::getCharCount() >= _maxLength)
         {
             return true;
         }
@@ -107,11 +107,11 @@ bool UICCTextField::onTextFieldDetachWithIME(TextFieldTTF *pSender)
 void UICCTextField::insertText(const char * text, int len)
 {
     std::string str_text = text;
-    int str_len = strlen(CCTextFieldTTF::getString());
+    ssize_t str_len = TextFieldTTF::getString().size();
     
     if (strcmp(text, "\n") != 0)
     {
-        if (m_bMaxLengthEnabled)
+        if (_maxLengthEnabled)
         {
             int multiple = 1;
             char value = text[0];
@@ -120,89 +120,89 @@ void UICCTextField::insertText(const char * text, int len)
                 multiple = 3;
             }
             
-            if (str_len + len > m_nMaxLength * multiple)
+            if (str_len + len > _maxLength * multiple)
             {
-                str_text = str_text.substr(0, m_nMaxLength * multiple);
-                len = m_nMaxLength * multiple;
+                str_text = str_text.substr(0, _maxLength * multiple);
+                len = _maxLength * multiple;
                 /*
                  int mod = str_len % 3;
                  int offset = (mod == 0) ? 0 : (3 - mod);
                  int amount = str_len + offset;
-                 str_text = str_text.substr(0, m_nMaxLength - amount);
+                 str_text = str_text.substr(0, _maxLength - amount);
                  //                CCLOG("str_test = %s", str_text.c_str());
                  */
             }
         }
     }
-    CCTextFieldTTF::insertText(str_text.c_str(), len);
+    TextFieldTTF::insertText(str_text.c_str(), len);
     
     // password
-    if (m_bPasswordEnabled)
+    if (_passwordEnabled)
     {
-        if (CCTextFieldTTF::getCharCount() > 0)
+        if (TextFieldTTF::getCharCount() > 0)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
 
 void UICCTextField::deleteBackward()
 {
-    CCTextFieldTTF::deleteBackward();
+    TextFieldTTF::deleteBackward();
     
-    if (CCTextFieldTTF::getCharCount() > 0)
+    if (TextFieldTTF::getCharCount() > 0)
     {
         // password
-        if (m_bPasswordEnabled)
+        if (_passwordEnabled)
         {
-            setPasswordText(_inputText->c_str());
+            setPasswordText(_inputText.c_str());
         }
     }
 }
 
 void UICCTextField::openIME()
 {
-    CCTextFieldTTF::attachWithIME();
+    TextFieldTTF::attachWithIME();
 }
 
 void UICCTextField::closeIME()
 {
-    CCTextFieldTTF::detachWithIME();
+    TextFieldTTF::detachWithIME();
 }
 
 void UICCTextField::setMaxLengthEnabled(bool enable)
 {
-    m_bMaxLengthEnabled = enable;
+    _maxLengthEnabled = enable;
 }
 
 bool UICCTextField::isMaxLengthEnabled()
 {
-    return m_bMaxLengthEnabled;
+    return _maxLengthEnabled;
 }
 
 void UICCTextField::setMaxLength(int length)
 {
-    m_nMaxLength = length;
+    _maxLength = length;
 }
 
 int UICCTextField::getMaxLength()
 {
-    return m_nMaxLength;
+    return _maxLength;
 }
 
 int UICCTextField::getCharCount()
 {
-    return CCTextFieldTTF::getCharCount();
+    return TextFieldTTF::getCharCount();
 }
 
 void UICCTextField::setPasswordEnabled(bool enable)
 {
-    m_bPasswordEnabled = enable;
+    _passwordEnabled = enable;
 }
 
 bool UICCTextField::isPasswordEnabled()
 {
-    return m_bPasswordEnabled;
+    return _passwordEnabled;
 }
 
 void UICCTextField::setPasswordStyleText(const char* styleText)
@@ -216,7 +216,7 @@ void UICCTextField::setPasswordStyleText(const char* styleText)
     {
         return;
     }
-    m_strPasswordStyleText = styleText;
+    _passwordStyleText = styleText;
 }
 
 void UICCTextField::setPasswordText(const char *text)
@@ -224,186 +224,198 @@ void UICCTextField::setPasswordText(const char *text)
     std::string tempStr;
     for (size_t i = 0; i < strlen(text); ++i)
     {
-        tempStr.append(m_strPasswordStyleText);
+        tempStr.append(_passwordStyleText);
     }
-    CCLabelTTF::setString(tempStr.c_str());
+    LabelTTF::setString(tempStr.c_str());
 }
 
 void UICCTextField::setAttachWithIME(bool attach)
 {
-    m_bAttachWithIME = attach;
+    _attachWithIME = attach;
 }
 
 bool UICCTextField::getAttachWithIME()
 {
-    return m_bAttachWithIME;
+    return _attachWithIME;
 }
 
 void UICCTextField::setDetachWithIME(bool detach)
 {
-    m_bDetachWithIME = detach;
+    _detachWithIME = detach;
 }
 
 bool UICCTextField::getDetachWithIME()
 {
-    return m_bDetachWithIME;
+    return _detachWithIME;
 }
 
 void UICCTextField::setInsertText(bool insert)
 {
-    m_bInsertText = insert;
+    _insertText = insert;
 }
 
 bool UICCTextField::getInsertText()
 {
-    return m_bInsertText;
+    return _insertText;
 }
 
 void UICCTextField::setDeleteBackward(bool deleteBackward)
 {
-    m_bDeleteBackward = deleteBackward;
+    _deleteBackward = deleteBackward;
 }
 
 bool UICCTextField::getDeleteBackward()
 {
-    return m_bDeleteBackward;
+    return _deleteBackward;
 }
 
-
+static const int TEXTFIELD_RENDERER_Z = (-1);
 
     
-UITextField::UITextField():
-_textFieldRenderer(NULL),
+TextField::TextField():
+_textFieldRenderer(nullptr),
 _touchWidth(0.0f),
 _touchHeight(0.0f),
 _useTouchArea(false),
-_eventListener(NULL),
-_eventSelector(NULL)
+_textFieldEventListener(nullptr),
+_textFieldEventSelector(nullptr),
+_passwordStyleText("")
 {
 }
 
-UITextField::~UITextField()
+TextField::~TextField()
 {
+    _textFieldEventListener = nullptr;
+    _textFieldEventSelector = nullptr;
 }
 
-UITextField* UITextField::create()
+TextField* TextField::create()
 {
-    UITextField* widget = new UITextField();
+    TextField* widget = new TextField();
     if (widget && widget->init())
     {
         widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
+}
+    
+void TextField::onEnter()
+{
+    Widget::onEnter();
+    scheduleUpdate();
 }
 
-bool UITextField::init()
+void TextField::initRenderer()
 {
-    if (UIWidget::init())
-    {
-        setUpdateEnabled(true);
-        return true;
-    }
-    return false;
-}
-
-void UITextField::initRenderer()
-{
-    UIWidget::initRenderer();
     _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
-    _renderer->addChild(_textFieldRenderer);
+    Node::addChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 
-void UITextField::setTouchSize(const Size &size)
+void TextField::setTouchSize(const Size &size)
 {
     _useTouchArea = true;
     _touchWidth = size.width;
     _touchHeight = size.height;
 }
 
-void UITextField::setText(const char* text)
+void TextField::setText(const std::string& text)
 {
-	if (!text)
-	{
-		return;
-	}
     std::string strText(text);
-    _textFieldRenderer->setString(strText.c_str());
+    if (isMaxLengthEnabled())
+    {
+        strText = strText.substr(0, getMaxLength());
+    }
+    const char* content = strText.c_str();
+    if (isPasswordEnabled())
+    {
+        _textFieldRenderer->setPasswordText(content);
+        _textFieldRenderer->insertText(content, static_cast<int>(strlen(content)));
+    }
+    else
+    {
+        _textFieldRenderer->setString(content);
+    }
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setPlaceHolder(const char *value)
+void TextField::setPlaceHolder(const std::string& value)
 {
     _textFieldRenderer->setPlaceHolder(value);
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setFontSize(int size)
+void TextField::setFontSize(int size)
 {
     _textFieldRenderer->setFontSize(size);
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::setFontName(const char *name)
+void TextField::setFontName(const std::string& name)
 {
     _textFieldRenderer->setFontName(name);
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::didNotSelectSelf()
+void TextField::didNotSelectSelf()
 {
     _textFieldRenderer->detachWithIME();
 }
 
-const char* UITextField::getStringValue()
+const std::string& TextField::getStringValue()
 {
     return _textFieldRenderer->getString();
 }
 
-bool UITextField::onTouchBegan(const Point &touchPoint)
+bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    bool pass = UIWidget::onTouchBegan(touchPoint);
-    _textFieldRenderer->attachWithIME();
+    bool pass = Widget::onTouchBegan(touch, unusedEvent);
+    if (_hitted)
+    {
+        _textFieldRenderer->attachWithIME();
+    }
     return pass;
 }
 
-void UITextField::setMaxLengthEnabled(bool enable)
+void TextField::setMaxLengthEnabled(bool enable)
 {
     _textFieldRenderer->setMaxLengthEnabled(enable);
 }
 
-bool UITextField::isMaxLengthEnabled()
+bool TextField::isMaxLengthEnabled()
 {
     return _textFieldRenderer->isMaxLengthEnabled();
 }
 
-void UITextField::setMaxLength(int length)
+void TextField::setMaxLength(int length)
 {
     _textFieldRenderer->setMaxLength(length);
 }
 
-int UITextField::getMaxLength()
+int TextField::getMaxLength()
 {
     return _textFieldRenderer->getMaxLength();
 }
 
-void UITextField::setPasswordEnabled(bool enable)
+void TextField::setPasswordEnabled(bool enable)
 {
     _textFieldRenderer->setPasswordEnabled(enable);
 }
 
-bool UITextField::isPasswordEnabled()
+bool TextField::isPasswordEnabled()
 {
     return _textFieldRenderer->isPasswordEnabled();
 }
 
-void UITextField::setPasswordStyleText(const char *styleText)
+void TextField::setPasswordStyleText(const char *styleText)
 {
     _textFieldRenderer->setPasswordStyleText(styleText);
+    
+    _passwordStyleText = styleText;
 }
 
-void UITextField::update(float dt)
+void TextField::update(float dt)
 {
     if (getAttachWithIME())
     {
@@ -429,108 +441,97 @@ void UITextField::update(float dt)
     }
 }
 
-bool UITextField::getAttachWithIME()
+bool TextField::getAttachWithIME()
 {
     return _textFieldRenderer->getAttachWithIME();
 }
 
-void UITextField::setAttachWithIME(bool attach)
+void TextField::setAttachWithIME(bool attach)
 {
     _textFieldRenderer->setAttachWithIME(attach);
 }
 
-bool UITextField::getDetachWithIME()
+bool TextField::getDetachWithIME()
 {
     return _textFieldRenderer->getDetachWithIME();
 }
 
-void UITextField::setDetachWithIME(bool detach)
+void TextField::setDetachWithIME(bool detach)
 {
     _textFieldRenderer->setDetachWithIME(detach);
 }
 
-bool UITextField::getInsertText()
+bool TextField::getInsertText()
 {
     return _textFieldRenderer->getInsertText();
 }
 
-void UITextField::setInsertText(bool insertText)
+void TextField::setInsertText(bool insertText)
 {
     _textFieldRenderer->setInsertText(insertText);
 }
 
-bool UITextField::getDeleteBackward()
+bool TextField::getDeleteBackward()
 {
     return _textFieldRenderer->getDeleteBackward();
 }
 
-void UITextField::setDeleteBackward(bool deleteBackward)
+void TextField::setDeleteBackward(bool deleteBackward)
 {
     _textFieldRenderer->setDeleteBackward(deleteBackward);
 }
 
-void UITextField::attachWithIMEEvent()
+void TextField::attachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_ATTACH_WITH_IME);
     }
 }
 
-void UITextField::detachWithIMEEvent()
+void TextField::detachWithIMEEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
 }
 
-void UITextField::insertTextEvent()
+void TextField::insertTextEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_INDERT_TEXT);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
 }
 
-void UITextField::deleteBackwardEvent()
+void TextField::deleteBackwardEvent()
 {
-    if (_eventListener && _eventSelector)
+    if (_textFieldEventListener && _textFieldEventSelector)
     {
-        (_eventListener->*_eventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
+        (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
 }
 
-void UITextField::addEventListener(Object *target, SEL_TextFieldEvent selecor)
+void TextField::addEventListenerTextField(Object *target, SEL_TextFieldEvent selecor)
 {
-    _eventListener = target;
-    _eventSelector = selecor;
+    _textFieldEventListener = target;
+    _textFieldEventSelector = selecor;
 }
 
-void UITextField::setAnchorPoint(const Point &pt)
+void TextField::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
     _textFieldRenderer->setAnchorPoint(pt);
 }
 
-void UITextField::setColor(const Color3B &color)
+void TextField::onSizeChanged()
 {
-    UIWidget::setColor(color);
-    _textFieldRenderer->setColor(color);
-}
-
-void UITextField::setOpacity(int opacity)
-{
-    UIWidget::setOpacity(opacity);
-    _textFieldRenderer->setOpacity(opacity);
-}
-
-void UITextField::onSizeChanged()
-{
+    Widget::onSizeChanged();
     textfieldRendererScaleChangedWithSize();
 }
 
-void UITextField::textfieldRendererScaleChangedWithSize()
+void TextField::textfieldRendererScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -552,19 +553,51 @@ void UITextField::textfieldRendererScaleChangedWithSize()
     }
 }
 
-const Size& UITextField::getContentSize() const
+const Size& TextField::getContentSize() const
 {
     return _textFieldRenderer->getContentSize();
 }
 
-Node* UITextField::getVirtualRenderer()
+Node* TextField::getVirtualRenderer()
 {
     return _textFieldRenderer;
 }
 
-const char* UITextField::getDescription() const
+std::string TextField::getDescription() const
 {
     return "TextField";
 }
 
+void TextField::attachWithIME()
+{
+    _textFieldRenderer->attachWithIME();
 }
+
+Widget* TextField::createCloneInstance()
+{
+    return TextField::create();
+}
+
+void TextField::copySpecialProperties(Widget *widget)
+{
+    TextField* textField = dynamic_cast<TextField*>(widget);
+    if (textField)
+    {
+        setText(textField->_textFieldRenderer->getString());
+        setPlaceHolder(textField->getStringValue());
+        setFontSize(textField->_textFieldRenderer->getFontSize());
+        setFontName(textField->_textFieldRenderer->getFontName().c_str());
+        setMaxLengthEnabled(textField->isMaxLengthEnabled());
+        setMaxLength(textField->getMaxLength());
+        setPasswordEnabled(textField->isPasswordEnabled());
+        setPasswordStyleText(textField->_passwordStyleText.c_str());
+        setAttachWithIME(textField->getAttachWithIME());
+        setDetachWithIME(textField->getDetachWithIME());
+        setInsertText(textField->getInsertText());
+        setDeleteBackward(textField->getDeleteBackward());
+    }
+}
+
+}
+
+NS_CC_END

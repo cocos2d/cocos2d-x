@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Steve Oldmeadow
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -64,7 +65,7 @@ public:
 
     /**
      @brief Release the shared Engine object
-     @warning It must be called before the application exit, or a memroy leak will be casued.
+     @warning It must be called before the application exit, or a memory leak will be casued.
      */
     static void end();
 

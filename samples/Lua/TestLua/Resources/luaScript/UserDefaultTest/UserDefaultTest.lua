@@ -75,6 +75,7 @@ function UserDefaultTestMain()
     local  label = cc.LabelTTF:create("UserDefault test see log", "Arial", 28)
     ret:addChild(label, 0)
     label:setPosition( cc.p(s.width/2, s.height-50) )
+    ret:addChild(CreateBackMenuItem())
     doTest()
     return ret
 end

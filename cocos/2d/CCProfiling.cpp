@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Stuart Carnie
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +38,7 @@ bool kProfilerCategoryBatchSprite = false;
 bool kProfilerCategoryParticles = false;
 
 
-static Profiler* g_sSharedProfiler = NULL;
+static Profiler* g_sSharedProfiler = nullptr;
 
 Profiler* Profiler::getInstance()
 {
@@ -60,7 +61,7 @@ ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 {
     ProfilingTimer *t = new ProfilingTimer();
     t->initWithName(timerName);
-    _activeTimers->setObject(t, timerName);
+    _activeTimers.insert(timerName, t);
     t->release();
 
     return t;
@@ -68,45 +69,41 @@ ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 
 void Profiler::releaseTimer(const char* timerName)
 {
-    _activeTimers->removeObjectForKey(timerName);
+    _activeTimers.erase(timerName);
 }
 
 void Profiler::releaseAllTimers()
 {
-    _activeTimers->removeAllObjects();
+    _activeTimers.clear();
 }
 
 bool Profiler::init()
 {
-    _activeTimers = new Dictionary();
-    _activeTimers->init();
     return true;
 }
 
 Profiler::~Profiler(void)
 {
-    CC_SAFE_RELEASE(_activeTimers);
 }
 
 void Profiler::displayTimers()
 {
-    DictElement* pElement = NULL;
-    CCDICT_FOREACH(_activeTimers, pElement)
+    for (auto iter = _activeTimers.begin(); iter != _activeTimers.end(); ++iter)
     {
-        ProfilingTimer* timer = static_cast<ProfilingTimer*>(pElement->getObject());
-        log("%s", timer->description());
+        ProfilingTimer* timer = iter->second;
+        log("%s", timer->getDescription().c_str());
     }
 }
 
 // implementation of ProfilingTimer
 
 ProfilingTimer::ProfilingTimer()
-: numberOfCalls(0)
-, _averageTime1(0)
+: _averageTime1(0)
 , _averageTime2(0)
-, totalTime(0)
 , minTime(100000000)
 , maxTime(0)
+, totalTime(0)
+, numberOfCalls(0)
 {
 }
 
@@ -121,11 +118,11 @@ ProfilingTimer::~ProfilingTimer(void)
     
 }
 
-const char* ProfilingTimer::description() const
+std::string ProfilingTimer::getDescription() const
 {
     static char s_desciption[512] = {0};
 
-    sprintf(s_desciption, "%s ::\tavg1: %dµ,\tavg2: %dµ,\tmin: %dµ,\tmax: %dµ,\ttotal: %.2fs,\tnr calls: %d", _nameStr.c_str(), _averageTime1, _averageTime2, minTime, maxTime, totalTime/1000000., numberOfCalls);
+    sprintf(s_desciption, "%s ::\tavg1: %ldµ,\tavg2: %ldµ,\tmin: %ldµ,\tmax: %ldµ,\ttotal: %.2fs,\tnr calls: %ld", _nameStr.c_str(), _averageTime1, _averageTime2, minTime, maxTime, totalTime/1000000., numberOfCalls);
     return s_desciption;
 }
 
@@ -143,7 +140,7 @@ void ProfilingTimer::reset()
 void ProfilingBeginTimingBlock(const char *timerName)
 {
     Profiler* p = Profiler::getInstance();
-    ProfilingTimer* timer = static_cast<ProfilingTimer*>( p->_activeTimers->objectForKey(timerName) );
+    ProfilingTimer* timer = p->_activeTimers.at(timerName);
     if( ! timer )
     {
         timer = p->createAndAddTimerWithName(timerName);
@@ -161,12 +158,12 @@ void ProfilingEndTimingBlock(const char *timerName)
     auto now = chrono::high_resolution_clock::now();
 
     Profiler* p = Profiler::getInstance();
-    ProfilingTimer* timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
+    ProfilingTimer* timer = p->_activeTimers.at(timerName);
 
     CCASSERT(timer, "CCProfilingTimer  not found");
 
 
-    int duration = chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count();
+    long duration = static_cast<long>(chrono::duration_cast<chrono::microseconds>(now - timer->_startTime).count());
 
     timer->totalTime += duration;
     timer->_averageTime1 = (timer->_averageTime1 + duration) / 2.0f;
@@ -178,7 +175,7 @@ void ProfilingEndTimingBlock(const char *timerName)
 void ProfilingResetTimingBlock(const char *timerName)
 {
     Profiler* p = Profiler::getInstance();
-    ProfilingTimer *timer = (ProfilingTimer*)p->_activeTimers->objectForKey(timerName);
+    ProfilingTimer *timer = p->_activeTimers.at(timerName);
 
     CCASSERT(timer, "CCProfilingTimer not found");
 

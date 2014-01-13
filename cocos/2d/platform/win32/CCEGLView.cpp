@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,7 +32,7 @@ THE SOFTWARE.
 #include "CCTouch.h"
 #include "CCEventDispatcher.h"
 #include "CCEventKeyboard.h"
-
+#include "CCEventMouse.h"
 
 NS_CC_BEGIN
 
@@ -277,6 +278,7 @@ public:
     static void OnGLFWError(int errorID, const char* errorDesc);
     static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
     static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
     static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
@@ -316,6 +318,21 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             }
         }
     }
+
+    if(GLFW_PRESS == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
@@ -336,13 +353,33 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
+
+    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    //Because OpenGL use upper left as origin point, we need to revert the mouse y coordinate here
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+{
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+
+    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
+    //Because OpenGL use upper left as origin point, we need to revert the mouse y coordinate here
+    event.setScrollData((float)x, -(float)y);
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
@@ -380,7 +417,7 @@ EGLView::EGLView()
     {
         g_keyCodeMap.insert(std::make_pair(item.glfwKeyCode, item.keyCode));
     }
-    strcpy(_viewName, "Cocos2dxWin32");
+    _viewName = "Cocos2dxWin32";
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
 }
@@ -400,14 +437,16 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::OnGLFWMouseScrollCallback);
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
     glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
+    glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
     
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);

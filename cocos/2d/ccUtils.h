@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010      cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,7 +44,7 @@ Examples:
 @since v0.99.5
 */
 
-unsigned long ccNextPOT( unsigned long value );
+int ccNextPOT(int value);
 
 }
 

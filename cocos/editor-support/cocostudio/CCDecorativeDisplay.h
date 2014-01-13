@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,36 +30,65 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 #include "cocostudio/CCColliderDetector.h"
 #endif
 
 namespace cocostudio {
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DecorativeDisplay: public cocos2d::Object
 {
 public:
     static DecorativeDisplay *create();
 public:
-	/**
-     * @js ctor
-     */
     DecorativeDisplay(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~DecorativeDisplay(void);
 
     virtual bool init();
 
+    virtual void setDisplay(cocos2d::Node *display) 
+    { 
+        if (_display != display)
+        {
+            CC_SAFE_RETAIN(display);
+            CC_SAFE_RELEASE(_display);
+            _display = display; 
+        }
+    }
+    virtual cocos2d::Node *getDisplay() const { return _display; }
+
+    virtual void setDisplayData(DisplayData *data)
+    {
+        if (_displayData != data)
+        {
+            CC_SAFE_RETAIN(data);
+            CC_SAFE_RELEASE(_displayData);
+            _displayData = data; 
+        }
+    }
+    virtual DisplayData *getDisplayData() const { return _displayData; }
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    virtual void setColliderDetector(ColliderDetector *detector)
+    {
+        if (_colliderDetector != detector)
+        {
+            CC_SAFE_RETAIN(detector);
+            CC_SAFE_RELEASE(_colliderDetector);
+            _colliderDetector = detector; 
+        }
+    }
+    virtual ColliderDetector *getColliderDetector() const { return _colliderDetector; }
+#endif
 protected:
+    cocos2d::Node *_display;
+    DisplayData *_displayData;
 
-    CC_SYNTHESIZE_RETAIN(cocos2d::Node *, _display, Display);
-    CC_SYNTHESIZE_RETAIN(DisplayData *, _displayData, DisplayData);
-
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    CC_SYNTHESIZE_RETAIN(ColliderDetector *, _colliderDetector, ColliderDetector);
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    ColliderDetector *_colliderDetector;
 #endif
 };
 

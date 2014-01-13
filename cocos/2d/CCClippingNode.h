@@ -1,9 +1,9 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- * cocos2d-x: http://www.cocos2d-x.org
+ * Copyright (c) 2012      Pierre-David Bélanger
+ * Copyright (c) 2012      cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
- * Copyright (c) 2012 Pierre-David Bélanger
- * Copyright (c) 2012 cocos2d-x.org
+ * http://www.cocos2d-x.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,8 @@
 
 #include "CCNode.h"
 #include "CCGL.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -48,28 +50,14 @@ public:
     /** Creates and initializes a clipping node with an other node as its stencil.
      The stencil node will be retained.
      */
-    static ClippingNode* create(Node *pStencil);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ClippingNode();
-    
-    /** Initializes a clipping node without a stencil.
-     */
-    virtual bool init();
-    
-    /** Initializes a clipping node with an other node as its stencil.
-     The stencil node will be retained, and its parent will be set to this clipping node.
-     */
-    virtual bool init(Node *pStencil);
-    
+    static ClippingNode* create(Node *stencil);
+
     /** The Node to use as a stencil to do the clipping.
      The stencil node will be retained.
      This default to nil.
      */
     Node* getStencil() const;
-    void setStencil(Node *pStencil);
+    void setStencil(Node *stencil);
     
     /** The alpha threshold.
      The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.
@@ -77,14 +65,14 @@ public:
      This default to 1 (so alpha test is disabled).
      */
     GLfloat getAlphaThreshold() const;
-    void setAlphaThreshold(GLfloat fAlphaThreshold);
+    void setAlphaThreshold(GLfloat alphaThreshold);
     
     /** Inverted. If this is set to true,
      the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
      This default to false.
      */
     bool isInverted() const;
-    void setInverted(bool bInverted);
+    void setInverted(bool inverted);
 
     // Overrides
     /**
@@ -109,18 +97,60 @@ public:
     virtual void onExit() override;
     virtual void visit() override;
 
-private:
+protected:
+    ClippingNode();
+
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ClippingNode();
+
+    /** Initializes a clipping node without a stencil.
+     */
+    virtual bool init();
+
+    /** Initializes a clipping node with an other node as its stencil.
+     The stencil node will be retained, and its parent will be set to this clipping node.
+     */
+    virtual bool init(Node *stencil);
+
     /**draw fullscreen quad to clear stencil bits
     */
     void drawFullScreenQuadClearStencil();
 
-protected:
-    ClippingNode();
-
-protected:
     Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
+protected:
+    //renderData and callback
+    void onBeforeVisit();
+    void onAfterDrawStencil();
+    void onAfterVisit();
+
+    GLboolean _currentStencilEnabled;
+    GLuint _currentStencilWriteMask;
+    GLenum _currentStencilFunc;
+    GLint _currentStencilRef;
+    GLuint _currentStencilValueMask;
+    GLenum _currentStencilFail;
+    GLenum _currentStencilPassDepthFail;
+    GLenum _currentStencilPassDepthPass;
+    GLboolean _currentDepthWriteMask;
+
+    GLboolean _currentAlphaTestEnabled;
+    GLenum _currentAlphaTestFunc;
+    GLclampf _currentAlphaTestRef;
+
+    GLint _mask_layer_le;
+    
+    GroupCommand _groupCommand;
+    CustomCommand _beforeVisitCmd;
+    CustomCommand _afterDrawStencilCmd;
+    CustomCommand _afterVisitCmd;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);
 };
 
 NS_CC_END

@@ -13,13 +13,13 @@ protected:
     virtual ~PlayerController(void);
     
 public:
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
     
 public:
-    virtual bool init();
-    virtual void onEnter();
-    virtual void onExit();
-    virtual void update(float delta);
+    virtual bool init() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual void update(float delta) override;
    
    static PlayerController* create(void);
 };

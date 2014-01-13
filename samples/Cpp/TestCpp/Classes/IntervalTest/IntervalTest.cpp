@@ -16,7 +16,7 @@ IntervalLayer::IntervalLayer()
     auto s = Director::getInstance()->getWinSize();
     // sun
     auto sun = ParticleSun::create();
-    sun->setTexture(TextureCache::getInstance()->addImage("Images/fire.png"));
+    sun->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
     sun->setPosition( Point(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
 
     sun->setTotalParticles(130);

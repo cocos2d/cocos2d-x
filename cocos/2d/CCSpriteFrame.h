@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -58,12 +59,12 @@ public:
     /** Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
      */
-    static SpriteFrame* create(const char* filename, const Rect& rect);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect);
     
     /** Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      */
-    static SpriteFrame* create(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
     
     /** Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -88,7 +89,7 @@ public:
     /** Initializes a SpriteFrame with a texture filename, rect in points;
      It is assumed that the frame was not trimmed.
      */
-    bool initWithTextureFilename(const char* filename, const Rect& rect);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect);
 
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
     The originalSize is the size in points of the frame before being trimmed.
@@ -100,7 +101,7 @@ public:
 
      @since v1.1
      */
-    bool initWithTextureFilename(const char* filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Point& offset, const Size& originalSize);
 
 
     // attributes
@@ -108,7 +109,7 @@ public:
     void setRectInPixels(const Rect& rectInPixels);
 
     inline bool isRotated(void) const { return _rotated; }
-    inline void setRotated(bool bRotated) { _rotated = bRotated; }
+    inline void setRotated(bool rotated) { _rotated = rotated; }
 
     /** get rect of the frame */
     inline const Rect& getRect(void) const { return _rect; }

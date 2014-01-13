@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -34,16 +34,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Float : public Object, public Clonable
+class CC_DLL __Float : public Object, public Clonable
 {
 public:
-    Float(float v)
+    __Float(float v)
         : _value(v) {}
     float getValue() const {return _value;}
 
-    static Float* create(float v)
+    static __Float* create(float v)
     {
-        Float* pRet = new Float(v);
+        __Float* pRet = new __Float(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -54,9 +54,9 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
     
-    Float* clone() const
+    __Float* clone() const
     {
-        return Float::create(_value);
+        return __Float::create(_value);
     }
     
 private:

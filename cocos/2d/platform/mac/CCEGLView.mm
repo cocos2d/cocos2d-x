@@ -1,39 +1,45 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "CCEGLView.h"
+
+#include <unordered_map>
+
 #include "EAGLView.h"
 #include "CCDirector.h"
 #include "CCSet.h"
 #include "CCTouch.h"
 #include "CCEventDispatcher.h"
 #include "CCEventKeyboard.h"
+#include "CCEventMouse.h"
 #include "CCIMEDispatcher.h"
 
 NS_CC_BEGIN
 
 
-static std::map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
+static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
     /* The unknown key */
     { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
     
@@ -175,6 +181,7 @@ public:
     static void OnGLFWError(int errorID, const char* errorDesc);
     static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
     static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
     static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
@@ -214,14 +221,31 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             }
         }
     }
+    
+    if(GLFW_PRESS == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
+    else if(GLFW_RELEASE == action)
+    {
+        EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
+        //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+        event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+        event.setMouseButton(button);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 {
-    s_mouseX = (float)x;
-    s_mouseY = (float)y;
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
+    s_mouseX = (float)x;
+    s_mouseY = (float)y;
     
     s_mouseX /= eglView->getFrameZoomFactor();
     s_mouseY /= eglView->getFrameZoomFactor();
@@ -234,13 +258,33 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
+    
+    EventMouse event(EventMouse::MouseEventType::MOUSE_MOVE);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+{
+    EGLView* eglView = EGLView::getInstance();
+    if(nullptr == eglView) return;
+    
+    EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
+    //Because OpenGL and cocos2d-x uses different Y axis, we need to convert the coordinate here
+    event.setScrollData((float)x, -(float)y);
+    event.setCursorPosition(s_mouseX, eglView->getViewPortRect().size.height - s_mouseY);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
@@ -272,8 +316,8 @@ EGLView::EGLView()
 , _mainWindow(nullptr)
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
+    _viewName = "cocos2dx";
     s_pEglView = this;
-    strcpy(_viewName, "Cocos2dxWin32");
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
 }
@@ -285,7 +329,7 @@ EGLView::~EGLView()
     s_pEglView = nullptr;
 }
 
-bool EGLView::init(const char *viewName, float width, float height, float frameZoomFactor)
+bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
 {
     if(nullptr != _mainWindow) return true;
     
@@ -294,13 +338,14 @@ bool EGLView::init(const char *viewName, float width, float height, float frameZ
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);
     
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::OnGLFWMouseScrollCallback);
     glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
     glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
     glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
@@ -390,9 +435,9 @@ void EGLView::setIMEKeyboardState(bool /*bOpen*/)
     
 }
 
-void EGLView::setFrameZoomFactor(float fZoomFactor)
+void EGLView::setFrameZoomFactor(float zoomFactor)
 {
-    _frameZoomFactor = fZoomFactor;
+    _frameZoomFactor = zoomFactor;
     Director::getInstance()->setProjection(Director::getInstance()->getProjection());
 }
 

@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Neophit
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,7 +31,7 @@ THE SOFTWARE.
 #include "CCGeometry.h"
 #include "CCString.h"
 #include "CCArray.h"
-#include "CCDictionary.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -55,20 +56,20 @@ public:
      */
     virtual ~TMXObjectGroup();
 
-    inline const char* getGroupName(){ return _groupName.c_str(); }
-    inline void setGroupName(const char *groupName){ _groupName = groupName; }
+    inline const std::string& getGroupName(){ return _groupName; }
+    inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
-    String* getProperty(const char* propertyName) const;
+    Value getProperty(const std::string& propertyName) const;
     
-    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char* propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
-    Dictionary* getObject(const char *objectName) const;
+    ValueMap getObject(const std::string& objectName) const;
     
-    CC_DEPRECATED_ATTRIBUTE Dictionary* objectNamed(const char *objectName) const { return getObject(objectName); };
+    CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
     inline const Point& getPositionOffset() const { return _positionOffset; };
@@ -77,22 +78,20 @@ public:
     inline void setPositionOffset(const Point& offset) { _positionOffset = offset; };
     
     /** Gets the list of properties stored in a dictionary */
-    inline Dictionary* getProperties() const { return _properties; };
+    inline const ValueMap& getProperties() const { return _properties; };
+    inline ValueMap& getProperties() { return _properties; };
     
     /** Sets the list of properties */
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
     /** Gets the array of the objects */
-    inline Array* getObjects() const { return _objects; };
+    inline const ValueVector& getObjects() const { return _objects; };
+    inline ValueVector& getObjects() { return _objects; };
     
     /** Sets the array of the objects */
-    inline void setObjects(Array* objects) {
-        CC_SAFE_RETAIN(objects);
-        CC_SAFE_RELEASE(_objects);
+    inline void setObjects(const ValueVector& objects) {
         _objects = objects;
     };
     
@@ -102,9 +101,9 @@ protected:
     /** offset position of child objects */
     Point _positionOffset;
     /** list of properties stored in a dictionary */
-    Dictionary* _properties;
+    ValueMap _properties;
     /** array of the objects */
-    Array* _objects;
+    ValueVector _objects;
 };
 
 // end of tilemap_parallax_nodes group

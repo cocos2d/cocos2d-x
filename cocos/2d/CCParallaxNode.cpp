@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,17 +34,17 @@ class PointObject : Object
 public:
     static PointObject * create(Point ratio, Point offset)
     {
-        PointObject *pRet = new PointObject();
-        pRet->initWithPoint(ratio, offset);
-        pRet->autorelease();
-        return pRet;
+        PointObject *ret = new PointObject();
+        ret->initWithPoint(ratio, offset);
+        ret->autorelease();
+        return ret;
     }
     
     bool initWithPoint(Point ratio, Point offset)
     {
         _ratio = ratio;
         _offset = offset;
-        _child = NULL;
+        _child = nullptr;
         return true;
     }
     
@@ -73,15 +74,15 @@ ParallaxNode::~ParallaxNode()
     if( _parallaxArray )
     {
         ccArrayFree(_parallaxArray);
-        _parallaxArray = NULL;
+        _parallaxArray = nullptr;
     }
 }
 
 ParallaxNode * ParallaxNode::create()
 {
-    ParallaxNode *pRet = new ParallaxNode();
-    pRet->autorelease();
-    return pRet;
+    ParallaxNode *ret = new ParallaxNode();
+    ret->autorelease();
+    return ret;
 }
 
 void ParallaxNode::addChild(Node * child, int zOrder, int tag)
@@ -94,7 +95,7 @@ void ParallaxNode::addChild(Node * child, int zOrder, int tag)
 
 void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point& offset)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
@@ -128,7 +129,7 @@ Point ParallaxNode::absolutePosition()
 {
     Point ret = _position;
     Node *cn = this;
-    while (cn->getParent() != NULL)
+    while (cn->getParent() != nullptr)
     {
         cn = cn->getParent();
         ret = ret + cn->getPosition();

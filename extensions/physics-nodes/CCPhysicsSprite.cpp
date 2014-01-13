@@ -19,10 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
 #include "CCPhysicsSprite.h"
 
-#if defined(CC_ENABLE_CHIPMUNK_INTEGRATION) && defined(CC_ENABLE_BOX2D_INTEGRATION)
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION && CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
 #endif
 
@@ -342,7 +343,7 @@ void PhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-const AffineTransform& PhysicsSprite::getNodeToParentTransform() const
+const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
@@ -360,9 +361,16 @@ const AffineTransform& PhysicsSprite::getNodeToParentTransform() const
 		y += _anchorPointInPoints.y;
 	}
 
-	return (_transform = AffineTransformMake(rot.x * _scaleX, rot.y * _scaleX,
-                                             -rot.y * _scaleY, rot.x * _scaleY,
-                                             x,	y));
+    
+    kmScalar mat[] = {  (kmScalar)rot.x * _scaleX, (kmScalar)rot.y * _scaleX, 0,  0,
+                        (kmScalar)-rot.y * _scaleY, (kmScalar)rot.x * _scaleY,  0,  0,
+                        0,  0,  1,  0,
+                        x,	y,  0,  1};
+
+
+    kmMat4Fill(&_transform, mat);
+    
+    return _transform;
 
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -399,3 +407,4 @@ const AffineTransform& PhysicsSprite::getNodeToParentTransform() const
 }
 
 NS_CC_EXT_END
+#endif //(CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)

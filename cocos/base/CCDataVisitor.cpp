@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,51 +31,45 @@
 #include "CCArray.h"
 #include "CCDictionary.h"
 #include "CCSet.h"
-#include "CCData.h"
 
 NS_CC_BEGIN
 
-void DataVisitor::visit(const Bool *value)
+void DataVisitor::visit(const __Bool *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Integer *value)
+void DataVisitor::visit(const __Integer *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Float *value)
+void DataVisitor::visit(const __Float *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Double *value)
+void DataVisitor::visit(const __Double *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const String *value)
+void DataVisitor::visit(const __String *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Array *value)
+void DataVisitor::visit(const __Array *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Dictionary *value)
+void DataVisitor::visit(const __Dictionary *value)
 {
     visitObject(value);
 }
 
-void DataVisitor::visit(const Set *value)
-{
-    visitObject(value);
-}
-
-void DataVisitor::visit(const Data *value)
+void DataVisitor::visit(const __Set *value)
 {
     visitObject(value);
 }
@@ -103,40 +97,40 @@ void PrettyPrinter::visitObject(const Object *p)
     _result += buf;
 }
 
-void PrettyPrinter::visit(const Bool * p)
+void PrettyPrinter::visit(const __Bool * p)
 {
     char buf[50] = {0};
     sprintf(buf, "%s", p->getValue() ? "true" : "false");
    _result += buf;
 }
 
-void PrettyPrinter::visit(const Integer *p)
+void PrettyPrinter::visit(const __Integer *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%d", p->getValue());
     _result += buf;
 }
 
-void PrettyPrinter::visit(const Float *p)
+void PrettyPrinter::visit(const __Float *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%f", p->getValue());
     _result += buf;
 }
 
-void PrettyPrinter::visit(const Double *p)
+void PrettyPrinter::visit(const __Double *p)
 {
     char buf[50] = {0};
     sprintf(buf, "%lf", p->getValue());
     _result += buf;
 }
 
-void PrettyPrinter::visit(const String *p)
+void PrettyPrinter::visit(const __String *p)
 {
     _result += p->getCString();
 }
 
-void PrettyPrinter::visit(const Array *p)
+void PrettyPrinter::visit(const __Array *p)
 {
     _result += "\n";
     _result += _indentStr;
@@ -165,7 +159,7 @@ void PrettyPrinter::visit(const Array *p)
     _result += "</array>";
 }
 
-void PrettyPrinter::visit(const Dictionary *p)
+void PrettyPrinter::visit(const __Dictionary *p)
 {
     _result += "\n";
     _result += _indentStr;
@@ -194,7 +188,7 @@ void PrettyPrinter::visit(const Dictionary *p)
     _result += "</dict>";
 }
 
-void PrettyPrinter::visit(const Set *p)
+void PrettyPrinter::visit(const __Set *p)
 {
     _result += "\n";
     _result += _indentStr;
@@ -203,8 +197,8 @@ void PrettyPrinter::visit(const Set *p)
     setIndentLevel(_indentLevel+1);
 
     int i = 0;
-    Set* tmp = const_cast<Set*>(p);
-    SetIterator it = tmp->begin();
+    __Set* tmp = const_cast<__Set*>(p);
+    __SetIterator it = tmp->begin();
 
     for (; it != tmp->end(); ++it, ++i) {
         if (i > 0) {
@@ -220,12 +214,6 @@ void PrettyPrinter::visit(const Set *p)
     _result += "\n";
     _result += _indentStr;
     _result += "</set>\n";
-}
-
-void PrettyPrinter::visit(const Data *p)
-{
-	//TODO Implement
-	DataVisitor::visit(p);
 }
 
 void PrettyPrinter::setIndentLevel(int indentLevel)

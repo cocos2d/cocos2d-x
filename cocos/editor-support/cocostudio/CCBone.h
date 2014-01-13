@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,7 +36,7 @@ namespace cocostudio {
 
 class Armature;
 
-class Bone : public cocos2d::NodeRGBA
+class Bone : public cocos2d::Node
 {
 public:
     /**
@@ -50,9 +50,12 @@ public:
      * @param  name If name is not null, then set name to the bone's name
      * @return A initialized bone which is marked as "autorelease".
      */
-    static Bone *create(const char *name);
+    static Bone *create(const std::string& name);
 
 public:
+    /**
+     *  @js ctor
+     */
     Bone();
     /**
      * @js NA
@@ -63,13 +66,13 @@ public:
     /**
      * Initializes an empty Bone with nothing init.
      */
-    virtual bool init();
+    virtual bool init() override;
 
     /**
      * Initializes a Bone with the specified name
      * @param name Bone's name.
      */
-    virtual bool init(const char *name);
+    virtual bool init(const std::string& name);
 
     /**
      * Add display and use displayData to init the display.
@@ -86,7 +89,13 @@ public:
 
     void addDisplay(cocos2d::Node *display, int index);
 
-    void changeDisplayByIndex(int index, bool force);
+    void removeDisplay(int index);
+
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByIndex(int index, bool force);
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const std::string& name, bool force);
+
+    void changeDisplayWithIndex(int index, bool force);
+    void changeDisplayWithName(const std::string& name, bool force);
 
     /**
      * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
@@ -100,7 +109,7 @@ public:
      * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
      *
      * @param parent  the parent bone.
-     *          NULL : remove this bone from armature
+     *          nullptr : remove this bone from armature
      */
     void setParentBone(Bone *parent);
 
@@ -110,6 +119,7 @@ public:
      */
     Bone *getParentBone();
 
+    using Node::removeFromParent;
     /**
      * Remove itself from its parent.
      * @param recursion    whether or not to remove childBone's display
@@ -122,73 +132,130 @@ public:
      */
     void removeChildBone(Bone *bone, bool recursion);
 
-    void update(float delta);
+    void update(float delta) override;
 
-    void updateDisplayedColor(const cocos2d::Color3B &parentColor);
-    void updateDisplayedOpacity(GLubyte parentOpacity);
+    void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
+    void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
     //! Update color to render display
-    void updateColor();
+    virtual void updateColor() override;
 
     //! Update zorder
     void updateZOrder();
 
-    virtual void setZOrder(int zOrder);
+    virtual void setZOrder(int zOrder) override;
 
     Tween *getTween();
 
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual void setTransformDirty(bool dirty);
+    virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
+    virtual bool isTransformDirty() { return _boneTransformDirty; }
 
-    virtual bool isTransformDirty();
-
-    virtual cocos2d::AffineTransform getNodeToArmatureTransform() const;
-    virtual cocos2d::AffineTransform getNodeToWorldTransform() const override;
+    virtual kmMat4 getNodeToArmatureTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const override;
 
     Node *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      */
-    virtual cocos2d::Array *getColliderBodyList();
+    virtual ColliderDetector* getColliderDetector() const;
 
-public:
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    virtual void setColliderFilter(ColliderFilter *filter);
+    virtual ColliderFilter *getColliderFilter();
+#endif
+
+    virtual void setBoneData(BoneData *boneData);
+    virtual BoneData *getBoneData() const;
+
+    virtual void setArmature(Armature *armature);
+    virtual Armature *getArmature() const;
+
+    virtual void setChildArmature(Armature *childArmature);
+    virtual Armature *getChildArmature() const;
+
+    virtual DisplayManager *getDisplayManager() const { return _displayManager; }
+    /**
+     *  @lua NA
+     */
+    virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
+    virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
+
+    /*
+     * This function is deprecated, please use isIgnoreMovementBoneData()
+     * @lua NA
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
+
+    
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
+    virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return _blendDirty; }
+
+    virtual FrameData *getTweenData() const { return _tweenData; }
+
+    virtual void setName(const std::string &name) { _name = name; }
+    virtual const std::string getName() const { return _name; }
+
+    virtual BaseData *getWorldInfo() const { return _worldInfo; }
+protected:
+    void applyParentTransform(Bone *parent);
+
     /*
      *  The origin state of the Bone. Display's state is effected by _boneData, m_pNode, _tweenData
      *  when call setData function, it will copy from the BoneData.
      */
-    CC_PROPERTY(BoneData *, _boneData, BoneData);
+    BoneData *_boneData;
 
     //! A weak reference to the Armature
-    CC_PROPERTY(Armature *, _armature, Armature);
+    Armature *_armature;
 
     //! A weak reference to the child Armature
-    CC_PROPERTY(Armature *, _childArmature, ChildArmature);
+    Armature *_childArmature;
 
-    CC_SYNTHESIZE(DisplayManager *, _displayManager, DisplayManager)
+    DisplayManager *_displayManager;
 
     /*
      *	When Armature play an animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will be hidden.
      *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
      */
-    CC_SYNTHESIZE(bool, _ignoreMovementBoneData, IgnoreMovementBoneData)
+    bool _ignoreMovementBoneData;
 
-    CC_SYNTHESIZE(BlendType, _blendType, BlendType)
-protected:
+    cocos2d::BlendFunc _blendFunc;
+    bool _blendDirty;
+
     Tween *_tween;				//! Calculate tween effect
 
     //! Used for making tween effect in every frame
-    CC_SYNTHESIZE_READONLY(FrameData *, _tweenData, TweenData);
+    FrameData *_tweenData;
 
-    CC_SYNTHESIZE(std::string, _name, Name);
+    std::string _name;
 
-    Bone *_parentBone;	             //! A weak reference to its parent
+    Bone *_parentBone;	               //! A weak reference to its parent
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
     //! self Transform, use this to change display's state
-    cocos2d::AffineTransform _worldTransform;
+    kmMat4 _worldTransform;
+
+    BaseData *_worldInfo;
+    
+    //! Armature's parent bone
+    Bone *_armatureParentBone;
+    
+    //! Data version
+    float _dataVersion;
 };
 
 }

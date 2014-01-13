@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace network;
+using namespace cocos2d::network;
 
 HttpClientTest::HttpClientTest() 
 : _labelStatusCode(NULL)
@@ -67,7 +67,7 @@ HttpClientTest::HttpClientTest()
 
 HttpClientTest::~HttpClientTest()
 {
-    HttpClient::getInstance()->destroyInstance();
+    HttpClient::destroyInstance();
 }
 
 void HttpClientTest::onMenuGetTestClicked(cocos2d::Object *sender)

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2012 - 2013 cocos2d-x.org
+Copyright (c) 2012      cocos2d-x.org
+ opyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class Dictionary;
+class __Dictionary;
 
 /**
  * @addtogroup data_structures
@@ -131,7 +132,7 @@ private:
     Object* _object;    // hash value
 public:
     UT_hash_handle hh;      // makes this class hashable
-    friend class Dictionary; // declare Dictionary as friend class
+    friend class __Dictionary; // declare Dictionary as friend class
 };
 
 /** The macro for traversing dictionary
@@ -163,15 +164,15 @@ public:
  *  pDict->setObject(pValue3, "key3");
  *
  *  // Get the object for key
- *  String* pStr1 = (String*)pDict->objectForKey("key1");
+ *  String* pStr1 = static_cast<String*>(pDict->objectForKey("key1"));
  *  log("{ key1: %s }", pStr1->getCString());
- *  Integer* pInteger = (Integer*)pDict->objectForKey("key3");
+ *  Integer* pInteger = static_cast<Integer*>(pDict->objectForKey("key3"));
  *  log("{ key3: %d }", pInteger->getValue());
  *  @endcode
  *
  */
 
-class CC_DLL Dictionary : public Object, public Clonable
+class CC_DLL __Dictionary : public Object, public Clonable
 {
 public:
     /**
@@ -179,14 +180,14 @@ public:
      * @js NA
      * @lua NA
      */
-    Dictionary();
+    __Dictionary();
 
     /**
      * The destructor of Dictionary
      * @js NA
      * @lua NA
      */
-    ~Dictionary();
+    ~__Dictionary();
 
     /** Initializes the dictionary. It returns true if the initializations was successful. 
      * @js NA
@@ -207,7 +208,7 @@ public:
      *  @return  The array contains all keys of elements. It's an autorelease object yet.
      * @js NA
      */
-    Array* allKeys();
+    __Array* allKeys();
 
     /** 
      *  Get all keys according to the specified object.
@@ -215,7 +216,7 @@ public:
      *  @return   The array contains all keys for the specified object. It's an autorelease object yet.
      * @js NA
      */
-    Array* allKeysForObject(Object* object);
+    __Array* allKeysForObject(Object* object);
 
     /**
      *  Get the object according to the specified string key.
@@ -225,7 +226,7 @@ public:
      *  @return The object matches the key. You need to force convert it to the type you know.
      *  @code
      *     // Assume that the elements are String* pointers. Convert it by following code.
-     *     String* pStr = (String*)pDict->objectForKey("key1");
+     *     String* pStr = static_cast<String*>(pDict->objectForKey("key1"));
      *     // Do something about pStr.
      *     // If you don't know the object type, properly you need to use dynamic_cast<SomeType*> to check it.
      *     String* pStr2 = dynamic_cast<String*>(pDict->objectForKey("key1"));
@@ -251,25 +252,25 @@ public:
     
     /** Get the value according to the specified string key.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are String pointer.
+     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching
      *  @return An instance of String.
-     *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
+     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
-    const String* valueForKey(const std::string& key);
+    const __String* valueForKey(const std::string& key);
     
     /** Get the value according to the specified integer key.
      *
-     *  @note Be careful to use this function since it assumes the objects in the dictionary are String pointer.
+     *  @note Be careful to use this function since it assumes the objects in the dictionary are __String pointer.
      *  @param key  The string key for searching.
      *  @return An instance of String.
-     *          It will return an empty string if the objects aren't String pointer or the key wasn't found.
+     *          It will return an empty string if the objects aren't __String pointer or the key wasn't found.
      *  @see valueForKey(intptr_t)
      *  @js NA
      */
-    const String* valueForKey(intptr_t key);
+    const __String* valueForKey(intptr_t key);
 
     /** Insert an object to dictionary, and match it with the specified string key.
      *
@@ -302,7 +303,7 @@ public:
      *  Remove an object by the specified string key.
      *
      *  @param key  The string key for searching.
-     *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(Array*),
+     *  @see removeObjectForKey(intptr_t), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
@@ -312,7 +313,7 @@ public:
      *  Remove an object by the specified integer key.
      *
      *  @param key  The integer key for searching.
-     *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(Array*),
+     *  @see removeObjectForKey(const std::string&), removeObjectsForKeys(__Array*),
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
@@ -326,14 +327,14 @@ public:
      *       removeObjectForElememt(DictElement*), removeAllObjects().
      *  @js NA
      */
-    void removeObjectsForKeys(Array* pKeyArray);
+    void removeObjectsForKeys(__Array* pKey__Array);
     
     /**
      *  Remove an object by an element.
      *
      *  @param pElement  The element need to be removed.
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
-     *       removeObjectsForKeys(Array*), removeAllObjects().
+     *       removeObjectsForKeys(__Array*), removeAllObjects().
      * @js NA
      * @lua NA
      */
@@ -343,7 +344,7 @@ public:
      *  Remove all objects in the dictionary.
      *
      *  @see removeObjectForKey(const std::string&), removeObjectForKey(intptr_t),
-     *       removeObjectsForKeys(Array*), removeObjectForElememt(DictElement*).
+     *       removeObjectsForKeys(__Array*), removeObjectForElememt(DictElement*).
      * @js NA
      */
     void removeAllObjects();
@@ -364,7 +365,7 @@ public:
      *  @see createWithDictionary(Dictionary*), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* create();
+    static __Dictionary* create();
 
     /**
      *  Create a dictionary with an existing dictionary.
@@ -374,7 +375,7 @@ public:
      *  @see create(), createWithContentsOfFile(const char*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* createWithDictionary(Dictionary* srcDict);
+    static __Dictionary* createWithDictionary(__Dictionary* srcDict);
     
     /**
      *  Create a dictionary with a plist file.
@@ -383,7 +384,7 @@ public:
      *  @see create(), createWithDictionary(Dictionary*), createWithContentsOfFileThreadSafe(const char*).
      *  @js NA
      */
-    static Dictionary* createWithContentsOfFile(const char *pFileName);
+    static __Dictionary* createWithContentsOfFile(const char *pFileName);
     
     /**
      *  Write a dictionary to a plist file.
@@ -407,7 +408,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    static Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
+    static __Dictionary* createWithContentsOfFileThreadSafe(const char *pFileName);
 
     /* override functions 
      *  @js NA
@@ -418,7 +419,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual Dictionary* clone() const;
+    virtual __Dictionary* clone() const;
     
 private:
     /** 

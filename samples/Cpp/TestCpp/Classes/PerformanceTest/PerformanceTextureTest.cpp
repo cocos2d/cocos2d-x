@@ -65,12 +65,12 @@ void TextureMenuLayer::onEnter()
     performTests();
 }
 
-std::string TextureMenuLayer::title()
+std::string TextureMenuLayer::title() const
 {
     return "no title";
 }
 
-std::string TextureMenuLayer::subtitle()
+std::string TextureMenuLayer::subtitle() const
 {
     return "no subtitle";
 }
@@ -84,7 +84,7 @@ void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
     Texture2D *texture;
-    auto cache = TextureCache::getInstance();
+    auto cache = Director::getInstance()->getTextureCache();
 
     log("RGBA 8888");
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
@@ -131,7 +131,7 @@ void TextureTest::performTests()
 {
 //     Texture2D *texture;
 //     struct timeval now;
-//     auto cache = TextureCache::getInstance();
+//     auto cache = Director::getInstance()->getTextureCache();
 
     log("--------");
 
@@ -332,12 +332,12 @@ void TextureTest::performTests()
 //     cache->removeTexture(texture);
 }
 
-std::string TextureTest::title()
+std::string TextureTest::title() const
 {
     return "Texture Performance Test";
 }
 
-std::string TextureTest::subtitle()
+std::string TextureTest::subtitle() const
 {
     return "See console for results";
 }

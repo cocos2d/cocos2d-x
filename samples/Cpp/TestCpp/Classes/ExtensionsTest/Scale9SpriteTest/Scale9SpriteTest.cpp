@@ -58,9 +58,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -72,18 +69,12 @@ static Layer* backAction()
         sceneIdx += total;
     
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
-    
     return layer;
 }
 
@@ -162,12 +153,12 @@ void S9BatchNodeBasic::onEnter()
     log("... S9BatchNodeBasic done.");
 }
 
-std::string S9BatchNodeBasic::title()
+std::string S9BatchNodeBasic::title() const
 {
     return "Scale9Sprite created empty and updated from SpriteBatchNode";
 }
 
-std::string S9BatchNodeBasic::subtitle()
+std::string S9BatchNodeBasic::subtitle() const
 {
     return "updateWithBatchNode(); capInsets=full size";
 }
@@ -196,12 +187,12 @@ void S9FrameNameSpriteSheet::onEnter()
     log("... S9FrameNameSpriteSheet done.");
 }
 
-std::string S9FrameNameSpriteSheet::title()
+std::string S9FrameNameSpriteSheet::title() const
 {
     return "Scale9Sprite from sprite sheet";
 }
 
-std::string S9FrameNameSpriteSheet::subtitle()
+std::string S9FrameNameSpriteSheet::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets";
 }
@@ -230,12 +221,12 @@ void S9FrameNameSpriteSheetRotated::onEnter()
     log("... S9FrameNameSpriteSheetRotated done.");
 }
 
-std::string S9FrameNameSpriteSheetRotated::title()
+std::string S9FrameNameSpriteSheetRotated::title() const
 {
     return "Scale9Sprite from sprite sheet (stored rotated)";
 }
 
-std::string S9FrameNameSpriteSheetRotated::subtitle()
+std::string S9FrameNameSpriteSheetRotated::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets";
 }
@@ -274,12 +265,12 @@ void S9BatchNodeScaledNoInsets::onEnter()
     log("... S9BtchNodeScaledNoInsets done.");
 }
 
-std::string S9BatchNodeScaledNoInsets::title()
+std::string S9BatchNodeScaledNoInsets::title() const
 {
     return "Scale9Sprite created empty and updated from SpriteBatchNode";
 }
 
-std::string S9BatchNodeScaledNoInsets::subtitle()
+std::string S9BatchNodeScaledNoInsets::subtitle() const
 {
     return "updateWithBatchNode(); capInsets=full size; rendered 4 X width, 2 X height";
 }
@@ -312,12 +303,12 @@ void S9FrameNameSpriteSheetScaledNoInsets::onEnter()
     log("... S9FrameNameSpriteSheetScaledNoInsets done.");
 }
 
-std::string S9FrameNameSpriteSheetScaledNoInsets::title()
+std::string S9FrameNameSpriteSheetScaledNoInsets::title() const
 {
     return "Scale9Sprite from sprite sheet";
 }
 
-std::string S9FrameNameSpriteSheetScaledNoInsets::subtitle()
+std::string S9FrameNameSpriteSheetScaledNoInsets::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets; rendered 4 X width, 2 X height";
 }
@@ -351,12 +342,12 @@ void S9FrameNameSpriteSheetRotatedScaledNoInsets::onEnter()
     log("... S9FrameNameSpriteSheetRotatedScaledNoInsets done.");
 }
 
-std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::title()
+std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::title() const
 {
     return "Scale9Sprite from sprite sheet (stored rotated)";
 }
 
-std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::subtitle()
+std::string S9FrameNameSpriteSheetRotatedScaledNoInsets::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets; rendered 4 X width, 2 X height";
 }
@@ -396,12 +387,12 @@ void S9BatchNodeScaleWithCapInsets::onEnter()
     log("... S9BatchNodeScaleWithCapInsets done.");
 }
 
-std::string S9BatchNodeScaleWithCapInsets::title()
+std::string S9BatchNodeScaleWithCapInsets::title() const
 {
     return "Scale9Sprite created empty and updated from SpriteBatchNode";
 }
 
-std::string S9BatchNodeScaleWithCapInsets::subtitle()
+std::string S9BatchNodeScaleWithCapInsets::subtitle() const
 {
     return "updateWithBatchNode(); capInsets=(32, 32, 32, 32)";
 }
@@ -431,12 +422,12 @@ void S9FrameNameSpriteSheetInsets::onEnter()
     log("... S9FrameNameSpriteSheetInsets done.");
 }
 
-std::string S9FrameNameSpriteSheetInsets::title()
+std::string S9FrameNameSpriteSheetInsets::title() const
 {
     return "Scale9Sprite scaled with insets sprite sheet";
 }
 
-std::string S9FrameNameSpriteSheetInsets::subtitle()
+std::string S9FrameNameSpriteSheetInsets::subtitle() const
 {
     return "createWithSpriteFrameName(); cap insets=(32, 32, 32, 32)";
 }
@@ -468,12 +459,12 @@ void S9FrameNameSpriteSheetInsetsScaled::onEnter()
     log("... S9FrameNameSpriteSheetInsetsScaled done.");
 }
 
-std::string S9FrameNameSpriteSheetInsetsScaled::title()
+std::string S9FrameNameSpriteSheetInsetsScaled::title() const
 {
     return "Scale9Sprite scaled with insets sprite sheet";
 }
 
-std::string S9FrameNameSpriteSheetInsetsScaled::subtitle()
+std::string S9FrameNameSpriteSheetInsetsScaled::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
 }
@@ -502,12 +493,12 @@ void S9FrameNameSpriteSheetRotatedInsets::onEnter()
     log("... S9FrameNameSpriteSheetRotatedInsets done.");
 }
 
-std::string S9FrameNameSpriteSheetRotatedInsets::title()
+std::string S9FrameNameSpriteSheetRotatedInsets::title() const
 {
     return "Scale9Sprite scaled with insets sprite sheet (stored rotated)";
 }
 
-std::string S9FrameNameSpriteSheetRotatedInsets::subtitle()
+std::string S9FrameNameSpriteSheetRotatedInsets::subtitle() const
 {
     return "createWithSpriteFrameName(); cap insets=(32, 32, 32, 32)";
 }
@@ -556,12 +547,12 @@ void S9_TexturePacker::onEnter()
     log("... S9_TexturePacker done.");
 }
 
-std::string S9_TexturePacker::title()
+std::string S9_TexturePacker::title() const
 {
     return "Scale9Sprite from a spritesheet created with TexturePacker";
 }
 
-std::string S9_TexturePacker::subtitle()
+std::string S9_TexturePacker::subtitle() const
 {
     return "createWithSpriteFrameName('button_normal.png');createWithSpriteFrameName('button_actived.png');";
 }
@@ -594,12 +585,12 @@ void S9FrameNameSpriteSheetRotatedInsetsScaled::onEnter()
     log("... S9FrameNameSpriteSheetRotatedInsetsScaled done.");
 }
 
-std::string S9FrameNameSpriteSheetRotatedInsetsScaled::title()
+std::string S9FrameNameSpriteSheetRotatedInsetsScaled::title() const
 {
     return "Scale9Sprite scaled with insets sprite sheet (stored rotated)";
 }
 
-std::string S9FrameNameSpriteSheetRotatedInsetsScaled::subtitle()
+std::string S9FrameNameSpriteSheetRotatedInsetsScaled::subtitle() const
 {
     return "createWithSpriteFrameName(); default cap insets; rendered scaled 4.5 X width, 2.5 X height";
 }
@@ -633,12 +624,12 @@ void S9FrameNameSpriteSheetRotatedSetCapInsetLater::onEnter()
     log("... Scale9FrameNameSpriteSheetRotatedSetCapInsetLater done.");
 }
 
-std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title()
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::title() const
 {
     return "Scale9Sprite from sprite sheet (stored rotated), with setting CapInset later";
 }
 
-std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::subtitle()
+std::string S9FrameNameSpriteSheetRotatedSetCapInsetLater::subtitle() const
 {
     return "createWithSpriteFrameName(); setInsetLeft(32); setInsetRight(32);";
 }
@@ -653,7 +644,7 @@ void S9CascadeOpacityAndColor::onEnter()
     auto winSize = Director::getInstance()->getWinSize();
     float x = winSize.width / 2;
     float y = 0 + (winSize.height / 2);
-    auto rgba = LayerRGBA::create();
+    auto rgba = Layer::create();
     rgba->setCascadeColorEnabled(true);
     rgba->setCascadeOpacityEnabled(true);
     this->addChild(rgba);
@@ -679,12 +670,12 @@ void S9CascadeOpacityAndColor::onEnter()
     log("... S9CascadeOpacityAndColor done.");
 }
 
-std::string S9CascadeOpacityAndColor::title()
+std::string S9CascadeOpacityAndColor::title() const
 {
-    return "Scale9Sprite and a LayerRGBA parent with setCascadeOpacityEnable(true) and setCascadeColorEnable(true)";
+    return "Scale9Sprite and a Layer parent with setCascadeOpacityEnable(true) and setCascadeColorEnable(true)";
 }
 
-std::string S9CascadeOpacityAndColor::subtitle()
+std::string S9CascadeOpacityAndColor::subtitle() const
 {
     return "when parent change color/opacity, Scale9Sprite should also change";
 }

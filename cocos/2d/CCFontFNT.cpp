@@ -1,24 +1,41 @@
-//
-//  CCFontFNT.cpp
-//  cocos2d_libs
-//
-//  Created by Carlo Morgantini on 7/24/13.
-//
-//
+/****************************************************************************
+ Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "CCFontFNT.h"
 #include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-FontFNT * FontFNT::create(const char* fntFilePath)
+FontFNT * FontFNT::create(const std::string& fntFilePath)
 {
     CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
         return nullptr;
     
     // add the texture
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(newConf->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(newConf->getAtlasName());
     if (!tempTexture)
     {
         delete newConf;
@@ -32,14 +49,13 @@ FontFNT * FontFNT::create(const char* fntFilePath)
         delete newConf;
         return nullptr;
     }
-    
+    tempFont->autorelease();
     return tempFont;
 }
 
 FontFNT::~FontFNT()
 {
-    if (_configuration)
-        _configuration->release();
+
 }
 
 Size * FontFNT::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
@@ -134,7 +150,7 @@ FontAtlas * FontFNT::createFontAtlas()
     if (!_configuration->_fontDefDictionary)
         return nullptr;
     
-    int numGlyphs = _configuration->_characterSet->size();
+    size_t numGlyphs = _configuration->_characterSet->size();
     if (!numGlyphs)
         return nullptr;
     
@@ -176,14 +192,14 @@ FontAtlas * FontFNT::createFontAtlas()
         
         tempDefinition.anchorX = 0.5f;
         tempDefinition.anchorY = 0.5f;
-        
+        tempDefinition.validDefinition = true;
         // add the new definition
         tempAtlas->addLetterDefinition(tempDefinition);
     }
     
     // add the texture (only one texture for now)
     
-    Texture2D *tempTexture = TextureCache::getInstance()->addImage(_configuration->getAtlasName());
+    Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(_configuration->getAtlasName());
     if (!tempTexture)
         return 0;
     

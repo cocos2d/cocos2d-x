@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2013 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -61,6 +61,8 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
 namespace network {
 
 //forward declarations
@@ -73,10 +75,8 @@ class SIOClient;
 class SocketIO
 {
 public:
-	SocketIO();
-	virtual ~SocketIO(void);
-
-	static SocketIO *instance();
+	static SocketIO* getInstance();
+    static void destroyInstance();
 
 	/**
      *  @brief The delegate class to process socket.io events
@@ -101,22 +101,26 @@ public:
 	
 private:
 
+    SocketIO();
+	virtual ~SocketIO(void);
+    
 	static SocketIO *_inst;
 
-	cocos2d::Dictionary* _sockets;
+	cocos2d::Map<std::string, SIOClientImpl*> _sockets;
 
 	SIOClientImpl* getSocket(const std::string& uri);
 	void addSocket(const std::string& uri, SIOClientImpl* socket);
 	void removeSocket(const std::string& uri);
 
 	friend class SIOClientImpl;
-	
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(SocketIO)
 };
 
 //c++11 style callbacks entities will be created using CC_CALLBACK (which uses std::bind)
 typedef std::function<void(SIOClient*, const std::string&)> SIOEvent;
 //c++11 map to callbacks
-typedef std::map<std::string, SIOEvent> EventRegistry;
+typedef std::unordered_map<std::string, SIOEvent> EventRegistry;
 
 /**
      *  @brief A single connection to a socket.io endpoint
@@ -182,5 +186,7 @@ public:
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */

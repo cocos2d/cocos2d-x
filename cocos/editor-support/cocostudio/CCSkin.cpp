@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,6 +37,8 @@ namespace cocostudio {
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
+
 Skin *Skin::create()
 {
     Skin *skin = new Skin();
@@ -46,10 +48,10 @@ Skin *Skin::create()
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
-Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
@@ -58,10 +60,10 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
-Skin *Skin::create(const char *pszFileName)
+Skin *Skin::create(const std::string& pszFileName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithFile(pszFileName))
@@ -70,42 +72,44 @@ Skin *Skin::create(const char *pszFileName)
         return skin;
     }
     CC_SAFE_DELETE(skin);
-    return NULL;
+    return nullptr;
 }
 
 Skin::Skin()
-    : _bone(NULL)
+    : _bone(nullptr)
+    , _armature(nullptr)
     , _displayName("")
 {
-    _skinTransform = AffineTransformIdentity;
+    kmMat4Identity(&_skinTransform);
 }
 
-bool Skin::initWithSpriteFrameName(const char *pszSpriteFrameName)
+bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
-    bool ret = Sprite::initWithSpriteFrameName(pszSpriteFrameName);
+    CCAssert(spriteFrameName != "", "");
 
-    if (ret)
+    SpriteFrame *pFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    bool ret = true;
+
+    if (pFrame != nullptr)
     {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
-
-		_displayName = pszSpriteFrameName;
+        ret = initWithSpriteFrame(pFrame);
     }
+    else
+    {
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", spriteFrameName.c_str());
+        ret = false;
+    }
+
+    _displayName = spriteFrameName;
 
     return ret;
 }
 
-bool Skin::initWithFile(const char *pszFilename)
+bool Skin::initWithFile(const std::string& filename)
 {
-    bool ret = Sprite::initWithFile(pszFilename);
+    bool ret = Sprite::initWithFile(filename);
 
-    if (ret)
-    {
-		TextureAtlas *atlas = SpriteFrameCacheHelper::getInstance()->getTexureAtlasWithTexture(_texture);
-		setTextureAtlas(atlas);
-
-		_displayName = pszFilename;
-    }
+    _displayName = filename;
 
     return ret;
 }
@@ -116,10 +120,12 @@ void Skin::setSkinData(const BaseData &var)
 
     setScaleX(_skinData.scaleX);
     setScaleY(_skinData.scaleY);
-    setRotation(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setRotationX(CC_RADIANS_TO_DEGREES(_skinData.skewX));
+    setRotationY(CC_RADIANS_TO_DEGREES(-_skinData.skewY));
     setPosition(Point(_skinData.x, _skinData.y));
 
     _skinTransform = getNodeToParentTransform();
+    updateArmatureTransform();
 }
 
 const BaseData &Skin::getSkinData() const
@@ -129,7 +135,11 @@ const BaseData &Skin::getSkinData() const
 
 void Skin::updateArmatureTransform()
 {
-    _transform = AffineTransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
+    _transform = TransformConcat(_bone->getNodeToArmatureTransform(), _skinTransform);
+//    if(_armature && _armature->getBatchNode())
+//    {
+//        _transform = TransformConcat(_transform, _armature->getNodeToParentTransform());
+//    }
 }
 
 void Skin::updateTransform()
@@ -153,13 +163,13 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
-        float x = _transform.tx;
-        float y = _transform.ty;
+        float x = _transform.mat[12];
+        float y = _transform.mat[13];
 
-        float cr = _transform.a;
-        float sr = _transform.b;
-        float cr2 = _transform.d;
-        float sr2 = -_transform.c;
+        float cr = _transform.mat[0];
+        float sr = _transform.mat[1];
+        float cr2 = _transform.mat[5];
+        float sr2 = -_transform.mat[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 
@@ -172,35 +182,59 @@ void Skin::updateTransform()
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
 
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+        SET_VERTEX3F( _quad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
+        SET_VERTEX3F( _quad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
+        SET_VERTEX3F( _quad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
+        SET_VERTEX3F( _quad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
     }
 
-    // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+    // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
     if (_textureAtlas)
     {
         _textureAtlas->updateQuad(&_quad, _textureAtlas->getTotalQuads());
     }
 }
 
-AffineTransform Skin::getNodeToWorldTransform() const
+kmMat4 Skin::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
 }
 
-AffineTransform Skin::getNodeToWorldTransformAR() const
+kmMat4 Skin::getNodeToWorldTransformAR() const
 {
-    AffineTransform displayTransform = _transform;
+    kmMat4 displayTransform = _transform;
     Point anchorPoint =  _anchorPointInPoints;
 
-    anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
+    anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
 
-    displayTransform.tx = anchorPoint.x;
-    displayTransform.ty = anchorPoint.y;
+    displayTransform.mat[12] = anchorPoint.x;
+    displayTransform.mat[13] = anchorPoint.y;
 
-    return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+}
+
+void Skin::draw()
+{
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+
+    //TODO implement z order
+    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+}
+
+void Skin::setBone(Bone *bone)
+{
+    _bone = bone;
+    if(Armature *armature = _bone->getArmature())
+    {
+        _armature = armature;
+    }
+}
+
+Bone *Skin::getBone() const
+{
+    return _bone;
 }
 
 }

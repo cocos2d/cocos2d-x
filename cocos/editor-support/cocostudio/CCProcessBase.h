@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 
 #ifndef __CCPROCESSBASE_H__
 #define __CCPROCESSBASE_H__
@@ -46,24 +45,19 @@ enum AnimationType
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ProcessBase : public cocos2d::Object
 {
 public:
-	/**
-     * @js ctor
-     */
     ProcessBase(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    ~ProcessBase(void);
+    virtual ~ProcessBase(void);
 
     /**
      * Play animation by animation name.
      *
-     * @param  animation  It will not used in the ProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
@@ -88,7 +82,7 @@ public:
      *         2  : fade in and out
      *
      */
-    virtual void play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
      * Pause the Process
@@ -104,8 +98,6 @@ public:
     virtual void stop();
 
 
-    virtual void gotoFrame(int frameIndex);
-
     /**
      * You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
@@ -116,8 +108,24 @@ public:
 
     virtual int getCurrentFrameIndex();
 
+    virtual void setProcessScale(float processScale) { _processScale = processScale; }
+    virtual float getProcessScale() const { return _processScale; }
+
+    virtual void setIsPause(bool pause) { _isPause = pause; }
+    virtual bool isPause() const { return _isPause; }
+
+    virtual void setIsComplete(bool complete) { _isComplete = complete; }
+    virtual bool isComplete() const { return _isComplete; }
+
+    virtual void setIsPlaying(bool playing) { _isPlaying = playing; }
+    virtual bool isPlaying() const { return _isPlaying; }
+
+    virtual float getCurrentPercent() const { return _currentPercent; }
+    virtual int getRawDuration() const { return _rawDuration; }
+
 protected:
 
+    virtual void gotoFrame(int frameIndex);
 
     /**
      * Update(float dt) will call this handler, you can handle your logic here
@@ -126,31 +134,31 @@ protected:
 
 protected:
     //! Scale the process speed
-    CC_SYNTHESIZE(float, _processScale, ProcessScale);
+    float _processScale;
 
     //! Set and get whether the aniamtion is pause
-    CC_SYNTHESIZE(bool, _isPause, IsPause);
+    bool _isPause;
 
     //! Set and get whether the aniamtion is complete
-    CC_SYNTHESIZE(bool, _isComplete, IsComplete);
+    bool _isComplete;
 
     //! Set and get whether the aniamtion is playing
-    CC_SYNTHESIZE(bool, _isPlaying, IsPlaying);
+    bool _isPlaying;
 
     //! Current percent this process arrived
-    CC_SYNTHESIZE(float, _currentPercent, CurrentPercent);
+    float _currentPercent;
 
     //! The raw duration
-    CC_SYNTHESIZE(int, _rawDuration, RawDuration);
+    int _rawDuration;
 
     //! The animation whether or not loop
-    CC_SYNTHESIZE(AnimationType, _loopType, LoopType);
+    AnimationType _loopType;
 
     //! The tween easing effect
-    CC_SYNTHESIZE(CCTweenType, _tweenEasing, TweenEasing);
+    TweenType _tweenEasing;
 
     //! The animation update speed
-    CC_SYNTHESIZE(float, _animationInternal, AnimationInternal);
+    float _animationInternal;
 
 
 protected:

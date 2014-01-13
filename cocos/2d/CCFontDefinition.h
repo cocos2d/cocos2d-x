@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc. 
  
  http://www.cocos2d-x.org
  
@@ -24,6 +25,8 @@
 
 #ifndef _FontDefinition_h_
 #define _FontDefinition_h_
+
+#include <unordered_map>
 
 #include "CCTextImage.h"
 #include "CCFont.h"
@@ -55,11 +58,11 @@ private:
     bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
     void addLetterDefinition(const FontLetterDefinition &defToAdd);
     
-    TextImage *                                     _textImages;
-    std::map<unsigned short, FontLetterDefinition>  _fontLettersDefinitionUTF16;
-    float                                           _commonLineHeight;
-    static const int                                DEFAUL_ATALS_TEXTURE_SIZE;
-    
+    TextImage * _textImages;
+    std::unordered_map<unsigned short, FontLetterDefinition> _fontLettersDefinitionUTF16;
+    float _commonLineHeight;
+
+    static const int DEFAUL_ATLAS_TEXTURE_SIZE;
 };
 
 NS_CC_END

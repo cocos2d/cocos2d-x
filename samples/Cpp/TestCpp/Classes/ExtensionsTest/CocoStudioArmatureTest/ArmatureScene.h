@@ -27,17 +27,24 @@ public:
 
 enum {
 	TEST_ASYNCHRONOUS_LOADING = 0,
+    TEST_DIRECT_LOADING,
 	TEST_COCOSTUDIO_WITH_SKELETON,
 	TEST_DRAGON_BONES_2_0,
 	TEST_PERFORMANCE,
+//    TEST_PERFORMANCE_BATCHNODE,
 	TEST_CHANGE_ZORDER,
 	TEST_ANIMATION_EVENT,
+    TEST_FRAME_EVENT,
 	TEST_PARTICLE_DISPLAY,
 	TEST_USE_DIFFERENT_PICTURE,
-	TEST_BCOLLIDER_DETECTOR,
+	TEST_COLLIDER_DETECTOR,
 	TEST_BOUDINGBOX,
 	TEST_ANCHORPOINT,
 	TEST_ARMATURE_NESTING,
+    TEST_ARMATURE_NESTING_2,
+    TEST_PLAY_SEVERAL_MOVEMENT,
+    TEST_EASING,
+    TEST_CHANGE_ANIMATION_INTERNAL,
 
 	TEST_LAYER_COUNT
 };
@@ -45,17 +52,16 @@ enum {
 class ArmatureTestLayer : public Layer
 {
 public:
-	virtual void onEnter();
-	virtual void onExit();
+	virtual std::string title() const;
+	virtual std::string subtitle() const;
 
-	virtual std::string title();
-	virtual std::string subtitle();
-
-	virtual void restartCallback(Object* pSender);
+    virtual void restartCallback(Object* pSender);
 	virtual void nextCallback(Object* pSender);
 	virtual void backCallback(Object* pSender);
 
-	virtual void draw();
+    // overrides
+    virtual void onEnter() override;
+	virtual void onExit() override;
 
 protected:
 	MenuItemImage *restartItem;
@@ -68,16 +74,24 @@ class TestAsynchronousLoading : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+    virtual void restartCallback(Object* pSender);
 
 	void dataLoaded(float percent);
+};
+
+class TestDirectLoading : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
 };
 
 class TestCSWithSkeleton : public ArmatureTestLayer
 {
 	virtual void onEnter();
-	virtual std::string title();
+	virtual std::string title() const override;
 };
 
 
@@ -85,7 +99,7 @@ class TestDragonBones20 : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
-	virtual std::string title();
+	virtual std::string title() const override;
 };
 
 
@@ -95,10 +109,14 @@ public:
 	~TestPerformance();
 
 	virtual void onEnter();
-	virtual std::string title();
-	virtual std::string subtitle();
-	virtual void addArmature(cocostudio::Armature *armature);
-	void update(float delta);
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+    virtual void onIncrease(Object* pSender);
+    virtual void onDecrease(Object* pSender);
+    virtual void addArmature(int number);
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+    virtual void refreshTitle();
 
 	int armatureCount;
 
@@ -108,11 +126,20 @@ public:
 	bool generated;
 };
 
+class TestPerformanceBatchNode : public TestPerformance
+{
+    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual void addArmatureToParent(cocostudio::Armature *armature);
+    virtual void removeArmatureFromParent(int tag);
+
+    cocostudio::BatchNode *batchNode;
+};
 
 class TestChangeZorder : public ArmatureTestLayer
 {
 	virtual void onEnter();
-	virtual std::string title();
+	virtual std::string title() const override;
 	void changeZorder(float dt);
 
 	int currentTag;
@@ -124,20 +151,33 @@ class TestAnimationEvent : public ArmatureTestLayer
 public:
 
 	virtual void onEnter();
-	virtual std::string title();
-	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const char *movementID);
+	virtual std::string title() const override;
+	void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 	void callback1();
 	void callback2();
 
 	cocostudio::Armature *armature;
 };
 
+
+class TestFrameEvent : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
+    void checkAction(float dt);
+protected:
+    NodeGrid* _gridNode;
+};
+
+
 class TestUseMutiplePicture : public ArmatureTestLayer
 {
 	virtual void onEnter();
 	virtual void onExit();
-	virtual std::string title();
-	virtual std::string subtitle();
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int displayIndex;
@@ -148,8 +188,8 @@ class TestParticleDisplay : public ArmatureTestLayer
 {
 	virtual void onEnter();
 	virtual void onExit();
-	virtual std::string title();
-	virtual std::string subtitle();
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	int animationID;
@@ -170,11 +210,11 @@ public:
 
 	virtual void onEnter();
 	virtual void onExit();
-	virtual std::string title();
+	virtual std::string title() const override;
 	virtual void draw();
 	virtual void update(float delta);
 
-	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
+	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
 
 	void initWorld();
 
@@ -200,7 +240,7 @@ public:
 
 	virtual void onEnter();
 	virtual void onExit();
-	virtual std::string title();
+	virtual std::string title() const override;
 	virtual void update(float delta);
 
 	void onFrameEvent(cocostudio::Bone *bone, const char *evt, int originFrameIndex, int currentFrameIndex);
@@ -221,6 +261,25 @@ public:
 
 	void destroyCPBody(cpBody *body);
 };
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+class TestColliderDetector : public ArmatureTestLayer
+{
+public:
+    ~TestColliderDetector();
+    
+    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual void update(float delta);
+    virtual void draw();
+    
+    void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
+    
+    void initWorld() {};
+    cocostudio::Armature *armature;
+    cocostudio::Armature *armature2;
+    
+    cocos2d::Sprite *bullet;
+};
 #endif
 
 
@@ -231,18 +290,22 @@ class TestBoundingBox : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
-	virtual std::string title();
+	virtual std::string title() const override;
 	virtual void draw();
 
 	cocostudio::Armature *armature;
 	Rect rect;
+protected:
+    void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
 {
 public:
 	virtual void onEnter();
-	virtual std::string title();
+	virtual std::string title() const override;
 };
 
 class TestArmatureNesting : public ArmatureTestLayer
@@ -250,10 +313,81 @@ class TestArmatureNesting : public ArmatureTestLayer
 public:
 	virtual void onEnter();
 	virtual void onExit();
-	virtual std::string title();
+	virtual std::string title() const override;
 	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 	cocostudio::Armature *armature;
 	int weaponIndex;
 };
+
+class Hero : public cocostudio::Armature
+{
+public:
+    static Hero *create(const char *name);
+    Hero();
+
+    virtual void changeMount(cocostudio::Armature *armature);
+    virtual void playWithIndex(int index);
+
+    CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
+    CC_SYNTHESIZE(cocos2d::Layer*, m_pLayer, Layer);
+};
+
+class TestArmatureNesting2 : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+
+    void changeMountCallback(Object* pSender);
+    virtual cocostudio::Armature *createMount(const char *name, Point position);
+
+private:
+    Hero *hero;
+
+    cocostudio::Armature *horse;
+    cocostudio::Armature *horse2;
+    cocostudio::Armature *bear;
+
+
+    bool touchedMenu;
+};
+
+class TestPlaySeveralMovement : public ArmatureTestLayer
+{      
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+
+class TestEasing : public ArmatureTestLayer
+{      
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void updateSubTitle();
+
+    int animationID;
+    cocostudio::Armature *armature;
+};
+
+class TestChangeAnimationInternal : public ArmatureTestLayer
+{
+public:
+    virtual void onEnter()override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+};
+
 #endif  // __HELLOWORLD_SCENE_H__

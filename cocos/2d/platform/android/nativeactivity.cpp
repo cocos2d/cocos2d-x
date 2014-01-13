@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "nativeactivity.h"
 
 #include <jni.h>
@@ -12,11 +35,11 @@
 #include <android/configuration.h>
 
 #include <pthread.h>
+#include <chrono>
 
 #include "CCDirector.h"
 #include "CCApplication.h"
 #include "CCEventType.h"
-#include "CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
 #include "jni/JniHelper.h"
 
@@ -27,17 +50,26 @@
 #include "CCEventDispatcher.h"
 #include "CCEventAcceleration.h"
 #include "CCEventKeyboard.h"
+#include "CCEventCustom.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 #define LOGW(...) ((void)__android_log_print(ANDROID_LOG_WARN, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+#define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
 #define LOG_RENDER_DEBUG(...)
 // #define LOG_RENDER_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
 
 #define LOG_EVENTS_DEBUG(...)
 // #define LOG_EVENTS_DEBUG(...)  ((void)__android_log_print(ANDROID_LOG_INFO, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+
+/* For debug builds, always enable the debug traces in this library */
+#ifndef NDEBUG
+#  define LOGV(...)  ((void)__android_log_print(ANDROID_LOG_VERBOSE, "cocos2dx/nativeactivity.cpp", __VA_ARGS__))
+#else
+#  define LOGV(...)  ((void)0)
+#endif
 
 void cocos_android_app_init(struct android_app* app);
 
@@ -68,6 +100,9 @@ struct engine {
     int32_t height;
     struct saved_state state;
 };
+
+static bool isContentRectChanged = false;
+static std::chrono::steady_clock::time_point timeRectChanged;
 
 static struct engine engine;
 
@@ -127,8 +162,9 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::GL::invalidateStateCache();
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
-        cocos2d::TextureCache::reloadAllTextures();
-        cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Director::getInstance()->setGLDefaultValues(); 
     }
 }
@@ -321,11 +357,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -340,11 +375,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
 
             LOG_EVENTS_DEBUG("Event: Action POINTER DOWN x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -356,7 +390,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
             int ids[pointerCount];
             float xs[pointerCount], ys[pointerCount];
             getTouchPos(event, ids, xs, ys);
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(pointerCount, ids, xs, ys);
+			cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesMove(pointerCount, ids, xs, ys);
             return 1;
         }
         break;
@@ -369,11 +403,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,0);
             LOG_EVENTS_DEBUG("Event: Action UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerId);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -387,11 +420,10 @@ static int32_t handle_touch_input(AInputEvent *event) {
             float yP = AMotionEvent_getY(event,pointerIndex);
             LOG_EVENTS_DEBUG("Event: Action POINTER UP x=%f y=%f pointerID=%d\n",
                  xP, yP, pointerIndex);
-            int pId = pointerId;
             float x = xP;
             float y = yP;
 
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pId, &x, &y);
+            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &pointerId, &x, &y);
             return 1;
         }
         break;
@@ -403,7 +435,7 @@ static int32_t handle_touch_input(AInputEvent *event) {
             int ids[pointerCount];
             float xs[pointerCount], ys[pointerCount];
             getTouchPos(event, ids, xs, ys);
-            cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(pointerCount, ids, xs, ys);
+			cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesCancel(pointerCount, ids, xs, ys);
             return 1;
         }
         break;
@@ -454,6 +486,7 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
     LOG_EVENTS_DEBUG("engine_handle_input(%X, %X), pthread_self() = %X", app, event, thisthread);
 
     struct engine* engine = (struct engine*)app->userData;
+
     if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_MOTION) {
         engine->animating = 1;
         engine->state.x = AMotionEvent_getX(event, 0);
@@ -467,8 +500,8 @@ static int32_t engine_handle_input(struct android_app* app, AInputEvent* event) 
     return 0;
 }
 
-void enableAccelerometer(void) {
-    LOGI("enableAccelerometer()");
+void enableAccelerometerJni(void) {
+    LOGI("enableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_enableSensor(engine.sensorEventQueue,
@@ -481,8 +514,8 @@ void enableAccelerometer(void) {
     }
 }
 
-void disableAccelerometer(void) {
-    LOGI("disableAccelerometer()");
+void disableAccelerometerJni(void) {
+    LOGI("disableAccelerometerJni()");
 
     if (engine.accelerometerSensor != NULL) {
         ASensorEventQueue_disableSensor(engine.sensorEventQueue,
@@ -490,8 +523,8 @@ void disableAccelerometer(void) {
     }
 }
 
-void setAccelerometerInterval(float interval) {
-    LOGI("setAccelerometerInterval(%f)", interval);
+void setAccelerometerIntervalJni(float interval) {
+    LOGI("setAccelerometerIntervalJni(%f)", interval);
         // We'd like to get 60 events per second (in us).
         ASensorEventQueue_setEventRate(engine.sensorEventQueue,
                                        engine.accelerometerSensor, interval * 1000000L);
@@ -548,16 +581,40 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
             break;
         case APP_CMD_LOST_FOCUS:
-            cocos2d::Application::getInstance()->applicationDidEnterBackground();
-            cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
-
-            // Also stop animating.
-            engine->animating = 0;
-            engine_draw_frame(engine);
+            {
+                cocos2d::Application::getInstance()->applicationDidEnterBackground();
+                cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+                // Also stop animating.
+                engine->animating = 0;
+                engine_draw_frame(engine);
+            }
             break;
     }
 }
 
+static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
+	timeRectChanged = std::chrono::steady_clock::now();
+	isContentRectChanged = true;
+}
+
+static void process_input(struct android_app* app, struct android_poll_source* source) {
+    AInputEvent* event = NULL;
+    int processed = 0;
+    while (AInputQueue_hasEvents( app->inputQueue ) && AInputQueue_getEvent(app->inputQueue, &event) >= 0) {
+        LOGV("New input event: type=%d\n", AInputEvent_getType(event));
+        if (AInputQueue_preDispatchEvent(app->inputQueue, event)) {
+            continue;
+        }
+        int32_t handled = 0;
+        if (app->onInputEvent != NULL) handled = app->onInputEvent(app, event);
+        AInputQueue_finishEvent(app->inputQueue, event, handled);
+        processed = 1;
+    }
+    if (processed == 0) {
+        LOGE("Failure reading next input event: %s\n", strerror(errno));
+    }
+}
 /**
  * This is the main entry point of a native application that is using
  * android_native_app_glue.  It runs in its own thread, with its own
@@ -572,6 +629,7 @@ void android_main(struct android_app* state) {
     state->userData = &engine;
     state->onAppCmd = engine_handle_cmd;
     state->onInputEvent = engine_handle_input;
+    state->inputPollSource.process = process_input;
     engine.app = state;
 
     // Prepare to monitor accelerometer
@@ -585,6 +643,9 @@ void android_main(struct android_app* state) {
         // We are starting with a previous saved state; restore from it.
         engine.state = *(struct saved_state*)state->savedState;
     }
+
+	// Screen size change support
+	state->activity->callbacks->onContentRectChanged = onContentRectChanged;
 
     // loop waiting for stuff to do.
 
@@ -673,5 +734,20 @@ void android_main(struct android_app* state) {
         } else {
             LOG_RENDER_DEBUG("android_main : !engine.animating");
         }
+
+		// Check if screen size changed
+		if (isContentRectChanged) {
+			std::chrono::duration<int, std::milli> duration(
+					std::chrono::duration_cast<std::chrono::duration<int, std::milli>>(std::chrono::steady_clock::now() - timeRectChanged));
+
+			// Wait about 30 ms to get new width and height. Without waiting we can get old values sometime
+			if (duration.count() > 30) {
+				isContentRectChanged = false;
+
+				int32_t newWidth = ANativeWindow_getWidth(engine.app->window);
+				int32_t newHeight = ANativeWindow_getHeight(engine.app->window);
+				cocos2d::Application::getInstance()->applicationScreenSizeChanged(newWidth, newHeight);
+			}
+		}
     }
 }

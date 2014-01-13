@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009      lhunath (Maarten Billemont)
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright 2009 lhunath (Maarten Billemont)
-
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,23 +28,23 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ActionTween* ActionTween::create(float aDuration, const char* key, float from, float to)
+ActionTween* ActionTween::create(float aDuration, const std::string& key, float from, float to)
 {
-    ActionTween* pRet = new ActionTween();
-    if (pRet && pRet->initWithDuration(aDuration, key, from, to))
+    ActionTween* ret = new ActionTween();
+    if (ret && ret->initWithDuration(aDuration, key, from, to))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
-bool ActionTween::initWithDuration(float aDuration, const char* key, float from, float to)
+bool ActionTween::initWithDuration(float duration, const std::string& key, float from, float to)
 {
-    if (ActionInterval::initWithDuration(aDuration)) 
+    if (ActionInterval::initWithDuration(duration))
     {
         _key    = key;
         _to       = to;

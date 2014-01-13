@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,35 +29,34 @@ THE SOFTWARE.
 #include "CCTextureAtlas.h"
 #include "TGAlib.h"
 #include "ccConfig.h"
-#include "CCDictionary.h"
 #include "CCInteger.h"
 #include "CCDirector.h"
+#include "CCString.h"
+#include <sstream>
 
 NS_CC_BEGIN
 
 // implementation TileMapAtlas
 
-TileMapAtlas * TileMapAtlas::create(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+TileMapAtlas * TileMapAtlas::create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
 {
-    TileMapAtlas *pRet = new TileMapAtlas();
-    if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
+    TileMapAtlas *ret = new TileMapAtlas();
+    if (ret->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
-bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int tileWidth, int tileHeight)
+bool TileMapAtlas::initWithTileFile(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
 {
     this->loadTGAfile(mapFile);
     this->calculateItemsToRender();
 
     if( AtlasNode::initWithTileFile(tile, tileWidth, tileHeight, _itemsToRender) )
     {
-        _posToAtlasIndex = new Dictionary();
-        _posToAtlasIndex->init();
         this->updateAtlasValues();
         this->setContentSize(Size((float)(_TGAInfo->width*_itemWidth),
                                         (float)(_TGAInfo->height*_itemHeight)));
@@ -66,9 +66,8 @@ bool TileMapAtlas::initWithTileFile(const char *tile, const char *mapFile, int t
 }
 
 TileMapAtlas::TileMapAtlas()
- : _posToAtlasIndex(NULL)
- , _itemsToRender(0)
- , _TGAInfo(NULL)
+ : _itemsToRender(0)
+ , _TGAInfo(nullptr)
 {
 }
 
@@ -78,7 +77,6 @@ TileMapAtlas::~TileMapAtlas()
     {
         tgaDestroy(_TGAInfo);
     }
-    CC_SAFE_RELEASE(_posToAtlasIndex);
 }
 
 void TileMapAtlas::releaseMap()
@@ -87,14 +85,12 @@ void TileMapAtlas::releaseMap()
     {
         tgaDestroy(_TGAInfo);
     }
-    _TGAInfo = NULL;
-
-    CC_SAFE_RELEASE_NULL(_posToAtlasIndex);
+    _TGAInfo = nullptr;
 }
 
 void TileMapAtlas::calculateItemsToRender()
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must be non-nil");
 
     _itemsToRender = 0;
     for(int x=0;x < _TGAInfo->width; x++ ) 
@@ -111,10 +107,8 @@ void TileMapAtlas::calculateItemsToRender()
     }
 }
 
-void TileMapAtlas::loadTGAfile(const char *file)
+void TileMapAtlas::loadTGAfile(const std::string& file)
 {
-    CCASSERT( file != NULL, "file must be non-nil");
-
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file);
 
     //    //Find the path of the file
@@ -134,8 +128,7 @@ void TileMapAtlas::loadTGAfile(const char *file)
 // TileMapAtlas - Atlas generation / updates
 void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 {
-    CCASSERT(_TGAInfo != NULL, "tgaInfo must not be nil");
-    CCASSERT(_posToAtlasIndex != NULL, "posToAtlasIndex must not be nil");
+    CCASSERT(_TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT(position.x < _TGAInfo->width, "Invalid position.x");
     CCASSERT(position.y < _TGAInfo->height, "Invalid position.x");
     CCASSERT(tile.r != 0, "R component must be non 0");
@@ -152,16 +145,16 @@ void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 
         // XXX: this method consumes a lot of memory
         // XXX: a tree of something like that shall be implemented
-        Integer *num = (Integer*)_posToAtlasIndex->objectForKey(String::createWithFormat("%ld,%ld", 
-                                                                                                 (long)position.x, 
-                                                                                                 (long)position.y)->getCString());
-        this->updateAtlasValueAt(position, tile, num->getValue());
+        std::string key = StringUtils::toString(position.x) + "," + StringUtils::toString(position.y);
+        int num = _posToAtlasIndex[key].asInt();
+
+        this->updateAtlasValueAt(position, tile, num);
     }    
 }
 
 Color3B TileMapAtlas::getTileAt(const Point& position) const
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must not be nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT( position.x < _TGAInfo->width, "Invalid position.x");
     CCASSERT( position.y < _TGAInfo->height, "Invalid position.y");
 
@@ -229,7 +222,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, in
     quad->bl.colors = color;
 
     _textureAtlas->setDirty(true);
-    int totalQuads = _textureAtlas->getTotalQuads();
+    ssize_t totalQuads = _textureAtlas->getTotalQuads();
     if (index + 1 > totalQuads) {
         _textureAtlas->increaseTotalQuadsWith(index + 1 - totalQuads);
     }
@@ -237,7 +230,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, in
 
 void TileMapAtlas::updateAtlasValues()
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must be non-nil");
 
     int total = 0;
 
@@ -254,9 +247,8 @@ void TileMapAtlas::updateAtlasValues()
                 {
                     this->updateAtlasValueAt(Point(x,y), value, total);
 
-                    String *key = String::createWithFormat("%d,%d", x,y);
-                    Integer *num = Integer::create(total);
-                    _posToAtlasIndex->setObject(num, key->getCString());
+                    std::string key = StringUtils::toString(x) + "," + StringUtils::toString(y);
+                    _posToAtlasIndex[key] = total;
 
                     total++;
                 }
