@@ -87,7 +87,7 @@ class BuildRuntime:
                         
                         msbuildPath = r"C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
                         slnPath = "%s\%s.sln" % (self.projectPath, self.projectName)
-                        buildCommand = "%s %s /t:build /p:configuration=Debug" % (msbuildPath, slnPath)
+                        buildCommand = "%s %s /maxcpucount:4 /t:build /p:configuration=Debug" % (msbuildPath, slnPath)
                         
                         os.system(buildCommand)
                         #print buildCommand
