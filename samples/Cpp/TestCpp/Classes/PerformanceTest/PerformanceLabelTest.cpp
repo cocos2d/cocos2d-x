@@ -1,8 +1,5 @@
 #include "PerformanceLabelTest.h"
 
-#undef min
-#undef max
-
 enum {
     kMaxNodes = 200,
     kNodesIncrease = 10,

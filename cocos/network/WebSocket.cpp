@@ -39,8 +39,6 @@
 
 #define WS_WRITE_BUFFER_SIZE 2048
 
-#undef min
-#undef max
 NS_CC_BEGIN
 
 namespace network {

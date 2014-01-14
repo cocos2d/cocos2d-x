@@ -27,8 +27,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include <algorithm>
 
-#undef min
-#undef max
 // implementation of Point
 NS_CC_BEGIN
 
