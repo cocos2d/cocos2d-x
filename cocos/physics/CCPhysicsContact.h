@@ -58,7 +58,7 @@ typedef struct PhysicsContactData
 /**
  * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
  */
-class PhysicsContact : Event
+class PhysicsContact : public Event
 {
 public:
     
@@ -76,7 +76,7 @@ public:
     /** get contact shape B. */
     inline PhysicsShape* getShapeB() const { return _shapeB; }
     /** get contact data */
-    inline const PhysicsContactData* getContactData() const { return _contactData; }
+    inline const PhysicsContactData& getContactData() const { return *_contactData; }
     /** get data. */
     inline void* getData() const { return _data; }
     /**
