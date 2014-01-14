@@ -51,9 +51,6 @@
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
 
-#undef min
-#undef max
-
 NS_CC_BEGIN
 
 
