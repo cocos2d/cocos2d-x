@@ -74,9 +74,8 @@ protected:
     void setupVBO();
     void mapBuffers();
 
-    void drawBatchedQuads();
+    void drawBatchedQuads(size_t firstCommand, size_t lastCommand);
     //Draw the previews queued quads and flush previous context
-    void flush();
 
     std::stack<int> _commandGroupStack;
     

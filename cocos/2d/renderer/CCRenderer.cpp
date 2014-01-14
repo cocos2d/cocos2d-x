@@ -249,9 +249,9 @@ void Renderer::render()
                     if(_numQuads + cmdQuadCount > VBO_SIZE)
                     {
                         CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
-
                         //Draw batched quads if VBO is full
-                        drawBatchedQuads();
+                        drawBatchedQuads(_firstCommand, _lastCommand-1);
+                        _firstCommand = _lastCommand;
                     }
 
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
@@ -259,13 +259,17 @@ void Renderer::render()
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
-                    flush();
+                    drawBatchedQuads(_firstCommand, _lastCommand);
+                    _firstCommand = _lastCommand;
+                    _lastMaterialID = 0;
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
-                    flush();
+                    drawBatchedQuads(_firstCommand, _lastCommand);
+                    _firstCommand = _lastCommand;
+                    _lastMaterialID = 0;
                     GroupCommand* cmd = static_cast<GroupCommand*>(command);
                     
                     _renderStack.top().currentIndex = i + 1;
@@ -279,12 +283,15 @@ void Renderer::render()
                 }
                 else
                 {
-                    flush();
+                    drawBatchedQuads(_firstCommand, _lastCommand);
+                    _firstCommand = _lastCommand;
+                    _lastMaterialID = 0;
                 }
             }
             
             //Draw the batched quads
-            drawBatchedQuads();
+            drawBatchedQuads(_firstCommand, _lastCommand);
+            _firstCommand = _lastCommand;
             
             currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
             len = currRenderQueue.size();
@@ -317,7 +324,7 @@ void Renderer::render()
     _lastMaterialID = 0;
 }
 
-void Renderer::drawBatchedQuads()
+void Renderer::drawBatchedQuads(size_t firstCommand, size_t lastCommand)
 {
     //TODO we can improve the draw performance by insert material switching command before hand.
 
@@ -327,7 +334,6 @@ void Renderer::drawBatchedQuads()
     //Upload buffer to VBO
     if(_numQuads <= 0)
     {
-        _firstCommand = _lastCommand;
         return;
     }
 
@@ -368,7 +374,7 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    for(size_t i = firstCommand; i <= lastCommand; i++)
     {
         RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
@@ -414,14 +420,7 @@ void Renderer::drawBatchedQuads()
     }
 
     
-    _firstCommand = _lastCommand;
     _numQuads = 0;
-}
-
-void Renderer::flush()
-{
-    drawBatchedQuads();
-    _lastMaterialID = 0;
 }
 
 NS_CC_END
