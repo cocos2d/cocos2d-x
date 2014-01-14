@@ -394,12 +394,6 @@ void ScrollView::deaccelerateScrolling(float dt)
         minInset = this->minContainerOffset();
     }
     
-    //check to see if offset lies within the inset bounds
-    newX     = MIN(_container->getPosition().x, maxInset.x);
-    newX     = MAX(newX, minInset.x);
-    newY     = MIN(_container->getPosition().y, maxInset.y);
-    newY     = MAX(newY, minInset.y);
-    
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
@@ -409,10 +403,8 @@ void ScrollView::deaccelerateScrolling(float dt)
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY > maxInset.y || newY < minInset.y ||
-        newX > maxInset.x || newX < minInset.x ||
-        newX == maxInset.x || newX == minInset.x ||
-        newY == maxInset.y || newY == minInset.y)
+        newY >= maxInset.y || newY <= minInset.y ||
+        newX >= maxInset.x || newX <= minInset.x)
     {
         this->unschedule(schedule_selector(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
