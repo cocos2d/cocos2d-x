@@ -646,7 +646,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
     {
         if (_touches.size() == 1 && _dragging)
         { // scrolling
-            Point moveDistance, newPoint, maxInset, minInset;
+            Point moveDistance, newPoint;
             Rect  frame;
             float newX, newY;
             
@@ -696,9 +696,6 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                     default:
                         break;
                 }
-                
-                maxInset = _maxInset;
-                minInset = _minInset;
 
                 newX     = _container->getPosition().x + moveDistance.x;
                 newY     = _container->getPosition().y + moveDistance.y;
