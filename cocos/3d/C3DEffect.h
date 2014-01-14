@@ -7,7 +7,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
-#include "Matrix.h"
+#include "C3DMatrix.h"
 #include "C3DResource.h"
 
 NS_CC_BEGIN

@@ -29,6 +29,6 @@
 
 #include "C3DSampler.h"
 
-#include "Quaternion.h"
+#include "C3DQuaternion.h"
 
 #endif

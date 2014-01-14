@@ -250,9 +250,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\math\kazmath\src\vec3.c" />
     <ClCompile Include="..\math\kazmath\src\vec4.c" />
     <ClCompile Include="..\math\MathUtilty.cpp" />
-    <ClCompile Include="..\math\Matrix.cpp" />
+    <ClCompile Include="..\math\C3DMatrix.cpp" />
     <ClCompile Include="..\math\neonmatriximpl.c" />
-    <ClCompile Include="..\math\Quaternion.cpp" />
+    <ClCompile Include="..\math\C3DQuaternion.cpp" />
     <ClCompile Include="..\math\Vector2.cpp" />
     <ClCompile Include="..\math\Vector3.cpp" />
     <ClCompile Include="..\math\Vector4.cpp" />
@@ -492,9 +492,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\math\MathUtilty.h" />
-    <ClInclude Include="..\math\Matrix.h" />
+    <ClInclude Include="..\math\C3DMatrix.h" />
     <ClInclude Include="..\math\neonmatriximpl.h" />
-    <ClInclude Include="..\math\Quaternion.h" />
+    <ClInclude Include="..\math\C3DQuaternion.h" />
     <ClInclude Include="..\math\Vector2.h" />
     <ClInclude Include="..\math\Vector3.h" />
     <ClInclude Include="..\math\Vector4.h" />
@@ -663,8 +663,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ZipUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\math\Matrix.inl" />
-    <None Include="..\math\Quaternion.inl" />
+    <None Include="..\math\C3DMatrix.inl" />
+    <None Include="..\math\C3DQuaternion.inl" />
     <None Include="..\math\Vector2.inl" />
     <None Include="..\math\Vector3.inl" />
     <None Include="..\math\Vector4.inl" />

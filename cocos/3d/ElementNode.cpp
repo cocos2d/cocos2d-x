@@ -1,7 +1,7 @@
 #include "ElementNode.h"
 #include "Stream.h"
-#include "Quaternion.h"
-#include "Matrix.h"
+#include "C3DQuaternion.h"
+#include "C3DMatrix.h"
 #include "Vector2.h"
 #include "Stream.h"
 

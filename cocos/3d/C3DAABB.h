@@ -2,7 +2,7 @@
 #define C3DAABB_H_
 
 #include "Vector3.h"
-#include "Matrix.h"
+#include "C3DMatrix.h"
 
 namespace cocos2d
 {

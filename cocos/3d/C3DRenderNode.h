@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-#include "Matrix.h"
+#include "C3DMatrix.h"
 #include "Vector3.h"
 
 #include "C3DNode.h"

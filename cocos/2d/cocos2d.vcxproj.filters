@@ -610,9 +610,6 @@
     <ClCompile Include="..\math\neonmatriximpl.c">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\Quaternion.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
     <ClCompile Include="..\math\Vector2.cpp">
       <Filter>math</Filter>
     </ClCompile>
@@ -620,9 +617,6 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\math\Vector4.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\math\Matrix.cpp">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\base\Transform.cpp">
@@ -783,6 +777,12 @@
     </ClCompile>
     <ClCompile Include="..\3d\StringTool.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\C3DMatrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\C3DQuaternion.cpp">
+      <Filter>math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1399,13 +1399,7 @@
     <ClInclude Include="..\math\MathUtilty.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\Matrix.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="..\math\neonmatriximpl.h">
-      <Filter>math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\math\Quaternion.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\math\Vector2.h">
@@ -1588,14 +1582,14 @@
     <ClInclude Include="..\3d\Vertex.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\math\C3DMatrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\math\C3DQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\math\Matrix.inl">
-      <Filter>math</Filter>
-    </None>
-    <None Include="..\math\Quaternion.inl">
-      <Filter>math</Filter>
-    </None>
     <None Include="..\math\Vector2.inl">
       <Filter>math</Filter>
     </None>
@@ -1603,6 +1597,12 @@
       <Filter>math</Filter>
     </None>
     <None Include="..\math\Vector4.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\C3DMatrix.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\C3DQuaternion.inl">
       <Filter>math</Filter>
     </None>
   </ItemGroup>
