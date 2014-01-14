@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -33,6 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class SpriteFrame;
+class EventCustom;
 
 /**
  * @addtogroup particle_nodes
@@ -81,14 +83,8 @@ public:
      * @js NA
      * @lua NA
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(int numberOfParticles) override;
     /**
      * @js NA
      * @lua NA
@@ -139,6 +135,13 @@ protected:
 
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
+    
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
 
     void setupVBOandVAO();
     void setupVBO();

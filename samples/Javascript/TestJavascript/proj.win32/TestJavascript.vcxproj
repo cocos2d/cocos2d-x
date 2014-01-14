@@ -237,6 +237,9 @@ xcopy "$(ProjectDir)..\..\Shared\tests" "$(OutDir)\TestJavascriptRes\" /e /Y</Co
     <ProjectReference Include="..\..\..\..\cocos\scripting\javascript\bindings\proj.win32\libJSBinding.vcxproj">
       <Project>{39379840-825a-45a0-b363-c09ffef864bd}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\cocos\scripting\javascript\bindings\spine\libJSBindingForSpine.vcxproj">
+      <Project>{e78cdc6b-f37d-48d2-ad91-1db549497e32}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
       <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
     </ProjectReference>

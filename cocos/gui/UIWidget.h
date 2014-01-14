@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UIWIDGET_H__
 #define __UIWIDGET_H__
@@ -315,7 +315,23 @@ public:
      */
     virtual Widget* getChildByName(const char* name);
     
-    virtual void visit();
+    virtual void addNode(Node* node);
+    
+    virtual void addNode(Node * node, int zOrder);
+    
+    virtual void addNode(Node* node, int zOrder, int tag);
+    
+    virtual Node * getNodeByTag(int tag);
+    
+    virtual Vector<Node*>& getNodes();
+    
+    virtual void removeNode(Node* node);
+    
+    virtual void removeNodeByTag(int tag);
+    
+    virtual void removeAllNodes();
+    
+    virtual void visit() override;
     
     /**
      * Sets the touch event target/selector of the menu item
@@ -333,7 +349,7 @@ public:
      *
      * @param position  The position (x,y) of the widget in OpenGL coordinates
      */
-    void setPosition(const Point &pos);
+    virtual void setPosition(const Point &pos) override;
     
     /**
      * Changes the position (x,y) of the widget in OpenGL coordinates
@@ -534,14 +550,7 @@ public:
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent);
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
-    
-    /**
-     * A call back function called when widget is selected, and on touch long clicked.
-     *
-     * @param touch point
-     */
-    virtual void onTouchLongClicked(const Point &touchPoint);
-    
+        
     /**
      * Sets a LayoutParameter to widget. 
      *
@@ -595,16 +604,6 @@ public:
     virtual Node* getVirtualRenderer();
     
     /**
-     * Schedules the "update" method.
-     */
-    void setUpdateEnabled(bool enable);
-    
-    /**
-     * is the "update" method scheduled.
-     */
-    bool isUpdateEnabled();
-    
-    /**
      * Gets the content size of widget.
      *
      * Content size is widget's texture size.
@@ -618,8 +617,8 @@ public:
     
     Widget* clone();
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
     void updateSizeAndPosition();
     
@@ -648,7 +647,6 @@ protected:
     void moveEvent();
     void releaseUpEvent();
     void cancelUpEvent();
-    void longClickEvent();
     void updateAnchorPoint();
     void copyProperties(Widget* model);
     virtual Widget* createCloneInstance();
@@ -662,7 +660,6 @@ protected:
     bool _touchPassedEnabled; ///< is the touch event should be passed
     bool _focus;              ///< is the widget on focus
     BrightStyle _brightStyle; ///< bright style
-    bool _updateEnabled;      ///< is "update" method scheduled
     Point _touchStartPos;    ///< touch began point
     Point _touchMovePos;     ///< touch moved point
     Point _touchEndPos;      ///< touch ended point
@@ -684,6 +681,7 @@ protected:
     EventListenerTouchOneByOne* _touchListener;
     Map<int, LayoutParameter*> _layoutParameterDictionary;
     Vector<Node*> _widgetChildren;
+    Vector<Node*> _nodes;
 };
 }
 

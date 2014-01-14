@@ -1,6 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Erawppa
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,50 +33,50 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static NotificationCenter *s_sharedNotifCenter = nullptr;
+static __NotificationCenter *s_sharedNotifCenter = nullptr;
 
-NotificationCenter::NotificationCenter()
+__NotificationCenter::__NotificationCenter()
 : _scriptHandler(0)
 {
     _observers = __Array::createWithCapacity(3);
     _observers->retain();
 }
 
-NotificationCenter::~NotificationCenter()
+__NotificationCenter::~__NotificationCenter()
 {
     _observers->release();
 }
 
-NotificationCenter *NotificationCenter::getInstance()
+__NotificationCenter *__NotificationCenter::getInstance()
 {
     if (!s_sharedNotifCenter)
     {
-        s_sharedNotifCenter = new NotificationCenter;
+        s_sharedNotifCenter = new __NotificationCenter;
     }
     return s_sharedNotifCenter;
 }
 
-void NotificationCenter::destroyInstance()
+void __NotificationCenter::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
 }
 
 // XXX: deprecated
-NotificationCenter *NotificationCenter::sharedNotificationCenter(void)
+__NotificationCenter *__NotificationCenter::sharedNotificationCenter(void)
 {
-    return NotificationCenter::getInstance();
+    return __NotificationCenter::getInstance();
 }
 
 // XXX: deprecated
-void NotificationCenter::purgeNotificationCenter(void)
+void __NotificationCenter::purgeNotificationCenter(void)
 {
-    NotificationCenter::destroyInstance();
+    __NotificationCenter::destroyInstance();
 }
 
 //
 // internal functions
 //
-bool NotificationCenter::observerExisted(Object *target, const std::string& name, Object *sender)
+bool __NotificationCenter::observerExisted(Object *target, const std::string& name, Object *sender)
 {
     Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
@@ -92,7 +94,7 @@ bool NotificationCenter::observerExisted(Object *target, const std::string& name
 //
 // observer functions
 //
-void NotificationCenter::addObserver(Object *target, 
+void __NotificationCenter::addObserver(Object *target, 
                                        SEL_CallFuncO selector,
                                        const std::string& name,
                                        Object *sender)
@@ -108,7 +110,7 @@ void NotificationCenter::addObserver(Object *target,
     _observers->addObject(observer);
 }
 
-void NotificationCenter::removeObserver(Object *target, const std::string& name)
+void __NotificationCenter::removeObserver(Object *target, const std::string& name)
 {
     Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
@@ -125,7 +127,7 @@ void NotificationCenter::removeObserver(Object *target, const std::string& name)
     }
 }
 
-int NotificationCenter::removeAllObservers(Object *target)
+int __NotificationCenter::removeAllObservers(Object *target)
 {
     Object *obj = nullptr;
     __Array *toRemove = __Array::create();
@@ -146,7 +148,7 @@ int NotificationCenter::removeAllObservers(Object *target)
     return static_cast<int>(toRemove->count());
 }
 
-void NotificationCenter::registerScriptObserver( Object *target, int handler,const std::string& name)
+void __NotificationCenter::registerScriptObserver( Object *target, int handler,const std::string& name)
 {
     
     if (this->observerExisted(target, name, nullptr))
@@ -161,7 +163,7 @@ void NotificationCenter::registerScriptObserver( Object *target, int handler,con
     _observers->addObject(observer);
 }
 
-void NotificationCenter::unregisterScriptObserver(Object *target,const std::string& name)
+void __NotificationCenter::unregisterScriptObserver(Object *target,const std::string& name)
 {        
     Object* obj = nullptr;
     CCARRAY_FOREACH(_observers, obj)
@@ -177,7 +179,7 @@ void NotificationCenter::unregisterScriptObserver(Object *target,const std::stri
     }
 }
 
-void NotificationCenter::postNotification(const std::string& name, Object *sender)
+void __NotificationCenter::postNotification(const std::string& name, Object *sender)
 {
     __Array* ObserversCopy = __Array::createWithCapacity(_observers->count());
     ObserversCopy->addObjectsFromArray(_observers);
@@ -198,12 +200,12 @@ void NotificationCenter::postNotification(const std::string& name, Object *sende
     }
 }
 
-void NotificationCenter::postNotification(const std::string& name)
+void __NotificationCenter::postNotification(const std::string& name)
 {
     this->postNotification(name,nullptr);
 }
 
-int NotificationCenter::getObserverHandlerByName(const std::string& name)
+int __NotificationCenter::getObserverHandlerByName(const std::string& name)
 {
     if (name.empty())
     {

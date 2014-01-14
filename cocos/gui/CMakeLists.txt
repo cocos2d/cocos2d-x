@@ -11,9 +11,9 @@ set(GUI_SRC
   UIButton.cpp
   UICheckBox.cpp
   UIImageView.cpp
-  UILabel.cpp
-  UILabelAtlas.cpp
-  UILabelBMFont.cpp
+  UIText.cpp
+  UITextAtlas.cpp
+  UITextBMFont.cpp
   UILoadingBar.cpp
   UISlider.cpp
   UITextField.cpp
@@ -25,6 +25,6 @@ add_library(gui STATIC
 
 set_target_properties(gui
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )

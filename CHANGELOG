@@ -1,14 +1,32 @@
-cocos2d-x-3.0beta0 ?? 2013
+cocos2d-x-3.0final ?.? ?
 [All]
+     [FIX]          Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          ControlSlider doesn't support to set selected thumb sprite.
+     [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
+     [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
+     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [FIX]          TestCpp works by using CMake on Windows.
+cocos2d-x-3.0beta Jan.7 2014
+[All]
+     [NEW]          New label: shadow, outline, glow support
+     [NEW]          AngelCode binary file format support for LabelBMFont
+     [NEW]          New spine runtime support
+     [NEW]          Add templated containers, such as `cocos2d::Map<>` and `cocos2d::Vector<>`
+     [NEW]          TextureCache::addImageAsync() uses std::function<> as call back
+     [NEW]          Namespace changed: network -> cocos2d::network, gui -> cocos2d::gui
+     [NEW]          Added more CocoStudioSceneTest samples.
+     [NEW]          Added UnitTest for Vector<T>, Map<K, V>, Value.
+     [NEW]          AngelCode binary file format support for LabelBMFont.
+     [NEW]          New renderer: Scene graph and Renderer are decoupled now.
      [NEW]          Upgrated Box2D to 2.3.0
      [NEW]          SChedule::performFunctionInCocosThread()
      [NEW]          Added tga format support again.
+     [NEW]          Adds UnitTest for Template container and Value class
      [FIX]          A Logic error in ControlUtils::RectUnion.
      [FIX]          Bug fixes for Armature, use Vector<T>, Map<K, V> instead of Array, Dictionary.
      [FIX]          Used c++11 range loop(highest performance) instead of other types of loop.
      [FIX]          Removed most hungarian notations.
      [FIX]          Merged NodeRGBA to Node.
-     [NEW]          New renderer support.
      [FIX]          Potential hash collision fix.
      [FIX]          Updates spine runtime to the latest version.
      [FIX]          Uses `const std::string&` instead of `const char*`.
@@ -17,20 +35,49 @@ cocos2d-x-3.0beta0 ?? 2013
      [FIX]          GUI refactoring: Removes UI prefix, Widget is inherited from Node, uses new containers(Vector<T>, Map<K,V>).
      [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
      [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
-     [FIX]          Crash if connection breaks during download using AssetManager.
-     [NEW]          AngelCode binary file format support for LabelBMFont.
+     [FIX]          Crash if connection breaks during download using AssetManager.   
+     [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
+     [FIX]          Useless conversion in ScrollView::onTouchBegan.
+     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).  
+     [FIX]          CCTMXMap doesn't support TMX files reference external TSX files
+     [FIX]          Logical error in `CallFuncN::clone()`   
+     [FIX]          Child's opacity will not be changed when its parent's cascadeOpacityEnabled was set to true and opacity was changed
+     [FIX]          Disallow copy and assign for Scene Graph + Actions objects
+     [FIX]          XMLHttpRequest receives wrong binary array
+     [FIX]          XMLHttpRequest.status needs to be assigned even when connection fails
+     [FIX]          TextureCache::addImageAsync may load a image even it is loaded in GL thread
+     [FIX]          EventCustom shouldn't use std::hash to generate unique ID, because the result is not unique 
+     [FIX]          CC_USE_PHYSICS is actually impossible to turn it off
+     [FIX]          Crash if connection breaks during download using AssetManager
+     [FIX]          Project_creator supports creating project at any folder and supports UI
 [Android]
      [NEW]          build/android-build.sh: add supporting to generate .apk file
-     [FIX]          XMLHttpRequest receives wrong binary array.
      [NEW]          Bindings-generator supports to bind 'unsigned long'.
+     [FIX]          XMLHttpRequest receives wrong binary array.
      [FIX]          'Test Frame Event' of TestJavascript/CocoStudioArmatureTest Crashes.
      [FIX]          UserDefault::getDoubleForKey() doesn't pass default value to Java.
+[iOS]
+     [FIX]          Infinite loop in UserDefault's destructor
 [Windows]
      [NEW]          CMake support for windows.
 [Bindings]
-     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
+     [NEW]          Support CocoStudio v1.2
      [NEW]          Adds spine JS binding support.
+     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
      [FIX]          The order of onEnter and onExit is wrong.
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA.
+     [FIX]          Bindings-generator doesn't support 'unsigned long'
+     [FIX]          Potential hash collision by using typeid(T).hash_code() in JSB and LuaBinding
+[Lua binding]
+     [NEW]          New label support
+     [NEW]          Physcis integrated support
+     [NEW]          EventDispatcher support
+     [FIX]          CallFuncND + auto remove lua test case have no effect
+     [FIX]          Lua gc will cause correcsponding c++ object been released
+     [FIX]          Some lua manual binding functions don't remove unneeded element in the lua stack
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA
+[Javascript binding]
+     [FIX]          `onEnter` event is triggered after children's `onEnter` event
      
 cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]

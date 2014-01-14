@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -58,7 +59,9 @@ __String::~__String()
 
 __String& __String::operator= (const __String& other)
 {
-    _string = other._string;
+    if (this != &other) {
+        _string = other._string;
+    }
     return *this;
 }
 

@@ -54,6 +54,8 @@
 
 #define BYTE_CODE_FILE_EXT ".jsc"
 
+using namespace cocos2d;
+
 static std::string inData;
 static std::string outData;
 static std::vector<std::string> g_queue;
@@ -198,12 +200,12 @@ void js_log(const char *format, ...) {
 
     if (_js_log_buf == NULL)
     {
-        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
-        _js_log_buf[kMaxLogLen] = '\0';
+        _js_log_buf = (char *)calloc(sizeof(char), MAX_LOG_LENGTH+1);
+        _js_log_buf[MAX_LOG_LENGTH] = '\0';
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
+    int len = vsnprintf(_js_log_buf, MAX_LOG_LENGTH, format, vl);
     va_end(vl);
     if (len > 0)
     {
@@ -1158,6 +1160,14 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     }
     
     return 0;
+}
+
+bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
+{
+    jsval args[2];
+    args[0] = int32_to_jsval(_cx, static_cast<int>(type));
+    args[1] = std_string_to_jsval(_cx, str);
+    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
 }
 
 #pragma mark - Debug

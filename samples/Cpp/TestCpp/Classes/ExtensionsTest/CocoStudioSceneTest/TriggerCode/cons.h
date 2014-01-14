@@ -18,10 +18,10 @@ public:
      virtual void removeAll();
 	 virtual void update(float dt);
 private:
-	 float _fTotalTime;
-	 float _fTmpTime;
-	 cocos2d::Scheduler *_pScheduler;
-	 bool _bSuc;
+	 float _totalTime;
+	 float _tmpTime;
+	 cocos2d::Scheduler *_scheduler;
+	 bool _suc;
 };
 
 
@@ -38,11 +38,11 @@ public:
      virtual void removeAll();
 	 void animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
 private:
-	 int _nTag;
+	 int _tag;
 	 std::string _comName;
 	 std::string _aniname;
-	 int _nState;
-	 bool _bSuc;
+	 int _state;
+	 bool _suc;
 };
 
 
@@ -58,7 +58,7 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
+	int  _tag;
 	cocos2d::Point _origin;
 	cocos2d::Size  _size;
 };
@@ -75,8 +75,8 @@ public:
 	 virtual void serialize(const rapidjson::Value &val);
      virtual void removeAll();
 private:
-	int  _nTag;
-	bool _bVisible;
+	int  _tag;
+	bool _visible;
 };
 
 

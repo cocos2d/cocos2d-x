@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Jason Booth
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,6 +34,8 @@ THE SOFTWARE.
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
+
+class EventCustom;
 
 /**
  * @addtogroup textures
@@ -111,12 +114,12 @@ public:
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
      */
-    void listenToBackground(Object *obj);
+    void listenToBackground(EventCustom *event);
     
     /** Listen "come to foreground" message and restore the frame buffer object
      It only has effect on Android.
      */
-    void listenToForeground(Object *obj);
+    void listenToForeground(EventCustom *event);
     
     /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. */
     inline unsigned int getClearFlags() const { return _clearFlags; };

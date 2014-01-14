@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,6 +30,7 @@
 #include "CCSpriteBatchNode.h"
 #include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -119,6 +121,7 @@ public:
 
     virtual std::string getDescription() const override;
     virtual void draw(void) override;
+    virtual void onDraw();
 
 private:
     /**
@@ -172,7 +175,8 @@ private:
     Color3B                     _effectColor;
 
     GLuint                      _uniformEffectColor;
-    
+
+    CustomCommand               _customCommand;
 };
 
 

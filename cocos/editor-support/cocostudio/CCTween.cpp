@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -330,7 +330,7 @@ void Tween::arriveKeyFrame(FrameData *keyFrameData)
 
         if (!displayManager->isForceChangeDisplay())
         {
-            displayManager->changeDisplayByIndex(displayIndex, false);
+            displayManager->changeDisplayWithIndex(displayIndex, false);
         }
 
         //! Update bone zorder, bone's zorder is determined by frame zorder and bone zorder

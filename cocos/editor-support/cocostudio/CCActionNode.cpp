@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -64,6 +64,7 @@ ActionNode::~ActionNode()
     for (auto object : _frameArray)
     {
         object->clear();
+        CC_SAFE_DELETE(object);
     }
 	_frameArray.clear();
 }
@@ -100,7 +101,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setScaleX(scaleX);
 			actionFrame->setScaleY(scaleY);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeScale);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -112,7 +113,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setRotation(rotation);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeRotate);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -124,7 +125,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setOpacity(opacity);
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeTint);
 			cActionArray->pushBack(actionFrame);
 		}
 
@@ -138,7 +139,7 @@ void ActionNode::initWithDictionary(const rapidjson::Value& dic,Object* root)
             actionFrame->autorelease();
 			actionFrame->setFrameIndex(frameInex);
 			actionFrame->setColor(Color3B(colorR,colorG,colorB));
-			auto cActionArray = _frameArray.at((int)kKeyframeMove);
+			auto cActionArray = _frameArray.at((int)kKeyframeFade);
 			cActionArray->pushBack(actionFrame);
 		}
 	}
@@ -153,7 +154,7 @@ void ActionNode::initActionNodeFromRoot(Object* root)
 		Widget* rootWidget = dynamic_cast<Widget*>(root);
 		if (rootWidget != nullptr)
 		{
-			Widget* widget = UIHelper::seekActionWidgetByActionTag(rootWidget, getActionTag());
+			Widget* widget = Helper::seekActionWidgetByActionTag(rootWidget, getActionTag());
 			if (widget != nullptr)
 			{
 				setObject(widget);

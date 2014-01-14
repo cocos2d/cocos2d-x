@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace network;
+using namespace cocos2d::network;
 
 HttpClientTest::HttpClientTest() 
 : _labelStatusCode(NULL)

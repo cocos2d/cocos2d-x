@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -101,7 +101,7 @@ Armature::~Armature(void)
 
 bool Armature::init()
 {
-    return init(nullptr);
+    return init("");
 }
 
 
@@ -155,7 +155,7 @@ bool Armature::init(const std::string& name)
                     CC_BREAK_IF(!frameData);
 
                     bone->getTweenData()->copy(frameData);
-                    bone->changeDisplayByIndex(frameData->displayIndex, false);
+                    bone->changeDisplayWithIndex(frameData->displayIndex, false);
                 }
                 while (0);
             }
@@ -222,7 +222,7 @@ Bone *Armature::createBone(const std::string& boneName)
     }
 
     bone->setBoneData(boneData);
-    bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+    bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
 
     return bone;
 }

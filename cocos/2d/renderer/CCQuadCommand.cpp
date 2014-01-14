@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -58,12 +58,6 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         _capacity = quadCount;
     }
 
-    kmMat4 p, mvp;
-    kmGLGetMatrix(KM_GL_PROJECTION, &p);
-
-    kmMat4Multiply(&mvp, &p, &mv);
-
-
     _quadCount = quadCount;
     memcpy(_quad, quad, sizeof(V3F_C4B_T2F_Quad) * quadCount);
 
@@ -74,7 +68,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec1.x = q->bl.vertices.x;
         vec1.y = q->bl.vertices.y;
         vec1.z = q->bl.vertices.z;
-        kmVec3TransformCoord(&out1, &vec1, &mvp);
+        kmVec3Transform(&out1, &vec1, &mv);
         q->bl.vertices.x = out1.x;
         q->bl.vertices.y = out1.y;
         q->bl.vertices.z = out1.z;
@@ -83,7 +77,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec2.x = q->br.vertices.x;
         vec2.y = q->br.vertices.y;
         vec2.z = q->br.vertices.z;
-        kmVec3TransformCoord(&out2, &vec2, &mvp);
+        kmVec3Transform(&out2, &vec2, &mv);
         q->br.vertices.x = out2.x;
         q->br.vertices.y = out2.y;
         q->br.vertices.z = out2.z;
@@ -92,7 +86,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec3.x = q->tr.vertices.x;
         vec3.y = q->tr.vertices.y;
         vec3.z = q->tr.vertices.z;
-        kmVec3TransformCoord(&out3, &vec3, &mvp);
+        kmVec3Transform(&out3, &vec3, &mv);
         q->tr.vertices.x = out3.x;
         q->tr.vertices.y = out3.y;
         q->tr.vertices.z = out3.z;
@@ -101,7 +95,7 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
         vec4.x = q->tl.vertices.x;
         vec4.y = q->tl.vertices.y;
         vec4.z = q->tl.vertices.z;
-        kmVec3TransformCoord(&out4, &vec4, &mvp);
+        kmVec3Transform(&out4, &vec4, &mv);
         q->tl.vertices.x = out4.x;
         q->tl.vertices.y = out4.y;
         q->tl.vertices.z = out4.z;
@@ -119,9 +113,9 @@ int64_t QuadCommand::generateID()
 
     //Generate Material ID
     //TODO fix shader ID generation
-    CCASSERT(_shader->getProgram() < 64, "ShaderID is greater than 64");
+    CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
     //TODO fix texture ID generation
-    CCASSERT(_textureID < 1024, "TextureID is greater than 1024");
+    CCASSERT(_textureID < pow(2,18), "TextureID is greater than 2^18");
 
     //TODO fix blend id generation
     int blendID = 0;
@@ -146,9 +140,17 @@ int64_t QuadCommand::generateID()
         blendID = 4;
     }
 
-    _materialID = (int32_t)_shader->getProgram() << 28
-            | (int32_t)blendID << 24
-            | (int32_t)_textureID << 14;
+    //TODO Material ID should be part of the ID
+    //
+    // Temporal hack (later, these 32-bits should be packed in 24-bits
+    //
+    // +---------------------+-------------------+----------------------+
+    // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
+    // +---------------------+-------------------+----------------------+
+
+    _materialID = (int32_t)_shader->getProgram() << 22
+            | (int32_t)blendID << 18
+            | (int32_t)_textureID << 0;
 
     //Generate RenderCommandID
     _id = (int64_t)_viewport << 61

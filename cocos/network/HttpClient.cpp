@@ -1,6 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 greathqy
+ Copyright (c) 2012      greathqy
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,7 +33,7 @@
 
 #include "platform/CCFileUtils.h"
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace network {
 
@@ -52,7 +53,7 @@ static bool s_need_quit = false;
 static Vector<HttpRequest*>*  s_requestQueue = nullptr;
 static Vector<HttpResponse*>* s_responseQueue = nullptr;
 
-static HttpClient *s_pHttpClient = NULL; // pointer to singleton
+static HttpClient *s_pHttpClient = nullptr; // pointer to singleton
 
 static char s_errorBuffer[CURL_ERROR_SIZE] = {0};
 
@@ -97,7 +98,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 // Worker thread
 void HttpClient::networkThread()
 {    
-    HttpRequest *request = NULL;
+    HttpRequest *request = nullptr;
     
     auto scheduler = Director::getInstance()->getScheduler();
     
@@ -109,7 +110,7 @@ void HttpClient::networkThread()
         }
         
         // step 1: send http request if the requestQueue isn't empty
-        request = NULL;
+        request = nullptr;
         
         s_requestQueueMutex.lock();
         
@@ -123,7 +124,7 @@ void HttpClient::networkThread()
         
         s_requestQueueMutex.unlock();
         
-        if (NULL == request)
+        if (nullptr == request)
         {
             // Wait for http request tasks from main thread
             std::unique_lock<std::mutex> lk(s_SleepMutex); 
@@ -263,7 +264,7 @@ class CURLRaii
 public:
     CURLRaii()
         : _curl(curl_easy_init())
-        , _headers(NULL)
+        , _headers(nullptr)
     {
     }
 
@@ -387,7 +388,7 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
 // HttpClient implementation
 HttpClient* HttpClient::getInstance()
 {
-    if (s_pHttpClient == NULL) {
+    if (s_pHttpClient == nullptr) {
         s_pHttpClient = new HttpClient();
     }
     
@@ -396,8 +397,7 @@ HttpClient* HttpClient::getInstance()
 
 void HttpClient::destroyInstance()
 {
-    CCASSERT(s_pHttpClient, "");
-    s_pHttpClient->release();
+    CC_SAFE_DELETE(s_pHttpClient);
 }
 
 void HttpClient::enableCookies(const char* cookieFile) {
@@ -419,17 +419,17 @@ HttpClient::~HttpClient()
 {
     s_need_quit = true;
     
-    if (s_requestQueue != NULL) {
+    if (s_requestQueue != nullptr) {
     	s_SleepCondition.notify_one();
     }
     
-    s_pHttpClient = NULL;
+    s_pHttpClient = nullptr;
 }
 
 //Lazy create semaphore & mutex & thread
 bool HttpClient::lazyInitThreadSemphore()
 {
-    if (s_requestQueue != NULL) {
+    if (s_requestQueue != nullptr) {
         return true;
     } else {
         
@@ -473,7 +473,7 @@ void HttpClient::dispatchResponseCallbacks()
 {
     // log("CCHttpClient::dispatchResponseCallbacks is running");
     
-    HttpResponse* response = NULL;
+    HttpResponse* response = nullptr;
     
     s_responseQueueMutex.lock();
 
@@ -501,5 +501,7 @@ void HttpClient::dispatchResponseCallbacks()
 }
 
 }
+
+NS_CC_END
 
 

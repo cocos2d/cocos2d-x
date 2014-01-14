@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,33 +29,10 @@
 #include <stdio.h>
 
 #import <UIKit/UIAlert.h>
+#include "CCDirector.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
-
-// XXX deprecated
-void CCLog(const char * format, ...)
-{
-    printf("cocos2d: ");
-    char buf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-}
-
-void log(const char * format, ...)
-{
-    printf("cocos2d: ");
-    char buf[kMaxLogLen+1] = {0};
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-}
 
 // ios no MessageBox, use log instead
 void MessageBox(const char * msg, const char * title)

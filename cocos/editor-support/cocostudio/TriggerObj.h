@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -70,14 +70,14 @@ public:
     virtual void removeAll();
     virtual void serialize(const rapidjson::Value &val);
 	unsigned int getId();
-	void setEnable(bool bEnable);
+	void setEnabled(bool enabled);
 	std::vector<int>& getEvents();
   
 private:
     cocos2d::Vector<BaseTriggerCondition*> _cons;
     cocos2d::Vector<BaseTriggerAction*> _acts;
 	unsigned int _id;
-	bool _bEnable;
+	bool _enabled;
 	std::vector<int> _vInt;
 };
 

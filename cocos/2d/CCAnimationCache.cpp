@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -187,7 +188,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
     }
 }
 
-void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
+void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist)
 {
     if ( dictionary.find("animations") == dictionary.end() )
     {
@@ -205,7 +206,8 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
         for(const auto &value : spritesheets) {
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
+            std::string path = FileUtils::getInstance()->fullPathFromRelativeFile(value.asString(),plist);
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(path);
         }
     }
 
@@ -231,7 +233,7 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 
-    addAnimationsWithDictionary(dict);
+    addAnimationsWithDictionary(dict,plist);
 }
 
 

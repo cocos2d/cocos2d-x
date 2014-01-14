@@ -14,6 +14,6 @@ int main(int argc, char **argv)
     // create the application instance
     AppDelegate app;
     EGLView eglView;
-    eglView.init("TestCPP",900,640);
+    eglView.init("Cocos2d-x Game Using LUA",900,640);
     return Application::getInstance()->run();
 }
