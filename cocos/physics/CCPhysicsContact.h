@@ -32,6 +32,7 @@
 #include "CCGeometry.h"
 #include "CCEventListenerCustom.h"
 #include "CCEvent.h"
+#include "CCEventCustom.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ typedef struct PhysicsContactData
 /**
  * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
  */
-class PhysicsContact : Event
+class PhysicsContact : public EventCustom
 {
 public:
     
@@ -86,6 +87,8 @@ public:
     /** get the event code */
     EventCode getEventCode() const { return _eventCode; };
     
+    static PhysicsContact* cast(EventCustom* event);
+
 private:
     static PhysicsContact* construct(PhysicsShape* a, PhysicsShape* b);
     bool init(PhysicsShape* a, PhysicsShape* b);
@@ -99,7 +102,7 @@ private:
     inline bool resetResult() { bool ret = _result; _result = true; return ret; }
     
     void generateContactData();
-    
+
 private:
     PhysicsContact();
     ~PhysicsContact();

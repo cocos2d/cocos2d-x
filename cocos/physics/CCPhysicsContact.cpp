@@ -37,7 +37,7 @@ NS_CC_BEGIN
 const char* PHYSICSCONTACT_EVENT_NAME = "PhysicsContactEvent";
 
 PhysicsContact::PhysicsContact()
-: Event(Event::Type::CUSTOM)
+: EventCustom(PHYSICSCONTACT_EVENT_NAME)
 , _world(nullptr)
 , _shapeA(nullptr)
 , _shapeB(nullptr)
@@ -69,6 +69,11 @@ PhysicsContact* PhysicsContact::construct(PhysicsShape* a, PhysicsShape* b)
     
     CC_SAFE_DELETE(contact);
     return nullptr;
+}
+
+PhysicsContact* PhysicsContact::cast(EventCustom* event) {
+	PhysicsContact* contact = static_cast<PhysicsContact*>(event);
+	return contact;
 }
 
 bool PhysicsContact::init(PhysicsShape* a, PhysicsShape* b)
