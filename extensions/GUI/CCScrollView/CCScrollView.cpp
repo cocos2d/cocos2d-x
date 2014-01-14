@@ -397,7 +397,6 @@ void ScrollView::deaccelerateScrolling(float dt)
     newX = _container->getPosition().x;
     newY = _container->getPosition().y;
     
-    _scrollDistance     = _scrollDistance - Point(newX - _container->getPosition().x, newY - _container->getPosition().y);
     _scrollDistance     = _scrollDistance * SCROLL_DEACCEL_RATE;
     this->setContentOffset(Point(newX,newY));
     
