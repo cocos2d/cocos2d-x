@@ -313,13 +313,13 @@ void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h
     float factorX = frameSizeW / w * view->getFrameZoomFactor();
     float factorY = frameSizeH / h * view->getFrameZoomFactor();;
     
-    if (fabs(factorX - 0.5f) < FLT_MIN && fabs(factorY - 0.5f) < FLT_MIN )
+    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
     {
         view->_isRetina = true;
         view->setFrameZoomFactor(2.0f * view->getFrameZoomFactor());
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * view->getFrameZoomFactor()) , static_cast<int>(frameSizeH * 0.5f * view->getFrameZoomFactor()));
     }
-    else if(fabs(factorX - 2.0f) < FLT_MIN && fabs(factorY - 2.0f) < FLT_MIN)
+    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
     {
         view->_isRetina = false;
         view->setFrameZoomFactor(0.5f * view->getFrameZoomFactor());
