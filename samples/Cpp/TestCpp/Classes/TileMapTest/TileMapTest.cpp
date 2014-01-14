@@ -599,10 +599,9 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
 void TMXOrthoObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXOrthoObjectsTest::onDraw()
@@ -673,10 +672,9 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
 void TMXIsoObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXIsoObjectsTest::onDraw()
@@ -1091,7 +1089,10 @@ TMXTilePropertyTest::TMXTilePropertyTest()
     addChild(map ,0 ,kTagTileMap);
 
     for(int i=1;i<=20;i++){
-        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asString().c_str());
+        for(const auto& value : map->getPropertiesForGID(i).asValueMap())
+        {
+            log("GID:%i, Properties:%s, %s", i, value.first.c_str(), value.second.asString().c_str());
+        }
     }
 }
 
@@ -1240,6 +1241,42 @@ std::string TMXOrthoFromXMLTest::title() const
 {
     return "TMX created from XML test";
 }
+//------------------------------------------------------------------
+//
+// TMXOrthoXMLFormatTest
+//
+//------------------------------------------------------------------
+
+TMXOrthoXMLFormatTest::TMXOrthoXMLFormatTest()
+{
+    // this test tests for:
+    // 1. load xml format tilemap
+    // 2. gid lower than firstgid is ignored
+    // 3. firstgid in tsx is ignored, tile property in tsx loaded correctly.
+    auto map = TMXTiledMap::create("TileMaps/xml-test.tmx");
+    addChild(map, 0, kTagTileMap);
+    
+    auto s = map->getContentSize();
+    log("ContentSize: %f, %f", s.width,s.height);
+    
+    auto& children = map->getChildren();
+    for(const auto &node : children) {
+        auto child = static_cast<SpriteBatchNode*>(node);
+        child->getTexture()->setAntiAliasTexParameters();
+    }
+    
+    for(int i=24;i<=26;i++){
+        log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asValueMap()["name"].asString().c_str());
+    }
+    
+    auto action = ScaleBy::create(2, 0.5f);
+    map->runAction(action);
+}
+
+std::string TMXOrthoXMLFormatTest::title() const
+{
+    return "you should see blue, green and yellow in console.";
+}
 
 //------------------------------------------------------------------
 //
@@ -1313,43 +1350,44 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    28
+#define MAX_LAYER    29
+
+static std::function<Layer*()> createFunctions[] = {
+    CLN(TMXIsoZorder),
+    CLN(TMXOrthoZorder),
+    CLN(TMXIsoVertexZ),
+    CLN(TMXOrthoVertexZ),
+    CLN(TMXOrthoTest),
+    CLN(TMXOrthoTest2),
+    CLN(TMXOrthoTest3),
+    CLN(TMXOrthoTest4),
+    CLN(TMXIsoTest),
+    CLN(TMXIsoTest1),
+    CLN(TMXIsoTest2),
+    CLN(TMXUncompressedTest),
+    CLN(TMXHexTest),
+    CLN(TMXReadWriteTest),
+    CLN(TMXTilesetTest),
+    CLN(TMXOrthoObjectsTest),
+    CLN(TMXIsoObjectsTest),
+    CLN(TMXResizeTest),
+    CLN(TMXIsoMoveLayer),
+    CLN(TMXOrthoMoveLayer),
+    CLN(TMXOrthoFlipTest),
+    CLN(TMXOrthoFlipRunTimeTest),
+    CLN(TMXOrthoFromXMLTest),
+    CLN(TMXOrthoXMLFormatTest),
+    CLN(TileMapTest),
+    CLN(TileMapEditTest),
+    CLN(TMXBug987),
+    CLN(TMXBug787),
+    CLN(TMXGIDObjectsTest),
+    
+};
 
 Layer* createTileMalayer(int nIndex)
 {
-    switch(nIndex)
-    {
-        case 0: return new TMXIsoZorder();
-        case 1: return new TMXOrthoZorder();
-        case 2: return new TMXIsoVertexZ();
-        case 3: return new TMXOrthoVertexZ();    
-        case 4: return new TMXOrthoTest();
-        case 5: return new TMXOrthoTest2();
-        case 6: return new TMXOrthoTest3();
-        case 7: return new TMXOrthoTest4();
-        case 8: return new TMXIsoTest();
-        case 9: return new TMXIsoTest1();
-        case 10: return new TMXIsoTest2();
-        case 11: return new TMXUncompressedTest ();
-        case 12: return new TMXHexTest();
-        case 13: return new TMXReadWriteTest();
-        case 14: return new TMXTilesetTest();
-        case 15: return new TMXOrthoObjectsTest();
-        case 16: return new TMXIsoObjectsTest();
-        case 17: return new TMXResizeTest();
-        case 18: return new TMXIsoMoveLayer();
-        case 19: return new TMXOrthoMoveLayer();
-        case 20: return new TMXOrthoFlipTest();
-        case 21: return new TMXOrthoFlipRunTimeTest();
-        case 22: return new TMXOrthoFromXMLTest();
-        case 23: return new TileMapTest();
-        case 24: return new TileMapEditTest();
-        case 25: return new TMXBug987();
-        case 26: return new TMXBug787();
-        case 27: return new TMXGIDObjectsTest();
-    }
-
-    return NULL;
+    return createFunctions[nIndex]();
 }
 
 Layer* nextTileMapAction()
@@ -1357,10 +1395,7 @@ Layer* nextTileMapAction()
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createTileMalayer(sceneIdx);
 }
 
 Layer* backTileMapAction()
@@ -1368,20 +1403,14 @@ Layer* backTileMapAction()
     sceneIdx--;
     int total = MAX_LAYER;
     if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
+        sceneIdx += total;
 
-    return layer;
+    return createTileMalayer(sceneIdx);
 }
 
 Layer* restartTileMapAction()
 {
-    auto layer = createTileMalayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createTileMalayer(sceneIdx);
 } 
 
 
@@ -1475,10 +1504,9 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 void TMXGIDObjectsTest::draw()
 {
-    CustomCommand *cmd = CustomCommand::getCommandPool().generateCommand();
-    cmd->init(0, _vertexZ);
-    cmd->func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    _renderCmd.init(0, _vertexZ);
+    _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 void TMXGIDObjectsTest::onDraw()

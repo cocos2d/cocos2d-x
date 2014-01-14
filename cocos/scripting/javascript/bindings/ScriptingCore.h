@@ -21,20 +21,18 @@
 
 void js_log(const char *format, ...);
 
-using namespace cocos2d;
-
 typedef void (*sc_register_sth)(JSContext* cx, JSObject* global);
 
 void registerDefaultClasses(JSContext* cx, JSObject* global);
 
 
-class SimpleRunLoop : public Object
+class SimpleRunLoop : public cocos2d::Object
 {
 public:
 	void update(float d);
 };
 
-class ScriptingCore : public ScriptEngineProtocol
+class ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
 	JSRuntime *_rt;
 	JSContext *_cx;
@@ -54,13 +52,13 @@ public:
 		return pInstance;
 	};
 
-    virtual ccScriptType getScriptType() { return kScriptTypeJavascript; };
+    virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
 
     /**
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(Object* pObj);
+    virtual void removeScriptObjectByObject(cocos2d::Object* pObj);
 
     /**
      @brief Execute script code contained in the given string.
@@ -87,11 +85,13 @@ public:
      */
 	virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
-    virtual int sendEvent(ScriptEvent* message) override;
+    virtual int sendEvent(cocos2d::ScriptEvent* message) override;
+    
+    virtual bool parseConfig(ConfigType type, const std::string& str) override;
 
     virtual bool handleAssert(const char *msg) { return false; }
 
-    bool executeFunctionWithObjectData(Node *self, const char *name, JSObject *obj);
+    bool executeFunctionWithObjectData(cocos2d::Node *self, const char *name, JSObject *obj);
     JSBool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
 
     void executeJSFunctionWithThisObj(jsval thisObj, jsval callback, uint32_t argc = 0, jsval* vp = NULL, jsval* retVal = NULL);
@@ -140,12 +140,12 @@ public:
     static void removeAllRoots(JSContext *cx);
 
 
-    int executeCustomTouchEvent(EventTouch::EventCode eventType,
-                                Touch *pTouch, JSObject *obj, jsval &retval);
-    int executeCustomTouchEvent(EventTouch::EventCode eventType,
-                                Touch *pTouch, JSObject *obj);
-    int executeCustomTouchesEvent(EventTouch::EventCode eventType,
-                                  const std::vector<Touch*>& touches, JSObject *obj);
+    int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
+                                cocos2d::Touch *pTouch, JSObject *obj, jsval &retval);
+    int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
+                                cocos2d::Touch *pTouch, JSObject *obj);
+    int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
+                                  const std::vector<cocos2d::Touch*>& touches, JSObject *obj);
 	/**
 	 * @return the global context
 	 */

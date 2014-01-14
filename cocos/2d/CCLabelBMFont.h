@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -234,7 +235,7 @@ public:
 
     virtual const std::string& getString() const override;
     virtual void setCString(const char *label);
-    virtual void setAnchorPoint(const Point& var);
+    virtual void setAnchorPoint(const Point& var) override;
     virtual void updateLabel();
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);

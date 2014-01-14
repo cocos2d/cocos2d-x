@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -102,7 +103,7 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransformDirty(false)
+, _useAdditionalTransform(false)
 , _transformDirty(true)
 , _inverseDirty(true)
 // children (lazy allocs)
@@ -854,11 +855,8 @@ void Node::transform()
 
     kmMat4 transfrom4x4 = this->getNodeToParentTransform();
 
-    // Update Z vertex manually
-    transfrom4x4.mat[14] = _vertexZ;
-
-
     kmGLMultMatrix( &transfrom4x4 );
+
     // saves the MV matrix
     kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewTransform);
 }
@@ -867,13 +865,6 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
-    for( const auto &child: _children)
-        child->onEnter();
-
-    this->resume();
-    
-    _running = true;
-
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
@@ -881,14 +872,18 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    for( const auto &child: _children)
+        child->onEnter();
+
+    this->resume();
+    
+    _running = true;
 }
 
 void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
-
-    for( const auto &child: _children)
-        child->onEnterTransitionDidFinish();
 
     if (_scriptType != kScriptTypeNone)
     {
@@ -897,6 +892,9 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+    
+    for( const auto &child: _children)
+        child->onEnterTransitionDidFinish();
 }
 
 void Node::onExitTransitionDidStart()
@@ -918,6 +916,10 @@ void Node::onExit()
     this->pause();
 
     _running = false;
+
+    for( const auto &child: _children)
+        child->onExit();
+    
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
@@ -925,9 +927,6 @@ void Node::onExit()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
-
-    for( const auto &child: _children)
-        child->onExit();
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1187,15 +1186,17 @@ const kmMat4& Node::getNodeToParentTransform() const
             }
         }
 
-        if (_additionalTransformDirty)
+        // vertex Z
+        _transform.mat[14] = _vertexZ;
+
+        if (_useAdditionalTransform)
         {
             kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
-            _additionalTransformDirty = false;
         }
-        
+
         _transformDirty = false;
     }
-    
+
     return _transform;
 }
 
@@ -1209,14 +1210,14 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     CGAffineToGL(additionalTransform, _additionalTransform.mat);
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 
@@ -1255,7 +1256,7 @@ kmMat4 Node::getNodeToWorldTransform() const
     kmMat4 t = this->getNodeToParentTransform();
 
     for (Node *p = _parent; p != nullptr; p = p->getParent())
-        kmMat4Multiply(&t, &t, &p->getNodeToParentTransform());
+        kmMat4Multiply(&t, &p->getNodeToParentTransform(), &t);
 
     return t;
 }

@@ -1,3 +1,5 @@
+require "CocoStudio"
+
 cc = cc or {}
 
 cc.DIRECTOR_PROJECTION_2D = 0
@@ -141,7 +143,7 @@ function cc.pUnrotate(pt1, pt2)
 end
 --Calculates the square length of pt
 function cc.pLengthSQ(pt)
-    return cc.pDot(pt)
+    return cc.pDot(pt,pt)
 end
 --Calculates the square distance between pt1 and pt2
 function cc.pDistanceSQ(pt1,pt2)
@@ -359,4 +361,21 @@ end
 --AnimationFrameData
 function cc.AnimationFrameData( _texCoords, _delay, _size)
     return { texCoords = _texCoords, delay = _delay, size = _size }
+end
+
+--PhysicsMaterial
+function cc.PhysicsMaterial(_density, _restitution, _friction)
+	return { density = _density, restitution = _restitution, friction = _friction }
+end
+
+local ConfigType = 
+{
+    NONE = 0,
+    COCOSTUDIO = 1,
+}
+
+function __onParseConfig(configType,jasonStr)
+    if configType == ConfigType.COCOSTUDIO then
+        ccs.TriggerMng.getInstance():parse(jasonStr)
+    end
 end

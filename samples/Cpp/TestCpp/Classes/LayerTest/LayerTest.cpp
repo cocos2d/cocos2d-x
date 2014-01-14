@@ -25,6 +25,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(LayerExtendedBlendOpacityTest),
     CL(LayerBug3162A),
     CL(LayerBug3162B),
+    CL(LayerColorOccludeBug),
 };
 
 static int sceneIdx=-1;
@@ -953,4 +954,28 @@ std::string LayerBug3162B::title() const
 std::string LayerBug3162B::subtitle() const
 {
     return "u and m layer color is effected/diseffected with b layer";
+}
+
+std::string LayerColorOccludeBug::title() const
+{
+    return "Layer Color Occlude Bug Test";
+}
+
+std::string LayerColorOccludeBug::subtitle() const
+{
+    return  "Layer Color Should not occlude titles and any sprites";
+}
+
+void LayerColorOccludeBug::onEnter()
+{
+    LayerTest::onEnter();
+    Director::getInstance()->setDepthTest(true);
+    _layer = LayerColor::create(Color4B(0, 80, 95, 255));
+    addChild(_layer);
+}
+
+void LayerColorOccludeBug::onExit()
+{
+    LayerTest::onExit();
+    Director::getInstance()->setDepthTest(false);
 }

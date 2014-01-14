@@ -21,7 +21,7 @@ bool UIButtonTest::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the button events will be displayed
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -30,7 +30,7 @@ bool UIButtonTest::init()
         _uiLayer->addChild(_displayValueLabel);        
         
         // Add the alert
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Button");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);        
@@ -97,7 +97,7 @@ bool UIButtonTest_Scale9::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the button events will be displayed
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -106,7 +106,7 @@ bool UIButtonTest_Scale9::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Button scale9 render");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -172,7 +172,7 @@ bool UIButtonTest_PressedAction::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the button events will be displayed
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -181,7 +181,7 @@ bool UIButtonTest_PressedAction::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Button Pressed Action");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);
@@ -247,7 +247,7 @@ bool UIButtonTest_Title::init()
         Size widgetSize = _widget->getSize();
         
         // Add a label in which the text button events will be displayed
-        _displayValueLabel = gui::Label::create();
+        _displayValueLabel = gui::Text::create();
         _displayValueLabel->setText("No Event");
         _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(32);
@@ -256,7 +256,7 @@ bool UIButtonTest_Title::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        gui::Label* alert = gui::Label::create();
+        gui::Text* alert = gui::Text::create();
         alert->setText("Button with title");
         alert->setFontName("Marker Felt");
         alert->setFontSize(30);

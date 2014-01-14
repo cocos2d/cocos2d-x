@@ -1,3 +1,26 @@
+/****************************************************************************
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 #include "nativeactivity.h"
 
 #include <jni.h>
@@ -17,7 +40,6 @@
 #include "CCDirector.h"
 #include "CCApplication.h"
 #include "CCEventType.h"
-#include "CCNotificationCenter.h"
 #include "CCFileUtilsAndroid.h"
 #include "jni/JniHelper.h"
 
@@ -28,6 +50,7 @@
 #include "CCEventDispatcher.h"
 #include "CCEventAcceleration.h"
 #include "CCEventKeyboard.h"
+#include "CCEventCustom.h"
 
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
@@ -140,7 +163,8 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
         cocos2d::ShaderCache::getInstance()->reloadDefaultShaders();
         cocos2d::DrawPrimitives::init();
         cocos2d::VolatileTextureMgr::reloadAllTextures();
-        cocos2d::NotificationCenter::getInstance()->postNotification(EVNET_COME_TO_FOREGROUND, NULL);
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
         cocos2d::Director::getInstance()->setGLDefaultValues(); 
     }
 }
@@ -557,12 +581,14 @@ static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
 
             break;
         case APP_CMD_LOST_FOCUS:
-            cocos2d::Application::getInstance()->applicationDidEnterBackground();
-            cocos2d::NotificationCenter::getInstance()->postNotification(EVENT_COME_TO_BACKGROUND, NULL);
-
-            // Also stop animating.
-            engine->animating = 0;
-            engine_draw_frame(engine);
+            {
+                cocos2d::Application::getInstance()->applicationDidEnterBackground();
+                cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+                // Also stop animating.
+                engine->animating = 0;
+                engine_draw_frame(engine);
+            }
             break;
     }
 }

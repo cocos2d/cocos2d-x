@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -116,7 +117,8 @@ public:
 
     virtual bool handleAssert(const char *msg);
     
-    virtual int sendEvent(ScriptEvent* message);
+    virtual bool parseConfig(ConfigType type, const std::string& str) override;
+    virtual int sendEvent(ScriptEvent* message) override;
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:

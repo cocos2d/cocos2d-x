@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -79,18 +102,22 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
         if (data.isBinary) {
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != nHandler) {
-                SendBinaryMessageToLua(nHandler, (const unsigned char*)data.bytes, data.len);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
+            if (0 != handler) {
+                SendBinaryMessageToLua(handler, (const unsigned char*)data.bytes, data.len);
             }
         }
         else{
                 
-            int nHandler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != nHandler) {
-                    CommonScriptData commonData(nHandler,data.bytes);
-                    ScriptEvent event(kCommonEvent,(void*)&commonData);
-                    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
+            if (0 != handler)
+            {
+                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                if (nullptr != stack)
+                {
+                    stack->pushString(data.bytes,data.len);
+                    stack->executeFunctionByHandler(handler,  1);
+                }
             }
         }
     }

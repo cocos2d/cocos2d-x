@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2013 Chris Hannon
+ Copyright (c) 2013      Chris Hannon
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,7 +32,7 @@
 #include "HttpClient.h"
 #include <algorithm>
 
-using namespace cocos2d;
+NS_CC_BEGIN
 
 namespace network {
 
@@ -688,3 +688,5 @@ void SocketIO::removeSocket(const std::string& uri)
 }
 
 }
+
+NS_CC_END

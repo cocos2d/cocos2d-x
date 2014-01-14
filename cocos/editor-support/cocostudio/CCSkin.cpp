@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -219,9 +219,8 @@ void Skin::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     //TODO implement z order
-    QuadCommand* renderCommand = QuadCommand::getCommandPool().generateCommand();
-    renderCommand->init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
-    Director::getInstance()->getRenderer()->addCommand(renderCommand);
+    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
 void Skin::setBone(Bone *bone)

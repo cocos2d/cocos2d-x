@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -240,10 +241,10 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
                 continue;
             }
             int index = static_cast<int>(i + lineLength - 1 + lineNumber);
+            if(currentChar == 0)
+                index -= 1;
             if (index < 0) continue;
             
-            if(currentChar == 0)
-                continue;
             LetterInfo* info = &leterInfo->at( index );
             if(info->def.validDefinition == false)
                 continue;

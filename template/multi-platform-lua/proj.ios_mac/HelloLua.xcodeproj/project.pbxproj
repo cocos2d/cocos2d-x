@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A8D331187A504A001CC002 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32E187A5049001CC002 /* CocoStudio.lua */; };
+		01A8D332187A504A001CC002 /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32E187A5049001CC002 /* CocoStudio.lua */; };
+		01A8D333187A504A001CC002 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32F187A504A001CC002 /* extern.lua */; };
+		01A8D334187A504A001CC002 /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D32F187A504A001CC002 /* extern.lua */; };
+		01A8D335187A504A001CC002 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D330187A504A001CC002 /* GuiConstants.lua */; };
+		01A8D336187A504A001CC002 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 01A8D330187A504A001CC002 /* GuiConstants.lua */; };
 		15A8A4441834C43700142BE0 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4291834BDA200142BE0 /* libchipmunk iOS.a */; };
 		15A8A4451834C43700142BE0 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4251834BDA200142BE0 /* libcocos2dx iOS.a */; };
 		15A8A4461834C43700142BE0 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4271834BDA200142BE0 /* libcocos2dx-extensions iOS.a */; };
@@ -219,24 +225,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		15A8A4031834BDA200142BE0 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
-		15A8A4551834C6AD00142BE0 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AudioEngine.lua; path = ../../../cocos/scripting/lua/script/AudioEngine.lua; sourceTree = "<group>"; };
-		15A8A4561834C6AD00142BE0 /* CCBReaderLoad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CCBReaderLoad.lua; path = ../../../cocos/scripting/lua/script/CCBReaderLoad.lua; sourceTree = "<group>"; };
-		15A8A4571834C6AD00142BE0 /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../../../cocos/scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
-		15A8A4581834C6AD00142BE0 /* Cocos2dConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2dConstants.lua; path = ../../../cocos/scripting/lua/script/Cocos2dConstants.lua; sourceTree = "<group>"; };
-		15A8A4591834C6AD00142BE0 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Deprecated.lua; path = ../../../cocos/scripting/lua/script/Deprecated.lua; sourceTree = "<group>"; };
-		15A8A45A1834C6AD00142BE0 /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedClass.lua; path = ../../../cocos/scripting/lua/script/DeprecatedClass.lua; sourceTree = "<group>"; };
-		15A8A45B1834C6AD00142BE0 /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedEnum.lua; path = ../../../cocos/scripting/lua/script/DeprecatedEnum.lua; sourceTree = "<group>"; };
-		15A8A45C1834C6AD00142BE0 /* DeprecatedOpenglEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedOpenglEnum.lua; path = ../../../cocos/scripting/lua/script/DeprecatedOpenglEnum.lua; sourceTree = "<group>"; };
-		15A8A45D1834C6AD00142BE0 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DrawPrimitives.lua; path = ../../../cocos/scripting/lua/script/DrawPrimitives.lua; sourceTree = "<group>"; };
-		15A8A45E1834C6AD00142BE0 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../../../cocos/scripting/lua/script/json.lua; sourceTree = "<group>"; };
-		15A8A45F1834C6AD00142BE0 /* luaj.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaj.lua; path = ../../../cocos/scripting/lua/script/luaj.lua; sourceTree = "<group>"; };
-		15A8A4601834C6AD00142BE0 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = ../../../cocos/scripting/lua/script/luaoc.lua; sourceTree = "<group>"; };
-		15A8A4611834C6AD00142BE0 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = ../../../cocos/scripting/lua/script/Opengl.lua; sourceTree = "<group>"; };
-		15A8A4621834C6AD00142BE0 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../../../cocos/scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
-		15A8A4631834C6AD00142BE0 /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = ../../../cocos/scripting/lua/script/StudioConstants.lua; sourceTree = "<group>"; };
+		01A8D32E187A5049001CC002 /* CocoStudio.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocoStudio.lua; path = ../cocos2d/cocos/scripting/lua/script/CocoStudio.lua; sourceTree = "<group>"; };
+		01A8D32F187A504A001CC002 /* extern.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = extern.lua; path = ../cocos2d/cocos/scripting/lua/script/extern.lua; sourceTree = "<group>"; };
+		01A8D330187A504A001CC002 /* GuiConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GuiConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/GuiConstants.lua; sourceTree = "<group>"; };
+		15A8A4031834BDA200142BE0 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		15A8A4551834C6AD00142BE0 /* AudioEngine.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AudioEngine.lua; path = ../cocos2d/cocos/scripting/lua/script/AudioEngine.lua; sourceTree = "<group>"; };
+		15A8A4561834C6AD00142BE0 /* CCBReaderLoad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CCBReaderLoad.lua; path = ../cocos2d/cocos/scripting/lua/script/CCBReaderLoad.lua; sourceTree = "<group>"; };
+		15A8A4571834C6AD00142BE0 /* Cocos2d.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2d.lua; path = ../cocos2d/cocos/scripting/lua/script/Cocos2d.lua; sourceTree = "<group>"; };
+		15A8A4581834C6AD00142BE0 /* Cocos2dConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Cocos2dConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/Cocos2dConstants.lua; sourceTree = "<group>"; };
+		15A8A4591834C6AD00142BE0 /* Deprecated.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Deprecated.lua; path = ../cocos2d/cocos/scripting/lua/script/Deprecated.lua; sourceTree = "<group>"; };
+		15A8A45A1834C6AD00142BE0 /* DeprecatedClass.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedClass.lua; path = ../cocos2d/cocos/scripting/lua/script/DeprecatedClass.lua; sourceTree = "<group>"; };
+		15A8A45B1834C6AD00142BE0 /* DeprecatedEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedEnum.lua; path = ../cocos2d/cocos/scripting/lua/script/DeprecatedEnum.lua; sourceTree = "<group>"; };
+		15A8A45C1834C6AD00142BE0 /* DeprecatedOpenglEnum.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DeprecatedOpenglEnum.lua; path = ../cocos2d/cocos/scripting/lua/script/DeprecatedOpenglEnum.lua; sourceTree = "<group>"; };
+		15A8A45D1834C6AD00142BE0 /* DrawPrimitives.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DrawPrimitives.lua; path = ../cocos2d/cocos/scripting/lua/script/DrawPrimitives.lua; sourceTree = "<group>"; };
+		15A8A45E1834C6AD00142BE0 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = json.lua; path = ../cocos2d/cocos/scripting/lua/script/json.lua; sourceTree = "<group>"; };
+		15A8A45F1834C6AD00142BE0 /* luaj.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaj.lua; path = ../cocos2d/cocos/scripting/lua/script/luaj.lua; sourceTree = "<group>"; };
+		15A8A4601834C6AD00142BE0 /* luaoc.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = luaoc.lua; path = ../cocos2d/cocos/scripting/lua/script/luaoc.lua; sourceTree = "<group>"; };
+		15A8A4611834C6AD00142BE0 /* Opengl.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Opengl.lua; path = ../cocos2d/cocos/scripting/lua/script/Opengl.lua; sourceTree = "<group>"; };
+		15A8A4621834C6AD00142BE0 /* OpenglConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OpenglConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/OpenglConstants.lua; sourceTree = "<group>"; };
+		15A8A4631834C6AD00142BE0 /* StudioConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = StudioConstants.lua; path = ../cocos2d/cocos/scripting/lua/script/StudioConstants.lua; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos2d/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1AC3622316D47C5C000847F2 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = ../Resources/background.mp3; sourceTree = "<group>"; };
 		1AC3622416D47C5C000847F2 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = ../Resources/background.ogg; sourceTree = "<group>"; };
 		1AC3622516D47C5C000847F2 /* crop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crop.png; path = ../Resources/crop.png; sourceTree = "<group>"; };
@@ -370,6 +379,9 @@
 		1A0227A417A3AA1A00B867AD /* Lua Common */ = {
 			isa = PBXGroup;
 			children = (
+				01A8D32E187A5049001CC002 /* CocoStudio.lua */,
+				01A8D32F187A504A001CC002 /* extern.lua */,
+				01A8D330187A504A001CC002 /* GuiConstants.lua */,
 				15A8A4551834C6AD00142BE0 /* AudioEngine.lua */,
 				15A8A4561834C6AD00142BE0 /* CCBReaderLoad.lua */,
 				15A8A4571834C6AD00142BE0 /* Cocos2d.lua */,
@@ -722,6 +734,9 @@
 				5023815717EBBCE400990C9B /* menu2.png in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
 				15A8A4651834C6AD00142BE0 /* AudioEngine.lua in Resources */,
+				01A8D332187A504A001CC002 /* CocoStudio.lua in Resources */,
+				01A8D334187A504A001CC002 /* extern.lua in Resources */,
+				01A8D336187A504A001CC002 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +787,9 @@
 				5023811A17EBBCAC00990C9B /* Default.png in Resources */,
 				5091733817ECE17A00D62437 /* Icon-50.png in Resources */,
 				5023812117EBBCAC00990C9B /* Icon-72.png in Resources */,
+				01A8D331187A504A001CC002 /* CocoStudio.lua in Resources */,
+				01A8D333187A504A001CC002 /* extern.lua in Resources */,
+				01A8D335187A504A001CC002 /* GuiConstants.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -824,7 +842,7 @@
 					10000,
 				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath/include $(SRCROOT)/../../../cocos/2d/platform/mac $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/gui $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/glfw3/include/mac $(SRCROOT)/../../../cocos/scripting/lua/bindings $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d/cocos $(SRCROOT)/../cocos2d/cocos/base $(SRCROOT)/../cocos2d/cocos/2d $(SRCROOT)/../cocos2d/cocos/physics $(SRCROOT)/../cocos2d/cocos/math/kazmath/include $(SRCROOT)/../cocos2d/cocos/2d/platform/mac $(SRCROOT)/../cocos2d/cocos/audio/include $(SRCROOT)/../cocos2d/cocos/editor-support $(SRCROOT)/../cocos2d/cocos/gui $(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk $(SRCROOT)/../cocos2d/external $(SRCROOT)/../cocos2d/external/glfw3/include/mac $(SRCROOT)/../cocos2d/cocos/scripting/lua/bindings $(SRCROOT)/../cocos2d/external/lua/luajit/include $(SRCROOT)/../cocos2d/external/lua/tolua";
 			};
 			name = Debug;
 		};
@@ -850,7 +868,7 @@
 					10000,
 				);
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath/include $(SRCROOT)/../../../cocos/2d/platform/mac $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/gui $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../external/glfw3/include/mac $(SRCROOT)/../../../cocos/scripting/lua/bindings $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d/cocos $(SRCROOT)/../cocos2d/cocos/base $(SRCROOT)/../cocos2d/cocos/2d $(SRCROOT)/../cocos2d/cocos/physics $(SRCROOT)/../cocos2d/cocos/math/kazmath/include $(SRCROOT)/../cocos2d/cocos/2d/platform/mac $(SRCROOT)/../cocos2d/cocos/audio/include $(SRCROOT)/../cocos2d/cocos/editor-support $(SRCROOT)/../cocos2d/cocos/gui $(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk $(SRCROOT)/../cocos2d/external $(SRCROOT)/../cocos2d/external/glfw3/include/mac $(SRCROOT)/../cocos2d/cocos/scripting/lua/bindings $(SRCROOT)/../cocos2d/external/lua/luajit/include $(SRCROOT)/../cocos2d/external/lua/tolua";
 			};
 			name = Release;
 		};
@@ -942,7 +960,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath/include $(SRCROOT)/../../../cocos/2d/platform/ios $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/gui $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../cocos/scripting/lua/bindings $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d/cocos $(SRCROOT)/../cocos2d/cocos/base $(SRCROOT)/../cocos2d/cocos/2d $(SRCROOT)/../cocos2d/cocos/physics $(SRCROOT)/../cocos2d/cocos/math/kazmath/include $(SRCROOT)/../cocos2d/cocos/2d/platform/ios $(SRCROOT)/../cocos2d/cocos/audio/include $(SRCROOT)/../cocos2d/cocos/editor-support $(SRCROOT)/../cocos2d/cocos/gui $(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk $(SRCROOT)/../cocos2d/external $(SRCROOT)/../cocos2d/cocos/scripting/lua/bindings $(SRCROOT)/../cocos2d/external/lua/luajit/include $(SRCROOT)/../cocos2d/external/lua/tolua";
 			};
 			name = Debug;
 		};
@@ -964,7 +982,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../cocos $(SRCROOT)/../../../cocos/base $(SRCROOT)/../../../cocos/2d $(SRCROOT)/../../../cocos/physics $(SRCROOT)/../../../cocos/math/kazmath/include $(SRCROOT)/../../../cocos/2d/platform/ios $(SRCROOT)/../../../cocos/audio/include $(SRCROOT)/../../../cocos/editor-support $(SRCROOT)/../../../cocos/gui $(SRCROOT)/../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../external $(SRCROOT)/../../../cocos/scripting/lua/bindings $(SRCROOT)/../../../external/lua/luajit/include $(SRCROOT)/../../../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos2d/cocos $(SRCROOT)/../cocos2d/cocos/base $(SRCROOT)/../cocos2d/cocos/2d $(SRCROOT)/../cocos2d/cocos/physics $(SRCROOT)/../cocos2d/cocos/math/kazmath/include $(SRCROOT)/../cocos2d/cocos/2d/platform/ios $(SRCROOT)/../cocos2d/cocos/audio/include $(SRCROOT)/../cocos2d/cocos/editor-support $(SRCROOT)/../cocos2d/cocos/gui $(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk $(SRCROOT)/../cocos2d/external $(SRCROOT)/../cocos2d/cocos/scripting/lua/bindings $(SRCROOT)/../cocos2d/external/lua/luajit/include $(SRCROOT)/../cocos2d/external/lua/tolua";
 			};
 			name = Release;
 		};

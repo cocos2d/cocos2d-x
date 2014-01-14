@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,7 +25,6 @@
 #include "CCCustomCommand.h"
 
 NS_CC_BEGIN
-RenderCommandPool<CustomCommand> CustomCommand::_commandPool;
 
 CustomCommand::CustomCommand()
 :RenderCommand()
@@ -64,11 +63,6 @@ void CustomCommand::execute()
     {
         func();
     }
-}
-
-void CustomCommand::releaseToCommandPool()
-{
-    getCommandPool().pushBackCommand(this);
 }
 
 NS_CC_END

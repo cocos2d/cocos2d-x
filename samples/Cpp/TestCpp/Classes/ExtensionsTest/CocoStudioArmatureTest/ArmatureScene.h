@@ -297,6 +297,8 @@ public:
 	Rect rect;
 protected:
     void onDraw();
+protected:
+    CustomCommand _customCommand;
 };
 
 class TestAnchorPoint : public ArmatureTestLayer
@@ -334,15 +336,16 @@ public:
 class TestArmatureNesting2 : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
-    virtual void ChangeMountCallback(Object* pSender);
+    void changeMountCallback(Object* pSender);
     virtual cocostudio::Armature *createMount(const char *name, Point position);
 
+private:
     Hero *hero;
 
     cocostudio::Armature *horse;
