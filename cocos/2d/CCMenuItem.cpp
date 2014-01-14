@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2011 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -347,9 +348,8 @@ bool MenuItemAtlasFont::initWithString(const std::string& value, const std::stri
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
     CCASSERT( value.size() != 0, "value length must be greater than 0");
-    LabelAtlas *label = new LabelAtlas();
+    LabelAtlas *label = LabelAtlas::create();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
-    label->autorelease();
     if (MenuItemLabel::initWithLabel(label, callback))
     {
         // do something ?

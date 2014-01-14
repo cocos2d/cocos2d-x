@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -373,9 +374,12 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action || GLFW_REPEAT == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)

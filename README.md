@@ -24,14 +24,47 @@ How to start a new game
 
 1. Download the code from [cocos2d download site][4]
 2. Enter `tools/project-creator`
-
-2. Run the `create-projects.py` script
+3. Run the `create-projects.py` script
 
 Example:
 
     $ cd cocos2d-x/tools/project-creator
-    $ ./create-multi-platform-projects.py -p mygame -k com.your_company.mygame -l cpp
-    $ cd ../../projects/mygame
+    $ ./project-creator.py -n mygame -k com.your_company.mygame -l cpp -p /home/mygame
+    $ cd /home/mygame
+
+### Build new project for android ###
+
+    $ cd proj.android
+    $ ./build_native.py
+
+### Build new project for ios & osx ###
+
+* Enter *proj.ios_mac* folder, open *mygame.xcodeproj*
+* Select ios or osx targets in scheme toolbar
+
+### Build new project for linux ###
+
+if you never run cocos2d-x on linux, you need to install all dependences by the
+script in **cocos2d/build/install-deps-linux.sh**
+
+    $ cd cocos2d/build
+    $ ./install-deps-linux.sh
+    $ ../..
+
+Then
+
+    $ mkdir build
+    $ cd build
+    $ cmake ..
+    $ make -j4
+    
+Run
+
+    $ bin/mygame
+
+### Build new project for win32 ###
+
+* Enter *proj.win32*, open *mygame.sln* by vs2012
 
 
 Main features
@@ -57,7 +90,7 @@ Main features
    * Motion Streak
    * Render To Texture
    * Touch/Accelerometer on mobile devices
-   * Touch/Mouse/Keyboard on desktop 
+   * Touch/Mouse/Keyboard on desktop
    * Sound Engine support (CocosDenshion library) based on OpenAL
    * Integrated Slow motion/Fast forward
    * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
@@ -103,8 +136,16 @@ $ cmake ..
 $ make
 ```
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, 
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run onece.
+Run Samples
+
+```
+$ bin/hellocpp/hellocpp
+or
+$ bin/testlua/testlua
+```
+
+      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
+      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 

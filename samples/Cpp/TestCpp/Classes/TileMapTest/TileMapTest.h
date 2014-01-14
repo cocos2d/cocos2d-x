@@ -3,6 +3,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "renderer/CCCustomCommand.h"
 
 class TileDemo : public BaseTest
 {
@@ -136,6 +137,7 @@ public:
     virtual void draw();
     virtual std::string subtitle() const override;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 
@@ -148,6 +150,7 @@ public:
     virtual void draw();
     virtual std::string subtitle() const override;
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
 };
 
@@ -253,10 +256,17 @@ public:
     void flipIt(float dt);
 };
 
-class TMXOrthoFromXMLTest : public TileDemo 
+class TMXOrthoFromXMLTest : public TileDemo
 {
 public:
     TMXOrthoFromXMLTest();
+    virtual std::string title() const override;
+};
+
+class TMXOrthoXMLFormatTest : public TileDemo
+{
+public:
+    TMXOrthoXMLFormatTest();
     virtual std::string title() const override;
 };
 
@@ -285,6 +295,7 @@ public:
     virtual void draw();
 
 protected:
+    CustomCommand _renderCmd;
     void onDraw();
     
 };

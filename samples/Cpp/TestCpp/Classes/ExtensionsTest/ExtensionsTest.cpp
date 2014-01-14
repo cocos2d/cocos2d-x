@@ -81,7 +81,10 @@ static struct {
 	},
     { "CocoStudioComponentsTest", [](Object *sender) { runComponentsTestLayerTest(); }
     },
-	{ "CocoStudioSceneTest", [](Object *sender) { runSceneEditorTestLayer(); }
+	{ "CocoStudioSceneTest", [](Object *sender) { SceneEditorTestScene *scene = new SceneEditorTestScene();
+	                                       scene->runThisTest();
+	                                       scene->release();
+ }
 	},
     { "CocoStudioGUITest", [](Object *sender)
         {

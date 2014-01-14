@@ -75,6 +75,7 @@
     <ClInclude Include="..\CCColliderDetector.h" />
     <ClInclude Include="..\CCComAttribute.h" />
     <ClInclude Include="..\CCComAudio.h" />
+    <ClInclude Include="..\CCComBase.h" />
     <ClInclude Include="..\CCComController.h" />
     <ClInclude Include="..\CCComRender.h" />
     <ClInclude Include="..\CCDataReaderHelper.h" />
@@ -151,6 +152,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

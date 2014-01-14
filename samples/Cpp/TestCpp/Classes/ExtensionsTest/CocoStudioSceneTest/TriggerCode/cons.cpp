@@ -8,29 +8,29 @@ using namespace cocostudio;
 IMPLEMENT_CLASS_INFO(TimeElapsed)
 
 TimeElapsed::TimeElapsed(void)
-:_fTotalTime(0.0f)
-,_fTmpTime(0.0f)
-,_pScheduler(nullptr)
-,_bSuc(false)
+:_totalTime(0.0f)
+,_tmpTime(0.0f)
+,_scheduler(nullptr)
+,_suc(false)
 {
-	_pScheduler = Director::getInstance()->getScheduler();
-	_pScheduler->retain();
+	_scheduler = Director::getInstance()->getScheduler();
+	_scheduler->retain();
 }
 
 TimeElapsed::~TimeElapsed(void)
 {
-	CC_SAFE_RELEASE(_pScheduler);
+	CC_SAFE_RELEASE(_scheduler);
 }
 
 bool TimeElapsed::init()
 {
-	_pScheduler->scheduleSelector(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
+	_scheduler->scheduleSelector(schedule_selector(TimeElapsed::update), this, 0.0f , kRepeatForever, 0.0f, false);
     return true;
 }
 
 bool TimeElapsed::detect()
 {
-    return _bSuc;
+    return _suc;
 }
 
 void TimeElapsed::serialize(const rapidjson::Value &val)
@@ -42,31 +42,31 @@ void TimeElapsed::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "TotalTime")
 		{
-			_fTotalTime = DICTOOL->getFloatValue_json(subDict, "value");
+			_totalTime = DICTOOL->getFloatValue_json(subDict, "value");
 		}
 	}
 }
 
 void TimeElapsed::removeAll()
 {
-	_pScheduler->unscheduleUpdateForTarget(this);
+	_scheduler->unscheduleUpdateForTarget(this);
 }
 
 void TimeElapsed::update(float dt)
 {
-	_fTmpTime += dt;
-	if (_fTmpTime > _fTotalTime)
+	_tmpTime += dt;
+	if (_tmpTime > _totalTime)
 	{
-		_fTmpTime = 0.0f;
-		_bSuc = true;
+		_tmpTime = 0.0f;
+		_suc = true;
 	}
 }
 
 IMPLEMENT_CLASS_INFO(ArmatureActionState)
 ArmatureActionState::ArmatureActionState(void)
-: _nTag(-1)
-, _nState(-1)
-, _bSuc(false)
+: _tag(-1)
+, _state(-1)
+, _suc(false)
 {
 }
 
@@ -78,7 +78,7 @@ bool ArmatureActionState::init()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
 		ComRender *pRender = (ComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
@@ -92,7 +92,7 @@ bool ArmatureActionState::init()
 
 bool ArmatureActionState::detect()
 {
-    return _bSuc;
+    return _suc;
 }
 
 void ArmatureActionState::serialize(const rapidjson::Value &val)
@@ -104,7 +104,7 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "componentName")
@@ -119,7 +119,7 @@ void ArmatureActionState::serialize(const rapidjson::Value &val)
 		}
 		else if (key == "ActionType")
 		{
-			_nState = DICTOOL->getIntValue_json(subDict, "value");
+			_state = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 	}
@@ -129,7 +129,7 @@ void ArmatureActionState::removeAll()
 {
 	do 
 	{
-		Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+		Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 		CC_BREAK_IF(pNode == nullptr);
 		ComRender *pRender = (ComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == nullptr);
@@ -142,15 +142,15 @@ void ArmatureActionState::removeAll()
 void ArmatureActionState::animationEvent(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID)
 {
 	 std::string id = movementID;
-	if (movementType == _nState && id.compare(_aniname) == 0)
+	if (movementType == _state && id.compare(_aniname) == 0)
 	{
-		_bSuc = true;
+		_suc = true;
 	}
 }
 
 IMPLEMENT_CLASS_INFO(NodeInRect)
 NodeInRect::NodeInRect(void)
-:_nTag(-1)
+:_tag(-1)
 {
 }
 
@@ -166,7 +166,7 @@ bool NodeInRect::init()
 
 bool NodeInRect::detect()
 {
-	Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+	Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
 	if (pNode != nullptr && abs(pNode->getPositionX() - _origin.x) <= _size.width && abs(pNode->getPositionY() - _origin.y) <= _size.height)
 	{
 		return true;
@@ -183,7 +183,7 @@ void NodeInRect::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "originX")
@@ -217,8 +217,8 @@ void NodeInRect::removeAll()
 
 IMPLEMENT_CLASS_INFO(NodeVisible)
 NodeVisible::NodeVisible(void)
-: _nTag(-1)
-, _bVisible(false)
+: _tag(-1)
+, _visible(false)
 {
 }
 
@@ -233,8 +233,8 @@ bool NodeVisible::init()
 
 bool NodeVisible::detect()
 {
-	Node *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
-	if (pNode != nullptr && pNode->isVisible() == _bVisible)
+	Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
+	if (pNode != nullptr && pNode->isVisible() == _visible)
 	{
 		return true;
 	}
@@ -250,12 +250,12 @@ void NodeVisible::serialize(const rapidjson::Value &val)
 		std::string key = DICTOOL->getStringValue_json(subDict, "key");
 		if (key == "Tag")
 		{
-			_nTag = DICTOOL->getIntValue_json(subDict, "value");
+			_tag = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 		else if (key == "Visible")
 		{
-			_bVisible = DICTOOL->getIntValue_json(subDict, "value");
+			_visible = DICTOOL->getIntValue_json(subDict, "value");
 			continue;
 		}
 	}

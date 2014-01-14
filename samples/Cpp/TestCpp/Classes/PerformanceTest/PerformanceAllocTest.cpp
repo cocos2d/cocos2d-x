@@ -80,7 +80,6 @@ void AllocBasicLayer::showCurrentTest()
         scene->initWithQuantityOfNodes(nodes);
 
         Director::getInstance()->replaceScene(scene);
-        scene->release();
     }
 }
 
@@ -478,5 +477,4 @@ void runAllocPerformanceTest()
     scene->initWithQuantityOfNodes(kNodesIncrease);
     
     Director::getInstance()->replaceScene(scene);
-    scene->release();
 }

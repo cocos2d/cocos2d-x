@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #ifndef __TRIGGERMNG_H__
 #define __TRIGGERMNG_H__
 
@@ -38,7 +37,7 @@ public:
 	ArmatureMovementDispatcher(void);
 	~ArmatureMovementDispatcher(void);
 public:
-	void addAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
+	void addAnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Object*pTarget, SEL_MovementEventCallFunc mecf);
 	void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     
