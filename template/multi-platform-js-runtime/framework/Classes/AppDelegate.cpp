@@ -23,8 +23,23 @@ using namespace CocosDenshion;
 #include "RuntimeConfig.h"
 #endif // ISRUNTIME
 
+void resetRuntime()
+{
+	FileUtils::sharedFileUtils()->purgeCachedEntries();
+	Director::getInstance()->purgeCachedData();
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	ScriptingCore::getInstance()->reset();
+	ScriptingCore::getInstance()->runScript("main.js");
+}
 
-
+/*
+void startRuntime()
+{
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	ScriptingCore::getInstance()->runScript("main.js");
+}*/
 
 AppDelegate::AppDelegate()
 {
@@ -40,10 +55,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     Director *director = Director::getInstance();
     director->setOpenGLView(EGLView::getInstance());
-    
+
     // turn on display FPS
     director->setDisplayStats(true);
-    
+	auto designSize = Size(480, 320);
+    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::EXACT_FIT);
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
@@ -58,21 +74,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     
-    sc->start();
+#ifdef ISRUNTIME
+	RuntimeConfig::getInstance()->setSearchPath();
+#endif
 	
+	sc->start();
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     sc->enableDebugger();
 #endif
-
+  
+	
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->setSearchPath();
 	RuntimeConfig::getInstance()->waitConnect();
+	return true;
 #endif
 
-    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("main.js");
-       
+    resetRuntime();
     return true;
 }
 

@@ -1,8 +1,11 @@
 #include "RuntimeConfig.h"
 
+
 #include "cocos2d.h"
 #include <vector>
 #include <string>
+using namespace std;
+using namespace cocos2d;
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 #include <unistd.h>
@@ -17,7 +20,7 @@ using namespace std;
 static RuntimeConfig *s_SharedRuntime = nullptr;
 RuntimeConfig::RuntimeConfig()
 {
-	s_SharedRuntime =NULL;
+	_scheduler = CCDirector::sharedDirector()->getScheduler();
 }
 
 RuntimeConfig::~RuntimeConfig()
@@ -43,8 +46,10 @@ void RuntimeConfig::setSearchPath()
 		extern std::string GetCurAppPath(void);
 		string searchPath = GetCurAppPath();
 		searchPath += "/../..";
+		string searchPathRes = GetCurAppPath();
+		searchPathRes += "/HelloJavascriptRes";
 		FileUtils::getInstance()->addSearchPath(searchPath.c_str());
-		FileUtils::getInstance()->addSearchPath("HelloJavascriptRes");
+		FileUtils::getInstance()->addSearchPath(searchPathRes.c_str());
 #endif
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
@@ -59,27 +64,43 @@ void RuntimeConfig::setSearchPath()
 	// CC_PLATFORM_ANDROID
 
 }
-
+void RuntimeConfig::updateConnect(float delta)
+{
+	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
+	{
+		_scheduler->unscheduleSelector(SEL_SCHEDULE(&RuntimeConfig::updateConnect),this);
+		extern void resetRuntime();
+		resetRuntime();	
+	}
+}
 void RuntimeConfig::waitConnect()
 {
 
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 
+	memset(szwaitFile,sizeof(szwaitFile),0);
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
+	extern std::string GetCurAppPath(void);
+	string searchPath = GetCurAppPath();
+	sprintf(szwaitFile,"%s/.wait",searchPath.c_str());
+#endif
+
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID )
 	extern std::string getPackageNameJNI();
 	string searchPath = getPackageNameJNI();
-	char szwaitFile[512]={0};
-	char szwaitEndFile[512] ={0};
-	sprintf(szwaitFile,"/mnt/sdcard/%s/wait",searchPath.c_str());
-	sprintf(szwaitEndFile,"/mnt/sdcard/%s/waitend",searchPath.c_str());
-	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
-		return;
+	sprintf(szwaitFile,"/mnt/sdcard/%s/.wait",searchPath.c_str());
+#endif	
 
-	while (true)
+	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
 	{
-		if (FileUtils::getInstance()->isFileExist(szwaitEndFile))
-			break;
-		Usleep(10);
-	}	
+		extern void resetRuntime();
+		resetRuntime();
+		return;
+	}
+		
+	if (_scheduler)
+		_scheduler->scheduleSelector(SEL_SCHEDULE(&RuntimeConfig::updateConnect), this,0.5f, false);
+
 #endif
 
 }

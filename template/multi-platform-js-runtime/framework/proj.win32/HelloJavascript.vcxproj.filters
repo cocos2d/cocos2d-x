@@ -22,6 +22,9 @@
     <ClCompile Include="..\Classes\RuntimeConfig.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="SimulatorConfig.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -33,10 +36,19 @@
     <ClInclude Include="..\Classes\RuntimeConfig.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SimulatorConfig.h">
+      <Filter>win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico">
+      <Filter>resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>

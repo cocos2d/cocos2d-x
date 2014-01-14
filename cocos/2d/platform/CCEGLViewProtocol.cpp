@@ -116,6 +116,11 @@ const Size& EGLViewProtocol::getDesignResolutionSize() const
     return _designResolutionSize;
 }
 
+const ResolutionPolicy& EGLViewProtocol::getResolutionPolicy() const
+{
+	return _resolutionPolicy;
+}
+
 const Size& EGLViewProtocol::getFrameSize() const
 {
     return _screenSize;

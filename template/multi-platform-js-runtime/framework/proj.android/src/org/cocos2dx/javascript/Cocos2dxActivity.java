@@ -1,4 +1,4 @@
-package org.cocos2dx.hellojavascript;
+package org.cocos2dx.javascript;
 
 import android.app.NativeActivity;
 import android.os.Bundle;
