@@ -34,7 +34,6 @@
 #include "CCPhysicsContact.h"
 #include "CCPhysicsJoint.h"
 #include "CCPhysicsContact.h"
-#include "CCPhysicsEvent.h"
 
 #include "chipmunk/CCPhysicsWorldInfo_chipmunk.h"
 #include "chipmunk/CCPhysicsBodyInfo_chipmunk.h"
