@@ -248,6 +248,14 @@ Widget* Widget::getChildByName(const char *name)
             {
                 return widgetChild;
             }
+            else
+            {
+                widgetChild = widgetChild->getChildByName(name);
+                if (widgetChild)
+                {
+                    return widgetChild;
+                }
+            }
         }
     }
     return nullptr;
