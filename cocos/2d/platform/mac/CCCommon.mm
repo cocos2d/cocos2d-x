@@ -33,36 +33,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-// XXX deprecated
-void CCLog(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-    fflush(stdout);
-}
-
-void log(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-    fflush(stdout);
-}
-
-
 void LuaLog(const char * format)
 {
     puts(format);
