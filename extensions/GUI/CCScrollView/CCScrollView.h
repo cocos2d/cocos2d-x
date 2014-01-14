@@ -231,7 +231,7 @@ public:
     /**
      * CCActionTweenDelegate
      */
-    void updateTweenAction(float value, const char* key);
+    void updateTweenAction(float value, const std::string& key);
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
