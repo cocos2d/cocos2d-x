@@ -63,7 +63,7 @@ public:
  * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class ScrollView : public Layer
+class ScrollView : public Layer, public CCActionTweenDelegate
 {
 public:
     enum class Direction
@@ -228,6 +228,10 @@ public:
     virtual void addChild(Node * child, int zOrder) override;
     virtual void addChild(Node * child) override;
 
+    /**
+     * CCActionTweenDelegate
+     */
+    void updateTweenAction(float value, const char* key);
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
