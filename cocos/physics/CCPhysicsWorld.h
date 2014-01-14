@@ -55,7 +55,7 @@ typedef struct PhysicsRayCastInfo
 {
     PhysicsShape* shape;
     Point start;
-    Point end;
+    Point end;              //< in lua, it's name is "ended"
     Point contact;
     Vect normal;
     float fraction;

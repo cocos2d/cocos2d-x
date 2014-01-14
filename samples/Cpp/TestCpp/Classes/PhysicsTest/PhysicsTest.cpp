@@ -1107,7 +1107,7 @@ void PhysicsDemoOneWayPlatform::onEnter()
 
 bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const PhysicsContact& contact)
 {
-    return contact.getContactData()->normal.y < 0;
+    return contact.getContactData().normal.y < 0;
 }
 
 std::string PhysicsDemoOneWayPlatform::title() const
@@ -1151,7 +1151,6 @@ bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastInfo& info
         Point normal = info.end - info.start;
         normal = normal.getPerp().normalize();
         float dist = info.start.dot(normal);
-        dist = dist;
         
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), normal, dist);
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), -normal, -dist);
