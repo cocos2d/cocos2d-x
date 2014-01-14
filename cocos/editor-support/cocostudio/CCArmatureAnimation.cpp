@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -236,7 +236,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
             if(!bone->isIgnoreMovementBoneData())
             {
                 //! this bone is not include in this movement, so hide it
-                bone->getDisplayManager()->changeDisplayByIndex(-1, false);
+                bone->getDisplayManager()->changeDisplayWithIndex(-1, false);
                 tween->stop();
             }
 
@@ -328,7 +328,7 @@ void ArmatureAnimation::gotoAndPause(int frameIndex)
     pause();
 }
 
-long ArmatureAnimation::getMovementCount() const
+ssize_t ArmatureAnimation::getMovementCount() const
 {
     return _animationData->getMovementCount();
 }

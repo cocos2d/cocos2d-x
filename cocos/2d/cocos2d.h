@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -111,6 +112,7 @@ THE SOFTWARE.
 #include "CCMotionStreak.h"
 #include "CCProgressTimer.h"
 #include "CCRenderTexture.h"
+#include "CCNodeGrid.h"
 
 // particle_nodes
 #include "CCParticleBatchNode.h"

@@ -635,7 +635,7 @@ void TestParticleDisplay::onEnter()
 
     Bone *bone  = Bone::create("p1");
     bone->addDisplay(p1, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -643,7 +643,7 @@ void TestParticleDisplay::onEnter()
 
     bone  = Bone::create("p2");
     bone->addDisplay(p2, 0);
-    bone->changeDisplayByIndex(0, true);
+    bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
     bone->setZOrder(100);
     bone->setScale(1.2f);
@@ -727,7 +727,7 @@ void TestUseMutiplePicture::onTouchesEnded(const std::vector<Touch*>&  touches, 
 {
     ++displayIndex;
     displayIndex = (displayIndex) % 8;
-    armature->getBone("weapon")->changeDisplayByIndex(displayIndex, true);
+    armature->getBone("weapon")->changeDisplayWithIndex(displayIndex, true);
 }
 
 TestColliderDetector::~TestColliderDetector()
@@ -1023,7 +1023,7 @@ void TestColliderDetector::update(float delta)
     // This code is just telling how to get the vertex.
     // For a more accurate collider detection, you need to implemente yourself.
     const Map<std::string, Bone*>& map = armature2->getBoneDic();
-    for(auto element : map)
+    for(const auto& element : map)
     {
         Bone *bone = element.second;
         ColliderDetector *detector = bone->getColliderDetector();
@@ -1033,12 +1033,12 @@ void TestColliderDetector::update(float delta)
 
         const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
 
-        for (auto object : bodyList)
+        for (const auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
-            float minx, miny, maxx, maxy = 0;
+            float minx = 0, miny = 0, maxx = 0, maxy = 0;
             int length = vertexList.size();
             for (int i = 0; i<length; i++)
             {
@@ -1230,7 +1230,7 @@ void Hero::changeMount(Armature *armature)
         //Add hero as a display to this bone
         bone->addDisplay(this, 0);
         //Change this bone's display
-        bone->changeDisplayByIndex(0, true);
+        bone->changeDisplayWithIndex(0, true);
         bone->setIgnoreMovementBoneData(true);
 
         setPosition(Point(0,0));
@@ -1264,7 +1264,7 @@ void TestArmatureNesting2::onEnter()
     touchedMenu = false;
 
     LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
-    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::ChangeMountCallback, this));
+    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
@@ -1321,7 +1321,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
     armature->runAction(Sequence::create(move, nullptr));
 }
 
-void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
+void TestArmatureNesting2::changeMountCallback(Object* pSender)
 {
     hero->stopAllActions();
 

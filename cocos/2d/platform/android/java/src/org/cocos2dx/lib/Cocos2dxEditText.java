@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2012 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +24,7 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -59,9 +61,11 @@ public class Cocos2dxEditText extends EditText {
 		this.setOnEditorActionListener(this.mTextWatcher);
 		
 		ViewGroup.LayoutParams layout =
-	            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+	            new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 	                                       ViewGroup.LayoutParams.WRAP_CONTENT);
-		this.setLayoutParams(layout);
+		
+		Activity activity = (Activity)context;
+		activity.addContentView(this, layout);
 	}
 
 	// ===========================================================
@@ -84,7 +88,7 @@ public class Cocos2dxEditText extends EditText {
 		this.removeTextChangedListener(mTextWatcher);
 		final InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(this.getWindowToken(), 0);
-		Cocos2dxHelper.nativeRequestFocus();
+		//Cocos2dxHelper.nativeRequestFocus();
 	}
 	
 	public void openIMEKeyboard() {
@@ -96,7 +100,7 @@ public class Cocos2dxEditText extends EditText {
 		this.addTextChangedListener(mTextWatcher);
 		
 		final InputMethodManager imm = (InputMethodManager)mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+		imm.showSoftInput(this, InputMethodManager.SHOW_FORCED);
 	}
 
 	@Override
@@ -105,7 +109,7 @@ public class Cocos2dxEditText extends EditText {
 
 		/* Let GlSurfaceView get focus if back key is input. */
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			this.requestFocus();
+			//Cocos2dxHelper.nativeRequestFocus();
 		}
 
 		return true;
@@ -189,7 +193,6 @@ class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListener {
 
 	@Override
 	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
-
 	}
 
 	@Override

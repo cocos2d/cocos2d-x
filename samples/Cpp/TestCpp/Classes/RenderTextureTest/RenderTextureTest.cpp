@@ -101,12 +101,6 @@ RenderTextureSave::RenderTextureSave()
     // note that the render texture is a Node, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
-
-    // create a brush image to draw into the texture with
-    _brush = Sprite::create("Images/fire.png");
-    _brush->retain();
-    _brush->setColor(Color3B::RED);
-    _brush->setOpacity(20);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
@@ -170,7 +164,6 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
 
 RenderTextureSave::~RenderTextureSave()
 {
-    _brush->release();
     _target->release();
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
@@ -190,20 +183,28 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
     if (distance > 1)
     {
         int d = (int)distance;
+        _brushs.clear();
+        for(int i = 0; i < d; ++i)
+        {
+            Sprite * sprite = Sprite::create("Images/fire.png");
+            sprite->setColor(Color3B::RED);
+            sprite->setOpacity(20);
+            _brushs.pushBack(sprite);
+        }
         for (int i = 0; i < d; i++)
         {
             float difx = end.x - start.x;
             float dify = end.y - start.y;
             float delta = (float)i / distance;
-            _brush->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
-            _brush->setRotation(rand() % 360);
+            _brushs.at(i)->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
+            _brushs.at(i)->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            _brush->setScale(r);
+            _brushs.at(i)->setScale(r);
             /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brush->setColor(Color3B(rand() % 127 + 128, 255, 255));
+            _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            _brush->visit();
+            _brushs.at(i)->visit();
         }
     }
 
@@ -442,32 +443,80 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto sprite = Sprite::create("Images/fire.png");
-    sprite->setPosition(Point(s.width * 0.25f, 0));
-    sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _spriteDS = Sprite::create("Images/fire.png");
+    _spriteDS->retain();
+    _spriteDS->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDS->setScale(10);
+    
+    _spriteDraw = Sprite::create("Images/fire.png");
+    _spriteDraw->retain();
+    _spriteDraw->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDraw->setScale(10);
+    //! move sprite half width and height, and draw only where not marked
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Point(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    
+    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
+    _rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(_rend);
+}
+
+RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
+{
+    CC_SAFE_RELEASE(_spriteDraw);
+    CC_SAFE_RELEASE(_spriteDS);
+}
+
+void RenderTextureTestDepthStencil::draw()
+{
+    _renderCmds[0].init(0, _vertexZ);
+    _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
+    
+    _rend->beginWithClear(0, 0, 0, 0, 0, 0);
+    
+    _renderCmds[1].init(0, _vertexZ);
+    _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
+    
+    _spriteDS->visit();
+    
+    _renderCmds[2].init(0, _vertexZ);
+    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
+    
+    _spriteDraw->visit();
+    
+    _rend->end();
+    
+    _renderCmds[3].init(0, _vertexZ);
+    _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
+
+}
+
+void RenderTextureTestDepthStencil::onBeforeClear()
+{
     glStencilMask(0xFF);
-    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+}
 
+void RenderTextureTestDepthStencil::onBeforeStencil()
+{
     //! mark sprite quad into stencil buffer
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-    sprite->visit();
+}
 
-    //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
+void RenderTextureTestDepthStencil::onBeforDraw()
+{
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    sprite->visit();
+}
 
-    rend->end();
-
+void RenderTextureTestDepthStencil::onAfterDraw()
+{
     glDisable(GL_STENCIL_TEST);
-
-    rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
-
-    this->addChild(rend);
 }
 
 std::string RenderTextureTestDepthStencil::title() const

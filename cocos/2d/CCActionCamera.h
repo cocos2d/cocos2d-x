@@ -1,7 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -48,17 +50,7 @@ public:
     /**
      * @js ctor
      */
-    ActionCamera()
-		:_centerX(0)
-        ,_centerY(0)
-        ,_centerZ(0)
-        ,_eyeX(0)
-        ,_eyeY(0)
-        ,_eyeZ(FLT_EPSILON)
-        ,_upX(0)
-        ,_upY(1)
-        ,_upZ(0)
-    {}
+    ActionCamera();
     /**
      * @js NA
      * @lua NA
@@ -70,23 +62,28 @@ public:
     virtual ActionCamera * reverse() const override;
 	virtual ActionCamera *clone() const override;
 
+    /* sets the Eye value of the Camera */
+    void setEye(const kmVec3 &eye);
+    void setEye(float x, float y, float z);
+    /* returns the Eye value of the Camera */
+    const kmVec3& getEye() const { return _eye; }
+    /* sets the Center value of the Camera */
+    void setCenter(const kmVec3 &center);
+    /* returns the Center value of the Camera */
+    const kmVec3& getCenter() const { return _center; }
+    /* sets the Up value of the Camera */
+    void setUp(const kmVec3 &up);
+    /* Returns the Up value of the Camera */
+    const kmVec3& getUp() const { return _up; }
+
 protected:
 
     void restore();
-    void setEye(float x, float y, float z);
-    void setCenter(float x, float y, float z);
-    void setUp(float x, float y, float z);
     void updateTransform();
 
-    float _centerX;
-    float _centerY;
-    float _centerZ;
-    float _eyeX;
-    float _eyeY;
-    float _eyeZ;
-    float _upX;
-    float _upY;
-    float _upZ;
+    kmVec3 _center;
+    kmVec3 _eye;
+    kmVec3 _up;
 };
 
 /** 

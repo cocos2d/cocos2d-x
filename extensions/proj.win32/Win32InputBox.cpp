@@ -133,7 +133,11 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
   if (param->DlgTemplateName != 0)
   {
     HMODULE hModule = (HMODULE)param->hInstance;
+#ifdef __MINGW32__
+    HRSRC rcDlg = ::FindResource(hModule, (LPWSTR)(ULONG_PTR)(size_t)(param->DlgTemplateName), RT_DIALOG);
+#else
     HRSRC rcDlg = ::FindResource(hModule, MAKEINTRESOURCE(param->DlgTemplateName), RT_DIALOG);
+#endif
     if (rcDlg == NULL)
       return 0;
 

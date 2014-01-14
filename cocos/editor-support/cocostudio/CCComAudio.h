@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,12 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "cocos2d.h"
+#include "CCComBase.h"
 
 namespace cocostudio {
 
 class ComAudio : public cocos2d::Component
 {
+
+    DECLARE_CLASS_COMPONENT_INFO
 protected:
     /**
      * @js ctor
@@ -43,19 +45,20 @@ protected:
     virtual ~ComAudio(void);
     
 public:
-    virtual bool init();
+    virtual bool init() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
-    virtual bool isEnabled() const;
-    virtual void setEnabled(bool b);
+    virtual void onExit() override;
+    virtual bool isEnabled() const override;
+    virtual void setEnabled(bool b) override;
+    virtual bool serialize(void* r) override;
 
     static ComAudio* create(void);
    
