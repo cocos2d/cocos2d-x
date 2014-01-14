@@ -51,6 +51,9 @@
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
 
+#undef min
+#undef max
+
 NS_CC_BEGIN
 
 
@@ -143,12 +146,12 @@ void log(const char *format, va_list args)
 
 #elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
+    MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
     
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
-    printf("%s\n", szBuf);
+    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
+    printf("%s\n", buf);
 
 #else
     // Linux, Mac, iOS, etc
