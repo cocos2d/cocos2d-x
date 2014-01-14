@@ -714,6 +714,9 @@ Developers:
         
     akof1314
         TestCpp works by using CMake and mingw on Windows.
+        
+    Pisces000221
+        Corrected a few mistakes in the README file of project-creator.
     
 Retired Core Developers:
     WenSheng Yang
