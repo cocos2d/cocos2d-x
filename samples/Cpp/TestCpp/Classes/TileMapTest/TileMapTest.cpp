@@ -3,6 +3,9 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+#undef min
+#undef max
+
 enum 
 {
     kTagTileMap = 1,

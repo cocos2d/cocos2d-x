@@ -1,5 +1,8 @@
 #include "PerformanceSpriteTest.h"
 
+#undef min
+#undef max
+
 enum {
     kMaxNodes = 50000,
     kNodesIncrease = 250,

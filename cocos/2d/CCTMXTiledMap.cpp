@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "CCSprite.h"
 #include <algorithm>
 
+#undef min
+#undef max
 NS_CC_BEGIN
 
 // implementation TMXTiledMap
