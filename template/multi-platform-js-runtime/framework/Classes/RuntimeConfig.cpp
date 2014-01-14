@@ -1,8 +1,11 @@
 #include "RuntimeConfig.h"
 
+
 #include "cocos2d.h"
 #include <vector>
 #include <string>
+using namespace std;
+using namespace cocos2d;
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 #include <unistd.h>
@@ -17,7 +20,7 @@ using namespace std;
 static RuntimeConfig *s_SharedRuntime = nullptr;
 RuntimeConfig::RuntimeConfig()
 {
-	s_SharedRuntime =NULL;
+	_scheduler = CCDirector::sharedDirector()->getScheduler();
 }
 
 RuntimeConfig::~RuntimeConfig()
@@ -61,12 +64,21 @@ void RuntimeConfig::setSearchPath()
 	// CC_PLATFORM_ANDROID
 
 }
-
+void RuntimeConfig::updateConnect(float delta)
+{
+	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
+	{
+		_scheduler->unscheduleSelector(SEL_SCHEDULE(&RuntimeConfig::updateConnect),this);
+		extern void resetRuntime();
+		resetRuntime();	
+	}
+}
 void RuntimeConfig::waitConnect()
 {
+
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 
-	char szwaitFile[512]={0};
+	memset(szwaitFile,sizeof(szwaitFile),0);
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 	extern std::string GetCurAppPath(void);
 	string searchPath = GetCurAppPath();
@@ -80,14 +92,14 @@ void RuntimeConfig::waitConnect()
 #endif	
 
 	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
-		return;
-
-	while (true)
 	{
-		if (!FileUtils::getInstance()->isFileExist(szwaitFile))
-			break;
-		Usleep(10);
-	}	
+		extern void resetRuntime();
+		resetRuntime();
+		return;
+	}
+		
+	if (_scheduler)
+		_scheduler->scheduleSelector(SEL_SCHEDULE(&RuntimeConfig::updateConnect), this,0.5f, false);
 
 #endif
 

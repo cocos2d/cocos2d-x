@@ -204,8 +204,8 @@ void SimulatorConfig::updateView()
 		glfwSetWindowSize(m_eglView.getWindow(),m_screenSize.height,m_screenSize.width);
 	}
 	updateMenu();
-	extern void resetPurage();
-	resetPurage();
+	extern void resetRuntime();
+	resetRuntime();
 }
 void SimulatorConfig::onViewChangeOrientation(int viewMenuID)
 {

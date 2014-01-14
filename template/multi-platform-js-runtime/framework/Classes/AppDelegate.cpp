@@ -23,13 +23,24 @@ using namespace CocosDenshion;
 #include "RuntimeConfig.h"
 #endif // ISRUNTIME
 
-void resetPurage()
+void resetRuntime()
 {
 	FileUtils::sharedFileUtils()->purgeCachedEntries();
 	Director::getInstance()->purgeCachedData();
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->reset();
 	ScriptingCore::getInstance()->runScript("main.js");
 }
+
+/*
+void startRuntime()
+{
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	ScriptingCore::getInstance()->runScript("main.js");
+}*/
+
 AppDelegate::AppDelegate()
 {
 }
@@ -72,14 +83,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
 #endif
   
+	
 #ifdef ISRUNTIME
 	RuntimeConfig::getInstance()->waitConnect();
+	return true;
 #endif
 
-    ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    ScriptingCore::getInstance()->runScript("main.js");
-       
+    resetRuntime();
     return true;
 }
 
