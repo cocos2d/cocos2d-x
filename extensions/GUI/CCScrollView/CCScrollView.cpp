@@ -300,6 +300,11 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
     }
 }
 
+void CCScrollView::updateTweenAction(float value, const char* key)
+{
+    setZoomScale(value);
+}
+
 void ScrollView::setViewSize(Size size)
 {
     _viewSize = size;
