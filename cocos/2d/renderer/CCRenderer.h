@@ -76,7 +76,6 @@ protected:
 
     void drawBatchedQuads();
     //Draw the previews queued quads and flush previous context
-    void flush();
 
     std::stack<int> _commandGroupStack;
     

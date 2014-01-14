@@ -259,13 +259,15 @@ void Renderer::render()
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
-                    flush();
+                    drawBatchedQuads();
+                    _lastMaterialID = 0;
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
-                    flush();
+                    drawBatchedQuads();
+                    _lastMaterialID = 0;
                     GroupCommand* cmd = static_cast<GroupCommand*>(command);
                     
                     _renderStack.top().currentIndex = i + 1;
@@ -279,7 +281,8 @@ void Renderer::render()
                 }
                 else
                 {
-                    flush();
+                    drawBatchedQuads();
+                    _lastMaterialID = 0;
                 }
             }
             
@@ -416,12 +419,6 @@ void Renderer::drawBatchedQuads()
     
     _firstCommand = _lastCommand;
     _numQuads = 0;
-}
-
-void Renderer::flush()
-{
-    drawBatchedQuads();
-    _lastMaterialID = 0;
 }
 
 NS_CC_END
