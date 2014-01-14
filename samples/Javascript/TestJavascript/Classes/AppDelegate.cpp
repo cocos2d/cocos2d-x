@@ -48,10 +48,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    FileUtils::getInstance()->addSearchPath("res");
-    FileUtils::getInstance()->addSearchPath("script");
-    FileUtils::getInstance()->addSearchPath("res/scenetest");
+    auto fileUtils = FileUtils::getInstance();
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("script");
     
+    const char* paths[] = {
+        "res",
+        "res/scenetest",
+        "res/scenetest/ArmatureComponentTest",
+        "res/scenetest/AttributeComponentTest",
+        "res/scenetest/BackgroundComponentTest",
+        "res/scenetest/EffectComponentTest",
+        "res/scenetest/LoadSceneEdtiorFileTest",
+        "res/scenetest/ParticleComponentTest",
+        "res/scenetest/SpriteComponentTest",
+        "res/scenetest/TmxMapComponentTest",
+        "res/scenetest/UIComponentTest",
+        "res/scenetest/TriggerTest",
+    };
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string testFolder = "tests/";
+    searchPaths.push_back(testFolder);
+    
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(testFolder + path);
+    }
+#else
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(path);
+    }
+#endif
+    
+    fileUtils->setSearchPaths(searchPaths);
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);

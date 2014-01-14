@@ -64,6 +64,7 @@ public:
 
 	virtual void update (float deltaTime) override;
 	virtual void draw() override;
+    void onDraw();
 	virtual cocos2d::Rect getBoundingBox () const override;
 
 	// --- Convenience methods for common Skeleton_* functions.
@@ -103,6 +104,10 @@ private:
 	void initialize ();
     // Util function that setting blend-function by nextRenderedTexture's premultiplied flag
     void setFittedBlendingFunc(cocos2d::TextureAtlas * nextRenderedTexture);
+    
+    cocos2d::CustomCommand _customCommand;
+    
+    kmMat4 _oldTransMatrix;
 };
 
 }

@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2011 Marco Tillemans
+ * Copyright (c) 2010-2012 cocos2d-x.org
+ * Copyright (c) 2011      Zynga Inc.
+ * Copyright (c) 2011      Marco Tillemans
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -42,7 +43,7 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
-#include "CCQuadCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "CCRenderer.h"
 
 NS_CC_BEGIN
@@ -392,8 +393,7 @@ void ParticleBatchNode::draw(void)
     kmMat4 mv;
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
-    QuadCommand* cmd = QuadCommand::getCommandPool().generateCommand();
-    cmd->init(0,
+    _quadCommand.init(0,
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,
@@ -401,7 +401,7 @@ void ParticleBatchNode::draw(void)
               _textureAtlas->getQuads(),
               _textureAtlas->getTotalQuads(),
               mv);
-    Director::getInstance()->getRenderer()->addCommand(cmd);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

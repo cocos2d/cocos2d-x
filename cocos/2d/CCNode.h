@@ -1,8 +1,9 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2009      Valentin Milea
- Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -1265,7 +1266,9 @@ public:
     Point convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
-     *  Sets the additional transform.
+     *  Sets an additional transform matrix to the node.
+     *
+     *  In order to remove it, set the Identity Matrix to the additional transform.
      *
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
@@ -1288,7 +1291,7 @@ public:
      spriteA->setPosition(Point(200, 200));
 
      // Gets the spriteA's transform.
-     AffineTransform t = spriteA->getNodeToParentTransform();
+     auto t = spriteA->getNodeToParentTransform();
 
      // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
      spriteB->setAdditionalTransform(t);
@@ -1420,12 +1423,13 @@ protected:
 
     Size _contentSize;             ///< untransformed size of the node
 
+    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
+
     // "cache" variables are allowed to be mutable
     mutable kmMat4 _additionalTransform; ///< transform
     mutable kmMat4 _transform;     ///< transform
     mutable kmMat4 _inverse;       ///< inverse transform
-    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
-    mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
+    bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
 

@@ -39,15 +39,6 @@
     <ClInclude Include="..\UIImageView.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\UILabel.h">
-      <Filter>UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UILabelAtlas.h">
-      <Filter>UIWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\UILabelBMFont.h">
-      <Filter>UIWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="..\UISlider.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
@@ -75,6 +66,15 @@
     <ClInclude Include="..\UILayoutParameter.h">
       <Filter>Layouts</Filter>
     </ClInclude>
+    <ClInclude Include="..\UITextBMFont.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UIText.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\UITextAtlas.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\UIScrollView.cpp">
@@ -93,15 +93,6 @@
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UIImageView.cpp">
-      <Filter>UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UILabel.cpp">
-      <Filter>UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UILabelAtlas.cpp">
-      <Filter>UIWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="..\UILabelBMFont.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UISlider.cpp">
@@ -130,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="..\UILayoutParameter.cpp">
       <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UITextBMFont.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIText.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UITextAtlas.cpp">
+      <Filter>UIWidgets</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

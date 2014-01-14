@@ -40,6 +40,7 @@ ControlSlider::ControlSlider()
 , _minimumAllowedValue(0.0f)
 , _maximumAllowedValue(0.0f)
 , _thumbSprite(NULL)
+, _selectedThumbSprite(NULL)
 , _progressSprite(NULL)
 , _backgroundSprite(NULL)
 {
@@ -49,11 +50,27 @@ ControlSlider::ControlSlider()
 ControlSlider::~ControlSlider()
 {
     CC_SAFE_RELEASE(_thumbSprite);
+    CC_SAFE_RELEASE(_selectedThumbSprite);
     CC_SAFE_RELEASE(_progressSprite);
     CC_SAFE_RELEASE(_backgroundSprite);
 }
 
 ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile)
+{
+    // Prepare background for slider
+    Sprite *backgroundSprite      = Sprite::create(bgFile);
+
+    // Prepare progress for slider
+    Sprite *progressSprite        = Sprite::create(progressFile);
+
+    // Prepare thumb (menuItem) for slider
+    Sprite *thumbSprite           = Sprite::create(thumbFile);
+
+    return ControlSlider::create(backgroundSprite, progressSprite, thumbSprite);
+}
+
+ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFile, const char* thumbFile,
+		const char* selectedThumbSpriteFile)
 {
     // Prepare background for slider
     Sprite *backgroundSprite      = Sprite::create(bgFile);
@@ -64,7 +81,10 @@ ControlSlider* ControlSlider::create(const char* bgFile, const char* progressFil
     // Prepare thumb (menuItem) for slider
     Sprite *thumbSprite           = Sprite::create(thumbFile);
     
-    return ControlSlider::create(backgroundSprite, progressSprite, thumbSprite);
+    // Prepare selected thumb (menuItem) for slider
+    Sprite *selectedThumbSprite   = Sprite::create(selectedThumbSpriteFile);
+
+    return ControlSlider::create(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
 }
 
 ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite)
@@ -75,19 +95,39 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
     return pRet;
 }
 
- bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite)
+ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite,
+        Sprite* selectedThumbSprite)
+{
+    ControlSlider *pRet = new ControlSlider();
+    pRet->initWithSprites(backgroundSprite, pogressSprite, thumbSprite, selectedThumbSprite);
+    pRet->autorelease();
+    return pRet;
+}
+
+bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite)
+{
+    Sprite* selectedThumbSprite = Sprite::createWithTexture(thumbSprite->getTexture(),
+        thumbSprite->getTextureRect());
+    selectedThumbSprite->setColor(Color3B::GRAY);
+    return this->initWithSprites(backgroundSprite, progressSprite, thumbSprite, selectedThumbSprite);
+}
+
+ bool ControlSlider::initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
+        Sprite* selectedThumbSprite)
  {
      if (Control::init())
      {
-        CCASSERT(backgroundSprite,  "Background sprite must be not nil");
-        CCASSERT(progressSprite,    "Progress sprite must be not nil");
-        CCASSERT(thumbSprite,       "Thumb sprite must be not nil");
+        CCASSERT(backgroundSprite,      "Background sprite must be not nil");
+        CCASSERT(progressSprite,        "Progress sprite must be not nil");
+        CCASSERT(thumbSprite,           "Thumb sprite must be not nil");
+        CCASSERT(selectedThumbSprite,   "Thumb sprite must be not nil");
 
         ignoreAnchorPointForPosition(false);
 
         this->setBackgroundSprite(backgroundSprite);
         this->setProgressSprite(progressSprite);
         this->setThumbSprite(thumbSprite);
+        this->setSelectedThumbSprite(selectedThumbSprite);
 
         // Defines the content size
         Rect maxRect   = ControlUtils::RectUnion(backgroundSprite->getBoundingBox(), thumbSprite->getBoundingBox());
@@ -108,6 +148,10 @@ ControlSlider* ControlSlider::create(Sprite * backgroundSprite, Sprite* pogressS
         _thumbSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
         addChild(_thumbSprite);
         
+        _selectedThumbSprite->setPosition(Point(0.0f, this->getContentSize().height / 2));
+        _selectedThumbSprite->setVisible(false);
+        addChild(_selectedThumbSprite);
+
         // Init default values
         _minimumValue                   = 0.0f;
         _maximumValue                   = 1.0f;
@@ -227,7 +271,8 @@ void ControlSlider::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 void ControlSlider::needsLayout()
 {
-    if (NULL == _thumbSprite || NULL == _backgroundSprite || NULL == _progressSprite)
+    if (NULL == _thumbSprite || NULL == _selectedThumbSprite || NULL == _backgroundSprite
+    		|| NULL == _progressSprite)
     {
         return;
     }
@@ -237,6 +282,7 @@ void ControlSlider::needsLayout()
     Point pos                 = _thumbSprite->getPosition();
     pos.x                       = percent * _backgroundSprite->getContentSize().width;
     _thumbSprite->setPosition(pos);
+    _selectedThumbSprite->setPosition(pos);
 
     // Stretches content proportional to newLevel
     Rect textureRect          = _progressSprite->getTextureRect();
@@ -247,7 +293,8 @@ void ControlSlider::needsLayout()
 void ControlSlider::sliderBegan(Point location)
 {
     this->setSelected(true);
-    this->getThumbSprite()->setColor(Color3B::GRAY);
+    _thumbSprite->setVisible(false);
+    _selectedThumbSprite->setVisible(true);
     setValue(valueForLocation(location));
 }
 
@@ -262,7 +309,8 @@ void ControlSlider::sliderEnded(Point location)
     {
         setValue(valueForLocation(_thumbSprite->getPosition()));
     }
-    this->getThumbSprite()->setColor(Color3B::WHITE);
+    _thumbSprite->setVisible(true);
+    _selectedThumbSprite->setVisible(false);
     this->setSelected(false);
 }
 

@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include "lua_cocos2dx_manual.hpp"
 
 #ifdef __cplusplus
@@ -538,10 +561,14 @@ static void setTouchEnabledForLayer(Layer* layer, bool enabled)
     auto priority  = static_cast<Integer*>(dict->objectForKey("priority"));
     
     auto dispatcher = layer->getEventDispatcher();
-    if (nullptr != dispatcher)
+    if (nullptr != dispatcher && (touchListenerAllAtOnce != nullptr || touchListenerOneByOne != nullptr))
     {
         dispatcher->removeEventListener(touchListenerAllAtOnce);
         dispatcher->removeEventListener(touchListenerOneByOne);
+        dict->removeObjectForKey("touchListenerAllAtOnce");
+        dict->removeObjectForKey("touchListenerOneByOne");
+        touchListenerAllAtOnce = nullptr;
+        touchListenerOneByOne = nullptr;
     }
 
     if (enabled)
@@ -1703,8 +1730,9 @@ int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
     
     int argc = 0;
     
+    tolua_Error tolua_err;
+    
 #if COCOS2D_DEBUG >= 1
-	tolua_Error tolua_err;
 	if (!tolua_isusertable(tolua_S,1,"Sequence",0,&tolua_err)) goto tolua_lerror;
 #endif
     
@@ -2192,8 +2220,8 @@ static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
     
     int argc = 0;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
+#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"Spawn",0,&tolua_err)) goto tolua_lerror;
 #endif
     
@@ -2703,6 +2731,26 @@ static int tolua_cocos2dx_Sprite_setBlendFunc(lua_State* tolua_S)
     return tolua_cocos2dx_setBlendFunc<Sprite>(tolua_S,"Sprite");
 }
 
+static int tolua_cocos2dx_SpriteBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<SpriteBatchNode>(tolua_S,"SpriteBatchNode");
+}
+
+static int tolua_cocos2dx_MotionStreak_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<MotionStreak>(tolua_S,"MotionStreak");
+}
+
+static int tolua_cocos2dx_AtlasNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<AtlasNode>(tolua_S,"AtlasNode");
+}
+
+static int tolua_cocos2dx_ParticleBatchNode_setBlendFunc(lua_State* tolua_S)
+{
+    return tolua_cocos2dx_setBlendFunc<ParticleBatchNode>(tolua_S,"ParticleBatchNode");
+}
+
 static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 {
     return tolua_cocos2dx_setBlendFunc<LayerColor>(tolua_S,"LayerColor");
@@ -2711,6 +2759,11 @@ static int tolua_cocos2dx_LayerColor_setBlendFunc(lua_State* tolua_S)
 static int tolua_cocos2dx_ParticleSystem_setBlendFunc(lua_State* tolua_S) 
 {
     return tolua_cocos2dx_setBlendFunc<ParticleSystem>(tolua_S,"ParticleSystem");
+}
+
+static int tolua_cocos2dx_DrawNode_setBlendFunc(lua_State* tolua_S) 
+{
+    return tolua_cocos2dx_setBlendFunc<DrawNode>(tolua_S,"DrawNode");
 }
 
 static int tolua_cocos2dx_LayerMultiplex_create(lua_State* tolua_S)
@@ -3491,6 +3544,10 @@ static void extendDrawNode(lua_State* tolua_S)
         lua_pushstring(tolua_S,"drawPolygon");
         lua_pushcfunction(tolua_S,tolua_cocos2d_DrawNode_drawPolygon);
         lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
 }
@@ -3581,6 +3638,49 @@ static void extendSpriteBatchNode(lua_State* tolua_S)
     {
         lua_pushstring(tolua_S,"getDescendants");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_getDescendants );
+        lua_rawset(tolua_S,-3);
+
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_SpriteBatchNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendMotionStreak(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "MotionStreak");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_MotionStreak_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendAtlasNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "AtlasNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_AtlasNode_setBlendFunc);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendParticleBatchNode(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "ParticleBatchNode");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"setBlendFunc");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_ParticleBatchNode_setBlendFunc);
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
@@ -3807,7 +3907,7 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
 #endif
         
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
@@ -3926,7 +4026,7 @@ static int tolua_cocos2dx_EventListenerTouchOneByOne_registerScriptHandler(lua_S
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_TOUCH_BEGAN:
@@ -4068,7 +4168,7 @@ static int tolua_cocos2dx_EventListenerTouchAllAtOnce_registerScriptHandler(lua_
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0));
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_TOUCHES_BEGAN:
@@ -4210,7 +4310,7 @@ static int tolua_cocos2dx_EventListenerMouse_registerScriptHandler(lua_State* to
         }
 #endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
-        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>(tolua_tonumber(tolua_S, 3, 0) ) ;
+        ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0) ) ;
         
         switch (type)
         {
@@ -4432,5 +4532,8 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendActionCamera(tolua_S);
     extendGridAction(tolua_S);
     
+    extendMotionStreak(tolua_S);
+    extendAtlasNode(tolua_S);
+    extendParticleBatchNode(tolua_S);
     return 0;
 }

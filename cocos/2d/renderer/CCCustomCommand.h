@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -34,7 +34,10 @@ NS_CC_BEGIN
 class CustomCommand : public RenderCommand
 {
 public:
-    static RenderCommandPool<CustomCommand>& getCommandPool() { return _commandPool; }
+    CustomCommand();
+    ~CustomCommand();
+    
+public:
 
     void init(int viewport, int32_t depth);
 
@@ -48,18 +51,11 @@ public:
     void execute();
 
     inline bool isTranslucent() { return true; }
-    virtual void releaseToCommandPool() override;
     std::function<void()> func;
 
 protected:
-    CustomCommand();
-    ~CustomCommand();
-
     int _viewport;
     int32_t _depth;
-    static RenderCommandPool<CustomCommand> _commandPool;
-
-    friend class RenderCommandPool<CustomCommand>;
 };
 
 NS_CC_END

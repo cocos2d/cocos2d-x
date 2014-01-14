@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,6 +31,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -130,6 +132,8 @@ protected:
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
+    // quad command
+    QuadCommand _quadCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);

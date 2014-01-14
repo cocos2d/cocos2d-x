@@ -1,6 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Erawppa
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,29 +33,29 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class ScriptHandlerMgr;
-class CC_DLL NotificationCenter : public Object
+class CC_DLL __NotificationCenter : public Object
 {
     friend class ScriptHandlerMgr;
 public:
-    /** NotificationCenter constructor
+    /** __NotificationCenter constructor
      * @js ctor
      */
-    NotificationCenter();
+    __NotificationCenter();
 
-    /** NotificationCenter destructor
+    /** __NotificationCenter destructor
      * @js NA
      * @lua NA
      */
-    ~NotificationCenter();
+    ~__NotificationCenter();
     
-    /** Gets the single instance of NotificationCenter. */
-    static NotificationCenter *getInstance();
+    /** Gets the single instance of __NotificationCenter. */
+    static __NotificationCenter *getInstance();
 
-    /** Destroys the single instance of NotificationCenter. */
+    /** Destroys the single instance of __NotificationCenter. */
     static void destroyInstance();
 
     /** @deprecated use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static NotificationCenter *sharedNotificationCenter(void);
+    CC_DEPRECATED_ATTRIBUTE static __NotificationCenter *sharedNotificationCenter(void);
 
     /** @deprecated use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void);
