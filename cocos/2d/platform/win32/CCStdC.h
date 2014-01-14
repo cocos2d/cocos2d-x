@@ -148,5 +148,8 @@ inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
 #undef DELETE
 #endif
 
+#undef min
+#undef max
+
 #endif  // __CC_STD_C_H__
 
