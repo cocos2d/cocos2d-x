@@ -300,7 +300,7 @@ void ScrollView::setZoomScaleInDuration(float s, float dt)
     }
 }
 
-void CCScrollView::updateTweenAction(float value, const std::string& key)
+void ScrollView::updateTweenAction(float value, const std::string& key)
 {
     this->setZoomScale(value);
 }
