@@ -103,7 +103,7 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransformDirty(false)
+, _useAdditionalTransform(false)
 , _transformDirty(true)
 , _inverseDirty(true)
 // children (lazy allocs)
@@ -1189,10 +1189,9 @@ const kmMat4& Node::getNodeToParentTransform() const
         // vertex Z
         _transform.mat[14] = _vertexZ;
 
-        if (_additionalTransformDirty)
+        if (_useAdditionalTransform)
         {
             kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
-            _additionalTransformDirty = false;
         }
 
         _transformDirty = false;
@@ -1211,14 +1210,14 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     CGAffineToGL(additionalTransform, _additionalTransform.mat);
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 

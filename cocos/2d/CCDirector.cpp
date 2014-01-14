@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
 #include "CCRenderer.h"
+#include "CCConsole.h"
 #include "renderer/CCFrustum.h"
 /**
  Position of the FPS
@@ -116,9 +117,6 @@ bool Director::init(void)
 
     _scenesStack.reserve(15);
 
-    // projection delegate if "Custom" projection is used
-    _projectionDelegate = nullptr;
-
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
@@ -131,16 +129,16 @@ bool Director::init(void)
 
     // paused ?
     _paused = false;
-   
+
     // purge ?
     _purgeDirectorInNextLoop = false;
 
-    _winSizeInPoints = Size::ZERO;    
+    _winSizeInPoints = Size::ZERO;
 
     _openGLView = nullptr;
-    
+
     _cullingFrustum = new Frustum();
-    
+
     _contentScaleFactor = 1.0f;
 
     // scheduler
@@ -163,15 +161,15 @@ bool Director::init(void)
     //init TextureCache
     initTextureCache();
 
-    // Renderer
     _renderer = new Renderer;
+    _console = new Console;
 
     // create autorelease pool
     PoolManager::sharedPoolManager()->push();
 
     return true;
 }
-    
+
 Director::~Director(void)
 {
     CCLOGINFO("deallocing Director: %p", this);
@@ -179,7 +177,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
     CC_SAFE_RELEASE(_drawsLabel);
-    
+
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
@@ -192,6 +190,7 @@ Director::~Director(void)
     delete _eventProjectionChanged;
 
     delete _renderer;
+    delete _console;
 
     // pop the autorelease pool
     PoolManager::sharedPoolManager()->pop();
@@ -284,17 +283,17 @@ void Director::drawScene()
     }
 
     kmGLPushMatrix();
-    
+
     //construct the frustum
     {
         kmMat4 view;
         kmMat4 projection;
         kmGLGetMatrix(KM_GL_PROJECTION, &projection);
         kmGLGetMatrix(KM_GL_MODELVIEW, &view);
-        
+
         _cullingFrustum->setupFromMatrix(view, projection);
     }
-    
+
     // draw the scene
     if (_runningScene)
     {
@@ -307,7 +306,7 @@ void Director::drawScene()
     {
         _notificationNode->visit();
     }
-    
+
     if (_displayStats)
     {
         showStats();
@@ -325,7 +324,7 @@ void Director::drawScene()
     {
         _openGLView->swapBuffers();
     }
-    
+
     if (_displayStats)
     {
         calculateMPF();
@@ -386,16 +385,16 @@ void Director::setOpenGLView(EGLView *openGLView)
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
-        
+
         createStatsLabel();
-        
+
         if (_openGLView)
         {
             setGLDefaultValues();
-        }  
-        
+        }
+
         _renderer->initGLView();
-        
+
         CHECK_GL_ERROR_DEBUG();
 
 //        _touchDispatcher->setDispatchEvents(true);
@@ -481,13 +480,12 @@ void Director::setProjection(Projection projection)
             kmGLMultMatrix(&matrixLookup);
             break;
         }
-            
+
         case Projection::CUSTOM:
-            if (_projectionDelegate)
-                _projectionDelegate->updateProjection();
-            
+            // Projection Delegate is no longer needed
+            // since the event "PROJECTION CHANGED" is emitted
             break;
-            
+
         default:
             CCLOG("cocos2d: Director: unrecognized projection");
             break;
@@ -549,10 +547,10 @@ static void GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
+
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
+
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
@@ -560,19 +558,19 @@ Point Director::convertToGL(const Point& uiPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-	
+
 	kmMat4 transformInv;
 	kmMat4Inverse(&transformInv, &transform);
-	
+
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	kmScalar zClip = transform.mat[14]/transform.mat[15];
-	
+
     Size glSize = _openGLView->getDesignResolutionSize();
 	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
-	
+
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
+
 	return Point(glCoord.x, glCoord.y);
 }
 
@@ -580,12 +578,12 @@ Point Director::convertToUI(const Point& glPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-    
+
 	kmVec3 clipCoord;
 	// Need to calculate the zero depth from the transform.
 	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
-	
+
 	Size glSize = _openGLView->getDesignResolutionSize();
 	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
@@ -606,7 +604,7 @@ Size Director::getVisibleSize() const
     {
         return _openGLView->getVisibleSize();
     }
-    else 
+    else
     {
         return Size::ZERO;
     }
@@ -618,7 +616,7 @@ Point Director::getVisibleOrigin() const
     {
         return _openGLView->getVisibleOrigin();
     }
-    else 
+    else
     {
         return Point::ZERO;
     }
@@ -973,11 +971,6 @@ void Director::createStatsLabel()
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
-float Director::getContentScaleFactor() const
-{
-    return _contentScaleFactor;
-}
-
 void Director::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != _contentScaleFactor)
@@ -987,26 +980,11 @@ void Director::setContentScaleFactor(float scaleFactor)
     }
 }
 
-Node* Director::getNotificationNode() 
-{ 
-    return _notificationNode; 
-}
-
 void Director::setNotificationNode(Node *node)
 {
     CC_SAFE_RELEASE(_notificationNode);
     _notificationNode = node;
     CC_SAFE_RETAIN(_notificationNode);
-}
-
-DirectorDelegate* Director::getDelegate() const
-{
-    return _projectionDelegate;
-}
-
-void Director::setDelegate(DirectorDelegate* delegate)
-{
-    _projectionDelegate = delegate;
 }
 
 void Director::setScheduler(Scheduler* scheduler)
@@ -1019,11 +997,6 @@ void Director::setScheduler(Scheduler* scheduler)
     }
 }
 
-Scheduler* Director::getScheduler() const
-{
-    return _scheduler;
-}
-
 void Director::setActionManager(ActionManager* actionManager)
 {
     if (_actionManager != actionManager)
@@ -1032,16 +1005,6 @@ void Director::setActionManager(ActionManager* actionManager)
         CC_SAFE_RELEASE(_actionManager);
         _actionManager = actionManager;
     }    
-}
-
-ActionManager* Director::getActionManager() const
-{
-    return _actionManager;
-}
-
-EventDispatcher* Director::getEventDispatcher() const
-{
-    return _eventDispatcher;
 }
 
 void Director::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1053,12 +1016,6 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         _eventDispatcher = dispatcher;
     }
 }
-
-Renderer* Director::getRenderer() const
-{
-    return _renderer;
-}
-
 
 /***************************************************
 * implementation of DisplayLinkDirector

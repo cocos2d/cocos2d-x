@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCDataVisitor.h"
 #include "ccMacros.h"
+#include "CCConsole.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
