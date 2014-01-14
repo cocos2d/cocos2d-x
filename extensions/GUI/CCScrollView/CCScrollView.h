@@ -63,7 +63,7 @@ public:
  * ScrollView support for cocos2d-x.
  * It provides scroll view functionalities to cocos2d projects natively.
  */
-class ScrollView : public Layer, public CCActionTweenDelegate
+class ScrollView : public Layer, public ActionTweenDelegate
 {
 public:
     enum class Direction
