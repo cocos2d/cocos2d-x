@@ -43,8 +43,6 @@ class ScriptingCore : public CCScriptEngineProtocol
     
     static ScriptingCore* pInstance;
 
-	static ScriptingCore* pInstance;
-
 	ScriptingCore();
 public:
 	~ScriptingCore();
