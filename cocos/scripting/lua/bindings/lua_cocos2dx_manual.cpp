@@ -3737,7 +3737,7 @@ static int tolua_cocos2dx_LuaEventListenerAcceleration_create(lua_State* tolua_S
     int argc = 0;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertable(tolua_S, 1, "EventListenerAcceleration", 0, &tolua_err))  goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S, 1, "cc.EventListenerAcceleration", 0, &tolua_err))  goto tolua_lerror;
 #endif
     
     argc = lua_gettop(tolua_S) - 1;
@@ -3754,7 +3754,7 @@ static int tolua_cocos2dx_LuaEventListenerAcceleration_create(lua_State* tolua_S
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)tolua_ret, handler, ScriptHandlerMgr::HandlerType::EVENT_ACC);
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"EventListenerAcceleration");
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerAcceleration");
         
         return 1;
     }
@@ -3777,7 +3777,7 @@ static int tolua_cocos2d_LuaEventListenerCustom_create(lua_State* tolua_S)
     int argc = 0;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertable(tolua_S, 1, "EventListenerCustom", 0, &tolua_err))  goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S, 1, "cc.EventListenerCustom", 0, &tolua_err))  goto tolua_lerror;
 #endif
     
     argc = lua_gettop(tolua_S) - 1;
@@ -3798,7 +3798,7 @@ static int tolua_cocos2d_LuaEventListenerCustom_create(lua_State* tolua_S)
         
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"EventListenerCustom");
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.EventListenerCustom");
         
         return 1;
     }
@@ -3813,30 +3813,26 @@ tolua_lerror:
 #endif
 }
 
-int register_cocos2dx_event_releated(lua_State* tolua_S)
+static void extendEventListenerCustom(lua_State* tolua_S)
 {
-    tolua_module(tolua_S,"cc",0);
-    tolua_beginmodule(tolua_S,"cc");
-      tolua_usertype(tolua_S,"EventListenerCustom");
-      tolua_cclass(tolua_S,"EventListenerCustom","EventListenerCustom","",NULL);
-      tolua_beginmodule(tolua_S,"EventListenerCustom");
-        tolua_function(tolua_S, "create", tolua_cocos2d_LuaEventListenerCustom_create);
-      tolua_endmodule(tolua_S);
-    
-      tolua_usertype(tolua_S, "EventListenerAcceleration");
-      tolua_cclass(tolua_S,"EventListenerAcceleration","EventListenerAcceleration","",NULL);
-      tolua_beginmodule(tolua_S,"EventListenerAcceleration");
-        tolua_function(tolua_S, "create", tolua_cocos2dx_LuaEventListenerAcceleration_create);
-      tolua_endmodule(tolua_S);
-    tolua_endmodule(tolua_S);
-    
-    std::string typeEventCustomName = typeid(LuaEventListenerCustom).name();
-    g_luaType[typeEventCustomName] = "EventListenerCustom";
-    
-    std::string typeEventAccelerationName = typeid(LuaEventListenerAcceleration).name();
-    g_luaType[typeEventAccelerationName] = "EventListenerAcceleration";
-    
-    return 1;
+    lua_pushstring(tolua_S, "cc.EventListenerCustom");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "create",tolua_cocos2d_LuaEventListenerCustom_create);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+static void extendEventListenerAcceleration(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.EventListenerAcceleration");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "create",tolua_cocos2dx_LuaEventListenerAcceleration_create);
+    }
+    lua_pop(tolua_S, 1);
 }
 
 static int tolua_cocos2dx_EventListenerKeyboard_create(lua_State* tolua_S)
@@ -4529,6 +4525,8 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerTouchOneByOne(tolua_S);
     extendEventListenerTouchAllAtOnce(tolua_S);
     extendEventListenerMouse(tolua_S);
+    extendEventListenerCustom(tolua_S);
+    extendEventListenerAcceleration(tolua_S);
     extendActionCamera(tolua_S);
     extendGridAction(tolua_S);
     
