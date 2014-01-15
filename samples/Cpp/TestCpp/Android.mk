@@ -121,6 +121,7 @@ Classes/PerformanceTest/PerformanceTest.cpp \
 Classes/PerformanceTest/PerformanceTextureTest.cpp \
 Classes/PerformanceTest/PerformanceTouchesTest.cpp \
 Classes/PerformanceTest/PerformanceLabelTest.cpp \
+Classes/PerformanceTest/PerformanceRendererTest.cpp \
 Classes/PhysicsTest/PhysicsTest.cpp \
 Classes/RenderTextureTest/RenderTextureTest.cpp \
 Classes/RotateWorldTest/RotateWorldTest.cpp \
