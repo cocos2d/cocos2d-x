@@ -513,5 +513,5 @@ std::string VBOFullTest::title() const
 
 std::string VBOFullTest::subtitle() const
 {
-    return "VBO full Test";
+    return "VBO full Test, everthing should render normally";
 }
