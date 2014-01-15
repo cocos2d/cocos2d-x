@@ -7,11 +7,14 @@
 #include <io.h>
 #include <stdlib.h>
 #include <direct.h>
+#define _MAX_PATH_ _MAX_PATH
 #else
 #include <unistd.h>
+#include <limits.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#define _MAX_PATH_ PATH_MAX
 #endif
 
 #include <stdio.h>
@@ -45,7 +48,7 @@ typedef vector<FILEINFOR> FileInfoList;
 class CBrowseDir
 {
 protected:
-	char _initDir[_MAX_PATH];
+	char _initDir[_MAX_PATH_];
 	vector<string> _filterArray;
 	FileInfoList _lFileInfo;
 

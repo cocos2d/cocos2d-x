@@ -15,8 +15,8 @@ void CBrowseDir::setFilter(const char *filterfile,const char *delimiter)
 		if (filterfile)
 		{
 			token=NULL;
-			char szFilterFile[_MAX_PATH]={0};
-			strcpy_s(szFilterFile,_MAX_PATH-1,filterfile);
+			char szFilterFile[_MAX_PATH_]={0};
+			strcpy_s(szFilterFile,_MAX_PATH_-1,filterfile);
 			token = strtok(szFilterFile, delimiter );		
 			while( token != NULL )
 			{
@@ -29,7 +29,7 @@ void CBrowseDir::setFilter(const char *filterfile,const char *delimiter)
 
 bool CBrowseDir::setInitDir(const char *dir)
 {
-	if (_fullpath(_initDir,dir,_MAX_PATH) == NULL)
+	if (_fullpath(_initDir,dir,_MAX_PATH_) == NULL)
 		return false;
 
 	if (chdir(dir) != 0)
@@ -54,9 +54,10 @@ FileInfoList &CBrowseDir::getFileInfoList()
 }
 bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 {
+
+#ifdef WIN32
 	if (chdir(dir) != 0)
 		return false;
-
 	long hFile;
 	_finddata_t fileinfo;
 	if ((hFile=_findfirst(filespec,&fileinfo)) != -1)
@@ -66,7 +67,7 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 			if (!(fileinfo.attrib & _A_SUBDIR))
 			{
 				char *pszexten=strrchr(fileinfo.name,'.');
-				char szextension[_MAX_PATH]={0};
+				char szextension[_MAX_PATH_]={0};
 				if (pszexten)
 				{
 					strcpy(szextension,"*");
@@ -97,7 +98,6 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 	{
 		do
 		{
-
 			if ((fileinfo.attrib & _A_SUBDIR))
 			{
 				if (strcmp(fileinfo.name,".") != 0 && strcmp
@@ -108,7 +108,7 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 						continue;
 					}
 
-					char subdir[_MAX_PATH];
+					char subdir[_MAX_PATH_];
 					strcpy(subdir,dir);
 					strcat(subdir,fileinfo.name);
 					strcat(subdir,"/");
@@ -124,13 +124,41 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 		_findclose(hFile);
 	}
 	return true;
+#else
+	DIR *dp;
+	struct dirent *entry;
+	struct stat statbuf;
+	if((dp = opendir(dir)) == NULL) {
+		return false;
+	}
+	if (chdir(dir) != 0)
+		return false;
+	while((entry = readdir(dp)) != NULL) {
+		lstat(entry->d_name,&statbuf);
+		if(S_ISDIR(statbuf.st_mode)) {
+
+			if(strcmp(".",entry->d_name) == 0 ||
+				strcmp("..",entry->d_name) == 0)
+				continue;
+			printf("%*s%s/\n",depth,"",entry->d_name);
+			browseDir(entry->d_name,);
+		} else {
+			string filename = entry->d_name;
+			if (!processFile(dir,fileinfo.name))
+				return false;
+			printf("%*s%s\n",depth,"",entry->d_name);
+		}
+	}
+	chdir("..");
+	closedir(dp);
+#endif
 }
 
 void CBrowseDir::saveFileInfo(const char *dir,_finddata_t fileinfo)
 {
-	char fileFullName[_MAX_PATH]={0};
-	char relFileName[_MAX_PATH] ={0};
-	char fileTime[_MAX_PATH]={0};
+	char fileFullName[_MAX_PATH_]={0};
+	char relFileName[_MAX_PATH_] ={0};
+	char fileTime[_MAX_PATH_]={0};
 
 	strcpy(fileFullName,dir);
 	strcat(fileFullName,fileinfo.name);
