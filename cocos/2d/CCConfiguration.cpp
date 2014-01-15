@@ -88,24 +88,20 @@ Configuration::~Configuration()
 {
 }
 
-void Configuration::dumpInfo() const
+std::string Configuration::getInfo() const
 {
-	// Dump
-    Value forDump = Value(_valueDict);
-    CCLOG("%s", forDump.getDescription().c_str());
-
 	// And Dump some warnings as well
 #if CC_ENABLE_PROFILERS
-    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.h)");
-    printf("\n");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.h)\n");
 #endif
 
 #if CC_ENABLE_GL_STATE_CACHE == 0
-    CCLOG("");
-    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it (from ccConfig.h)");
-    printf("\n");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it (from ccConfig.h)\n");
 #endif
 
+    // Dump
+    Value forDump = Value(_valueDict);
+    return forDump.getDescription();
 }
 
 void Configuration::gatherGPUInfo()

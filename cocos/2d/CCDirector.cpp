@@ -377,7 +377,7 @@ void Director::setOpenGLView(EGLView *openGLView)
 		// Configuration. Gather GPU info
 		Configuration *conf = Configuration::getInstance();
 		conf->gatherGPUInfo();
-		conf->dumpInfo();
+        CCLOG("%s\n",conf->getInfo().c_str());
 
         // EAGLView is not a Object
         delete _openGLView; // [openGLView_ release]
