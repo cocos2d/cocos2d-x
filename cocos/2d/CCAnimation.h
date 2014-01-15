@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,9 +30,11 @@ THE SOFTWARE.
 #include "CCPlatformConfig.h"
 #include "CCObject.h"
 #include "CCArray.h"
-#include "CCDictionary.h"
+#include "CCValue.h"
 #include "CCGeometry.h"
 #include "CCSpriteFrame.h"
+#include "CCVector.h"
+
 #include <string>
 
 NS_CC_BEGIN
@@ -56,17 +59,10 @@ class CC_DLL AnimationFrame : public Object, public Clonable
 {
 public:
     /**
-     * @js ctor
+     * Creates the animation frame with a spriteframe, number of delay units and a notification user info
+     * @since 3.0
      */
-    AnimationFrame();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AnimationFrame();
-
-    /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
-    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo);
+    static AnimationFrame* create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
     SpriteFrame* getSpriteFrame() const { return _spriteFrame; };
     
@@ -86,13 +82,12 @@ public:
     /** @brief Gets user infomation
         A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.
      */
-    Dictionary* getUserInfo() const { return _userInfo; };
+    const ValueMap& getUserInfo() const { return _userInfo; };
+    ValueMap& getUserInfo() { return _userInfo; };
     
     /** Sets user infomation */
-    void setUserInfo(Dictionary* userInfo)
+    void setUserInfo(const ValueMap& userInfo)
     {
-        CC_SAFE_RETAIN(userInfo);
-        CC_SAFE_RELEASE(_userInfo);
         _userInfo = userInfo;
     }
     
@@ -100,6 +95,20 @@ public:
 	virtual AnimationFrame *clone() const override;
 
 protected:
+    
+    /**
+     * @js ctor
+     */
+    AnimationFrame();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~AnimationFrame();
+    
+    /** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
+    bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
+    
     /** SpriteFrameName to be used */
     SpriteFrame* _spriteFrame;
 
@@ -107,7 +116,10 @@ protected:
     float _delayUnits;
 
     /**  A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast. */
-    Dictionary* _userInfo;
+    ValueMap _userInfo;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(AnimationFrame);
 };
 
 
@@ -135,49 +147,28 @@ public:
      The frames will be added with one "delay unit".
      @since v0.99.5
      */
-    static Animation* createWithSpriteFrames(Array* arrayOfSpriteFrameNames, float delay = 0.0f);
+    static Animation* createWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f);
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      @since v2.0
      * @js NA
      */
-    static Animation* create(Array *arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
-    /**
-     * @js ctor
-     */
-    Animation();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~Animation(void);
-
-    bool init();
-
-    /** Initializes a Animation with frames and a delay between frames
-    @since v0.99.5
-    */
-    bool initWithSpriteFrames(Array *pFrames, float delay = 0.0f);
-
-    /** Initializes a Animation with AnimationFrame
-    @since v2.0
-    */
-    bool initWithAnimationFrames(Array* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops);
+    static Animation* create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops = 1);
 
     /** Adds a SpriteFrame to a Animation.
      The frame will be added with one "delay unit".
      */
-    void addSpriteFrame(SpriteFrame *pFrame);
+    void addSpriteFrame(SpriteFrame *frame);
 
     /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
      The frame will be added with one "delay unit".
      Added to facilitate the migration from v0.8 to v0.9.
      */
-    void addSpriteFrameWithFile(const char *filename);
+    void addSpriteFrameWithFile(const std::string& filename);
     /**
      @deprecated. Use addSpriteFrameWithFile() instead
      */
-    CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const char *filename){ addSpriteFrameWithFile(filename);}
+    CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const std::string& filename){ addSpriteFrameWithFile(filename);}
 
     /** Adds a frame with a texture and a rect. Internally it will create a SpriteFrame and it will add it.
      The frame will be added with one "delay unit".
@@ -199,13 +190,11 @@ public:
     float getDuration() const;
     
     /** Gets the array of AnimationFrames */
-    Array* getFrames() const { return _frames; };
+    const Vector<AnimationFrame*>& getFrames() const { return _frames; };
     
     /** Sets the array of AnimationFrames */
-    void setFrames(Array* frames)
+    void setFrames(const Vector<AnimationFrame*>& frames)
     {
-        CC_SAFE_RETAIN(frames);
-        CC_SAFE_RELEASE(_frames);
         _frames = frames;
     }
     
@@ -225,6 +214,22 @@ public:
 	virtual Animation *clone() const override;
 
 protected:
+    Animation();
+    virtual ~Animation(void);
+    
+    /** Initializes a Animation */
+    bool init();
+    
+    /** Initializes a Animation with frames and a delay between frames
+     @since v0.99.5
+     */
+    bool initWithSpriteFrames(const Vector<SpriteFrame*>& arrayOfSpriteFrameNames, float delay = 0.0f);
+    
+    /** Initializes a Animation with AnimationFrame
+     @since v2.0
+     */
+    bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
+    
     /** total Delay units of the Animation. */
     float _totalDelayUnits;
 
@@ -235,13 +240,16 @@ protected:
     float _duration;
 
     /** array of AnimationFrames */
-    Array* _frames;
+    Vector<AnimationFrame*> _frames;
 
     /** whether or not it shall restore the original frame when the animation finishes */
     bool _restoreOriginalFrame;
 
     /** how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ... */
     unsigned int _loops;
+    
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Animation);
 };
 
 // end of sprite_nodes group

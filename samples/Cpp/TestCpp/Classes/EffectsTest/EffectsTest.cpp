@@ -1,6 +1,6 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
-
+#include "CCNodeGrid.h"
 enum {
     kTagTextLayer = 1,
 
@@ -342,25 +342,25 @@ TextLayer::TextLayer(void)
 	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
-    auto node = Node::create();
+    _gridNodeTarget = NodeGrid::create();
     auto effect = getAction();
-    node->runAction(effect);
-    addChild(node, 0, kTagBackground);
+    _gridNodeTarget->runAction(effect);
+    addChild(_gridNodeTarget, 0, kTagBackground);
     
     auto bg = Sprite::create(s_back3);
-    node->addChild(bg, 0);
+    _gridNodeTarget->addChild(bg, 0);
 //  bg->setAnchorPoint( Point::ZERO );
     bg->setPosition(VisibleRect::center());
 
     auto grossini = Sprite::create(s_pathSister2);
-    node->addChild(grossini, 1);
+    _gridNodeTarget->addChild(grossini, 1);
     grossini->setPosition( Point(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
 
     auto tamara = Sprite::create(s_pathSister1);
-    node->addChild(tamara, 1);
+    _gridNodeTarget->addChild(tamara, 1);
     tamara->setPosition( Point(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
@@ -377,9 +377,9 @@ TextLayer::TextLayer(void)
 
 void TextLayer::checkAnim(float dt)
 {
-    auto s2 = getChildByTag(kTagBackground);
-    if ( s2->getNumberOfRunningActions() == 0 && s2->getGrid() != NULL)
-        s2->setGrid(NULL);;
+    //auto s2 = getChildByTag(kTagBackground);
+    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != NULL)
+        _gridNodeTarget->setGrid(NULL);;
 }
 
 

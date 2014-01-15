@@ -50,10 +50,12 @@ public:
 class S9BatchNodeBasic : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9BatchNodeBasic);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheet
@@ -61,10 +63,12 @@ public:
 class S9FrameNameSpriteSheet : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheet);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotated
@@ -72,10 +76,12 @@ public:
 class S9FrameNameSpriteSheetRotated : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetRotated);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9BatchNodeScaledNoInsets
@@ -83,10 +89,12 @@ public:
 class S9BatchNodeScaledNoInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9BatchNodeScaledNoInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetScaledNoInsets
@@ -94,10 +102,12 @@ public:
 class S9FrameNameSpriteSheetScaledNoInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetScaledNoInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedScaledNoInsets
@@ -105,10 +115,12 @@ public:
 class S9FrameNameSpriteSheetRotatedScaledNoInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetRotatedScaledNoInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -117,10 +129,12 @@ public:
 class S9BatchNodeScaleWithCapInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9BatchNodeScaleWithCapInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetInsets
@@ -128,10 +142,12 @@ public:
 class S9FrameNameSpriteSheetInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetInsetsScaled
@@ -139,10 +155,12 @@ public:
 class S9FrameNameSpriteSheetInsetsScaled : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetInsetsScaled);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsets
@@ -150,10 +168,12 @@ public:
 class S9FrameNameSpriteSheetRotatedInsets : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetRotatedInsets);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9_TexturePacker
@@ -161,10 +181,12 @@ public:
 class S9_TexturePacker : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9_TexturePacker);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsetsScaled
@@ -172,10 +194,12 @@ public:
 class S9FrameNameSpriteSheetRotatedInsetsScaled : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetRotatedInsetsScaled);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsetsScaled
@@ -183,10 +207,12 @@ public:
 class S9FrameNameSpriteSheetRotatedSetCapInsetLater : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9FrameNameSpriteSheetRotatedSetCapInsetLater);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9CascadeOpacityAndColor
@@ -194,8 +220,10 @@ public:
 class S9CascadeOpacityAndColor : public S9SpriteTestDemo
 {
 public:
+    CREATE_FUNC(S9CascadeOpacityAndColor);
+
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };

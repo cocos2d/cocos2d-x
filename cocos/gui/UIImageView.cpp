@@ -1,45 +1,44 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UIImageView.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 
 
-#define DYNAMIC_CAST_CCSPRITE dynamic_cast<cocos2d::Sprite*>(_imageRenderer)
-#define DYNAMIC_CAST_SCALE9SPRITE dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)
+#define STATIC_CAST_CCSPRITE static_cast<Sprite*>(_imageRenderer)
+#define STATIC_CAST_SCALE9SPRITE static_cast<extension::Scale9Sprite*>(_imageRenderer)
+    
+static const int IMAGE_RENDERER_Z = (-1);
 
-UIImageView::UIImageView():
-_clickCount(0),
-_clickTimeInterval(0.0),
-_startCheckDoubleClick(false),
-_touchRelease(false),
-_doubleClickEnabled(false),
+ImageView::ImageView():
 _scale9Enabled(false),
 _prevIgnoreSize(true),
-_capInsets(cocos2d::Rect::ZERO),
+_capInsets(Rect::ZERO),
 _imageRenderer(nullptr),
 _textureFile(""),
 _imageTexType(UI_TEX_TYPE_LOCAL),
@@ -48,14 +47,14 @@ _imageTextureSize(_size)
 
 }
 
-UIImageView::~UIImageView()
+ImageView::~ImageView()
 {
     
 }
 
-UIImageView* UIImageView::create()
+ImageView* ImageView::create()
 {
-    UIImageView* widget = new UIImageView();
+    ImageView* widget = new ImageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -65,14 +64,13 @@ UIImageView* UIImageView::create()
     return nullptr;
 }
 
-void UIImageView::initRenderer()
+void ImageView::initRenderer()
 {
-    UIWidget::initRenderer();
-    _imageRenderer = cocos2d::Sprite::create();
-    _renderer->addChild(_imageRenderer);
+    _imageRenderer = Sprite::create();
+    Node::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
-void UIImageView::loadTexture(const char *fileName, TextureResType texType)
+void ImageView::loadTexture(const char *fileName, TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)
     {
@@ -85,163 +83,73 @@ void UIImageView::loadTexture(const char *fileName, TextureResType texType)
         case UI_TEX_TYPE_LOCAL:
             if (_scale9Enabled)
             {
-                DYNAMIC_CAST_SCALE9SPRITE->initWithFile(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
-                DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(_capInsets);
+                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                imageRendererScale9->initWithFile(fileName);
+                imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->initWithFile(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
+                imageRenderer->setTexture(fileName);
             }
             break;
         case UI_TEX_TYPE_PLIST:
             if (_scale9Enabled)
             {
-                DYNAMIC_CAST_SCALE9SPRITE->initWithSpriteFrameName(fileName);
-                DYNAMIC_CAST_SCALE9SPRITE->setColor(getColor());
-                DYNAMIC_CAST_SCALE9SPRITE->setOpacity(getOpacity());
-                DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(_capInsets);
+                extension::Scale9Sprite* imageRendererScale9 = STATIC_CAST_SCALE9SPRITE;
+                imageRendererScale9->initWithSpriteFrameName(fileName);
+                imageRendererScale9->setCapInsets(_capInsets);
             }
             else
             {
-                DYNAMIC_CAST_CCSPRITE->initWithSpriteFrameName(fileName);
-                DYNAMIC_CAST_CCSPRITE->setColor(getColor());
-                DYNAMIC_CAST_CCSPRITE->setOpacity(getOpacity());
+                Sprite* imageRenderer = STATIC_CAST_CCSPRITE;
+                imageRenderer->setSpriteFrame(fileName);
             }
             break;
         default:
             break;
     }
     _imageTextureSize = _imageRenderer->getContentSize();
+    updateDisplayedColor(getColor());
+    updateDisplayedOpacity(getOpacity());
     updateAnchorPoint();
     imageTextureScaleChangedWithSize();
 }
 
-void UIImageView::setTextureRect(const cocos2d::Rect &rect)
+void ImageView::setTextureRect(const Rect &rect)
 {
     if (_scale9Enabled)
     {
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setTextureRect(rect);
+        STATIC_CAST_CCSPRITE->setTextureRect(rect);
     }
 }
 
-bool UIImageView::onTouchBegan(const cocos2d::Point &touchPoint)
-{
-    setFocused(true);
-    _touchStartPos.x = touchPoint.x;
-    _touchStartPos.y = touchPoint.y;
-    _widgetParent->checkChildInfo(0,this,touchPoint);
-    pushDownEvent();
-    
-    if (_doubleClickEnabled)
-    {
-        _clickTimeInterval = 0;
-        _startCheckDoubleClick = true;
-        _clickCount++;
-        _touchRelease = false;
-    }
-    return _touchPassedEnabled;
-}
-
-void UIImageView::onTouchEnded(const cocos2d::Point &touchPoint)
-{
-    if (_doubleClickEnabled)
-    {
-        if (_clickCount >= 2)
-        {
-            doubleClickEvent();
-            _clickCount = 0;
-            _startCheckDoubleClick = false;
-        }
-        else
-        {
-            _touchRelease = true;
-        }
-    }
-    else
-    {
-        UIWidget::onTouchEnded(touchPoint);
-    }
-}
-
-void UIImageView::doubleClickEvent()
-{
-    
-}
-
-void UIImageView::checkDoubleClick(float dt)
-{
-    if (_startCheckDoubleClick)
-    {
-        _clickTimeInterval += dt;
-        if (_clickTimeInterval >= 200 && _clickCount > 0)
-        {
-            _clickTimeInterval = 0;
-            _clickCount--;
-            _startCheckDoubleClick = false;
-        }
-    }
-    else
-    {
-        if (_clickCount <= 1)
-        {
-            if (_touchRelease)
-            {
-                releaseUpEvent();
-                _clickTimeInterval = 0;
-                _clickCount = 0;
-                _touchRelease = false;
-            }
-        }
-    }
-}
-
-void UIImageView::setDoubleClickEnabled(bool able)
-{
-    if (able == _doubleClickEnabled)
-    {
-        return;
-    }
-    _doubleClickEnabled = able;
-    if (able)
-    {
-//        COCOUISYSTEM->getUIInputManager()->addCheckedDoubleClickWidget(this);
-    }
-    else
-    {
-        
-    }
-}
-
-void UIImageView::setFlipX(bool flipX)
+void ImageView::setFlipX(bool flipX)
 {
     if (_scale9Enabled)
     {
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setFlippedX(flipX);
+        STATIC_CAST_CCSPRITE->setFlippedX(flipX);
     }
 }
 
-void UIImageView::setFlipY(bool flipY)
+void ImageView::setFlipY(bool flipY)
 {
     if (_scale9Enabled)
     {
     }
     else
     {
-        DYNAMIC_CAST_CCSPRITE->setFlippedY(flipY);
+        STATIC_CAST_CCSPRITE->setFlippedY(flipY);
     }
 }
 
-bool UIImageView::isFlipX()
+bool ImageView::isFlipX()
 {
     if (_scale9Enabled)
     {
@@ -249,11 +157,11 @@ bool UIImageView::isFlipX()
     }
     else
     {
-        return DYNAMIC_CAST_CCSPRITE->isFlippedX();
+        return STATIC_CAST_CCSPRITE->isFlippedX();
     }
 }
 
-bool UIImageView::isFlipY()
+bool ImageView::isFlipY()
 {
     if (_scale9Enabled)
     {
@@ -261,11 +169,11 @@ bool UIImageView::isFlipY()
     }
     else
     {
-        return DYNAMIC_CAST_CCSPRITE->isFlippedY();
+        return STATIC_CAST_CCSPRITE->isFlippedY();
     }
 }
 
-void UIImageView::setScale9Enabled(bool able)
+void ImageView::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)
     {
@@ -274,18 +182,18 @@ void UIImageView::setScale9Enabled(bool able)
     
     
     _scale9Enabled = able;
-    _renderer->removeChild(_imageRenderer, true);
+    Node::removeChild(_imageRenderer);
     _imageRenderer = nullptr;
     if (_scale9Enabled)
     {
-        _imageRenderer = cocos2d::extension::Scale9Sprite::create();
+        _imageRenderer = extension::Scale9Sprite::create();
     }
     else
     {
-        _imageRenderer = cocos2d::Sprite::create();
+        _imageRenderer = Sprite::create();
     }
     loadTexture(_textureFile.c_str(),_imageTexType);
-    _renderer->addChild(_imageRenderer);
+    Node::addChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
     if (_scale9Enabled)
     {
         bool ignoreBefore = _ignoreSize;
@@ -299,47 +207,48 @@ void UIImageView::setScale9Enabled(bool able)
     setCapInsets(_capInsets);
 }
 
-void UIImageView::ignoreContentAdaptWithSize(bool ignore)
+void ImageView::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
     {
-        UIWidget::ignoreContentAdaptWithSize(ignore);
+        Widget::ignoreContentAdaptWithSize(ignore);
         _prevIgnoreSize = ignore;
     }
 }
 
-void UIImageView::setCapInsets(const cocos2d::Rect &capInsets)
+void ImageView::setCapInsets(const Rect &capInsets)
 {
     _capInsets = capInsets;
     if (!_scale9Enabled)
     {
         return;
     }
-    DYNAMIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
+    STATIC_CAST_SCALE9SPRITE->setCapInsets(capInsets);
 }
 
-void UIImageView::setAnchorPoint(const cocos2d::Point &pt)
+void ImageView::setAnchorPoint(const Point &pt)
 {
-    UIWidget::setAnchorPoint(pt);
+    Widget::setAnchorPoint(pt);
     _imageRenderer->setAnchorPoint(pt);
 }
 
-void UIImageView::onSizeChanged()
+void ImageView::onSizeChanged()
 {
+    Widget::onSizeChanged();
     imageTextureScaleChangedWithSize();
 }
 
-const cocos2d::Size& UIImageView::getContentSize() const
+const Size& ImageView::getContentSize() const
 {
     return _imageTextureSize;
 }
 
-cocos2d::Node* UIImageView::getVirtualRenderer()
+Node* ImageView::getVirtualRenderer()
 {
     return _imageRenderer;
 }
 
-void UIImageView::imageTextureScaleChangedWithSize()
+void ImageView::imageTextureScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
@@ -353,11 +262,11 @@ void UIImageView::imageTextureScaleChangedWithSize()
     {
         if (_scale9Enabled)
         {
-            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_imageRenderer)->setPreferredSize(_size);
         }
         else
         {
-            cocos2d::Size textureSize = _imageRenderer->getContentSize();
+            Size textureSize = _imageRenderer->getContentSize();
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _imageRenderer->setScale(1.0f);
@@ -371,19 +280,19 @@ void UIImageView::imageTextureScaleChangedWithSize()
     }
 }
 
-const char* UIImageView::getDescription() const
+std::string ImageView::getDescription() const
 {
     return "ImageView";
 }
 
-UIWidget* UIImageView::createCloneInstance()
+Widget* ImageView::createCloneInstance()
 {
-    return UIImageView::create();
+    return ImageView::create();
 }
 
-void UIImageView::copySpecialProperties(UIWidget *widget)
+void ImageView::copySpecialProperties(Widget *widget)
 {
-    UIImageView* imageView = dynamic_cast<UIImageView*>(widget);
+    ImageView* imageView = dynamic_cast<ImageView*>(widget);
     if (imageView)
     {
         _prevIgnoreSize = imageView->_prevIgnoreSize;
@@ -394,3 +303,5 @@ void UIImageView::copySpecialProperties(UIWidget *widget)
 }
 
 }
+
+NS_CC_END

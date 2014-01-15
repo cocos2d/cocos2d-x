@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,23 +44,11 @@ struct _ccArray;
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
 */
-class CC_DLL ParallaxNode : public Node 
+class CC_DLL ParallaxNode : public Node
 {
 public:
     // Create a Parallax node
     static ParallaxNode * create();
-    
-    /** Adds a child to the container with a z-order, a parallax ratio and a position offset
-    It returns self, so you can chain several addChilds.
-    @since v0.8
-    * @js ctor
-    */
-    ParallaxNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ParallaxNode();
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
@@ -81,10 +70,25 @@ public:
     virtual void visit(void) override;
 
 protected:
+    /** Adds a child to the container with a z-order, a parallax ratio and a position offset
+     It returns self, so you can chain several addChilds.
+     @since v0.8
+     * @js ctor
+     */
+    ParallaxNode();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParallaxNode();
+
     Point absolutePosition();
 
     Point    _lastPosition;
     struct _ccArray* _parallaxArray;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParallaxNode);
 };
 
 // end of tilemap_parallax_nodes group

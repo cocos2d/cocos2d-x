@@ -31,6 +31,7 @@ set(BOX2D_SRC
   Dynamics/Joints/b2GearJoint.cpp
   Dynamics/Joints/b2Joint.cpp
   Dynamics/Joints/b2MouseJoint.cpp
+  Dynamics/Joints/b2MotorJoint.cpp
   Dynamics/Joints/b2PrismaticJoint.cpp
   Dynamics/Joints/b2PulleyJoint.cpp
   Dynamics/Joints/b2RevoluteJoint.cpp
@@ -56,6 +57,6 @@ add_library(box2d STATIC
 
 set_target_properties(box2d
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )

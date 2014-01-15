@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -27,20 +28,28 @@
 #include "CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
 
+#define DISTANCEFIELD_ATLAS_FONTSIZE 50
+
 NS_CC_BEGIN
 
-Label* Label::createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs )
+Label* Label::createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
 {
-    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), fontSize, glyphs, customGlyphs);
+    FontAtlas *tmpAtlas = nullptr;
+    if(useDistanceField)
+        tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), DISTANCEFIELD_ATLAS_FONTSIZE, glyphs, customGlyphs,true);
+    else
+        tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), fontSize, glyphs, customGlyphs,false);
 
     if (!tmpAtlas)
         return nullptr;
     
     // create the actual label
-    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize);
+    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize, useDistanceField,true);
     
     if (templabel)
     {
+        if(useDistanceField)
+            templabel->setFontSize(fontSize);
         templabel->setText(label, lineSize, alignment, false);
         return templabel;
     }
@@ -71,9 +80,9 @@ Label* Label::createWithBMFont(const std::string& label, const std::string& bmfo
     return 0;
 }
 
-Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int lineSize)
+Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int lineSize, bool useDistanceField,bool useA8Shader)
 {
-    Label *ret = new Label(atlas, alignment);
+    Label *ret = new Label(atlas, alignment, useDistanceField,useA8Shader);
     
     if (!ret)
         return 0;
@@ -92,21 +101,22 @@ Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int li
     return ret;
 }
 
-Label::Label(FontAtlas *atlas, TextHAlignment alignment)
+Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
 : _reusedLetter(nullptr)
+, _multilineEnable(true)
+, _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
+, _width(0.0f)
 , _alignment(alignment)
 , _currentUTF16String(0)
 , _originalUTF16String(0)
-, _advances(0)
+, _advances(nullptr)
 , _fontAtlas(atlas)
-, _displayedColor(Color3B::WHITE)
-, _realColor(Color3B::WHITE)
-, _cascadeColorEnabled(true)
-, _cascadeOpacityEnabled(true)
-, _displayedOpacity(255)
-, _realOpacity(255)
 , _isOpacityModifyRGB(true)
+, _useDistanceField(useDistanceField)
+, _useA8Shader(useA8Shader)
+, _fontSize(0)
+, _uniformEffectColor(0)
 {
 }
 
@@ -119,24 +129,37 @@ Label::~Label()
     if (_fontAtlas)
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
 
-    delete _reusedLetter;
+    _reusedLetter->release();
 }
 
 bool Label::init()
 { 
+    bool ret = true;
     if(_fontAtlas)
     {
-        _reusedLetter = new Sprite;
-        _reusedLetter->initWithTexture(&_fontAtlas->getTexture(0));
+        _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);
-        return SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
+        ret = SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
+        _reusedLetter->retain();
     }
-
-    return true;
+    if (_useDistanceField)
+        setLabelEffect(LabelEffect::NORMAL,Color3B::BLACK);
+    else if(_useA8Shader)
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR));
+    else
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    return ret;
 }
 
 void Label::setString(const std::string &stringToRender)
 {
+    _multilineEnable = true;
+    setText(stringToRender, _width, TextHAlignment::CENTER, false);
+}
+
+void Label::setString(const std::string &stringToRender,bool multilineEnable)
+{
+    _multilineEnable = multilineEnable;
     setText(stringToRender, _width, TextHAlignment::CENTER, false);
 }
 
@@ -221,20 +244,53 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
 
 void Label::setScale(float scale)
 {
+    if (_useDistanceField)
+    {
+        scale *= 1.0f * _fontSize / DISTANCEFIELD_ATLAS_FONTSIZE;
+    } 
     Node::setScale(scale);
-    alignText();
 }
 
 void Label::setScaleX(float scaleX)
 {
+    if (_useDistanceField)
+    {
+        scaleX *= 1.0f * _fontSize / DISTANCEFIELD_ATLAS_FONTSIZE;
+    } 
     Node::setScaleX(scaleX);
-    alignText();
 }
 
 void Label::setScaleY(float scaleY)
 {
+    if (_useDistanceField)
+    {
+        scaleY *= 1.0f * _fontSize / DISTANCEFIELD_ATLAS_FONTSIZE;
+    } 
     Node::setScaleY(scaleY);
-    alignText();
+}
+
+float Label::getScaleY() const
+{
+    if (_useDistanceField)
+    {
+        return _scaleY / (1.0f * _fontSize / DISTANCEFIELD_ATLAS_FONTSIZE);
+    }
+    else
+    {
+        return _scaleY;
+    }
+}
+
+float Label::getScaleX() const
+{
+    if (_useDistanceField)
+    {
+        return _scaleX / (1.0f * _fontSize / DISTANCEFIELD_ATLAS_FONTSIZE);
+    }
+    else
+    {
+        return _scaleX;
+    }
 }
 
 void Label::alignText()
@@ -243,25 +299,18 @@ void Label::alignText()
         _textureAtlas->removeAllQuads();  
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     LabelTextFormatter::createStringSprites(this);    
-    if( LabelTextFormatter::multilineText(this) )      
+    if(_multilineEnable && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
     
     LabelTextFormatter::alignText(this);
   
-    int strLen = cc_wcslen(_currentUTF16String);  
-    if (_children && _children->count() != 0)
-    {
-        for (auto child: *_children)
-        {
-            Node* pNode = static_cast<Node*>( child );
-            if (pNode)
-            {
-                int tag = pNode->getTag();
-                if(tag < 0 || tag >= strLen)
-                    SpriteBatchNode::removeChild(pNode, true);
-            }
-        }
+    int strLen = cc_wcslen(_currentUTF16String);
+    for(const auto &child : _children) {
+        int tag = child->getTag();
+        if(tag < 0 || tag >= strLen)
+            SpriteBatchNode::removeChild(child, true);
     }
+
     _reusedLetter->setBatchNode(nullptr);
    
     int vaildIndex = 0;
@@ -376,7 +425,7 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         {
             spriteToUpdate->setBatchNode(this); 
             spriteToUpdate->setTexture(theTexture);
-            spriteToUpdate->setDisplayFrame(frame);
+            spriteToUpdate->setSpriteFrame(frame);
             spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));                                        
         }     
         
@@ -418,6 +467,75 @@ void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
     CCASSERT(0, "addChild: is not supported on Label.");
 }
 
+void Label::setLabelEffect(LabelEffect effect,const Color3B& effectColor)
+{
+    if(_useDistanceField == false)
+        return;
+
+    _currLabelEffect = effect;
+    _effectColor = effectColor;
+
+    switch (_currLabelEffect)
+    {
+    case cocos2d::LabelEffect::NORMAL:  
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
+        break;
+    case cocos2d::LabelEffect::OUTLINE:
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE));
+        break;
+    case cocos2d::LabelEffect::SHADOW:
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW));
+        break;
+    case cocos2d::LabelEffect::GLOW:
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW));
+        break;
+    default:
+        return;
+    }
+
+    _uniformEffectColor = glGetUniformLocation(_shaderProgram->getProgram(), "v_effectColor");
+}
+
+void Label::setFontSize(int fontSize)
+{
+    _fontSize = fontSize;
+    Node::setScale(1.0f*_fontSize/DISTANCEFIELD_ATLAS_FONTSIZE);
+}
+
+void Label::onDraw()
+{
+    CC_PROFILER_START("CCSpriteBatchNode - draw");
+
+    // Optimization: Fast Dispatch
+    if( _textureAtlas->getTotalQuads() == 0 )
+    {
+        return;
+    }
+
+    CC_NODE_DRAW_SETUP();
+
+    if (_useDistanceField && _currLabelEffect != LabelEffect::NORMAL)
+    {
+        _shaderProgram->setUniformLocationWith3f(_uniformEffectColor, _effectColor.r/255.0f,_effectColor.g/255.0f,_effectColor.b/255.0f);
+    }
+
+    for(const auto &child: _children)
+        child->updateTransform();
+
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+
+    _textureAtlas->drawQuads();
+
+    CC_PROFILER_STOP("CCSpriteBatchNode - draw");
+}
+
+void Label::draw()
+{
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
 ///// PROTOCOL STUFF
 
 Sprite * Label::getLetter(int ID)
@@ -437,15 +555,13 @@ Sprite * Label::getLetter(int ID)
             uvRect.origin.x    = _lettersInfo[ID].def.U;
             uvRect.origin.y    = _lettersInfo[ID].def.V;
 
-            sp = new Sprite();
-            sp->initWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID),uvRect);
+            sp = Sprite::createWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID),uvRect);
             sp->setBatchNode(this);
             sp->setAnchorPoint(Point(_lettersInfo[ID].def.anchorX, _lettersInfo[ID].def.anchorY));                    
             sp->setPosition(_lettersInfo[ID].position);
             sp->setOpacity(_realOpacity);
          
             this->addSpriteWithoutQuad(sp, ID, ID);
-            sp->release();
         }
         return sp;
     }
@@ -596,128 +712,26 @@ bool Label::isOpacityModifyRGB() const
 void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 {
     _isOpacityModifyRGB = isOpacityModifyRGB;
-    if (_children && _children->count() != 0)
-    {
-        for (auto child: *_children)
-        {
-            Node* pNode = static_cast<Node*>( child );
-            if (pNode)
-            {
-                RGBAProtocol *pRGBAProtocol = dynamic_cast<RGBAProtocol*>(pNode);
-                if (pRGBAProtocol)
-                {
-                    pRGBAProtocol->setOpacityModifyRGB(_isOpacityModifyRGB);
-                }
-            }
-        }
-    }
-    _reusedLetter->setOpacityModifyRGB(true);
-}
-
-unsigned char Label::getOpacity() const
-{
-     return _realOpacity;
-}
-
-unsigned char Label::getDisplayedOpacity() const
-{
-    return _displayedOpacity;
-}
-
-void Label::setOpacity(GLubyte opacity)
-{
-    _displayedOpacity = _realOpacity = opacity;
-    _reusedLetter->setOpacity(opacity);
-	if( _cascadeOpacityEnabled ) {
-		GLubyte parentOpacity = 255;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        if (pParent && pParent->isCascadeOpacityEnabled())
-        {
-            parentOpacity = pParent->getDisplayedOpacity();
-        }
-        this->updateDisplayedOpacity(parentOpacity);
-	}
-}
-void Label::updateDisplayedOpacity(GLubyte parentOpacity)
-{
-    _displayedOpacity = _realOpacity * parentOpacity/255.0;
     
-    for (auto child: *_children)
-    {
-        Sprite *item = static_cast<Sprite*>( child );
-		item->updateDisplayedOpacity(_displayedOpacity);
-	}
-    V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
-    Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    if (_isOpacityModifyRGB)
-    {
-        color4.r *= _displayedOpacity/255.0f;
-        color4.g *= _displayedOpacity/255.0f;
-        color4.b *= _displayedOpacity/255.0f;
+    for(const auto& child: _children) {
+        child->setOpacityModifyRGB(_isOpacityModifyRGB);
     }
-    for (int index = 0; index < count; ++index)
-    {    
-        quads[index].bl.colors = color4;
-        quads[index].br.colors = color4;
-        quads[index].tl.colors = color4;
-        quads[index].tr.colors = color4;
-        _textureAtlas->updateQuad(&quads[index], index);           
-    }
-}
 
-bool Label::isCascadeOpacityEnabled() const
-{
-    return false;
-}
-
-void Label::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
-{
-    _cascadeOpacityEnabled = cascadeOpacityEnabled;
-}
-
-const Color3B& Label::getColor(void) const
-{
-    return _realColor;
-}
-
-const Color3B& Label::getDisplayedColor() const
-{
-    return _displayedColor;
+    _reusedLetter->setOpacityModifyRGB(true);
 }
 
 void Label::setColor(const Color3B& color)
 {
-    _displayedColor = _realColor = color;
 	_reusedLetter->setColor(color);
-	if( _cascadeColorEnabled )
-    {
-		Color3B parentColor = Color3B::WHITE;
-        RGBAProtocol* pParent = dynamic_cast<RGBAProtocol*>(_parent);
-        
-        if (pParent && pParent->isCascadeColorEnabled())
-            parentColor = pParent->getDisplayedColor();
-        
-        updateDisplayedColor(parentColor);
-	}
+    SpriteBatchNode::setColor(color);
 }
 
-void Label::updateDisplayedColor(const Color3B& parentColor)
+void Label::updateColor()
 {
-    _displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-    
-	for (auto child: *_children)
-    {
-        Sprite *item = static_cast<Sprite*>( child );
-		item->updateDisplayedColor(_displayedColor);
-	}
-
     V3F_C4B_T2F_Quad *quads = _textureAtlas->getQuads();
-    int count = _textureAtlas->getTotalQuads();
+    auto count = _textureAtlas->getTotalQuads();
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-
+    
     // special opacity for premultiplied textures
     if (_isOpacityModifyRGB)
     {
@@ -726,23 +740,18 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
         color4.b *= _displayedOpacity/255.0f;
     }
     for (int index=0; index<count; ++index)
-    {    
+    {
         quads[index].bl.colors = color4;
         quads[index].br.colors = color4;
         quads[index].tl.colors = color4;
         quads[index].tr.colors = color4;
         _textureAtlas->updateQuad(&quads[index], index);
-    }  
+    }
 }
 
-bool Label::isCascadeColorEnabled() const
+std::string Label::getDescription() const
 {
-    return false;
-}
-
-void Label::setCascadeColorEnabled(bool cascadeColorEnabled)
-{
-    _cascadeColorEnabled = cascadeColorEnabled;
+    return StringUtils::format("<Label | Tag = %d, Label = '%s'>", _tag, cc_utf16_to_utf8(_currentUTF16String,-1,nullptr,nullptr));
 }
 
 

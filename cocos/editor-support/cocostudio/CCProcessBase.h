@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 
 #ifndef __CCPROCESSBASE_H__
 #define __CCPROCESSBASE_H__
@@ -46,18 +45,14 @@ enum AnimationType
 
 };
 
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  ProcessBase : public cocos2d::Object
 {
 public:
-	/**
-     * @js ctor
-     */
     ProcessBase(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ProcessBase(void);
 
     /**
@@ -128,8 +123,6 @@ public:
     virtual float getCurrentPercent() const { return _currentPercent; }
     virtual int getRawDuration() const { return _rawDuration; }
 
-    virtual void setAnimationInternal(float animationInternal) { _animationInternal = animationInternal; }
-    virtual float getAnimationInternal() const { return _animationInternal; }
 protected:
 
     virtual void gotoFrame(int frameIndex);

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,10 +27,12 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include <stack>
 
-using namespace std;
-
 namespace cocostudio {
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  SpriteFrameCacheHelper
 {
 public:
@@ -45,17 +47,10 @@ public:
     /**
      *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
-    void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
+    void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
 
 private:
-	/**
-     * @js ctor
-     */
     SpriteFrameCacheHelper();
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~SpriteFrameCacheHelper();
 
     static SpriteFrameCacheHelper *_spriteFrameCacheHelper;

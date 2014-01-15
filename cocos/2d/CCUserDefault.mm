@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -48,44 +49,44 @@ NS_CC_BEGIN
  * implements of UserDefault
  */
 
-UserDefault* UserDefault::_userDefault = 0;
+UserDefault* UserDefault::_userDefault = nullptr;
 string UserDefault::_filePath = string("");
 bool UserDefault::_isFilePathInitialized = false;
 
 #ifdef KEEP_COMPATABILITY
 static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDocument **doc)
 {
-    tinyxml2::XMLElement* curNode = NULL;
-    tinyxml2::XMLElement* rootNode = NULL;
+    tinyxml2::XMLElement* curNode = nullptr;
+    tinyxml2::XMLElement* rootNode = nullptr;
     
     if (! UserDefault::isXMLFileExist())
     {
-        return NULL;
+        return nullptr;
     }
     
     // check the key value
     if (! pKey)
     {
-        return NULL;
+        return nullptr;
     }
     
     do
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		long size;
-		char* pXmlBuffer = (char*)FileUtils::getInstance()->getFileData(UserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &size);
-		//const char* pXmlBuffer = (const char*)data.getBuffer();
-		if(NULL == pXmlBuffer)
+
+        std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
+
+		if (xmlBuffer.empty())
 		{
             NSLog(@"can not read xml file");
 			break;
 		}
-		xmlDoc->Parse(pXmlBuffer);
-        free(pXmlBuffer);
+		xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
+
 		// get root node
 		rootNode = xmlDoc->RootElement();
-		if (NULL == rootNode)
+		if (nullptr == rootNode)
 		{
             NSLog(@"read root node error");
 			break;
@@ -97,10 +98,10 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
             // There is not xml node, delete xml file.
             remove(UserDefault::getInstance()->getXMLFilePath().c_str());
             
-            return NULL;
+            return nullptr;
         }
         
-		while (NULL != curNode)
+		while (nullptr != curNode)
 		{
 			const char* nodeName = curNode->Value();
 			if (!strcmp(nodeName, pKey))
@@ -128,25 +129,18 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
 
 static void deleteNodeByKey(const char *pKey)
 {
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     deleteNode(doc, node);
 }
 #endif
 
-/**
- * If the user invoke delete UserDefault::getInstance(), should set _userDefault
- * to null to avoid error when he invoke UserDefault::getInstance() later.
- */
 UserDefault::~UserDefault()
 {
-	CC_SAFE_DELETE(_userDefault);
-    _userDefault = NULL;
 }
 
 UserDefault::UserDefault()
 {
-	_userDefault = NULL;
 }
 
 bool UserDefault::getBoolForKey(const char* pKey)
@@ -157,7 +151,7 @@ bool UserDefault::getBoolForKey(const char* pKey)
 bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -202,7 +196,7 @@ int UserDefault::getIntegerForKey(const char* pKey)
 int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -246,7 +240,7 @@ float UserDefault::getFloatForKey(const char* pKey)
 float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -290,7 +284,7 @@ double  UserDefault::getDoubleForKey(const char* pKey)
 double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -334,7 +328,7 @@ std::string UserDefault::getStringForKey(const char* pKey)
 string UserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -370,15 +364,15 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
     }
 }
 
-Data* UserDefault::getDataForKey(const char* pKey)
+Data UserDefault::getDataForKey(const char* pKey)
 {
-    return getDataForKey(pKey, NULL);
+    return getDataForKey(pKey, Data::Null);
 }
 
-Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
+Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
-    tinyxml2::XMLDocument* doc = NULL;
+    tinyxml2::XMLDocument* doc = nullptr;
     tinyxml2::XMLElement* node = getXMLNodeForKey(pKey, &doc);
     if (node)
     {
@@ -389,12 +383,11 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
             int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
 
             if (decodedData) {
-                Data *ret = Data::create(decodedData, decodedDataLen);
+                Data ret;
+                ret.fastSet(decodedData, decodedDataLen);
                 
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
-                
-                free(decodedData);
                 
                 flush();
                 
@@ -419,17 +412,8 @@ Data* UserDefault::getDataForKey(const char* pKey, Data* defaultValue)
     }
     else
     {
-        unsigned char *bytes = {0};
-        unsigned long size = 0;
-        
-        if (data.length > 0) {
-            bytes = (unsigned char*)data.bytes;
-            size = data.length;
-        }
-        Data *ret = new Data(bytes, size);
-        
-        ret->autorelease();
-        
+        Data ret;
+        ret.copy((unsigned char*)data.bytes, data.length);
         return ret;
     }
 }
@@ -503,8 +487,7 @@ UserDefault* UserDefault::getInstance()
 
 void UserDefault::destroyInstance()
 {
-    delete _userDefault;
-    _userDefault = NULL;
+    CC_SAFE_DELETE(_userDefault);
 }
 
 // XXX: deprecated

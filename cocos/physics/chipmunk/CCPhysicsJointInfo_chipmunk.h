@@ -25,13 +25,13 @@
 #ifndef __CCPHYSICS_JOINT_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_JOINT_INFO_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 NS_CC_BEGIN
 
 class PhysicsJoint;
@@ -45,21 +45,20 @@ public:
     
     PhysicsJoint* getJoint() const { return _joint; }
     std::vector<cpConstraint*>& getJoints() { return _joints; }
-    static std::map<cpConstraint*, PhysicsJointInfo*>& getMap() { return _map; }
+    static std::unordered_map<cpConstraint*, PhysicsJointInfo*>& getMap() { return _map; }
     
-private:
+protected:
     PhysicsJointInfo(PhysicsJoint* joint);
     ~PhysicsJointInfo();
     
-private:
     std::vector<cpConstraint*> _joints;
     PhysicsJoint* _joint;
-    static std::map<cpConstraint*, PhysicsJointInfo*> _map;
+    static std::unordered_map<cpConstraint*, PhysicsJointInfo*> _map;
     
     friend class PhysicsJoint;
 };
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_JOINT_INFO_CHIPMUNK_H__

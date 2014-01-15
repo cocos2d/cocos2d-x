@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -303,7 +304,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = true;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -312,7 +313,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = false;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -348,7 +349,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     {
         if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
         {
-            long id = 0;
+            int id = 0;
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
@@ -373,9 +374,12 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action || GLFW_REPEAT == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
@@ -413,7 +417,7 @@ EGLView::EGLView()
     {
         g_keyCodeMap.insert(std::make_pair(item.glfwKeyCode, item.keyCode));
     }
-    strcpy(_viewName, "Cocos2dxWin32");
+    _viewName = "Cocos2dxWin32";
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
 }
@@ -433,7 +437,7 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);

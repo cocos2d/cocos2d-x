@@ -63,6 +63,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -92,7 +93,6 @@
     <ClCompile Include="..\CCBReader.cpp" />
     <ClCompile Include="..\CCBSequence.cpp" />
     <ClCompile Include="..\CCBSequenceProperty.cpp" />
-    <ClCompile Include="..\CCBValue.cpp" />
     <ClCompile Include="..\CCControlButtonLoader.cpp" />
     <ClCompile Include="..\CCControlLoader.cpp" />
     <ClCompile Include="..\CCLabelBMFontLoader.cpp" />
@@ -119,7 +119,6 @@
     <ClInclude Include="..\CCBSelectorResolver.h" />
     <ClInclude Include="..\CCBSequence.h" />
     <ClInclude Include="..\CCBSequenceProperty.h" />
-    <ClInclude Include="..\CCBValue.h" />
     <ClInclude Include="..\CCControlButtonLoader.h" />
     <ClInclude Include="..\CCControlLoader.h" />
     <ClInclude Include="..\CCLabelBMFontLoader.h" />

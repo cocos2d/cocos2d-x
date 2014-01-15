@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -44,7 +45,7 @@ NS_CC_BEGIN
 @return A Core Graphics structure that represents a rectangle.
         If the string is not well-formed, the function returns Rect::ZERO.
 */
-Rect CC_DLL RectFromString(const char* pszContent);
+Rect CC_DLL RectFromString(const std::string& str);
 
 /**
 @brief Returns a Core Graphics point structure corresponding to the data in a given string.
@@ -56,7 +57,7 @@ Rect CC_DLL RectFromString(const char* pszContent);
 @return A Core Graphics structure that represents a point.
         If the string is not well-formed, the function returns Point::ZERO.
 */
-Point CC_DLL PointFromString(const char* pszContent);
+Point CC_DLL PointFromString(const std::string& str);
 
 /**
 @brief Returns a Core Graphics size structure corresponding to the data in a given string.
@@ -68,7 +69,7 @@ Point CC_DLL PointFromString(const char* pszContent);
 @return A Core Graphics structure that represents a size.
         If the string is not well-formed, the function returns Size::ZERO.
 */
-Size CC_DLL SizeFromString(const char* pszContent);
+Size CC_DLL SizeFromString(const std::string& str);
 
 // end of data_structure group
 /// @}

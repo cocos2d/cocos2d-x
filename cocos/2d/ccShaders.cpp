@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2012 		cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -57,6 +58,12 @@ const GLchar * ccPositionTextureColor_vert =
 #include "ccShader_PositionTextureColor_vert.h"
 
 //
+const GLchar * ccPositionTextureColor_noMVP_frag =
+#include "ccShader_PositionTextureColor_noMVP_frag.h"
+const GLchar * ccPositionTextureColor_noMVP_vert =
+#include "ccShader_PositionTextureColor_noMVP_vert.h"
+
+//
 const GLchar * ccPositionTextureColorAlphaTest_frag = 
 #include "ccShader_PositionTextureColorAlphaTest_frag.h"
 
@@ -73,5 +80,25 @@ const GLchar * ccPositionColorLengthTexture_frag =
 #include "ccShader_PositionColorLengthTexture_frag.h"
 const GLchar * ccPositionColorLengthTexture_vert =
 #include "ccShader_PositionColorLengthTexture_vert.h"
+
+const GLchar * ccLabelDistanceFieldNormal_frag =
+#include "ccShader_Label_frag.h"
+const GLchar * ccLabelDistanceFieldNormal_vert =
+#include "ccShader_Label_vert.h"
+
+const GLchar * ccLabelDistanceFieldGlow_frag =
+#include "ccShader_Label_frag_glow.h"
+const GLchar * ccLabelDistanceFieldGlow_vert =
+#include "ccShader_Label_vert.h"
+
+const GLchar * ccLabelDistanceFieldOutline_frag =
+#include "ccShader_Label_frag_outline.h"
+const GLchar * ccLabelDistanceFieldOutline_vert =
+#include "ccShader_Label_vert.h"
+
+const GLchar * ccLabelDistanceFieldShadow_frag =
+#include "ccShader_Label_frag_shadow.h"
+const GLchar * ccLabelDistanceFieldShadow_vert =
+#include "ccShader_Label_vert.h"
 
 NS_CC_END

@@ -4,12 +4,13 @@
 #include "UISceneManager.h"
 #include "../ExtensionsTest.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
+#include "CocosGUIScene.h"
 
 using namespace gui;
 
 UIScene::UIScene()
-: m_pSceneTitle(NULL)
-, m_pUiLayer(NULL)
+: _sceneTitle(nullptr)
+, _uiLayer(nullptr)
 {
     
 }
@@ -23,37 +24,32 @@ bool UIScene::init()
 {
     if (CCLayer::init())
     {
-        m_pUiLayer = UILayer::create();
-        addChild(m_pUiLayer);
+        _uiLayer = Layer::create();
+        addChild(_uiLayer);
         
-        m_pWidget = dynamic_cast<UILayout*>(cocostudio::GUIReader::shareReader()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
-        m_pUiLayer->addWidget(m_pWidget);
+        _widget = dynamic_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosgui/UITest/UITest.json"));
+        _uiLayer->addChild(_widget);
         
-        m_pSceneTitle = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("UItest"));
+        Size screenSize = Director::getInstance()->getWinSize();
+        Size rootSize = _widget->getSize();
+        _uiLayer->setPosition(Point((screenSize.width - rootSize.width) / 2,
+                                        (screenSize.height - rootSize.height) / 2));
         
-        UILabel *back_label = dynamic_cast<UILabel*>(m_pUiLayer->getWidgetByName("back"));
-        back_label->setVisible(false);
-//        back_label->addReleaseEvent(this, coco_releaseselector(UIScene::toExtensionsMainLayer));
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
         
-        UIButton *left_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("left_Button"));
+        _sceneTitle = dynamic_cast<gui::Text*>(root->getChildByName("UItest"));
+        
+        gui::Text* back_label = dynamic_cast<gui::Text*>(root->getChildByName("back"));
+        back_label->addTouchEventListener(this, toucheventselector(UIScene::toCocosGUITestScene));
+        
+        Button* left_button = dynamic_cast<Button*>(root->getChildByName("left_Button"));
         left_button->addTouchEventListener(this, toucheventselector(UIScene::previousCallback));
         
-        UIButton *middle_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("middle_Button"));
+        Button* middle_button = dynamic_cast<Button*>(root->getChildByName("middle_Button"));
         middle_button->addTouchEventListener(this, toucheventselector(UIScene::restartCallback));
         
-        UIButton *right_button = dynamic_cast<UIButton*>(m_pUiLayer->getWidgetByName("right_Button"));
+        Button* right_button = dynamic_cast<Button*>(root->getChildByName("right_Button"));
         right_button->addTouchEventListener(this, toucheventselector(UIScene::nextCallback));
-        
-        
-        UILabel* mainMenuLabel = UILabel::create();
-        mainMenuLabel->setText("MainMenu");
-        mainMenuLabel->setFontSize(20);
-        mainMenuLabel->setTouchScaleChangeEnabled(true);
-        mainMenuLabel->setPosition(Point(430,30));
-        mainMenuLabel->setTouchEnabled(true);
-        mainMenuLabel->addTouchEventListener(this, toucheventselector(UIScene::menuCloseCallback));
-        m_pUiLayer->addWidget(mainMenuLabel);
-    
         
         return true;
     }
@@ -64,10 +60,22 @@ void UIScene::menuCloseCallback(Object* pSender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
-        m_pUiLayer->removeFromParent();
+        _uiLayer->removeFromParent();
         auto scene = new ExtensionsTestScene();
         scene->runThisTest();
         scene->release();
+    }
+}
+
+void UIScene::toCocosGUITestScene(Object* sender, TouchEventType type)
+{
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        UISceneManager::purgeUISceneManager();
+        
+        CocosGUITestScene* pScene = new CocosGUITestScene();
+        pScene->runThisTest();
+        pScene->release();
     }
 }
 
@@ -75,7 +83,6 @@ void UIScene::previousCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
-        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->previousUIScene());
     }
 }
@@ -84,7 +91,6 @@ void UIScene::restartCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
-        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->currentUIScene());
     }
 }
@@ -93,7 +99,6 @@ void UIScene::nextCallback(Object* sender, TouchEventType type)
 {
     if (type == TOUCH_EVENT_ENDED)
     {
-        m_pUiLayer->removeFromParent();
         CCDirector::getInstance()->replaceScene(UISceneManager::sharedUISceneManager()->nextUIScene());
     }
 }

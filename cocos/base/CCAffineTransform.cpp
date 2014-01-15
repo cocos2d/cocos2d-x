@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -45,6 +46,14 @@ Point __CCPointApplyAffineTransform(const Point& point, const AffineTransform& t
   return p;
 }
 
+Point PointApplyTransform(const Point& point, const kmMat4& transform)
+{
+    kmVec3 vec = {point.x, point.y, 0};
+    kmVec3Transform(&vec, &vec, &transform);
+    return Point(vec.x, vec.y);
+}
+
+
 Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t)
 {
   Size s;
@@ -82,6 +91,32 @@ Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineT
     return Rect(minX, minY, (maxX - minX), (maxY - minY));
 }
 
+Rect RectApplyTransform(const Rect& rect, const kmMat4& transform)
+{
+    float top    = rect.getMinY();
+    float left   = rect.getMinX();
+    float right  = rect.getMaxX();
+    float bottom = rect.getMaxY();
+
+    kmVec3 topLeft = {left, top};
+    kmVec3 topRight = {right, top};
+    kmVec3 bottomLeft = {left, bottom};
+    kmVec3 bottomRight = {right, bottom};
+
+    kmVec3Transform(&topLeft, &topLeft, &transform);
+    kmVec3Transform(&topRight, &topRight, &transform);
+    kmVec3Transform(&bottomLeft, &bottomLeft, &transform);
+    kmVec3Transform(&bottomRight, &bottomRight, &transform);
+
+    float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
+    float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
+    float minY = min(min(topLeft.y, topRight.y), min(bottomLeft.y, bottomRight.y));
+    float maxY = max(max(topLeft.y, topRight.y), max(bottomLeft.y, bottomRight.y));
+
+    return Rect(minX, minY, (maxX - minX), (maxY - minY));
+}
+
+
 AffineTransform AffineTransformTranslate(const AffineTransform& t, float tx, float ty)
 {
     return __CCAffineTransformMake(t.a, t.b, t.c, t.d, t.tx + t.a * tx + t.c * ty, t.ty + t.b * tx + t.d * ty);
@@ -114,6 +149,14 @@ AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTra
                                     t1.tx * t2.a + t1.ty * t2.c + t2.tx,                  //tx
                                     t1.tx * t2.b + t1.ty * t2.d + t2.ty);                  //ty
 }
+
+kmMat4 TransformConcat(const kmMat4& t1, const kmMat4& t2)
+{
+    kmMat4 ret;
+    kmMat4Multiply(&ret, &t1, &t2);
+    return ret;
+}
+
 
 /* Return true if `t1' and `t2' are equal, false otherwise. */
 bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2)

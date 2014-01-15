@@ -25,8 +25,8 @@
 #ifndef __CCPHYSICS_BODY_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_BODY_INFO_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
@@ -52,5 +52,5 @@ private:
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_BODY_INFO_CHIPMUNK_H__

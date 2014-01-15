@@ -1,5 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -43,13 +45,13 @@ class CC_DLL FileUtilsApple : public FileUtils
 public:
     /* override funtions */
     virtual std::string getWritablePath() const override;
-    virtual bool isFileExist(const std::string& strFilePath) const override;
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) override;
+    virtual bool isFileExist(const std::string& filePath) const override;
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
     
-    virtual Dictionary* createDictionaryWithContentsOfFile(const std::string& filename) override;
-    virtual bool writeToFile(Dictionary *dict, const std::string& fullPath) override;
+    virtual ValueMap getValueMapFromFile(const std::string& filename) override;
+    virtual bool writeToFile(ValueMap& dict, const std::string& fullPath) override;
     
-    virtual Array* createArrayWithContentsOfFile(const std::string& filename) override;
+    virtual ValueVector getValueVectorFromFile(const std::string& filename) override;
 };
 
 // end of platform group

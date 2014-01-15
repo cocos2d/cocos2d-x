@@ -1,10 +1,8 @@
 /*
- * Copyright (c) 2012 cocos2d-x.org
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
  * Copyright (c) 2008 Radu Gruian
- *
  * Copyright (c) 2011 Vit Valentin
+ * Copyright (c) 2012 cocos2d-x.org
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -61,7 +59,7 @@ public:
     /** creates and initializes a Points array with capacity 
      * @js NA
      */
-    static PointArray* create(unsigned int capacity);
+    static PointArray* create(ssize_t capacity);
     
     /**
      * @js NA
@@ -77,7 +75,7 @@ public:
     /** initializes a Catmull Rom config with a capacity hint 
      * @js NA
      */
-    bool initWithCapacity(unsigned int capacity);
+    bool initWithCapacity(ssize_t capacity);
     
     /** appends a control point 
      * @js NA
@@ -87,27 +85,27 @@ public:
     /** inserts a controlPoint at index 
      * @js NA
      */
-    void insertControlPoint(Point &controlPoint, unsigned int index);
+    void insertControlPoint(Point &controlPoint, ssize_t index);
     
     /** replaces an existing controlPoint at index 
      * @js NA
      */
-    void replaceControlPoint(Point &controlPoint, unsigned int index);
+    void replaceControlPoint(Point &controlPoint, ssize_t index);
     
     /** get the value of a controlPoint at a given index 
      * @js NA
      */
-    Point getControlPointAtIndex(unsigned int index);
+    Point getControlPointAtIndex(ssize_t index);
     
     /** deletes a control point at a given index 
      * @js NA
      */
-    void removeControlPointAtIndex(unsigned int index);
+    void removeControlPointAtIndex(ssize_t index);
     
     /** returns the number of objects of the control point array 
      * @js NA
      */
-    unsigned int count() const;
+    ssize_t count() const;
     
     /** returns a new copy of the array reversed. User is responsible for releasing this copy 
      * @js NA

@@ -1,4 +1,92 @@
-cocos2d-x-3.0alpha1 @??? 2013
+cocos2d-x-3.0final ?.? ?
+[All]
+     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
+     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [FIX]          Configuration: dumpInfo() -> getInfo()
+     [FIX]          ControlSlider doesn't support to set selected thumb sprite.
+     [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
+     [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          Tests: TestCpp works with CMake on Windows.
+     [FIX]          Tests: Sprites Performance Test has 3 new tests
+     [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
+     [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
+     [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
+     [FIX]          Windows: There will be some compilation errors when using x64 target on Windows.
+
+cocos2d-x-3.0beta Jan.7 2014
+[All]
+     [NEW]          New label: shadow, outline, glow support
+     [NEW]          AngelCode binary file format support for LabelBMFont
+     [NEW]          New spine runtime support
+     [NEW]          Add templated containers, such as `cocos2d::Map<>` and `cocos2d::Vector<>`
+     [NEW]          TextureCache::addImageAsync() uses std::function<> as call back
+     [NEW]          Namespace changed: network -> cocos2d::network, gui -> cocos2d::gui
+     [NEW]          Added more CocoStudioSceneTest samples.
+     [NEW]          Added UnitTest for Vector<T>, Map<K, V>, Value.
+     [NEW]          AngelCode binary file format support for LabelBMFont.
+     [NEW]          New renderer: Scene graph and Renderer are decoupled now.
+     [NEW]          Upgrated Box2D to 2.3.0
+     [NEW]          SChedule::performFunctionInCocosThread()
+     [NEW]          Added tga format support again.
+     [NEW]          Adds UnitTest for Template container and Value class
+     [FIX]          A Logic error in ControlUtils::RectUnion.
+     [FIX]          Bug fixes for Armature, use Vector<T>, Map<K, V> instead of Array, Dictionary.
+     [FIX]          Used c++11 range loop(highest performance) instead of other types of loop.
+     [FIX]          Removed most hungarian notations.
+     [FIX]          Merged NodeRGBA to Node.
+     [FIX]          Potential hash collision fix.
+     [FIX]          Updates spine runtime to the latest version.
+     [FIX]          Uses `const std::string&` instead of `const char*`.
+     [FIX]          LabelBMFont string can't be shown integrally.
+     [FIX]          Deprecates FileUtils::getFileData, adds FileUtils::getStringFromFile/getDataFromFile.
+     [FIX]          GUI refactoring: Removes UI prefix, Widget is inherited from Node, uses new containers(Vector<T>, Map<K,V>).
+     [FIX]          String itself is also modified in `String::componentsSeparatedByString`.
+     [FIX]          Sprites with PhysicsBody move to a wrong position when game resume from background.
+     [FIX]          Crash if connection breaks during download using AssetManager.   
+     [FIX]          OpenAL context isn't destroyed correctly on mac and ios.
+     [FIX]          Useless conversion in ScrollView::onTouchBegan.
+     [FIX]          Two memory leak fixes in EventDispatcher::removeEventListener(s).  
+     [FIX]          CCTMXMap doesn't support TMX files reference external TSX files
+     [FIX]          Logical error in `CallFuncN::clone()`   
+     [FIX]          Child's opacity will not be changed when its parent's cascadeOpacityEnabled was set to true and opacity was changed
+     [FIX]          Disallow copy and assign for Scene Graph + Actions objects
+     [FIX]          XMLHttpRequest receives wrong binary array
+     [FIX]          XMLHttpRequest.status needs to be assigned even when connection fails
+     [FIX]          TextureCache::addImageAsync may load a image even it is loaded in GL thread
+     [FIX]          EventCustom shouldn't use std::hash to generate unique ID, because the result is not unique 
+     [FIX]          CC_USE_PHYSICS is actually impossible to turn it off
+     [FIX]          Crash if connection breaks during download using AssetManager
+     [FIX]          Project_creator supports creating project at any folder and supports UI
+[Android]
+     [NEW]          build/android-build.sh: add supporting to generate .apk file
+     [NEW]          Bindings-generator supports to bind 'unsigned long'.
+     [FIX]          XMLHttpRequest receives wrong binary array.
+     [FIX]          'Test Frame Event' of TestJavascript/CocoStudioArmatureTest Crashes.
+     [FIX]          UserDefault::getDoubleForKey() doesn't pass default value to Java.
+[iOS]
+     [FIX]          Infinite loop in UserDefault's destructor
+[Windows]
+     [NEW]          CMake support for windows.
+[Bindings]
+     [NEW]          Support CocoStudio v1.2
+     [NEW]          Adds spine JS binding support.
+     [FIX]          Don't bind override functions for JSB and LuaBining since they aren't needed at all.
+     [FIX]          The order of onEnter and onExit is wrong.
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA.
+     [FIX]          Bindings-generator doesn't support 'unsigned long'
+     [FIX]          Potential hash collision by using typeid(T).hash_code() in JSB and LuaBinding
+[Lua binding]
+     [NEW]          New label support
+     [NEW]          Physcis integrated support
+     [NEW]          EventDispatcher support
+     [FIX]          CallFuncND + auto remove lua test case have no effect
+     [FIX]          Lua gc will cause correcsponding c++ object been released
+     [FIX]          Some lua manual binding functions don't remove unneeded element in the lua stack
+     [FIX]          The setBlendFunc method of some classes wasn't exposed to LUA
+[Javascript binding]
+     [FIX]          `onEnter` event is triggered after children's `onEnter` event
+     
+cocos2d-x-3.0alpha1 Nov.19 2013
 [all platforms]
      [DOC]          Added RELEASE_NOTES and CODING_STYLE.md files
      [FIX]          Texture: use CCLOG to log when a texture is being decoded in software
@@ -19,6 +107,18 @@ cocos2d-x-3.0alpha1 @??? 2013
      [FIX]          TransitionScenePageTurn: z fighting
      [FIX]          AssetsManager: Adding test whether the file directory exists when uncompressing file entry,if does not exist then create directory
      [FIX]          CCBReader: To set anchor point to 0,0 when loading Scale9Sprite
+     [FIX]          OpenGL Error 502 in Hole Demo
+     [FIX]          AssetsManager: downloading progress is not synchronized with actual download
+     [FIX]          SpriteFrameCache: memory leak when loading a plist file
+     [FIX]          removeSpriteFramesFromFile() crashes if file doesn't exist
+     [FIX]          EditBox: can't click the area that outside of keyboard to close keyboard
+     [FIX]          CCBReader: can not set next animation in AnimationCompleted callback
+     [FIX]          Node's anchor point was changed after being added to ScrollView
+     [FIX]          EventDispather: refactor method and fix some bugs
+     [FIX]          EventListner: cann't be removed sometimes
+     [FIX]          UserDefault: didn't set data size when parsing XML using TinyXML
+     [FIX]          Webp test crashed
+     [FIX]          CCHttpClient: The subthread of CCHttpClient interrupts main thread if timeout signal comes.
      [NEW]          Arm64 support.
      [NEW]          Added Mouse Support For Desktop Platforms.
      [NEW]          Point: Adds ANCHOR_XXX constants like ANCHOR_MIDDLE, ANCHOR_TOP_RIGHT, etc.
@@ -27,32 +127,58 @@ cocos2d-x-3.0alpha1 @??? 2013
      [NEW]          Android & iOS screen size change support
      [NEW]          GLProgram: setUniformLocationWithMatrix2fv, setUniformLocationWithMatrix3fv
      [NEW]          Color[3|4][B|F]: comparable and explicit convertible
+     [NEW]          Contorl::EventType add | operation
+     [NEW]          Performance Test: Sprite drawing
+     [NEW]          Adjusted folder structure
+     [NEW]          Added tools to simplify upgrading game codes from v2.x to v3.x
+     [FIX]          Added virtual destructors on Interfaces
 [Android]
      [FIX]          Added EGL_RENDERABLE_TYPE to OpenGL attributes
      [FIX]          Fixed application will crash when pause and resume.
      [FIX]          Clear NoSuchMethodError Exception when JniHelper fails to find method id
+     [FIX]          Fixed crash when backging from background
+     [FIX]          LabelTTF: crashed when setting dimension input height value less than the height of the font and the input width value is 0
+     [FIX]          Changed data type of 'char' to signed as default
      [NEW]          Added xlargeScreens="true" to supports-screens
      [NEW]          Added build/android-build.py to build all Android samples, and remove all build_native.sh/cmd
      [NEW]          Added build_native.py to build template projects, and remove build_native.sh/cmd
      [NEW]          Added Cocos2dxHelper.runOnGLThread(Runnable) again
+     [NEW]          Added support for orientation changed
+     [NEW]          Disabled CDT Builder on Eclipse
 [Mac]
      [FIX]          Removed unused CCLOG() from GL initialization
+     [FIX]          HttpClientTest: crash
 [iOS]
      [FIX]          Can't click the area that outside of keyboard to close keyboard when using EditBox.
+     [NEW]          Added support for orientation changed
 [Linux]
      [NEW]          Used CMake to build linux projects.
      [FIX]          Closed X display after getting DPI on Linux.
+[Win32]
+     [FIX]          Last test case of OpenglTest crashed
 [Desktop]
      [FIX]          Trigger onKeyReleased only after the key has been released.
+     [NEW]          Added mouse support
 [Javascript binding]
      [FIX]          Fixed a memory leak in ScriptingCore::runScript()
      [FIX]          sys.localStorage.getItem() does not support non-ascii string.
      [FIX]          cc.Scheduler.schedule(target, func) without repeat argument couldn't repeat schedule forever on device.
      [FIX]          CCBReader can't play sequence automatically in JSB.
-     [NEW]          main.js -> cocos2d-jsb.js
      [FIX]          Wrong convention to jsval in cccolor4f_to_jsval and cccolor3b_to_jsval
+     [FIX]          sys.localStorage: doesn't support non-ascii string
+     [FIX]          BuilderReader: can't play sequence  automatically
+     [FIX]          Wrong conversion to javal in cccolor4f_to_jsval and cccolor3b_to_jsval
+     [NEW]          main.js -> cocos2d-jsb.js
+     [NEW]          Remote debugging using Firefox, "step into" can not work
+     [NEW]          Added binding for Node::setScale(float, float)
+     [NEW]          Impvoved armature binding
+     [NEW]          Added CocoStudio releated binding codes: gui, scene parser, and add corresponding samples
 [Lua Binding]
      [NEW]          Added Armature lua binding and added test samples.
+     [NEW]          Added LuaObjectBridge & LuaJavaBridge to simplify invoking objective-c codes and java codes from lua
+     [NEW]          Added CocoStudio releated binding codes: gui, scene parser, and add corresponding samples
+     [NEW]          Added AssetsManager binding and corresponding sample
+     [NEW]          Added XMLHttpRequest lua binding and corresponding sample
 
 cocos2d-x-3.0alpha0 @Sep.19 2013
 [all platforms]

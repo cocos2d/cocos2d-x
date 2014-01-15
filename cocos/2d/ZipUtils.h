@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,6 +32,9 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtilsAndroid.h"
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+// for import ssize_t on win32 platform
+#include "CCStdC.h"
 #endif
 
 namespace cocos2d
@@ -65,8 +69,8 @@ namespace cocos2d
         *
         @since v0.8.1
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateMemory(unsigned char *in, long inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
-        static int inflateMemory(unsigned char *in, long inLength, unsigned char **out);
+        CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
+        static ssize_t inflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out);
 
         /** 
         * Inflates either zlib or gzip deflated memory. The inflated memory is
@@ -78,8 +82,8 @@ namespace cocos2d
         *
         @since v1.0.0
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
-        static int inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long outLengthHint);
+        CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
+        static ssize_t inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint);
 
         /** inflates a GZip file into memory
         *
@@ -105,8 +109,8 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipBuffer(const unsigned char *buffer, long len) { return isGZipBuffer(buffer, len); }
-        static bool isGZipBuffer(const unsigned char *buffer, long len);
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipBuffer(const unsigned char *buffer, ssize_t len) { return isGZipBuffer(buffer, len); }
+        static bool isGZipBuffer(const unsigned char *buffer, ssize_t len);
 
         /** inflates a CCZ file into memory
         *
@@ -123,8 +127,8 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZBuffer(const unsigned char *buffer, long len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
-        static int inflateCCZBuffer(const unsigned char *buffer, long len, unsigned char **out);
+        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
+        static int inflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out);
         
         /** test a file is a CCZ format file or not
         *
@@ -141,8 +145,8 @@ namespace cocos2d
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZBuffer(const unsigned char *buffer, long len) { return isCCZBuffer(buffer, len); }
-        static bool isCCZBuffer(const unsigned char *buffer, long len);
+        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZBuffer(const unsigned char *buffer, ssize_t len) { return isCCZBuffer(buffer, len); }
+        static bool isCCZBuffer(const unsigned char *buffer, ssize_t len);
 
         /** Sets the pvr.ccz encryption key parts separately for added
         * security.
@@ -199,9 +203,9 @@ namespace cocos2d
         static void setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
 
     private:
-        static int inflateMemoryWithHint(unsigned char *in, long inLength, unsigned char **out, long *outLength, long outLenghtHint);
-        static inline void decodeEncodedPvr (unsigned int *data, long len);
-        static inline unsigned int checksumPvr(const unsigned int *data, long len);
+        static int inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t *outLength, ssize_t outLenghtHint);
+        static inline void decodeEncodedPvr (unsigned int *data, ssize_t len);
+        static inline unsigned int checksumPvr(const unsigned int *data, ssize_t len);
 
         static unsigned int s_uEncryptedPvrKeyParts[4];
         static unsigned int s_uEncryptionKey[1024];
@@ -259,12 +263,12 @@ namespace cocos2d
         * Get resource file data from a zip file.
         * @param fileName File name
         * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-        * @return Upon success, a pointer to the data is returned, otherwise NULL.
-        * @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
+        * @return Upon success, a pointer to the data is returned, otherwise nullptr.
+        * @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
         *
         * @since v2.0.5
         */
-        unsigned char *getFileData(const std::string &fileName, long *size);
+        unsigned char *getFileData(const std::string &fileName, ssize_t *size);
 
     private:
         /** Internal data like zip file pointer / file list array and so on */

@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,8 +28,9 @@ THE SOFTWARE.
 
 #include "CCMenuItem.h"
 #include "CCLayer.h"
-
+#include "CCVector.h"
 #include "CCEventTouch.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -47,7 +49,7 @@ NS_CC_BEGIN
 *  - You can add MenuItem objects in runtime using addChild:
 *  - But the only accepted children are MenuItem objects
 */
-class CC_DLL Menu : public LayerRGBA
+class CC_DLL Menu : public Layer
 {
 public:
     enum class State
@@ -63,7 +65,7 @@ public:
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** creates a Menu with a Array of MenuItem objects */
-    static Menu* createWithArray(Array* pArrayOfItems);
+    static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** creates a Menu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
@@ -73,17 +75,6 @@ public:
     
     /** creates a Menu with MenuItem objects */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
-    /**
-     * @js ctor
-     */
-    Menu() : _selectedItem(NULL) {}
-    virtual ~Menu();
-
-    /** initializes an empty Menu */
-    bool init();
-
-    /** initializes a Menu with a NSArray of MenuItem objects */
-    bool initWithArray(Array* pArrayOfItems);
 
     /** align items vertically */
     void alignItemsVertically();
@@ -102,12 +93,12 @@ public:
     /** align items in rows of columns */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
-    void alignItemsInColumnsWithArray(Array* rows);
+    void alignItemsInColumnsWithArray(const ValueVector& rows);
 
     /** align items in columns of rows */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
-    void alignItemsInRowsWithArray(Array* columns);
+    void alignItemsInRowsWithArray(const ValueVector& columns);
 
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
@@ -129,13 +120,30 @@ public:
     virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB(void) const override { return false;}
 
+    virtual std::string getDescription() const override;
+
 protected:
+    /**
+     * @js ctor
+     */
+    Menu() : _selectedItem(nullptr) {}
+    virtual ~Menu();
+
+    /** initializes an empty Menu */
+    bool init();
+
+    /** initializes a Menu with a NSArray of MenuItem objects */
+    bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
+
     /** whether or not the menu will receive events */
     bool _enabled;
 
-    MenuItem* itemForTouch(Touch * touch);
+    MenuItem* getItemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(Menu);
 };
 
 // end of GUI group

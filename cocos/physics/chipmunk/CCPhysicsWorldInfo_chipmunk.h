@@ -25,24 +25,32 @@
 #ifndef __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 #define __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
 
+#include <vector>
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
-#include <vector>
+#include "CCGeometry.h"
 NS_CC_BEGIN
+typedef Point Vect;
+class PhysicsBodyInfo;
+class PhysicsJointInfo;
+class PhysicsShapeInfo;
 
 class PhysicsWorldInfo
 {
 public:
     cpSpace* getSpace() const { return _space; }
-    void addShape(cpShape* shape);
-    void removeShape(cpShape* shape);
-    void addBody(cpBody* body);
-    void removeBody(cpBody* body);
-    void addJoint(cpConstraint* joint);
-    void removeJoint(cpConstraint* joint);
+    void addShape(PhysicsShapeInfo& shape);
+    void removeShape(PhysicsShapeInfo& shape);
+    void addBody(PhysicsBodyInfo& body);
+    void removeBody(PhysicsBodyInfo& body);
+    void addJoint(PhysicsJointInfo& joint);
+    void removeJoint(PhysicsJointInfo& joint);
+    void setGravity(const Vect& gravity);
+    inline bool isLocked() { return 0 == _space->locked_private ? false : true; }
+    inline void step(float delta) { cpSpaceStep(_space, delta); }
     
 private:
     PhysicsWorldInfo();
@@ -56,5 +64,5 @@ private:
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_WORLD_INFO_CHIPMUNK_H__

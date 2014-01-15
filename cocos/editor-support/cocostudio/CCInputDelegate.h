@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,96 +29,113 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+/**
+ *  @lua NA
+ */
 class InputDelegate
 {
 protected:
     /**
-     * @js NA
-     * @lua NA
+     * @js ctor
      */
     InputDelegate(void);
     /**
      * @js NA
-     * @lua NA
      */
     virtual ~InputDelegate(void);
     
 public:
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual bool isTouchEnabled() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setTouchEnabled(bool value);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual bool isAccelerometerEnabled() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setAccelerometerEnabled(bool value);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual bool isKeypadEnabled() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setKeypadEnabled(bool value);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual cocos2d::Touch::DispatchMode getTouchMode() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setTouchPriority(int priority);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual int  getTouchPriority() const;
  /** @deprecated Please override onAcceleration */
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(cocos2d::Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
     // Deprecated touch callbacks.
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(cocos2d::Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    
+    /**
+     * @js NA
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
+    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
+    /**
+     * @js NA
+     */
     virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {};
-
+    /**
+     * @js NA
+     */
     virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
+    /**
+     * @js NA
+     */
     virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
-    
+    /**
+     * @js NA
+     */
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+    /**
+     * @js NA
+     */
     virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 protected:   

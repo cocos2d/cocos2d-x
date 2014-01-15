@@ -1,26 +1,26 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "cocostudio/DictionaryHelper.h"
 
@@ -38,7 +38,7 @@ DictionaryHelper::~DictionaryHelper()
     
 }
 
-DictionaryHelper* DictionaryHelper::shareHelper()
+DictionaryHelper* DictionaryHelper::getInstance()
 {
     if (!sharedHelper) {
         sharedHelper = new DictionaryHelper();
@@ -46,244 +46,181 @@ DictionaryHelper* DictionaryHelper::shareHelper()
     return sharedHelper;
 }
 
-void DictionaryHelper::purgeDictionaryHelper()
+void DictionaryHelper::destroyInstance()
 {
 	 CC_SAFE_DELETE(sharedHelper);
 }
 
-cocos2d::Dictionary* DictionaryHelper::getSubDictionary(cocos2d::Dictionary* root,const char* key)
+const rapidjson::Value& DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, const char* key)
 {
-    if (!root) {
-        return nullptr;
-    }
-    cocos2d::Object* obj = root->objectForKey(key);
-    if (!obj) {
-        return nullptr;
-    }
-    return (cocos2d::Dictionary*)(obj);
+	return root[key];
 }
 
-int DictionaryHelper::getIntValue(cocos2d::Dictionary* root,const char* key)
+const rapidjson::Value& DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx)
 {
-    if (!root) {
-        return 0;
-    }
-    cocos2d::Object* obj = root->objectForKey(key);
-    if (!obj) {
-        return 0;
-    }
+    return root[key][idx];
+}
+
+const rapidjson::Value& DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, int idx)
+{
+    return root[idx];
+}
+
+int DictionaryHelper::getIntValue_json(const rapidjson::Value& root, const char* key, int def)
+{
+    int nRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        nRet = root[key].GetInt();
+    } while (0);
     
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->intValue();
+    return nRet;
 }
 
-float DictionaryHelper::getFloatValue(cocos2d::Dictionary* root,const char* key)
+
+float DictionaryHelper::getFloatValue_json(const rapidjson::Value& root,const char* key, float def)
 {
-    if (!root) {
-        return 0.0;
-    }
-    cocos2d::Object* obj = root->objectForKey(key);
-    if (!obj) {
-        return 0.0f;
-    }
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->floatValue();
+	float fRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        fRet = (float)root[key].GetDouble();
+    } while (0);
+    
+    return fRet;
 }
 
-const char* DictionaryHelper::getStringValue(cocos2d::Dictionary* root,const char* key)
+bool DictionaryHelper::getBooleanValue_json(const rapidjson::Value& root,const char* key, bool def)
 {
-    if (!root) {
-        return nullptr;
-    }
-    cocos2d::Object* obj = root->objectForKey(key);
-    if (!obj) {
-        return nullptr;
-    }
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->_string.c_str();
+    bool bRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        bRet = root[key].GetBool();
+    } while (0);
+    
+    return bRet;
 }
 
-bool DictionaryHelper::getBooleanValue(cocos2d::Dictionary* root,const char* key)
+const char* DictionaryHelper::getStringValue_json(const rapidjson::Value& root,const char* key, const char *def)
 {
-    return (getIntValue( root, key ) != 0);
+    const char* sRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        sRet = root[key].GetString();
+    } while (0);
+    
+    return sRet;
 }
 
-cocos2d::Array* DictionaryHelper::getArrayValue(cocos2d::Dictionary *root, const char *key)
+
+
+int DictionaryHelper::getArrayCount_json(const rapidjson::Value& root, const char* key, int def)
 {
-    if (!root) {
-        return nullptr;
-    }
-    cocos2d::Object* obj = root->objectForKey(key);
-    if (!obj) {
-        return nullptr;
-    }
-    cocos2d::Array* array = (cocos2d::Array*)(obj);
-    return array;
+    int nRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[key].IsNull());
+        nRet = (int)(root[key].Size());
+    } while (0);
+    
+    return nRet;
 }
 
-cocos2d::Object* DictionaryHelper::checkObjectExist(cocos2d::Dictionary *root, const char *key)
+
+int DictionaryHelper::getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, int def)
 {
-    if (!root) {
-        return nullptr;
-    }
-    return root->objectForKey(key);
+    int nRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        nRet = root[arrayKey][idx].GetInt();
+    } while (0);
+    
+    return nRet;
 }
 
-int DictionaryHelper::objectToIntValue(cocos2d::Object *obj)
+
+float DictionaryHelper::getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, float def)
 {
-    if (!obj)
-    {
-        return 0;
-    }
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->intValue();
+    float fRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        fRet = (float)root[arrayKey][idx].GetDouble();
+    } while (0);
+    
+    return fRet;
 }
 
-float DictionaryHelper::objectToFloatValue(cocos2d::Object *obj)
+bool DictionaryHelper::getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, bool def)
 {
-    if (!obj)
-    {
-        return 0.0f;
-    }
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->floatValue();
+	bool bRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        bRet = root[arrayKey][idx].GetBool();
+    } while (0);
+    
+    return bRet;
 }
 
-const char* DictionaryHelper::objectToStringValue(cocos2d::Object *obj)
+const char* DictionaryHelper::getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def)
 {
-    if (!obj)
-    {
-        return nullptr;
-    }
-    cocos2d::String* cstr = (cocos2d::String*)(obj);
-    return cstr->_string.c_str();
+    const char *sRet = def;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(root[arrayKey].IsNull());
+        CC_BREAK_IF(root[arrayKey][idx].IsNull());
+        sRet = root[arrayKey][idx].GetString();
+    } while (0);
+    
+    return sRet;
 }
 
-bool DictionaryHelper::objectToBooleanValue(cocos2d::Object *obj)
+const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx)
 {
-    if (!obj)
-    {
-        return false;
-    }
-    return (objectToIntValue( obj ) != 0);
+	return root[key][idx];
 }
 
-cocos2d::Array* DictionaryHelper::objectToCCArray(cocos2d::Object *obj)
+bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root)
 {
-    if (!obj)
-    {
-        return nullptr;
-    }
-    cocos2d::Array* array = (cocos2d::Array*)(obj);
-    return array;
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        bRet = true;
+    } while (0);
+    
+    return bRet;
 }
 
-JsonDictionary* DictionaryHelper::getSubDictionary_json(JsonDictionary* root,const char* key)
+bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root,const char* key)
 {
-    if (!root)
-    {
-        return nullptr;
-    }
-    return root->getSubDictionary(key);
+    bool bRet = false;
+    do {
+        CC_BREAK_IF(root.IsNull());
+        bRet = root.HasMember(key);
+    } while (0);
+    
+    return bRet;
 }
 
-int DictionaryHelper::getIntValue_json(JsonDictionary* root,const char* key)
+bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root, int index)
 {
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getItemIntValue(key, 0);
-}
+    bool bRet = false;
+    do {   
+        CC_BREAK_IF(root.IsNull());
+        CC_BREAK_IF(!root.IsArray());
+        CC_BREAK_IF(index < 0 || root.Size() <= (unsigned int )index);
+        bRet = true;
+    } while (0);
 
-float DictionaryHelper::getFloatValue_json(JsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0.0f;
-    }
-    return root->getItemFloatValue(key, 0.0);
-}
-
-const char* DictionaryHelper::getStringValue_json(JsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return nullptr;
-    }
-    return root->getItemStringValue(key);
-}
-
-bool DictionaryHelper::getBooleanValue_json(JsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getItemBoolvalue(key, false);
-}
-
-int DictionaryHelper::getArrayCount_json(JsonDictionary* root,const char* key)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getArrayItemCount(key);
-}
-
-int DictionaryHelper::getIntValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return 0;
-    }
-    return root->getIntValueFromArray(arrayKey, idx, 0);
-}
-
-float DictionaryHelper::getFloatValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return 0.0f;
-    }
-    return root->getFloatValueFromArray(arrayKey, idx, 0.0);
-}
-
-bool DictionaryHelper::getBoolValueFromArray_json(JsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return false;
-    }
-    return root->getBoolValueFromArray(arrayKey, idx, false);
-}
-
-const char* DictionaryHelper::getStringValueFromArray_json(JsonDictionary *root, const char *arrayKey, int idx)
-{
-    if (!root)
-    {
-        return nullptr;
-    }
-    return root->getStringValueFromArray(arrayKey, idx);
-}
-
-JsonDictionary* DictionaryHelper::getDictionaryFromArray_json(JsonDictionary* root,const char* arrayKey,int idx)
-{
-    if (!root)
-    {
-        return nullptr;
-    }
-    return root->getSubItemFromArray(arrayKey, idx);
-}
-
-bool DictionaryHelper::checkObjectExist_json(JsonDictionary *root, const char *key)
-{
-    if (!root)
-    {
-        return false;
-    }
-    return root->isKeyValidate(key);
+    return bRet;
 }
 
 }

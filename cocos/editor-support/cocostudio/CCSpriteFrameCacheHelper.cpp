@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,7 +47,7 @@ void SpriteFrameCacheHelper::purge()
     _spriteFrameCacheHelper = nullptr;
 }
 
-void SpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
+void SpriteFrameCacheHelper::addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath)
 {
     CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
 }

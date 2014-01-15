@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -27,7 +28,6 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "CCNode.h"
-#include "CCCamera.h"
 #include "ccTypes.h"
 #include "CCTexture2D.h"
 #include "CCDirector.h"
@@ -62,16 +62,16 @@ public:
      */
     virtual ~GridBase(void);
 
-    bool initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
 
     /** whether or not the grid is active */
     inline bool isActive(void) const { return _active; }
-    void setActive(bool bActive);
+    void setActive(bool active);
 
     /** number of times that the grid will be reused */
     inline int getReuseGrid(void) const { return _reuseGrid; }
-    inline void setReuseGrid(int nReuseGrid) { _reuseGrid = nReuseGrid; }
+    inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
     /** size of the grid */
     inline const Size& getGridSize(void) const { return _gridSize; }
@@ -83,7 +83,7 @@ public:
 
     /** is texture flipped */
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
-    void setTextureFlipped(bool bFlipped);
+    void setTextureFlipped(bool flipped);
 
     void beforeDraw(void);
     void afterDraw(Node *target);
@@ -95,7 +95,7 @@ public:
 
 protected:
     bool _active;
-    long  _reuseGrid;
+    int  _reuseGrid;
     Size _gridSize;
     Texture2D *_texture;
     Point _step;
@@ -115,7 +115,7 @@ class CC_DLL Grid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
     static Grid3D* create(const Size& gridSize);
     /**
@@ -178,7 +178,7 @@ class CC_DLL TiledGrid3D : public GridBase
 {
 public:
     /** create one Grid */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool bFlipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid */
     static TiledGrid3D* create(const Size& gridSize);
     /**

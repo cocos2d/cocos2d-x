@@ -1,31 +1,33 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UISLIDER_H__
 #define __UISLIDER_H__
 
 #include "gui/UIWidget.h"
+
+NS_CC_BEGIN
 
 namespace gui {
 
@@ -34,30 +36,30 @@ typedef enum
     SLIDER_PERCENTCHANGED
 }SliderEventType;
 
-typedef void (cocos2d::Object::*SEL_SlidPercentChangedEvent)(cocos2d::Object*,SliderEventType);
+typedef void (Object::*SEL_SlidPercentChangedEvent)(Object*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /**
 *   @js NA
 *   @lua NA
 */
-class UISlider : public UIWidget
+class Slider : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UISlider();
+    Slider();
     
     /**
      * Default destructor
      */
-    virtual ~UISlider();
+    virtual ~Slider();
     
     /**
      * Allocates and initializes.
      */
-    static UISlider* create();
+    static Slider* create();
     
     /**
      * Load texture for slider bar.
@@ -80,21 +82,21 @@ public:
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsets(const cocos2d::Rect &capInsets);
+    void setCapInsets(const Rect &capInsets);
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsetsBarRenderer(const cocos2d::Rect &capInsets);
+    void setCapInsetsBarRenderer(const Rect &capInsets);
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
      *
      * @param capInsets    capinsets for slider
      */
-    void setCapInsetProgressBarRebderer(const cocos2d::Rect &capInsets);
+    void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
     /**
      * Load textures for slider ball.
@@ -162,25 +164,18 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    void addEventListenerSlider(cocos2d::Object* target,SEL_SlidPercentChangedEvent selector);
+    void addEventListenerSlider(Object* target,SEL_SlidPercentChangedEvent selector);
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
-    
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
-    
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
-    
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
+    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
     //override "getContentSize" method of widget.
-    virtual const cocos2d::Size& getContentSize() const override;
+    virtual const Size& getContentSize() const override;
     
     //override "getVirtualRenderer" method of widget.
-    virtual cocos2d::Node* getVirtualRenderer() override;
+    virtual Node* getVirtualRenderer() override;
     
     //override "ignoreContentAdaptWithSize" method of widget.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
@@ -188,7 +183,7 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
 
 protected:
     virtual void initRenderer() override;
@@ -200,17 +195,17 @@ protected:
     virtual void onSizeChanged() override;
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
 protected:
-    cocos2d::Node*  _barRenderer;
-    cocos2d::Node* _progressBarRenderer;
-    cocos2d::Size _progressBarTextureSize;
+    Node*  _barRenderer;
+    Node* _progressBarRenderer;
+    Size _progressBarTextureSize;
     
-    cocos2d::Sprite* _slidBallNormalRenderer;
-    cocos2d::Sprite* _slidBallPressedRenderer;
-    cocos2d::Sprite* _slidBallDisabledRenderer;
-    cocos2d::Node* _slidBallRenderer;
+    Sprite* _slidBallNormalRenderer;
+    Sprite* _slidBallPressedRenderer;
+    Sprite* _slidBallDisabledRenderer;
+    Node* _slidBallRenderer;
     
     float _barLength;
     int _percent;
@@ -223,10 +218,10 @@ protected:
     std::string _slidBallPressedTextureFile;
     std::string _slidBallDisabledTextureFile;
 
-    cocos2d::Rect _capInsetsBarRenderer;
-    cocos2d::Rect _capInsetsProgressBarRenderer;
+    Rect _capInsetsBarRenderer;
+    Rect _capInsetsProgressBarRenderer;
 
-    cocos2d::Object*       _sliderEventListener;
+    Object*       _sliderEventListener;
     SEL_SlidPercentChangedEvent    _sliderEventSelector;
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
@@ -236,5 +231,6 @@ protected:
 };
 
 }
+NS_CC_END
 
-#endif /* defined(__CocoGUI__UISlider__) */
+#endif /* defined(__CocoGUI__Slider__) */

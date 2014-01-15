@@ -1,6 +1,9 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
 #include "extensions/cocos-ext.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+
 USING_NS_CC_EXT;
 
 #define PTM_RATIO 32
@@ -144,12 +147,26 @@ void Box2DTestLayer::draw()
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
 
-    world->DrawDebugData();
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
     kmGLPopMatrix();
 #endif
 }
+
+#if CC_ENABLE_BOX2D_INTEGRATION
+void Box2DTestLayer::onDraw()
+{
+    kmMat4 oldMV;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMV);
+    kmGLLoadMatrix(&_modelViewMV);
+    world->DrawDebugData();
+    kmGLLoadMatrix(&oldMV);
+}
+#endif
 
 void Box2DTestLayer::addNewSpriteAtPosition(Point p)
 {

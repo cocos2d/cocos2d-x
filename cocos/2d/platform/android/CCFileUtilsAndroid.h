@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -55,19 +56,28 @@ public:
 
     /* override funtions */
     bool init();
-    virtual unsigned char* getFileData(const char* filename, const char* mode, long * size);
+
+    /** @deprecated Please use FileUtils::getDataFromFile or FileUtils::getStringFromFile instead. */
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
+
+    /**
+     *  Gets string from a file.
+     */
+    virtual std::string getStringFromFile(const std::string& filename) override;
+    
+    /**
+     *  Creates binary data from a file.
+     *  @return A data object.
+     */
+    virtual Data getDataFromFile(const std::string& filename) override;
 
     virtual std::string getWritablePath() const;
     virtual bool isFileExist(const std::string& strFilePath) const;
     virtual bool isAbsolutePath(const std::string& strPath) const;
     
-    /** This function is android specific. It is used for TextureCache::addImageAsync(). 
-     Don't use it in your codes.
-     */
-    unsigned char* getFileDataForAsync(const char* filename, const char* mode, long * size);
-    
 private:
-    unsigned char* doGetFileData(const char* filename, const char* mode, long * size, bool forAsync);
+    Data getData(const std::string& filename, bool forString);
+
     static AAssetManager* assetmanager;
 };
 

@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2011 Marco Tillemans
+ * Copyright (c) 2010-2012 cocos2d-x.org
+ * Copyright (c) 2011      Zynga Inc.
+ * Copyright (c) 2011      Marco Tillemans
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -31,6 +32,7 @@
 
 #include "CCNode.h"
 #include "CCProtocols.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -68,34 +70,25 @@ class CC_DLL ParticleBatchNode : public Node, public TextureProtocol
 {
 public:
     /** initializes the particle system with Texture2D, a capacity of particles, which particle system to use */
-    static ParticleBatchNode* createWithTexture(Texture2D *tex, unsigned int capacity = kParticleDefaultCapacity);
+    static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 
     /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    static ParticleBatchNode* create(const char* fileImage, unsigned int capacity = kParticleDefaultCapacity);
-    /**
-     * @js ctor
-     */
-    ParticleBatchNode();
+    static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
+
     /**
      * @js NA
      * @lua NA
      */
     virtual ~ParticleBatchNode();
 
-    /** initializes the particle system with Texture2D, a capacity of particles */
-    bool initWithTexture(Texture2D *tex, unsigned int capacity);
-
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
-    bool initWithFile(const char* fileImage, unsigned int capacity);
-
     /** Inserts a child into the ParticleBatchNode */
     void insertChild(ParticleSystem* system, int index);
 
-    void removeChildAtIndex(unsigned int index, bool doCleanup);
+    void removeChildAtIndex(int index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);
 
     /** disables a particle by inserting a 0'd quad into the texture atlas */
-    void disableParticle(unsigned int particleIndex);
+    void disableParticle(int particleIndex);
 
     /** Gets the texture atlas used for drawing the quads */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
@@ -105,8 +98,8 @@ public:
     
     // Overrides
     void visit();
-    virtual void addChild(Node * child) override;
-    virtual void addChild(Node * child, int zOrder) override;
+
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
@@ -126,13 +119,25 @@ public:
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc(void) const override;
+    
+protected:
+    /**
+     * @js ctor
+     */
+    ParticleBatchNode();
+    
+    /** initializes the particle system with Texture2D, a capacity of particles */
+    bool initWithTexture(Texture2D *tex, int capacity);
+    
+    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
+    bool initWithFile(const std::string& fileImage, int capacity);
 
 private:
     void updateAllAtlasIndexes();
-    void increaseAtlasCapacityTo(unsigned int quantity);
-    unsigned int searchNewPositionInChildrenForZ(int z);
-    void getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z);
-    unsigned int addChildHelper(ParticleSystem* child, int z, int aTag);
+    void increaseAtlasCapacityTo(ssize_t quantity);
+    int searchNewPositionInChildrenForZ(int z);
+    void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
+    int addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
     /** the texture atlas used for drawing the quads */
     TextureAtlas* _textureAtlas;
@@ -140,6 +145,8 @@ private:
 private:
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
+    // quad command
+    QuadCommand _quadCommand;
 };
 
 // end of particle_nodes group

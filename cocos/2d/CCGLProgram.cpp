@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright 2012 cocos2d-x.org
 Copyright 2011 Jeff Lamarche
 Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
+Copyright 2012 cocos2d-x.org
+Copyright 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
  
@@ -46,13 +47,21 @@ typedef struct _hashUniformEntry
 } tHashUniformEntry;
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
+const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
+const char* GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP = "ShaderPositionColor_noMVP";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTexture_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTextureA8Color";
 const char* GLProgram::SHADER_NAME_POSITION_U_COLOR = "ShaderPosition_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositionLengthTextureColor";
+
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelNormol";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelGlow";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_OUTLINE = "ShaderLabelOutline";
+const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_SHADOW = "ShaderLabelShadow";
+
 
 // uniform names
 const char* GLProgram::UNIFORM_NAME_P_MATRIX = "CC_PMatrix";
@@ -74,7 +83,7 @@ GLProgram::GLProgram()
 : _program(0)
 , _vertShader(0)
 , _fragShader(0)
-, _hashForUniforms(NULL)
+, _hashForUniforms(nullptr)
 , _flags()
 {
     memset(_uniforms, 0, sizeof(_uniforms));
@@ -138,7 +147,7 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
     {
         glAttachShader(_program, _fragShader);
     }
-    _hashForUniforms = NULL;
+    _hashForUniforms = nullptr;
     
     CHECK_GL_ERROR_DEBUG();
 
@@ -147,18 +156,18 @@ bool GLProgram::initWithVertexShaderByteArray(const GLchar* vShaderByteArray, co
 
 bool GLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str())->getCString();
-    const GLchar * fragmentSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str())->getCString();
+    std::string vertexSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename).c_str());
+    std::string fragmentSource = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename).c_str());
 
-    return initWithVertexShaderByteArray(vertexSource, fragmentSource);
+    return initWithVertexShaderByteArray(vertexSource.c_str(), fragmentSource.c_str());
 }
 
-const char* GLProgram::description() const
+std::string GLProgram::getDescription() const
 {
-    return String::createWithFormat("<GLProgram = "
+    return StringUtils::format("<GLProgram = "
                                       CC_FORMAT_PRINTF_SIZE_T
                                       " | Program = %i, VertexShader = %i, FragmentShader = %i>",
-                                      (size_t)this, _program, _vertShader, _fragShader)->getCString();
+                                      (size_t)this, _program, _vertShader, _fragShader);
 }
 
 bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
@@ -186,7 +195,7 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     };
 
     *shader = glCreateShader(type);
-    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
+    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, nullptr);
     glCompileShader(*shader);
 
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
@@ -197,16 +206,16 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
 		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
 		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
 		
-		glGetShaderSource(*shader, length, NULL, src);
+		glGetShaderSource(*shader, length, nullptr, src);
 		CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
         
         if (type == GL_VERTEX_SHADER)
         {
-            CCLOG("cocos2d: %s", getVertexShaderLog());
+            CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
         }
         else
         {
-            CCLOG("cocos2d: %s", getFragmentShaderLog());
+            CCLOG("cocos2d: %s", getFragmentShaderLog().c_str());
         }
         free(src);
 
@@ -234,8 +243,9 @@ void GLProgram::updateUniforms()
 
     _uniforms[UNIFORM_SAMPLER] = glGetUniformLocation(_program, UNIFORM_NAME_SAMPLER);
 
+    _flags.usesP = _uniforms[UNIFORM_P_MATRIX] != -1;
+	_flags.usesMV = _uniforms[UNIFORM_MV_MATRIX] != -1;
     _flags.usesMVP = _uniforms[UNIFORM_MVP_MATRIX] != -1;
-	_flags.usesMV = (_uniforms[UNIFORM_MV_MATRIX] != -1 && _uniforms[UNIFORM_P_MATRIX] != -1 );
 	_flags.usesTime = (
                        _uniforms[UNIFORM_TIME] != -1 ||
                        _uniforms[UNIFORM_SIN_TIME] != -1 ||
@@ -288,41 +298,42 @@ void GLProgram::use()
     GL::useProgram(_program);
 }
 
-const char* GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
+std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
 {
+    std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
     infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
-        return 0;
+        return "";
 
     char *logBytes = (char*)malloc(logLength);
     logFunc(object, logLength, &charsWritten, logBytes);
 
-    String* log = String::create(logBytes);
+    ret = logBytes;
 
     free(logBytes);
-    return log->getCString();
+    return ret;
 }
 
-const char* GLProgram::getVertexShaderLog() const
+std::string GLProgram::getVertexShaderLog() const
 {
     return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::getFragmentShaderLog() const
+std::string GLProgram::getFragmentShaderLog() const
 {
     return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
 }
 
-const char* GLProgram::getProgramLog() const
+std::string GLProgram::getProgramLog() const
 {
     return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
 }
 
 // Uniform cache
 
-bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int bytes)
+bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsigned int bytes)
 {
     if (location < 0)
     {
@@ -330,7 +341,7 @@ bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int
     }
     
     bool updated = true;
-    tHashUniformEntry *element = NULL;
+    tHashUniformEntry *element = nullptr;
     HASH_FIND_INT(_hashForUniforms, &location, element);
 
     if (! element)
@@ -363,7 +374,7 @@ bool GLProgram::updateUniformLocation(GLint location, GLvoid* data, unsigned int
 
 GLint GLProgram::getUniformLocationForName(const char* name) const
 {
-    CCASSERT(name != NULL, "Invalid uniform name" );
+    CCASSERT(name != nullptr, "Invalid uniform name" );
     CCASSERT(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
     
     return glGetUniformLocation(_program, name);
@@ -485,7 +496,7 @@ void GLProgram::setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2,
     }
 }
 
-void GLProgram::setUniformLocationWith2fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*2*numberOfArrays);
 
@@ -495,7 +506,7 @@ void GLProgram::setUniformLocationWith2fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWith3fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*3*numberOfArrays);
 
@@ -505,7 +516,7 @@ void GLProgram::setUniformLocationWith3fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, unsigned int numberOfArrays)
+void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays)
 {
     bool updated =  updateUniformLocation(location, floats, sizeof(float)*4*numberOfArrays);
 
@@ -515,7 +526,7 @@ void GLProgram::setUniformLocationWith4fv(GLint location, GLfloat* floats, unsig
     }
 }
 
-void GLProgram::setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
     
     if( updated )
@@ -524,7 +535,7 @@ void GLProgram::setUniformLocationWithMatrix2fv(GLint location, GLfloat* matrixA
     }
 }
 
-void GLProgram::setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices) {
+void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
     
     if( updated )
@@ -534,7 +545,7 @@ void GLProgram::setUniformLocationWithMatrix3fv(GLint location, GLfloat* matrixA
 }
 
 
-void GLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixArray, unsigned int numberOfMatrices)
+void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices)
 {
     bool updated =  updateUniformLocation(location, matrixArray, sizeof(float)*16*numberOfMatrices);
 
@@ -546,22 +557,28 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, GLfloat* matrixA
 
 void GLProgram::setUniformsForBuiltins()
 {
-    kmMat4 matrixP;
 	kmMat4 matrixMV;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
+
+    setUniformsForBuiltins(matrixMV);
+}
+
+void GLProgram::setUniformsForBuiltins(const kmMat4 &matrixMV)
+{
+    kmMat4 matrixP;
 
 	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV);
-	
+
+    if(_flags.usesP)
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
+
+    if(_flags.usesMV)
+        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
 
     if(_flags.usesMVP) {
         kmMat4 matrixMVP;
         kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
         setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MVP_MATRIX], matrixMVP.mat, 1);
-    }
-
-    if(_flags.usesMV) {
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_P_MATRIX], matrixP.mat, 1);
-        setUniformLocationWithMatrix4fv(_uniforms[UNIFORM_MV_MATRIX], matrixMV.mat, 1);
     }
 
 	if(_flags.usesTime) {
@@ -600,7 +617,7 @@ void GLProgram::reset()
         free(current_element->value);
         free(current_element);
     }
-    _hashForUniforms = NULL;
+    _hashForUniforms = nullptr;
 }
 
 NS_CC_END

@@ -106,7 +106,7 @@ void TouchesMainScene::update(float dt)
     }
 }
 
-std::string TouchesMainScene::title()
+std::string TouchesMainScene::title() const
 {
     return "No title";
 }
@@ -128,7 +128,7 @@ void TouchesPerformTest1::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-std::string TouchesPerformTest1::title()
+std::string TouchesPerformTest1::title() const
 {
     return "Targeted touches";
 }
@@ -171,7 +171,7 @@ void TouchesPerformTest2::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-std::string TouchesPerformTest2::title()
+std::string TouchesPerformTest2::title() const
 {
     return "Standard touches";
 }
@@ -287,7 +287,7 @@ void TouchesPerformTest3::onEnter()
     addChild(menu);
 }
 
-std::string TouchesPerformTest3::title()
+std::string TouchesPerformTest3::title() const
 {
     return "Touch Event Perf Test";
 }

@@ -1,38 +1,40 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UILAYOUTDEFINE_H__
 #define __UILAYOUTDEFINE_H__
 
 #include "cocos2d.h"
 
+NS_CC_BEGIN
+
 namespace gui {
 /**
 *   @js NA
 *   @lua NA
 */
-class UIMargin
+class Margin
 {
 public:
     float left;
@@ -41,15 +43,15 @@ public:
     float bottom;
     
 public:
-    UIMargin();
-    UIMargin(float l, float t, float r, float b);
-    UIMargin(const UIMargin& other);
-    UIMargin& operator= (const UIMargin& other);
+    Margin();
+    Margin(float l, float t, float r, float b);
+    Margin(const Margin& other);
+    Margin& operator= (const Margin& other);
     void setMargin(float l, float t, float r, float b);
-    bool equals(const UIMargin& target) const;
+    bool equals(const Margin& target) const;
 };
 
-const UIMargin UIMarginZero = UIMargin();
+const Margin MarginZero = Margin();
 
 typedef enum
 {
@@ -60,7 +62,7 @@ typedef enum
     LINEAR_GRAVITY_BOTTOM,
     LINEAR_GRAVITY_CENTER_VERTICAL,
     LINEAR_GRAVITY_CENTER_HORIZONTAL
-}UILinearGravity;
+}LinearGravity;
 
 typedef enum
 {
@@ -87,8 +89,8 @@ typedef enum
     RELATIVE_LOCATION_BELOW_LEFTALIGN,
     RELATIVE_LOCATION_BELOW_CENTER,
     RELATIVE_LOCATION_BELOW_RIGHTALIGN
-}UIRelativeAlign;
+}RelativeAlign;
 
 }
-
+NS_CC_END
 #endif /* defined(__UILayoutDefine__) */

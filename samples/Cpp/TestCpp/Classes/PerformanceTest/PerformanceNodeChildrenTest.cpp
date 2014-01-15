@@ -32,11 +32,10 @@
 static std::function<NodeChildrenMainScene*()> createFunctions[] =
 {
     CL(IterateSpriteSheetForLoop),
-    CL(IterateSpriteSheetCArray),
     CL(IterateSpriteSheetIterator),
+    CL(IterateSpriteSheetForEach),
 
     CL(CallFuncsSpriteSheetForEach),
-    CL(CallFuncsSpriteSheetCMacro),
 
     CL(AddSprite),
     CL(AddSpriteSheet),
@@ -110,7 +109,6 @@ void NodeChildrenMenuLayer::showCurrentTest()
         scene->initWithQuantityOfNodes(nodes);
 
         Director::getInstance()->replaceScene(scene);
-        scene->release();
     }
 }
 
@@ -189,12 +187,12 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     srand(0);
 }
 
-std::string NodeChildrenMainScene::title()
+std::string NodeChildrenMainScene::title() const
 {
     return "No title";
 }
 
-std::string NodeChildrenMainScene::subtitle()
+std::string NodeChildrenMainScene::subtitle() const
 {
     return "";
 }
@@ -283,11 +281,11 @@ const char*  IterateSpriteSheet::testName()
 void IterateSpriteSheetForLoop::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
-    for( const auto &object : *children )
+    for( const auto &object : children )
     {
         auto o = static_cast<Object*>(object);
         auto sprite = static_cast<Sprite*>(o);
@@ -297,12 +295,12 @@ void IterateSpriteSheetForLoop::update(float dt)
     CC_PROFILER_STOP(this->profilerName());
 }
 
-std::string IterateSpriteSheetForLoop::title()
+std::string IterateSpriteSheetForLoop::title() const
 {
     return "Iterate SpriteSheet";
 }
 
-std::string IterateSpriteSheetForLoop::subtitle()
+std::string IterateSpriteSheetForLoop::subtitle() const
 {
     return "Iterate children using C++11 range-based for loop. See console";
 }
@@ -312,43 +310,6 @@ const char*  IterateSpriteSheetForLoop::testName()
     return "Iterator: C++11 for loop";
 }
 
-////////////////////////////////////////////////////////
-//
-// IterateSpriteSheetCArray
-//
-////////////////////////////////////////////////////////
-void IterateSpriteSheetCArray::update(float dt)
-{
-    // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
-    Object* object = NULL;
-
-    CC_PROFILER_START(this->profilerName());
-
-    CCARRAY_FOREACH(children, object)
-    {
-        auto sprite = static_cast<Sprite*>(object);
-        sprite->setVisible(false);
-    }
-
-    CC_PROFILER_STOP(this->profilerName());
-}
-
-
-std::string IterateSpriteSheetCArray::title()
-{
-    return "Iterate SpriteSheet";
-}
-
-std::string IterateSpriteSheetCArray::subtitle()
-{
-    return "Iterate children using C Array API. See console";
-}
-
-const char*  IterateSpriteSheetCArray::testName()
-{
-    return "Iterator: CC_ARRAY_FOREACH";
-}
 
 ////////////////////////////////////////////////////////
 //
@@ -358,14 +319,13 @@ const char*  IterateSpriteSheetCArray::testName()
 void IterateSpriteSheetIterator::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
-    for( auto it=std::begin(*children); it != std::end(*children); ++it)
+    for( auto it=std::begin(children); it != std::end(children); ++it)
     {
-        auto obj = static_cast<Object*>(*it);
-        auto sprite = static_cast<Sprite*>(obj);
+        auto sprite = static_cast<Sprite*>(*it);
         sprite->setVisible(false);
     }
 
@@ -373,12 +333,12 @@ void IterateSpriteSheetIterator::update(float dt)
 }
 
 
-std::string IterateSpriteSheetIterator::title()
+std::string IterateSpriteSheetIterator::title() const
 {
     return "Iterate SpriteSheet";
 }
 
-std::string IterateSpriteSheetIterator::subtitle()
+std::string IterateSpriteSheetIterator::subtitle() const
 {
     return "Iterate children using begin() / end(). See console";
 }
@@ -390,23 +350,60 @@ const char*  IterateSpriteSheetIterator::testName()
 
 ////////////////////////////////////////////////////////
 //
+// IterateSpriteSheetForEach
+//
+////////////////////////////////////////////////////////
+void IterateSpriteSheetForEach::update(float dt)
+{
+    // iterate using fast enumeration protocol
+    auto& children = batchNode->getChildren();
+
+    CC_PROFILER_START(this->profilerName());
+
+    std::for_each(std::begin(children), std::end(children), [](Node *child) {
+        auto sprite = static_cast<Sprite*>(child);
+        sprite->setVisible(false);
+    });
+
+    CC_PROFILER_STOP(this->profilerName());
+}
+
+
+std::string IterateSpriteSheetForEach::title() const
+{
+    return "Iterate SpriteSheet";
+}
+
+std::string IterateSpriteSheetForEach::subtitle() const
+{
+    return "Iterate children using std::for_each(). See console";
+}
+
+const char*  IterateSpriteSheetForEach::testName()
+{
+    return "Iterator: std::for_each()";
+}
+
+
+////////////////////////////////////////////////////////
+//
 // CallFuncsSpriteSheetForEach
 //
 ////////////////////////////////////////////////////////
 void CallFuncsSpriteSheetForEach::update(float dt)
 {
     // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
+    auto& children = batchNode->getChildren();
 
     CC_PROFILER_START(this->profilerName());
 
 #if CC_USE_ARRAY_VECTOR
-    std::for_each(std::begin(*children), std::end(*children), [](const RCPtr<Object>& obj) {
+    std::for_each(std::begin(children), std::end(children), [](const RCPtr<Object>& obj) {
         static_cast<Node*>( static_cast<Object*>(obj) )->getPosition();
     });
 #else
-    std::for_each(std::begin(*children), std::end(*children), [](Object* obj) {
-        static_cast<Node*>(obj)->getPosition();
+    std::for_each(std::begin(children), std::end(children), [](Node* obj) {
+        obj->getPosition();
     });
 #endif
 
@@ -414,12 +411,12 @@ void CallFuncsSpriteSheetForEach::update(float dt)
 }
 
 
-std::string CallFuncsSpriteSheetForEach::title()
+std::string CallFuncsSpriteSheetForEach::title() const
 {
     return "'map' functional call";
 }
 
-std::string CallFuncsSpriteSheetForEach::subtitle()
+std::string CallFuncsSpriteSheetForEach::subtitle() const
 {
     return "Using 'std::for_each()'. See console";
 }
@@ -429,38 +426,6 @@ const char*  CallFuncsSpriteSheetForEach::testName()
     return "Map: std::for_each";
 }
 
-////////////////////////////////////////////////////////
-//
-// CallFuncsSpriteSheetCMacro
-//
-////////////////////////////////////////////////////////
-void CallFuncsSpriteSheetCMacro::update(float dt)
-{
-    // iterate using fast enumeration protocol
-    auto children = batchNode->getChildren();
-
-    CC_PROFILER_START(this->profilerName());
-
-    arrayMakeObjectsPerformSelector(children, getPosition, Node*);
-
-    CC_PROFILER_STOP(this->profilerName());
-}
-
-
-std::string CallFuncsSpriteSheetCMacro::title()
-{
-    return "'map' functional call";
-}
-
-std::string CallFuncsSpriteSheetCMacro::subtitle()
-{
-    return "Using 'arrayMakeObjectsPerformSelector'. See console";
-}
-
-const char*  CallFuncsSpriteSheetCMacro::testName()
-{
-    return "Map: arrayMakeObjectsPerformSelector";
-}
 ////////////////////////////////////////////////////////
 //
 // AddRemoveSpriteSheet
@@ -562,12 +527,12 @@ void AddSprite::update(float dt)
     }
 }
 
-std::string AddSprite::title()
+std::string AddSprite::title() const
 {
     return "Node::addChild()";
 }
 
-std::string AddSprite::subtitle()
+std::string AddSprite::subtitle() const
 {
     return "Adds sprites with random z. See console";
 }
@@ -625,12 +590,12 @@ void AddSpriteSheet::update(float dt)
     }
 }
 
-std::string AddSpriteSheet::title()
+std::string AddSpriteSheet::title() const
 {
     return "SpriteBatchNode::addChild()";
 }
 
-std::string AddSpriteSheet::subtitle()
+std::string AddSpriteSheet::subtitle() const
 {
     return "Adds sprites with random z. See console";
 }
@@ -690,12 +655,12 @@ void GetSpriteSheet::update(float dt)
     }
 }
 
-std::string GetSpriteSheet::title()
+std::string GetSpriteSheet::title() const
 {
     return "getChildByTag from spritesheet";
 }
 
-std::string GetSpriteSheet::subtitle()
+std::string GetSpriteSheet::subtitle() const
 {
     return "Get sprites using getChildByTag(). See console";
 }
@@ -746,12 +711,12 @@ void RemoveSprite::update(float dt)
     }
 }
 
-std::string RemoveSprite::title()
+std::string RemoveSprite::title() const
 {
     return "Node::removeChild()";
 }
 
-std::string RemoveSprite::subtitle()
+std::string RemoveSprite::subtitle() const
 {
     return "Remove sprites. See console";
 }
@@ -801,12 +766,12 @@ void RemoveSpriteSheet::update(float dt)
     }
 }
 
-std::string RemoveSpriteSheet::title()
+std::string RemoveSpriteSheet::title() const
 {
     return "SpriteBatchNode::removeChild()";
 }
 
-std::string RemoveSpriteSheet::subtitle()
+std::string RemoveSpriteSheet::subtitle() const
 {
     return "Remove sprites. See console";
 }
@@ -864,12 +829,12 @@ void ReorderSpriteSheet::update(float dt)
     }
 }
 
-std::string ReorderSpriteSheet::title()
+std::string ReorderSpriteSheet::title() const
 {
     return "SpriteBatchNode::reorderChild()";
 }
 
-std::string ReorderSpriteSheet::subtitle()
+std::string ReorderSpriteSheet::subtitle() const
 {
     return "Reorder sprites. See console";
 }
@@ -929,12 +894,12 @@ void SortAllChildrenSpriteSheet::update(float dt)
     }
 }
 
-std::string SortAllChildrenSpriteSheet::title()
+std::string SortAllChildrenSpriteSheet::title() const
 {
     return "SpriteBatchNode::sortAllChildren()";
 }
 
-std::string SortAllChildrenSpriteSheet::subtitle()
+std::string SortAllChildrenSpriteSheet::subtitle() const
 {
     return "Calls sortOfChildren(). See console";
 }
@@ -991,12 +956,12 @@ void VisitSceneGraph::update(float dt)
     CC_PROFILER_STOP( this->profilerName() );
 }
 
-std::string VisitSceneGraph::title()
+std::string VisitSceneGraph::title() const
 {
     return "Performance of visiting the scene graph";
 }
 
-std::string VisitSceneGraph::subtitle()
+std::string VisitSceneGraph::subtitle() const
 {
     return "calls visit() on scene graph. See console";
 }
@@ -1013,5 +978,4 @@ void runNodeChildrenTest()
     scene->initWithQuantityOfNodes(kNodesIncrease);
 
     Director::getInstance()->replaceScene(scene);
-    scene->release();
 }

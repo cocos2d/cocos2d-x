@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010гн2011 cocos2d-x.org
-Copyright (c) 2009       On-Core
+Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -26,6 +27,7 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "ccMacros.h"
 #include "CCGrid.h"
+#include "CCNodeGrid.h"
 #include <stdlib.h>
 
 NS_CC_BEGIN
@@ -39,31 +41,31 @@ struct Tile
 
 // implementation of ShakyTiles3D
 
-ShakyTiles3D* ShakyTiles3D::create(float duration, const Size& gridSize, int nRange, bool bShakeZ)
+ShakyTiles3D* ShakyTiles3D::create(float duration, const Size& gridSize, int range, bool shakeZ)
 {
-    ShakyTiles3D *pAction = new ShakyTiles3D();
+    ShakyTiles3D *action = new ShakyTiles3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, nRange, bShakeZ))
+        if (action->initWithDuration(duration, gridSize, range, shakeZ))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;    
+    return action;
 }
 
-bool ShakyTiles3D::initWithDuration(float duration, const Size& gridSize, int nRange, bool bShakeZ)
+bool ShakyTiles3D::initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ)
 {
     if (TiledGrid3DAction::initWithDuration(duration, gridSize))
     {
-        _randrange = nRange;
-        _shakeZ = bShakeZ;
+        _randrange = range;
+        _shakeZ = shakeZ;
 
         return true;
     }
@@ -118,32 +120,32 @@ void ShakyTiles3D::update(float time)
 
 // implementation of ShatteredTiles3D
 
-ShatteredTiles3D* ShatteredTiles3D::create(float duration, const Size& gridSize, int nRange, bool bShatterZ)
+ShatteredTiles3D* ShatteredTiles3D::create(float duration, const Size& gridSize, int range, bool shatterZ)
 {
-    ShatteredTiles3D *pAction = new ShatteredTiles3D();
+    ShatteredTiles3D *action = new ShatteredTiles3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, nRange, bShatterZ))
+        if (action->initWithDuration(duration, gridSize, range, shatterZ))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;    
+    return action;
 }
 
-bool ShatteredTiles3D::initWithDuration(float duration, const Size& gridSize, int nRange, bool bShatterZ)
+bool ShatteredTiles3D::initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ)
 {
     if (TiledGrid3DAction::initWithDuration(duration, gridSize))
     {
         _once = false;
-        _randrange = nRange;
-        _shatterZ = bShatterZ;
+        _randrange = range;
+        _shatterZ = shatterZ;
 
         return true;
     }
@@ -205,21 +207,21 @@ void ShatteredTiles3D::update(float time)
 
 ShuffleTiles* ShuffleTiles::create(float duration, const Size& gridSize, unsigned int seed)
 {
-    ShuffleTiles *pAction = new ShuffleTiles();
+    ShuffleTiles *action = new ShuffleTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, seed))
+        if (action->initWithDuration(duration, gridSize, seed))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;    
+    return action;
 }
 
 bool ShuffleTiles::initWithDuration(float duration, const Size& gridSize, unsigned int seed)
@@ -227,8 +229,8 @@ bool ShuffleTiles::initWithDuration(float duration, const Size& gridSize, unsign
     if (TiledGrid3DAction::initWithDuration(duration, gridSize))
     {
         _seed = seed;
-        _tilesOrder = NULL;
-        _tiles = NULL;
+        _tilesOrder = nullptr;
+        _tiles = nullptr;
 
         return true;
     }
@@ -251,15 +253,15 @@ ShuffleTiles::~ShuffleTiles(void)
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
-void ShuffleTiles::shuffle(unsigned int *pArray, unsigned int nLen)
+void ShuffleTiles::shuffle(unsigned int *array, unsigned int len)
 {
     int i;
-    for( i = nLen - 1; i >= 0; i-- )
+    for( i = len - 1; i >= 0; i-- )
     {
         unsigned int j = rand() % (i+1);
-        unsigned int v = pArray[i];
-        pArray[i] = pArray[j];
-        pArray[j] = v;
+        unsigned int v = array[i];
+        array[i] = array[j];
+        array[j] = v;
     }
 }
 
@@ -279,7 +281,7 @@ void ShuffleTiles::placeTile(const Point& pos, Tile *t)
 {
     Quad3 coords = getOriginalTile(pos);
 
-    Point step = _target->getGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
     coords.bl.x += (int)(t->position.x * step.x);
     coords.bl.y += (int)(t->position.y * step.y);
 
@@ -356,21 +358,21 @@ void ShuffleTiles::update(float time)
 
 FadeOutTRTiles* FadeOutTRTiles::create(float duration, const Size& gridSize)
 {
-    FadeOutTRTiles *pAction = new FadeOutTRTiles();
+    FadeOutTRTiles *action = new FadeOutTRTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize))
+        if (action->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;    
+    return action;
 }
 
 FadeOutTRTiles* FadeOutTRTiles::clone() const
@@ -408,7 +410,7 @@ void FadeOutTRTiles::turnOffTile(const Point& pos)
 void FadeOutTRTiles::transformTile(const Point& pos, float distance)
 {
     Quad3 coords = getOriginalTile(pos);
-    Point step = _target->getGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
 
     coords.bl.x += (step.x / 2) * (1.0f - distance);
     coords.bl.y += (step.y / 2) * (1.0f - distance);
@@ -454,21 +456,21 @@ void FadeOutTRTiles::update(float time)
 
 FadeOutBLTiles* FadeOutBLTiles::create(float duration, const Size& gridSize)
 {
-    FadeOutBLTiles *pAction = new FadeOutBLTiles();
+    FadeOutBLTiles *action = new FadeOutBLTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize))
+        if (action->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 FadeOutBLTiles* FadeOutBLTiles::clone() const
@@ -495,21 +497,21 @@ float FadeOutBLTiles::testFunc(const Size& pos, float time)
 
 FadeOutUpTiles* FadeOutUpTiles::create(float duration, const Size& gridSize)
 {
-    FadeOutUpTiles *pAction = new FadeOutUpTiles();
+    FadeOutUpTiles *action = new FadeOutUpTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize))
+        if (action->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 FadeOutUpTiles* FadeOutUpTiles::clone() const
@@ -535,7 +537,7 @@ float FadeOutUpTiles::testFunc(const Size& pos, float time)
 void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 {
     Quad3 coords = getOriginalTile(pos);
-    Point step = _target->getGrid()->getStep();
+    Point step = _gridNodeTarget->getGrid()->getStep();
 
     coords.bl.y += (step.y / 2) * (1.0f - distance);
     coords.br.y += (step.y / 2) * (1.0f - distance);
@@ -549,21 +551,21 @@ void FadeOutUpTiles::transformTile(const Point& pos, float distance)
 
 FadeOutDownTiles* FadeOutDownTiles::create(float duration, const Size& gridSize)
 {
-    FadeOutDownTiles *pAction = new FadeOutDownTiles();
+    FadeOutDownTiles *action = new FadeOutDownTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize))
+        if (action->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 FadeOutDownTiles* FadeOutDownTiles::clone() const
@@ -604,21 +606,21 @@ TurnOffTiles* TurnOffTiles::create(float duration, const Size& gridSize)
 
 TurnOffTiles* TurnOffTiles::create(float duration, const Size& gridSize, unsigned int seed)
 {
-    TurnOffTiles *pAction = new TurnOffTiles();
+    TurnOffTiles *action = new TurnOffTiles();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, seed))
+        if (action->initWithDuration(duration, gridSize, seed))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool TurnOffTiles::initWithDuration(float duration, const Size& gridSize, unsigned int seed)
@@ -626,7 +628,7 @@ bool TurnOffTiles::initWithDuration(float duration, const Size& gridSize, unsign
     if (TiledGrid3DAction::initWithDuration(duration, gridSize))
     {
         _seed = seed;
-        _tilesOrder = NULL;
+        _tilesOrder = nullptr;
 
         return true;
     }
@@ -648,15 +650,15 @@ TurnOffTiles::~TurnOffTiles(void)
     CC_SAFE_DELETE_ARRAY(_tilesOrder);
 }
 
-void TurnOffTiles::shuffle(unsigned int *pArray, unsigned int nLen)
+void TurnOffTiles::shuffle(unsigned int *array, unsigned int len)
 {
     int i;
-    for (i = nLen - 1; i >= 0; i--)
+    for (i = len - 1; i >= 0; i--)
     {
         unsigned int j = rand() % (i+1);
-        unsigned int v = pArray[i];
-        pArray[i] = pArray[j];
-        pArray[j] = v;
+        unsigned int v = array[i];
+        array[i] = array[j];
+        array[j] = v;
     }
 }
 
@@ -721,21 +723,21 @@ void TurnOffTiles::update(float time)
 
 WavesTiles3D* WavesTiles3D::create(float duration, const Size& gridSize, unsigned int waves, float amplitude)
 {
-    WavesTiles3D *pAction = new WavesTiles3D();
+    WavesTiles3D *action = new WavesTiles3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, waves, amplitude))
+        if (action->initWithDuration(duration, gridSize, waves, amplitude))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool WavesTiles3D::initWithDuration(float duration, const Size& gridSize, unsigned int waves, float amplitude)
@@ -786,21 +788,21 @@ void WavesTiles3D::update(float time)
 
 JumpTiles3D* JumpTiles3D::create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude)
 {
-    JumpTiles3D *pAction = new JumpTiles3D();
+    JumpTiles3D *action = new JumpTiles3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize, numberOfJumps, amplitude))
+        if (action->initWithDuration(duration, gridSize, numberOfJumps, amplitude))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 bool JumpTiles3D::initWithDuration(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude)
@@ -863,28 +865,28 @@ void JumpTiles3D::update(float time)
 
 SplitRows* SplitRows::create(float duration, unsigned int nRows)
 {
-    SplitRows *pAction = new SplitRows();
+    SplitRows *action = new SplitRows();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, nRows))
+        if (action->initWithDuration(duration, nRows))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
-bool SplitRows::initWithDuration(float duration, unsigned int nRows)
+bool SplitRows::initWithDuration(float duration, unsigned int rows)
 {
-    _rows = nRows;
+    _rows = rows;
 
-    return TiledGrid3DAction::initWithDuration(duration, Size(1, nRows));
+    return TiledGrid3DAction::initWithDuration(duration, Size(1, rows));
 }
 
 SplitRows* SplitRows::clone() const
@@ -927,29 +929,29 @@ void SplitRows::update(float time)
 
 // implementation of SplitCols
 
-SplitCols* SplitCols::create(float duration, unsigned int nCols)
+SplitCols* SplitCols::create(float duration, unsigned int cols)
 {
-    SplitCols *pAction = new SplitCols();
+    SplitCols *action = new SplitCols();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, nCols))
+        if (action->initWithDuration(duration, cols))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
-bool SplitCols::initWithDuration(float duration, unsigned int nCols)
+bool SplitCols::initWithDuration(float duration, unsigned int cols)
 {
-    _cols = nCols;
-    return TiledGrid3DAction::initWithDuration(duration, Size(nCols, 1));
+    _cols = cols;
+    return TiledGrid3DAction::initWithDuration(duration, Size(cols, 1));
 }
 
 SplitCols* SplitCols::clone() const

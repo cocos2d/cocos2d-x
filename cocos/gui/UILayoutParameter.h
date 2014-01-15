@@ -1,31 +1,33 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __LAYOUTPARMETER_H__
 #define __LAYOUTPARMETER_H__
 
 #include "gui/UILayoutDefine.h"
+
+NS_CC_BEGIN
 
 namespace gui {
 
@@ -39,42 +41,42 @@ typedef enum
 *   @js NA
 *   @lua NA
 */
-class UILayoutParameter : public cocos2d::Object
+class LayoutParameter : public Object
 {
 public:
     /**
      * Default constructor
      */
-    UILayoutParameter() : _margin(UIMargin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
+    LayoutParameter() : _margin(Margin()){_layoutParameterType = LAYOUT_PARAMETER_NONE;};
     
     /**
      * Default destructor
      */
-    virtual ~UILayoutParameter(){};
+    virtual ~LayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UILayoutParameter* create();
+    static LayoutParameter* create();
     
     /**
      * Sets Margin parameter for LayoutParameter.
      * 
-     * @see UIMargin
+     * @see Margin
      *
      * @param margin
      */
-    void setMargin(const UIMargin& margin);
+    void setMargin(const Margin& margin);
     
     /**
      * Gets Margin parameter of LayoutParameter.
      *
-     * @see UIMargin
+     * @see Margin
      *
-     * @return const UIMargin&
+     * @return const Margin&
      */
-    const UIMargin& getMargin() const;
+    const Margin& getMargin() const;
     
     /**
      * Gets LayoutParameterType of LayoutParameter.
@@ -85,95 +87,93 @@ public:
      */
     LayoutParameterType getLayoutType() const;
 protected:
-    UIMargin _margin;
+    Margin _margin;
     LayoutParameterType _layoutParameterType;
 };
 /**
 *   @js NA
 *   @lua NA
 */
-class UILinearLayoutParameter : public UILayoutParameter
+class LinearLayoutParameter : public LayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    UILinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
+    LinearLayoutParameter() : _linearGravity(LINEAR_GRAVITY_NONE){_layoutParameterType = LAYOUT_PARAMETER_LINEAR;};
     
     /**
      * Default destructor
      */
-    virtual ~UILinearLayoutParameter(){};
+    virtual ~LinearLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UILinearLayoutParameter* create();
+    static LinearLayoutParameter* create();
     
     /**
-     * Sets UILinearGravity parameter for LayoutParameter.
+     * Sets LinearGravity parameter for LayoutParameter.
      *
-     * @see UILinearGravity
+     * @see LinearGravity
      *
-     * @param UILinearGravity
+     * @param LinearGravity
      */
-    void setGravity(UILinearGravity gravity);
+    void setGravity(LinearGravity gravity);
     
     /**
-     * Gets UILinearGravity parameter for LayoutParameter.
+     * Gets LinearGravity parameter for LayoutParameter.
      *
-     * @see UILinearGravity
+     * @see LinearGravity
      *
-     * @return UILinearGravity
+     * @return LinearGravity
      */
-    UILinearGravity getGravity() const;
+    LinearGravity getGravity() const;
 protected:
-    UILinearGravity _linearGravity;
+    LinearGravity _linearGravity;
 };
 /**
 *   @js NA
 *   @lua NA
 */
 
-class UILayout;
-
-class UIRelativeLayoutParameter : public UILayoutParameter
+class RelativeLayoutParameter : public LayoutParameter
 {
 public:
     /**
      * Default constructor
      */
-    UIRelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""),_put(false){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
+    RelativeLayoutParameter() : _relativeAlign(RELATIVE_ALIGN_NONE),_relativeWidgetName(""),_relativeLayoutName(""),_put(false){_layoutParameterType = LAYOUT_PARAMETER_RELATIVE;};
     
     /**
      * Default destructor
      */
-    virtual ~UIRelativeLayoutParameter(){};
+    virtual ~RelativeLayoutParameter(){};
     
     /**
      * Allocates and initializes.
      * @return A initialized LayoutParameter which is marked as "autorelease".
      */
-    static UIRelativeLayoutParameter* create();
+    static RelativeLayoutParameter* create();
     
     /**
-     * Sets UIRelativeAlign parameter for LayoutParameter.
+     * Sets RelativeAlign parameter for LayoutParameter.
      *
-     * @see UIRelativeAlign
+     * @see RelativeAlign
      *
-     * @param UIRelativeAlign
+     * @param RelativeAlign
      */
-    void setAlign(UIRelativeAlign align);
+    void setAlign(RelativeAlign align);
     
     /**
-     * Gets UIRelativeAlign parameter for LayoutParameter.
+     * Gets RelativeAlign parameter for LayoutParameter.
      *
-     * @see UIRelativeAlign
+     * @see RelativeAlign
      *
-     * @return UIRelativeAlign
+     * @return RelativeAlign
      */
-    UIRelativeAlign getAlign() const;
+    RelativeAlign getAlign() const;
     
     /**
      * Sets a key for LayoutParameter. Witch widget named this is relative to.
@@ -203,13 +203,15 @@ public:
      */
     const char* getRelativeName() const;
 protected:
-    UIRelativeAlign _relativeAlign;
+    RelativeAlign _relativeAlign;
     std::string _relativeWidgetName;
     std::string _relativeLayoutName;
     bool _put;
-    friend class UILayout;
+    friend class Layout;
 };
 
 }
+
+NS_CC_END
 
 #endif /* defined(__LayoutParameter__) */

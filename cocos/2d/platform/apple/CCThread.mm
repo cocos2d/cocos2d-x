@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,14 +27,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-Thread::~Thread()
+void* ThreadHelper::createAutoreleasePool()
 {
-    [(id)_autoReleasePool release];
+    id pool = [[NSAutoreleasePool alloc] init];
+    return pool;
 }
 
-void Thread::createAutoreleasePool()
+void ThreadHelper::releaseAutoreleasePool(void *autoreleasePool)
 {
-    _autoReleasePool = [[NSAutoreleasePool alloc] init];
+    [(NSAutoreleasePool*)autoreleasePool release];
 }
 
 NS_CC_END

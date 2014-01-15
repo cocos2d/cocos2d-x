@@ -73,7 +73,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,7 +81,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -120,7 +120,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -162,6 +162,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="..\..\external\unzip\unzip.cpp" />
@@ -169,6 +170,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCAffineTransform.cpp" />
     <ClCompile Include="..\base\CCArray.cpp" />
     <ClCompile Include="..\base\CCAutoreleasePool.cpp" />
+    <ClCompile Include="..\base\CCConsole.cpp" />
     <ClCompile Include="..\base\CCData.cpp" />
     <ClCompile Include="..\base\CCDataVisitor.cpp" />
     <ClCompile Include="..\base\CCDictionary.cpp" />
@@ -177,6 +179,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\base\CCObject.cpp" />
     <ClCompile Include="..\base\CCSet.cpp" />
     <ClCompile Include="..\base\CCString.cpp" />
+    <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
     <ClCompile Include="..\math\kazmath\src\aabb.c" />
@@ -192,11 +195,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="..\math\kazmath\src\vec2.c" />
     <ClCompile Include="..\math\kazmath\src\vec3.c" />
     <ClCompile Include="..\math\kazmath\src\vec4.c" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsContactInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsJointInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.cpp" />
-    <ClCompile Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
@@ -224,7 +222,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCAnimation.cpp" />
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="ccCArray.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
@@ -259,6 +256,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="ccGLStateCache.cpp" />
     <ClCompile Include="CCGrabber.cpp" />
     <ClCompile Include="CCGrid.cpp" />
+    <ClCompile Include="CCNodeGrid.cpp" />
     <ClCompile Include="CCIMEDispatcher.cpp" />
     <ClCompile Include="CCLabel.cpp" />
     <ClCompile Include="CCLabelAtlas.cpp" />
@@ -319,11 +317,20 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="platform\win32\CCImage.cpp" />
     <ClCompile Include="platform\win32\CCStdC.cpp" />
+    <ClCompile Include="renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="renderer\CCFrustum.cpp" />
+    <ClCompile Include="renderer\CCGroupCommand.cpp" />
+    <ClCompile Include="renderer\CCMaterialManager.cpp" />
+    <ClCompile Include="renderer\CCQuadCommand.cpp" />
+    <ClCompile Include="renderer\CCRenderCommand.cpp" />
+    <ClCompile Include="renderer\CCRenderer.cpp" />
+    <ClCompile Include="renderer\CCRenderMaterial.cpp" />
     <ClCompile Include="TGAlib.cpp" />
     <ClCompile Include="TransformUtils.cpp" />
     <ClCompile Include="ZipUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
@@ -332,6 +339,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCArray.h" />
     <ClInclude Include="..\base\CCAutoreleasePool.h" />
     <ClInclude Include="..\base\CCBool.h" />
+    <ClInclude Include="..\base\CCConsole.h" />
     <ClInclude Include="..\base\CCData.h" />
     <ClInclude Include="..\base\CCDataVisitor.h" />
     <ClInclude Include="..\base\CCDictionary.h" />
@@ -339,12 +347,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\base\CCFloat.h" />
     <ClInclude Include="..\base\CCGeometry.h" />
     <ClInclude Include="..\base\CCInteger.h" />
+    <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCObject.h" />
     <ClInclude Include="..\base\CCPlatformConfig.h" />
     <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCSet.h" />
     <ClInclude Include="..\base\CCString.h" />
+    <ClInclude Include="..\base\CCValue.h" />
+    <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\s3tc.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\aabb.h" />
@@ -361,16 +372,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="..\math\kazmath\include\kazmath\vec2.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec3.h" />
     <ClInclude Include="..\math\kazmath\include\kazmath\vec4.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsContactInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsHelper_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsJointInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.h" />
-    <ClInclude Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
-    <ClInclude Include="..\physics\CCPhysicsSetting.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h" />
@@ -396,7 +400,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCAnimation.h" />
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="ccCArray.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCComponent.h" />
@@ -433,6 +436,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="ccGLStateCache.h" />
     <ClInclude Include="CCGrabber.h" />
     <ClInclude Include="CCGrid.h" />
+    <ClInclude Include="CCNodeGrid.h" />
     <ClInclude Include="CCIMEDelegate.h" />
     <ClInclude Include="CCIMEDispatcher.h" />
     <ClInclude Include="CCLabel.h" />
@@ -517,6 +521,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="platform\win32\CCGL.h" />
     <ClInclude Include="platform\win32\CCPlatformDefine.h" />
     <ClInclude Include="platform\win32\CCStdC.h" />
+    <ClInclude Include="renderer\CCCustomCommand.h" />
+    <ClInclude Include="renderer\CCFrustum.h" />
+    <ClInclude Include="renderer\CCGroupCommand.h" />
+    <ClInclude Include="renderer\CCMaterialManager.h" />
+    <ClInclude Include="renderer\CCQuadCommand.h" />
+    <ClInclude Include="renderer\CCRenderCommand.h" />
+    <ClInclude Include="renderer\CCRenderCommandPool.h" />
+    <ClInclude Include="renderer\CCRenderer.h" />
+    <ClInclude Include="renderer\CCRenderMaterial.h" />
     <ClInclude Include="TGAlib.h" />
     <ClInclude Include="TransformUtils.h" />
     <ClInclude Include="uthash.h" />

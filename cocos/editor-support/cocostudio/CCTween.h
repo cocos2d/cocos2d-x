@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,6 +34,10 @@ namespace cocostudio {
 class Bone;
 class ArmatureAnimation;
 
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  Tween : public ProcessBase
 {
 public:
@@ -43,14 +47,7 @@ public:
      */
     static Tween *create(Bone *bone);
 public:
-	/**
-     * @js ctor
-     */
     Tween(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~Tween(void);
 
     /**

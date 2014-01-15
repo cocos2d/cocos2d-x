@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -137,7 +138,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char * description() const;
+    std::string description() const;
 
     /** allocates a CCBMFontConfiguration with a FNT file */
     static CCBMFontConfiguration * create(const std::string& FNTfile);
@@ -151,6 +152,7 @@ public:
     std::set<unsigned int>* getCharacterSet() const;
 private:
     std::set<unsigned int>* parseConfigFile(const std::string& controlFile);
+	std::set<unsigned int>* parseBinaryConfigFile(unsigned char* pData, unsigned long size, const std::string& controlFile);
     void parseCharacterDefinition(std::string line, ccBMFontDef *characterDefinition);
     void parseInfoArguments(std::string line);
     void parseCommonArguments(std::string line);
@@ -190,7 +192,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol
+class CC_DLL LabelBMFont : public SpriteBatchNode, public LabelProtocol
 {
 public:
     /**
@@ -233,7 +235,7 @@ public:
 
     virtual const std::string& getString() const override;
     virtual void setCString(const char *label);
-    virtual void setAnchorPoint(const Point& var);
+    virtual void setAnchorPoint(const Point& var) override;
     virtual void updateLabel();
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
@@ -245,31 +247,21 @@ public:
     // RGBAProtocol 
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-    virtual GLubyte getOpacity() const;
-    virtual GLubyte getDisplayedOpacity() const;
-    virtual void setOpacity(GLubyte opacity);
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
-    virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
-    virtual const Color3B& getColor(void) const;
-    virtual const Color3B& getDisplayedColor() const;
-    virtual void setColor(const Color3B& color);
-    virtual void updateDisplayedColor(const Color3B& parentColor);
-    virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
 
-    void setFntFile(const char* fntFile);
-    const char* getFntFile();
+    void setFntFile(const std::string& fntFile);
+    const std::string& getFntFile() const;
+
+    virtual std::string getDescription() const override;
+
 #if CC_LABELBMFONT_DEBUG_DRAW
     virtual void draw();
 #endif // CC_LABELBMFONT_DEBUG_DRAW
-private:
+protected:
     char * atlasNameFromFntFile(const std::string& fntFile);
     int kerningAmountForFirst(unsigned short first, unsigned short second);
     float getLetterPosXLeft( Sprite* characterSprite );
     float getLetterPosXRight( Sprite* characterSprite );
     
-protected:
     virtual void setString(unsigned short *newString, bool needUpdateLabel);
     // string to render
     unsigned short* _string;
@@ -296,13 +288,6 @@ protected:
     Sprite *_reusedChar;
     
     // texture RGBA
-    GLubyte _displayedOpacity;
-    GLubyte _realOpacity;
-    Color3B _displayedColor;
-    Color3B _realColor;
-    bool _cascadeColorEnabled;
-    bool _cascadeOpacityEnabled;
-    /** conforms to RGBAProtocol protocol */
     bool _isOpacityModifyRGB;
 
 };

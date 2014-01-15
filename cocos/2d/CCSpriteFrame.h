@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2011 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,7 +109,7 @@ public:
     void setRectInPixels(const Rect& rectInPixels);
 
     inline bool isRotated(void) const { return _rotated; }
-    inline void setRotated(bool bRotated) { _rotated = bRotated; }
+    inline void setRotated(bool rotated) { _rotated = rotated; }
 
     /** get rect of the frame */
     inline const Rect& getRect(void) const { return _rect; }

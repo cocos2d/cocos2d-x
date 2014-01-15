@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -73,7 +74,6 @@ public:
     const Font* getFont() const;
     
 private:
-    bool renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
 
     void relaseTextures();
     std::unordered_map<int, Texture2D*> _atlasTextures;
@@ -89,6 +89,7 @@ private:
     float _currentPageOrigY;
     float _currentPageLineHeight;
     float _letterPadding;
+    bool  _makeDistanceMap;
 };
 
 

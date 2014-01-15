@@ -15,12 +15,19 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           LuaOpengl.cpp \
           LuaScriptHandlerMgr.cpp \
           LuaBasicConversions.cpp \
+          LuaSkeletonAnimation.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_auto.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_extension_auto.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_gui_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_spine_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_physics_auto.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
           lua_cocos2dx_coco_studio_manual.cpp \
+          lua_cocos2dx_gui_manual.cpp \
+          lua_cocos2dx_spine_manual.cpp \
+          lua_cocos2dx_physics_manual.cpp \
           lua_cocos2dx_deprecated.cpp \
           lua_xml_http_request.cpp \
           platform/android/CCLuaJavaBridge.cpp \
@@ -39,6 +46,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../extensions \
                     $(LOCAL_PATH)/../../../editor-support/cocosbuilder \
                     $(LOCAL_PATH)/../../../editor-support/cocostudio \
+                    $(LOCAL_PATH)/../../../editor-support/spine \
                     $(LOCAL_PATH)/../../../gui
 
 
@@ -52,6 +60,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += websockets_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
+LOCAL_WHOLE_STATIC_LIBRARIES += spine_static
 
 LOCAL_CFLAGS += -Wno-psabi
 LOCAL_EXPORT_CFLAGS += -Wno-psabi
@@ -65,3 +74,4 @@ $(call import-module,websockets/prebuilt/android)
 $(call import-module,network)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/cocosbuilder)
+$(call import-module,editor-support/spine)

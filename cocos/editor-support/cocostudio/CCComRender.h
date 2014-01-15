@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,16 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMNODE_H__
-#define __CC_EXTENTIONS_CCCOMNODE_H__
+#ifndef __CC_EXTENTIONS_CCCOMRENDER_H__
+#define __CC_EXTENTIONS_CCCOMRENDER_H__
 
-#include "cocos2d.h"
+#include "CCComBase.h"
 
 namespace cocostudio {
 
 class ComRender : public cocos2d::Component
 {
+    DECLARE_CLASS_COMPONENT_INFO
 protected:
+    /**
+     *  @js ctor
+     */
     ComRender(void);
     ComRender(cocos2d::Node *node, const char *comName);
     /**
@@ -45,15 +49,20 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onEnter();
+    virtual void onEnter() override;
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onExit();
-    cocos2d::Node* getNode();
+    virtual void onExit() override;
+    virtual bool serialize(void* r) override;
+    virtual cocos2d::Node* getNode();
+    virtual void setNode(cocos2d::Node *node);
 
-    static ComRender* create(cocos2d::Node *pNode, const char *comName);
+    static ComRender* create(void);
+    static ComRender* create(cocos2d::Node *node, const char *comName);
+private:
+    bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
 private:
     cocos2d::Node *_render;

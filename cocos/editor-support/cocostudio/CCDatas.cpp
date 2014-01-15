@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -123,8 +123,8 @@ void BaseData::subtract(BaseData *from, BaseData *to, bool limit)
 
     if (to->tweenRotate)
     {
-        skewX += to->tweenRotate;
-        skewY -= to->tweenRotate;
+        skewX += to->tweenRotate * M_PI * 2;
+        skewY -= to->tweenRotate * M_PI * 2;
     }
 	
 }
@@ -142,7 +142,7 @@ Color4B BaseData::getColor()
     return Color4B(r, g, b, a);
 }
 
-const char *DisplayData::changeDisplayToTexture(const char *displayName)
+const std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
@@ -153,63 +153,47 @@ const char *DisplayData::changeDisplayToTexture(const char *displayName)
         textureName = textureName.erase(startPos);
     }
 
-    return textureName.c_str();
+    return textureName;
 }
 
 DisplayData::DisplayData(void)
     : displayType(CS_DISPLAY_MAX)
+    , displayName("")
 {
 }
 
-DisplayData::~DisplayData(void)
+void DisplayData::copy(DisplayData *displayData)
 {
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 
 SpriteDisplayData::SpriteDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-SpriteDisplayData::~SpriteDisplayData()
-{
-}
 
-void SpriteDisplayData::copy(SpriteDisplayData *displayData)
+void SpriteDisplayData::copy(DisplayData *displayData)
 {
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
+    DisplayData::copy(displayData);
 
-    skinData = displayData->skinData;
+    if (SpriteDisplayData *sdd = dynamic_cast<SpriteDisplayData*>(displayData))
+    {
+        skinData = sdd->skinData;
+    }
 }
 
 ArmatureDisplayData::ArmatureDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-ArmatureDisplayData::~ArmatureDisplayData()
-{
-}
-
-void ArmatureDisplayData::copy(ArmatureDisplayData *displayData)
-{
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
-}
-
 ParticleDisplayData::ParticleDisplayData(void)
-    : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void ParticleDisplayData::copy(ParticleDisplayData *displayData)
-{
-    plist = displayData->plist;
-    displayType = displayData->displayType;
-}
 
 
 BoneData::BoneData(void)
@@ -224,18 +208,17 @@ BoneData::~BoneData(void)
 
 bool BoneData::init()
 {
-    displayDataList.init();
     return true;
 }
 
 void BoneData::addDisplayData(DisplayData *displayData)
 {
-    displayDataList.addObject(displayData);
+    displayDataList.pushBack(displayData);
 }
 
 DisplayData *BoneData::getDisplayData(int index)
 {
-    return static_cast<DisplayData *>(displayDataList.getObjectAtIndex(index));
+    return displayDataList.at(index);
 }
 
 
@@ -255,21 +238,23 @@ bool ArmatureData::init()
 
 void ArmatureData::addBoneData(BoneData *boneData)
 {
-    boneDataDic.setObject(boneData, boneData->name);
+    boneDataDic.insert(boneData->name, boneData);
 }
 
-BoneData *ArmatureData::getBoneData(const char *boneName)
+BoneData *ArmatureData::getBoneData(const std::string& boneName)
 {
-    return static_cast<BoneData*>(boneDataDic.objectForKey(boneName));
+    return static_cast<BoneData*>(boneDataDic.at(boneName));
 }
 
 FrameData::FrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , easingParamNumber(0)
+    , easingParams(NULL)
     , isTween(true)
     , displayIndex(0)
-    , blendType(BLEND_NORMAL)
+    , blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 
     , strEvent("")
     , strMovement("")
@@ -280,6 +265,7 @@ FrameData::FrameData(void)
 
 FrameData::~FrameData(void)
 {
+    CC_SAFE_DELETE(easingParams);
 }
 
 void FrameData::copy(const BaseData *baseData)
@@ -290,8 +276,21 @@ void FrameData::copy(const BaseData *baseData)
     {
         duration = frameData->duration;
         displayIndex = frameData->displayIndex;
+        
         tweenEasing = frameData->tweenEasing;
-        blendType = frameData->blendType;
+        easingParamNumber = frameData->easingParamNumber;
+        
+        CC_SAFE_DELETE(easingParams);
+        if (easingParamNumber != 0)
+        {
+            easingParams = new float[easingParamNumber];
+            for (int i = 0; i<easingParamNumber; i++)
+            {
+                easingParams[i] = frameData->easingParams[i];
+            }
+        }
+
+        blendFunc = frameData->blendFunc;
     }
 }
 
@@ -309,17 +308,17 @@ MovementBoneData::~MovementBoneData(void)
 
 bool MovementBoneData::init()
 {
-    return frameList.init();
+    return true;
 }
 
 void MovementBoneData::addFrameData(FrameData *frameData)
 {
-    frameList.addObject(frameData);
+    frameList.pushBack(frameData);
 }
 
 FrameData *MovementBoneData::getFrameData(int index)
 {
-    return static_cast<FrameData*>(frameList.getObjectAtIndex(index));
+    return frameList.at(index);
 }
 
 
@@ -341,12 +340,12 @@ MovementData::~MovementData(void)
 
 void MovementData::addMovementBoneData(MovementBoneData *movBoneData)
 {
-    movBoneDataDic.setObject(movBoneData, movBoneData->name);
+    movBoneDataDic.insert(movBoneData->name, movBoneData);
 }
 
-MovementBoneData *MovementData::getMovementBoneData(const char *boneName)
+MovementBoneData *MovementData::getMovementBoneData(const std::string& boneName)
 {
-    return static_cast<MovementBoneData *>(movBoneDataDic.objectForKey(boneName));
+    return movBoneDataDic.at(boneName);
 }
 
 
@@ -361,18 +360,18 @@ AnimationData::~AnimationData(void)
 
 void AnimationData::addMovement(MovementData *movData)
 {
-    movementDataDic.setObject(movData, movData->name);
+    movementDataDic.insert(movData->name, movData);
     movementNames.push_back(movData->name);
 }
 
-MovementData *AnimationData::getMovement(const char *movementName)
+MovementData *AnimationData::getMovement(const std::string& movementName)
 {
-    return static_cast<MovementData *>(movementDataDic.objectForKey(movementName));
+    return movementDataDic.at(movementName);
 }
 
-int AnimationData::getMovementCount()
+ssize_t AnimationData::getMovementCount()
 {
-    return movementDataDic.count();
+    return movementDataDic.size();
 }
 
 
@@ -387,15 +386,12 @@ ContourData::~ContourData()
 
 bool ContourData::init()
 {
-    return vertexList.init();
+    return true;
 }
 
-void ContourData::addVertex(Point *vertex)
+void ContourData::addVertex(Point &vertex)
 {
-    ContourVertex2 *vertex2 = new ContourVertex2(vertex->x, vertex->y);
-    vertex2->autorelease();
-
-    vertexList.addObject(vertex2);
+    vertexList.push_back(vertex);
 }
 
 TextureData::TextureData()
@@ -413,17 +409,17 @@ TextureData::~TextureData()
 
 bool TextureData::init()
 {
-    return contourDataList.init();
+    return true;
 }
 
 void TextureData::addContourData(ContourData *contourData)
 {
-    contourDataList.addObject(contourData);
+    contourDataList.pushBack(contourData);
 }
 
 ContourData *TextureData::getContourData(int index)
 {
-    return static_cast<ContourData *>(contourDataList.getObjectAtIndex(index));
+    return contourDataList.at(index);
 }
 
 

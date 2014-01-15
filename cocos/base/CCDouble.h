@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -34,16 +34,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Double : public Object, public Clonable
+class CC_DLL __Double : public Object, public Clonable
 {
 public:
-    Double(double v)
+    __Double(double v)
         : _value(v) {}
     double getValue() const {return _value;}
 
-    static Double* create(double v)
+    static __Double* create(double v)
     {
-        Double* pRet = new Double(v);
+        __Double* pRet = new __Double(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -54,9 +54,9 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
     
-    Double* clone() const
+    __Double* clone() const
     {
-        return Double::create(_value);
+        return __Double::create(_value);
     }
 private:
     double _value;

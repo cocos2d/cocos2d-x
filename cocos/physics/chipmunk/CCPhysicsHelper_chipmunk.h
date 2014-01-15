@@ -25,8 +25,8 @@
 #ifndef __CCPHYSICS_HELPER_CHIPMUNK_H__
 #define __CCPHYSICS_HELPER_CHIPMUNK_H__
 
-#include "../CCPhysicsSetting.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
 
 #include "chipmunk.h"
 #include "CCPlatformMacros.h"
@@ -44,7 +44,7 @@ public:
     static float cpfloat2float(cpFloat f) { return f; }
     static cpFloat float2cpfloat(float f) { return f; }
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
-    static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r, bb.t); }
+    static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
     static Point* cpvs2points(const cpVect* cpvs, Point* out, int count)
     {
@@ -69,5 +69,5 @@ public:
 
 NS_CC_END
 
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS
 #endif // __CCPHYSICS_HELPER_CHIPMUNK_H__

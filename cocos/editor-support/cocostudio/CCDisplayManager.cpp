@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -46,8 +46,7 @@ DisplayManager *DisplayManager::create(Bone *bone)
 
 
 DisplayManager::DisplayManager()
-    : _decoDisplayList(nullptr)
-    , _displayRenderNode(nullptr)
+    : _displayRenderNode(nullptr)
     , _displayType(CS_DISPLAY_MAX)
     , _currentDecoDisplay(nullptr)
     , _displayIndex(-1)
@@ -59,7 +58,7 @@ DisplayManager::DisplayManager()
 
 DisplayManager::~DisplayManager()
 {
-    CC_SAFE_DELETE(_decoDisplayList);
+    _decoDisplayList.clear();
 
     if( _displayRenderNode )
     {
@@ -93,14 +92,14 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
 {
     DecorativeDisplay *decoDisplay = nullptr;
 
-    if( (index >= 0) && (index < _decoDisplayList->count()) )
+    if( (index >= 0) && (index < _decoDisplayList.size()) )
     {
-        decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
+        decoDisplay = (DecorativeDisplay *)_decoDisplayList.at(index);
     }
     else
     {
         decoDisplay = DecorativeDisplay::create();
-        _decoDisplayList->addObject(decoDisplay);
+        _decoDisplayList.pushBack(decoDisplay);
     }
 
     DisplayFactory::addDisplay(_bone, decoDisplay, displayData);
@@ -109,7 +108,7 @@ void DisplayManager::addDisplay(DisplayData *displayData, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -117,14 +116,14 @@ void DisplayManager::addDisplay(Node *display, int index)
 {
     DecorativeDisplay *decoDisplay = nullptr;
 
-    if( (index >= 0) && (index < _decoDisplayList->count()) )
+    if( (index >= 0) && (index < _decoDisplayList.size()) )
     {
-        decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
+        decoDisplay = _decoDisplayList.at(index);
     }
     else
     {
         decoDisplay = DecorativeDisplay::create();
-        _decoDisplayList->addObject(decoDisplay);
+        _decoDisplayList.pushBack(decoDisplay);
     }
 
     DisplayData *displayData = nullptr;
@@ -144,9 +143,9 @@ void DisplayManager::addDisplay(Node *display, int index)
         {
             bool find = false;
 
-            for (int i = _decoDisplayList->count()-2; i>=0; i--)
+            for (long i = _decoDisplayList.size()-2; i>=0; i--)
             {
-                DecorativeDisplay *dd = static_cast<DecorativeDisplay*>(_decoDisplayList->getObjectAtIndex(i));
+                DecorativeDisplay *dd = _decoDisplayList.at(i);
                 SpriteDisplayData *sdd = static_cast<SpriteDisplayData*>(dd->getDisplayData());
                 if (sdd)
                 {
@@ -179,6 +178,7 @@ void DisplayManager::addDisplay(Node *display, int index)
     else if(Armature *armature = dynamic_cast<Armature *>(display))
     {
         displayData = ArmatureDisplayData::create();
+        displayData->displayName = armature->getName();
         armature->setParentBone(_bone);
     }
     else
@@ -193,7 +193,7 @@ void DisplayManager::addDisplay(Node *display, int index)
     if(index == _displayIndex)
     {
         _displayIndex = -1;
-        changeDisplayByIndex(index, false);
+        changeDisplayWithIndex(index, false);
     }
 }
 
@@ -205,17 +205,17 @@ void DisplayManager::removeDisplay(int index)
         _displayIndex = -1;
     }
 
-    _decoDisplayList->removeObjectAtIndex(index);
+    _decoDisplayList.erase(index);
 }
 
-Array *DisplayManager::getDecorativeDisplayList() const
+const cocos2d::Vector<DecorativeDisplay*>& DisplayManager::getDecorativeDisplayList() const
 {
     return _decoDisplayList;
 }
 
-void DisplayManager::changeDisplayByIndex(int index, bool force)
+void DisplayManager::changeDisplayWithIndex(int index, bool force)
 {
-    CCASSERT( (_decoDisplayList ? index < (int)_decoDisplayList->count() : true), "the _index value is out of range");
+    CCASSERT( index < (int)_decoDisplayList.size(), "the _index value is out of range");
 
     _forceChangeDisplay = force;
 
@@ -238,14 +238,26 @@ void DisplayManager::changeDisplayByIndex(int index, bool force)
     }
 
 
-    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(_displayIndex);
+    DecorativeDisplay *decoDisplay = (DecorativeDisplay *)_decoDisplayList.at(_displayIndex);
 
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
+void CCDisplayManager::changeDisplayWithName(const std::string& name, bool force)
+{
+    for (int i = 0; i<_decoDisplayList.size(); i++)
+    {
+        if (_decoDisplayList.at(i)->getDisplayData()->displayName == name)
+        {
+            changeDisplayWithIndex(i, force);
+            break;
+        }
+    }
+}
+
 void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(false);
@@ -254,7 +266,7 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
 
     _currentDecoDisplay = decoDisplay;
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     if (_currentDecoDisplay && _currentDecoDisplay->getColliderDetector())
     {
         _currentDecoDisplay->getColliderDetector()->setActive(true);
@@ -285,11 +297,8 @@ void DisplayManager::setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay)
             particle->resetSystem();
         }
 
-        if (RGBAProtocol *rgbaProtocaol = dynamic_cast<RGBAProtocol *>(_displayRenderNode))
-        {
-			rgbaProtocaol->setColor(_bone->getDisplayedColor());
-			rgbaProtocaol->setOpacity(_bone->getDisplayedOpacity());
-        }
+        _displayRenderNode->setColor(_bone->getDisplayedColor());
+        _displayRenderNode->setOpacity(_bone->getDisplayedOpacity());
 
         _displayRenderNode->retain();
         _displayRenderNode->setVisible(_visible);
@@ -325,18 +334,16 @@ DecorativeDisplay *DisplayManager::getCurrentDecorativeDisplay() const
 
 DecorativeDisplay *DisplayManager::getDecorativeDisplayByIndex( int index) const
 {
-    return (DecorativeDisplay *)_decoDisplayList->getObjectAtIndex(index);
+    return _decoDisplayList.at(index);
 }
 
 void DisplayManager::initDisplayList(BoneData *boneData)
 {
-    CC_SAFE_DELETE(_decoDisplayList);
-    _decoDisplayList = Array::create();
-    _decoDisplayList->retain();
+    _decoDisplayList.clear();
 
     CS_RETURN_IF(!boneData);
 
-    for(auto object : boneData->displayDataList)
+    for(auto& object : boneData->displayDataList)
     {
         DisplayData *displayData = static_cast<DisplayData *>(object);
 
@@ -345,7 +352,7 @@ void DisplayManager::initDisplayList(BoneData *boneData)
 
         DisplayFactory::createDisplay(_bone, decoDisplay);
 
-        _decoDisplayList->addObject(decoDisplay);
+        _decoDisplayList.pushBack(decoDisplay);
     }
 }
 

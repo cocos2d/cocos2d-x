@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc. 
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -76,9 +77,9 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlipped)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    bool bRet = true;
+    bool ret = true;
 
     _active = false;
     _reuseGrid = 0;
@@ -86,7 +87,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlip
 
     _texture = texture;
     CC_SAFE_RETAIN(_texture);
-    _isTextureFlipped = bFlipped;
+    _isTextureFlipped = flipped;
 
     Size texSize = _texture->getContentSize();
     _step.x = texSize.width / _gridSize.width;
@@ -99,27 +100,27 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool bFlip
     }
     else
     {
-        bRet = false;
+        ret = false;
     }
     
     _shaderProgram = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     calculateVertexPoints();
 
-    return bRet;
+    return ret;
 }
 
 bool GridBase::initWithSize(const Size& gridSize)
 {
-    Director *pDirector = Director::getInstance();
-    Size s = pDirector->getWinSizeInPixels();
+    Director *director = Director::getInstance();
+    Size s = director->getWinSizeInPixels();
     
-    unsigned long POTWide = ccNextPOT((unsigned int)s.width);
-    unsigned long POTHigh = ccNextPOT((unsigned int)s.height);
+    auto POTWide = ccNextPOT((unsigned int)s.width);
+    auto POTHigh = ccNextPOT((unsigned int)s.height);
 
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
-    long dataLen = POTWide * POTHigh * 4;
+    auto dataLen = POTWide * POTHigh * 4;
     void *data = calloc(dataLen, 1);
     if (! data)
     {
@@ -156,10 +157,10 @@ GridBase::~GridBase(void)
 }
 
 // properties
-void GridBase::setActive(bool bActive)
+void GridBase::setActive(bool active)
 {
-    _active = bActive;
-    if (! bActive)
+    _active = active;
+    if (! active)
     {
         Director *pDirector = Director::getInstance();
         Director::Projection proj = pDirector->getProjection();
@@ -167,11 +168,11 @@ void GridBase::setActive(bool bActive)
     }
 }
 
-void GridBase::setTextureFlipped(bool bFlipped)
+void GridBase::setTextureFlipped(bool flipped)
 {
-    if (_isTextureFlipped != bFlipped)
+    if (_isTextureFlipped != flipped)
     {
-        _isTextureFlipped = bFlipped;
+        _isTextureFlipped = flipped;
         calculateVertexPoints();
     }
 }
@@ -216,17 +217,17 @@ void GridBase::afterDraw(cocos2d::Node *target)
     Director *director = Director::getInstance();
     director->setProjection(_directorProjection);
 
-    if (target->getCamera()->isDirty())
-    {
-        Point offset = target->getAnchorPointInPoints();
-
-        //
-        // XXX: Camera should be applied in the AnchorPoint
-        //
-        kmGLTranslatef(offset.x, offset.y, 0);
-        target->getCamera()->locate();
-        kmGLTranslatef(-offset.x, -offset.y, 0);
-    }
+//    if (target->getCamera()->isDirty())
+//    {
+//        Point offset = target->getAnchorPointInPoints();
+//
+//        //
+//        // XXX: Camera should be applied in the AnchorPoint
+//        //
+//        kmGLTranslatef(offset.x, offset.y, 0);
+//        target->getCamera()->locate();
+//        kmGLTranslatef(-offset.x, -offset.y, 0);
+//    }
 
     GL::bindTexture2D(_texture->getName());
 
@@ -253,52 +254,52 @@ void GridBase::calculateVertexPoints(void)
 
 // implementation of Grid3D
 
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    Grid3D *pRet= new Grid3D();
+    Grid3D *ret= new Grid3D();
 
-    if (pRet)
+    if (ret)
     {
-        if (pRet->initWithSize(gridSize, texture, bFlipped))
+        if (ret->initWithSize(gridSize, texture, flipped))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            delete pRet;
-            pRet = NULL;
+            delete ret;
+            ret = nullptr;
         }
     }
 
-    return pRet;
+    return ret;
 }
 
 Grid3D* Grid3D::create(const Size& gridSize)
 {
-    Grid3D *pRet= new Grid3D();
+    Grid3D *ret= new Grid3D();
 
-    if (pRet)
+    if (ret)
     {
-        if (pRet->initWithSize(gridSize))
+        if (ret->initWithSize(gridSize))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            delete pRet;
-            pRet = NULL;
+            delete ret;
+            ret = nullptr;
         }
     }
 
-    return pRet;
+    return ret;
 }
 
 
 Grid3D::Grid3D()
-    : _texCoordinates(NULL)
-    , _vertices(NULL)
-    , _originalVertices(NULL)
-    , _indices(NULL)
+    : _texCoordinates(nullptr)
+    , _vertices(nullptr)
+    , _originalVertices(nullptr)
+    , _indices(nullptr)
 {
 
 }
@@ -470,10 +471,10 @@ void Grid3D::reuse(void)
 // implementation of TiledGrid3D
 
 TiledGrid3D::TiledGrid3D()
-    : _texCoordinates(NULL)
-    , _vertices(NULL)
-    , _originalVertices(NULL)
-    , _indices(NULL)
+    : _texCoordinates(nullptr)
+    , _vertices(nullptr)
+    , _originalVertices(nullptr)
+    , _indices(nullptr)
 {
 
 }
@@ -486,44 +487,44 @@ TiledGrid3D::~TiledGrid3D(void)
     CC_SAFE_FREE(_indices);
 }
 
-TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool bFlipped)
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    TiledGrid3D *pRet= new TiledGrid3D();
+    TiledGrid3D *ret= new TiledGrid3D();
 
-    if (pRet)
+    if (ret)
     {
-        if (pRet->initWithSize(gridSize, texture, bFlipped))
+        if (ret->initWithSize(gridSize, texture, flipped))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            delete pRet;
-            pRet = NULL;
+            delete ret;
+            ret = nullptr;
         }
     }
 
-    return pRet;
+    return ret;
 }
 
 TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
 {
-    TiledGrid3D *pRet= new TiledGrid3D();
+    TiledGrid3D *ret= new TiledGrid3D();
 
-    if (pRet)
+    if (ret)
     {
-        if (pRet->initWithSize(gridSize))
+        if (ret->initWithSize(gridSize))
         {
-            pRet->autorelease();
+            ret->autorelease();
         }
         else
         {
-            delete pRet;
-            pRet = NULL;
+            delete ret;
+            ret = nullptr;
         }
     }
 
-    return pRet;
+    return ret;
 }
 
 void TiledGrid3D::blit(void)

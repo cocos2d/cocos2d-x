@@ -76,7 +76,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -117,11 +117,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <AdditionalDependencies>libcurl_imp.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ProgramDatabaseFile />
     </Link>
     <PostBuildEvent>
       <Command>
@@ -138,6 +139,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
+    <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -151,24 +153,23 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.cpp" />
-    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp" />
+    <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.cpp" />
@@ -183,11 +184,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\KeyboardTest\KeyboardTest.cpp" />
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
+    <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
+    <ClCompile Include="..\Classes\UnitTest\UnitTest.cpp" />
     <ClCompile Include="..\Classes\VisibleRect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -270,9 +274,15 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\BaseTest.h" />
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConvexHull.h" />
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\ConveyorBelt.h" />
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h" />
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
+    <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
+    <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
@@ -288,24 +298,24 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\CocosGUIScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIDragPanelTest\UIDragPanelTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelAtlasTest\UILabelAtlasTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelBMFontTest\UILabelBMFontTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILabelTest\UILabelTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UINodeContainerTest\UINodeContainerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIPanelTest\UIPanelTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScene.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISceneManager.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UISliderTest\UISliderTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextAreaTest\UITextAreaTest.h" />
-    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextButtonTest\UITextButtonTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h" />
+    <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlPotentiometerTest\CCControlPotentiometerTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlStepperTest\CCControlStepperTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\EditBoxTest\EditBoxTest.h" />
@@ -320,10 +330,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClInclude Include="..\Classes\KeyboardTest\KeyboardTest.h" />
     <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
+    <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
+    <ClInclude Include="..\Classes\UnitTest\UnitTest.h" />
     <ClInclude Include="..\Classes\VisibleRect.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />

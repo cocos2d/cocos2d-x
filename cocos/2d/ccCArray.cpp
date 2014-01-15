@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2007      Scott Lembcke
+Copyright (c) 2010-2012 cocos2d-x.org
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,10 +29,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-const long CC_INVALID_INDEX = -1;
+const ssize_t CC_INVALID_INDEX = -1;
 
 /** Allocates and initializes a new array with specified capacity */
-ccArray* ccArrayNew(long capacity)
+ccArray* ccArrayNew(ssize_t capacity)
 {
 	if (capacity == 0)
 		capacity = 7;
@@ -44,10 +45,10 @@ ccArray* ccArrayNew(long capacity)
 	return arr;
 }
 
-/** Frees array after removing all remaining objects. Silently ignores NULL arr. */
+/** Frees array after removing all remaining objects. Silently ignores nullptr arr. */
 void ccArrayFree(ccArray*& arr)
 {
-    if( arr == NULL ) 
+    if( arr == nullptr ) 
     {
         return;
     }
@@ -56,7 +57,7 @@ void ccArrayFree(ccArray*& arr)
 	free(arr->arr);
 	free(arr);
 
-    arr = NULL;
+    arr = nullptr;
 }
 
 void ccArrayDoubleCapacity(ccArray *arr)
@@ -68,13 +69,13 @@ void ccArrayDoubleCapacity(ccArray *arr)
 	arr->arr = newArr;
 }
 
-void ccArrayEnsureExtraCapacity(ccArray *arr, long extra)
+void ccArrayEnsureExtraCapacity(ccArray *arr, ssize_t extra)
 {
 	while (arr->max < arr->num + extra)
     {
-        CCLOG("cocos2d: ccCArray: resizing ccArray capacity from [%lu] to [%lu].",
-              (long) arr->max,
-              (long) arr->max*2);
+        CCLOG("cocos2d: ccCArray: resizing ccArray capacity from [%d] to [%d].",
+              static_cast<int>(arr->max),
+              static_cast<int>(arr->max*2));
 
 		ccArrayDoubleCapacity(arr);
     }
@@ -82,7 +83,7 @@ void ccArrayEnsureExtraCapacity(ccArray *arr, long extra)
 
 void ccArrayShrink(ccArray *arr)
 {
-    long newSize = 0;
+    ssize_t newSize = 0;
 	
 	//only resize when necessary
 	if (arr->max > arr->num && !(arr->num==0 && arr->max==1))
@@ -99,18 +100,18 @@ void ccArrayShrink(ccArray *arr)
 		}
 		
 		arr->arr = (Object**)realloc(arr->arr,newSize * sizeof(Object*) );
-		CCASSERT(arr->arr!=NULL,"could not reallocate the memory");
+		CCASSERT(arr->arr!=nullptr,"could not reallocate the memory");
 	}
 }
 
 /** Returns index of first occurrence of object, CC_INVALID_INDEX if object not found. */
-long ccArrayGetIndexOfObject(ccArray *arr, Object* object)
+ssize_t ccArrayGetIndexOfObject(ccArray *arr, Object* object)
 {
-    const long arrNum = arr->num;
+    const auto arrNum = arr->num;
     Object** ptr = arr->arr;
-	for(long i = 0; i < arrNum; ++i, ++ptr)
+	for (ssize_t i = 0; i < arrNum; ++i, ++ptr)
     {
-		if( *ptr == object )
+		if (*ptr == object)
             return i;
     }
     
@@ -126,7 +127,7 @@ bool ccArrayContainsObject(ccArray *arr, Object* object)
 /** Appends an object. Behavior undefined if array doesn't have enough capacity. */
 void ccArrayAppendObject(ccArray *arr, Object* object)
 {
-    CCASSERT(object != NULL, "Invalid parameter!");
+    CCASSERT(object != nullptr, "Invalid parameter!");
     object->retain();
 	arr->arr[arr->num] = object;
 	arr->num++;
@@ -143,7 +144,7 @@ void ccArrayAppendObjectWithResize(ccArray *arr, Object* object)
  enough capacity. */
 void ccArrayAppendArray(ccArray *arr, ccArray *plusArr)
 {
-	for(long i = 0; i < plusArr->num; i++)
+	for (ssize_t i = 0; i < plusArr->num; i++)
     {
 		ccArrayAppendObject(arr, plusArr->arr[i]);
     }
@@ -157,15 +158,15 @@ void ccArrayAppendArrayWithResize(ccArray *arr, ccArray *plusArr)
 }
 
 /** Inserts an object at index */
-void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, long index)
+void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, ssize_t index)
 {
 	CCASSERT(index<=arr->num, "Invalid index. Out of bounds");
-	CCASSERT(object != NULL, "Invalid parameter!");
+	CCASSERT(object != nullptr, "Invalid parameter!");
 
 	ccArrayEnsureExtraCapacity(arr, 1);
 	
-	long remaining = arr->num - index;
-	if( remaining > 0)
+	ssize_t remaining = arr->num - index;
+	if (remaining > 0)
     {
 		memmove((void *)&arr->arr[index+1], (void *)&arr->arr[index], sizeof(Object*) * remaining );
     }
@@ -176,7 +177,7 @@ void ccArrayInsertObjectAtIndex(ccArray *arr, Object* object, long index)
 }
 
 /** Swaps two objects */
-void ccArraySwapObjectsAtIndexes(ccArray *arr, long index1, long index2)
+void ccArraySwapObjectsAtIndexes(ccArray *arr, ssize_t index1, ssize_t index2)
 {
 	CCASSERT(index1>=0 && index1 < arr->num, "(1) Invalid index. Out of bounds");
 	CCASSERT(index2>=0 && index2 < arr->num, "(2) Invalid index. Out of bounds");
@@ -190,7 +191,7 @@ void ccArraySwapObjectsAtIndexes(ccArray *arr, long index1, long index2)
 /** Removes all objects from arr */
 void ccArrayRemoveAllObjects(ccArray *arr)
 {
-	while( arr->num > 0 )
+	while (arr->num > 0)
     {
 		(arr->arr[--arr->num])->release();
     }
@@ -198,17 +199,17 @@ void ccArrayRemoveAllObjects(ccArray *arr)
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayRemoveObjectAtIndex(ccArray *arr, long index, bool bReleaseObj/* = true*/)
+void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool releaseObj/* = true*/)
 {
     CCASSERT(arr && arr->num > 0 && index>=0 && index < arr->num, "Invalid index. Out of bounds");
-    if (bReleaseObj)
+    if (releaseObj)
     {
         CC_SAFE_RELEASE(arr->arr[index]);
     }
     
 	arr->num--;
 	
-	long remaining = arr->num - index;
+	ssize_t remaining = arr->num - index;
 	if(remaining>0)
     {
 		memmove((void *)&arr->arr[index], (void *)&arr->arr[index+1], remaining * sizeof(Object*));
@@ -218,16 +219,16 @@ void ccArrayRemoveObjectAtIndex(ccArray *arr, long index, bool bReleaseObj/* = t
 /** Removes object at specified index and fills the gap with the last object,
  thereby avoiding the need to push back subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayFastRemoveObjectAtIndex(ccArray *arr, long index)
+void ccArrayFastRemoveObjectAtIndex(ccArray *arr, ssize_t index)
 {
 	CC_SAFE_RELEASE(arr->arr[index]);
-	long last = --arr->num;
+	auto last = --arr->num;
 	arr->arr[index] = arr->arr[last];
 }
 
 void ccArrayFastRemoveObject(ccArray *arr, Object* object)
 {
-	long index = ccArrayGetIndexOfObject(arr, object);
+	auto index = ccArrayGetIndexOfObject(arr, object);
 	if (index != CC_INVALID_INDEX)
     {
 		ccArrayFastRemoveObjectAtIndex(arr, index);
@@ -236,12 +237,12 @@ void ccArrayFastRemoveObject(ccArray *arr, Object* object)
 
 /** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
-void ccArrayRemoveObject(ccArray *arr, Object* object, bool bReleaseObj/* = true*/)
+void ccArrayRemoveObject(ccArray *arr, Object* object, bool releaseObj/* = true*/)
 {
-	long index = ccArrayGetIndexOfObject(arr, object);
+	auto index = ccArrayGetIndexOfObject(arr, object);
 	if (index != CC_INVALID_INDEX)
     {
-		ccArrayRemoveObjectAtIndex(arr, index, bReleaseObj);
+		ccArrayRemoveObjectAtIndex(arr, index, releaseObj);
     }
 }
 
@@ -249,7 +250,7 @@ void ccArrayRemoveObject(ccArray *arr, Object* object, bool bReleaseObj/* = true
  first matching instance in arr will be removed. */
 void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr)
 {
-	for(long i = 0; i < minusArr->num; i++)
+	for (ssize_t i = 0; i < minusArr->num; i++)
     {
 		ccArrayRemoveObject(arr, minusArr->arr[i]);
     }
@@ -259,12 +260,11 @@ void ccArrayRemoveArray(ccArray *arr, ccArray *minusArr)
  matching instances in arr will be removed. */
 void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 {
-	long back = 0;
-	long i = 0;
+	ssize_t back = 0;
 	
-	for( i = 0; i < arr->num; i++) 
+	for (ssize_t i = 0; i < arr->num; i++)
     {
-		if( ccArrayContainsObject(minusArr, arr->arr[i]) ) 
+		if (ccArrayContainsObject(minusArr, arr->arr[i]))
         {
 			CC_SAFE_RELEASE(arr->arr[i]);
 			back++;
@@ -282,25 +282,25 @@ void ccArrayFullRemoveArray(ccArray *arr, ccArray *minusArr)
 // #pragma mark ccCArray for Values (c structures)
 
 /** Allocates and initializes a new C array with specified capacity */
-ccCArray* ccCArrayNew(long capacity)
+ccCArray* ccCArrayNew(ssize_t capacity)
 {
 	if (capacity == 0)
     {
 		capacity = 7;
     }
 
-	ccCArray *arr = (ccCArray*)malloc( sizeof(ccCArray) );
+	ccCArray *arr = (ccCArray*)malloc(sizeof(ccCArray));
 	arr->num = 0;
-	arr->arr = (void**)malloc( capacity * sizeof(void*) );
+	arr->arr = (void**)malloc(capacity * sizeof(void*));
 	arr->max = capacity;
 	
 	return arr;
 }
 
-/** Frees C array after removing all remaining values. Silently ignores NULL arr. */
+/** Frees C array after removing all remaining values. Silently ignores nullptr arr. */
 void ccCArrayFree(ccCArray *arr)
 {
-    if( arr == NULL ) 
+    if (arr == nullptr)
     {
         return;
     }
@@ -317,15 +317,15 @@ void ccCArrayDoubleCapacity(ccCArray *arr)
 }
 
 /** Increases array capacity such that max >= num + extra. */
-void ccCArrayEnsureExtraCapacity(ccCArray *arr, long extra)
+void ccCArrayEnsureExtraCapacity(ccCArray *arr, ssize_t extra)
 {
     ccArrayEnsureExtraCapacity((ccArray*)arr,extra);
 }
 
 /** Returns index of first occurrence of value, CC_INVALID_INDEX if value not found. */
-long ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
+ssize_t ccCArrayGetIndexOfValue(ccCArray *arr, void* value)
 {
-	for(long i = 0; i < arr->num; i++)
+	for(ssize_t i = 0; i < arr->num; i++)
     {
 		if( arr->arr[i] == value )
             return i;
@@ -340,11 +340,11 @@ bool ccCArrayContainsValue(ccCArray *arr, void* value)
 }
 
 /** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
-void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, long index)
+void ccCArrayInsertValueAtIndex( ccCArray *arr, void* value, ssize_t index)
 {
 	CCASSERT( index < arr->max, "ccCArrayInsertValueAtIndex: invalid index");
 	
-	long remaining = arr->num - index;
+	auto remaining = arr->num - index;
     // make sure it has enough capacity
     if (arr->num + 1 == arr->max)
     {
@@ -385,7 +385,7 @@ void ccCArrayAppendValueWithResize(ccCArray *arr, void* value)
  enough capacity. */
 void ccCArrayAppendArray(ccCArray *arr, ccCArray *plusArr)
 {
-	for( long i = 0; i < plusArr->num; i++)
+	for( ssize_t i = 0; i < plusArr->num; i++)
     {
 		ccCArrayAppendValue(arr, plusArr->arr[i]);
     }
@@ -408,9 +408,9 @@ void ccCArrayRemoveAllValues(ccCArray *arr)
  Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
-void ccCArrayRemoveValueAtIndex(ccCArray *arr, long index)
+void ccCArrayRemoveValueAtIndex(ccCArray *arr, ssize_t index)
 {
-	for( long last = --arr->num; index < last; index++)
+	for( ssize_t last = --arr->num; index < last; index++)
     {
 		arr->arr[index] = arr->arr[index + 1];
     }
@@ -421,9 +421,9 @@ void ccCArrayRemoveValueAtIndex(ccCArray *arr, long index)
  Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
-void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, long index)
+void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, ssize_t index)
 {
-	long last = --arr->num;
+	ssize_t last = --arr->num;
 	arr->arr[index] = arr->arr[last];
 }
 
@@ -432,7 +432,7 @@ void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, long index)
  */
 void ccCArrayRemoveValue(ccCArray *arr, void* value)
 {
-	long index = ccCArrayGetIndexOfValue(arr, value);
+	auto index = ccCArrayGetIndexOfValue(arr, value);
 	if (index != CC_INVALID_INDEX)
     {
 		ccCArrayRemoveValueAtIndex(arr, index);
@@ -444,7 +444,7 @@ void ccCArrayRemoveValue(ccCArray *arr, void* value)
  */
 void ccCArrayRemoveArray(ccCArray *arr, ccCArray *minusArr)
 {
-	for(long i = 0; i < minusArr->num; i++)
+	for(ssize_t i = 0; i < minusArr->num; i++)
     {
 		ccCArrayRemoveValue(arr, minusArr->arr[i]);
     }
@@ -455,9 +455,9 @@ void ccCArrayRemoveArray(ccCArray *arr, ccCArray *minusArr)
  */
 void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr)
 {
-	long back = 0;
+	ssize_t back = 0;
 	
-	for(long i = 0; i < arr->num; i++)
+	for(ssize_t i = 0; i < arr->num; i++)
     {
 		if( ccCArrayContainsValue(minusArr, arr->arr[i]) ) 
         {

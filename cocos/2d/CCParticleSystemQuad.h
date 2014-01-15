@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -28,10 +29,12 @@ THE SOFTWARE.
 #define __CC_PARTICLE_SYSTEM_QUAD_H__
 
 #include  "CCParticleSystem.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
 class SpriteFrame;
+class EventCustom;
 
 /**
  * @addtogroup particle_nodes
@@ -57,26 +60,11 @@ public:
     /** creates a Particle Emitter */
     static ParticleSystemQuad * create();
     /** creates a Particle Emitter with a number of particles */
-    static ParticleSystemQuad * createWithTotalParticles(unsigned int numberOfParticles);
+    static ParticleSystemQuad * createWithTotalParticles(int numberOfParticles);
     /** creates an initializes a ParticleSystemQuad from a plist file.
      This plist files can be created manually or with Particle Designer:
      */
-    static ParticleSystemQuad * create(const char *plistFile);
-    /**
-     * @js ctor
-     */
-    ParticleSystemQuad();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ParticleSystemQuad();
-
-    /** initializes the indices for the vertices*/
-    void initIndices();
-
-    /** initializes the texture with a rectangle measured Points */
-    void initTexCoordsWithRect(const Rect& rect);
+    static ParticleSystemQuad * create(const std::string& filename);
 
     /** Sets a new SpriteFrame as particle.
     WARNING: this method is experimental. Use setTextureWithRect instead.
@@ -95,14 +83,8 @@ public:
      * @js NA
      * @lua NA
      */
-    void listenBackToForeground(Object *obj);
+    void listenBackToForeground(EventCustom* event);
 
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual bool initWithTotalParticles(unsigned int numberOfParticles) override;
     /**
      * @js NA
      * @lua NA
@@ -123,6 +105,7 @@ public:
      * @lua NA
      */
     virtual void draw() override;
+
     /**
      * @js NA
      * @lua NA
@@ -134,18 +117,48 @@ public:
      */
     virtual void setTotalParticles(int tp) override;
 
-private:
+    virtual std::string getDescription() const override;
+
+protected:
+    /**
+     * @js ctor
+     */
+    ParticleSystemQuad();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~ParticleSystemQuad();
+
+    /** initializes the indices for the vertices*/
+    void initIndices();
+
+    /** initializes the texture with a rectangle measured Points */
+    void initTexCoordsWithRect(const Rect& rect);
+    
+    // Overrides
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual bool initWithTotalParticles(int numberOfParticles) override;
+
     void setupVBOandVAO();
     void setupVBO();
     bool allocMemory();
-    
-protected:
+
     V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
     GLushort            *_indices;    // indices
     
     GLuint                _VAOname;
     
     GLuint                _buffersVBO[2]; //0: vertex  1: indices
+
+    kmMat4                _transformMatrix;
+    
+    QuadCommand _quadCommand;     // quad command
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
 
 // end of particle_nodes group

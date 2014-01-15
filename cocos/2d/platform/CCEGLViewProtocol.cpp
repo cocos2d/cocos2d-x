@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "CCEGLViewProtocol.h"
 #include "CCTouch.h"
 #include "CCDirector.h"
@@ -9,10 +34,10 @@ NS_CC_BEGIN
 
 namespace {
     
-    static Touch* g_touches[EventTouch::MAX_TOUCHES] = { NULL };
+    static Touch* g_touches[EventTouch::MAX_TOUCHES] = { nullptr };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
-    static std::map<long, int> g_touchIdReorderMap;
+    static std::map<int, int> g_touchIdReorderMap;
     
     static int getUnUsedIndex()
     {
@@ -47,7 +72,7 @@ namespace {
 }
 
 EGLViewProtocol::EGLViewProtocol()
-: _delegate(NULL)
+: _delegate(nullptr)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
@@ -151,9 +176,9 @@ Point EGLViewProtocol::getVisibleOrigin() const
     }
 }
 
-void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * pDelegate)
+void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * delegate)
 {
-    _delegate = pDelegate;
+    _delegate = delegate;
 }
 
 void EGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
@@ -177,7 +202,7 @@ bool EGLViewProtocol::isScissorEnabled()
 	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
-Rect EGLViewProtocol::getScissorRect()
+Rect EGLViewProtocol::getScissorRect() const
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
@@ -188,25 +213,22 @@ Rect EGLViewProtocol::getScissorRect()
 	return Rect(x, y, w, h);
 }
 
-void EGLViewProtocol::setViewName(const char* pszViewName)
+void EGLViewProtocol::setViewName(const std::string& viewname )
 {
-    if (pszViewName != NULL && strlen(pszViewName) > 0)
-    {
-        strncpy(_viewName, pszViewName, sizeof(_viewName));
-    }
+    _viewName = viewname;
 }
 
-const char* EGLViewProtocol::getViewName()
+const std::string& EGLViewProtocol::getViewName() const
 {
     return _viewName;
 }
 
-void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
 {
-    long id = 0;
+    int id = 0;
     float x = 0.0f;
     float y = 0.0f;
-    int nUnusedIndex = 0;
+    int unusedIndex = 0;
     EventTouch touchEvent;
     
     for (int i = 0; i < num; ++i)
@@ -216,26 +238,26 @@ void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float 
         y = ys[i];
 
         auto iter = g_touchIdReorderMap.find(id);
-        nUnusedIndex = 0;
+        unusedIndex = 0;
 
         // it is a new touch
         if (iter == g_touchIdReorderMap.end())
         {
-            nUnusedIndex = getUnUsedIndex();
+            unusedIndex = getUnUsedIndex();
 
             // The touches is more than MAX_TOUCHES ?
-            if (nUnusedIndex == -1) {
-                CCLOG("The touches is more than MAX_TOUCHES, nUnusedIndex = %d", nUnusedIndex);
+            if (unusedIndex == -1) {
+                CCLOG("The touches is more than MAX_TOUCHES, unusedIndex = %d", unusedIndex);
                 continue;
             }
 
-            Touch* touch = g_touches[nUnusedIndex] = new Touch();
-			touch->setTouchInfo(nUnusedIndex, (x - _viewPortRect.origin.x) / _scaleX, 
+            Touch* touch = g_touches[unusedIndex] = new Touch();
+			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             CCLOGINFO("x = %f y = %f", pTouch->getLocationInView().x, pTouch->getLocationInView().y);
             
-            g_touchIdReorderMap.insert(std::make_pair(id, nUnusedIndex));
+            g_touchIdReorderMap.insert(std::make_pair(id, unusedIndex));
             touchEvent._touches.push_back(touch);
         }
     }
@@ -251,9 +273,9 @@ void EGLViewProtocol::handleTouchesBegin(int num, long ids[], float xs[], float 
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
 {
-    long id = 0;
+    int id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -283,7 +305,7 @@ void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float y
         else
         {
             // It is error, should return.
-            CCLOG("Moving touches with id: %ld error", id);
+            CCLOG("Moving touches with id: %d error", id);
             return;
         }
     }
@@ -299,9 +321,9 @@ void EGLViewProtocol::handleTouchesMove(int num, long ids[], float xs[], float y
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
 {
-    long id = 0;
+    int id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -329,14 +351,14 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
 
             touchEvent._touches.push_back(touch);
             
-            g_touches[iter->second] = NULL;
+            g_touches[iter->second] = nullptr;
             removeUsedIndexBit(iter->second);
 
             g_touchIdReorderMap.erase(id);
         } 
         else
         {
-            CCLOG("Ending touches with id: %ld error", id);
+            CCLOG("Ending touches with id: %d error", id);
             return;
         } 
 
@@ -359,12 +381,12 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     }
 }
 
-void EGLViewProtocol::handleTouchesEnd(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
-void EGLViewProtocol::handleTouchesCancel(int num, long ids[], float xs[], float ys[])
+void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }

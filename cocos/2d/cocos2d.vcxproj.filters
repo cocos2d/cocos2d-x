@@ -91,9 +91,6 @@
     <Filter Include="physics\chipmunk">
       <UniqueIdentifier>{aeadfa95-9c89-4212-98ae-89ad57db596a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics\Box2D">
-      <UniqueIdentifier>{b9880458-36e5-4f28-a34b-d01d9512a395}</UniqueIdentifier>
-    </Filter>
     <Filter Include="kazmath\include">
       <UniqueIdentifier>{05e27e68-7574-4a8b-af68-553dd3bafdfa}</UniqueIdentifier>
     </Filter>
@@ -111,6 +108,9 @@
     </Filter>
     <Filter Include="base">
       <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{cba0f362-878c-438b-ad0f-43d287516357}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -453,7 +453,6 @@
     <ClCompile Include="CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCConfiguration.cpp" />
     <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
@@ -548,21 +547,6 @@
     <ClCompile Include="CCEventMouse.cpp">
       <Filter>event_dispatcher</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsContactInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsJointInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.cpp">
-      <Filter>physics\Box2D</Filter>
-    </ClCompile>
     <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp">
       <Filter>physics\chipmunk</Filter>
     </ClCompile>
@@ -578,6 +562,42 @@
     <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp">
       <Filter>physics\chipmunk</Filter>
     </ClCompile>
+    <ClCompile Include="..\base\CCConsole.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCValue.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCCustomCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCFrustum.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCGroupCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCMaterialManager.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCQuadCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -587,9 +607,6 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsJoint.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\CCPhysicsSetting.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsShape.h">
@@ -1018,7 +1035,6 @@
     <ClInclude Include="CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCConfiguration.h" />
     <ClInclude Include="CCDirector.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -1128,24 +1144,6 @@
     <ClInclude Include="CCEventMouse.h">
       <Filter>event_dispatcher</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsBodyInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsContactInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsHelper_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsJointInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsShapeInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\box2d\CCPhysicsWorldInfo_box2d.h">
-      <Filter>physics\Box2D</Filter>
-    </ClInclude>
     <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h">
       <Filter>physics\chipmunk</Filter>
     </ClInclude>
@@ -1163,6 +1161,51 @@
     </ClInclude>
     <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h">
       <Filter>physics\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCConsole.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCMap.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCValue.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCVector.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCCustomCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCFrustum.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCGroupCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCMaterialManager.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCQuadCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommandPool.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderMaterial.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

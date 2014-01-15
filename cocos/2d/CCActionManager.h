@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,12 +30,10 @@ THE SOFTWARE.
 #define __ACTION_CCACTION_MANAGER_H__
 
 #include "CCAction.h"
-#include "CCArray.h"
+#include "CCVector.h"
 #include "CCObject.h"
 
 NS_CC_BEGIN
-
-class Set;
 
 struct _hashElement;
 
@@ -74,61 +73,61 @@ public:
      If the target is not present, a new instance of this target will be created either paused or not, and the action will be added to the newly created target.
      When the target is paused, the queued actions won't be 'ticked'.
      */
-    void addAction(Action *pAction, Node *target, bool paused);
+    void addAction(Action *action, Node *target, bool paused);
 
     /** Removes all actions from all the targets.
     */
-    void removeAllActions(void);
+    void removeAllActions();
 
     /** Removes all actions from a certain target.
      All the actions that belongs to the target will be removed.
      */
-    void removeAllActionsFromTarget(Object *target);
+    void removeAllActionsFromTarget(Node *target);
 
     /** Removes an action given an action reference.
     */
-    void removeAction(Action *pAction);
+    void removeAction(Action *action);
 
     /** Removes an action given its tag and the target */
-    void removeActionByTag(int tag, Object *target);
+    void removeActionByTag(int tag, Node *target);
 
     /** Gets an action given its tag an a target
      @return the Action the with the given tag
      */
-    Action* getActionByTag(int tag, const Object *target) const;
+    Action* getActionByTag(int tag, const Node *target) const;
 
     /** Returns the numbers of actions that are running in a certain target. 
      * Composable actions are counted as 1 action. Example:
      * - If you are running 1 Sequence of 7 actions, it will return 1.
      * - If you are running 7 Sequences of 2 actions, it will return 7.
      */
-    long getNumberOfRunningActionsInTarget(const Object *target) const;
+    ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
 
     /** @deprecated use getNumberOfRunningActionsInTarget() instead */
-    CC_DEPRECATED_ATTRIBUTE inline unsigned int numberOfRunningActionsInTarget(Object *target) const { return getNumberOfRunningActionsInTarget(target); }
+    CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** Pauses the target: all running actions and newly added actions will be paused.
     */
-    void pauseTarget(Object *target);
+    void pauseTarget(Node *target);
 
     /** Resumes the target. All queued actions will be resumed.
     */
-    void resumeTarget(Object *target);
+    void resumeTarget(Node *target);
     
     /** Pauses all running actions, returning a list of targets whose actions were paused.
      */
-    Set* pauseAllRunningActions();
+    Vector<Node*> pauseAllRunningActions();
     
     /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      */
-    void resumeTargets(Set *targetsToResume);
+    void resumeTargets(const Vector<Node*>& targetsToResume);
 
 protected:
     // declared in ActionManager.m
 
-    void removeActionAtIndex(long index, struct _hashElement *pElement);
-    void deleteHashElement(struct _hashElement *pElement);
-    void actionAllocWithHashElement(struct _hashElement *pElement);
+    void removeActionAtIndex(ssize_t index, struct _hashElement *element);
+    void deleteHashElement(struct _hashElement *element);
+    void actionAllocWithHashElement(struct _hashElement *element);
     void update(float dt);
 
 protected:

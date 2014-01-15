@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,10 +26,11 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
+#include "CCFont.h"
+#include "CCData.h"
+
 #include <string>
 #include <ft2build.h>
-
-#include "CCFont.h"
 
 #include FT_FREETYPE_H
 
@@ -71,9 +73,9 @@ private:
     static FT_Library _FTlibrary;
     static bool       _FTInitialized;
     FT_Face           _fontRef;
-    const int         _letterPadding;
+    int               _letterPadding;
     std::string       _fontName;
-    unsigned char*    _ttfData;
+    Data              _ttfData;
     bool              _dynamicGlyphCollection;
 };
 

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,24 +31,28 @@
 
 NS_CC_BEGIN
 
-FontAtlas * FontAtlasFactory::createAtlasFromTTF(const char* fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
+FontAtlas * FontAtlasFactory::createAtlasFromTTF(const std::string& fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
 {
     
     Font *font = Font::createWithTTF(fntFilePath, fontSize, glyphs, customGlyphs);
     if (font)
+    {
+        font->setDistanceFieldEnabled(useDistanceField);
         return font->createFontAtlas();
+    }
     else
+    {
         return nullptr;
+    }
 }
 
-FontAtlas * FontAtlasFactory::createAtlasFromFNT(const char* fntFilePath)
+FontAtlas * FontAtlasFactory::createAtlasFromFNT(const std::string& fntFilePath)
 {
     Font *font = Font::createWithFNT(fntFilePath);
     
     if(font)
     {
-        FontAtlas * atlas = font->createFontAtlas();
-        return atlas;
+        return font->createFontAtlas();
     }
     else
     {

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -53,19 +54,22 @@ typedef struct sImageTGA {
 } tImageTGA;
 
 /// load the image header fields. We only keep those that matter!
-bool tgaLoadHeader(unsigned char *Buffer, unsigned long bufSize, tImageTGA *psInfo);
+bool tgaLoadHeader(unsigned char *buffer, unsigned long bufSize, tImageTGA *info);
 
 /// loads the image pixels. You shouldn't call this function directly
-bool tgaLoadImageData(unsigned char *Buffer, unsigned long bufSize, tImageTGA *psInfo);
+bool tgaLoadImageData(unsigned char *buffer, unsigned long bufSize, tImageTGA *info);
+
+/// this is the function to call when we want to load an image buffer.
+tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size);
 
 /// this is the function to call when we want to load an image
 tImageTGA * tgaLoad(const char *filename);
 
 // /converts RGB to grayscale
-void tgaRGBtogreyscale(tImageTGA *psInfo);
+void tgaRGBtogreyscale(tImageTGA *info);
 
 /// releases the memory used for the image
-void tgaDestroy(tImageTGA *psInfo);
+void tgaDestroy(tImageTGA *info);
 
 }//namespace cocos2d 
 

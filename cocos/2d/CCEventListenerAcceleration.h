@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -33,6 +33,8 @@ NS_CC_BEGIN
 class EventListenerAcceleration : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerAcceleration* create(std::function<void(Acceleration*, Event*)> callback);
     virtual ~EventListenerAcceleration();
     
@@ -44,6 +46,8 @@ private:
     
     bool init(std::function<void(Acceleration*, Event* event)> callback);
     std::function<void(Acceleration*, Event*)> onAccelerationEvent;
+    
+    friend class LuaEventListenerAcceleration;
 };
 
 NS_CC_END
