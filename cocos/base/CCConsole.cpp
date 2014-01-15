@@ -50,7 +50,7 @@
 #include "CCScheduler.h"
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 #include "CCConfiguration.h"
 #include "CCTextureCache.h"
 
