@@ -251,7 +251,9 @@ void Renderer::render()
                         CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
+                        _lastCommand --;
                         drawBatchedQuads();
+                        _lastCommand ++;
                     }
 
                     memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
@@ -414,7 +416,7 @@ void Renderer::drawBatchedQuads()
     }
 
     
-    _firstCommand = _lastCommand;
+    _firstCommand = _lastCommand + 1;
     _numQuads = 0;
 }
 
