@@ -3936,7 +3936,7 @@ JSBool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
 
     ret->fontSize = (int)fontSize;
     ret->glyphs = GlyphCollection((int)glyphs);
-    ret->distanceFieldEnable = distanceFieldEnable;
+    ret->distanceFieldEnabled = distanceFieldEnable;
     if(ret->glyphs == GlyphCollection::CUSTOM && customGlyphs.length() > 0)
         ret->customGlyphs = customGlyphs.c_str();
     else
