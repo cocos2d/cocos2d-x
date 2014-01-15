@@ -53,9 +53,9 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
       
     if (ret->setTTFConfig(ttfConfig))
     {
-        if(ttfConfig.distanceFieldEnable)
+        if(ttfConfig.distanceFieldEnabled)
             ret->setFontSize(ttfConfig.fontSize);
-        ret->setText(text,alignment,lineSize);
+        ret->setString(text,alignment,lineSize);
         ret->autorelease();
         return ret;
     }
@@ -81,7 +81,7 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
 
     if (ret->setBMFontFilePath(bmfontFilePath))
     {
-        ret->setText(text,alignment,lineSize);
+        ret->setString(text,alignment,lineSize);
         ret->autorelease();
         return ret;
     }
@@ -94,7 +94,6 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
 
 Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
 : _reusedLetter(nullptr)
-, _multilineEnable(true)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _width(0.0f)
@@ -147,24 +146,15 @@ bool Label::init()
     return ret;
 }
 
-bool Label::setTTFConfig(const TTFConfig& ttfConfig)
+bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
-    FontAtlas *newAtlas = nullptr;
-    if(ttfConfig.distanceFieldEnable)
-        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, DISTANCEFIELD_ATLAS_FONTSIZE, ttfConfig.glyphs, ttfConfig.customGlyphs,true);
-    else
-        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, ttfConfig.fontSize, ttfConfig.glyphs, ttfConfig.customGlyphs,false);
-
-    if (!newAtlas)
-        return false;
-
     FontAtlas *oldAtlas = _fontAtlas;
     bool oldDistanceFieldEnable = _useDistanceField;
     bool oldA8ShaderEnabel = _useA8Shader;
-    
-    _fontAtlas = newAtlas;
-    _useDistanceField = ttfConfig.distanceFieldEnable;
-    _useA8Shader = true;
+
+    _fontAtlas = atlas;
+    _useDistanceField = distanceFieldEnabled;
+    _useA8Shader = useA8Shader;
 
     bool ret = Label::init();
     if (oldAtlas)
@@ -180,7 +170,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
             _useA8Shader = oldA8ShaderEnabel;
             Label::init();
 
-            FontAtlasCache::releaseFontAtlas(newAtlas);
+            FontAtlasCache::releaseFontAtlas(atlas);
         }
     }
 
@@ -194,6 +184,20 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     }
 
     return ret;
+}
+
+bool Label::setTTFConfig(const TTFConfig& ttfConfig)
+{
+    FontAtlas *newAtlas = nullptr;
+    if(ttfConfig.distanceFieldEnabled)
+        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, DISTANCEFIELD_ATLAS_FONTSIZE, ttfConfig.glyphs, ttfConfig.customGlyphs,true);
+    else
+        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, ttfConfig.fontSize, ttfConfig.glyphs, ttfConfig.customGlyphs,false);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
 }
 
 bool Label::setBMFontFilePath(const std::string& bmfontFilePath)
@@ -203,57 +207,10 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath)
     if (!newAtlas)
         return false;
 
-    FontAtlas *oldAtlas = _fontAtlas;
-    bool oldDistanceFieldEnable = _useDistanceField;
-    bool oldA8ShaderEnabel = _useA8Shader;
-
-    _fontAtlas = newAtlas;
-    _useDistanceField = false;
-    _useA8Shader = false;
-
-    bool ret = Label::init();
-    if (oldAtlas)
-    {
-        if (ret)
-        {
-            FontAtlasCache::releaseFontAtlas(oldAtlas);        
-        }
-        else
-        {
-            _fontAtlas = oldAtlas;
-            _useDistanceField = oldDistanceFieldEnable;
-            _useA8Shader = oldA8ShaderEnabel;
-            Label::init();
-
-            FontAtlasCache::releaseFontAtlas(newAtlas);
-        }
-    }
-    
-    if (_fontAtlas)
-    {
-        _commonLineHeight = _fontAtlas->getCommonLineHeight();
-        if (_currentUTF16String)
-        {      
-            alignText();
-        }
-    }
-    
-    return ret;
+    return initWithFontAtlas(newAtlas);
 }
 
-void Label::setString(const std::string &text)
-{
-    _multilineEnable = true;
-    setText(text, TextHAlignment::CENTER, _width, false);
-}
-
-void Label::setString(const std::string &text,bool multilineEnable)
-{
-    _multilineEnable = multilineEnable;
-    setText(text, TextHAlignment::CENTER, _width, false);
-}
-
-bool Label::setText(const std::string& text, const TextHAlignment& alignment /* = TextHAlignment::LEFT */, float lineWidth /* = 0 */, bool lineBreakWithoutSpaces /* = false */)
+bool Label::setString(const std::string& text, const TextHAlignment& alignment /* = TextHAlignment::CENTER */, float lineWidth /* = -1 */, bool lineBreakWithoutSpaces /* = false */)
 {
     if (!_fontAtlas || _commonLineHeight <= 0)
         return false;
@@ -262,7 +219,10 @@ bool Label::setText(const std::string& text, const TextHAlignment& alignment /* 
     // reset the string
     resetCurrentString();
     
-    _width                  = lineWidth;
+    if(lineWidth >= 0)
+    {
+        _width                  = lineWidth;
+    }   
     _alignment              = alignment;
     _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
     
@@ -381,7 +341,7 @@ void Label::alignText()
         _textureAtlas->removeAllQuads();  
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     LabelTextFormatter::createStringSprites(this);    
-    if(_multilineEnable && LabelTextFormatter::multilineText(this) )      
+    if(_width > 0 && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
     
     LabelTextFormatter::alignText(this);
