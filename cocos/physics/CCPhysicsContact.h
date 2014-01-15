@@ -86,8 +86,6 @@ public:
     inline void setData(void* data) { _data = data; }
     /** get the event code */
     EventCode getEventCode() const { return _eventCode; };
-    
-    static PhysicsContact* cast(EventCustom* event);
 
 private:
     static PhysicsContact* construct(PhysicsShape* a, PhysicsShape* b);
