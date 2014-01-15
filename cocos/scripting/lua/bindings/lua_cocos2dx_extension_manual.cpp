@@ -52,7 +52,7 @@ static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"Control",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.Control",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Control*>(tolua_tousertype(tolua_S,1,0));
@@ -108,7 +108,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"Control",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.Control",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Control*>(tolua_tousertype(tolua_S,1,0));
@@ -153,7 +153,7 @@ tolua_lerror:
 
 static void extendControl(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "Control");
+    lua_pushstring(tolua_S, "cc.Control");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
@@ -177,7 +177,7 @@ static int tolua_cocos2d_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"EditBox",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
@@ -226,7 +226,7 @@ static int tolua_cocos2d_EditBox_unregisterScriptEditBoxHandler(lua_State* tolua
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"EditBox",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.EditBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<EditBox*>(tolua_tousertype(tolua_S,1,0));
@@ -258,7 +258,7 @@ tolua_lerror:
 
 static void extendEditBox(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "EditBox");
+    lua_pushstring(tolua_S, "cc.EditBox");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
@@ -281,7 +281,7 @@ static int tolua_cocos2d_CCBProxy_create(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 	tolua_Error tolua_err;
-	if (!tolua_isusertable(tolua_S,1,"CCBProxy",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertable(tolua_S,1,"cc.CCBProxy",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     argc = lua_gettop(tolua_S) - 1;
@@ -291,7 +291,7 @@ static int tolua_cocos2d_CCBProxy_create(lua_State* tolua_S)
         CCBProxy* tolua_ret = (CCBProxy*)CCBProxy::create();        
         int  nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int *pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBProxy");
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.CCBProxy");
         return 1;
     }
     
@@ -316,7 +316,7 @@ static int tolua_cocos2d_CCBProxy_createCCBReader(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBProxy",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBProxy",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBProxy*>(tolua_tousertype(tolua_S,1,0));
@@ -335,7 +335,7 @@ static int tolua_cocos2d_CCBProxy_createCCBReader(lua_State* tolua_S)
         CCBReader* tolua_ret = (CCBReader*) self->createCCBReader();
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCBReader");
+        toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.CCBReader");
         return 1;
     }
     
@@ -366,7 +366,7 @@ static int tolua_cocos2d_CCBProxy_readCCBFromFile(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBProxy",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBProxy",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBProxy*>(tolua_tousertype(tolua_S,1,0));
@@ -384,7 +384,7 @@ static int tolua_cocos2d_CCBProxy_readCCBFromFile(lua_State* tolua_S)
     {
 #if COCOS2D_DEBUG >= 1
         if (!tolua_isstring(tolua_S, 2, 0, &tolua_err)||
-            !tolua_isusertype(tolua_S,3,"CCBReader",0,&tolua_err)||
+            !tolua_isusertype(tolua_S,3,"cc.CCBReader",0,&tolua_err)||
             !tolua_isboolean(tolua_S,4,1,&tolua_err )
             )
             goto tolua_lerror;
@@ -395,7 +395,7 @@ static int tolua_cocos2d_CCBProxy_readCCBFromFile(lua_State* tolua_S)
         tolua_ret = (Node*) self->readCCBFromFile(ccbFilePath, ccbReader, setOwner);
         ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"Node");
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.Node");
         return 1;
     }
     
@@ -420,7 +420,7 @@ static int tolua_cocos2d_CCBProxy_getNodeTypeName(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBProxy",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBProxy",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBProxy*>(tolua_tousertype(tolua_S,1,0));
@@ -437,7 +437,7 @@ static int tolua_cocos2d_CCBProxy_getNodeTypeName(lua_State* tolua_S)
     if (1 == argc)
     {
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S,1,"Node",0,&tolua_err)) goto tolua_lerror;
+        if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
 #endif
         
         Node* node = static_cast<Node*>(tolua_tousertype(tolua_S,2,0));
@@ -466,7 +466,7 @@ static int tolua_cocos2d_CCBProxy_setCallback(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBProxy",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBProxy",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBProxy*>(tolua_tousertype(tolua_S,1,0));
@@ -482,7 +482,7 @@ static int tolua_cocos2d_CCBProxy_setCallback(lua_State* tolua_S)
     if ( argc >= 2 && argc <= 3 )
     {
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S,2,"Node",0,&tolua_err) ||
+        if (!tolua_isusertype(tolua_S,2,"cc.Node",0,&tolua_err) ||
             !toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err) ||
             !tolua_isnumber(tolua_S, 4, 1, &tolua_err)
             )
@@ -510,8 +510,8 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
 {
     tolua_module(tolua_S,"cc",0);
 	tolua_beginmodule(tolua_S,"cc");
-    tolua_usertype(tolua_S,"CCBProxy");
-    tolua_cclass(tolua_S,"CCBProxy","CCBProxy","Layer",NULL);
+    tolua_usertype(tolua_S,"cc.CCBProxy");
+    tolua_cclass(tolua_S,"CCBProxy","cc.CCBProxy","cc.Layer",NULL);
     tolua_beginmodule(tolua_S,"CCBProxy");
     tolua_function(tolua_S, "create", tolua_cocos2d_CCBProxy_create);
     tolua_function(tolua_S, "createCCBReader", tolua_cocos2d_CCBProxy_createCCBReader);
@@ -522,7 +522,7 @@ int register_cocos2dx_extension_CCBProxy(lua_State* tolua_S)
     tolua_endmodule(tolua_S);
     
     std::string typeName = typeid(CCBProxy).name();
-    g_luaType[typeName] = "CCBProxy";
+    g_luaType[typeName] = "cc.CCBProxy";
     return 1;
 }
 
@@ -537,7 +537,7 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBReader",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBReader",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBReader*>(tolua_tousertype(tolua_S,1,0));
@@ -564,12 +564,12 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
             Node* tolua_ret = (Node*) self->readNodeGraphFromFile(fileName);
             int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"Node");
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.Node");
             return 1;
         }
         
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S, 3, "Object", 0, &tolua_err))
+        if (!tolua_isusertype(tolua_S, 3, "cc.Object", 0, &tolua_err))
             goto tolua_lerror;
 #endif
         Object* owner = static_cast<Object*>(tolua_tousertype(tolua_S, 3, 0));
@@ -579,7 +579,7 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
             Node* tolua_ret = (Node*) self->readNodeGraphFromFile(fileName,owner);
             int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
             int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"Node");
+            toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.Node");
             return 1;
         }
         
@@ -591,7 +591,7 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
         Node* tolua_ret = (Node*) self->readNodeGraphFromFile(fileName,owner,size);
         int ID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* luaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"Node");
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)tolua_ret,"cc.Node");
         return 1;
         
     }
@@ -608,7 +608,7 @@ tolua_lerror:
 
 static void extendCCBReader(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "CCBReader");
+    lua_pushstring(tolua_S, "cc.CCBReader");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
@@ -630,7 +630,7 @@ static int tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed(lua_
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(tolua_S,1,"CCBAnimationManager",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(tolua_S,1,"cc.CCBAnimationManager",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CCBAnimationManager*>(tolua_tousertype(tolua_S,1,0));
@@ -647,7 +647,7 @@ static int tolua_cocos2d_CCBAnimationManager_setCallFuncForLuaCallbackNamed(lua_
     {
         
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S,2, "CallFunc", 0, &tolua_err) ||
+        if (!tolua_isusertype(tolua_S,2, "cc.CallFunc", 0, &tolua_err) ||
             !tolua_isstring(tolua_S, 3, 0, &tolua_err) )
             goto tolua_lerror;
 #endif
@@ -675,7 +675,7 @@ tolua_lerror:
 
 static void extendCCBAnimationManager(lua_State* tolua_S)
 {
-    lua_pushstring(tolua_S, "CCBAnimationManager");
+    lua_pushstring(tolua_S, "cc.CCBAnimationManager");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
@@ -736,7 +736,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(L,1,"AssetsManager",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(L,1,"cc.AssetsManager",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = (AssetsManager*)  tolua_tousertype(L,1,0);
@@ -791,7 +791,7 @@ tolua_lerror:
 
 static void extendAssetsManager(lua_State* L)
 {
-    lua_pushstring(L, "AssetsManager");
+    lua_pushstring(L, "cc.AssetsManager");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
