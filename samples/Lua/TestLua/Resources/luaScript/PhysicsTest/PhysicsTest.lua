@@ -291,9 +291,6 @@ local function PhysicsDemoJoints()
        for j in range(0, 3) do
             local offset = cc.p(VisibleRect:leftBottom().x + 5 + j * width + width/2, VisibleRect:leftBottom().y + 50 + i * height + height/2);
             box:addShape(cc.PhysicsShapeEdgeBox:create(cc.size(width, height), cc.PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset));
-            print("i,j")
-	    print(i)
-	    print(j)
             local index = i*4 + j
             if index == 0 then
 	            local sp1 = makeBall(layer, cc.p(offset.x - 30, offset.y), 10);
@@ -623,7 +620,6 @@ local function PhysicsDemoOneWayPlatform()
       layer:addChild(ball);
 
       local function onContactBegin(event, contact)
-        print(contact:getContactData())
         return contact:getContactData().normal.y < 0;
       end
       local contactListener = cc.EventListenerPhysicsContactWithBodies:create(platform:getPhysicsBody(), ball:getPhysicsBody());
@@ -637,6 +633,205 @@ local function PhysicsDemoOneWayPlatform()
     return layer
 end
 
+local function PhysicsDemoActions()
+  local layer = cc.Layer:create()
+  local function onEnter()
+    local touchListener = cc.EventListenerTouchOneByOne:create()
+    touchListener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN) 
+    touchListener:registerScriptHandler(onTouchMoved, cc.Handler.EVENT_TOUCH_MOVED) 
+    touchListener:registerScriptHandler(onTouchEnded, cc.Handler.EVENT_TOUCH_ENDED)
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, layer)
+    
+    local node = cc.Node:create();
+    node:setPhysicsBody(cc.PhysicsBody:createEdgeBox(cc.size(VisibleRect:getVisibleRect().width, VisibleRect:getVisibleRect().height)));
+    node:setPosition(VisibleRect:center());
+    layer:addChild(node);
+    
+    local sp1 = addGrossiniAtPosition(layer, VisibleRect:center());
+    local sp2 = addGrossiniAtPosition(layer, cc.p(VisibleRect:left().x + 50, VisibleRect:left().y));
+    local sp3 = addGrossiniAtPosition(layer, cc.p(VisibleRect:right().x - 20, VisibleRect:right().y));
+    local sp4 = addGrossiniAtPosition(layer, cc.p(VisibleRect:leftTop().x + 50, VisibleRect:leftTop().y-50));
+    sp4:getPhysicsBody():setGravityEnable(false);
+    
+    
+    local actionTo = cc.JumpTo:create(2, cc.p(100,100), 50, 4);
+    local actionBy = cc.JumpBy:create(2, cc.p(300,0), 50, 4);
+    local actionUp = cc.JumpBy:create(2, cc.p(0,50), 80, 4);
+    local actionByBack = actionBy:reverse();
+    
+    sp1:runAction(cc.RepeatForever:create(actionUp));
+    sp2:runAction(cc.RepeatForever:create(cc.Sequence:create(actionBy, actionByBack)));
+    sp3:runAction(actionTo);
+    sp4:runAction(cc.RepeatForever:create(cc.Sequence:create(actionBy:clone(), actionByBack:clone())));
+  end
+
+  initWithLayer(layer, onEnter)
+  Helper.titleLabel:setString("Actions")
+
+  return layer
+end
+
+local function PhysicsDemoPump()
+  local layer = cc.Layer:create()
+  local function onEnter()
+    layer:toggleDebug();
+
+    local distance = 0.0;
+    local rotationV = 0.0;
+    local function onTouchBeganEx(touch, event)
+      onTouchBegan(touch, event)
+      distance = touch:getLocation().x - VisibleRect:center().x;
+      return true;
+    end
+
+    local function onTouchMovedEx(touch, event)
+      onTouchMoved(touch, event);
+      distance = touch:getLocation().x - VisibleRect:center().x;
+    end
+
+    local function onTouchEndedEx(touch, event)
+      onTouchEnded(touch, event)
+      distance = 0;
+    end
+    
+    local touchListener = cc.EventListenerTouchOneByOne:create()
+    touchListener:registerScriptHandler(onTouchBeganEx, cc.Handler.EVENT_TOUCH_BEGAN) 
+    touchListener:registerScriptHandler(onTouchMovedEx, cc.Handler.EVENT_TOUCH_MOVED) 
+    touchListener:registerScriptHandler(onTouchEndedEx, cc.Handler.EVENT_TOUCH_ENDED)
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(touchListener, layer)
+    
+    local function update()
+      for _, body in ipairs(cc.Director:getInstance():getRunningScene():getPhysicsWorld():getAllBodies()) do
+        if body:getTag() == DRAG_BODYS_TAG and body:getPosition().y < 0.0 then
+            body:getNode():setPosition(cc.p(VisibleRect:leftTop().x + 75, VisibleRect:leftTop().y + math.random() * 90, 0));
+            body:setVelocity(cc.p(0, 0));
+        end
+      end
+      
+      local gear = cc.Director:getInstance():getRunningScene():getPhysicsWorld():getBody(1);
+      if gear then
+          if distance ~= 0.0 then
+            rotationV = rotationV + distance/2500.0;
+          end
+          if rotationV > 30 then rotationV = 30.0 end
+          if rotationV < -30 then rotationV = -30.0 end
+          
+          gear:setAngularVelocity(rotationV);
+          rotationV = rotationV*0.995;
+      end
+    end
+
+    layer:scheduleUpdateWithPriorityLua(update, 0);
+    
+    local node = cc.Node:create();
+    local body = cc.PhysicsBody:create();
+    body:setDynamic(false);
+    
+    local staticMaterial = cc.PhysicsMaterial(cc.PHYSICS_INFINITY, 0, 0.5);
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 50, VisibleRect:leftTop().y), 
+      cc.p(VisibleRect:leftTop().x + 50, VisibleRect:leftTop().y-130), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 190, VisibleRect:leftTop().y), 
+      cc.p(VisibleRect:leftTop().x + 100, VisibleRect:leftTop().y-50), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 100, VisibleRect:leftTop().y-50), 
+      cc.p(VisibleRect:leftTop().x + 100, VisibleRect:leftTop().y-90), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 50, VisibleRect:leftTop().y-130), 
+      cc.p(VisibleRect:leftTop().x + 100, VisibleRect:leftTop().y-145), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 100, VisibleRect:leftTop().y-145), 
+      cc.p(VisibleRect:leftBottom().x + 100, VisibleRect:leftBottom().y + 80), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 150, VisibleRect:leftTop().y-80), 
+      cc.p(VisibleRect:leftBottom().x + 150, VisibleRect:leftBottom().y + 80), staticMaterial, 2.0));
+    body:addShape(cc.PhysicsShapeEdgeSegment:create(
+      cc.p(VisibleRect:leftTop().x + 150, VisibleRect:leftTop().y-80), 
+      cc.p(VisibleRect:rightTop().x -100, VisibleRect:rightTop().y-150), staticMaterial, 2.0));
+    
+    body:setCategoryBitmask(1);
+    
+    for _ in range(1, 6) do
+        local ball = makeBall(layer, cc.p(VisibleRect:leftTop().x + 75 + math.random() * 90, VisibleRect:leftTop().y), 22, cc.PhysicsMaterial(0.05, 0.0, 0.1));
+        ball:getPhysicsBody():setTag(DRAG_BODYS_TAG);
+        layer:addChild(ball);
+    end
+    
+    node:setPhysicsBody(body);
+    layer:addChild(node);
+    
+    local vec =
+    {
+        cc.p(VisibleRect:leftTop().x + 102, VisibleRect:leftTop().y-148),
+        cc.p(VisibleRect:leftTop().x + 148, VisibleRect:leftTop().y-161),
+        cc.p(VisibleRect:leftBottom().x + 148, VisibleRect:leftBottom().y + 20),
+        cc.p(VisibleRect:leftBottom().x + 102, VisibleRect:leftBottom().y + 20)
+    };
+    
+    local world = cc.Director:getInstance():getRunningScene():getPhysicsWorld();
+    
+    -- small gear
+    local sgear = cc.Node:create();
+    local sgearB = cc.PhysicsBody:createCircle(44);
+    sgear:setPhysicsBody(sgearB);
+    sgear:setPosition(cc.p(VisibleRect:leftBottom().x + 125, VisibleRect:leftBottom().y));
+    layer:addChild(sgear);
+    sgearB:setCategoryBitmask(4);
+    sgearB:setCollisionBitmask(4);
+    sgearB:setTag(1);
+    world:addJoint(cc.PhysicsJointPin:construct(body, sgearB, sgearB:getPosition()));
+    
+    
+    -- big gear
+    local bgear = cc.Node:create();
+    local bgearB = cc.PhysicsBody:createCircle(100);
+    bgear:setPhysicsBody(bgearB);
+    bgear:setPosition(cc.p(VisibleRect:leftBottom().x + 275, VisibleRect:leftBottom().y));
+    layer:addChild(bgear);
+    bgearB:setCategoryBitmask(4);
+    world:addJoint(cc.PhysicsJointPin:construct(body, bgearB, bgearB:getPosition()));
+    
+    
+    -- pump
+    local pump = cc.Node:create();
+    local center = cc.PhysicsShape:getPolyonCenter(vec);
+    pump:setPosition(center);
+    local pumpB = cc.PhysicsBody:createPolygon(vec, cc.PHYSICSBODY_MATERIAL_DEFAULT, cc.p(-center.x, -center.y));
+    pump:setPhysicsBody(pumpB);
+    layer:addChild(pump);
+    pumpB:setCategoryBitmask(2);
+    pumpB:setGravityEnable(false);
+    world:addJoint(cc.PhysicsJointDistance:construct(pumpB, sgearB, cc.p(0, 0), cc.p(0, -44)));
+    
+    -- plugger
+    local seg = {cc.p(VisibleRect:leftTop().x + 75, VisibleRect:leftTop().y-120), cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y-100)};
+    local segCenter = cc.p((seg[2].x + seg[1].x)/2, (seg[2].y + seg[1].y)/2);
+    seg[2] = cc.p(seg[2].x - segCenter.x, seg[2].y - segCenter.y);
+    seg[1] = cc.p(seg[1].x - segCenter.x, seg[1].y - segCenter.y);
+    local plugger = cc.Node:create();
+    local pluggerB = cc.PhysicsBody:createEdgeSegment(seg[1], seg[2], cc.PhysicsMaterial(0.01, 0.0, 0.5), 20);
+    pluggerB:setDynamic(true);
+    pluggerB:setMass(30);
+    pluggerB:setMoment(100000);
+    plugger:setPhysicsBody(pluggerB);
+    plugger:setPosition(segCenter);
+    layer:addChild(plugger);
+    pluggerB:setCategoryBitmask(2);
+    sgearB:setCollisionBitmask(5);
+    world:addJoint(cc.PhysicsJointPin:construct(body, pluggerB, cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y-90)));
+    world:addJoint(cc.PhysicsJointDistance:construct(pluggerB, sgearB, 
+      pluggerB:world2Local(cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y)), cc.p(44, 0)));
+  end
+
+  initWithLayer(layer, onEnter)
+  Helper.titleLabel:setString("Pump")
+  Helper.subtitleLabel:setString("touch screen on left or right")
+
+  return layer
+end
 
 local function PhysicsDemoSlice()
     local layer = cc.Layer:create()
@@ -740,6 +935,8 @@ function PhysicsTest()
       PhysicsDemoClickAdd,
       PhysicsDemoRayCast,
       PhysicsDemoJoints,
+      PhysicsDemoActions,
+      PhysicsDemoPump,
       PhysicsDemoOneWayPlatform,
       PhysicsDemoSlice,
    }

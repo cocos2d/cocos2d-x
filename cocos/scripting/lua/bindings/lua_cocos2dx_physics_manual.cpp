@@ -923,7 +923,6 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PhysicsShapeBox* cobj = nullptr;
-    bool ok  = true;
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
