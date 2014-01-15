@@ -512,62 +512,77 @@ static std::string RemoveFileExt(const std::string& filePath) {
     }
 }
 
-JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
+void ScriptingCore::compileScript(const char *path, JSObject* global, JSContext* cx)
 {
-    if (!path) {
-        return false;
-    }
-    
-    
-    cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
+	if (!path) {
+		return ;
+	}
 
-    if (global == NULL) {
-        global = _global;
-    }
-    if (cx == NULL) {
-        cx = _cx;
-    }
-    
-    JSAutoCompartment ac(cx, global);
-    
-    js::RootedScript script(cx);
-    js::RootedObject obj(cx, global);
-    
-    // a) check jsc file first
-    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+	cocos2d::FileUtils *futil = cocos2d::FileUtils::getInstance();
 
-    Data data = futil->getDataFromFile(byteCodePath);
-    
-    if (!data.isNull())
-    {
-        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
-    }
-    
-    // b) no jsc file, check js file
-    if (!script)
-    {
-        /* Clear any pending exception from previous failed decoding.  */
-        ReportException(cx);
-        
-        std::string fullPath = futil->fullPathForFilename(path);
-        JS::CompileOptions options(cx);
-        options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
-        
+	if (global == NULL) {
+		global = _global;
+	}
+	if (cx == NULL) {
+		cx = _cx;
+	}
+
+	JSAutoCompartment ac(cx, global);
+
+	js::RootedScript script(cx);
+	js::RootedObject obj(cx, global);
+
+	// a) check jsc file first
+	std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
+
+	Data data = futil->getDataFromFile(byteCodePath);
+
+	if (!data.isNull())
+	{
+		script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
+	}
+
+	// b) no jsc file, check js file
+	if (!script)
+	{
+		/* Clear any pending exception from previous failed decoding.  */
+		ReportException(cx);
+
+		std::string fullPath = futil->fullPathForFilename(path);
+		JS::CompileOptions options(cx);
+		options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        std::string jsFileContent = futil->getStringFromFile(fullPath);
-        if (!jsFileContent.empty())
-        {
-            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
-        }
+		std::string jsFileContent = futil->getStringFromFile(fullPath);
+		if (!jsFileContent.empty())
+		{
+			script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
+		}
 #else
-        script = JS::Compile(cx, obj, options, fullPath.c_str());
+		script = JS::Compile(cx, obj, options, fullPath.c_str());
 #endif
-    }
-    
+	}
+	if (script) {
+		filename_script[path] = script;
+	}
+}
+
+JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* cx)
+{ 
+	if (global == NULL) {
+		global = _global;
+	}
+	if (cx == NULL) {
+		cx = _cx;
+	}
+	if (!filename_script[path])
+	{
+		compileScript(path,global,cx );
+	}
+	JSScript * script = filename_script[path];
     JSBool evaluatedOK = false;
     if (script) {
         jsval rval;
-        filename_script[path] = script;
         JSAutoCompartment ac(cx, global);
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
