@@ -2,6 +2,7 @@ cocos2d-x-3.0final ?.? ?
 [All]
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
      [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
      [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
