@@ -337,7 +337,7 @@ void LabelMainScene::updateText(float dt)
     case kCaseLabelUpdate:
         for(const auto &child : children) {
             Label* label = (Label*)child;
-            label->setString(text,false);
+            label->setString(text);
         }
         break;
     default:

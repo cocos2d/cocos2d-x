@@ -60,7 +60,7 @@ typedef struct _ttfConfig
     int fontSize;
     GlyphCollection glyphs;
     const char *customGlyphs;
-    bool distanceFieldEnable;
+    bool distanceFieldEnabled;
 
     _ttfConfig(const char* filePath,int fontSize = 36, const GlyphCollection& glyphs = GlyphCollection::NEHE,
         const char *customGlyphs = nullptr,bool useDistanceField = false)
@@ -68,11 +68,11 @@ typedef struct _ttfConfig
         ,fontSize(fontSize)
         ,glyphs(glyphs)
         ,customGlyphs(customGlyphs)
-        ,distanceFieldEnable(useDistanceField)
+        ,distanceFieldEnabled(useDistanceField)
     {}
 }TTFConfig;
 
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode, public LabelTextFormatProtocol
 {
 public:
     static Label* create();
@@ -86,13 +86,11 @@ public:
 
     bool setBMFontFilePath(const std::string& bmfontFilePath);
 
-    bool setText(const std::string& text, const TextHAlignment& alignment = TextHAlignment::LEFT, float lineWidth = 0, bool lineBreakWithoutSpaces = false);
+    bool setString(const std::string& text, const TextHAlignment& alignment = TextHAlignment::CENTER, float lineWidth = -1, bool lineBreakWithoutSpaces = false);
 
     //only support for TTF
     void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
-    virtual void setString(const std::string &text) override;
-    void setString(const std::string &text,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -138,7 +136,7 @@ public:
     virtual void setLabelContentSize(const Size &newSize) override;
     
     // carloX
-    virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
+    virtual const std::string& getString() const { static std::string _ret("not implemented"); return _ret; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
@@ -156,6 +154,8 @@ private:
      */
    ~Label();
     
+   bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+
     void setFontSize(int fontSize);
     
     bool init();
@@ -173,9 +173,8 @@ private:
 
     //! used for optimization
     Sprite              *_reusedLetter;
-    std::vector<LetterInfo>     _lettersInfo;       
-   
-    bool                        _multilineEnable;
+    std::vector<LetterInfo>     _lettersInfo;
+
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
