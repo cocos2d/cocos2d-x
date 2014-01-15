@@ -1,6 +1,6 @@
 #!/usr/bin/python
-# create_project.py
-# Create cross-platform cocos2d-x project
+# obfuscate.py
+# Create Ant buildfile to obfuscate game source code
 # Copyright (c) 2012 cocos2d-x.org
 # Author: WangZhe
 
@@ -16,9 +16,9 @@ import sys
 import os, os.path
 
 def dumpUsage():
-    print "Usage: generate-config.py -input INPUT_PATH -output OUTPUT_PATH -cocos2d COCOS2D_ROOT_PATH"
+    print "Usage: %s -input INPUT_PATH -output OUTPUT_PATH -cocos2d COCOS2D_ROOT_PATH" % (os.path.basename(__file__))
     print "Options:"
-    print "  -intput    INPUT_PATH            The path to javscript files directory"
+    print "  -input     INPUT_PATH            The path to javascript files directory"
     print "  -output    OUTPUT_PATH           The path to the obfuscated javascript file"
     print "  -cocos2d   COCOS2D_ROOT_PATH     The root path of cocos2d-x, e.g. /workspace/cocos2d-x"
     print ""
@@ -123,7 +123,7 @@ checkParams()
 generateXmlForCompiler()
 # print "running ant to generate obfuscated main.js"
 # os.popen("ant -buildfile obfuscate.xml")
-print "Successful! obfuscate.xml is generated."
-print "Note: Please reoder the files sequence in obfuscate.xml, keep it the same order as javascript \"requrie\" instruction,"
-print "then call \"ant -buildfile obfuscate.xml\" to obfuscate your js codes."
+print "Successful! obfuscate.xml generated."
+print "Note: Please reorder the file's sequence in obfuscate.xml, keep it the same order as javascript \"require\" instruction,"
+print "then call \"ant -buildfile obfuscate.xml\" to obfuscate your js code."
 
