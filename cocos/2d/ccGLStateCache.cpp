@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (C) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,23 +37,26 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static GLuint      s_uCurrentProjectionMatrix = -1;
-static bool        s_bVertexAttribPosition = false;
-static bool        s_bVertexAttribColor = false;
-static bool        s_bVertexAttribTexCoords = false;
-
-
+namespace
+{
+    static GLuint      s_currentProjectionMatrix = -1;
+    static bool        s_vertexAttribPosition = false;
+    static bool        s_vertexAttribColor = false;
+    static bool        s_vertexAttribTexCoords = false;
+    
+    
 #if CC_ENABLE_GL_STATE_CACHE
-
+    
 #define kMaxActiveTexture 16
-
-static GLuint    s_uCurrentShaderProgram = -1;
-static GLuint    s_uCurrentBoundTexture[kMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
-static GLenum    s_eBlendingSource = -1;
-static GLenum    s_eBlendingDest = -1;
-static int       s_eGLServerState = 0;
-static GLuint    s_uVAO = 0;
+    
+    static GLuint    s_currentShaderProgram = -1;
+    static GLuint    s_currentBoundTexture[kMaxActiveTexture] =  {(GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, (GLuint)-1,(GLuint)-1,(GLuint)-1,(GLuint)-1, };
+    static GLenum    s_blendingSource = -1;
+    static GLenum    s_blendingDest = -1;
+    static int       s_GLServerState = 0;
+    static GLuint    s_VAO = 0;
 #endif // CC_ENABLE_GL_STATE_CACHE
+}
 
 // GL State Cache functions
 
@@ -62,22 +66,22 @@ void invalidateStateCache( void )
 {
     kmGLFreeAll();
     
-    s_uCurrentProjectionMatrix = -1;
-    s_bVertexAttribPosition = false;
-    s_bVertexAttribColor = false;
-    s_bVertexAttribTexCoords = false;
+    s_currentProjectionMatrix = -1;
+    s_vertexAttribPosition = false;
+    s_vertexAttribColor = false;
+    s_vertexAttribTexCoords = false;
     
 #if CC_ENABLE_GL_STATE_CACHE
-    s_uCurrentShaderProgram = -1;
+    s_currentShaderProgram = -1;
     for( int i=0; i < kMaxActiveTexture; i++ )
     {
-        s_uCurrentBoundTexture[i] = -1;
+        s_currentBoundTexture[i] = -1;
     }
 
-    s_eBlendingSource = -1;
-    s_eBlendingDest = -1;
-    s_eGLServerState = 0;
-    s_uVAO = 0;
+    s_blendingSource = -1;
+    s_blendingDest = -1;
+    s_GLServerState = 0;
+    s_VAO = 0;
     
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
@@ -85,9 +89,9 @@ void invalidateStateCache( void )
 void deleteProgram( GLuint program )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    if(program == s_uCurrentShaderProgram)
+    if(program == s_currentShaderProgram)
     {
-        s_uCurrentShaderProgram = -1;
+        s_currentShaderProgram = -1;
     }
 #endif // CC_ENABLE_GL_STATE_CACHE
 
@@ -97,8 +101,8 @@ void deleteProgram( GLuint program )
 void useProgram( GLuint program )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    if( program != s_uCurrentShaderProgram ) {
-        s_uCurrentShaderProgram = program;
+    if( program != s_currentShaderProgram ) {
+        s_currentShaderProgram = program;
         glUseProgram(program);
     }
 #else
@@ -122,10 +126,10 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 void blendFunc(GLenum sfactor, GLenum dfactor)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-    if (sfactor != s_eBlendingSource || dfactor != s_eBlendingDest)
+    if (sfactor != s_blendingSource || dfactor != s_blendingDest)
     {
-        s_eBlendingSource = sfactor;
-        s_eBlendingDest = dfactor;
+        s_blendingSource = sfactor;
+        s_blendingDest = dfactor;
         SetBlending(sfactor, dfactor);
     }
 #else
@@ -137,7 +141,7 @@ void blendResetToCache(void)
 {
 	glBlendEquation(GL_FUNC_ADD);
 #if CC_ENABLE_GL_STATE_CACHE
-	SetBlending(s_eBlendingSource, s_eBlendingDest);
+	SetBlending(s_blendingSource, s_blendingDest);
 #else
 	SetBlending(CC_BLEND_SRC, CC_BLEND_DST);
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -152,9 +156,9 @@ void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
     CCASSERT(textureUnit < kMaxActiveTexture, "textureUnit is too big");
-    if (s_uCurrentBoundTexture[textureUnit] != textureId)
+    if (s_currentBoundTexture[textureUnit] != textureId)
     {
-        s_uCurrentBoundTexture[textureUnit] = textureId;
+        s_currentBoundTexture[textureUnit] = textureId;
         glActiveTexture(GL_TEXTURE0 + textureUnit);
         glBindTexture(GL_TEXTURE_2D, textureId);
     }
@@ -173,9 +177,9 @@ void deleteTexture(GLuint textureId)
 void deleteTextureN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
-	if (s_uCurrentBoundTexture[textureUnit] == textureId)
+	if (s_currentBoundTexture[textureUnit] == textureId)
     {
-		s_uCurrentBoundTexture[textureUnit] = -1;
+		s_currentBoundTexture[textureUnit] = -1;
     }
 #endif // CC_ENABLE_GL_STATE_CACHE
     
@@ -188,9 +192,9 @@ void bindVAO(GLuint vaoId)
     {
     
 #if CC_ENABLE_GL_STATE_CACHE
-        if (s_uVAO != vaoId)
+        if (s_VAO != vaoId)
         {
-            s_uVAO = vaoId;
+            s_VAO = vaoId;
             glBindVertexArray(vaoId);
         }
 #else
@@ -209,37 +213,37 @@ void enableVertexAttribs( unsigned int flags )
     /* Position */
     bool enablePosition = flags & VERTEX_ATTRIB_FLAG_POSITION;
 
-    if( enablePosition != s_bVertexAttribPosition ) {
+    if( enablePosition != s_vertexAttribPosition ) {
         if( enablePosition )
             glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
         else
             glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_POSITION );
 
-        s_bVertexAttribPosition = enablePosition;
+        s_vertexAttribPosition = enablePosition;
     }
 
     /* Color */
     bool enableColor = (flags & VERTEX_ATTRIB_FLAG_COLOR) != 0 ? true : false;
 
-    if( enableColor != s_bVertexAttribColor ) {
+    if( enableColor != s_vertexAttribColor ) {
         if( enableColor )
             glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
         else
             glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_COLOR );
 
-        s_bVertexAttribColor = enableColor;
+        s_vertexAttribColor = enableColor;
     }
 
     /* Tex Coords */
     bool enableTexCoords = (flags & VERTEX_ATTRIB_FLAG_TEX_COORDS) != 0 ? true : false;
 
-    if( enableTexCoords != s_bVertexAttribTexCoords ) {
+    if( enableTexCoords != s_vertexAttribTexCoords ) {
         if( enableTexCoords )
             glEnableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
         else
             glDisableVertexAttribArray( GLProgram::VERTEX_ATTRIB_TEX_COORDS );
 
-        s_bVertexAttribTexCoords = enableTexCoords;
+        s_vertexAttribTexCoords = enableTexCoords;
     }
 }
 
@@ -247,7 +251,7 @@ void enableVertexAttribs( unsigned int flags )
 
 void setProjectionMatrixDirty( void )
 {
-    s_uCurrentProjectionMatrix = -1;
+    s_currentProjectionMatrix = -1;
 }
 
 } // Namespace GL

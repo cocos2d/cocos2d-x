@@ -6,7 +6,19 @@
 import sys
 import os, os.path
 import shutil
+from optparse import OptionParser
 
+def check_environment_variables_sdk():
+    ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
+    '''
+
+    try:
+        SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+    except Exception:
+        print "ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment"
+        sys.exit(1)
+
+    return SDK_ROOT
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -39,7 +51,7 @@ def select_toolchain_version():
         print "Couldn't find the gcc toolchain."
         exit(1)
 
-def do_build(cocos_root, ndk_root, app_android_root):
+def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode):
 
     ndk_path = os.path.join(ndk_root, "ndk-build")
 
@@ -50,12 +62,24 @@ def do_build(cocos_root, ndk_root, app_android_root):
     else:
         ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
 
-    ndk_build_param = sys.argv[1:]
-    if len(ndk_build_param) == 0:
+    if ndk_build_param == None:
         command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
     else:
         command = '%s -C %s %s %s' % (ndk_path, app_android_root, ''.join(str(e) for e in ndk_build_param), ndk_module_path)
-    os.system(command)
+    if os.system(command) != 0:
+        raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
+    elif android_platform is not None:
+    	  sdk_tool_path = os.path.join(sdk_root, "tools/android")
+    	  cocoslib_path = os.path.join(cocos_root, "cocos/2d/platform/android/java")
+    	  command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path) 
+    	  if os.system(command) != 0:
+    	  	  raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")  	  
+    	  command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
+    	  if os.system(command) != 0:
+    	  	  raise Exception("update project [ " + app_android_root + " ] fails!")    	  	  
+    	  buildfile_path = os.path.join(app_android_root, "build.xml")
+    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
+    	  os.system(command)
 
 def copy_files(src, dst):
 
@@ -82,19 +106,42 @@ def copy_resources(app_android_root):
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
-def build():
+def build(ndk_build_param,android_platform,build_mode):
 
     ndk_root = check_environment_variables()
+    sdk_root = None
     select_toolchain_version()
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(current_dir, "../../..")
+    cocos_root = os.path.join(current_dir, "../cocos2d")
 
     app_android_root = current_dir
     copy_resources(app_android_root)
-    do_build(cocos_root, ndk_root, app_android_root)
+    
+    if android_platform is not None:
+				sdk_root = check_environment_variables_sdk()
+				if android_platform.isdigit():
+						android_platform = 'android-'+android_platform
+				else:
+						print 'please use vaild android platform'
+						exit(1)
+		
+    if build_mode is None:
+    	  build_mode = 'debug'
+    elif build_mode != 'release':
+        build_mode = 'debug'
+    
+    do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
 
-    build()
+    parser = OptionParser()
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
+    parser.add_option("-p", "--platform", dest="android_platform", 
+    help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    parser.add_option("-b", "--build", dest="build_mode", 
+    help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    (opts, args) = parser.parse_args()
+    
+    build(opts.ndk_build_param,opts.android_platform,opts.build_mode)

@@ -175,14 +175,6 @@ end
 _G["CCEaseElasticOut"] = DeprecatedClass.CCEaseElasticOut()
 --CCEaseElasticOut class will be Deprecated,end
 
---CCTableViewCell class will be Deprecated,begin
-function DeprecatedClass.CCTableViewCell()
-    deprecatedTip("CCTableViewCell","cc.TableViewCell")
-    return cc.TableViewCell
-end
-_G["CCTableViewCell"] = DeprecatedClass.CCTableViewCell()
---CCTableViewCell class will be Deprecated,end
-
 --CCEaseBackOut class will be Deprecated,begin
 function DeprecatedClass.CCEaseBackOut()
     deprecatedTip("CCEaseBackOut","cc.EaseBackOut")
@@ -273,11 +265,19 @@ _G["CCFadeIn"] = DeprecatedClass.CCFadeIn()
 
 --CCNodeRGBA class will be Deprecated,begin
 function DeprecatedClass.CCNodeRGBA()
-    deprecatedTip("CCNodeRGBA","cc.NodeRGBA")
-    return cc.NodeRGBA
+    deprecatedTip("CCNodeRGBA","cc.Node")
+    return cc.Node
 end
 _G["CCNodeRGBA"] = DeprecatedClass.CCNodeRGBA()
 --CCNodeRGBA class will be Deprecated,end
+
+--NodeRGBA class will be Deprecated,begin
+function DeprecatedClass.NodeRGBA()
+    deprecatedTip("cc.NodeRGBA","cc.Node")
+    return cc.Node
+end
+_G["cc"]["NodeRGBA"] = DeprecatedClass.NodeRGBA()
+--NodeRGBA class will be Deprecated,end
 
 --CCAnimationCache class will be Deprecated,begin
 function DeprecatedClass.CCAnimationCache()
@@ -719,14 +719,6 @@ end
 _G["CCPlace"] = DeprecatedClass.CCPlace()
 --CCPlace class will be Deprecated,end
 
---CCScrollView class will be Deprecated,begin
-function DeprecatedClass.CCScrollView()
-    deprecatedTip("CCScrollView","cc.ScrollView")
-    return cc.ScrollView
-end
-_G["CCScrollView"] = DeprecatedClass.CCScrollView()
---CCScrollView class will be Deprecated,end
-
 --CCGLProgram class will be Deprecated,begin
 function DeprecatedClass.CCGLProgram()
     deprecatedTip("CCGLProgram","cc.GLProgram")
@@ -806,14 +798,6 @@ function DeprecatedClass.CCParticleFlower()
 end
 _G["CCParticleFlower"] = DeprecatedClass.CCParticleFlower()
 --CCParticleFlower class will be Deprecated,end
-
---CCTableView class will be Deprecated,begin
-function DeprecatedClass.CCTableView()
-    deprecatedTip("CCTableView","cc.TableView")
-    return cc.TableView
-end
-_G["CCTableView"] = DeprecatedClass.CCTableView()
---CCTableView class will be Deprecated,end
 
 --CCParticleSmoke class will be Deprecated,begin
 function DeprecatedClass.CCParticleSmoke()
@@ -1305,11 +1289,19 @@ _G["CCCamera"] = DeprecatedClass.CCCamera()
 
 --CCLayerRGBA class will be Deprecated,begin
 function DeprecatedClass.CCLayerRGBA()
-    deprecatedTip("CCLayerRGBA","cc.LayerRGBA")
-    return cc.LayerRGBA
+    deprecatedTip("CCLayerRGBA","cc.Layer")
+    return cc.Layer
 end
 _G["CCLayerRGBA"] = DeprecatedClass.CCLayerRGBA()
 --CCLayerRGBA class will be Deprecated,end
+
+--LayerRGBA class will be Deprecated,begin
+function DeprecatedClass.LayerRGBA()
+    deprecatedTip("cc.LayerRGBA","cc.Layer")
+    return cc.Layer
+end
+_G["cc"]["LayerRGBA"] = DeprecatedClass.LayerRGBA()
+--LayerRGBA class will be Deprecated,end
 
 --CCBezierTo class will be Deprecated,begin
 function DeprecatedClass.CCBezierTo()
@@ -1815,13 +1807,324 @@ end
 _G["CCCallFuncN"] = DeprecatedClass.CCCallFuncN()
 --CCCallFuncN class will be Deprecated,end
 
---ccBlendFunc class will be Deprecated,begin
-function DeprecatedClass.ccBlendFunc()
-    deprecatedTip("ccBlendFunc","BlendFunc")
-    return BlendFunc
+--CCArmature class will be Deprecated,begin
+function DeprecatedClass.CCArmature()
+    deprecatedTip("CCArmature","ccs.Armature")
+    return ccs.Armature
 end
-_G["ccBlendFunc"] = DeprecatedClass.ccBlendFunc()
---ccBlendFunc class will be Deprecated,end
+_G["CCArmature"] = DeprecatedClass.CCArmature()
+--CCArmature class will be Deprecated,end
 
+--CCArmatureAnimation class will be Deprecated,begin
+function DeprecatedClass.CCArmatureAnimation()
+    deprecatedTip("CCArmatureAnimation","ccs.ArmatureAnimation")
+    return ccs.ArmatureAnimation
+end
+_G["CCArmatureAnimation"] = DeprecatedClass.CCArmatureAnimation()
+--CCArmatureAnimation class will be Deprecated,end
+
+--CCSkin class will be Deprecated,begin
+function DeprecatedClass.CCSkin()
+    deprecatedTip("CCSkin","ccs.Skin")
+    return ccs.Skin
+end
+_G["CCSkin"] = DeprecatedClass.CCSkin()
+--CCSkin class will be Deprecated,end
+
+--CCBone class will be Deprecated,begin
+function DeprecatedClass.CCBone()
+    deprecatedTip("CCBone","ccs.Bone")
+    return ccs.Bone
+end
+_G["CCBone"] = DeprecatedClass.CCBone()
+--CCBone class will be Deprecated,end
+
+--CCArmatureDataManager class will be Deprecated,begin
+function DeprecatedClass.CCArmatureDataManager()
+    deprecatedTip("CCArmatureDataManager","ccs.ArmatureDataManager")
+    return ccs.ArmatureDataManager
+end
+_G["CCArmatureDataManager"] = DeprecatedClass.CCArmatureDataManager()
+--CCArmatureDataManager class will be Deprecated,end
+
+--CCBatchNode class will be Deprecated,begin
+function DeprecatedClass.CCBatchNode()
+    deprecatedTip("CCBatchNode","ccs.BatchNode")
+    return ccs.BatchNode
+end
+_G["CCBatchNode"] = DeprecatedClass.CCBatchNode()
+--CCBatchNode class will be Deprecated,end
+
+--CCTween class will be Deprecated,begin
+function DeprecatedClass.CCTween()
+    deprecatedTip("CCTween","ccs.Tween")
+    return ccs.Tween
+end
+_G["CCTween"] = DeprecatedClass.CCTween()
+--CCTween class will be Deprecated,end
+
+--CCBaseData class will be Deprecated,begin
+function DeprecatedClass.CCBaseData()
+    deprecatedTip("CCBaseData","ccs.BaseData")
+    return ccs.BaseData
+end
+_G["CCBaseData"] = DeprecatedClass.CCBaseData()
+--CCBaseData class will be Deprecated,end
+
+--CCDisplayManager class will be Deprecated,begin
+function DeprecatedClass.CCDisplayManager()
+    deprecatedTip("CCDisplayManager","ccs.DisplayManager")
+    return ccs.DisplayManager
+end
+_G["CCDisplayManager"] = DeprecatedClass.CCDisplayManager()
+--CCDisplayManager class will be Deprecated,end
+
+--UIHelper class will be Deprecated,begin
+function DeprecatedClass.UIHelper()
+    deprecatedTip("UIHelper","ccs.UIHelper")
+    return ccs.UIHelper
+end
+_G["UIHelper"] = DeprecatedClass.UIHelper()
+--UIHelper class will be Deprecated,end
+
+--UILayout class will be Deprecated,begin
+function DeprecatedClass.UILayout()
+    deprecatedTip("UILayout","ccs.UILayout")
+    return ccs.UILayout
+end
+_G["UILayout"] = DeprecatedClass.UILayout()
+--UILayout class will be Deprecated,end
+
+--UIWidget class will be Deprecated,begin
+function DeprecatedClass.UIWidget()
+    deprecatedTip("UIWidget","ccs.UIWidget")
+    return ccs.UIWidget
+end
+_G["UIWidget"] = DeprecatedClass.UIWidget()
+--UIWidget class will be Deprecated,end
+
+--UILayer class will be Deprecated,begin
+function DeprecatedClass.UILayer()
+    deprecatedTip("UILayer","ccs.UILayer")
+    return ccs.UILayer
+end
+_G["UILayer"] = DeprecatedClass.UILayer()
+--UILayer class will be Deprecated,end
+
+--UIButton class will be Deprecated,begin
+function DeprecatedClass.UIButton()
+    deprecatedTip("UIButton","ccs.UIButton")
+    return ccs.UIButton
+end
+_G["UIButton"] = DeprecatedClass.UIButton()
+--UIButton class will be Deprecated,end
+
+--UICheckBox class will be Deprecated,begin
+function DeprecatedClass.UICheckBox()
+    deprecatedTip("UICheckBox","ccs.UICheckBox")
+    return ccs.UICheckBox
+end
+_G["UICheckBox"] = DeprecatedClass.UICheckBox()
+--UICheckBox class will be Deprecated,end
+
+--UIImageView class will be Deprecated,begin
+function DeprecatedClass.UIImageView()
+    deprecatedTip("UIImageView","ccs.UIImageView")
+    return ccs.UIImageView
+end
+_G["UIImageView"] = DeprecatedClass.UIImageView()
+--UIImageView class will be Deprecated,end
+
+--UILabel class will be Deprecated,begin
+function DeprecatedClass.UILabel()
+    deprecatedTip("UILabel","ccs.UILabel")
+    return ccs.UILabel
+end
+_G["UILabel"] = DeprecatedClass.UILabel()
+--UILabel class will be Deprecated,end
+
+--UILabelAtlas class will be Deprecated,begin
+function DeprecatedClass.UILabelAtlas()
+    deprecatedTip("UILabelAtlas","ccs.UILabelAtlas")
+    return ccs.UILabelAtlas
+end
+_G["UILabelAtlas"] = DeprecatedClass.UILabelAtlas()
+--UILabelAtlas class will be Deprecated,end
+
+--UILabelBMFont class will be Deprecated,begin
+function DeprecatedClass.UILabelBMFont()
+    deprecatedTip("UILabelBMFont","ccs.UILabelBMFont")
+    return ccs.UILabelBMFont
+end
+_G["UILabelBMFont"] = DeprecatedClass.UILabelBMFont()
+--UILabelBMFont class will be Deprecated,end
+
+--UILoadingBar class will be Deprecated,begin
+function DeprecatedClass.UILoadingBar()
+    deprecatedTip("UILoadingBar","ccs.UILoadingBar")
+    return ccs.UILoadingBar
+end
+_G["UILoadingBar"] = DeprecatedClass.UILoadingBar()
+--UILoadingBar class will be Deprecated,end
+
+--UISlider class will be Deprecated,begin
+function DeprecatedClass.UISlider()
+    deprecatedTip("UISlider","ccs.UISlider")
+    return ccs.UISlider
+end
+_G["UISlider"] = DeprecatedClass.UISlider()
+--UISlider class will be Deprecated,end
+
+--UITextField class will be Deprecated,begin
+function DeprecatedClass.UITextField()
+    deprecatedTip("UITextField","ccs.UITextField")
+    return ccs.UITextField
+end
+_G["UITextField"] = DeprecatedClass.UITextField()
+--UITextField class will be Deprecated,end
+
+--UIScrollView class will be Deprecated,begin
+function DeprecatedClass.UIScrollView()
+    deprecatedTip("UIScrollView","ccs.UIScrollView")
+    return ccs.UIScrollView
+end
+_G["UIScrollView"] = DeprecatedClass.UIScrollView()
+--UIScrollView class will be Deprecated,end
+
+--UIPageView class will be Deprecated,begin
+function DeprecatedClass.UIPageView()
+    deprecatedTip("UIPageView","ccs.UIPageView")
+    return ccs.UIPageView
+end
+_G["UIPageView"] = DeprecatedClass.UIPageView()
+--UIPageView class will be Deprecated,end
+
+--UIListView class will be Deprecated,begin
+function DeprecatedClass.UIListView()
+    deprecatedTip("UIListView","ccs.UIListView")
+    return ccs.UIListView
+end
+_G["UIListView"] = DeprecatedClass.UIListView()
+--UIListView class will be Deprecated,end
+
+--UILayoutParameter class will be Deprecated,begin
+function DeprecatedClass.UILayoutParameter()
+    deprecatedTip("UILayoutParameter","ccs.UILayoutParameter")
+    return ccs.UILayoutParameter
+end
+_G["UILayoutParameter"] = DeprecatedClass.UILayoutParameter()
+--UILayoutParameter class will be Deprecated,end
+
+--UILinearLayoutParameter class will be Deprecated,begin
+function DeprecatedClass.UILinearLayoutParameter()
+    deprecatedTip("UILinearLayoutParameter","ccs.UILinearLayoutParameter")
+    return ccs.UILinearLayoutParameter
+end
+_G["UILinearLayoutParameter"] = DeprecatedClass.UILinearLayoutParameter()
+--UILinearLayoutParameter class will be Deprecated,end
+
+--UIRelativeLayoutParameter class will be Deprecated,begin
+function DeprecatedClass.UIRelativeLayoutParameter()
+    deprecatedTip("UIRelativeLayoutParameter","ccs.UIRelativeLayoutParameter")
+    return ccs.UIRelativeLayoutParameter
+end
+_G["UIRelativeLayoutParameter"] = DeprecatedClass.UIRelativeLayoutParameter()
+--UIRelativeLayoutParameter class will be Deprecated,end
+
+--CCComController class will be Deprecated,begin
+function DeprecatedClass.CCComController()
+    deprecatedTip("CCComController","ccs.ComController")
+    return ccs.CCComController
+end
+_G["CCComController"] = DeprecatedClass.CCComController()
+--CCComController class will be Deprecated,end
+
+--CCComAudio class will be Deprecated,begin
+function DeprecatedClass.CCComAudio()
+    deprecatedTip("CCComAudio","ccs.ComAudio")
+    return ccs.ComAudio
+end
+_G["CCComAudio"] = DeprecatedClass.CCComAudio()
+--CCComAudio class will be Deprecated,end
+
+--CCComAttribute class will be Deprecated,begin
+function DeprecatedClass.CCComAttribute()
+    deprecatedTip("CCComAttribute","ccs.ComAttribute")
+    return ccs.ComAttribute
+end
+_G["CCComAttribute"] = DeprecatedClass.CCComAttribute()
+--CCComAttribute class will be Deprecated,end
+
+--CCComRender class will be Deprecated,begin
+function DeprecatedClass.CCComRender()
+    deprecatedTip("CCComRender","ccs.ComRender")
+    return ccs.ComRender
+end
+_G["CCComRender"] = DeprecatedClass.CCComRender()
+--CCComRender class will be Deprecated,end
+
+--ActionManager class will be Deprecated,begin
+function DeprecatedClass.ActionManager()
+    deprecatedTip("ActionManager","ccs.ActionManagerEx")
+    return ccs.ActionManagerEx
+end
+_G["ActionManager"] = DeprecatedClass.ActionManager()
+--CCComRender class will be Deprecated,end
+
+--SceneReader class will be Deprecated,begin
+function DeprecatedClass.SceneReader()
+    deprecatedTip("SceneReader","ccs.SceneReader")
+    return ccs.SceneReader
+end
+_G["SceneReader"] = DeprecatedClass.SceneReader()
+--SceneReader class will be Deprecated,end
+
+--GUIReader class will be Deprecated,begin
+function DeprecatedClass.GUIReader()
+    deprecatedTip("GUIReader","ccs.GUIReader")
+    return ccs.GUIReader
+end
+_G["GUIReader"] = DeprecatedClass.GUIReader()
+--GUIReader class will be Deprecated,end
+
+--UIRootWidget class will be Deprecated,begin
+function DeprecatedClass.UIRootWidget()
+    deprecatedTip("UIRootWidget","ccs.UIRootWidget")
+    return ccs.UIRootWidget
+end
+_G["UIRootWidget"] = DeprecatedClass.UIRootWidget()
+--UIRootWidget class will be Deprecated,end
+
+--ActionObject class will be Deprecated,begin
+function DeprecatedClass.ActionObject()
+    deprecatedTip("ActionObject","ccs.ActionObject")
+    return ccs.ActionObject
+end
+_G["ActionObject"] = DeprecatedClass.ActionObject()
+--ActionObject class will be Deprecated,end
+
+--CCEGLViewProtocol class will be Deprecated,begin
+function DeprecatedClass.CCEGLViewProtocol()
+    deprecatedTip("CCEGLViewProtocol","cc.EGLViewProtocol")
+    return cc.EGLViewProtocol
+end
+_G["CCEGLViewProtocol"] = DeprecatedClass.CCEGLViewProtocol()
+--CCEGLViewProtocol class will be Deprecated,end
+
+--CCEGLView class will be Deprecated,begin
+function DeprecatedClass.CCEGLView()
+    deprecatedTip("CCEGLView","cc.EGLView")
+    return cc.EGLView
+end
+_G["CCEGLView"] = DeprecatedClass.CCEGLView()
+--CCEGLView class will be Deprecated,end
+
+--CCBProxy class will be Deprecated,begin
+function DeprecatedClass.CCBProxy()
+    deprecatedTip("CCBProxy","cc.CCBProxy")
+    return cc.CCBProxy
+end
+_G["CCBProxy"] = DeprecatedClass.CCBProxy()
+--CCBProxy class will be Deprecated,end
 
 

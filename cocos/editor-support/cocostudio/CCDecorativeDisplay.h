@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,25 +30,21 @@ THE SOFTWARE.
 #include "cocostudio/CCDatas.h"
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
 #include "cocostudio/CCColliderDetector.h"
 #endif
 
 namespace cocostudio {
-
+/**
+ *  @js NA
+ *  @lua NA
+ */
 class  DecorativeDisplay: public cocos2d::Object
 {
 public:
     static DecorativeDisplay *create();
 public:
-	/**
-     * @js ctor
-     */
     DecorativeDisplay(void);
-    /**
-     * @js NA
-     * @lua NA
-     */
     ~DecorativeDisplay(void);
 
     virtual bool init();
@@ -75,7 +71,7 @@ public:
     }
     virtual DisplayData *getDisplayData() const { return _displayData; }
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     virtual void setColliderDetector(ColliderDetector *detector)
     {
         if (_colliderDetector != detector)
@@ -91,7 +87,7 @@ protected:
     cocos2d::Node *_display;
     DisplayData *_displayData;
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     ColliderDetector *_colliderDetector;
 #endif
 };

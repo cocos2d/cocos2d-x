@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,15 +33,28 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo)
+{
+    auto ret = new AnimationFrame();
+    if (ret && ret->initWithSpriteFrame(spriteFrame, delayUnits, userInfo))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
+}
+
 AnimationFrame::AnimationFrame()
-: _spriteFrame(NULL)
+: _spriteFrame(nullptr)
 , _delayUnits(0.0f)
-, _userInfo(NULL)
 {
 
 }
 
-bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, Dictionary* userInfo)
+bool AnimationFrame::initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo)
 {
     setSpriteFrame(spriteFrame);
     setDelayUnits(delayUnits);
@@ -54,7 +68,6 @@ AnimationFrame::~AnimationFrame()
     CCLOGINFO( "deallocing AnimationFrame: %p", this);
 
     CC_SAFE_RELEASE(_spriteFrame);
-    CC_SAFE_RELEASE(_userInfo);
 }
 
 AnimationFrame* AnimationFrame::clone() const
@@ -63,7 +76,7 @@ AnimationFrame* AnimationFrame::clone() const
 	auto frame = new AnimationFrame();
     frame->initWithSpriteFrame(_spriteFrame->clone(),
 							   _delayUnits,
-							   _userInfo != NULL ? _userInfo->clone() : NULL);
+							   _userInfo);
 
 	frame->autorelease();
 	return frame;
@@ -73,75 +86,62 @@ AnimationFrame* AnimationFrame::clone() const
 
 Animation* Animation::create(void)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->init();
-    pAnimation->autorelease();
+    Animation *animation = new Animation();
+    animation->init();
+    animation->autorelease();
 
-    return pAnimation;
+    return animation;
 } 
 
-Animation* Animation::createWithSpriteFrames(Array *frames, float delay/* = 0.0f*/)
+Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->initWithSpriteFrames(frames, delay);
-    pAnimation->autorelease();
+    Animation *animation = new Animation();
+    animation->initWithSpriteFrames(frames, delay);
+    animation->autorelease();
 
-    return pAnimation;
+    return animation;
 }
 
-Animation* Animation::create(Array* arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
+Animation* Animation::create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
-    pAnimation->autorelease();
-    return pAnimation;
+    Animation *animation = new Animation();
+    animation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
+    animation->autorelease();
+    return animation;
 }
 
 bool Animation::init()
 {
-    return initWithSpriteFrames(NULL, 0.0f);
+    _loops = 1;
+    _delayPerUnit = 0.0f;
+    
+    return true;
 }
 
-bool Animation::initWithSpriteFrames(Array *pFrames, float delay/* = 0.0f*/)
+bool Animation::initWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
 {
-    CCARRAY_VERIFY_TYPE(pFrames, SpriteFrame*);
-
     _loops = 1;
     _delayPerUnit = delay;
-    Array* pTmpFrames = Array::create();
-    setFrames(pTmpFrames);
 
-    if (pFrames != NULL)
+    for (auto& spriteFrame : frames)
     {
-        Object* pObj = NULL;
-        CCARRAY_FOREACH(pFrames, pObj)
-        {
-            SpriteFrame* frame = static_cast<SpriteFrame*>(pObj);
-            AnimationFrame *animFrame = new AnimationFrame();
-            animFrame->initWithSpriteFrame(frame, 1, NULL);
-            _frames->addObject(animFrame);
-            animFrame->release();
-
-            _totalDelayUnits++;
-        }
+        auto animFrame = AnimationFrame::create(spriteFrame, 1, ValueMap());
+        _frames.pushBack(animFrame);
+        _totalDelayUnits++;
     }
 
     return true;
 }
 
-bool Animation::initWithAnimationFrames(Array* arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
+bool Animation::initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrames, float delayPerUnit, unsigned int loops)
 {
-    CCARRAY_VERIFY_TYPE(arrayOfAnimationFrames, AnimationFrame*);
-
     _delayPerUnit = delayPerUnit;
     _loops = loops;
 
-    setFrames(Array::createWithArray(arrayOfAnimationFrames));
+    setFrames(arrayOfAnimationFrames);
 
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_frames, pObj)
+    for (auto& animFrame : _frames)
     {
-        AnimationFrame* animFrame = static_cast<AnimationFrame*>(pObj);
         _totalDelayUnits += animFrame->getDelayUnits();
     }
     return true;
@@ -151,7 +151,6 @@ Animation::Animation()
 : _totalDelayUnits(0.0f)
 , _delayPerUnit(0.0f)
 , _duration(0.0f)
-, _frames(NULL)
 , _restoreOriginalFrame(false)
 , _loops(0)
 {
@@ -161,33 +160,30 @@ Animation::Animation()
 Animation::~Animation(void)
 {
     CCLOGINFO("deallocing Animation: %p", this);
-    CC_SAFE_RELEASE(_frames);
 }
 
-void Animation::addSpriteFrame(SpriteFrame *pFrame)
+void Animation::addSpriteFrame(SpriteFrame* spriteFrame)
 {
-    AnimationFrame *animFrame = new AnimationFrame();
-    animFrame->initWithSpriteFrame(pFrame, 1.0f, NULL);
-    _frames->addObject(animFrame);
-    animFrame->release();
+    AnimationFrame *animFrame = AnimationFrame::create(spriteFrame, 1.0f, ValueMap());
+    _frames.pushBack(animFrame);
 
     // update duration
     _totalDelayUnits++;
 }
 
-void Animation::addSpriteFrameWithFile(const char *filename)
+void Animation::addSpriteFrameWithFile(const std::string& filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     Rect rect = Rect::ZERO;
     rect.size = texture->getContentSize();
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(texture, rect);
-    addSpriteFrame(pFrame);
+    SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+    addSpriteFrame(frame);
 }
 
 void Animation::addSpriteFrameWithTexture(Texture2D *pobTexture, const Rect& rect)
 {
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(pobTexture, rect);
-    addSpriteFrame(pFrame);
+    SpriteFrame *frame = SpriteFrame::createWithTexture(pobTexture, rect);
+    addSpriteFrame(frame);
 }
 
 float Animation::getDuration(void) const

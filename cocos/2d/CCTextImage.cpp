@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- 
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -49,9 +50,9 @@ TextPageDef::TextPageDef(int pageNum, int width, int height):   _pageNum(pageNum
 
 TextPageDef::~TextPageDef()
 {
-    int numLines = _lines.size();
+    size_t numLines = _lines.size();
     
-    for( int c = 0; c<numLines; ++c )
+    for( size_t c = 0; c<numLines; ++c )
     {
         delete _lines[c];
     }
@@ -88,8 +89,8 @@ bool TextPageDef::generatePageTexture(bool releasePageData)
     if (!_pageTexture)
         return false;
     
-    int  dataLenght     = (_width * _height * 4);
-    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::RGBA8888, _width, _height, imageSize);
+    int  dataLenght     = (_width * _height * 1);
+    bool textureCreated = _pageTexture->initWithData(_pageData, dataLenght, Texture2D::PixelFormat::A8, _width, _height, imageSize);
     
     // release the page data if requested
     if (releasePageData && textureCreated)
@@ -122,8 +123,8 @@ TextFontPagesDef::TextFontPagesDef()
 
 TextFontPagesDef::~TextFontPagesDef()
 {
-    int numPages = _pages.size();
-    for( int c = 0; c < numPages; ++c )
+    size_t numPages = _pages.size();
+    for( size_t c = 0; c < numPages; ++c )
     {
         if (_pages[c])
             delete _pages[c];
@@ -294,7 +295,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
     return true;
 }
 
-int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *pFont, Size *constrainSize, int &outNewSize)
+int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize)
 {
     if (!strUTF8)
         return 0;
@@ -415,13 +416,13 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
         return 0;
     
     if (thePage->getNumLines() == 0)
-        return NULL;
+        return nullptr;
     
     int pageWidth  = thePage->getWidth();
     int pageHeight = thePage->getHeight();
     
     // prepare memory and clean to 0
-    int sizeInBytes     = (pageWidth * pageHeight * 4);
+    int sizeInBytes     = (pageWidth * pageHeight * 1);
     unsigned char* data = new unsigned char[sizeInBytes];
     
     if (!data)
@@ -443,7 +444,7 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
         for (int cglyph = 0; cglyph < numGlyphToRender; ++cglyph)
         {
             GlyphDef currGlyph      = currentLine->getGlyphAt(cglyph);
-            renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
+            _font->renderCharAt(currGlyph.getUTF8Letter(), origX, origY, data, pageWidth);
             origX += (currGlyph.getRect().size.width + _font->getLetterPadding());
         }
     }
@@ -460,47 +461,6 @@ unsigned char * TextImage::renderGlyphData(TextPageDef *thePage)
     
     // we are done here
     return data;
-}
-
-bool TextImage::renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize)
-{
-    if (!_font)
-        return false;
-    
-    unsigned char *sourceBitmap = 0;
-    int sourceWidth  = 0;
-    int sourceHeight = 0;
-    
-    // get the glyph's bitmap
-    sourceBitmap = _font->getGlyphBitmap(charToRender, sourceWidth, sourceHeight);
-    
-    if (!sourceBitmap)
-        return false;
-    
-    int iX = posX;
-    int iY = posY;
-    
-    for (int y = 0; y < sourceHeight; ++y)
-    {
-        int bitmap_y = y * sourceWidth;
-        
-        for (int x = 0; x < sourceWidth; ++x)
-        {
-            unsigned char cTemp = sourceBitmap[bitmap_y + x];
-            
-            // the final pixel
-            int iTemp = cTemp << 24 | cTemp << 16 | cTemp << 8 | cTemp;
-            *(int*) &destMemory[(iX + ( iY * destSize ) ) * 4] = iTemp;
-            
-            iX += 1;
-        }
-        
-        iX  = posX;
-        iY += 1;
-    }
-    
-    //everything good
-    return true;
 }
 
 NS_CC_END

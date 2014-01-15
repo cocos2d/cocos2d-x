@@ -24,7 +24,6 @@ CCActionTween.cpp \
 CCAnimation.cpp \
 CCAnimationCache.cpp \
 CCAtlasNode.cpp \
-CCCamera.cpp \
 ccCArray.cpp \
 CCClippingNode.cpp \
 CCComponent.cpp \
@@ -39,13 +38,13 @@ CCEventAcceleration.cpp \
 CCEventCustom.cpp \
 CCEventDispatcher.cpp \
 CCEventKeyboard.cpp \
-CCEventMouse.cpp \
-CCEventListenerMouse.cpp \
 CCEventListener.cpp \
 CCEventListenerAcceleration.cpp \
 CCEventListenerCustom.cpp \
 CCEventListenerKeyboard.cpp \
+CCEventListenerMouse.cpp \
 CCEventListenerTouch.cpp \
+CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
 CCFontAtlas.cpp \
@@ -60,6 +59,7 @@ CCGLProgram.cpp \
 ccGLStateCache.cpp \
 CCGrabber.cpp \
 CCGrid.cpp \
+CCNodeGrid.cpp \
 CCIMEDispatcher.cpp \
 CCLabel.cpp \
 CCLabelAtlas.cpp \
@@ -117,10 +117,19 @@ platform/CCEGLViewProtocol.cpp \
 platform/CCFileUtils.cpp \
 platform/CCSAXParser.cpp \
 platform/CCThread.cpp \
+renderer/CCCustomCommand.cpp \
+renderer/CCFrustum.cpp \
+renderer/CCGroupCommand.cpp \
+renderer/CCMaterialManager.cpp \
+renderer/CCQuadCommand.cpp \
+renderer/CCRenderCommand.cpp \
+renderer/CCRenderer.cpp \
+renderer/CCRenderMaterial.cpp \
 ../base/atitc.cpp \
 ../base/CCAffineTransform.cpp \
 ../base/CCArray.cpp \
 ../base/CCAutoreleasePool.cpp \
+../base/CCConsole.cpp \
 ../base/CCData.cpp \
 ../base/CCDataVisitor.cpp \
 ../base/CCDictionary.cpp \
@@ -129,6 +138,7 @@ platform/CCThread.cpp \
 ../base/CCObject.cpp \
 ../base/CCSet.cpp \
 ../base/CCString.cpp \
+../base/CCValue.cpp \
 ../base/etc1.cpp \
 ../base/s3tc.cpp \
 ../math/kazmath/src/aabb.c \
@@ -149,11 +159,6 @@ platform/CCThread.cpp \
 ../physics/CCPhysicsJoint.cpp \
 ../physics/CCPhysicsShape.cpp \
 ../physics/CCPhysicsWorld.cpp \
-../physics/box2d/CCPhysicsBodyInfo_box2d.cpp \
-../physics/box2d/CCPhysicsContactInfo_box2d.cpp \
-../physics/box2d/CCPhysicsJointInfo_box2d.cpp \
-../physics/box2d/CCPhysicsShapeInfo_box2d.cpp \
-../physics/box2d/CCPhysicsWorldInfo_box2d.cpp \
 ../physics/chipmunk/CCPhysicsBodyInfo_chipmunk.cpp \
 ../physics/chipmunk/CCPhysicsContactInfo_chipmunk.cpp \
 ../physics/chipmunk/CCPhysicsJointInfo_chipmunk.cpp \
@@ -161,10 +166,12 @@ platform/CCThread.cpp \
 ../physics/chipmunk/CCPhysicsWorldInfo_chipmunk.cpp \
 ../../external/tinyxml2/tinyxml2.cpp \
 ../../external/unzip/ioapi.cpp \
-../../external/unzip/unzip.cpp
+../../external/unzip/unzip.cpp \
+../../external/edtaa3func/edtaa3func.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     platform/android \
                     $(LOCAL_PATH)/../physics \
@@ -174,13 +181,15 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/renderer \
                     $(LOCAL_PATH)/../math/kazmath/include \
                     $(LOCAL_PATH)/platform/android \
                     $(LOCAL_PATH)/../physics \
                     $(LOCAL_PATH)/../base \
                     $(LOCAL_PATH)/../../external/tinyxml2 \
                     $(LOCAL_PATH)/../../external/unzip \
-                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk
+                    $(LOCAL_PATH)/../../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../../external/edtaa3func
 
 
 LOCAL_LDLIBS := -lGLESv2 \
@@ -199,9 +208,9 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   := -Wno-psabi  -DUSE_FILE32API
-LOCAL_CPPFLAGS := -Wno-literal-suffix
+LOCAL_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 LOCAL_EXPORT_CFLAGS   := -Wno-psabi -DUSE_FILE32API
-LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix
+LOCAL_EXPORT_CPPFLAGS := -Wno-literal-suffix -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,14 +25,14 @@
 #ifndef __CCPHYSICS_WORLD_H__
 #define __CCPHYSICS_WORLD_H__
 
-#include "CCPhysicsSetting.h"
-#ifdef CC_USE_PHYSICS
+#include "ccConfig.h"
+#if CC_USE_PHYSICS
 
-#include <list>
-#include <vector>
-
+#include "CCVector.h"
 #include "CCObject.h"
 #include "CCGeometry.h"
+
+#include <list>
 
 NS_CC_BEGIN
 
@@ -41,14 +41,15 @@ class PhysicsJoint;
 class PhysicsWorldInfo;
 class PhysicsShape;
 class PhysicsContact;
-class Array;
+
+typedef Point Vect;
 
 class Sprite;
 class Scene;
 class DrawNode;
+class PhysicsDebugDraw;
 
 class PhysicsWorld;
-
 
 typedef struct PhysicsRayCastInfo
 {
@@ -72,7 +73,8 @@ typedef struct PhysicsRayCastInfo
  * @return true to continue, false to terminate
  */
 typedef std::function<bool(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data)> PhysicsRayCastCallbackFunc;
-typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQueryCallbackFunc;
+typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRectCallbackFunc;
+typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
@@ -80,42 +82,68 @@ typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsRectQuer
 class PhysicsWorld
 {
 public:
+    static const int DEBUGDRAW_NONE;        ///< draw nothing
+    static const int DEBUGDRAW_SHAPE;       ///< draw shapes
+    static const int DEBUGDRAW_JOINT;       ///< draw joints
+    static const int DEBUGDRAW_CONTACT;     ///< draw contact
+    static const int DEBUGDRAW_ALL;         ///< draw all
+    
+public:
     /** Adds a joint to the physics world.*/
     virtual void addJoint(PhysicsJoint* joint);
-    /** Removes a joint from the physics world.*/
+    /** Remove a joint from physics world.*/
     virtual void removeJoint(PhysicsJoint* joint, bool destroy);
-    /** Remove all joints from the physics world.*/
+    /** Remove all joints from physics world.*/
     virtual void removeAllJoints(bool destroy);
     
+    /** Remove a body from physics world. */
     virtual void removeBody(PhysicsBody* body);
+    /** Remove body by tag. */
     virtual void removeBody(int tag);
+    /** Remove all bodies from physics world. */
     virtual void removeAllBodies();
     
-    void rayCast(PhysicsRayCastCallbackFunc func, const Point& point1, const Point& point2, void* data);
-    void rectQuery(PhysicsRectQueryCallbackFunc func, const Rect& rect, void* data);
-    Array* getShapes(const Point& point) const;
+    /** Searches for physics shapes that intersects the ray. */
+    void rayCast(PhysicsRayCastCallbackFunc func, const Point& start, const Point& end, void* data);
+    /** Searches for physics shapes that contains in the rect. */
+    void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
+    /** Searches for physics shapes that contains the point. */
+    void queryPoint(PhysicsQueryPointCallbackFunc func, const Point& point, void* data);
+    /** Get phsyics shapes that contains the point. */
+    Vector<PhysicsShape*> getShapes(const Point& point) const;
+    /** return physics shape that contains the point. */
     PhysicsShape* getShape(const Point& point) const;
-    Array* getAllBodies() const;
+    /** Get all the bodys that in the physics world. */
+    const Vector<PhysicsBody*>& getAllBodies() const;
+    /** Get body by tag */
     PhysicsBody* getBody(int tag) const;
     
-    /** Register a listener to receive contact callbacks*/
-    //inline void registerContactListener(EventListenerPhysicsContact* delegate) { _listener = delegate; }
-    /** Unregister a listener. */
-    //inline void unregisterContactListener() { _listener = nullptr; }
-    
+    /** Get scene contain this physics world */
     inline Scene& getScene() const { return *_scene; }
     /** get the gravity value */
     inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
     void setGravity(const Vect& gravity);
+    /** Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0 */
+    inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
+    /** get the speed of physics world */
+    inline float getSpeed() { return _speed; }
+    /** 
+     * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
+     * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
+     * default value is 1.0
+     */
+    inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
+    /** get the update rate */
+    inline int getUpdateRate() { return _updateRate; }
     
-    /** test the debug draw is enabled */
-    inline bool isDebugDraw() const { return _debugDraw; }
-    /** set the debug draw */
-    inline void setDebugDraw(bool debugDraw) { _debugDraw = debugDraw; }
+    /** set the debug draw mask */
+    void setDebugDrawMask(int mask);
+    /** get the bebug draw mask */
+    inline int getDebugDrawMask() { return _debugDrawMask; }
     
 protected:
-    static PhysicsWorld* create(Scene& scene);
+    static PhysicsWorld* construct(Scene& scene);
     bool init(Scene& scene);
     
     virtual void addBody(PhysicsBody* body);
@@ -124,8 +152,6 @@ protected:
     virtual void update(float delta);
     
     virtual void debugDraw();
-    virtual void drawWithShape(DrawNode* node, PhysicsShape* shape);
-    virtual void drawWithJoint(DrawNode* node, PhysicsJoint* joint);
     
     virtual int collisionBeginCallback(PhysicsContact& contact);
     virtual int collisionPreSolveCallback(PhysicsContact& contact);
@@ -146,18 +172,22 @@ protected:
 protected:
     Vect _gravity;
     float _speed;
+    int _updateRate;
+    int _updateRateCount;
+    float _updateTime;
     PhysicsWorldInfo* _info;
     
-    Array* _bodies;
+    Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
     Scene* _scene;
     
     bool _delayDirty;
-    bool _debugDraw;
-    DrawNode* _drawNode;
+    PhysicsDebugDraw* _debugDraw;
+    int _debugDrawMask;
     
-    Array* _delayAddBodies;
-    Array* _delayRemoveBodies;
+    
+    Vector<PhysicsBody*> _delayAddBodies;
+    Vector<PhysicsBody*> _delayRemoveBodies;
     std::vector<PhysicsJoint*> _delayAddJoints;
     std::vector<PhysicsJoint*> _delayRemoveJoints;
     
@@ -171,7 +201,30 @@ protected:
     friend class PhysicsShape;
     friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
+    friend class PhysicsDebugDraw;
 };
+
+
+class PhysicsDebugDraw
+{
+protected:
+    virtual bool begin();
+    virtual void end();
+    virtual void drawShape(PhysicsShape& shape);
+    virtual void drawJoint(PhysicsJoint& joint);
+    virtual void drawContact();
+    
+protected:
+    PhysicsDebugDraw(PhysicsWorld& world);
+    virtual ~PhysicsDebugDraw();
+    
+protected:
+    DrawNode* _drawNode;
+    PhysicsWorld& _world;
+    
+    friend class PhysicsWorld;
+};
+extern const float PHYSICS_INFINITY;
 
 NS_CC_END
 

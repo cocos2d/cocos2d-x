@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #ifndef __LUA_SCRIPT_HANDLER_MGR_H__
 #define __LUA_SCRIPT_HANDLER_MGR_H__
 
@@ -44,14 +67,20 @@ private:
 class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
-    LuaCallFunc()
+    LuaCallFunc():_functionLua(nullptr)
     {}
     virtual ~LuaCallFunc()
     {}
     
-    static LuaCallFunc * create(int nHandler);
-    virtual void execute();
+    static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
+    bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const;
+    virtual void execute() override;
+protected:
+    /**
+     */
+    std::function<void(void* self,Node*)> _functionLua;
+    
 };
 
 class ScriptHandlerMgr
@@ -61,7 +90,6 @@ public:
     {
         NODE = 0,
         MENU_CLICKED,
-        NOTIFICATION,
         CALLFUNC,
         SCHEDULE,
         TOUCHES,
@@ -102,8 +130,31 @@ public:
         ASSETSMANAGER_SUCCESS,
         ASSETSMANAGER_ERROR,
         
-        EVENT_LISTENER,
+        STUDIO_EVENT_LISTENER,
         ARMATURE_EVENT,
+        
+        EVENT_ACC,
+        EVENT_CUSTIOM,
+        
+        EVENT_KEYBOARD_PRESSED,
+        EVENT_KEYBOARD_RELEASED,
+        
+        EVENT_TOUCH_BEGAN,
+        EVENT_TOUCH_MOVED,
+        EVENT_TOUCH_ENDED,
+        EVENT_TOUCH_CANCELLED,
+        
+        EVENT_TOUCHES_BEGAN,
+        EVENT_TOUCHES_MOVED,
+        EVENT_TOUCHES_ENDED,
+        EVENT_TOUCHES_CANCELLED,
+        
+        EVENT_MOUSE_DOWN,
+        EVENT_MOUSE_UP,
+        EVENT_MOUSE_MOVE,
+        EVENT_MOUSE_SCROLL,
+        
+        EVENT_SPINE,
     };
     
     typedef int Handler;
@@ -127,14 +178,6 @@ private:
 };
 
 NS_CC_END
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-TOLUA_API int tolua_Cocos2d_WebSocket_registerScriptHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_WebSocket_unregisterScriptHandler00(lua_State* tolua_S);
-#endif
-
-TOLUA_API int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S);
-TOLUA_API int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S);
 
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
 

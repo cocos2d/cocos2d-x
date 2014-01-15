@@ -12,6 +12,84 @@
 
 USING_NS_CC;
 
+// JSStringWrapper
+JSStringWrapper::JSStringWrapper()
+: _buffer(nullptr)
+{
+}
+
+JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(str, cx);
+}
+
+JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
+: _buffer(nullptr)
+{
+    set(val, cx);
+}
+
+JSStringWrapper::~JSStringWrapper()
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+}
+
+void JSStringWrapper::set(jsval val, JSContext* cx)
+{
+    if (val.isString())
+    {
+        this->set(val.toString(), cx);
+    }
+    else
+    {
+        CC_SAFE_DELETE_ARRAY(_buffer);
+    }
+}
+
+void JSStringWrapper::set(JSString* str, JSContext* cx)
+{
+    CC_SAFE_DELETE_ARRAY(_buffer);
+    
+    if (!cx)
+    {
+        cx = ScriptingCore::getInstance()->getGlobalContext();
+    }
+    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
+    //buffer = JS_EncodeString(cx, string);
+    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
+    
+    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
+}
+
+const char* JSStringWrapper::get()
+{
+    return _buffer ? _buffer : "";
+}
+
+// JSFunctionWrapper
+JSFunctionWrapper::JSFunctionWrapper(JSContext* cx, JSObject *jsthis, jsval fval)
+: _cx(cx)
+, _jsthis(jsthis)
+, _fval(fval)
+{
+    JS_AddNamedValueRoot(cx, &this->_fval, "JSFunctionWrapper");
+    JS_AddNamedObjectRoot(cx, &this->_jsthis, "JSFunctionWrapper");
+}
+
+JSFunctionWrapper::~JSFunctionWrapper()
+{
+    JS_RemoveValueRoot(this->_cx, &this->_fval);
+    JS_RemoveObjectRoot(this->_cx, &this->_jsthis);
+}
+
+JSBool JSFunctionWrapper::invoke(unsigned int argc, jsval *argv, jsval &rval)
+{
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    
+    return JS_CallFunctionValue(this->_cx, this->_jsthis, this->_fval, argc, argv, &rval);
+}
+
 static Color3B getColorFromJSObject(JSContext *cx, JSObject *colorObject)
 {
     JS::RootedValue jsr(cx);
@@ -93,34 +171,6 @@ JSBool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 	return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
 
-// XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
-JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
-{
-#ifdef __LP64__
-	// compatibility check
-	assert( sizeof(long)==8);
-	JSString *jsstr = JS_ValueToString(cx, vp);
-	JSB_PRECONDITION2(jsstr, cx, JS_FALSE, "Error converting value to string");
-
-	char *str = JS_EncodeString(cx, jsstr);
-	JSB_PRECONDITION2(str, cx, JS_FALSE, "Error encoding string");
-
-	char *endptr;
-	long ret = strtol(str, &endptr, 10);
-
-	*r = ret;
-	return JS_TRUE;
-
-#else
-	// compatibility check
-	assert( sizeof(int)==4);
-	long ret = JSVAL_TO_INT(vp);
-#endif
-	
-	*r = ret;
-	return JS_TRUE;
-}
-
 jsval opaque_to_jsval( JSContext *cx, void *opaque )
 {
 #ifdef __LP64__
@@ -188,6 +238,21 @@ jsval long_to_jsval( JSContext *cx, long number )
 #else
 	CCASSERT( sizeof(int)==4, "Error!");
 	return INT_TO_JSVAL(number);
+#endif
+}
+
+jsval ulong_to_jsval( JSContext *cx, unsigned long number )
+{
+#ifdef __LP64__
+	assert( sizeof(unsigned long)==8);
+    
+	char chr[128];
+	snprintf(chr, sizeof(chr)-1, "%lu", number);
+	JSString *ret_obj = JS_NewStringCopyZ(cx, chr);
+	return STRING_TO_JSVAL(ret_obj);
+#else
+	CCASSERT( sizeof(int)==4, "Error!");
+	return UINT_TO_JSVAL(number);
 #endif
 }
 
@@ -325,6 +390,20 @@ JSBool JSB_get_arraybufferview_dataptr( JSContext *cx, jsval vp, GLsizei *count,
 
 
 #pragma mark - Conversion Routines
+JSBool jsval_to_ushort( JSContext *cx, jsval vp, unsigned short *outval )
+{
+    JSBool ok = JS_TRUE;
+    double dp;
+    ok &= JS_ValueToNumber(cx, vp, &dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+    ok &= !isnan(dp);
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+    *outval = (unsigned short)dp;
+
+    return ok;
+}
+
 JSBool jsval_to_int32( JSContext *cx, jsval vp, int32_t *outval )
 {
     JSBool ok = JS_TRUE;
@@ -367,7 +446,52 @@ JSBool jsval_to_uint16( JSContext *cx, jsval vp, uint16_t *outval )
     return ok;
 }
 
-JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r) {
+// XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
+JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
+{
+#ifdef __LP64__
+	// compatibility check
+	assert( sizeof(long)==8);
+	JSString *jsstr = JS_ValueToString(cx, vp);
+	JSB_PRECONDITION2(jsstr, cx, JS_FALSE, "Error converting value to string");
+    
+	char *str = JS_EncodeString(cx, jsstr);
+	JSB_PRECONDITION2(str, cx, JS_FALSE, "Error encoding string");
+    
+	char *endptr;
+	long ret = strtol(str, &endptr, 10);
+    
+	*r = ret;
+	return JS_TRUE;
+    
+#else
+	// compatibility check
+	assert( sizeof(int)==4);
+	long ret = JSVAL_TO_INT(vp);
+#endif
+	
+	*r = ret;
+	return JS_TRUE;
+}
+
+
+JSBool jsval_to_ulong( JSContext *cx, jsval vp, unsigned long *out)
+{
+    if (out == nullptr)
+        return JS_FALSE;
+    
+    long rval = 0;
+    JSBool ret = JS_FALSE;
+    ret = jsval_to_long(cx, vp, &rval);
+    if (ret)
+    {
+        *out = (unsigned long)rval;
+    }
+    return ret;
+}
+
+JSBool jsval_to_long_long(JSContext *cx, jsval vp, long long* r)
+{
 	JSObject *tmp_arg;
 	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
 	JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
@@ -474,6 +598,71 @@ JSBool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, Array** r
     *ret = pArray;
     JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
     return ok;
+}
+
+JSBool jsvals_variadic_to_ccvaluevector( JSContext *cx, jsval *vp, int argc, cocos2d::ValueVector* ret)
+{
+    
+    for (int i = 0; i < argc; i++)
+    {
+        jsval value = *vp;
+        if (value.isObject())
+        {
+            JSObject* jsobj = JSVAL_TO_OBJECT(value);
+            CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+            
+            if (!JS_IsArrayObject(cx, jsobj))
+            {
+                // It's a normal js object.
+                ValueMap dictVal;
+                JSBool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
+                if (ok)
+                {
+                    ret->push_back(Value(dictVal));
+                }
+            }
+            else {
+                // It's a js array object.
+                ValueVector arrVal;
+                JSBool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
+                if (ok)
+                {
+                    ret->push_back(Value(arrVal));
+                }
+            }
+        }
+        else if (JSVAL_IS_STRING(value))
+        {
+            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            ret->push_back(Value(valueWapper.get()));
+        }
+        else if (JSVAL_IS_NUMBER(value))
+        {
+            double number = 0.0;
+            JSBool ok = JS_ValueToNumber(cx, value, &number);
+            if (ok)
+            {
+                ret->push_back(Value(number));
+            }
+        }
+        else if (JSVAL_IS_BOOLEAN(value))
+        {
+            JSBool boolVal = JS_FALSE;
+            JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+            if (ok)
+            {
+                ret->push_back(Value(boolVal));
+            }
+        }
+        else
+        {
+            CCASSERT(false, "not supported type");
+        }
+        // next
+        vp++;
+    }
+    
+    return JS_TRUE;
 }
 
 JSBool jsval_to_ccrect(JSContext *cx, jsval v, Rect* ret) {
@@ -626,7 +815,8 @@ JSBool jsval_to_ccarray_of_CCPoint(JSContext* cx, jsval v, Point **points, int *
 }
 
 
-JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
+JSBool jsval_to_ccarray(JSContext* cx, jsval v, __Array** ret)
+{
     JSObject *jsobj;
     JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
     JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
@@ -634,7 +824,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    Array* arr = Array::createWithCapacity(len);
+    __Array* arr = __Array::createWithCapacity(len);
     for (uint32_t i=0; i < len; i++) {
         jsval value;
         if (JS_GetElement(cx, jsobj, i, &value)) {
@@ -652,7 +842,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
                 }
                 else if (!JS_IsArrayObject(cx, tmp)){
                     // It's a normal js object.
-                    Dictionary* dictVal = NULL;
+                    __Dictionary* dictVal = NULL;
                     JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                     if (ok) {
                         arr->addObject(dictVal);
@@ -660,7 +850,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
                 }
                 else {
                     // It's a js array object.
-                    Array* arrVal = NULL;
+                    __Array* arrVal = NULL;
                     JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                     if (ok) {
                         arr->addObject(arrVal);
@@ -685,7 +875,7 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
                 JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
                 if (ok) {
                     arr->addObject(Bool::create(boolVal));
-                    //                    CCLOG("iterate object: value = %d", boolVal);
+                    // CCLOG("iterate object: value = %d", boolVal);
                 }
             }
             else {
@@ -697,8 +887,394 @@ JSBool jsval_to_ccarray(JSContext* cx, jsval v, Array** ret) {
     return JS_TRUE;
 }
 
+JSBool jsval_to_ccvalue(JSContext* cx, jsval v, cocos2d::Value* ret)
+{
+    if (v.isObject())
+    {
+        JSObject* jsobj = JSVAL_TO_OBJECT(v);
+        CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+        if (!JS_IsArrayObject(cx, jsobj))
+        {
+            // It's a normal js object.
+            ValueMap dictVal;
+            JSBool ok = jsval_to_ccvaluemap(cx, v, &dictVal);
+            if (ok)
+            {
+                *ret = Value(dictVal);
+            }
+        }
+        else {
+            // It's a js array object.
+            ValueVector arrVal;
+            JSBool ok = jsval_to_ccvaluevector(cx, v, &arrVal);
+            if (ok)
+            {
+                *ret = Value(arrVal);
+            }
+        }
+    }
+    else if (JSVAL_IS_STRING(v))
+    {
+        JSStringWrapper valueWapper(JSVAL_TO_STRING(v), cx);
+        *ret = Value(valueWapper.get());
+    }
+    else if (JSVAL_IS_NUMBER(v))
+    {
+        double number = 0.0;
+        JSBool ok = JS_ValueToNumber(cx, v, &number);
+        if (ok) {
+            *ret = Value(number);
+        }
+    }
+    else if (JSVAL_IS_BOOLEAN(v))
+    {
+        JSBool boolVal = JS_FALSE;
+        JSBool ok = JS_ValueToBoolean(cx, v, &boolVal);
+        if (ok) {
+            *ret = Value(boolVal);
+        }
+    }
+    else {
+        CCASSERT(false, "not supported type");
+    }
 
-jsval ccarray_to_jsval(JSContext* cx, Array *arr)
+    return JS_TRUE;
+}
+
+JSBool jsval_to_ccvaluemap(JSContext* cx, jsval v, cocos2d::ValueMap* ret)
+{
+    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    {
+        return JS_TRUE;
+    }
+    
+    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    if (!tmp) {
+        CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
+        return JS_FALSE;
+    }
+    
+    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    
+    ValueMap& dict = *ret;
+    
+    while (true)
+    {
+        jsid idp;
+        jsval key;
+        if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
+            return JS_FALSE; // error
+        }
+        
+        if (key == JSVAL_VOID) {
+            break; // end of iteration
+        }
+        
+        if (!JSVAL_IS_STRING(key)) {
+            continue; // ignore integer properties
+        }
+        
+        JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
+        
+        JS::RootedValue value(cx);
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isObject())
+        {
+            JSObject* jsobj = JSVAL_TO_OBJECT(value);
+            CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+            if (!JS_IsArrayObject(cx, jsobj))
+            {
+                // It's a normal js object.
+                ValueMap dictVal;
+                JSBool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
+                if (ok)
+                {
+                    dict[keyWrapper.get()] = Value(dictVal);
+                }
+            }
+            else {
+                // It's a js array object.
+                ValueVector arrVal;
+                JSBool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
+                if (ok)
+                {
+                    dict[keyWrapper.get()] = Value(arrVal);
+                }
+            }
+        }
+        else if (JSVAL_IS_STRING(value))
+        {
+            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            dict[keyWrapper.get()] = Value(valueWapper.get());
+            //            CCLOG("iterate object: key = %s, value = %s", keyWrapper.get().c_str(), valueWapper.get().c_str());
+        }
+        else if (JSVAL_IS_NUMBER(value))
+        {
+            double number = 0.0;
+            JSBool ok = JS_ValueToNumber(cx, value, &number);
+            if (ok) {
+                dict[keyWrapper.get()] = Value(number);
+                // CCLOG("iterate object: key = %s, value = %lf", keyWrapper.get().c_str(), number);
+            }
+        }
+        else if (JSVAL_IS_BOOLEAN(value))
+        {
+            JSBool boolVal = JS_FALSE;
+            JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+            if (ok) {
+                dict[keyWrapper.get()] = Value(boolVal);
+                // CCLOG("iterate object: key = %s, value = %d", keyWrapper.get().c_str(), boolVal);
+            }
+        }
+        else {
+            CCASSERT(false, "not supported type");
+        }
+    }
+    
+    return JS_TRUE;
+}
+
+JSBool jsval_to_ccvaluemapintkey(JSContext* cx, jsval v, cocos2d::ValueMapIntKey* ret)
+{
+    if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
+    {
+        return JS_TRUE;
+    }
+    
+    JSObject* tmp = JSVAL_TO_OBJECT(v);
+    if (!tmp) {
+        CCLOG("%s", "jsval_to_ccvaluemap: the jsval is not an object.");
+        return JS_FALSE;
+    }
+    
+    JSObject* it = JS_NewPropertyIterator(cx, tmp);
+    
+    ValueMapIntKey& dict = *ret;
+    
+    while (true)
+    {
+        jsid idp;
+        jsval key;
+        if (! JS_NextProperty(cx, it, &idp) || ! JS_IdToValue(cx, idp, &key)) {
+            return JS_FALSE; // error
+        }
+        
+        if (key == JSVAL_VOID) {
+            break; // end of iteration
+        }
+        
+        if (!JSVAL_IS_STRING(key)) {
+            continue; // ignore integer properties
+        }
+        
+        int keyVal = JSVAL_TO_INT(key);
+        
+        JS::RootedValue value(cx);
+        JS_GetPropertyById(cx, tmp, idp, &value);
+        if (value.isObject())
+        {
+            JSObject* jsobj = JSVAL_TO_OBJECT(value);
+            CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+            if (!JS_IsArrayObject(cx, jsobj))
+            {
+                // It's a normal js object.
+                ValueMap dictVal;
+                JSBool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
+                if (ok)
+                {
+                    dict[keyVal] = Value(dictVal);
+                }
+            }
+            else {
+                // It's a js array object.
+                ValueVector arrVal;
+                JSBool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
+                if (ok)
+                {
+                    dict[keyVal] = Value(arrVal);
+                }
+            }
+        }
+        else if (JSVAL_IS_STRING(value))
+        {
+            JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+            dict[keyVal] = Value(valueWapper.get());
+        }
+        else if (JSVAL_IS_NUMBER(value))
+        {
+            double number = 0.0;
+            JSBool ok = JS_ValueToNumber(cx, value, &number);
+            if (ok) {
+                dict[keyVal] = Value(number);
+            }
+        }
+        else if (JSVAL_IS_BOOLEAN(value))
+        {
+            JSBool boolVal = JS_FALSE;
+            JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+            if (ok) {
+                dict[keyVal] = Value(boolVal);
+            }
+        }
+        else {
+            CCASSERT(false, "not supported type");
+        }
+    }
+    
+    return JS_TRUE;
+}
+
+JSBool jsval_to_ccvaluevector(JSContext* cx, jsval v, cocos2d::ValueVector* ret)
+{
+    JSObject *jsobj;
+    JSBool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+
+    for (uint32_t i=0; i < len; i++)
+    {
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (value.isObject())
+            {
+                JSObject* jsobj = JSVAL_TO_OBJECT(value);
+                CCASSERT(jsb_get_js_proxy(jsobj) == nullptr, "Native object should be added!");
+                
+                if (!JS_IsArrayObject(cx, jsobj))
+                {
+                    // It's a normal js object.
+                    ValueMap dictVal;
+                    JSBool ok = jsval_to_ccvaluemap(cx, value, &dictVal);
+                    if (ok)
+                    {
+                        ret->push_back(Value(dictVal));
+                    }
+                }
+                else {
+                    // It's a js array object.
+                    ValueVector arrVal;
+                    JSBool ok = jsval_to_ccvaluevector(cx, value, &arrVal);
+                    if (ok)
+                    {
+                        ret->push_back(Value(arrVal));
+                    }
+                }
+            }
+            else if (JSVAL_IS_STRING(value))
+            {
+                JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+                ret->push_back(Value(valueWapper.get()));
+            }
+            else if (JSVAL_IS_NUMBER(value))
+            {
+                double number = 0.0;
+                JSBool ok = JS_ValueToNumber(cx, value, &number);
+                if (ok)
+                {
+                    ret->push_back(Value(number));
+                }
+            }
+            else if (JSVAL_IS_BOOLEAN(value))
+            {
+                JSBool boolVal = JS_FALSE;
+                JSBool ok = JS_ValueToBoolean(cx, value, &boolVal);
+                if (ok)
+                {
+                    ret->push_back(Value(boolVal));
+                }
+            }
+            else
+            {
+                CCASSERT(false, "not supported type");
+            }
+        }
+    }
+
+    return JS_TRUE;
+}
+
+JSBool jsval_to_ssize( JSContext *cx, jsval vp, ssize_t* size)
+{
+    JSBool ret = JS_FALSE;
+    int32_t sizeInt32 = 0;
+    ret = jsval_to_int32(cx, vp, &sizeInt32);
+    *size = sizeInt32;
+    return ret;
+}
+
+JSBool jsval_to_std_vector_string( JSContext *cx, jsval vp, std::vector<std::string>* ret)
+{
+    JSObject *jsobj;
+    JSBool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    
+    for (uint32_t i=0; i < len; i++)
+    {
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (JSVAL_IS_STRING(value))
+            {
+                JSStringWrapper valueWapper(JSVAL_TO_STRING(value), cx);
+                ret->push_back(valueWapper.get());
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return JS_FALSE;
+            }
+        }
+    }
+    
+    return JS_TRUE;
+}
+
+JSBool jsval_to_std_vector_int( JSContext *cx, jsval vp, std::vector<int>* ret)
+{
+    JSObject *jsobj;
+    JSBool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, JS_FALSE, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, JS_FALSE, "Object must be an array");
+    
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    
+    for (uint32_t i=0; i < len; i++)
+    {
+        jsval value;
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (JSVAL_IS_NUMBER(value))
+            {
+                double number = 0.0;
+                JSBool ok = JS_ValueToNumber(cx, value, &number);
+                if (ok)
+                {
+                    ret->push_back(static_cast<int>(number));
+                }
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return JS_FALSE;
+            }
+        }
+    }
+    
+    return JS_TRUE;
+}
+
+// native --> jsval
+
+jsval ccarray_to_jsval(JSContext* cx, __Array *arr)
 {
     JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
     
@@ -714,27 +1290,27 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
         else {
-            String* strVal = NULL;
-            Dictionary* dictVal = NULL;
-            Array* arrVal = NULL;
-            Double* doubleVal = NULL;
-            Bool* boolVal = NULL;
-            Float* floatVal = NULL;
-            Integer* intVal = NULL;
+            __String* strVal = NULL;
+            __Dictionary* dictVal = NULL;
+            __Array* arrVal = NULL;
+            __Double* doubleVal = NULL;
+            __Bool* boolVal = NULL;
+            __Float* floatVal = NULL;
+            __Integer* intVal = NULL;
             
-            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 arrElement = c_string_to_jsval(cx, strVal->getCString());
-            } else if ((dictVal = dynamic_cast<cocos2d::Dictionary*>(obj))) {
+            } else if ((dictVal = dynamic_cast<cocos2d::__Dictionary*>(obj))) {
                 arrElement = ccdictionary_to_jsval(cx, dictVal);
-            } else if ((arrVal = dynamic_cast<cocos2d::Array*>(obj))) {
+            } else if ((arrVal = dynamic_cast<cocos2d::__Array*>(obj))) {
                 arrElement = ccarray_to_jsval(cx, arrVal);
-            } else if ((doubleVal = dynamic_cast<Double*>(obj))) {
+            } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
                 arrElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-            } else if ((floatVal = dynamic_cast<Float*>(obj))) {
+            } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
                 arrElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-            } else if ((intVal = dynamic_cast<Integer*>(obj))) {
+            } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
                 arrElement = INT_TO_JSVAL(intVal->getValue());
-            }  else if ((boolVal = dynamic_cast<Bool*>(obj))) {
+            }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 arrElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
                 CCASSERT(false, "the type isn't suppored.");
@@ -748,7 +1324,7 @@ jsval ccarray_to_jsval(JSContext* cx, Array *arr)
     return OBJECT_TO_JSVAL(jsretArr);
 }
 
-jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
+jsval ccdictionary_to_jsval(JSContext* cx, __Dictionary* dict)
 {
     JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
     DictElement* pElement = NULL;
@@ -762,27 +1338,27 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
             dictElement = OBJECT_TO_JSVAL(jsproxy->obj);
         }
         else {
-            String* strVal = NULL;
-            Dictionary* dictVal = NULL;
-            Array* arrVal = NULL;
-            Double* doubleVal = NULL;
-            Bool* boolVal = NULL;
-            Float* floatVal = NULL;
-            Integer* intVal = NULL;
+            __String* strVal = NULL;
+            __Dictionary* dictVal = NULL;
+            __Array* arrVal = NULL;
+            __Double* doubleVal = NULL;
+            __Bool* boolVal = NULL;
+            __Float* floatVal = NULL;
+            __Integer* intVal = NULL;
             
-            if ((strVal = dynamic_cast<cocos2d::String *>(obj))) {
+            if ((strVal = dynamic_cast<cocos2d::__String *>(obj))) {
                 dictElement = c_string_to_jsval(cx, strVal->getCString());
-            } else if ((dictVal = dynamic_cast<Dictionary*>(obj))) {
+            } else if ((dictVal = dynamic_cast<__Dictionary*>(obj))) {
                 dictElement = ccdictionary_to_jsval(cx, dictVal);
-            } else if ((arrVal = dynamic_cast<Array*>(obj))) {
+            } else if ((arrVal = dynamic_cast<__Array*>(obj))) {
                 dictElement = ccarray_to_jsval(cx, arrVal);
-            } else if ((doubleVal = dynamic_cast<Double*>(obj))) {
+            } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
                 dictElement = DOUBLE_TO_JSVAL(doubleVal->getValue());
-            } else if ((floatVal = dynamic_cast<Float*>(obj))) {
+            } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
                 dictElement = DOUBLE_TO_JSVAL(floatVal->getValue());
-            } else if ((intVal = dynamic_cast<Integer*>(obj))) {
+            } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
                 dictElement = INT_TO_JSVAL(intVal->getValue());
-            } else if ((boolVal = dynamic_cast<Bool*>(obj))) {
+            } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
                 dictElement = BOOLEAN_TO_JSVAL(boolVal->getValue() ? JS_TRUE : JS_FALSE);
             } else {
                 CCASSERT(false, "the type isn't suppored.");
@@ -797,7 +1373,7 @@ jsval ccdictionary_to_jsval(JSContext* cx, Dictionary* dict)
     return OBJECT_TO_JSVAL(jsRet);
 }
 
-JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
+JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, __Dictionary** ret)
 {
     if (JSVAL_IS_NULL(v) || JSVAL_IS_VOID(v))
     {
@@ -812,7 +1388,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
     }
     
     JSObject* it = JS_NewPropertyIterator(cx, tmp);
-    Dictionary* dict = NULL;
+    __Dictionary* dict = NULL;
     
     while (true)
     {
@@ -832,7 +1408,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
         
         JSStringWrapper keyWrapper(JSVAL_TO_STRING(key), cx);
         if (!dict) {
-            dict = Dictionary::create();
+            dict = __Dictionary::create();
         }
         
         JS::RootedValue value(cx);
@@ -840,7 +1416,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
         if (value.isObject())
         {
             js_proxy_t *proxy;
-            JSObject *tmp = JSVAL_TO_OBJECT(value);
+            tmp = JSVAL_TO_OBJECT(value);
             proxy = jsb_get_js_proxy(tmp);
             cocos2d::Object* cobj = (cocos2d::Object *)(proxy ? proxy->ptr : NULL);
             // Don't test it.
@@ -851,7 +1427,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
             }
             else if (!JS_IsArrayObject(cx, tmp)){
                 // It's a normal js object.
-                Dictionary* dictVal = NULL;
+                __Dictionary* dictVal = NULL;
                 JSBool ok = jsval_to_ccdictionary(cx, value, &dictVal);
                 if (ok) {
                     dict->setObject(dictVal, keyWrapper.get());
@@ -859,7 +1435,7 @@ JSBool jsval_to_ccdictionary(JSContext* cx, jsval v, Dictionary** ret)
             }
             else {
                 // It's a js array object.
-                Array* arrVal = NULL;
+                __Array* arrVal = NULL;
                 JSBool ok = jsval_to_ccarray(cx, value, &arrVal);
                 if (ok) {
                     dict->setObject(arrVal, keyWrapper.get());
@@ -933,6 +1509,11 @@ jsval int32_to_jsval( JSContext *cx, int32_t number )
 }
 
 jsval uint32_to_jsval( JSContext *cx, uint32_t number )
+{
+    return UINT_TO_JSVAL(number);
+}
+
+jsval ushort_to_jsval( JSContext *cx, unsigned short number )
 {
     return UINT_TO_JSVAL(number);
 }
@@ -1434,4 +2015,187 @@ jsval CGPoint_to_jsval( JSContext *cx, cpVect p)
 	*buffer = p;
 	return OBJECT_TO_JSVAL(typedArray);
 #endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+}
+
+jsval ccvalue_to_jsval(JSContext* cx, const cocos2d::Value& v)
+{
+    jsval ret = JSVAL_NULL;
+    const Value& obj = v;
+    
+    switch (obj.getType())
+    {
+        case Value::Type::BOOLEAN:
+            ret = BOOLEAN_TO_JSVAL(obj.asBool());
+            break;
+        case Value::Type::FLOAT:
+        case Value::Type::DOUBLE:
+            ret = DOUBLE_TO_JSVAL(obj.asDouble());
+            break;
+        case Value::Type::INTEGER:
+            ret = INT_TO_JSVAL(obj.asInt());
+            break;
+        case Value::Type::STRING:
+            ret = std_string_to_jsval(cx, obj.asString());
+            break;
+        case Value::Type::VECTOR:
+            ret = ccvaluevector_to_jsval(cx, obj.asValueVector());
+            break;
+        case Value::Type::MAP:
+            ret = ccvaluemap_to_jsval(cx, obj.asValueMap());
+            break;
+        case Value::Type::INT_KEY_MAP:
+            ret = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+            break;
+        default:
+            break;
+    }
+    
+    return ret;
+}
+
+jsval ccvaluemap_to_jsval(JSContext* cx, const cocos2d::ValueMap& v)
+{
+    JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        JS::RootedValue dictElement(cx);
+
+        std::string key = iter->first;
+        const Value& obj = iter->second;
+        
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                dictElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                dictElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case Value::Type::INTEGER:
+                dictElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case Value::Type::STRING:
+                dictElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case Value::Type::VECTOR:
+                dictElement = ccvaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case Value::Type::MAP:
+                dictElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case Value::Type::INT_KEY_MAP:
+                dictElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+        
+        if (!key.empty())
+        {
+            JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
+}
+
+jsval ccvaluemapintkey_to_jsval(JSContext* cx, const cocos2d::ValueMapIntKey& v)
+{
+    JSObject* jsRet = JS_NewObject(cx, NULL, NULL, NULL);
+    
+    for (auto iter = v.begin(); iter != v.end(); ++iter)
+    {
+        JS::RootedValue dictElement(cx);
+        std::stringstream keyss;
+        keyss << iter->first;
+        std::string key = keyss.str();
+        
+        const Value& obj = iter->second;
+        
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                dictElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                dictElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case Value::Type::INTEGER:
+                dictElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case Value::Type::STRING:
+                dictElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case Value::Type::VECTOR:
+                dictElement = ccvaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case Value::Type::MAP:
+                dictElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case Value::Type::INT_KEY_MAP:
+                dictElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+        
+        if (!key.empty())
+        {
+            JS_SetProperty(cx, jsRet, key.c_str(), dictElement);
+        }
+    }
+    return OBJECT_TO_JSVAL(jsRet);
+}
+
+jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v)
+{
+    JSObject *jsretArr = JS_NewArrayObject(cx, 0, NULL);
+    
+    int i = 0;
+    for (const auto& obj : v)
+    {
+        jsval arrElement;
+        
+        switch (obj.getType())
+        {
+            case Value::Type::BOOLEAN:
+                arrElement = BOOLEAN_TO_JSVAL(obj.asBool());
+                break;
+            case Value::Type::FLOAT:
+            case Value::Type::DOUBLE:
+                arrElement = DOUBLE_TO_JSVAL(obj.asDouble());
+                break;
+            case Value::Type::INTEGER:
+                arrElement = INT_TO_JSVAL(obj.asInt());
+                break;
+            case Value::Type::STRING:
+                arrElement = std_string_to_jsval(cx, obj.asString());
+                break;
+            case Value::Type::VECTOR:
+                arrElement = ccvaluevector_to_jsval(cx, obj.asValueVector());
+                break;
+            case Value::Type::MAP:
+                arrElement = ccvaluemap_to_jsval(cx, obj.asValueMap());
+                break;
+            case Value::Type::INT_KEY_MAP:
+                arrElement = ccvaluemapintkey_to_jsval(cx, obj.asIntKeyMap());
+                break;
+            default:
+                break;
+        }
+
+        if (!JS_SetElement(cx, jsretArr, i, &arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval ssize_to_jsval(JSContext *cx, ssize_t v)
+{
+    CCASSERT(v < INT_MAX, "The size should not bigger than 32 bit (int32_t).");
+    return int32_to_jsval(cx, static_cast<int>(v));
 }

@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
-
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,8 +26,8 @@ THE SOFTWARE.
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
 
-#include "CCSprite.h"
 #include "CCTexture2D.h"
+#include "CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -66,12 +67,7 @@ public:
      * @lua NA
      */
     virtual ~LabelTTF();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    const char* description() const;
-    
+
     /** creates a LabelTTF with a font name and font size in points
      @since v2.0.1
      */
@@ -161,11 +157,16 @@ public:
     
     const std::string& getFontName() const;
     void setFontName(const std::string& fontName);
-    
-private:
-    bool updateTexture();
+
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual std::string getDescription() const override;
+
 protected:
-    
+    bool updateTexture();
+
     /** set the text definition for this label */
     void _updateWithTextDefinition(const FontDefinition& textDefinition, bool mustUpdateTexture = true);
     FontDefinition    _prepareTextDefinition(bool adjustForResolution = false);
@@ -197,8 +198,6 @@ protected:
         
     /** font tint */
     Color3B   _textFillColor;
-
-    
 };
 
 

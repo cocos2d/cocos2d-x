@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,6 +31,7 @@ THE SOFTWARE.
 #include "CCNode.h"
 #include "CCProtocols.h"
 #include "ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -48,27 +50,12 @@ If you are going to render a TextureAtlas consider subclassing AtlasNode (or a s
 All features from Node are valid, plus the following features:
 - opacity and RGB colors
 */
-class CC_DLL AtlasNode : public NodeRGBA, public TextureProtocol
+class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
 	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static AtlasNode * create(const std::string& filename, long tileWidth, long tileHeight, long itemsToRender);
-    /**
-     * @js ctor
-     */
-    AtlasNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~AtlasNode();
+	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-    bool initWithTileFile(const std::string& tile, long tileWidth, long tileHeight, long itemsToRender);
-
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
-    bool initWithTexture(Texture2D* texture, long tileWidth, long tileHeight, long itemsToRender);
-    
     /** updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses
     */
@@ -77,8 +64,8 @@ public:
     void setTextureAtlas(TextureAtlas* textureAtlas);
     TextureAtlas* getTextureAtlas() const;
     
-    void setQuadsToDraw(long quadsToDraw);
-    long getQuadsToDraw() const;
+    void setQuadsToDraw(ssize_t quadsToDraw);
+    ssize_t getQuadsToDraw() const;
 
     
     // Overrides
@@ -104,24 +91,33 @@ public:
     */
     virtual const BlendFunc& getBlendFunc() const override;
 
-private :
+
+protected:
+    AtlasNode();
+    virtual ~AtlasNode();
+
+    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
+
+    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
+
     void calculateMaxItems();
     void updateBlendFunc();
     void updateOpacityModifyRGB();
-    
+
     friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
-protected:
     //! chars per row
-    long    _itemsPerRow;
+    int    _itemsPerRow;
     //! chars per column
-    long    _itemsPerColumn;
+    int    _itemsPerColumn;
 
     //! width of each char
-    long    _itemWidth;
+    int    _itemWidth;
     //! height of each char
-    long    _itemHeight;
+    int    _itemHeight;
     
     Color3B    _colorUnmodified;
     
@@ -131,11 +127,17 @@ protected:
     BlendFunc _blendFunc;
 
     // quads to draw
-    long _quadsToDraw;
+    ssize_t _quadsToDraw;
     // color uniform
     GLint    _uniformColor;
     // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
     bool _ignoreContentScaleFactor;
+    // quad command
+    QuadCommand _quadCommand;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);
+
 };
 
 // end of base_node group

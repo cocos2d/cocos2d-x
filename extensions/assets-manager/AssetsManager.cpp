@@ -51,6 +51,10 @@ NS_CC_EXT_BEGIN;
 #define BUFFER_SIZE    8192
 #define MAX_FILENAME   512
 
+#define LOW_SPEED_LIMIT 1L
+#define LOW_SPEED_TIME 5L
+
+
 // Message type
 #define ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED                0
 #define ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION     1
@@ -86,15 +90,10 @@ AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* vers
 , _shouldDeleteDelegateWhenExit(false)
 {
     checkStoragePath();
-    _schedule = new Helper();
 }
 
 AssetsManager::~AssetsManager()
 {
-    if (_schedule)
-    {
-        _schedule->release();
-    }
     if (_shouldDeleteDelegateWhenExit)
     {
         delete _delegate;
@@ -157,11 +156,17 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, &_version);
     if (_connectionTimeout) curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     res = curl_easy_perform(_curl);
     
     if (res != 0)
     {
-        sendErrorMessage(ErrorCode::NETWORK);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            if (this->_delegate)
+                this->_delegate->onError(ErrorCode::NETWORK);
+        });
         CCLOG("can not get version file content, error code is %d", res);
         curl_easy_cleanup(_curl);
         return false;
@@ -170,7 +175,10 @@ bool AssetsManager::checkUpdate()
     string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
     if (recordedVersion == _version)
     {
-        sendErrorMessage(ErrorCode::NO_NEW_VERSION);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            if (this->_delegate)
+                this->_delegate->onError(ErrorCode::NO_NEW_VERSION);
+        });
         CCLOG("there is not new version");
         // Set resource search path.
         setSearchPath();
@@ -190,25 +198,45 @@ void AssetsManager::downloadAndUncompress()
         {
             if (! downLoad()) break;
             
-            // Record downloaded version.
-            AssetsManager::Message *msg1 = new AssetsManager::Message();
-            msg1->what = ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION;
-            msg1->obj = this;
-            _schedule->sendMessage(msg1);
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),
+                                                            this->_version.c_str());
+                UserDefault::getInstance()->flush();
+            });
         }
         
         // Uncompress zip file.
         if (! uncompress())
         {
-            sendErrorMessage(ErrorCode::UNCOMPRESS);
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+                if (this->_delegate)
+                    this->_delegate->onError(ErrorCode::UNCOMPRESS);
+            });
             break;
         }
         
-        // Record updated version and remove downloaded zip file
-        AssetsManager::Message *msg2 = new AssetsManager::Message();
-        msg2->what = ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED;
-        msg2->obj = this;
-        _schedule->sendMessage(msg2);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this] {
+            
+            // Record new version code.
+            UserDefault::getInstance()->setStringForKey(this->keyOfVersion().c_str(), this->_version.c_str());
+            
+            // Unrecord downloaded version code.
+            UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(), "");
+            UserDefault::getInstance()->flush();
+            
+            // Set resource search path.
+            this->setSearchPath();
+            
+            // Delete unloaded zip file.
+            string zipfileName = this->_storagePath + TEMP_PACKAGE_FILE_NAME;
+            if (remove(zipfileName.c_str()) != 0)
+            {
+                CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
+            }
+            
+            if (this->_delegate) this->_delegate->onSuccess();
+        });
+       
     } while (0);
     
     _isDownloading = false;
@@ -291,7 +319,7 @@ bool AssetsManager::uncompress()
             return false;
         }
         
-        string fullPath = _storagePath + fileName;
+        const string fullPath = _storagePath + fileName;
         
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
@@ -311,15 +339,15 @@ bool AssetsManager::uncompress()
             //There are not directory entry in some case.
             //So we need to test whether the file directory exists when uncompressing file entry
             //, if does not exist then create directory
-            string fileNameStr(fileName);
+            const string fileNameStr(fileName);
             
             size_t startIndex=0;
             
             size_t index=fileNameStr.find("/",startIndex);
             
-            while(index!=-1)
+            while(index != std::string::npos)
             {
-                string dir=_storagePath+fileNameStr.substr(0,index);
+                const string dir=_storagePath+fileNameStr.substr(0,index);
                 
                 FILE *out = fopen(dir.c_str(), "r");
                 
@@ -452,18 +480,20 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 
 int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
-    AssetsManager* manager = (AssetsManager*)ptr;
-    AssetsManager::Message *msg = new AssetsManager::Message();
-    msg->what = ASSETSMANAGER_MESSAGE_PROGRESS;
+    static int percent = 0;
+    int tmp = (int)(nowDownloaded / totalToDownload * 100);
     
-    ProgressMessage *progressData = new ProgressMessage();
-    progressData->percent = (int)(nowDownloaded/totalToDownload*100);
-    progressData->manager = manager;
-    msg->obj = progressData;
-    
-    manager->_schedule->sendMessage(msg);
-    
-    CCLOG("downloading... %d%%", (int)(nowDownloaded/totalToDownload*100));
+    if (percent != tmp)
+    {
+        percent = tmp;
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            auto manager = static_cast<AssetsManager*>(ptr);
+            if (manager->_delegate)
+                manager->_delegate->onProgress(percent);
+        });
+        
+        CCLOG("downloading... %d%%", percent);
+    }
     
     return 0;
 }
@@ -471,11 +501,14 @@ int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownl
 bool AssetsManager::downLoad()
 {
     // Create a file to save package.
-    string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
+    const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
     FILE *fp = fopen(outFileName.c_str(), "wb");
     if (! fp)
     {
-        sendErrorMessage(ErrorCode::CREATE_FILE);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            if (this->_delegate)
+                this->_delegate->onError(ErrorCode::CREATE_FILE);
+        });
         CCLOG("can not create file %s", outFileName.c_str());
         return false;
     }
@@ -488,11 +521,18 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOPROGRESS, false);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSFUNCTION, assetsManagerProgressFunc);
     curl_easy_setopt(_curl, CURLOPT_PROGRESSDATA, this);
+    curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
+    curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
     if (res != 0)
     {
-        sendErrorMessage(ErrorCode::NETWORK);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            if (this->_delegate)
+                this->_delegate->onError(ErrorCode::NETWORK);
+        });
         CCLOG("error when download package");
         fclose(fp);
         return false;
@@ -558,133 +598,6 @@ void AssetsManager::setConnectionTimeout(unsigned int timeout)
 unsigned int AssetsManager::getConnectionTimeout()
 {
     return _connectionTimeout;
-}
-
-void AssetsManager::sendErrorMessage(AssetsManager::ErrorCode code)
-{
-    Message *msg = new Message();
-    msg->what = ASSETSMANAGER_MESSAGE_ERROR;
-    
-    ErrorMessage *errorMessage = new ErrorMessage();
-    errorMessage->code = code;
-    errorMessage->manager = this;
-    msg->obj = errorMessage;
-    
-    _schedule->sendMessage(msg);
-}
-
-// Implementation of AssetsManagerHelper
-
-AssetsManager::Helper::Helper()
-{
-    _messageQueue = new list<Message*>();
-    Director::getInstance()->getScheduler()->scheduleUpdateForTarget(this, 0, false);
-}
-
-AssetsManager::Helper::~Helper()
-{
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
-    delete _messageQueue;
-}
-
-void AssetsManager::Helper::sendMessage(Message *msg)
-{
-    _messageQueueMutex.lock();
-    _messageQueue->push_back(msg);
-    _messageQueueMutex.unlock();
-}
-
-void AssetsManager::Helper::update(float dt)
-{
-    Message *msg = NULL;
-    
-    // Returns quickly if no message
-    _messageQueueMutex.lock();
-    if (0 == _messageQueue->size())
-    {
-        _messageQueueMutex.unlock();
-        return;
-    }
-    //remove unnecessary message
-    std::list<Message*>::iterator it;
-    Message *proMsg = nullptr;  
-    for (it = _messageQueue->begin(); it != _messageQueue->end(); ++it)
-    {          
-        if((*it)->what == ASSETSMANAGER_MESSAGE_PROGRESS)
-        {
-            if (proMsg)
-            {
-                _messageQueue->remove(proMsg); 
-                delete (ProgressMessage*)proMsg->obj;
-                delete proMsg;
-            }
-            proMsg = *it;        
-        }       
-    }
-    // Gets message
-    msg = *(_messageQueue->begin());
-    _messageQueue->pop_front();
-    _messageQueueMutex.unlock();
-    
-    switch (msg->what) {
-        case ASSETSMANAGER_MESSAGE_UPDATE_SUCCEED:
-            handleUpdateSucceed(msg);
-            
-            break;
-        case ASSETSMANAGER_MESSAGE_RECORD_DOWNLOADED_VERSION:
-            UserDefault::getInstance()->setStringForKey(((AssetsManager*)msg->obj)->keyOfDownloadedVersion().c_str(),
-                                                                ((AssetsManager*)msg->obj)->_version.c_str());
-            UserDefault::getInstance()->flush();
-            
-            break;
-        case ASSETSMANAGER_MESSAGE_PROGRESS:
-            if (((ProgressMessage*)msg->obj)->manager->_delegate)
-            {
-                ((ProgressMessage*)msg->obj)->manager->_delegate->onProgress(((ProgressMessage*)msg->obj)->percent);
-            }
-            
-            delete (ProgressMessage*)msg->obj;
-            
-            break;
-        case ASSETSMANAGER_MESSAGE_ERROR:
-            // error call back
-            if (((ErrorMessage*)msg->obj)->manager->_delegate)
-            {
-                ((ErrorMessage*)msg->obj)->manager->_delegate->onError(((ErrorMessage*)msg->obj)->code);
-            }
-            
-            delete ((ErrorMessage*)msg->obj);
-            
-            break;
-        default:
-            break;
-    }
-    
-    delete msg;
-}
-
-void AssetsManager::Helper::handleUpdateSucceed(Message *msg)
-{
-    AssetsManager* manager = (AssetsManager*)msg->obj;
-    
-    // Record new version code.
-    UserDefault::getInstance()->setStringForKey(manager->keyOfVersion().c_str(), manager->_version.c_str());
-    
-    // Unrecord downloaded version code.
-    UserDefault::getInstance()->setStringForKey(manager->keyOfDownloadedVersion().c_str(), "");
-    UserDefault::getInstance()->flush();
-    
-    // Set resource search path.
-    manager->setSearchPath();
-    
-    // Delete unloaded zip file.
-    string zipfileName = manager->_storagePath + TEMP_PACKAGE_FILE_NAME;
-    if (remove(zipfileName.c_str()) != 0)
-    {
-        CCLOG("can not remove downloaded zip file %s", zipfileName.c_str());
-    }
-    
-    if (manager->_delegate) manager->_delegate->onSuccess();
 }
 
 AssetsManager* AssetsManager::create(const char* packageUrl, const char* versionFileUrl, const char* storagePath, ErrorCallback errorCallback, ProgressCallback progressCallback, SuccessCallback successCallback )

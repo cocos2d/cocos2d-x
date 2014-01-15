@@ -1,9 +1,27 @@
-/*
- * EGLViewlinux.cpp
- *
- *  Created on: Aug 8, 2011
- *      Author: laschweinski
- */
+/****************************************************************************
+Copyright (c) 2011      Laschweinski
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "CCEGLView.h"
 #include "CCGL.h"
@@ -186,7 +204,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = true;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesBegin(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -195,7 +213,7 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
             s_captured = false;
             if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,s_mouseY)))
             {
-                long id = 0;
+                int id = 0;
                 eglView->handleTouchesEnd(1, &id, &s_mouseX, &s_mouseY);
             }
         }
@@ -231,7 +249,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     {
         if (eglView->getViewPortRect().equals(Rect::ZERO) || eglView->getViewPortRect().containsPoint(Point(s_mouseX,eglView->getFrameSize().height - s_mouseY)))
         {
-            long id = 0;
+            int id = 0;
             eglView->handleTouchesMove(1, &id, &s_mouseX, &s_mouseY);
         }
     }
@@ -256,9 +274,12 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
 
 void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action || GLFW_REPEAT == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
 void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
@@ -290,7 +311,7 @@ EGLView::EGLView()
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     s_pEglView = this;
-    strcpy(_viewName, "Cocos2dxWin32");
+    _viewName = "Cocos2dxWin32";
     glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
     glfwInit();
 }
@@ -310,7 +331,7 @@ bool EGLView::init(const char* viewName, float width, float height, float frameZ
     setFrameZoomFactor(frameZoomFactor);
 
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-   _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName, nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
     glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);

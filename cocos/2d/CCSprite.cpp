@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -44,6 +45,10 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
+#include "CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "CCFrustum.h"
+
 // external
 #include "kazmath/GL/matrix.h"
 
@@ -67,19 +72,19 @@ Sprite* Sprite::createWithTexture(Texture2D *texture)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
-Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect)
+Sprite* Sprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
     Sprite *sprite = new Sprite();
-    if (sprite && sprite->initWithTexture(texture, rect))
+    if (sprite && sprite->initWithTexture(texture, rect, rotated))
     {
         sprite->autorelease();
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename)
@@ -91,7 +96,7 @@ Sprite* Sprite::create(const std::string& filename)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
@@ -103,7 +108,7 @@ Sprite* Sprite::create(const std::string& filename, const Rect& rect)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
@@ -115,7 +120,7 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
@@ -125,7 +130,7 @@ Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
-    CCASSERT(frame != NULL, msg);
+    CCASSERT(frame != nullptr, msg);
 #endif
     
     return createWithSpriteFrame(frame);
@@ -140,20 +145,88 @@ Sprite* Sprite::create()
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
-    return NULL;
+    return nullptr;
 }
 
 bool Sprite::init(void)
 {
-    return initWithTexture(NULL, Rect::ZERO);
+    return initWithTexture(nullptr, Rect::ZERO );
+}
+
+bool Sprite::initWithTexture(Texture2D *texture)
+{
+    CCASSERT(texture != nullptr, "Invalid texture for sprite");
+
+    Rect rect = Rect::ZERO;
+    rect.size = texture->getContentSize();
+
+    return initWithTexture(texture, rect);
+}
+
+bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
+{
+    return initWithTexture(texture, rect, false);
+}
+
+bool Sprite::initWithFile(const std::string& filename)
+{
+    CCASSERT(filename.size()>0, "Invalid filename for sprite");
+
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    if (texture)
+    {
+        Rect rect = Rect::ZERO;
+        rect.size = texture->getContentSize();
+        return initWithTexture(texture, rect);
+    }
+
+    // don't release here.
+    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
+    // this->release();
+    return false;
+}
+
+bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
+{
+    CCASSERT(filename.size()>0, "Invalid filename");
+
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    if (texture)
+    {
+        return initWithTexture(texture, rect);
+    }
+
+    // don't release here.
+    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
+    // this->release();
+    return false;
+}
+
+bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
+{
+    CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
+
+    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+    return initWithSpriteFrame(frame);
+}
+
+bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
+{
+    CCASSERT(spriteFrame != nullptr, "");
+
+    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
+    setSpriteFrame(spriteFrame);
+
+    return bRet;
 }
 
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
-    if (NodeRGBA::init())
+    bool result;
+    if (Node::init())
     {
-        _batchNode = NULL;
+        _batchNode = nullptr;
         
         _recursiveDirty = false;
         setDirty(false);
@@ -182,7 +255,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
         
         // shader program
-        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
         
         // update texture (calls updateBlendFunc)
         setTexture(texture);
@@ -190,108 +263,17 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        setBatchNode(NULL);
-        
-        return true;
+        setBatchNode(nullptr);
+        result = true;
     }
     else
     {
-        return false;
+        result = false;
     }
+    _recursiveDirty = true;
+    setDirty(true);
+    return result;
 }
-
-bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
-{
-    return initWithTexture(texture, rect, false);
-}
-
-bool Sprite::initWithTexture(Texture2D *texture)
-{
-    CCASSERT(texture != NULL, "Invalid texture for sprite");
-
-    Rect rect = Rect::ZERO;
-    rect.size = texture->getContentSize();
-    
-    return initWithTexture(texture, rect);
-}
-
-bool Sprite::initWithFile(const std::string& filename)
-{
-    CCASSERT(filename.size()>0, "Invalid filename for sprite");
-
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
-    if (texture)
-    {
-        Rect rect = Rect::ZERO;
-        rect.size = texture->getContentSize();
-        return initWithTexture(texture, rect);
-    }
-
-    // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
-    // this->release(); 
-    return false;
-}
-
-bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
-{
-    CCASSERT(filename.size()>0, "Invalid filename");
-
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
-    if (texture)
-    {
-        return initWithTexture(texture, rect);
-    }
-
-    // don't release here.
-    // when load texture failed, it's better to get a "transparent" sprite then a crashed program
-    // this->release(); 
-    return false;
-}
-
-bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
-{
-    CCASSERT(spriteFrame != NULL, "");
-
-    bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
-    setDisplayFrame(spriteFrame);
-
-    return bRet;
-}
-
-bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
-{
-    CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
-
-    SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    return initWithSpriteFrame(frame);
-}
-
-// XXX: deprecated
-/*
-Sprite* Sprite::initWithCGImage(CGImageRef pImage)
-{
-    // todo
-    // because it is deprecated, so we do not implement it
-
-    return NULL;
-}
-*/
-
-/*
-Sprite* Sprite::initWithCGImage(CGImageRef pImage, const char *pszKey)
-{
-    CCASSERT(pImage != NULL);
-
-    // XXX: possible bug. See issue #349. New API should be added
-    Texture2D *texture = Director::getInstance()->getTextureCache()->addCGImage(pImage, pszKey);
-
-    const Size& size = texture->getContentSize();
-    Rect rect = Rect(0 ,0, size.width, size.height);
-
-    return initWithTexture(texture, rect);
-}
-*/
 
 Sprite::Sprite(void)
 : _shouldBeHidden(false)
@@ -304,11 +286,82 @@ Sprite::~Sprite(void)
     CC_SAFE_RELEASE(_texture);
 }
 
+/*
+ * Texture methods
+ */
+
+/*
+ * This array is the data of a white image with 2 by 2 dimension.
+ * It's used for creating a default texture when sprite's texture is set to nullptr.
+ * Supposing codes as follows:
+ *
+ *   auto sp = new Sprite();
+ *   sp->init();  // Texture was set to nullptr, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
+ *
+ * The test is in "TestCpp/SpriteTest/Sprite without texture".
+ */
+static unsigned char cc_2x2_white_image[] = {
+    // RGBA8888
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF
+};
+
+#define CC_2x2_WHITE_IMAGE_KEY  "/cc_2x2_white_image"
+
+void Sprite::setTexture(const std::string &filename)
+{
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    setTexture(texture);
+
+    Rect rect = Rect::ZERO;
+    rect.size = texture->getContentSize();
+    setTextureRect(rect);
+}
+
+void Sprite::setTexture(Texture2D *texture)
+{
+    // If batchnode, then texture id should be the same
+    CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    // accept texture==nil as argument
+    CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
+
+    if (texture == nullptr)
+    {
+        // Gets the texture by key firstly.
+        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (texture == nullptr)
+        {
+            Image* image = new Image();
+            bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
+    }
+
+    if (!_batchNode && _texture != texture)
+    {
+        CC_SAFE_RETAIN(texture);
+        CC_SAFE_RELEASE(_texture);
+        _texture = texture;
+        updateBlendFunc();
+    }
+}
+
+Texture2D* Sprite::getTexture() const
+{
+    return _texture;
+}
+
 void Sprite::setTextureRect(const Rect& rect)
 {
     setTextureRect(rect, false, rect.size);
 }
-
 
 void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize)
 {
@@ -449,12 +502,14 @@ void Sprite::setTextureCoords(Rect rect)
 void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
-    
-#ifdef CC_USE_PHYSICS
-    updatePhysicsTransform();
-    setDirty(true);
+
+#if CC_USE_PHYSICS
+    if (updatePhysicsTransform())
+    {
+        setDirty(true);
+    };
 #endif
-    
+
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
@@ -464,7 +519,7 @@ void Sprite::updateTransform(void)
             _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vertex3F(0,0,0);
             _shouldBeHidden = true;
         }
-        else 
+        else
         {
             _shouldBeHidden = false;
 
@@ -472,10 +527,12 @@ void Sprite::updateTransform(void)
             {
                 _transformToBatch = getNodeToParentTransform();
             }
-            else 
+            else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
+                kmMat4 nodeToParent = getNodeToParentTransform();
+                kmMat4 parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                kmMat4Multiply(&_transformToBatch, &parentTransform, &nodeToParent);
             }
 
             //
@@ -489,13 +546,13 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            float x = _transformToBatch.tx;
-            float y = _transformToBatch.ty;
+            float x = _transformToBatch.mat[12];
+            float y = _transformToBatch.mat[13];
 
-            float cr = _transformToBatch.a;
-            float sr = _transformToBatch.b;
-            float cr2 = _transformToBatch.d;
-            float sr2 = -_transformToBatch.c;
+            float cr = _transformToBatch.mat[0];
+            float sr = _transformToBatch.mat[1];
+            float cr2 = _transformToBatch.mat[5];
+            float sr2 = -_transformToBatch.mat[4];
             float ax = x1 * cr - y1 * sr2 + x;
             float ay = x1 * sr + y1 * cr2 + y;
 
@@ -514,19 +571,19 @@ void Sprite::updateTransform(void)
             _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
         }
 
-        // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
+        // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
 		{
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
-		
+
         _recursiveDirty = false;
         setDirty(false);
     }
 
     // MARMALADE CHANGED
     // recursively iterate over children
-/*    if( _hasChildren ) 
+/*    if( _hasChildren )
     {
         // MARMALADE: CHANGED TO USE Node*
         // NOTE THAT WE HAVE ALSO DEFINED virtual Node::updateTransform()
@@ -548,85 +605,152 @@ void Sprite::updateTransform(void)
 
 // draw
 
+//void Sprite::draw(void)
+//{
+//    CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+//
+//    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
+//
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    GL::bindTexture2D( _texture->getName() );
+//    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+//
+//#define kQuadSize sizeof(_quad.bl)
+//#ifdef EMSCRIPTEN
+//    long offset = 0;
+//    setGLBufferData(&_quad, 4 * kQuadSize, 0);
+//#else
+//    long offset = (long)&_quad;
+//#endif // EMSCRIPTEN
+//
+//    // vertex
+//    int diff = offsetof( V3F_C4B_T2F, vertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+//
+//    // texCoods
+//    diff = offsetof( V3F_C4B_T2F, texCoords);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+//
+//    // color
+//    diff = offsetof( V3F_C4B_T2F, colors);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+//
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//
+//    CHECK_GL_ERROR_DEBUG();
+//
+//
+//#if CC_SPRITE_DEBUG_DRAW == 1
+//    // draw bounding box
+//    Point vertices[4]={
+//        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
+//        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
+//        Point(_quad.br.vertices.x,_quad.br.vertices.y),
+//        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
+//    };
+//    ccDrawPoly(vertices, 4, true);
+//#elif CC_SPRITE_DEBUG_DRAW == 2
+//    // draw texture box
+//    Size s = this->getTextureRect().size;
+//    Point offsetPix = this->getOffsetPosition();
+//    Point vertices[4] = {
+//        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
+//        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
+//    };
+//    ccDrawPoly(vertices, 4, true);
+//#endif // CC_SPRITE_DEBUG_DRAW
+//
+//    CC_INCREMENT_GL_DRAWS(1);
+//
+//    CC_PROFILER_STOP_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+//}
+
 void Sprite::draw(void)
 {
-    CC_PROFILER_START_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+    //TODO implement z order
+    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
-    CCASSERT(!_batchNode, "If Sprite is being rendered by SpriteBatchNode, Sprite#draw SHOULD NOT be called");
+//    if(culling())
+    {
+        Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    }
+}
 
-    CC_NODE_DRAW_SETUP();
+bool Sprite::culling() const
+{
+    Frustum* frustum = Director::getInstance()->getFrustum();
+    //TODO optimize this transformation, should use parent's transformation instead
+    kmMat4 worldTM = getNodeToWorldTransform();
+    //generate aabb
+
+    //
+    // calculate the Quad based on the Affine Matrix
+    //
+    Rect newRect = RectApplyTransform(_rect, worldTM);
+
+    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
     
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    AABB aabb(point,point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
+    aabb.expand(point);
 
-    GL::bindTexture2D( _texture->getName() );
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
+}
 
-#define kQuadSize sizeof(_quad.bl)
-#ifdef EMSCRIPTEN
-    long offset = 0;
-    setGLBufferData(&_quad, 4 * kQuadSize, 0);
-#else
-    long offset = (long)&_quad;
-#endif // EMSCRIPTEN
+void Sprite::updateQuadVertices()
+{
+#if CC_USE_PHYSICS
+    updatePhysicsTransform();
+    setDirty(true);
+#endif
 
-    // vertex
-    int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    //TODO optimize the performance cache affineTransformation
 
-    // texCoods
-    diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-    // color
-    diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    // recalculate matrix only if it is dirty
+    if(isDirty())
+    {
 
+//        if( ! _parent || _parent == (Node*)_batchNode )
+//        {
+//            _transformToBatch = getNodeToParentTransform();
+//        }
+//        else
+//        {
+//            CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
+//            _transformToBatch = AffineTransformConcat( getNodeToParentTransform() , static_cast<Sprite*>(_parent)->_transformToBatch );
+//        }
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        //TODO optimize this transformation, should use parent's transformation instead
+        _transformToBatch = getNodeToWorldTransform();
 
-    CHECK_GL_ERROR_DEBUG();
+        //
+        // calculate the Quad based on the Affine Matrix
+        //
+        Rect newRect = RectApplyTransform(_rect, _transformToBatch);
 
-
-#if CC_SPRITE_DEBUG_DRAW == 1
-    // draw bounding box
-    Point vertices[4]={
-        Point(_quad.tl.vertices.x,_quad.tl.vertices.y),
-        Point(_quad.bl.vertices.x,_quad.bl.vertices.y),
-        Point(_quad.br.vertices.x,_quad.br.vertices.y),
-        Point(_quad.tr.vertices.x,_quad.tr.vertices.y),
-    };
-    ccDrawPoly(vertices, 4, true);
-#elif CC_SPRITE_DEBUG_DRAW == 2
-    // draw texture box
-    Size s = this->getTextureRect().size;
-    Point offsetPix = this->getOffsetPosition();
-    Point vertices[4] = {
-        Point(offsetPix.x,offsetPix.y), Point(offsetPix.x+s.width,offsetPix.y),
-        Point(offsetPix.x+s.width,offsetPix.y+s.height), Point(offsetPix.x,offsetPix.y+s.height)
-    };
-    ccDrawPoly(vertices, 4, true);
-#endif // CC_SPRITE_DEBUG_DRAW
-
-    CC_INCREMENT_GL_DRAWS(1);
-
-    CC_PROFILER_STOP_CATEGORY(kProfilerCategorySprite, "CCSprite - draw");
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        
+        _recursiveDirty = false;
+        setDirty(false);
+    }
 }
 
 // Node overrides
 
-void Sprite::addChild(Node* child)
-{
-    Node::addChild(child);
-}
-
-void Sprite::addChild(Node *child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {
-    CCASSERT(child != NULL, "Argument must be non-NULL");
+    CCASSERT(child != nullptr, "Argument must be non-nullptr");
 
     if (_batchNode)
     {
@@ -648,8 +772,8 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != NULL, "");
-    CCASSERT(_children->containsObject(child), "");
+    CCASSERT(child != nullptr, "");
+    CCASSERT(_children.contains(child), "");
 
     if (zOrder == child->getZOrder())
     {
@@ -673,20 +797,17 @@ void Sprite::removeChild(Node *child, bool cleanup)
     }
 
     Node::removeChild(child, cleanup);
-    
 }
 
 void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        Object* object = NULL;
-        CCARRAY_FOREACH(_children, object)
-        {
-            Sprite* child = dynamic_cast<Sprite*>(object);
-            if (child)
+        for(const auto &child : _children) {
+            Sprite* sprite = dynamic_cast<Sprite*>(child);
+            if (sprite)
             {
-                _batchNode->removeSpriteFromAtlas(child);
+                _batchNode->removeSpriteFromAtlas(sprite);
             }
         }
     }
@@ -723,12 +844,13 @@ void Sprite::sortAllChildren()
             _children->fastSetObject(tempI, j+1);
         }
 #else
-        std::sort(std::begin(*_children), std::end(*_children), nodeComparisonLess);
+        std::sort(std::begin(_children), std::end(_children), nodeComparisonLess);
 #endif
 
         if ( _batchNode)
         {
-            arrayMakeObjectsPerformSelector(_children, sortAllChildren, Sprite*);
+            for(const auto &child : _children)
+                child->sortAllChildren();
         }
 
         _reorderChildDirty = false;
@@ -763,13 +885,11 @@ void Sprite::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (_hasChildren)
     {
-        Object* object = NULL;
-        CCARRAY_FOREACH(_children, object)
-        {
-            Sprite* child = dynamic_cast<Sprite*>(object);
-            if (child)
+        for(const auto &child: _children) {
+            Sprite* sp = dynamic_cast<Sprite*>(child);
+            if (sp)
             {
-                child->setDirtyRecursively(true);
+                sp->setDirtyRecursively(true);
             }
         }
     }
@@ -777,7 +897,7 @@ void Sprite::setDirtyRecursively(bool bValue)
 
 // XXX HACK: optimization
 #define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (_batchNode && ! _recursiveDirty) {    \
+                    if (! _recursiveDirty) {    \
                         _recursiveDirty = true;                    \
                         setDirty(true);                              \
                         if ( _hasChildren)                        \
@@ -788,6 +908,12 @@ void Sprite::setDirtyRecursively(bool bValue)
 void Sprite::setPosition(const Point& pos)
 {
     Node::setPosition(pos);
+    SET_DIRTY_RECURSIVELY();
+}
+
+void Sprite::setPosition(float x, float y)
+{
+    Node::setPosition(x, y);
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -938,20 +1064,6 @@ void Sprite::updateColor(void)
     // do nothing
 }
 
-void Sprite::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-
-    updateColor();
-}
-
-void Sprite::setColor(const Color3B& color3)
-{
-    NodeRGBA::setColor(color3);
-
-    updateColor();
-}
-
 void Sprite::setOpacityModifyRGB(bool modify)
 {
     if (_opacityModifyRGB != modify)
@@ -966,51 +1078,47 @@ bool Sprite::isOpacityModifyRGB(void) const
     return _opacityModifyRGB;
 }
 
-void Sprite::updateDisplayedColor(const Color3B& parentColor)
-{
-    NodeRGBA::updateDisplayedColor(parentColor);
-    
-    updateColor();
-}
-
-void Sprite::updateDisplayedOpacity(GLubyte opacity)
-{
-    NodeRGBA::updateDisplayedOpacity(opacity);
-    
-    updateColor();
-}
-
 // Frames
 
-void Sprite::setDisplayFrame(SpriteFrame *pNewFrame)
+void Sprite::setSpriteFrame(const std::string &spriteFrameName)
 {
-    _unflippedOffsetPositionFromCenter = pNewFrame->getOffset();
+    SpriteFrameCache *cache = SpriteFrameCache::getInstance();
+    SpriteFrame *spriteFrame = cache->getSpriteFrameByName(spriteFrameName);
 
-    Texture2D *pNewTexture = pNewFrame->getTexture();
+    CCASSERT(spriteFrame, "Invalid spriteFrameName");
+
+    setSpriteFrame(spriteFrame);
+}
+
+void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
+{
+    _unflippedOffsetPositionFromCenter = spriteFrame->getOffset();
+
+    Texture2D *texture = spriteFrame->getTexture();
     // update texture before updating texture rect
-    if (pNewTexture != _texture)
+    if (texture != _texture)
     {
-        setTexture(pNewTexture);
+        setTexture(texture);
     }
 
     // update rect
-    _rectRotated = pNewFrame->isRotated();
-    setTextureRect(pNewFrame->getRect(), _rectRotated, pNewFrame->getOriginalSize());
+    _rectRotated = spriteFrame->isRotated();
+    setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
 }
 
-void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex)
+void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
-    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be NULL");
+    CCASSERT(animationName.size()>0, "CCSprite#setDisplayFrameWithAnimationName. animationName must not be nullptr");
 
     Animation *a = AnimationCache::getInstance()->getAnimation(animationName);
 
     CCASSERT(a, "CCSprite#setDisplayFrameWithAnimationName: Frame not found");
 
-    AnimationFrame* frame = static_cast<AnimationFrame*>( a->getFrames()->getObjectAtIndex(frameIndex) );
+    AnimationFrame* frame = a->getFrames().at(frameIndex);
 
     CCASSERT(frame, "CCSprite#setDisplayFrame. Invalid frame");
 
-    setDisplayFrame(frame->getSpriteFrame());
+    setSpriteFrame(frame->getSpriteFrame());
 }
 
 bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
@@ -1022,7 +1130,7 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
             frame->getOffset().equals(_unflippedOffsetPositionFromCenter));
 }
 
-SpriteFrame* Sprite::getDisplayFrame()
+SpriteFrame* Sprite::getSpriteFrame() const
 {
     return SpriteFrame::createWithTexture(_texture,
                                            CC_RECT_POINTS_TO_PIXELS(_rect),
@@ -1043,7 +1151,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     // self render
     if( ! _batchNode ) {
         _atlasIndex = INDEX_NOT_INITIALIZED;
-        setTextureAtlas(NULL);
+        setTextureAtlas(nullptr);
         _recursiveDirty = false;
         setDirty(false);
 
@@ -1059,7 +1167,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
 
         // using batch
-        _transformToBatch = AffineTransformIdentity;
+        kmMat4Identity(&_transformToBatch);
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }
@@ -1083,62 +1191,14 @@ void Sprite::updateBlendFunc(void)
     }
 }
 
-/*
- * This array is the data of a white image with 2 by 2 dimension.
- * It's used for creating a default texture when sprite's texture is set to NULL.
- * Supposing codes as follows:
- *
- *   auto sp = new Sprite();
- *   sp->init();  // Texture was set to NULL, in order to make opacity and color to work correctly, we need to create a 2x2 white texture.
- *
- * The test is in "TestCpp/SpriteTest/Sprite without texture".
- */
-static unsigned char cc_2x2_white_image[] = {
-    // RGBA8888
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF,
-    0xFF, 0xFF, 0xFF, 0xFF
-};
-
-#define CC_2x2_WHITE_IMAGE_KEY  "/cc_2x2_white_image"
-
-void Sprite::setTexture(Texture2D *texture)
+std::string Sprite::getDescription() const
 {
-    // If batchnode, then texture id should be the same
-    CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
-    // accept texture==nil as argument
-    CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-    
-    if (NULL == texture)
-    {
-        // Gets the texture by key firstly.
-        texture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
-        
-        // If texture wasn't in cache, create it from RAW data.
-        if (NULL == texture)
-        {
-            Image* image = new Image();
-            bool isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
-            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
-
-            texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
-            CC_SAFE_RELEASE(image);
-        }
-    }
-    
-    if (!_batchNode && _texture != texture)
-    {
-        CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(_texture);
-        _texture = texture;
-        updateBlendFunc();
-    }
-}
-
-Texture2D* Sprite::getTexture(void) const
-{
-    return _texture;
+    int texture_id = -1;
+    if( _batchNode )
+        texture_id = _batchNode->getTextureAtlas()->getTexture()->getName();
+    else
+        texture_id = _texture->getName();
+    return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
 }
 
 NS_CC_END

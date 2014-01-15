@@ -24,7 +24,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../../../audio/include \
                     $(LOCAL_PATH)/../../../storage \
                     $(LOCAL_PATH)/../../auto-generated/js-bindings \
-                    $(LOCAL_PATH)/../../../../extensions
+                    $(LOCAL_PATH)/../../../../extensions \
+                    $(LOCAL_PATH)/../../../editor-support/spine \
+                    $(LOCAL_PATH)/../../../editor-support
+
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/../../auto-generated/js-bindings \
@@ -38,3 +41,4 @@ include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,spidermonkey/prebuilt/android)
 $(call import-module,2d)
+$(call import-module,audio/android)

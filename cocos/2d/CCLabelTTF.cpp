@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -92,7 +93,7 @@ LabelTTF* LabelTTF::create(const std::string& string, const std::string& fontNam
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDefinition &textDefinition)
@@ -104,7 +105,7 @@ LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDef
         return ret;
     }
     CC_SAFE_DELETE(ret);
-    return NULL;
+    return nullptr;
 }
 
 bool LabelTTF::init()
@@ -131,8 +132,8 @@ bool LabelTTF::initWithString(const std::string& string, const std::string& font
     if (Sprite::init())
     {
         // shader program
-        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
-        
+//        this->setShaderProgram(ShaderCache::getInstance()->getProgram(SHADER_PROGRAM));
+
         _dimensions = Size(dimensions.width, dimensions.height);
         _alignment = hAlignment;
         _vAlignment = vAlignment;
@@ -185,9 +186,9 @@ const std::string& LabelTTF::getString() const
     return _string;
 }
 
-const char* LabelTTF::description() const
+std::string LabelTTF::getDescription() const
 {
-    return String::createWithFormat("<LabelTTF | FontName = %s, FontSize = %.1f>", _fontName.c_str(), _fontSize)->getCString();
+    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %.1f, Label = '%s'>", _fontName.c_str(), _fontSize, _string.c_str());
 }
 
 TextHAlignment LabelTTF::getHorizontalAlignment() const

@@ -1,3 +1,28 @@
+/****************************************************************************
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #ifndef __CCEGLVIEWPROTOCOL_H__
 #define __CCEGLVIEWPROTOCOL_H__
 
@@ -63,7 +88,7 @@ public:
     virtual void    swapBuffers() = 0;
 
     /** Open or close IME keyboard , subclass must implement this method. */
-    virtual void    setIMEKeyboardState(bool bOpen) = 0;
+    virtual void    setIMEKeyboardState(bool open) = 0;
 
     /**
      * Polls input events. Subclass must implement methods if platform
@@ -109,7 +134,7 @@ public:
     virtual const Size&  getDesignResolutionSize() const;
 
     /** Set touch delegate */
-    virtual void setTouchDelegate(EGLTouchDelegate * pDelegate);
+    virtual void setTouchDelegate(EGLTouchDelegate * delegate);
 
     /**
      * Set opengl view port rectangle with points.
@@ -129,17 +154,16 @@ public:
     /**
      * Get the current scissor rectangle
      */
-    virtual Rect getScissorRect();
+    virtual Rect getScissorRect() const;
 
-    virtual void setViewName(const char* pszViewName);
-
-    const char* getViewName();
+    virtual void setViewName(const std::string& viewname);
+    const std::string& getViewName() const;
 
     /** Touch events are handled by default; if you want to customize your handlers, please override these functions: */
-    virtual void handleTouchesBegin(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesMove(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesEnd(int num, long ids[], float xs[], float ys[]);
-    virtual void handleTouchesCancel(int num, long ids[], float xs[], float ys[]);
+    virtual void handleTouchesBegin(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesMove(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesEnd(int num, int ids[], float xs[], float ys[]);
+    virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
     /**
      * Get the opengl view port rectangle.
@@ -155,10 +179,11 @@ public:
      * Get scale factor of the vertical direction.
      */
     float getScaleY() const;
-private:
-    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, long ids[], float xs[], float ys[]);
+
 
 protected:
+    void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
+
     EGLTouchDelegate* _delegate;
 
     // real screen size
@@ -168,7 +193,7 @@ protected:
     // the view port size
     Rect _viewPortRect;
     // the view name
-    char   _viewName[50];
+    std::string _viewName;
 
     float  _scaleX;
     float  _scaleY;

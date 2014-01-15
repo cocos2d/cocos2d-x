@@ -85,5 +85,14 @@ LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py
 echo "Generating bindings for cocos2dx_extension..."
 LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_extension_auto
 
+echo "Generating bindings for cocos2dx_gui..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_gui.ini -s cocos2dx_gui -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_gui_auto
+
 echo "Generating bindings for cocos2dx_studio..."
 LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_studio_auto
+
+echo "Generating bindings for cocos2dx_spine..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_spine_auto
+
+echo "Generating bindings for cocos2dx_physics..."
+LD_LIBRARY_PATH=${CLANG_ROOT}/lib $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TO_JS_ROOT}/cocos2dx_physics.ini -s cocos2dx_physics -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_physics_auto

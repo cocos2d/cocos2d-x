@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,6 +30,7 @@
 #include "CCSpriteBatchNode.h"
 #include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -40,46 +42,47 @@ enum class GlyphCollection {
     CUSTOM
 };
 
+enum class LabelEffect {
+
+    NORMAL,
+    OUTLINE,
+    SHADOW,
+    GLOW
+};
+
 //fwd
 struct FontLetterDefinition;
 class FontAtlas;
 
 
 
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public RGBAProtocol, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
 {
 public:
     
     // static create
-    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0);
+    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
     
     static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
     
     bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+
+    void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
     virtual void setString(const std::string &stringToRender) override;
+    void setString(const std::string &stringToRender,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     virtual void setScale(float scale) override;
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
+    virtual float getScaleX() const;
+    virtual float getScaleY() const;
 
-    // RGBAProtocol
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
     virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual unsigned char  getOpacity() const override;
-    virtual unsigned char  getDisplayedOpacity() const override;
     
      // CCLabelTextFormat protocol implementation
     virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
@@ -116,18 +119,24 @@ public:
     virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
+    virtual std::string getDescription() const override;
+    virtual void draw(void) override;
+    virtual void onDraw();
+
 private:
     /**
      * @js NA
      */
-    Label(FontAtlas *atlas, TextHAlignment alignment);
+    Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField = false,bool useA8Shader = false);
     /**
      * @js NA
      * @lua NA
      */
    ~Label();
     
-    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0);
+    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0, bool useDistanceField = false,bool useA8Shader = false);
+
+    void setFontSize(int fontSize);
     
     bool init();
     
@@ -137,14 +146,17 @@ private:
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
-         
-    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);        
-    
+
+    Sprite * updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const FontLetterDefinition &theDefinition, Texture2D *theTexture);
+
+    virtual void updateColor() override;
+
     
     //! used for optimization
     Sprite              *_reusedLetter;
     std::vector<LetterInfo>     _lettersInfo;       
    
+    bool                        _multilineEnable;
     float                       _commonLineHeight;
     bool                        _lineBreakWithoutSpaces;
     float                       _width;
@@ -153,15 +165,18 @@ private:
     unsigned short int *        _originalUTF16String;
     Size               *        _advances;
     FontAtlas          *        _fontAtlas;
-    Color3B                     _displayedColor;
-    Color3B                     _realColor;
-    bool                        _cascadeColorEnabled;
-    bool                        _cascadeOpacityEnabled;
-    unsigned char               _displayedOpacity;
-    unsigned char               _realOpacity;
     bool                        _isOpacityModifyRGB;
-    
-    
+
+    bool                        _useDistanceField;
+    bool                        _useA8Shader;
+    int                         _fontSize;
+
+    LabelEffect                 _currLabelEffect;
+    Color3B                     _effectColor;
+
+    GLuint                      _uniformEffectColor;
+
+    CustomCommand               _customCommand;
 };
 
 

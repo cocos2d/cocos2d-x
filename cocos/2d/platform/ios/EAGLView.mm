@@ -251,7 +251,7 @@ static CCEAGLView *__view = 0;
 - (void) dealloc
 {
     [renderer_ release];
-    self.keyboardShowNotification = NULL; // implicit release
+    self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];
 }
 
@@ -413,7 +413,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -433,7 +433,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -454,7 +454,7 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (int*)ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -475,11 +475,10 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (long*)ids, xs, ys);
+    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (int*)ids, xs, ys);
 }
 
-#pragma mark -
-#pragma mark UIView - Responder
+#pragma mark - UIView - Responder
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -506,8 +505,7 @@ static CCEAGLView *__view = 0;
     return [super resignFirstResponder];
 }
 
-#pragma mark -
-#pragma mark UIKeyInput protocol
+#pragma mark - UIKeyInput protocol
 
 
 - (BOOL)hasText
@@ -534,16 +532,14 @@ static CCEAGLView *__view = 0;
     cocos2d::IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
 }
 
-#pragma mark -
-#pragma mark UITextInputTrait protocol
+#pragma mark - UITextInputTrait protocol
 
 -(UITextAutocapitalizationType) autocapitalizationType
 {
     return UITextAutocapitalizationTypeNone;
 }
 
-#pragma mark -
-#pragma mark UITextInput protocol
+#pragma mark - UITextInput protocol
 
 #pragma mark UITextInput - properties
 
@@ -727,8 +723,7 @@ static CCEAGLView *__view = 0;
     return nil;
 }
 
-#pragma mark -
-#pragma mark UIKeyboard notification
+#pragma mark - UIKeyboard notification
 
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {
@@ -866,7 +861,7 @@ static CCEAGLView *__view = 0;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
-    [UIView beginAnimations:nil context:NULL];
+    [UIView beginAnimations:nil context:nullptr];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];

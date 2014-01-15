@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -85,6 +86,8 @@ public:
         S3TC,
         //! ATITC
         ATITC,
+        //! TGA
+        TGA,
         //! Raw Data
         RAW_DATA,
         //! Unknown format
@@ -109,7 +112,7 @@ public:
     @param path   the absolute file path.
     @return true if loaded correctly.
     */
-    bool initWithImageFile(const char *path);
+    bool initWithImageFile(const std::string& path);
 
     /**
     @brief Load image from stream buffer.
@@ -119,10 +122,10 @@ public:
     * @js NA
     * @lua NA
     */
-    bool initWithImageData(const unsigned char * data, long dataLen);
+    bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
     // @warning kFmtRawData only support RGBA8888
-    bool initWithRawData(const unsigned char * data, long dataLen, long width, long height, long bitsPerComponent, bool preMulti = false);
+    bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     /**
     @brief Create image with specified string.
@@ -173,9 +176,9 @@ public:
     
     // Getters
     inline unsigned char *   getData()               { return _data; }
-    inline int               getDataLen()            { return _dataLen; }
+    inline ssize_t           getDataLen()            { return _dataLen; }
     inline Format            getFileType()           {return _fileType; }
-    inline Texture2D::PixelFormat getRenderFormat()    { return _renderFormat; }
+    inline Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
     inline int               getWidth()              { return _width; }
     inline int               getHeight()             { return _height; }
     inline bool              isPremultipliedAlpha()  { return _preMulti;   }
@@ -193,22 +196,24 @@ public:
      @param    filePath        the file's absolute path, including file suffix.
      @param    isToRGB        whether the image is saved as RGB format.
      */
-    bool saveToFile(const char *filePath, bool isToRGB = true);
+    bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
-    bool initWithJpgData(const unsigned char *  data, int dataLen);
-    bool initWithPngData(const unsigned char * data, int dataLen);
-    bool initWithTiffData(const unsigned char * data, int dataLen);
-    bool initWithWebpData(const unsigned char * data, int dataLen);
-    bool initWithPVRData(const unsigned char * data, int dataLen);
-    bool initWithPVRv2Data(const unsigned char * data, int dataLen);
-    bool initWithPVRv3Data(const unsigned char * data, int dataLen);
-    bool initWithETCData(const unsigned char * data, int dataLen);
-    bool initWithS3TCData(const unsigned char * data, int dataLen);
-    bool initWithATITCData(const unsigned char *data, int dataLen);
+    bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
+    bool initWithPngData(const unsigned char * data, ssize_t dataLen);
+    bool initWithTiffData(const unsigned char * data, ssize_t dataLen);
+    bool initWithWebpData(const unsigned char * data, ssize_t dataLen);
+    bool initWithPVRData(const unsigned char * data, ssize_t dataLen);
+    bool initWithPVRv2Data(const unsigned char * data, ssize_t dataLen);
+    bool initWithPVRv3Data(const unsigned char * data, ssize_t dataLen);
+    bool initWithETCData(const unsigned char * data, ssize_t dataLen);
+    bool initWithS3TCData(const unsigned char * data, ssize_t dataLen);
+    bool initWithATITCData(const unsigned char *data, ssize_t dataLen);
+    typedef struct sImageTGA tImageTGA;
+    bool initWithTGAData(tImageTGA* tgaData);
 
-    bool saveImageToPNG(const char *filePath, bool isToRGB = true);
-    bool saveImageToJPG(const char *filePath);
+    bool saveImageToPNG(const std::string& filePath, bool isToRGB = true);
+    bool saveImageToJPG(const std::string& filePath);
     
 private:
     /**
@@ -217,7 +222,7 @@ private:
      */
     static const int MIPMAP_MAX = 16;
     unsigned char *_data;
-    int _dataLen;
+    ssize_t _dataLen;
     int _width;
     int _height;
     Format _fileType;
@@ -227,6 +232,7 @@ private:
     int _numberOfMipmaps;
     // false if we cann't auto detect the image is premultiplied or not.
     bool _hasPremultipliedAlpha;
+    std::string _filePath;
 
 
 private:
@@ -241,17 +247,17 @@ private:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath);
+    bool initWithImageFileThreadSafe(const std::string& fullpath);
     
-    Format detectFormat(const unsigned char * data, int dataLen);
-    bool isPng(const unsigned char * data, int dataLen);
-    bool isJpg(const unsigned char * data, int dataLen);
-    bool isTiff(const unsigned char * data, int dataLen);
-    bool isWebp(const unsigned char * data, int dataLen);
-    bool isPvr(const unsigned char * data, int dataLen);
-    bool isEtc(const unsigned char * data, int dataLen);
-    bool isS3TC(const unsigned char * data,int dataLen);
-    bool isATITC(const unsigned char *data, int dataLen);
+    Format detectFormat(const unsigned char * data, ssize_t dataLen);
+    bool isPng(const unsigned char * data, ssize_t dataLen);
+    bool isJpg(const unsigned char * data, ssize_t dataLen);
+    bool isTiff(const unsigned char * data, ssize_t dataLen);
+    bool isWebp(const unsigned char * data, ssize_t dataLen);
+    bool isPvr(const unsigned char * data, ssize_t dataLen);
+    bool isEtc(const unsigned char * data, ssize_t dataLen);
+    bool isS3TC(const unsigned char * data,ssize_t dataLen);
+    bool isATITC(const unsigned char *data, ssize_t dataLen);
 };
 
 // end of platform group

@@ -28,8 +28,6 @@ Layer* nextMotionAction()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
@@ -41,16 +39,12 @@ Layer* backMotionAction()
         sceneIdx += total;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 
 Layer* restartMotionAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-
     return layer;
 }
 //------------------------------------------------------------------
@@ -106,7 +100,7 @@ void MotionStreakTest1::onUpdate(float delta)
     streak->setPosition( _target->convertToWorldSpace(Point::ZERO) );
 }
 
-std::string MotionStreakTest1::title()
+std::string MotionStreakTest1::title() const
 {
     return "MotionStreak test 1";
 }
@@ -141,7 +135,7 @@ void MotionStreakTest2::onTouchesMoved(const std::vector<Touch*>& touches, Event
     streak->setPosition( touchLocation );
 }
 
-std::string MotionStreakTest2::title()
+std::string MotionStreakTest2::title() const
 {
     return "MotionStreak test";
 }
@@ -177,12 +171,12 @@ void Issue1358::update(float dt)
                             _center.y + sinf(_angle/ 180 * M_PI)*_radius));
 }
 
-std::string Issue1358::title()
+std::string Issue1358::title() const
 {
     return "Issue 1358";
 }
 
-std::string Issue1358::subtitle()
+std::string Issue1358::subtitle() const
 {
     return "The tail should use the texture";
 }
@@ -201,12 +195,12 @@ MotionStreakTest::~MotionStreakTest(void)
 {
 }
 
-std::string MotionStreakTest::title()
+std::string MotionStreakTest::title() const
 {
     return "No title";
 }
 
-std::string MotionStreakTest::subtitle()
+std::string MotionStreakTest::subtitle() const
 {
     return "";
 }

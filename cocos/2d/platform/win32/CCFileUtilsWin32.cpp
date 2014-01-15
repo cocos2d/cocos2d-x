@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -121,10 +122,80 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mode, long* size)
+static Data getData(const std::string& filename, bool forString)
+{
+    unsigned char *buffer = nullptr;
+    CCASSERT(!filename.empty(), "Invalid parameters.");
+    size_t size = 0;
+    do
+    {
+        // read the file from hardware
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+
+        WCHAR wszBuf[CC_MAX_PATH] = {0};
+        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf));
+
+        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, 0, NULL, OPEN_EXISTING, NULL, NULL);
+        CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
+        
+        size = ::GetFileSize(fileHandle, NULL);
+
+        if (forString)
+        {
+            buffer = (unsigned char*) malloc(size + 1);
+            buffer[size] = '\0';
+        }
+        else
+        {
+            buffer = (unsigned char*) malloc(size);
+        }
+        DWORD sizeRead = 0;
+        BOOL successed = FALSE;
+        successed = ::ReadFile(fileHandle, buffer, size, &sizeRead, NULL);
+        ::CloseHandle(fileHandle);
+
+        if (!successed)
+        {
+            free(buffer);
+            buffer = nullptr;
+        }
+    } while (0);
+    
+    Data ret;
+
+    if (buffer == nullptr || size == 0)
+    {
+        std::string msg = "Get data from file(";
+        // Gets error code.
+        DWORD errorCode = ::GetLastError();
+        char errorCodeBuffer[20] = {0};
+        snprintf(errorCodeBuffer, sizeof(errorCodeBuffer), "%d", errorCode);
+
+        msg = msg + filename + ") failed, error code is " + errorCodeBuffer;
+        CCLOG("%s", msg.c_str());
+    }
+    else
+    {
+        ret.fastSet(buffer, size);
+    }
+    return ret;
+}
+
+std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
+{
+    Data data = getData(filename, true);
+    std::string ret((const char*)data.getBytes());
+    return ret;
+}
+    
+Data FileUtilsWin32::getDataFromFile(const std::string& filename)
+{
+    return getData(filename, false);
+}
+
+unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const char* mode, ssize_t* size)
 {
     unsigned char * pBuffer = NULL;
-    CCASSERT(filename != NULL && size != NULL && mode != NULL, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -148,6 +219,7 @@ unsigned char* FileUtilsWin32::getFileData(const char* filename, const char* mod
         if (!successed)
         {
             free(pBuffer);
+            pBuffer = nullptr;
         }
     } while (0);
     

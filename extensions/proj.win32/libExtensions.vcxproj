@@ -72,7 +72,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -110,7 +110,6 @@
     <ClCompile Include="..\GUI\CCEditBox\CCEditBox.cpp" />
     <ClCompile Include="..\GUI\CCEditBox\CCEditBoxImplWin.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCScrollView.cpp" />
-    <ClCompile Include="..\GUI\CCScrollView\CCSorting.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="..\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\physics-nodes\CCPhysicsDebugNode.cpp" />
@@ -138,7 +137,6 @@
     <ClInclude Include="..\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="..\cocos-ext.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
-    <ClInclude Include="..\GUI\CCScrollView\CCSorting.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCTableView.h" />
     <ClInclude Include="..\GUI\CCScrollView\CCTableViewCell.h" />
     <ClInclude Include="..\physics-nodes\CCPhysicsDebugNode.h" />

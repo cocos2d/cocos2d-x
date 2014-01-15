@@ -25,27 +25,27 @@
 /// Input parameters for b2TimeOfImpact
 struct b2TOIInput
 {
-    b2DistanceProxy proxyA;
-    b2DistanceProxy proxyB;
-    b2Sweep sweepA;
-    b2Sweep sweepB;
-    float32 tMax;        // defines sweep interval [0, tMax]
+	b2DistanceProxy proxyA;
+	b2DistanceProxy proxyB;
+	b2Sweep sweepA;
+	b2Sweep sweepB;
+	float32 tMax;		// defines sweep interval [0, tMax]
 };
 
 // Output parameters for b2TimeOfImpact.
 struct b2TOIOutput
 {
-    enum State
-    {
-        e_unknown,
-        e_failed,
-        e_overlapped,
-        e_touching,
-        e_separated
-    };
+	enum State
+	{
+		e_unknown,
+		e_failed,
+		e_overlapped,
+		e_touching,
+		e_separated
+	};
 
-    State state;
-    float32 t;
+	State state;
+	float32 t;
 };
 
 /// Compute the upper bound on time before two shapes penetrate. Time is represented as

@@ -173,7 +173,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readNodeGraphFromData(cocos2d::Data *pData, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
+    cocos2d::Node* readNodeGraphFromData(std::shared_ptr<cocos2d::Data> data, cocos2d::Object *pOwner, const cocos2d::Size &parentSize);
    
     /**
      @lua NA
@@ -282,24 +282,28 @@ public:
     bool readCallbackKeyframesForSeq(CCBSequence* seq);
     bool readSoundKeyframesForSeq(CCBSequence* seq);
     
-    cocos2d::Array* getOwnerCallbackNames();
-    cocos2d::Array* getOwnerCallbackNodes();
-    cocos2d::Array* getOwnerCallbackControlEvents();
+    cocos2d::ValueVector getOwnerCallbackNames();
+    cocos2d::Vector<cocos2d::Node*>& getOwnerCallbackNodes();
+    cocos2d::ValueVector& getOwnerCallbackControlEvents();
     
-    cocos2d::Array* getOwnerOutletNames();
-    cocos2d::Array* getOwnerOutletNodes();
-    cocos2d::Array* getNodesWithAnimationManagers();
-    cocos2d::Array* getAnimationManagersForNodes();
+    cocos2d::ValueVector getOwnerOutletNames();
+    cocos2d::Vector<cocos2d::Node*>& getOwnerOutletNodes();
+    cocos2d::Vector<cocos2d::Node*>& getNodesWithAnimationManagers();
+    cocos2d::Vector<CCBAnimationManager*>& getAnimationManagersForNodes();
+    
+    typedef cocos2d::Map<cocos2d::Node*, CCBAnimationManager*> CCBAnimationManagerMap;
+    typedef std::shared_ptr<CCBAnimationManagerMap> CCBAnimationManagerMapPtr;
+    
     /**
      * @js NA
      * @lua NA
      */
-    cocos2d::Dictionary* getAnimationManagers();
+    CCBAnimationManagerMapPtr getAnimationManagers();
     /**
      * @js NA
      * @lua NA
      */
-    void setAnimationManagers(cocos2d::Dictionary* x);  // weak reference
+    void setAnimationManagers(CCBAnimationManagerMapPtr x);
     /**
      * @js NA
      * @lua NA
@@ -332,7 +336,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, cocos2d::Dictionary* am);
+    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am);
     
     void addOwnerOutletName(std::string name);
     void addOwnerOutletNode(cocos2d::Node *node);
@@ -356,7 +360,7 @@ private:
     friend class NodeLoader;
 
 private:
-    cocos2d::Data *_data;
+    std::shared_ptr<cocos2d::Data> _data;
     unsigned char *_bytes;
     int _currentByte;
     int _currentBit;
@@ -366,8 +370,8 @@ private:
     
     cocos2d::Object *_owner;
     
-    CCBAnimationManager *_actionManager; //retain
-    cocos2d::Dictionary* _actionManagers;
+    CCBAnimationManager* _animationManager; //retain
+    CCBAnimationManagerMapPtr _animationManagers;
     
     std::set<std::string> *_animatedProps;
     
@@ -377,13 +381,13 @@ private:
     CCBSelectorResolver *_CCBSelectorResolver;
     
     std::vector<std::string> _ownerOutletNames;
-    cocos2d::Array* _ownerOutletNodes;
-    cocos2d::Array* _nodesWithAnimationManagers;
-    cocos2d::Array* _animationManagersForNodes;
+    cocos2d::Vector<cocos2d::Node*> _ownerOutletNodes;
+    cocos2d::Vector<cocos2d::Node*> _nodesWithAnimationManagers;
+    cocos2d::Vector<CCBAnimationManager*> _animationManagersForNodes;
     
     std::vector<std::string> _ownerCallbackNames;
-    cocos2d::Array* _ownerCallbackNodes;
-    cocos2d::Array* _ownerOwnerCallbackControlEvents;
+    cocos2d::Vector<cocos2d::Node*> _ownerCallbackNodes;
+    cocos2d::ValueVector _ownerOwnerCallbackControlEvents;
     std::string _CCBRootPath;
     
     bool _jsControlled;

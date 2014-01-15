@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-
+Copyright (c) 2010      cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -78,12 +79,12 @@ public:
         _delegateWithIme = 0;
     }
 
-    DelegateIter findDelegate(IMEDelegate* pDelegate)
+    DelegateIter findDelegate(IMEDelegate* delegate)
     {
         DelegateIter end = _delegateList.end();
         for (DelegateIter iter = _delegateList.begin(); iter != end; ++iter)
         {
-            if (pDelegate == *iter)
+            if (delegate == *iter)
             {
                 return iter;
             }
@@ -114,29 +115,29 @@ IMEDispatcher::~IMEDispatcher()
 // Add/Attach/Remove IMEDelegate
 //////////////////////////////////////////////////////////////////////////
 
-void IMEDispatcher::addDelegate(IMEDelegate* pDelegate)
+void IMEDispatcher::addDelegate(IMEDelegate* delegate)
 {
-    if (! pDelegate || ! _impl)
+    if (! delegate || ! _impl)
     {
         return;
     }
-    if (_impl->_delegateList.end() != _impl->findDelegate(pDelegate))
+    if (_impl->_delegateList.end() != _impl->findDelegate(delegate))
     {
         // pDelegate already in list
         return;
     }
-    _impl->_delegateList.push_front(pDelegate);
+    _impl->_delegateList.push_front(delegate);
 }
 
-bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * pDelegate)
+bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * delegate)
 {
-    bool bRet = false;
+    bool ret = false;
     do
     {
-        CC_BREAK_IF(! _impl || ! pDelegate);
+        CC_BREAK_IF(! _impl || ! delegate);
 
         DelegateIter end  = _impl->_delegateList.end();
-        DelegateIter iter = _impl->findDelegate(pDelegate);
+        DelegateIter iter = _impl->findDelegate(delegate);
 
         // if pDelegate is not in delegate list, return
         CC_BREAK_IF(end == iter);
@@ -147,55 +148,55 @@ bool IMEDispatcher::attachDelegateWithIME(IMEDelegate * pDelegate)
             // or pDelegate canAttachWithIME return false,
             // do nothing.
             CC_BREAK_IF(! _impl->_delegateWithIme->canDetachWithIME()
-                || ! pDelegate->canAttachWithIME());
+                || ! delegate->canAttachWithIME());
 
             // detach first
-            IMEDelegate * pOldDelegate = _impl->_delegateWithIme;
+            IMEDelegate * oldDelegate = _impl->_delegateWithIme;
             _impl->_delegateWithIme = 0;
-            pOldDelegate->didDetachWithIME();
+            oldDelegate->didDetachWithIME();
 
             _impl->_delegateWithIme = *iter;
-            pDelegate->didAttachWithIME();
-            bRet = true;
+            delegate->didAttachWithIME();
+            ret = true;
             break;
         }
 
         // delegate hasn't attached to IME yet
-        CC_BREAK_IF(! pDelegate->canAttachWithIME());
+        CC_BREAK_IF(! delegate->canAttachWithIME());
 
         _impl->_delegateWithIme = *iter;
-        pDelegate->didAttachWithIME();
-        bRet = true;
+        delegate->didAttachWithIME();
+        ret = true;
     } while (0);
-    return bRet;
+    return ret;
 }
 
-bool IMEDispatcher::detachDelegateWithIME(IMEDelegate * pDelegate)
+bool IMEDispatcher::detachDelegateWithIME(IMEDelegate * delegate)
 {
-    bool bRet = false;
+    bool ret = false;
     do
     {
-        CC_BREAK_IF(! _impl || ! pDelegate);
+        CC_BREAK_IF(! _impl || ! delegate);
 
         // if pDelegate is not the current delegate attached to IME, return
-        CC_BREAK_IF(_impl->_delegateWithIme != pDelegate);
+        CC_BREAK_IF(_impl->_delegateWithIme != delegate);
 
-        CC_BREAK_IF(! pDelegate->canDetachWithIME());
+        CC_BREAK_IF(! delegate->canDetachWithIME());
 
         _impl->_delegateWithIme = 0;
-        pDelegate->didDetachWithIME();
-        bRet = true;
+        delegate->didDetachWithIME();
+        ret = true;
     } while (0);
-    return bRet;
+    return ret;
 }
 
-void IMEDispatcher::removeDelegate(IMEDelegate* pDelegate)
+void IMEDispatcher::removeDelegate(IMEDelegate* delegate)
 {
     do 
     {
-        CC_BREAK_IF(! pDelegate || ! _impl);
+        CC_BREAK_IF(! delegate || ! _impl);
 
-        DelegateIter iter = _impl->findDelegate(pDelegate);
+        DelegateIter iter = _impl->findDelegate(delegate);
         DelegateIter end  = _impl->_delegateList.end();
         CC_BREAK_IF(end == iter);
 
@@ -213,16 +214,16 @@ void IMEDispatcher::removeDelegate(IMEDelegate* pDelegate)
 // dispatch text message
 //////////////////////////////////////////////////////////////////////////
 
-void IMEDispatcher::dispatchInsertText(const char * pText, int nLen)
+void IMEDispatcher::dispatchInsertText(const char * text, int len)
 {
     do 
     {
-        CC_BREAK_IF(! _impl || ! pText || nLen <= 0);
+        CC_BREAK_IF(! _impl || ! text || len <= 0);
 
         // there is no delegate attached to IME
         CC_BREAK_IF(! _impl->_delegateWithIme);
 
-        _impl->_delegateWithIme->insertText(pText, nLen);
+        _impl->_delegateWithIme->insertText(text, len);
     } while (0);
 }
 
@@ -239,14 +240,13 @@ void IMEDispatcher::dispatchDeleteBackward()
     } while (0);
 }
 
-const char * IMEDispatcher::getContentText()
+const std::string& IMEDispatcher::getContentText()
 {
-    const char * pszContentText = 0;
     if (_impl && _impl->_delegateWithIme)
     {
-        pszContentText = _impl->_delegateWithIme->getContentText();
+        return _impl->_delegateWithIme->getContentText();
     }
-    return (pszContentText) ? pszContentText : "";
+    return STD_STRING_EMPTY;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -257,14 +257,14 @@ void IMEDispatcher::dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * pDelegate = 0;
+        IMEDelegate * delegate = 0;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
-            pDelegate = *(first);
-            if (pDelegate)
+            delegate = *(first);
+            if (delegate)
             {
-                pDelegate->keyboardWillShow(info);
+                delegate->keyboardWillShow(info);
             }
         }
     }
@@ -274,14 +274,14 @@ void IMEDispatcher::dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * pDelegate = 0;
+        IMEDelegate * delegate = 0;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
-            pDelegate = *(first);
-            if (pDelegate)
+            delegate = *(first);
+            if (delegate)
             {
-                pDelegate->keyboardDidShow(info);
+                delegate->keyboardDidShow(info);
             }
         }
     }
@@ -291,14 +291,14 @@ void IMEDispatcher::dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * pDelegate = 0;
+        IMEDelegate * delegate = 0;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
-            pDelegate = *(first);
-            if (pDelegate)
+            delegate = *(first);
+            if (delegate)
             {
-                pDelegate->keyboardWillHide(info);
+                delegate->keyboardWillHide(info);
             }
         }
     }
@@ -308,14 +308,14 @@ void IMEDispatcher::dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * pDelegate = 0;
+        IMEDelegate * delegate = 0;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
-            pDelegate = *(first);
-            if (pDelegate)
+            delegate = *(first);
+            if (delegate)
             {
-                pDelegate->keyboardDidHide(info);
+                delegate->keyboardDidHide(info);
             }
         }
     }

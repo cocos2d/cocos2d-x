@@ -46,10 +46,10 @@ ScrollView::ScrollView()
 : _zoomScale(0.0f)
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
-, _container(NULL)
+, _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
 , _clippingToBounds(false)
@@ -104,8 +104,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
+            _container->ignoreAnchorPointForPosition(false);
+            _container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -153,34 +153,32 @@ void ScrollView::pause(Object* sender)
 {
     _container->pause();
 
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->pause();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->pause();
     }
 }
 
 void ScrollView::resume(Object* sender)
 {
-    Object* pObj = NULL;
-    Array* pChildren = _container->getChildren();
-
-    CCARRAY_FOREACH(pChildren, pObj)
-    {
-        Node* pChild = static_cast<Node*>(pObj);
-        pChild->resume();
+    auto& children = _container->getChildren();
+    for(const auto &child : children) {
+        child->resume();
     }
 
     _container->resume();
 }
 
+bool ScrollView::isTouchEnabled() const
+{
+	return _touchListener != nullptr;
+}
+
 void ScrollView::setTouchEnabled(bool enabled)
 {
     _eventDispatcher->removeEventListener(_touchListener);
-    
+    _touchListener = nullptr;
+
     if (enabled)
     {
         _touchListener = EventListenerTouchOneByOne::create();
@@ -487,20 +485,17 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
-void ScrollView::addChild(Node * child, int zOrder)
+void ScrollView::beforeDraw()
 {
-    this->addChild(child, zOrder, child->getTag());
-}
-
-void ScrollView::addChild(Node * child)
-{
-    this->addChild(child, child->getZOrder(), child->getTag());
+    _beforeDrawCommand.init(0, _vertexZ);
+    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
 }
 
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
-void ScrollView::beforeDraw()
+void ScrollView::onBeforeDraw()
 {
     if (_clippingToBounds)
     {
@@ -525,11 +520,18 @@ void ScrollView::beforeDraw()
     }
 }
 
+void ScrollView::afterDraw()
+{
+    _afterDrawCommand.init(0, _vertexZ);
+    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
+}
+
 /**
  * retract what's done in beforeDraw so that there's no side effect to
  * other nodes.
  */
-void ScrollView::afterDraw()
+void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
@@ -551,24 +553,18 @@ void ScrollView::visit()
     }
 
 	kmGLPushMatrix();
-	
-    if (_grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        this->transformAncestors();
-    }
 
 	this->transform();
     this->beforeDraw();
 
-	if(_children)
+	if (!_children.empty())
     {
 		int i=0;
 		
 		// draw children zOrder < 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			if ( child->getZOrder() < 0 )
             {
 				child->visit();
@@ -583,9 +579,9 @@ void ScrollView::visit()
 		this->draw();
         
 		// draw children zOrder >= 0
-		for( ; i < _children->count(); i++ )
+		for( ; i < _children.size(); i++ )
         {
-			Node *child = static_cast<Node*>( _children->getObjectAtIndex(i) );
+			Node *child = _children.at(i);
 			child->visit();
 		}
         
@@ -596,10 +592,6 @@ void ScrollView::visit()
     }
 
     this->afterDraw();
-	if ( _grid && _grid->isActive())
-    {
-		_grid->afterDraw(this);
-    }
 
 	kmGLPopMatrix();
 }
@@ -616,7 +608,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (_touches.size() > 2 ||
         _touchMoved          ||
-        !frame.containsPoint(_container->convertToWorldSpace(_container->convertTouchToNodeSpace(touch))))
+        !frame.containsPoint(touch->getLocation()))
     {
         return false;
     }

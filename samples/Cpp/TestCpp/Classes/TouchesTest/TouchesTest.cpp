@@ -43,39 +43,31 @@ PongLayer::PongLayer()
     _ball->setPosition( VisibleRect::center() );
     _ball->setVelocity( _ballStartingVelocity );
     addChild( _ball );
-    _ball->retain();
     
     auto paddleTexture = Director::getInstance()->getTextureCache()->addImage(s_Paddle);
     
-    auto paddlesM = Array::createWithCapacity(4);
+    Vector<Paddle*> paddlesM(4);
     
     Paddle* paddle = Paddle::createWithTexture(paddleTexture);
     paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 15) );
-    paddlesM->addObject( paddle );
+	paddlesM.pushBack( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 15) );
-    paddlesM->addObject( paddle );
+    paddlesM.pushBack( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::bottom().y + 100) );
-    paddlesM->addObject( paddle );
+    paddlesM.pushBack( paddle );
     
     paddle = Paddle::createWithTexture( paddleTexture );
     paddle->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - kStatusBarHeight - 100) );
-    paddlesM->addObject( paddle );
+    paddlesM.pushBack( paddle );
     
-    _paddles = paddlesM->clone();
-    _paddles->retain();
+    _paddles = paddlesM;
     
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_paddles, pObj)
+    for (auto& paddle : _paddles)
     {
-        paddle = static_cast<Paddle*>(pObj);
-
-        if(!paddle)
-            break;
-
         addChild(paddle);
     }
 
@@ -84,8 +76,6 @@ PongLayer::PongLayer()
 
 PongLayer::~PongLayer()
 {
-    _ball->release();
-    _paddles->release();
 }
 
 void PongLayer::resetAndScoreBallForPlayer(int player)
@@ -101,15 +91,8 @@ void PongLayer::doStep(float delta)
 {
     _ball->move(delta);
 
-    Paddle* paddle = NULL;
-    Object* pObj = NULL;
-    CCARRAY_FOREACH(_paddles, pObj)
+    for (auto& paddle : _paddles)
     {
-        paddle = static_cast<Paddle*>(pObj);
-
-        if(!paddle)
-            break;
-
         _ball->collideWithPaddle( paddle );
     }
 
@@ -117,7 +100,6 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kLowPlayer );
     else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
-    _ball->draw();
 } 
 
 void PongScene::runThisTest()

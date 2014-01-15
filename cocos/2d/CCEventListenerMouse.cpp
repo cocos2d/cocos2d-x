@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,6 +26,8 @@
 #include "CCEventListenerMouse.h"
 
 NS_CC_BEGIN
+
+const std::string EventListenerMouse::LISTENER_ID = "__cc_mouse";
 
 bool EventListenerMouse::checkAvailable()
 {
@@ -65,8 +67,8 @@ EventListenerMouse* EventListenerMouse::clone()
 }
 
 EventListenerMouse::EventListenerMouse()
-: onMouseUp(nullptr)
-, onMouseDown(nullptr)
+: onMouseDown(nullptr)
+, onMouseUp(nullptr)
 , onMouseMove(nullptr)
 , onMouseScroll(nullptr)
 {
@@ -99,7 +101,7 @@ bool EventListenerMouse::init()
         }
     };
 
-    if (EventListener::init(Type::MOUSE, static_cast<ListenerID>(Type::MOUSE), listener))
+    if (EventListener::init(Type::MOUSE, LISTENER_ID, listener))
     {
         return true;
     }

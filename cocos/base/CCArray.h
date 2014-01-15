@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010      ForzeField Studios S.L. http://forzefield.com
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -230,7 +231,7 @@ while(false)
 
 NS_CC_BEGIN
 
-class CC_DLL Array : public Object, public Clonable
+class CC_DLL __Array : public Object, public Clonable
 {
 public:
 
@@ -238,30 +239,30 @@ public:
      * @js NA
      * @lua NA
      */
-    static Array* create();
+    static __Array* create();
     /** Create an array with objects 
      * @js NA
      */
-    static Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
+    static __Array* create(Object* object, ...) CC_REQUIRES_NULL_TERMINATION;
     /** Create an array with one object 
      * @js NA
      */
-    static Array* createWithObject(Object* object);
+    static __Array* createWithObject(Object* object);
     /** Create an array with a default capacity 
      * @js NA
      */
-    static Array* createWithCapacity(long capacity);
+    static __Array* createWithCapacity(ssize_t capacity);
     /** Create an array with from an existing array 
      * @js NA
      */
-    static Array* createWithArray(Array* otherArray);
+    static __Array* createWithArray(__Array* otherArray);
     /**
      @brief   Generate a Array pointer by file
      @param   pFileName  The file name of *.plist file
      @return  The Array pointer generated from the file
      * @js NA
      */
-    static Array* createWithContentsOfFile(const char* pFileName);
+    static __Array* createWithContentsOfFile(const std::string& pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
@@ -269,12 +270,12 @@ public:
      * @js NA
      * @lua NA
      */
-    static Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    static __Array* createWithContentsOfFileThreadSafe(const std::string& pFileName);
     /**
      * @js NA
      * @lua NA
      */
-    ~Array();
+    ~__Array();
 
     /** Initializes an array 
      * @js NA
@@ -295,19 +296,19 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithCapacity(long capacity);
+    bool initWithCapacity(ssize_t capacity);
     /** Initializes an array with an existing array 
      * @js NA
      * @lua NA
      */
-    bool initWithArray(Array* otherArray);
+    bool initWithArray(__Array* otherArray);
 
     // Querying an Array
 
     /** Returns element count of the array 
      * @js NA
      */
-    long count() const
+    ssize_t count() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.size();
@@ -318,7 +319,7 @@ public:
     /** Returns capacity of the array 
      * @js NA
      */
-    long capacity() const
+    ssize_t capacity() const
     {
 #if CC_USE_ARRAY_VECTOR
         return data.capacity();
@@ -330,17 +331,17 @@ public:
      * @js NA
      * @lua NA
      */
-    long getIndexOfObject(Object* object) const;
+    ssize_t getIndexOfObject(Object* object) const;
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE long indexOfObject(Object* object) const { return getIndexOfObject(object); }
+    CC_DEPRECATED_ATTRIBUTE ssize_t indexOfObject(Object* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index 
      * @js NA
      * @lua NA
      */
-    Object* getObjectAtIndex(long index)
+    Object* getObjectAtIndex(ssize_t index)
     {
         CCASSERT(index>=0 && index < count(), "index out of range in getObjectAtIndex()");
 #if CC_USE_ARRAY_VECTOR
@@ -349,7 +350,7 @@ public:
         return data->arr[index];
 #endif
     }
-    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(long index) { return getObjectAtIndex(index); }
+    CC_DEPRECATED_ATTRIBUTE Object* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
     /** Returns the last element of the array 
      * @js NA
      */
@@ -384,7 +385,7 @@ public:
     /** @since 1.1 
      * @js NA
      */
-    bool isEqualToArray(Array* otherArray);
+    bool isEqualToArray(__Array* otherArray);
     // Adding Objects
 
     /** Add a certain object 
@@ -397,21 +398,21 @@ public:
     /** Add all elements of an existing array 
      * @js NA
      */
-    void addObjectsFromArray(Array* otherArray);
+    void addObjectsFromArray(__Array* otherArray);
     /** Insert a certain object at a certain index 
      * @js NA
      */
-    void insertObject(Object* object, long index);
+    void insertObject(Object* object, ssize_t index);
     /** sets a certain object at a certain index 
      * @js NA
      * @lua NA
      */
-    void setObject(Object* object, long index);
+    void setObject(Object* object, ssize_t index);
     /** sets a certain object at a certain index without retaining. Use it with caution 
      * @js NA
      * @lua NA
      */
-    void fastSetObject(Object* object, long index)
+    void fastSetObject(Object* object, ssize_t index)
     {
 #if CC_USE_ARRAY_VECTOR
         setObject(object, index);
@@ -424,7 +425,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void swap( long indexOne, long indexTwo )
+    void swap( ssize_t indexOne, ssize_t indexTwo )
     {
         CCASSERT(indexOne >=0 && indexOne < count() && indexTwo >= 0 && indexTwo < count(), "Invalid indices");
 #if CC_USE_ARRAY_VECTOR
@@ -447,11 +448,11 @@ public:
     /** Remove an element with a certain index 
      * @js NA
      */
-    void removeObjectAtIndex(long index, bool releaseObj = true);
+    void removeObjectAtIndex(ssize_t index, bool releaseObj = true);
     /** Remove all elements 
      * @js NA
      */
-    void removeObjectsInArray(Array* otherArray);
+    void removeObjectsInArray(__Array* otherArray);
     /** Remove all objects 
      * @js NA
      */
@@ -463,7 +464,7 @@ public:
     /** Fast way to remove an element with a certain index 
      * @js NA
      */
-    void fastRemoveObjectAtIndex(long index);
+    void fastRemoveObjectAtIndex(ssize_t index);
 
     // Rearranging Content
 
@@ -474,12 +475,12 @@ public:
     /** Swap two elements with certain indexes 
      * @js NA
      */
-    void exchangeObjectAtIndex(long index1, long index2);
+    void exchangeObjectAtIndex(ssize_t index1, ssize_t index2);
 
     /** Replace object at index with another object. 
      * @js NA
      */
-    void replaceObjectAtIndex(long index, Object* object, bool releaseObject = true);
+    void replaceObjectAtIndex(ssize_t index, Object* object, bool releaseObject = true);
 
     /** Revers the array 
      * @js NA
@@ -498,7 +499,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual Array* clone() const;
+    virtual __Array* clone() const;
 
     // ------------------------------------------
     // Iterators
@@ -546,7 +547,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Array();
+    __Array();
 };
 
 // end of data_structure group

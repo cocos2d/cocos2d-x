@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
-Copyright (C) 2009      Matt Oswald
+Copyright (c) 2009      Matt Oswald
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,6 +35,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -68,13 +70,13 @@ public:
     /** creates a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    static SpriteBatchNode* createWithTexture(Texture2D* tex, int capacity = DEFAULT_CAPACITY);
+    static SpriteBatchNode* createWithTexture(Texture2D* tex, ssize_t capacity = DEFAULT_CAPACITY);
 
     /** creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, long capacity = DEFAULT_CAPACITY);
+    static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
     /**
      * @js ctor
      */
@@ -88,14 +90,14 @@ public:
     /** initializes a SpriteBatchNode with a texture2d and capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      */
-    bool initWithTexture(Texture2D *tex, long capacity);
+    bool initWithTexture(Texture2D *tex, ssize_t capacity);
     /** initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      * @js init
      * @lua init
      */
-    bool initWithFile(const char* fileImage, long capacity);
+    bool initWithFile(const std::string& fileImage, ssize_t capacity);
     bool init();
 
     /** returns the TextureAtlas object */
@@ -121,15 +123,15 @@ public:
     /** removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.
     @warning Removing a child from a SpriteBatchNode is very slow
     */
-    void removeChildAtIndex(int index, bool doCleanup);
+    void removeChildAtIndex(ssize_t index, bool doCleanup);
 
     void appendChild(Sprite* sprite);
     void removeSpriteFromAtlas(Sprite *sprite);
 
-    int rebuildIndexInOrder(Sprite *parent, int index);
-    int highestAtlasIndexInChild(Sprite *sprite);
-    int lowestAtlasIndexInChild(Sprite *sprite);
-    int atlasIndexForChild(Sprite *sprite, int z);
+    ssize_t rebuildIndexInOrder(Sprite *parent, ssize_t index);
+    ssize_t highestAtlasIndexInChild(Sprite *sprite);
+    ssize_t lowestAtlasIndexInChild(Sprite *sprite);
+    ssize_t atlasIndexForChild(Sprite *sprite, int z);
     /* Sprites use this to start sortChildren, don't call this manually */
     void reorderBatch(bool reorder);
 
@@ -137,7 +139,7 @@ public:
     // Overrides
     //
     // TextureProtocol
-    virtual Texture2D* getTexture(void) const override;
+    virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     /**
     *@code
@@ -151,11 +153,11 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual const BlendFunc& getBlendFunc(void) const override;
+    virtual const BlendFunc& getBlendFunc() const override;
 
-    virtual void visit(void) override;
-    virtual void addChild(Node* child) override{ Node::addChild(child);}
-    virtual void addChild(Node * child, int zOrder) override { Node::addChild(child, zOrder);}
+    virtual void visit() override;
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void reorderChild(Node *child, int zOrder) override;
         
@@ -163,29 +165,31 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void sortAllChildren() override;
     virtual void draw(void) override;
+    virtual std::string getDescription() const override;
 
 protected:
     /** Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void insertQuadFromSprite(Sprite *sprite, int index);
+    void insertQuadFromSprite(Sprite *sprite, ssize_t index);
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
      This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
      For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
      */
-    void updateQuadFromSprite(Sprite *sprite, int index);
+    void updateQuadFromSprite(Sprite *sprite, ssize_t index);
     /* This is the opposite of "addQuadFromSprite.
     It add the sprite to the children and descendants array, but it doesn't update add it to the texture atlas
     */
     SpriteBatchNode * addSpriteWithoutQuad(Sprite *child, int z, int aTag);
 
-    void updateAtlasIndex(Sprite* sprite, int* curIndex);
-    void swap(int oldIndex, int newIndex);
+    void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
+    void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
+    QuadCommand _quadCommand;     // quad command
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -45,7 +45,7 @@ DecorativeDisplay::DecorativeDisplay()
     , _displayData(nullptr)
 
 {
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     _colliderDetector = nullptr;
 #endif
 }
@@ -56,7 +56,7 @@ DecorativeDisplay::~DecorativeDisplay(void)
     CC_SAFE_RELEASE_NULL(_displayData);
     CC_SAFE_RELEASE_NULL(_display);
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CC_SAFE_RELEASE_NULL(_colliderDetector);
 #endif
 }

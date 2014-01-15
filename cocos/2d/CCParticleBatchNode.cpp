@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2011 Marco Tillemans
+ * Copyright (c) 2010-2012 cocos2d-x.org
+ * Copyright (c) 2011      Zynga Inc.
+ * Copyright (c) 2011      Marco Tillemans
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -42,11 +43,13 @@
 #include "platform/CCFileUtils.h"
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
+#include "renderer/CCQuadCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
 ParticleBatchNode::ParticleBatchNode()
-: _textureAtlas(NULL)
+: _textureAtlas(nullptr)
 {
 
 }
@@ -59,7 +62,7 @@ ParticleBatchNode::~ParticleBatchNode()
  * creation with Texture2D
  */
 
-ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, unsigned int capacity/* = kParticleDefaultCapacity*/)
+ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, int capacity/* = kParticleDefaultCapacity*/)
 {
     ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithTexture(tex, capacity))
@@ -68,14 +71,14 @@ ParticleBatchNode* ParticleBatchNode::createWithTexture(Texture2D *tex, unsigned
         return p;
     }
     CC_SAFE_DELETE(p);
-    return NULL;
+    return nullptr;
 }
 
 /*
  * creation with File Image
  */
 
-ParticleBatchNode* ParticleBatchNode::create(const char* imageFile, unsigned int capacity/* = kParticleDefaultCapacity*/)
+ParticleBatchNode* ParticleBatchNode::create(const std::string& imageFile, int capacity/* = kParticleDefaultCapacity*/)
 {
     ParticleBatchNode * p = new ParticleBatchNode();
     if( p && p->initWithFile(imageFile, capacity))
@@ -84,32 +87,30 @@ ParticleBatchNode* ParticleBatchNode::create(const char* imageFile, unsigned int
         return p;
     }
     CC_SAFE_DELETE(p);
-    return NULL;
+    return nullptr;
 }
 
 /*
  * init with Texture2D
  */
-bool ParticleBatchNode::initWithTexture(Texture2D *tex, unsigned int capacity)
+bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
 {
     _textureAtlas = new TextureAtlas();
     _textureAtlas->initWithTexture(tex, capacity);
 
-    // no lazy alloc in this node
-    _children = new Array();
-    _children->initWithCapacity(capacity);
-
+    _children.reserve(capacity);
+    
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-    
+
     return true;
 }
 
 /*
  * init with FileImage
  */
-bool ParticleBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
+bool ParticleBatchNode::initWithFile(const std::string& fileImage, int capacity)
 {
     Texture2D *tex = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(tex, capacity);
@@ -135,60 +136,38 @@ void ParticleBatchNode::visit()
 
     kmGLPushMatrix();
 
-    if ( _grid && _grid->isActive())
-    {
-        _grid->beforeDraw();
-        transformAncestors();
-    }
-
     transform();
 
     draw();
-    
-    if ( _grid && _grid->isActive())
-    {
-        _grid->afterDraw(this);
-    }
 
     kmGLPopMatrix();
 }
 
 // override addChild:
-void ParticleBatchNode::addChild(Node * child)
-{
-    Node::addChild(child);
-}
-
-void ParticleBatchNode::addChild(Node * child, int zOrder)
-{
-    Node::addChild(child, zOrder);
-}
-
 void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 {
-    CCASSERT( aChild != NULL, "Argument must be non-NULL");
-    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT( aChild != nullptr, "Argument must be non-nullptr");
+    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != nullptr, "CCParticleBatchNode only supports QuadParticleSystems as children");
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
     CCASSERT( child->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
     // If this is the 1st children, then copy blending function
-    if( _children->count() == 0 ) 
+    if (_children.empty())
     {
         setBlendFunc(child->getBlendFunc());
     }
 
-    CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a PaticleSystem that uses a different blending function");
+    CCASSERT( _blendFunc.src  == child->getBlendFunc().src && _blendFunc.dst  == child->getBlendFunc().dst, "Can't add a ParticleSystem that uses a different blending function");
 
     //no lazy sorting, so don't call super addChild, call helper instead
-    unsigned int pos = addChildHelper(child,zOrder,tag);
+    auto pos = addChildHelper(child,zOrder,tag);
 
     //get new atlasIndex
     int atlasIndex = 0;
 
-    if (pos != 0) 
+    if (pos != 0)
     {
-        ParticleSystem* p = (ParticleSystem*)_children->getObjectAtIndex(pos-1);
+        ParticleSystem* p = static_cast<ParticleSystem*>(_children.at(pos-1));
         atlasIndex = p->getAtlasIndex() + p->getTotalParticles();
-
     }
     else
     {
@@ -205,28 +184,24 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
 // XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
 // XXX or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to Node's addChild, but doesn't make use of the lazy sorting
-unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
+int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
 {
-    CCASSERT( child != NULL, "Argument must be non-nil");
-    CCASSERT( child->getParent() == NULL, "child already added. It can't be added again");
+    CCASSERT( child != nullptr, "Argument must be non-nil");
+    CCASSERT( child->getParent() == nullptr, "child already added. It can't be added again");
 
-    if( ! _children ) 
-    {
-        _children = new Array();
-        _children->initWithCapacity(4);
-    }
+    _children.reserve(4);
 
     //don't use a lazy insert
-    unsigned int pos = searchNewPositionInChildrenForZ(z);
+    auto pos = searchNewPositionInChildrenForZ(z);
 
-    _children->insertObject(child, pos);
+    _children.insert(pos, child);
 
     child->setTag(aTag);
     child->_setZOrder(z);
 
     child->setParent(this);
 
-    if( _running ) 
+    if( _running )
     {
         child->onEnter();
         child->onEnterTransitionDidFinish();
@@ -237,21 +212,21 @@ unsigned int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int
 // Reorder will be done in this function, no "lazy" reorder to particles
 void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 {
-    CCASSERT( aChild != NULL, "Child must be non-NULL");
-    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCASSERT( _children->containsObject(aChild), "Child doesn't belong to batch" );
+    CCASSERT( aChild != nullptr, "Child must be non-nullptr");
+    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != nullptr, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT( _children.contains(aChild), "Child doesn't belong to batch" );
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
-    if( zOrder == child->getZOrder() ) 
+    if( zOrder == child->getZOrder() )
     {
         return;
     }
 
     // no reordering if only 1 child
-    if( _children->count() > 1)
+    if (!_children.empty())
     {
-        unsigned int newIndex = 0, oldIndex = 0;
+        int newIndex = 0, oldIndex = 0;
 
         getCurrentIndex(&oldIndex, &newIndex, child, zOrder);
 
@@ -260,8 +235,8 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // reorder _children->array
             child->retain();
-            _children->removeObjectAtIndex(oldIndex);
-            _children->insertObject(child, newIndex);
+            _children.erase(oldIndex);
+            _children.insert(newIndex, child);
             child->release();
 
             // save old altasIndex
@@ -272,10 +247,10 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
             // Find new AtlasIndex
             int newAtlasIndex = 0;
-            for( int i=0;i < _children->count();i++)
+            for( int i=0;i < _children.size();i++)
             {
-                ParticleSystem* pNode = (ParticleSystem*)_children->getObjectAtIndex(i);
-                if( pNode == child ) 
+                ParticleSystem* node = static_cast<ParticleSystem*>(_children.at(i));
+                if( node == child )
                 {
                     newAtlasIndex = child->getAtlasIndex();
                     break;
@@ -292,20 +267,20 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
     child->_setZOrder(zOrder);
 }
 
-void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* newIndex, Node* child, int z)
+void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
 {
     bool foundCurrentIdx = false;
     bool foundNewIdx = false;
 
     int  minusOne = 0;
-    unsigned int count = _children->count();
+    auto count = _children.size();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( int i=0; i < count; i++ )
     {
-        Node* pNode = (Node *)_children->getObjectAtIndex(i);
+        Node* pNode = _children.at(i);
 
         // new index
-        if( pNode->getZOrder() > z &&  ! foundNewIdx ) 
+        if( pNode->getZOrder() > z &&  ! foundNewIdx )
         {
             *newIndex = i;
             foundNewIdx = true;
@@ -317,7 +292,7 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
         }
 
         // current index
-        if( child == pNode ) 
+        if( child == pNode )
         {
             *oldIndex = i;
             foundCurrentIdx = true;
@@ -337,36 +312,36 @@ void ParticleBatchNode::getCurrentIndex(unsigned int* oldIndex, unsigned int* ne
 
     if( ! foundNewIdx )
     {
-        *newIndex = count;
+        *newIndex = static_cast<int>(count);
     }
 
     *newIndex += minusOne;
 }
 
-unsigned int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
+int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
 {
-    unsigned int count = _children->count();
+    auto count = _children.size();
 
-    for( unsigned int i=0; i < count; i++ ) 
+    for( int i=0; i < count; i++ )
     {
-        Node *child = (Node *)_children->getObjectAtIndex(i);
+        Node *child = _children.at(i);
         if (child->getZOrder() > z)
         {
             return i;
         }
     }
-    return count;
+    return static_cast<int>(count);
 }
 
 // override removeChild:
 void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
 {
     // explicit nil handling
-    if (aChild == NULL)
+    if (aChild == nullptr)
         return;
-    
-    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != NULL, "CCParticleBatchNode only supports QuadParticleSystems as children");
-    CCASSERT(_children->containsObject(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+
+    CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != nullptr, "CCParticleBatchNode only supports QuadParticleSystems as children");
+    CCASSERT(_children.contains(aChild), "CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
     Node::removeChild(child, cleanup);
@@ -378,19 +353,20 @@ void  ParticleBatchNode::removeChild(Node* aChild, bool cleanup)
     _textureAtlas->fillWithEmptyQuadsFromIndex(_textureAtlas->getTotalQuads(), child->getTotalParticles());
 
     // particle could be reused for self rendering
-    child->setBatchNode(NULL);
+    child->setBatchNode(nullptr);
 
     updateAllAtlasIndexes();
 }
 
-void ParticleBatchNode::removeChildAtIndex(unsigned int index, bool doCleanup)
+void ParticleBatchNode::removeChildAtIndex(int index, bool doCleanup)
 {
-    removeChild((ParticleSystem *)_children->getObjectAtIndex(index),doCleanup);
+    removeChild(_children.at(index), doCleanup);
 }
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    arrayMakeObjectsPerformSelectorWithObject(_children, setBatchNode, NULL, ParticleSystem*);
+    for(const auto &child : _children)
+        static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
 
     Node::removeAllChildrenWithCleanup(doCleanup);
 
@@ -406,18 +382,32 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-    CC_NODE_DRAW_SETUP();
+//    CC_NODE_DRAW_SETUP();
+//
+//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//    _textureAtlas->drawQuads();
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _textureAtlas->drawQuads();
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
+    _quadCommand.init(0,
+              _vertexZ,
+              _textureAtlas->getTexture()->getName(),
+              shader,
+              _blendFunc,
+              _textureAtlas->getQuads(),
+              _textureAtlas->getTotalQuads(),
+              mv);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 
 
 
-void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
+void ParticleBatchNode::increaseAtlasCapacityTo(ssize_t quantity)
 {
     CCLOG("cocos2d: ParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
           (long)_textureAtlas->getCapacity(),
@@ -431,7 +421,7 @@ void ParticleBatchNode::increaseAtlasCapacityTo(unsigned int quantity)
 }
 
 //sets a 0'd quad into the quads array
-void ParticleBatchNode::disableParticle(unsigned int particleIndex)
+void ParticleBatchNode::disableParticle(int particleIndex)
 {
     V3F_C4B_T2F_Quad* quad = &((_textureAtlas->getQuads())[particleIndex]);
     quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;
@@ -467,20 +457,18 @@ void ParticleBatchNode::insertChild(ParticleSystem* system, int index)
 //rebuild atlas indexes
 void ParticleBatchNode::updateAllAtlasIndexes()
 {
-    Object *pObj = NULL;
-    unsigned int index = 0;
-
-    CCARRAY_FOREACH(_children,pObj)
-    {
-        ParticleSystem* child = static_cast<ParticleSystem*>(pObj);
-        child->setAtlasIndex(index);
-        index += child->getTotalParticles();
+    int index = 0;
+    
+    for(const auto &child : _children) {
+        ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
+        partiSys->setAtlasIndex(index);
+        index += partiSys->getTotalParticles();
     }
 }
 
 // ParticleBatchNode - CocosNodeTexture protocol
 
-void ParticleBatchNode::updateBlendFunc(void)
+void ParticleBatchNode::updateBlendFunc()
 {
     if( ! _textureAtlas->getTexture()->hasPremultipliedAlpha())
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -497,7 +485,7 @@ void ParticleBatchNode::setTexture(Texture2D* texture)
     }
 }
 
-Texture2D* ParticleBatchNode::getTexture(void) const
+Texture2D* ParticleBatchNode::getTexture() const
 {
     return _textureAtlas->getTexture();
 }
@@ -507,7 +495,7 @@ void ParticleBatchNode::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 // returns the blending function used for the texture
-const BlendFunc& ParticleBatchNode::getBlendFunc(void) const
+const BlendFunc& ParticleBatchNode::getBlendFunc() const
 {
     return _blendFunc;
 }

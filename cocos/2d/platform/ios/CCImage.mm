@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -87,20 +88,20 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
 #define ALIGN_CENTER 3
 #define ALIGN_BOTTOM 2
 
-static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign, const char * pFontName, int nSize, tImageInfo* pInfo)
+static bool _initWithString(const char * text, cocos2d::Image::TextAlign align, const char * fontName, int size, tImageInfo* info)
 {
     bool bRet = false;
     do 
     {
-        CC_BREAK_IF(! pText || ! pInfo);
+        CC_BREAK_IF(! text || ! info);
         
-        NSString * str          = [NSString stringWithUTF8String:pText];
-        NSString * fntName      = [NSString stringWithUTF8String:pFontName];
+        NSString * str          = [NSString stringWithUTF8String:text];
+        NSString * fntName      = [NSString stringWithUTF8String:fontName];
         
         CGSize dim, constrainSize;
         
-        constrainSize.width     = pInfo->width;
-        constrainSize.height    = pInfo->height;
+        constrainSize.width     = info->width;
+        constrainSize.height    = info->height;
         
         // On iOS custom fonts must be listed beforehand in the App info.plist (in order to be usable) and referenced only the by the font family name itself when
         // calling [UIFont fontWithName]. Therefore even if the developer adds 'SomeFont.ttf' or 'fonts/SomeFont.ttf' to the App .plist, the font must
@@ -110,7 +111,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
         
         // create the font   
-        id font = [UIFont fontWithName:fntName size:nSize];
+        id font = [UIFont fontWithName:fntName size:size];
         
         if (font)
         {
@@ -120,7 +121,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         {
             if (!font)
             {
-                font = [UIFont systemFontOfSize:nSize];
+                font = [UIFont systemFontOfSize:size];
             }
                 
             if (font)
@@ -136,7 +137,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         if (constrainSize.height > dim.height)
         {
             // vertical alignment
-            unsigned int vAlignment = ((int)eAlign >> 4) & 0x0F;
+            unsigned int vAlignment = ((int)align >> 4) & 0x0F;
             if (vAlignment == ALIGN_TOP)
             {
                 startH = 0;
@@ -166,16 +167,16 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         float shadowStrokePaddingX = 0.0f;
         float shadowStrokePaddingY = 0.0f;
         
-        if ( pInfo->hasStroke )
+        if ( info->hasStroke )
         {
-            shadowStrokePaddingX = ceilf(pInfo->strokeSize);
-            shadowStrokePaddingY = ceilf(pInfo->strokeSize);
+            shadowStrokePaddingX = ceilf(info->strokeSize);
+            shadowStrokePaddingY = ceilf(info->strokeSize);
         }
         
-        if ( pInfo->hasShadow )
+        if ( info->hasShadow )
         {
-            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(pInfo->shadowOffset.width));
-            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(pInfo->shadowOffset.height));
+            shadowStrokePaddingX = std::max(shadowStrokePaddingX, (float)fabs(info->shadowOffset.width));
+            shadowStrokePaddingY = std::max(shadowStrokePaddingY, (float)fabs(info->shadowOffset.height));
         }
         
         // add the padding (this could be 0 if no shadow and no stroke)
@@ -203,7 +204,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         }
 
         // text color
-        CGContextSetRGBFillColor(context, pInfo->tintColorR, pInfo->tintColorG, pInfo->tintColorB, 1);
+        CGContextSetRGBFillColor(context, info->tintColorR, info->tintColorG, info->tintColorB, 1);
         // move Y rendering to the top of the image
         CGContextTranslateCTM(context, 0.0f, (dim.height - shadowStrokePaddingY) );
         CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
@@ -212,30 +213,30 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         UIGraphicsPushContext(context);
         
         // measure text size with specified font and determine the rectangle to draw text in
-        unsigned uHoriFlag = (int)eAlign & 0x0f;
-        UITextAlignment align = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
+        unsigned uHoriFlag = (int)align & 0x0f;
+        UITextAlignment testAlign = (UITextAlignment)((2 == uHoriFlag) ? UITextAlignmentRight
                                 : (3 == uHoriFlag) ? UITextAlignmentCenter
                                 : UITextAlignmentLeft);
 
         
         // take care of stroke if needed
-        if ( pInfo->hasStroke )
+        if ( info->hasStroke )
         {
             CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-            CGContextSetRGBStrokeColor(context, pInfo->strokeColorR, pInfo->strokeColorG, pInfo->strokeColorB, 1);
-            CGContextSetLineWidth(context, pInfo->strokeSize);
+            CGContextSetRGBStrokeColor(context, info->strokeColorR, info->strokeColorG, info->strokeColorB, 1);
+            CGContextSetLineWidth(context, info->strokeSize);
         }
         
         // take care of shadow if needed
-        if ( pInfo->hasShadow )
+        if ( info->hasShadow )
         {
             CGSize offset;
-            offset.height = pInfo->shadowOffset.height;
-            offset.width  = pInfo->shadowOffset.width;
-            CGFloat shadowColorValues[] = {0, 0, 0, pInfo->shadowOpacity};
+            offset.height = info->shadowOffset.height;
+            offset.width  = info->shadowOffset.width;
+            CGFloat shadowColorValues[] = {0, 0, 0, info->shadowOpacity};
             CGColorRef shadowColor = CGColorCreate (colorSpace, shadowColorValues);
             
-            CGContextSetShadowWithColor(context, offset, pInfo->shadowBlur, shadowColor);
+            CGContextSetShadowWithColor(context, offset, info->shadowBlur, shadowColor);
             
             CGColorRelease (shadowColor);
         }
@@ -266,7 +267,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         float textHeight   = dim.height - shadowStrokePaddingY;
         
         
-        if ( pInfo->shadowOffset.width < 0 )
+        if ( info->shadowOffset.width < 0 )
         {
             textOriginX = shadowStrokePaddingX;
         }
@@ -275,7 +276,7 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
             textOriginX = 0.0;
         }
         
-        if (pInfo->shadowOffset.height > 0)
+        if (info->shadowOffset.height > 0)
         {
             textOrigingY = startH;
         }
@@ -286,10 +287,10 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         
         CGRect rect = CGRectMake(textOriginX, textOrigingY, textWidth, textHeight);
         
-        CGContextBeginTransparencyLayerWithRect(context, rect, NULL);
+        CGContextBeginTransparencyLayerWithRect(context, rect, nullptr);
         // actually draw the text in the context
 		// XXX: ios7 casting
-        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)align];
+        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:(NSTextAlignment)testAlign];
 
         CGContextEndTransparencyLayer(context);
         
@@ -300,10 +301,10 @@ static bool _initWithString(const char * pText, cocos2d::Image::TextAlign eAlign
         CGContextRelease(context);
                
         // output params
-        pInfo->data                 = data;
-        pInfo->isPremultipliedAlpha = true;
-        pInfo->width                = dim.width;
-        pInfo->height               = dim.height;
+        info->data                 = data;
+        info->isPremultipliedAlpha = true;
+        info->width                = dim.width;
+        info->height               = dim.height;
         bRet                        = true;
         
     } while (0);
@@ -325,12 +326,12 @@ bool Image::initWithString(
 }
 
 bool Image::initWithStringShadowStroke(
-                                         const char * pText,
-                                         int         nWidth ,
-                                         int         nHeight ,
-                                         TextAlign   eAlignMask ,
-                                         const char * pFontName ,
-                                         int         nSize ,
+                                         const char * text,
+                                         int         width ,
+                                         int         height ,
+                                         TextAlign   alignMask ,
+                                         const char * fontName ,
+                                         int         size ,
                                          float       textTintR,
                                          float       textTintG,
                                          float       textTintB,
@@ -349,8 +350,8 @@ bool Image::initWithStringShadowStroke(
     
     
     tImageInfo info = {0};
-    info.width                  = nWidth;
-    info.height                 = nHeight;
+    info.width                  = width;
+    info.height                 = height;
     info.hasShadow              = shadow;
     info.shadowOffset.width     = shadowOffsetX;
     info.shadowOffset.height    = shadowOffsetY;
@@ -366,7 +367,7 @@ bool Image::initWithStringShadowStroke(
     info.tintColorB             = textTintB;
     
     
-    if (! _initWithString(pText, eAlignMask, pFontName, nSize, &info))
+    if (! _initWithString(text, alignMask, fontName, size, &info))
     {
         return false;
     }
@@ -380,19 +381,19 @@ bool Image::initWithStringShadowStroke(
     return true;
 }
 
-bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
+bool Image::saveToFile(const std::string& filename, bool isToRGB)
 {
     bool saveToPNG = false;
     bool needToCopyPixels = false;
-    std::string filePath(pszFilePath);
-    if (std::string::npos != filePath.find(".png"))
+
+    if (std::string::npos != filename.find(".png"))
     {
         saveToPNG = true;
     }
         
     int bitsPerComponent = 8;            
     int bitsPerPixel = hasAlpha() ? 32 : 24;
-    if ((! saveToPNG) || bIsToRGB)
+    if ((! saveToPNG) || isToRGB)
     {
         bitsPerPixel = 24;
     }            
@@ -404,7 +405,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
     
     // The data has alpha channel, and want to save it with an RGB png file,
     // or want to save as jpg,  remove the alpha channel.
-    if ((saveToPNG && hasAlpha() && bIsToRGB)
+    if ((saveToPNG && hasAlpha() && isToRGB)
        || (! saveToPNG))
     {
         pixels = new unsigned char[myDataLength];
@@ -424,16 +425,16 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
         
     // make data provider with data.
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;
-    if (saveToPNG && hasAlpha() && (! bIsToRGB))
+    if (saveToPNG && hasAlpha() && (! isToRGB))
     {
         bitmapInfo |= kCGImageAlphaPremultipliedLast;
     }
-    CGDataProviderRef provider        = CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+    CGDataProviderRef provider        = CGDataProviderCreateWithData(nullptr, pixels, myDataLength, nullptr);
     CGColorSpaceRef colorSpaceRef    = CGColorSpaceCreateDeviceRGB();
     CGImageRef iref                    = CGImageCreate(_width, _height,
                                                         bitsPerComponent, bitsPerPixel, bytesPerRow,
                                                         colorSpaceRef, bitmapInfo, provider,
-                                                        NULL, false,
+                                                        nullptr, false,
                                                         kCGRenderingIntentDefault);
         
     UIImage* image                    = [[UIImage alloc] initWithCGImage:iref];
@@ -453,7 +454,7 @@ bool Image::saveToFile(const char *pszFilePath, bool bIsToRGB)
         data = UIImageJPEGRepresentation(image, 1.0f);
     }
     
-    [data writeToFile:[NSString stringWithUTF8String:pszFilePath] atomically:YES];
+    [data writeToFile:[NSString stringWithUTF8String:filename.c_str()] atomically:YES];
         
     [image release];
         

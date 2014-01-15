@@ -4,17 +4,17 @@
 #include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 
 // android effect only support ogg
-#if (CC_TARGET_PLATFORM == CC_PLATFOR_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     #define EFFECT_FILE        "effect2.ogg"
-#elif( CC_TARGET_PLATFORM == CC_PLATFOR_MARMALADE)
+#elif( CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
     #define EFFECT_FILE        "effect1.raw"
 #else
     #define EFFECT_FILE        "effect1.wav"
 #endif // CC_PLATFOR_ANDROID
 
-#if (CC_TARGET_PLATFORM == CC_PLATFOR_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
-#elif (CC_TARGET_PLATFORM == CC_PLATFOR_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFOR_LINUX )
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
     #define MUSIC_FILE        "background.ogg"
 #else
     #define MUSIC_FILE        "background.mp3"

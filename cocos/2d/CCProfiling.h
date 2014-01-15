@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Stuart Carnie
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +30,7 @@ THE SOFTWARE.
 #include <chrono>
 #include "ccConfig.h"
 #include "CCObject.h"
-#include "CCDictionary.h"
+#include "CCMap.h"
 
 NS_CC_BEGIN
 
@@ -94,7 +95,7 @@ public:
      */
     void releaseAllTimers();
 
-    Dictionary* _activeTimers;
+    Map<std::string, ProfilingTimer*> _activeTimers;
 };
 
 class ProfilingTimer : public Object
@@ -119,7 +120,7 @@ public:
      * @js NA
      * @lua NA
      */
-    const char* description(void) const;
+    virtual std::string getDescription() const;
     /**
      * @js NA
      * @lua NA

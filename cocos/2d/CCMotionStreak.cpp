@@ -1,6 +1,7 @@
 /****************************************************************************
+Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011 ForzeField Studios S.L.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,13 +31,15 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCVertex.h"
+#include "CCCustomCommand.h"
+#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
 MotionStreak::MotionStreak()
 : _fastMode(false)
 , _startingPositionInitialized(false)
-, _texture(NULL)
+, _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _positionR(Point::ZERO)
 , _stroke(0.0f)
@@ -45,11 +48,11 @@ MotionStreak::MotionStreak()
 , _maxPoints(0)
 , _nuPoints(0)
 , _previousNuPoints(0)
-, _pointVertexes(NULL)
-, _pointState(NULL)
-, _vertices(NULL)
-, _colorPointer(NULL)
-, _texCoords(NULL)
+, _pointVertexes(nullptr)
+, _pointState(nullptr)
+, _vertices(nullptr)
+, _colorPointer(nullptr)
+, _texCoords(nullptr)
 {
 }
 
@@ -63,35 +66,35 @@ MotionStreak::~MotionStreak()
     CC_SAFE_FREE(_texCoords);
 }
 
-MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    MotionStreak *pRet = new MotionStreak();
-    if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, path))
+    MotionStreak *ret = new MotionStreak();
+    if (ret && ret->initWithFade(fade, minSeg, stroke, color, path))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 MotionStreak* MotionStreak::create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    MotionStreak *pRet = new MotionStreak();
-    if (pRet && pRet->initWithFade(fade, minSeg, stroke, color, texture))
+    MotionStreak *ret = new MotionStreak();
+    if (ret && ret->initWithFade(fade, minSeg, stroke, color, texture))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
 
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
-bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path)
+bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path)
 {
-    CCASSERT(path != NULL, "Invalid filename");
+    CCASSERT(!path.empty(), "Invalid filename");
 
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(path);
     return initWithFade(fade, minSeg, stroke, color, texture);
@@ -322,12 +325,10 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::draw()
-{
-    if(_nuPoints <= 1)
-        return;
-
-    CC_NODE_DRAW_SETUP();
+void MotionStreak::onDraw()
+{  
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_cachedMV);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
@@ -351,8 +352,17 @@ void MotionStreak::draw()
 #endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
+}
 
-    CC_INCREMENT_GL_DRAWS(1);
+void MotionStreak::draw()
+{
+    if(_nuPoints <= 1)
+        return;
+    kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
+    _customCommand.init(0,_vertexZ);
+    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+
 }
 
 NS_CC_END

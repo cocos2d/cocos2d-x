@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,13 +33,14 @@ namespace cocostudio {
 
 enum TweenType
 {
-    TWEEN_EASING_MIN = -1,
+    CUSTOM_EASING = -1,
 
     Linear,
 
     Sine_EaseIn,
     Sine_EaseOut,
     Sine_EaseInOut,
+
 
     Quad_EaseIn,
     Quad_EaseOut,
@@ -79,54 +80,59 @@ enum TweenType
 
     TWEEN_EASING_MAX = 10000
 };
-
+/**
+*   @js NA
+*   @lua NA
+*/
 class  TweenFunction
 {
 public:
 
-    static float tweenTo(float from, float change, float time, float duration, TweenType tweenType);
+    static float tweenTo(float time, TweenType type, float *easingParam);
 
-    static float linear(float t, float b, float c, float d);
+    static float linear(float time);
 
-    static float sineEaseIn(float t, float b, float c, float d);
-    static float sineEaseOut(float t, float b, float c, float d);
-    static float sineEaseInOut(float t, float b, float c, float d);
+    static float sineEaseIn(float time);
+    static float sineEaseOut(float time);
+    static float sineEaseInOut(float time);
 
-    static float quadEaseIn(float t, float b, float c, float d);
-    static float quadEaseOut(float t, float b, float c, float d);
-    static float quadEaseInOut(float t, float b, float c, float d);
+    static float quadEaseIn(float time);
+    static float quadEaseOut(float time);
+    static float quadEaseInOut(float time);
 
-    static float cubicEaseIn(float t, float b, float c, float d);
-    static float cubicEaseOut(float t, float b, float c, float d);
-    static float cubicEaseInOut(float t, float b, float c, float d);
+    static float cubicEaseIn(float time);
+    static float cubicEaseOut(float time);
+    static float cubicEaseInOut(float time);
 
-    static float quartEaseIn(float t, float b, float c, float d);
-    static float quartEaseOut(float t, float b, float c, float d);
-    static float quartEaseInOut(float t, float b, float c, float d);
+    static float quartEaseIn(float time);
+    static float quartEaseOut(float time);
+    static float quartEaseInOut(float time);
 
-    static float quintEaseIn(float t, float b, float c, float d);
-    static float quintEaseOut(float t, float b, float c, float d);
-    static float quintEaseInOut(float t, float b, float c, float d);
+    static float quintEaseIn(float time);
+    static float quintEaseOut(float time);
+    static float quintEaseInOut(float time);
 
-    static float expoEaseIn(float t, float b, float c, float d);
-    static float expoEaseOut(float t, float b, float c, float d);
-    static float expoEaseInOut(float t, float b, float c, float d);
+    static float expoEaseIn(float time);
+    static float expoEaseOut(float time);
+    static float expoEaseInOut(float time);
 
-    static float circEaseIn(float t, float b, float c, float d);
-    static float circEaseOut(float t, float b, float c, float d);
-    static float circEaseInOut(float t, float b, float c, float d);
+    static float circEaseIn(float time);
+    static float circEaseOut(float time);
+    static float circEaseInOut(float time);
 
-    static float elasticEaseIn(float t, float b, float c, float d, float a = 0, float p = 0);
-    static float elasticEaseOut(float t, float b, float c, float d, float a = 0, float p = 0);
-    static float elasticEaseInOut(float t, float b, float c, float d, float a = 0, float p = 0);
+    static float elasticEaseIn(float time, float *easingParam);
+    static float elasticEaseOut(float time, float *easingParam);
+    static float elasticEaseInOut(float time, float *easingParam);
 
-    static float backEaseIn(float t, float b, float c, float d, float s = 0);
-    static float backEaseOut(float t, float b, float c, float d, float s = 0);
-    static float backEaseInOut(float t, float b, float c, float d, float s = 0);
+    static float backEaseIn(float time);
+    static float backEaseOut(float time);
+    static float backEaseInOut(float time);
 
-    static float bounceEaseIn(float t, float b, float c, float d);
-    static float bounceEaseOut(float t, float b, float c, float d);
-    static float bounceEaseInOut(float t, float b, float c, float d);
+    static float bounceEaseIn(float time);
+    static float bounceEaseOut(float time);
+    static float bounceEaseInOut(float time);
+
+    static float customEase(float time, float *easingParam);
 };
 
 

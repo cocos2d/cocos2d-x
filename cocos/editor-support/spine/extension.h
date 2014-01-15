@@ -1,28 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2013, Esoteric Software
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
-
 /*
  Implementation notes:
 
@@ -40,15 +15,17 @@
  function.
 
  - Subclasses do not provide a dispose function, instead the base class' dispose function should be used, which will delegate to
- a dispose function.
+ a dispose function pointer.
 
- - Classes not designed for inheritance cannot be extended. They may use an internal subclass to hide private data and don't
+ - Classes not designed for inheritance cannot be extended because they may use an internal subclass to hide private data and don't
  expose function pointers.
 
- - The public API hides implementation details such init/deinit functions. An internal API is exposed in extension.h to allow
+ - The public API hides implementation details, such as init/deinit functions. An internal API is exposed by extension.h to allow
  classes to be extended. Internal functions begin with underscore (_).
 
- - OOP in C tends to lose type safety. Macros are provided in extension.h to give context for why a cast is being done.
+ - OOP in C tends to lose type safety. Macros for casting are provided in extension.h to give context for why a cast is being done.
+
+ - If SPINE_SHORT_NAMES is defined, the "sp" prefix for all class names is optional.
  */
 
 #ifndef SPINE_EXTENSION_H_
@@ -56,7 +33,7 @@
 
 /* All allocation uses these. */
 #define MALLOC(TYPE,COUNT) ((TYPE*)_malloc(sizeof(TYPE) * COUNT))
-#define CALLOC(TYPE,COUNT) ((TYPE*)_calloc(1, sizeof(TYPE) * COUNT))
+#define CALLOC(TYPE,COUNT) ((TYPE*)_calloc(COUNT, sizeof(TYPE)))
 #define NEW(TYPE) CALLOC(TYPE,1)
 
 /* Gets the direct super class. Type safe. */
@@ -80,23 +57,39 @@
 /* Allocates a new char[], assigns it to TO, and copies FROM to it. Can be used on const types. */
 #define MALLOC_STR(TO,FROM) strcpy(CONST_CAST(char*, TO) = (char*)malloc(strlen(FROM) + 1), FROM)
 
+#ifdef __STDC_VERSION__
+#define FMOD(A,B) fmodf(A, B)
+#else
+#define FMOD(A,B) (float)fmod(A, B)
+#endif
+
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <spine/Skeleton.h>
 #include <spine/RegionAttachment.h>
+#include <spine/BoundingBoxAttachment.h>
 #include <spine/Animation.h>
 #include <spine/Atlas.h>
 #include <spine/AttachmentLoader.h>
 
-namespace spine {
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * Functions that must be implemented:
  */
 
-void _AtlasPage_createTexture (AtlasPage* self, const char* path);
-void _AtlasPage_disposeTexture (AtlasPage* self);
-char* _Util_readFile (const char* path, int* length);
+void _spAtlasPage_createTexture (spAtlasPage* self, const char* path);
+void _spAtlasPage_disposeTexture (spAtlasPage* self);
+char* _spUtil_readFile (const char* path, int* length);
+
+#ifdef SPINE_SHORT_NAMES
+#define _AtlasPage_createTexture(...) _spAtlasPage_createTexture(__VA_ARGS__)
+#define _AtlasPage_disposeTexture(...) _spAtlasPage_disposeTexture(__VA_ARGS__)
+#define _Util_readFile(...) _spUtil_readFile(__VA_ARGS__)
+#endif
 
 /*
  * Internal API available for extension:
@@ -113,33 +106,59 @@ char* _readFile (const char* path, int* length);
 
 /**/
 
-void _AttachmentLoader_init (AttachmentLoader* self, /**/
-		void (*dispose) (AttachmentLoader* self), /**/
-		Attachment* (*newAttachment) (AttachmentLoader* self, Skin* skin, AttachmentType type, const char* name));
-void _AttachmentLoader_deinit (AttachmentLoader* self);
-void _AttachmentLoader_setError (AttachmentLoader* self, const char* error1, const char* error2);
-void _AttachmentLoader_setUnknownTypeError (AttachmentLoader* self, AttachmentType type);
+void _spAttachmentLoader_init (spAttachmentLoader* self, /**/
+void (*dispose) (spAttachmentLoader* self), /**/
+spAttachment* (*newAttachment) (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name));
+void _spAttachmentLoader_deinit (spAttachmentLoader* self);
+void _spAttachmentLoader_setError (spAttachmentLoader* self, const char* error1, const char* error2);
+void _spAttachmentLoader_setUnknownTypeError (spAttachmentLoader* self, spAttachmentType type);
+
+#ifdef SPINE_SHORT_NAMES
+#define _AttachmentLoader_init(...) _spAttachmentLoader_init(__VA_ARGS__)
+#define _AttachmentLoader_deinit(...) _spAttachmentLoader_deinit(__VA_ARGS__)
+#define _AttachmentLoader_setError(...) _spAttachmentLoader_setError(__VA_ARGS__)
+#define _AttachmentLoader_setUnknownTypeError(...) _spAttachmentLoader_setUnknownTypeError(__VA_ARGS__)
+#endif
 
 /**/
 
-void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
-		void (*dispose) (Attachment* self));
-void _Attachment_deinit (Attachment* self);
+void _spAttachment_init (spAttachment* self, const char* name, spAttachmentType type, /**/
+void (*dispose) (spAttachment* self));
+void _spAttachment_deinit (spAttachment* self);
+
+#ifdef SPINE_SHORT_NAMES
+#define _Attachment_init(...) _spAttachment_init(__VA_ARGS__)
+#define _Attachment_deinit(...) _spAttachment_deinit(__VA_ARGS__)
+#endif
 
 /**/
 
-void _Timeline_init (Timeline* self, /**/
-		void (*dispose) (Timeline* self), /**/
-		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha));
-void _Timeline_deinit (Timeline* self);
+void _spTimeline_init (spTimeline* self, spTimelineType type, /**/
+void (*dispose) (spTimeline* self), /**/
+		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
+				int* eventCount, float alpha));
+void _spTimeline_deinit (spTimeline* self);
+
+#ifdef SPINE_SHORT_NAMES
+#define _Timeline_init(...) _spTimeline_init(__VA_ARGS__)
+#define _Timeline_deinit(...) _spTimeline_deinit(__VA_ARGS__)
+#endif
 
 /**/
 
-void _CurveTimeline_init (CurveTimeline* self, int frameCount, /**/
-		void (*dispose) (Timeline* self), /**/
-		void (*apply) (const Timeline* self, Skeleton* skeleton, float time, float alpha));
-void _CurveTimeline_deinit (CurveTimeline* self);
+void _spCurveTimeline_init (spCurveTimeline* self, spTimelineType type, int frameCount, /**/
+void (*dispose) (spTimeline* self), /**/
+		void (*apply) (const spTimeline* self, spSkeleton* skeleton, float lastTime, float time, spEvent** firedEvents,
+				int* eventCount, float alpha));
+void _spCurveTimeline_deinit (spCurveTimeline* self);
 
-} // namespace spine {
+#ifdef SPINE_SHORT_NAMES
+#define _CurveTimeline_init(...) _spCurveTimeline_init(__VA_ARGS__)
+#define _CurveTimeline_deinit(...) _spCurveTimeline_deinit(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPINE_EXTENSION_H_ */

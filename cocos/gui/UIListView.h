@@ -1,32 +1,34 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 
 #ifndef __UILISTVIEW_H__
 #define __UILISTVIEW_H__
 
 #include "gui/UIScrollView.h"
+
+NS_CC_BEGIN
 
 namespace gui{
 
@@ -46,10 +48,10 @@ typedef enum
     LISTVIEW_ONSELECTEDITEM
 }ListViewEventType;
 
-typedef void (cocos2d::Object::*SEL_ListViewEvent)(cocos2d::Object*,ListViewEventType);
+typedef void (Object::*SEL_ListViewEvent)(Object*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
-class UIListView : public UIScrollView
+class ListView : public ScrollView
 {
     
 public:
@@ -57,17 +59,17 @@ public:
     /**
      * Default constructor
      */
-    UIListView();
+    ListView();
     
     /**
      * Default destructor
      */
-    virtual ~UIListView();
+    virtual ~ListView();
     
     /**
      * Allocates and initializes.
      */
-    static UIListView* create();
+    static ListView* create();
     
     /**
      * Sets a item model for listview
@@ -76,7 +78,7 @@ public:
      *
      * @param model  item model for listview
      */
-    void setItemModel(UIWidget* model);
+    void setItemModel(Widget* model);
     
     /**
      * Push back a default item(create by a cloned model) into listview.
@@ -86,17 +88,17 @@ public:
     /**
      * Insert a default item(create by a cloned model) into listview.
      */
-    void insertDefaultItem(int index);
+    void insertDefaultItem(ssize_t index);
     
     /**
      * Push back custom item into listview.
      */
-    void pushBackCustomItem(UIWidget* item);
+    void pushBackCustomItem(Widget* item);
     
     /**
      * Insert custom item into listview.
      */
-    void insertCustomItem(UIWidget* item, int index);
+    void insertCustomItem(Widget* item, ssize_t index);
     
     /**
      *  Removes the last item of listview.
@@ -108,7 +110,9 @@ public:
      *
      * @param index of item.
      */
-    void removeItem(int index);
+    void removeItem(ssize_t index);
+    
+    void removeAllItems();
     
     /**
      * Returns a item whose index is same as the parameter.
@@ -117,12 +121,12 @@ public:
      *
      * @return the item widget.
      */
-    UIWidget* getItem(unsigned int index);
+    Widget* getItem(ssize_t index);
     
     /**
      * Returns the item container.
      */
-    cocos2d::Array* getItems();
+    Vector<Widget*>& getItems();
     
     /**
      * Returns the index of item.
@@ -131,7 +135,7 @@ public:
      *
      * @return the index of item.
      */
-    unsigned int getIndex(UIWidget* item) const;
+    ssize_t getIndex(Widget* item) const;
     
     /**
      * Changes the gravity of listview.
@@ -146,16 +150,11 @@ public:
      */
     void setItemsMargin(float margin);
     
-    /**
-     * Refresh the view of list.
-     *
-     * If you change the data, you need to call this mathod.
-     */
-    void refreshView();
+    virtual void sortAllChildren() override;
     
-    int getCurSelectedIndex() const;
+    ssize_t getCurSelectedIndex() const;
     
-    void addEventListenerListView(cocos2d::Object* target, SEL_ListViewEvent selector);
+    void addEventListenerListView(Object* target, SEL_ListViewEvent selector);
     
     /**
      * Changes scroll direction of scrollview.
@@ -166,33 +165,46 @@ public:
      */
     virtual void setDirection(SCROLLVIEW_DIR dir) override;
     
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
+    
+    void requestRefreshView();
     
 protected:
-    virtual bool addChild(UIWidget* widget) override{return UIScrollView::addChild(widget);};
-    virtual bool removeChild(UIWidget* widget) override{return UIScrollView::removeChild(widget);};
-    virtual void removeAllChildren() override{UIScrollView::removeAllChildren();};
-    virtual cocos2d::Array* getChildren() override{return UIScrollView::getChildren();};
+    virtual void addChild(Node* child) override{ScrollView::addChild(child);};
+    virtual void addChild(Node * child, int zOrder) override{ScrollView::addChild(child, zOrder);};
+    virtual void addChild(Node* child, int zOrder, int tag) override{ScrollView::addChild(child, zOrder, tag);};
+    virtual void removeChild(Node* widget, bool cleanup = true) override{ScrollView::removeChild(widget, cleanup);};
+    
+    virtual void removeAllChildren() override{removeAllChildrenWithCleanup(true);};
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override {ScrollView::removeAllChildrenWithCleanup(cleanup);};
+    virtual Vector<Node*>& getChildren() override{return ScrollView::getChildren();};
+    virtual const Vector<Node*>& getChildren() const override{return ScrollView::getChildren();};
+    virtual ssize_t getChildrenCount() const override {return ScrollView::getChildrenCount();};
+    virtual Node * getChildByTag(int tag) override {return ScrollView::getChildByTag(tag);};
+    virtual Widget* getChildByName(const char* name) override {return ScrollView::getChildByName(name);};
     virtual bool init() override;
     void updateInnerContainerSize();
-    void remedyLayoutParameter(UIWidget* item);
+    void remedyLayoutParameter(Widget* item);
     virtual void onSizeChanged() override;
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent();
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
+    void refreshView();
 protected:
     
-    UIWidget* _model;
-    cocos2d::Array* _items;
+    Widget* _model;
+    Vector<Widget*> _items;
     ListViewGravity _gravity;
     float _itemsMargin;
-    cocos2d::Object*       _listViewEventListener;
+    Object*       _listViewEventListener;
     SEL_ListViewEvent    _listViewEventSelector;
-    int _curSelectedIndex;
+    ssize_t _curSelectedIndex;
+    bool _refreshViewDirty;
 };
 
 }
+NS_CC_END
 
-#endif /* defined(__UIListView__) */
+#endif /* defined(__ListView__) */

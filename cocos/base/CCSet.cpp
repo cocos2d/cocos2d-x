@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -28,17 +29,17 @@ using namespace std;
 
 NS_CC_BEGIN
 
-Set::Set(void)
+__Set::__Set(void)
 {
     _set = new set<Object *>;
 }
 
-Set::Set(const Set &rSetObject)
+__Set::__Set(const __Set &r__SetObject)
 {
-    _set = new set<Object *>(*rSetObject._set);
+    _set = new set<Object *>(*r__SetObject._set);
 
     // call retain of members
-    SetIterator iter;
+    __SetIterator iter;
     for (iter = _set->begin(); iter != _set->end(); ++iter)
     {
         if (! (*iter))
@@ -50,20 +51,20 @@ Set::Set(const Set &rSetObject)
     }
 }
 
-Set::~Set(void)
+__Set::~__Set(void)
 {
     removeAllObjects();
     CC_SAFE_DELETE(_set);
 }
 
-void Set::acceptVisitor(DataVisitor &visitor)
+void __Set::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }
 
-Set * Set::create()
+__Set * __Set::create()
 {
-    Set * pRet = new Set();
+    __Set * pRet = new __Set();
     
     if (pRet != NULL)
     {
@@ -73,24 +74,24 @@ Set * Set::create()
     return pRet;
 }
 
-Set* Set::copy(void)
+__Set* __Set::copy(void)
 {
-    Set *pSet = new Set(*this);
+    __Set *p__Set = new __Set(*this);
 
-    return pSet;
+    return p__Set;
 }
 
-Set* Set::mutableCopy(void)
+__Set* __Set::mutableCopy(void)
 {
     return copy();
 }
 
-int Set::count(void)
+int __Set::count(void)
 {
     return (int)_set->size();
 }
 
-void Set::addObject(Object *pObject)
+void __Set::addObject(Object *pObject)
 {
     if (_set->count(pObject) == 0)
     {
@@ -99,7 +100,7 @@ void Set::addObject(Object *pObject)
     }
 }
 
-void Set::removeObject(Object *pObject)
+void __Set::removeObject(Object *pObject)
 {
     if (_set->erase(pObject) > 0)
     {
@@ -107,10 +108,10 @@ void Set::removeObject(Object *pObject)
     }
 }
 
-void Set::removeAllObjects()
+void __Set::removeAllObjects()
 {
-    SetIterator it = _set->begin();
-    SetIterator tmp;
+    __SetIterator it = _set->begin();
+    __SetIterator tmp;
 
     while (it != _set->end())
     {
@@ -128,29 +129,29 @@ void Set::removeAllObjects()
     }
 }
 
-bool Set::containsObject(Object *pObject)
+bool __Set::containsObject(Object *pObject)
 {
     return _set->find(pObject) != _set->end();
 }
 
-SetIterator Set::begin(void)
+__SetIterator __Set::begin(void)
 {
     return _set->begin();
 }
 
-SetIterator Set::end(void)
+__SetIterator __Set::end(void)
 {
     return _set->end();
 }
 
-Object* Set::anyObject()
+Object* __Set::anyObject()
 {
     if (!_set || _set->empty())
     {
         return 0;
     }
     
-    SetIterator it;
+    __SetIterator it;
 
     for( it = _set->begin(); it != _set->end(); ++it)
     {

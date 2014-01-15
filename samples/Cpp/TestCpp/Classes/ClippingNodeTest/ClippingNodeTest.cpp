@@ -7,6 +7,7 @@
 
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
 
 enum {
 	kTagTitleLabel = 1,
@@ -16,36 +17,21 @@ enum {
 	kTagContentNode = 102,
 };
 
-TESTLAYER_CREATE_FUNC(ScrollViewDemo);
-TESTLAYER_CREATE_FUNC(HoleDemo);
-TESTLAYER_CREATE_FUNC(ShapeTest);
-TESTLAYER_CREATE_FUNC(ShapeInvertedTest);
-TESTLAYER_CREATE_FUNC(SpriteTest);
-TESTLAYER_CREATE_FUNC(SpriteNoAlphaTest);
-TESTLAYER_CREATE_FUNC(SpriteInvertedTest);
-TESTLAYER_CREATE_FUNC(NestedTest);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest2);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest3);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest4);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest5);
-TESTLAYER_CREATE_FUNC(RawStencilBufferTest6);
-
-static NEWTESTFUNC createFunctions[] = {
-    CF(ScrollViewDemo),
-    CF(HoleDemo),
-    CF(ShapeTest),
-    CF(ShapeInvertedTest),
-    CF(SpriteTest),
-    CF(SpriteNoAlphaTest),
-    CF(SpriteInvertedTest),
-    CF(NestedTest),
-    CF(RawStencilBufferTest),
-    CF(RawStencilBufferTest2),
-    CF(RawStencilBufferTest3),
-    CF(RawStencilBufferTest4),
-    CF(RawStencilBufferTest5),
-    CF(RawStencilBufferTest6)
+static std::function<Layer*()> createFunctions[] = {
+    CL(ScrollViewDemo),
+    CL(HoleDemo),
+    CL(ShapeTest),
+    CL(ShapeInvertedTest),
+    CL(SpriteTest),
+    CL(SpriteNoAlphaTest),
+    CL(SpriteInvertedTest),
+    CL(NestedTest),
+    CL(RawStencilBufferTest),
+    CL(RawStencilBufferTest2),
+    CL(RawStencilBufferTest3),
+    CL(RawStencilBufferTest4),
+    CL(RawStencilBufferTest5),
+    CL(RawStencilBufferTest6)
 };
 
 static int sceneIdx=-1;
@@ -57,8 +43,6 @@ static Layer* nextAction()
     sceneIdx = sceneIdx % MAX_LAYER;
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 }
@@ -71,8 +55,6 @@ static Layer* backAction()
         sceneIdx += total;    
 
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 }
@@ -80,8 +62,6 @@ static Layer* backAction()
 static Layer* restartAction()
 {
     auto layer = (createFunctions[sceneIdx])();
-    layer->init();
-    layer->autorelease();
 
     return layer;
 } 
@@ -110,12 +90,12 @@ BaseClippingNodeTest::~BaseClippingNodeTest()
 	Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
 
-std::string BaseClippingNodeTest::title()
+std::string BaseClippingNodeTest::title() const
 {
 	return "Clipping Demo";
 }
 
-std::string BaseClippingNodeTest::subtitle()
+std::string BaseClippingNodeTest::subtitle() const
 {
 	return "";
 }
@@ -152,12 +132,12 @@ void BaseClippingNodeTest::setup()
 
 //#pragma mark - BasicTest
 
-std::string BasicTest::title()
+std::string BasicTest::title() const
 {
 	return "Basic Test";
 }
 
-std::string BasicTest::subtitle()
+std::string BasicTest::subtitle() const
 {
 	return "";
 }
@@ -231,12 +211,12 @@ Node* BasicTest::content()
 
 //#pragma mark - ShapeTest
 
-std::string ShapeTest::title()
+std::string ShapeTest::title() const
 {
 	return "Shape Basic Test";
 }
 
-std::string ShapeTest::subtitle()
+std::string ShapeTest::subtitle() const
 {
 	return "A DrawNode as stencil and Sprite as content";
 }
@@ -258,12 +238,12 @@ Node* ShapeTest::content()
 
 //#pragma mark - ShapeInvertedTest
 
-std::string ShapeInvertedTest::title()
+std::string ShapeInvertedTest::title() const
 {
 	return "Shape Inverted Basic Test";
 }
 
-std::string ShapeInvertedTest::subtitle()
+std::string ShapeInvertedTest::subtitle() const
 {
 	return "A DrawNode as stencil and Sprite as content, inverted";
 }
@@ -277,12 +257,12 @@ ClippingNode* ShapeInvertedTest::clipper()
 
 //#pragma mark - SpriteTest
 
-std::string SpriteTest::title()
+std::string SpriteTest::title() const
 {
 	return "Sprite Basic Test";
 }
 
-std::string SpriteTest::subtitle()
+std::string SpriteTest::subtitle() const
 {
 	return "A Sprite as stencil and DrawNode as content";
 }
@@ -310,12 +290,12 @@ Node* SpriteTest::content()
 
 //#pragma mark - SpriteNoAlphaTest
 
-std::string SpriteNoAlphaTest::title()
+std::string SpriteNoAlphaTest::title() const
 {
 	return "Sprite No Alpha Basic Test";
 }
 
-std::string SpriteNoAlphaTest::subtitle()
+std::string SpriteNoAlphaTest::subtitle() const
 {
 	return "A Sprite as stencil and DrawNode as content, no alpha";
 }
@@ -329,12 +309,12 @@ ClippingNode* SpriteNoAlphaTest::clipper()
 
 //#pragma mark - SpriteInvertedTest
 
-std::string SpriteInvertedTest::title()
+std::string SpriteInvertedTest::title() const
 {
 	return "Sprite Inverted Basic Test";
 }
 
-std::string SpriteInvertedTest::subtitle()
+std::string SpriteInvertedTest::subtitle() const
 {
 	return "A Sprite as stencil and DrawNode as content, inverted";
 }
@@ -349,12 +329,12 @@ ClippingNode* SpriteInvertedTest::clipper()
 
 //#pragma mark - NestedTest
 
-std::string NestedTest::title()
+std::string NestedTest::title() const
 {
 	return "Nested Test";
 }
 
-std::string NestedTest::subtitle()
+std::string NestedTest::subtitle() const
 {
 	return "Nest 9 Clipping Nodes, max is usually 8";
 }
@@ -401,12 +381,12 @@ HoleDemo::~HoleDemo()
     CC_SAFE_RELEASE(_holesStencil);
 }
 
-std::string HoleDemo::title()
+std::string HoleDemo::title() const
 {
 	return "Hole Demo";
 }
 
-std::string HoleDemo::subtitle()
+std::string HoleDemo::subtitle() const
 {
 	return "Touch/click to poke holes";
 }
@@ -489,12 +469,12 @@ void HoleDemo::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
 
 //#pragma mark - ScrollViewDemo
 
-std::string ScrollViewDemo::title()
+std::string ScrollViewDemo::title() const
 {
 	return "Scroll View Demo";
 }
 
-std::string ScrollViewDemo::subtitle()
+std::string ScrollViewDemo::subtitle() const
 {
 	return "Move/drag to scroll the content";
 }
@@ -585,15 +565,15 @@ static const Color4F _planeColor[] = {
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-    CC_SAFE_RELEASE(_sprite);
+
 }
 
-std::string RawStencilBufferTest::title()
+std::string RawStencilBufferTest::title() const
 {
 	return "Raw Stencil Tests";
 }
 
-std::string RawStencilBufferTest::subtitle()
+std::string RawStencilBufferTest::subtitle() const
 {
 	return "1:Default";
 }
@@ -604,10 +584,15 @@ void RawStencilBufferTest::setup()
     if (_stencilBits < 3) {
         CCLOGWARN("Stencil must be enabled for the current GLView.");
     }
-    _sprite = Sprite::create(s_pathGrossini);
-    _sprite->retain();
-    _sprite->setAnchorPoint(  Point(0.5, 0) );
-    _sprite->setScale( 2.5f );
+    
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        Sprite* sprite = Sprite::create(s_pathGrossini);
+        sprite->setAnchorPoint(  Point(0.5, 0) );
+        sprite->setScale( 2.5f );
+        _sprites.pushBack(sprite);
+    }
+
     Director::getInstance()->setAlphaBlending(true);
 }
 
@@ -617,8 +602,21 @@ void RawStencilBufferTest::draw()
     
     auto planeSize = winPoint * (1.0 / _planeCount);
     
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
+    Renderer *renderer = Director::getInstance()->getRenderer();
+    size_t neededCmdSize = _planeCount * 2 + 2;
+    if(_renderCmds.size() != neededCmdSize)
+    {
+        _renderCmds.resize(neededCmdSize);
+    }
+    
+    auto iter = _renderCmds.begin();
+    
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
+    renderer->addCommand(&(*iter));
+    ++iter;
+    
+
         
     for (int i = 0; i < _planeCount; i++) {
         
@@ -628,31 +626,60 @@ void RawStencilBufferTest::draw()
         auto spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
-        _sprite->setPosition( spritePoint );
-
-        this->setupStencilForClippingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-
-        DrawPrimitives::drawSolidRect(Point::ZERO, stencilPoint, Color4F(1, 1, 1, 1));
+        _sprites.at(i)->setPosition( spritePoint );
+        
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites.at(i)->visit();
         kmGLPopMatrix();
         
-        this->setupStencilForDrawingOnPlane(i);
-        CHECK_GL_ERROR_DEBUG();
-        
-        DrawPrimitives::drawSolidRect(Point::ZERO, winPoint, _planeColor[i]);
+        iter->init(0, _vertexZ);
+        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
+        renderer->addCommand(&(*iter));
+        ++iter;
         
         kmGLPushMatrix();
         this->transform();
-        _sprite->visit();
+        _sprites.at(i)->visit();
         kmGLPopMatrix();
     }
     
+    iter->init(0, _vertexZ);
+    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
+    renderer->addCommand(&(*iter));
+
+}
+
+void RawStencilBufferTest::onEnableStencil()
+{
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onDisableStencil()
+{
     glDisable(GL_STENCIL_TEST);
     CHECK_GL_ERROR_DEBUG();
+}
+
+void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Point& pt)
+{
+    this->setupStencilForClippingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, Color4F(1, 1, 1, 1));
+}
+
+void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Point& pt)
+{
+    this->setupStencilForDrawingOnPlane(planeIndex);
+    CHECK_GL_ERROR_DEBUG();
+    
+    DrawPrimitives::drawSolidRect(Point::ZERO, pt, _planeColor[planeIndex]);
 }
 
 void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
@@ -675,7 +702,7 @@ void RawStencilBufferTest::setupStencilForDrawingOnPlane(GLint plane)
 
 //@implementation RawStencilBufferTest2
 
-std::string RawStencilBufferTest2::subtitle()
+std::string RawStencilBufferTest2::subtitle() const
 {
 	return "2:DepthMask:FALSE";
 }
@@ -694,7 +721,7 @@ void RawStencilBufferTest2::setupStencilForDrawingOnPlane(GLint plane)
 
 //@implementation RawStencilBufferTest3
 
-std::string RawStencilBufferTest3::subtitle()
+std::string RawStencilBufferTest3::subtitle() const
 {
 	return "3:DepthTest:DISABLE,DepthMask:FALSE";
 }
@@ -715,7 +742,7 @@ void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 
 //@implementation RawStencilBufferTest4
 
-std::string RawStencilBufferTest4::subtitle()
+std::string RawStencilBufferTest4::subtitle() const
 {
 	return "4:DepthMask:FALSE,AlphaTest:ENABLE";
 }
@@ -732,7 +759,11 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram(program );
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
+    
 #endif
 }
 
@@ -747,7 +778,7 @@ void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
 
 //@implementation RawStencilBufferTest5
 
-std::string RawStencilBufferTest5::subtitle()
+std::string RawStencilBufferTest5::subtitle() const
 {
 	return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
 }
@@ -765,7 +796,10 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram( program );
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
 #endif
 }
 
@@ -781,7 +815,7 @@ void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
 
 //@implementation RawStencilBufferTest6
 
-std::string RawStencilBufferTest6::subtitle()
+std::string RawStencilBufferTest6::subtitle() const
 {
 	return "6:ManualClear,AlphaTest:ENABLE";
 }
@@ -831,7 +865,10 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     auto program = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
     GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
     program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-    _sprite->setShaderProgram(program);
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _sprites.at(i)->setShaderProgram(program );
+    }
 #endif
     glFlush();
 }

@@ -23,11 +23,13 @@
  ****************************************************************************/
 
 #include "CCPhysicsShapeInfo_chipmunk.h"
-#if (CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK)
+#if CC_USE_PHYSICS
 #include <algorithm>
+#include <unordered_map>
+
 NS_CC_BEGIN
 
-std::map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::_map;
+std::unordered_map<cpShape*, PhysicsShapeInfo*> PhysicsShapeInfo::_map;
 cpBody* PhysicsShapeInfo::_sharedBody = nullptr;
 
 PhysicsShapeInfo::PhysicsShapeInfo(PhysicsShape* shape)
@@ -113,4 +115,4 @@ void PhysicsShapeInfo::removeAll()
 }
 
 NS_CC_END
-#endif // CC_PHYSICS_ENGINE == CC_PHYSICS_CHIPMUNK
+#endif // CC_USE_PHYSICS

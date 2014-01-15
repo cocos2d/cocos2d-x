@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
  http://www.cocos2d-x.org
 
@@ -33,36 +34,38 @@ NS_CC_BEGIN
 
 #define kMaxStringLen (1024*100)
 
-String::String()
+__String::__String()
     :_string("")
 {}
 
-String::String(const char * str)
+__String::__String(const char * str)
     :_string(str)
 {}
 
-String::String(const std::string& str)
+__String::__String(const std::string& str)
     :_string(str)
 {}
 
-String::String(const String& str)
+__String::__String(const __String& str)
     :_string(str.getCString())
 {}
 
-String::~String()
+__String::~__String()
 {
-    CCLOGINFO("deallocing String: %p", this);
+    CCLOGINFO("deallocing __String: %p", this);
 
     _string.clear();
 }
 
-String& String::operator= (const String& other)
+__String& __String::operator= (const __String& other)
 {
-    _string = other._string;
+    if (this != &other) {
+        _string = other._string;
+    }
     return *this;
 }
 
-bool String::initWithFormatAndValist(const char* format, va_list ap)
+bool __String::initWithFormatAndValist(const char* format, va_list ap)
 {
     bool bRet = false;
     char* pBuf = (char*)malloc(kMaxStringLen);
@@ -76,7 +79,7 @@ bool String::initWithFormatAndValist(const char* format, va_list ap)
     return bRet;
 }
 
-bool String::initWithFormat(const char* format, ...)
+bool __String::initWithFormat(const char* format, ...)
 {
     bool bRet = false;
     _string.clear();
@@ -91,7 +94,7 @@ bool String::initWithFormat(const char* format, ...)
     return bRet;
 }
 
-int String::intValue() const
+int __String::intValue() const
 {
     if (length() == 0)
     {
@@ -100,7 +103,7 @@ int String::intValue() const
     return atoi(_string.c_str());
 }
 
-unsigned int String::uintValue() const
+unsigned int __String::uintValue() const
 {
     if (length() == 0)
     {
@@ -109,7 +112,7 @@ unsigned int String::uintValue() const
     return (unsigned int)atoi(_string.c_str());
 }
 
-float String::floatValue() const
+float __String::floatValue() const
 {
     if (length() == 0)
     {
@@ -118,7 +121,7 @@ float String::floatValue() const
     return (float)atof(_string.c_str());
 }
 
-double String::doubleValue() const
+double __String::doubleValue() const
 {
     if (length() == 0)
     {
@@ -127,7 +130,7 @@ double String::doubleValue() const
     return atof(_string.c_str());
 }
 
-bool String::boolValue() const
+bool __String::boolValue() const
 {
     if (length() == 0)
     {
@@ -141,27 +144,27 @@ bool String::boolValue() const
     return true;
 }
 
-const char* String::getCString() const
+const char* __String::getCString() const
 {
     return _string.c_str();
 }
 
-unsigned int String::length() const
+int __String::length() const
 {
-    return _string.length();
+    return static_cast<int>(_string.length());
 }
 
-int String::compare(const char * pStr) const
+int __String::compare(const char * pStr) const
 {
     return strcmp(getCString(), pStr);
 }
 
-void String::append(const std::string& str)
+void __String::append(const std::string& str)
 {
     _string.append(str);
 }
 
-void String::appendWithFormat(const char* format, ...)
+void __String::appendWithFormat(const char* format, ...)
 {
     va_list ap;
     va_start(ap, format);
@@ -178,32 +181,32 @@ void String::appendWithFormat(const char* format, ...)
     
 }
 
-Array* String::componentsSeparatedByString(const char *delimiter)
+__Array* __String::componentsSeparatedByString(const char *delimiter)
 {
-    Array* result = Array::create();
-    
-    int cutAt;
-    while( (cutAt = _string.find_first_of(delimiter)) != _string.npos )
+    __Array* result = __Array::create();
+    std::string strTmp = _string;
+    size_t cutAt;
+    while( (cutAt = strTmp.find_first_of(delimiter)) != strTmp.npos )
     {
         if(cutAt > 0)
         {
-            result->addObject(String::create(_string.substr(0, cutAt)));
+            result->addObject(__String::create(strTmp.substr(0, cutAt)));
         }
-        _string = _string.substr(cutAt + 1);
+        strTmp = strTmp.substr(cutAt + 1);
     }
     
-    if(_string.length() > 0)
+    if(strTmp.length() > 0)
     {
-        result->addObject(String::create(_string));
+        result->addObject(__String::create(strTmp));
     }
     
     return result;
 }
 
-bool String::isEqual(const Object* pObject)
+bool __String::isEqual(const Object* pObject)
 {
     bool bRet = false;
-    const String* pStr = dynamic_cast<const String*>(pObject);
+    const __String* pStr = dynamic_cast<const __String*>(pObject);
     if (pStr != NULL)
     {
         if (0 == _string.compare(pStr->_string))
@@ -214,16 +217,16 @@ bool String::isEqual(const Object* pObject)
     return bRet;
 }
 
-String* String::create(const std::string& str)
+__String* __String::create(const std::string& str)
 {
-    String* ret = new String(str);
+    __String* ret = new __String(str);
     ret->autorelease();
     return ret;
 }
 
-String* String::createWithData(const unsigned char* data, unsigned long nLen)
+__String* __String::createWithData(const unsigned char* data, int nLen)
 {
-    String* ret = NULL;
+    __String* ret = NULL;
     if (data != NULL)
     {
         char* pStr = (char*)malloc(nLen+1);
@@ -235,16 +238,16 @@ String* String::createWithData(const unsigned char* data, unsigned long nLen)
                 memcpy(pStr, data, nLen);
             }
             
-            ret = String::create(pStr);
+            ret = __String::create(pStr);
             free(pStr);
         }
     }
     return ret;
 }
 
-String* String::createWithFormat(const char* format, ...)
+__String* __String::createWithFormat(const char* format, ...)
 {
-    String* ret = String::create("");
+    __String* ret = __String::create("");
     va_list ap;
     va_start(ap, format);
     ret->initWithFormatAndValist(format, ap);
@@ -253,25 +256,20 @@ String* String::createWithFormat(const char* format, ...)
     return ret;
 }
 
-String* String::createWithContentsOfFile(const char* filename)
+__String* __String::createWithContentsOfFile(const char* filename)
 {
-    long size = 0;
-    unsigned char* data = 0;
-    String* ret = NULL;
-    data = FileUtils::getInstance()->getFileData(filename, "rb", &size);
-    ret = String::createWithData(data, size);
-    free(data);
-    return ret;
+    std::string str = FileUtils::getInstance()->getStringFromFile(filename);
+    return __String::create(std::move(str));
 }
 
-void String::acceptVisitor(DataVisitor &visitor)
+void __String::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }
 
-String* String::clone() const
+__String* __String::clone() const
 {
-    return String::create(_string);
+    return __String::create(_string);
 }
 
 NS_CC_END

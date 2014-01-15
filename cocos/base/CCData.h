@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,41 +27,26 @@
 #define __CCDATA_H__
 
 #include "CCPlatformMacros.h"
-#include "CCObject.h"
+#include <stdint.h> // for ssize_t on android
+#include <string>   // for ssize_t on linux
+#include "CCStdC.h" // for ssize_t on window
 
 NS_CC_BEGIN
 
-class CC_DLL Data : public Object
+class CC_DLL Data
 {
 public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Data(unsigned char *pBytes, const unsigned long nSize);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    Data(Data *pData);
-    /**
-     * @js NA
-     * @lua NA
-     */
+    static const Data Null;
+    
+    Data();
+    Data(const Data& other);
+    Data(Data&& other);
     ~Data();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    static Data* create(unsigned char *pBytes, const unsigned long nSize)
-    {
-        Data* pRet = new Data(pBytes, nSize);
-        if (pRet)
-        {
-            pRet->autorelease();
-        }
-        return pRet;
-    }    
+    
+    // Assignment operator
+    Data& operator= (const Data& other);
+    Data& operator= (Data&& other);
+    
     /**
      * @js NA
      * @lua NA
@@ -70,17 +56,36 @@ public:
      * @js NA
      * @lua NA
      */
-    unsigned long getSize() const;
+    ssize_t getSize() const;
     
-    /** override functions
-     * @js NA
-     * @lua NA
+    /** Copies the buffer pointer and its size.
+     *  @note This method will copy the whole buffer.
+     *        Developer should free the pointer after invoking this method.
+     *  @see Data::fastSet
      */
-    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
-
+    void copy(unsigned char* bytes, const ssize_t size);
+    
+    /** Fast set the buffer pointer and its size. Please use it carefully.
+     *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
+     *         since in the destructor of Data, the buffer will be deleted by 'free'.
+     *  @note 1. This method will move the ownship of 'bytes'pointer to Data,
+     *        2. The pointer should not be used outside after it was passed to this method.
+     *  @see Data::copy
+     */
+    void fastSet(unsigned char* bytes, const ssize_t size);
+    
+    /** Clears data, free buffer and reset data size */
+    void clear();
+    
+    /** Check whether the data is null. */
+    bool isNull() const;
+    
+private:
+    void move(Data& other);
+    
 private:
     unsigned char* _bytes;
-    unsigned long _size;
+    ssize_t _size;
 };
 
 NS_CC_END

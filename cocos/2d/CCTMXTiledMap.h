@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,6 +29,7 @@ THE SOFTWARE.
 
 #include "CCNode.h"
 #include "CCTMXObjectGroup.h"
+#include "CCValue.h"
 
 NS_CC_BEGIN
 
@@ -109,27 +111,11 @@ object->getProperty(name_of_the_property);
 class CC_DLL TMXTiledMap : public Node
 {
 public:
-    /**
-     * @js ctor
-     */
-    TMXTiledMap();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~TMXTiledMap();
-
     /** creates a TMX Tiled Map with a TMX file.*/
     static TMXTiledMap* create(const std::string& tmxFile);
 
     /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
-
-    /** initializes a TMX Tiled Map with a TMX file */
-    bool initWithTMXFile(const std::string& tmxFile);
-
-    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
-    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
 
     /** return the TMXLayer for the specific layer */
     TMXLayer* getLayer(const std::string& layerName) const;
@@ -137,7 +123,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
@@ -145,19 +131,19 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
-    String *getProperty(const std::string& propertyName) const;
+    Value getProperty(const std::string& propertyName) const;
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE String *propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
-    Dictionary* getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Dictionary* propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
+    Value getPropertiesForGID(int GID) const;
+    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** the map's size property measured in tiles */
     inline const Size& getMapSize() const { return _mapSize; };
@@ -172,26 +158,41 @@ public:
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
     /** object groups */
-    inline Array* getObjectGroups() const { return _objectGroups; };
-    inline void setObjectGroups(Array* groups) {
-        CC_SAFE_RETAIN(groups);
-        CC_SAFE_RELEASE(_objectGroups);
+    inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
+    inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
     };
     
     /** properties */
-    inline Dictionary* getProperties() const { return _properties; };
-    inline void setProperties(Dictionary* properties) {
-        CC_SAFE_RETAIN(properties);
-        CC_SAFE_RELEASE(_properties);
+    inline ValueMap& getProperties() { return _properties; };
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
+
+    virtual std::string getDescription() const override;
+
+protected:
+    /**
+     * @js ctor
+     */
+    TMXTiledMap();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~TMXTiledMap();
+
+    /** initializes a TMX Tiled Map with a TMX file */
+    bool initWithTMXFile(const std::string& tmxFile);
+
+    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+    bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-private:
     TMXLayer * parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
-protected:
+
     /** the map's size property measured in tiles */
     Size _mapSize;
     /** the tiles's size property measured in pixels */
@@ -199,12 +200,15 @@ protected:
     /** map orientation */
     int _mapOrientation;
     /** object groups */
-    Array* _objectGroups;
+    Vector<TMXObjectGroup*> _objectGroups;
     /** properties */
-    Dictionary* _properties;
+    ValueMap _properties;
     
     //! tile properties
-    Dictionary* _tileProperties;
+    ValueMapIntKey _tileProperties;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);
 
 };
 

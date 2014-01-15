@@ -300,45 +300,6 @@ end
 rawset(CCLabelAtlas,"create",CCLabelAtlasDeprecated.create)
 --functions of CCLabelAtlas will be deprecated end
 
---functions of CCCamera will be deprecated begin
-local CCCameraDeprecated = {}
-function CCCameraDeprecated.setUpXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setUpXYZ","CCCameraDeprecated:setUp")
-    return self:setUp(...)
-end
-rawset(CCCamera,"setUpXYZ",CCCameraDeprecated.setUpXYZ)
-
-function CCCameraDeprecated.getUpXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getUpXYZ","CCCameraDeprecated:getUp")
-    return self:getUp()
-end
-rawset(CCCamera,"getUpXYZ",CCCameraDeprecated.getUpXYZ)
-
-function CCCameraDeprecated.setEyeXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setEyeXYZ","CCCameraDeprecated:setEye")
-    return self:setEye(...)
-end
-rawset(CCCamera,"setEyeXYZ",CCCameraDeprecated.setEyeXYZ)
-
-function CCCameraDeprecated.getEyeXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getEyeXYZ","CCCameraDeprecated:getEye")
-    return self:getEye()
-end
-rawset(CCCamera,"getEyeXYZ",CCCameraDeprecated.getEyeXYZ)
-
-function CCCameraDeprecated.setCenterXYZ(self,...)
-    deprecatedTip("CCCameraDeprecated:setCenterXYZ","CCCameraDeprecated:setCenter")
-    return self:setCenter(...)
-end
-rawset(CCCamera,"setCenterXYZ",CCCameraDeprecated.setCenterXYZ)
-
-function CCCameraDeprecated.getCenterXYZ(self)
-    deprecatedTip("CCCameraDeprecated:getCenterXYZ","CCCameraDeprecated:getCenter")
-    return self:getCenter()
-end
-rawset(CCCamera,"getCenterXYZ",CCCameraDeprecated.getCenterXYZ)
---functions of CCCamera will be deprecated end
-
 
 ---------------------------
 --global functions wil be deprecated, begin
@@ -591,20 +552,20 @@ rawset(_G,"ccpIntersectPoint",ccpIntersectPoint)
 
 
 local function vertex2(x,y)
-    deprecatedTip("vertex2(x,y)","Vertex2F(x,y)")
-    return Vertex2F(x,y)
+    deprecatedTip("vertex2(x,y)","cc.vertex2F(x,y)")
+    return cc.vertex2F(x,y)
 end
 rawset(_G,"vertex2",vertex2)
 
 local function vertex3(x,y,z)
-    deprecatedTip("vertex3(x,y,z)","Vertex3F(x,y,z)")
-    return Vertex3F(x,y,z)
+    deprecatedTip("vertex3(x,y,z)","cc.Vertex3F(x,y,z)")
+    return cc.Vertex3F(x,y,z)
 end
 rawset(_G,"vertex3",vertex3)
 
 local function tex2(u,v)
-    deprecatedTip("tex2(u,v)","Tex2F(u,v)")
-    return Tex2F(u,v)
+    deprecatedTip("tex2(u,v)","cc.tex2f(u,v)")
+    return cc.tex2f(u,v)
 end
 rawset(_G,"tex2",tex2) 
 
@@ -615,108 +576,115 @@ end
 rawset(_G,"ccc4BFromccc4F",ccc4BFromccc4F)
 
 local function ccColor3BDeprecated()
-    deprecatedTip("ccColor3B","Color3B")
-    return Color3B
+    deprecatedTip("ccColor3B","cc.c3b(0,0,0)")
+    return cc.c3b(0,0,0)
 end
-_G["ccColor3B"] = ccColor3BDeprecated()
+_G["ccColor3B"] = ccColor3BDeprecated
 
 local function ccColor4BDeprecated()
-    deprecatedTip("ccColor4B","Color4B")
-    return Color4B
+    deprecatedTip("ccColor4B","cc.c4b(0,0,0,0)")
+    return cc.c4b(0,0,0,0)
 end
-_G["ccColor4B"] = ccColor4BDeprecated()
+_G["ccColor4B"] = ccColor4BDeprecated
 
 local function ccColor4FDeprecated()
-    deprecatedTip("ccColor4F","Color4F")
-    return Color4F
+    deprecatedTip("ccColor4F","cc.c4f(0.0,0.0,0.0,0.0)")
+    return cc.c4f(0.0,0.0,0.0,0.0)
 end
-_G["ccColor4F"] = ccColor4FDeprecated()
+_G["ccColor4F"] = ccColor4FDeprecated
 
 local function ccVertex2FDeprecated()
-    deprecatedTip("ccVertex2F","Vertex2F")
-    return Vertex2F
+    deprecatedTip("ccVertex2F","cc.vertex2F(0.0,0.0)")
+    return cc.vertex2F(0.0,0.0)
 end
-_G["ccVertex2F"] = ccVertex2FDeprecated()
+_G["ccVertex2F"] = ccVertex2FDeprecated
 
 local function ccVertex3FDeprecated()
-    deprecatedTip("ccVertex3F","Vertex3F")
-    return Vertex3F
+    deprecatedTip("ccVertex3F","cc.Vertex3F(0.0, 0.0, 0.0)")
+    return cc.Vertex3F(0.0, 0.0, 0.0)
 end
-_G["ccVertex3F"] = ccVertex3FDeprecated()
+_G["ccVertex3F"] = ccVertex3FDeprecated
 
 local function ccTex2FDeprecated()
-    deprecatedTip("ccTex2F","Tex2F")
-    return Tex2F
+    deprecatedTip("ccTex2F","cc.tex2F(0.0, 0.0)")
+    return cc.tex2F(0.0, 0.0)
 end
-_G["ccTex2F"] = ccTex2FDeprecated()
+_G["ccTex2F"] = ccTex2FDeprecated
 
 local function ccPointSpriteDeprecated()
-    deprecatedTip("ccPointSprite","PointSprite")
-    return PointSprite
+    deprecatedTip("ccPointSprite","cc.PointSprite(cc.vertex2F(0.0, 0.0),cc.c4b(0.0, 0.0, 0.0),0)")
+    return cc.PointSprite(cc.vertex2F(0.0, 0.0),cc.c4b(0.0, 0.0, 0.0),0)
 end
-_G["ccPointSprite"] = ccPointSpriteDeprecated()
+_G["ccPointSprite"] = ccPointSpriteDeprecated
 
 local function ccQuad2Deprecated()
-    deprecatedTip("ccQuad2","Quad2")
-    return Quad2
+    deprecatedTip("ccQuad2","cc.Quad2(cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0))")
+    return cc.Quad2(cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0), cc.vertex2F(0.0, 0.0))
 end
-_G["ccQuad2"] = ccQuad2Deprecated()
+_G["ccQuad2"] = ccQuad2Deprecated
 
 local function ccQuad3Deprecated()
-    deprecatedTip("ccQuad3","Quad3")
-    return Quad3
+    deprecatedTip("ccQuad3","cc.Quad3(cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0))")
+    return cc.Quad3(cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0), cc.Vertex3F(0.0, 0.0 ,0.0))
 end
-_G["ccQuad3"] = ccQuad3Deprecated()
+_G["ccQuad3"] = ccQuad3Deprecated
 
 local function ccV2FC4BT2FDeprecated()
-    deprecatedTip("ccV2F_C4B_T2F","V2F_C4B_T2F")
-    return V2F_C4B_T2F
+    deprecatedTip("ccV2F_C4B_T2F","cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0))")
+    return cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0))
 end
-_G["ccV2F_C4B_T2F"] = ccV2FC4BT2FDeprecated()
+_G["ccV2F_C4B_T2F"] = ccV2FC4BT2FDeprecated
 
 
 local function ccV2FC4FT2FDeprecated()
-    deprecatedTip("ccV2F_C4F_T2F","V2F_C4F_T2F")
-    return V2F_C4F_T2F
+    deprecatedTip("ccV2F_C4F_T2F","cc.V2F_C4F_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0 , 0.0 , 0.0 ), cc.tex2F(0.0, 0.0))")
+    return cc.V2F_C4F_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0 , 0.0 , 0.0), cc.tex2F(0.0, 0.0))
 end
-_G["ccV2F_C4F_T2F"] = ccV2FC4FT2FDeprecated()
+_G["ccV2F_C4F_T2F"] = ccV2FC4FT2FDeprecated
 
 local function ccV3FC4BT2FDeprecated()
-    deprecatedTip("ccV3F_C4B_T2F","V3F_C4B_T2F")
-    return V3F_C4B_T2F
+    deprecatedTip("ccV3F_C4B_T2F","cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0 , 0, 0 ), cc.tex2F(0.0, 0.0))")
+    return cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0 , 0, 0 ), cc.tex2F(0.0, 0.0))
 end
-_G["ccV3F_C4B_T2F"] = ccV3FC4BT2FDeprecated()
+_G["ccV3F_C4B_T2F"] = ccV3FC4BT2FDeprecated
 
 local function ccV2FC4BT2FQuadDeprecated()
-    deprecatedTip("ccV2F_C4B_T2F_Quad","V2F_C4B_T2F_Quad")
-    return V2F_C4B_T2F_Quad
+    deprecatedTip("ccV2F_C4B_T2F_Quad","cc.V2F_C4B_T2F_Quad(cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)))")
+    return cc.V2F_C4B_T2F_Quad(cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)))
 end
-_G["ccV2F_C4B_T2F_Quad"] = ccV2FC4BT2FQuadDeprecated()
+_G["ccV2F_C4B_T2F_Quad"] = ccV2FC4BT2FQuadDeprecated
 
 local function ccV3FC4BT2FQuadDeprecated()
-    deprecatedTip("ccV3F_C4B_T2F_Quad","V3F_C4B_T2F_Quad")
-    return V3F_C4B_T2F_Quad
+    deprecatedTip("ccV3F_C4B_T2F_Quad","cc.V3F_C4B_T2F_Quad(_tl, _bl, _tr, _br)")
+    return cc.V3F_C4B_T2F_Quad(cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)), cc.V3F_C4B_T2F(cc.vertex3F(0.0, 0.0, 0.0), cc.c4b(0 , 0, 0, 0 ), cc.tex2F(0.0, 0.0)))
 end
-_G["ccV3F_C4B_T2F_Quad"] = ccV3FC4BT2FQuadDeprecated()
+_G["ccV3F_C4B_T2F_Quad"] = ccV3FC4BT2FQuadDeprecated
 
 local function ccV2FC4FT2FQuadDeprecated()
-    deprecatedTip("ccV2F_C4F_T2F_Quad","V2F_C4F_T2F_Quad")
-    return V2F_C4F_T2F_Quad
+    deprecatedTip("ccV2F_C4F_T2F_Quad","cc.V2F_C4F_T2F_Quad(_bl, _br, _tl, _tr)")
+    return cc.V2F_C4F_T2F_Quad(cc.V2F_C4F_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0, 0.0, 0.0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4F_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0, 0.0, 0.0 ), cc.tex2F(0.0, 0.0)), cc.V3F_C4B_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0, 0.0, 0.0 ), cc.tex2F(0.0, 0.0)), cc.V2F_C4F_T2F(cc.vertex2F(0.0, 0.0), cc.c4f(0.0 , 0.0, 0.0, 0.0 ), cc.tex2F(0.0, 0.0)))
 end
-_G["ccV2F_C4F_T2F_Quad"] = ccV2FC4FT2FQuadDeprecated()
+_G["ccV2F_C4F_T2F_Quad"] = ccV2FC4FT2FQuadDeprecated
 
 local function ccT2FQuadDeprecated()
-    deprecatedTip("ccT2F_Quad","T2F_Quad")
-    return T2F_Quad
+    deprecatedTip("ccT2F_Quad","cc.T2F_Quad(_bl, _br, _tl, _tr)")
+    return cc.T2F_Quad(cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0))
 end
-_G["ccT2F_Quad"] = ccT2FQuadDeprecated()
+_G["ccT2F_Quad"] = ccT2FQuadDeprecated
 
 local function ccAnimationFrameDataDeprecated()
-    deprecatedTip("ccAnimationFrameData","AnimationFrameData")
-    return AnimationFrameData
+    deprecatedTip("ccAnimationFrameData","cc.AnimationFrameData( _texCoords, _delay, _size)")
+    return cc.AnimationFrameData(cc.T2F_Quad(cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0), cc.tex2F(0.0,0.0)), 0, cc.size(0,0))
 end
-_G["ccAnimationFrameData"] = ccAnimationFrameDataDeprecated()
+_G["ccAnimationFrameData"] = ccAnimationFrameDataDeprecated
 
+
+
+local function tex2(u,v)
+    deprecatedTip("tex2(u,v)","cc.tex2f(u,v)")
+    return cc.tex2f(u,v)
+end
+rawset(_G,"tex2",tex2) 
 
 --functions of CCControl will be deprecated end
 local CCControlDeprecated = { }
@@ -1047,3 +1015,85 @@ function CCLayerDeprecated.isKeypadEnabled(self)
 end
 rawset(cc.Layer, "isKeypadEnabled", CCLayerDeprecated.isKeypadEnabled )
 --functions of Layer will be deprecated end
+
+--functions of ccs.GUIReader will be deprecated begin
+local CCSGUIReaderDeprecated = { }
+function CCSGUIReaderDeprecated.purgeGUIReader()
+    deprecatedTip("ccs.GUIReader:purgeGUIReader","ccs.GUIReader:destroyInstance")
+    return ccs.GUIReader:destroyInstance()
+end
+rawset(ccs.GUIReader,"purgeGUIReader",CCSGUIReaderDeprecated.purgeGUIReader)
+--functions of ccs.GUIReader will be deprecated end
+
+--functions of ccs.ActionManagerEx will be deprecated begin
+local CCSActionManagerExDeprecated = { }
+function CCSActionManagerExDeprecated.destroyActionManager()
+    deprecatedTip("ccs.ActionManagerEx:destroyActionManager","ccs.ActionManagerEx:destroyInstance")
+    return ccs.ActionManagerEx:destroyInstance()
+end
+rawset(ccs.ActionManagerEx,"destroyActionManager",CCSActionManagerExDeprecated.destroyActionManager)
+--functions of ccs.ActionManagerEx will be deprecated end
+
+--functions of ccs.SceneReader will be deprecated begin
+local CCSSceneReaderDeprecated = { }
+function CCSSceneReaderDeprecated.destroySceneReader(self)
+    deprecatedTip("ccs.SceneReader:destroySceneReader","ccs.SceneReader:destroyInstance")
+    return self:destroyInstance()
+end
+rawset(ccs.SceneReader,"destroySceneReader",CCSSceneReaderDeprecated.destroySceneReader)
+--functions of ccs.SceneReader will be deprecated end
+
+--functions of CCArmatureDataManager will be deprecated begin
+local CCArmatureDataManagerDeprecated = { }
+function CCArmatureDataManagerDeprecated.sharedArmatureDataManager()
+    deprecatedTip("CCArmatureDataManager:sharedArmatureDataManager","ccs.ArmatureDataManager:getInstance")
+    return ccs.ArmatureDataManager:getInstance()
+end
+rawset(CCArmatureDataManager,"sharedArmatureDataManager",CCArmatureDataManagerDeprecated.sharedArmatureDataManager)
+
+function CCArmatureDataManagerDeprecated.purge()
+    deprecatedTip("CCArmatureDataManager:purge","ccs.ArmatureDataManager:destoryInstance")
+    return ccs.ArmatureDataManager:destoryInstance() 
+end
+rawset(CCArmatureDataManager,"purge",CCArmatureDataManagerDeprecated.purge)
+--functions of CCArmatureDataManager will be deprecated end
+
+--functions of GUIReader will be deprecated begin
+local GUIReaderDeprecated = { }
+function GUIReaderDeprecated.shareReader()
+    deprecatedTip("GUIReader:shareReader","ccs.GUIReader:getInstance")
+    return ccs.GUIReader:getInstance()
+end
+rawset(GUIReader,"shareReader",GUIReaderDeprecated.shareReader)
+
+function GUIReaderDeprecated.purgeGUIReader()
+    deprecatedTip("GUIReader:purgeGUIReader","ccs.GUIReader:destroyInstance")
+    return ccs.GUIReader:destroyInstance()
+end
+rawset(GUIReader,"purgeGUIReader",GUIReaderDeprecated.purgeGUIReader)
+--functions of GUIReader will be deprecated end
+
+--functions of SceneReader will be deprecated begin
+local SceneReaderDeprecated = { }
+function SceneReaderDeprecated.sharedSceneReader()
+    deprecatedTip("SceneReader:sharedSceneReader","ccs.SceneReader:getInstance")
+    return ccs.SceneReader:getInstance()
+end
+rawset(SceneReader,"sharedSceneReader",SceneReaderDeprecated.sharedSceneReader)
+
+function SceneReaderDeprecated.purgeSceneReader(self)
+    deprecatedTip("SceneReader:purgeSceneReader","ccs.SceneReader:destroyInstance")
+    return self:destroyInstance()
+end
+rawset(SceneReader,"purgeSceneReader",SceneReaderDeprecated.purgeSceneReader)
+--functions of SceneReader will be deprecated end
+
+--functions of CCEGLView will be deprecated begin
+local CCEGLViewDeprecated = { }
+function CCEGLViewDeprecated.sharedOpenGLView()
+    deprecatedTip("CCEGLView:sharedOpenGLView","cc.EGLView:getInstance")
+    return cc.EGLView:getInstance()
+end
+rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
+--functions of CCEGLView will be deprecated end
+

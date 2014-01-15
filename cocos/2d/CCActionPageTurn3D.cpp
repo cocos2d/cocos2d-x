@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      Sindesso Pty Ltd http://www.sindesso.com/
+Copyright (c) 2010-2012 cocos2d-x.org
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -28,21 +29,21 @@ NS_CC_BEGIN
 
 PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 {
-    PageTurn3D *pAction = new PageTurn3D();
+    PageTurn3D *action = new PageTurn3D();
 
-    if (pAction)
+    if (action)
     {
-        if (pAction->initWithDuration(duration, gridSize))
+        if (action->initWithDuration(duration, gridSize))
         {
-            pAction->autorelease();
+            action->autorelease();
         }
         else
         {
-            CC_SAFE_RELEASE_NULL(pAction);
+            CC_SAFE_RELEASE_NULL(action);
         }
     }
 
-    return pAction;
+    return action;
 }
 
 PageTurn3D *PageTurn3D::clone() const

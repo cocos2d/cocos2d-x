@@ -19,6 +19,8 @@ struct {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
+    { "AUnitTest", []() { return new UnitTestScene(); }},
+    { "ANewRenderTest", []() { return new NewRendererTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -36,6 +38,7 @@ struct {
 #endif
 	{ "CocosDenshionTest", []() { return new CocosDenshionTestScene(); } },
 	{ "ConfigurationTest", []() { return new ConfigurationTestScene(); } },
+	{ "ConsoleTest", []() { return new ConsoleTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
@@ -158,7 +161,7 @@ void TestController::menuCallback(Object * sender)
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();
 
-    if (scene && scene->initTest())
+    if (scene)
     {
         scene->runThisTest();
         scene->release();

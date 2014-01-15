@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010      ForzeField Studios S.L. http://forzefield.com
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,22 +30,21 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-
 #if CC_USE_ARRAY_VECTOR
 
 //  ----------------------------------------------------------------------------------
 // std::vector implementation
 //  ----------------------------------------------------------------------------------
 
-Array::Array()
+__Array::__Array()
 : data(NULL)
 {
     init();
 }
 
-Array* Array::create()
+__Array* __Array::create()
 {
-    Array* array = new Array();
+    __Array* array = new __Array();
 
     if (array && array->initWithCapacity(7))
     {
@@ -58,9 +58,9 @@ Array* Array::create()
     return array;
 }
 
-Array* Array::createWithObject(Object* object)
+__Array* __Array::createWithObject(Object* object)
 {
-    Array* array = new Array();
+    __Array* array = new __Array();
 
     if (array && array->initWithObject(object))
     {
@@ -74,12 +74,12 @@ Array* Array::createWithObject(Object* object)
     return array;
 }
 
-Array* Array::create(Object* object, ...)
+__Array* __Array::create(Object* object, ...)
 {
     va_list args;
     va_start(args,object);
 
-    Array* array = create();
+    __Array* array = create();
     if (array && object)
     {
         array->addObject(object);
@@ -100,16 +100,16 @@ Array* Array::create(Object* object, ...)
     return array;
 }
 
-Array* Array::createWithArray(Array* otherArray)
+__Array* __Array::createWithArray(__Array* otherArray)
 {
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(long capacity)
+__Array* __Array::createWithCapacity(int capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
-    Array* array = new Array();
+    __Array* array = new __Array();
     
     if (array && array->initWithCapacity(capacity))
     {
@@ -123,9 +123,9 @@ Array* Array::createWithCapacity(long capacity)
     return array;
 }
 
-Array* Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
-    Array* ret = Array::createWithContentsOfFileThreadSafe(fileName);
+    __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
     {
         ret->autorelease();
@@ -133,17 +133,17 @@ Array* Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
     return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
 }
 
-bool Array::init()
+bool __Array::init()
 {
     return initWithCapacity(7);
 }
 
-bool Array::initWithObject(Object* object)
+bool __Array::initWithObject(Object* object)
 {
     bool ret = initWithCapacity(7);
     if (ret)
@@ -154,7 +154,7 @@ bool Array::initWithObject(Object* object)
 }
 
 /** Initializes an array with some objects */
-bool Array::initWithObjects(Object* object, ...)
+bool __Array::initWithObjects(Object* object, ...)
 {
     bool ret = false;
     do 
@@ -182,7 +182,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(long capacity)
+bool __Array::initWithCapacity(int capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
@@ -190,17 +190,17 @@ bool Array::initWithCapacity(long capacity)
     return true;
 }
 
-bool Array::initWithArray(Array* otherArray)
+bool __Array::initWithArray(__Array* otherArray)
 {
     data = otherArray->data;
     return true;
 }
 
-int Array::getIndexOfObject(Object* object) const
+ssize_t __Array::getIndexOfObject(Object* object) const
 {
     auto it = data.begin();
 
-    for (long i = 0; it != data.end(); ++it, ++i)
+    for (ssize_t i = 0; it != data.end(); ++it, ++i)
     {
         if (it->get() == object)
         {
@@ -211,7 +211,7 @@ int Array::getIndexOfObject(Object* object) const
     return -1;
 }
 
-Object* Array::getRandomObject()
+Object* __Array::getRandomObject()
 {
     if (data.size()==0)
     {
@@ -230,15 +230,15 @@ Object* Array::getRandomObject()
     return data[r].get();
 }
 
-bool Array::containsObject(Object* object) const
+bool __Array::containsObject(Object* object) const
 {
-    int i = this->getIndexOfObject(object);
-    return (i >=0);
+    ssize_t i = this->getIndexOfObject(object);
+    return (i >= 0);
 }
 
-bool Array::isEqualToArray(Array* otherArray)
+bool __Array::isEqualToArray(__Array* otherArray)
 {
-    for (long i = 0; i< this->count(); i++)
+    for (ssize_t i = 0; i < this->count(); ++i)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -248,101 +248,101 @@ bool Array::isEqualToArray(Array* otherArray)
     return true;
 }
 
-void Array::addObject(Object* object)
+void __Array::addObject(Object* object)
 {
-    data.push_back( RCPtr<Object>(object) );
+    data.push_back(RCPtr<Object>(object));
 }
 
-void Array::addObjectsFromArray(Array* otherArray)
+void __Array::addObjectsFromArray(__Array* otherArray)
 {
     data.insert(data.end(), otherArray->data.begin(), otherArray->data.end());
 }
 
-void Array::insertObject(Object* object, int index)
+void __Array::insertObject(Object* object, int index)
 {
-    data.insert( std::begin(data) + index, RCPtr<Object>(object) );
+    data.insert(std::begin(data) + index, RCPtr<Object>(object));
 }
 
-void Array::setObject(Object* object, int index)
+void __Array::setObject(Object* object, int index)
 {
     data[index] = RCPtr<Object>(object);
 }
 
-void Array::removeLastObject(bool releaseObj)
+void __Array::removeLastObject(bool releaseObj)
 {
     CCASSERT(data.size(), "no objects added");
     data.pop_back();
 }
 
-void Array::removeObject(Object* object, bool releaseObj /* ignored */)
+void __Array::removeObject(Object* object, bool releaseObj /* ignored */)
 {
-    data.erase( std::remove( data.begin(), data.end(), object ) );
+    data.erase(std::remove(data.begin(), data.end(), object));
 }
 
-void Array::removeObjectAtIndex(long index, bool releaseObj /* ignored */)
+void __Array::removeObjectAtIndex(ssize_t index, bool releaseObj /* ignored */)
 {
     auto obj = data[index];
-    data.erase( data.begin() + index );
+    data.erase(data.begin() + index);
 }
 
-void Array::removeObjectsInArray(Array* otherArray)
+void __Array::removeObjectsInArray(__Array* otherArray)
 {
     CCASSERT(false, "not implemented");
 }
 
-void Array::removeAllObjects()
+void __Array::removeAllObjects()
 {
     data.erase(std::begin(data), std::end(data));
 }
 
-void Array::fastRemoveObjectAtIndex(long index)
+void __Array::fastRemoveObjectAtIndex(int index)
 {
     removeObjectAtIndex(index);
 }
 
-void Array::fastRemoveObject(Object* object)
+void __Array::fastRemoveObject(Object* object)
 {
     removeObject(object);
 }
 
-void Array::exchangeObject(Object* object1, Object* object2)
+void __Array::exchangeObject(Object* object1, Object* object2)
 {
-    int idx1 = getIndexOfObject(object1);
-    int idx2 = getIndexOfObject(object2);
+    ssize_t idx1 = getIndexOfObject(object1);
+    ssize_t idx2 = getIndexOfObject(object2);
 
-    CCASSERT(idx1>=0 && idx2>=2, "invalid object index");
+    CCASSERT(idx1 >= 0 && idx2 >= 2, "invalid object index");
 
-    std::swap( data[idx1], data[idx2] );
+    std::swap(data[idx1], data[idx2]);
 }
 
-void Array::exchangeObjectAtIndex(long index1, long index2)
+void __Array::exchangeObjectAtIndex(ssize_t index1, ssize_t index2)
 {
-    std::swap( data[index1], data[index2] );
+    std::swap(data[index1], data[index2]);
 }
 
-void Array::replaceObjectAtIndex(long index, Object* object, bool releaseObject /* ignored */)
+void __Array::replaceObjectAtIndex(int index, Object* object, bool releaseObject /* ignored */)
 {
     data[index] = object;
 }
 
-void Array::reverseObjects()
+void __Array::reverseObjects()
 {
-    std::reverse( std::begin(data), std::end(data) );
+    std::reverse(std::begin(data), std::end(data));
 }
 
-void Array::reduceMemoryFootprint()
+void __Array::reduceMemoryFootprint()
 {
     // N/A
 }
 
-Array::~Array()
+__Array::~Array()
 {
     CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
 }
 
-Array* Array::clone() const
+__Array* __Array::clone() const
 {
-    Array* ret = new Array();
+    __Array* ret = new __Array();
     ret->autorelease();
     ret->initWithCapacity(this->data.size() > 0 ? this->data.size() : 1);
 
@@ -368,7 +368,7 @@ Array* Array::clone() const
     return ret;
 }
 
-void Array::acceptVisitor(DataVisitor &visitor)
+void __Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }
@@ -379,15 +379,15 @@ void Array::acceptVisitor(DataVisitor &visitor)
 
 #else
 
-Array::Array()
+__Array::__Array()
 : data(nullptr)
 {
 //    init();
 }
 
-Array* Array::create()
+__Array* __Array::create()
 {
-    Array* array = new Array();
+    __Array* array = new __Array();
 
     if (array && array->initWithCapacity(7))
     {
@@ -401,9 +401,9 @@ Array* Array::create()
     return array;
 }
 
-Array* Array::createWithObject(Object* object)
+__Array* __Array::createWithObject(Object* object)
 {
-    Array* array = new Array();
+    __Array* array = new __Array();
 
     if (array && array->initWithObject(object))
     {
@@ -417,12 +417,12 @@ Array* Array::createWithObject(Object* object)
     return array;
 }
 
-Array* Array::create(Object* object, ...)
+__Array* __Array::create(Object* object, ...)
 {
     va_list args;
     va_start(args,object);
 
-    Array* array = create();
+    __Array* array = create();
     if (array && object)
     {
         array->addObject(object);
@@ -443,16 +443,16 @@ Array* Array::create(Object* object, ...)
     return array;
 }
 
-Array* Array::createWithArray(Array* otherArray)
+__Array* __Array::createWithArray(__Array* otherArray)
 {
     return otherArray->clone();
 }
 
-Array* Array::createWithCapacity(long capacity)
+__Array* __Array::createWithCapacity(ssize_t capacity)
 {
     CCASSERT(capacity>=0, "Invalid capacity");
 
-    Array* array = new Array();
+    __Array* array = new __Array();
 
     if (array && array->initWithCapacity(capacity))
     {
@@ -466,9 +466,9 @@ Array* Array::createWithCapacity(long capacity)
     return array;
 }
 
-Array* Array::createWithContentsOfFile(const char* fileName)
+__Array* __Array::createWithContentsOfFile(const std::string& fileName)
 {
-    Array* ret = Array::createWithContentsOfFileThreadSafe(fileName);
+    __Array* ret = __Array::createWithContentsOfFileThreadSafe(fileName);
     if (ret != nullptr)
     {
         ret->autorelease();
@@ -476,19 +476,27 @@ Array* Array::createWithContentsOfFile(const char* fileName)
     return ret;
 }
 
-Array* Array::createWithContentsOfFileThreadSafe(const char* fileName)
+__Array* __Array::createWithContentsOfFileThreadSafe(const std::string& fileName)
 {
-    return FileUtils::getInstance()->createArrayWithContentsOfFile(fileName);
+    ValueVector arr = FileUtils::getInstance()->getValueVectorFromFile(fileName);
+    
+    __Array* ret = __Array::createWithCapacity(static_cast<int>(arr.size()));
+
+    for(const auto &value : arr) {
+        ret->addObject(__String::create(value.asString()));
+    }
+    
+    return ret;
 }
 
-bool Array::init()
+bool __Array::init()
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
     return initWithCapacity(7);
 }
 
-bool Array::initWithObject(Object* object)
+bool __Array::initWithObject(Object* object)
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
@@ -501,7 +509,7 @@ bool Array::initWithObject(Object* object)
 }
 
 /** Initializes an array with some objects */
-bool Array::initWithObjects(Object* object, ...)
+bool __Array::initWithObjects(Object* object, ...)
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
@@ -531,7 +539,7 @@ bool Array::initWithObjects(Object* object, ...)
     return ret;
 }
 
-bool Array::initWithCapacity(long capacity)
+bool __Array::initWithCapacity(ssize_t capacity)
 {
     CCASSERT(capacity>=0 && !data, "Array cannot be re-initialized");
 
@@ -539,7 +547,7 @@ bool Array::initWithCapacity(long capacity)
     return true;
 }
 
-bool Array::initWithArray(Array* otherArray)
+bool __Array::initWithArray(__Array* otherArray)
 {
     CCASSERT(!data, "Array cannot be re-initialized");
 
@@ -555,12 +563,12 @@ bool Array::initWithArray(Array* otherArray)
     return ret;
 }
 
-long Array::getIndexOfObject(Object* object) const
+ssize_t __Array::getIndexOfObject(Object* object) const
 {
     return ccArrayGetIndexOfObject(data, object);
 }
 
-Object* Array::getRandomObject()
+Object* __Array::getRandomObject()
 {
     if (data->num == 0)
     {
@@ -574,17 +582,17 @@ Object* Array::getRandomObject()
         r = 0;
     }
 
-    return data->arr[(long)(data->num * r)];
+    return data->arr[static_cast<int>(data->num * r)];
 }
 
-bool Array::containsObject(Object* object) const
+bool __Array::containsObject(Object* object) const
 {
     return ccArrayContainsObject(data, object);
 }
 
-bool Array::isEqualToArray(Array* otherArray)
+bool __Array::isEqualToArray(__Array* otherArray)
 {
-    for (long i = 0; i< this->count(); i++)
+    for (int i = 0; i < this->count(); ++i)
     {
         if (!this->getObjectAtIndex(i)->isEqual(otherArray->getObjectAtIndex(i)))
         {
@@ -594,27 +602,27 @@ bool Array::isEqualToArray(Array* otherArray)
     return true;
 }
 
-void Array::addObject(Object* object) 
+void __Array::addObject(Object* object) 
 {
     CCASSERT(data, "Array not initialized");
     ccArrayAppendObjectWithResize(data, object);
 }
 
-void Array::addObjectsFromArray(Array* otherArray)
+void __Array::addObjectsFromArray(__Array* otherArray)
 {
     CCASSERT(data, "Array not initialized");
     ccArrayAppendArrayWithResize(data, otherArray->data);
 }
 
-void Array::insertObject(Object* object, long index)
+void __Array::insertObject(Object* object, ssize_t index)
 {
     CCASSERT(data, "Array not initialized");
     ccArrayInsertObjectAtIndex(data, object, index);
 }
 
-void Array::setObject(Object* object, long index)
+void __Array::setObject(Object* object, ssize_t index)
 {
-    CCASSERT(index>=0 && index < count(), "Invalid index");
+    CCASSERT(index >= 0 && index < count(), "Invalid index");
     
     if (object != data->arr[index])
     {
@@ -624,51 +632,51 @@ void Array::setObject(Object* object, long index)
     }
 }
 
-void Array::removeLastObject(bool releaseObj)
+void __Array::removeLastObject(bool releaseObj)
 {
     CCASSERT(data->num, "no objects added");
-    ccArrayRemoveObjectAtIndex(data, data->num-1, releaseObj);
+    ccArrayRemoveObjectAtIndex(data, data->num - 1, releaseObj);
 }
 
-void Array::removeObject(Object* object, bool releaseObj/* = true*/)
+void __Array::removeObject(Object* object, bool releaseObj/* = true*/)
 {
     ccArrayRemoveObject(data, object, releaseObj);
 }
 
-void Array::removeObjectAtIndex(long index, bool releaseObj)
+void __Array::removeObjectAtIndex(ssize_t index, bool releaseObj)
 {
     ccArrayRemoveObjectAtIndex(data, index, releaseObj);
 }
 
-void Array::removeObjectsInArray(Array* otherArray)
+void __Array::removeObjectsInArray(__Array* otherArray)
 {
     ccArrayRemoveArray(data, otherArray->data);
 }
 
-void Array::removeAllObjects()
+void __Array::removeAllObjects()
 {
     ccArrayRemoveAllObjects(data);
 }
 
-void Array::fastRemoveObjectAtIndex(long index)
+void __Array::fastRemoveObjectAtIndex(ssize_t index)
 {
     ccArrayFastRemoveObjectAtIndex(data, index);
 }
 
-void Array::fastRemoveObject(Object* object)
+void __Array::fastRemoveObject(Object* object)
 {
     ccArrayFastRemoveObject(data, object);
 }
 
-void Array::exchangeObject(Object* object1, Object* object2)
+void __Array::exchangeObject(Object* object1, Object* object2)
 {
-    long index1 = ccArrayGetIndexOfObject(data, object1);
+    auto index1 = ccArrayGetIndexOfObject(data, object1);
     if (index1 == CC_INVALID_INDEX)
     {
         return;
     }
 
-    long index2 = ccArrayGetIndexOfObject(data, object2);
+    auto index2 = ccArrayGetIndexOfObject(data, object2);
     if (index2 == CC_INVALID_INDEX)
     {
         return;
@@ -677,26 +685,26 @@ void Array::exchangeObject(Object* object1, Object* object2)
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::exchangeObjectAtIndex(long index1, long index2)
+void __Array::exchangeObjectAtIndex(ssize_t index1, ssize_t index2)
 {
     ccArraySwapObjectsAtIndexes(data, index1, index2);
 }
 
-void Array::replaceObjectAtIndex(long index, Object* object, bool releaseObject/* = true*/)
+void __Array::replaceObjectAtIndex(ssize_t index, Object* object, bool releaseObject/* = true*/)
 {
     ccArrayInsertObjectAtIndex(data, object, index);
-    ccArrayRemoveObjectAtIndex(data, index+1);
+    ccArrayRemoveObjectAtIndex(data, index + 1);
 }
 
-void Array::reverseObjects()
+void __Array::reverseObjects()
 {
     if (data->num > 1)
     {
         // floorf(), since in the case of an even number, the number of swaps stays the same
-        long count = (long) floorf(data->num/2.f);
-        long maxIndex = data->num - 1;
+        auto count = static_cast<ssize_t>(floorf(data->num/2.f));
+        ssize_t maxIndex = data->num - 1;
 
-        for (long i = 0; i < count ; i++)
+        for (ssize_t i = 0; i < count ; ++i)
         {
             ccArraySwapObjectsAtIndexes(data, i, maxIndex);
             --maxIndex;
@@ -704,21 +712,21 @@ void Array::reverseObjects()
     }
 }
 
-void Array::reduceMemoryFootprint()
+void __Array::reduceMemoryFootprint()
 {
     ccArrayShrink(data);
 }
 
-Array::~Array()
+__Array::~__Array()
 {
     CCLOGINFO("deallocing Array: %p - len: %d", this, count() );
 
     ccArrayFree(data);
 }
 
-Array* Array::clone() const
+__Array* __Array::clone() const
 {
-    Array* ret = new Array();
+    __Array* ret = new __Array();
     ret->autorelease();
     ret->initWithCapacity(this->data->num > 0 ? this->data->num : 1);
 
@@ -744,7 +752,7 @@ Array* Array::clone() const
     return ret;
 }
 
-void Array::acceptVisitor(DataVisitor &visitor)
+void __Array::acceptVisitor(DataVisitor &visitor)
 {
     visitor.visit(this);
 }

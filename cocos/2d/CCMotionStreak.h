@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012  cocos2d-x.org
-Copyright (c) 2011 ForzeField Studios S.L.
+Copyright (c) 2011      ForzeField Studios S.L.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +30,7 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "ccTypes.h"
 #include "CCNode.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -43,30 +45,16 @@ NS_CC_BEGIN
 /** MotionStreak.
  Creates a trailing path.
  */
-class CC_DLL MotionStreak : public NodeRGBA, public TextureProtocol
+class CC_DLL MotionStreak : public Node, public TextureProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN
 {
 public:
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
+    static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
     /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
-    /**
-     * @js ctor
-     */
-    MotionStreak();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~MotionStreak();
-
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const char* path);
-    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
     /** color used for the tint */
     void tintWithColor(const Color3B& colors);
@@ -114,9 +102,29 @@ public:
     virtual bool isOpacityModifyRGB() const override;
 
 protected:
+    kmMat4 _cachedMV;
+    //renderer callback
+    void onDraw();
+
+protected:
+    /**
+     * @js ctor
+     */
+    MotionStreak();
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~MotionStreak();
+
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
+    /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
+    bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
+
     bool _fastMode;
     bool _startingPositionInitialized;
-private:
+
     /** texture used for the motion streak */
     Texture2D* _texture;
     BlendFunc _blendFunc;
@@ -138,6 +146,11 @@ private:
     Vertex2F* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
+    
+    CustomCommand _customCommand;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
 };
 
 // end of misc_nodes group

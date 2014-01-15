@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
-
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -149,7 +150,7 @@ FontAtlas * FontFNT::createFontAtlas()
     if (!_configuration->_fontDefDictionary)
         return nullptr;
     
-    int numGlyphs = _configuration->_characterSet->size();
+    size_t numGlyphs = _configuration->_characterSet->size();
     if (!numGlyphs)
         return nullptr;
     

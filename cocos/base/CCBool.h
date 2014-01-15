@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -34,16 +35,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL Bool : public Object, public Clonable
+class CC_DLL __Bool : public Object, public Clonable
 {
 public:
-    Bool(bool v)
+    __Bool(bool v)
         : _value(v) {}
     bool getValue() const {return _value;}
 
-    static Bool* create(bool v)
+    static __Bool* create(bool v)
     {
-        Bool* pRet = new Bool(v);
+        __Bool* pRet = new __Bool(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -54,9 +55,9 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
 
-    Bool* clone() const
+    __Bool* clone() const
     {
-        return Bool::create(_value);
+        return __Bool::create(_value);
     }
 private:
     bool _value;

@@ -31,26 +31,17 @@
     <Filter Include="armature\utils">
       <UniqueIdentifier>{023e3440-1259-4981-ba54-24390d1df447}</UniqueIdentifier>
     </Filter>
-    <Filter Include="json\libjson">
-      <UniqueIdentifier>{e8d09ad5-8816-4724-a10b-04263868ed7c}</UniqueIdentifier>
+    <Filter Include="json\rapidjson">
+      <UniqueIdentifier>{f1f20817-9232-4967-a4dd-77550e84e39b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\rapidjson\internal">
+      <UniqueIdentifier>{5149f922-cf29-4a4b-b604-f15c6e8856b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="trigger">
+      <UniqueIdentifier>{59eee6d9-bbfd-4193-be1d-6c18fc38f896}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CCActionFrameEasing.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionManagerEx.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionNode.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionObject.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CCActionFrame.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
     <ClCompile Include="..\CCComAttribute.cpp">
       <Filter>components</Filter>
     </ClCompile>
@@ -67,9 +58,6 @@
       <Filter>components</Filter>
     </ClCompile>
     <ClCompile Include="..\DictionaryHelper.cpp">
-      <Filter>json</Filter>
-    </ClCompile>
-    <ClCompile Include="..\CSContentJsonDictionary.cpp">
       <Filter>json</Filter>
     </ClCompile>
     <ClCompile Include="..\CCSSceneReader.cpp">
@@ -135,32 +123,38 @@
     <ClCompile Include="..\CCBone.cpp">
       <Filter>armature</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\json\json_reader.cpp">
-      <Filter>json\libjson</Filter>
+    <ClCompile Include="..\CCActionEaseEx.cpp">
+      <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\json\json_value.cpp">
-      <Filter>json\libjson</Filter>
+    <ClCompile Include="..\CCActionFrame.cpp">
+      <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\json\json_writer.cpp">
-      <Filter>json\libjson</Filter>
+    <ClCompile Include="..\CCActionFrameEasing.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionManagerEx.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionNode.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCActionObject.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ObjectFactory.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerBase.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerMng.cpp">
+      <Filter>trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TriggerObj.cpp">
+      <Filter>trigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\CCActionFrameEasing.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionManagerEx.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionNode.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionObject.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CCActionFrame.h">
-      <Filter>action</Filter>
-    </ClInclude>
     <ClInclude Include="..\CCComAttribute.h">
       <Filter>components</Filter>
     </ClInclude>
@@ -177,9 +171,6 @@
       <Filter>components</Filter>
     </ClInclude>
     <ClInclude Include="..\DictionaryHelper.h">
-      <Filter>json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\CSContentJsonDictionary.h">
       <Filter>json</Filter>
     </ClInclude>
     <ClInclude Include="..\CCSSceneReader.h">
@@ -245,46 +236,68 @@
     <ClInclude Include="..\CCBone.h">
       <Filter>armature</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\forwards.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\document.h">
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\json.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\filestream.h">
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\json_batchallocator.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\prettywriter.h">
+      <Filter>json\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\external\json\rapidjson.h">
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\json\reader.h">
-      <Filter>json\libjson</Filter>
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\value.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\stringbuffer.h">
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\external\json\writer.h">
-      <Filter>json\libjson</Filter>
+      <Filter>json\rapidjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\autolink.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\internal\pow10.h">
+      <Filter>json\rapidjson\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\config.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\internal\stack.h">
+      <Filter>json\rapidjson\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\json\features.h">
-      <Filter>json\libjson</Filter>
+    <ClInclude Include="..\..\..\..\external\json\internal\strfunc.h">
+      <Filter>json\rapidjson\internal</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\..\external\json\json_internalarray.inl">
-      <Filter>json\libjson</Filter>
-    </None>
-    <None Include="..\..\..\..\external\json\json_internalmap.inl">
-      <Filter>json\libjson</Filter>
-    </None>
-    <None Include="..\..\..\..\external\json\json_valueiterator.inl">
-      <Filter>json\libjson</Filter>
-    </None>
-    <None Include="..\..\..\..\external\json\sconscript">
-      <Filter>json\libjson</Filter>
-    </None>
+    <ClInclude Include="..\CCActionEaseEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrame.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionFrameEasing.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionManagerEx.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionNode.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCActionObject.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ObjectFactory.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerBase.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerMng.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TriggerObj.h">
+      <Filter>trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCComBase.h">
+      <Filter>components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

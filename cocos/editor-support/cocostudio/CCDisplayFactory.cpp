@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -75,30 +75,6 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
     Node *display = bone->getDisplayRenderNode();
     CS_RETURN_IF(!display);
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    if (dirty)
-    {
-        DecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
-        ColliderDetector *detector = decoDisplay->getColliderDetector();
-        if (detector)
-        {
-            do
-            {
-                CC_BREAK_IF(!detector->getBody());
-
-                AffineTransform displayTransform = display->getNodeToParentTransform();
-                Point anchorPoint =  display->getAnchorPointInPoints();
-                anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
-                displayTransform.tx = anchorPoint.x;
-                displayTransform.ty = anchorPoint.y;
-                AffineTransform t = AffineTransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
-                detector->updateTransform(t);
-            }
-            while (0);
-        }
-    }
-#endif
-
     switch(bone->getDisplayRenderNodeType())
     {
     case CS_DISPLAY_SPRITE:
@@ -119,6 +95,33 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
     }
     break;
     }
+
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    if (dirty)
+    {
+        DecorativeDisplay *decoDisplay = bone->getDisplayManager()->getCurrentDecorativeDisplay();
+        ColliderDetector *detector = decoDisplay->getColliderDetector();
+        if (detector)
+        {
+            do
+            {
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+                CC_BREAK_IF(!detector->getBody());
+#endif
+
+                kmMat4 displayTransform = display->getNodeToParentTransform();
+                Point anchorPoint =  display->getAnchorPointInPoints();
+                anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
+                displayTransform.mat[12] = anchorPoint.x;
+                displayTransform.mat[13] = anchorPoint.y;
+                kmMat4 t = TransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
+                detector->updateTransform(t);
+            }
+            while (0);
+        }
+    }
+#endif
 }
 
 
@@ -200,13 +203,13 @@ void DisplayFactory::initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDispla
     }
 
 
-#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    if (textureData && textureData->contourDataList.count() > 0)
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    if (textureData && textureData->contourDataList.size() > 0)
     {
 
         //! create ContourSprite
         ColliderDetector *colliderDetector = ColliderDetector::create(bone);
-        colliderDetector->addContourDataList(&textureData->contourDataList);
+        colliderDetector->addContourDataList(textureData->contourDataList);
 
         decoDisplay->setColliderDetector(colliderDetector);
     }
@@ -254,7 +257,7 @@ void DisplayFactory::addParticleDisplay(Bone *bone, DecorativeDisplay *decoDispl
 void DisplayFactory::createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay)
 {
     ParticleDisplayData *displayData = (ParticleDisplayData *)decoDisplay->getDisplayData();
-    ParticleSystem *system = ParticleSystemQuad::create(displayData->plist.c_str());
+    ParticleSystem *system = ParticleSystemQuad::create(displayData->displayName.c_str());
 
     system->removeFromParent();
     

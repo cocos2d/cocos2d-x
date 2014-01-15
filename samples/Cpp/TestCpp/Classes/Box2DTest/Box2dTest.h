@@ -24,6 +24,12 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
     //CREATE_NODE(Box2DTestLayer);
+#if CC_ENABLE_BOX2D_INTEGRATION
+protected:
+    kmMat4 _modelViewMV;
+    void onDraw();
+    CustomCommand _customCommand;
+#endif
 } ;
 
 class Box2DTestScene : public TestScene
