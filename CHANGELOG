@@ -1,11 +1,18 @@
 cocos2d-x-3.0final ?.? ?
 [All]
-     [FIX]          Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
+     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
      [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
+     [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          Tests: TestCpp works with CMake on Windows.
+     [FIX]          Tests: Sprites Performance Test has 3 new tests
+     [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
+     [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
      [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
-     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
-     [FIX]          TestCpp works by using CMake on Windows.
+     [FIX]          Windows: There will be some compilation errors when using x64 target on Windows.
+
 cocos2d-x-3.0beta Jan.7 2014
 [All]
      [NEW]          New label: shadow, outline, glow support

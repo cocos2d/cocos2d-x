@@ -109,6 +109,9 @@ protected:
     void commandHelp(int fd, const char *command);
     void commandExit(int fd, const char *command);
     void commandSceneGraph(int fd, const char *command);
+    void commandFileUtilsDump(int fd, const char *command);
+    void commandConfig(int fd, const char *command);
+    void commandTextures(int fd, const char *command);
 
     // file descriptor: socket, console, etc.
     int _listenfd;

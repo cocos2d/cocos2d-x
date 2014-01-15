@@ -74,6 +74,9 @@ public:
     
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+    
+    inline bool isRetina() { return _isRetina; };
+    
 protected:
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -82,8 +85,8 @@ protected:
 private:
     bool _captured;
     bool _supportTouch;
+    bool _isRetina;
 
-    int _frameBufferSize[2];
     float _frameZoomFactor;
     static EGLView* s_pEglView;
 public:
@@ -93,6 +96,7 @@ public:
     GLFWwindow* getWindow() const { return _mainWindow; }
 private:
     GLFWwindow* _mainWindow;
+    friend class EGLViewEventHandler;
 };
 
 NS_CC_END   // end of namespace   cocos2d
