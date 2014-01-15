@@ -1,5 +1,6 @@
 
 #include "SimulatorConfig.h"
+#include "RuntimeConfig.h"
 
 #include "glfw3native.h"
 #include "resource.h"
@@ -204,8 +205,7 @@ void SimulatorConfig::updateView()
 		glfwSetWindowSize(m_eglView.getWindow(),m_screenSize.height,m_screenSize.width);
 	}
 	updateMenu();
-	extern void resetRuntime();
-	resetRuntime();
+	RuntimeConfig::getInstance()->resetRuntime();
 }
 void SimulatorConfig::onViewChangeOrientation(int viewMenuID)
 {

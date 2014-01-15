@@ -1,14 +1,11 @@
 #include "AppDelegate.h"
 
-#include "cocos2d.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
 #include "SimpleAudioEngine.h"
-#include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
-#include "cocos2d_specifics.hpp"
-#include "cocosbuilder/js_bindings_ccbreader.h"
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
@@ -23,23 +20,6 @@ using namespace CocosDenshion;
 #include "RuntimeConfig.h"
 #endif // ISRUNTIME
 
-void resetRuntime()
-{
-	FileUtils::sharedFileUtils()->purgeCachedEntries();
-	Director::getInstance()->purgeCachedData();
-	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->reset();
-	ScriptingCore::getInstance()->runScript("main.js");
-}
-
-/*
-void startRuntime()
-{
-	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("main.js");
-}*/
 
 AppDelegate::AppDelegate()
 {
@@ -89,7 +69,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 	return true;
 #endif
 
-    resetRuntime();
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+	ScriptingCore::getInstance()->runScript("main.js");
     return true;
 }
 

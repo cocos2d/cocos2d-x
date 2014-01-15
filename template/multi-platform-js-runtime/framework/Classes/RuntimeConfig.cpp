@@ -1,21 +1,17 @@
+
 #include "RuntimeConfig.h"
 
+#include "SimpleAudioEngine.h"
+#include "jsb_cocos2dx_auto.hpp"
+#include "jsb_cocos2dx_extension_auto.hpp"
+#include "jsb_cocos2dx_builder_auto.hpp"
+#include "extension/jsb_cocos2dx_extension_manual.h"
+#include "cocosbuilder/js_bindings_ccbreader.h"
+#include "localstorage/js_bindings_system_registration.h"
+#include "chipmunk/js_bindings_chipmunk_registration.h"
+#include "jsb_opengl_registration.h"
 
-#include "cocos2d.h"
-#include <vector>
-#include <string>
-using namespace std;
-using namespace cocos2d;
-
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
-#include <unistd.h>
-#define Usleep usleep
-#elif (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32) 
-#define Usleep Sleep
-#endif
-
-USING_NS_CC;
-using namespace std;
+#include "BrowseDir.h"
 
 static RuntimeConfig *s_SharedRuntime = nullptr;
 RuntimeConfig::RuntimeConfig()
@@ -28,6 +24,26 @@ RuntimeConfig::~RuntimeConfig()
 	s_SharedRuntime =NULL;
 }
 
+void RuntimeConfig::resetRuntime()
+{
+// 	FileUtils::sharedFileUtils()->purgeCachedEntries();
+// 	Director::getInstance()->purgeCachedData();
+	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
+	ScriptEngineManager::getInstance()->setScriptEngine(engine);
+
+	CBrowseDir browseDir;  
+	browseDir.setFilter("runtime|framework|","|");
+	browseDir.setInitDir(_searchPath.c_str());
+	browseDir.beginBrowse("*.js");   
+
+	FileInfoList  fileInfoList=browseDir.getFileInfoList();
+	for (int i = 0; i < fileInfoList.size(); i++)
+	{
+		string strfile = fileInfoList[i].fileName.c_str();
+		ScriptingCore::getInstance()->compileScript(fileInfoList[i].fileName.c_str());
+	}
+ 	ScriptingCore::getInstance()->runScript("main.js");
+}
 
 RuntimeConfig* RuntimeConfig::getInstance()
 {
@@ -44,19 +60,19 @@ void RuntimeConfig::setSearchPath()
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 		extern std::string GetCurAppPath(void);
-		string searchPath = GetCurAppPath();
-		searchPath += "/../..";
+		_searchPath = GetCurAppPath();
+		_searchPath += "/../..";
 		string searchPathRes = GetCurAppPath();
 		searchPathRes += "/HelloJavascriptRes";
-		FileUtils::getInstance()->addSearchPath(searchPath.c_str());
+		FileUtils::getInstance()->addSearchPath(_searchPath.c_str());
 		FileUtils::getInstance()->addSearchPath(searchPathRes.c_str());
 #endif
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_ANDROID)
 	extern std::string getPackageNameJNI();
-	string searchPath = "/mnt/sdcard/";
-	searchPath += getPackageNameJNI();
-	FileUtils::getInstance()->addSearchPath(searchPath.c_str());
+	_searchPath = "/mnt/sdcard/";
+	_searchPath += getPackageNameJNI();
+	FileUtils::getInstance()->addSearchPath(_searchPath.c_str());
 	//MessageBox(searchPath.c_str(),""); 
 #endif
 
@@ -69,7 +85,6 @@ void RuntimeConfig::updateConnect(float delta)
 	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
 	{
 		_scheduler->unscheduleSelector(SEL_SCHEDULE(&RuntimeConfig::updateConnect),this);
-		extern void resetRuntime();
 		resetRuntime();	
 	}
 }
@@ -93,7 +108,6 @@ void RuntimeConfig::waitConnect()
 
 	if (!FileUtils::getInstance()->isFileExist(szwaitFile))
 	{
-		extern void resetRuntime();
 		resetRuntime();
 		return;
 	}
