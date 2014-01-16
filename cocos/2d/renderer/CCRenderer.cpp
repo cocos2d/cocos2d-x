@@ -249,7 +249,7 @@ void Renderer::render()
                     //Batch quads
                     if(_numQuads + cmdQuadCount > VBO_SIZE)
                     {
-                        CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmdQuadCount>=0 && cmdQuadCount<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         _lastCommand --;
@@ -381,7 +381,7 @@ void Renderer::drawBatchedQuads()
 #define kQuadSize sizeof(_quads[0].bl)
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _numQuads , _quads);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
 
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
@@ -398,7 +398,7 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    for(ssize_t i = _firstCommand; i <= _lastCommand; i++)
     {
         RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == RenderCommand::Type::QUAD_COMMAND)

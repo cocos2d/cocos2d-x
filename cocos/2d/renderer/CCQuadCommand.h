@@ -56,7 +56,7 @@ public:
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() const { return true; }
 
-    inline int32_t getMaterialID() const { return _materialID; }
+    inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
 
@@ -71,7 +71,7 @@ public:
     inline const kmMat4& getModelView() const { return _mv; }
     
 protected:
-    int32_t _materialID;
+    uint32_t _materialID;
 
     //Key Data
     int _viewport;          /// Which view port it belongs to
