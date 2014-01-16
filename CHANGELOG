@@ -1,5 +1,6 @@
 cocos2d-x-3.0final ?.? ?
 [All]
+     [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
