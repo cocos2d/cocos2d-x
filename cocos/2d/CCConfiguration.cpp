@@ -146,7 +146,7 @@ void Configuration::gatherGPUInfo()
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
 	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
-    
+
     CHECK_GL_ERROR_DEBUG();
 }
 
