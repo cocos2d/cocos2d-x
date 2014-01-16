@@ -99,7 +99,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
 
     _descendants.reserve(capacity);
     
-    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     return true;
 }
 
@@ -356,18 +356,14 @@ void SpriteBatchNode::draw()
     for(const auto &child: _children)
         child->updateTransform();
 
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    _quadCommand.init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              _shaderProgram,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    _batchCommand.init(0,
+                       _vertexZ,
+                       _textureAtlas->getTexture()->getName(),
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity(void)

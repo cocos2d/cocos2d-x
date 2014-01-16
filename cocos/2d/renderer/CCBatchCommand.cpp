@@ -23,24 +23,24 @@
  ****************************************************************************/
 
 
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 #include "ccGLStateCache.h"
+#include "CCTextureAtlas.h"
 
 NS_CC_BEGIN
 
-QuadCommand::QuadCommand()
-:_viewport(0)
-,_depth(0)
-,_textureID(0)
-,_blendType(BlendFunc::DISABLE)
-,_quadsCount(0)
+BatchCommand::BatchCommand()
+: _viewport(0)
+, _depth(0)
+, _textureID(0)
+, _blendType(BlendFunc::DISABLE)
+, _textureAtlas(nullptr)
 {
-    _type = RenderCommand::Type::QUAD_COMMAND;
+    _type = RenderCommand::Type::BATCH_COMMAND;
     _shader = nullptr;
-    _quads = nullptr;
 }
 
-void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
+void BatchCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
 {
     _viewport = viewport;
     _depth = depth;
@@ -48,17 +48,16 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
     _blendType = blendType;
     _shader = shader;
 
-    _quadsCount = quadCount;
-    _quads = quad;
+    _textureAtlas = textureAtlas;
 
-    _mv = mv;
+    _mv = modelViewTransform;
 }
 
-QuadCommand::~QuadCommand()
+BatchCommand::~BatchCommand()
 {
 }
 
-int64_t QuadCommand::generateID()
+int64_t BatchCommand::generateID()
 {
     _id = 0;
 
@@ -111,17 +110,16 @@ int64_t QuadCommand::generateID()
     return _id;
 }
 
-void QuadCommand::useMaterial()
+void BatchCommand::execute()
 {
+    // Set material
     _shader->use();
-
-    _shader->setUniformsForBuiltins();
-
-    //Set texture
+    _shader->setUniformsForBuiltins(_mv);
     GL::bindTexture2D(_textureID);
-
-    //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
+
+    // Draw
+    _textureAtlas->drawQuads();
 }
 
 NS_CC_END
