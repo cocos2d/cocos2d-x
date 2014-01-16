@@ -40,8 +40,7 @@ public:
 
 protected:
     int subtestNumber;
-    SpriteBatchNode *_batchNode;
-    Node* _parent;
+    Node *_parentNode;
 };
 
 class SpriteMenuLayer : public PerformBasicLayer
