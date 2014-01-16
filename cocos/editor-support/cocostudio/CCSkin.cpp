@@ -197,7 +197,7 @@ void Skin::updateTransform()
 
 kmMat4 Skin::getNodeToWorldTransform() const
 {
-    return TransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
 kmMat4 Skin::getNodeToWorldTransformAR() const
