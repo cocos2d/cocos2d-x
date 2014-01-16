@@ -44,7 +44,6 @@ namespace
     static bool        s_vertexAttribColor = false;
     static bool        s_vertexAttribTexCoords = false;
     
-    
 #if CC_ENABLE_GL_STATE_CACHE
     
 #define kMaxActiveTexture 16
@@ -55,6 +54,8 @@ namespace
     static GLenum    s_blendingDest = -1;
     static int       s_GLServerState = 0;
     static GLuint    s_VAO = 0;
+    static GLenum    s_activeTexture = -1;
+
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
@@ -159,7 +160,7 @@ void bindTexture2DN(GLuint textureUnit, GLuint textureId)
     if (s_currentBoundTexture[textureUnit] != textureId)
     {
         s_currentBoundTexture[textureUnit] = textureId;
-        glActiveTexture(GL_TEXTURE0 + textureUnit);
+        activeTexture(GL_TEXTURE0 + textureUnit);
         glBindTexture(GL_TEXTURE_2D, textureId);
     }
 #else
@@ -184,6 +185,18 @@ void deleteTextureN(GLuint textureUnit, GLuint textureId)
 #endif // CC_ENABLE_GL_STATE_CACHE
     
 	glDeleteTextures(1, &textureId);
+}
+
+void activeTexture(GLenum texture)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+    if(s_activeTexture != texture) {
+        s_activeTexture = texture;
+        glActiveTexture(s_activeTexture);
+    }
+#else
+    glActiveTexture(texture);
+#endif
 }
 
 void bindVAO(GLuint vaoId)
