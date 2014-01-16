@@ -1250,7 +1250,7 @@ LabelCrashTest::LabelCrashTest()
 
     TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
 
-    auto label1 = Label::createWithTTF(ttfConfig,"Test崩溃34324324", TextHAlignment::CENTER, size.width);
+    auto label1 = Label::createWithTTF(ttfConfig,"Test崩溃123", TextHAlignment::CENTER, size.width);
     label1->setPosition( Point(size.width/2, size.height/2) );
     label1->setAnchorPoint(Point(0.5, 0.5));
     addChild(label1);
@@ -1263,5 +1263,5 @@ std::string LabelCrashTest::title() const
 
 std::string LabelCrashTest::subtitle() const
 {
-    return "Should not crash when using unknown character.";
+    return "Not crash and show [Test123] when using unknown character.";
 }
