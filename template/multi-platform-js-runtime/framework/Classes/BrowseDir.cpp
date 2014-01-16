@@ -16,7 +16,7 @@ void CBrowseDir::setFilter(const char *filterfile,const char *delimiter)
 		{
 			token=NULL;
 			char szFilterFile[_MAX_PATH_]={0};
-			strcpy_s(szFilterFile,_MAX_PATH_-1,filterfile);
+			strcpy(szFilterFile,filterfile);
 			token = strtok(szFilterFile, delimiter );		
 			while( token != NULL )
 			{
@@ -29,8 +29,13 @@ void CBrowseDir::setFilter(const char *filterfile,const char *delimiter)
 
 bool CBrowseDir::setInitDir(const char *dir)
 {
+#ifdef WIN32
 	if (_fullpath(_initDir,dir,_MAX_PATH_) == NULL)
 		return false;
+#else
+    if (realpath(dir, _initDir)== NULL)
+		return false;
+#endif
 
 	if (chdir(dir) != 0)
 		return false;
@@ -52,6 +57,27 @@ FileInfoList &CBrowseDir::getFileInfoList()
 {
 	return _lFileInfo;
 }
+
+bool wildcard_matches(const char *wildcard, const char *str) {
+	while (1) {
+		if (*wildcard == '\0')
+			return *str == '\0';
+		if (*wildcard == '?') {
+			++wildcard; ++str;
+		} else if (*wildcard == '*') {
+			for (++wildcard; *str; ++str)
+				if (wildcard_matches(wildcard, str))
+					return true;
+			return *wildcard == '\0';
+		} else {
+			if (*wildcard != *str)
+				return false;
+			++wildcard; ++str;
+		}
+	}
+}
+
+
 bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 {
 
@@ -83,8 +109,7 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 				{
 					continue;
 				}
-				
-				saveFileInfo(dir,fileinfo);
+                
 				if (!processFile(dir,fileinfo.name))
 					return false;
 			}
@@ -140,45 +165,77 @@ bool CBrowseDir::browseDir(const char *dir,const char *filespec)
 			if(strcmp(".",entry->d_name) == 0 ||
 				strcmp("..",entry->d_name) == 0)
 				continue;
-			printf("%*s%s/\n",depth,"",entry->d_name);
-			browseDir(entry->d_name,);
+            if (find(_filterArray.begin(),_filterArray.end(),entry->d_name) != _filterArray.end())
+            {
+                continue;
+            }
+            char subdir[_MAX_PATH_];
+            strcpy(subdir,dir);
+            strcat(subdir,entry->d_name);
+            strcat(subdir,"/");
+            processDir(subdir,dir);
+            if (!browseDir(subdir,filespec))
+            {
+                closedir(dp);
+                return false;
+            }
 		} else {
-			string filename = entry->d_name;
-			if (!processFile(dir,fileinfo.name))
-				return false;
-			printf("%*s%s\n",depth,"",entry->d_name);
+            
+            if (!wildcard_matches(filespec,entry->d_name))
+                 continue;
+            
+            char *pszexten=strrchr(entry->d_name,'.');
+            char szextension[_MAX_PATH_]={0};
+            if (pszexten)
+            {
+                strcpy(szextension,"*");
+                strcat(szextension,pszexten);
+                if (find(_filterArray.begin(),_filterArray.end(),szextension) != _filterArray.end())
+                {
+                    continue;
+                }
+            }
+            
+            strcpy(szextension,entry->d_name);
+            if (find(_filterArray.begin(),_filterArray.end(),szextension) != _filterArray.end())
+            {
+                continue;
+            }
+            
+            if (!processFile(dir,entry->d_name))
+            {
+                closedir(dp);
+                return false;
+            }
 		}
 	}
 	chdir("..");
 	closedir(dp);
+    return true;
 #endif
-}
-
-void CBrowseDir::saveFileInfo(const char *dir,_finddata_t fileinfo)
-{
-	char fileFullName[_MAX_PATH_]={0};
-	char relFileName[_MAX_PATH_] ={0};
-	char fileTime[_MAX_PATH_]={0};
-
-	strcpy(fileFullName,dir);
-	strcat(fileFullName,fileinfo.name);
-	struct tm *pFileTime = localtime(&fileinfo.time_write);   
-	sprintf(fileTime,"%d-%02d-%02d %02d:%02d:%02d",pFileTime->tm_year+1900,pFileTime->tm_mon+1,pFileTime->tm_mday,
-		pFileTime->tm_hour,pFileTime->tm_min,pFileTime->tm_sec);
-
-	strcpy(relFileName,fileFullName+strlen(_initDir));
-	FILEINFOR tempfileinfo;
-	tempfileinfo.fileName=relFileName;
-	tempfileinfo.fileSize=fileinfo.size;
-	tempfileinfo.fileTime=fileTime;
-	
-	_lFileInfo.push_back(tempfileinfo);
 }
 
 
 bool CBrowseDir::processFile(const char *dir,const char *filename)
 {
-
+    char fileFullName[_MAX_PATH_]={0};
+	char relFileName[_MAX_PATH_] ={0};
+    
+    strcpy(fileFullName,dir);
+	strcat(fileFullName,filename);
+    
+    struct stat buf;
+    if(stat(fileFullName, &buf) != 0)
+        return false;
+    
+    strcpy(relFileName,fileFullName+strlen(_initDir));
+    FILEINFOR tempfileinfo;
+	tempfileinfo.fileName=relFileName;
+	tempfileinfo.fileSize=buf.st_size;
+	//tempfileinfo.fileTime=ctime(&buf.st_mtime);
+	
+	_lFileInfo.push_back(tempfileinfo);
+    
 	return true;
 }
 

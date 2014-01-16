@@ -5,21 +5,21 @@
 
 #ifdef _WIN32
 #include <io.h>
-#include <stdlib.h>
 #include <direct.h>
 #define _MAX_PATH_ _MAX_PATH
 #else
 #include <unistd.h>
 #include <limits.h>
 #include <dirent.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #define _MAX_PATH_ PATH_MAX
 #endif
 
+#include <sys/stat.h>
+#include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 
+#include <algorithm>
 #include <vector>
 #include <string>
 using namespace std;
@@ -62,7 +62,6 @@ public:
 protected:
 
 	bool browseDir(const char *dir,const char *filespec);
-	void saveFileInfo(const char *dir,_finddata_t fileinfo);
 
 	virtual bool processFile(const char *dir,const char *filename);
 	virtual void processDir(const char *currentdir,const char *parentdir);
