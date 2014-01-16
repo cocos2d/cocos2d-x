@@ -1,5 +1,6 @@
 cocos2d-x-3.0final ?.? ?
 [All]
+     [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
      [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
      [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
