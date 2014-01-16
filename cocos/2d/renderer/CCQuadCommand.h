@@ -41,7 +41,7 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount,
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
     // +----------+----------+-----+-----------------------------------+
@@ -60,13 +60,15 @@ public:
 
     inline GLuint getTextureID() const { return _textureID; }
 
-    inline V3F_C4B_T2F_Quad* getQuad() const { return _quad; }
+    inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
 
-    inline ssize_t getQuadCount() const { return _quadCount; }
+    inline ssize_t getQuadCount() const { return _quadsCount; }
 
     inline GLProgram* getShader() const { return _shader; }
 
     inline BlendFunc getBlendType() const { return _blendType; }
+
+    inline const kmMat4& getModelView() const { return _mv; }
     
 protected:
     int32_t _materialID;
@@ -85,9 +87,10 @@ protected:
 
     BlendFunc _blendType;
 
-    V3F_C4B_T2F_Quad* _quad;
-    ssize_t _quadCount;
-    ssize_t _capacity;
+    V3F_C4B_T2F_Quad* _quads;
+    ssize_t _quadsCount;
+
+    kmMat4 _mv;
 };
 NS_CC_END
 

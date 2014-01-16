@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 
@@ -189,7 +189,7 @@ protected:
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
-    QuadCommand _quadCommand;     // quad command
+    BatchCommand _batchCommand;     // render command
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

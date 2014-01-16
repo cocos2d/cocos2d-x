@@ -86,8 +86,7 @@ void GroupCommandManager::releaseGroupID(int groupID)
 }
 
 GroupCommand::GroupCommand()
-:RenderCommand()
-, _viewport(0)
+: _viewport(0)
 , _depth(0)
 {
     _type = RenderCommand::Type::GROUP_COMMAND;
