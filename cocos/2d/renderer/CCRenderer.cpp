@@ -27,6 +27,7 @@
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
@@ -256,13 +257,21 @@ void Renderer::render()
                         _lastCommand ++;
                     }
 
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    convertToWorldCoordiantes(_quads + _numQuads, cmdQuadCount, cmd->getModelView());
+
                     _numQuads += cmdQuadCount;
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                    cmd->execute();
+                }
+                else if(commandType == RenderCommand::Type::BATCH_COMMAND)
+                {
+                    flush();
+                    BatchCommand* cmd = static_cast<BatchCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
@@ -317,6 +326,25 @@ void Renderer::render()
     _renderStack.push(element);
     _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
+}
+
+void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
+{
+    for(ssize_t i=0; i<quantity; ++i) {
+        V3F_C4B_T2F_Quad *q = &quads[i];
+
+        kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
+        kmVec3Transform(vec1, vec1, &modelView);
+
+        kmVec3 *vec2 = (kmVec3*)&q->br.vertices;
+        kmVec3Transform(vec2, vec2, &modelView);
+
+        kmVec3 *vec3 = (kmVec3*)&q->tr.vertices;
+        kmVec3Transform(vec3, vec3, &modelView);
+
+        kmVec3 *vec4 = (kmVec3*)&q->tl.vertices;
+        kmVec3Transform(vec4, vec4, &modelView);
+    }
 }
 
 void Renderer::drawBatchedQuads()

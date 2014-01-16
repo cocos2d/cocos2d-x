@@ -122,6 +122,7 @@ renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCRenderMaterial.cpp \
