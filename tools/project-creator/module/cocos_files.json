@@ -105,6 +105,8 @@
 "cocos/2d/CCFontAtlasCache.h",
 "cocos/2d/CCFontAtlasFactory.cpp",
 "cocos/2d/CCFontAtlasFactory.h",
+"cocos/2d/CCFontCharMap.cpp",
+"cocos/2d/CCFontCharMap.h",
 "cocos/2d/CCFontDefinition.cpp",
 "cocos/2d/CCFontDefinition.h",
 "cocos/2d/CCFontFNT.cpp",
