@@ -158,7 +158,7 @@ void AtlasNode::draw(void)
               shader,
               _blendFunc,
               _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
+              _quadsToDraw,
               _modelViewTransform);
 
     Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
