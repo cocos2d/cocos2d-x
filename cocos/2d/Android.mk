@@ -47,6 +47,7 @@ CCEventListenerTouch.cpp \
 CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
+CCFontCharMap.cpp \
 CCFontAtlas.cpp \
 CCFontAtlasCache.cpp \
 CCFontAtlasFactory.cpp \
