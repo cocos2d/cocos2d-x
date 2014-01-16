@@ -798,6 +798,8 @@
 		1ADCE7A0186BCF19001B78A4 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F2186819DB00828878 /* UISliderTest.cpp */; };
 		1ADCE7A1186BCF19001B78A4 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F5186819DB00828878 /* UITextFieldTest.cpp */; };
 		1ADCE7A2186BCF19001B78A4 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F8186819DB00828878 /* UIWidgetAddNodeTest.cpp */; };
+		1AFB0DE31885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
+		1AFB0DE41885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
 		37A61460186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
 		37A61461186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
 		37A61462186B21F6007A4638 /* cons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145D186B21F6007A4638 /* cons.cpp */; };
@@ -2513,6 +2515,8 @@
 		1AAF5283180E2C31000584C8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
+		1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
+		1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37A6145B186B21F6007A4638 /* acts.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acts.cpp; sourceTree = "<group>"; };
 		37A6145C186B21F6007A4638 /* acts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acts.h; sourceTree = "<group>"; };
@@ -4548,6 +4552,8 @@
 		1AAF50FC180E2C1A000584C8 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */,
+				1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */,
 				1AAF50FD180E2C1A000584C8 /* PerformanceAllocTest.cpp */,
 				1AAF50FE180E2C1A000584C8 /* PerformanceAllocTest.h */,
 				1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */,
@@ -6423,6 +6429,7 @@
 				1AAF51A2180E2C1A000584C8 /* EnemyController.cpp in Sources */,
 				1ADCE799186BCB21001B78A4 /* UILabelBMFontTest.cpp in Sources */,
 				1AAF51A4180E2C1A000584C8 /* GameOverScene.cpp in Sources */,
+				1AFB0DE31885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */,
 				59A79D5D1821E95C00F19697 /* MouseTest.cpp in Sources */,
 				1AAF51A6180E2C1A000584C8 /* PlayerController.cpp in Sources */,
 				1ADCE796186BCB20001B78A4 /* UICheckBoxTest.cpp in Sources */,
@@ -6742,6 +6749,7 @@
 				50D360FD186819DB00828878 /* UIImageViewTest.cpp in Sources */,
 				1A80519818768FD300C117B5 /* UnitTest.cpp in Sources */,
 				1AAF51F9180E2C1A000584C8 /* FileUtilsTest.cpp in Sources */,
+				1AFB0DE41885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */,
 				1AAF51FB180E2C1A000584C8 /* FontTest.cpp in Sources */,
 				1AAF51FD180E2C1A000584C8 /* IntervalTest.cpp in Sources */,
 				1AAF51FF180E2C1A000584C8 /* KeyboardTest.cpp in Sources */,
