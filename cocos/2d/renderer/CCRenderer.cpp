@@ -27,6 +27,7 @@
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
@@ -265,6 +266,12 @@ void Renderer::render()
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                    cmd->execute();
+                }
+                else if(commandType == RenderCommand::Type::BATCH_COMMAND)
+                {
+                    flush();
+                    BatchCommand* cmd = static_cast<BatchCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)

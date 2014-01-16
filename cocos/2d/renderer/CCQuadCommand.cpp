@@ -29,8 +29,7 @@
 NS_CC_BEGIN
 
 QuadCommand::QuadCommand()
-:RenderCommand()
-,_viewport(0)
+:_viewport(0)
 ,_depth(0)
 ,_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
