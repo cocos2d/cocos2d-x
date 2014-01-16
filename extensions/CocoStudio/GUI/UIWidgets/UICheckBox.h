@@ -27,7 +27,9 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 typedef enum
 {
@@ -36,35 +38,29 @@ typedef enum
 }CheckBoxEventType;
 
 typedef void (CCObject::*SEL_SelectedStateEvent)(CCObject*,CheckBoxEventType);
-#define checkboxselectedeventselector(_SELECTOR) (cocos2d::extension::SEL_SelectedStateEvent)(&_SELECTOR)
+#define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
-/*******Compatible*******/
-typedef void (CCObject::*SEL_SelectEvent)(CCObject*);
-typedef void (CCObject::*SEL_UnSelectEvent)(CCObject*);
-#define coco_selectselector(_SELECTOR) (cocos2d::extension::SEL_SelectEvent)(&_SELECTOR)
-#define coco_unselectselector(_SELECTOR) (cocos2d::extension::SEL_UnSelectEvent)(&_SELECTOR)
-/************************/
 /**
 *   @js NA
 *   @lua NA
 */
-class UICheckBox : public UIWidget
+class CheckBox : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UICheckBox();
+    CheckBox();
     
     /**
      * Default destructor
      */
-    virtual ~UICheckBox();
+    virtual ~CheckBox();
     
     /**
      * Allocates and initializes.
      */
-    static UICheckBox* create();
+    static CheckBox* create();
     
     /**
      * Load textures for checkbox.
@@ -144,7 +140,7 @@ public:
     virtual void setAnchorPoint(const CCPoint &pt);
     
     //add a call back function would called when checkbox is selected or unselected.
-    void addEventListener(CCObject* target,SEL_SelectedStateEvent selector);
+    void addEventListenerCheckBox(CCObject* target,SEL_SelectedStateEvent selector);
     
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -159,7 +155,7 @@ public:
     virtual bool isFlipY();
     
     //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const CCPoint &touchPoint);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
     
     //override "getContentSize" method of widget.
     virtual const CCSize& getContentSize() const;
@@ -170,29 +166,7 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
-    
-    /*Compatible*/
-    /**
-     * These methods will be removed
-     */
-    void setTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextures(backGround, backGroundSelected, cross, backGroundDisabled,frontCrossDisabled,texType);};
-    void setBackGroundTexture(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL){loadTextureBackGround(backGround,type);};
-    void setBackGroundSelectedTexture(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundSelected(backGroundSelected,texType);};
-    void setFrontCrossTexture(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCross(cross,texType);};
-    void setBackGroundDisabledTexture(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureBackGroundDisabled(backGroundDisabled,texType);};
-    void setFrontCrossDisabledTexture(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL){loadTextureFrontCrossDisabled(frontCrossDisabled,texType);};
-    void addSelectEvent(CCObject* target,SEL_SelectEvent selector)
-    {
-        m_pSelectListener = target;
-        m_pfnSelectSelector = selector;
-    };
-    void addUnSelectEvent(CCObject* target,SEL_UnSelectEvent selector)
-    {
-        m_pUnSelectListener = target;
-        m_pfnUnSelectSelector = selector;
-    };
-    /************/
+    virtual std::string getDescription() const;
 
 protected:
     virtual bool init();
@@ -208,31 +182,34 @@ protected:
     void frontCrossTextureScaleChangedWithSize();
     void backGroundDisabledTextureScaleChangedWithSize();
     void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    CCSprite* m_pBackGroundBoxRenderer;
-    CCSprite* m_pBackGroundSelectedBoxRenderer;
-    CCSprite* m_pFrontCrossRenderer;
-    CCSprite* m_pBackGroundBoxDisabledRenderer;
-    CCSprite* m_pFrontCrossDisabledRenderer;
-    bool m_bIsSelected;
+    CCSprite* _backGroundBoxRenderer;
+    CCSprite* _backGroundSelectedBoxRenderer;
+    CCSprite* _frontCrossRenderer;
+    CCSprite* _backGroundBoxDisabledRenderer;
+    CCSprite* _frontCrossDisabledRenderer;
+    bool _isSelected;
 
-    CCObject*       m_pSelectedStateEventListener;
-    SEL_SelectedStateEvent    m_pfnSelectedStateEventSelector;
+    CCObject*       _checkBoxEventListener;
+    SEL_SelectedStateEvent    _checkBoxEventSelector;
     
-    TextureResType m_eBackGroundTexType;
-    TextureResType m_eBackGroundSelectedTexType;
-    TextureResType m_eFrontCrossTexType;
-    TextureResType m_eBackGroundDisabledTexType;
-    TextureResType m_eFrontCrossDisabledTexType;
+    TextureResType _backGroundTexType;
+    TextureResType _backGroundSelectedTexType;
+    TextureResType _frontCrossTexType;
+    TextureResType _backGroundDisabledTexType;
+    TextureResType _frontCrossDisabledTexType;
     
-    /*Compatible*/
-    CCObject*       m_pSelectListener;
-    SEL_SelectEvent    m_pfnSelectSelector;
-    CCObject*       m_pUnSelectListener;
-    SEL_UnSelectEvent    m_pfnUnSelectSelector;
-    /************/
+    std::string _backGroundFileName;
+    std::string _backGroundSelectedFileName;
+    std::string _frontCrossFileName;
+    std::string _backGroundDisabledFileName;
+    std::string _frontCrossDisabledFileName;
 };
 
-NS_CC_EXT_END
+}
 
-#endif /* defined(__CocoGUI__UICheckBox__) */
+NS_CC_END
+
+#endif /* defined(__CocoGUI__CheckBox__) */

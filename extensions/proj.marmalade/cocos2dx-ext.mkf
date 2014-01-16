@@ -127,10 +127,13 @@ files
     "*.h"
     "*.cpp"
 
-    ["CocoStudio/Json/lib_json"]
-    ("../CocoStudio/Json/lib_json")
+    ["CocoStudio/Json/rapidjson"]
+    ("../CocoStudio/Json/rapidjson")
     "*.h"
-    "*.cpp"
+	
+	 ["CocoStudio/Json/rapidjson/internal"]
+    ("../CocoStudio/Json/rapidjson/internal")
+    "*.h"
 
 	["CocoStudio/Reader"]
     ("../CocoStudio/Reader")
@@ -139,6 +142,11 @@ files
 	
 	["CocoStudio/Action"]
     ("../CocoStudio/Action")
+    "*.h"
+    "*.cpp"
+	
+	["CocoStudio/Trigger"]
+    ("../CocoStudio/Trigger")
     "*.h"
     "*.cpp"
 }

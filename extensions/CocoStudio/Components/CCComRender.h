@@ -22,36 +22,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EXTENTIONS_CCCOMNODE_H__
-#define __CC_EXTENTIONS_CCCOMNODE_H__
+#ifndef __CC_EXTENTIONS_CCCOMRENDER_H__
+#define __CC_EXTENTIONS_CCCOMRENDER_H__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
+#include "CCComBase.h"
 
 NS_CC_EXT_BEGIN
+
 /**
- *  @js NA
  *  @lua NA
  */
 class CCComRender : public cocos2d::CCComponent
 {
-protected:
+	DECLARE_CLASS_COMPONENT_INFO
+public:
+    /**
+     *  @js ctor
+     */
     CCComRender(void);
     CCComRender(cocos2d::CCNode *node, const char *comName);
+    /**
+     *  @js NA
+     */
     virtual ~CCComRender(void);
     
 public:
    virtual void onEnter();
    virtual void onExit();
-   cocos2d::CCNode* getNode();
-   void setNode(cocos2d::CCNode *pNode);
+   virtual bool serialize(void* r);
+   virtual cocos2d::CCNode* getNode();
+   virtual void setNode(cocos2d::CCNode *pNode);
 
    static CCComRender* create(cocos2d::CCNode *pNode, const char *comName);
-
+   static CCComRender* create(void);
+private:
+   bool readJson(const char *pszFileName, rapidjson::Document &doc);
 private:
    cocos2d::CCNode *m_pRender;
 };
 
 NS_CC_EXT_END
+
 #endif  // __FUNDATION__CCCOMPONENT_H__

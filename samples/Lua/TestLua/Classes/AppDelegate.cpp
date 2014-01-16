@@ -45,9 +45,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     tolua_s = pStack->getLuaState();
     tolua_web_socket_open(tolua_s);
 #endif
-    
+        
     std::vector<std::string> searchPaths;
     searchPaths.push_back("cocosbuilderRes");
+    searchPaths.insert(searchPaths.begin(), "scenetest/LoadSceneEdtiorFileTest");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
     searchPaths.push_back("TestCppResources");

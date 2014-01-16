@@ -11,10 +11,13 @@ LOCAL_SRC_FILES := ../cocos2dx_support/CCLuaBridge.cpp \
           ../cocos2dx_support/CCLuaValue.cpp \
           ../cocos2dx_support/Cocos2dxLuaLoader.cpp \
           ../cocos2dx_support/LuaCocos2d.cpp \
+          ../cocos2dx_support/LuaCocoStudio.cpp \
           ../cocos2dx_support/CCBProxy.cpp \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/Lua_web_socket.cpp \
+          ../cocos2dx_support/lua_cocos2dx_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_extensions_manual.cpp \
+          ../cocos2dx_support/lua_cocos2dx_cocostudio_manual.cpp \
           ../tolua/tolua_event.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \

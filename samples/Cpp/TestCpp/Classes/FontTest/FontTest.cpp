@@ -16,7 +16,7 @@ static int fontIdx = 0;
 
 static std::string fontList[] =
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
     // custom ttf files are defined in Test-info.plist
     "American Typewriter",
     "Marker Felt",

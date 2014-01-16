@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __CCANIMATION_H__
 
 #include "CCProcessBase.h"
+#include <queue>
 
 NS_CC_EXT_BEGIN
 
@@ -48,6 +49,21 @@ typedef void (CCObject::*SEL_FrameEventCallFunc)(CCBone *, const char *, int, in
 #define movementEvent_selector(_SELECTOR) (SEL_MovementEventCallFunc)(&_SELECTOR)
 #define frameEvent_selector(_SELECTOR) (SEL_FrameEventCallFunc)(&_SELECTOR)
 
+struct CCFrameEvent
+{
+    CCBone *bone;
+    const char *frameEventName;
+    int originFrameIndex;
+    int currentFrameIndex;
+};
+
+struct CCMovementEvent
+{
+    CCArmature *armature;
+    MovementEventType movementType;
+    const char *movementID;
+};
+
 /**
  *  @lua NA
  */
@@ -60,7 +76,13 @@ public:
      */
     static CCArmatureAnimation *create(CCArmature *armature);
 public:
+    /**
+     *  @js ctor
+     */
     CCArmatureAnimation();
+    /**
+     *  @js NA
+     */
     virtual ~CCArmatureAnimation(void);
 
     /**
@@ -71,10 +93,11 @@ public:
 
     /**
      * Scale animation play speed.
+     * This method is deprecated, please use setSpeedScale.
      * @param animationScale Scale value
      */
-    virtual void setAnimationScale(float animationScale);
-    virtual float getAnimationScale() const;
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
+    CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
      * Scale animation play speed.
@@ -84,8 +107,9 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    virtual void setAnimationInternal(float animationInternal);
+    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {};
 
+    using CCProcessBase::play;
     /**
      * Play animation by animation name.
      *
@@ -114,13 +138,47 @@ public:
      *         2  : fade in and out
      *
      */
-    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
 
     /**
      * Play animation by index, the other param is the same to play.
-     * @param  _animationIndex  the animation index you want to play
+     * Deprecated, please use playWithIndex
+     * @param  animationIndex  the animation index you want to play
      */
-    void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void playWithIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+
+    /**
+     * Play several animation by names
+     */
+    virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+
+    /**
+     * Play several animation by indexes
+     */
+    virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
+
+
+    // For bindings
+    virtual void playWithArray(cocos2d::CCArray *movementNames, int durationTo = -1, bool loop = true);
+    virtual void playWithIndexArray(cocos2d::CCArray *movementIndexes, int durationTo = -1, bool loop = true);
+
+    /**
+     * Go to specified frame and play current movement.
+     * You need first switch to the movement you want to play, then call this function.
+     * 
+     * example : playByIndex(0);
+     *           gotoAndPlay(0);
+     *           playByIndex(1);
+     *           gotoAndPlay(0);
+     *           gotoAndPlay(15);
+     */
+    virtual void gotoAndPlay(int frameIndex);
+
+    /**
+     * Go to specified frame and pause current movement.
+     */
+    virtual void gotoAndPause(int frameIndex);
 
     /**
      * Pause the Process
@@ -161,6 +219,23 @@ public:
      */
     void setFrameEventCallFunc(CCObject *target, SEL_FrameEventCallFunc callFunc);
 
+
+    /** 
+     * Returns a user assigned CCObject
+     *
+     * @return A user assigned CCObject
+     */
+    virtual CCObject* getUserObject();
+    /**
+     * Returns a user assigned CCObject
+     *
+     * The UserObject will be retained once in this method,
+     * and the previous UserObject (if existed) will be relese.
+     * The UserObject will be released in destructure.
+     *
+     * @param A user assigned CCObject
+     */
+    virtual void setUserObject(CCObject *pUserObject);
 protected:
 
     /**
@@ -181,6 +256,15 @@ protected:
      */
     void frameEvent(CCBone *bone, const char *frameEventName, int originFrameIndex, int currentFrameIndex);
 
+    /**
+     * Emit a movement event
+     */
+    void movementEvent(CCArmature *armature, MovementEventType movementType, const char *movementID);
+
+    void updateMovementList();
+
+    inline bool isIgnoreFrameEvent() { return m_bIgnoreFrameEvent; }
+
     friend class CCTween;
 protected:
     //! CCAnimationData save all MovementDatas this animation used.
@@ -189,16 +273,29 @@ protected:
     //! Scale the animation speed
     float m_fSpeedScale;
 
-    CCMovementData *m_pMovementData;				//! CCMovementData save all MovementFrameDatas this animation used.
+    CCMovementData *m_pMovementData;            //! CCMovementData save all MovementFrameDatas this animation used.
 
-    CCArmature *m_pArmature;						//! A weak reference of armature
+    CCArmature *m_pArmature;                    //! A weak reference of armature
 
-    std::string m_strMovementID;				//! Current movment's name
+    std::string m_strMovementID;                //! Current movment's name
 
-    int m_iToIndex;								//! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int m_iToIndex;	                            //! The frame index in CCMovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     CCArray *m_pTweenList;
 
+    bool m_bIgnoreFrameEvent;
+
+    std::queue<CCFrameEvent*> m_sFrameEventQueue;
+    std::queue<CCMovementEvent*> m_sMovementEventQueue;
+
+    std::vector<std::string> m_sMovementList;
+
+    bool m_bOnMovementList;
+    bool m_bMovementListLoop;
+    unsigned int m_uMovementIndex;
+	int m_iMovementListDurationTo;
+
+    CCObject *m_pUserObject;
 protected:
     /**
      * MovementEvent CallFunc.

@@ -1,0 +1,15 @@
+
+class  CCTween : public CCProcessBase
+{
+    static CCTween *create(CCBone *bone);
+    CCTween(void);
+    virtual ~CCTween(void);
+    virtual bool init(CCBone *bone);
+    virtual void play(CCMovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
+
+    virtual void gotoAndPlay(int frameIndex);
+    virtual void gotoAndPause(int frameIndex);
+
+    void setAnimation(CCArmatureAnimation *animation);
+    CCArmatureAnimation *getAnimation() const;
+};

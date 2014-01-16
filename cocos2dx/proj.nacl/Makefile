@@ -2,7 +2,8 @@ COCOS_ROOT = ../..
 COCOS_SRC_ROOT = $(COCOS_ROOT)/cocos2dx
 
 INCLUDES = \
-	-I$(NACL_SDK_ROOT)/include
+	-I$(NACL_SDK_ROOT)/include \
+	-I$(NACL_SDK_ROOT)/include/newlib
 
 SOURCES = ../actions/CCAction.cpp \
 ../actions/CCActionCamera.cpp \

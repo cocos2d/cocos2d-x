@@ -35,6 +35,10 @@ NS_CC_EXT_BEGIN
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
+
+#define SET_VERTEX3F(_v_, _x_, _y_, _z_) (_v_).x = (_x_); (_v_).y = (_y_); (_v_).z = (_z_);
+
+
 CCSkin *CCSkin::create()
 {
     CCSkin *skin = new CCSkin();
@@ -73,6 +77,7 @@ CCSkin *CCSkin::create(const char *pszFileName)
 
 CCSkin::CCSkin()
     : m_pBone(NULL)
+    , m_pArmature(NULL)
     , m_strDisplayName("")
 {
     m_tSkinTransform = CCAffineTransformIdentity;
@@ -80,14 +85,21 @@ CCSkin::CCSkin()
 
 bool CCSkin::initWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    bool ret = CCSprite::initWithSpriteFrameName(pszSpriteFrameName);
+    CCAssert(pszSpriteFrameName != NULL, "");
 
-    if (ret)
+    CCSpriteFrame *pFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszSpriteFrameName);
+    bool ret = true;
+
+    if (pFrame != NULL)
     {
-        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-        setTextureAtlas(atlas);
+        ret = initWithSpriteFrame(pFrame);
 
         m_strDisplayName = pszSpriteFrameName;
+    }
+    else
+    {
+        CCLOG("Cann't find CCSpriteFrame with %s. Please check your .plist file", pszSpriteFrameName);
+        ret = false;
     }
 
     return ret;
@@ -97,13 +109,7 @@ bool CCSkin::initWithFile(const char *pszFilename)
 {
     bool ret = CCSprite::initWithFile(pszFilename);
 
-    if (ret)
-    {
-        CCTextureAtlas *atlas = CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()->getTexureAtlasWithTexture(m_pobTexture);
-        setTextureAtlas(atlas);
-
-        m_strDisplayName = pszFilename;
-    }
+    m_strDisplayName = pszFilename;
 
     return ret;
 }
@@ -130,6 +136,10 @@ const CCBaseData &CCSkin::getSkinData()
 void CCSkin::updateArmatureTransform()
 {
     m_sTransform = CCAffineTransformConcat(m_tSkinTransform, m_pBone->nodeToArmatureTransform());
+    if(m_pArmature && m_pArmature->getBatchNode())
+    {
+        m_sTransform = CCAffineTransformConcat(m_sTransform, m_pArmature->nodeToParentTransform());
+    }
 }
 
 void CCSkin::updateTransform()
@@ -171,11 +181,11 @@ void CCSkin::updateTransform()
 
         float dx = x1 * cr - y2 * sr2 + x;
         float dy = x1 * sr + y2 * cr2 + y;
-
-        m_sQuad.bl.vertices = vertex3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
-        m_sQuad.br.vertices = vertex3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
-        m_sQuad.tl.vertices = vertex3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
-        m_sQuad.tr.vertices = vertex3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
+        
+        SET_VERTEX3F( m_sQuad.bl.vertices, RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.br.vertices, RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.tl.vertices, RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ );
+        SET_VERTEX3F( m_sQuad.tr.vertices, RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ );
     }
 
     // MARMALADE CHANGE: ADDED CHECK FOR NULL, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -201,6 +211,23 @@ CCAffineTransform CCSkin::nodeToWorldTransformAR()
     displayTransform.ty = anchorPoint.y;
 
     return CCAffineTransformConcat(displayTransform, m_pBone->getArmature()->nodeToWorldTransform());
+}
+
+void CCSkin::setBone(CCBone *bone)
+{
+    m_pBone = bone;
+    if(CCArmature *armature = m_pBone->getArmature())
+    {
+        m_pArmature = armature;
+
+        CCTextureAtlas *atlas = armature->getTexureAtlasWithTexture(m_pobTexture);
+        setTextureAtlas(atlas);
+    }
+}
+
+CCBone *CCSkin::getBone()
+{
+    return m_pBone;
 }
 
 NS_CC_EXT_END

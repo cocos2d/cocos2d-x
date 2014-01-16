@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 #include "WP8Keyboard.h"
+#include "support/CCNotificationCenter.h"
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -51,6 +52,8 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Phone::UI::Core;
 using namespace Platform;
+using namespace Microsoft::WRL;
+using namespace PhoneDirect3DXamlAppComponent;
 
 
 NS_CC_BEGIN
@@ -75,10 +78,15 @@ CCEGLView::CCEGLView()
 	, m_lastPointValid(false)
 	, m_running(false)
 	, m_initialized(false)
-    , m_textInputEnabled(false)
 	, m_windowClosed(false)
 	, m_windowVisible(true)
     , mKeyboard(nullptr)
+    , m_width(0)
+    , m_height(0)
+    , m_eglDisplay(nullptr)
+    , m_eglContext(nullptr)
+    , m_eglSurface(nullptr)
+    , m_isXamlWindow(false)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8");
@@ -99,43 +107,92 @@ bool CCEGLView::Create(CoreWindow^ window)
 	m_bSupportTouch = true;
 
  	esInitContext ( &m_esContext );
-	m_esContext.hWnd = WINRT_EGL_WINDOW(window);
-    esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
 
-    m_wp8Window = ref new WP8Window(window);
-    m_orientation = DisplayOrientations::None;
-    m_initialized = false;
-    UpdateForWindowSizeChange();
+	HRESULT result = CreateWinrtEglWindow(WINRT_EGL_IUNKNOWN(window), ANGLE_D3D_FEATURE_LEVEL::ANGLE_D3D_FEATURE_LEVEL_9_3, m_eglWindow.GetAddressOf());
+
+	if (SUCCEEDED(result))
+	{
+		m_esContext.hWnd = m_eglWindow;
+		esCreateWindow ( &m_esContext, TEXT("Cocos2d-x"), 0, 0, ES_WINDOW_RGB | ES_WINDOW_ALPHA | ES_WINDOW_DEPTH | ES_WINDOW_STENCIL );
+
+		m_wp8Window = ref new WP8Window(window);
+		m_orientation = DisplayOrientations::Portrait;
+		m_initialized = false;
+
+        m_eglContext =    m_esContext.eglContext;
+        m_eglSurface = m_esContext.eglSurface;
+        m_eglDisplay = m_esContext.eglDisplay;
+
+		UpdateForWindowSizeChange();
+		bRet = true;
+	}
+	else
+	{
+		CCLOG("Unable to create Angle EGL Window: %d", result);
+	}
 
     return bRet;
 }
 
+bool CCEGLView::Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height)
+{
+	m_bSupportTouch = true;
+    m_isXamlWindow = true;
+    m_eglDisplay = eglDisplay;
+    m_eglContext = eglContext;
+    m_eglSurface = eglSurface;
+    UpdateForWindowSizeChange(width, height);
+
+    return true;
+}
+
+void CCEGLView::UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface)
+{
+	m_bSupportTouch = true;
+    m_eglDisplay = eglDisplay;
+    m_eglContext = eglContext;
+    m_eglSurface = eglSurface;
+
+    //UpdateForWindowSizeChange(width, height);
+}
+
 void CCEGLView::setIMEKeyboardState(bool bOpen)
 {
-	m_textInputEnabled = bOpen;
-    if(!mKeyboard)
-        mKeyboard = ref new WP8Keyboard(m_window.Get());
-
-    mKeyboard->SetFocus(m_textInputEnabled);
+    if(m_delegate)
+    {
+        if(bOpen)
+        {
+            m_delegate->Invoke(Cocos2dEvent::ShowKeyboard);
+        }
+        else
+        {
+            m_delegate->Invoke(Cocos2dEvent::HideKeyboard);
+        }
+    }
+    else
+    {
+        if(!mKeyboard)
+            mKeyboard = ref new WP8Keyboard(m_window.Get());
+        mKeyboard->SetFocus(bOpen);
+    }
 }
 
 void CCEGLView::swapBuffers()
 {
-	eglSwapBuffers(m_esContext.eglDisplay, m_esContext.eglSurface);  
+    eglSwapBuffers(m_eglDisplay, m_eglSurface);  
 }
 
 
 bool CCEGLView::isOpenGLReady()
 {
 	// TODO: need to revisit this
-    return (m_window.Get() != nullptr && m_orientation != DisplayOrientations::None);
+    return ((m_window.Get() || m_eglDisplay) && m_orientation != DisplayOrientations::None);
 }
 
 void CCEGLView::end()
 {
 	m_windowClosed = true;
 }
-
 
 void CCEGLView::OnOrientationChanged()
 {
@@ -153,10 +210,16 @@ void CCEGLView::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 
 void CCEGLView::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerPressed(args);
+}
+
+void CCEGLView::OnPointerPressed(PointerEventArgs^ args)
+{
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
+
 
 void CCEGLView::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
@@ -181,6 +244,11 @@ void CCEGLView::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 
 void CCEGLView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerMoved(args);   
+}
+
+void CCEGLView::OnPointerMoved( PointerEventArgs^ args)
+{
 	auto currentPoint = args->CurrentPoint;
 	if (currentPoint->IsInContact)
 	{
@@ -201,11 +269,15 @@ void CCEGLView::OnPointerMoved(CoreWindow^ sender, PointerEventArgs^ args)
 
 void CCEGLView::OnPointerReleased(CoreWindow^ sender, PointerEventArgs^ args)
 {
+    OnPointerReleased(args);
+}
+
+void CCEGLView::OnPointerReleased(PointerEventArgs^ args)
+{
     int id = args->CurrentPoint->PointerId;
     CCPoint pt = GetCCPoint(args);
     handleTouchesEnd(1, &id, &pt.x, &pt.y);
 }
-
 
 
 
@@ -247,6 +319,11 @@ CCEGLView* CCEGLView::sharedOpenGLView()
 int CCEGLView::Run() 
 {
 	m_running = true; 
+
+    // XAML version does not have a run loop
+    if(m_isXamlWindow)
+        return 0;
+
 	while (!m_windowClosed)
 	{
 		if (m_windowVisible)
@@ -261,6 +338,11 @@ int CCEGLView::Run()
 	}
 	return 0;
 };
+
+void CCEGLView::Render()
+{
+    OnRendering();
+}
 
 void CCEGLView::OnRendering()
 {
@@ -312,23 +394,46 @@ void CCEGLView::ValidateDevice()
 
 }
 
+// called by orientation change from WP8 XAML
+void CCEGLView::UpdateOrientation(DisplayOrientations orientation)
+{
+    if(m_orientation != orientation)
+    {
+        m_orientation = orientation;
+        UpdateWindowSize();
+    }
+}
+
+// called by size change from WP8 XAML
+void CCEGLView::UpdateForWindowSizeChange(float width, float height)
+{
+    m_width = width;
+    m_height = height;
+    UpdateWindowSize();
+}
+
 void CCEGLView::UpdateForWindowSizeChange()
+{
+    m_orientation = DisplayProperties::CurrentOrientation;
+    m_width = ConvertDipsToPixels(m_window->Bounds.Width);
+    m_height = ConvertDipsToPixels(m_window->Bounds.Height);
+ 
+    UpdateWindowSize();
+}
+
+void CCEGLView::UpdateWindowSize()
 {
     float width, height;
 
-    m_orientation = DisplayProperties::CurrentOrientation;
-
-    m_windowBounds = m_window->Bounds;
-    
     if(m_orientation == DisplayOrientations::Landscape || m_orientation == DisplayOrientations::LandscapeFlipped)
     {
-        width = ConvertDipsToPixels(m_window->Bounds.Height);
-        height = ConvertDipsToPixels(m_window->Bounds.Width);
+        width = m_height;
+        height = m_width;
     }
     else
     {
-        width = ConvertDipsToPixels(m_window->Bounds.Width);
-        height = ConvertDipsToPixels(m_window->Bounds.Height);
+        width = m_width;
+        height = m_height;
     }
 
     UpdateOrientationMatrix();
@@ -374,52 +479,48 @@ void CCEGLView::UpdateOrientationMatrix()
 	}
 }
 
-
-
-Point CCEGLView::TransformToOrientation(Point point, bool dipsToPixels)
+CCPoint CCEGLView::TransformToOrientation(Point p)
 {
-    Point returnValue;
+    CCPoint returnValue;
 
-    switch (DisplayProperties::CurrentOrientation)
+	float x = getScaledDPIValue(p.X);
+	float y = getScaledDPIValue(p.Y);
+
+
+    switch (m_orientation)
     {
     case DisplayOrientations::Portrait:
-        returnValue = point;
+    default:
+        returnValue = CCPoint(x, y);
         break;
     case DisplayOrientations::Landscape:
-        returnValue = Point(point.Y, m_windowBounds.Width - point.X);
+        returnValue = CCPoint(y, m_width - x);
         break;
     case DisplayOrientations::PortraitFlipped:
-        returnValue = Point(m_windowBounds.Width - point.X, m_windowBounds.Height - point.Y);
+        returnValue = CCPoint(m_width - x, m_height - y);
         break;
     case DisplayOrientations::LandscapeFlipped:
-        returnValue = Point(m_windowBounds.Height -point.Y, point.X);
-        break;
-    default:
-        throw ref new Platform::FailureException();
+        returnValue = CCPoint(m_height - y, x);
         break;
     }
 
-    return dipsToPixels ? Point(ConvertDipsToPixels(returnValue.X),
-                                ConvertDipsToPixels(returnValue.Y)) 
-                        : returnValue;
+	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
+	if(zoomFactor > 0.0f) {
+		returnValue.x /= zoomFactor;
+		returnValue.y /= zoomFactor;
+	}
+
+    // CCLOG("%.2f %.2f : %.2f %.2f", p.X, p.Y,returnValue.x, returnValue.y);
+
+    return returnValue;
 }
 
 #if 1
 
 CCPoint CCEGLView::GetCCPoint(PointerEventArgs^ args) {
 
-	auto p = TransformToOrientation(args->CurrentPoint->Position, false);
-	float x = getScaledDPIValue(p.X);
-	float y = getScaledDPIValue(p.Y);
-    CCPoint pt(x, y);
+	return TransformToOrientation(args->CurrentPoint->Position);
 
-	float zoomFactor = CCEGLView::sharedOpenGLView()->getFrameZoomFactor();
-
-	if(zoomFactor > 0.0f) {
-		pt.x /= zoomFactor;
-		pt.y /= zoomFactor;
-	}
-	return pt;
 }
 
 #else
@@ -465,14 +566,14 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
 	{
 		case DisplayOrientations::Landscape:
 		case DisplayOrientations::LandscapeFlipped:
-            glViewport((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
-                       (GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
+                       (GLint)((m_obViewPortRect.size.width - ((x + w) * m_fScaleX)) + m_obViewPortRect.origin.x),
                        (GLsizei)(h * m_fScaleY),
                        (GLsizei)(w * m_fScaleX));
 			break;
 
         default:
-            glViewport((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
+            glScissor((GLint)(x * m_fScaleX + m_obViewPortRect.origin.x),
                        (GLint)(y * m_fScaleY + m_obViewPortRect.origin.y),
                        (GLsizei)(w * m_fScaleX),
                        (GLsizei)(h * m_fScaleY));

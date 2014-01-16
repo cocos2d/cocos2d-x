@@ -28,7 +28,9 @@ THE SOFTWARE.
 #include "CCArmatureDefine.h"
 #include "../datas/CCDatas.h"
 #include "../CCArmature.h"
-#include "../../Json/CSContentJsonDictionary.h"
+
+#include "../../Json/DictionaryHelper.h"
+#include "../../Json/rapidjson/document.h"
 
 namespace tinyxml2
 {
@@ -55,15 +57,16 @@ public:
     static float getPositionReadScale();
 
     static void purge();
-    static void clear();
+    
 public:
     ~CCDataReaderHelper();
 
     void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *filePath, CCObject *target, SEL_SCHEDULE selector);
+    void addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, CCObject *target, SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
+    void removeConfigFile(const char *configFile);
 public:
 
     /**
@@ -79,49 +82,49 @@ public:
     /**
      * Decode CCArmature Datas from xml export from Dragon CCBone flash tool
      */
-    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML);
-    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML);
-    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML);
+    static CCArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
+    static CCBoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
+    static CCDisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
 
 
     /**
      * Decode CCArmatureAnimation Datas from xml export from Dragon CCBone flash tool
      */
-    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML);
-    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData);
-    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData);
-    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData);
+    static CCAnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
+    static CCMovementData *decodeMovement(tinyxml2::XMLElement *movementXML, CCArmatureData *armatureData, DataInfo *dataInfo);
+    static CCMovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, CCBoneData *boneData, DataInfo *dataInfo);
+    static CCFrameData *decodeFrame(tinyxml2::XMLElement *frameXML, tinyxml2::XMLElement *parentFrameXml, CCBoneData *boneData, DataInfo *dataInfo);
 
 
     /**
      * Decode Texture Datas from xml export from Dragon CCBone flash tool
      */
-    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML);
+    static CCTextureData *decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo);
 
     /**
      * Decode Contour Datas from xml export from Dragon CCBone flash tool
      */
-    static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML);
+    static CCContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static CCArmatureData *decodeArmature(cs::CSJsonDictionary &json);
-    static CCBoneData *decodeBone(cs::CSJsonDictionary &json);
-    static CCDisplayData *decodeBoneDisplay(cs::CSJsonDictionary &json);
+	static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCDisplayData *decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCAnimationData *decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCMovementData *decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo);
+    
+	static CCMovementBoneData *decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCFrameData *decodeFrame(const rapidjson::Value &json, DataInfo *dataInfo);
 
-    static CCAnimationData *decodeAnimation(cs::CSJsonDictionary &json);
-    static CCMovementData *decodeMovement(cs::CSJsonDictionary &json);
-    static CCMovementBoneData *decodeMovementBone(cs::CSJsonDictionary &json);
-    static CCFrameData *decodeFrame(cs::CSJsonDictionary &json);
+	static CCTextureData *decodeTexture(const rapidjson::Value &json);
+	static CCContourData *decodeContour(const rapidjson::Value &json);
 
-    static CCTextureData *decodeTexture(cs::CSJsonDictionary &json);
-
-    static CCContourData *decodeContour(cs::CSJsonDictionary &json);
-
-    static void decodeNode(CCBaseData *node, cs::CSJsonDictionary &json);
-
+	static void decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo);
 private:
+    static std::vector<std::string> s_arrConfigFileList;
+
     static CCDataReaderHelper *s_DataReaderHelper;
 };
 

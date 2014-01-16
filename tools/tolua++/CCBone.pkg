@@ -1,0 +1,51 @@
+class CCBone : public CCNodeRGBA
+{
+    static CCBone *create();
+    static CCBone *create(const char *name);
+    CCBone();
+    virtual ~CCBone(void);
+    virtual bool init();
+    virtual bool init(const char *name);
+    void addDisplay(CCDisplayData *displayData, int index);
+    void addDisplay(CCNode *display, int index);
+    void removeDisplay(int index);
+    void changeDisplayWithIndex(int index, bool force);
+    void addChildBone(CCBone *child);
+    void setParentBone(CCBone *parent);
+    CCBone *getParentBone();
+    virtual void removeFromParent();
+    void removeFromParent(bool recursion);
+    void removeChildBone(CCBone *bone, bool recursion);
+    void update(float delta);
+    void updateDisplayedColor(const ccColor3B &parentColor);
+    void updateDisplayedOpacity(GLubyte parentOpacity);
+    void setColor(const ccColor3B &color);
+    void setOpacity(GLubyte opacity);
+    void updateColor();
+    void updateZOrder();
+    virtual void setZOrder(int zOrder);
+    CCTween *getTween();
+    virtual inline void setTransformDirty(bool dirty);
+    virtual inline bool isTransformDirty();
+    virtual CCAffineTransform nodeToArmatureTransform();
+    virtual CCAffineTransform nodeToWorldTransform();
+    CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
+
+    virtual CCArmature* getArmature(void);
+    virtual void setArmature(CCArmature* var);
+
+    virtual CCArmature* getChildArmature(void);
+    virtual void setChildArmature(CCArmature* var);
+
+    virtual CCDisplayManager* getDisplayManager(void) const;
+    virtual void setDisplayManager(CCDisplayManager* var);
+
+    virtual bool getIgnoreMovementBoneData(void);
+    virtual void setIgnoreMovementBoneData(bool var);
+
+    virtual std::string getName(void) const;
+    virtual void setName(std::string var);
+
+    virtual CCBaseData* getWorldInfo(void) const;
+};

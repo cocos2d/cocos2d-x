@@ -1,0 +1,12 @@
+
+class ActionManager:public CCObject
+{
+   ActionManager();
+   virtual ~ActionManager();
+
+   static ActionManager* shareManager();
+   static void purge();
+   ActionObject* getActionByName(const char* jsonName,const char* actionName);
+   ActionObject* playActionByName(const char* jsonName,const char* actionName);
+   void releaseActions();
+};

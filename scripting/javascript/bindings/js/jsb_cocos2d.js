@@ -4,6 +4,25 @@
 
 var cc = cc || {};
 
+/**
+ * Device type
+ * @constant
+ * @type {Object}
+ */
+cc.TARGET_PLATFORM = {
+    WINDOWS:0,
+    LINUX:1,
+    MACOS:2,
+    ANDROID:3,
+    IPHONE:4,
+    IPAD:5,
+    BLACKBERRY:6,
+    NACL:7,
+    EMSCRIPTEN:8,
+    MOBILE_BROWSER:100,
+    PC_BROWSER:101
+};
+
 cc.LANGUAGE_ENGLISH    = 0;
 cc.LANGUAGE_CHINESE    = 1;
 cc.LANGUAGE_FRENCH     = 2;
@@ -104,8 +123,34 @@ cc.log = cc._cocosplayerLog || cc.log || log;
 //
 cc.c3b = function( r, g, b )
 {
-    return {r:r, g:g, b:b };
+    switch (arguments.length) {
+        case 0:
+            return {r:0, g:0, b:0 };
+        case 1:
+            if (r && r instanceof cc.c3b) {
+            	  return {r:r.r, g:r.g, b:r.b };
+            } else {
+                return {r:0, g:0, b:0 };
+            }
+        case 3:
+            return {r:r, g:g, b:b };
+        default:
+            throw "unknown argument type";
+            break;
+    }
 };
+
+cc.integerToColor3B = function (intValue) {
+    intValue = intValue || 0;
+
+    var offset = 0xff;
+    var retColor = {r:0, g:0, b:0 };
+    retColor.r = intValue & (offset);
+    retColor.g = (intValue >> 8) & offset;
+    retColor.b = (intValue >> 16) & offset;
+    return retColor;
+};
+
 cc._c3b = function( r, g, b )
 {
     cc._reuse_color3b.r = r;
@@ -114,13 +159,53 @@ cc._c3b = function( r, g, b )
     return cc._reuse_color3b;
 };
 
+cc.c3BEqual = function(color1, color2){
+    return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
+};
+
+cc.white = function () {
+    return cc.c3b(255, 255, 255);
+};
+
+cc.yellow = function () {
+    return cc.c3b(255, 255, 0);
+};
+
+cc.blue = function () {
+    return cc.c3b(0, 0, 255);
+};
+
+cc.green = function () {
+    return cc.c3b(0, 255, 0);
+};
+
+cc.red = function () {
+    return cc.c3b(255, 0, 0);
+};
+
+cc.magenta = function () {
+    return cc.c3b(255, 0, 255);
+};
+
+cc.black = function () {
+    return cc.c3b(0, 0, 0);
+};
+
+cc.orange = function () {
+    return cc.c3b(255, 127, 0);
+};
+
+cc.gray = function () {
+    return cc.c3b(166, 166, 166);
+};
+
 //
 // Color 4B
 //
-cc.c4b = function( r, g, b, a )
-{
+cc.c4b = function (r, g, b, a) {
     return {r:r, g:g, b:b, a:a };
 };
+
 cc._c4b = function( r, g, b, a )
 {
     cc._reuse_color4b.r = r;
@@ -132,6 +217,26 @@ cc._c4b = function( r, g, b, a )
 // compatibility
 cc.c4 = cc.c4b;
 cc._c4 = cc._c4b;
+
+cc.c4f = function (r, g, b, a) {
+    return {r:r, g:g, b:b, a:a };
+};
+
+cc.c4FFromccc3B = function (c) {
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
+};
+
+cc.c4FFromccc4B = function (c) {
+    return cc.c4f(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
+};
+
+cc.c4BFromccc4F = function (c) {
+    return cc.c4f(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
+};
+
+cc.c4FEqual = function (a, b) {
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+};
 
 /**
  * convert Color3B to a string of color for style.
@@ -145,14 +250,6 @@ cc.convertColor3BtoHexString = function (clr) {
     var hB = clr.b.toString(16);
     var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
     return stClr;
-};
-
-//
-// Color 4F
-//
-cc.c4f = function( r, g, b, a )
-{
-    return {r:r, g:g, b:b, a:a };
 };
 
 //
@@ -176,6 +273,10 @@ cc._p = function( x, y )
 
 cc.pointEqualToPoint = function (point1, point2) {
     return ((point1.x == point2.x) && (point1.y == point2.y));
+};
+
+cc.PointZero = function () {
+    return cc.p(0, 0);
 };
 
 //
@@ -204,6 +305,9 @@ cc._size = function(w,h)
 cc.sizeEqualToSize = function (size1, size2)
 {
     return ((size1.width == size2.width) && (size1.height == size2.height));
+};
+cc.SizeZero = function () {
+    return cc.size(0, 0);
 };
 
 //
@@ -294,6 +398,86 @@ cc.rectIntersection = function (rectA, rectB) {
     intersection.width = Math.min(rectA.x+rectA.width, rectB.x+rectB.width) - intersection.x;
     intersection.height = Math.min(rectA.y+rectA.height, rectB.y+rectB.height) - intersection.y;
     return intersection;
+};
+
+cc.RectZero = function () {
+    return cc.rect(0, 0, 0, 0);
+};
+
+cc.VisibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    init:function(size){
+        this._width = size.width;
+        this._height = size.height;
+
+        var w = this._width;
+        var h = this._height;
+
+        //top
+        this._topLeft.y = h;
+        this._topRight.x = w;
+        this._topRight.y = h;
+        this._top.x = w/2;
+        this._top.y = h;
+
+        //bottom
+        this._bottomRight.x = w;
+        this._bottom.x = w/2;
+
+        //center
+        this._center.x = w/2;
+        this._center.y = h/2;
+
+        //left
+        this._left.y = h/2;
+
+        //right
+        this._right.x = w;
+        this._right.y = h/2;
+    },
+    getWidth:function(){
+        return this._width;
+    },
+    getHeight:function(){
+        return this._height;
+    },
+    topLeft:function(){
+        return this._topLeft;
+    },
+    topRight:function(){
+        return this._topRight;
+    },
+    top:function(){
+        return this._top;
+    },
+    bottomLeft:function(){
+        return this._bottomLeft;
+    },
+    bottomRight:function(){
+        return this._bottomRight;
+    },
+    bottom:function(){
+        return this._bottom;
+    },
+    center:function(){
+        return this._center;
+    },
+    left:function(){
+        return this._left;
+    },
+    right:function(){
+        return this._right;
+    }
 };
 
 //
@@ -543,4 +727,123 @@ cc.Loader.preload = function (resources, selector, target) {
     }
     this._instance.initWith(resources, selector, target);
     return this._instance;
+};
+
+cc.LoaderScene = cc.Loader;
+
+var ConfigType = {
+    NONE: 0,
+    COCOSTUDIO: 1
+};
+
+var __onParseConfig = function(type, str) {
+    if (type === ConfigType.COCOSTUDIO) {
+        ccs.TriggerMng.getInstance().parse(JSON.parse(str));
+    }
+};
+
+cc.VisibleRect = {
+    _topLeft:cc.p(0,0),
+    _topRight:cc.p(0,0),
+    _top:cc.p(0,0),
+    _bottomLeft:cc.p(0,0),
+    _bottomRight:cc.p(0,0),
+    _bottom:cc.p(0,0),
+    _center:cc.p(0,0),
+    _left:cc.p(0,0),
+    _right:cc.p(0,0),
+    _width:0,
+    _height:0,
+    _isInitialized: false,
+    init:function(){
+        var director = cc.Director.getInstance();
+        var origin = director.getVisibleOrigin();
+        var size = director.getVisibleSize();
+
+        this._width = size.width;
+        this._height = size.height;
+
+        var x = origin.x;
+        var y = origin.y;
+        var w = this._width;
+        var h = this._height;
+
+        var left = origin.x;
+        var right = origin.x + size.width;
+        var middle = origin.x + size.width/2;
+
+        //top
+        this._top.y = this._topLeft.y = this._topRight.y = y + h;
+        this._topLeft.x = left;
+        this._top.x = middle;
+        this._topRight.x = right;
+
+        //bottom
+
+        this._bottom.y = this._bottomRight.y = this._bottomLeft.y = y;
+        this._bottomLeft.x = left
+        this._bottom.x = middle;
+        this._bottomRight.x = right;
+
+        //center
+        this._right.y = this._left.y = this._center.y = y + h/2;
+        this._center.x = middle;
+        
+        //left
+        this._left.x = left;
+
+        //right
+        this._right.x = right;
+    },
+
+    lazyInit: function(){
+        if (!this._isInitialized) {
+            this.init();
+            this._isInitialized = true;
+        }
+    },
+    getWidth:function(){
+        this.lazyInit();
+        return this._width;
+    },
+    getHeight:function(){
+        this.lazyInit();
+        return this._height;
+    },
+    topLeft:function(){
+        this.lazyInit();        
+        return this._topLeft;
+    },
+    topRight:function(){
+        this.lazyInit();        
+        return this._topRight;
+    },
+    top:function(){
+        this.lazyInit();        
+        return this._top;
+    },
+    bottomLeft:function(){
+        this.lazyInit();        
+        return this._bottomLeft;
+    },
+    bottomRight:function(){
+        this.lazyInit();        
+        return this._bottomRight;
+    },
+    bottom:function(){
+        this.lazyInit();        
+        return this._bottom;
+    },
+    center:function(){
+        this.lazyInit();        
+        return this._center;
+    },
+    left:function(){
+        this.lazyInit();        
+        return this._left;
+    },
+    right:function(){
+        this.lazyInit();        
+        return this._right;
+    }
 };

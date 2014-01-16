@@ -1,0 +1,91 @@
+
+typedef enum
+{
+    LAYOUT_COLOR_NONE,
+    LAYOUT_COLOR_SOLID,
+    LAYOUT_COLOR_GRADIENT
+}LayoutBackGroundColorType;
+
+typedef enum
+{
+    LAYOUT_ABSOLUTE,
+    LAYOUT_LINEAR_VERTICAL,
+    LAYOUT_LINEAR_HORIZONTAL,
+    LAYOUT_RELATIVE
+}LayoutType;
+
+typedef enum {
+    LAYOUT_CLIPPING_STENCIL,
+    LAYOUT_CLIPPING_SCISSOR
+}LayoutClippingType;
+
+
+class Layout : public Widget
+{    
+    Layout();
+    
+    
+    virtual ~Layout();
+    
+    
+    static Layout* create();
+        
+    
+    void setBackGroundImage(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    
+    
+    void setBackGroundImageCapInsets(const CCRect& capInsets);
+    
+    
+    void setBackGroundColorType(LayoutBackGroundColorType type);
+    
+    
+    void setBackGroundImageScale9Enabled(bool enabled);
+    
+    
+    void setBackGroundColor(const ccColor3B &color);
+    
+    
+    void setBackGroundColor(const ccColor3B &startColor, const ccColor3B &endColor);
+    
+    
+    void setBackGroundColorOpacity(int opacity);
+    
+    
+    void setBackGroundColorVector(const CCPoint &vector);
+    
+    
+    void removeBackGroundImage();
+    
+    
+    const CCSize& getBackGroundImageTextureSize() const;
+    
+    
+    virtual void setClippingEnabled(bool enabled);
+    
+    void setClippingType(LayoutClippingType type);
+    
+    
+    virtual bool isClippingEnabled();
+    
+    
+    virtual std::string getDescription() const;
+    
+    
+    virtual void setLayoutType(LayoutType type);
+    
+    
+    virtual LayoutType getLayoutType() const;
+
+    virtual void addChild(CCNode * child);
+    
+    virtual void addChild(CCNode * child, int zOrder);
+    
+    virtual void addChild(CCNode* child, int zOrder, int tag);
+    
+    virtual void visit();
+    
+    virtual void sortAllChildren();
+    
+    void requestDoLayout();  
+};

@@ -9,7 +9,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Device-Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -110,8 +110,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Device-Release"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -149,6 +149,7 @@
 								<option id="com.qnx.qcc.option.compiler.pie.306742309" name="Position Independent Executable (-fPIE)" superClass="com.qnx.qcc.option.compiler.pie" value="true" valueType="boolean"/>
 								<option id="com.qnx.qcc.option.compiler.qccoptions.413233097" name="QCC Options" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList">
 									<listOptionValue builtIn="false" value="-frecord-gcc-switches"/>
+									<listOptionValue builtIn="false" value="-fPIC"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1766824597" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -189,8 +190,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Device-Profile"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -268,8 +269,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Device-Coverage"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -348,8 +349,8 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Simulator-Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Simulator"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -424,8 +425,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Simulator-Profile"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -502,8 +503,8 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/extensions/Simulator-Coverage"/>
-						<entry flags="" kind="libraryFile" name="extensions"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="extensions"/>
+						<entry flags="" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="extensions" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -606,4 +607,5 @@
 		<resource resourceType="PROJECT" workspacePath="/extensions"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

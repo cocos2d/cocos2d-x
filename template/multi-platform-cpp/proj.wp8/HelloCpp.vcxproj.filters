@@ -8,12 +8,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{75a4d4c5-4978-4bf9-a391-fbbd7b2d35b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Resources">
-      <UniqueIdentifier>{c09e6c12-88ba-4ac4-a100-934ae83cb526}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\fonts">
-      <UniqueIdentifier>{c20ecf31-94f4-4ac0-bac7-f3d6f170c765}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ClickAndMoveTest">
       <UniqueIdentifier>{c4067854-d06e-431d-b750-d76dab15655d}</UniqueIdentifier>
     </Filter>
@@ -40,15 +34,6 @@
     <Image Include="Assets\Tiles\IconicTileSmall.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Resources\CloseNormal.png">
-      <Filter>Assets\Resources</Filter>
-    </Image>
-    <Image Include="Assets\Resources\CloseSelected.png">
-      <Filter>Assets\Resources</Filter>
-    </Image>
-    <Image Include="Assets\Resources\HelloWorld.png">
-      <Filter>Assets\Resources</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloCpp.cpp" />
@@ -73,13 +58,5 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Assets\Resources\fonts\arial.ttf">
-      <Filter>Assets\Resources\fonts</Filter>
-    </Font>
-    <Font Include="Assets\Resources\fonts\Marker Felt.ttf">
-      <Filter>Assets\Resources\fonts</Filter>
-    </Font>
   </ItemGroup>
 </Project>

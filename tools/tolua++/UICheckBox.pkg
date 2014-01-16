@@ -1,0 +1,31 @@
+
+typedef enum
+{
+    CHECKBOX_STATE_EVENT_SELECTED,
+    CHECKBOX_STATE_EVENT_UNSELECTED
+}CheckBoxEventType;
+
+class CheckBox : public Widget
+{
+    CheckBox();
+    virtual ~CheckBox();
+    static CheckBox* create();
+    void loadTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGround(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundSelected(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCross(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureBackGroundDisabled(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadTextureFrontCrossDisabled(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setSelectedState(bool selected);
+    bool getSelectedState();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual std::string getDescription() const;
+
+};

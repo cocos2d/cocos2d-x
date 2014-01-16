@@ -94,10 +94,23 @@ void CCTransformHelp::transformToParentWithoutScale(CCBaseData &node, const CCBa
 
 void CCTransformHelp::nodeToMatrix(const CCBaseData &node, CCAffineTransform &matrix)
 {
-    matrix.a = node.scaleX * cos(node.skewY);
-    matrix.b = node.scaleX * sin(node.skewY);
-    matrix.c = node.scaleY * sin(node.skewX);
-    matrix.d = node.scaleY * cos(node.skewX);
+    if (node.skewX == -node.skewY)
+    {
+        double sine   = sin(node.skewX);
+        double cosine = cos(node.skewX);
+
+        matrix.a = node.scaleX * cosine;
+        matrix.b = node.scaleX * -sine;
+        matrix.c = node.scaleY * sine;
+        matrix.d = node.scaleY * cosine;
+    }
+    else
+    {
+        matrix.a = node.scaleX * cos(node.skewY);
+        matrix.b = node.scaleX * sin(node.skewY);
+        matrix.c = node.scaleY * sin(node.skewX);
+        matrix.d = node.scaleY * cos(node.skewX);
+    }
 
     matrix.tx = node.x;
     matrix.ty = node.y;

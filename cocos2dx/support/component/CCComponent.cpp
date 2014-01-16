@@ -55,8 +55,9 @@ void CCComponent::update(float delta)
 {
 }
 
-void CCComponent::serialize(void *ar)
+bool CCComponent::serialize(void *ar)
 {
+	return true;
 }
 
 CCComponent* CCComponent::create(void)
@@ -101,16 +102,6 @@ bool CCComponent::isEnabled() const
 void CCComponent::setEnabled(bool b)
 {
     m_bEnabled = b;
-}
-
-CCNode* CCComponent::getNode()
-{
-	return NULL;
-}
-
-void CCComponent::setNode(CCNode *pNode)
-{
-	CC_UNUSED_PARAM(pNode);
 }
 
 NS_CC_END

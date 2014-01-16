@@ -9,7 +9,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Debug"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -69,7 +69,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Release"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -95,6 +95,9 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/usr/include/freetype2"/>
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../../"/>
+								</option>
+								<option id="com.qnx.qcc.option.compiler.qccoptions.296577673" superClass="com.qnx.qcc.option.compiler.qccoptions" valueType="stringList">
+									<listOptionValue builtIn="false" value="-fPIC"/>
 								</option>
 								<inputType id="com.qnx.qcc.inputType.compiler.1144257796" superClass="com.qnx.qcc.inputType.compiler"/>
 							</tool>
@@ -129,7 +132,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Profile"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -191,7 +194,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Device-Coverage"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -253,7 +256,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Simulator"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -312,7 +315,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Simulator-Profile"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -373,7 +376,7 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Box2D"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Box2D/Simulator-Coverage"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="Box2D"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Box2D" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -457,4 +460,5 @@
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

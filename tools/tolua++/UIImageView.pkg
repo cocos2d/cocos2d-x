@@ -1,0 +1,21 @@
+
+class ImageView : public Widget
+{
+    ImageView();
+    virtual ~ImageView();
+    static ImageView* create();
+    void loadTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setTextureRect(const CCRect& rect);
+    void setScale9Enabled(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual std::string getDescription() const;
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+
+};

@@ -27,8 +27,7 @@
 
 
 #include "../BaseClasses/UIWidget.h"
-#include "../Layouts/Layout.h"
-#include "../BaseClasses/UIRootWidget.h"
+#include "../Layouts/UILayout.h"
 #include "../UIWidgets/UIButton.h"
 #include "../UIWidgets/UICheckBox.h"
 #include "../UIWidgets/UIImageView.h"
@@ -39,18 +38,17 @@
 #include "../UIWidgets/UISlider.h"
 #include "../UIWidgets/UITextField.h"
 #include "../UIWidgets/ScrollWidget/UIListView.h"
-#include "../UIWidgets/ScrollWidget/UIDragPanel.h"
 #include "../UIWidgets/UILabelBMFont.h"
 #include "../UIWidgets/ScrollWidget/UIPageView.h"
 #include "UIHelper.h"
-#include "../../Reader/CCSGUIReader.h"
-#include "UILayer.h"
+#include "../../Reader/GUIReader.h"
+#include "UITouchGroup.h"
 #include "../UIWidgets/Compatible/CompatibleClasses.h"
 
-NS_CC_EXT_BEGIN
+//NS_CC_EXT_BEGIN
 
 const char* CocosGUIVersion();
 
-NS_CC_EXT_END
+//NS_CC_EXT_END
 
 #endif /* defined(__CocosGUITest__Cocos__) */

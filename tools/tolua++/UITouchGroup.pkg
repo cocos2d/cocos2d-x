@@ -1,0 +1,21 @@
+
+class TouchGroup : public CCLayer
+{
+    TouchGroup();
+    virtual ~TouchGroup();
+    static TouchGroup *create(void);
+    virtual bool init();
+    virtual void onEnter();
+    virtual void onExit();
+    virtual void onEnterTransitionDidFinish();
+    virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    void addWidget(Widget* widget);
+    void removeWidget(Widget* widget);
+    Widget* getWidgetByTag(int tag);
+    Widget* getWidgetByName(const char* name);
+    virtual void clear();
+    Widget* getRootWidget();
+};

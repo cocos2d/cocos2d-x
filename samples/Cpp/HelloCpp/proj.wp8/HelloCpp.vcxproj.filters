@@ -8,21 +8,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{75a4d4c5-4978-4bf9-a391-fbbd7b2d35b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Resources">
-      <UniqueIdentifier>{c09e6c12-88ba-4ac4-a100-934ae83cb526}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\fonts">
-      <UniqueIdentifier>{c20ecf31-94f4-4ac0-bac7-f3d6f170c765}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\ipad">
-      <UniqueIdentifier>{52e79149-9cf4-4441-b6b2-c620e17df6d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\ipadhd">
-      <UniqueIdentifier>{ac3c7a07-292f-4c6d-b8f9-e407426b685e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Resources\iphone">
-      <UniqueIdentifier>{a087a405-f923-45c3-b942-8979b56ca933}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ClickAndMoveTest">
       <UniqueIdentifier>{c4067854-d06e-431d-b750-d76dab15655d}</UniqueIdentifier>
     </Filter>
@@ -49,33 +34,6 @@
     <Image Include="Assets\Tiles\IconicTileSmall.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Resources\ipad\CloseNormal.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipad\CloseSelected.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipad\HelloWorld.png">
-      <Filter>Assets\Resources\ipad</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\CloseNormal.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\CloseSelected.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\ipadhd\HelloWorld.png">
-      <Filter>Assets\Resources\ipadhd</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\CloseNormal.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\CloseSelected.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
-    <Image Include="Assets\Resources\iphone\HelloWorld.png">
-      <Filter>Assets\Resources\iphone</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloCpp.cpp" />
@@ -100,13 +58,5 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Assets\Resources\fonts\Marker Felt.ttf">
-      <Filter>Assets\Resources\fonts</Filter>
-    </Font>
-    <Font Include="Assets\Resources\fonts\arial.ttf">
-      <Filter>Assets\Resources\fonts</Filter>
-    </Font>
   </ItemGroup>
 </Project>

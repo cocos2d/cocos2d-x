@@ -315,9 +315,6 @@
     <ClCompile Include="..\platform\winrt\CCWinRTUtils.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\winrt\DirectXBase.cpp">
-      <Filter>platform\winrt</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -483,6 +480,15 @@
     <ClCompile Include="..\ccFPSImages.c" />
     <ClCompile Include="..\CCScheduler.cpp" />
     <ClCompile Include="..\cocos2d.cpp" />
+    <ClCompile Include="..\platform\winrt\CCPrecompiledShaders.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\sha1.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\winrt\CCPThreadWinRT.cpp">
+      <Filter>platform\winrt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h">
@@ -734,9 +740,6 @@
     <ClInclude Include="..\platform\winrt\CCWinRTUtils.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\winrt\DirectXBase.h">
-      <Filter>platform\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\winrt\DirectXHelper.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
@@ -943,5 +946,14 @@
     <ClInclude Include="..\CCDirector.h" />
     <ClInclude Include="..\ccFPSImages.h" />
     <ClInclude Include="..\CCScheduler.h" />
+    <ClInclude Include="..\platform\winrt\CCPrecompiledShaders.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\sha1.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\winrt\CCPThreadWinRT.h">
+      <Filter>platform\winrt</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

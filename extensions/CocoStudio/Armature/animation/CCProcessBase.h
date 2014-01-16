@@ -59,7 +59,6 @@ public:
     /**
      * Play animation by animation name.
      *
-     * @param  animation  It will not used in the CCProcessBase Class
      * @param  durationTo The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
@@ -84,7 +83,7 @@ public:
      *         2  : fade in and out
      *
      */
-    virtual void play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing);
+    virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
      * Pause the Process
@@ -100,7 +99,6 @@ public:
     virtual void stop();
 
 
-    virtual void gotoFrame(int frameIndex);
 
     /**
      * You should never call this function, unless you know what you do
@@ -114,6 +112,7 @@ public:
 
 protected:
 
+    virtual void gotoFrame(int frameIndex);
 
     /**
      * Update(float dt) will call this handler, you can handle your logic here
@@ -145,10 +144,6 @@ protected:
     //! The tween easing effect
     CC_SYNTHESIZE(CCTweenType, m_eTweenEasing, TweenEasing);
 
-    //! The animation update speed
-    CC_SYNTHESIZE(float, m_fAnimationInternal, AnimationInternal);
-
-
 protected:
     //! The durantion frame count will run
     int m_iDurationTween;
@@ -163,6 +158,9 @@ protected:
 
 
     bool m_bIsLoopBack;
+
+    //! The animation update speed
+    float m_fAnimationInternal;
 };
 
 NS_CC_EXT_END

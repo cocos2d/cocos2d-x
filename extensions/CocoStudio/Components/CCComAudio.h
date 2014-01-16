@@ -25,16 +25,15 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "cocos2d.h"
-#include "ExtensionMacros.h"
+#include "CCComBase.h"
 
 NS_CC_EXT_BEGIN
 /**
- *  @js NA
  *  @lua NA
  */
 class CCComAudio : public cocos2d::CCComponent
 {
+	DECLARE_CLASS_COMPONENT_INFO
 protected:
     CCComAudio(void);
     virtual ~CCComAudio(void);
@@ -45,6 +44,7 @@ public:
    virtual void onExit();
    virtual bool isEnabled() const;
    virtual void setEnabled(bool b);
+   virtual bool serialize(void* r);
 
    static CCComAudio* create(void);
    
@@ -53,6 +53,7 @@ public:
    void preloadBackgroundMusic(const char* pszFilePath);
    void playBackgroundMusic(const char* pszFilePath, bool bLoop);
    void playBackgroundMusic(const char* pszFilePath);
+   void playBackgroundMusic();
    void stopBackgroundMusic(bool bReleaseData);
    void stopBackgroundMusic();
    void pauseBackgroundMusic();
@@ -66,6 +67,7 @@ public:
    void setEffectsVolume(float volume);
    unsigned int playEffect(const char* pszFilePath, bool bLoop);
    unsigned int playEffect(const char* pszFilePath);
+   unsigned int playEffect();
    void pauseEffect(unsigned int nSoundId);
    void pauseAllEffects();
    void resumeEffect(unsigned int nSoundId);

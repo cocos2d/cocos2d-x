@@ -22,16 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "cocos-ext.h"
 #include "CCComAudio.h"
 #include "SimpleAudioEngine.h"
 
 NS_CC_EXT_BEGIN
 
+IMPLEMENT_CLASS_COMPONENT_INFO(CCComAudio)
 CCComAudio::CCComAudio(void)
 : m_strFilePath("")
 , m_bLoop(false)
 {
-    m_strName = "Audio";
+    m_strName = "CCComAudio";
 }
 
 CCComAudio::~CCComAudio(void)
@@ -64,6 +66,65 @@ void CCComAudio::setEnabled(bool b)
     m_bEnabled = b;
 }
 
+bool CCComAudio::serialize(void* r)
+{
+	bool bRet = false;
+	do 
+	{
+		CC_BREAK_IF(r == NULL);
+		rapidjson::Value *v = (rapidjson::Value *)r;
+		const char *pClassName = DICTOOL->getStringValue_json(*v, "classname");
+		CC_BREAK_IF(pClassName == NULL);
+		const char *pComName = DICTOOL->getStringValue_json(*v, "name");
+		if (pComName != NULL)
+		{
+			setName(pComName);
+		}
+		else
+		{
+			setName(pClassName);
+		}
+		const rapidjson::Value &fileData = DICTOOL->getSubDictionary_json(*v, "fileData");
+		CC_BREAK_IF(!DICTOOL->checkObjectExist_json(fileData));
+		const char *pFile = DICTOOL->getStringValue_json(fileData, "path");
+		CC_BREAK_IF(pFile == NULL);
+		std::string strFilePath;
+		if (pFile != NULL)
+		{
+			strFilePath.assign(cocos2d::CCFileUtils::sharedFileUtils()->fullPathForFilename(pFile));
+		}
+		int nResType = DICTOOL->getIntValue_json(fileData, "resourceType", -1);
+		CC_BREAK_IF(nResType != 0);
+		if (strcmp(pClassName, "CCBackgroundAudio") == 0)
+		{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+			// no MP3 support for CC_PLATFORM_WP8
+			std::string::size_type pos = strFilePath.find(".mp3");
+			if (pos  == strFilePath.npos)
+			{
+				continue;
+			}
+			strFilePath.replace(pos, strFilePath.length(), ".wav");
+#endif
+			preloadBackgroundMusic(strFilePath.c_str());
+			bool bLoop = DICTOOL->getIntValue_json(*v, "loop") != 0? true:false;
+			setLoop(bLoop);
+            playBackgroundMusic(strFilePath.c_str(), bLoop);
+		}
+		else if(strcmp(pClassName, "CCComAudio") == 0)
+		{
+			preloadEffect(strFilePath.c_str());
+		}
+		else
+		{
+			CC_BREAK_IF(true);
+		}
+		bRet = true;
+	} while (0);
+
+	return bRet;
+}
+
 CCComAudio* CCComAudio::create(void)
 {
     CCComAudio * pRet = new CCComAudio();
@@ -86,6 +147,8 @@ void CCComAudio::end()
 void CCComAudio::preloadBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic(pszFilePath);
+    setFile(pszFilePath);
+	setLoop(false);
 }
 
 void CCComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
@@ -96,6 +159,11 @@ void CCComAudio::playBackgroundMusic(const char* pszFilePath, bool bLoop)
 void CCComAudio::playBackgroundMusic(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(pszFilePath);
+}
+
+void CCComAudio::playBackgroundMusic()
+{
+	 CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic(m_strFilePath.c_str(), m_bLoop);
 }
 
 void CCComAudio::stopBackgroundMusic(bool bReleaseData)
@@ -163,6 +231,11 @@ unsigned int CCComAudio::playEffect(const char* pszFilePath)
     return CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(pszFilePath);
 }
 
+unsigned int CCComAudio::playEffect()
+{
+	return CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect(m_strFilePath.c_str(), m_bLoop);
+}
+
 void CCComAudio::pauseEffect(unsigned int nSoundId)
 {
     return CocosDenshion::SimpleAudioEngine::sharedEngine()->pauseEffect(nSoundId);
@@ -196,6 +269,8 @@ void CCComAudio::stopAllEffects()
 void CCComAudio::preloadEffect(const char* pszFilePath)
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect(pszFilePath);
+    setFile(pszFilePath);
+    setLoop(false);
 }
 
 void CCComAudio::unloadEffect(const char *pszFilePath)

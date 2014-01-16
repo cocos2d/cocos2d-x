@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="TestCpp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestCpp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <SwapChainBackgroundPanel x:Name="SwapChainPanel"></SwapChainBackgroundPanel>
+    <Page.BottomAppBar>
+        <AppBar Padding="10,0,10,0">
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Style="{StaticResource AppBarButtonStyle}" 
+                            Tag="Previous" 
+                            AutomationProperties.AutomationId="PreviousAppBarButton" Content="&#xE112;"  
+                            AutomationProperties.Name="Previous" 
+                            Click="OnPreviousPressed"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource AppBarButtonStyle}" 
+                            Tag="Next" 
+                            AutomationProperties.AutomationId="NextAppBarButton" Content="&#xE111;"  
+                            AutomationProperties.Name="Next" 
+                            Click="OnNextPressed"/>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+</Page>

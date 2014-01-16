@@ -1,0 +1,24 @@
+
+class ActionObject:public CCObject
+{
+    ActionObject();
+    virtual ~ActionObject();
+    void setName(const char* name);
+    const char* getName();
+    void setLoop(bool bLoop);
+    bool getLoop();
+    void setUnitTime(float fTime);
+    float getUnitTime();
+    void setCurrentTime(float fTime);
+    float getCurrentTime();
+    bool isPlaying();
+    void play();
+    void pause();
+    void stop();
+    void addActionNode(ActionNode* node);
+    void removeActionNode(ActionNode* node);
+    void updateToFrameByTime(float fTime);
+    void initWithDictionary(const rapidjson::Value& dic,CCObject* root);
+    
+    void simulationActionUpdate(float dt);
+};

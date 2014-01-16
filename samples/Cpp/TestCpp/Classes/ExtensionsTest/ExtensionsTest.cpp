@@ -171,15 +171,16 @@ void ExtensionsMainLayer::menuCallback(CCObject* pSender)
 		break;
     case TEST_SCENEEDITOR:
        {
-            runSceneEditorTestLayer();
+            SceneEditorTestScene *pScene = new SceneEditorTestScene();
+            if (NULL != pScene)
+            {
+                pScene->runThisTest();
+                pScene->release();
+            }
        }
             break;
         case TEST_COCOSGUI:
         {
-			/*UISceneManager* pManager = UISceneManager::sharedUISceneManager();
-			CCScene* pScene = pManager->currentUIScene();
-			CCDirector::sharedDirector()->replaceScene(pScene);*/ 
-
 			CocosGUITestScene *pScene = new CocosGUITestScene();
 			pScene->runThisTest();
 			pScene->release();

@@ -1,0 +1,34 @@
+
+typedef enum
+{
+    SLIDER_PERCENTCHANGED
+}SliderEventType;
+
+class Slider : public Widget
+{
+    Slider();
+    virtual ~Slider();
+    static Slider* create();
+    void loadBarTexture(const char* fileName,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setScale9Enabled(bool able);
+    void setCapInsets(const CCRect &capInsets);
+    void setCapInsetsBarRenderer(const CCRect &capInsets);
+    void setCapInsetProgressBarRebderer(const CCRect &capInsets);
+    void loadSlidBallTextures(const char* normal,const char* pressed,const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureNormal(const char* normal,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTexturePressed(const char* pressed,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadSlidBallTextureDisabled(const char* disabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void loadProgressBarTexture(const char* fileName, TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setPercent(int percent);
+    int getPercent();
+    
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);
+    
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual std::string getDescription() const;
+};

@@ -1,0 +1,27 @@
+class  CCArmatureAnimation : public CCProcessBase
+{
+    static CCArmatureAnimation *create(CCArmature *armature);
+    CCArmatureAnimation();
+    virtual ~CCArmatureAnimation(void);
+    virtual bool init(CCArmature *armature);
+    virtual void setSpeedScale(float speedScale);
+    virtual float getSpeedScale() const;
+    virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
+    void play(const char *animationName, int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    void playWithIndex(int animationIndex,  int durationTo = -1, int durationTween = -1,  int loop = -1, int tweenEasing = TWEEN_EASING_MAX);
+    virtual void gotoAndPlay(int frameIndex);
+    virtual void gotoAndPause(int frameIndex);
+    virtual void pause();
+    virtual void resume();
+    virtual void stop();
+    int getMovementCount();
+    void update(float dt);
+    std::string getCurrentMovementID();
+    virtual CCObject* getUserObject();
+    virtual void setUserObject(CCObject *pUserObject);
+
+    virtual CCAnimationData* getAnimationData();
+    virtual void setAnimationData(CCAnimationData* var);
+
+    
+};

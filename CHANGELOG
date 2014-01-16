@@ -1,3 +1,29 @@
+cocos2d-x-2.2.2 @Jan.07 2014
+[Windows8 & WinPhone8]
+     [FIX]    Updated WinRT and WP8 to pass App Certification tests
+     [FIX]    Updated to latest version of ANGLE
+     [FIX]    Fixed type that was preventing loading of precompiled shaders in Windows 8 WinRT builds
+     [FIX]    Fixed CCEGLView::SetScissorInPoints() on WP8 to fixed libextensions CCScollView bug
+     [NEW]    Added Trim() support for app Suspend() in Windows 8.1 WinRT
+     [FIX]    A memory leak fix when loading JSC(JS bytecode) file.
+     [NEW]    WP8 XAML support
+     [FIX]    cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+     [FIX]    Fixes the font rendering on Windows
+
+cocos2d-x-2.2.1 @Nov.19 2013
+[All platforms]
+     [NEW]    Supports CocoStudio v1.1
+     [NEW]    CCUserDefault: pass size to XMLDocument::Parse()
+[Javascript binding]
+     [NEW]    Supports CocoStudio v1.1
+[Lua binding]
+     [FIX]    Clean up peertable after object is deleted
+[WinPhone8 & Windows8]
+     [FIX]    Use "PMingLiu" to show Chinese characters
+     [NEW]    Add "SimpleGame" project
+     [NEW]    Add VS2013 project
+     [FIX]    Many bugs fixed
+
 cocos2d-x-2.2.0 @Sep.25 2013
 [All platforms]
      [NEW]    CocoStudio GUI

@@ -23,7 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCWinRTUtils.h"
-#include "shaders/CCGLProgram.h"
 #include <Windows.h>
 #include <wrl/client.h>
 #include <ppl.h>
@@ -150,101 +149,9 @@ Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
 	});
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-bool writeShader(std::string path, std::string name, GLuint program)
-{
-    int status;
-    glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH_OES, &status);
-    unsigned char *binary = new unsigned char[status];
-    GLenum binaryFormat;
-    glGetProgramBinaryOES(program, status, NULL, &binaryFormat, binary);
-    FILE *fp = fopen(path.c_str(), "w");
-    fprintf(fp, "unsigned char %s[] = {\n", name);
-    fprintf(fp, "%3i, ", binary[0]);
-    for(int i = 1; i < status - 1; ++i)
-    {
-        if(i % 8 == 0)
-            fprintf(fp, "\n");
-        fprintf(fp, "%3i, ", binary[i]);
-    }
-    if((status - 1) % 8 == 0)
-        fprintf(fp, "\n");
-    fprintf(fp, "%3i\n};", binary[status - 1]);
-    fclose(fp);
-
-    return TRUE;
-}
-
-void savePrecompiledProgram(Windows::Storage::StorageFolder^ folder, CCDictElement* pElement)
-{
-    Platform::String ^name = ref new String(CCUtf8ToUnicode(pElement->getStrKey()).c_str());
-    Platform::String ^fileName = name + L".h";
-
-    auto saveTask = create_task(folder->CreateFileAsync(fileName, CreationCollisionOption::ReplaceExisting));
-
-    saveTask.then([pElement, name](StorageFile^ file)
-    {
-        CCGLProgram* pProgram = (CCGLProgram*)pElement->getObject();
-        GLuint program = pProgram->getProgram();
-        int length;
-        glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH_OES, &length);
-        unsigned char *buffer = new byte[length];
-        GLenum binaryFormat;
-        glGetProgramBinaryOES(program, length, NULL, &binaryFormat, buffer);
-        
-        InMemoryRandomAccessStream^ memoryStream = ref new InMemoryRandomAccessStream(); 
-        DataWriter^ dataWriter = ref new DataWriter(memoryStream); 
-        dataWriter->WriteString("const BYTE ");
-        dataWriter->WriteString(name);
-        dataWriter->WriteString("[] = {\n");
-
-        char temp[32];
-
-        for(int i = 0; i < length - 1; i++)
-        {
-            if(i % 8 == 0)
-                dataWriter->WriteString("\n");
-            sprintf_s(temp, "%3i, ", buffer[i]);
-            dataWriter->WriteString(ref new Platform::String(CCUtf8ToUnicode(temp).c_str()));
-        }
-        if((length - 1) % 8 == 0)
-            dataWriter->WriteString("\n");
-        sprintf_s(temp, "%3i, ", buffer[length - 1]);
-        dataWriter->WriteString(ref new Platform::String(CCUtf8ToUnicode(temp).c_str()));
-        dataWriter->WriteString("\n};");
-        FileIO::WriteBufferAsync(file, dataWriter->DetachBuffer());
-        delete [] buffer;
-    });  
-
-}
-
-void savePrecompiledShaders(CCDictionary* programs)
-{
-    FolderPicker^ folderPicker = ref new FolderPicker();
-    folderPicker->SuggestedStartLocation = PickerLocationId::Desktop;
-    folderPicker->FileTypeFilter->Append(".h");
-
-    auto saveTask = create_task(folderPicker->PickSingleFolderAsync());
-    saveTask.then([programs](StorageFolder^ folder)
-    {
-        CCDictElement* pElement;
-        CCDICT_FOREACH(programs, pElement)
-        {
-            savePrecompiledProgram(folder, pElement);
-       }
-	});
-}
-#endif
 
 #endif
-
-
-
-
-
-
-
 
 
 NS_CC_END

@@ -1,0 +1,25 @@
+
+typedef enum
+{
+    LoadingBarTypeLeft,
+    LoadingBarTypeRight
+}LoadingBarType;
+
+class LoadingBar : public Widget
+{
+    LoadingBar();
+    virtual ~LoadingBar();
+    
+    static LoadingBar* create();
+    void setDirection(LoadingBarType dir);
+    int getDirection();
+    void loadTexture(const char* texture,TextureResType texType = UI_TEX_TYPE_LOCAL);
+    void setPercent(int percent);
+    int getPercent();
+    void setScale9Enabled(bool enabled);
+    void setCapInsets(const CCRect &capInsets);
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual std::string getDescription() const;
+};

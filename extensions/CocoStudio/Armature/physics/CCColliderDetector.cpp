@@ -35,14 +35,50 @@ THE SOFTWARE.
 
 NS_CC_EXT_BEGIN
 
+#if ENABLE_PHYSICS_BOX2D_DETECT
+CCColliderFilter::CCColliderFilter(unsigned short categoryBits, unsigned short maskBits, signed short groupIndex)
+    : m_CategoryBits(categoryBits)
+    , m_MaskBits(maskBits)
+    , m_GroupIndex(groupIndex)
+{
+}
+
+void CCColliderFilter::updateShape(b2Fixture *fixture)
+{
+    b2Filter filter;
+    filter.categoryBits = m_CategoryBits;
+    filter.groupIndex = m_GroupIndex;
+    filter.maskBits = m_MaskBits;
+
+    fixture->SetFilterData(filter);
+}
+
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+CCColliderFilter::CCColliderFilter(uintptr_t collisionType, uintptr_t group)
+    : m_CollisionType(collisionType)
+    , m_Group(group)
+{
+}
+void CCColliderFilter::updateShape(cpShape *shape)
+{
+    shape->collision_type = m_CollisionType;
+    shape->group = m_Group;
+}
+#endif
+
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 ColliderBody::ColliderBody(CCContourData *contourData)
     : m_pFixture(NULL)
-    , m_pFilter(NULL)
     , m_pContourData(contourData)
 {
     CC_SAFE_RETAIN(m_pContourData);
+    m_pFilter = new CCColliderFilter();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
+#endif
 }
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
 
@@ -51,6 +87,21 @@ ColliderBody::ColliderBody(CCContourData *contourData)
     , m_pContourData(contourData)
 {
     CC_SAFE_RETAIN(m_pContourData);
+    m_pFilter = new CCColliderFilter();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
+#endif
+}
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+ColliderBody::ColliderBody(CCContourData *contourData)
+    : m_pContourData(contourData)
+{
+    CC_SAFE_RETAIN(m_pContourData);
+
+    m_pCalculatedVertexList = CCArray::create();
+    CC_SAFE_RETAIN(m_pCalculatedVertexList);
 }
 #endif
 
@@ -58,11 +109,23 @@ ColliderBody::~ColliderBody()
 {
     CC_SAFE_RELEASE(m_pContourData);
 
-#if ENABLE_PHYSICS_BOX2D_DETECT
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     CC_SAFE_DELETE(m_pFilter);
+#elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CC_SAFE_RELEASE(m_pCalculatedVertexList);
 #endif
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+void ColliderBody::setColliderFilter(CCColliderFilter *filter)
+{
+    *m_pFilter = *filter;
+}
+CCColliderFilter *ColliderBody::getColliderFilter()
+{
+    return m_pFilter;
+}
+#endif
 
 
 CCColliderDetector *CCColliderDetector::create()
@@ -95,8 +158,10 @@ CCColliderDetector::CCColliderDetector()
 {
 #if ENABLE_PHYSICS_BOX2D_DETECT
     m_pBody = NULL;
+    m_pFilter = NULL;
 #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
     m_pBody = NULL;
+    m_pFilter = NULL;
 #endif
 }
 
@@ -104,6 +169,10 @@ CCColliderDetector::~CCColliderDetector()
 {
     m_pColliderBodyList->removeAllObjects();
     CC_SAFE_DELETE(m_pColliderBodyList);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    CC_SAFE_DELETE(m_pFilter);
+#endif
 }
 
 bool CCColliderDetector::init()
@@ -111,6 +180,10 @@ bool CCColliderDetector::init()
     m_pColliderBodyList = CCArray::create();
     CCAssert(m_pColliderBodyList, "create m_pColliderBodyList failed!");
     m_pColliderBodyList->retain();
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    m_pFilter = new CCColliderFilter();
+#endif
 
     return true;
 }
@@ -128,6 +201,18 @@ void CCColliderDetector::addContourData(CCContourData *contourData)
     ColliderBody *colliderBody = new ColliderBody(contourData);
     m_pColliderBodyList->addObject(colliderBody);
     colliderBody->release();
+
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+    CCArray *calculatedVertexList = colliderBody->getCalculatedVertexList();
+
+    int num = contourData->vertexList.count();
+    for (int i = 0; i < num; i++)
+    {
+        CCContourVertex2 *newVertex = new CCContourVertex2(0, 0);
+        calculatedVertexList->addObject(newVertex);
+        newVertex->release();
+    }
+#endif
 }
 
 void CCColliderDetector::addContourDataList(CCArray *contourDataList)
@@ -182,9 +267,6 @@ void CCColliderDetector::setActive(bool active)
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 b2Fixture *fixture = colliderBody->getB2Fixture();
 
-                b2Filter *filter = colliderBody->getB2Filter();
-                *filter = fixture->GetFilterData();
-
                 m_pBody->DestroyFixture(fixture);
                 colliderBody->setB2Fixture(NULL);
             }
@@ -200,7 +282,10 @@ void CCColliderDetector::setActive(bool active)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceAddShape(m_pBody->space_private, shape);
+                if(shape->space_private == NULL)
+                {
+                    cpSpaceAddShape(m_pBody->space_private, shape);
+                }
             }
         }
         else
@@ -209,7 +294,10 @@ void CCColliderDetector::setActive(bool active)
             {
                 ColliderBody *colliderBody = (ColliderBody *)object;
                 cpShape *shape = colliderBody->getShape();
-                cpSpaceRemoveShape(m_pBody->space_private, shape);
+                if (shape->space_private != NULL)
+                {
+                    cpSpaceRemoveShape(m_pBody->space_private, shape);
+                }
             }
         }
     }
@@ -226,6 +314,36 @@ CCArray *CCColliderDetector::getColliderBodyList()
     return m_pColliderBodyList;
 }
 
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+void CCColliderDetector::setColliderFilter(CCColliderFilter *filter)
+{
+    *m_pFilter = *filter;
+
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(m_pColliderBodyList, object)
+    {
+        ColliderBody *colliderBody = (ColliderBody *)object;
+        colliderBody->setColliderFilter(filter);
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+        if (colliderBody->getB2Fixture())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getB2Fixture());
+        }
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+        if (colliderBody->getShape())
+        {
+            colliderBody->getColliderFilter()->updateShape(colliderBody->getShape());
+        }
+#endif
+
+    }
+}
+CCColliderFilter *CCColliderDetector::getColliderFilter()
+{
+    return m_pFilter;
+}
+#endif
 
 CCPoint helpPoint;
 
@@ -259,11 +377,19 @@ void CCColliderDetector::updateTransform(CCAffineTransform &t)
         int num = contourData->vertexList.count();
         CCContourVertex2 **vs = (CCContourVertex2 **)contourData->vertexList.data->arr;
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+        CCContourVertex2 **cvs = (CCContourVertex2 **)colliderBody->getCalculatedVertexList()->data->arr;
+#endif
+
         for (int i = 0; i < num; i++)
         {
             helpPoint.setPoint( vs[i]->x,  vs[i]->y);
             helpPoint = CCPointApplyAffineTransform(helpPoint, t);
 
+#if ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+            cvs[i]->x = helpPoint.x;
+            cvs[i]->y = helpPoint.y;
+#endif
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
             if (shape != NULL)
@@ -339,15 +465,7 @@ void CCColliderDetector::setBody(b2Body *pBody)
         }
         colliderBody->setB2Fixture(fixture);
 
-        if (colliderBody->getB2Filter() == NULL)
-        {
-            b2Filter *filter = new b2Filter;
-            colliderBody->setB2Filter(filter);
-        }
-        else
-        {
-            fixture->SetFilterData(*colliderBody->getB2Filter());
-        }
+        colliderBody->getColliderFilter()->updateShape(fixture);
     }
 }
 
@@ -381,9 +499,14 @@ void CCColliderDetector::setBody(cpBody *pBody)
 
         shape->sensor = true;
         shape->data = m_pBone;
-        cpSpaceAddShape(m_pBody->space_private, shape);
+
+        if (m_bActive)
+        {
+            cpSpaceAddShape(m_pBody->space_private, shape);
+        }
 
         colliderBody->setShape(shape);
+        colliderBody->getColliderFilter()->updateShape(shape);
 
         delete []verts;
     }

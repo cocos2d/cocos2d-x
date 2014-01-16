@@ -19,13 +19,13 @@ function CCBuilderReaderLoad(strFilePath,proxy,owner)
             local callbackName =  tolua.cast(ownerCallbackNames:objectAtIndex(i - 1),"CCString")
             local callbackNode =  tolua.cast(ownerCallbackNodes:objectAtIndex(i - 1),"CCNode")
 
-            if "function" == type(owner[callbackName]) then
+            if "function" == type(owner[callbackName:getCString()]) then
                 local integerValue = tolua.cast(ownerCallbackControlEvents:objectAtIndex(i - 1),"CCInteger")
                 if nil ~= integerValue then
-                    proxy:setCallback(callbackNode, owner[callbackName], integerValue:getValue())
+                    proxy:setCallback(callbackNode, owner[callbackName:getCString()], integerValue:getValue())
                 end
             else
-                print("Warning: Cannot find owner's lua function:" .. ":" .. callbackName .. " for ownerVar selector")
+                print("Warning: Cannot find owner's lua function:" .. ":" .. callbackName:getCString() .. " for ownerVar selector")
             end
 
         end

@@ -1,0 +1,38 @@
+
+typedef enum
+{
+    PAGEVIEW_EVENT_TURNING,
+}PageViewEventType;
+
+typedef enum {
+    PAGEVIEW_TOUCHLEFT,
+    PAGEVIEW_TOUCHRIGHT
+}PVTouchDir;
+
+class PageView : public Layout , public UIScrollInterface
+{
+    PageView();
+    virtual ~PageView();
+    static PageView* create();
+    void addWidgetToPage(Widget* widget, int pageIdx, bool forceCreate);
+    void addPage(Layout* page);
+    void insertPage(Layout* page, int idx);
+    void removePage(Layout* page);
+    void removePageAtIndex(int index);
+    void removeAllPages();
+    void scrollToPage(int idx);
+    int getCurPageIndex() const;
+    CCArray* getPages();
+    Layout* getPage(int index);
+
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
+    
+    virtual void update(float dt);
+    virtual void setLayoutType(LayoutType type){};
+    virtual LayoutType getLayoutType() const {return LAYOUT_ABSOLUTE;};
+    virtual std::string getDescription() const;
+
+};

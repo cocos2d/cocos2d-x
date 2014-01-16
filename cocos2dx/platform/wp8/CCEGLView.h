@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include <agile.h>
 #include <DirectXMath.h>
 #include "kazmath/mat4.h"
+#include "../wp8-xaml/InputEvent.h"
 
 #include "esUtil.h"
 
@@ -80,14 +81,20 @@ public:
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
 
-
-
     virtual void setIMEKeyboardState(bool bOpen);
 	void ShowKeyboard(Windows::Foundation::Rect r);
 	void HideKeyboard(Windows::Foundation::Rect r);
 
+    // WP8 C++ app
     virtual bool Create(Windows::UI::Core::CoreWindow^ window);
 
+    // WP8 XAML app
+    virtual bool Create(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface, float width, float height);
+    virtual void UpdateDevice(EGLDisplay eglDisplay, EGLContext eglContext, EGLSurface eglSurface);
+
+	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
+	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
+	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerWheelChanged(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
@@ -97,10 +104,13 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnOrientationChanged();
+    
+    void SetXamlEventDelegate(PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ delegate) { m_delegate = delegate; };
 
 	Windows::UI::Core::CoreWindow^ getWindow() { return m_window.Get(); };
 	
 	int Run();
+	void Render();
 
     void resize(int width, int height);
     /* 
@@ -110,7 +120,9 @@ public:
 	float getFrameZoomFactor();
     void centerWindow();
 
-    
+ 	void UpdateOrientation(Windows::Graphics::Display::DisplayOrientations orientation);
+ 	void UpdateForWindowSizeChange(float width, float height);
+   
     // static function
     /**
     @brief    get the shared main open gl window
@@ -122,17 +134,20 @@ protected:
 private:
 	void OnRendering();
 	void UpdateForWindowSizeChange();
+	void UpdateWindowSize();
     void UpdateOrientationMatrix();
 
 	void ValidateDevice();
-    Windows::Foundation::Point TransformToOrientation(Windows::Foundation::Point point, bool dipsToPixels);
+    CCPoint TransformToOrientation(Windows::Foundation::Point point);
  	CCPoint GetCCPoint(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
 	Windows::Foundation::Point m_lastPoint;
 
-        
+    float m_width;
+    float m_height;
+
     Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
     Windows::Graphics::Display::DisplayOrientations m_orientation;
 	Windows::Foundation::Rect m_keyboardRect;
@@ -149,10 +164,15 @@ private:
     float m_fFrameZoomFactor;
 
 	ESContext m_esContext;
-	bool m_textInputEnabled;
+	Microsoft::WRL::ComPtr<IWinrtEglWindow> m_eglWindow;
+
     WP8Keyboard^ mKeyboard;
     WP8Window^ m_wp8Window;
-
+	EGLDisplay m_eglDisplay;
+	EGLContext m_eglContext;
+	EGLSurface m_eglSurface;
+    bool m_isXamlWindow;
+    PhoneDirect3DXamlAppComponent::Cocos2dEventDelegate^ m_delegate;
 };
 
 NS_CC_END

@@ -159,7 +159,9 @@ bool MediaStreamer::GetNextBuffer(uint8* buffer, uint32 maxBufferSize, uint32* b
     }
     else
     {
+#if defined(COCOS2D_DEBUG)
         OutputDebugString(L"Sample buffer dumped");
+#endif
     }
     
     if (flags & MF_SOURCE_READERF_ENDOFSTREAM)

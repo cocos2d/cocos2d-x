@@ -52,11 +52,9 @@ public:
      */
     virtual void onExit();
     virtual void update(float delta);
-    virtual void serialize(void* r);
+    virtual bool serialize(void* r);
     virtual bool isEnabled() const;
     virtual void setEnabled(bool b);
-	virtual CCNode* getNode();
-	virtual void setNode(CCNode *pNode);
     static CCComponent* create(void);
     
     const char* getName() const;

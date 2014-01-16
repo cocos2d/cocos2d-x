@@ -50,26 +50,12 @@ void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, con
     CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
-CCTextureAtlas *CCSpriteFrameCacheHelper::getTexureAtlasWithTexture(CCTexture2D *texture)
-{
-    int key = texture->getName();
-    CCTextureAtlas *atlas = (CCTextureAtlas *)m_pTextureAtlasDic->objectForKey(key);
-    if (atlas == NULL)
-    {
-        atlas = CCTextureAtlas::createWithTexture(texture, 4);
-        m_pTextureAtlasDic->setObject(atlas, key);
-    }
-    return atlas;
-}
-
 CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
 {
-    m_pTextureAtlasDic = new CCDictionary();
 }
 
 CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
 {
-    CC_SAFE_RELEASE_NULL(m_pTextureAtlasDic);
 }
 
 NS_CC_EXT_END

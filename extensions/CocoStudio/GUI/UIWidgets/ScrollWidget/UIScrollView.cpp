@@ -23,55 +23,68 @@
  ****************************************************************************/
 
 #include "UIScrollView.h"
-#include "../../System/UILayer.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
-UIScrollView::UIScrollView():
-m_pInnerContainer(NULL),
-m_eDirection(SCROLLVIEW_DIR_VERTICAL),
-m_eMoveDirection(SCROLLVIEW_MOVE_DIR_NONE),
-m_fTouchStartLocation(0.0f),
-m_fTouchEndLocation(0.0f),
-m_fTouchMoveStartLocation(0.0f),
-m_fTopBoundary(0.0f),
-m_fBottomBoundary(0.0f),
-m_fLeftBoundary(0.0f),
-m_fRightBoundary(0.0f),
-m_bTopEnd(false),
-m_bBottomEnd(false),
-m_bLeftEnd(false),
-m_bRightEnd(false),
-m_bAutoScroll(false),
-m_fAutoScrollOriginalSpeed(0.0f),
-m_fAutoScrollAcceleration(600.0f),
-m_bBePressed(false),
-m_fSlidTime(0.0f),
-moveChildPoint(CCPointZero),
-m_fChildFocusCancelOffset(5.0f),
-m_pEventListener(NULL),
-m_pfnEventSelector(NULL),
-/*******Compatible*******/
-m_pScrollToTopListener(NULL),
-m_pfnScrollToTopSelector(NULL),
-m_pScrollToBottomListener(NULL),
-m_pfnScrollToBottomSelector(NULL),
-m_pScrollToLeftListener(NULL),
-m_pfnScrollToLeftSelector(NULL),
-m_pScrollToRightListener(NULL),
-m_pfnScrollToRightSelector(NULL)
-/************************/
+namespace gui {
+
+static const float AUTOSCROLLMAXSPEED = 1000.0f;
+
+const CCPoint SCROLLDIR_UP = CCPoint(0.0f, 1.0f);
+const CCPoint SCROLLDIR_DOWN = CCPoint(0.0f, -1.0f);
+const CCPoint SCROLLDIR_LEFT = CCPoint(-1.0f, 0.0f);
+const CCPoint SCROLLDIR_RIGHT = CCPoint(1.0f, 0.0f);
+
+ScrollView::ScrollView():
+_innerContainer(NULL),
+_direction(SCROLLVIEW_DIR_VERTICAL),
+_touchBeganPoint(CCPointZero),
+_touchMovedPoint(CCPointZero),
+_touchEndedPoint(CCPointZero),
+_touchMovingPoint(CCPointZero),
+_autoScrollDir(CCPointZero),
+_topBoundary(0.0f),
+_bottomBoundary(0.0f),
+_leftBoundary(0.0f),
+_rightBoundary(0.0f),
+_bounceTopBoundary(0.0f),
+_bounceBottomBoundary(0.0f),
+_bounceLeftBoundary(0.0f),
+_bounceRightBoundary(0.0f),
+_autoScroll(false),
+_autoScrollAddUpTime(0.0f),
+_autoScrollOriginalSpeed(0.0f),
+_autoScrollAcceleration(-1000.0f),
+_isAutoScrollSpeedAttenuated(false),
+_needCheckAutoScrollDestination(false),
+_autoScrollDestination(CCPointZero),
+_bePressed(false),
+_slidTime(0.0f),
+_moveChildPoint(CCPointZero),
+_childFocusCancelOffset(5.0f),
+_leftBounceNeeded(false),
+_topBounceNeeded(false),
+_rightBounceNeeded(false),
+_bottomBounceNeeded(false),
+_bounceEnabled(false),
+_bouncing(false),
+_bounceDir(CCPointZero),
+_bounceOriginalSpeed(0.0f),
+_inertiaScrollEnabled(true),
+_scrollViewEventListener(NULL),
+_scrollViewEventSelector(NULL)
 {
 }
 
-UIScrollView::~UIScrollView()
+ScrollView::~ScrollView()
 {
-    
+    _scrollViewEventListener = NULL;
+    _scrollViewEventSelector = NULL;
 }
 
-UIScrollView* UIScrollView::create()
+ScrollView* ScrollView::create()
 {
-    UIScrollView* widget = new UIScrollView();
+    ScrollView* widget = new ScrollView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -80,67 +93,58 @@ UIScrollView* UIScrollView::create()
     CC_SAFE_DELETE(widget);
     return NULL;
 }
-
-void UIScrollView::releaseResoures()
-{
-    m_pPushListener = NULL;
-    m_pfnPushSelector = NULL;
-    m_pMoveListener = NULL;
-    m_pfnMoveSelector = NULL;
-    m_pReleaseListener = NULL;
-    m_pfnReleaseSelector = NULL;
-    m_pCancelListener = NULL;
-    m_pfnCancelSelector = NULL;
-    setUpdateEnabled(false);
-    removeAllChildren();
-    m_pRenderer->removeAllChildrenWithCleanup(true);
-    m_pRenderer->removeFromParentAndCleanup(true);
-    m_pRenderer->release();
     
-    Layout::removeChild(m_pInnerContainer);
-
-    m_children->release();
+void ScrollView::onEnter()
+{
+    Layout::onEnter();
+    scheduleUpdate();
 }
 
-bool UIScrollView::init()
+bool ScrollView::init()
 {
     if (Layout::init())
     {
-        setUpdateEnabled(true);
         setTouchEnabled(true);
         setClippingEnabled(true);
-        m_pInnerContainer->setTouchEnabled(false);
+        _innerContainer->setTouchEnabled(false);
         return true;
     }
     return false;
 }
 
-void UIScrollView::initRenderer()
+void ScrollView::initRenderer()
 {
     Layout::initRenderer();
-    m_pInnerContainer = Layout::create();
-    Layout::addChild(m_pInnerContainer);
+    _innerContainer = Layout::create();
+    Layout::addChild(_innerContainer,1,1);
 }
 
-void UIScrollView::onSizeChanged()
+void ScrollView::onSizeChanged()
 {
     Layout::onSizeChanged();
-    m_fTopBoundary = m_size.height;
-    m_fRightBoundary = m_size.width;
-    CCSize innerSize = m_pInnerContainer->getSize();
+    _topBoundary = _size.height;
+    _rightBoundary = _size.width;
+    float bounceBoundaryParameterX = _size.width / 3.0f;
+    float bounceBoundaryParameterY = _size.height / 3.0f;
+    _bounceTopBoundary = _size.height - bounceBoundaryParameterY;
+    _bounceBottomBoundary = bounceBoundaryParameterY;
+    _bounceLeftBoundary = bounceBoundaryParameterX;
+    _bounceRightBoundary = _size.width - bounceBoundaryParameterX;
+    CCSize innerSize = _innerContainer->getSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
-    float innerSizeWidth = MAX(orginInnerSizeWidth, m_size.width);
-    float innerSizeHeight = MAX(orginInnerSizeHeight, m_size.height);
-    m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(ccp(0, m_size.height - m_pInnerContainer->getSize().height));
+    float innerSizeWidth = MAX(orginInnerSizeWidth, _size.width);
+    float innerSizeHeight = MAX(orginInnerSizeHeight, _size.height);
+    _innerContainer->setSize(CCSize(innerSizeWidth, innerSizeHeight));
+    _innerContainer->setPosition(CCPoint(0, _size.height - _innerContainer->getSize().height));
 }
 
-void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
+void ScrollView::setInnerContainerSize(const CCSize &size)
 {
-    float innerSizeWidth = m_size.width;
-    float innerSizeHeight = m_size.height;
-    if (size.width < m_size.width)
+    float innerSizeWidth = _size.width;
+    float innerSizeHeight = _size.height;
+    CCSize originalInnerSize = _innerContainer->getSize();
+    if (size.width < _size.width)
     {
         CCLOG("Inner width <= scrollview width, it will be force sized!");
     }
@@ -148,7 +152,7 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
     {
         innerSizeWidth = size.width;
     }
-    if (size.height < m_size.height)
+    if (size.height < _size.height)
     {
         CCLOG("Inner height <= scrollview height, it will be force sized!");
     }
@@ -156,424 +160,1320 @@ void UIScrollView::setInnerContainerSize(const cocos2d::CCSize &size)
     {
         innerSizeHeight = size.height;
     }
-    m_pInnerContainer->setSize(CCSizeMake(innerSizeWidth, innerSizeHeight));
-    m_pInnerContainer->setPosition(ccp(0, m_size.height - m_pInnerContainer->getSize().height));
-}
+    _innerContainer->setSize(CCSize(innerSizeWidth, innerSizeHeight));
 
-const CCSize& UIScrollView::getInnerContainerSize() const
-{
-	return m_pInnerContainer->getSize();
-}
-
-bool UIScrollView::addChild(UIWidget* widget)
-{
-    return m_pInnerContainer->addChild(widget);
-}
-
-void UIScrollView::removeAllChildren()
-{
-    m_pInnerContainer->removeAllChildren();
-}
-
-bool UIScrollView::removeChild(UIWidget* child)
-{
-	return m_pInnerContainer->removeChild(child);
-}
-
-CCArray* UIScrollView::getChildren()
-{
-    return m_pInnerContainer->getChildren();
-}
-
-void UIScrollView::moveChildren(float offset)
-{
-    switch (m_eDirection)
+    switch (_direction)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        case SCROLLVIEW_DIR_VERTICAL:
         {
-            moveChildPoint.x = m_pInnerContainer->getPosition().x;
-            moveChildPoint.y = m_pInnerContainer->getPosition().y + offset;
-            m_pInnerContainer->setPosition(moveChildPoint);
+            CCSize newInnerSize = _innerContainer->getSize();
+            float offset = originalInnerSize.height - newInnerSize.height;
+            scrollChildren(0.0f, offset);
             break;
         }
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        case SCROLLVIEW_DIR_HORIZONTAL:
         {
-            moveChildPoint.x = m_pInnerContainer->getPosition().x + offset;
-            moveChildPoint.y = m_pInnerContainer->getPosition().y;
-            m_pInnerContainer->setPosition(moveChildPoint);
+            if (_innerContainer->getRightInParent() <= _size.width)
+            {
+                CCSize newInnerSize = _innerContainer->getSize();
+                float offset = originalInnerSize.width - newInnerSize.width;
+                scrollChildren(offset, 0.0f);
+            }
+            break;
+        }
+        case SCROLLVIEW_DIR_BOTH:
+        {
+            CCSize newInnerSize = _innerContainer->getSize();
+            float offsetY = originalInnerSize.height - newInnerSize.height;
+            float offsetX = 0.0f;
+            if (_innerContainer->getRightInParent() <= _size.width)
+            {
+                offsetX = originalInnerSize.width - newInnerSize.width;
+            }
+            scrollChildren(offsetX, offsetY);
             break;
         }
         default:
             break;
     }
-}
-
-void UIScrollView::autoScrollChildren(float dt)
-{
-    switch (m_eDirection)
+    if (_innerContainer->getLeftInParent() > 0.0f)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
-            switch (m_eMoveDirection)
-            {                        
-                case SCROLLVIEW_MOVE_DIR_UP: // up
-                    {
-                        float curDis = getCurAutoScrollDistance(dt);
-                        if (curDis <= 0)
-                        {
-                            curDis = 0;
-                            stopAutoScrollChildren();
-                        }
-                        if (!scrollChildren(curDis))
-                        {
-                            stopAutoScrollChildren();
-                        }
-                    }
-                    break;
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
-                    {
-                        float curDis = getCurAutoScrollDistance(dt);
-                        if (curDis <= 0)
-                        {
-                            curDis = 0;
-                            stopAutoScrollChildren();
-                        }
-                        if (!scrollChildren(-curDis))
-                        {
-                            stopAutoScrollChildren();
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-            break;
-            
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            switch (m_eMoveDirection)
-            {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
-                    {
-                        float curDis = getCurAutoScrollDistance(dt);
-                        if (curDis <= 0)
-                        {
-                            curDis = 0;
-                            stopAutoScrollChildren();
-                        }
-                        if (!scrollChildren(-curDis))
-                        {
-                            stopAutoScrollChildren();
-                        }
-                    }
-                    break;
-                    
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
-                    {
-                        float curDis = getCurAutoScrollDistance(dt);
-                        if (curDis <= 0)
-                        {
-                            curDis = 0;
-                            stopAutoScrollChildren();
-                        }
-                        if (!scrollChildren(curDis))
-                        {
-                            stopAutoScrollChildren();
-                        }
-                    }
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-            
-        default:
-            break;
+        _innerContainer->setPosition(CCPoint(_innerContainer->getAnchorPoint().x * _innerContainer->getSize().width, _innerContainer->getPosition().y));
+    }
+    if (_innerContainer->getRightInParent() < _size.width)
+    {
+         _innerContainer->setPosition(CCPoint(_size.width - ((1.0f - _innerContainer->getAnchorPoint().x) * _innerContainer->getSize().width), _innerContainer->getPosition().y));
+    }
+    if (_innerContainer->getPosition().y > 0.0f)
+    {
+        _innerContainer->setPosition(CCPoint(_innerContainer->getPosition().x, _innerContainer->getAnchorPoint().y * _innerContainer->getSize().height));
+    }
+    if (_innerContainer->getTopInParent() < _size.height)
+    {
+        _innerContainer->setPosition(CCPoint(_innerContainer->getPosition().x, _size.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getSize().height));
     }
 }
 
-void UIScrollView::startAutoScrollChildren(float v)
+const CCSize& ScrollView::getInnerContainerSize() const
 {
-    m_fAutoScrollOriginalSpeed = v;
-    m_bAutoScroll = true;
+	return _innerContainer->getSize();
 }
-
-void UIScrollView::stopAutoScrollChildren()
-{
-    m_bAutoScroll = false;
-    m_fAutoScrollOriginalSpeed = 0.0f;
-}
-
-float UIScrollView::getCurAutoScrollDistance(float time)
-{
-    float dt = time;
-    m_fAutoScrollOriginalSpeed -= m_fAutoScrollAcceleration*dt;
-    return m_fAutoScrollOriginalSpeed*dt;
-}
-
-bool UIScrollView::scrollChildren(float touchOffset)
-{    
-    float realOffset = touchOffset;
     
-    switch (m_eDirection)
+void ScrollView::addChild(CCNode *child)
+{
+    Layout::addChild(child);
+}
+
+void ScrollView::addChild(CCNode * child, int zOrder)
+{
+    Layout::addChild(child, zOrder);
+}
+
+void ScrollView::addChild(CCNode *child, int zOrder, int tag)
+{
+    return _innerContainer->addChild(child, zOrder, tag);
+}
+
+void ScrollView::removeAllChildren()
+{
+    removeAllChildrenWithCleanup(true);
+}
+    
+void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    _innerContainer->removeAllChildrenWithCleanup(cleanup);
+}
+
+void ScrollView::removeChild(CCNode* child, bool cleanup)
+{
+	return _innerContainer->removeChild(child, cleanup);
+}
+
+CCArray* ScrollView::getChildren()
+{
+    return _innerContainer->getChildren();
+}
+
+unsigned int ScrollView::getChildrenCount() const
+{
+    return _innerContainer->getChildrenCount();
+}
+    
+CCNode* ScrollView::getChildByTag(int tag)
+{
+    return _innerContainer->getChildByTag(tag);
+}
+    
+Widget* ScrollView::getChildByName(const char *name)
+{
+    return _innerContainer->getChildByName(name);
+}
+
+void ScrollView::moveChildren(float offsetX, float offsetY)
+{
+    _moveChildPoint = _innerContainer->getPosition() + CCPoint(offsetX, offsetY);
+    _innerContainer->setPosition(_moveChildPoint);
+}
+
+void ScrollView::autoScrollChildren(float dt)
+{
+    float lastTime = _autoScrollAddUpTime;
+    _autoScrollAddUpTime += dt;
+    if (_isAutoScrollSpeedAttenuated)
     {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
-            switch (m_eMoveDirection)
-            {                        
-                case SCROLLVIEW_MOVE_DIR_UP: // up
-                {
-                    float icBottomPos = m_pInnerContainer->getBottomInParent();
-                    if (icBottomPos + touchOffset >= m_fBottomBoundary)
-                    {
-                        realOffset = m_fBottomBoundary - icBottomPos;
-                        moveChildren(realOffset);
-                        m_bBottomEnd = true;
-                        scrollToBottomEvent();
-                        return false;
-                    }
-                    break;
-                }
-                case SCROLLVIEW_MOVE_DIR_DOWN: // down
-                {
-                    float icTopPos = m_pInnerContainer->getTopInParent();
-                    if (icTopPos + touchOffset <= m_fTopBoundary)
-                    {
-                        realOffset = m_fTopBoundary - icTopPos;
-                        moveChildren(realOffset);
-                        m_bTopEnd = true;
-                        scrollToTopEvent();
-                        return false;
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-            moveChildren(realOffset);
-            m_bTopEnd = false;
-            m_bBottomEnd = false;
-            return true;
-            break;
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            switch (m_eMoveDirection)
+        float nowSpeed = _autoScrollOriginalSpeed + _autoScrollAcceleration * _autoScrollAddUpTime;
+        if (nowSpeed <= 0.0f)
+        {
+            stopAutoScrollChildren();
+            checkNeedBounce();
+        }
+        else
+        {
+            float timeParam = lastTime * 2 + dt;
+            float offset = (_autoScrollOriginalSpeed + _autoScrollAcceleration * timeParam * 0.5f) * dt;
+            float offsetX = offset * _autoScrollDir.x;
+            float offsetY = offset * _autoScrollDir.y;
+            if (!scrollChildren(offsetX, offsetY))
             {
-                case SCROLLVIEW_MOVE_DIR_LEFT: // left
-                {
-                    float icRightPos = m_pInnerContainer->getRightInParent();
-                    if (icRightPos + touchOffset <= m_fRightBoundary)
-                    {
-                        realOffset = m_fRightBoundary - icRightPos;
-                        moveChildren(realOffset);
-                        m_bRightEnd = true;
-                        scrollToRightEvent();
-                        return false;
-                    }
-                    break;
-                }
-                case SCROLLVIEW_MOVE_DIR_RIGHT: // right
-                {
-                    float icLeftPos = m_pInnerContainer->getLeftInParent();
-                    if (icLeftPos + touchOffset >= m_fLeftBoundary)
-                    {
-                        realOffset = m_fLeftBoundary - icLeftPos;
-                        moveChildren(realOffset);
-                        m_bLeftEnd = true;
-                        scrollToLeftEvent();
-                        return false;
-                    }
-                    break;
-                }
-                default:
-                    break;
+                stopAutoScrollChildren();
+                checkNeedBounce();
             }
-            moveChildren(realOffset);
-            m_bLeftEnd = false;
-            m_bRightEnd = false;
-            return true;
-            break;
-            
-        default:
-            break;
+        }
     }
-    
+    else
+    {
+        if (_needCheckAutoScrollDestination)
+        {
+            float xOffset = _autoScrollDir.x * dt * _autoScrollOriginalSpeed;
+            float yOffset = _autoScrollDir.y * dt * _autoScrollOriginalSpeed;
+            bool notDone = checkCustomScrollDestination(&xOffset, &yOffset);
+            bool scrollCheck = scrollChildren(xOffset, yOffset);
+            if (!notDone || !scrollCheck)
+            {
+                stopAutoScrollChildren();
+                checkNeedBounce();
+            }
+        }
+        else
+        {
+            if (!scrollChildren(_autoScrollDir.x * dt * _autoScrollOriginalSpeed, _autoScrollDir.y * dt * _autoScrollOriginalSpeed))
+            {
+                stopAutoScrollChildren();
+                checkNeedBounce();
+            }
+        }
+    }
+}
+
+void ScrollView::bounceChildren(float dt)
+{
+    if (_bounceOriginalSpeed <= 0.0f)
+    {
+        stopBounceChildren();
+    }
+    if (!bounceScrollChildren(_bounceDir.x * dt * _bounceOriginalSpeed, _bounceDir.y * dt * _bounceOriginalSpeed))
+    {
+        stopBounceChildren();
+    }
+}
+
+bool ScrollView::checkNeedBounce()
+{
+    if (!_bounceEnabled)
+    {
+        return false;
+    }
+    checkBounceBoundary();
+    if (_topBounceNeeded || _bottomBounceNeeded || _leftBounceNeeded || _rightBounceNeeded)
+    {
+        if (_topBounceNeeded && _leftBounceNeeded)
+        {
+            CCPoint scrollVector = CCPoint(0.0f, _size.height) - CCPoint(_innerContainer->getLeftInParent(), _innerContainer->getTopInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_topBounceNeeded && _rightBounceNeeded)
+        {
+            CCPoint scrollVector = CCPoint(_size.width, _size.height) - CCPoint(_innerContainer->getRightInParent(), _innerContainer->getTopInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_bottomBounceNeeded && _leftBounceNeeded)
+        {
+            CCPoint scrollVector = CCPointZero - CCPoint(_innerContainer->getLeftInParent(), _innerContainer->getBottomInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_bottomBounceNeeded && _rightBounceNeeded)
+        {
+            CCPoint scrollVector = CCPoint(_size.width, 0.0f) - CCPoint(_innerContainer->getRightInParent(), _innerContainer->getBottomInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_topBounceNeeded)
+        {
+            CCPoint scrollVector = CCPoint(0.0f, _size.height) - CCPoint(0.0f, _innerContainer->getTopInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_bottomBounceNeeded)
+        {
+            CCPoint scrollVector = CCPointZero - CCPoint(0.0f, _innerContainer->getBottomInParent());
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_leftBounceNeeded)
+        {
+            CCPoint scrollVector = CCPointZero - CCPoint(_innerContainer->getLeftInParent(), 0.0f);
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        else if (_rightBounceNeeded)
+        {
+            CCPoint scrollVector = CCPoint(_size.width, 0.0f) - CCPoint(_innerContainer->getRightInParent(), 0.0f);
+            float orSpeed = scrollVector.getLength()/(0.2f);
+            _bounceDir = scrollVector.normalize();
+            startBounceChildren(orSpeed);
+        }
+        return true;
+    }
     return false;
 }
 
-void UIScrollView::scrollToBottom()
+void ScrollView::checkBounceBoundary()
 {
-    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
-    scrollChildren(m_pInnerContainer->getSize().height);
+    float icBottomPos = _innerContainer->getBottomInParent();
+    if (icBottomPos > _bottomBoundary)
+    {
+        scrollToBottomEvent();
+        _bottomBounceNeeded = true;
+    }
+    else
+    {
+        _bottomBounceNeeded = false;
+    }
+    float icTopPos = _innerContainer->getTopInParent();
+    if (icTopPos < _topBoundary)
+    {
+        scrollToTopEvent();
+        _topBounceNeeded = true;
+    }
+    else
+    {
+        _topBounceNeeded = false;
+    }
+    float icRightPos = _innerContainer->getRightInParent();
+    if (icRightPos < _rightBoundary)
+    {
+        scrollToRightEvent();
+        _rightBounceNeeded = true;
+    }
+    else
+    {
+        _rightBounceNeeded = false;
+    }
+    float icLeftPos = _innerContainer->getLeftInParent();
+    if (icLeftPos > _leftBoundary)
+    {
+        scrollToLeftEvent();
+        _leftBounceNeeded = true;
+    }
+    else
+    {
+        _leftBounceNeeded = false;
+    }
 }
 
-void UIScrollView::scrollToTop()
+void ScrollView::startBounceChildren(float v)
 {
-    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
-    scrollChildren(-m_pInnerContainer->getSize().height);
+    _bounceOriginalSpeed = v;
+    _bouncing = true;
 }
 
-void UIScrollView::startRecordSlidAction()
+void ScrollView::stopBounceChildren()
 {
-    if (m_children->count() <= 0)
+    _bouncing = false;
+    _bounceOriginalSpeed = 0.0f;
+    _leftBounceNeeded = false;
+    _rightBounceNeeded = false;
+    _topBounceNeeded = false;
+    _bottomBounceNeeded = false;
+}
+
+void ScrollView::startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration)
+{
+    stopAutoScrollChildren();
+    _autoScrollDir = dir;
+    _isAutoScrollSpeedAttenuated = attenuated;
+    _autoScrollOriginalSpeed = v;
+    _autoScroll = true;
+    _autoScrollAcceleration = acceleration;
+}
+
+void ScrollView::startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated)
+{
+    _needCheckAutoScrollDestination = false;
+    _autoScrollDestination = des;
+    CCPoint dis = des - _innerContainer->getPosition();
+    CCPoint dir = dis.normalize();
+    float orSpeed = 0.0f;
+    float acceleration = -1000.0f;
+    if (attenuated)
+    {
+        acceleration = (-(2 * dis.getLength())) / (time * time);
+        orSpeed =  2 * dis.getLength() / time;
+    }
+    else
+    {
+        _needCheckAutoScrollDestination = true;
+        orSpeed = dis.getLength() / time;
+    }
+    startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
+}
+
+void ScrollView::jumpToDestination(const CCPoint &des)
+{
+    float finalOffsetX = des.x;
+    float finalOffsetY = des.y;
+    switch (_direction)
+    {
+        case SCROLLVIEW_DIR_VERTICAL:
+            if (des.y <= 0)
+            {
+                finalOffsetY = MAX(des.y, _size.height - _innerContainer->getSize().height);
+            }
+            break;
+        case SCROLLVIEW_DIR_HORIZONTAL:
+            if (des.x <= 0)
+            {
+                finalOffsetX = MAX(des.x, _size.width - _innerContainer->getSize().width);
+            }
+            break;
+        case SCROLLVIEW_DIR_BOTH:
+            if (des.y <= 0)
+            {
+                finalOffsetY = MAX(des.y, _size.height - _innerContainer->getSize().height);
+            }
+            if (des.x <= 0)
+            {
+                finalOffsetX = MAX(des.x, _size.width - _innerContainer->getSize().width);
+            }
+            break;
+        default:
+            break;
+    }
+    _innerContainer->setPosition(CCPoint(finalOffsetX, finalOffsetY));
+}
+
+void ScrollView::stopAutoScrollChildren()
+{
+    _autoScroll = false;
+    _autoScrollOriginalSpeed = 0.0f;
+    _autoScrollAddUpTime = 0.0f;
+}
+
+bool ScrollView::bounceScrollChildren(float touchOffsetX, float touchOffsetY)
+{
+    bool scrollenabled = true;
+    if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) //first quadrant //bounce to top-right
+    {
+        float realOffsetX = touchOffsetX;
+        float realOffsetY = touchOffsetY;
+        float icRightPos = _innerContainer->getRightInParent();
+        if (icRightPos + realOffsetX >= _rightBoundary)
+        {
+            realOffsetX = _rightBoundary - icRightPos;
+            bounceRightEvent();
+            scrollenabled = false;
+        }
+        float icTopPos = _innerContainer->getTopInParent();
+        if (icTopPos + touchOffsetY >= _topBoundary)
+        {
+            realOffsetY = _topBoundary - icTopPos;
+            bounceTopEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, realOffsetY);
+    }
+    else if(touchOffsetX < 0.0f && touchOffsetY > 0.0f) //second quadrant //bounce to top-left
+    {
+        float realOffsetX = touchOffsetX;
+        float realOffsetY = touchOffsetY;
+        float icLefrPos = _innerContainer->getLeftInParent();
+        if (icLefrPos + realOffsetX <= _leftBoundary)
+        {
+            realOffsetX = _leftBoundary - icLefrPos;
+            bounceLeftEvent();
+            scrollenabled = false;
+        }
+        float icTopPos = _innerContainer->getTopInParent();
+        if (icTopPos + touchOffsetY >= _topBoundary)
+        {
+            realOffsetY = _topBoundary - icTopPos;
+            bounceTopEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, realOffsetY);
+    }
+    else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) //third quadrant //bounce to bottom-left
+    {
+        float realOffsetX = touchOffsetX;
+        float realOffsetY = touchOffsetY;
+        float icLefrPos = _innerContainer->getLeftInParent();
+        if (icLefrPos + realOffsetX <= _leftBoundary)
+        {
+            realOffsetX = _leftBoundary - icLefrPos;
+            bounceLeftEvent();
+            scrollenabled = false;
+        }
+        float icBottomPos = _innerContainer->getBottomInParent();
+        if (icBottomPos + touchOffsetY <= _bottomBoundary)
+        {
+            realOffsetY = _bottomBoundary - icBottomPos;
+            bounceBottomEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, realOffsetY);
+    }
+    else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) //forth quadrant //bounce to bottom-right
+    {
+        float realOffsetX = touchOffsetX;
+        float realOffsetY = touchOffsetY;
+        float icRightPos = _innerContainer->getRightInParent();
+        if (icRightPos + realOffsetX >= _rightBoundary)
+        {
+            realOffsetX = _rightBoundary - icRightPos;
+            bounceRightEvent();
+            scrollenabled = false;
+        }
+        float icBottomPos = _innerContainer->getBottomInParent();
+        if (icBottomPos + touchOffsetY <= _bottomBoundary)
+        {
+            realOffsetY = _bottomBoundary - icBottomPos;
+            bounceBottomEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, realOffsetY);
+    }
+    else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // bounce to top
+    {
+        float realOffsetY = touchOffsetY;
+        float icTopPos = _innerContainer->getTopInParent();
+        if (icTopPos + touchOffsetY >= _topBoundary)
+        {
+            realOffsetY = _topBoundary - icTopPos;
+            bounceTopEvent();
+            scrollenabled = false;
+        }
+        moveChildren(0.0f, realOffsetY);
+    }
+    else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) //bounce to bottom
+    {
+        float realOffsetY = touchOffsetY;
+        float icBottomPos = _innerContainer->getBottomInParent();
+        if (icBottomPos + touchOffsetY <= _bottomBoundary)
+        {
+            realOffsetY = _bottomBoundary - icBottomPos;
+            bounceBottomEvent();
+            scrollenabled = false;
+        }
+        moveChildren(0.0f, realOffsetY);
+    }
+    else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) //bounce to right
+    {
+        float realOffsetX = touchOffsetX;
+        float icRightPos = _innerContainer->getRightInParent();
+        if (icRightPos + realOffsetX >= _rightBoundary)
+        {
+            realOffsetX = _rightBoundary - icRightPos;
+            bounceRightEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, 0.0f);
+    }
+    else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) //bounce to left
+    {
+        float realOffsetX = touchOffsetX;
+        float icLeftPos = _innerContainer->getLeftInParent();
+        if (icLeftPos + realOffsetX <= _leftBoundary)
+        {
+            realOffsetX = _leftBoundary - icLeftPos;
+            bounceLeftEvent();
+            scrollenabled = false;
+        }
+        moveChildren(realOffsetX, 0.0f);
+    }
+    return scrollenabled;
+}
+
+bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY)
+{
+    bool scrollenabled = true;
+    switch (_direction)
+    {
+        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        {
+            if (_autoScrollDir.y > 0)
+            {
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
+                    scrollenabled = false;
+                }
+            }
+            else
+            {
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + *touchOffsetY <= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
+                    scrollenabled = false;
+                }
+            }
+            break;
+        }
+        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        {
+            if (_autoScrollDir.x > 0)
+            {
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
+                    scrollenabled = false;
+                }
+            }
+            else
+            {
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + *touchOffsetX <= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
+                    scrollenabled = false;
+                }
+            }
+            break;
+        }
+        case SCROLLVIEW_DIR_BOTH:
+        {
+            if (*touchOffsetX > 0.0f && *touchOffsetY > 0.0f) // up right
+            {
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
+                    scrollenabled = false;
+                }
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX < 0.0f && *touchOffsetY > 0.0f) // up left
+            {
+                float icRightPos = _innerContainer->getRightInParent();
+                if (icRightPos + *touchOffsetX <= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icRightPos;
+                    scrollenabled = false;
+                }
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX < 0.0f && *touchOffsetY < 0.0f) // down left
+            {
+                float icRightPos = _innerContainer->getRightInParent();
+                if (icRightPos + *touchOffsetX <= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icRightPos;
+                    scrollenabled = false;
+                }
+                float icTopPos = _innerContainer->getTopInParent();
+                if (icTopPos + *touchOffsetY <= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icTopPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX > 0.0f && *touchOffsetY < 0.0f) // down right
+            {
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
+                    scrollenabled = false;
+                }
+                float icTopPos = _innerContainer->getTopInParent();
+                if (icTopPos + *touchOffsetY <= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icTopPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX == 0.0f && *touchOffsetY > 0.0f) // up
+            {
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX < 0.0f && *touchOffsetY == 0.0f) // left
+            {
+                float icRightPos = _innerContainer->getRightInParent();
+                if (icRightPos + *touchOffsetX <= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icRightPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX == 0.0f && *touchOffsetY < 0.0f) // down
+            {
+                float icTopPos = _innerContainer->getTopInParent();
+                if (icTopPos + *touchOffsetY <= _autoScrollDestination.y)
+                {
+                    *touchOffsetY = _autoScrollDestination.y - icTopPos;
+                    scrollenabled = false;
+                }
+            }
+            else if (*touchOffsetX > 0.0f && *touchOffsetY == 0.0f) // right
+            {
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
+                {
+                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
+                    scrollenabled = false;
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return scrollenabled;
+}
+
+bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
+{
+    bool scrollenabled = true;
+    scrollingEvent();
+    switch (_direction)
+    {
+        case SCROLLVIEW_DIR_VERTICAL: // vertical
+        {
+            float realOffset = touchOffsetY;
+            if (_bounceEnabled)
+            {
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
+                {
+                    realOffset = _bounceBottomBoundary - icBottomPos;
+                    scrollToBottomEvent();
+                    scrollenabled = false;
+                }
+                float icTopPos = _innerContainer->getTopInParent();
+                if (icTopPos + touchOffsetY <= _bounceTopBoundary)
+                {
+                    realOffset = _bounceTopBoundary - icTopPos;
+                    scrollToTopEvent();
+                    scrollenabled = false;
+                }
+            }
+            else
+            {
+                float icBottomPos = _innerContainer->getBottomInParent();
+                if (icBottomPos + touchOffsetY >= _bottomBoundary)
+                {
+                    realOffset = _bottomBoundary - icBottomPos;
+                    scrollToBottomEvent();
+                    scrollenabled = false;
+                }
+                float icTopPos = _innerContainer->getTopInParent();
+                if (icTopPos + touchOffsetY <= _topBoundary)
+                {
+                    realOffset = _topBoundary - icTopPos;
+                    scrollToTopEvent();
+                    scrollenabled = false;
+                }
+            }
+            moveChildren(0.0f, realOffset);
+            break;
+        }
+        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
+        {
+            float realOffset = touchOffsetX;
+            if (_bounceEnabled)
+            {
+                float icRightPos = _innerContainer->getRightInParent();
+                if (icRightPos + touchOffsetX <= _bounceRightBoundary)
+                {
+                    realOffset = _bounceRightBoundary - icRightPos;
+                    scrollToRightEvent();
+                    scrollenabled = false;
+                }
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
+                {
+                    realOffset = _bounceLeftBoundary - icLeftPos;
+                    scrollToLeftEvent();
+                    scrollenabled = false;
+                }
+            }
+            else
+            {
+                float icRightPos = _innerContainer->getRightInParent();
+                if (icRightPos + touchOffsetX <= _rightBoundary)
+                {
+                    realOffset = _rightBoundary - icRightPos;
+                    scrollToRightEvent();
+                    scrollenabled = false;
+                }
+                float icLeftPos = _innerContainer->getLeftInParent();
+                if (icLeftPos + touchOffsetX >= _leftBoundary)
+                {
+                    realOffset = _leftBoundary - icLeftPos;
+                    scrollToLeftEvent();
+                    scrollenabled = false;
+                }
+            }
+            moveChildren(realOffset, 0.0f);
+            break;
+        }
+        case SCROLLVIEW_DIR_BOTH:
+        {
+            float realOffsetX = touchOffsetX;
+            float realOffsetY = touchOffsetY;
+            if (_bounceEnabled)
+            {
+                if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
+                    {
+                        realOffsetX = _bounceLeftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
+                    {
+                        realOffsetY = _bounceBottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY > 0.0f) // up left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _bounceRightBoundary)
+                    {
+                        realOffsetX = _bounceRightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
+                    {
+                        realOffsetY = _bounceBottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) // down left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _bounceRightBoundary)
+                    {
+                        realOffsetX = _bounceRightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _bounceTopBoundary)
+                    {
+                        realOffsetY = _bounceTopBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) // down right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
+                    {
+                        realOffsetX = _bounceLeftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _bounceTopBoundary)
+                    {
+                        realOffsetY = _bounceTopBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // up
+                {
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
+                    {
+                        realOffsetY = _bounceBottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) // left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _bounceRightBoundary)
+                    {
+                        realOffsetX = _bounceRightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) // down
+                {
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _bounceTopBoundary)
+                    {
+                        realOffsetY = _bounceTopBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) // right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
+                    {
+                        realOffsetX = _bounceLeftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                }
+            }
+            else
+            {
+                if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _leftBoundary)
+                    {
+                        realOffsetX = _leftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bottomBoundary)
+                    {
+                        realOffsetY = _bottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY > 0.0f) // up left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _rightBoundary)
+                    {
+                        realOffsetX = _rightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bottomBoundary)
+                    {
+                        realOffsetY = _bottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) // down left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _rightBoundary)
+                    {
+                        realOffsetX = _rightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _topBoundary)
+                    {
+                        realOffsetY = _topBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) // down right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _leftBoundary)
+                    {
+                        realOffsetX = _leftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _topBoundary)
+                    {
+                        realOffsetY = _topBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // up
+                {
+                    float icBottomPos = _innerContainer->getBottomInParent();
+                    if (icBottomPos + touchOffsetY >= _bottomBoundary)
+                    {
+                        realOffsetY = _bottomBoundary - icBottomPos;
+                        scrollToBottomEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) // left
+                {
+                    float icRightPos = _innerContainer->getRightInParent();
+                    if (icRightPos + touchOffsetX <= _rightBoundary)
+                    {
+                        realOffsetX = _rightBoundary - icRightPos;
+                        scrollToRightEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) // down
+                {
+                    float icTopPos = _innerContainer->getTopInParent();
+                    if (icTopPos + touchOffsetY <= _topBoundary)
+                    {
+                        realOffsetY = _topBoundary - icTopPos;
+                        scrollToTopEvent();
+                        scrollenabled = false;
+                    }
+                }
+                else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) // right
+                {
+                    float icLeftPos = _innerContainer->getLeftInParent();
+                    if (icLeftPos + touchOffsetX >= _leftBoundary)
+                    {
+                        realOffsetX = _leftBoundary - icLeftPos;
+                        scrollToLeftEvent();
+                        scrollenabled = false;
+                    }
+                }
+            }
+            moveChildren(realOffsetX, realOffsetY);
+            break;
+        }
+        default:
+            break;
+    }
+    return scrollenabled;
+}
+
+void ScrollView::scrollToBottom(float time, bool attenuated)
+{
+    startAutoScrollChildrenWithDestination(CCPoint(_innerContainer->getPosition().x, 0.0f), time, attenuated);
+}
+
+void ScrollView::scrollToTop(float time, bool attenuated)
+{
+    startAutoScrollChildrenWithDestination(CCPoint(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height), time, attenuated);
+}
+
+void ScrollView::scrollToLeft(float time, bool attenuated)
+{
+    startAutoScrollChildrenWithDestination(CCPoint(0.0f, _innerContainer->getPosition().y), time, attenuated);
+}
+
+void ScrollView::scrollToRight(float time, bool attenuated)
+{
+    startAutoScrollChildrenWithDestination(CCPoint(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y), time, attenuated);
+}
+
+void ScrollView::scrollToTopLeft(float time, bool attenuated)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    startAutoScrollChildrenWithDestination(CCPoint(0.0f, _size.height - _innerContainer->getSize().height), time, attenuated);
+}
+
+void ScrollView::scrollToTopRight(float time, bool attenuated)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    startAutoScrollChildrenWithDestination(CCPoint(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height), time, attenuated);
+}
+
+void ScrollView::scrollToBottomLeft(float time, bool attenuated)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    startAutoScrollChildrenWithDestination(CCPointZero, time, attenuated);
+}
+
+void ScrollView::scrollToBottomRight(float time, bool attenuated)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    startAutoScrollChildrenWithDestination(CCPoint(_size.width - _innerContainer->getSize().width, 0.0f), time, attenuated);
+}
+
+void ScrollView::scrollToPercentVertical(float percent, float time, bool attenuated)
+{
+    float minY = _size.height - _innerContainer->getSize().height;
+    float h = - minY;
+    startAutoScrollChildrenWithDestination(CCPoint(_innerContainer->getPosition().x, minY + percent * h / 100.0f), time, attenuated);
+}
+
+void ScrollView::scrollToPercentHorizontal(float percent, float time, bool attenuated)
+{
+    float w = _innerContainer->getSize().width - _size.width;
+    startAutoScrollChildrenWithDestination(CCPoint(-(percent * w / 100.0f), _innerContainer->getPosition().y), time, attenuated);
+}
+
+void ScrollView::scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
     {
         return;
     }
-    if (m_bAutoScroll){
+    float minY = _size.height - _innerContainer->getSize().height;
+    float h = - minY;
+    float w = _innerContainer->getSize().width - _size.width;
+    startAutoScrollChildrenWithDestination(CCPoint(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), time, attenuated);
+}
+
+void ScrollView::jumpToBottom()
+{
+    jumpToDestination(CCPoint(_innerContainer->getPosition().x, 0.0f));
+}
+
+void ScrollView::jumpToTop()
+{
+    jumpToDestination(CCPoint(_innerContainer->getPosition().x, _size.height - _innerContainer->getSize().height));
+}
+
+void ScrollView::jumpToLeft()
+{
+    jumpToDestination(CCPoint(0.0f, _innerContainer->getPosition().y));
+}
+
+void ScrollView::jumpToRight()
+{
+    jumpToDestination(CCPoint(_size.width - _innerContainer->getSize().width, _innerContainer->getPosition().y));
+}
+
+void ScrollView::jumpToTopLeft()
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(CCPoint(0.0f, _size.height - _innerContainer->getSize().height));
+}
+
+void ScrollView::jumpToTopRight()
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(CCPoint(_size.width - _innerContainer->getSize().width, _size.height - _innerContainer->getSize().height));
+}
+
+void ScrollView::jumpToBottomLeft()
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(CCPointZero);
+}
+
+void ScrollView::jumpToBottomRight()
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        CCLOG("Scroll diretion is not both!");
+        return;
+    }
+    jumpToDestination(CCPoint(_size.width - _innerContainer->getSize().width, 0.0f));
+}
+
+void ScrollView::jumpToPercentVertical(float percent)
+{
+    float minY = _size.height - _innerContainer->getSize().height;
+    float h = - minY;
+    jumpToDestination(CCPoint(_innerContainer->getPosition().x, minY + percent * h / 100.0f));
+}
+
+void ScrollView::jumpToPercentHorizontal(float percent)
+{
+    float w = _innerContainer->getSize().width - _size.width;
+    jumpToDestination(CCPoint(-(percent * w / 100.0f), _innerContainer->getPosition().y));
+}
+
+void ScrollView::jumpToPercentBothDirection(const CCPoint& percent)
+{
+    if (_direction != SCROLLVIEW_DIR_BOTH)
+    {
+        return;
+    }
+    float minY = _size.height - _innerContainer->getSize().height;
+    float h = - minY;
+    float w = _innerContainer->getSize().width - _size.width;
+    jumpToDestination(CCPoint(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
+}
+
+void ScrollView::startRecordSlidAction()
+{
+    if (_autoScroll)
+    {
         stopAutoScrollChildren();
     }
-    m_bBePressed = true;
-    m_fSlidTime = 0.0;
+    if (_bouncing)
+    {
+        stopBounceChildren();
+    }
+    _slidTime = 0.0f;
 }
 
-void UIScrollView::endRecordSlidAction()
+void ScrollView::endRecordSlidAction()
 {
-    if (m_children->count() <= 0)
+    if (!checkNeedBounce() && _inertiaScrollEnabled)
     {
-        return;
+        if (_slidTime <= 0.016f)
+        {
+            return;
+        }
+        float totalDis = 0.0f;
+        CCPoint dir;
+        switch (_direction)
+        {
+            case SCROLLVIEW_DIR_VERTICAL:
+                totalDis = _touchEndedPoint.y - _touchBeganPoint.y;
+                if (totalDis < 0.0f)
+                {
+                    dir = SCROLLDIR_DOWN;
+                }
+                else
+                {
+                    dir = SCROLLDIR_UP;
+                }
+                break;
+            case SCROLLVIEW_DIR_HORIZONTAL:
+                totalDis = _touchEndedPoint.x - _touchBeganPoint.x;
+                if (totalDis < 0.0f)
+                {
+                    dir = SCROLLDIR_LEFT;
+                }
+                else
+                {
+                    dir = SCROLLDIR_RIGHT;
+                }
+                break;
+            case SCROLLVIEW_DIR_BOTH:
+            {
+                CCPoint subVector = _touchEndedPoint - _touchBeganPoint;
+                totalDis = subVector.getLength();
+                dir = subVector.normalize();
+                break;
+            }
+            default:
+                break;
+        }
+        float orSpeed = MIN(fabs(totalDis)/(_slidTime), AUTOSCROLLMAXSPEED);
+        startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, true, -1000);
+        _slidTime = 0.0f;
     }
-    if (m_fSlidTime <= 0.016f)
-    {
-        return;
-    }
-    float totalDis = 0;
-    totalDis = m_fTouchEndLocation-m_fTouchStartLocation;
-    float orSpeed = fabs(totalDis)/(m_fSlidTime);
-    startAutoScrollChildren(orSpeed);
-    
-    m_bBePressed = false;
-    m_fSlidTime = 0.0;
 }
 
-void UIScrollView::handlePressLogic(const CCPoint &touchPoint)
+void ScrollView::handlePressLogic(const CCPoint &touchPoint)
 {        
-    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
-    switch (m_eDirection)
-    {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
-            m_fTouchMoveStartLocation = nsp.y;
-            m_fTouchStartLocation = nsp.y;
-            break;
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            m_fTouchMoveStartLocation = nsp.x;
-            m_fTouchStartLocation = nsp.x;
-            break;
-        default:
-            break;
-    }
+    _touchBeganPoint = convertToNodeSpace(touchPoint);
+    _touchMovingPoint = _touchBeganPoint;    
     startRecordSlidAction();
+    _bePressed = true;
 }
 
-void UIScrollView::handleMoveLogic(const CCPoint &touchPoint)
+void ScrollView::handleMoveLogic(const CCPoint &touchPoint)
 {
-    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
-    float offset = 0.0f;
-    
-    switch (m_eDirection)
+    _touchMovedPoint = convertToNodeSpace(touchPoint);
+    CCPoint delta = _touchMovedPoint - _touchMovingPoint;
+    _touchMovingPoint = _touchMovedPoint;
+    switch (_direction)
     {
         case SCROLLVIEW_DIR_VERTICAL: // vertical
-            {
-                float moveY = nsp.y;
-                offset = moveY - m_fTouchMoveStartLocation;
-                m_fTouchMoveStartLocation = moveY;
-                
-                if (offset < 0.0f)
-                {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_DOWN; // down
-                }
-                else if (offset > 0.0f)
-                {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_UP; // up
-                }
-            }
+        {
+            scrollChildren(0.0f, delta.y);
             break;
-            
+        }
         case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            {
-                float moveX = nsp.x;
-                offset = moveX - m_fTouchMoveStartLocation;
-                m_fTouchMoveStartLocation = moveX;
-                
-                if (offset < 0)
-                {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_LEFT; // left
-                }
-                else if (offset > 0)
-                {
-                    m_eMoveDirection = SCROLLVIEW_MOVE_DIR_RIGHT; // right
-                }
-            }
+        {
+            scrollChildren(delta.x, 0.0f);
             break;
-            
+        }
+        case SCROLLVIEW_DIR_BOTH: // both
+        {
+            scrollChildren(delta.x, delta.y);
+            break;
+        }
         default:
             break;
     }
-    scrollChildren(offset);
 }
 
-void UIScrollView::handleReleaseLogic(const CCPoint &touchPoint)
+void ScrollView::handleReleaseLogic(const CCPoint &touchPoint)
 {
-    CCPoint nsp = m_pRenderer->convertToNodeSpace(touchPoint);
-    switch (m_eDirection)
-    {
-        case SCROLLVIEW_DIR_VERTICAL: // vertical
-            m_fTouchEndLocation = nsp.y;
-            break;
-            
-        case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-            m_fTouchEndLocation = nsp.x;
-            break;
-            
-        default:
-            break;
-    }
+    _touchEndedPoint = convertToNodeSpace(touchPoint);
     endRecordSlidAction();
+    _bePressed = false;
 }    
 
-bool UIScrollView::onTouchBegan(const CCPoint &touchPoint)
+bool ScrollView::onTouchBegan(CCTouch *touch, CCEvent *unusedEvent)
 {
-    bool pass = Layout::onTouchBegan(touchPoint);
-    handlePressLogic(touchPoint);
+    bool pass = Layout::onTouchBegan(touch, unusedEvent);
+    if (_hitted)
+    {
+        handlePressLogic(_touchStartPos);
+    }
     return pass;
 }
 
-void UIScrollView::onTouchMoved(const CCPoint &touchPoint)
+void ScrollView::onTouchMoved(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchMoved(touchPoint);
-    handleMoveLogic(touchPoint);
+    Layout::onTouchMoved(touch, unusedEvent);
+    handleMoveLogic(_touchMovePos);
 }
 
-void UIScrollView::onTouchEnded(const CCPoint &touchPoint)
+void ScrollView::onTouchEnded(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchEnded(touchPoint);
-    handleReleaseLogic(touchPoint);
+    Layout::onTouchEnded(touch, unusedEvent);
+    handleReleaseLogic(_touchEndPos);
 }
 
-void UIScrollView::onTouchCancelled(const CCPoint &touchPoint)
+void ScrollView::onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent)
 {
-    Layout::onTouchCancelled(touchPoint);
+    Layout::onTouchCancelled(touch, unusedEvent);
+    handleReleaseLogic(touch->getLocation());
 }
 
-void UIScrollView::onTouchLongClicked(const CCPoint &touchPoint)
+void ScrollView::update(float dt)
 {
-    
-}
-
-void UIScrollView::update(float dt)
-{
-    if (m_bAutoScroll)
+    if (_autoScroll)
     {
         autoScrollChildren(dt);
+    }
+    if (_bouncing)
+    {
+        bounceChildren(dt);
     }
     recordSlidTime(dt);
 }
 
-void UIScrollView::recordSlidTime(float dt)
+void ScrollView::recordSlidTime(float dt)
 {
-    if (m_bBePressed)
+    if (_bePressed)
     {
-        m_fSlidTime += dt;
+        _slidTime += dt;
     }
 }
 
-void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const CCPoint &touchPoint)
+void ScrollView::interceptTouchEvent(int handleState, Widget *sender, const CCPoint &touchPoint)
 {
     switch (handleState)
     {
@@ -583,21 +1483,8 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             
         case 1:
         {
-            float offset = 0;
-            switch (m_eDirection)
-            {
-                case SCROLLVIEW_DIR_VERTICAL: // vertical
-                    offset = fabs(sender->getTouchStartPos().y - touchPoint.y);
-                    break;
-                    
-                case SCROLLVIEW_DIR_HORIZONTAL: // horizontal
-                    offset = fabs(sender->getTouchStartPos().x - touchPoint.x);
-                    break;
-                    
-                default:
-                    break;
-            }
-            if (offset > m_fChildFocusCancelOffset)
+            float offset = (sender->getTouchStartPos() - touchPoint).getLength();
+            if (offset > _childFocusCancelOffset)
             {
                 sender->setFocused(false);
                 handleMoveLogic(touchPoint);
@@ -610,146 +1497,176 @@ void UIScrollView::interceptTouchEvent(int handleState, UIWidget *sender, const 
             break;
             
         case 3:
+            handleReleaseLogic(touchPoint);
             break;
     }
 }
 
-void UIScrollView::checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint)
+void ScrollView::checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint)
 {
     interceptTouchEvent(handleState, sender, touchPoint);
 }
 
-void UIScrollView::scrollToTopEvent()
+void ScrollView::scrollToTopEvent()
 {
-    /*******Compatible*******/
-    if (m_pScrollToTopListener && m_pfnScrollToTopSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (m_pScrollToTopListener->*m_pfnScrollToTopSelector)(this);
-    }
-    /************************/
-    if (m_pEventListener && m_pfnEventSelector)
-    {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_TOP);
     }
 }
 
-void UIScrollView::scrollToBottomEvent()
+void ScrollView::scrollToBottomEvent()
 {
-    /*******Compatible*******/
-    if (m_pScrollToBottomListener && m_pfnScrollToBottomSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (m_pScrollToBottomListener->*m_pfnScrollToBottomSelector)(this);
-    }
-    /************************/
-    if (m_pEventListener && m_pfnEventSelector)
-    {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
     }
 }
 
-void UIScrollView::scrollToLeftEvent()
+void ScrollView::scrollToLeftEvent()
 {
-    /*******Compatible*******/
-    if (m_pScrollToLeftListener && m_pfnScrollToLeftSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (m_pScrollToLeftListener->*m_pfnScrollToLeftSelector)(this);
-    }
-    /************************/
-    if (m_pEventListener && m_pfnEventSelector)
-    {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
     }
 }
 
-void UIScrollView::scrollToRightEvent()
+void ScrollView::scrollToRightEvent()
 {
-    /*******Compatible*******/
-    if (m_pScrollToRightListener && m_pfnScrollToRightSelector)
+    if (_scrollViewEventListener && _scrollViewEventSelector)
     {
-        (m_pScrollToRightListener->*m_pfnScrollToRightSelector)(this);
-    }
-    /************************/
-    if (m_pEventListener && m_pfnEventSelector)
-    {
-        (m_pEventListener->*m_pfnEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
     }
 }
 
-void UIScrollView::addEventListener(CCObject *target, SEL_ScrollViewEvent selector)
+void ScrollView::scrollingEvent()
 {
-    m_pEventListener = target;
-    m_pfnEventSelector = selector;
+    if (_scrollViewEventListener && _scrollViewEventSelector)
+    {
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLLING);
+    }
 }
 
-/*******Compatible*******/
-void UIScrollView::addScrollToTopEvent(CCObject *target, SEL_ScrollToTopEvent selector)
+void ScrollView::bounceTopEvent()
 {
-    m_pScrollToTopListener = target;
-    m_pfnScrollToTopSelector = selector;
+    if (_scrollViewEventListener && _scrollViewEventSelector)
+    {
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_TOP);
+    }
 }
 
-void UIScrollView::addScrollToBottomEvent(CCObject *target, SEL_ScrollToBottomEvent selector)
+void ScrollView::bounceBottomEvent()
 {
-    m_pScrollToBottomListener = target;
-    m_pfnScrollToBottomSelector = selector;
+    if (_scrollViewEventListener && _scrollViewEventSelector)
+    {
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_BOTTOM);
+    }
 }
 
-void UIScrollView::addScrollToLeftEvent(CCObject *target, SEL_ScrollToLeftEvent selector)
+void ScrollView::bounceLeftEvent()
 {
-    m_pScrollToLeftListener = target;
-    m_pfnScrollToLeftSelector = selector;
+    if (_scrollViewEventListener && _scrollViewEventSelector)
+    {
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_LEFT);
+    }
 }
 
-void UIScrollView::addScrollToRightEvent(CCObject *target, SEL_ScrollToRightEvent selector)
+void ScrollView::bounceRightEvent()
 {
-    m_pScrollToRightListener = target;
-    m_pfnScrollToRightSelector = selector;
-}
-/************************/
-
-void UIScrollView::setDirection(SCROLLVIEW_DIR dir)
-{
-    m_eDirection = dir;
+    if (_scrollViewEventListener && _scrollViewEventSelector)
+    {
+        (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_BOUNCE_RIGHT);
+    }
 }
 
-SCROLLVIEW_DIR UIScrollView::getDirection()
+void ScrollView::addEventListenerScrollView(CCObject *target, SEL_ScrollViewEvent selector)
 {
-    return m_eDirection;
+    _scrollViewEventListener = target;
+    _scrollViewEventSelector = selector;
 }
 
-void UIScrollView::setMoveDirection(SCROLLVIEW_MOVE_DIR dir)
+void ScrollView::setDirection(SCROLLVIEW_DIR dir)
 {
-    m_eMoveDirection = dir;
+    _direction = dir;
 }
 
-SCROLLVIEW_MOVE_DIR UIScrollView::getMoveDirection()
+SCROLLVIEW_DIR ScrollView::getDirection()
 {
-    return m_eMoveDirection;
+    return _direction;
 }
 
-Layout* UIScrollView::getInnerContainer()
+void ScrollView::setBounceEnabled(bool enabled)
 {
-    return m_pInnerContainer;
+    _bounceEnabled = enabled;
 }
 
-void UIScrollView::setLayoutType(LayoutType type)
+bool ScrollView::isBounceEnabled() const
 {
-    m_pInnerContainer->setLayoutType(type);
+    return _bounceEnabled;
 }
 
-LayoutType UIScrollView::getLayoutType() const
+void ScrollView::setInertiaScrollEnabled(bool enabled)
 {
-    return m_pInnerContainer->getLayoutType();
+    _inertiaScrollEnabled = enabled;
 }
 
-void UIScrollView::doLayout()
+bool ScrollView::isInertiaScrollEnabled() const
 {
-    m_pInnerContainer->doLayout();
+    return _inertiaScrollEnabled;
 }
 
-const char* UIScrollView::getDescription() const
+Layout* ScrollView::getInnerContainer()
+{
+    return _innerContainer;
+}
+
+void ScrollView::setLayoutType(LayoutType type)
+{
+    _innerContainer->setLayoutType(type);
+}
+
+LayoutType ScrollView::getLayoutType() const
+{
+    return _innerContainer->getLayoutType();
+}
+
+void ScrollView::doLayout()
+{
+    if (!_doLayoutDirty)
+    {
+        return;
+    }
+    _doLayoutDirty = false;
+}
+
+std::string ScrollView::getDescription() const
 {
     return "ScrollView";
 }
 
-NS_CC_EXT_END
+Widget* ScrollView::createCloneInstance()
+{
+    return ScrollView::create();
+}
+
+void ScrollView::copyClonedWidgetChildren(Widget* model)
+{
+    Layout::copyClonedWidgetChildren(model);
+}
+
+void ScrollView::copySpecialProperties(Widget *widget)
+{
+    ScrollView* scrollView = dynamic_cast<ScrollView*>(widget);
+    if (scrollView)
+    {
+        Layout::copySpecialProperties(widget);
+        setInnerContainerSize(scrollView->getInnerContainerSize());
+        setDirection(scrollView->_direction);
+        setBounceEnabled(scrollView->_bounceEnabled);
+        setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
+    }
+}
+
+}
+
+NS_CC_END

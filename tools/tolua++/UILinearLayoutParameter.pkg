@@ -1,0 +1,8 @@
+class LinearLayoutParameter : public LayoutParameter
+{
+    LinearLayoutParameter();
+    virtual ~LinearLayoutParameter();
+    static LinearLayoutParameter* create();
+    void setGravity(LinearGravity gravity);
+    LinearGravity getGravity() const;
+};

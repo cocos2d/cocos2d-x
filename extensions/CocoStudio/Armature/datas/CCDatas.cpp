@@ -122,8 +122,8 @@ void CCBaseData::subtract(CCBaseData *from, CCBaseData *to, bool limit)
 
     if (to->tweenRotate)
     {
-        skewX += to->tweenRotate;
-        skewY -= to->tweenRotate;
+        skewX += to->tweenRotate * M_PI * 2;
+        skewY -= to->tweenRotate * M_PI * 2;
     }
 }
 
@@ -156,58 +156,46 @@ const char *CCDisplayData::changeDisplayToTexture(const char *displayName)
 
 CCDisplayData::CCDisplayData(void)
     : displayType(CS_DISPLAY_MAX)
+    , displayName("")
 {
 }
 
-CCDisplayData::~CCDisplayData(void)
+
+void CCDisplayData::copy(CCDisplayData *displayData)
 {
+    displayName = displayData->displayName;
+    displayType = displayData->displayType;
 }
 
 CCSpriteDisplayData::CCSpriteDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_SPRITE;
 }
 
-CCSpriteDisplayData::~CCSpriteDisplayData()
-{
-}
 
-void CCSpriteDisplayData::copy(CCSpriteDisplayData *displayData)
+void CCSpriteDisplayData::copy(CCDisplayData *displayData)
 {
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
+    CCDisplayData::copy(displayData);
 
-    skinData = displayData->skinData;
+    if (CCSpriteDisplayData *sdd = dynamic_cast<CCSpriteDisplayData*>(displayData))
+    {
+        skinData = sdd->skinData;
+    }
 }
 
 CCArmatureDisplayData::CCArmatureDisplayData(void)
-    : displayName("")
 {
     displayType = CS_DISPLAY_ARMATURE;
 }
 
-CCArmatureDisplayData::~CCArmatureDisplayData()
-{
-}
 
-void CCArmatureDisplayData::copy(CCArmatureDisplayData *displayData)
-{
-    displayName = displayData->displayName;
-    displayType = displayData->displayType;
-}
 
 CCParticleDisplayData::CCParticleDisplayData(void)
-    : plist("")
 {
     displayType = CS_DISPLAY_PARTICLE;
 }
 
-void CCParticleDisplayData::copy(CCParticleDisplayData *displayData)
-{
-    plist = displayData->plist;
-    displayType = displayData->displayType;
-}
+
 
 
 CCBoneData::CCBoneData(void)
@@ -265,19 +253,23 @@ CCFrameData::CCFrameData(void)
     : frameID(0)
     , duration(1)
     , tweenEasing(Linear)
+    , easingParamNumber(0)
+    , easingParams(NULL)
     , isTween(true)
     , displayIndex(0)
-    , blendType(BLEND_NORMAL)
 
     , strEvent("")
     , strMovement("")
     , strSound("")
     , strSoundEffect("")
 {
+    blendFunc.src = CC_BLEND_SRC;
+    blendFunc.dst = CC_BLEND_DST;
 }
 
 CCFrameData::~CCFrameData(void)
 {
+    CC_SAFE_DELETE_ARRAY(easingParams);
 }
 
 void CCFrameData::copy(const CCBaseData *node)
@@ -288,8 +280,21 @@ void CCFrameData::copy(const CCBaseData *node)
 	{
 		duration = frameData->duration;
 		displayIndex = frameData->displayIndex;
-		tweenEasing = frameData->tweenEasing;
-		blendType = frameData->blendType;
+		
+        tweenEasing = frameData->tweenEasing;
+        easingParamNumber = frameData->easingParamNumber;
+
+        CC_SAFE_DELETE_ARRAY(easingParams);
+        if (easingParamNumber != 0)
+        {
+            easingParams = new float[easingParamNumber];
+            for (int i = 0; i<easingParamNumber; i++)
+            {
+                easingParams[i] = frameData->easingParams[i];
+            }
+        }
+		
+        blendFunc = frameData->blendFunc;
 		isTween = frameData->isTween;
 	}
 }

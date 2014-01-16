@@ -1,0 +1,7 @@
+class  CCBaseData : public CCObject
+{
+    CCBaseData* create(void);
+    CCBaseData();
+    virtual void setColor(const ccColor4B &color);
+    virtual ccColor4B getColor();
+};

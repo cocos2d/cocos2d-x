@@ -37,34 +37,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-typedef HANDLE pthread_t;
-typedef HANDLE pthread_mutex_t;
-typedef int pthread_cond_t;
-#define pthread_cond_wait(x, y)
 
-inline void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
-	*m = CreateMutexEx(NULL,FALSE,0,NULL);
-}
-
-inline int pthread_mutex_lock(pthread_mutex_t* m) {
-	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
-}
-
-inline int pthread_mutex_unlock(pthread_mutex_t* m) {
-	return ReleaseMutex(*m);
-}
-
-inline void pthread_mutex_destroy(pthread_mutex_t* m) {
-	if(m)
-	{
-		CloseHandle(*m);
-	}
-}
-
-#define pthread_mutex_destroy(x)
-#define pthread_cond_destroy(x)
-#define pthread_cond_signal(x)
-#define pthread_cond_init(x, y)
 
 std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
@@ -76,9 +49,6 @@ float getScaledDPIValue(float v);
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-void savePrecompiledShaders(CCDictionary* programs);
-#endif
 
 NS_CC_END
 

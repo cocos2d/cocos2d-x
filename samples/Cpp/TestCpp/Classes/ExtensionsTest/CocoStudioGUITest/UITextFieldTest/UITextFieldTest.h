@@ -65,4 +65,17 @@ protected:
     UI_SCENE_CREATE_FUNC(UITextFieldTest_Password)
     UILabel* m_pDisplayValueLabel;
 };
+
+class UITextFieldTest_LineWrap : public UIScene
+{
+public:
+    UITextFieldTest_LineWrap();
+    ~UITextFieldTest_LineWrap();
+    bool init();
+    void textFieldEvent(CCObject* pSender, TextFiledEventType type);
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UITextFieldTest_LineWrap)
+    UILabel* m_pDisplayValueLabel;
+};
 #endif /* defined(__TestCpp__UITextFieldTest__) */

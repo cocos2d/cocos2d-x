@@ -1,0 +1,41 @@
+
+typedef enum
+{
+    LISTVIEW_GRAVITY_LEFT,
+    LISTVIEW_GRAVITY_RIGHT,
+    LISTVIEW_GRAVITY_CENTER_HORIZONTAL,
+    
+    LISTVIEW_GRAVITY_TOP,
+    LISTVIEW_GRAVITY_BOTTOM,
+    LISTVIEW_GRAVITY_CENTER_VERTICAL,
+}ListViewGravity;
+    
+typedef enum
+{
+    LISTVIEW_ONSELECTEDITEM
+}ListViewEventType;
+
+class ListView : public ScrollView
+{
+    ListView();
+    virtual ~ListView();
+    static ListView* create();
+    void setItemModel(Widget* model);
+    void pushBackDefaultItem();
+    void insertDefaultItem(int index);
+    void pushBackCustomItem(Widget* item);
+    void insertCustomItem(Widget* item, int index);
+    void removeLastItem();
+    void removeItem(int index);
+    void removeAllItems();
+    Widget* getItem(unsigned int index);
+    CCArray* getItems();
+    unsigned int getIndex(Widget* item) const;
+    void setGravity(ListViewGravity gravity);
+    void setItemsMargin(float margin);
+    virtual void sortAllChildren();
+    int getCurSelectedIndex() const;
+    virtual void setDirection(SCROLLVIEW_DIR dir);
+    virtual std::string getDescription() const;
+    void requestRefreshView();
+};

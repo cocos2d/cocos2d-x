@@ -40,12 +40,8 @@ CCProcessBase::CCProcessBase(void)
     , m_fCurrentFrame(0)
     , m_iCurFrameIndex(0)
     , m_bIsLoopBack(false)
+    , m_fAnimationInternal(1/60.0f)
 {
-    /*
-     *  set m_fAnimationInternal defualt value to CCDirector::sharedDirector()
-     *  ->getAnimationInterval(), in line with game update speed
-     */
-    m_fAnimationInternal = CCDirector::sharedDirector()->getAnimationInterval();
 }
 
 
@@ -71,11 +67,9 @@ void CCProcessBase::stop()
 {
     m_bIsComplete = true;
     m_bIsPlaying = false;
-    m_fCurrentFrame = 0;
-    m_fCurrentPercent = 0;
 }
 
-void CCProcessBase::play(void *animation, int durationTo, int durationTween,  int loop, int tweenEasing)
+void CCProcessBase::play(int durationTo, int durationTween,  int loop, int tweenEasing)
 {
     m_bIsComplete = false;
     m_bIsPause = false;
@@ -136,16 +130,24 @@ void CCProcessBase::update(float dt)
 }
 
 
-
 void CCProcessBase::gotoFrame(int frameIndex)
 {
+    if (m_eLoopType == ANIMATION_NO_LOOP)
+    {
+        m_eLoopType = ANIMATION_MAX;
+    }
+    else if (m_eLoopType == ANIMATION_TO_LOOP_FRONT)
+    {
+        m_eLoopType = ANIMATION_LOOP_FRONT;
+    }
+
     m_iCurFrameIndex = frameIndex;
-    pause();
+    m_iNextFrameIndex = m_iDurationTween;
 }
 
 int CCProcessBase::getCurrentFrameIndex()
 {
-    m_iCurFrameIndex = m_iRawDuration * m_fCurrentPercent;
+    m_iCurFrameIndex = (m_iRawDuration-1) * m_fCurrentPercent;
     return m_iCurFrameIndex;
 }
 

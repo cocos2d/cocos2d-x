@@ -1,0 +1,243 @@
+
+typedef enum
+{
+    BRIGHT_NONE = -1,
+    BRIGHT_NORMAL,
+    BRIGHT_HIGHLIGHT
+}BrightStyle;
+
+typedef enum
+{
+    WidgetTypeWidget, //control
+    WidgetTypeContainer //container
+}WidgetType;
+
+typedef enum
+{
+    UI_TEX_TYPE_LOCAL,
+    UI_TEX_TYPE_PLIST
+}TextureResType;
+
+typedef enum
+{
+    TOUCH_EVENT_BEGAN,
+    TOUCH_EVENT_MOVED,
+    TOUCH_EVENT_ENDED,
+    TOUCH_EVENT_CANCELED
+}TouchEventType;
+
+typedef enum
+{
+    SIZE_ABSOLUTE,
+    SIZE_PERCENT
+}SizeType;
+
+typedef enum
+{
+    POSITION_ABSOLUTE,
+    POSITION_PERCENT
+}PositionType;
+
+class Widget : public CCNodeRGBA
+{    
+    Widget(void);
+    
+    
+    virtual ~Widget();
+    
+    
+    static Widget* create();
+    
+    
+    virtual void setEnabled(bool enabled);
+    
+    
+    bool isEnabled() const;
+    
+    
+    void setBright(bool bright);
+    
+    
+    bool isBright() const;
+    
+    
+    virtual void setTouchEnabled(bool enabled);
+    
+    
+    void setBrightStyle(BrightStyle style);
+    
+    
+    bool isTouchEnabled() const;
+    
+    
+    bool isFocused() const;
+
+    
+    void setFocused(bool fucosed);
+    
+    
+    float getLeftInParent();
+    
+    
+    float getBottomInParent();
+    
+    
+    float getRightInParent();
+    
+    
+    float getTopInParent();
+
+    
+    virtual void addChild(CCNode * child);
+    
+    virtual void addChild(CCNode * child, int zOrder);
+    
+    virtual void addChild(CCNode* child, int zOrder, int tag);
+    
+    virtual CCNode * getChildByTag(int tag);
+    
+    virtual void sortAllChildren();
+    
+    virtual CCArray* getChildren();
+    
+    
+    virtual unsigned int getChildrenCount() const;
+    
+    
+    virtual void removeFromParent();
+    
+    virtual void removeFromParentAndCleanup(bool cleanup);
+    
+    
+    virtual void removeChild(CCNode* child, bool cleanup = true);
+    
+    
+    virtual void removeChildByTag(int tag, bool cleanup = true);
+    
+    virtual void removeAllChildren();
+    
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    
+    
+    virtual Widget* getChildByName(const char* name);
+    
+    
+    virtual void visit();
+    
+    
+    void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
+    
+    
+    void setPosition(const CCPoint &pos);
+    
+    
+    void setPositionPercent(const CCPoint &percent);
+        
+    
+    const CCPoint& getPositionPercent();
+    
+    
+    void setPositionType(PositionType type);
+
+    
+    PositionType getPositionType() const;
+    
+    
+    virtual void setFlipX(bool flipX){};
+    
+    
+    virtual bool isFlipX(){return false;};
+    
+    
+    virtual void setFlipY(bool flipY){};
+    
+    
+    virtual bool isFlipY(){return false;};
+    
+    
+    void didNotSelectSelf();
+    
+    
+    bool clippingParentAreaContainPoint(const CCPoint &pt);
+    
+    
+    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint);
+    
+    
+    const CCPoint& getTouchStartPos();
+    
+    
+    const CCPoint& getTouchMovePos();
+    
+    
+    const CCPoint& getTouchEndPos();
+    
+    
+    void setName(const char* name);
+    
+    
+    const char* getName() const;
+    
+    
+    WidgetType getWidgetType() const;
+    
+    
+    virtual void setSize(const CCSize &size);
+    
+    
+    virtual void setSizePercent(const CCPoint &percent);
+    
+    
+    void setSizeType(SizeType type);
+
+    
+    SizeType getSizeType() const;
+    
+    
+    const CCSize& getSize() const;
+    
+    
+    const CCPoint& getSizePercent() const;
+    
+    
+    virtual bool hitTest(const CCPoint &pt);
+    
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unused_event);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unused_event);    
+    
+    void setLayoutParameter(LayoutParameter* parameter);
+    
+    
+    LayoutParameter* getLayoutParameter(LayoutParameterType type);
+    
+    
+    virtual void ignoreContentAdaptWithSize(bool ignore);
+    
+    
+    bool isIgnoreContentAdaptWithSize() const;
+    
+    
+    CCPoint getWorldPosition();
+
+    
+    virtual CCNode* getVirtualRenderer();    
+    
+    virtual const CCSize& getContentSize() const;
+    
+    
+    virtual std::string getDescription() const;
+    
+    Widget* clone();
+
+    virtual void onEnter();
+    virtual void onExit();
+    
+    void updateSizeAndPosition();
+    
+    
+    void setActionTag(int tag);
+	int getActionTag();
+
+};

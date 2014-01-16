@@ -27,35 +27,38 @@
 
 #include "../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
+
 /**
 *   @js NA
 *   @lua NA
 */
-class UILabel : public UIWidget
+class Label : public Widget
 {
 public:
     /**
      * Default constructor
      */
-    UILabel();
+    Label();
     
     /**
      * Default destructor
      */
-    virtual ~UILabel();
+    virtual ~Label();
     
     /**
      * Allocates and initializes.
      */
-    static UILabel* create();
+    static Label* create();
     
     /**
      * Changes the string value of label.
      *
      * @param text  string value.
      */
-    void setText(const char* text);
+    void setText(const std::string& text);
     
     /**
      * Gets the string value of label.
@@ -83,7 +86,7 @@ public:
      *
      * @param  font name.
      */
-    void setFontName(const char* name);
+    void setFontName(const std::string& name);
     
     /**
      * Sets the touch scale enabled of label.
@@ -98,6 +101,34 @@ public:
      * @return  touch scale enabled of label.
      */
     bool isTouchScaleChangeEnabled();
+    
+    /**
+     * Changes both X and Y scale factor of the widget.
+     *
+     * 1.0 is the default scale factor. It modifies the X and Y scale at the same time.
+     *
+     * @param scale     The scale factor for both X and Y axis.
+     */
+    virtual void setScale(float fScale);
+    
+    /**
+     * Changes the scale factor on X axis of this widget
+     *
+     * The deafult value is 1.0 if you haven't changed it before
+     *
+     * @param fScaleX   The scale factor on X axis.
+     */
+    virtual void setScaleX(float fScaleX);
+    
+    /**
+     * Changes the scale factor on Y axis of this widget
+     *
+     * The Default value is 1.0 if you haven't changed it before.
+     *
+     * @param fScaleY   The scale factor on Y axis.
+     */
+    virtual void setScaleY(float fScaleY);
+    
 
     //override "setFlipX" method of widget.
     virtual void setFlipX(bool flipX);
@@ -123,15 +154,11 @@ public:
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
     
     void setTextAreaSize(const CCSize &size);
     void setTextHorizontalAlignment(CCTextAlignment alignment);
     void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
-
-    
-    void setTouchScaleChangeAble(bool able){setTouchScaleChangeEnabled(able);};
-    bool getTouchScaleChangeAble(){return isTouchScaleChangeEnabled();};
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -139,17 +166,22 @@ protected:
     virtual void onPressStateChangedToPressed();
     virtual void onPressStateChangedToDisabled();
     virtual void onSizeChanged();
-    void clickScale(float scale);
+    void clickScale(float scaleX, float scaleY);
     void labelScaleChangedWithSize();
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
 protected:
-    bool m_bTouchScaleChangeEnabled;
-    float m_fNormalScaleValue;
-    std::string m_sFontName;
-    int m_nFontSize;
-    float m_fOnSelectedScaleOffset;
-    CCLabelTTF* m_pLabelRenderer;
+    bool _touchScaleChangeEnabled;
+    float _normalScaleValueX;
+    float _normalScaleValueY;
+    std::string _fontName;
+    int _fontSize;
+    float _onSelectedScaleOffset;
+    CCLabelTTF* _labelRenderer;
 };
 
-NS_CC_EXT_END
+}
+
+NS_CC_END
 
 #endif /* defined(__CocoGUI__Label__) */

@@ -1,0 +1,64 @@
+class  CCArmature : public CCNodeRGBA, public CCBlendProtocol
+{
+    static CCArmature *create();
+    static CCArmature *create(const char *name);
+    static CCArmature *create(const char *name, CCBone *parentBone);
+    CCArmature();
+     ~CCArmature(void);
+
+    virtual bool init();
+
+    virtual bool init(const char *name);
+
+    virtual bool init(const char *name, CCBone *parentBone);
+
+    virtual void addBone(CCBone *bone, const char *parentName);
+
+    virtual CCBone *getBone(const char *name) const;
+
+    virtual void changeBoneParent(CCBone *bone, const char *parentName);
+
+    virtual void removeBone(CCBone *bone, bool recursion);
+
+    CCDictionary *getBoneDic();
+
+    virtual CCRect boundingBox();
+
+    CCBone *getBoneAtPoint(float x, float y);
+
+    virtual void visit();
+    virtual void update(float dt);
+    virtual void draw();
+
+    virtual CCAffineTransform nodeToParentTransform();
+
+    virtual void updateOffsetPoint();
+
+    void setBlendFunc(ccBlendFunc blendFunc);
+    ccBlendFunc getBlendFunc(void);
+
+    virtual void setAnimation(CCArmatureAnimation *animation);
+    virtual CCArmatureAnimation *getAnimation();
+
+    virtual CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
+
+    virtual CCArmatureData* getArmatureData(void) const;
+    virtual void setArmatureData(CCArmatureData* var);
+
+    virtual CCBatchNode* getBatchNode(void) const;
+    virtual void setBatchNode(CCBatchNode* var);
+
+    virtual std::string getName(void) const;
+    virtual void setName(std::string var);
+
+    virtual CCTextureAtlas* getTextureAtlas(void) const;
+    virtual void setTextureAtlas(CCTextureAtlas* var);
+
+    virtual CCBone* getParentBone(void);
+    virtual void setParentBone(CCBone* var);
+
+    virtual float getVersion(void) const;
+    virtual void setVersion(float var);
+
+    virtual bool getArmatureTransformDirty(void) const;
+};

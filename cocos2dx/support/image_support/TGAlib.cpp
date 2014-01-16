@@ -290,8 +290,8 @@ void tgaRGBtogreyscale(tImageTGA *psInfo) {
     mode = psInfo->pixelDepth / 8;
     
     // allocate an array for the new image data
-    newImageData = (unsigned char *)malloc(sizeof(unsigned char) * 
-                                           psInfo->height * psInfo->width);
+    size_t size = psInfo->height * psInfo->width;
+    newImageData = (unsigned char *)malloc(sizeof(unsigned char) * size);
     if (newImageData == NULL) {
         return;
     }

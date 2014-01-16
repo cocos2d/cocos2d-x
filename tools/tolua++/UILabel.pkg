@@ -1,0 +1,29 @@
+
+class Label : public Widget
+{
+    Label();
+    virtual ~Label();
+    static Label* create();
+    void setText(const std::string& text);
+    const char* getStringValue();
+    int getStringLength();
+    void setFontSize(int size);
+    void setFontName(const std::string& name);
+    void setTouchScaleChangeEnabled(bool enabled);
+    bool isTouchScaleChangeEnabled();
+    virtual void setScale(float fScale);
+    virtual void setScaleX(float fScaleX);
+    virtual void setScaleY(float fScaleY);
+    virtual void setFlipX(bool flipX);
+    virtual void setFlipY(bool flipY);
+    virtual bool isFlipX();
+    virtual bool isFlipY();
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    virtual std::string getDescription() const;
+    void setTextAreaSize(const CCSize &size);
+    void setTextHorizontalAlignment(CCTextAlignment alignment);
+    void setTextVerticalAlignment(CCVerticalTextAlignment alignment);
+
+};

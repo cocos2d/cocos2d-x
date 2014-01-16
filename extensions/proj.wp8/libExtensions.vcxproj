@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -91,7 +91,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -109,7 +109,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;COCOS2D_DEBUG=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_LIB;WP8;_WP8;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;UNICODE;_UNICODE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalUsingDirectories>$(WindowsSDK_MetadataPath);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -156,6 +156,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\AssetsManager\AssetsManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBAnimationManager.cpp" />
     <ClCompile Include="..\CCBReader\CCBFileLoader.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="..\CCBReader\CCScale9SpriteLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCScrollViewLoader.cpp" />
     <ClCompile Include="..\CCBReader\CCSpriteLoader.cpp" />
+    <ClCompile Include="..\CocoStudio\Action\CCActionEaseEx.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrame.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionFrameEasing.cpp" />
     <ClCompile Include="..\CocoStudio\Action\CCActionManager.cpp" />
@@ -210,16 +212,13 @@
     <ClCompile Include="..\CocoStudio\Components\CCComController.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCComRender.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCInputDelegate.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\BaseClasses\UIWidget.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\Layout.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\Layouts\LayoutParameter.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayout.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\CocosGUI.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\System\UIHelper.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\System\UIInputManager.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\System\UILayer.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.cpp" />
+    <ClCompile Include="..\CocoStudio\GUI\System\UITouchGroup.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.cpp" />
@@ -231,15 +230,14 @@
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILabelBMFont.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UILoadingBar.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISlider.cpp" />
-    <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UISwitch.cpp" />
     <ClCompile Include="..\CocoStudio\GUI\UIWidgets\UITextField.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\CSContentJsonDictionary.cpp" />
     <ClCompile Include="..\CocoStudio\Json\DictionaryHelper.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_reader.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_value.cpp" />
-    <ClCompile Include="..\CocoStudio\Json\lib_json\json_writer.cpp" />
-    <ClCompile Include="..\CocoStudio\Reader\CCSGUIReader.cpp" />
-    <ClCompile Include="..\CocoStudio\Reader\CCSSceneReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\GUIReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Reader\SceneReader.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\ObjectFactory.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerBase.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerMng.cpp" />
+    <ClCompile Include="..\CocoStudio\Trigger\TriggerObj.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlButton.cpp" />
     <ClCompile Include="..\GUI\CCControlExtension\CCControlColourPicker.cpp" />
@@ -282,6 +280,7 @@
     <ClCompile Include="..\spine\spine-cocos2dx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cocos2dx\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\AssetsManager\AssetsManager.h" />
     <ClInclude Include="..\CCBReader\CCBAnimationManager.h" />
     <ClInclude Include="..\CCBReader\CCBFileLoader.h" />
@@ -312,6 +311,7 @@
     <ClInclude Include="..\CCBReader\CCScrollViewLoader.h" />
     <ClInclude Include="..\CCBReader\CCSpriteLoader.h" />
     <ClInclude Include="..\cocos-ext.h" />
+    <ClInclude Include="..\CocoStudio\Action\CCActionEaseEx.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrame.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionFrameEasing.h" />
     <ClInclude Include="..\CocoStudio\Action\CCActionManager.h" />
@@ -339,21 +339,23 @@
     <ClInclude Include="..\CocoStudio\Armature\utils\CCUtilMath.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAudio.h" />
+    <ClInclude Include="..\CocoStudio\Components\CCComBase.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComController.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComRender.h" />
     <ClInclude Include="..\CocoStudio\Components\CCInputDelegate.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIRootWidget.h" />
     <ClInclude Include="..\CocoStudio\GUI\BaseClasses\UIWidget.h" />
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\Layout.h" />
-    <ClInclude Include="..\CocoStudio\GUI\Layouts\LayoutParameter.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayout.h" />
     <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutDefine.h" />
+    <ClInclude Include="..\CocoStudio\GUI\Layouts\UILayoutParameter.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\CocosGUI.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIHelper.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UIInputManager.h" />
     <ClInclude Include="..\CocoStudio\GUI\System\UILayer.h" />
+    <ClInclude Include="..\CocoStudio\GUI\System\UITouchGroup.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\Compatible\CompatibleClasses.h" />
-    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIDragPanel.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListView.h" />
+    <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIListViewEx.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIPageView.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollInterface.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\ScrollWidget\UIScrollView.h" />
@@ -367,20 +369,23 @@
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISlider.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UISwitch.h" />
     <ClInclude Include="..\CocoStudio\GUI\UIWidgets\UITextField.h" />
-    <ClInclude Include="..\CocoStudio\Json\CSContentJsonDictionary.h" />
     <ClInclude Include="..\CocoStudio\Json\DictionaryHelper.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\autolink.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\config.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\features.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\forwards.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_batchallocator.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_lib.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\json_tool.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\reader.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\value.h" />
-    <ClInclude Include="..\CocoStudio\Json\lib_json\writer.h" />
-    <ClInclude Include="..\CocoStudio\Reader\CCSGUIReader.h" />
-    <ClInclude Include="..\CocoStudio\Reader\CCSSceneReader.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\document.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\filestream.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\reader.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\CocoStudio\Json\rapidjson\writer.h" />
+    <ClInclude Include="..\CocoStudio\Reader\GUIReader.h" />
+    <ClInclude Include="..\CocoStudio\Reader\SceneReader.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\ObjectFactory.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerBase.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerMng.h" />
+    <ClInclude Include="..\CocoStudio\Trigger\TriggerObj.h" />
     <ClInclude Include="..\ExtensionMacros.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControl.h" />
     <ClInclude Include="..\GUI\CCControlExtension\CCControlButton.h" />
@@ -426,12 +431,6 @@
     <ClInclude Include="..\spine\SlotData.h" />
     <ClInclude Include="..\spine\spine-cocos2dx.h" />
     <ClInclude Include="..\spine\spine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\CocoStudio\Json\lib_json\json_internalarray.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_internalmap.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\json_valueiterator.inl" />
-    <None Include="..\CocoStudio\Json\lib_json\sconscript" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsPhone\v$(TargetPlatformVersion)\Microsoft.Cpp.WindowsPhone.$(TargetPlatformVersion).targets" />

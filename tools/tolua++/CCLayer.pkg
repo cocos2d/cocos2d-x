@@ -67,8 +67,6 @@ class CCLayerColor : public CCLayerRGBA
     void changeHeight(GLfloat h);
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
 
-	void setContentSize(const CCSize & var);
-
     void setOpacity(GLubyte var);
     GLubyte getOpacity(void);
     void setColor(ccColor3B Value);
@@ -79,6 +77,7 @@ class CCLayerColor : public CCLayerRGBA
 	void setOpacityModifyRGB(bool bValue);
     bool isOpacityModifyRGB(void);
 
+    static CCLayerColor*  create();
     static CCLayerColor * create(ccColor4B color, GLfloat width, GLfloat height);
     static CCLayerColor * create(ccColor4B color);
 };

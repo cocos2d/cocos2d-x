@@ -1,0 +1,16 @@
+
+typedef enum
+{
+    LAYOUT_PARAMETER_NONE,
+    LAYOUT_PARAMETER_LINEAR,
+    LAYOUT_PARAMETER_RELATIVE
+}LayoutParameterType;
+
+
+class LayoutParameter : public CCObject
+{
+    LayoutParameter();
+    virtual ~LayoutParameter();
+    static LayoutParameter* create();
+    LayoutParameterType getLayoutType() const;
+};

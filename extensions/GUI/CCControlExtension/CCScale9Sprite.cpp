@@ -111,6 +111,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 
 bool CCScale9Sprite::updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets)
 {
+    m_bSpriteFrameRotated = rotated;
     GLubyte opacity = getOpacity();
     ccColor3B color = getColor();
 

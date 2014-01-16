@@ -26,14 +26,15 @@
 #define __UILAYOUTDEFINE_H__
 
 #include "cocos2d.h"
-#include "ExtensionMacros.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 /**
 *   @js NA
 *   @lua NA
 */
-class UIMargin
+class Margin
 {
 public:
     float left;
@@ -42,14 +43,15 @@ public:
     float bottom;
     
 public:
-    UIMargin();
-    UIMargin(float l, float t, float r, float b);
-    UIMargin(const UIMargin& other);
-    UIMargin& operator= (const UIMargin& other);
+    Margin();
+    Margin(float l, float t, float r, float b);
+    Margin(const Margin& other);
+    Margin& operator= (const Margin& other);
     void setMargin(float l, float t, float r, float b);
-    bool equals(const UIMargin& target) const;
+    bool equals(const Margin& target) const;
 };
 
+const Margin MarginZero = Margin();
 
 typedef enum
 {
@@ -60,32 +62,35 @@ typedef enum
     LINEAR_GRAVITY_BOTTOM,
     LINEAR_GRAVITY_CENTER_VERTICAL,
     LINEAR_GRAVITY_CENTER_HORIZONTAL
-}UILinearGravity;
+}LinearGravity;
 
 typedef enum
 {
     RELATIVE_ALIGN_NONE,
-    RELATIVE_ALIGN_PARENT_LEFT,
-    RELATIVE_ALIGN_PARENT_TOP,
-    RELATIVE_ALIGN_PARENT_RIGHT,
-    RELATIVE_ALIGN_PARENT_BOTTOM,
+    RELATIVE_ALIGN_PARENT_TOP_LEFT,
+    RELATIVE_ALIGN_PARENT_TOP_CENTER_HORIZONTAL,
+    RELATIVE_ALIGN_PARENT_TOP_RIGHT,
+    RELATIVE_ALIGN_PARENT_LEFT_CENTER_VERTICAL,
     RELATIVE_CENTER_IN_PARENT,
-    RELATIVE_CENTER_HORIZONTAL,
-    RELATIVE_CENTER_VERTICAL,
+    RELATIVE_ALIGN_PARENT_RIGHT_CENTER_VERTICAL,
+    RELATIVE_ALIGN_PARENT_LEFT_BOTTOM,
+    RELATIVE_ALIGN_PARENT_BOTTOM_CENTER_HORIZONTAL,
+    RELATIVE_ALIGN_PARENT_RIGHT_BOTTOM,
+    
+    RELATIVE_LOCATION_ABOVE_LEFTALIGN,
+    RELATIVE_LOCATION_ABOVE_CENTER,
+    RELATIVE_LOCATION_ABOVE_RIGHTALIGN,
     RELATIVE_LOCATION_LEFT_OF_TOPALIGN,
     RELATIVE_LOCATION_LEFT_OF_CENTER,
     RELATIVE_LOCATION_LEFT_OF_BOTTOMALIGN,
     RELATIVE_LOCATION_RIGHT_OF_TOPALIGN,
     RELATIVE_LOCATION_RIGHT_OF_CENTER,
     RELATIVE_LOCATION_RIGHT_OF_BOTTOMALIGN,
-    RELATIVE_LOCATION_ABOVE_LEFTALIGN,
-    RELATIVE_LOCATION_ABOVE_CENTER,
-    RELATIVE_LOCATION_ABOVE_RIGHTALIGN,
     RELATIVE_LOCATION_BELOW_LEFTALIGN,
     RELATIVE_LOCATION_BELOW_CENTER,
     RELATIVE_LOCATION_BELOW_RIGHTALIGN
-}UIRelativeAlign;
+}RelativeAlign;
 
-NS_CC_EXT_END
-
+}
+NS_CC_END
 #endif /* defined(__UILayoutDefine__) */

@@ -1,0 +1,38 @@
+
+class  CCDisplayManager : public CCObject
+{
+    static CCDisplayManager *create(CCBone *bone);
+    CCDisplayManager();
+    ~CCDisplayManager();
+
+    bool init(CCBone *bone);
+    void addDisplay(CCDisplayData *displayData, int index);
+
+    void addDisplay(CCNode *display, int index);
+
+    void removeDisplay(int index);
+
+    CCArray *getDecorativeDisplayList();
+
+    void changeDisplayWithIndex(int index, bool force);
+
+
+    CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
+
+    int getCurrentDisplayIndex();
+
+    virtual void setVisible(bool visible);
+
+    virtual bool isVisible();
+
+    CCSize getContentSize();
+    CCRect getBoundingBox();
+
+    CCPoint getAnchorPoint();
+    CCPoint getAnchorPointInPoints();
+
+    virtual bool containPoint(CCPoint &_point);
+
+    virtual bool containPoint(float x, float y);
+};

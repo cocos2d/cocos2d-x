@@ -1,0 +1,44 @@
+
+typedef enum
+{
+    TEXTFIELD_EVENT_ATTACH_WITH_IME,
+    TEXTFIELD_EVENT_DETACH_WITH_IME,
+    TEXTFIELD_EVENT_INSERT_TEXT,
+    TEXTFIELD_EVENT_DELETE_BACKWARD,
+}TextFiledEventType;
+
+class TextField : public Widget
+{
+    TextField();
+    virtual ~TextField();
+    static TextField* create();
+    void setTouchSize(const CCSize &size);
+    void setText(const std::string& text);
+    void setPlaceHolder(const std::string& value);
+    void setFontSize(int size);
+    void setFontName(const std::string& name);
+    virtual void didNotSelectSelf();
+    const char* getStringValue();
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unused_event);
+    void setMaxLengthEnabled(bool enable);
+    bool isMaxLengthEnabled();
+    void setMaxLength(int length);
+    int getMaxLength();
+    void setPasswordEnabled(bool enable);
+    bool isPasswordEnabled();
+    void setPasswordStyleText(const char* styleText);
+    virtual void update(float dt);
+    bool getAttachWithIME();
+    void setAttachWithIME(bool attach);
+    bool getDetachWithIME();
+    void setDetachWithIME(bool detach);
+    bool getInsertText();
+    void setInsertText(bool insertText);
+    bool getDeleteBackward();
+    void setDeleteBackward(bool deleteBackward);
+    virtual void setAnchorPoint(const CCPoint &pt);
+    virtual std::string getDescription() const;
+    virtual const CCSize& getContentSize() const;
+    virtual CCNode* getVirtualRenderer();
+    void attachWithIME();
+};

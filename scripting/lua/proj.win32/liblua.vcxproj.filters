@@ -63,6 +63,15 @@
     <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.cpp">
       <Filter>cocos2dx_support</Filter>
     </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\LuaCocoStudio.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cocos2dx_support\lua_cocos2dx_manual.cpp">
+      <Filter>cocos2dx_support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\tolua\tolua++.h">
@@ -114,6 +123,15 @@
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_extensions_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_cocostudio_manual.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\LuaCocoStudio.h">
+      <Filter>cocos2dx_support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cocos2dx_support\lua_cocos2dx_manual.h">
       <Filter>cocos2dx_support</Filter>
     </ClInclude>
   </ItemGroup>

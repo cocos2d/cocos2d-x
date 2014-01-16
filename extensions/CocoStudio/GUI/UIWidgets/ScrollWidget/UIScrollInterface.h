@@ -27,18 +27,23 @@
 
 #include "../../BaseClasses/UIWidget.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 class UIScrollInterface
 {
+public:
+    virtual ~UIScrollInterface() {}
+
 protected:
     virtual void handlePressLogic(const CCPoint &touchPoint) = 0;
     virtual void handleMoveLogic(const CCPoint &touchPoint) = 0;
     virtual void handleReleaseLogic(const CCPoint &touchPoint) = 0;
-    virtual void interceptTouchEvent(int handleState, UIWidget* sender, const CCPoint &touchPoint) = 0;
-//    virtual bool isInScrollDegreeRange(UIWidget* widget) = 0;
+    virtual void interceptTouchEvent(int handleState, Widget* sender, const CCPoint &touchPoint) = 0;
 };
 
-NS_CC_EXT_END
+}
+NS_CC_END
 
 #endif /* defined(__UIScrollDelegate__) */

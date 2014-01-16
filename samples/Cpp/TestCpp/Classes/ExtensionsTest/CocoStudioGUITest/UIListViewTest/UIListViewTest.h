@@ -22,41 +22,39 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__UIListViewTest__
-#define __TestCpp__UIListViewTest__
+#ifndef __TestCpp__UIListViewExTest__
+#define __TestCpp__UIListViewExTest__
 
 #include "../UIScene.h"
 
-class UIListViewTest_Vertical : public UIScene
+class UIListViewExTest_Vertical : public UIScene
 {
 public:
-    UIListViewTest_Vertical();
-    ~UIListViewTest_Vertical();
+    UIListViewExTest_Vertical();
+    ~UIListViewExTest_Vertical();
     bool init();
-    void listViewEvent(CCObject* pSender, ListViewEventType type);
+    void selectedItemEvent(CCObject* pSender, ListViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
+    UI_SCENE_CREATE_FUNC(UIListViewExTest_Vertical)
     UILabel* m_pDisplayValueLabel;
     
-    int m_nCount;
     CCArray* m_array;
 };
 
-class UIListViewTest_Horizontal : public UIScene
+class UIListViewExTest_Horizontal : public UIScene
 {
 public:
-    UIListViewTest_Horizontal();
-    ~UIListViewTest_Horizontal();
+    UIListViewExTest_Horizontal();
+    ~UIListViewExTest_Horizontal();
     bool init();
-    void listViewEvent(CCObject* pSender, ListViewEventType type);    
+    void selectedItemEvent(CCObject* pSender, ListViewEventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
+    UI_SCENE_CREATE_FUNC(UIListViewExTest_Horizontal)
     UILabel* m_pDisplayValueLabel;
     
-    int m_nCount;
     CCArray* m_array;
 };
 
-#endif /* defined(__TestCpp__UIListViewTest__) */
+#endif /* defined(__TestCpp__UIListViewExTest__) */

@@ -35,8 +35,8 @@ NS_CC_EXT_BEGIN
 
 class CCArmature;
 /**
-*   @lua NA
-*/
+ * @lua NA
+ */
 class CCBone : public CCNodeRGBA
 {
 public:
@@ -54,7 +54,13 @@ public:
     static CCBone *create(const char *name);
 
 public:
+    /**
+     *  @js ctor
+     */
     CCBone();
+    /**
+     *  @js NA
+     */
     virtual ~CCBone(void);
 
     /**
@@ -83,7 +89,16 @@ public:
 
     void addDisplay(CCNode *display, int index);
 
-    void changeDisplayByIndex(int index, bool force);
+    void removeDisplay(int index);
+
+    /**
+     * @deprecated please use changeDisplayWithIndex and changeDisplayWithName
+     */
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByIndex(int index, bool force);
+    CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const char *name, bool force);
+
+    void changeDisplayWithIndex(int index, bool force);
+    void changeDisplayWithName(const char *name, bool force);
 
     /**
      * Add a child to this bone, and it will let this child call setParent(CCBone *parent) function to set self to it's parent
@@ -107,6 +122,7 @@ public:
      */
     CCBone *getParentBone();
 
+    using CCNode::removeFromParent;
     /**
      * Remove itself from its parent.
      * @param 	recursion    whether or not to remove childBone's display
@@ -140,19 +156,36 @@ public:
     /*
      * Whether or not the bone's transform property changed. if true, the bone will update the transform.
      */
-    virtual void setTransformDirty(bool dirty);
+    virtual inline void setTransformDirty(bool dirty) { m_bBoneTransformDirty = dirty; }
+    virtual inline bool isTransformDirty() { return m_bBoneTransformDirty; }
 
-    virtual bool isTransformDirty();
+    /*
+     * Set blend function
+     */
+    virtual void setBlendFunc(const ccBlendFunc& blendFunc);
+    virtual ccBlendFunc getBlendFunc(void) { return m_sBlendFunc; }
+
+    /*
+     * Set if blend function is dirty 
+     */
+    virtual void setBlendDirty(bool dirty) { m_bBlendDirty = dirty; }
+    virtual bool isBlendDirty(void) { return m_bBlendDirty; }
 
     virtual CCAffineTransform nodeToArmatureTransform();
     virtual CCAffineTransform nodeToWorldTransform();
 
     CCNode *getDisplayRenderNode();
+    DisplayType getDisplayRenderNodeType();
 
     /*
      * Get the ColliderBody list in this bone. The object in the CCArray is ColliderBody.
      */
     virtual CCArray *getColliderBodyList();
+
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
+    virtual void setColliderFilter(CCColliderFilter *filter);
+    virtual CCColliderFilter *getColliderFilter();
+#endif
 
 public:
     /*
@@ -175,7 +208,6 @@ public:
      */
     CC_SYNTHESIZE(bool, m_bIgnoreMovementBoneData, IgnoreMovementBoneData)
 
-    CC_SYNTHESIZE(CCBlendType, m_eBlendType, BlendType)
 protected:
     virtual void applyParentTransform(CCBone *parent);
 
@@ -194,6 +226,15 @@ protected:
 
     //! World Point, Scale, Rotation in armature space
     CC_SYNTHESIZE_READONLY(CCBaseData *, m_tWorldInfo, WorldInfo);
+
+    //! Armature's parent bone
+    CCBone *m_pArmatureParentBone;
+
+    //! Data version
+    float m_fDataVersion;
+
+    ccBlendFunc m_sBlendFunc; 
+    bool m_bBlendDirty;
 };
 
 NS_CC_EXT_END

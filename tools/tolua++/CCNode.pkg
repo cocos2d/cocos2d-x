@@ -39,9 +39,7 @@ class CCNode : public CCObject
     bool    isVisible();
     void    setVisible(bool var);
     CCPoint getAnchorPoint();
-    void    setAnchorPoint(CCPoint point);
     CCSize  getContentSize();
-    void    setContentSize(const CCSize & size);
     int     getTag();
     void    setTag(int var);
 
@@ -119,6 +117,7 @@ class CCNode : public CCObject
     void unregisterScriptHandler(void);
 
     static CCNode * create(void);
+    virtual void setZOrder(int zOrder);
 };
 
 class CCNodeRGBA : public CCNode, public CCRGBAProtocol

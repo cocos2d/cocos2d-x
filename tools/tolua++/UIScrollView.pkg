@@ -1,0 +1,75 @@
+
+enum SCROLLVIEW_DIR
+{
+    SCROLLVIEW_DIR_NONE,
+    SCROLLVIEW_DIR_VERTICAL,
+    SCROLLVIEW_DIR_HORIZONTAL,
+    SCROLLVIEW_DIR_BOTH
+};
+
+typedef enum
+{
+    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
+    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
+    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
+    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+    SCROLLVIEW_EVENT_SCROLLING,
+    SCROLLVIEW_EVENT_BOUNCE_TOP,
+    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
+    SCROLLVIEW_EVENT_BOUNCE_LEFT,
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT
+}ScrollviewEventType;
+
+class ScrollView:public Layout,public UIScrollInterface
+{
+    ScrollView();
+    virtual ~ScrollView();
+    static ScrollView* create();
+    virtual void setDirection(SCROLLVIEW_DIR dir);
+    SCROLLVIEW_DIR getDirection();
+    Layout* getInnerContainer();
+    void scrollToBottom(float time, bool attenuated);
+    void scrollToTop(float time, bool attenuated);
+    void scrollToLeft(float time, bool attenuated);
+    void scrollToRight(float time, bool attenuated);
+    void scrollToTopLeft(float time, bool attenuated);
+    void scrollToTopRight(float time, bool attenuated);
+    void scrollToBottomLeft(float time, bool attenuated);
+    void scrollToBottomRight(float time, bool attenuated);
+    void scrollToPercentVertical(float percent, float time, bool attenuated);
+    void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
+    void jumpToBottom();
+    void jumpToTop();
+    void jumpToLeft();
+    void jumpToRight();
+    void jumpToTopLeft();
+    void jumpToTopRight();
+    void jumpToBottomLeft();
+    void jumpToBottomRight();
+    void jumpToPercentVertical(float percent);
+    void jumpToPercentHorizontal(float percent);
+    void jumpToPercentBothDirection(const CCPoint& percent);
+    void setInnerContainerSize(const CCSize &size);
+    const CCSize& getInnerContainerSize() const;
+    virtual void addChild(CCNode * child);
+    virtual void addChild(CCNode * child, int zOrder);
+    virtual void addChild(CCNode* child, int zOrder, int tag);
+    virtual void removeAllChildren();
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    virtual void removeChild(CCNode* child, bool cleaup = true);
+    virtual CCArray* getChildren();
+    virtual unsigned int getChildrenCount() const;
+    virtual CCNode * getChildByTag(int tag);
+    virtual Widget* getChildByName(const char* name);
+        
+    virtual void update(float dt);
+    void setBounceEnabled(bool enabled);
+    bool isBounceEnabled() const;
+    void setInertiaScrollEnabled(bool enabled);
+    bool isInertiaScrollEnabled() const;
+    virtual void setLayoutType(LayoutType type);
+    virtual LayoutType getLayoutType() const;
+    virtual std::string getDescription() const;
+
+};

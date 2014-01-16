@@ -25,44 +25,44 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 #define __CC_EXTENTIONS_CCCOMATTRIBUTE_H__
 
-#include "cocos2d.h"
-#include "cocos-ext.h"
-#include "ExtensionMacros.h"
-#include <string>
+#include "CCComBase.h"
 
 NS_CC_EXT_BEGIN
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  @lua NA
+ */
 class CCComAttribute : public cocos2d::CCComponent
 {
+	DECLARE_CLASS_COMPONENT_INFO
 protected:
+    /**
+     *  @js ctor
+     */
     CCComAttribute(void);
+    /**
+     *  @js NA
+     */
     virtual ~CCComAttribute(void);
     
 public:
    virtual bool init();
    static CCComAttribute* create(void);
-
+   virtual bool serialize(void* r);
+   
    void setInt(const char *key, int value);
-   void setDouble(const char *key, double value);
    void setFloat(const char *key, float value);
    void setBool(const char *key, bool value);
    void setCString(const char *key, const char *value);
-   void setObject(const char *key, CCObject *value);
    
-   int    getInt(const char *key) const;
-   double getDouble(const char *key) const;
-   float  getFloat(const char *key) const;
-   bool   getBool(const char *key) const;
-   const char* getCString(const char *key) const;
-   CCObject* getObject(const char *key) const;
+   int    getInt(const char *key, int def = 0) const;
+   float  getFloat(const char *key, float def = 0.0f) const;
+   bool   getBool(const char *key, bool def = false) const;
+   const char* getCString(const char *key, const char *def = NULL) const;
    
-   cs::CSJsonDictionary* getDict();
+   bool parse(const std::string &jsonPath);
 private:
-   CCDictionary *m_pAttributes;  
-   cs::CSJsonDictionary *m_pJsonDict;
+   cocos2d::CCDictionary *_dict;
+   rapidjson::Document _doc;
 };
 
 NS_CC_EXT_END

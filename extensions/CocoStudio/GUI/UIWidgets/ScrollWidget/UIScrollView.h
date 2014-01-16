@@ -25,25 +25,19 @@
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
 
-#include "../../Layouts/Layout.h"
+#include "../../Layouts/UILayout.h"
 #include "UIScrollInterface.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+namespace gui {
 
 enum SCROLLVIEW_DIR
 {
     SCROLLVIEW_DIR_NONE,
     SCROLLVIEW_DIR_VERTICAL,
-    SCROLLVIEW_DIR_HORIZONTAL
-};
-
-enum SCROLLVIEW_MOVE_DIR
-{
-    SCROLLVIEW_MOVE_DIR_NONE,
-    SCROLLVIEW_MOVE_DIR_UP,
-    SCROLLVIEW_MOVE_DIR_DOWN,
-    SCROLLVIEW_MOVE_DIR_LEFT,
-    SCROLLVIEW_MOVE_DIR_RIGHT,
+    SCROLLVIEW_DIR_HORIZONTAL,
+    SCROLLVIEW_DIR_BOTH
 };
 
 typedef enum
@@ -52,40 +46,34 @@ typedef enum
     SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
     SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
     SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
+    SCROLLVIEW_EVENT_SCROLLING,
+    SCROLLVIEW_EVENT_BOUNCE_TOP,
+    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
+    SCROLLVIEW_EVENT_BOUNCE_LEFT,
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
 typedef void (CCObject::*SEL_ScrollViewEvent)(CCObject*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
-/*******Compatible*******/
-typedef void (CCObject::*SEL_ScrollToTopEvent)(CCObject*);
-typedef void (CCObject::*SEL_ScrollToBottomEvent)(CCObject*);
-typedef void (CCObject::*SEL_ScrollToLeftEvent)(CCObject*);
-typedef void (CCObject::*SEL_ScrollToRightEvent)(CCObject*);
-#define coco_ScrollToTopSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToTopEvent)(&_SELECTOR)
-#define coco_ScrollToBottomSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToBottomEvent)(&_SELECTOR)
-#define coco_ScrollToLeftSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToLeftEvent)(&_SELECTOR)
-#define coco_ScrollToRightSelector(_SELECTOR) (cocos2d::extension::SEL_ScrollToRightEvent)(&_SELECTOR)
-/************************/
 
-
-class UIScrollView : public Layout , public UIScrollInterface
+class ScrollView : public Layout , public UIScrollInterface
 {
 public:
     /**
      * Default constructor
      */
-    UIScrollView();
+    ScrollView();
     
     /**
      * Default destructor
      */
-    virtual ~UIScrollView();
+    virtual ~ScrollView();
     
     /**
      * Allocates and initializes.
      */
-    static UIScrollView* create();
+    static ScrollView* create();
     
     /**
      * Changes scroll direction of scrollview.
@@ -94,7 +82,7 @@ public:
      *
      * @param SCROLLVIEW_DIR
      */
-    void setDirection(SCROLLVIEW_DIR dir);
+    virtual void setDirection(SCROLLVIEW_DIR dir);
     
     /**
      * Gets scroll direction of scrollview.
@@ -117,12 +105,112 @@ public:
     /**
      * Scroll inner container to bottom boundary of scrollview.
      */
-    void scrollToBottom();
+    void scrollToBottom(float time, bool attenuated);
     
     /**
      * Scroll inner container to top boundary of scrollview.
      */
-    void scrollToTop();
+    void scrollToTop(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to left boundary of scrollview.
+     */
+    void scrollToLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to right boundary of scrollview.
+     */
+    void scrollToRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to top and left boundary of scrollview.
+     */
+    void scrollToTopLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to top and right boundary of scrollview.
+     */
+    void scrollToTopRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and left boundary of scrollview.
+     */
+    void scrollToBottomLeft(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to bottom and right boundary of scrollview.
+     */
+    void scrollToBottomRight(float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to vertical percent position of scrollview.
+     */
+    void scrollToPercentVertical(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to horizontal percent position of scrollview.
+     */
+    void scrollToPercentHorizontal(float percent, float time, bool attenuated);
+    
+    /**
+     * Scroll inner container to both direction percent position of scrollview.
+     */
+    void scrollToPercentBothDirection(const CCPoint& percent, float time, bool attenuated);
+    
+    /**
+     * Move inner container to bottom boundary of scrollview.
+     */
+    void jumpToBottom();
+    
+    /**
+     * Move inner container to top boundary of scrollview.
+     */
+    void jumpToTop();
+    
+    /**
+     * Move inner container to left boundary of scrollview.
+     */
+    void jumpToLeft();
+    
+    /**
+     * Move inner container to right boundary of scrollview.
+     */
+    void jumpToRight();
+    
+    /**
+     * Move inner container to top and left boundary of scrollview.
+     */
+    void jumpToTopLeft();
+    
+    /**
+     * Move inner container to top and right boundary of scrollview.
+     */
+    void jumpToTopRight();
+    
+    /**
+     * Move inner container to bottom and left boundary of scrollview.
+     */
+    void jumpToBottomLeft();
+    
+    /**
+     * Move inner container to bottom and right boundary of scrollview.
+     */
+    void jumpToBottomRight();
+    
+    /**
+     * Move inner container to vertical percent position of scrollview.
+     */
+    void jumpToPercentVertical(float percent);
+    
+    /**
+     * Move inner container to horizontal percent position of scrollview.
+     */
+    void jumpToPercentHorizontal(float percent);
+    
+    /**
+     * Move inner container to both direction percent position of scrollview.
+     */
+    void jumpToPercentBothDirection(const CCPoint& percent);
     
     /**
      * Changes inner container size of scrollview.
@@ -145,58 +233,60 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListener(CCObject* target, SEL_ScrollViewEvent selector);
-    
-    /*******Compatible*******/
-    /**
-     * Add call back function called when scrollview scrolled to top.
-     */
-    void addScrollToTopEvent(CCObject* target, SEL_ScrollToTopEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to bottom.
-     */
-    void addScrollToBottomEvent(CCObject* target, SEL_ScrollToBottomEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to left.
-     */
-    void addScrollToLeftEvent(CCObject* target, SEL_ScrollToLeftEvent selector);
-    
-    /**
-     * Add call back function called when scrollview scrolled to right.
-     */
-    void addScrollToRightEvent(CCObject* target, SEL_ScrollToRightEvent selector);
-    /**************/
+    void addEventListenerScrollView(CCObject* target, SEL_ScrollViewEvent selector);
         
-    //override "addChild" method of widget.
-    virtual bool addChild(UIWidget* widget);
+    virtual void addChild(CCNode * child);
+    /**
+     * Adds a child to the container with a z-order
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     */
+    virtual void addChild(CCNode * child, int zOrder);
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     */
+    virtual void addChild(CCNode* child, int zOrder, int tag);
     
     //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren();
     
+    virtual void removeAllChildrenWithCleanup(bool cleanup);
+    
     //override "removeChild" method of widget.
-	virtual bool removeChild(UIWidget* child);
+	virtual void removeChild(CCNode* child, bool cleaup = true);
     
     //override "getChildren" method of widget.
     virtual CCArray* getChildren();
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const CCPoint &touchPoint);
+    virtual unsigned int getChildrenCount() const;
     
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const CCPoint &touchPoint);
+    virtual CCNode * getChildByTag(int tag);
     
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const CCPoint &touchPoint);
+    virtual Widget* getChildByName(const char* name);
     
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const CCPoint &touchPoint);
-    
-    //override "onTouchLongClicked" method of widget.
-    virtual void onTouchLongClicked(const CCPoint &touchPoint);
-    
+    virtual bool onTouchBegan(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchMoved(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchEnded(CCTouch *touch, CCEvent *unusedEvent);
+    virtual void onTouchCancelled(CCTouch *touch, CCEvent *unusedEvent);
+        
     virtual void update(float dt);
+    
+    void setBounceEnabled(bool enabled);
+    
+    bool isBounceEnabled() const;
+    
+    void setInertiaScrollEnabled(bool enabled);
+    
+    bool isInertiaScrollEnabled() const;
     
     /**
      * Sets LayoutType.
@@ -216,91 +306,105 @@ public:
      */
     virtual LayoutType getLayoutType() const;
     
-    virtual void doLayout();
-    
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const;
+    virtual std::string getDescription() const;
+    
+    virtual void onEnter();
 protected:
     virtual bool init();
     virtual void initRenderer();
-    void moveChildren(float offset);
+    void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
-    void startAutoScrollChildren(float v);
+    void bounceChildren(float dt);
+    void checkBounceBoundary();
+    bool checkNeedBounce();
+    void startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated);
+    void jumpToDestination(const CCPoint& des);
     void stopAutoScrollChildren();
-    float getCurAutoScrollDistance(float time);
-    virtual bool scrollChildren(float touchOffset);
+    void startBounceChildren(float v);
+    void stopBounceChildren();
+    bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
     virtual void handlePressLogic(const CCPoint &touchPoint);
     virtual void handleMoveLogic(const CCPoint &touchPoint);
     virtual void handleReleaseLogic(const CCPoint &touchPoint);
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const CCPoint &touchPoint);
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const CCPoint &touchPoint);
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const CCPoint &touchPoint);
+    virtual void checkChildInfo(int handleState,Widget* sender,const CCPoint &touchPoint);
     void recordSlidTime(float dt);
-    //override "releaseResoures" method of widget.
-    virtual void releaseResoures();
-    
     void scrollToTopEvent();
     void scrollToBottomEvent();
     void scrollToLeftEvent();
     void scrollToRightEvent();
-    void setMoveDirection(SCROLLVIEW_MOVE_DIR dir);
-    SCROLLVIEW_MOVE_DIR getMoveDirection();
+    void scrollingEvent();
+    void bounceTopEvent();
+    void bounceBottomEvent();
+    void bounceLeftEvent();
+    void bounceRightEvent();
     virtual void onSizeChanged();
-//    virtual bool isInScrollDegreeRange(UIWidget* widget);
-    /*compatible*/
-    /**
-     * These methods will be removed
-     */
-    virtual void setClippingEnable(bool is){setClippingEnabled(is);};
-    /************/
-    virtual void setClippingEnabled(bool able){Layout::setClippingEnabled(able);};
+    virtual Widget* createCloneInstance();
+    virtual void copySpecialProperties(Widget* model);
+    virtual void copyClonedWidgetChildren(Widget* model);
+    virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
+    virtual void doLayout();
 protected:
-    Layout* m_pInnerContainer;
+    Layout* _innerContainer;
     
-    SCROLLVIEW_DIR m_eDirection;
-    SCROLLVIEW_MOVE_DIR m_eMoveDirection;
-    float m_fTouchStartLocation;
-    float m_fTouchEndLocation;
-    float m_fTouchMoveStartLocation;
-    float m_fTopBoundary;//test
-    float m_fBottomBoundary;//test
-    float m_fLeftBoundary;
-    float m_fRightBoundary;
+    SCROLLVIEW_DIR _direction;
+
+    CCPoint _touchBeganPoint;
+    CCPoint _touchMovedPoint;
+    CCPoint _touchEndedPoint;
+    CCPoint _touchMovingPoint;
+    CCPoint _autoScrollDir;
     
-    bool m_bTopEnd;
-    bool m_bBottomEnd;
-    bool m_bLeftEnd;
-    bool m_bRightEnd;
+    float _topBoundary;
+    float _bottomBoundary;
+    float _leftBoundary;
+    float _rightBoundary;
     
-    bool m_bAutoScroll;
+    float _bounceTopBoundary;
+    float _bounceBottomBoundary;
+    float _bounceLeftBoundary;
+    float _bounceRightBoundary;
+
     
-    float m_fAutoScrollOriginalSpeed;
-    float m_fAutoScrollAcceleration;
+    bool _autoScroll;
+    float _autoScrollAddUpTime;
     
-    bool m_bBePressed;
-    float m_fSlidTime;
-    CCPoint moveChildPoint;
-    float m_fChildFocusCancelOffset;
+    float _autoScrollOriginalSpeed;
+    float _autoScrollAcceleration;
+    bool _isAutoScrollSpeedAttenuated;
+    bool _needCheckAutoScrollDestination;
+    CCPoint _autoScrollDestination;
     
-    CCObject* m_pEventListener;
-    SEL_ScrollViewEvent m_pfnEventSelector;
-    /*compatible*/
-    CCObject* m_pScrollToTopListener;
-    SEL_ScrollToTopEvent m_pfnScrollToTopSelector;
-    CCObject* m_pScrollToBottomListener;
-    SEL_ScrollToBottomEvent m_pfnScrollToBottomSelector;
-    CCObject* m_pScrollToLeftListener;
-    SEL_ScrollToLeftEvent m_pfnScrollToLeftSelector;
-    CCObject* m_pScrollToRightListener;
-    SEL_ScrollToRightEvent m_pfnScrollToRightSelector;
-    /************/
+    bool _bePressed;
+    float _slidTime;
+    CCPoint _moveChildPoint;
+    float _childFocusCancelOffset;
     
+    bool _leftBounceNeeded;
+    bool _topBounceNeeded;
+    bool _rightBounceNeeded;
+    bool _bottomBounceNeeded;
     
+    bool _bounceEnabled;
+    bool _bouncing;
+    CCPoint _bounceDir;
+    float _bounceOriginalSpeed;
+    bool _inertiaScrollEnabled;
+
+
+    
+    CCObject* _scrollViewEventListener;
+    SEL_ScrollViewEvent _scrollViewEventSelector;
 };
 
-NS_CC_EXT_END
-
-#endif /* defined(__CocoGUI__UIScrollView__) */
+}
+NS_CC_END
+#endif /* defined(__CocoGUI__ScrollView__) */

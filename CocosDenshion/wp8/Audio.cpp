@@ -16,10 +16,18 @@
 * See the License for the specific language governing permissions and limitations under the License.
 */
 
-#include "DirectXHelper.h"
 #include "Audio.h"
 #include "MediaStreamer.h"
 //#include "CCCommon.h"
+
+inline void ThrowIfFailed(HRESULT hr)
+{
+    if (FAILED(hr))
+    {
+        // Set a breakpoint on this line to catch DX API errors.
+        throw Platform::Exception::CreateException(hr);
+    }
+}
 
 void AudioEngineCallbacks::Initialize(Audio *audio)
 {
@@ -35,7 +43,9 @@ void  _stdcall AudioEngineCallbacks::OnCriticalError(HRESULT Error)
 };
 
 Audio::Audio() :
-    m_backgroundID(0)
+    m_backgroundID(0),
+	m_soundEffctVolume(1.0f),
+	m_backgroundMusicVolume(1.0f)
 {
 }
 
@@ -53,7 +63,7 @@ void Audio::CreateResources()
 {
     try
     {	
-        DX::ThrowIfFailed(
+        ThrowIfFailed(
             XAudio2Create(&m_musicEngine)
             );
 
@@ -73,7 +83,7 @@ void Audio::CreateResources()
 	    // decode the data then we feed it through the XAudio2 pipeline as a separate Mastering Voice, so that we can tag it
 	    // as Game Media.
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    DX::ThrowIfFailed(
+	    ThrowIfFailed(
 		    m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)
         );
 
@@ -82,7 +92,7 @@ void Audio::CreateResources()
 	    // single mastering voice.
 	    // We are creating an entirely new engine instance and mastering voice in order to tag
 	    // our sound effects with the audio category AudioCategory_GameEffects.
-	    DX::ThrowIfFailed(
+	    ThrowIfFailed(
 		    XAudio2Create(&m_soundEffectEngine)
 		    );
     
@@ -90,7 +100,7 @@ void Audio::CreateResources()
         m_soundEffectEngine->RegisterForCallbacks(&m_soundEffectEngineCallback);
 
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    DX::ThrowIfFailed(
+	    ThrowIfFailed(
 		    m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)
 		    );
     }
@@ -297,7 +307,7 @@ void Audio::PlaySoundEffect(unsigned int sound)
 
     StopSoundEffect(sound);
 
-    DX::ThrowIfFailed(
+    ThrowIfFailed(
 		m_soundEffects[sound].m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound].m_audioBuffer)
 		);
 
@@ -506,12 +516,12 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        DX::ThrowIfFailed(
+        ThrowIfFailed(
 	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
             &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
-		//m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
+		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
     } else
     {
         XAUDIO2_SEND_DESCRIPTOR descriptors[1];
@@ -521,7 +531,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        DX::ThrowIfFailed(
+        ThrowIfFailed(
 	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
             &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
         );
@@ -558,6 +568,9 @@ void Audio::UnloadSoundEffect(unsigned int sound)
         return;
 
     m_soundEffects[sound].m_soundEffectSourceVoice->DestroyVoice();
+
+    if(m_soundEffects[sound].m_soundEffectBufferData)
+        delete [] m_soundEffects[sound].m_soundEffectBufferData;
 
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;

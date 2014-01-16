@@ -47,13 +47,10 @@ public:
      */
     void addSpriteFrameFromFile(const char *plistPath, const char *imagePath);
 
-    CCTextureAtlas *getTexureAtlasWithTexture(CCTexture2D *texture);
 
 private:
     CCSpriteFrameCacheHelper();
     ~CCSpriteFrameCacheHelper();
-
-    CCDictionary *m_pTextureAtlasDic;
 
     static CCSpriteFrameCacheHelper *s_SpriteFrameCacheHelper;
 };
