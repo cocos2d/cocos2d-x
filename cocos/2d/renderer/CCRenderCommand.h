@@ -42,6 +42,7 @@ public:
     {
         QUAD_COMMAND,
         CUSTOM_COMMAND,
+        BATCH_COMMAND,
         GROUP_COMMAND,
         UNKNOWN_COMMAND,
     };
