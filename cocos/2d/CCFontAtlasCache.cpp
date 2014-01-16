@@ -69,6 +69,65 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName)
     return tempAtlas;
 }
 
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
+{
+    std::string atlasName = generateFontName(plistFile, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        tempAtlas = FontAtlasFactory::createAtlasFromCharMap(plistFile);
+        if (tempAtlas)
+            _atlasMap[atlasName] = tempAtlas;
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    char tmp[30];
+    sprintf_s(tmp,"name:%u_%d_%d_%d",texture->getName(),itemWidth,itemHeight,startCharMap);
+    std::string atlasName = generateFontName(tmp, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        tempAtlas = FontAtlasFactory::createAtlasFromCharMap(texture,itemWidth,itemHeight,startCharMap);
+        if (tempAtlas)
+            _atlasMap[atlasName] = tempAtlas;
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    std::string atlasName = generateFontName(charMapFile, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        tempAtlas = FontAtlasFactory::createAtlasFromCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
+        if (tempAtlas)
+            _atlasMap[atlasName] = tempAtlas;
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
 std::string FontAtlasCache::generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField)
 {
     std::string tempName(fontFileName);
