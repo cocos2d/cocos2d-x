@@ -115,7 +115,7 @@ void DisplayFactory::updateDisplay(Bone *bone, float dt, bool dirty)
                 anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
                 displayTransform.mat[12] = anchorPoint.x;
                 displayTransform.mat[13] = anchorPoint.y;
-                kmMat4 t = TransformConcat(displayTransform, bone->getArmature()->getNodeToParentTransform());
+                kmMat4 t = TransformConcat( bone->getArmature()->getNodeToParentTransform(),displayTransform);
                 detector->updateTransform(t);
             }
             while (0);

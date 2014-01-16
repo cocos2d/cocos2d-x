@@ -1067,8 +1067,22 @@ void TestColliderDetector::update(float delta)
 }
 void TestColliderDetector::draw()
 {
-    armature2->drawContour();
+    _customCommand.init(0, _vertexZ);
+    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
+
+void TestColliderDetector::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    armature2->drawContour();
+    
+    kmGLLoadMatrix(&oldMat);
+}
+
 #endif
 
 
