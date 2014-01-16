@@ -144,6 +144,7 @@ set(COCOS2D_SRC
   renderer/CCGroupCommand.cpp
   renderer/CCMaterialManager.cpp
   renderer/CCQuadCommand.cpp
+  renderer/CCBatchCommand.cpp
   renderer/CCRenderCommand.cpp
   renderer/CCRenderer.cpp
   renderer/CCRenderMaterial.cpp
