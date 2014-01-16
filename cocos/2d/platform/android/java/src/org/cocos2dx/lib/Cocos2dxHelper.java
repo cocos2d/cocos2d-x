@@ -89,38 +89,43 @@ public class Cocos2dxHelper {
 		jobs.add(r);
 	}
 
+	private static boolean sInited = false;
 	public static void init(final Activity activity) {
-		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
-		
-        initListener();
-            
-        try {
-        // Get the lib_name from AndroidManifest.xml metadata
-            ActivityInfo ai =
-                activity.getPackageManager().getActivityInfo(activity.getIntent().getComponent(), PackageManager.GET_META_DATA);
-            if (null != ai.metaData) {
-                String lib_name = ai.metaData.getString(META_DATA_LIB_NAME);
-                if (null != lib_name) {
-                    System.loadLibrary(lib_name);
-                } else {
-                    System.loadLibrary(DEFAULT_LIB_NAME);
+	    if (!sInited) {
+    		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
+    		
+            initListener();
+                
+            try {
+            // Get the lib_name from AndroidManifest.xml metadata
+                ActivityInfo ai =
+                    activity.getPackageManager().getActivityInfo(activity.getIntent().getComponent(), PackageManager.GET_META_DATA);
+                if (null != ai.metaData) {
+                    String lib_name = ai.metaData.getString(META_DATA_LIB_NAME);
+                    if (null != lib_name) {
+                        System.loadLibrary(lib_name);
+                    } else {
+                        System.loadLibrary(DEFAULT_LIB_NAME);
+                    }
                 }
+            } catch (PackageManager.NameNotFoundException e) {
+                throw new RuntimeException("Error getting activity info", e);
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Error getting activity info", e);
-        }
+    
+    		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
+    		Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
+    		//Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
+    
+    		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
+    		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
+    		Cocos2dxHelper.sAssetManager = activity.getAssets();
+    
+    		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
+            Cocos2dxBitmap.setContext(activity);
+            sActivity = activity;
 
-		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
-		Cocos2dxHelper.sFileDirectory = activity.getFilesDir().getAbsolutePath();
-		//Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
-
-		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
-		Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
-		Cocos2dxHelper.sAssetManager = activity.getAssets();
-
-		//Cocos2dxHelper.nativeSetAssetManager(sAssetManager);
-        Cocos2dxBitmap.setContext(activity);
-        sActivity = activity;                   
+            sInited = true;
+	    }
 	}
 	
 	public static void initListener() {
