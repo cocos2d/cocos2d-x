@@ -363,33 +363,59 @@ void TemplateVectorPerfTest::generateTestFunctions()
                 index = nodeVector.getIndex(objToGet);
             CC_PROFILER_STOP(this->profilerName());
             
-            log("index = %d", (int)index);
+            // Uses `index` to avoids `getIndex` invoking was optimized in release mode
+            if (index == quantityOfNodes/3)
+            {
+                nodeVector.clear();
+            }
         } } ,
         { "find",        [=](){
             Vector<Node*> nodeVector = createVector();
             Node* objToGet = nodeVector.at(quantityOfNodes/3);
+            Vector<Node*>::iterator iter;
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
-                nodeVector.find(objToGet);
+                iter = nodeVector.find(objToGet);
             CC_PROFILER_STOP(this->profilerName());
+            
+            // Uses `iter` to avoids `find` invoking was optimized in release mode
+            if (*iter == objToGet)
+            {
+                nodeVector.clear();
+            }
+            
         } } ,
         { "at",          [=](){
             Vector<Node*> nodeVector = createVector();
-            
+            Node* objToGet = nullptr;
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
-                nodeVector.at(quantityOfNodes/3);
+                objToGet = nodeVector.at(quantityOfNodes/3);
             CC_PROFILER_STOP(this->profilerName());
+            
+            // Uses `objToGet` to avoids `at` invoking was optimized in release mode
+            if (nodeVector.getIndex(objToGet) == quantityOfNodes/3)
+            {
+                nodeVector.clear();
+            }
         } } ,
         { "contains",    [=](){
             Vector<Node*> nodeVector = createVector();
             Node* objToGet = nodeVector.at(quantityOfNodes/3);
             
+            bool ret = false;
+            
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
-                nodeVector.contains(objToGet);
+                ret = nodeVector.contains(objToGet);
             CC_PROFILER_STOP(this->profilerName());
+            
+            // Uses `ret` to avoids `contains` invoking was optimized in release mode
+            if (ret)
+            {
+                nodeVector.clear();
+            }
         } } ,
         { "eraseObject", [=](){
             Vector<Node*> nodeVector = createVector();
@@ -497,7 +523,7 @@ std::string ArrayPerfTest::title() const
 
 std::string ArrayPerfTest::subtitle() const
 {
-    return "Test addObject, See console";
+    return "Test `addObject`, See console";
 }
 
 void ArrayPerfTest::generateTestFunctions()
@@ -545,12 +571,16 @@ void ArrayPerfTest::generateTestFunctions()
         { "getIndexOfObject",    [=](){
             Array* nodeVector = createArray();
             Object* objToGet = nodeVector->getObjectAtIndex(quantityOfNodes/3);
-            
+            ssize_t index = 0;
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
-                nodeVector->getIndexOfObject(objToGet);
+                index = nodeVector->getIndexOfObject(objToGet);
             CC_PROFILER_STOP(this->profilerName());
-            
+            // Uses `index` to avoids `getIndex` invoking was optimized in release mode
+            if (index == quantityOfNodes/3)
+            {
+                nodeVector->removeAllObjects();
+            }
         } } ,
         { "getObjectAtIndex",          [=](){
             Array* nodeVector = createArray();
