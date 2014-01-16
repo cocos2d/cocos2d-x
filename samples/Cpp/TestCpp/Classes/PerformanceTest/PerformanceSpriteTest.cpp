@@ -276,20 +276,18 @@ void SubTest::removeByTag(int tag)
     switch (subtestNumber)
     {
         case 1:
+        case 2:
         case 5:
+        case 6:
         case 9:
+        case 10:
             _parent->removeChildByTag(tag+100, true);
             break;
 
-        case 2:
         case 3:
         case 4:
-
-        case 6:
         case 7:
         case 8:
-
-        case 10:
         case 11:
         case 12:
             _batchNode->removeChildByTag(tag+100, true);
