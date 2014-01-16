@@ -4,7 +4,7 @@ cocos2d-x-3.0final ?.? ?
      [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
      [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
      [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
-     [FIX]          Label: Label::createWithTTF crashes when using unknown characters.
+     [FIX]          Label: Crash when using unknown characters.
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
