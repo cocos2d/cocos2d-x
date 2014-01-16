@@ -147,7 +147,7 @@ int LuaEngine::executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouc
     return 0;
 }
 
-int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches)
+int LuaEngine::executeLayerTouchesEvent(Layer* pLayer, int eventType, const std::vector<Touch *> &pTouches)
 {
     return 0;
 }
