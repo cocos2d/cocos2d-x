@@ -1085,6 +1085,13 @@ void Widget::copyProperties(Widget *widget)
     setOpacity(widget->getOpacity());
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    CCDictElement* parameterElement = NULL;
+    CCDictionary* layoutParameterDic = widget->_layoutParameterDictionary;
+    CCDICT_FOREACH(layoutParameterDic, parameterElement)
+    {
+        LayoutParameter* parameter = (LayoutParameter*)parameterElement->getObject();
+        setLayoutParameter(parameter);
+    }
     onSizeChanged();
 }
 
