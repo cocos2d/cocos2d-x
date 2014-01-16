@@ -91,6 +91,10 @@ ccLanguageType CCApplication::getCurrentLanguage()
     {
         ret = kLanguageSpanish;
     }
+    else if (0 == strcmp("nl", pLanguageName))
+    {
+        ret = kLanguageDutch;
+    }
     else if (0 == strcmp("ru", pLanguageName))
     {
         ret = kLanguageRussian;
