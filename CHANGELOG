@@ -2,12 +2,14 @@ cocos2d-x-3.0final ?.? ?
 [All]
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
      [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
      [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
      [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
      [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
      [FIX]          Renderer: QuadCommand::init() does not copy the Quads, it only store a reference making the code faster
+     [FIX]	    Renderer: Performance improved in Sprite and SpriteBatchNode (and subclasses) sprites in about 20%
      [FIX]          Tests: TestCpp works with CMake on Windows.
      [FIX]          Tests: Sprites Performance Test has 3 new tests
      [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
