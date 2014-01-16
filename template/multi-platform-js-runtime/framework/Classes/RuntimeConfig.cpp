@@ -95,7 +95,7 @@ void RuntimeConfig::waitConnect()
 		ScriptingCore::getInstance()->compileScript(fileInfoList[i].fileName.c_str());
 	}
 
-    memset(szwaitFile,sizeof(szwaitFile),0);
+    memset(szwaitFile,0,sizeof(szwaitFile));
 	
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_WIN32)
 	extern std::string GetCurAppPath(void);
