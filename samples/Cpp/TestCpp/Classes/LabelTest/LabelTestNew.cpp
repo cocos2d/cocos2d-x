@@ -66,7 +66,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFUnicodeNew),
     CL(LabelBMFontTestNew),
     CL(LabelTTFDistanceField),
-    CL(LabelTTFDistanceFieldEffect)
+    CL(LabelTTFDistanceFieldEffect),
+    CL(LabelCrashTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1241,4 +1242,26 @@ std::string LabelTTFDistanceFieldEffect::title() const
 std::string LabelTTFDistanceFieldEffect::subtitle() const
 {
     return "Testing effect base on DistanceField";
+}
+
+LabelCrashTest::LabelCrashTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+
+    auto label1 = Label::createWithTTF(ttfConfig,"Test崩溃123", TextHAlignment::CENTER, size.width);
+    label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+}
+
+std::string LabelCrashTest::title() const
+{
+    return "New Label Crash Test";
+}
+
+std::string LabelCrashTest::subtitle() const
+{
+    return "Not crash and show [Test123] when using unknown character.";
 }
