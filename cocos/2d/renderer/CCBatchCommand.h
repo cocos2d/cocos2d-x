@@ -22,49 +22,60 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef _CC_BATCHCOMMAND_H_
+#define _CC_BATCHCOMMAND_H_
 
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include "CCPlatformMacros.h"
-#include <stdint.h>
-#include "ccTypes.h"
-#include "kazmath/GL/matrix.h"
+#include "CCRenderCommand.h"
+#include "CCGLProgram.h"
+#include "CCRenderCommandPool.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
-//TODO make RenderCommand inherent from Object
-class RenderCommand
+class TextureAtlas;
+
+#define CC_NO_TEXTURE 0
+
+class BatchCommand : public RenderCommand
 {
 public:
 
-    enum class Type
-    {
-        QUAD_COMMAND,
-        CUSTOM_COMMAND,
-        BATCH_COMMAND,
-        GROUP_COMMAND,
-        UNKNOWN_COMMAND,
-    };
+    BatchCommand();
+    ~BatchCommand();
 
-    virtual int64_t generateID() = 0;
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
 
-    /** Get Render Command Id */
-    virtual inline int64_t getID() { return _id; }
-    
-    virtual inline Type getType() { return _type; }
+    // +----------+----------+-----+-----------------------------------+
+    // |          |          |     |                |                  |
+    // | ViewPort | Transluc |     |      Depth     |  Material ID     |
+    // |   3 bits |    1 bit |     |    24 bits     |      24 bit2     |
+    // +----------+----------+-----+----------------+------------------+
+    virtual int64_t generateID();
+
+    void execute();
 
 protected:
-    RenderCommand();
-    virtual ~RenderCommand();
+    int32_t _materialID;
 
-    void printID();
+    //Key Data
+    int _viewport;          /// Which view port it belongs to
 
-    //Generated IDs
-    int64_t _id; /// used for sorting render commands
-    Type _type;
+    //TODO use material to determine if it's translucent
+    int32_t _depth;
+
+    //Maternal
+    GLuint _textureID;
+
+    GLProgram* _shader;
+//    GLuint _shaderID;
+
+    BlendFunc _blendType;
+
+    TextureAtlas *_textureAtlas;
+
+    // ModelView transform
+    kmMat4 _mv;
 };
-
 NS_CC_END
 
-#endif //__CCRENDERCOMMAND_H_
+#endif //_CC_BATCHCOMMAND_H_
