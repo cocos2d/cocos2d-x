@@ -23,30 +23,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CCFontAtlasFactory_h_
-#define _CCFontAtlasFactory_h_
+#ifndef _CCFontCharMap_h_
+#define _CCFontCharMap_h_
 
 #include "cocos2d.h"
-#include "CCFontAtlas.h"
-
+#include "CCFont.h"
 
 NS_CC_BEGIN
 
-class CC_DLL FontAtlasFactory
+class FontCharMap : public Font
 {
     
 public:
     
-    static FontAtlas * createAtlasFromTTF(const std::string& fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
-    static FontAtlas * createAtlasFromFNT(const std::string& fntFilePath);
-
-    static FontAtlas * createAtlasFromCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
-    static FontAtlas * createAtlasFromCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
-    static FontAtlas * createAtlasFromCharMap(const std::string& plistFile);
+    static FontCharMap * create(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static FontCharMap * create(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static FontCharMap * create(const std::string& plistFile);
+    
+    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual Rect  getRectForChar(unsigned short theChar) const override;
+    virtual FontAtlas *createFontAtlas() override;
+    
+protected:
+    
+    FontCharMap(Texture2D* texture,int itemWidth, int itemHeight, int startCharMap) :
+        _texture(texture),_itemWidth(itemWidth),_itemHeight(itemHeight),_mapStartChar(startCharMap),_charRect(0,0,itemWidth,itemHeight){}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~FontCharMap();
     
 private:
+    
+    Texture2D* _texture;
+    int _mapStartChar;
+    int _itemWidth;
+    int _itemHeight;
+
+    Rect _charRect;
 };
 
 NS_CC_END
 
-#endif /* defined(_CCFontAtlasFactory_h_) */
+#endif /* defined(_CCFontCharMap_h_) */
