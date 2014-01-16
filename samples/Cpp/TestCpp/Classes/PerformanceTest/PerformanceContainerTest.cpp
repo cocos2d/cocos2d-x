@@ -488,6 +488,17 @@ void TemplateVectorPerfTest::generateTestFunctions()
                 nodeVector.reverse();
             CC_PROFILER_STOP(this->profilerName());
         } } ,
+        
+        { "c++11 Range Loop",     [=](){
+            Vector<Node*> nodeVector = createVector();
+            
+            CC_PROFILER_START(this->profilerName());
+            for (const auto& e : nodeVector)
+            {
+                e->setTag(111);
+            }
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
     };
     
     for (const auto& nameCB : nameCBs)
@@ -668,6 +679,18 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
                 nodeVector->reverseObjects();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "CCARRAY_FOREACH",     [=](){
+            Array* nodeVector = createArray();
+            Object* obj;
+            CC_PROFILER_START(this->profilerName());
+            
+            CCARRAY_FOREACH(nodeVector, obj)
+            {
+                static_cast<Node*>(obj)->setTag(111);
+            }
             CC_PROFILER_STOP(this->profilerName());
         } } ,
     };
