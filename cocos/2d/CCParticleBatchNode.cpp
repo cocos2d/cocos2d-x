@@ -382,26 +382,14 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    _textureAtlas->drawQuads();
-
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    _quadCommand.init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    _batchCommand.init(0,
+                       _vertexZ,
+                       _textureAtlas->getTexture()->getName(),
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

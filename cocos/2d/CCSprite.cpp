@@ -242,9 +242,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // zwoptex default values
         _offsetPosition = Point::ZERO;
-        
-        _hasChildren = false;
-        
+
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
         
@@ -767,7 +765,6 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     }
     //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
     Node::addChild(child, zOrder, tag);
-    _hasChildren = true;
 }
 
 void Sprite::reorderChild(Node *child, int zOrder)
@@ -813,8 +810,6 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
-    
-    _hasChildren = false;
 }
 
 void Sprite::sortAllChildren()
@@ -882,27 +877,24 @@ void Sprite::setDirtyRecursively(bool bValue)
 {
     _recursiveDirty = bValue;
     setDirty(bValue);
-    // recursively set dirty
-    if (_hasChildren)
-    {
-        for(const auto &child: _children) {
-            Sprite* sp = dynamic_cast<Sprite*>(child);
-            if (sp)
-            {
-                sp->setDirtyRecursively(true);
-            }
+
+    for(const auto &child: _children) {
+        Sprite* sp = dynamic_cast<Sprite*>(child);
+        if (sp)
+        {
+            sp->setDirtyRecursively(true);
         }
     }
 }
 
 // XXX HACK: optimization
-#define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (! _recursiveDirty) {    \
-                        _recursiveDirty = true;                    \
-                        setDirty(true);                              \
-                        if ( _hasChildren)                        \
-                            setDirtyRecursively(true);                \
-                        }                                            \
+#define SET_DIRTY_RECURSIVELY() {                       \
+                    if (! _recursiveDirty) {            \
+                        _recursiveDirty = true;         \
+                        setDirty(true);                 \
+                        if (!_children.empty())         \
+                            setDirtyRecursively(true);  \
+                        }                               \
                     }
 
 void Sprite::setPosition(const Point& pos)

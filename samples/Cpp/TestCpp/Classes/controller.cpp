@@ -151,7 +151,6 @@ TestController::~TestController()
 
 void TestController::menuCallback(Object * sender)
 {
-
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
