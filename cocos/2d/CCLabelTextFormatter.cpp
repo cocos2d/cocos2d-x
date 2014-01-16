@@ -63,20 +63,24 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         {            
             LetterInfo* info = &leterInfo->at(j+skip);
 
-            unsigned int justSkipped = 0;                                  
+            unsigned int justSkipped = 0;
             
             while (info->def.validDefinition == false)
             {
                 justSkipped++;
-                info = &leterInfo->at( j+skip+justSkipped );
+                tIndex = j+skip+justSkipped;
+                if(tIndex < strLen)
+                    info = &leterInfo->at( tIndex );
+                else
+                    break;
             }
             skip += justSkipped;
             tIndex = j + skip;
             
-            if (i >= stringLength)
+            if (tIndex >= stringLength)
                 break;
             
-            unsigned short character = strWhole[i];
+            unsigned short character = strWhole[tIndex];
             
             if (!isStartOfWord)
             {
