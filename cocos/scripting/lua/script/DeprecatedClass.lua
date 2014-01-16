@@ -2154,4 +2154,20 @@ end
 _G["CCBProxy"] = DeprecatedClass.CCBProxy()
 --CCBProxy class will be Deprecated,end
 
+--WebSocket class will be Deprecated,begin
+function DeprecatedClass.WebSocket()
+    deprecatedTip("WebSocket","cc.WebSocket")
+    return cc.WebSocket
+end
+_G["WebSocket"] = DeprecatedClass.WebSocket()
+--WebSocket class will be Deprecated,end
+
+--XMLHttpRequest class will be Deprecated,begin
+function DeprecatedClass.XMLHttpRequest()
+    deprecatedTip("XMLHttpRequest","cc.XMLHttpRequest")
+    return cc.XMLHttpRequest
+end
+_G["XMLHttpRequest"] = DeprecatedClass.XMLHttpRequest()
+--XMLHttpRequest class will be Deprecated,end
+
 
