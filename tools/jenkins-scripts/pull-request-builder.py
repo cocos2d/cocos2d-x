@@ -57,7 +57,7 @@ def main():
 
     set_description(pr_desc, target_url)
     
-    if((action != 'opened') and (action != 'synchronize')):
+    if(action == 'closed'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
   
