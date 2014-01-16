@@ -538,7 +538,6 @@ protected:
 
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
     kmMat4              _transformToBatch;
 
