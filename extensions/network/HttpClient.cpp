@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 greathqy
- Copyright (c) 2013 Martell Malone
+ Copyright (c) 2013-2014 Martell Malone < martell malone at g mail dot com >
  
  http://www.cocos2d-x.org
  
@@ -44,6 +44,7 @@
 #include <ppltasks.h>
 #include <sstream>
 #include <robuffer.h>
+
 
 using namespace concurrency;
 using namespace Microsoft::WRL;
@@ -198,9 +199,9 @@ NS_CC_EXT_BEGIN
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 static pthread_t        s_networkThread;
+
 static pthread_mutex_t  s_requestQueueMutex;
 static pthread_mutex_t  s_responseQueueMutex;
-
 static pthread_mutex_t		s_SleepMutex;
 static pthread_cond_t		s_SleepCondition;
 
@@ -648,11 +649,20 @@ int processHttpTask(CCHttpRequest *request, write_callback callback, void *strea
 
     res = xhr->Open(requestType, wurl.c_str(), stringCallback.Get(), nullptr, nullptr, nullptr, nullptr);
 
-    if (postStream != nullptr && headers.size() != 0)
-    {
-        wstring head = wstring(headers.front().begin(),headers.front().end());
-        res = xhr->SetRequestHeader(L"Content-Type", head.c_str());
-    }
+   	if(headers.size() != 0)
+	    for(std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)  {
+
+			wstring head = wstring(it->begin(), it->end());
+			std::wstring delimiter = L":";
+			size_t pos = 0;
+
+			pos = head.find(delimiter);
+			std::wstring left = head.substr(0, pos); // token is all left of ":"
+			head.erase(0, pos + delimiter.length());
+
+			res = xhr->SetRequestHeader(left.c_str(), head.c_str());
+
+		}
 
     res = xhr->Send(postStream, length);
 
