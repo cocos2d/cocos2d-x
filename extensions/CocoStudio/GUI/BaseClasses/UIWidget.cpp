@@ -1090,7 +1090,7 @@ void Widget::copyProperties(Widget *widget)
     CCDICT_FOREACH(layoutParameterDic, parameterElement)
     {
         LayoutParameter* parameter = (LayoutParameter*)parameterElement->getObject();
-        setLayoutParameter(parameter);
+        setLayoutParameter(parameter->clone());
     }
     onSizeChanged();
 }
