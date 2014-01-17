@@ -60,9 +60,10 @@ THE SOFTWARE.
 #include "CCEventDispatcher.h"
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
-#include "CCRenderer.h"
-#include "CCConsole.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCFrustum.h"
+#include "CCConsole.h"
+
 /**
  Position of the FPS
  

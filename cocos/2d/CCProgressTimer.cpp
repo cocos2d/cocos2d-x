@@ -33,8 +33,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"

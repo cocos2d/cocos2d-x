@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
+
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
+
 
 using namespace cocos2d;
 
