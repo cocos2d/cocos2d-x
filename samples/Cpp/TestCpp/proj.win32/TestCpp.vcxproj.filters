@@ -718,6 +718,9 @@
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1322,6 +1325,12 @@
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
