@@ -27,6 +27,7 @@ def set_description(desc, url):
 def main():
     #get payload from os env
     payload_str = os.environ['payload']
+    payload_str = payload_str.decode('utf-8','ignore')
     #parse to json obj
     payload = json.loads(payload_str)
 
