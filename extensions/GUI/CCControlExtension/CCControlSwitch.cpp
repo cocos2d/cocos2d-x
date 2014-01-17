@@ -28,7 +28,7 @@
 #include "CCControlSwitch.h"
 #include "CCSprite.h"
 #include "CCActionTween.h"
-#include "CClabelTTF.h"
+#include "CCLabelTTF.h"
 #include "CCClippingNode.h"
 #include "ccShaders.h"
 #include "CCRenderTexture.h"

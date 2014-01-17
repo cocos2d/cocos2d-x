@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include <stack>
+#include <string>
 
 namespace cocostudio {
 
