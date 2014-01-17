@@ -62,12 +62,12 @@ typedef struct _ttfConfig
     const char *customGlyphs;
     bool distanceFieldEnabled;
 
-    _ttfConfig(const char* filePath,int fontSize = 36, const GlyphCollection& glyphs = GlyphCollection::NEHE,
-        const char *customGlyphs = nullptr,bool useDistanceField = false)
+    _ttfConfig(const char* filePath,int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+        const char *customGlyphCollection = nullptr,bool useDistanceField = false)
         :fontFilePath(filePath)
-        ,fontSize(fontSize)
-        ,glyphs(glyphs)
-        ,customGlyphs(customGlyphs)
+        ,fontSize(size)
+        ,glyphs(glyphCollection)
+        ,customGlyphs(customGlyphCollection)
         ,distanceFieldEnabled(useDistanceField)
     {}
 }TTFConfig;
@@ -82,9 +82,17 @@ public:
     
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::CENTER, int lineWidth = 0);
     
+    static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(const std::string& plistFile);
+
     bool setTTFConfig(const TTFConfig& ttfConfig);
 
     bool setBMFontFilePath(const std::string& bmfontFilePath);
+
+    bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(const std::string& plistFile);
 
     bool setString(const std::string& text, const TextHAlignment& alignment = TextHAlignment::CENTER, float lineWidth = -1, bool lineBreakWithoutSpaces = false);
 
