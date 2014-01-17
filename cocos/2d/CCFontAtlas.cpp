@@ -130,8 +130,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
             Rect tempRect;           
 
-            FontLetterDefinition tempDef;
-            tempDef.offsetX = 0;
+            FontLetterDefinition tempDef;           
             tempDef.anchorX = 0.0f;
             tempDef.anchorY = 1.0f;
 
@@ -143,7 +142,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.width            = 0;
                 tempDef.height           = 0;
                 tempDef.U                = 0;
-                tempDef.V                = 0;            
+                tempDef.V                = 0;
+                tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
             }
@@ -152,7 +152,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.validDefinition = true;
                 tempDef.letteCharUTF16   = utf16String[i];
                 tempDef.width            = tempRect.size.width  + _letterPadding;
-                tempDef.height           = _currentPageLineHeight - 1;             
+                tempDef.height           = _currentPageLineHeight - 1;
+                tempDef.offsetX          = tempRect.origin.x;
                 tempDef.offsetY          = tempRect.origin.y;
                 tempDef.commonLineHeight = _currentPageLineHeight;
                         
