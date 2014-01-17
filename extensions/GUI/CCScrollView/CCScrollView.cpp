@@ -25,7 +25,7 @@
 
 #include "CCScrollView.h"
 #include "CCEGLView.h"
-#include "CCDevice.h"
+#include "platform/CCDevice.h"
 #include "CCActionInstant.h"
 #include "CCActionInterval.h"
 #include "CCActionTween.h"
