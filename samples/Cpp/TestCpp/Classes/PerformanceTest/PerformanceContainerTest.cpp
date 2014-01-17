@@ -35,7 +35,9 @@
 static std::function<PerformanceContainerScene*()> createFunctions[] =
 {
     CL(TemplateVectorPerfTest),
-    CL(ArrayPerfTest)
+    CL(ArrayPerfTest),
+    CL(TemplateMapPerfTest),
+    CL(DictionaryPerfTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -519,8 +521,6 @@ std::string TemplateVectorPerfTest::subtitle() const
     return "Test 'pushBack', See console";
 }
 
-
-
 ////////////////////////////////////////////////////////
 //
 // ArrayPerfTest
@@ -692,6 +692,170 @@ void ArrayPerfTest::generateTestFunctions()
                 static_cast<Node*>(obj)->setTag(111);
             }
             CC_PROFILER_STOP(this->profilerName());
+        } } ,
+    };
+    
+    for (const auto& func : testFunctions)
+    {
+        _testFunctions.push_back(func);
+    }
+}
+
+////////////////////////////////////////////////////////
+//
+// TemplateMapPerfTest
+//
+////////////////////////////////////////////////////////
+
+void TemplateMapPerfTest::generateTestFunctions()
+{
+    auto createMap = [this](){
+        Map<std::string, Node*> ret;
+        
+        for( int i=0; i<quantityOfNodes; ++i)
+        {
+            auto node = Node::create();
+            node->setTag(i);
+            ret.insert(StringUtils::format("key_%d", i), node);
+        }
+        return ret;
+    };
+    
+    TestFunction nameCBs[] = {
+        { "insert",    [=](){
+            Map<std::string, Node*> map;
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                map.insert(keys[i], Node::create());
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+        } } ,
+
+        { "at",    [=](){
+            Map<std::string, Node*> map = createMap();
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                nodes[i] = map.at(keys[i]);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                nodes[i]->setTag(100);
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+    };
+    
+    for (const auto& nameCB : nameCBs)
+    {
+        _testFunctions.push_back(nameCB);
+    }
+}
+
+
+
+std::string TemplateMapPerfTest::title() const
+{
+    return "Map<T> Perf test";
+}
+
+std::string TemplateMapPerfTest::subtitle() const
+{
+    return "Test 'insert', See console";
+}
+
+////////////////////////////////////////////////////////
+//
+// DictionaryPerfTest
+//
+////////////////////////////////////////////////////////
+
+std::string DictionaryPerfTest::title() const
+{
+    return "Array Perf test";
+}
+
+std::string DictionaryPerfTest::subtitle() const
+{
+    return "Test `addObject`, See console";
+}
+
+void DictionaryPerfTest::generateTestFunctions()
+{
+    auto createDict = [this](){
+        Dictionary* ret = Dictionary::create();
+        
+        for( int i=0; i<quantityOfNodes; ++i)
+        {
+            auto node = Node::create();
+            node->setTag(i);
+            ret->setObject(node, StringUtils::format("key_%d", i));
+        }
+        return ret;
+    };
+    
+    TestFunction testFunctions[] = {
+        { "setObject",    [=](){
+            Dictionary* dict = Dictionary::create();
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                dict->setObject(Node::create(), keys[i]);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+        } } ,
+        
+        { "objectForKey",    [=](){
+            auto dict = createDict();
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                nodes[i] = static_cast<Node*>(dict->objectForKey(keys[i]));
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                nodes[i]->setTag(100);
+            }
+            
+            CC_SAFE_FREE(nodes);
         } } ,
     };
     
