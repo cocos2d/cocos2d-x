@@ -85,6 +85,27 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TemplateMapPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(TemplateMapPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class DictionaryPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(DictionaryPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 void runContainerPerformanceTest();
 
