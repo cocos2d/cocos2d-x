@@ -1065,6 +1065,11 @@ void Widget::copyProperties(Widget *widget)
     setOpacity(widget->getOpacity());
     setCascadeOpacityEnabled(widget->isCascadeOpacityEnabled());
     setCascadeColorEnabled(widget->isCascadeColorEnabled());
+    Map<int, LayoutParameter*>& layoutParameterDic = widget->_layoutParameterDictionary;
+    for (auto iter = layoutParameterDic.begin(); iter != layoutParameterDic.end(); ++iter)
+    {
+        setLayoutParameter(iter->second->clone());
+    }
     onSizeChanged();
 }
 
