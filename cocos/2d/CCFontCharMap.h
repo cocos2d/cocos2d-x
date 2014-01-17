@@ -43,8 +43,13 @@ public:
     virtual FontAtlas *createFontAtlas() override;
     
 protected:    
-    FontCharMap(Texture2D* texture,int itemWidth, int itemHeight, int startCharMap) :
-        _texture(texture),_itemWidth(itemWidth),_itemHeight(itemHeight),_mapStartChar(startCharMap),_charRect(0,0,itemWidth,itemHeight){}
+    FontCharMap(Texture2D* texture,int itemWidth, int itemHeight, int startCharMap)
+        :_texture(texture)
+        ,_mapStartChar(startCharMap)
+        ,_itemWidth(itemWidth)
+        ,_itemHeight(itemHeight)
+        ,_charRect(0,0,itemWidth,itemHeight)
+    {}
     /**
      * @js NA
      * @lua NA
