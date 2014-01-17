@@ -222,7 +222,6 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         if ( item.second.validDefinition )
         {
             FontLetterDefinition tempDefinition = item.second;
-            tempDefinition.offsetX = 0;
             tempDefinition.anchorX = 0.0f;
             tempDefinition.anchorY = 1.0f;
             retAtlas->addLetterDefinition(tempDefinition);
