@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "cocos2d.h"
+
 #include "CCFontDefinition.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 

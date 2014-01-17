@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCSpriteFrameCache.h"
 
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"

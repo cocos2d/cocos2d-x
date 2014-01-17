@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __DICTIONARYHELPER_H__
 #define __DICTIONARYHELPER_H__
 
-#include "cocos2d.h"
 #include "json/document.h"
 
 #define DICTOOL DictionaryHelper::getInstance()

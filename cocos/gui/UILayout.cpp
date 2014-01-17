@@ -30,9 +30,9 @@ THE SOFTWARE.
 #include "CCShaderCache.h"
 #include "CCDirector.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
