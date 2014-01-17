@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCVertex.h"
-#include "CCCustomCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 

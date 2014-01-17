@@ -8,6 +8,7 @@
 #include "PerformanceAllocTest.h"
 #include "PerformanceLabelTest.h"
 #include "PerformanceRendererTest.h"
+#include "PerformanceContainerTest.h"
 
 enum
 {
@@ -28,6 +29,7 @@ struct {
 	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
     { "Label Perf Test",[](Object*sender){runLabelTest();} },
     { "Renderer Perf Test",[](Object*sender){runRendererTest();} },
+    { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } }
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);

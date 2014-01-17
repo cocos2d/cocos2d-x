@@ -27,6 +27,12 @@
 #include "CCFontDefinition.h"
 #include "CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
+#include "CCSprite.h"
+#include "CCShaderCache.h"
+#include "ccUTF8.h"
+#include "CCSpriteFrame.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #define DISTANCEFIELD_ATLAS_FONTSIZE 50
 
@@ -90,6 +96,93 @@ Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::str
         delete ret;
         return nullptr;
     }
+}
+
+Label* Label::createWithCharMap(const std::string& plistFile)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(plistFile))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(texture,itemWidth,itemHeight,startCharMap))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(charMapFile,itemWidth,itemHeight,startCharMap))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+bool Label::setCharMap(const std::string& plistFile)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
+}
+
+bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
+}
+
+bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
 }
 
 Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)

@@ -25,9 +25,9 @@
 
 #include <vector>
 
-#include "cocos2d.h"
 #include "ccUTF8.h"
 #include "CCLabelTextFormatter.h"
+#include "CCDirector.h"
 
 using namespace std;
 
@@ -353,7 +353,7 @@ bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
         
         
         Point fontPos = Point((float)nextFontPositionX + charXOffset +   charRect.size.width  *  0.5f + kerningAmount,
-                             (float)nextFontPositionY + yOffset     -   charRect.size.height *  0.5f);
+                             (float)nextFontPositionY + yOffset - charRect.size.height *  0.5f);
                
         if( theLabel->recordLetterInfo(CC_POINT_PIXELS_TO_POINTS(fontPos),c,i) == false)
         {

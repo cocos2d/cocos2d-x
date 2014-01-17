@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "CCProfiling.h"
 #include "CCLayer.h"
 #include "CCScene.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 // external
 #include "kazmath/GL/matrix.h"

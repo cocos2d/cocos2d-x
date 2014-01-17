@@ -28,10 +28,10 @@
 #include <vector>
 #include <string>
 
-#include "cocos2d.h"
 #include "CCTextImage.h"
 #include "CCFontFreeType.h"
 #include "CCFont.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 
@@ -295,7 +295,7 @@ bool TextImage::createPageDefinitions(unsigned short int *inText, int imageWidth
     return true;
 }
 
-int TextImage::getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize)
+int TextImage::getNumGlyphsFittingInSize(std::unordered_map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize)
 {
     if (!strUTF8)
         return 0;
