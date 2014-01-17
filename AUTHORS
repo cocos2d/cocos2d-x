@@ -58,6 +58,7 @@ Developers:
     martell
         use tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
+        Adds emscripten support for Windows Host
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
