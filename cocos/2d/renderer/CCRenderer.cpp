@@ -338,16 +338,16 @@ void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quanti
         V3F_C4B_T2F_Quad *q = &quads[i];
 
         kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
-        kmVec3TransformCoord(vec1, vec1, &modelView);
+        kmVec3Transform(vec1, vec1, &modelView);
 
         kmVec3 *vec2 = (kmVec3*)&q->br.vertices;
-        kmVec3TransformCoord(vec2, vec2, &modelView);
+        kmVec3Transform(vec2, vec2, &modelView);
 
         kmVec3 *vec3 = (kmVec3*)&q->tr.vertices;
-        kmVec3TransformCoord(vec3, vec3, &modelView);
+        kmVec3Transform(vec3, vec3, &modelView);
 
         kmVec3 *vec4 = (kmVec3*)&q->tl.vertices;
-        kmVec3TransformCoord(vec4, vec4, &modelView);
+        kmVec3Transform(vec4, vec4, &modelView);
     }
 }
 
