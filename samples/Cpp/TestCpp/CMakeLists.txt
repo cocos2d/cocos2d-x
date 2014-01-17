@@ -117,6 +117,7 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceTouchesTest.cpp
   Classes/PerformanceTest/PerformanceLabelTest.cpp
   Classes/PerformanceTest/PerformanceRendererTest.cpp
+  Classes/PerformanceTest/PerformanceContainerTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp
   Classes/RotateWorldTest/RotateWorldTest.cpp
