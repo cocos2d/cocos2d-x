@@ -23,6 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include <sstream>
+
 #include "CCFontAtlasCache.h"
 #include "CCFontAtlasFactory.h"
 

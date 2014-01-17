@@ -22,10 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "cocos2d.h"
+
 #include "CCFontAtlas.h"
 #include "CCFont.h"
 #include "CCFontFreeType.h"
+#include "ccUTF8.h"
+#include "CCDirector.h"
 
 #define  PAGE_WIDTH 1024
 #define  PAGE_HEIGHT 1024

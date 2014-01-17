@@ -38,9 +38,9 @@ THE SOFTWARE.
 #include "TransformUtils.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"

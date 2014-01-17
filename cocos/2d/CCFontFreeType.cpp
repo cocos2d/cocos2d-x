@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCTextImage.h"
 #include "CCFont.h"
 #include "CCFontDefinition.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 

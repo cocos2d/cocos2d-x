@@ -31,13 +31,13 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCInteger.h"
 #include "CCBool.h"
-#include "cocos2d.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
+extern const char* cocos2dVersion();
 
 Configuration* Configuration::s_sharedConfiguration = nullptr;
 

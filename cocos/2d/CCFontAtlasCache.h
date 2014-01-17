@@ -29,8 +29,8 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "cocos2d.h"
 #include "CCFontAtlas.h"
+#include "CCLabel.h"
 
 NS_CC_BEGIN
 

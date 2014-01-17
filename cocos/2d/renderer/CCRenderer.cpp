@@ -22,13 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCRenderer.h"
-#include "CCShaderCache.h"
-#include "ccGLStateCache.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCBatchCommand.h"
-#include "CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "ccGLStateCache.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
 #include "CCEventDispatcher.h"
@@ -330,6 +330,10 @@ void Renderer::render()
 
 void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
 {
+//    kmMat4 matrixP, mvp;
+//    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
+//    kmMat4Multiply(&mvp, &matrixP, &modelView);
+
     for(ssize_t i=0; i<quantity; ++i) {
         V3F_C4B_T2F_Quad *q = &quads[i];
 
@@ -366,6 +370,13 @@ void Renderer::drawBatchedQuads()
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
+        // option 1: subdata
+//        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+
+        // option 2: data
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+
+        // option 3: orphaning + glMapBuffer
         glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (_numQuads), nullptr, GL_DYNAMIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         memcpy(buf, _quads, sizeof(_quads[0])* (_numQuads));
