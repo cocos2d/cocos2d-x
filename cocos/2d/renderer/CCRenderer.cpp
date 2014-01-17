@@ -27,6 +27,7 @@
 #include "ccGLStateCache.h"
 #include "CCCustomCommand.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 #include "CCGroupCommand.h"
 #include "CCConfiguration.h"
 #include "CCDirector.h"
@@ -248,7 +249,7 @@ void Renderer::render()
                     //Batch quads
                     if(_numQuads + cmdQuadCount > VBO_SIZE)
                     {
-                        CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmdQuadCount>=0 && cmdQuadCount<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         _lastCommand --;
@@ -256,13 +257,21 @@ void Renderer::render()
                         _lastCommand ++;
                     }
 
-                    memcpy(_quads + _numQuads, cmd->getQuad(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
+                    convertToWorldCoordiantes(_quads + _numQuads, cmdQuadCount, cmd->getModelView());
+
                     _numQuads += cmdQuadCount;
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
                     CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                    cmd->execute();
+                }
+                else if(commandType == RenderCommand::Type::BATCH_COMMAND)
+                {
+                    flush();
+                    BatchCommand* cmd = static_cast<BatchCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
@@ -319,6 +328,25 @@ void Renderer::render()
     _lastMaterialID = 0;
 }
 
+void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
+{
+    for(ssize_t i=0; i<quantity; ++i) {
+        V3F_C4B_T2F_Quad *q = &quads[i];
+
+        kmVec3 *vec1 = (kmVec3*)&q->bl.vertices;
+        kmVec3Transform(vec1, vec1, &modelView);
+
+        kmVec3 *vec2 = (kmVec3*)&q->br.vertices;
+        kmVec3Transform(vec2, vec2, &modelView);
+
+        kmVec3 *vec3 = (kmVec3*)&q->tr.vertices;
+        kmVec3Transform(vec3, vec3, &modelView);
+
+        kmVec3 *vec4 = (kmVec3*)&q->tl.vertices;
+        kmVec3Transform(vec4, vec4, &modelView);
+    }
+}
+
 void Renderer::drawBatchedQuads()
 {
     //TODO we can improve the draw performance by insert material switching command before hand.
@@ -353,7 +381,7 @@ void Renderer::drawBatchedQuads()
 #define kQuadSize sizeof(_quads[0].bl)
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _numQuads , _quads);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _numQuads , _quads, GL_DYNAMIC_DRAW);
 
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
@@ -370,7 +398,7 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    for(ssize_t i = _firstCommand; i <= _lastCommand; i++)
     {
         RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == RenderCommand::Type::QUAD_COMMAND)

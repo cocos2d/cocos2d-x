@@ -27,8 +27,7 @@
 NS_CC_BEGIN
 
 CustomCommand::CustomCommand()
-:RenderCommand()
-, func(nullptr)
+: func(nullptr)
 , _viewport(0)
 , _depth(0)
 {

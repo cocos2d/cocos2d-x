@@ -764,20 +764,22 @@ void DirectorEventTest::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
 
-    _label1 = Label::createWithTTF("Update: 0", "fonts/arial.ttf", 20);
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+
+    _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
-    _label2 = Label::createWithTTF("Visit: 0", "fonts/arial.ttf", 20);
+    _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
-    _label3 = Label::createWithTTF("Draw: 0", "fonts/arial.ttf", 20);
+    _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
-    _label4 = Label::createWithTTF("Projection: 0", "fonts/arial.ttf", 20);
+    _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);

@@ -1,13 +1,26 @@
 cocos2d-x-3.0final ?.? ?
 [All]
-     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
+     [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
+     [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
+     [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
+
+     [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.
+     [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
+     [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
+     [FIX]          Label: Crash when using unknown characters.
+     [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
      [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
      [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
      [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          Renderer: QuadCommand::init() does not copy the Quads, it only store a reference making the code faster
+     [FIX]          Renderer: Performance improved in Sprite and SpriteBatchNode (and subclasses) sprites in about 20%
+     [FIX]          Renderer: When note using VAO, call glBufferData() instead of glBufferSubData().
+     [FIX]          Sprite: removed _hasChildren optimization. It uses !_children.empty() now which is super fast as well
      [FIX]          Tests: TestCpp works with CMake on Windows.
-     [FIX]          Tests: Sprites Performance Test has 3 new tests
+     [FIX]          Tests: Sprites Performance Test has 4 new tests
      [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
      [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
      [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.

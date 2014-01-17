@@ -42,6 +42,7 @@ public:
     {
         QUAD_COMMAND,
         CUSTOM_COMMAND,
+        BATCH_COMMAND,
         GROUP_COMMAND,
         UNKNOWN_COMMAND,
     };
@@ -49,9 +50,10 @@ public:
     virtual int64_t generateID() = 0;
 
     /** Get Render Command Id */
-    virtual inline int64_t getID() { return _id; }
-    
-    virtual inline Type getType() { return _type; }
+    inline int64_t getID() { return _id; }
+
+    /** Returns the Command type */
+    inline Type getType() { return _type; }
 
 protected:
     RenderCommand();

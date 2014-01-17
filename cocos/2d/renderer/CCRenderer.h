@@ -42,7 +42,7 @@ typedef std::vector<RenderCommand*> RenderQueue;
 struct RenderStackElement
 {
     int renderQueueID;
-    size_t currentIndex;
+    ssize_t currentIndex;
 };
 
 class Renderer
@@ -75,18 +75,21 @@ protected:
     void mapBuffers();
 
     void drawBatchedQuads();
+
     //Draw the previews queued quads and flush previous context
     void flush();
+
+    void convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    int _lastMaterialID;
+    uint32_t _lastMaterialID;
 
-    size_t _firstCommand;
-    size_t _lastCommand;
+    ssize_t _firstCommand;
+    ssize_t _lastCommand;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];
