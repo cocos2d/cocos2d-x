@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCSSCENEREADER_H__
 #define __CCSSCENEREADER_H__
 
-#include "cocos2d.h"
 #include "cocostudio/DictionaryHelper.h"
 
 

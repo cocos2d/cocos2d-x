@@ -26,9 +26,9 @@
 #include "CCGL.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 #include "CCDirector.h"
-#include "CCRenderer.h"
 #include "CCEventListenerCustom.h"
 #include "CCEventDispatcher.h"
 
