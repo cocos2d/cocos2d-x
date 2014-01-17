@@ -1084,6 +1084,8 @@
 		D6408CAE1806513A00FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D6408CAF1806514400FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		D6408CB01806515200FB5B4C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		ED3674B9187FA7020038ECFC /* PerformanceRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */; };
+		ED3674BA187FA7020038ECFC /* PerformanceRendererTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */; };
 		ED743D1517D098AF0004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1617D098B60004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
@@ -2679,6 +2681,8 @@
 		B3AF01AB184313DE00A98B85 /* MobileBalanced.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileBalanced.h; sourceTree = "<group>"; };
 		B3AF01AC184313DE00A98B85 /* MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotorJoint.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceRendererTest.h; sourceTree = "<group>"; };
+		ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceRendererTest.cpp; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -4560,6 +4564,8 @@
 				1AAF5108180E2C1A000584C8 /* PerformanceTextureTest.h */,
 				1AAF5109180E2C1A000584C8 /* PerformanceTouchesTest.cpp */,
 				1AAF510A180E2C1A000584C8 /* PerformanceTouchesTest.h */,
+				ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */,
+				ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */,
 			);
 			path = PerformanceTest;
 			sourceTree = "<group>";
@@ -6439,6 +6445,7 @@
 				1AAF51EC180E2C1A000584C8 /* SocketIOTest.cpp in Sources */,
 				1AAF51EE180E2C1A000584C8 /* WebSocketTest.cpp in Sources */,
 				1AAF51F0180E2C1A000584C8 /* NotificationCenterTest.cpp in Sources */,
+				ED3674B9187FA7020038ECFC /* PerformanceRendererTest.cpp in Sources */,
 				1AAF51F2180E2C1A000584C8 /* Scale9SpriteTest.cpp in Sources */,
 				1ADCE793186BCAFB001B78A4 /* UIScene.cpp in Sources */,
 				1AAF51F4180E2C1A000584C8 /* CustomTableViewCell.cpp in Sources */,
@@ -6667,6 +6674,7 @@
 				1AAF5167180E2C1A000584C8 /* Bug-350.cpp in Sources */,
 				1AAF5169180E2C1A000584C8 /* Bug-422.cpp in Sources */,
 				1AAF516B180E2C1A000584C8 /* Bug-458.cpp in Sources */,
+				ED3674BA187FA7020038ECFC /* PerformanceRendererTest.cpp in Sources */,
 				50D36102186819DB00828878 /* UIListViewTest.cpp in Sources */,
 				1AAF516D180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516F180E2C1A000584C8 /* Bug-624.cpp in Sources */,
