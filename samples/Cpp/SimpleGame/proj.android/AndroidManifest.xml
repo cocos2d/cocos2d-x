@@ -15,7 +15,7 @@
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:configChanges="orientation|screenSize|smallestScreenSize">
+                  android:configChanges="orientation">
 
             <!-- Tell NativeActivity the name of our .so -->
             <meta-data android:name="android.app.lib_name"

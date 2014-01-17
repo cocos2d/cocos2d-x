@@ -48,11 +48,7 @@ enum {
 ////////////////////////////////////////////////////////
 SubTest::~SubTest()
 {
-    if (_batchNode)
-    {
-        _batchNode->release();
-        _batchNode = NULL;
-    }
+    _parentNode->release();
 }
 
 void SubTest::initWithSubTest(int subtest, Node* p)
@@ -60,12 +56,11 @@ void SubTest::initWithSubTest(int subtest, Node* p)
     srand(0);
 
     subtestNumber = subtest;
-    _parent = p;
-    _batchNode = nullptr;
+    _parentNode = nullptr;
     /*
      * Tests:
      * 1: 1 (32-bit) PNG sprite of 52 x 139
-     * 2: 1 (32-bit) PNG sprite of 52 x 139
+     * 2: 1 (32-bit) PNG sprite of 52 x 139 (same as 1)
      * 3: 1 (32-bit) PNG Batch Node using 1 sprite of 52 x 139
      * 4: 1 (16-bit) PNG Batch Node using 1 sprite of 52 x 139
 
@@ -90,73 +85,67 @@ void SubTest::initWithSubTest(int subtest, Node* p)
     {
             ///
         case 1:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            break;
         case 2:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            _parentNode = Node::create();
             break;
         case 3:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            _batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
-            p->addChild(_batchNode, 0);
+            _parentNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             break;
         case 4:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-            _batchNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
-            p->addChild(_batchNode, 0);
+            _parentNode = SpriteBatchNode::create("Images/grossinis_sister1.png", 100);
             break;
 
             ///
         case 5:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            break;
         case 6:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            _batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
+            _parentNode = Node::create();
             break;
         case 7:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            _batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
-            p->addChild(_batchNode, 0);
-            break;                
+            _parentNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
+            break;
         case 8:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-            _batchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
-            p->addChild(_batchNode, 0);
+            _parentNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 100);
             break;
 
             ///
         case 9:
-            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            break;
         case 10:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            _batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
+            _parentNode = Node::create();
             break;
         case 11:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-            _batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
-            p->addChild(_batchNode, 0);
+            _parentNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             break;
         case 12:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-            _batchNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
-            p->addChild(_batchNode, 0);
+            _parentNode = SpriteBatchNode::create("Images/spritesheet1.png", 100);
             break;
 
             ///
+        case 13:
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
+            _parentNode = Node::create();
+            break;
+
         default:
             break;
     }
 
-    if (_batchNode)
-    {
-        _batchNode->retain();
-    }
+    p->addChild(_parentNode);
+    _parentNode->retain();
 }
 
 Sprite* SubTest::createSpriteWithTag(int tag)
 {
+    TextureCache *cache = Director::getInstance()->getTextureCache();
+
     Sprite* sprite = NULL;
     switch (subtestNumber)
     {
@@ -165,14 +154,15 @@ Sprite* SubTest::createSpriteWithTag(int tag)
         case 2:
         {
             sprite = Sprite::create("Images/grossinis_sister1.png");
-            _parent->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, tag+100);
             break;
         }
         case 3:
         case 4:
         {
-            sprite = Sprite::createWithTexture(_batchNode->getTexture(), Rect(0, 0, 52, 139));
-            _batchNode->addChild(sprite, 0, tag+100);
+            Texture2D *texture = cache->addImage("Images/grossinis_sister1.png");
+            sprite = Sprite::createWithTexture(texture, Rect(0, 0, 52, 139));
+            _parentNode->addChild(sprite, 0, tag+100);
             break;
         }
 
@@ -183,24 +173,10 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             char str[32] = {0};
             sprintf(str, "Images/grossini_dance_%02d.png", idx);
             sprite = Sprite::create(str);
-            _parent->addChild(sprite, 0, tag+100);
+            _parentNode->addChild(sprite, 0, tag+100);
             break;
         }
         case 6:
-        {
-            int y,x;
-            int r = (CCRANDOM_0_1() * 1400 / 100);
-
-            y = r / 5;
-            x = r % 5;
-
-            x *= 85;
-            y *= 121;
-            sprite = Sprite::createWithTexture(_batchNode->getTexture(), Rect(x,y,85,121));
-            _parent->addChild(sprite, 0, tag+100);
-            break;
-        }
-
         case 7:
         case 8:
         {
@@ -212,8 +188,9 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
             x *= 85;
             y *= 121;
-            sprite = Sprite::createWithTexture(_batchNode->getTexture(), Rect(x,y,85,121));
-            _batchNode->addChild(sprite, 0, tag+100);
+            Texture2D *texture = cache->addImage("Images/grossini_dance_atlas.png");
+            sprite = Sprite::createWithTexture(texture, Rect(x,y,85,121));
+            _parentNode->addChild(sprite, 0, tag+100);
             break;
         }
 
@@ -229,25 +206,11 @@ Sprite* SubTest::createSpriteWithTag(int tag)
                 char str[40] = {0};
                 sprintf(str, "Images/sprites_test/sprite-%d-%d.png", x, y);
                 sprite = Sprite::create(str);
-                _parent->addChild(sprite, 0, tag+100);
+                _parentNode->addChild(sprite, 0, tag+100);
                 break;
             }
 
         case 10:
-        {
-            int y,x;
-            int r = (CCRANDOM_0_1() * 6400 / 100);
-
-            y = r / 8;
-            x = r % 8;
-
-            x *= 32;
-            y *= 32;
-            sprite = Sprite::createWithTexture(_batchNode->getTexture(), CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
-            _parent->addChild(sprite, 0, tag+100);
-            break;
-        }
-
         case 11:
         case 12:
         {
@@ -259,9 +222,51 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
             x *= 32;
             y *= 32;
-            sprite = Sprite::createWithTexture(_batchNode->getTexture(), CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
-            _batchNode->addChild(sprite, 0, tag+100);
+            Texture2D *texture = cache->addImage("Images/spritesheet1.png");
+            sprite = Sprite::createWithTexture(texture, CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
+            _parentNode->addChild(sprite, 0, tag+100);
             break;
+        }
+            ///
+        case 13:
+        {
+            int test = (CCRANDOM_0_1() * 3);
+
+            if(test==0) {
+                // Switch case 1
+                sprite = Sprite::create("Images/grossinis_sister1.png");
+                _parentNode->addChild(sprite, 0, tag+100);
+            }
+            else if(test==1)
+            {
+                // Switch case 6
+                int y,x;
+                int r = (CCRANDOM_0_1() * 1400 / 100);
+
+                y = r / 5;
+                x = r % 5;
+
+                x *= 85;
+                y *= 121;
+                Texture2D *texture = cache->addImage("Images/grossini_dance_atlas.png");
+                sprite = Sprite::createWithTexture(texture, Rect(x,y,85,121));
+                _parentNode->addChild(sprite, 0, tag+100);
+
+            }
+            else if(test==2)
+            {
+                int y,x;
+                int r = (CCRANDOM_0_1() * 6400 / 100);
+
+                y = r / 8;
+                x = r % 8;
+
+                x *= 32;
+                y *= 32;
+                Texture2D *texture = cache->addImage("Images/spritesheet1.png");
+                sprite = Sprite::createWithTexture(texture, CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
+                _parentNode->addChild(sprite, 0, tag+100);
+            }
         }
 
         default:
@@ -273,30 +278,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
 
 void SubTest::removeByTag(int tag)
 {
-    switch (subtestNumber)
-    {
-        case 1:
-        case 5:
-        case 9:
-            _parent->removeChildByTag(tag+100, true);
-            break;
-
-        case 2:
-        case 3:
-        case 4:
-
-        case 6:
-        case 7:
-        case 8:
-
-        case 10:
-        case 11:
-        case 12:
-            _batchNode->removeChildByTag(tag+100, true);
-            break;
-        default:
-            break;
-    }
+    _parentNode->removeChildByTag(tag+100, true);
 }
 
 ////////////////////////////////////////////////////////
@@ -443,9 +425,9 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     addChild( menuAutoTest, 3, kTagAutoTestMenu );
     
     // Sub Tests
-    MenuItemFont::setFontSize(32);
+    MenuItemFont::setFontSize(28);
     auto subMenu = Menu::create();
-    for (int i = 1; i <= 12; ++i)
+    for (int i = 1; i <= 13; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
@@ -457,8 +439,10 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
             itemFont->setColor(Color3B(200,20,20));
         else if(i <= 8)
             itemFont->setColor(Color3B(0,200,20));
-        else
+        else if( i<=12)
             itemFont->setColor(Color3B(0,20,200));
+        else
+            itemFont->setColor(Color3B::GRAY);
     }
 
     subMenu->alignItemsHorizontally();
