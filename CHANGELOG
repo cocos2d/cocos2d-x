@@ -4,6 +4,7 @@ cocos2d-x-3.0final ?.? ?
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
      [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
+     [NEW]          Label: Integrates LabelAtlas into new Label.
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
 
      [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.

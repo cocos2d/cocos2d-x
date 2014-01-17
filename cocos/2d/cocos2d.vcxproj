@@ -248,6 +248,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
     <ClCompile Include="CCFontAtlasFactory.cpp" />
+    <ClCompile Include="CCFontCharMap.cpp" />
     <ClCompile Include="CCFontDefinition.cpp" />
     <ClCompile Include="CCFontFNT.cpp" />
     <ClCompile Include="CCFontFreeType.cpp" />
@@ -429,6 +430,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCFontAtlas.h" />
     <ClInclude Include="CCFontAtlasCache.h" />
     <ClInclude Include="CCFontAtlasFactory.h" />
+    <ClInclude Include="CCFontCharMap.h" />
     <ClInclude Include="CCFontDefinition.h" />
     <ClInclude Include="CCFontFNT.h" />
     <ClInclude Include="CCFontFreeType.h" />
