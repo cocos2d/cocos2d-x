@@ -26,7 +26,9 @@
 #ifndef __CCSCROLLVIEW_H__
 #define __CCSCROLLVIEW_H__
 
-#include "cocos2d.h"
+#include "CCLayer.h"
+#include "CCEventListenerTouch.h"
+
 #include "extensions/ExtensionMacros.h"
 
 NS_CC_EXT_BEGIN

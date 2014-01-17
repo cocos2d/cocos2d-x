@@ -1,7 +1,13 @@
-#include "CCBReader.h"
-
+#include <ctype.h>
 #include <algorithm>
 
+#include "CCDirector.h"
+#include "platform/CCFileUtils.h"
+#include "CCScene.h"
+#include "CCTextureCache.h"
+#include "CCSpriteFrameCache.h"
+
+#include "CCBReader.h"
 #include "CCNodeLoader.h"
 #include "CCNodeLoaderLibrary.h"
 #include "CCNodeLoaderListener.h"
@@ -11,7 +17,7 @@
 #include "CCBSequenceProperty.h"
 #include "CCBKeyframe.h"
 
-#include <ctype.h>
+
 
 using namespace std;
 using namespace cocos2d;

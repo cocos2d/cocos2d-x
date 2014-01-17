@@ -26,7 +26,6 @@
 #ifndef __HTTP_RESPONSE__
 #define __HTTP_RESPONSE__
 
-#include "cocos2d.h"
 #include "network/HttpRequest.h"
 
 NS_CC_BEGIN

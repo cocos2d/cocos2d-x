@@ -180,29 +180,29 @@ private:
     virtual void updateColor() override;
 
     //! used for optimization
-    Sprite              *_reusedLetter;
-    std::vector<LetterInfo>     _lettersInfo;
+    Sprite *_reusedLetter;
+    std::vector<LetterInfo> _lettersInfo;
 
-    float                       _commonLineHeight;
-    bool                        _lineBreakWithoutSpaces;
-    float                       _width;
-    TextHAlignment              _alignment;
-    unsigned short int *        _currentUTF16String;
-    unsigned short int *        _originalUTF16String;
-    Size               *        _advances;
-    FontAtlas          *        _fontAtlas;
-    bool                        _isOpacityModifyRGB;
+    float _commonLineHeight;
+    bool _lineBreakWithoutSpaces;
+    float _width;
+    TextHAlignment _alignment;
+    unsigned short int * _currentUTF16String;
+    unsigned short int * _originalUTF16String;
+    Size * _advances;
+    FontAtlas * _fontAtlas;
+    bool _isOpacityModifyRGB;
 
-    bool                        _useDistanceField;
-    bool                        _useA8Shader;
-    int                         _fontSize;
+    bool _useDistanceField;
+    bool _useA8Shader;
+    int _fontSize;
 
-    LabelEffect                 _currLabelEffect;
-    Color3B                     _effectColor;
+    LabelEffect _currLabelEffect;
+    Color3B _effectColor;
 
-    GLuint                      _uniformEffectColor;
+    GLuint _uniformEffectColor;
 
-    CustomCommand               _customCommand;
+    CustomCommand _customCommand;
 };
 
 

@@ -24,6 +24,13 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include "CCEGLView.h"
+#include "CCDevice.h"
+#include "CCActionInstant.h"
+#include "CCActionInterval.h"
+#include "CCActionTween.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include <algorithm>
 
