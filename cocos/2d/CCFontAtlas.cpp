@@ -100,6 +100,7 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
     }
     else
     {
+        outDefinition.validDefinition = false;
         return false;
     }
 }

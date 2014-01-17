@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_QUADCOMMAND_H_
-#define _CC_QUADCOMMAND_H_
+#ifndef _CC_BATCHCOMMAND_H_
+#define _CC_BATCHCOMMAND_H_
 
 #include "CCRenderCommand.h"
 #include "CCGLProgram.h"
@@ -32,17 +32,18 @@
 
 NS_CC_BEGIN
 
+class TextureAtlas;
+
 #define CC_NO_TEXTURE 0
 
-class QuadCommand : public RenderCommand
+class BatchCommand : public RenderCommand
 {
 public:
 
-    QuadCommand();
-    ~QuadCommand();
+    BatchCommand();
+    ~BatchCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const kmMat4& mv);
+    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
 
     // +----------+----------+-----+-----------------------------------+
     // |          |          |     |                |                  |
@@ -51,27 +52,10 @@ public:
     // +----------+----------+-----+----------------+------------------+
     virtual int64_t generateID();
 
-    void useMaterial();
+    void execute();
 
-    //TODO use material to decide if it is translucent
-    inline bool isTranslucent() const { return true; }
-
-    inline uint32_t getMaterialID() const { return _materialID; }
-
-    inline GLuint getTextureID() const { return _textureID; }
-
-    inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
-
-    inline ssize_t getQuadCount() const { return _quadsCount; }
-
-    inline GLProgram* getShader() const { return _shader; }
-
-    inline BlendFunc getBlendType() const { return _blendType; }
-
-    inline const kmMat4& getModelView() const { return _mv; }
-    
 protected:
-    uint32_t _materialID;
+    int32_t _materialID;
 
     //Key Data
     int _viewport;          /// Which view port it belongs to
@@ -87,11 +71,11 @@ protected:
 
     BlendFunc _blendType;
 
-    V3F_C4B_T2F_Quad* _quads;
-    ssize_t _quadsCount;
+    TextureAtlas *_textureAtlas;
 
+    // ModelView transform
     kmMat4 _mv;
 };
 NS_CC_END
 
-#endif //_CC_QUADCOMMAND_H_
+#endif //_CC_BATCHCOMMAND_H_
