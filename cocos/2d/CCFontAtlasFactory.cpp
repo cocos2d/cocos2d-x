@@ -60,4 +60,46 @@ FontAtlas * FontAtlasFactory::createAtlasFromFNT(const std::string& fntFilePath)
     }
 }
 
+FontAtlas * FontAtlasFactory::createAtlasFromCharMap(const std::string& plistFile)
+{
+    Font *font = Font::createWithCharMap(plistFile);
+
+    if(font)
+    {
+        return font->createFontAtlas();
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+FontAtlas * FontAtlasFactory::createAtlasFromCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    Font *font = Font::createWithCharMap(texture,itemWidth,itemHeight,startCharMap);
+
+    if(font)
+    {
+        return font->createFontAtlas();
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+FontAtlas * FontAtlasFactory::createAtlasFromCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    Font *font = Font::createWithCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
+
+    if(font)
+    {
+        return font->createFontAtlas();
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 NS_CC_END
