@@ -40,11 +40,11 @@ public:
 
     enum class Type
     {
+        UNKNOWN_COMMAND,
         QUAD_COMMAND,
         CUSTOM_COMMAND,
         BATCH_COMMAND,
         GROUP_COMMAND,
-        UNKNOWN_COMMAND,
     };
 
     virtual int64_t generateID() = 0;
