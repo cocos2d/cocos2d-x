@@ -1,9 +1,12 @@
 #ifndef _CCB_CCBREADER_H_
 #define _CCB_CCBREADER_H_
 
-#include "cocos2d.h"
 #include <string>
 #include <vector>
+#include "CCNode.h"
+#include "CCData.h"
+#include "CCMap.h"
+
 #include "CCBSequence.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 

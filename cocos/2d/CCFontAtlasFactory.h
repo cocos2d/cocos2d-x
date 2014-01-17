@@ -26,8 +26,8 @@
 #ifndef _CCFontAtlasFactory_h_
 #define _CCFontAtlasFactory_h_
 
-#include "cocos2d.h"
 #include "CCFontAtlas.h"
+#include "CCLabel.h"
 
 
 NS_CC_BEGIN

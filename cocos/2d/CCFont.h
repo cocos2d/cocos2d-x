@@ -28,7 +28,6 @@
 
 #include <string>
 
-#include "cocos2d.h"
 #include "CCLabel.h"
 
 NS_CC_BEGIN

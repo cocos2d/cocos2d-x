@@ -2,7 +2,8 @@
 #define __CCB_CCSEQUENCE_H__
 
 #include <string>
-#include "cocos2d.h"
+
+#include "CCObject.h"
 #include "CCBSequenceProperty.h"
 
 namespace cocosbuilder {

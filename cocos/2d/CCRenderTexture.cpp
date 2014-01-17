@@ -38,9 +38,9 @@ THE SOFTWARE.
 #include "CCEventType.h"
 #include "CCGrid.h"
 
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
