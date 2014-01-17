@@ -18,7 +18,6 @@ public:
 class PerformanceContainerScene : public Scene
 {
 public:
-    
     static const int TAG_TITLE = 100;
     static const int TAG_SUBTITLE = 101;
     
@@ -40,11 +39,8 @@ public:
     
     // for the profiler
     virtual const char* testName();
-    
     void updateQuantityLabel();
-    
     int getQuantityOfNodes() { return quantityOfNodes; }
-    
     void dumpProfilerInfo(float dt);
     
     // overrides
@@ -73,7 +69,6 @@ public:
     CREATE_FUNC(TemplateVectorPerfTest);
     
     virtual void generateTestFunctions() override;
-    
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

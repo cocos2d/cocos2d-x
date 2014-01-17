@@ -325,7 +325,7 @@ void TemplateVectorPerfTest::generateTestFunctions()
         return ret;
     };
     
-    TestFunction nameCBs[] = {
+    TestFunction testFunctions[] = {
         { "pushBack",    [=](){
             Vector<Node*> nodeVector;
             
@@ -501,9 +501,9 @@ void TemplateVectorPerfTest::generateTestFunctions()
         } } ,
     };
     
-    for (const auto& nameCB : nameCBs)
+    for (const auto& func : testFunctions)
     {
-        _testFunctions.push_back(nameCB);
+        _testFunctions.push_back(func);
     }
 }
 
@@ -551,7 +551,7 @@ void ArrayPerfTest::generateTestFunctions()
         return ret;
     };
     
-    TestFunction nameCBs[] = {
+    TestFunction testFunctions[] = {
         { "addObject",    [=](){
             Array* nodeVector = Array::create();
             
@@ -695,9 +695,9 @@ void ArrayPerfTest::generateTestFunctions()
         } } ,
     };
     
-    for (const auto& nameCB : nameCBs)
+    for (const auto& func : testFunctions)
     {
-        _testFunctions.push_back(nameCB);
+        _testFunctions.push_back(func);
     }
 }
 
