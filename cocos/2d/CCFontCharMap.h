@@ -32,10 +32,8 @@
 NS_CC_BEGIN
 
 class FontCharMap : public Font
-{
-    
+{  
 public:
-    
     static FontCharMap * create(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static FontCharMap * create(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     static FontCharMap * create(const std::string& plistFile);
@@ -44,8 +42,7 @@ public:
     virtual Rect  getRectForChar(unsigned short theChar) const override;
     virtual FontAtlas *createFontAtlas() override;
     
-protected:
-    
+protected:    
     FontCharMap(Texture2D* texture,int itemWidth, int itemHeight, int startCharMap) :
         _texture(texture),_itemWidth(itemWidth),_itemHeight(itemHeight),_mapStartChar(startCharMap),_charRect(0,0,itemWidth,itemHeight){}
     /**
@@ -55,7 +52,6 @@ protected:
     virtual ~FontCharMap();
     
 private:
-    
     Texture2D* _texture;
     int _mapStartChar;
     int _itemWidth;
