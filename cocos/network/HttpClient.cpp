@@ -28,6 +28,8 @@
 
 #include <thread>
 #include <queue>
+#include <condition_variable>
+
 #include <errno.h>
 
 #include "CCVector.h"
