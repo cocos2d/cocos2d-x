@@ -167,7 +167,7 @@ int LuaEngine::executeEvent(int nHandler, const char* pEventName, Object* pEvent
     _stack->pushString(pEventName);
     if (pEventSource)
     {
-        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "CCObject");
+        _stack->pushObject(pEventSource, pEventSourceClassName ? pEventSourceClassName : "cc.Object");
     }
     int ret = _stack->executeFunctionByHandler(nHandler, pEventSource ? 2 : 1);
     _stack->clean();
@@ -329,7 +329,7 @@ int LuaEngine::handleMenuClickedEvent(void* data)
         return 0;
     
     _stack->pushInt(menuItem->getTag());
-    _stack->pushObject(menuItem, "MenuItem");
+    _stack->pushObject(menuItem, "cc.MenuItem");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
@@ -352,7 +352,7 @@ int LuaEngine::handleCallFuncActionEvent(void* data)
     Object* target = static_cast<Object*>(basicScriptData->value);
     if (NULL != target)
     {
-        _stack->pushObject(target, "Node");
+        _stack->pushObject(target, "cc.Node");
     }
     int ret = _stack->executeFunctionByHandler(handler, target ? 1 : 0);
     _stack->clean();
@@ -447,7 +447,7 @@ int LuaEngine::handleCommonEvent(void* data)
         }
         else
         {
-            _stack->pushObject(commonInfo->eventSource, "Object");
+            _stack->pushObject(commonInfo->eventSource, "cc.Object");
         }
     }
     int ret = _stack->executeFunctionByHandler(commonInfo->handler, commonInfo->eventSource ? 2 : 1);
@@ -585,7 +585,7 @@ int LuaEngine::handlerControlEvent(void* data)
             
             if (0 != handler)
             {
-                _stack->pushObject((Object*)basicScriptData->nativeObject, "Object");
+                _stack->pushObject((Object*)basicScriptData->nativeObject, "cc.Object");
                 _stack->pushInt(controlEvents);
                 ret = _stack->executeFunctionByHandler(handler, 2);
                 _stack->clean();
@@ -612,7 +612,7 @@ int LuaEngine::handleEventAcc(void* data)
     lua_State* L = _stack->getLuaState();
     
     LuaEventAccelerationData* eventListennerAcc = static_cast<LuaEventAccelerationData*>(basicScriptData->value);    
-    toluafix_pushusertype_ccobject(L, eventListennerAcc->event->_ID, &(eventListennerAcc->event->_luaID), (void*)(eventListennerAcc->event),"Event");
+    toluafix_pushusertype_ccobject(L, eventListennerAcc->event->_ID, &(eventListennerAcc->event->_luaID), (void*)(eventListennerAcc->event),"cc.Event");
     Acceleration*  accleration = static_cast<Acceleration*>(eventListennerAcc->acc);
     lua_pushnumber(L,accleration->x);
     lua_pushnumber(L,accleration->y);
@@ -640,7 +640,7 @@ int LuaEngine::handleEventKeyboard(ScriptHandlerMgr::HandlerType type, void* dat
     
     lua_State* L = _stack->getLuaState();
     lua_pushinteger(L, keyboardData->keyCode);
-    toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"Event");
+    toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"cc.Event");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
@@ -667,8 +667,8 @@ int LuaEngine::handleEventTouch(ScriptHandlerMgr::HandlerType type, void* data)
     
     Touch* touch = touchData->touch;
     if (NULL != touch) {
-        _stack->pushObject(touchData->touch, "Touch");
-        _stack->pushObject(touchData->event, "Event");
+        _stack->pushObject(touchData->touch, "cc.Touch");
+        _stack->pushObject(touchData->event, "cc.Event");
         ret = _stack->executeFunctionByHandler(handler, 2);
     }
     _stack->clean();
@@ -702,11 +702,11 @@ int LuaEngine::handleEventTouches(ScriptHandlerMgr::HandlerType type,void* data)
     for (auto& touch : touchesData->touches)
     {
         _stack->pushInt(i);
-        _stack->pushObject(touch, "Touch");
+        _stack->pushObject(touch, "cc.Touch");
         lua_rawset(L, -3);
         ++i;
     }
-    _stack->pushObject(touchesData->event, "Event");
+    _stack->pushObject(touchesData->event, "cc.Event");
     
     ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
@@ -731,7 +731,7 @@ int LuaEngine::handleEventMouse(ScriptHandlerMgr::HandlerType type, void* data)
     if (0 == handler)
         return 0;
     
-    _stack->pushObject(mouseData->event, "Event");
+    _stack->pushObject(mouseData->event, "cc.Event");
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     
@@ -754,7 +754,7 @@ int LuaEngine::handleEvenCustom(void* data)
         return 0;
     
     lua_State* L = _stack->getLuaState();
-    toluafix_pushusertype_ccobject(L, eventCustom->_ID, &(eventCustom->_luaID), (void*)(eventCustom),"EventCustom");
+    toluafix_pushusertype_ccobject(L, eventCustom->_ID, &(eventCustom->_luaID), (void*)(eventCustom),"cc.EventCustom");
     int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     
@@ -1013,7 +1013,7 @@ int LuaEngine::handleStudioEventListener(ScriptHandlerMgr::HandlerType type,void
     if (0 == handler)
         return 0;
     
-    _stack->pushObject(listenerData->objTarget, "Object");
+    _stack->pushObject(listenerData->objTarget, "cc.Object");
     _stack->pushInt(listenerData->eventType);
     
     _stack->executeFunctionByHandler(handler, 2);
@@ -1044,7 +1044,7 @@ int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* da
             {
                 LuaArmatureMovementEventData* movementData = static_cast<LuaArmatureMovementEventData*>(wrapperData->eventData);
             
-                _stack->pushObject(movementData->objTarget, "Armature");
+                _stack->pushObject(movementData->objTarget, "ccs.Armature");
                 _stack->pushInt(movementData->movementType);
                 _stack->pushString(movementData->movementID.c_str());
                 _stack->executeFunctionByHandler(handler, 3);
@@ -1054,7 +1054,7 @@ int LuaEngine::handleArmatureWrapper(ScriptHandlerMgr::HandlerType type,void* da
             {
                 LuaArmatureFrameEventData* frameData = static_cast<LuaArmatureFrameEventData*>(wrapperData->eventData);
             
-                _stack->pushObject(frameData->objTarget, "Bone");
+                _stack->pushObject(frameData->objTarget, "ccs.Bone");
                 _stack->pushString(frameData->frameEventName.c_str());
                 _stack->pushInt(frameData->originFrameIndex);
                 _stack->pushInt(frameData->currentFrameIndex);
