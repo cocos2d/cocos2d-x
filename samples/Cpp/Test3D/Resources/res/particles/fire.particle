@@ -1,0 +1,93 @@
+Particle particle system
+{
+	particleCountMax = 5000
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 4
+		height = 1
+		animated = false
+		looped = true
+		frameCount = 4
+		frameRandomOffset = 3
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/fire.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 100
+		ellipsoid = true
+		sizeStartMin = 0.4
+		sizeStartMax = 0.5
+		ageMin = 750
+		ageMax = 1000
+		position = 0,0,0
+		positionVar = 0.05,0.05,0.05
+		velocity = 0,0.1,0
+		velocityVar = 0.01,0.03,0.01
+		rotationPerParticleSpeedMin = -1.5
+		rotationPerParticleSpeedMax = 1.5
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = false
+		orbitVelocity = false
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		ForcePSA ForcePSA
+		{
+			name = forcePSA1
+			force = 0,2,0
+		}
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 0.3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintPSA1
+			period = 10000
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 1,0.215686,0,1
+				}
+
+				Tint Tint
+				{
+					time = 700
+					color = 0,0,0,1
+				}
+
+				Tint Tint
+				{
+					time = 10000
+					color = 0,0,0,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+

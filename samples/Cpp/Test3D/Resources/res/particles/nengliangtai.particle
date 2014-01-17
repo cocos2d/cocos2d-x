@@ -1,0 +1,1022 @@
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 1
+		sizeStartMax = 3
+		ageMin = 100
+		ageMax = 6000
+		position = 3.5,0,-6
+		positionVar = 5,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 1,1,1,0.4
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 3
+		ellipsoid = true
+		sizeStartMin = 0.2
+		sizeStartMax = 2
+		ageMin = 100
+		ageMax = 6000
+		position = 2.5,0,-1
+		positionVar = 7,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.333333,0.8,1,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 0.3
+		sizeStartMax = 0.3
+		ageMin = 100
+		ageMax = 6000
+		position = 2.5,0,-10
+		positionVar = 5,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,1
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0,0.984314,0.662745,0.6
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 2
+		ellipsoid = true
+		sizeStartMin = 1
+		sizeStartMax = 0.5
+		ageMin = 100
+		ageMax = 6000
+		position = 2.8,0,-15
+		positionVar = 7,0,0
+		velocity = 0,0,-5
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 1,1,1,1
+				}
+
+			}
+
+		}
+
+		ForcePSA ForcePSA
+		{
+			name = forceAction
+			force = 0,0,0
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 3
+		ellipsoid = true
+		sizeStartMin = 1.5
+		sizeStartMax = 1
+		ageMin = 100
+		ageMax = 6000
+		position = 2.5,0,-20
+		positionVar = 5,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.615686,0.0431373,1,1
+				}
+
+			}
+
+		}
+
+		ForcePSA ForcePSA
+		{
+			name = forceAction
+			force = 0.5,0,0
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 0.5
+		sizeStartMax = 2
+		ageMin = 100
+		ageMax = 6000
+		position = 4,0,-5
+		positionVar = 5,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,5
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.937255,1,0.141176,0.6
+				}
+
+			}
+
+		}
+
+		ForcePSA ForcePSA
+		{
+			name = forceAction
+			force = -5,0,0
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/xiantiao01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 4
+		sizeStartMax = 5
+		ageMin = 100
+		ageMax = 6000
+		position = 2.8,0,-5
+		positionVar = 3,0,0
+		velocity = 0,0,-10
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.333333,0.8,1,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/xiantiao01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 1
+		ellipsoid = true
+		sizeStartMin = 5
+		sizeStartMax = 6
+		ageMin = 100
+		ageMax = 6000
+		position = 2.7,0,-9
+		positionVar = 5,2,2
+		velocity = 0.2,0,-8
+		velocityVar = 0,0,0
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = -10
+		rotationSpeedMax = 3
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0
+			sizeRate = 5
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.658824,0.6,0.992157,1
+				}
+
+			}
+
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 1
+
+			Tints Tints
+			{
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 1
+		sizeStartMax = 0.5
+		ageMin = 100
+		ageMax = 6000
+		position = 2.5,0,-5
+		positionVar = 8,0,0
+		velocity = 0,0,-5
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 1,1,1,0.4
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 2
+		ellipsoid = true
+		sizeStartMin = 2
+		sizeStartMax = 1
+		ageMin = 100
+		ageMax = 6000
+		position = 2.6,0,0
+		positionVar = 7,0,0
+		velocity = 0,0,-20
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.333333,0.8,1,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/xiantiao01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 3
+		ellipsoid = true
+		sizeStartMin = 4
+		sizeStartMax = 3
+		ageMin = 100
+		ageMax = 6000
+		position = 3,0,-10
+		positionVar = 6,0,0
+		velocity = 0,0,-15
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 0.615686,1,0.87451,0.4
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 100
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/liziguang01.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 3
+		ellipsoid = true
+		sizeStartMin = 0.5
+		sizeStartMax = 1
+		ageMin = 100
+		ageMax = 6000
+		position = 3,0,0
+		positionVar = 7,0,0
+		velocity = 0,0,-20
+		velocityVar = 0,0,3
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 0.1
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 50
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 50
+					color = 1,0.815686,0.333333,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+Particle particle system
+{
+	particleCountMax = 5000
+	timeLast = 0
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 1
+		height = 1
+		animated = false
+		looped = false
+		frameCount = 1
+		frameRandomOffset = 0
+		frameDuration = 0
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/smoke.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 5
+		ellipsoid = true
+		sizeStartMin = 1
+		sizeStartMax = 2
+		ageMin = 10000
+		ageMax = 10000
+		position = 2.8,0,-8
+		positionVar = 0.8,0.8,0.8
+		velocity = 0,0,0
+		velocityVar = 0.6,0.5,0.8
+		rotationPerParticleSpeedMin = -1.5
+		rotationPerParticleSpeedMax = 1.5
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		ForcePSA ForcePSA
+		{
+			name = forcePSA1
+			force = 0,0,0
+		}
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 5
+			sizeRate = 5
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintPSA1
+			period = 10000
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 0,0,1,0.3
+				}
+
+				Tint Tint
+				{
+					time = 5000
+					color = 0.701961,0.152941,0.996078,0.6
+				}
+
+				Tint Tint
+				{
+					time = 10000
+					color = 0.117647,0.960784,0.984314,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+

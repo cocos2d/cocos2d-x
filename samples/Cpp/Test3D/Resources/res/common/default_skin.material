@@ -1,0 +1,38 @@
+material 
+{
+
+	technique 0
+	{
+
+		pass 0
+		{
+			vertexShader = shaders/textured.vsh
+			fragmentShader = shaders/textured.fsh
+			defines = SKINNING_JOINT_COUNT 32
+
+			sampler u_diffuseTexture
+			{
+				path = common\default.png
+				mipmap = false
+				wrapS = REPEAT
+				wrapT = REPEAT
+				minFilter = LINEAR
+				magFilter = LINEAR
+			}
+
+			renderState 
+			{
+				cullFace = true
+				depthTest = true
+				depthWrite = true
+				blend = false
+				srcBlend = SRC_ALPHA
+				dstBlend = ONE_MINUS_SRC_ALPHA
+			}
+
+		}
+
+	}
+
+}
+

@@ -1,0 +1,42 @@
+material 
+{
+
+	technique Technique0
+	{
+
+		pass Pass0
+		{
+			vertexShader = shaders/textured.vsh
+			fragmentShader = shaders/textured.fsh
+			defines = MAXDIRLIGHT 1
+			u_diffuseColor = 1,1,1,1
+			u_dirlight[0].color = 0,0,1
+			u_dirlight[0].dir = 1,1,1
+			u_ndirlight = 0
+
+			sampler u_diffuseTexture
+			{
+				path = demo/scene/dibiao1.png
+				mipmap = true
+				wrapS = REPEAT
+				wrapT = REPEAT
+				minFilter = LINEAR_MIPMAP_LINEAR
+				magFilter = LINEAR
+			}
+
+			renderState 
+			{
+				blend = true
+				srcBlend = SRC_ALPHA
+				dstBlend = ONE_MINUS_SRC_ALPHA
+				cullFace = true
+				depthTest = true
+				depthWrite = true
+			}
+
+		}
+
+	}
+
+}
+

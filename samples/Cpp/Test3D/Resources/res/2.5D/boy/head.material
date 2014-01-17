@@ -1,0 +1,41 @@
+material test
+{
+    technique
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/textured.fsh
+            
+            // uniforms
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+          //  u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            defines = SKINNING;SKINNING_JOINT_COUNT 32;FOG
+            u_matrixPalette = MATRIX_PALETTE
+          
+            u_ambientColor = 0.9, 0.9, 0.9
+            u_lightColor = 0.9, 0.9, 0.9
+
+            
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = 2.5D/boy/avatar.png
+                mipmap = true
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}

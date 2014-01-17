@@ -1,0 +1,18 @@
+material postprocess_point_warp
+{
+    technique vortex
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess_point_warp.vsh
+            fragmentShader = shaders/postprocess/postprocess_scene_copy.fsh
+
+		    renderState
+		    {
+		        depthTest = false            
+		    }
+
+        }
+    }   
+}
+

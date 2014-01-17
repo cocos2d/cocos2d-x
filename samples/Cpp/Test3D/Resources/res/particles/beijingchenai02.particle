@@ -1,0 +1,70 @@
+Particle particle system
+{
+	particleCountMax = 100
+
+	Render particle render
+	{
+		texture = particles/paopao.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 8
+		ellipsoid = true
+		sizeStartMin = 0
+		sizeStartMax = 0
+		ageMin = 0
+		ageMax = 800
+		position = 0,0,0
+		positionVar = 3,3,3
+		velocity = 0,0,0
+		velocityVar = 0.2,0.2,0.2
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 10
+			sizeRate = 3
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 0
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 1,1,1,0.3
+				}
+
+			}
+
+		}
+
+		ForcePSA ForcePSA
+		{
+			name = forceAction
+			force = 0.3,0.3,0.3
+		}
+
+	}
+
+}
+

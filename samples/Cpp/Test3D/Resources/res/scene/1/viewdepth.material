@@ -1,0 +1,34 @@
+material texturedflat
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/viewdepth.fsh
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_worldMatrix = WORLD_MATRIX
+            u_diffuseColor = 1.0, 1.0, 1.0, 1.0
+            
+			
+            sampler u_diffuseTexture
+            {
+                path = scene/ChangJing_DiMian.png
+                mipmap = false
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+ 
+
+            renderState
+            {
+                cullFace = true
+                depthTest = false
+				blend = false
+            }
+        }
+    }
+}

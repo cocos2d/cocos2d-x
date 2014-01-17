@@ -1,0 +1,68 @@
+material postprocess
+{
+   
+   
+    technique Color
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess.vsh
+            fragmentShader = shaders/postprocess/postprocess_color.fsh
+
+				    renderState
+				    {
+				        depthTest = false            
+				    }
+
+        }
+    }   
+    
+    technique Blur
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess.vsh
+            fragmentShader = shaders/postprocess/postprocess_blur.fsh
+
+				    renderState
+				    {
+				        depthTest = false            
+				        blend = false
+				        depthWrite = false
+				    }
+
+        }
+    }   
+   
+    
+    technique Outline
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess.vsh
+            fragmentShader = shaders/postprocess/postprocess_outline.fsh
+            
+            renderState
+				    {
+				        depthTest = false            
+				    }
+        }
+    }
+
+		technique Wrap
+		{
+				pass
+				{
+						vertexShader = shaders/postprocess/postprocess_wrap.vsh
+						fragmentShader = shaders/postprocess/postprocess_wrap.fsh
+						
+						renderState
+						{
+								depthTest = false
+						}
+				}
+		}
+    
+   
+}
+

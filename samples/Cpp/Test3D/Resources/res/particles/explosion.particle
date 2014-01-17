@@ -1,0 +1,81 @@
+Particle particle system
+{
+	particleCountMax = 5000
+	timeLast = 1000
+	timeStart = 0
+
+	Render particle render
+	{
+		width = 4
+		height = 4
+		animated = true
+		looped = false
+		frameCount = 16
+		frameRandomOffset = 1
+		frameDuration = 0.06
+		srcBlend = SRC_ALPHA
+    dstBlend = ONE
+		texture = particles/explosion.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 10
+		ellipsoid = true
+		sizeStartMin = 0.8
+		sizeStartMax = 1.5
+		ageMin = 1000
+		ageMax = 1200
+		position = 0,0,0
+		positionVar = 0.2,0.2,0.2
+		velocity = 0,0,0
+		velocityVar = 0.3,0.3,0.3
+		rotationPerParticleSpeedMin = -0.5
+		rotationPerParticleSpeedMax = 0.5
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = false
+		orbitVelocity = false
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 2
+			sizeRate = 0.5
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 1200
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 1,1,1,0.5
+				}
+
+				Tint Tint
+				{
+					time = 1200
+					color = 1,1,1,0
+				}
+
+			}
+
+		}
+
+	}
+
+}
+

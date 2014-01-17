@@ -1,0 +1,23 @@
+material sceneCopy
+{
+   
+   
+    technique sceneCopy
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess.vsh
+            fragmentShader = shaders/postprocess/postprocess_scene_copy.fsh
+
+				    renderState
+				    {
+				        depthTest = false            
+				    }
+
+        }
+    }   
+    
+    
+   
+}
+

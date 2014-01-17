@@ -1,0 +1,22 @@
+material postprocess_Color
+{
+   
+   
+    technique Color
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess.vsh
+            fragmentShader = shaders/postprocess/postprocess_blur.fsh
+
+				    renderState
+				    {
+				        depthTest = false            
+				    }
+
+        }
+    }   
+
+   
+}
+

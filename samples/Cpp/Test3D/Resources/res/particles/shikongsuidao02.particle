@@ -1,0 +1,64 @@
+Particle particle system
+{
+	particleCountMax = 100
+
+	Render particle render
+	{
+		texture = particles/shikongsuidao_00002_00000.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 3
+		ellipsoid = true
+		sizeStartMin = 0
+		sizeStartMax = 0
+		ageMin = 0
+		ageMax = 5000
+		position = 0,0,0
+		positionVar = 0,0,0
+		velocity = 0,0,0
+		velocityVar = 0,0,0
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0.6
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 60
+			sizeRate = 15
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 0
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 1,1,1,0.5
+				}
+
+			}
+
+		}
+
+	}
+
+}
+

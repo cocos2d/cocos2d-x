@@ -1,0 +1,66 @@
+material 
+{
+    u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+    u_matrixPalette = MATRIX_PALETTE
+
+    sampler u_diffuseTexture
+    {
+        path = 2.5D/fish/denglongyu.png
+        mipmap = true
+        wrapS = CLAMP
+        wrapT = CLAMP
+        minFilter = LINEAR_MIPMAP_LINEAR
+        magFilter = LINEAR
+    }
+
+	technique
+    {
+		u_inverseTransposeWorldMatrix = INVERSE_TRANSPOSE_WORLD_MATRIX
+		u_worldViewMatrix = WORLD_VIEW_MATRIX
+		u_worldMatrix = WORLD_MATRIX
+		u_diffuseColor = 0.7, 0.6, 0.6, 1.0
+		u_transColor = 0.1, 0.1, 0.2
+		u_specularPower = 3.0, 3.0, 5.0, 100.0;
+
+				
+		pass 
+		{
+			vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/textured.fsh
+			defines = SKINNING_JOINT_COUNT 32;TRANSMISSION;MAXDIRLIGHT 1
+
+		}
+
+        renderState
+        {
+            cullFace = false
+            depthTest = true
+            depthWrite = true
+            blend = true
+            srcBlend = SRC_ALPHA
+            dstBlend = ONE_MINUS_SRC_ALPHA
+        }
+
+	}
+
+	technique _castshadow
+    {
+        
+		pass
+		{
+			vertexShader = shaders/textured.vsh
+            fragmentShader = shaders/writedepth.fsh
+			defines = SKINNING_JOINT_COUNT 32;ALPHAREF 100
+		}
+        
+        renderState
+        {
+            cullFace = true
+            depthTest = true
+            depthWrite = true
+            blend = false
+        }
+        
+	}
+}
+

@@ -1,0 +1,37 @@
+material 
+{
+
+	technique 0
+	{
+
+		pass 0
+		{
+			vertexShader = shaders/textured.vsh
+			fragmentShader = shaders/textured.fsh
+
+			sampler u_diffuseTexture
+			{
+				path = common/light/deng_direct/deng.png
+				mipmap = true
+				wrapS = REPEAT
+				wrapT = REPEAT
+				minFilter = LINEAR_MIPMAP_LINEAR
+				magFilter = LINEAR
+			}
+
+			renderState 
+			{
+				cullFace = true
+				depthTest = true
+				depthWrite = true
+				blend = true
+				srcBlend = SRC_ALPHA
+				dstBlend = ONE_MINUS_SRC_ALPHA
+			}
+
+		}
+
+	}
+
+}
+

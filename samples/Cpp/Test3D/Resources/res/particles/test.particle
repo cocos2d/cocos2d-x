@@ -1,0 +1,80 @@
+Particle test
+{
+    particleCountMax = 5000
+
+    //render
+    Render
+    {
+        texture = particles/smoke.png
+    }
+    
+    //emitter
+    Emitter
+    {        
+		  emissionRate = 5
+	    ellipsoid = true
+	    sizeStartMin = 1.5
+	    sizeStartMax = 2	   
+	    ageMin = 10000
+	    ageMax = 10000
+	    position = 0, 0, 0
+	    positionVar = 1, 1, 1
+	    velocity = 0.0, 1, 0.0
+	    velocityVar = 1, 2, 1	   
+	    rotationPerParticleSpeedMin = -1.5
+	    rotationPerParticleSpeedMax = 1.5
+	    orbitPosition = true
+	    orbitVelocity = true
+	    orbitAcceleration = false
+    }
+    
+    //action
+    Actions
+    {
+			test = 1000
+			
+			ForcePSA
+			{
+			   name = forcePSA1
+			   force = 1, 0, 0			
+			}		
+			
+			TransformPSA
+			{
+			   name = transformPSA1
+			   
+			   endSize = 5.0
+			   sizeRate = 1.0		
+			
+			}			
+		
+			
+			TintPSA
+			{			   
+			   name = tintPSA1
+			   period = 1.0
+			   Tints
+			   {
+			     Tint
+			     {
+			       time = 0
+			       color = 0.0,0.0,1.0,1.000000
+			     }
+			     Tint
+			     {
+			       time = 5000
+			       color = 0.0,1.0,0.0,1.000000
+			     }
+			     Tint
+			     {
+			       time = 10000
+			       color = 1.0,0.0,0.0,1.000000
+			     }
+			   }			   
+			}			
+				
+				
+    }
+    
+    
+}

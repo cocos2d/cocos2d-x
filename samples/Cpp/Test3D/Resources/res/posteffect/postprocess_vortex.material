@@ -1,0 +1,18 @@
+material postprocess_vortex
+{
+    technique vortex
+    {
+        pass
+        {
+            vertexShader = shaders/postprocess/postprocess_vortex.vsh
+            fragmentShader = shaders/postprocess/postprocess_scene_copy.fsh
+
+		    renderState
+		    {
+		        depthTest = false            
+		    }
+
+        }
+    }   
+}
+

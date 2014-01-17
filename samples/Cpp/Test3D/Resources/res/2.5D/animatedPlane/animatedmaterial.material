@@ -1,0 +1,63 @@
+material test
+{
+    technique
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = shaders/animatedtexture.vsh
+            fragmentShader = shaders/animatedtexture.fsh
+
+            
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = 2.5D/animatedPlane/Cookie.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+            
+            // samplers
+          //  sampler u_bg
+          //  {
+          //      path = 2.5D/animatedPlane/bg3_B.png
+          //      mipmap = false
+          //      wrapS = CLAMP
+           //     wrapT = CLAMP
+           //     minFilter = NEAREST
+          //      magFilter = NEAREST
+         //   }
+            
+            // samplers
+         //   sampler u_bgdiff
+          //  {
+           //     path = 2.5D/animatedPlane/bg2.png
+          //      mipmap = false
+           //     wrapS = CLAMP
+            //    wrapT = CLAMP
+            //    minFilter = NEAREST
+            //    magFilter = NEAREST
+          //  }
+
+
+            
+            u_alph = 0.1
+
+            // render state
+            renderState
+            {
+                cullFace = false
+                depthTest =  false
+                
+        depthWrite = true
+
+        blend = true
+        srcBlend = SRC_ALPHA
+        dstBlend = ONE_MINUS_SRC_ALPHA
+            }
+        }
+    }
+}

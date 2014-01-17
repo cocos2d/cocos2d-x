@@ -1,0 +1,26 @@
+material postprocess_SceneChange
+{
+
+		
+	technique sceneChange
+	{
+
+		pass sceneChange
+		{
+      vertexShader = shaders/postprocess/postprocess.vsh
+      fragmentShader = shaders/postprocess/postprocess_scene_change.fsh
+
+
+ 
+	    renderState
+	    {
+	        depthTest = false            
+	    }
+
+
+		}
+	}
+	
+
+}
+

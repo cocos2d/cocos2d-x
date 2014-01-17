@@ -1,0 +1,35 @@
+material texturedflat
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = shaders/textured_animlight.vsh
+            fragmentShader = shaders/textured_animlight.fsh
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_worldMatrix = WORLD_MATRIX
+            u_diffuseColor = 1.0, 1.0, 1.0, 1.0
+            
+			//defines = MAXANIMLIGHT 0
+            sampler u_diffuseTexture
+            {
+                path = scene/xxxx.png
+                mipmap = false
+                wrapS = false
+                wrapT = CLAMP
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+				blend = true
+                srcBlend = SRC_ALPHA
+                dstBlend = ONE_MINUS_SRC_ALPHA
+            }
+        }
+    }
+}

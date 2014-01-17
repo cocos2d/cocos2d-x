@@ -1,0 +1,80 @@
+Particle test
+{
+    particleCountMax = 5000
+
+    //render
+    Render
+    {
+       texture = particles/ChenAi.png
+    }
+    
+    //emitter
+    Emitter
+    {        
+		  emissionRate = 30
+	    ellipsoid = true
+	    sizeStartMin = 5
+	    sizeStartMax = 7	   
+	    ageMin = 1000
+	    ageMax = 3000
+	    position = 0, 0, 0
+	    positionVar = 50, 50, 0
+	    velocity = 0.2, 0.2, 0.2
+	    velocityVar = 1, 1, 1	   
+	    rotationPerParticleSpeedMin = -1.5
+	    rotationPerParticleSpeedMax = 1.5
+	    orbitPosition = true
+	    orbitVelocity = true
+	    orbitAcceleration = false
+    }
+    
+    //action
+    Actions
+    {
+			test = 1000
+			
+			ForcePSA
+			{
+			   name = forcePSA1
+			   force = 0, 0.5, 0			
+			}		
+			
+			TransformPSA
+			{
+			   name = transformPSA1
+			   
+			   endSize = 20.0
+			   sizeRate = 2.0		
+			
+			}			
+		
+			
+			TintPSA
+			{			   
+			   name = tintPSA1
+			   period = 1.0
+			   Tints
+			   {
+			     Tint
+			     {
+			       time = 0
+			       color = 0.625,1.0,0.5859,1.0
+			     }
+			     Tint
+			     {
+			       time = 5000
+			       color = 0.28125,0.28125,0.28125,0.5
+			     }
+			     Tint
+			     {
+			       time = 10000
+			       color = 0.28125,0.28125,0.28125,0.5
+			     }
+			   }			   
+			}			
+				
+				
+    }
+    
+    
+}

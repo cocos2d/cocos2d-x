@@ -1,0 +1,33 @@
+material lighting
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = shaders/lineRender.vsh
+            fragmentShader = shaders/lineRender.fsh
+
+					
+            sampler u_texture
+            {
+                path = sceneEffect/lighting.png
+                mipmap = false
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = LINEAR
+                magFilter = LINEAR
+            }
+            renderState
+            {
+			    
+		depthWrite = false
+                cullFace = false
+                depthTest = true
+		blend = true
+		srcBlend = SRC_ALPHA
+                dstBlend = ONE
+
+            }
+        }
+    }
+}

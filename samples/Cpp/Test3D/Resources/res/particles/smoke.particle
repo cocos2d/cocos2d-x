@@ -1,0 +1,37 @@
+particle chimney-smoke
+{
+    sprite 
+    {
+		path = res/smoke.png
+        width = 64
+        height = 64
+        blending = ADDITIVE
+		animated = false
+        looped = false
+		frameCount = 1
+	    frameRandomOffset = 0
+        frameDuration = 0
+    }
+
+    particleCountMax = 5000
+    emissionRate = 20
+    ellipsoid = false
+    sizeStartMin = 3.5
+    sizeStartMax = 3.5
+    sizeEndMin = 15
+    sizeEndMax = 15
+    energyMin = 4000
+    energyMax = 5000
+    colorStart = 0.5, 0.5, 0.5, 1
+    colorStartVar = 0, 0, 0, 0
+    colorEnd = 1, 0, 0, 0
+    colorEndVar = 0, 0.0, 0.0, 0.0
+    position = 0, 0, 0
+    positionVar = 0, 0, 0
+    velocity = 2.5, 5, 0
+    velocityVar = 0, 0, 0
+    acceleration = -10, 5, 0
+    accelerationVar = 2.5, 5, 0
+    rotationPerParticleSpeedMin = -1.5
+    rotationPerParticleSpeedMax = 1.5
+}

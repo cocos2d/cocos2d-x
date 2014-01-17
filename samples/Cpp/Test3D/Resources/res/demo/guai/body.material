@@ -1,0 +1,38 @@
+material 
+{
+
+	technique Technique0
+	{
+
+		pass Pass0
+		{
+			vertexShader = shaders/textured.vsh
+			fragmentShader = shaders/textured.fsh
+			defines = SKINNING_JOINT_COUNT 49
+			u_diffuseColor = 1,1,1,1
+
+			sampler u_diffuseTexture
+			{
+				path = demo/guai/guai.png
+				mipmap = true
+				wrapS = REPEAT
+				wrapT = REPEAT
+				minFilter = LINEAR_MIPMAP_LINEAR
+				magFilter = LINEAR
+			}
+
+			renderState 
+			{
+				blend = true
+				srcBlend = SRC_ALPHA
+				dstBlend = ONE_MINUS_SRC_ALPHA
+				depthTest = true
+				depthWrite = true
+			}
+
+		}
+
+	}
+
+}
+

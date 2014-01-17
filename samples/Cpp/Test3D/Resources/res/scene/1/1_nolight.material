@@ -1,0 +1,36 @@
+material texturedflat
+{   
+ 
+
+    technique
+    {		
+		pass
+        {			
+			u_diffuseColor = 0.7, 0.7, 0.7, 1.0
+			u_transColor = 0.65, 0.5, 0.3
+			u_specularPower = 5.0, 5.0, 5.0, 150.0;
+            vertexShader = shaders/texture.vsh
+            fragmentShader = shaders/texture.fsh
+			
+
+			 sampler u_diffuseTexture
+			{
+				path = scene/1/ChangJing_DiMian.png
+				mipmap = false
+				wrapS = CLAMP
+				wrapT = CLAMP
+				minFilter = LINEAR
+				magFilter = LINEAR
+			}
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+				depthWrite = true
+				blend = false
+            }
+        }
+    }    
+
+}

@@ -1,0 +1,70 @@
+Particle particle system
+{
+	particleCountMax = 100
+
+	Render particle render
+	{
+		texture = particles/bubble2.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 18
+		ellipsoid = true
+		sizeStartMin = 0
+		sizeStartMax = 0
+		ageMin = 0
+		ageMax = 3500
+		position = 0,0,0
+		positionVar = 3,10,2
+		velocity = 0,0,0
+		velocityVar = 3,15,0
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 2
+		rotationSpeedMax = 4
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 3
+			sizeRate = 0.6
+		}
+
+		ForcePSA ForcePSA
+		{
+			name = forceAction
+			force = -2,0,-6
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 0
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 0.52549,0.760784,1,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+

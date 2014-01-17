@@ -1,0 +1,64 @@
+Particle particle system
+{
+	particleCountMax = 100
+
+	Render particle render
+	{
+		texture = particles/xingguang_bai.png
+	}
+
+	Emitter emitter
+	{
+		emissionRate = 18
+		ellipsoid = true
+		sizeStartMin = 0.06
+		sizeStartMax = 0.15
+		ageMin = 100
+		ageMax = 1000
+		position = 0,0,0
+		positionVar = 3,3,3
+		velocity = 0.1,0.1,0.1
+		velocityVar = 0.1,0.1,0.1
+		rotationPerParticleSpeedMin = 0
+		rotationPerParticleSpeedMax = 0
+		rotationSpeedMin = 0
+		rotationSpeedMax = 0
+		rotationAxis = 0,0,0
+		rotationAxisVar = 0,0,0
+		orbitPosition = true
+		orbitVelocity = true
+		orbitAcceleration = false
+	}
+
+	Actions action
+	{
+
+		TransformPSA TransformPSA
+		{
+			name = transformPSA1
+			endSize = 15
+			sizeRate = 4
+		}
+
+		TintPSA TintPSA
+		{
+			name = tintAction
+			period = 0
+
+			Tints Tints
+			{
+
+				Tint Tint
+				{
+					time = 0
+					color = 1,1,1,1
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
