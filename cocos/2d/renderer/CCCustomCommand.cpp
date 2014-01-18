@@ -42,7 +42,7 @@ CustomCommand::~CustomCommand()
 
 }
 
-void CustomCommand::execute()
+void CustomCommand::execute() const
 {
     if(func)
     {
