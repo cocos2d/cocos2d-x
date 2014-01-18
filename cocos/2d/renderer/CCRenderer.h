@@ -49,7 +49,7 @@ public:
     void push_back(RenderCommand* command);
     ssize_t size() const;
     void sort();
-    const RenderCommand* operator[](ssize_t index) const;
+    RenderCommand* operator[](ssize_t index) const;
     void clear();
 
 protected:

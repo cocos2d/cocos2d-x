@@ -1,10 +1,11 @@
-cocos2d-x-3.0final ?.? ?
+cocos2d-x-3.0beta2 ?.? ?
 [All]
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
      [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
      [NEW]          Label: Integrates LabelAtlas into new Label.
+     [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
      [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
      
