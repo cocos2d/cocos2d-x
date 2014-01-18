@@ -32,9 +32,9 @@ CustomCommand::CustomCommand()
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
-void CustomCommand::init(float depth)
+void CustomCommand::init(float globalOrder)
 {
-    _depth = depth;
+    _globalOrder = globalOrder;
 }
 
 CustomCommand::~CustomCommand()
@@ -42,7 +42,7 @@ CustomCommand::~CustomCommand()
 
 }
 
-void CustomCommand::execute() const
+void CustomCommand::execute()
 {
     if(func)
     {

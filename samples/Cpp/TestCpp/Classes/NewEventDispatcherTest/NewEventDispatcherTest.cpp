@@ -166,11 +166,11 @@ void TouchableSpriteTest::onEnter()
         target->setOpacity(255);
         if (target == sprite2)
         {
-            sprite1->setZOrder(100);
+            sprite1->setLocalZOrder(100);
         }
         else if(target == sprite1)
         {
-            sprite1->setZOrder(0);
+            sprite1->setLocalZOrder(0);
         }
     };
     
