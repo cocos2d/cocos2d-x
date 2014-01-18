@@ -152,7 +152,7 @@ void AtlasNode::draw(void)
 
     auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _quadCommand.init(0,
+    _quadCommand.init(
               _vertexZ,
               _textureAtlas->getTexture()->getName(),
               shader,

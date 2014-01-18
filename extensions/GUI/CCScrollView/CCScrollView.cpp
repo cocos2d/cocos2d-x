@@ -494,7 +494,7 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
 
 void ScrollView::beforeDraw()
 {
-    _beforeDrawCommand.init(0, _vertexZ);
+    _beforeDrawCommand.init(_vertexZ);
     _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
 }
@@ -529,7 +529,7 @@ void ScrollView::onBeforeDraw()
 
 void ScrollView::afterDraw()
 {
-    _afterDrawCommand.init(0, _vertexZ);
+    _afterDrawCommand.init(_vertexZ);
     _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
 }

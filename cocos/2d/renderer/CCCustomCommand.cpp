@@ -28,32 +28,18 @@ NS_CC_BEGIN
 
 CustomCommand::CustomCommand()
 : func(nullptr)
-, _viewport(0)
-, _depth(0)
 {
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
-void CustomCommand::init(int viewport, int32_t depth)
+void CustomCommand::init(float depth)
 {
-    _viewport = viewport;
     _depth = depth;
 }
 
 CustomCommand::~CustomCommand()
 {
 
-}
-
-int64_t CustomCommand::generateID()
-{
-    _id = 0;
-
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 // translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
 }
 
 void CustomCommand::execute()

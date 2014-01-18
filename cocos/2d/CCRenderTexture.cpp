@@ -322,7 +322,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     this->begin();
 
     //clear screen
-    _beginWithClearCommand.init(0, _vertexZ);
+    _beginWithClearCommand.init(_vertexZ);
     _beginWithClearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
     Director::getInstance()->getRenderer()->addCommand(&_beginWithClearCommand);
 }
@@ -340,7 +340,7 @@ void RenderTexture::clearDepth(float depthValue)
 
     this->begin();
 
-    _clearDepthCommand.init(0, _vertexZ);
+    _clearDepthCommand.init(_vertexZ);
     _clearDepthCommand.func = CC_CALLBACK_0(RenderTexture::onClearDepth, this);
 
     Director::getInstance()->getRenderer()->addCommand(&_clearDepthCommand);
@@ -605,7 +605,7 @@ void RenderTexture::draw()
         begin();
 
         //clear screen
-        _clearCommand.init(0, _vertexZ);
+        _clearCommand.init(_vertexZ);
         _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
         Director::getInstance()->getRenderer()->addCommand(&_clearCommand);
 
@@ -648,13 +648,13 @@ void RenderTexture::begin()
                                  (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
     kmGLMultMatrix(&orthoMatrix);
 
-    _groupCommand.init(0, _vertexZ);
+    _groupCommand.init(_vertexZ);
 
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beginCommand.init(0, _vertexZ);
+    _beginCommand.init(_vertexZ);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
     Director::getInstance()->getRenderer()->addCommand(&_beginCommand);
@@ -662,7 +662,7 @@ void RenderTexture::begin()
 
 void RenderTexture::end()
 {
-    _endCommand.init(0, _vertexZ);
+    _endCommand.init(_vertexZ);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Renderer *renderer = Director::getInstance()->getRenderer();
