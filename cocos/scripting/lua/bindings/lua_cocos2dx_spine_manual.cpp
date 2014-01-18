@@ -94,7 +94,7 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertable(L,1,"SkeletonAnimation",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertable(L,1,"sp.SkeletonAnimation",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     argc = lua_gettop(L) - 1;
@@ -115,7 +115,7 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
         
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)tolua_ret,"SkeletonAnimation");
+        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)tolua_ret,"sp.SkeletonAnimation");
         return 1;
     } else if (3 == argc)
     {
@@ -135,7 +135,7 @@ static int lua_cocos2dx_CCSkeletonAnimation_createWithFile(lua_State* L)
 
         int nID = (tolua_ret) ? (int)tolua_ret->_ID : -1;
         int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
-        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)tolua_ret,"SkeletonAnimation");
+        toluafix_pushusertype_ccobject(L, nID, pLuaID, (void*)tolua_ret,"sp.SkeletonAnimation");
         return 1;
     }
     
@@ -153,7 +153,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_registerScriptHandler00(lua_State* tolua_S
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
          !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -180,7 +180,7 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterScriptHandler00(lua_State* tolua
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -205,7 +205,7 @@ static int tolua_Cocos2d_CCSkeletonAnimation_setTimeScale00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
          !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -232,7 +232,7 @@ static int tolua_Cocos2d_CCSkeletonAnimation_setDebugSlots00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
          !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -259,7 +259,7 @@ static int tolua_Cocos2d_CCSkeletonAnimation_setDebugBones00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
          !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -286,7 +286,7 @@ static int tolua_Cocos2d_CCSkeletonAnimation_setPremultipliedAlpha00(lua_State* 
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"SkeletonAnimation",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"sp.SkeletonAnimation",0,&tolua_err) ||
         !tolua_isboolean(tolua_S,2,0,&tolua_err) ||
          !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
@@ -311,13 +311,13 @@ tolua_lerror:
 
 static int tolua_spine_SkeletoneAnimation_setBlendFunc(lua_State* tolua_S)
 {
-    return tolua_cocos2dx_setBlendFunc<spine::SkeletonAnimation>(tolua_S,"SkeletonAnimation");
+    return tolua_cocos2dx_setBlendFunc<spine::SkeletonAnimation>(tolua_S,"sp.SkeletonAnimation");
 }
 
 
 static void extendCCSkeletonAnimation(lua_State* L)
 {
-    lua_pushstring(L, "SkeletonAnimation");
+    lua_pushstring(L, "sp.SkeletonAnimation");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
