@@ -555,7 +555,7 @@ void ProgressTimer::draw()
     if( ! _vertexData || ! _sprite)
         return;
 
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_vertexZ);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

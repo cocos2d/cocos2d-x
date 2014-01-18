@@ -33,7 +33,9 @@
 
 NS_CC_BEGIN
 
-//TODO make RenderCommand inherent from Object
+/** Base class of the RenderCommand hierarchy.
+ The Renderer knows how to render RenderCommands.
+ */
 class RenderCommand
 {
 public:
@@ -47,10 +49,8 @@ public:
         GROUP_COMMAND,
     };
 
-    virtual int64_t generateID() = 0;
-
     /** Get Render Command Id */
-    inline int64_t getID() { return _id; }
+    inline float getDepth() { return _depth; }
 
     /** Returns the Command type */
     inline Type getType() { return _type; }
@@ -61,9 +61,11 @@ protected:
 
     void printID();
 
-    //Generated IDs
-    int64_t _id; /// used for sorting render commands
+    // Type used in order to avoid dynamic cast, faster
     Type _type;
+
+    // commands are sort by depth
+    float _depth;
 };
 
 NS_CC_END

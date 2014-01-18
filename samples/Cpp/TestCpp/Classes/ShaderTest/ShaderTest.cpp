@@ -193,7 +193,7 @@ void ShaderNode::setPosition(const Point &newPosition)
 
 void ShaderNode::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_vertexZ);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -526,7 +526,7 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_vertexZ);
     _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

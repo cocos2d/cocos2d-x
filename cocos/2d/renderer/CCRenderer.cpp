@@ -185,8 +185,6 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
 {
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-
-    command->generateID();
     _renderGroups[renderQueue].push_back(command);
 }
 
@@ -209,7 +207,7 @@ int Renderer::createRenderQueue()
 
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 {
-    return a->getID() < b->getID();
+    return a->getDepth() < b->getDepth();
 }
 
 void Renderer::render()

@@ -1067,7 +1067,7 @@ void TestColliderDetector::update(float delta)
 }
 void TestColliderDetector::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_vertexZ);
     _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -1108,7 +1108,7 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_vertexZ);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     

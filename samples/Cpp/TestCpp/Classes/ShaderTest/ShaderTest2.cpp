@@ -178,7 +178,7 @@ void ShaderSprite::initShader()
 
 void ShaderSprite::draw()
 {
-    _renderCommand.init(0, _vertexZ);
+    _renderCommand.init(_vertexZ);
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
     
