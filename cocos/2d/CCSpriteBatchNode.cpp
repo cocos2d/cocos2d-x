@@ -357,7 +357,7 @@ void SpriteBatchNode::draw()
         child->updateTransform();
 
     _batchCommand.init(
-                       _vertexZ,
+                       _globalZOrder,
                        _textureAtlas->getTexture()->getName(),
                        _shaderProgram,
                        _blendFunc,

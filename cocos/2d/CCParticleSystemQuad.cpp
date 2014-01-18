@@ -439,7 +439,7 @@ void ParticleSystemQuad::draw()
 
         auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-        _quadCommand.init(_vertexZ, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), shader, _blendFunc, _quads, _particleIdx, _modelViewTransform);
         Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
     }
 

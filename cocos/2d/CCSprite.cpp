@@ -670,7 +670,7 @@ void Sprite::updateTransform(void)
 void Sprite::draw(void)
 {
     //TODO implement z order
-    _quadCommand.init(_vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
 //    if(culling())
     {
@@ -769,13 +769,8 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != nullptr, "");
-    CCASSERT(_children.contains(child), "");
-
-    if (zOrder == child->getZOrder())
-    {
-        return;
-    }
+    CCASSERT(child != nullptr, "child must be non null");
+    CCASSERT(_children.contains(child), "child does not belong to this");
 
     if( _batchNode && ! _reorderChildDirty)
     {
