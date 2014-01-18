@@ -45,7 +45,7 @@ public:
 
     void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
 
-    void execute() const;
+    void execute();
 
 protected:
     int32_t _materialID;
