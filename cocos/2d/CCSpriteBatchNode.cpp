@@ -356,7 +356,7 @@ void SpriteBatchNode::draw()
     for(const auto &child: _children)
         child->updateTransform();
 
-    _batchCommand.init(0,
+    _batchCommand.init(
                        _vertexZ,
                        _textureAtlas->getTexture()->getName(),
                        _shaderProgram,

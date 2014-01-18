@@ -225,7 +225,7 @@ void Skin::draw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
 
     //TODO implement z order
-    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    _quadCommand.init(_vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
     Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
