@@ -34,21 +34,21 @@
 #include "CCEventDispatcher.h"
 #include "CCEventListenerCustom.h"
 #include "CCEventType.h"
-#include <algorithm>    // for std::stable_sort
+#include <algorithm>
 
 NS_CC_BEGIN
 
 bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
 {
-    return a->getDepth() < b->getDepth();
+    return a->getGlobalOrder() < b->getGlobalOrder();
 }
 
 void RenderQueue::push_back(RenderCommand* command)
 {
-    float z = command->getDepth();
+    float z = command->getGlobalOrder();
     if(z < 0)
         _queueNegZ.push_back(command);
-    if(z > 0)
+    else if(z > 0)
         _queuePosZ.push_back(command);
     else
         _queue0.push_back(command);
@@ -66,7 +66,7 @@ void RenderQueue::sort()
     std::sort(std::begin(_queuePosZ), std::end(_queuePosZ), compareRenderCommand);
 }
 
-const RenderCommand* RenderQueue::operator[](ssize_t index) const
+RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
     if(index < _queueNegZ.size())
         return _queueNegZ[index];
@@ -295,7 +295,7 @@ void Renderer::render()
                 
                 if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
-                    auto cmd = static_cast<const QuadCommand*>(command);
+                    auto cmd = static_cast<QuadCommand*>(command);
                     ssize_t cmdQuadCount = cmd->getQuadCount();
                     
                     //Batch quads
@@ -317,19 +317,19 @@ void Renderer::render()
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
-                    auto cmd = static_cast<const CustomCommand*>(command);
+                    auto cmd = static_cast<CustomCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::BATCH_COMMAND)
                 {
                     flush();
-                    auto cmd = static_cast<const BatchCommand*>(command);
+                    auto cmd = static_cast<BatchCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
                     flush();
-                    auto cmd = static_cast<const GroupCommand*>(command);
+                    auto cmd = static_cast<GroupCommand*>(command);
                     
                     _renderStack.top().currentIndex = i + 1;
                     
@@ -467,7 +467,7 @@ void Renderer::drawBatchedQuads()
         auto command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
         {
-            auto cmd = static_cast<const QuadCommand*>(command);
+            auto cmd = static_cast<QuadCommand*>(command);
             if(_lastMaterialID != cmd->getMaterialID())
             {
                 //Draw quads

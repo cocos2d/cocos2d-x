@@ -503,7 +503,7 @@ void TestChangeZorder::changeZorder(float dt)
 
     Node *node = getChildByTag(currentTag);
 
-    node->setZOrder(CCRANDOM_0_1() * 3);
+    node->setLocalZOrder(CCRANDOM_0_1() * 3);
 
     currentTag ++;
     currentTag = currentTag % 3;
@@ -637,7 +637,7 @@ void TestParticleDisplay::onEnter()
     bone->addDisplay(p1, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
-    bone->setZOrder(100);
+    bone->setLocalZOrder(100);
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a3");
 
@@ -645,7 +645,7 @@ void TestParticleDisplay::onEnter()
     bone->addDisplay(p2, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
-    bone->setZOrder(100);
+    bone->setLocalZOrder(100);
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a30");
 }
@@ -1067,7 +1067,7 @@ void TestColliderDetector::update(float delta)
 }
 void TestColliderDetector::draw()
 {
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -1108,7 +1108,7 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
