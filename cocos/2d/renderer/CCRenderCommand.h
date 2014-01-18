@@ -50,10 +50,10 @@ public:
     };
 
     /** Get Render Command Id */
-    inline float getDepth() { return _depth; }
+    inline float getDepth() const { return _depth; }
 
     /** Returns the Command type */
-    inline Type getType() { return _type; }
+    inline Type getType() const { return _type; }
 
 protected:
     RenderCommand();

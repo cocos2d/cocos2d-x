@@ -101,7 +101,7 @@ void QuadCommand::generateMaterialID()
             | (uint32_t)_textureID << 0;
 }
 
-void QuadCommand::useMaterial()
+void QuadCommand::useMaterial() const
 {
     _shader->use();
 
