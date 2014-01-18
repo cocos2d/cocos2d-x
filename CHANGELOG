@@ -6,7 +6,8 @@ cocos2d-x-3.0final ?.? ?
      [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
      [NEW]          Label: Integrates LabelAtlas into new Label.
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
-
+     [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
+     
      [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.
      [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
      [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
