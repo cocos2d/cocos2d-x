@@ -41,7 +41,7 @@ public:
 
     void init(float depth);
 
-    void execute() const;
+    void execute();
 
     inline bool isTranslucent() { return true; }
     std::function<void()> func;

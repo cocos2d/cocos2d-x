@@ -67,6 +67,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
     CL(NodeNonOpaqueTest),
+    CL(NodeGlobalZValueTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -905,6 +906,55 @@ std::string NodeNonOpaqueTest::subtitle() const
     return "Node rendered with GL_BLEND enabled";
 }
 
+/// NodeGlobalZValueTest
+
+NodeGlobalZValueTest::NodeGlobalZValueTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    for (int i = 0; i < 9; i++)
+    {
+        Sprite *sprite;
+        auto parent = Node::create();
+        if(i==4) {
+            sprite = Sprite::create("Images/grossinis_sister2.png");
+            _sprite = sprite;
+            _sprite->setGlobalZOrder(-1);
+        }
+        else
+            sprite = Sprite::create("Images/grossinis_sister1.png");
+
+        parent->addChild(sprite);
+        this->addChild(parent);
+
+        float w = sprite->getContentSize().width;
+        sprite->setPosition(s.width/2 - w*0.7*(i-5), s.height/2);
+    }
+
+    this->scheduleUpdate();
+}
+
+void NodeGlobalZValueTest::update(float dt)
+{
+    static float accum = 0;
+
+    accum += dt;
+    if( accum > 1) {
+        float z = _sprite->getGlobalZOrder();
+        _sprite->setGlobalZOrder(-z);
+        accum = 0;
+    }
+}
+
+std::string NodeGlobalZValueTest::title() const
+{
+    return "Global Z Value";
+}
+
+std::string NodeGlobalZValueTest::subtitle() const
+{
+    return "Center Sprite should change go from foreground to background";
+}
+
 
 //
 // MySprite: Used by CameraTest1 and CameraTest2
@@ -932,7 +982,7 @@ protected:
 
 void MySprite::draw()
 {
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
