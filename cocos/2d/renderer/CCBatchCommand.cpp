@@ -54,7 +54,7 @@ BatchCommand::~BatchCommand()
 {
 }
 
-void BatchCommand::execute()
+void BatchCommand::execute() const
 {
     // Set material
     _shader->use();

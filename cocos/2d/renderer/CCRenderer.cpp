@@ -37,9 +37,65 @@
 #include <algorithm>    // for std::stable_sort
 
 NS_CC_BEGIN
-using namespace std;
+
+bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
+{
+    return a->getDepth() < b->getDepth();
+}
+
+void RenderQueue::push_back(RenderCommand* command)
+{
+    float z = command->getDepth();
+    if(z < 0)
+        _queueNegZ.push_back(command);
+    if(z > 0)
+        _queuePosZ.push_back(command);
+    else
+        _queue0.push_back(command);
+}
+
+ssize_t RenderQueue::size() const
+{
+    return _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
+}
+
+void RenderQueue::sort()
+{
+    // Don't sort _queue0, it already comes sorted
+    std::sort(std::begin(_queueNegZ), std::end(_queueNegZ), compareRenderCommand);
+    std::sort(std::begin(_queuePosZ), std::end(_queuePosZ), compareRenderCommand);
+}
+
+const RenderCommand* RenderQueue::operator[](ssize_t index) const
+{
+    if(index < _queueNegZ.size())
+        return _queueNegZ[index];
+
+    index -= _queueNegZ.size();
+
+    if(index < _queue0.size())
+        return _queue0[index];
+
+    index -= _queue0.size();
+
+    if(index < _queuePosZ.size())
+        return _queuePosZ[index];
+
+    CCASSERT(false, "invalid index");
+    return nullptr;
+}
+
+void RenderQueue::clear()
+{
+    _queueNegZ.clear();
+    _queue0.clear();
+    _queuePosZ.clear();
+}
 
 
+//
+//
+//
 #define DEFAULT_RENDER_QUEUE 0
 
 Renderer::Renderer()
@@ -205,11 +261,6 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
-bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
-{
-    return a->getDepth() < b->getDepth();
-}
-
 void Renderer::render()
 {
     //Uncomment this once everything is rendered by new renderer
@@ -221,9 +272,9 @@ void Renderer::render()
     {
         //Process render commands
         //1. Sort render commands based on ID
-        for (auto it = _renderGroups.begin(); it != _renderGroups.end(); ++it)
+        for (auto &renderqueue : _renderGroups)
         {
-            std::stable_sort((*it).begin(), (*it).end(), compareRenderCommand);
+            renderqueue.sort();
         }
         
         while(!_renderStack.empty())
@@ -244,7 +295,7 @@ void Renderer::render()
                 
                 if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
-                    QuadCommand* cmd = static_cast<QuadCommand*>(command);
+                    auto cmd = static_cast<const QuadCommand*>(command);
                     ssize_t cmdQuadCount = cmd->getQuadCount();
                     
                     //Batch quads
@@ -266,19 +317,19 @@ void Renderer::render()
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
                     flush();
-                    CustomCommand* cmd = static_cast<CustomCommand*>(command);
+                    auto cmd = static_cast<const CustomCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::BATCH_COMMAND)
                 {
                     flush();
-                    BatchCommand* cmd = static_cast<BatchCommand*>(command);
+                    auto cmd = static_cast<const BatchCommand*>(command);
                     cmd->execute();
                 }
                 else if(commandType == RenderCommand::Type::GROUP_COMMAND)
                 {
                     flush();
-                    GroupCommand* cmd = static_cast<GroupCommand*>(command);
+                    auto cmd = static_cast<const GroupCommand*>(command);
                     
                     _renderStack.top().currentIndex = i + 1;
                     
@@ -413,10 +464,10 @@ void Renderer::drawBatchedQuads()
     //Start drawing verties in batch
     for(ssize_t i = _firstCommand; i <= _lastCommand; i++)
     {
-        RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
+        auto command = _renderGroups[_renderStack.top().renderQueueID][i];
         if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
         {
-            QuadCommand* cmd = static_cast<QuadCommand*>(command);
+            auto cmd = static_cast<const QuadCommand*>(command);
             if(_lastMaterialID != cmd->getMaterialID())
             {
                 //Draw quads

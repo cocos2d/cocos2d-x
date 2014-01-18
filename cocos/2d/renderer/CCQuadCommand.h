@@ -44,7 +44,7 @@ public:
     void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
-    void useMaterial();
+    void useMaterial() const;
 
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() const { return true; }
