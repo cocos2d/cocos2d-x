@@ -30,4 +30,26 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Classes</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/Classes</locationURI>
+		</link>
+		<link>
+			<name>cocos2dx</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d/cocos</locationURI>
+		</link>
+		<link>
+			<name>extensions</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d/extensions</locationURI>
+		</link>
+		<link>
+			<name>scripting</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d/cocos/scripting</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
