@@ -19,6 +19,7 @@ cocos2d-x-3.0final ?.? ?
      [FIX]          Renderer: QuadCommand::init() does not copy the Quads, it only store a reference making the code faster
      [FIX]          Renderer: Performance improved in Sprite and SpriteBatchNode (and subclasses) sprites in about 20%
      [FIX]          Renderer: When note using VAO, call glBufferData() instead of glBufferSubData().
+     [FIX]          Renderer: Uses a float as key with only the depth. Viewport, opaque are not needed now
      [FIX]          Sprite: removed _hasChildren optimization. It uses !_children.empty() now which is super fast as well
      [FIX]          Tests: TestCpp works with CMake on Windows.
      [FIX]          Tests: Sprites Performance Test has 4 new tests

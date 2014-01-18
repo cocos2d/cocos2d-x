@@ -30,9 +30,7 @@
 NS_CC_BEGIN
 
 BatchCommand::BatchCommand()
-: _viewport(0)
-, _depth(0)
-, _textureID(0)
+: _textureID(0)
 , _blendType(BlendFunc::DISABLE)
 , _textureAtlas(nullptr)
 {
@@ -40,9 +38,8 @@ BatchCommand::BatchCommand()
     _shader = nullptr;
 }
 
-void BatchCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
+void BatchCommand::init(float depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
 {
-    _viewport = viewport;
     _depth = depth;
     _textureID = textureID;
     _blendType = blendType;
@@ -55,59 +52,6 @@ void BatchCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram
 
 BatchCommand::~BatchCommand()
 {
-}
-
-int64_t BatchCommand::generateID()
-{
-    _id = 0;
-
-    //Generate Material ID
-    //TODO fix shader ID generation
-    CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
-    //TODO fix texture ID generation
-    CCASSERT(_textureID < pow(2,18), "TextureID is greater than 2^18");
-
-    //TODO fix blend id generation
-    int blendID = 0;
-    if(_blendType == BlendFunc::DISABLE)
-    {
-        blendID = 0;
-    }
-    else if(_blendType == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        blendID = 1;
-    }
-    else if(_blendType == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        blendID = 2;
-    }
-    else if(_blendType == BlendFunc::ADDITIVE)
-    {
-        blendID = 3;
-    }
-    else
-    {
-        blendID = 4;
-    }
-
-    //TODO Material ID should be part of the ID
-    //
-    // Temporal hack (later, these 32-bits should be packed in 24-bits
-    //
-    // +---------------------+-------------------+----------------------+
-    // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
-    // +---------------------+-------------------+----------------------+
-
-    _materialID = (int32_t)_shader->getProgram() << 22
-            | (int32_t)blendID << 18
-            | (int32_t)_textureID << 0;
-
-    //Generate RenderCommandID
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 //translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
 }
 
 void BatchCommand::execute()

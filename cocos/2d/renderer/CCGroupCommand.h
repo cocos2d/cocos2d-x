@@ -58,21 +58,12 @@ public:
     
 public:
 
-    void init(int viewport, int32_t depth);
-
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |                  |
-    // |   3 bits |    1 bit |     |    24 bits     |                  |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID() override;
+    void init(float depth);
 
     inline bool isTranslucent() {return true;}
     inline int getRenderQueueID() {return _renderQueueID;}
     
 protected:
-    int _viewport;
-    int32_t _depth;
     int _renderQueueID;
 };
 

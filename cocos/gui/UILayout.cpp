@@ -210,18 +210,18 @@ void Layout::stencilClippingVisit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
     
-    _groupCommand.init(0,_vertexZ);
+    _groupCommand.init(_vertexZ);
     renderer->addCommand(&_groupCommand);
     
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
-    _beforeVisitCmdStencil.init(0,_vertexZ);
+    _beforeVisitCmdStencil.init(_vertexZ);
     _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
     renderer->addCommand(&_beforeVisitCmdStencil);
     
     _clippingStencil->visit();
     
-    _afterDrawStencilCmd.init(0,_vertexZ);
+    _afterDrawStencilCmd.init(_vertexZ);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
     
@@ -251,7 +251,7 @@ void Layout::stencilClippingVisit()
         this->draw();
     }
     
-    _afterVisitCmdStencil.init(0,_vertexZ);
+    _afterVisitCmdStencil.init(_vertexZ);
     _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
     renderer->addCommand(&_afterVisitCmdStencil);
     
@@ -336,13 +336,13 @@ void Layout::scissorClippingVisit()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    _beforeVisitCmdScissor.init(0, _vertexZ);
+    _beforeVisitCmdScissor.init(_vertexZ);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
 
     Node::visit();
     
-    _afterVisitCmdScissor.init(0, _vertexZ);
+    _afterVisitCmdScissor.init(_vertexZ);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
     renderer->addCommand(&_afterVisitCmdScissor);
 }
