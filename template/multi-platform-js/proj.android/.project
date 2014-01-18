@@ -61,5 +61,10 @@
 			<type>2</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d/cocos/scripting</locationURI>
 		</link>
+		<link>
+			<name>libcocos2d</name>
+			<type>2</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/cocos2d/cocos/2d/platform/android/java/src</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
