@@ -503,7 +503,7 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 }
 
-int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,std::vector<Object *> result)
+int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,std::vector<Object *>& result)
 {
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {
