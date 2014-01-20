@@ -28,6 +28,7 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
+#include "LocalStorage.h"
 #include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -35,7 +36,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <string>
 #include "jni.h"
 #include "jni/JniHelper.h"
 
