@@ -241,7 +241,7 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

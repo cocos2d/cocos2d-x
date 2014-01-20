@@ -249,6 +249,20 @@ protected:
     NodeNonOpaqueTest();
 };
 
+class NodeGlobalZValueTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeGlobalZValueTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual void update(float dt) override;
+
+protected:
+    NodeGlobalZValueTest();
+    Sprite *_sprite;
+};
+
 class CocosNodeTestScene : public TestScene
 {
 public:

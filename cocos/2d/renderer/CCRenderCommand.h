@@ -50,10 +50,10 @@ public:
     };
 
     /** Get Render Command Id */
-    inline float getDepth() { return _depth; }
+    inline float getGlobalOrder() const { return _globalOrder; }
 
     /** Returns the Command type */
-    inline Type getType() { return _type; }
+    inline Type getType() const { return _type; }
 
 protected:
     RenderCommand();
@@ -65,7 +65,7 @@ protected:
     Type _type;
 
     // commands are sort by depth
-    float _depth;
+    float _globalOrder;
 };
 
 NS_CC_END

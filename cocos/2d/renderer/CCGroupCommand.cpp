@@ -91,9 +91,9 @@ GroupCommand::GroupCommand()
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
 
-void GroupCommand::init(float depth)
+void GroupCommand::init(float globalOrder)
 {
-    _depth = depth;
+    _globalOrder = globalOrder;
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }

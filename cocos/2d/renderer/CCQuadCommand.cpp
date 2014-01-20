@@ -38,9 +38,9 @@ QuadCommand::QuadCommand()
     _quads = nullptr;
 }
 
-void QuadCommand::init(float depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
 {
-    _depth = depth;
+    _globalOrder = globalOrder;
     _textureID = textureID;
     _blendType = blendType;
     _shader = shader;
@@ -101,7 +101,7 @@ void QuadCommand::generateMaterialID()
             | (uint32_t)_textureID << 0;
 }
 
-void QuadCommand::useMaterial()
+void QuadCommand::useMaterial() const
 {
     _shader->use();
 

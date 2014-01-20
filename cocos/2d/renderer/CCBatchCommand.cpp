@@ -38,9 +38,9 @@ BatchCommand::BatchCommand()
     _shader = nullptr;
 }
 
-void BatchCommand::init(float depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
 {
-    _depth = depth;
+    _globalOrder = globalOrder;
     _textureID = textureID;
     _blendType = blendType;
     _shader = shader;

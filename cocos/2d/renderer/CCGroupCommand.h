@@ -56,12 +56,9 @@ public:
     GroupCommand();
     ~GroupCommand();
     
-public:
-
     void init(float depth);
 
-    inline bool isTranslucent() {return true;}
-    inline int getRenderQueueID() {return _renderQueueID;}
+    inline int getRenderQueueID() const {return _renderQueueID;}
     
 protected:
     int _renderQueueID;

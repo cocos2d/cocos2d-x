@@ -565,7 +565,7 @@ void LayerColor::updateColor()
 
 void LayerColor::draw()
 {
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     

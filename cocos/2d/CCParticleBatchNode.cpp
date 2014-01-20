@@ -197,7 +197,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     _children.insert(pos, child);
 
     child->setTag(aTag);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -264,7 +264,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
@@ -383,7 +383,7 @@ void ParticleBatchNode::draw(void)
     }
 
     _batchCommand.init(
-                       _vertexZ,
+                       _globalZOrder,
                        _textureAtlas->getTexture()->getName(),
                        _shaderProgram,
                        _blendFunc,

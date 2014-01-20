@@ -131,7 +131,7 @@ void Skeleton::draw()
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
     
-    _customCommand.init(_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skeleton::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
