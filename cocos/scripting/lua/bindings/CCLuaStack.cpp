@@ -151,7 +151,6 @@ bool LuaStack::init(void)
     register_all_cocos2dx_extension(_state);
     register_all_cocos2dx_deprecated(_state);
     register_cocos2dx_extension_CCBProxy(_state);
-    register_cocos2dx_event_releated(_state);
     tolua_opengl_open(_state);
     register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);

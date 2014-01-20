@@ -28,9 +28,9 @@
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
+: _type(RenderCommand::Type::UNKNOWN_COMMAND)
+, _globalOrder(0)
 {
-    _id = 0;
-    _type = RenderCommand::Type::UNKNOWN_COMMAND;
 }
 
 RenderCommand::~RenderCommand()
@@ -57,9 +57,7 @@ void printBits(ssize_t const size, void const * const ptr)
 
 void RenderCommand::printID()
 {
-    printf("CommandID: ");
-    printBits(sizeof(_id), &_id);
-    printf("\n");
+    printf("Command Depth: %f\n", _globalOrder);
 }
 
 NS_CC_END

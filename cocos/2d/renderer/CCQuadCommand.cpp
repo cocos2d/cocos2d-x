@@ -29,9 +29,7 @@
 NS_CC_BEGIN
 
 QuadCommand::QuadCommand()
-:_viewport(0)
-,_depth(0)
-,_textureID(0)
+:_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
 ,_quadsCount(0)
 {
@@ -40,10 +38,9 @@ QuadCommand::QuadCommand()
     _quads = nullptr;
 }
 
-void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
 {
-    _viewport = viewport;
-    _depth = depth;
+    _globalOrder = globalOrder;
     _textureID = textureID;
     _blendType = blendType;
     _shader = shader;
@@ -52,16 +49,16 @@ void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram*
     _quads = quad;
 
     _mv = mv;
+
+    generateMaterialID();
 }
 
 QuadCommand::~QuadCommand()
 {
 }
 
-int64_t QuadCommand::generateID()
+void QuadCommand::generateMaterialID()
 {
-    _id = 0;
-
     //Generate Material ID
     //TODO fix shader ID generation
     CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
@@ -99,19 +96,12 @@ int64_t QuadCommand::generateID()
     // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
     // +---------------------+-------------------+----------------------+
 
-    _materialID = (int32_t)_shader->getProgram() << 22
-            | (int32_t)blendID << 18
-            | (int32_t)_textureID << 0;
-
-    //Generate RenderCommandID
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 //translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
+    _materialID = (uint32_t)_shader->getProgram() << 22
+            | (uint32_t)blendID << 18
+            | (uint32_t)_textureID << 0;
 }
 
-void QuadCommand::useMaterial()
+void QuadCommand::useMaterial() const
 {
     _shader->use();
 
