@@ -207,9 +207,9 @@ protected:
     enum class DirtyFlag
     {
         NONE = 0,
-        FIXED_PRITORY = 1 << 0,
+        FIXED_PRIORITY = 1 << 0,
         SCENE_GRAPH_PRIORITY = 1 << 1,
-        ALL = FIXED_PRITORY | SCENE_GRAPH_PRIORITY
+        ALL = FIXED_PRIORITY | SCENE_GRAPH_PRIORITY
     };
     
     /** Sets the dirty flag for a specified listener ID */
