@@ -32,6 +32,7 @@
 #include "CCSpriteFrame.h"
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
+#include "CCFont.h"
 
 #define DISTANCEFIELD_ATLAS_FONTSIZE 50
 
