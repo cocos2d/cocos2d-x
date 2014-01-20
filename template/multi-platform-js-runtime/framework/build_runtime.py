@@ -117,12 +117,18 @@ class BuildRuntime:
 
         vsPath = None
         i = 0
-        while True:
-            version = _winreg.EnumKey(vs,i)
-            if float(version) >= 11.0:
-                key = _winreg.OpenKey(vs, r"SxS\VS7")
-                vsPath, type = _winreg.QueryValueEx(key, version)
-            i += 1
+        try:
+            while True:
+                version = _winreg.EnumKey(vs,i)
+                try:
+                    if float(version) >= 11.0:
+                        key = _winreg.OpenKey(vs, r"SxS\VS7")
+                        vsPath, type = _winreg.QueryValueEx(key, version)
+                except:
+                    pass
+                i += 1
+        except WindowsError:
+            pass
 
         if vsPath == None:
             print("Can't find the Visual Studio's path in the regedit")
@@ -130,13 +136,21 @@ class BuildRuntime:
 
         msbuildPath = None
         i = 0
-        while True:
-            version = _winreg.EnumKey(msbuild,i)
-            if float(version) >= 4.0:
-                key = _winreg.OpenKey(msbuild, version)
-                msbuildPath, type = _winreg.QueryValueEx(key, "MSBuildToolsPath")
-
-            i += 1
+        try:
+            while True:
+                version = _winreg.EnumKey(msbuild,i)
+                try:
+                    if float(version) >= 4.0:
+                        key = _winreg.OpenKey(msbuild, version)
+                        msbuildPath, type = _winreg.QueryValueEx(
+                            key, 
+                            "MSBuildToolsPath"
+                        )
+                except:
+                    pass
+                i += 1
+        except WindowsError:
+            pass
 
         if msbuildPath == None:
             print ("Can't find the MSBuildTools' path in the regedit")
