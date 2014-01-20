@@ -25,6 +25,10 @@
 
 #include "CCFontFNT.h"
 #include "CCFontAtlas.h"
+#include "CCLabelBMFont.h"
+#include "CCDirector.h"
+#include "CCTextureCache.h"
+#include "ccUTF8.h"
 
 NS_CC_BEGIN
 

@@ -58,7 +58,6 @@ static const int MAX_LOG_LENGTH = 16*1024;
  @brief Output Debug message.
  */
 void CC_DLL log(const char * format, ...) CC_FORMAT_PRINTF(1, 2);
-void CC_DLL log(const char * format, va_list args);
 
 /** Console is helper class that lets the developer control the game from TCP connection.
  Console will spawn a new thread that will listen to a specified TCP port.
@@ -109,6 +108,9 @@ protected:
     void commandHelp(int fd, const char *command);
     void commandExit(int fd, const char *command);
     void commandSceneGraph(int fd, const char *command);
+    void commandFileUtilsDump(int fd, const char *command);
+    void commandConfig(int fd, const char *command);
+    void commandTextures(int fd, const char *command);
 
     // file descriptor: socket, console, etc.
     int _listenfd;

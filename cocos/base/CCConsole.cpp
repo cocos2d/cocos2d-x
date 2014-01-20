@@ -50,6 +50,9 @@
 #include "CCScheduler.h"
 #include "CCScene.h"
 #include "CCPlatformConfig.h"
+#include "platform/CCFileUtils.h"
+#include "CCConfiguration.h"
+#include "CCTextureCache.h"
 
 NS_CC_BEGIN
 
@@ -61,7 +64,7 @@ NS_CC_BEGIN
 static ssize_t mydprintf(int sock, const char *format, ...)
 {
     va_list args;
-	char buf[1024];
+	char buf[16386];
 
 	va_start(args, format);
 	vsnprintf(buf, sizeof(buf), format, args);
@@ -92,6 +95,33 @@ static void printSceneGraphBoot(int fd)
     mydprintf(fd, "Total Nodes: %d\n", total);
 }
 
+static void printFileUtils(int fd)
+{
+    FileUtils* fu = FileUtils::getInstance();
+
+    mydprintf(fd, "\nSearch Paths:\n");
+    auto list = fu->getSearchPaths();
+    for( const auto &item : list) {
+        mydprintf(fd, "%s\n", item.c_str());
+    }
+
+    mydprintf(fd, "\nResolution Order:\n");
+    list = fu->getSearchResolutionsOrder();
+    for( const auto &item : list) {
+        mydprintf(fd, "%s\n", item.c_str());
+    }
+
+    mydprintf(fd, "\nWriteble Path:\n");
+    mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
+
+    mydprintf(fd, "\nFull Path Cache:\n");
+    auto cache = fu->getFullPathCache();
+    for( const auto &item : cache) {
+        mydprintf(fd, "%s -> %s\n", item.first.c_str(), item.second.c_str());
+    }
+}
+
+
 #if defined(__MINGW32__)
 static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 {
@@ -114,24 +144,7 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 // Free functions to log
 //
 
-// XXX: Deprecated
-void CCLog(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(format, args);
-    va_end(args);
-}
-
-void log(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    log(format, args);
-    va_end(args);
-}
-
-void log(const char *format, va_list args)
+static void _log(const char *format, va_list args)
 {
     char buf[MAX_LOG_LENGTH];
 
@@ -146,7 +159,7 @@ void log(const char *format, va_list args)
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
-    
+
     WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
     printf("%s\n", buf);
 
@@ -159,6 +172,22 @@ void log(const char *format, va_list args)
     Director::getInstance()->getConsole()->log(buf);
 }
 
+// XXX: Deprecated
+void CCLog(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _log(format, args);
+    va_end(args);
+}
+
+void log(const char * format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    _log(format, args);
+    va_end(args);
+}
 
 //
 // Console code
@@ -174,6 +203,7 @@ Console::Console()
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
 	Command commands[] = {     
+        { "config", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
         { "debug msg on", [&](int fd, const char* command) {
             _sendDebugStrings = true;
         } },
@@ -181,6 +211,7 @@ Console::Console()
             _sendDebugStrings = false;
         } },
         { "exit", std::bind(&Console::commandExit, this, std::placeholders::_1, std::placeholders::_2) },
+        { "fileutils dump", std::bind(&Console::commandFileUtilsDump, this, std::placeholders::_1, std::placeholders::_2) },
         { "fps on", [](int fd, const char* command) {
             Director *dir = Director::getInstance();
             Scheduler *sched = dir->getScheduler();
@@ -193,6 +224,7 @@ Console::Console()
         } },
         { "help", std::bind(&Console::commandHelp, this, std::placeholders::_1, std::placeholders::_2) },
         { "scene graph", std::bind(&Console::commandSceneGraph, this, std::placeholders::_1, std::placeholders::_2) },
+        { "textures", std::bind(&Console::commandTextures, this, std::placeholders::_1, std::placeholders::_2) },
     };
 
     _maxCommands = sizeof(commands)/sizeof(commands[0]);
@@ -339,6 +371,31 @@ void Console::commandSceneGraph(int fd, const char *command)
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
 }
+
+void Console::commandFileUtilsDump(int fd, const char *command)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( std::bind(&printFileUtils, fd) );
+}
+
+void Console::commandConfig(int fd, const char *command)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( [&](){
+        mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
+    }
+                                        );
+}
+
+void Console::commandTextures(int fd, const char *command)
+{
+    Scheduler *sched = Director::getInstance()->getScheduler();
+    sched->performFunctionInCocosThread( [&](){
+        mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+    }
+                                        );
+}
+
 
 bool Console::parseCommand(int fd)
 {

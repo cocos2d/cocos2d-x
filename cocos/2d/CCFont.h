@@ -28,7 +28,6 @@
 
 #include <string>
 
-#include "cocos2d.h"
 #include "CCLabel.h"
 
 NS_CC_BEGIN
@@ -45,6 +44,10 @@ public:
     // create the font
     static   Font* createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
     static   Font* createWithFNT(const std::string& fntFilePath);
+
+    static Font * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static Font * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static Font * createWithCharMap(const std::string& plistFile);
     
     static   unsigned char * makeDistanceMap(unsigned char *img, unsigned int width, unsigned int height);
     void     setDistanceFieldEnabled(bool distanceFieldEnabled);

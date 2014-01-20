@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "CCTextImage.h"
 #include "CCFont.h"
 #include "CCFontDefinition.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -175,7 +176,7 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
         return false;
     
     // store result in the passed rectangle
-    outRect.origin.x    = 0;
+    outRect.origin.x    = _fontRef->glyph->metrics.horiBearingX >> 6;
     outRect.origin.y    = - (_fontRef->glyph->metrics.horiBearingY >> 6);
     outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
     outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
@@ -267,7 +268,7 @@ Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLe
         int advance = 0;
         int kerning = 0;
         
-        advance = getAdvanceForChar(text[c]) - getBearingXForChar(text[c]);
+        advance = getAdvanceForChar(text[c]);
         
         if (c < (outNumLetters-1))
             kerning = getHorizontalKerningForChars(text[c], text[c+1]);
@@ -294,7 +295,7 @@ int FontFreeType::getAdvanceForChar(unsigned short theChar) const
         return 0;
     
     // get to the advance for this glyph
-    return (static_cast<int>(_fontRef->glyph->advance.x >> 6));
+    return (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
 }
 
 int FontFreeType::getBearingXForChar(unsigned short theChar) const

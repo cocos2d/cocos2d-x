@@ -47,6 +47,7 @@ CCEventListenerTouch.cpp \
 CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
+CCFontCharMap.cpp \
 CCFontAtlas.cpp \
 CCFontAtlasCache.cpp \
 CCFontAtlasFactory.cpp \
@@ -122,6 +123,7 @@ renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCRenderMaterial.cpp \

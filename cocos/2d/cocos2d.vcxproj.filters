@@ -598,6 +598,12 @@
     <ClCompile Include="renderer\CCRenderMaterial.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="renderer\CCBatchCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontCharMap.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1206,6 +1212,12 @@
     </ClInclude>
     <ClInclude Include="renderer\CCRenderMaterial.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCBatchCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontCharMap.h">
+      <Filter>label_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

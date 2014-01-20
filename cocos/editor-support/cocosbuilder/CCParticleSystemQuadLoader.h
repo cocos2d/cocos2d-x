@@ -1,6 +1,9 @@
 #ifndef _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 #define _CCB_CCPARTICLESYSTEMQUADLOADER_H_
 
+#include "CCObject.h"
+#include "CCParticleSystemQuad.h"
+
 #include "CCNodeLoader.h"
 
 namespace cocosbuilder {
