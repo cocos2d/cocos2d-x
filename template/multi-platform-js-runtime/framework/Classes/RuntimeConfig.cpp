@@ -66,7 +66,7 @@ void RuntimeConfig::setSearchPath()
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC )
     
-    _searchPath = FileUtils::getInstance()->getResPath();
+   // _searchPath = FileUtils::getInstance()->getResPath();
 #endif
     
 	// /mnt/sdcard/
