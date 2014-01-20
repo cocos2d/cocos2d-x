@@ -1,5 +1,6 @@
 cocos2d-x-3.0beta2 ?.? ?
 [All]
+     [NEW]          Adds performance test for Containers(Vector<>, Array, Map<K,V>, Dictionary).
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
      [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
      [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
