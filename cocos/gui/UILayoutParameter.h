@@ -134,8 +134,8 @@ public:
      * @return LinearGravity
      */
     LinearGravity getGravity() const;
-    virtual LayoutParameter* createCloneInstance();
-    virtual void copyProperties(LayoutParameter* model);
+    virtual LayoutParameter* createCloneInstance() override;
+    virtual void copyProperties(LayoutParameter* model) override;
 protected:
     LinearGravity _linearGravity;
 };
@@ -209,8 +209,8 @@ public:
      */
     const char* getRelativeName() const;
     
-    virtual LayoutParameter* createCloneInstance();
-    virtual void copyProperties(LayoutParameter* model);
+    virtual LayoutParameter* createCloneInstance() override;
+    virtual void copyProperties(LayoutParameter* model) override;
 protected:
     RelativeAlign _relativeAlign;
     std::string _relativeWidgetName;
