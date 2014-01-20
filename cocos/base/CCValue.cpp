@@ -246,24 +246,22 @@ Value& Value::operator= (Value&& other)
             case Type::VECTOR:
                 CC_SAFE_DELETE(_vectorData);
                 _vectorData = other._vectorData;
+				other._vectorData = nullptr;
                 break;
             case Type::MAP:
                 CC_SAFE_DELETE(_mapData);
                 _mapData = other._mapData;
+				other._mapData = nullptr;
                 break;
             case Type::INT_KEY_MAP:
                 CC_SAFE_DELETE(_intKeyMapData);
                 _intKeyMapData = other._intKeyMapData;
+				other._intKeyMapData = nullptr;
                 break;
             default:
                 break;
         }
         _type = other._type;
-        
-        other._vectorData = nullptr;
-        other._mapData = nullptr;
-        other._intKeyMapData = nullptr;
-        other._type = Type::NONE;
     }
     
     return *this;
