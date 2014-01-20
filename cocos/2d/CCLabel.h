@@ -54,23 +54,51 @@ enum class LabelEffect {
 struct FontLetterDefinition;
 class FontAtlas;
 
+typedef struct _ttfConfig
+{
+    std::string fontFilePath;
+    int fontSize;
+    GlyphCollection glyphs;
+    const char *customGlyphs;
+    bool distanceFieldEnabled;
 
+    _ttfConfig(const char* filePath,int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+        const char *customGlyphCollection = nullptr,bool useDistanceField = false)
+        :fontFilePath(filePath)
+        ,fontSize(size)
+        ,glyphs(glyphCollection)
+        ,customGlyphs(customGlyphCollection)
+        ,distanceFieldEnabled(useDistanceField)
+    {}
+}TTFConfig;
 
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode, public LabelTextFormatProtocol
 {
 public:
-    
-    // static create
-    static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
-    
-    static Label* createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment = TextHAlignment::CENTER, int lineSize = 0);
-    
-    bool setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment = TextHAlignment::LEFT, bool lineBreakWithoutSpaces = false);
+    static Label* create();
 
+    CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
+    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    
+    static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    
+    static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(const std::string& plistFile);
+
+    bool setTTFConfig(const TTFConfig& ttfConfig);
+
+    bool setBMFontFilePath(const std::string& bmfontFilePath);
+
+    bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(const std::string& plistFile);
+
+    bool setString(const std::string& text, const TextHAlignment& alignment = TextHAlignment::CENTER, float lineWidth = -1, bool lineBreakWithoutSpaces = false);
+
+    //only support for TTF
     void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
     
-    virtual void setString(const std::string &stringToRender) override;
-    void setString(const std::string &stringToRender,bool multilineEnable);
     virtual void setAlignment(TextHAlignment alignment);
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
@@ -116,7 +144,7 @@ public:
     virtual void setLabelContentSize(const Size &newSize) override;
     
     // carloX
-    virtual const std::string& getString() const override { static std::string _ret("not implemented"); return _ret; }
+    virtual const std::string& getString() const { static std::string _ret("not implemented"); return _ret; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
@@ -127,14 +155,14 @@ private:
     /**
      * @js NA
      */
-    Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField = false,bool useA8Shader = false);
+    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::CENTER, bool useDistanceField = false,bool useA8Shader = false);
     /**
      * @js NA
      * @lua NA
      */
    ~Label();
     
-    static Label* createWithAtlas(FontAtlas *atlas, TextHAlignment alignment = TextHAlignment::LEFT, int lineSize = 0, bool useDistanceField = false,bool useA8Shader = false);
+   bool initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     void setFontSize(int fontSize);
     
@@ -151,32 +179,30 @@ private:
 
     virtual void updateColor() override;
 
-    
     //! used for optimization
-    Sprite              *_reusedLetter;
-    std::vector<LetterInfo>     _lettersInfo;       
-   
-    bool                        _multilineEnable;
-    float                       _commonLineHeight;
-    bool                        _lineBreakWithoutSpaces;
-    float                       _width;
-    TextHAlignment              _alignment;
-    unsigned short int *        _currentUTF16String;
-    unsigned short int *        _originalUTF16String;
-    Size               *        _advances;
-    FontAtlas          *        _fontAtlas;
-    bool                        _isOpacityModifyRGB;
+    Sprite *_reusedLetter;
+    std::vector<LetterInfo> _lettersInfo;
 
-    bool                        _useDistanceField;
-    bool                        _useA8Shader;
-    int                         _fontSize;
+    float _commonLineHeight;
+    bool _lineBreakWithoutSpaces;
+    float _width;
+    TextHAlignment _alignment;
+    unsigned short int * _currentUTF16String;
+    unsigned short int * _originalUTF16String;
+    Size * _advances;
+    FontAtlas * _fontAtlas;
+    bool _isOpacityModifyRGB;
 
-    LabelEffect                 _currLabelEffect;
-    Color3B                     _effectColor;
+    bool _useDistanceField;
+    bool _useA8Shader;
+    int _fontSize;
 
-    GLuint                      _uniformEffectColor;
+    LabelEffect _currLabelEffect;
+    Color3B _effectColor;
 
-    CustomCommand               _customCommand;
+    GLuint _uniformEffectColor;
+
+    CustomCommand _customCommand;
 };
 
 

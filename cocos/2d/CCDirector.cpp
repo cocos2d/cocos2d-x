@@ -60,9 +60,10 @@ THE SOFTWARE.
 #include "CCEventDispatcher.h"
 #include "CCEventCustom.h"
 #include "CCFontFreeType.h"
-#include "CCRenderer.h"
-#include "CCConsole.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCFrustum.h"
+#include "CCConsole.h"
+
 /**
  Position of the FPS
  
@@ -377,7 +378,7 @@ void Director::setOpenGLView(EGLView *openGLView)
 		// Configuration. Gather GPU info
 		Configuration *conf = Configuration::getInstance();
 		conf->gatherGPUInfo();
-		conf->dumpInfo();
+        CCLOG("%s\n",conf->getInfo().c_str());
 
         // EAGLView is not a Object
         delete _openGLView; // [openGLView_ release]

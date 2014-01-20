@@ -445,7 +445,7 @@ function SpriteAnchorPoint.initLayer(layer)
         end
         point:setPosition( sprite:getPosition() )
         
-        local copy = tolua.cast(action:clone(), "Action")
+        local copy = tolua.cast(action:clone(), "cc.Action")
         sprite:runAction(copy)
         layer:addChild(sprite, i)
     end        
@@ -498,7 +498,7 @@ function SpriteBatchNodeAnchorPoint.initLayer(layer)
 
         point:setPosition( cc.p(sprite:getPosition()) )
 
-        local copy = tolua.cast(action:clone(), "Action")
+        local copy = tolua.cast(action:clone(), "cc.Action")
         sprite:runAction(copy)
         batch:addChild(sprite, i)
     end

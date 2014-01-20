@@ -23,8 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "cocos2d.h"
+
 #include "CCFontDefinition.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -221,7 +222,6 @@ FontAtlas * FontDefinitionTTF::createFontAtlas()
         if ( item.second.validDefinition )
         {
             FontLetterDefinition tempDefinition = item.second;
-            tempDefinition.offsetX = 0;
             tempDefinition.anchorX = 0.0f;
             tempDefinition.anchorY = 1.0f;
             retAtlas->addLetterDefinition(tempDefinition);

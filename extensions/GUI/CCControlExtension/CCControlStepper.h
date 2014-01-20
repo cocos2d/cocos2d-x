@@ -29,6 +29,7 @@
 #define __CCCONTROLSTEPPER_H__
 
 #include "CCControl.h"
+#include "CCLabelTTF.h"
 
 NS_CC_EXT_BEGIN
 
