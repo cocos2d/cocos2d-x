@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "CCLabel.h"
-#include "CCFontDefinition.h"
 #include "CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
 #include "CCSprite.h"
