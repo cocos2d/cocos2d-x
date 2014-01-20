@@ -54,7 +54,7 @@ static void splitFilename (std::string& str)
 
 void localStorageInit( const std::string& fullpath)
 {
-	if (fullpath.emty())
+	if (fullpath.empty())
         return;
 
 	if( ! _initialized )
