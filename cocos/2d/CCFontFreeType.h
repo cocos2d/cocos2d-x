@@ -46,18 +46,16 @@ public:
 
     virtual FontAtlas   * createFontAtlas() override;
     virtual Size        * getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
-    virtual GlyphDef    * getGlyphDefintionsForText(const char *text, int &outNumGlyphs,    bool UTF16text = false) const override;
+    
     unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const override;
     virtual int           getFontMaxHeight() const override;
     virtual int           getLetterPadding() const override;
     
-    bool getBBOXFotChar(unsigned short theChar, Rect &outRect) const;
-
-    inline bool isDynamicGlyphCollection() { return _dynamicGlyphCollection;}  
+    bool getBBOXFotChar(unsigned short theChar, Rect &outRect) const; 
 
 protected:
     
-    FontFreeType(bool dynamicGlyphCollection = false);
+    FontFreeType();
     virtual ~FontFreeType();
     bool   createFontObject(const std::string &fontName, int fontSize);
     
@@ -76,7 +74,6 @@ private:
     int               _letterPadding;
     std::string       _fontName;
     Data              _ttfData;
-    bool              _dynamicGlyphCollection;
 };
 
 NS_CC_END

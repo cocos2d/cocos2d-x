@@ -28,9 +28,6 @@ THE SOFTWARE.
 
 #include "ccUTF8.h"
 #include "CCFontFreeType.h"
-#include "CCTextImage.h"
-#include "CCFont.h"
-#include "CCFontDefinition.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -41,11 +38,7 @@ bool       FontFreeType::_FTInitialized = false;
 
 FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
 {
-    bool  dynamicGlyphCollection = false;
-    if(glyphs == GlyphCollection::DYNAMIC)
-        dynamicGlyphCollection = true;
-    
-    FontFreeType *tempFont =  new FontFreeType(dynamicGlyphCollection);
+    FontFreeType *tempFont =  new FontFreeType();
 
     if (!tempFont)
         return nullptr;
@@ -89,10 +82,9 @@ FT_Library FontFreeType::getFTLibrary()
     return _FTlibrary;
 }
 
-FontFreeType::FontFreeType(bool dynamicGlyphCollection)
+FontFreeType::FontFreeType()
 : _fontRef(nullptr),
-_letterPadding(5),
-_dynamicGlyphCollection(dynamicGlyphCollection)
+_letterPadding(5)
 {
     if(_distanceFieldEnabled)
         _letterPadding += 2 * DistanceMapSpread;
@@ -141,23 +133,13 @@ FontFreeType::~FontFreeType()
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    if (_dynamicGlyphCollection)
+    FontAtlas *atlas = new FontAtlas(*this);
+    if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
-        FontAtlas *atlas = new FontAtlas(*this);
-        this->release();
-        return atlas;
-    } 
-    else
-    {
-        FontDefinitionTTF *def = FontDefinitionTTF::create(this);
-
-        if (!def)
-            return nullptr;
-
-        FontAtlas *atlas = def->createFontAtlas();
-
-        return atlas;
-    }   
+        atlas->prepareLetterDefinitions(cc_utf8_to_utf16(getCurrentGlyphCollection()));
+    }
+    this->release();
+    return atlas;
 }
 
 bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
@@ -182,71 +164,6 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
     outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
     
     return true;
-}
-
-GlyphDef * FontFreeType::getGlyphDefintionsForText(const char *text, int &outNumGlyphs, bool UTF16text) const
-{
-    unsigned short* utf16String = 0;
-    
-    if (UTF16text)
-    {
-        utf16String = (unsigned short*) text;
-    }
-    else
-    {
-        utf16String = cc_utf8_to_utf16(text);
-    }
-    
-    //
-    if  (!utf16String)
-        return 0;
-    
-    int numChar = cc_wcslen(utf16String);
-    if (!numChar)
-        return 0;
-
-    // allocate the needed Glyphs
-    GlyphDef *glyphs = new GlyphDef[numChar];
-    assert(glyphs != nullptr);
-    if (!glyphs)
-        return 0;
-    
-    // sore result as CCRect
-    for (int c = 0; c < numChar; ++c)
-    {
-        Rect tempRect;
-        
-        if (!getBBOXFotChar(utf16String[c], tempRect))
-        {
-            log("Warning: Cannot find definition for glyph: %c in font:%s", utf16String[c], _fontName.c_str());
-            
-            tempRect.origin.x       = 0;
-            tempRect.origin.y       = 0;
-            tempRect.size.width     = 0;
-            tempRect.size.height    = 0;
-            
-            glyphs[c].setRect(tempRect);
-            glyphs[c].setUTF16Letter(utf16String[c]);
-            glyphs[c].setValid(false);
-            glyphs[c].setPadding(_letterPadding);
-        }
-        else
-        {
-            glyphs[c].setRect(tempRect);
-            glyphs[c].setUTF16Letter(utf16String[c]);
-            glyphs[c].setPadding(_letterPadding);
-            glyphs[c].setValid(true);
-        }
-    }
-    
-    outNumGlyphs = numChar;
-    
-    // free memory
-    if (!UTF16text)
-        delete [] utf16String;
-    
-    // done
-    return glyphs;
 }
 
 Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const

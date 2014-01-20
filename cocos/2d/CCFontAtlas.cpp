@@ -24,7 +24,6 @@
  ****************************************************************************/
 
 #include "CCFontAtlas.h"
-#include "CCFont.h"
 #include "CCFontFreeType.h"
 #include "ccUTF8.h"
 #include "CCDirector.h"
@@ -42,7 +41,7 @@ _currentPageData(nullptr)
     _makeDistanceMap = _font->isDistanceFieldEnabled();
 
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
-    if (fontTTf && fontTTf->isDynamicGlyphCollection())
+    if (fontTTf)
     {
         _currentPageLineHeight = _font->getFontMaxHeight();
         _commonLineHeight = _currentPageLineHeight * 0.8f;
@@ -55,13 +54,9 @@ _currentPageData(nullptr)
         if(_makeDistanceMap)
         {
             _commonLineHeight += 2 * Font::DistanceMapSpread;
-            _letterPadding += 2 * Font::DistanceMapSpread;
-            _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
+            _letterPadding += 2 * Font::DistanceMapSpread;    
         }
-        else
-        {
-            _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
-        }
+        _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
 
         _currentPageData = new unsigned char[_currentPageDataSize];       
         memset(_currentPageData, 0, _currentPageDataSize);  
@@ -165,7 +160,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     Size _pageContentSize = Size(PAGE_WIDTH,PAGE_HEIGHT);
     float scaleFactor = CC_CONTENT_SCALE_FACTOR();
     float glyphWidth;
-    Texture2D::PixelFormat  pixelFormat = _makeDistanceMap ? Texture2D::PixelFormat::A8 : Texture2D::PixelFormat::A8;
+    Texture2D::PixelFormat  pixelFormat = Texture2D::PixelFormat::A8;
+    
 
     for(auto it = fontDefs.begin(); it != fontDefs.end(); it++)
     {

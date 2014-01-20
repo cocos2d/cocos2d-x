@@ -25,10 +25,6 @@
 
 #include "CCFont.h"
 #include "ccUTF8.h"
-
-#include "CCFontFNT.h"
-#include "CCFontFreeType.h"
-#include "CCFontCharMap.h"
 #include "edtaa3func.h"
 
 NS_CC_BEGIN
@@ -105,31 +101,6 @@ const char * Font::getCurrentGlyphCollection() const
     {
         return getGlyphCollection(_usedGlyphs);
     }
-}
-
-Font* Font::createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs)
-{
-    return FontFreeType::create(fntName, fontSize, glyphs, customGlyphs);
-}
-
-Font* Font::createWithFNT(const std::string& fntFilePath)
-{
-   return FontFNT::create(fntFilePath);
-}
-
-Font* Font::createWithCharMap(const std::string& plistFile)
-{
-    return FontCharMap::create(plistFile);
-}
-
-Font* Font::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
-{
-    return FontCharMap::create(texture,itemWidth,itemHeight,startCharMap);
-}
-
-Font* Font::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
-{
-    return FontCharMap::create(charMapFile,itemWidth,itemHeight,startCharMap);
 }
 
 unsigned char * Font::makeDistanceMap( unsigned char *img, unsigned int width, unsigned int height)
