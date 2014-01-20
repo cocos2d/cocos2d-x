@@ -2,9 +2,14 @@
 # coding=utf-8
 # filename=build_runtime.py
 
+import platform
 import os
 import commands
-import _winreg
+import subprocess
+
+if platform.system() == 'Windows':
+    import _winreg
+
 
 def checkParams():
     """Custom and check param list.
@@ -45,20 +50,39 @@ class BuildRuntime:
             self.projectPath = os.path.join(scriptPath, "proj.win32")
         elif platform == 'android':
             self.projectPath = os.path.join(scriptPath, "proj.android")
+        elif platform == 'ios':
+            self.projectPath = os.path.join(scriptPath, "proj.ios")
+        elif platform == 'mac':
+            self.projectPath = os.path.join(scriptPath, "proj.mac")
         
-    
     def buildRuntime(self):
         if self.runtimePlatform == 'win32':
             self.win32Runtime()
         elif self.runtimePlatform == 'android':
             self.androidRuntime()
+        if self.runtimePlatform == 'ios':
+            self.iosRuntime()
+        if self.runtimePlatform == 'mac':
+            self.macRuntime()
             
+    def macRuntime(self):
+        pass
+    
+    def iosRuntime(self):
+        pass
+    
     def androidRuntime(self):
         buildNative = os.path.join(self.projectPath, "build_native.py")
         buildCommand = "python %s -p 16" % (buildNative)
         #print buildCommand
         os.system(buildCommand)
-    
+        
+        child = subprocess.Popen(["python", buildNative, "-p", "16"], stdout=subprocess.PIPE)
+        for line in child.stdout:
+            print line
+            
+        child.wait()
+        
     def win32Runtime(self):
         try:
             key = _winreg.OpenKey(
@@ -87,10 +111,13 @@ class BuildRuntime:
                         
                         msbuildPath = r"C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
                         slnPath = "%s\%s.sln" % (self.projectPath, self.projectName)
-                        buildCommand = "%s %s /maxcpucount:4 /t:build /p:configuration=Debug" % (msbuildPath, slnPath)
                         
-                        os.system(buildCommand)
-                        #print buildCommand
+                        child = subprocess.Popen([msbuildPath, slnPath, "/maxcpucount:4", "/t:build", "/p:configuration=Debug"], stdout=subprocess.PIPE)
+                        #output = child.communicate()
+                        for line in child.stdout:
+                            print line
+                            
+                        child.wait()
                 except:
                     pass
                 i += 1
