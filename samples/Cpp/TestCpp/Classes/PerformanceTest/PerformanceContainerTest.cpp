@@ -36,8 +36,10 @@ static std::function<PerformanceContainerScene*()> createFunctions[] =
 {
     CL(TemplateVectorPerfTest),
     CL(ArrayPerfTest),
-    CL(TemplateMapPerfTest),
-    CL(DictionaryPerfTest)
+    CL(TemplateMapStringKeyPerfTest),
+    CL(DictionaryStringKeyPerfTest),
+    CL(TemplateMapIntKeyPerfTest),
+    CL(DictionaryIntKeyPerfTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -266,27 +268,6 @@ void PerformanceContainerScene::updateProfilerName()
     snprintf(_profilerName, sizeof(_profilerName)-1, "%s(%d)", testName(), quantityOfNodes);
 }
 
-void PerformanceContainerScene::onExitTransitionDidStart()
-{
-    Scene::onExitTransitionDidStart();
-    
-    auto director = Director::getInstance();
-    auto sched = director->getScheduler();
-
-    sched->unscheduleSelector(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this);
-}
-
-void PerformanceContainerScene::onEnterTransitionDidFinish()
-{
-    Scene::onEnterTransitionDidFinish();
-
-    auto director = Director::getInstance();
-    auto sched = director->getScheduler();
-
-    CC_PROFILER_PURGE_ALL();
-    sched->scheduleSelector(schedule_selector(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
-}
-
 void PerformanceContainerScene::dumpProfilerInfo(float dt)
 {
 	CC_PROFILER_DISPLAY_TIMERS();
@@ -509,8 +490,6 @@ void TemplateVectorPerfTest::generateTestFunctions()
     }
 }
 
-
-
 std::string TemplateVectorPerfTest::title() const
 {
     return "Vector<T> Perf test";
@@ -703,11 +682,11 @@ void ArrayPerfTest::generateTestFunctions()
 
 ////////////////////////////////////////////////////////
 //
-// TemplateMapPerfTest
+// TemplateMapStringKeyPerfTest
 //
 ////////////////////////////////////////////////////////
 
-void TemplateMapPerfTest::generateTestFunctions()
+void TemplateMapStringKeyPerfTest::generateTestFunctions()
 {
     auto createMap = [this](){
         Map<std::string, Node*> ret;
@@ -721,7 +700,7 @@ void TemplateMapPerfTest::generateTestFunctions()
         return ret;
     };
     
-    TestFunction nameCBs[] = {
+    TestFunction testFunctions[] = {
         { "insert",    [=](){
             Map<std::string, Node*> map;
             
@@ -764,43 +743,129 @@ void TemplateMapPerfTest::generateTestFunctions()
             
             CC_SAFE_FREE(nodes);
         } } ,
+        
+        { "erase",    [=](){
+            auto map = createMap();
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                map.erase(keys[i]);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "clear",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            map.clear();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "size",    [=](){
+            auto map = createMap();
+            
+            ssize_t size = 0;
+            CC_PROFILER_START(this->profilerName());
+            size = map.size();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "keys(all)",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = map.keys();
+            CC_PROFILER_STOP(this->profilerName());
+            
+            std::string allKeysString;
+            for (const auto& key : keys)
+            {
+                allKeysString += "_" + key;
+            }
+        } } ,
+        
+        { "keys(object)",    [=](){
+            Map<std::string, Node*> map;
+            
+            Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
+            Node* sameNode = Node::create();
+            
+            for( int i=0; i<quantityOfNodes; ++i)
+            {
+                if (quantityOfNodes % 100 == 0)
+                {
+                    map.insert(StringUtils::format("key_%d", i), sameNode);
+                }
+                else
+                {
+                    auto node = Node::create();
+                    node->setTag(i);
+                    map.insert(StringUtils::format("key_%d", i), node);
+                }
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = map.keys(sameNode);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            std::string allKeysString;
+            for (const auto& key : keys)
+            {
+                allKeysString += "_" + key;
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "c++11 range loop",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            
+            for (const auto& e : map)
+            {
+                e.second->setTag(100);
+            }
+            
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
     };
     
-    for (const auto& nameCB : nameCBs)
+    for (const auto& func : testFunctions)
     {
-        _testFunctions.push_back(nameCB);
+        _testFunctions.push_back(func);
     }
 }
 
-
-
-std::string TemplateMapPerfTest::title() const
+std::string TemplateMapStringKeyPerfTest::title() const
 {
-    return "Map<T> Perf test";
+    return "Map<T> String Key Perf test";
 }
 
-std::string TemplateMapPerfTest::subtitle() const
+std::string TemplateMapStringKeyPerfTest::subtitle() const
 {
     return "Test 'insert', See console";
 }
 
 ////////////////////////////////////////////////////////
 //
-// DictionaryPerfTest
+// DictionaryStringKeyPerfTest
 //
 ////////////////////////////////////////////////////////
 
-std::string DictionaryPerfTest::title() const
-{
-    return "Array Perf test";
-}
-
-std::string DictionaryPerfTest::subtitle() const
-{
-    return "Test `addObject`, See console";
-}
-
-void DictionaryPerfTest::generateTestFunctions()
+void DictionaryStringKeyPerfTest::generateTestFunctions()
 {
     auto createDict = [this](){
         Dictionary* ret = Dictionary::create();
@@ -857,6 +922,108 @@ void DictionaryPerfTest::generateTestFunctions()
             
             CC_SAFE_FREE(nodes);
         } } ,
+        
+        { "removeObjectForKey",    [=](){
+            auto dict = createDict();
+            
+            std::string* keys = new std::string[quantityOfNodes];
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                keys[i] = StringUtils::format("key_%d", i);
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                dict->removeObjectForKey(keys[i]);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_DELETE_ARRAY(keys);
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "removeAllObjects",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            dict->removeAllObjects();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "count",    [=](){
+            auto dict = createDict();
+            
+            ssize_t size = 0;
+            CC_PROFILER_START(this->profilerName());
+            size = dict->count();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "allKeys",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = dict->allKeys();
+            CC_PROFILER_STOP(this->profilerName());
+            
+            std::string allKeysString;
+            Object* obj;
+            CCARRAY_FOREACH(keys, obj)
+            {
+                auto key = static_cast<String*>(obj);
+                allKeysString += (std::string("_") + key->getCString());
+            }
+        } } ,
+        
+        { "allKeysForObject",    [=](){
+            Dictionary* dict = Dictionary::create();
+            
+            Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
+            Node* sameNode = Node::create();
+            
+            for( int i=0; i<quantityOfNodes; ++i)
+            {
+                if (quantityOfNodes % 100 == 0)
+                {
+                    dict->setObject(sameNode, StringUtils::format("key_%d", i));
+                }
+                else
+                {
+                    auto node = Node::create();
+                    node->setTag(i);
+                    dict->setObject(node, StringUtils::format("key_%d", i));
+                }
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = dict->allKeysForObject(sameNode);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            std::string allKeysString;
+            Object* obj;
+            CCARRAY_FOREACH(keys, obj)
+            {
+                auto key = static_cast<String*>(obj);
+                allKeysString += (std::string("_") + key->getCString());
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "CCDICT_FOREACH",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            
+            DictElement* e = nullptr;
+            CCDICT_FOREACH(dict, e)
+            {
+                static_cast<Node*>(e->getObject())->setTag(100);
+            }
+            
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
     };
     
     for (const auto& func : testFunctions)
@@ -864,6 +1031,333 @@ void DictionaryPerfTest::generateTestFunctions()
         _testFunctions.push_back(func);
     }
 }
+
+std::string DictionaryStringKeyPerfTest::title() const
+{
+    return "Dictionary String Key Perf test";
+}
+
+std::string DictionaryStringKeyPerfTest::subtitle() const
+{
+    return "Test `setObject`, See console";
+}
+
+
+////////////////////////////////////////////////////////
+//
+// TemplateMapIntKeyPerfTest
+//
+////////////////////////////////////////////////////////
+
+void TemplateMapIntKeyPerfTest::generateTestFunctions()
+{
+    auto createMap = [this](){
+        Map<int, Node*> ret;
+        
+        for( int i=0; i<quantityOfNodes; ++i)
+        {
+            auto node = Node::create();
+            node->setTag(i);
+            ret.insert(100+i, node);
+        }
+        return ret;
+    };
+    
+    TestFunction testFunctions[] = {
+        { "insert",    [=](){
+            Map<int, Node*> map;
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                map.insert(100 + i, Node::create());
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "at",    [=](){
+            auto map = createMap();
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                nodes[i] = map.at(100 + i);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                nodes[i]->setTag(100);
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "erase",    [=](){
+            auto map = createMap();
+            
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                map.erase(100 + i);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "clear",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            map.clear();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "size",    [=](){
+            auto map = createMap();
+            
+            ssize_t size = 0;
+            CC_PROFILER_START(this->profilerName());
+            size = map.size();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "keys(all)",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = map.keys();
+            CC_PROFILER_STOP(this->profilerName());
+            
+            int allKeysInt = 0;
+            for (const auto& key : keys)
+            {
+                allKeysInt += key;
+            }
+        } } ,
+        
+        { "keys(object)",    [=](){
+            Map<int, Node*> map;
+            
+            Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
+            Node* sameNode = Node::create();
+            
+            for( int i=0; i<quantityOfNodes; ++i)
+            {
+                if (quantityOfNodes % 100 == 0)
+                {
+                    map.insert(100 + i, sameNode);
+                }
+                else
+                {
+                    auto node = Node::create();
+                    node->setTag(i);
+                    map.insert(100 + i, node);
+                }
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = map.keys(sameNode);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            int allKeysInt = 0;
+            for (const auto& key : keys)
+            {
+                allKeysInt += key;
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "c++11 range loop",    [=](){
+            auto map = createMap();
+            
+            CC_PROFILER_START(this->profilerName());
+            
+            for (const auto& e : map)
+            {
+                e.second->setTag(100);
+            }
+            
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+    };
+    
+    for (const auto& func : testFunctions)
+    {
+        _testFunctions.push_back(func);
+    }
+}
+
+std::string TemplateMapIntKeyPerfTest::title() const
+{
+    return "Map<T> Integer Key Perf test";
+}
+
+std::string TemplateMapIntKeyPerfTest::subtitle() const
+{
+    return "Test 'insert', See console";
+}
+
+////////////////////////////////////////////////////////
+//
+// DictionaryIntKeyPerfTest
+//
+////////////////////////////////////////////////////////
+
+void DictionaryIntKeyPerfTest::generateTestFunctions()
+{
+    auto createDict = [this](){
+        Dictionary* ret = Dictionary::create();
+        
+        for( int i=0; i<quantityOfNodes; ++i)
+        {
+            auto node = Node::create();
+            node->setTag(i);
+            ret->setObject(node, 100 + i);
+        }
+        return ret;
+    };
+    
+    TestFunction testFunctions[] = {
+        { "setObject",    [=](){
+            Dictionary* dict = Dictionary::create();
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                dict->setObject(Node::create(), 100 + i);
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "objectForKey",    [=](){
+            auto dict = createDict();
+            
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                nodes[i] = static_cast<Node*>(dict->objectForKey(100 + i));
+            CC_PROFILER_STOP(this->profilerName());
+            
+            for (int i = 0; i < quantityOfNodes; ++i)
+            {
+                nodes[i]->setTag(100);
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "removeObjectForKey",    [=](){
+            auto dict = createDict();
+            
+            Node** nodes = (Node**)malloc(sizeof(Node*) * quantityOfNodes);
+            
+            CC_PROFILER_START(this->profilerName());
+            for( int i=0; i<quantityOfNodes; ++i)
+                dict->removeObjectForKey(100 + i);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "removeAllObjects",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            dict->removeAllObjects();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "count",    [=](){
+            auto dict = createDict();
+            
+            unsigned int size = 0;
+            CC_PROFILER_START(this->profilerName());
+            size = dict->count();
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+        
+        { "allKeys",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = dict->allKeys();
+            CC_PROFILER_STOP(this->profilerName());
+            
+            int allKeysInt = 0;
+            Object* obj;
+            CCARRAY_FOREACH(keys, obj)
+            {
+                auto key = static_cast<Integer*>(obj);
+                allKeysInt += key->getValue();
+            }
+        } } ,
+        
+        { "allKeysForObject",    [=](){
+            Dictionary* dict = Dictionary::create();
+            
+            Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
+            Node* sameNode = Node::create();
+            
+            for( int i=0; i<quantityOfNodes; ++i)
+            {
+                if (quantityOfNodes % 100 == 0)
+                {
+                    dict->setObject(sameNode, 100 + i);
+                }
+                else
+                {
+                    auto node = Node::create();
+                    node->setTag(i);
+                    dict->setObject(node, 100 + i);
+                }
+            }
+            
+            CC_PROFILER_START(this->profilerName());
+            auto keys = dict->allKeysForObject(sameNode);
+            CC_PROFILER_STOP(this->profilerName());
+            
+            int allKeysInt = 0;
+            Object* obj;
+            CCARRAY_FOREACH(keys, obj)
+            {
+                auto key = static_cast<Integer*>(obj);
+                allKeysInt += key->getValue();
+            }
+            
+            CC_SAFE_FREE(nodes);
+        } } ,
+        
+        { "CCDICT_FOREACH",    [=](){
+            auto dict = createDict();
+            
+            CC_PROFILER_START(this->profilerName());
+            
+            DictElement* e = nullptr;
+            CCDICT_FOREACH(dict, e)
+            {
+                static_cast<Node*>(e->getObject())->setTag(100);
+            }
+            
+            CC_PROFILER_STOP(this->profilerName());
+        } } ,
+    };
+    
+    for (const auto& func : testFunctions)
+    {
+        _testFunctions.push_back(func);
+    }
+}
+
+std::string DictionaryIntKeyPerfTest::title() const
+{
+    return "Dictionary Integer Key Perf test";
+}
+
+std::string DictionaryIntKeyPerfTest::subtitle() const
+{
+    return "Test `setObject`, See console";
+}
+
 
 ///----------------------------------------
 void runContainerPerformanceTest()
