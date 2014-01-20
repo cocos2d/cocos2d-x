@@ -144,9 +144,11 @@ public:
     std::vector<K> keys() const
     {
         std::vector<K> keys;
-        
+
         if (!_data.empty())
         {
+            keys.reserve(_data.size());
+            
             for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
             {
                 keys.push_back(iter->first);
@@ -160,13 +162,20 @@ public:
     {
         std::vector<K> keys;
         
-        for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
+        if (!_data.empty())
         {
-            if (iter->second == object)
+            keys.reserve(_data.size() / 10);
+            
+            for (auto iter = _data.cbegin(); iter != _data.cend(); ++iter)
             {
-                keys.push_back(iter->first);
+                if (iter->second == object)
+                {
+                    keys.push_back(iter->first);
+                }
             }
         }
+        
+        keys.shrink_to_fit();
         
         return keys;
     }
