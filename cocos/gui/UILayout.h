@@ -273,6 +273,7 @@ protected:
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+    bool _clippingRectDirty;
     
     //clipping
 
