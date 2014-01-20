@@ -24,7 +24,7 @@
 #ifndef __PHYSICSNODES_CCPHYSICSSPRITE_H__
 #define __PHYSICSNODES_CCPHYSICSSPRITE_H__
 
-#include "cocos2d.h"
+#include "CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 
 struct cpBody;

@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 std::unordered_map<std::string, std::string>  g_luaType;
+std::unordered_map<std::string, std::string>  g_typeCast;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)

@@ -29,88 +29,36 @@
 NS_CC_BEGIN
 
 QuadCommand::QuadCommand()
-:RenderCommand()
-,_viewport(0)
-,_depth(0)
-,_textureID(0)
+:_textureID(0)
 ,_blendType(BlendFunc::DISABLE)
-,_quadCount(0)
-,_capacity(0)
+,_quadsCount(0)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
     _shader = nullptr;
-    _quad = nullptr;
+    _quads = nullptr;
 }
 
-void QuadCommand::init(int viewport, int32_t depth, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
+void QuadCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quad, ssize_t quadCount, const kmMat4 &mv)
 {
-    _viewport = viewport;
-    _depth = depth;
+    _globalOrder = globalOrder;
     _textureID = textureID;
     _blendType = blendType;
-    _quadCount = quadCount;
     _shader = shader;
 
-    if(quadCount > _capacity ) {
-        //TODO find a better way to manage quads, current way will result in memory be wasted
-//        _quad = (V3F_C4B_T2F_Quad*)malloc(sizeof(V3F_C4B_T2F_Quad) * quadCount);
-        _quad = (V3F_C4B_T2F_Quad*) realloc(_quad, sizeof(*quad) * quadCount );
-        _capacity = quadCount;
-    }
+    _quadsCount = quadCount;
+    _quads = quad;
 
-    _quadCount = quadCount;
-    memcpy(_quad, quad, sizeof(V3F_C4B_T2F_Quad) * quadCount);
+    _mv = mv;
 
-    for(int i=0; i<quadCount; ++i) {
-        V3F_C4B_T2F_Quad *q = &_quad[i];
-
-        kmVec3 vec1, out1;
-        vec1.x = q->bl.vertices.x;
-        vec1.y = q->bl.vertices.y;
-        vec1.z = q->bl.vertices.z;
-        kmVec3Transform(&out1, &vec1, &mv);
-        q->bl.vertices.x = out1.x;
-        q->bl.vertices.y = out1.y;
-        q->bl.vertices.z = out1.z;
-
-        kmVec3 vec2, out2;
-        vec2.x = q->br.vertices.x;
-        vec2.y = q->br.vertices.y;
-        vec2.z = q->br.vertices.z;
-        kmVec3Transform(&out2, &vec2, &mv);
-        q->br.vertices.x = out2.x;
-        q->br.vertices.y = out2.y;
-        q->br.vertices.z = out2.z;
-
-        kmVec3 vec3, out3;
-        vec3.x = q->tr.vertices.x;
-        vec3.y = q->tr.vertices.y;
-        vec3.z = q->tr.vertices.z;
-        kmVec3Transform(&out3, &vec3, &mv);
-        q->tr.vertices.x = out3.x;
-        q->tr.vertices.y = out3.y;
-        q->tr.vertices.z = out3.z;
-
-        kmVec3 vec4, out4;
-        vec4.x = q->tl.vertices.x;
-        vec4.y = q->tl.vertices.y;
-        vec4.z = q->tl.vertices.z;
-        kmVec3Transform(&out4, &vec4, &mv);
-        q->tl.vertices.x = out4.x;
-        q->tl.vertices.y = out4.y;
-        q->tl.vertices.z = out4.z;
-    }
+    generateMaterialID();
 }
 
 QuadCommand::~QuadCommand()
 {
-    free(_quad);
 }
 
-int64_t QuadCommand::generateID()
+void QuadCommand::generateMaterialID()
 {
-    _id = 0;
-
     //Generate Material ID
     //TODO fix shader ID generation
     CCASSERT(_shader->getProgram() < pow(2,10), "ShaderID is greater than 2^10");
@@ -148,19 +96,12 @@ int64_t QuadCommand::generateID()
     // | Shader ID (10 bits) | Blend ID (4 bits) | Texture ID (18 bits) |
     // +---------------------+-------------------+----------------------+
 
-    _materialID = (int32_t)_shader->getProgram() << 22
-            | (int32_t)blendID << 18
-            | (int32_t)_textureID << 0;
-
-    //Generate RenderCommandID
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 //translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
+    _materialID = (uint32_t)_shader->getProgram() << 22
+            | (uint32_t)blendID << 18
+            | (uint32_t)_textureID << 0;
 }
 
-void QuadCommand::useMaterial()
+void QuadCommand::useMaterial() const
 {
     _shader->use();
 

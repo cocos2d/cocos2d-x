@@ -25,6 +25,7 @@ THE SOFTWARE.
 #ifndef __CCUTILMATH_H__
 #define __CCUTILMATH_H__
 
+#include "CCSprite.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include <math.h>
 

@@ -3907,6 +3907,130 @@ JSBool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
     return JS_FALSE;
 }
 
+JSBool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
+    JSObject *tmp;
+    JS::RootedValue js_fontFilePath(cx);
+    JS::RootedValue js_fontSize(cx);
+    JS::RootedValue js_glyphs(cx);
+    JS::RootedValue js_customGlyphs(cx);
+    JS::RootedValue js_distanceFieldEnable(cx);
+
+    std::string fontFilePath,customGlyphs;
+    double fontSize, glyphs;
+    JSBool distanceFieldEnable;
+
+    JSBool ok = v.isObject() &&
+        JS_ValueToObject(cx, v, &tmp) &&
+        JS_GetProperty(cx, tmp, "fontFilePath", &js_fontFilePath) &&
+        JS_GetProperty(cx, tmp, "fontSize", &js_fontSize) &&
+        JS_GetProperty(cx, tmp, "glyphs", &js_glyphs) &&
+        JS_GetProperty(cx, tmp, "customGlyphs", &js_customGlyphs) &&
+        JS_GetProperty(cx, tmp, "distanceFieldEnable", &js_distanceFieldEnable) &&
+        JS_ValueToNumber(cx, js_fontSize, &fontSize) &&
+        JS_ValueToNumber(cx, js_glyphs, &glyphs) &&
+        JS_ValueToBoolean(cx,js_distanceFieldEnable,&distanceFieldEnable) &&
+        jsval_to_std_string(cx,js_fontFilePath,&ret->fontFilePath) &&
+        jsval_to_std_string(cx,js_customGlyphs,&customGlyphs);
+
+    JSB_PRECONDITION3(ok, cx, JS_FALSE, "Error processing arguments");
+
+    ret->fontSize = (int)fontSize;
+    ret->glyphs = GlyphCollection((int)glyphs);
+    ret->distanceFieldEnabled = distanceFieldEnable;
+    if(ret->glyphs == GlyphCollection::CUSTOM && customGlyphs.length() > 0)
+        ret->customGlyphs = customGlyphs.c_str();
+    else
+        ret->customGlyphs = nullptr;
+
+    return JS_TRUE;
+}
+
+JSBool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc < 2)
+        return JS_FALSE;
+
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+
+    TTFConfig ttfConfig(nullptr);
+    std::string text;
+
+    ok &= jsval_to_TTFConfig(cx, argv[0], &ttfConfig);
+    ok &= jsval_to_std_string(cx, argv[1], &text);
+
+    cocos2d::Label* ret = nullptr;
+
+    if (argc == 2) {
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+        ret = cocos2d::Label::createWithTTF(ttfConfig, text);
+        jsval jsret = JSVAL_NULL;
+        if (ret) {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
+            jsret = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    if (argc == 3) {
+        int arg2;
+        ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+        TextHAlignment alignment = TextHAlignment(arg2);
+        cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
+        jsval jsret = JSVAL_NULL;
+        if (ret) {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
+            jsret = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+    if (argc == 4) {
+        int arg2,arg3;
+        ok &= jsval_to_int32(cx, argv[2], (int32_t *)&arg2);
+        ok &= jsval_to_int32(cx, argv[3], (int32_t *)&arg3);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+        TextHAlignment alignment = TextHAlignment(arg2);
+        cocos2d::Label* ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
+        jsval jsret = JSVAL_NULL;
+        if (ret) {
+            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Label>(cx, (cocos2d::Label*)ret);
+            jsret = OBJECT_TO_JSVAL(proxy->obj);
+        }
+        JS_SET_RVAL(cx, vp, jsret);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_createWithTTF : wrong number of arguments");
+    return JS_FALSE;
+}
+
+JSBool js_cocos2dx_Label_setTTFConfig(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    jsval *argv = JS_ARGV(cx, vp);
+    JSBool ok = JS_TRUE;
+    JSObject *obj = JS_THIS_OBJECT(cx, vp);
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_cocos2dx_Label_setTTFConfig : Invalid Native Object");
+
+    if (argc == 1) {
+        TTFConfig ttfConfig(nullptr);
+        do {
+            if (!argv[0].isObject()) { ok = JS_FALSE; break; }
+            ok &= jsval_to_TTFConfig(cx, argv[0], &ttfConfig);
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "js_cocos2dx_Label_setTTFConfig : Error processing arguments");
+        cobj->setTTFConfig(ttfConfig);
+        JS_SET_RVAL(cx, vp, JSVAL_VOID);
+        return JS_TRUE;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_setTTFConfig : wrong number of arguments");
+    return JS_FALSE;
+}
+
 void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 {
 	// first, try to get the ns
@@ -3925,6 +4049,9 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;
+    JS_DefineFunction(cx, jsb_cocos2d_Label_prototype, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_Label_prototype, "setTTFConfig", js_cocos2dx_Label_setTTFConfig, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, jsb_cocos2d_NodeGrid_prototype, "setGrid", js_cocos2dx_NodeGrid_setGrid, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_cocos2d_Node_prototype, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);

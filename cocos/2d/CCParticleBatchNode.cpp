@@ -44,7 +44,7 @@
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -197,7 +197,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     _children.insert(pos, child);
 
     child->setTag(aTag);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -264,7 +264,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
@@ -382,26 +382,14 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-//    CC_NODE_DRAW_SETUP();
-//
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    _textureAtlas->drawQuads();
-
-    auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-
-    kmMat4 mv;
-    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
-
-    _quadCommand.init(0,
-              _vertexZ,
-              _textureAtlas->getTexture()->getName(),
-              shader,
-              _blendFunc,
-              _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
-              mv);
-    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
+    _batchCommand.init(
+                       _globalZOrder,
+                       _textureAtlas->getTexture()->getName(),
+                       _shaderProgram,
+                       _blendFunc,
+                       _textureAtlas,
+                       _modelViewTransform);
+    Director::getInstance()->getRenderer()->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
 

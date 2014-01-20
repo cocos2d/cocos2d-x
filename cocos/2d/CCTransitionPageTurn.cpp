@@ -98,23 +98,23 @@ void TransitionPageTurn::draw()
     
     if( _isInSceneOnTop ) {
         _outSceneProxy->visit();
-        _enableOffsetCmd.init(0, _vertexZ);
+        _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
         _inSceneProxy->visit();
-        _disableOffsetCmd.init(0, _vertexZ);
+        _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
     } else {
         _inSceneProxy->visit();
         
-        _enableOffsetCmd.init(0, _vertexZ);
+        _enableOffsetCmd.init(_globalZOrder);
         _enableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onEnablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_enableOffsetCmd);
         
         _outSceneProxy->visit();
         
-        _disableOffsetCmd.init(0, _vertexZ);
+        _disableOffsetCmd.init(_globalZOrder);
         _disableOffsetCmd.func = CC_CALLBACK_0(TransitionPageTurn::onDisablePolygonOffset, this);
         Director::getInstance()->getRenderer()->addCommand(&_disableOffsetCmd);
     }

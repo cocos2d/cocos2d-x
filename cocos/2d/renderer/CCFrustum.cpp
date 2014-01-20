@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFrustum.h"
+#include "renderer/CCFrustum.h"
 #include "CCConsole.h"
 
 #include <stdlib.h>
@@ -176,7 +176,7 @@ Frustum::~Frustum()
 {
 }
 
-void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, float width, float height, float near, float far)
+void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, float width, float height, float nearPlane, float farPlane)
 {
     kmVec3 cc = view.getPosition();
     kmVec3 cDir = view.getDirection();
@@ -192,7 +192,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         kmVec3 point;
         kmVec3 normal;
         normal = cDir;
-        kmVec3Scale(&point, &cDir, near);
+        kmVec3Scale(&point, &cDir, nearPlane);
         kmVec3Add(&point, &point, &cc);
         kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_NEAR], &point, &normal);
     }
@@ -202,7 +202,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
         kmVec3 point;
         kmVec3 normal;
         kmVec3Scale(&normal, &cDir, -1);
-        kmVec3Scale(&point, &cDir, far);
+        kmVec3Scale(&point, &cDir, farPlane);
         kmVec3Add(&point, &point, &cc);
         kmPlaneFromPointNormal(&_frustumPlanes[FrustumPlane::FRUSTUM_FAR], &point, &normal);
     }
@@ -248,7 +248,7 @@ void Frustum::setupProjectionOrthogonal(const cocos2d::ViewTransform &view, floa
     }
 }
 
-void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, float right, float top, float bottom, float near, float far)
+void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, float right, float top, float bottom, float nearPlane, float farPlane)
 {
     kmVec3 cc = view.getPosition();
     kmVec3 cDir = view.getDirection();
@@ -262,10 +262,10 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
     kmVec3 nearCenter;
     kmVec3 farCenter;
     
-    kmVec3Scale(&nearCenter, &cDir, near);
+    kmVec3Scale(&nearCenter, &cDir, nearPlane);
     kmVec3Add(&nearCenter, &nearCenter, &cc);
     
-    kmVec3Scale(&farCenter, &cDir, far);
+    kmVec3Scale(&farCenter, &cDir, farPlane);
     kmVec3Add(&farCenter, &farCenter, &cc);
     
     //near
@@ -338,11 +338,11 @@ void Frustum::setupProjectionPerspective(const ViewTransform& view, float left, 
     
 }
 
-void Frustum::setupProjectionPerspectiveFov(const ViewTransform& view, float fov, float ratio, float near, float far)
+void Frustum::setupProjectionPerspectiveFov(const ViewTransform& view, float fov, float ratio, float nearPlane, float farPlane)
 {
-    float width = 2 * near * tan(fov * 0.5);
+    float width = 2 * nearPlane * tan(fov * 0.5);
     float height = width/ratio;
-    setupProjectionPerspective(view, -width/2, width/2, height/2, -height/2, near, far);
+    setupProjectionPerspective(view, -width/2, width/2, height/2, -height/2, nearPlane, farPlane);
 }
 
 void Frustum::setupFromMatrix(const kmMat4 &view, const kmMat4 &projection)

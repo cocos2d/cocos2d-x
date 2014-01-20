@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "NodeTest.h"
 #include "../testResource.h"
 
@@ -42,6 +67,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
     CL(NodeNonOpaqueTest),
+    CL(NodeGlobalZValueTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -880,6 +906,55 @@ std::string NodeNonOpaqueTest::subtitle() const
     return "Node rendered with GL_BLEND enabled";
 }
 
+/// NodeGlobalZValueTest
+
+NodeGlobalZValueTest::NodeGlobalZValueTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    for (int i = 0; i < 9; i++)
+    {
+        Sprite *sprite;
+        auto parent = Node::create();
+        if(i==4) {
+            sprite = Sprite::create("Images/grossinis_sister2.png");
+            _sprite = sprite;
+            _sprite->setGlobalZOrder(-1);
+        }
+        else
+            sprite = Sprite::create("Images/grossinis_sister1.png");
+
+        parent->addChild(sprite);
+        this->addChild(parent);
+
+        float w = sprite->getContentSize().width;
+        sprite->setPosition(s.width/2 - w*0.7*(i-5), s.height/2);
+    }
+
+    this->scheduleUpdate();
+}
+
+void NodeGlobalZValueTest::update(float dt)
+{
+    static float accum = 0;
+
+    accum += dt;
+    if( accum > 1) {
+        float z = _sprite->getGlobalZOrder();
+        _sprite->setGlobalZOrder(-z);
+        accum = 0;
+    }
+}
+
+std::string NodeGlobalZValueTest::title() const
+{
+    return "Global Z Value";
+}
+
+std::string NodeGlobalZValueTest::subtitle() const
+{
+    return "Center Sprite should change go from foreground to background";
+}
+
 
 //
 // MySprite: Used by CameraTest1 and CameraTest2
@@ -907,7 +982,7 @@ protected:
 
 void MySprite::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -1021,7 +1096,18 @@ CameraTest2::CameraTest2()
     _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
     _sprite2->setScale(0.5);
 
-    scheduleUpdate();
+    kmVec3 eye, center, up;
+
+    kmVec3Fill(&eye, 150, 0, 200);
+    kmVec3Fill(&center, 0, 0, 0);
+    kmVec3Fill(&up, 0, 1, 0);
+
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+
+    _sprite1->setAdditionalTransform(lookupMatrix);
+    _sprite2->setAdditionalTransform(lookupMatrix);
+
 }
 
 std::string CameraTest2::title() const
@@ -1032,22 +1118,6 @@ std::string CameraTest2::title() const
 std::string CameraTest2::subtitle() const
 {
     return "Both images should look the same";
-}
-
-void CameraTest2::update(float dt)
-{
-    kmVec3 eye, center, up;
-
-    kmVec3Fill(&eye, 150, 0, 200);
-    kmVec3Fill(&center, 0, 0, 0);
-    kmVec3Fill(&up, 0, 1, 0);
-
-
-    kmMat4 lookupMatrix;
-    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
-
-    _sprite1->setAdditionalTransform(lookupMatrix);
-    _sprite2->setAdditionalTransform(lookupMatrix);
 }
 
 ///
