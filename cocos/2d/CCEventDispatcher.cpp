@@ -206,7 +206,7 @@ void EventDispatcher::visitTarget(Node* node)
         {
             child = children.at(i);
             
-            if ( child && child->getZOrder() < 0 )
+            if ( child && child->getLocalZOrder() < 0 )
                 visitTarget(child);
             else
                 break;
