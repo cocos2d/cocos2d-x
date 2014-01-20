@@ -27,6 +27,7 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
+#include "LocalStorage.h"
 #include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
