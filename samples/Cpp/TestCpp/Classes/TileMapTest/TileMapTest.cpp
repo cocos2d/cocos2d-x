@@ -599,7 +599,7 @@ TMXOrthoObjectsTest::TMXOrthoObjectsTest()
 
 void TMXOrthoObjectsTest::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXOrthoObjectsTest::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
@@ -672,7 +672,7 @@ TMXIsoObjectsTest::TMXIsoObjectsTest()
 
 void TMXIsoObjectsTest::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXIsoObjectsTest::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
@@ -1504,7 +1504,7 @@ TMXGIDObjectsTest::TMXGIDObjectsTest()
 
 void TMXGIDObjectsTest::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TMXGIDObjectsTest::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }

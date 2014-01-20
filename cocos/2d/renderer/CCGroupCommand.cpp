@@ -86,17 +86,14 @@ void GroupCommandManager::releaseGroupID(int groupID)
 }
 
 GroupCommand::GroupCommand()
-: _viewport(0)
-, _depth(0)
 {
     _type = RenderCommand::Type::GROUP_COMMAND;
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
 
-void GroupCommand::init(int viewport, int32_t depth)
+void GroupCommand::init(float globalOrder)
 {
-    _viewport = viewport;
-    _depth = depth;
+    _globalOrder = globalOrder;
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
     _renderQueueID = GroupCommandManager::getInstance()->getGroupID();
 }
@@ -104,17 +101,6 @@ void GroupCommand::init(int viewport, int32_t depth)
 GroupCommand::~GroupCommand()
 {
     GroupCommandManager::getInstance()->releaseGroupID(_renderQueueID);
-}
-
-int64_t GroupCommand::generateID()
-{
-    _id = 0;
-
-    _id = (int64_t)_viewport << 61
-            | (int64_t)1 << 60 // translucent
-            | (int64_t)_depth << 36;
-
-    return _id;
 }
 
 NS_CC_END

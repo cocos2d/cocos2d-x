@@ -302,7 +302,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
 
 void LabelFNTSpriteActions::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
     
@@ -912,7 +912,7 @@ std::string LabelFNTBounds::subtitle() const
 
 void LabelFNTBounds::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }

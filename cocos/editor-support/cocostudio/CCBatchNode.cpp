@@ -156,7 +156,7 @@ void BatchNode::draw()
 void BatchNode::generateGroupCommand()
 {
     Renderer* renderer = Director::getInstance()->getRenderer();
-    _groupCommand->init(0,_vertexZ);
+    _groupCommand->init(_globalZOrder);
     renderer->addCommand(_groupCommand);
 
     renderer->pushGroup(_groupCommand->getRenderQueueID());

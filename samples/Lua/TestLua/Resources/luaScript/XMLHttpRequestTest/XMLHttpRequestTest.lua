@@ -22,7 +22,7 @@ local function XMLHttpRequestLayer()
 
         --Get
         local function onMenuGetClicked()
-            local xhr = XMLHttpRequest:new()
+            local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
             xhr:open("GET", "http://httpbin.org/get")
 
@@ -46,7 +46,7 @@ local function XMLHttpRequestLayer()
 
         --Post
         local function onMenuPostClicked()
-            local xhr = XMLHttpRequest:new()
+            local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
             xhr:open("POST", "http://httpbin.org/post")
             local function onReadyStateChange()
@@ -67,7 +67,7 @@ local function XMLHttpRequestLayer()
 
         --Post Binary
         local function onMenuPostBinaryClicked()
-            local xhr = XMLHttpRequest:new()
+            local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_ARRAY_BUFFER
             xhr:open("POST", "http://httpbin.org/post")
 
@@ -102,7 +102,7 @@ local function XMLHttpRequestLayer()
         --Post Json
 
         local function onMenuPostJsonClicked()
-            local xhr = XMLHttpRequest:new()
+            local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_JSON
             xhr:open("POST", "http://httpbin.org/post")
 
