@@ -27,7 +27,7 @@
  Works on cocos2d-iphone and cocos2d-x.
  */
 
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
