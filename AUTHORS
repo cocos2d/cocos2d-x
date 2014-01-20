@@ -94,6 +94,7 @@ Developers:
         use tinyxml2 to replace libxml2
         Added Mingw-crt Support without breaking VS SDK
         CMake support for windows.
+        Added support for x64 target of windows.
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
@@ -714,6 +715,15 @@ Developers:
         
     akof1314
         TestCpp works by using CMake and mingw on Windows.
+        
+    Pisces000221
+        Corrected a few mistakes in the README file of project-creator.
+        
+    hbbalfred
+        Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
+        
+    liang8305
+        Use multiple processes according the number of cores to build android project
     
 Retired Core Developers:
     WenSheng Yang

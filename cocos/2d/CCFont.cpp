@@ -28,6 +28,7 @@
 
 #include "CCFontFNT.h"
 #include "CCFontFreeType.h"
+#include "CCFontCharMap.h"
 #include "edtaa3func.h"
 
 NS_CC_BEGIN
@@ -114,6 +115,21 @@ Font* Font::createWithTTF(const std::string& fntName, int fontSize, GlyphCollect
 Font* Font::createWithFNT(const std::string& fntFilePath)
 {
    return FontFNT::create(fntFilePath);
+}
+
+Font* Font::createWithCharMap(const std::string& plistFile)
+{
+    return FontCharMap::create(plistFile);
+}
+
+Font* Font::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    return FontCharMap::create(texture,itemWidth,itemHeight,startCharMap);
+}
+
+Font* Font::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    return FontCharMap::create(charMapFile,itemWidth,itemHeight,startCharMap);
 }
 
 unsigned char * Font::makeDistanceMap( unsigned char *img, unsigned int width, unsigned int height)

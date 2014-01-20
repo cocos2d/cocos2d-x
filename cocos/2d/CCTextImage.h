@@ -23,15 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _TextImage_h_
-#define _TextImage_h_
+#ifndef _CCTextImage_h_
+#define _CCTextImage_h_
 
-//#include "CCFont.h"
 #include <vector>
+#include <unordered_map>
+
+#include "CCPlatformMacros.h"
+#include "CCGeometry.h"
 
 NS_CC_BEGIN
 
 class Font;
+class Texture2D;
 
 /** @brief GlyphDef defines one single glyph (character) in a text image
  *
@@ -43,27 +47,33 @@ class CC_DLL GlyphDef
 {
 public:
     
-    GlyphDef() : _validGlyph(false)                                     {   /*do nothing*/                              }
-    GlyphDef(unsigned short int letterUTF8, const Rect &rect)           { _gliphRect = rect; _uTF16Letter = letterUTF8; }
+    GlyphDef() : _validGlyph(false) {}
+    GlyphDef(unsigned short int letterUTF8, const Rect &rect) {
+        _gliphRect = rect;
+        _uTF16Letter = letterUTF8;
+    }
     
-    void setUTF16Letter(unsigned short int letterUTF8)                  { _uTF16Letter  = letterUTF8;   }
-    void setRect(const Rect & theRect)                                  { _gliphRect = theRect;         }
-    unsigned short int getUTF8Letter()                                  { return _uTF16Letter;          }
-    const Rect &  getRect() const                                       { return _gliphRect;            }
-    void    setPadding(float padding)                                   { _padding = padding;           }
-    float   getPadding()                                                { return _padding;              }
-    void    setCommonHeight(float commonHeight)                         { _commonHeight = commonHeight; }
-    float   getCommonHeight()                                           { return _commonHeight;         }
-    void    setValid(bool isValid)                                      { _validGlyph = isValid;        }
-    bool    isValid()                                                   { return _validGlyph;           }
+    void setUTF16Letter(unsigned short int letterUTF8) { _uTF16Letter  = letterUTF8; }
+    void setRect(const Rect & theRect) { _gliphRect = theRect; }
+
+    unsigned short int getUTF8Letter() const { return _uTF16Letter; }
+    const Rect& getRect() const { return _gliphRect; }
+
+    void setPadding(float padding) { _padding = padding; }
+    float getPadding() const { return _padding; }
+
+    void setCommonHeight(float commonHeight) { _commonHeight = commonHeight; }
+    float getCommonHeight() const { return _commonHeight; }
+
+    void setValid(bool isValid) { _validGlyph = isValid; }
+    bool isValid() const { return _validGlyph; }
     
-private:
-    
-    Rect                _gliphRect;
-    unsigned short int  _uTF16Letter;
-    float               _padding;
-    float               _commonHeight;
-    bool                _validGlyph;
+protected:
+    Rect _gliphRect;
+    unsigned short int _uTF16Letter;
+    float _padding;
+    float _commonHeight;
+    bool _validGlyph;
     
 };
 
@@ -78,23 +88,21 @@ public:
     
     TextLineDef(float x, float y, float width, float height);
     
-    float getX() const        { return _x;        }
-    float getY() const        { return _y;        }
-    float getWidth() const    { return _width;    }
-    float getHeight() const   { return _height;   }
+    float getX() const { return _x; }
+    float getY() const { return _y; }
+    float getWidth() const { return _width; }
+    float getHeight() const { return _height; }
     
-    void  addGlyph(GlyphDef theGlyph)               { _glyphs.push_back(theGlyph);  }
-    int   getNumGlyph()  const                      { return  static_cast<int>(_glyphs.size()); }
-    const GlyphDef & getGlyphAt(int index) const    { return _glyphs[index];        }
+    void addGlyph(GlyphDef theGlyph) { _glyphs.push_back(theGlyph); }
+    int getNumGlyph() const { return  static_cast<int>(_glyphs.size()); }
+    const GlyphDef & getGlyphAt(int index) const { return _glyphs[index]; }
     
-private:
-    
-    float                   _x;
-    float                   _y;
-    float                   _width;
-    float                   _height;
-    std::vector<GlyphDef>   _glyphs;
-    
+protected:
+    float _x;
+    float _y;
+    float _width;
+    float _height;
+    std::vector<GlyphDef> _glyphs;
 };
 
 /** @brief TextPageDef defines one text image page (a TextImage can have/use more than one page)
@@ -115,28 +123,26 @@ public:
      */
     ~TextPageDef();
     
-    void addLine(TextLineDef *theLine)      { _lines.push_back(theLine); }
-    int  getNumLines() const                { return  static_cast<int>(_lines.size());      }
-    TextLineDef * getLineAt(int index) const        { return _lines[index];      }
-    int getWidth() const                            { return _width;             }
-    int getHeight() const                           { return _height;            }
-    int getPageNumber() const                       { return _pageNum;           }
-    void setPageData(unsigned char *data)           { _pageData = data;          }
-    const unsigned char * getPageData() const       { return _pageData;          }
-    Texture2D     *getPageTexture();
+    void addLine(TextLineDef *theLine) { _lines.push_back(theLine); }
+    int  getNumLines() const { return  static_cast<int>(_lines.size()); }
+    TextLineDef * getLineAt(int index) const { return _lines[index]; }
+    int getWidth() const { return _width; }
+    int getHeight() const { return _height; }
+    int getPageNumber() const { return _pageNum; }
+    void setPageData(unsigned char *data) { _pageData = data; }
+    const unsigned char * getPageData() const { return _pageData; }
+    Texture2D *getPageTexture();
     void preparePageTexture(bool releaseRAWData = true);
     
-private:
-    
+protected:
     bool generatePageTexture(bool releasePageData = false);
     
-    int                         _pageNum;
-    int                         _width;
-    int                         _height;
-    unsigned char *             _pageData;
-    Texture2D   *               _pageTexture;
-    std::vector<TextLineDef *>  _lines;
-    
+    int _pageNum;
+    int _width;
+    int _height;
+    unsigned char * _pageData;
+    Texture2D* _pageTexture;
+    std::vector<TextLineDef*> _lines;
 };
 
 /** @brief CCTextFontPages collection of pages (TextPageDef)
@@ -156,13 +162,12 @@ public:
      */
    ~TextFontPagesDef();
     
-    void addPage(TextPageDef *newPage)         { _pages.push_back(newPage);    }
-    int  getNumPages()  const                  { return static_cast<int>(_pages.size());         }
-    TextPageDef* getPageAt(int index) const    { return _pages[index];         }
+    void addPage(TextPageDef *newPage) { _pages.push_back(newPage); }
+    int  getNumPages() const { return static_cast<int>(_pages.size()); }
+    TextPageDef* getPageAt(int index) const { return _pages[index]; }
     
-private:
-    
-    std::vector<TextPageDef *>    _pages;
+protected:
+    std::vector<TextPageDef*> _pages;
     
 };
 
@@ -184,28 +189,27 @@ public:
     
     bool initWithString(const char *text, int width, int height, Font* font, bool releaseRAWData = true);
     
-    TextFontPagesDef  * getPages()  const  { return _fontPages; }
-    Font              * getFont() const    { return _font;      }
+    TextFontPagesDef* getPages() const { return _fontPages; }
+    Font* getFont() const { return _font; }
     
-private:
-    
+protected:
     bool createImageDataFromPages(TextFontPagesDef *thePages, bool releaseRAWData = true);
     bool addGlyphsToLine(TextLineDef *line, const char *lineText, bool textIsUTF16 = false);
     bool generateTextGlyphs(const char * text);
-    int  getNumGlyphsFittingInSize(std::map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize);
+    int getNumGlyphsFittingInSize(std::unordered_map<unsigned short int, GlyphDef> &glyphDefs, unsigned short int *strUTF8, Font *font, Size *constrainSize, int &outNewSize);
     bool createPageDefinitions(unsigned short int *inText, int imageWidth, int imageHeight, int lineHeight);
     unsigned char * preparePageGlyphData(TextPageDef *thePage);
     
     // glyph rendering
     unsigned char * renderGlyphData(TextPageDef *thePage);
     
-    std::map<unsigned short int, GlyphDef>      _textGlyphs;
-    TextFontPagesDef *                          _fontPages;
-    Font             *                          _font;
+    std::unordered_map<unsigned short int, GlyphDef> _textGlyphs;
+    TextFontPagesDef* _fontPages;
+    Font* _font;
 };
 
 
 NS_CC_END
 
 
-#endif
+#endif // _CCTextImage_h_

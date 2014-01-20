@@ -22,10 +22,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "cocos2d.h"
+
 #include "CCFontAtlas.h"
 #include "CCFont.h"
 #include "CCFontFreeType.h"
+#include "ccUTF8.h"
+#include "CCDirector.h"
 
 #define  PAGE_WIDTH 1024
 #define  PAGE_HEIGHT 1024
@@ -100,6 +102,7 @@ bool FontAtlas::getLetterDefinitionForChar(unsigned short  letteCharUTF16, FontL
     }
     else
     {
+        outDefinition.validDefinition = false;
         return false;
     }
 }
@@ -114,8 +117,6 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
     std::unordered_map<unsigned short, FontLetterDefinition> fontDefs;
     int length = cc_wcslen(utf16String);
 
-    auto yDelta = _currentPageLineHeight * 0.7;
-
     //find out new letter
     for (int i = 0; i < length; ++i)
     {
@@ -129,8 +130,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
 
             Rect tempRect;           
 
-            FontLetterDefinition tempDef;
-            tempDef.offsetX = 0;
+            FontLetterDefinition tempDef;           
             tempDef.anchorX = 0.0f;
             tempDef.anchorY = 1.0f;
 
@@ -142,7 +142,8 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.width            = 0;
                 tempDef.height           = 0;
                 tempDef.U                = 0;
-                tempDef.V                = 0;            
+                tempDef.V                = 0;
+                tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
             }
@@ -151,8 +152,9 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.validDefinition = true;
                 tempDef.letteCharUTF16   = utf16String[i];
                 tempDef.width            = tempRect.size.width  + _letterPadding;
-                tempDef.height           = _currentPageLineHeight - 1;             
-                tempDef.offsetY          = tempRect.origin.y + yDelta;
+                tempDef.height           = _currentPageLineHeight - 1;
+                tempDef.offsetX          = tempRect.origin.x;
+                tempDef.offsetY          = tempRect.origin.y;
                 tempDef.commonLineHeight = _currentPageLineHeight;
                         
             } 

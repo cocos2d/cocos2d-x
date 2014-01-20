@@ -120,23 +120,23 @@ class TkCocosDialog(Frame):
         self.rowconfigure(5, weight=1)
 
         # project name frame
-        self.labName = Label(self, text="projectName:")
+        self.labName = Label(self, text="Project Name:")
         self.strName = StringVar()
         self.strName.set("MyGame")
         self.editName = Entry(self, textvariable=self.strName)
         self.labName.grid(sticky=W, pady=4, padx=5)
-        self.editName.grid(row=0, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
+        self.editName.grid(row=0, column=1, columnspan=4,padx=5, pady=2,sticky=E+W)
 
         # package name frame
-        self.labPackage = Label(self, text="packageName:")
+        self.labPackage = Label(self, text="Package Name:")
         self.strPackage=StringVar()
         self.strPackage.set("com.MyCompany.AwesomeGame")
         self.editPackage = Entry(self, textvariable=self.strPackage)
         self.labPackage.grid(row=1, column=0,sticky=W, padx=5)
-        self.editPackage.grid(row=1, column=1, columnspan=3,padx=5, pady=2,sticky=E+W)
+        self.editPackage.grid(row=1, column=1, columnspan=4,padx=5, pady=2,sticky=E+W)
 
         # project path frame
-        self.labPath = Label(self, text="projectPath:")
+        self.labPath = Label(self, text="Project Path:")
         self.editPath = Entry(self)
         self.btnPath = Button(self, text="...", width = 6, command = self.pathCallback)
         self.labPath.grid(row=2, column=0,sticky=W, pady=4, padx=5)
@@ -144,12 +144,12 @@ class TkCocosDialog(Frame):
         self.btnPath.grid(row=2, column=4,)
 
         # language frame
-        self.labLanguage = Label(self, text="language:")
+        self.labLanguage = Label(self, text="Language:")
         self.var=IntVar()
         self.var.set(1)
-        self.checkcpp = Radiobutton(self, text="cpp", variable=self.var, value=1)
-        self.checklua = Radiobutton(self, text="lua", variable=self.var, value=2)
-        self.checkjs = Radiobutton(self, text="javascript", variable=self.var, value=3)
+        self.checkcpp = Radiobutton(self, text="C++", variable=self.var, value=1)
+        self.checklua = Radiobutton(self, text="Lua", variable=self.var, value=2)
+        self.checkjs = Radiobutton(self, text="JavaScript", variable=self.var, value=3)
         self.labLanguage.grid(row=3, column=0,sticky=W, padx=5)
         self.checkcpp.grid(row=3, column=1,sticky=N+W)
         self.checklua.grid(row=3, column=2,padx=5,sticky=N+W)
@@ -158,12 +158,12 @@ class TkCocosDialog(Frame):
         # show progress
         self.progress = Scale(self, state= DISABLED, from_=0, to=100, orient=HORIZONTAL)
         self.progress.set(0)
-        self.progress.grid(row=4, column=0, columnspan=4,padx=5, pady=2,sticky=E+W+S+N)
+        self.progress.grid(row=4, column=0, columnspan=5,padx=5, pady=2,sticky=E+W+S+N)
 
         # msg text frame
         self.text=Text(self,background = '#d9efff')
         self.text.bind("<KeyPress>", lambda e : "break")
-        self.text.grid(row=5, column=0, columnspan=4, rowspan=1, padx=5, sticky=E+W+S+N)
+        self.text.grid(row=5, column=0, columnspan=5, rowspan=1, padx=5, sticky=E+W+S+N)
 
         # new project button
         self.btnCreate = Button(self, text="create", command = self.createBtnCallback)
@@ -176,7 +176,7 @@ class TkCocosDialog(Frame):
         scnHeight = self.parent.winfo_screenheight()
         tmpcnf = '%dx%d+%d+%d'%(curWidth, curHeight, int((scnWidth-curWidth)/2), int((scnHeight-curHeight)/2))
         self.parent.geometry(tmpcnf)
-        self.parent.title("CocosCreateProject")
+        self.parent.title("Cocos Project Creator")
 
         #fix size
         #self.parent.maxsize(curWidth, curHeight)
