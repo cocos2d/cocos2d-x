@@ -268,9 +268,12 @@ void AssetsManager::update()
     
     // Is package already downloaded?
     _downloadedVersion = UserDefault::getInstance()->getStringForKey(keyOfDownloadedVersion().c_str());
-    
-    auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
-    t.detach();
+ 
+	// memory leak issue : http://connect.microsoft.com/VisualStudio/feedback/details/757212/vs-2012-rc-std-thread-reports-memory-leak-even-on-stack
+	// Constructing a std::thread resulted in a memory leak reported by (http://blogs.msdn.com/b/vcblog/archive/2013/06/28/c-11-14-stl-features-fixes-and-breaking-changes-in-vs-2013.aspx)
+    //auto t = std::thread(&AssetsManager::downloadAndUncompress, this);
+    //t.detach();
+	downloadAndUncompress();
 }
 
 bool AssetsManager::uncompress()
@@ -432,9 +435,11 @@ bool AssetsManager::uncompress()
             }
         }
     }
-    
+
+	unzClose(zipfile);
+
     CCLOG("end uncompressing");
-    
+
     return true;
 }
 

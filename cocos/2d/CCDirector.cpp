@@ -62,6 +62,7 @@ THE SOFTWARE.
 #include "CCFontFreeType.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCFrustum.h"
+#include "renderer/CCGroupCommand.h"
 #include "CCConsole.h"
 
 /**
@@ -764,6 +765,7 @@ void Director::purgeDirector()
     ShaderCache::destroyInstance();
     FileUtils::destroyInstance();
     Configuration::destroyInstance();
+	GroupCommandManager::destroyInstance();
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

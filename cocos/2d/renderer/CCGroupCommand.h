@@ -37,6 +37,7 @@ class GroupCommandManager : public Object
 {
 public:
     static GroupCommandManager* getInstance();
+	static void destroyInstance();
 
     ~GroupCommandManager();
 
