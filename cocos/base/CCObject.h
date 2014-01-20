@@ -77,8 +77,6 @@ public:
 protected:
     /// count of references
     unsigned int        _reference;
-    /// count of autorelease
-    unsigned int        _autoReleaseCount;
 public:
     /**
      * Constructor
