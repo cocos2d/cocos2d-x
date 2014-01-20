@@ -354,7 +354,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     }
     else
     {
-        setDirty(listenerID, DirtyFlag::FIXED_PRITORY);
+        setDirty(listenerID, DirtyFlag::FIXED_PRIORITY);
     }
 }
 
@@ -496,7 +496,7 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
                 if (listener->getFixedPriority() != fixedPriority)
                 {
                     listener->setFixedPriority(fixedPriority);
-                    setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRITORY);
+                    setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRIORITY);
                 }
                 return;
             }
@@ -921,7 +921,7 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
     
     if (dirtyFlag != DirtyFlag::NONE)
     {
-        if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRITORY)
+        if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRIORITY)
         {
             sortEventListenersOfFixedPriority(listenerID);
         }
