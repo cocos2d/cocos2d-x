@@ -67,8 +67,6 @@ set(COCOS2D_SRC
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp
-  CCFontAtlasFactory.cpp
-  CCFontDefinition.cpp
   CCFontFNT.cpp
   CCFontFreeType.cpp
   CCFontCharMap.cpp
@@ -77,7 +75,6 @@ set(COCOS2D_SRC
   CCLabelBMFont.cpp
   CCLabelTTF.cpp
   CCLabelTextFormatter.cpp
-  CCTextImage.cpp
   CCLayer.cpp
   CCScene.cpp
   CCTransition.cpp
