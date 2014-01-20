@@ -203,6 +203,7 @@ local CCObjectTypes = {
     "CCScrollView",
     "CCTableViewCell",
     "CCTableView",
+    "CCComponent",
 }
 
 -- register CCObject types
