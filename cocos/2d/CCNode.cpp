@@ -108,7 +108,8 @@ Node::Node(void)
 , _inverseDirty(true)
 // children (lazy allocs)
 // lazy alloc
-, _ZOrder(0)
+, _localZOrder(0)
+, _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
@@ -212,29 +213,22 @@ void Node::setSkewY(float newSkewY)
     _transformDirty = _inverseDirty = true;
 }
 
-/// zOrder getter
-int Node::getZOrder() const
-{
-    return _ZOrder;
-}
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void Node::_setZOrder(int z)
+void Node::_setLocalZOrder(int z)
 {
-    _ZOrder = z;
+    _localZOrder = z;
 }
 
-void Node::setZOrder(int z)
+void Node::setLocalZOrder(int z)
 {
+    _localZOrder = z;
     if (_parent)
     {
         _parent->reorderChild(this, z);
     }
-    // should set "_ZOrder" after reorderChild, because the implementation of reorderChild subclass of Node, such as Sprite,
-    // will return when _ZOrder value is not changed
-    _setZOrder(z);
-    
+
     _eventDispatcher->setDirtyForNode(this);
 }
 
@@ -246,9 +240,10 @@ float Node::getVertexZ() const
 
 
 /// vertexZ setter
-void Node::setVertexZ(float var)
+void Node::setVertexZ(float zOrder)
 {
-    _vertexZ = var;
+    _vertexZ = zOrder;
+    setGlobalZOrder(zOrder);
 }
 
 
@@ -650,7 +645,7 @@ void Node::addChild(Node *child, int zOrder)
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_ZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_tag);
 }
 
 void Node::removeFromParent()
@@ -767,7 +762,7 @@ void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
     _children.pushBack(child);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -775,7 +770,7 @@ void Node::reorderChild(Node *child, int zOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void Node::sortAllChildren()
@@ -816,7 +811,7 @@ void Node::visit()
         {
             auto node = _children.at(i);
 
-            if ( node && node->_ZOrder < 0 )
+            if ( node && node->_localZOrder < 0 )
                 node->visit();
             else
                 break;

@@ -1040,7 +1040,7 @@ void Widget::copyProperties(Widget *widget)
     setBright(widget->isBright());
     setTouchEnabled(widget->isTouchEnabled());
     _touchPassedEnabled = false;
-    setZOrder(widget->getZOrder());
+    setLocalZOrder(widget->getLocalZOrder());
     setTag(widget->getTag());
     setName(widget->getName());
     setActionTag(widget->getActionTag());

@@ -2123,6 +2123,15 @@ static int tolua_bnd_cast_deprecated00(lua_State* tolua_S)
     }
     else
     {
+        std::string castName = tolua_tostring(tolua_S,2,NULL);
+        auto iter = g_typeCast.find(castName);
+        if (iter != g_typeCast.end() )
+        {
+            CCLOG("Cast name %s doesn't include modular name which it belongs to,please add the modular name",iter->first.c_str());
+            tolua_pushstring(tolua_S, iter->second.c_str());
+            lua_insert(tolua_S, 2);
+            lua_pop(tolua_S, 1);
+        }
         return tolua_bnd_cast(tolua_S);
     }
 }
