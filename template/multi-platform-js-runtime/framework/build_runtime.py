@@ -2,9 +2,13 @@
 # coding=utf-8
 # filename=build_runtime.py
 
+import platform
 import os
-import commands
-import _winreg
+import subprocess
+
+if platform.system() == 'Windows':
+    import _winreg
+
 
 def checkParams():
     """Custom and check param list.
@@ -12,18 +16,33 @@ def checkParams():
     from optparse import OptionParser
     # set the parser to parse input params
     # the correspond variable name of "-x, --xxx" is parser.xxx
-    parser = OptionParser(
-        usage="Usage: %prog -p <win32|android|ios|mac>\n\
-        Sample: %prog -p win32"
-    )
-    parser.add_option(
-        "-p",
-        "--platform",
-        metavar="PLATFORM",
-        type="choice",
-        choices=["win32","android","ios","mac"],
-        help="Set build runtime's platform"
-    )
+
+    if platform.system() == "Darwin":
+        parser = OptionParser(
+            usage="Usage: %prog -p <android|ios|mac>\n\
+            Sample: %prog -p ios"
+        )
+        parser.add_option(
+            "-p",
+            "--platform",
+            metavar="PLATFORM",
+            type="choice",
+            choices=["android", "ios", "mac"],
+            help="Set build runtime's platform"
+        )
+    elif platform.system() == "Windows":
+        parser = OptionParser(
+            usage="Usage: %prog -p <win32|android>\n\
+            Sample: %prog -p win32"
+        )
+        parser.add_option(
+            "-p",
+            "--platform",
+            metavar="PLATFORM",
+            type="choice",
+            choices=["win32", "android"],
+            help="Set build runtime's platform"
+        )
 
     # parse the params
     (opts, args) = parser.parse_args()
@@ -45,63 +64,126 @@ class BuildRuntime:
             self.projectPath = os.path.join(scriptPath, "proj.win32")
         elif platform == 'android':
             self.projectPath = os.path.join(scriptPath, "proj.android")
+        elif platform == 'ios':
+            self.projectPath = os.path.join(scriptPath, "proj.ios")
+        elif platform == 'mac':
+            self.projectPath = os.path.join(scriptPath, "proj.mac")
         
-    
     def buildRuntime(self):
         if self.runtimePlatform == 'win32':
             self.win32Runtime()
         elif self.runtimePlatform == 'android':
             self.androidRuntime()
+        if self.runtimePlatform == 'ios':
+            self.iosRuntime()
+        if self.runtimePlatform == 'mac':
+            self.macRuntime()
             
+    def macRuntime(self):
+        pass
+    
+    def iosRuntime(self):
+        pass
+    
     def androidRuntime(self):
         buildNative = os.path.join(self.projectPath, "build_native.py")
-        buildCommand = "python %s -p 16" % (buildNative)
-        #print buildCommand
-        os.system(buildCommand)
-    
+        commands = [
+            "python",
+            buildNative,
+            "-p",
+            "16",
+        ]
+        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
+        for line in child.stdout:
+            print line
+            
+        child.wait()
+        
     def win32Runtime(self):
         try:
-            key = _winreg.OpenKey(
+            vs = _winreg.OpenKey(
                 _winreg.HKEY_LOCAL_MACHINE,
-                r"SOFTWARE\Microsoft\VisualStudio",
+                r"SOFTWARE\Microsoft\VisualStudio"
             )
+
+            msbuild = _winreg.OpenKey(
+                _winreg.HKEY_LOCAL_MACHINE,
+                r"SOFTWARE\Microsoft\MSBuild\ToolsVersions"
+            )
+
         except WindowsError:
-            print "The computer was not installed visual studio "
-            return False
-        
-        res = self.checkFileByExtention()
-        
-        if not res:
-            print "There is no sln file in the win32 project path"
+            print ("Visual Studio wasn't installed")
             return False
 
+        vsPath = None
+        i = 0
         try:
-            i = 0
-            while 1:
-                name = _winreg.EnumKey(key,i)
+            while True:
+                version = _winreg.EnumKey(vs,i)
                 try:
-                    version = float(name)
-                    if version >= 11.0:
-                        pathKey = _winreg.OpenKey(key, r"SxS\VS7")
-                        pathValue,type = _winreg.QueryValueEx(pathKey, name)
-                        
-                        msbuildPath = r"C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"
-                        slnPath = "%s\%s.sln" % (self.projectPath, self.projectName)
-                        buildCommand = "%s %s /maxcpucount:4 /t:build /p:configuration=Debug" % (msbuildPath, slnPath)
-                        
-                        os.system(buildCommand)
-                        #print buildCommand
+                    if float(version) >= 11.0:
+                        key = _winreg.OpenKey(vs, r"SxS\VS7")
+                        vsPath, type = _winreg.QueryValueEx(key, version)
                 except:
                     pass
                 i += 1
         except WindowsError:
+            pass
+
+        if vsPath == None:
+            print("Can't find the Visual Studio's path in the regedit")
             return False
+
+        msbuildPath = None
+        i = 0
+        try:
+            while True:
+                version = _winreg.EnumKey(msbuild,i)
+                try:
+                    if float(version) >= 4.0:
+                        key = _winreg.OpenKey(msbuild, version)
+                        msbuildPath, type = _winreg.QueryValueEx(
+                            key, 
+                            "MSBuildToolsPath"
+                        )
+                except:
+                    pass
+                i += 1
+        except WindowsError:
+            pass
+
+        if msbuildPath == None:
+            print ("Can't find the MSBuildTools' path in the regedit")
+            return False
+
+        res = self.checkFileByExtention(".sln")
+        if not res:
+            print ("Can't find the \".sln\" file")
+            return False
+
+        msbuildPath = os.path.join(msbuildPath, "MSBuild.exe")
+        projectPath = os.path.join(self.projectPath, self.projectName)
+        commands = [
+            msbuildPath,
+            projectPath,
+            "/maxcpucount:4",
+            "/t:build",
+            "/p:configuration=Debug"
+        ]
+
+        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
+        for line in child.stdout:
+            print (line)
+
+        child.wait()
+
+        return True
         
-    def checkFileByExtention(self):
+    def checkFileByExtention(self, ext):
         files = os.listdir(self.projectPath)
         for file in files:
             name, extention = os.path.splitext(file)
-            if extention == '.sln':
+            if extention == ext:
                 self.projectName = name
                 return True
         return False
