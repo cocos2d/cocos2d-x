@@ -3953,7 +3953,7 @@ JSBool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
     jsval *argv = JS_ARGV(cx, vp);
     JSBool ok = JS_TRUE;
 
-    TTFConfig ttfConfig(nullptr);
+    TTFConfig ttfConfig("");
     std::string text;
 
     ok &= jsval_to_TTFConfig(cx, argv[0], &ttfConfig);
@@ -4016,7 +4016,7 @@ JSBool js_cocos2dx_Label_setTTFConfig(JSContext *cx, uint32_t argc, jsval *vp)
     JSB_PRECONDITION2( cobj, cx, JS_FALSE, "js_cocos2dx_Label_setTTFConfig : Invalid Native Object");
 
     if (argc == 1) {
-        TTFConfig ttfConfig(nullptr);
+        TTFConfig ttfConfig("");
         do {
             if (!argv[0].isObject()) { ok = JS_FALSE; break; }
             ok &= jsval_to_TTFConfig(cx, argv[0], &ttfConfig);
