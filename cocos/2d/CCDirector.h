@@ -60,6 +60,7 @@ class EventListenerCustom;
 class TextureCache;
 class Frustum;
 class Renderer;
+class Console;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -186,21 +187,9 @@ public:
      Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
-    Node* getNotificationNode();
+    Node* getNotificationNode() const { return _notificationNode; }
     void setNotificationNode(Node *node);
     
-    /** Director delegate. It shall implement the DirectorDelegate protocol
-     @since v0.99.5
-     * @js NA
-     * @lua NA
-     */
-    DirectorDelegate* getDelegate() const;
-    /**
-     * @js NA
-     * @lua NA
-     */
-    void setDelegate(DirectorDelegate* delegate);
-
     // window size
 
     /** returns the size of the OpenGL view in points.
@@ -340,7 +329,7 @@ public:
     @since v0.99.4
     */
     void setContentScaleFactor(float scaleFactor);
-    float getContentScaleFactor() const;
+    float getContentScaleFactor() const { return _contentScaleFactor; }
     
     /**
      Get the Culling Frustum
@@ -351,7 +340,7 @@ public:
     /** Gets the Scheduler associated with this director
      @since v2.0
      */
-    Scheduler* getScheduler() const;
+    Scheduler* getScheduler() const { return _scheduler; }
     
     /** Sets the Scheduler associated with this director
      @since v2.0
@@ -361,7 +350,7 @@ public:
     /** Gets the ActionManager associated with this director
      @since v2.0
      */
-    ActionManager* getActionManager() const;
+    ActionManager* getActionManager() const { return _actionManager; }
     
     /** Sets the ActionManager associated with this director
      @since v2.0
@@ -371,7 +360,7 @@ public:
     /** Gets the EventDispatcher associated with this director 
      @since v3.0
      */
-    EventDispatcher* getEventDispatcher() const;
+    EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
     /** Sets the EventDispatcher associated with this director 
      @since v3.0
@@ -381,7 +370,12 @@ public:
     /** Returns the Renderer
      @since v3.0
      */
-    Renderer* getRenderer() const;
+    Renderer* getRenderer() const { return _renderer; }
+
+    /** Returns the Console 
+     @since v3.0
+     */
+    Console* getConsole() const { return _console; }
 
     /* Gets delta time since last tick to main loop */
 	float getDeltaTime() const;
@@ -492,10 +486,11 @@ protected:
     /* This object will be visited after the scene. Useful to hook a notification node */
     Node *_notificationNode;
 
-    /* Projection protocol delegate */
-    DirectorDelegate *_projectionDelegate;
-
+    /* Renderer for the Director */
     Renderer *_renderer;
+
+    /* Console for the director */
+    Console *_console;
     
     // EGLViewProtocol will recreate stats labels to fit visible rect
     friend class EGLViewProtocol;

@@ -1,5 +1,18 @@
 set(APP_NAME testcpp)
 
+if(WIN32)
+  set(PLATFORM_SRC
+    Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
+    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+    proj.win32/main.cpp
+  )
+else()
+  set(PLATFORM_SRC
+    proj.linux/main.cpp
+  )
+endif()
+
 set(SAMPLE_SRC
   Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
@@ -103,6 +116,8 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceTextureTest.cpp
   Classes/PerformanceTest/PerformanceTouchesTest.cpp
   Classes/PerformanceTest/PerformanceLabelTest.cpp
+  Classes/PerformanceTest/PerformanceRendererTest.cpp
+  Classes/PerformanceTest/PerformanceContainerTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp
   Classes/RotateWorldTest/RotateWorldTest.cpp
@@ -133,7 +148,7 @@ set(SAMPLE_SRC
   Classes/AppDelegate.cpp
   Classes/BaseTest.cpp
   Classes/VisibleRect.cpp
-  proj.linux/main.cpp
+  ${PLATFORM_SRC}
 )
 
 include_directories(

@@ -151,12 +151,11 @@ TestController::~TestController()
 
 void TestController::menuCallback(Object * sender)
 {
-
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
     auto menuItem = static_cast<MenuItem *>(sender);
-    int idx = menuItem->getZOrder() - 10000;
+    int idx = menuItem->getLocalZOrder() - 10000;
 
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();

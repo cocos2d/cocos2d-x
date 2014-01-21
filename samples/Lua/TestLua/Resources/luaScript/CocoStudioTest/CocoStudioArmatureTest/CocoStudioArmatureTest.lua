@@ -428,7 +428,7 @@ end
 
 function TestPerformance:refreshTitle()
     local subTitleInfo = ArmatureTestLayer.subTitle(5) .. self._armatureCount
-    local label        = tolua.cast(self:getChildByTag(10001),"LabelTTF")
+    local label        = tolua.cast(self:getChildByTag(10001),"cc.LabelTTF")
     label:setString(subTitleInfo)
 end
 

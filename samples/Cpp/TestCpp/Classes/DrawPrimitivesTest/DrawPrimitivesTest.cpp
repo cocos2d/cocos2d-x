@@ -116,7 +116,7 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -302,6 +302,14 @@ DrawNodeTest::DrawNodeTest()
     draw->drawSegment(Point(20,s.height), Point(20,s.height/2), 10, Color4F(0, 1, 0, 1));
 
     draw->drawSegment(Point(10,s.height/2), Point(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
+
+	// Draw triangle
+    draw->drawTriangle(Point(10, 10), Point(70, 30), Point(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+	
+	// Draw some beziers
+    draw->drawQuadraticBezier(Point(s.width - 150, s.height - 150), Point(s.width - 70, s.height - 10), Point(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
+
+    draw->drawCubicBezier(Point(s.width - 250, 40), Point(s.width - 70, 100), Point(s.width - 30, 250), Point(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
 }
 
 string DrawNodeTest::title() const

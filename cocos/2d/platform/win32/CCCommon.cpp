@@ -29,43 +29,6 @@ NS_CC_BEGIN
 
 #define MAX_LEN         (cocos2d::kMaxLogLen + 1)
 
-// XXX deprecated
-void CCLog(const char * pszFormat, ...)
-{
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    WCHAR wszBuf[MAX_LEN] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-    OutputDebugStringW(wszBuf);
-    OutputDebugStringA("\n");
-
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
-    printf("%s\n", szBuf);
-}
-
-void log(const char * pszFormat, ...)
-{
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf_s(szBuf, MAX_LEN, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    WCHAR wszBuf[MAX_LEN] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, szBuf, -1, wszBuf, sizeof(wszBuf));
-    OutputDebugStringW(wszBuf);
-    OutputDebugStringA("\n");
-
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), szBuf, sizeof(szBuf), NULL, FALSE);
-    printf("%s\n", szBuf);
-}
-
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     MessageBoxA(NULL, pszMsg, pszTitle, MB_OK);

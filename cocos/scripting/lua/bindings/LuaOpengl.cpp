@@ -59,7 +59,7 @@ void GLNode::draw()
 /* function to release collected object via destructor */
 static void tolua_reg_gl_type(lua_State* tolua_S)
 {
-    tolua_usertype(tolua_S, "GLNode");
+    tolua_usertype(tolua_S, "cc.GLNode");
 }
 
 static int tolua_collect_GLNode (lua_State* tolua_S)
@@ -76,7 +76,7 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertable(tolua_S,1,"GLNode",0,&tolua_err) ||
+        !tolua_isusertable(tolua_S,1,"cc.GLNode",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err)
         )
         goto tolua_lerror;
@@ -89,7 +89,7 @@ static int tolua_Cocos2d_GLNode_create00(lua_State* tolua_S)
             glNode->autorelease();
             int nID = (int)glNode->_ID;
             int* pLuaID = &glNode->_luaID;
-            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)glNode,"GLNode");
+            toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)glNode,"cc.GLNode");
             //tolua_register_gc(tolua_S,lua_gettop(tolua_S));
         }
         else
@@ -113,8 +113,8 @@ static int tolua_Cocos2d_GLNode_setShaderProgram00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (
-        !tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S,2,"GLProgram",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,1,"cc.GLNode",0,&tolua_err) ||
+        !tolua_isusertype(tolua_S,2,"cc.GLProgram",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err)
         )
         goto tolua_lerror;
@@ -5043,7 +5043,7 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S)
     tolua_reg_gl_type(tolua_S);
     tolua_module(tolua_S,"cc",0);
     tolua_beginmodule(tolua_S,"cc");
-      tolua_cclass(tolua_S,"GLNode","GLNode","Node",tolua_collect_GLNode);
+      tolua_cclass(tolua_S,"GLNode","cc.GLNode","cc.Node",tolua_collect_GLNode);
         tolua_beginmodule(tolua_S,"GLNode");
             tolua_function(tolua_S, "create", tolua_Cocos2d_GLNode_create00);
             tolua_function(tolua_S, "setShaderProgram", tolua_Cocos2d_GLNode_setShaderProgram00);
@@ -5206,7 +5206,7 @@ static int tolua_Cocos2d_GLNode_registerScriptDrawHandler00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+    if (!tolua_isusertype(tolua_S,1,"cc.GLNode",0,&tolua_err) ||
         (tolua_isvaluenil(tolua_S,2,&tolua_err) || !toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err)) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err))
         goto tolua_lerror;
@@ -5230,7 +5230,7 @@ static int tolua_Cocos2d_GLNode_unregisterScriptDrawHandler00(lua_State* tolua_S
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S,1,"GLNode",0,&tolua_err) ||
+    if (!tolua_isusertype(tolua_S,1,"cc.GLNode",0,&tolua_err) ||
         !tolua_isnoobj(tolua_S,2,&tolua_err))
         goto tolua_lerror;
     else
@@ -5252,7 +5252,7 @@ int register_glnode_manual(lua_State* tolua_S)
     if (nullptr == tolua_S)
         return 0;
     
-    lua_pushstring(tolua_S,"GLNode");
+    lua_pushstring(tolua_S,"cc.GLNode");
     lua_rawget(tolua_S,LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {

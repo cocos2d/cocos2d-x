@@ -22,6 +22,7 @@ std::function<Layer*()> createFunctions[] =
     CL(RemoveAndRetainNodeTest),
     CL(RemoveListenerAfterAddingTest),
     CL(DirectorEventTest),
+    CL(GlobalZTouchTest),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -166,11 +167,11 @@ void TouchableSpriteTest::onEnter()
         target->setOpacity(255);
         if (target == sprite2)
         {
-            sprite1->setZOrder(100);
+            sprite1->setLocalZOrder(100);
         }
         else if(target == sprite1)
         {
-            sprite1->setZOrder(0);
+            sprite1->setLocalZOrder(0);
         }
     };
     
@@ -764,20 +765,22 @@ void DirectorEventTest::onEnter()
 
     Size s = Director::getInstance()->getWinSize();
 
-    _label1 = Label::createWithTTF("Update: 0", "fonts/arial.ttf", 20);
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+
+    _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
     _label1->setPosition(30,s.height/2 + 60);
     this->addChild(_label1);
 
-    _label2 = Label::createWithTTF("Visit: 0", "fonts/arial.ttf", 20);
+    _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
     _label2->setPosition(30,s.height/2 + 20);
     this->addChild(_label2);
 
-    _label3 = Label::createWithTTF("Draw: 0", "fonts/arial.ttf", 20);
+    _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
     _label3->setPosition(30,30);
     _label3->setPosition(30,s.height/2 - 20);
     this->addChild(_label3);
 
-    _label4 = Label::createWithTTF("Projection: 0", "fonts/arial.ttf", 20);
+    _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
     _label4->setPosition(30,30);
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
@@ -857,4 +860,88 @@ std::string DirectorEventTest::subtitle() const
     return "after visit, after draw, after update, projection changed";
 }
 
+// GlobalZTouchTest
+GlobalZTouchTest::GlobalZTouchTest()
+: _sprite(nullptr)
+, _accum(0)
+{
+    
+    auto listener1 = EventListenerTouchOneByOne::create();
+    listener1->setSwallowTouches(true);
+    
+    listener1->onTouchBegan = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        
+        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        
+        if (rect.containsPoint(locationInNode))
+        {
+            log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setOpacity(180);
+            return true;
+        }
+        return false;
+    };
+    
+    listener1->onTouchMoved = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setPosition(target->getPosition() + touch->getDelta());
+    };
+    
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        log("sprite onTouchesEnded.. ");
+        target->setOpacity(255);
+    };
+    
+    const int SPRITE_COUNT = 8;
+    
+    for (int i = 0; i < SPRITE_COUNT; i++)
+    {
+        Sprite *sprite;
+        auto parent = Node::create();
+        if(i==4)
+        {
+            sprite = Sprite::create("Images/CyanSquare.png");
+            _sprite = sprite;
+            _sprite->setGlobalZOrder(-1);
+        }
+        else
+        {
+            sprite = Sprite::create("Images/YellowSquare.png");
+        }
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite);
+        
+        parent->addChild(sprite);
+        this->addChild(parent);
+        
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        sprite->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y);
+    }
+    
+    this->scheduleUpdate();
+}
+
+void GlobalZTouchTest::update(float dt)
+{
+    _accum += dt;
+    if( _accum > 2.0f) {
+        float z = _sprite->getGlobalZOrder();
+        _sprite->setGlobalZOrder(-z);
+        _accum = 0;
+    }
+}
+
+std::string GlobalZTouchTest::title() const
+{
+    return "Global Z Value, Try touch blue sprite";
+}
+
+std::string GlobalZTouchTest::subtitle() const
+{
+    return "Blue Sprite should change go from foreground to background";
+}
 

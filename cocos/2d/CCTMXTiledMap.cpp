@@ -174,7 +174,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
         if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
-            addChild((Node*)child, idx, idx);
+            addChild(child, idx, idx);
             
             // update content size with the max size
             const Size& childSize = child->getContentSize();

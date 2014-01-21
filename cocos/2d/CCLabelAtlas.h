@@ -52,21 +52,6 @@ A more flexible class is LabelBMFont. It supports variable width characters and 
 class CC_DLL LabelAtlas : public AtlasNode, public LabelProtocol
 {
 public:
-    /**
-     * @js ctor
-     */
-    LabelAtlas()
-        :_string("")
-    {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LabelAtlas()
-    { 
-        _string.clear(); 
-    }
-
     /** creates an empty LabelAtlas, user need to call initWithString(...) later to make this object work properly **/
     static LabelAtlas* create();
     
@@ -101,6 +86,15 @@ public:
 #endif
 
 protected:
+    LabelAtlas()
+    :_string("")
+    {}
+
+    virtual ~LabelAtlas()
+    {
+        _string.clear();
+    }
+    
     // string to render
     std::string _string;
     // the first char in the charmap

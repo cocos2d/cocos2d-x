@@ -22,7 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "platform/CCFileUtils.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
+
 #include "tinyxml2.h"
+
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
@@ -288,7 +293,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     std::string str = &filePathStr[startPos];
 
     // Read content from file
-    std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
     std::string contentStr = FileUtils::getInstance()->getStringFromFile(fullPath);
 
     DataInfo dataInfo;
@@ -384,7 +389,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     size_t startPos = filePathStr.find_last_of(".");
     std::string str = &filePathStr[startPos];
 
-    std::string fullPath = CCFileUtils::getInstance()->fullPathForFilename(filePath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 
     // XXX fileContent is being leaked
     data->fileContent = FileUtils::getInstance()->getStringFromFile(fullPath);
@@ -461,7 +466,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         if (0 == _asyncRefCount)
         {
             _asyncRefTotalCount = 0;
-            CCDirector::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
+            Director::getInstance()->getScheduler()->unscheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this);
         }
     }
 }

@@ -33,8 +33,8 @@ THE SOFTWARE.
 #include "CCDirector.h"
 #include "TransformUtils.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // extern
 #include "kazmath/GL/matrix.h"
@@ -555,7 +555,7 @@ void ProgressTimer::draw()
     if( ! _vertexData || ! _sprite)
         return;
 
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

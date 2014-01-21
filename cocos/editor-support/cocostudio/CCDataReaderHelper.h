@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include <list>
 #include <mutex>
 #include <thread>
+#include <condition_variable>
 
 namespace tinyxml2
 {

@@ -178,25 +178,26 @@ public:
     static float s_mouseX;
     static float s_mouseY;
     
-    static void OnGLFWError(int errorID, const char* errorDesc);
-    static void OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
-    static void OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
-    static void OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
-    static void OnGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-    static void OnGLFWCharCallback(GLFWwindow* window, unsigned int character);
-    static void OnGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
+    static void onGLFWError(int errorID, const char* errorDesc);
+    static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
+    static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
+    static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
+    static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void onGLFWCharCallback(GLFWwindow* window, unsigned int character);
+    static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
+    static void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
 };
 
 bool EGLViewEventHandler::s_captured = false;
 float EGLViewEventHandler::s_mouseX = 0;
 float EGLViewEventHandler::s_mouseY = 0;
 
-void EGLViewEventHandler::OnGLFWError(int errorID, const char* errorDesc)
+void EGLViewEventHandler::onGLFWError(int errorID, const char* errorDesc)
 {
     CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
 }
 
-void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+void EGLViewEventHandler::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
 {
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
@@ -240,10 +241,16 @@ void EGLViewEventHandler::OnGLFWMouseCallBack(GLFWwindow* window, int button, in
     }
 }
 
-void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+void EGLViewEventHandler::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 {
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
+    
+    if (eglView->isRetina()) {
+        x *= 2;
+        y *= 2;
+    }
+    
     s_mouseX = (float)x;
     s_mouseY = (float)y;
     
@@ -265,7 +272,7 @@ void EGLViewEventHandler::OnGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+void EGLViewEventHandler::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
 {
     EGLView* eglView = EGLView::getInstance();
     if(nullptr == eglView) return;
@@ -277,25 +284,49 @@ void EGLViewEventHandler::OnGLFWMouseScrollCallback(GLFWwindow* window, double x
     Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
 }
 
-void EGLViewEventHandler::OnGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
+void EGLViewEventHandler::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-    EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action || GLFW_REPEAT == action);
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
-    dispatcher->dispatchEvent(&event);
+    if (GLFW_REPEAT != action)
+    {
+        EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->dispatchEvent(&event);
+    }
 }
 
-void EGLViewEventHandler::OnGLFWCharCallback(GLFWwindow *window, unsigned int character)
+void EGLViewEventHandler::onGLFWCharCallback(GLFWwindow *window, unsigned int character)
 {
     IMEDispatcher::sharedDispatcher()->dispatchInsertText((const char*) &character, 1);
 }
 
-void EGLViewEventHandler::OnGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
+void EGLViewEventHandler::onGLFWWindowPosCallback(GLFWwindow *windows, int x, int y)
 {
-    if(Director::getInstance())
+    Director::getInstance()->setViewport();
+}
+
+void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
+{
+    auto view = EGLView::getInstance();
+
+    float frameSizeW = view->getFrameSize().width;
+    float frameSizeH = view->getFrameSize().height;
+    float factorX = frameSizeW / w * view->getFrameZoomFactor();
+    float factorY = frameSizeH / h * view->getFrameZoomFactor();;
+    
+    if (fabs(factorX - 0.5f) < FLT_EPSILON && fabs(factorY - 0.5f) < FLT_EPSILON )
     {
-        Director::getInstance()->setViewport();
+        view->_isRetina = true;
+        view->setFrameZoomFactor(2.0f * view->getFrameZoomFactor());
+        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * view->getFrameZoomFactor()) , static_cast<int>(frameSizeH * 0.5f * view->getFrameZoomFactor()));
+    }
+    else if(fabs(factorX - 2.0f) < FLT_EPSILON && fabs(factorY - 2.0f) < FLT_EPSILON)
+    {
+        view->_isRetina = false;
+        view->setFrameZoomFactor(0.5f * view->getFrameZoomFactor());
+        glfwSetWindowSize(window, static_cast<int>(frameSizeW * view->getFrameZoomFactor()), static_cast<int>(frameSizeH * view->getFrameZoomFactor()));
     }
 }
+
 
 //end EGLViewEventHandler
 
@@ -310,12 +341,13 @@ EGLView::EGLView()
 : _captured(false)
 , _frameZoomFactor(1.0f)
 , _supportTouch(false)
+, _isRetina(false)
 , _mainWindow(nullptr)
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     _viewName = "cocos2dx";
     s_pEglView = this;
-    glfwSetErrorCallback(EGLViewEventHandler::OnGLFWError);
+    glfwSetErrorCallback(EGLViewEventHandler::onGLFWError);
     glfwInit();
 }
 
@@ -338,15 +370,25 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
     _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(_mainWindow);
     
-    glfwGetFramebufferSize(_mainWindow, &_frameBufferSize[0], &_frameBufferSize[1]);
+    int w, h;
+    glfwGetWindowSize(_mainWindow, &w, &h);
+    int frameBufferW, frameBufferH;
+    glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
     
-    glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseCallBack);
-    glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::OnGLFWMouseMoveCallBack);
-    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::OnGLFWMouseScrollCallback);
-    glfwSetCharCallback(_mainWindow, EGLViewEventHandler::OnGLFWCharCallback);
-    glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::OnGLFWKeyCallback);
-    glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::OnGLFWWindowPosCallback);
+    if (frameBufferW == 2 * w && frameBufferH == 2 * h)
+    {
+        _isRetina = true;
+        setFrameZoomFactor(frameZoomFactor * 2);
+        glfwSetWindowSize(_mainWindow, width/2 * _frameZoomFactor, height/2 * _frameZoomFactor);
+    }
     
+    glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::onGLFWMouseCallBack);
+    glfwSetCursorPosCallback(_mainWindow,EGLViewEventHandler::onGLFWMouseMoveCallBack);
+    glfwSetScrollCallback(_mainWindow, EGLViewEventHandler::onGLFWMouseScrollCallback);
+    glfwSetCharCallback(_mainWindow, EGLViewEventHandler::onGLFWCharCallback);
+    glfwSetKeyCallback(_mainWindow, EGLViewEventHandler::onGLFWKeyCallback);
+    glfwSetWindowPosCallback(_mainWindow, EGLViewEventHandler::onGLFWWindowPosCallback);
+    glfwSetFramebufferSizeCallback(_mainWindow, EGLViewEventHandler::onGLFWframebuffersize);
     // check OpenGL version at first
     const GLubyte* glVersion = glGetString(GL_VERSION);
     
@@ -450,22 +492,18 @@ void EGLView::setFrameSize(float width, float height)
 
 void EGLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
-    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
-    glViewport((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
-               (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
-               (GLsizei)(w * _scaleX * frameZoomFactorX),
-               (GLsizei)(h * _scaleY * frameZoomFactorY));
+    glViewport((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
+               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
+               (GLsizei)(w * _scaleX * _frameZoomFactor),
+               (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
 void EGLView::setScissorInPoints(float x , float y , float w , float h)
 {
-    float frameZoomFactorX = _frameBufferSize[0]/_screenSize.width;
-    float frameZoomFactorY = _frameBufferSize[1]/_screenSize.height;
-    glScissor((GLint)(x * _scaleX * frameZoomFactorX + _viewPortRect.origin.x * frameZoomFactorX),
-               (GLint)(y * _scaleY  * frameZoomFactorY + _viewPortRect.origin.y * frameZoomFactorY),
-               (GLsizei)(w * _scaleX * frameZoomFactorX),
-               (GLsizei)(h * _scaleY * frameZoomFactorY));
+    glScissor((GLint)(x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor),
+               (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
+               (GLsizei)(w * _scaleX * _frameZoomFactor),
+               (GLsizei)(h * _scaleY * _frameZoomFactor));
 }
 
 EGLView* EGLView::getInstance()

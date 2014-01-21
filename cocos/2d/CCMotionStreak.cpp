@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCVertex.h"
-#include "CCCustomCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -359,7 +359,7 @@ void MotionStreak::draw()
     if(_nuPoints <= 1)
         return;
     kmGLGetMatrix(KM_GL_MODELVIEW,&_cachedMV);
-    _customCommand.init(0,_vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 

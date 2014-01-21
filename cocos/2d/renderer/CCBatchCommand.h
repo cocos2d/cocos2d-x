@@ -1,19 +1,18 @@
 /****************************************************************************
- Copyright (c) 2013      Zynga Inc.
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,26 +22,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CCFontAtlasFactory_h_
-#define _CCFontAtlasFactory_h_
+#ifndef _CC_BATCHCOMMAND_H_
+#define _CC_BATCHCOMMAND_H_
 
-#include "cocos2d.h"
-#include "CCFontAtlas.h"
-
+#include "CCRenderCommand.h"
+#include "CCGLProgram.h"
+#include "CCRenderCommandPool.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
-class CC_DLL FontAtlasFactory
-{
-    
-public:
-    
-    static FontAtlas * createAtlasFromTTF(const std::string& fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs = 0, bool useDistanceField = false);
-    static FontAtlas * createAtlasFromFNT(const std::string& fntFilePath);
-    
-private:
-};
+class TextureAtlas;
 
+#define CC_NO_TEXTURE 0
+
+class BatchCommand : public RenderCommand
+{
+public:
+
+    BatchCommand();
+    ~BatchCommand();
+
+    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
+
+    void execute();
+
+protected:
+    int32_t _materialID;
+
+    //Maternal
+    GLuint _textureID;
+
+    GLProgram* _shader;
+//    GLuint _shaderID;
+
+    BlendFunc _blendType;
+
+    TextureAtlas *_textureAtlas;
+
+    // ModelView transform
+    kmMat4 _mv;
+};
 NS_CC_END
 
-#endif /* defined(_CCFontAtlasFactory_h_) */
+#endif //_CC_BATCHCOMMAND_H_

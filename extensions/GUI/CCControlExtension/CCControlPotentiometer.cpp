@@ -26,7 +26,6 @@
  */
 
 #include "CCControlPotentiometer.h"
-#include "cocos2d.h"
 
 NS_CC_EXT_BEGIN
 
