@@ -191,7 +191,7 @@ Director::~Director(void)
     delete _console;
 
     // clean auto release pool
-    PoolManager::getInstance()->destroyInstance();
+    PoolManager::destroyInstance();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
