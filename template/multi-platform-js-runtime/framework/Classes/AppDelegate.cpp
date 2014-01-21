@@ -17,7 +17,7 @@ using namespace CocosDenshion;
 #define ISRUNTIME 1
 
 #ifdef ISRUNTIME
-#include "RuntimeConfig.h"
+#include "Runtime.h"
 #endif // ISRUNTIME
 
 
@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->setSearchPath();
+	Runtime::getInstance().setSearchPath();
 #endif
 	
 	sc->start();
@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
   
 	
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->waitConnect();
+	Runtime::getInstance().waitDebugConnect();
 	return true;
 #endif
 
