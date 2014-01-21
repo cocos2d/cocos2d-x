@@ -39,10 +39,15 @@ NS_CC_BEGIN
 class CC_DLL FontFreeType : public Font
 {
 public:
-    
+    static const int DistanceMapSpread;
+
     static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
 
     static void shutdownFreeType();
+
+    void     setDistanceFieldEnabled(bool distanceFieldEnabled);
+    bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
+    bool     renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize); 
 
     virtual FontAtlas   * createFontAtlas() override;
     virtual Size        * getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
@@ -74,6 +79,7 @@ private:
     int               _letterPadding;
     std::string       _fontName;
     Data              _ttfData;
+    bool              _distanceFieldEnabled;
 };
 
 NS_CC_END

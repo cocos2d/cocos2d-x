@@ -38,7 +38,6 @@ _font(&theFont),
 _currentPageData(nullptr)
 {
     _font->retain();
-    _makeDistanceMap = _font->isDistanceFieldEnabled();
 
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf)
@@ -50,11 +49,12 @@ _currentPageData(nullptr)
         _currentPageOrigX = 0;
         _currentPageOrigY = 0;
         _letterPadding = 5;
-    
+
+        _makeDistanceMap = fontTTf->isDistanceFieldEnabled();
         if(_makeDistanceMap)
         {
-            _commonLineHeight += 2 * Font::DistanceMapSpread;
-            _letterPadding += 2 * Font::DistanceMapSpread;    
+            _commonLineHeight += 2 * FontFreeType::DistanceMapSpread;
+            _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
         _currentPageDataSize = (PAGE_WIDTH * PAGE_HEIGHT * 1);
 
@@ -62,6 +62,10 @@ _currentPageData(nullptr)
         memset(_currentPageData, 0, _currentPageDataSize);  
         addTexture(*tex,0);
         tex->release();
+    }
+    else
+    {
+        _makeDistanceMap = false;
     }
 }
 
@@ -190,7 +194,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                     tex->release();
                 }
             }
-            _font->renderCharAt(it->second.letteCharUTF16,_currentPageOrigX,_currentPageOrigY,_currentPageData,PAGE_WIDTH);
+            fontTTf->renderCharAt(it->second.letteCharUTF16,_currentPageOrigX,_currentPageOrigY,_currentPageData,PAGE_WIDTH);
 
             it->second.U                = _currentPageOrigX - 1;
             it->second.V                = _currentPageOrigY;
@@ -231,7 +235,7 @@ float FontAtlas::getCommonLineHeight() const
 void  FontAtlas::setCommonLineHeight(float newHeight)
 {
     if(_makeDistanceMap)
-        newHeight += 2 * Font::DistanceMapSpread;
+        newHeight += 2 * FontFreeType::DistanceMapSpread;
     _commonLineHeight = newHeight;
 }
 
