@@ -44,16 +44,19 @@ if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
     CXX_GENERATOR_ROOT="$COCOS2DX_ROOT/tools/bindings-generator"
 fi
 
-if [ -z "${TOJS_ROOT+aaa}" ]; then
-    OUPUT_ROOT="$COCOS2DX_ROOT/tools/tolua"
+if [ -z "${TOLUA_ROOT+aaa}" ]; then
+    TOLUA_ROOT="$COCOS2DX_ROOT/tools/tolua"
 fi
+
+# set output dir
+OUTPUT_DIR=${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings
 
 echo "Paths"
 echo "    NDK_ROOT: $NDK_ROOT"
 echo "    PYTHON_BIN: $PYTHON_BIN"
 echo "    COCOS2DX_ROOT: $COCOS2DX_ROOT"
 echo "    CXX_GENERATOR_ROOT: $CXX_GENERATOR_ROOT"
-echo "    OUPUT_ROOT: $OUPUT_ROOT"
+echo "    TOLUA_ROOT: $TOLUA_ROOT"
 
 # check NDK version, must be r9b
 if ! grep -q r9b $NDK_ROOT/RELEASE.TXT
@@ -122,20 +125,20 @@ echo ---
 # Generate bindings for cocos2dx
 echo "Generating bindings for cocos2dx..."
 set -x
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx.ini -s cocos2d-x -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx.ini -s cocos2d-x -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_auto
 
 echo "Generating bindings for cocos2dx_extension..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_extension_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_extension_auto
 
 echo "Generating bindings for cocos2dx_gui..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_gui.ini -s cocos2dx_gui -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_gui_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx_gui.ini -s cocos2dx_gui -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_gui_auto
 
 echo "Generating bindings for cocos2dx_studio..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_studio_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_studio_auto
 
 echo "Generating bindings for cocos2dx_spine..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_spine_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_spine_auto
 
 echo "Generating bindings for cocos2dx_physics..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_physics.ini -s cocos2dx_physics -t lua -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/lua-bindings -n lua_cocos2dx_physics_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOLUA_ROOT}/cocos2dx_physics.ini -s cocos2dx_physics -t lua -o ${OUTPUT_DIR} -n lua_cocos2dx_physics_auto
 
