@@ -718,6 +718,7 @@ Developers:
         
     Pisces000221
         Corrected a few mistakes in the README file of project-creator.
+        Corrected a mistake in README.
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
