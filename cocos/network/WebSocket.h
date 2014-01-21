@@ -31,7 +31,7 @@
 #define __CC_WEBSOCKET_H__
 
 #include "CCPlatformMacros.h"
-
+#include "CCStdC.h"
 #include <list>
 #include <string>
 #include <vector>
