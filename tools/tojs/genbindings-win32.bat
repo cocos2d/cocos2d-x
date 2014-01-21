@@ -66,11 +66,6 @@ python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx_spine.ini -s coco
 if %errorlevel% neq 0 goto ERROR
 
 
-echo "Generating bindings for cocos2dx_physics..."
-python %CXX_GENERATOR_ROOT%/generator.py %TO_JS_ROOT%/cocos2dx_physics.ini -s cocos2dx_physics -t spidermonkey -o %OUTPUT_DIR% -n js_cocos2dx_physics_auto
-if %errorlevel% neq 0 goto ERROR
-
-
 :: Change the generated file format from DOS to UNIX.
 pushd "%OUTPUT_DIR%"
 dos2unix *
