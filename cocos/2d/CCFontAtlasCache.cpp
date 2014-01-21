@@ -42,7 +42,7 @@ FontAtlas * FontAtlasCache::getFontAtlasTTF(const std::string& fontFileName, int
     
     if ( !tempAtlas )
     {
-        Font *font = FontFreeType::create(fontFileName, size, glyphs, customGlyphs);
+        FontFreeType *font = FontFreeType::create(fontFileName, size, glyphs, customGlyphs);
         if (font)
         {
             font->setDistanceFieldEnabled(useDistanceField);
