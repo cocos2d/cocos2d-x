@@ -45,15 +45,18 @@ if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
 fi
 
 if [ -z "${TOJS_ROOT+aaa}" ]; then
-    OUPUT_ROOT="$COCOS2DX_ROOT/tools/tojs"
+    TOJS_ROOT="$COCOS2DX_ROOT/tools/tojs"
 fi
+
+# set output dir
+OUTPUT_DIR=${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings
 
 echo "Paths"
 echo "    NDK_ROOT: $NDK_ROOT"
 echo "    PYTHON_BIN: $PYTHON_BIN"
 echo "    COCOS2DX_ROOT: $COCOS2DX_ROOT"
 echo "    CXX_GENERATOR_ROOT: $CXX_GENERATOR_ROOT"
-echo "    OUPUT_ROOT: $OUPUT_ROOT"
+echo "    TOJS_ROOT: $TOJS_ROOT"
 
 # check NDK version, must be r9b
 if ! grep -q r9b $NDK_ROOT/RELEASE.TXT
@@ -122,20 +125,20 @@ echo ---
 # Generate bindings for cocos2dx
 echo "Generating bindings for cocos2dx..."
 set -x
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx.ini -s cocos2d-x -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings  -n jsb_cocos2dx_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx.ini -s cocos2d-x -t spidermonkey -o ${OUTPUT_DIR}  -n jsb_cocos2dx_auto
 
 echo "Generating bindings for cocos2dx_extension..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_extension_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx_extension.ini -s cocos2dx_extension -t spidermonkey -o ${OUTPUT_DIR} -n jsb_cocos2dx_extension_auto
 
 echo "Generating bindings for cocos2dx_builder..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_builder.ini -s cocos2dx_builder -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_builder_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx_builder.ini -s cocos2dx_builder -t spidermonkey -o ${OUTPUT_DIR} -n jsb_cocos2dx_builder_auto
 
 echo "Generating bindings for cocos2dx_gui..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_gui.ini -s cocos2dx_gui -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_gui_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx_gui.ini -s cocos2dx_gui -t spidermonkey -o ${OUTPUT_DIR} -n jsb_cocos2dx_gui_auto
 
 echo "Generating bindings for cocos2dx_studio..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_studio_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx_studio.ini -s cocos2dx_studio -t spidermonkey -o ${OUTPUT_DIR} -n jsb_cocos2dx_studio_auto
 
 echo "Generating bindings for cocos2dx_spine..."
-LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${OUPUT_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t spidermonkey -o ${COCOS2DX_ROOT}/cocos/scripting/auto-generated/js-bindings -n jsb_cocos2dx_spine_auto
+LD_LIBRARY_PATH=${CXX_GENERATOR_ROOT}/libclang $PYTHON_BIN ${CXX_GENERATOR_ROOT}/generator.py ${TOJS_ROOT}/cocos2dx_spine.ini -s cocos2dx_spine -t spidermonkey -o ${OUTPUT_DIR} -n jsb_cocos2dx_spine_auto
 
