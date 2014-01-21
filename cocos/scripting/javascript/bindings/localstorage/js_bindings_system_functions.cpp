@@ -24,15 +24,15 @@ JSBool JSB_localStorageGetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION2( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	const char* arg0; 
+	std::string arg0; 
 
-	ok &= jsval_to_charptr( cx, *argvp++, &arg0 );
+	ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-	const char* ret_val;
+	std::string ret_val;
 
-	ret_val = localStorageGetItem((char*)arg0  );
+	ret_val = localStorageGetItem(arg0);
 
-	jsval ret_jsval = c_string_to_jsval(cx, ret_val ? ret_val : "");
+	jsval ret_jsval = std_string_to_jsval(cx, ret_val);
 	JS_SET_RVAL(cx, vp, ret_jsval );
 
 	return JS_TRUE;
@@ -44,12 +44,12 @@ JSBool JSB_localStorageRemoveItem(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION2( argc == 1, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	const char* arg0; 
+	std::string arg0; 
 
-	ok &= jsval_to_charptr( cx, *argvp++, &arg0 );
+	ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-	localStorageRemoveItem((char*)arg0  );
+	localStorageRemoveItem(arg0);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -60,13 +60,13 @@ JSBool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION2( argc == 2, cx, JS_FALSE, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
-	const char* arg0; const char* arg1; 
+	std::string arg0; std::string arg1; 
 
-	ok &= jsval_to_charptr( cx, *argvp++, &arg0 );
-	ok &= jsval_to_charptr( cx, *argvp++, &arg1 );
+	ok &= jsval_to_std_string( cx, *argvp++, &arg0 );
+	ok &= jsval_to_std_string( cx, *argvp++, &arg1 );
 	JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 
-	localStorageSetItem((char*)arg0 , (char*)arg1  );
+	localStorageSetItem(arg0 , arg1);
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
