@@ -1166,7 +1166,7 @@ bool EventDispatcher::isEnabled() const
 
 void EventDispatcher::setDirtyForNode(Node* node)
 {
-    // Mark the node dirty only when there was an eventlistener associates with it. 
+    // Mark the node dirty only when there is an eventlistener associated with it. 
     if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
     {
         _dirtyNodes.insert(node);

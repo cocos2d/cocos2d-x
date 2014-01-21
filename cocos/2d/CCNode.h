@@ -1,9 +1,9 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2009      Valentin Milea
+ Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -72,11 +72,7 @@ enum {
     kNodeOnCleanup
 };
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
-#else
-bool nodeComparisonLess(Object* p1, Object* p2);
-#endif
+bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -173,9 +169,9 @@ public:
      @see `setGlobalZOrder`
      @see `setVertexZ`
      */
-    virtual void setLocalZOrder(int zOrder);
+    virtual void setLocalZOrder(int localZOrder);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int zOrder) { setLocalZOrder(zOrder); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
     /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
     virtual void _setLocalZOrder(int z);
@@ -208,7 +204,7 @@ public:
 
      @since v3.0
      */
-    virtual void setGlobalZOrder(float zOrder);
+    virtual void setGlobalZOrder(float globalZOrder);
     /**
      * Returns the Node's Global Z Order.
      *
@@ -535,11 +531,11 @@ public:
      * A node which called addChild subsequently will take a larger arrival order,
      * If two children have the same Z order, the child with larger arrival order will be drawn later.
      *
-     * @warning This method is used internally for zOrder sorting, don't change this manually
+     * @warning This method is used internally for localZOrder sorting, don't change this manually
      *
      * @param orderOfArrival   The arrival order.
      */
-    virtual void setOrderOfArrival(int orderOfArrival);
+    void setOrderOfArrival(int orderOfArrival);
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
@@ -547,7 +543,7 @@ public:
      *
      * @return The arrival order.
      */
-    virtual int getOrderOfArrival() const;
+    int getOrderOfArrival() const;
 
 
     /** @deprecated No longer needed
@@ -595,24 +591,24 @@ public:
      */
     virtual void addChild(Node * child);
     /**
-     * Adds a child to the container with a z-order
+     * Adds a child to the container with a local z-order
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      */
-    virtual void addChild(Node * child, int zOrder);
+    virtual void addChild(Node * child, int localZOrder);
     /**
      * Adds a child to the container with z order and tag
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag);
+    virtual void addChild(Node* child, int localZOrder, int tag);
     /**
      * Gets a child from the container with its tag
      *
@@ -715,9 +711,9 @@ public:
      * Reorders a child according to a new z value.
      *
      * @param child     An already added child node. It MUST be already added.
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
-    virtual void reorderChild(Node * child, int zOrder);
+    virtual void reorderChild(Node * child, int localZOrder);
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
@@ -1477,7 +1473,7 @@ protected:
 
     GLProgram *_shaderProgram;      ///< OpenGL shader
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same zOrder
+    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
