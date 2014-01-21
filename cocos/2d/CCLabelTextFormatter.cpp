@@ -55,7 +55,7 @@ bool LabelTextFormatter::multilineText(LabelTextFormatProtocol *theLabel)
         
         int skip = 0;
                 
-        int strLen = theLabel->getStringLenght();
+        int strLen = theLabel->getStringLength();
         std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
         int tIndex = 0;
 
@@ -296,7 +296,7 @@ bool LabelTextFormatter::alignText(LabelTextFormatProtocol *theLabel)
 bool LabelTextFormatter::createStringSprites(LabelTextFormatProtocol *theLabel)
 {
     // check for string
-    unsigned int stringLen = theLabel->getStringLenght();
+    unsigned int stringLen = theLabel->getStringLength();
     
     // no string
     if (stringLen == 0)
