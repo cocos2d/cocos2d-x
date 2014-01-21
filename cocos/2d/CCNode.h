@@ -208,7 +208,7 @@ public:
 
      @since v3.0
      */
-    virtual void setGlobalZOrder(float zOrder) { _globalZOrder = zOrder; }
+    virtual void setGlobalZOrder(float zOrder);
     /**
      * Returns the Node's Global Z Order.
      *
