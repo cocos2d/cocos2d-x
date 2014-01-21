@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc. 
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,48 +23,47 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _FontDefinition_h_
-#define _FontDefinition_h_
+#ifndef _CCFontCharMap_h_
+#define _CCFontCharMap_h_
 
-#include <unordered_map>
-
-#include "CCTextImage.h"
 #include "CCFont.h"
-#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-/**
- */
-class CC_DLL FontDefinitionTTF : public Object
-{
+class FontCharMap : public Font
+{  
 public:
+    static FontCharMap * create(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static FontCharMap * create(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static FontCharMap * create(const std::string& plistFile);
     
-    static FontDefinitionTTF* create(Font *font, int textureSize = 0);
-    FontAtlas * createFontAtlas();
+    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual Rect  getRectForChar(unsigned short theChar) const override;
+    virtual FontAtlas *createFontAtlas() override;
     
-private:
-    /**
-     * @js ctor
-     */
-     FontDefinitionTTF();
+protected:    
+    FontCharMap(Texture2D* texture,int itemWidth, int itemHeight, int startCharMap)
+        :_texture(texture)
+        ,_mapStartChar(startCharMap)
+        ,_itemWidth(itemWidth)
+        ,_itemHeight(itemHeight)
+        ,_charRect(0,0,itemWidth,itemHeight)
+    {}
     /**
      * @js NA
      * @lua NA
      */
-    ~FontDefinitionTTF();
+    virtual ~FontCharMap();
     
-    bool initDefinition(Font *font, const char *letters, int textureSize);
-    bool prepareLetterDefinitions(TextFontPagesDef *pageDefs);
-    void addLetterDefinition(const FontLetterDefinition &defToAdd);
-    
-    TextImage * _textImages;
-    std::unordered_map<unsigned short, FontLetterDefinition> _fontLettersDefinitionUTF16;
-    float _commonLineHeight;
+private:
+    Texture2D* _texture;
+    int _mapStartChar;
+    int _itemWidth;
+    int _itemHeight;
 
-    static const int DEFAUL_ATLAS_TEXTURE_SIZE;
+    Rect _charRect;
 };
 
 NS_CC_END
 
-#endif 
+#endif /* defined(_CCFontCharMap_h_) */

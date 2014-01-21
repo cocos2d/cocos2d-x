@@ -66,13 +66,18 @@ PageView* PageView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+void PageView::onEnter()
+{
+    Layout::onEnter();
+    scheduleUpdate();
+}
 
 bool PageView::init()
 {
     if (Layout::init())
     {
         setClippingEnabled(true);
-        setUpdateEnabled(true);
         setTouchEnabled(true);
         return true;
     }

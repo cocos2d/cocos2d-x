@@ -247,8 +247,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
-    <ClCompile Include="CCFontAtlasFactory.cpp" />
-    <ClCompile Include="CCFontDefinition.cpp" />
+    <ClCompile Include="CCFontCharMap.cpp" />
     <ClCompile Include="CCFontFNT.cpp" />
     <ClCompile Include="CCFontFreeType.cpp" />
     <ClCompile Include="ccFPSImages.c" />
@@ -287,7 +286,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="CCSpriteFrame.cpp" />
     <ClCompile Include="CCSpriteFrameCache.cpp" />
     <ClCompile Include="CCTextFieldTTF.cpp" />
-    <ClCompile Include="CCTextImage.cpp" />
     <ClCompile Include="CCTexture2D.cpp" />
     <ClCompile Include="CCTextureAtlas.cpp" />
     <ClCompile Include="CCTextureCache.cpp" />
@@ -317,6 +315,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="platform\win32\CCImage.cpp" />
     <ClCompile Include="platform\win32\CCStdC.cpp" />
+    <ClCompile Include="renderer\CCBatchCommand.cpp" />
     <ClCompile Include="renderer\CCCustomCommand.cpp" />
     <ClCompile Include="renderer\CCFrustum.cpp" />
     <ClCompile Include="renderer\CCGroupCommand.cpp" />
@@ -427,8 +426,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCFont.h" />
     <ClInclude Include="CCFontAtlas.h" />
     <ClInclude Include="CCFontAtlasCache.h" />
-    <ClInclude Include="CCFontAtlasFactory.h" />
-    <ClInclude Include="CCFontDefinition.h" />
+    <ClInclude Include="CCFontCharMap.h" />
     <ClInclude Include="CCFontFNT.h" />
     <ClInclude Include="CCFontFreeType.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -487,7 +485,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCSpriteFrame.h" />
     <ClInclude Include="CCSpriteFrameCache.h" />
     <ClInclude Include="CCTextFieldTTF.h" />
-    <ClInclude Include="CCTextImage.h" />
     <ClInclude Include="CCTexture2D.h" />
     <ClInclude Include="CCTextureAtlas.h" />
     <ClInclude Include="CCTextureCache.h" />
@@ -521,6 +518,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="platform\win32\CCGL.h" />
     <ClInclude Include="platform\win32\CCPlatformDefine.h" />
     <ClInclude Include="platform\win32\CCStdC.h" />
+    <ClInclude Include="renderer\CCBatchCommand.h" />
     <ClInclude Include="renderer\CCCustomCommand.h" />
     <ClInclude Include="renderer\CCFrustum.h" />
     <ClInclude Include="renderer\CCGroupCommand.h" />

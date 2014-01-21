@@ -93,12 +93,17 @@ ScrollView* ScrollView::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
+    
+void ScrollView::onEnter()
+{
+    Layout::onEnter();
+    scheduleUpdate();
+}
 
 bool ScrollView::init()
 {
     if (Layout::init())
     {
-        setUpdateEnabled(true);
         setTouchEnabled(true);
         setClippingEnabled(true);
         _innerContainer->setTouchEnabled(false);
@@ -1450,11 +1455,6 @@ void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Layout::onTouchCancelled(touch, unusedEvent);
     handleReleaseLogic(touch->getLocation());
-}
-
-void ScrollView::onTouchLongClicked(const Point &touchPoint)
-{
-    
 }
 
 void ScrollView::update(float dt)

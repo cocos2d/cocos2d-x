@@ -159,6 +159,8 @@ public:
      */
     virtual std::string getDescription() const override;
 
+    virtual void onEnter() override;
+
 protected:
     virtual void addChild(Node * child) override;
     virtual void addChild(Node * child, int zOrder) override;

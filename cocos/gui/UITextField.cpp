@@ -300,15 +300,11 @@ TextField* TextField::create()
     CC_SAFE_DELETE(widget);
     return nullptr;
 }
-
-bool TextField::init()
+    
+void TextField::onEnter()
 {
-    if (Widget::init())
-    {
-        setUpdateEnabled(true);
-        return true;
-    }
-    return false;
+    Widget::onEnter();
+    scheduleUpdate();
 }
 
 void TextField::initRenderer()

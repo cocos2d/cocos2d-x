@@ -211,7 +211,7 @@ void Box2DView::draw()
 {
     Layer::draw();
 
-    _customCmd.init(0, _vertexZ);
+    _customCmd.init(_globalZOrder);
     _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCmd);
 }

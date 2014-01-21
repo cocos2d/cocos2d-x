@@ -27,8 +27,6 @@
 #ifndef __CCHTTPREQUEST_H__
 #define __CCHTTPREQUEST_H__
 
-#include "cocos2d.h"
-
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 #include "network/HttpClient.h"

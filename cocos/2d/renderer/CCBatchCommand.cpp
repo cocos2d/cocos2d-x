@@ -1,7 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013      Zynga Inc.
  Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,41 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFontAtlasFactory.h"
-#include "CCFontFNT.h"
 
-// carloX this NEEDS to be changed
-#include "CCLabelBMFont.h"
+#include "renderer/CCBatchCommand.h"
+#include "ccGLStateCache.h"
+#include "CCTextureAtlas.h"
 
 NS_CC_BEGIN
 
-FontAtlas * FontAtlasFactory::createAtlasFromTTF(const std::string& fntFilePath, int fontSize, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
+BatchCommand::BatchCommand()
+: _textureID(0)
+, _blendType(BlendFunc::DISABLE)
+, _textureAtlas(nullptr)
 {
-    
-    Font *font = Font::createWithTTF(fntFilePath, fontSize, glyphs, customGlyphs);
-    if (font)
-    {
-        font->setDistanceFieldEnabled(useDistanceField);
-        return font->createFontAtlas();
-    }
-    else
-    {
-        return nullptr;
-    }
+    _type = RenderCommand::Type::BATCH_COMMAND;
+    _shader = nullptr;
 }
 
-FontAtlas * FontAtlasFactory::createAtlasFromFNT(const std::string& fntFilePath)
+void BatchCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
 {
-    Font *font = Font::createWithFNT(fntFilePath);
-    
-    if(font)
-    {
-        return font->createFontAtlas();
-    }
-    else
-    {
-        return nullptr;
-    }
+    _globalOrder = globalOrder;
+    _textureID = textureID;
+    _blendType = blendType;
+    _shader = shader;
+
+    _textureAtlas = textureAtlas;
+
+    _mv = modelViewTransform;
+}
+
+BatchCommand::~BatchCommand()
+{
+}
+
+void BatchCommand::execute()
+{
+    // Set material
+    _shader->use();
+    _shader->setUniformsForBuiltins(_mv);
+    GL::bindTexture2D(_textureID);
+    GL::blendFunc(_blendType.src, _blendType.dst);
+
+    // Draw
+    _textureAtlas->drawQuads();
 }
 
 NS_CC_END
