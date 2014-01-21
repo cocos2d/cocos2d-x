@@ -105,11 +105,14 @@ public:
      */
     inline void release()
     {
-        CCASSERT(_reference > 0, "reference count should greater than 0");
-        --_reference;
-
         if (_reference == 0)
+        {
             delete this;
+        }
+        else
+        {
+            --_reference;
+        }
     }
 
     /**
@@ -122,7 +125,6 @@ public:
      */
     inline void retain()
     {
-        CCASSERT(_reference > 0, "reference count should greater than 0");
         ++_reference;
     }
 

@@ -53,13 +53,17 @@ void AutoreleasePool::addObject(Object* object)
 {
     _managedObjectArray.pushBack(object);
 
-    CCASSERT(object->_reference > 1, "reference count should be greater than 1");
+    CCASSERT(object->_reference > 0, "reference count should be greater than 0");
 }
 
 void AutoreleasePool::clear()
 {
     if (!_managedObjectArray.empty())
     {
+        for (const auto& obj : _managedObjectArray)
+        {
+            obj->release();
+        }
         _managedObjectArray.clear();
     }
 }

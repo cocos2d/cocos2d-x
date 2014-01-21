@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 Object::Object()
 : _luaID(0)
-, _reference(1) // when the object is created, the reference count of it is 1
+, _reference(0) // when the object is created, the reference count of it is 0
 {
     static unsigned int uObjectCount = 0;
 
