@@ -26,6 +26,7 @@ THE SOFTWARE.
 #define __AUTORELEASEPOOL_H__
 
 #include <stack>
+#include <string>
 #include "CCObject.h"
 #include "CCVector.h"
 
@@ -45,6 +46,12 @@ public:
      * @lua NA
      */
     AutoreleasePool();
+    
+    /**
+     * Create an autorelease pool with specific name. This name is useful for debugging.
+     */
+    AutoreleasePool(const std::string &name);
+    
     /**
      * @js NA
      * @lua NA
@@ -74,6 +81,15 @@ public:
      */
     void clear();
     
+    /**
+     * Dump the objects that are put into autorelease pool. It is used for debugging.
+     *
+     * The result will look like:
+     * Object pointer address     object id     reference count
+     *
+     */
+    void dump();
+    
 private:
     /**
      * The underlying array of object managed by the pool.
@@ -85,6 +101,7 @@ private:
      * is in the pool.
      */
     Vector<Object*> _managedObjectArray;
+    std::string _name;
 };
 
 class CC_DLL PoolManager
