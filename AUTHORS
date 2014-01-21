@@ -718,9 +718,13 @@ Developers:
         
     Pisces000221
         Corrected a few mistakes in the README file of project-creator.
+        Corrected a mistake in README.
         
     hbbalfred
         Fixed a bug that crash if file doesn't exist when using FileUtils::getStringFromFile.
+        
+    liang8305
+        Use multiple processes according the number of cores to build android project
     
 Retired Core Developers:
     WenSheng Yang

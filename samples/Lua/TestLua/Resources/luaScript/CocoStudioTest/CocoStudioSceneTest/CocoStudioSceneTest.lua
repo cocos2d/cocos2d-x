@@ -40,7 +40,7 @@ function SceneEditorTestLayer:createGameScene()
     itemBack:registerScriptTapHandler(menuCloseCallback)
     local menuBack = cc.Menu:create()
     menuBack:setPosition(cc.p(0.0, 0.0))
-    menuBack:setZOrder(4)
+    menuBack:setLocalZOrder(4)
     menuBack:addChild(itemBack)
 
     node:addChild(menuBack)

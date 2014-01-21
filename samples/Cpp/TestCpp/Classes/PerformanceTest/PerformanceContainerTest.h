@@ -44,8 +44,6 @@ public:
     void dumpProfilerInfo(float dt);
     
     // overrides
-    virtual void onExitTransitionDidStart() override;
-    virtual void onEnterTransitionDidFinish() override;
     virtual void update(float dt) override;
     
 protected:
@@ -85,6 +83,49 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TemplateMapStringKeyPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(TemplateMapStringKeyPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class DictionaryStringKeyPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(DictionaryStringKeyPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TemplateMapIntKeyPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(TemplateMapIntKeyPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class DictionaryIntKeyPerfTest : public PerformanceContainerScene
+{
+public:
+    CREATE_FUNC(DictionaryIntKeyPerfTest);
+    
+    virtual void generateTestFunctions() override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 void runContainerPerformanceTest();
 
