@@ -28,9 +28,16 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 AutoreleasePool::AutoreleasePool()
+:_name("")
 {
     _managedObjectArray.reserve(150);
-    
+    PoolManager::getInstance()->push(this);
+}
+
+AutoreleasePool::AutoreleasePool(const std::string &name)
+:_name(name)
+{
+    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
@@ -57,6 +64,16 @@ void AutoreleasePool::clear()
     }
 }
 
+void AutoreleasePool::dump()
+{
+    CCLOG("autorelease pool: %s, number of managed object %d\n", _name.c_str(), static_cast<int>(_managedObjectArray.size()));
+    CCLOG("%20s%20s%20s", "Object pointer", "Object id", "reference count");
+    for (const auto &obj : _managedObjectArray)
+    {
+        CCLOG("%20p%20u%20u\n", obj, obj->_ID, obj->retainCount());
+    }
+}
+
 
 //--------------------------------------------------------------------
 //
@@ -72,7 +89,7 @@ PoolManager* PoolManager::getInstance()
     {
         s_singleInstance = new PoolManager();
         // Add the first auto release pool
-        s_singleInstance->_curReleasePool = new AutoreleasePool();
+        s_singleInstance->_curReleasePool = new AutoreleasePool("cocos2d autorelease pool");
         s_singleInstance->_releasePoolStack.push(s_singleInstance->_curReleasePool);
     }
     return s_singleInstance;
