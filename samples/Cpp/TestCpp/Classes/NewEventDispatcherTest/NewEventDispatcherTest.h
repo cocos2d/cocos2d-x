@@ -135,4 +135,20 @@ protected:
     EventListenerCustom *_event1, *_event2, *_event3, *_event4;
 };
 
+class GlobalZTouchTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(GlobalZTouchTest);
+    GlobalZTouchTest();
+    
+    virtual void update(float dt) override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    Sprite* _sprite;
+    float _accum;
+};
+
 #endif /* defined(__samples__NewEventDispatcherTest__) */
