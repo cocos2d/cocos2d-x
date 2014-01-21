@@ -232,6 +232,15 @@ void Node::setLocalZOrder(int z)
     _eventDispatcher->setDirtyForNode(this);
 }
 
+void Node::setGlobalZOrder(float zOrder)
+{
+    if (_globalZOrder != zOrder)
+    {
+        _globalZOrder = zOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
+}
+
 /// vertexZ getter
 float Node::getVertexZ() const
 {
