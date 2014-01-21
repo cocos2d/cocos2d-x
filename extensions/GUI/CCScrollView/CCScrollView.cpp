@@ -572,7 +572,7 @@ void ScrollView::visit()
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			if ( child->getZOrder() < 0 )
+			if ( child->getLocalZOrder() < 0 )
             {
 				child->visit();
 			}
