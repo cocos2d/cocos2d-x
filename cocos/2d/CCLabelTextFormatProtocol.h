@@ -57,7 +57,7 @@ public:
     virtual float getLetterPosXLeft(int index)  const = 0;
     virtual float getLetterPosXRight(int index) const = 0;
     // sprite related stuff
-    virtual Sprite *getLetter(int ID) = 0;
+    virtual Sprite *getLetterAtIndex(int ID) = 0;
     
     // font related stuff
     virtual int getCommonLineHeight()  const = 0;
