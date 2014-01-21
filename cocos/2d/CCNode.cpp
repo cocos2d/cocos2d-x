@@ -215,6 +215,15 @@ void Node::setLocalZOrder(int z)
     _eventDispatcher->setDirtyForNode(this);
 }
 
+void Node::setGlobalZOrder(float globalZOrder)
+{
+    if (_globalZOrder != globalZOrder)
+    {
+        _globalZOrder = globalZOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
+}
+
 /// vertexZ getter
 float Node::getVertexZ() const
 {
