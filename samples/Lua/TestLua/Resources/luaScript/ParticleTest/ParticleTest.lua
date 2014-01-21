@@ -1278,8 +1278,8 @@ local function reorderSystem(dt)
     local childArray = ReorderParticleSystems_batchNode:getChildren()
     local random     = math.random(1,table.getn(childArray))
 	local child = childArray[random]
-	-- problem: there's no getZOrder() for cc.Object
-	-- ReorderParticleSystems_batchNode:reorderChild(child, child:getZOrder() - 1)
+	-- problem: there's no getLocalZOrder() for cc.Object
+	-- ReorderParticleSystems_batchNode:reorderChild(child, child:getLocalZOrder() - 1)
 	ReorderParticleSystems_batchNode:reorderChild(child, math.random(0, 99999))
 end
 
