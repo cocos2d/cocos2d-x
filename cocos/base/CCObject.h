@@ -71,14 +71,12 @@ class CC_DLL Object
 {
 public:
     /// object id, ScriptSupport need public _ID
-    unsigned int        _ID;
+    unsigned int _ID;
     /// Lua reference id
-    int                 _luaID;
+    int _luaID;
 protected:
     /// count of references
-    unsigned int        _reference;
-    /// count of autorelease
-    unsigned int        _autoReleaseCount;
+    unsigned int _reference;
 public:
     /**
      * Constructor
