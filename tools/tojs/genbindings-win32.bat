@@ -32,8 +32,8 @@ echo androidndkdir=%NDK_ROOT% >> %_CONF_INI_FILE%
 echo clangllvmdir=%NDK_LLVM_ROOT% >> %_CONF_INI_FILE%
 echo cocosdir=%COCOS2DX_ROOT% >> %_CONF_INI_FILE%
 echo cxxgeneratordir=%CXX_GENERATOR_ROOT% >> %_CONF_INI_FILE%
-:: fixme: to fix parse error, we must difine __WCHAR_MAX__ here.
-echo extra_flags=-D__WCHAR_MAX__=0x7fffffff >> %_CONF_INI_FILE%
+:: fixme: to fix parse error, we must difine __WCHAR_MAX__ and undefine __MINGW32__ .
+echo extra_flags=-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__ >> %_CONF_INI_FILE%
 echo ---
 
 
