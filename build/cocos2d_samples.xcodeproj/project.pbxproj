@@ -886,6 +886,8 @@
 		460E45DC180801C9000CDD6D /* sd in Resources */ = {isa = PBXBuildFile; fileRef = 460E45DA180801C9000CDD6D /* sd */; };
 		460E45DF18080238000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		460E45E018080238000CDD6D /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		4662EB5F188E426300B02E8F /* ReleasePoolTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */; };
+		4662EB60188E426300B02E8F /* ReleasePoolTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */; };
 		468588DA180805F100AC387D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 460E45391807E712000CDD6D /* main.m */; };
 		46A174E71807D95B005B8026 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174851807D934005B8026 /* AppDelegate.cpp */; };
 		46A174E81807D96A005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
@@ -2581,6 +2583,8 @@
 		460E45AB180801A4000CDD6D /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pew-pew-lei.wav"; sourceTree = "<group>"; };
 		460E45D7180801C1000CDD6D /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		460E45DA180801C9000CDD6D /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReleasePoolTest.cpp; sourceTree = "<group>"; };
+		4662EB63188E472A00B02E8F /* ReleasePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleasePoolTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		46A174851807D934005B8026 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46A174861807D934005B8026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3809,6 +3813,7 @@
 				1AAF50F9180E2C1A000584C8 /* ParticleTest */,
 				1AAF50FC180E2C1A000584C8 /* PerformanceTest */,
 				1AAF510B180E2C1A000584C8 /* PhysicsTest */,
+				4662EB5C188E426300B02E8F /* ReleasePoolTest */,
 				1AAF510E180E2C1A000584C8 /* RenderTextureTest */,
 				1AAF5111180E2C1A000584C8 /* RotateWorldTest */,
 				1AAF5114180E2C1A000584C8 /* SceneTest */,
@@ -4942,6 +4947,15 @@
 				460E45A4180801A4000CDD6D /* Marker Felt.ttf */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		4662EB5C188E426300B02E8F /* ReleasePoolTest */ = {
+			isa = PBXGroup;
+			children = (
+				4662EB63188E472A00B02E8F /* ReleasePoolTest.h */,
+				4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */,
+			);
+			path = ReleasePoolTest;
 			sourceTree = "<group>";
 		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
@@ -6421,6 +6435,7 @@
 				1AAF5192180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5194180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5196180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
+				4662EB5F188E426300B02E8F /* ReleasePoolTest.cpp in Sources */,
 				1AAF5198180E2C1A000584C8 /* MenuTestLayer.cpp in Sources */,
 				1AAF519A180E2C1A000584C8 /* TestHeaderLayer.cpp in Sources */,
 				1AAF519C180E2C1A000584C8 /* TimelineCallbackTestLayer.cpp in Sources */,
@@ -6663,6 +6678,7 @@
 			files = (
 				1AAF514B180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514D180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
+				4662EB60188E426300B02E8F /* ReleasePoolTest.cpp in Sources */,
 				1AAF514F180E2C1A000584C8 /* ActionsEaseTest.cpp in Sources */,
 				1AAF5151180E2C1A000584C8 /* ActionsProgressTest.cpp in Sources */,
 				1AAF5153180E2C1A000584C8 /* ActionsTest.cpp in Sources */,

@@ -190,6 +190,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
+    <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
@@ -338,6 +339,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
+    <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
