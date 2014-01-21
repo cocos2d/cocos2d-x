@@ -72,8 +72,8 @@ bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
     Node *n1 = static_cast<Node*>(p1);
     Node *n2 = static_cast<Node*>(p2);
 
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
+           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
            );
 }
 #else
@@ -82,8 +82,8 @@ bool nodeComparisonLess(Object* p1, Object* p2)
     Node *n1 = static_cast<Node*>(p1);
     Node *n2 = static_cast<Node*>(p2);
 
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
+           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
            );
 }
 #endif
@@ -230,6 +230,15 @@ void Node::setLocalZOrder(int z)
     }
 
     _eventDispatcher->setDirtyForNode(this);
+}
+
+void Node::setGlobalZOrder(float zOrder)
+{
+    if (_globalZOrder != zOrder)
+    {
+        _globalZOrder = zOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
 }
 
 /// vertexZ getter
