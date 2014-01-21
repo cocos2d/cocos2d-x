@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,12 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
+#include "CCObject.h"
+#include "ccTypes.h"
+#include "CCVector.h"
+#include "CCMap.h"
+#include "CCAffineTransform.h"
+#include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCTweenFunction.h"
 

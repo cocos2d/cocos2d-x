@@ -3,8 +3,9 @@
  *
  * gutf8.c - Operations on UTF-8 strings.
  *
- * Copyright (C) 1999 Tom Tromey
- * Copyright (C) 2000 Red Hat, Inc.
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +25,7 @@
 
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -277,9 +279,9 @@ cc_utf8_get_char (const char * p)
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = nullptr */)
 {
-    unsigned short len = cc_utf8_strlen(str_old, length);
+    long len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != nullptr) {
-        *rUtf16Size = len;
+        *rUtf16Size = static_cast<int>(len);
     }
     
     unsigned short* str_new = new unsigned short[len + 1];
@@ -399,8 +401,8 @@ cc_unichar_to_utf8 (unsigned int c,
 char *
 cc_utf16_to_utf8 (const unsigned short  *str,
                  int             len,
-                 int            *items_read,
-                 int            *items_written)
+                 long            *items_read,
+                 long            *items_written)
 {
     /* This function and g_utf16_to_ucs4 are almost exactly identical - The lines that differ
      * are marked.

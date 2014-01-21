@@ -24,6 +24,13 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include "CCEGLView.h"
+#include "platform/CCDevice.h"
+#include "CCActionInstant.h"
+#include "CCActionInterval.h"
+#include "CCActionTween.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include <algorithm>
 
@@ -46,10 +53,10 @@ ScrollView::ScrollView()
 : _zoomScale(0.0f)
 , _minZoomScale(0.0f)
 , _maxZoomScale(0.0f)
-, _delegate(NULL)
+, _delegate(nullptr)
 , _direction(Direction::BOTH)
 , _dragging(false)
-, _container(NULL)
+, _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
 , _clippingToBounds(false)
@@ -104,8 +111,8 @@ bool ScrollView::initWithViewSize(Size size, Node *container/* = NULL*/)
         if (!this->_container)
         {
             _container = Layer::create();
-            this->_container->ignoreAnchorPointForPosition(false);
-            this->_container->setAnchorPoint(Point(0.0f, 0.0f));
+            _container->ignoreAnchorPointForPosition(false);
+            _container->setAnchorPoint(Point(0.0f, 0.0f));
         }
 
         this->setViewSize(size);
@@ -485,10 +492,17 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
+void ScrollView::beforeDraw()
+{
+    _beforeDrawCommand.init(_globalZOrder);
+    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
+}
+
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
-void ScrollView::beforeDraw()
+void ScrollView::onBeforeDraw()
 {
     if (_clippingToBounds)
     {
@@ -513,11 +527,18 @@ void ScrollView::beforeDraw()
     }
 }
 
+void ScrollView::afterDraw()
+{
+    _afterDrawCommand.init(_globalZOrder);
+    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
+}
+
 /**
  * retract what's done in beforeDraw so that there's no side effect to
  * other nodes.
  */
-void ScrollView::afterDraw()
+void ScrollView::onAfterDraw()
 {
     if (_clippingToBounds)
     {
@@ -551,7 +572,7 @@ void ScrollView::visit()
 		for( ; i < _children.size(); i++ )
         {
 			Node *child = _children.at(i);
-			if ( child->getZOrder() < 0 )
+			if ( child->getLocalZOrder() < 0 )
             {
 				child->visit();
 			}

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -39,14 +39,7 @@ public:
     
 public:
 
-    void init(int viewport, int32_t depth);
-
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |                  |
-    // |   3 bits |    1 bit |     |    24 bits     |                  |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID();
+    void init(float depth);
 
     void execute();
 
@@ -54,8 +47,6 @@ public:
     std::function<void()> func;
 
 protected:
-    int _viewport;
-    int32_t _depth;
 };
 
 NS_CC_END

@@ -352,9 +352,18 @@ cc.EVENT_MOUSE                 = 4
 cc.EVENT_ACCELERATION          = 5
 cc.EVENT_CUSTOM                = 6
 
+cc.PHYSICSSHAPE_MATERIAL_DEFAULT = {0.0, 0.5, 0.5}
+cc.PHYSICSBODY_MATERIAL_DEFAULT = {0.1, 0.5, 0.5}
 cc.GLYPHCOLLECTION_DYNAMIC = 0
 cc.GLYPHCOLLECTION_NEHE    = 1
 cc.GLYPHCOLLECTION_ASCII   = 2
 cc.GLYPHCOLLECTION_CUSTOM  = 3
 
- 
+cc.LabelEffect = 
+{
+    NORMAL  = 0,
+    OUTLINE = 1,
+    SHADOW  = 2,
+    GLOW    = 3,
+}
+

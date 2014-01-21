@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCSkin.h"
+
+#include "CCParticleSystemQuad.h"
 
 using namespace cocos2d;
 

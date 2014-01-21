@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -375,7 +376,7 @@ namespace
 //////////////////////////////////////////////////////////////////////////
 
 Image::Image()
-: _data(0)
+: _data(nullptr)
 , _dataLen(0)
 , _width(0)
 , _height(0)
@@ -390,10 +391,7 @@ Image::Image()
 
 Image::~Image()
 {
-    if (_data != nullptr)
-    {
-        free(_data);
-    }
+    CC_SAFE_FREE(_data);
 }
 
 bool Image::initWithImageFile(const std::string& path)
@@ -1538,7 +1536,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         
     }while(false);
     
-    if (!ret)
+    if (ret)
     {
         const unsigned char tgaSuffix[] = ".tga";
         for(int i = 0; i < 4; ++i)
@@ -1555,6 +1553,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         if (tgaData->imageData != nullptr)
         {
             free(tgaData->imageData);
+            _data = nullptr;
         }
     }
     

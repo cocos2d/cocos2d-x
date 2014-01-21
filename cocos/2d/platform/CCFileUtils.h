@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -325,7 +326,10 @@ public:
      *  @note This method is used internally.
      */
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
-    
+
+    /** Returns the full path cache */
+    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+
 protected:
     /**
      *  The default constructor.

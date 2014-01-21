@@ -47,10 +47,9 @@ CCEventListenerTouch.cpp \
 CCEventMouse.cpp \
 CCEventTouch.cpp \
 CCFont.cpp \
+CCFontCharMap.cpp \
 CCFontAtlas.cpp \
 CCFontAtlasCache.cpp \
-CCFontAtlasFactory.cpp \
-CCFontDefinition.cpp \
 CCFontFNT.cpp \
 CCFontFreeType.cpp \
 ccFPSImages.c \
@@ -90,7 +89,6 @@ CCSpriteBatchNode.cpp \
 CCSpriteFrame.cpp \
 CCSpriteFrameCache.cpp \
 CCTextFieldTTF.cpp \
-CCTextImage.cpp \
 CCTexture2D.cpp \
 CCTextureAtlas.cpp \
 CCTextureCache.cpp \
@@ -122,6 +120,7 @@ renderer/CCFrustum.cpp \
 renderer/CCGroupCommand.cpp \
 renderer/CCMaterialManager.cpp \
 renderer/CCQuadCommand.cpp \
+renderer/CCBatchCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderer.cpp \
 renderer/CCRenderMaterial.cpp \

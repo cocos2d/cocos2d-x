@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,70 +24,88 @@
  ****************************************************************************/
 
 #include "CCLabel.h"
-#include "CCFontDefinition.h"
 #include "CCFontAtlasCache.h"
 #include "CCLabelTextFormatter.h"
+#include "CCSprite.h"
+#include "CCShaderCache.h"
+#include "ccUTF8.h"
+#include "CCSpriteFrame.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "CCFont.h"
 
 #define DISTANCEFIELD_ATLAS_FONTSIZE 50
 
 NS_CC_BEGIN
 
-Label* Label::createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize, TextHAlignment alignment, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
+Label* Label::create()
 {
-    FontAtlas *tmpAtlas = nullptr;
-    if(useDistanceField)
-        tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), DISTANCEFIELD_ATLAS_FONTSIZE, glyphs, customGlyphs,true);
-    else
-        tmpAtlas = FontAtlasCache::getFontAtlasTTF(fontFilePath.c_str(), fontSize, glyphs, customGlyphs,false);
+    Label *ret = new Label();
 
-    if (!tmpAtlas)
-        return nullptr;
-    
-    // create the actual label
-    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize, useDistanceField,true);
-    
-    if (templabel)
-    {
-        if(useDistanceField)
-            templabel->setFontSize(fontSize);
-        templabel->setText(label, lineSize, alignment, false);
-        return templabel;
-    }
-    
-    return nullptr;
-}
-
-Label* Label::createWithBMFont(const std::string& label, const std::string& bmfontFilePath, TextHAlignment alignment, int lineSize)
-{
-    
-    FontAtlas *tmpAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath.c_str());
-    
-    if (!tmpAtlas)
-        return 0;
-    
-    Label* templabel = Label::createWithAtlas(tmpAtlas, alignment, lineSize);
-    
-    if (templabel)
-    {
-        templabel->setText(label, lineSize, alignment, false);
-        return templabel;
-    }
-    else
-    {
-        return 0;
-    }
-     
-    return 0;
-}
-
-Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int lineSize, bool useDistanceField,bool useA8Shader)
-{
-    Label *ret = new Label(atlas, alignment, useDistanceField,useA8Shader);
-    
     if (!ret)
-        return 0;
-    
-    if( ret->init() )
+        return nullptr;
+
+    ret->autorelease();
+
+    return ret;
+}
+
+Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+      
+    if (ret->setTTFConfig(ttfConfig))
+    {
+        if(ttfConfig.distanceFieldEnabled)
+            ret->setFontSize(ttfConfig.fontSize);
+        ret->setString(text,alignment,lineSize);
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+Label* Label::createWithTTF(const std::string& text, const std::string& fontFilePath, int fontSize, int lineSize /* = 0 */, TextHAlignment alignment /* = TextHAlignment::CENTER */, GlyphCollection glyphs /* = GlyphCollection::NEHE */, const char *customGlyphs /* = 0 */, bool useDistanceField /* = false */)
+{
+    TTFConfig ttfConfig(fontFilePath.c_str(),fontSize,glyphs,customGlyphs,useDistanceField);
+    return createWithTTF(ttfConfig,text,alignment,lineSize);
+}
+
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setBMFontFilePath(bmfontFilePath))
+    {
+        ret->setString(text,alignment,lineSize);
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+Label* Label::createWithCharMap(const std::string& plistFile)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(plistFile))
     {
         ret->autorelease();
         return ret;
@@ -94,21 +113,86 @@ Label* Label::createWithAtlas(FontAtlas *atlas, TextHAlignment alignment, int li
     else
     {
         delete ret;
-        return 0;
+        return nullptr;
     }
-    
-    return ret;
+}
+
+Label* Label::createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(texture,itemWidth,itemHeight,startCharMap))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    Label *ret = new Label();
+
+    if (!ret)
+        return nullptr;
+
+    if (ret->setCharMap(charMapFile,itemWidth,itemHeight,startCharMap))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        return nullptr;
+    }
+}
+
+bool Label::setCharMap(const std::string& plistFile)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
+}
+
+bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
+}
+
+bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
 }
 
 Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,bool useA8Shader)
 : _reusedLetter(nullptr)
-, _multilineEnable(true)
 , _commonLineHeight(0.0f)
 , _lineBreakWithoutSpaces(false)
 , _width(0.0f)
 , _alignment(alignment)
-, _currentUTF16String(0)
-, _originalUTF16String(0)
+, _currentUTF16String(nullptr)
+, _originalUTF16String(nullptr)
 , _advances(nullptr)
 , _fontAtlas(atlas)
 , _isOpacityModifyRGB(true)
@@ -117,6 +201,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _fontSize(0)
 , _uniformEffectColor(0)
 {
+    _cascadeColorEnabled = true;
 }
 
 Label::~Label()
@@ -136,55 +221,107 @@ bool Label::init()
     bool ret = true;
     if(_fontAtlas)
     {
-        _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
-        _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);
-        ret = SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
-        _reusedLetter->retain();
+        if (_reusedLetter == nullptr)
+        {
+            _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
+            _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
+            _reusedLetter->retain();
+        }
+       ret = SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
     }
     if (_useDistanceField)
         setLabelEffect(LabelEffect::NORMAL,Color3B::BLACK);
     else if(_useA8Shader)
         setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR));
+    else
+        setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
     return ret;
 }
 
-void Label::setString(const std::string &stringToRender)
+bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
 {
-    _multilineEnable = true;
-    setText(stringToRender, _width, TextHAlignment::CENTER, false);
+    FontAtlas *oldAtlas = _fontAtlas;
+    bool oldDistanceFieldEnable = _useDistanceField;
+    bool oldA8ShaderEnabel = _useA8Shader;
+
+    _fontAtlas = atlas;
+    _useDistanceField = distanceFieldEnabled;
+    _useA8Shader = useA8Shader;
+
+    bool ret = Label::init();
+    if (oldAtlas)
+    {
+        if (ret)
+        {
+            FontAtlasCache::releaseFontAtlas(oldAtlas);        
+        }
+        else
+        {
+            _fontAtlas = oldAtlas;
+            _useDistanceField = oldDistanceFieldEnable;
+            _useA8Shader = oldA8ShaderEnabel;
+            Label::init();
+
+            FontAtlasCache::releaseFontAtlas(atlas);
+        }
+    }
+
+    if (_fontAtlas)
+    {
+        _commonLineHeight = _fontAtlas->getCommonLineHeight();
+        if (_currentUTF16String)
+        {      
+            alignText();
+        }
+    }
+
+    return ret;
 }
 
-void Label::setString(const std::string &stringToRender,bool multilineEnable)
+bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
-    _multilineEnable = multilineEnable;
-    setText(stringToRender, _width, TextHAlignment::CENTER, false);
+    FontAtlas *newAtlas = nullptr;
+    if(ttfConfig.distanceFieldEnabled)
+        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, DISTANCEFIELD_ATLAS_FONTSIZE, ttfConfig.glyphs, ttfConfig.customGlyphs,true);
+    else
+        newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig.fontFilePath, ttfConfig.fontSize, ttfConfig.glyphs, ttfConfig.customGlyphs,false);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
 }
 
-bool Label::setText(const std::string& stringToRender, float lineWidth, TextHAlignment alignment, bool lineBreakWithoutSpaces)
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath)
 {
-    if (!_fontAtlas)
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath);
+
+    if (!newAtlas)
+        return false;
+
+    return initWithFontAtlas(newAtlas);
+}
+
+bool Label::setString(const std::string& text, const TextHAlignment& alignment /* = TextHAlignment::CENTER */, float lineWidth /* = -1 */, bool lineBreakWithoutSpaces /* = false */)
+{
+    if (!_fontAtlas || _commonLineHeight <= 0)
         return false;
     
     // carloX
     // reset the string
     resetCurrentString();
     
-    _width                  = lineWidth;
+    if(lineWidth >= 0)
+    {
+        _width                  = lineWidth;
+    }   
     _alignment              = alignment;
     _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
     
-    // store locally common line height
-    _commonLineHeight = _fontAtlas->getCommonLineHeight();
-    if (_commonLineHeight <= 0)
-        return false;
-    
-//    int numLetter = 0;
-    unsigned short* utf16String = cc_utf8_to_utf16(stringToRender.c_str());
+    unsigned short* utf16String = cc_utf8_to_utf16(text.c_str());
     if(!utf16String)
         return false;
-    
-    _cascadeColorEnabled = true;
     
     setCurrentString(utf16String);
     setOriginalString(utf16String);
@@ -297,7 +434,7 @@ void Label::alignText()
         _textureAtlas->removeAllQuads();  
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     LabelTextFormatter::createStringSprites(this);    
-    if(_multilineEnable && LabelTextFormatter::multilineText(this) )      
+    if(_width > 0 && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
     
     LabelTextFormatter::alignText(this);
@@ -529,7 +666,7 @@ void Label::onDraw()
 
 void Label::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Label::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

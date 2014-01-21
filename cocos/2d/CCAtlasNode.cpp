@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -33,7 +34,7 @@ THE SOFTWARE.
 #include "ccGLStateCache.h"
 #include "CCDirector.h"
 #include "TransformUtils.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 
 // external
@@ -151,13 +152,13 @@ void AtlasNode::draw(void)
 
     auto shader = ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
 
-    _quadCommand.init(0,
-              _vertexZ,
+    _quadCommand.init(
+              _globalZOrder,
               _textureAtlas->getTexture()->getName(),
               shader,
               _blendFunc,
               _textureAtlas->getQuads(),
-              _textureAtlas->getTotalQuads(),
+              _quadsToDraw,
               _modelViewTransform);
 
     Director::getInstance()->getRenderer()->addCommand(&_quadCommand);

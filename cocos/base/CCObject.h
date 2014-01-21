@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -27,6 +28,7 @@ THE SOFTWARE.
 
 #include "CCDataVisitor.h"
 #include "ccMacros.h"
+#include "CCConsole.h"
 
 #ifdef EMSCRIPTEN
 #include <GLES2/gl2.h>
@@ -69,14 +71,12 @@ class CC_DLL Object
 {
 public:
     /// object id, ScriptSupport need public _ID
-    unsigned int        _ID;
+    unsigned int _ID;
     /// Lua reference id
-    int                 _luaID;
+    int _luaID;
 protected:
     /// count of references
-    unsigned int        _reference;
-    /// count of autorelease
-    unsigned int        _autoReleaseCount;
+    unsigned int _reference;
 public:
     /**
      * Constructor

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,10 +26,11 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
-#include "cocos2d.h"
 #include "CCFont.h"
 
 NS_CC_BEGIN
+
+class CCBMFontConfiguration;
 
 class FontFNT : public Font
 {

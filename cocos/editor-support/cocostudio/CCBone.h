@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -143,7 +143,7 @@ public:
     //! Update zorder
     void updateZOrder();
 
-    virtual void setZOrder(int zOrder) override;
+    virtual void setLocalZOrder(int zOrder) override;
 
     Tween *getTween();
 

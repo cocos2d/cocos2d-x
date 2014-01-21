@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -44,9 +45,9 @@ THE SOFTWARE.
 #include "CCAffineTransform.h"
 #include "TransformUtils.h"
 #include "CCProfiling.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCFrustum.h"
+#include "renderer/CCFrustum.h"
 
 // external
 #include "kazmath/GL/matrix.h"
@@ -241,9 +242,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         
         // zwoptex default values
         _offsetPosition = Point::ZERO;
-        
-        _hasChildren = false;
-        
+
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
         
@@ -671,7 +670,7 @@ void Sprite::updateTransform(void)
 void Sprite::draw(void)
 {
     //TODO implement z order
-    _quadCommand.init(0, _vertexZ, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, _modelViewTransform);
 
 //    if(culling())
     {
@@ -766,18 +765,12 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     }
     //CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
     Node::addChild(child, zOrder, tag);
-    _hasChildren = true;
 }
 
 void Sprite::reorderChild(Node *child, int zOrder)
 {
-    CCASSERT(child != nullptr, "");
-    CCASSERT(_children.contains(child), "");
-
-    if (zOrder == child->getZOrder())
-    {
-        return;
-    }
+    CCASSERT(child != nullptr, "child must be non null");
+    CCASSERT(_children.contains(child), "child does not belong to this");
 
     if( _batchNode && ! _reorderChildDirty)
     {
@@ -812,8 +805,6 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
     }
 
     Node::removeAllChildrenWithCleanup(cleanup);
-    
-    _hasChildren = false;
 }
 
 void Sprite::sortAllChildren()
@@ -831,8 +822,8 @@ void Sprite::sortAllChildren()
             auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
-                           ( tempI->getZOrder() == tempJ->getZOrder() &&
+            while(j>=0 && ( tempI->getLocalZOrder() < tempJ->getLocalZOrder() ||
+                           ( tempI->getLocalZOrder() == tempJ->getLocalZOrder() &&
                             tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
             {
                 _children->fastSetObject( tempJ, j+1 );
@@ -881,27 +872,24 @@ void Sprite::setDirtyRecursively(bool bValue)
 {
     _recursiveDirty = bValue;
     setDirty(bValue);
-    // recursively set dirty
-    if (_hasChildren)
-    {
-        for(const auto &child: _children) {
-            Sprite* sp = dynamic_cast<Sprite*>(child);
-            if (sp)
-            {
-                sp->setDirtyRecursively(true);
-            }
+
+    for(const auto &child: _children) {
+        Sprite* sp = dynamic_cast<Sprite*>(child);
+        if (sp)
+        {
+            sp->setDirtyRecursively(true);
         }
     }
 }
 
 // XXX HACK: optimization
-#define SET_DIRTY_RECURSIVELY() {                                    \
-                    if (! _recursiveDirty) {    \
-                        _recursiveDirty = true;                    \
-                        setDirty(true);                              \
-                        if ( _hasChildren)                        \
-                            setDirtyRecursively(true);                \
-                        }                                            \
+#define SET_DIRTY_RECURSIVELY() {                       \
+                    if (! _recursiveDirty) {            \
+                        _recursiveDirty = true;         \
+                        setDirty(true);                 \
+                        if (!_children.empty())         \
+                            setDirtyRecursively(true);  \
+                        }                               \
                     }
 
 void Sprite::setPosition(const Point& pos)

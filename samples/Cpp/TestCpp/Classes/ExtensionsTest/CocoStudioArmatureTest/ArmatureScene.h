@@ -271,6 +271,7 @@ public:
     virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw();
+    void onDraw();
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -278,6 +279,7 @@ public:
     cocostudio::Armature *armature;
     cocostudio::Armature *armature2;
     
+    CustomCommand _customCommand; //new render needed this for drawing primitives
     cocos2d::Sprite *bullet;
 };
 #endif
@@ -336,15 +338,16 @@ public:
 class TestArmatureNesting2 : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
-    virtual void ChangeMountCallback(Object* pSender);
+    void changeMountCallback(Object* pSender);
     virtual cocostudio::Armature *createMount(const char *name, Point position);
 
+private:
     Hero *hero;
 
     cocostudio::Armature *horse;

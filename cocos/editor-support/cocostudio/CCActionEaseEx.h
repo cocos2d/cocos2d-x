@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __ActionEaseEx_H__
 #define __ActionEaseEx_H__
 
-#include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
 
 namespace cocostudio {

@@ -1,9 +1,23 @@
-//
-//  ccUTF8.h
-//  cocos2dx
-//
-//  Created by James Chen on 2/27/13.
-//
+/*
+ * Copyright (C) 1999      Tom Tromey
+ * Copyright (C) 2000      Red Hat, Inc.
+ * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
 
 #ifndef __cocos2dx__ccUTF8__
 #define __cocos2dx__ccUTF8__
@@ -81,8 +95,8 @@ CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_old, int length = -1, in
 CC_DLL char *
 cc_utf16_to_utf8 (const unsigned short  *str,
                   int             len,
-                  int            *items_read,
-                  int            *items_written);
+                  long            *items_read,
+                  long            *items_written);
 
 NS_CC_END
 

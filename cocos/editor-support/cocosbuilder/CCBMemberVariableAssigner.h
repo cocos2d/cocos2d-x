@@ -1,7 +1,6 @@
 #ifndef _CCB_CCBMEMBERVARIABLEASSIGNER_H_
 #define _CCB_CCBMEMBERVARIABLEASSIGNER_H_
 
-#include "cocos2d.h"
 
 namespace cocosbuilder {
 
