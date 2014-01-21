@@ -49,6 +49,7 @@ struct FontLetterDefinition
     float anchorX;
     float anchorY;
     bool validDefinition;
+    int xAdvance;
 };
 
 class CC_DLL FontAtlas : public Object
