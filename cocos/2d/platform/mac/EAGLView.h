@@ -113,8 +113,6 @@ THE SOFTWARE.
 -(int) getHeight;
 -(void) swapBuffers;
 
--(void) setFullScreen:(BOOL)fullscreen;
-
 @end
 #endif // __EAGLVIEW_MAC_H__
 
