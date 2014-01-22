@@ -159,6 +159,10 @@ Issue2572::Issue2572()
 , _moveTimer(0.0f)
 , _addTimer(0.0f)
 {
+    _addChildStep = 1.0f;
+    _wholeMoveTime = 3.0f;
+    _wholeMoveSize = Point(-300, 0);
+    
     // create a parallax node, a parent node
     _paraNode = ParallaxNode::create();
     addChild(_paraNode, 0, kTagNode);
@@ -166,9 +170,6 @@ Issue2572::Issue2572()
     this->scheduleUpdate();
 }
 
-const static float _addChildStep = 1.0f;
-const static float _wholeMoveTime = 3.0f;
-const static Point _wholeMoveSize = Point(-300, 0);
 void Issue2572::update(float dt)
 {
     _addTimer += dt;
@@ -199,10 +200,10 @@ void Issue2572::update(float dt)
             case 1:
             case 2:
                 log( "--child count-- %zd", _childList.size());
-                for (auto obj : _childList)
+                for (const auto& obj : _childList)
                 {
                     Sprite* obstacle = dynamic_cast<Sprite*>( obj );
-                    log("child size : (%.2f, %.2f)", obstacle->getPositionX(), obstacle->getPositionY());
+                    log("child position : (%.2f, %.2f)", obstacle->getPositionX(), obstacle->getPositionY());
                 }
                 log("-------------------");
                 _printCount++;
