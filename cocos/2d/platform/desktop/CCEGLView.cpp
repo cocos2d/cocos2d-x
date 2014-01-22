@@ -331,7 +331,7 @@ void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h
 
 
 //////////////////////////////////////////////////////////////////////////
-// impliment EGLView
+// implement EGLView
 //////////////////////////////////////////////////////////////////////////
 
 EGLView* EGLView::s_pEglView = nullptr;
@@ -359,14 +359,19 @@ EGLView::~EGLView()
 
 bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
 {
-    if(nullptr != _mainWindow) return true;
+    if(_mainWindow != nullptr)
+        return true;
     
     setViewName(viewName);
     setFrameSize(width, height);
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor,
+                                   _screenSize.height * _frameZoomFactor,
+                                   _viewName.c_str(),
+                                   NULL, // glfwGetPrimaryMonitor() for fullscreen mode
+                                   NULL);
     glfwMakeContextCurrent(_mainWindow);
     
     int w, h;
@@ -400,38 +405,9 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
         MessageBox(strComplain, "OpenGL version too old");
         return false;
     }
-//    
-//    GLenum GlewInitResult = glewInit();
-//    if (GLEW_OK != GlewInitResult)
-//    {
-//        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
-//        return false;
-//    }
-//    
-//    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
-//    {
-//        log("Ready for GLSL");
-//    }
-//    else
-//    {
-//        log("Not totally ready :(");
-//    }
-//    
-//    if (glewIsSupported("GL_VERSION_2_0"))
-//    {
-//        log("Ready for OpenGL 2.0");
-//    }
-//    else
-//    {
-//        log("OpenGL 2.0 not supported");
-//    }
-//    
-//    if(glew_dynamic_binding() == false)
-//    {
-//        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
-//        return false;
-//    }
-//    
+
+    initGlew();
+
     // Enable point size by default on windows.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     
@@ -515,6 +491,46 @@ EGLView* EGLView::getInstance()
 EGLView* EGLView::sharedOpenGLView()
 {
     return EGLView::getInstance();
+}
+
+// helper
+bool EGLView::initGlew()
+{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult)
+    {
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        return false;
+    }
+
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        log("Ready for GLSL");
+    }
+    else
+    {
+        log("Not totally ready :(");
+    }
+
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+        log("Ready for OpenGL 2.0");
+    }
+    else
+    {
+        log("OpenGL 2.0 not supported");
+    }
+
+//    if(glew_dynamic_binding() == false)
+//    {
+//        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+//        return false;
+//    }
+
+#endif // Linux
+
+    return true;
 }
 
 NS_CC_END // end of namespace cocos2d;

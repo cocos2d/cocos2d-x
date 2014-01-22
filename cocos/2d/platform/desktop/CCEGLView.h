@@ -35,6 +35,15 @@ NS_CC_BEGIN
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
+    // static function
+    /**
+     @brief    get the shared main open gl window
+     */
+    static EGLView* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+
     /**
      * @js ctor
      */
@@ -55,8 +64,7 @@ public:
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     bool init(const std::string& viewName, float width, float height, float frameZoomFactor = 1.0f);
-public:
-    
+
     //void resize(int width, int height);
  
 	float getFrameZoomFactor();
@@ -65,36 +73,27 @@ public:
     
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    
-    // static function
-    /**
-     @brief    get the shared main open gl window
-     */
-    static EGLView* getInstance();
-    
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
-    
-    inline bool isRetina() { return _isRetina; };
-    
+
+
+    bool windowShouldClose();
+    void pollEvents();
+    GLFWwindow* getWindow() const { return _mainWindow; }
+
 protected:
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float zoomFactor);
-private:
+    bool initGlew();
+    inline bool isRetina() { return _isRetina; };
+
     bool _captured;
     bool _supportTouch;
     bool _isRetina;
 
     float _frameZoomFactor;
     static EGLView* s_pEglView;
-public:
-    bool windowShouldClose();
-    
-    void pollEvents();
-    GLFWwindow* getWindow() const { return _mainWindow; }
-private:
+
     GLFWwindow* _mainWindow;
     friend class EGLViewEventHandler;
 };

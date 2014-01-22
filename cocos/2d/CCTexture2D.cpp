@@ -544,7 +544,6 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     _contentSize = contentSize;
     _maxS = contentSize.width / (float)(pixelsWide);
     _maxT = contentSize.height / (float)(pixelsHigh);
-
 }
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
