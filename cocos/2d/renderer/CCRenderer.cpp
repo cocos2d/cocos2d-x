@@ -100,7 +100,6 @@ void RenderQueue::clear()
 
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_firstCommand(0)
 ,_lastCommand(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
@@ -283,7 +282,7 @@ void Renderer::render()
             size_t len = currRenderQueue.size();
             
             //Refresh the batch command index in case the renderStack has changed.
-            _firstCommand = _lastCommand = _renderStack.top().currentIndex;
+            _lastCommand = _renderStack.top().currentIndex;
             
             //Process RenderQueue
             for(size_t i = _renderStack.top().currentIndex; i < len; i++)
@@ -379,7 +378,7 @@ void Renderer::render()
     }
     RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(element);
-    _firstCommand = _lastCommand = 0;
+    _lastCommand = 0;
     _lastMaterialID = 0;
 }
 
@@ -416,7 +415,6 @@ void Renderer::drawBatchedQuads()
     //Upload buffer to VBO
     if(_numQuads <= 0 || 0 == _batchedQuadCommands.size())
     {
-        _firstCommand = _lastCommand;
         return;
     }
 
@@ -464,32 +462,27 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    //for(size_t i = _firstCommand; i <= _lastCommand; i++)
     for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
     {
-        //RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
-        //if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
+        QuadCommand* cmd = *i;
+        if(_lastMaterialID != cmd->getMaterialID())
         {
-            QuadCommand* cmd = *i;
-            if(_lastMaterialID != cmd->getMaterialID())
+            //Draw quads
+            if(quadsToDraw > 0)
             {
-                //Draw quads
-                if(quadsToDraw > 0)
-                {
-                    glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-                    CC_INCREMENT_GL_DRAWS(1);
+                glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                CC_INCREMENT_GL_DRAWS(1);
 
-                    startQuad += quadsToDraw;
-                    quadsToDraw = 0;
-                }
-
-                //Use new material
-                cmd->useMaterial();
-                _lastMaterialID = cmd->getMaterialID();
+                startQuad += quadsToDraw;
+                quadsToDraw = 0;
             }
 
-            quadsToDraw += cmd->getQuadCount();
+            //Use new material
+            cmd->useMaterial();
+            _lastMaterialID = cmd->getMaterialID();
         }
+
+        quadsToDraw += cmd->getQuadCount();
     }
 
     //Draw any remaining quad
@@ -511,7 +504,6 @@ void Renderer::drawBatchedQuads()
     }
 
     _batchedQuadCommands.clear();
-    _firstCommand = _lastCommand + 1;
     _numQuads = 0;
 }
 
