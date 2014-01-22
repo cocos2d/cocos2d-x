@@ -7,6 +7,9 @@
 #include "PerformanceTouchesTest.h"
 #include "PerformanceAllocTest.h"
 #include "PerformanceLabelTest.h"
+#include "PerformanceRendererTest.h"
+#include "PerformanceContainerTest.h"
+#include "PerformanceEventDispatcherTest.h"
 
 enum
 {
@@ -26,6 +29,9 @@ struct {
 	{ "Texture Perf Test",[](Object*sender){runTextureTest();} },
 	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
     { "Label Perf Test",[](Object*sender){runLabelTest();} },
+    { "Renderer Perf Test",[](Object*sender){runRendererTest();} },
+    { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } },
+    { "EventDispatcher Perf Test", [](Object* sender ) { runEventDispatcherPerformanceTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
@@ -41,18 +47,83 @@ void PerformanceMainLayer::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto menu = Menu::create();
-    menu->setPosition( Point::ZERO );
+    _itemMenu = Menu::create();
+    _itemMenu->setPosition( Point::ZERO );
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
     {
         auto pItem = MenuItemFont::create(g_testsName[i].name, g_testsName[i].callback);
         pItem->setPosition(Point(s.width / 2, s.height - (i + 1) * LINE_SPACE));
-        menu->addChild(pItem, kItemTagBasic + i);
+        _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
 
-    addChild(menu);
+    addChild(_itemMenu);
+    
+    // Register Touch Event
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = CC_CALLBACK_2(PerformanceMainLayer::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(PerformanceMainLayer::onTouchMoved, this);
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto mouseListener = EventListenerMouse::create();
+    mouseListener->onMouseScroll = CC_CALLBACK_1(PerformanceMainLayer::onMouseScroll, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+}
+
+bool PerformanceMainLayer::onTouchBegan(Touch* touches, Event  *event)
+{
+    _beginPos = touches->getLocation();
+    return true;
+}
+void PerformanceMainLayer::onTouchMoved(Touch* touches, Event  *event)
+{
+    auto touchLocation = touches->getLocation();
+    float nMoveY = touchLocation.y - _beginPos.y;
+    
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(Point::ZERO);
+        return;
+    }
+    
+    if (nextPos.y > ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(Point(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+    
+    _itemMenu->setPosition(nextPos);
+    _beginPos = touchLocation;
+}
+
+void PerformanceMainLayer::onMouseScroll(Event *event)
+{
+    auto mouseEvent = static_cast<EventMouse*>(event);
+    float nMoveY = mouseEvent->getScrollY() * 6;
+    
+    auto curPos  = _itemMenu->getPosition();
+    auto nextPos = Point(curPos.x, curPos.y + nMoveY);
+    
+    if (nextPos.y < 0.0f)
+    {
+        _itemMenu->setPosition(Point::ZERO);
+        return;
+    }
+    
+    if (nextPos.y > ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
+    {
+        _itemMenu->setPosition(Point(0, ((g_testMax + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        return;
+    }
+    
+    _itemMenu->setPosition(nextPos);
 }
 
 ////////////////////////////////////////////////////////

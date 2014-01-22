@@ -583,7 +583,7 @@ local function BugsTestMainLayer()
     
     --menu callback
     local function menuCallback(tag, pMenuItem)
-        local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+        local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
         local BugTestScene = CreateBugsTestScene(nIdx)
         if nil ~= testScene then
             cc.Director:getInstance():replaceScene(testScene)

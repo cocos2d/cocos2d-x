@@ -191,7 +191,7 @@ EventDispatcher::~EventDispatcher()
     removeAllEventListeners();
 }
 
-void EventDispatcher::visitTarget(Node* node)
+void EventDispatcher::visitTarget(Node* node, bool isRootNode)
 {    
     int i = 0;
     auto& children = node->getChildren();
@@ -206,24 +206,55 @@ void EventDispatcher::visitTarget(Node* node)
         {
             child = children.at(i);
             
-            if ( child && child->getZOrder() < 0 )
-                visitTarget(child);
+            if ( child && child->getLocalZOrder() < 0 )
+                visitTarget(child, false);
             else
                 break;
         }
         
-        _nodePriorityMap.insert(std::make_pair(node, ++_nodePriorityIndex));
+        if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
+        {
+            _globalZOrderNodeMap[node->getGlobalZOrder()].push_back(node);
+        }
         
         for( ; i < childrenCount; i++ )
         {
             child = children.at(i);
             if (child)
-                visitTarget(child);
+                visitTarget(child, false);
         }
     }
     else
     {
-        _nodePriorityMap.insert(std::make_pair(node, ++_nodePriorityIndex));
+        if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
+        {
+            _globalZOrderNodeMap[node->getGlobalZOrder()].push_back(node);
+        }
+    }
+    
+    if (isRootNode)
+    {
+        std::vector<float> globalZOrders;
+        globalZOrders.reserve(_globalZOrderNodeMap.size());
+        
+        for (const auto& e : _globalZOrderNodeMap)
+        {
+            globalZOrders.push_back(e.first);
+        }
+        
+        std::sort(globalZOrders.begin(), globalZOrders.end(), [](const float a, const float b){
+            return a < b;
+        });
+        
+        for (const auto& globalZ : globalZOrders)
+        {
+            for (const auto& n : _globalZOrderNodeMap[globalZ])
+            {
+                _nodePriorityMap[n] = ++_nodePriorityIndex;
+            }
+        }
+        
+        _globalZOrderNodeMap.clear();
     }
 }
 
@@ -354,7 +385,7 @@ void EventDispatcher::forceAddEventListener(EventListener* listener)
     }
     else
     {
-        setDirty(listenerID, DirtyFlag::FIXED_PRITORY);
+        setDirty(listenerID, DirtyFlag::FIXED_PRIORITY);
     }
 }
 
@@ -496,7 +527,7 @@ void EventDispatcher::setPriority(EventListener* listener, int fixedPriority)
                 if (listener->getFixedPriority() != fixedPriority)
                 {
                     listener->setFixedPriority(fixedPriority);
-                    setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRITORY);
+                    setDirty(listener->getListenerID(), DirtyFlag::FIXED_PRIORITY);
                 }
                 return;
             }
@@ -921,7 +952,7 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
     
     if (dirtyFlag != DirtyFlag::NONE)
     {
-        if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRITORY)
+        if ((int)dirtyFlag & (int)DirtyFlag::FIXED_PRIORITY)
         {
             sortEventListenersOfFixedPriority(listenerID);
         }
@@ -947,7 +978,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     _nodePriorityIndex = 0;
     _nodePriorityMap.clear();
 
-    visitTarget(rootNode);
+    visitTarget(rootNode, true);
     
     // After sort: priority < 0, > 0
     auto sceneGraphlisteners = listeners->getSceneGraphPriorityListeners();
@@ -1135,7 +1166,7 @@ bool EventDispatcher::isEnabled() const
 
 void EventDispatcher::setDirtyForNode(Node* node)
 {
-    // Mark the node dirty only when there was an eventlistener associates with it. 
+    // Mark the node dirty only when there is an eventlistener associated with it. 
     if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
     {
         _dirtyNodes.insert(node);

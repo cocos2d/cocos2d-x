@@ -318,12 +318,6 @@
     <ClCompile Include="CCFontAtlasCache.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCFontAtlasFactory.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFontDefinition.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="CCFontFNT.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -343,9 +337,6 @@
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="CCLabelTTF.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="CCTextImage.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
     <ClCompile Include="..\base\etc1.cpp">
@@ -601,6 +592,9 @@
     <ClCompile Include="renderer\CCBatchCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="CCFontCharMap.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -831,12 +825,6 @@
     <ClInclude Include="CCFontAtlasCache.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCFontAtlasFactory.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="CCFontDefinition.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="CCFontFNT.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
@@ -859,9 +847,6 @@
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelTTF.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="CCTextImage.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="..\base\etc1.h">
@@ -1212,6 +1197,9 @@
     </ClInclude>
     <ClInclude Include="renderer\CCBatchCommand.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontCharMap.h">
+      <Filter>label_nodes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

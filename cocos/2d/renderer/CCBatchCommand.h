@@ -43,32 +43,15 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
-
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |  Material ID     |
-    // |   3 bits |    1 bit |     |    24 bits     |      24 bit2     |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID();
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
 
     void execute();
 
 protected:
+    //Material
     int32_t _materialID;
-
-    //Key Data
-    int _viewport;          /// Which view port it belongs to
-
-    //TODO use material to determine if it's translucent
-    int32_t _depth;
-
-    //Maternal
     GLuint _textureID;
-
     GLProgram* _shader;
-//    GLuint _shaderID;
-
     BlendFunc _blendType;
 
     TextureAtlas *_textureAtlas;

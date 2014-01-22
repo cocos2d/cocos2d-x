@@ -62,12 +62,12 @@ typedef struct _ttfConfig
     const char *customGlyphs;
     bool distanceFieldEnabled;
 
-    _ttfConfig(const char* filePath,int fontSize = 36, const GlyphCollection& glyphs = GlyphCollection::NEHE,
-        const char *customGlyphs = nullptr,bool useDistanceField = false)
+    _ttfConfig(const char* filePath,int size = 36, const GlyphCollection& glyphCollection = GlyphCollection::NEHE,
+        const char *customGlyphCollection = nullptr,bool useDistanceField = false)
         :fontFilePath(filePath)
-        ,fontSize(fontSize)
-        ,glyphs(glyphs)
-        ,customGlyphs(customGlyphs)
+        ,fontSize(size)
+        ,glyphs(glyphCollection)
+        ,customGlyphs(customGlyphCollection)
         ,distanceFieldEnabled(useDistanceField)
     {}
 }TTFConfig;
@@ -82,9 +82,17 @@ public:
     
     static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::CENTER, int lineWidth = 0);
     
+    static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    static Label * createWithCharMap(const std::string& plistFile);
+
     bool setTTFConfig(const TTFConfig& ttfConfig);
 
     bool setBMFontFilePath(const std::string& bmfontFilePath);
+
+    bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
+    bool setCharMap(const std::string& plistFile);
 
     bool setString(const std::string& text, const TextHAlignment& alignment = TextHAlignment::CENTER, float lineWidth = -1, bool lineBreakWithoutSpaces = false);
 
@@ -115,7 +123,7 @@ public:
     
     // font related stuff
     virtual int getCommonLineHeight() const override;
-    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const override;
+    virtual int getKerningInString(int hintPositionInString) const override;
     virtual int getXOffsetForChar(unsigned short c) const override;
     virtual int getYOffsetForChar(unsigned short c) const override;
     virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
@@ -162,7 +170,7 @@ private:
     
     void alignText();   
     
-    bool computeAdvancesForString(unsigned short int *stringToRender);
+    bool computeHorizontalKernings(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
@@ -172,29 +180,29 @@ private:
     virtual void updateColor() override;
 
     //! used for optimization
-    Sprite              *_reusedLetter;
-    std::vector<LetterInfo>     _lettersInfo;
+    Sprite *_reusedLetter;
+    std::vector<LetterInfo> _lettersInfo;
 
-    float                       _commonLineHeight;
-    bool                        _lineBreakWithoutSpaces;
-    float                       _width;
-    TextHAlignment              _alignment;
-    unsigned short int *        _currentUTF16String;
-    unsigned short int *        _originalUTF16String;
-    Size               *        _advances;
-    FontAtlas          *        _fontAtlas;
-    bool                        _isOpacityModifyRGB;
+    float _commonLineHeight;
+    bool _lineBreakWithoutSpaces;
+    float _width;
+    TextHAlignment _alignment;
+    unsigned short int * _currentUTF16String;
+    unsigned short int * _originalUTF16String;
+    int * _horizontalKernings;
+    FontAtlas * _fontAtlas;
+    bool _isOpacityModifyRGB;
 
-    bool                        _useDistanceField;
-    bool                        _useA8Shader;
-    int                         _fontSize;
+    bool _useDistanceField;
+    bool _useA8Shader;
+    int _fontSize;
 
-    LabelEffect                 _currLabelEffect;
-    Color3B                     _effectColor;
+    LabelEffect _currLabelEffect;
+    Color3B _effectColor;
 
-    GLuint                      _uniformEffectColor;
+    GLuint _uniformEffectColor;
 
-    CustomCommand               _customCommand;
+    CustomCommand _customCommand;
 };
 
 

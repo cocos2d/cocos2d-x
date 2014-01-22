@@ -25,9 +25,9 @@
 #include "CCNodeGrid.h"
 #include "CCGrid.h"
 
-#include "CCGroupCommand.h"
-#include "CCRenderer.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN
@@ -92,7 +92,7 @@ void NodeGrid::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
 
-    _groupCommand.init(0,_vertexZ);
+    _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
@@ -104,7 +104,7 @@ void NodeGrid::visit()
         _nodeGrid->set2DProjection();
     }
 
-    _gridBeginCommand.init(0,_vertexZ);
+    _gridBeginCommand.init(_globalZOrder);
     _gridBeginCommand.func = CC_CALLBACK_0(NodeGrid::onGridBeginDraw, this);
     renderer->addCommand(&_gridBeginCommand);
 
@@ -125,7 +125,7 @@ void NodeGrid::visit()
         {
             auto node = _children.at(i);
 
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;
@@ -152,7 +152,7 @@ void NodeGrid::visit()
         director->setProjection(beforeProjectionType);
     }
 
-    _gridEndCommand.init(0,_vertexZ);
+    _gridEndCommand.init(_globalZOrder);
     _gridEndCommand.func = CC_CALLBACK_0(NodeGrid::onGridEndDraw, this);
     renderer->addCommand(&_gridEndCommand);
 

@@ -470,19 +470,19 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
 
 void RenderTextureTestDepthStencil::draw()
 {
-    _renderCmds[0].init(0, _vertexZ);
+    _renderCmds[0].init(_globalZOrder);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
     
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
-    _renderCmds[1].init(0, _vertexZ);
+    _renderCmds[1].init(_globalZOrder);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
     
     _spriteDS->visit();
     
-    _renderCmds[2].init(0, _vertexZ);
+    _renderCmds[2].init(_globalZOrder);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
     
@@ -490,7 +490,7 @@ void RenderTextureTestDepthStencil::draw()
     
     _rend->end();
     
-    _renderCmds[3].init(0, _vertexZ);
+    _renderCmds[3].init(_globalZOrder);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
 
@@ -638,7 +638,7 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     

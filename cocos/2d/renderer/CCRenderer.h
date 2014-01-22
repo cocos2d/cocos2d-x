@@ -39,12 +39,31 @@ NS_CC_BEGIN
 class EventListenerCustom;
 class QuadCommand;
 
-typedef std::vector<RenderCommand*> RenderQueue;
+/** Class that knows how to sort the Commands.
+ Since the commands that have z==0 are "pushed back" in
+ the correct order, the only Commands that need to be sorted, 
+ are the ones that have z <0 and z >0.
+ And that is what this class does.
+*/
+class RenderQueue {
+
+public:
+    void push_back(RenderCommand* command);
+    ssize_t size() const;
+    void sort();
+    RenderCommand* operator[](ssize_t index) const;
+    void clear();
+
+protected:
+    std::vector<RenderCommand*> _queueNegZ;
+    std::vector<RenderCommand*> _queue0;
+    std::vector<RenderCommand*> _queuePosZ;
+};
 
 struct RenderStackElement
 {
     int renderQueueID;
-    size_t currentIndex;
+    ssize_t currentIndex;
 };
 
 class Renderer
@@ -88,10 +107,10 @@ protected:
     std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    int _lastMaterialID;
+    uint32_t _lastMaterialID;
 
-    size_t _firstCommand;
-    size_t _lastCommand;
+    ssize_t _firstCommand;
+    ssize_t _lastCommand;
 
     std::vector<QuadCommand*> _batchedQuadCommands;
 
