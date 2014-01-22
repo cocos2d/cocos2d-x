@@ -32,7 +32,6 @@
 #include "CCGL.h"
 #include <vector>
 #include <stack>
-#include <list>
 
 NS_CC_BEGIN
 
@@ -70,6 +69,7 @@ class Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;
+    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
     ~Renderer();
