@@ -116,7 +116,7 @@ local function updateLayer()
 
     local function menuCallback(tag, menuItem)
         local scene = nil
-        local nIdx = menuItem:getZOrder() - itemTagBasic
+        local nIdx = menuItem:getLocalZOrder() - itemTagBasic
         local ExtensionsTestScene = CreateExtensionsTestScene(nIdx)
         if nil ~= ExtensionsTestScene then
             cc.Director:getInstance():replaceScene(ExtensionsTestScene)

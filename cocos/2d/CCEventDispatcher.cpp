@@ -234,7 +234,7 @@ void EventDispatcher::visitTarget(Node* node, bool isRootNode)
     
     if (isRootNode)
     {
-        std::vector<int> globalZOrders;
+        std::vector<float> globalZOrders;
         globalZOrders.reserve(_globalZOrderNodeMap.size());
         
         for (const auto& e : _globalZOrderNodeMap)
@@ -242,7 +242,7 @@ void EventDispatcher::visitTarget(Node* node, bool isRootNode)
             globalZOrders.push_back(e.first);
         }
         
-        std::sort(globalZOrders.begin(), globalZOrders.end(), [](const int a, const int b){
+        std::sort(globalZOrders.begin(), globalZOrders.end(), [](const float a, const float b){
             return a < b;
         });
         
@@ -1166,7 +1166,7 @@ bool EventDispatcher::isEnabled() const
 
 void EventDispatcher::setDirtyForNode(Node* node)
 {
-    // Mark the node dirty only when there was an eventlistener associates with it. 
+    // Mark the node dirty only when there is an eventlistener associated with it. 
     if (_nodeListenersMap.find(node) != _nodeListenersMap.end())
     {
         _dirtyNodes.insert(node);

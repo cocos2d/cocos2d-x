@@ -193,7 +193,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _alignment(alignment)
 , _currentUTF16String(nullptr)
 , _originalUTF16String(nullptr)
-, _advances(nullptr)
+, _horizontalKernings(nullptr)
 , _fontAtlas(atlas)
 , _isOpacityModifyRGB(true)
 , _useDistanceField(useDistanceField)
@@ -208,7 +208,7 @@ Label::~Label()
 {   
     delete [] _currentUTF16String;
     delete [] _originalUTF16String;
-    delete [] _advances;
+    delete [] _horizontalKernings;
     
     if (_fontAtlas)
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
@@ -226,6 +226,7 @@ bool Label::init()
             _reusedLetter = Sprite::createWithTexture(&_fontAtlas->getTexture(0));
             _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
             _reusedLetter->retain();
+            _reusedLetter->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
         }
        ret = SpriteBatchNode::initWithTexture(&_fontAtlas->getTexture(0), 30);
     }
@@ -474,18 +475,18 @@ void Label::alignText()
     }
 }
 
-bool Label::computeAdvancesForString(unsigned short int *stringToRender)
+bool Label::computeHorizontalKernings(unsigned short int *stringToRender)
 {
-    if (_advances)
+    if (_horizontalKernings)
     {
-        delete [] _advances;
-        _advances = 0;
+        delete [] _horizontalKernings;
+        _horizontalKernings = 0;
     }
     
     int letterCount = 0;
-    _advances = _fontAtlas->getFont()->getAdvancesForTextUTF16(stringToRender, letterCount);
+    _horizontalKernings = _fontAtlas->getFont()->getHorizontalKerningForTextUTF16(stringToRender, letterCount);
     
-    if(!_advances)
+    if(!_horizontalKernings)
         return false;
     else
         return true;
@@ -519,7 +520,7 @@ bool Label::setCurrentString(unsigned short *stringToSet)
     //
     _currentUTF16String  = stringToSet;
     // compute the advances
-    return computeAdvancesForString(stringToSet);
+    return computeHorizontalKernings(stringToSet);
 }
 
 void Label::resetCurrentString()
@@ -558,10 +559,8 @@ Sprite * Label::updateSpriteWithLetterDefinition(Sprite *spriteToUpdate, const F
         SpriteFrame *frame = SpriteFrame::createWithTexture(theTexture, uvRect);
         if (frame)
         {
-            spriteToUpdate->setBatchNode(this); 
-            spriteToUpdate->setTexture(theTexture);
-            spriteToUpdate->setSpriteFrame(frame);
-            spriteToUpdate->setAnchorPoint(Point(theDefinition.anchorX, theDefinition.anchorY));                                        
+            spriteToUpdate->setBatchNode(this);
+            spriteToUpdate->setSpriteFrame(frame);                                       
         }     
         
         return spriteToUpdate;
@@ -692,8 +691,8 @@ Sprite * Label::getLetter(int ID)
 
             sp = Sprite::createWithTexture(&_fontAtlas->getTexture(_lettersInfo[ID].def.textureID),uvRect);
             sp->setBatchNode(this);
-            sp->setAnchorPoint(Point(_lettersInfo[ID].def.anchorX, _lettersInfo[ID].def.anchorY));                    
-            sp->setPosition(_lettersInfo[ID].position);
+            sp->setAnchorPoint(Point::ANCHOR_MIDDLE);
+            sp->setPosition(Point(_lettersInfo[ID].position.x+uvRect.size.width/2,_lettersInfo[ID].position.y-uvRect.size.height/2));
             sp->setOpacity(_realOpacity);
          
             this->addSpriteWithoutQuad(sp, ID, ID);
@@ -704,67 +703,9 @@ Sprite * Label::getLetter(int ID)
     return nullptr;
 }
 
-float Label::getLetterPosXLeft( int index ) const
-{
-    return _lettersInfo[index].position.x * _scaleX - (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
-}
-
-float Label::getLetterPosXRight( int index ) const
-{
-    return _lettersInfo[index].position.x * _scaleX + (_lettersInfo[index].contentSize.width * _scaleX * _lettersInfo[index].def.anchorX);
-}
-
 int Label::getCommonLineHeight() const
 {
     return _commonLineHeight;
-}
-
-int Label::getKerningForCharsPair(unsigned short first, unsigned short second) const
-{
-    return 0;
-}
-
-int Label::getXOffsetForChar(unsigned short c) const
-{
-    FontLetterDefinition tempDefinition;
-    bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-    if (!validDefinition)
-        return -1;
-    
-    return (tempDefinition.offsetX);
-}
-
-int Label::getYOffsetForChar(unsigned short c) const
-{
-    FontLetterDefinition tempDefinition;
-    bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-    if (!validDefinition)
-        return -1;
-    
-    return (tempDefinition.offsetY);
-}
-
-int Label::getAdvanceForChar(unsigned short c, int hintPositionInString) const
-{
-    if (_advances)
-    {
-        // not that advance contains the X offset already
-        FontLetterDefinition tempDefinition;
-        bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-        if (!validDefinition)
-            return -1;
-        
-        return (_advances[hintPositionInString].width);
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-Rect Label::getRectForChar(unsigned short c) const
-{
-    return _fontAtlas->getFont()->getRectForChar(c);
 }
 
 // string related stuff
@@ -772,7 +713,9 @@ int Label::getStringNumLines() const
 {
     int quantityOfLines = 1;
     
-    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
+    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
+    if (stringLen < 1)
+        return stringLen;
     if (stringLen == 0)
         return (-1);
     
@@ -794,17 +737,12 @@ int Label::getStringLenght() const
     return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
 }
 
-unsigned short Label::getCharAtStringPosition(int position) const
-{
-    return _currentUTF16String[position];
-}
-
-unsigned short * Label::getUTF8String() const
+unsigned short * Label::getUTF16String() const
 {
     return _currentUTF16String;
 }
 
-void Label::assignNewUTF8String(unsigned short *newString)
+void Label::assignNewUTF16String(unsigned short *newString)
 {
     setCurrentString(newString);
 }
@@ -824,17 +762,6 @@ bool Label::breakLineWithoutSpace() const
 {
     return _lineBreakWithoutSpaces;
 }
-
-Size Label::getLabelContentSize() const
-{
-    return getContentSize();
-}
-
-void Label::setLabelContentSize(const Size &newSize)
-{
-    setContentSize(newSize);
-}
-
 
 // RGBA protocol
 
