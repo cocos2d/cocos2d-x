@@ -55,7 +55,7 @@ void AutoreleasePool::addObject(Object* object)
 
 void AutoreleasePool::clear()
 {
-    for (const auto obj : _managedObjectArray)
+    for (const auto &obj : _managedObjectArray)
     {
         obj->release();
     }
