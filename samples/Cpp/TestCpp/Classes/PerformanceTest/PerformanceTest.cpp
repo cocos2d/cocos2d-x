@@ -9,7 +9,7 @@
 #include "PerformanceLabelTest.h"
 #include "PerformanceRendererTest.h"
 #include "PerformanceContainerTest.h"
-#include "PerformanceEventDispatcher.h"
+#include "PerformanceEventDispatcherTest.h"
 
 enum
 {
