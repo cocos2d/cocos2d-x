@@ -703,74 +703,9 @@ Sprite * Label::getLetter(int ID)
     return nullptr;
 }
 
-float Label::getLetterPosXLeft( int index ) const
-{
-    return _lettersInfo[index].position.x * _scaleX;
-}
-
-float Label::getLetterPosXRight( int index ) const
-{
-    return (_lettersInfo[index].position.x + _lettersInfo[index].contentSize.width) * _scaleX;
-}
-
 int Label::getCommonLineHeight() const
 {
     return _commonLineHeight;
-}
-
-int Label::getKerningInString(int hintPositionInString) const
-{
-    if (_horizontalKernings)
-    {
-        return (_horizontalKernings[hintPositionInString]);
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-int Label::getXOffsetForChar(unsigned short c) const
-{
-    FontLetterDefinition tempDefinition;
-    bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-    if (!validDefinition)
-        return -1;
-    
-    return (tempDefinition.offsetX);
-}
-
-int Label::getYOffsetForChar(unsigned short c) const
-{
-    FontLetterDefinition tempDefinition;
-    bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-    if (!validDefinition)
-        return -1;
-    
-    return (tempDefinition.offsetY);
-}
-
-int Label::getAdvanceForChar(unsigned short c, int hintPositionInString) const
-{
-    if (_horizontalKernings)
-    {
-        // not that advance contains the X offset already
-        FontLetterDefinition tempDefinition;
-        bool validDefinition = _fontAtlas->getLetterDefinitionForChar(c, tempDefinition);
-        if (!validDefinition)
-            return -1;
-        
-        return tempDefinition.xAdvance;
-    }
-    else
-    {
-        return -1;
-    }
-}
-
-Rect Label::getRectForChar(unsigned short c) const
-{
-    return _fontAtlas->getFont()->getRectForChar(c);
 }
 
 // string related stuff
@@ -778,7 +713,9 @@ int Label::getStringNumLines() const
 {
     int quantityOfLines = 1;
     
-    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
+    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
+    if (stringLen < 1)
+        return stringLen;
     if (stringLen == 0)
         return (-1);
     
@@ -800,17 +737,12 @@ int Label::getStringLenght() const
     return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
 }
 
-unsigned short Label::getCharAtStringPosition(int position) const
-{
-    return _currentUTF16String[position];
-}
-
-unsigned short * Label::getUTF8String() const
+unsigned short * Label::getUTF16String() const
 {
     return _currentUTF16String;
 }
 
-void Label::assignNewUTF8String(unsigned short *newString)
+void Label::assignNewUTF16String(unsigned short *newString)
 {
     setCurrentString(newString);
 }
@@ -830,17 +762,6 @@ bool Label::breakLineWithoutSpace() const
 {
     return _lineBreakWithoutSpaces;
 }
-
-Size Label::getLabelContentSize() const
-{
-    return getContentSize();
-}
-
-void Label::setLabelContentSize(const Size &newSize)
-{
-    setContentSize(newSize);
-}
-
 
 // RGBA protocol
 
