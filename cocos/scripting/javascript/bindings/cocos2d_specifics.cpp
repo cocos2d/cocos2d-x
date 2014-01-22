@@ -4004,7 +4004,7 @@ cocos2d::SAXParser* __JSSAXDelegator::getParser() {
     return &_parser;
 }
 
-std::string __JSSAXDelegator::parse(std::string path) {
+std::string __JSSAXDelegator::parse(const std::string& path) {
     _result.clear();
     
     SAXParser parser;
