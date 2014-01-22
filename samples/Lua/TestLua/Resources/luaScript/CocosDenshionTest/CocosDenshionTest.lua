@@ -33,7 +33,7 @@ local function CocosDenshionTest()
     }
 
     local function menuCallback(tag, pMenuItem)
-        local nIdx = pMenuItem:getZOrder() - 10000
+        local nIdx = pMenuItem:getLocalZOrder() - 10000
         -- play background music
         if nIdx ==  0 then
             AudioEngine.playMusic(MUSIC_FILE, true)
