@@ -21,7 +21,7 @@ set(PLATFORM_SRC
   platform/linux/CCFileUtilsLinux.cpp
   platform/linux/CCCommon.cpp
   platform/linux/CCApplication.cpp
-  platform/linux/CCEGLView.cpp
+  platform/desktop/CCEGLView.cpp
   platform/linux/CCImage.cpp
   platform/linux/CCDevice.cpp
 )
