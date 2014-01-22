@@ -209,7 +209,7 @@ bool LabelTextFormatter::alignText(Label *theLabel)
             LetterInfo* info = &leterInfo->at( index );
             if(info->def.validDefinition == false)
                 continue;
-            lineWidth = info->position.x + info->contentSize.width /2.0f;
+            lineWidth = info->position.x + info->contentSize.width;
             
             float shift = 0;
             switch (theLabel->getTextAlignment())
