@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "CCEGLView.h"
 
 USING_NS_CC;
 
