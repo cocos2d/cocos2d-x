@@ -104,7 +104,6 @@
 		1A0DB7321823827C0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7301823827C0025743D /* CCGL.h */; };
 		1A0DB7331823827C0025743D /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* EAGLView.h */; };
 		1A0DB7381823828F0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7351823828F0025743D /* CCGL.h */; };
-		1A0DB7391823828F0025743D /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7361823828F0025743D /* EAGLView.h */; };
 		1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
 		1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
 		1A2C7876181A11EC004E5527 /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */; };
@@ -499,8 +498,6 @@
 		1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */; };
 		1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570195180BCB590088DEC7 /* CCLabelBMFont.h */; };
 		1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570195180BCB590088DEC7 /* CCLabelBMFont.h */; };
-		1A5701C5180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570196180BCB590088DEC7 /* CCLabelTextFormatProtocol.h */; };
-		1A5701C6180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570196180BCB590088DEC7 /* CCLabelTextFormatProtocol.h */; };
 		1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */; };
 		1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */; };
 		1A5701C9180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */; };
@@ -1662,12 +1659,9 @@
 		46A170521807CC1C005B8026 /* CCDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACB1807B038005B8026 /* CCDevice.cpp */; };
 		46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16ACC1807B038005B8026 /* CCDirectorCaller.h */; };
 		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
-		46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */; };
-		46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */; };
 		46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD31807B038005B8026 /* CCImage.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
-		46A170601807CC1C005B8026 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD91807B038005B8026 /* EAGLView.mm */; };
 		46A170A91807CE9D005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
 		46A170AA1807CE9E005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
 		46A170AB1807CEA3005B8026 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708B1807CE87005B8026 /* mat4stack.h */; };
@@ -1904,9 +1898,9 @@
 		A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
 		A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
+		A04583F2189053B500E32FE8 /* CCEGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A04583F0189053B500E32FE8 /* CCEGLView.cpp */; };
+		A04583F3189053B500E32FE8 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = A04583F1189053B500E32FE8 /* CCEGLView.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
-		A0CA06D2188F4DDD00CB5504 /* CCEGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0CA06D0188F4DDD00CB5504 /* CCEGLView.cpp */; };
-		A0CA06D3188F4DDD00CB5504 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0CA06D1188F4DDD00CB5504 /* CCEGLView.h */; };
 		A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
 		A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
 		B362C3AE1872BAB700F0BDF4 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */; };
@@ -2100,7 +2094,6 @@
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1A0DB7311823827C0025743D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		1A0DB7361823828F0025743D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
 		1A2C785F181A11EC004E5527 /* jsb_cocos2dx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_auto.hpp; sourceTree = "<group>"; };
@@ -2300,7 +2293,6 @@
 		1A570193180BCB590088DEC7 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
 		1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFont.cpp; sourceTree = "<group>"; };
 		1A570195180BCB590088DEC7 /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
-		1A570196180BCB590088DEC7 /* CCLabelTextFormatProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatProtocol.h; sourceTree = "<group>"; };
 		1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTextFormatter.cpp; sourceTree = "<group>"; };
 		1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatter.h; sourceTree = "<group>"; };
 		1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTF.cpp; sourceTree = "<group>"; };
@@ -2985,12 +2977,9 @@
 		46A16ACB1807B038005B8026 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
 		46A16ACC1807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
 		46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
-		46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcherMac.h; sourceTree = "<group>"; };
-		46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcherMac.mm; sourceTree = "<group>"; };
 		46A16AD31807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AD41807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AD51807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		46A16AD91807B038005B8026 /* EAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		46A16E1B1807C948005B8026 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos/2d/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		46A16E1C1807C948005B8026 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../cocos/2d/platform/third_party/ios/libraries/libfreetype.a; sourceTree = "<group>"; };
 		46A16E1D1807C948005B8026 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../cocos/2d/platform/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
@@ -3078,14 +3067,14 @@
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F31FD1781479B006731B9 /* libjsbindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A04583F0189053B500E32FE8 /* CCEGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLView.cpp; sourceTree = "<group>"; };
+		A04583F1189053B500E32FE8 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F9E1783876B0073F6A7 /* libbox2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbox2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4FB4178387730073F6A7 /* libCocosDenshion iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A5030178387750073F6A7 /* libjsbindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0CA06D0188F4DDD00CB5504 /* CCEGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLView.cpp; sourceTree = "<group>"; };
-		A0CA06D1188F4DDD00CB5504 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEGLView.h; sourceTree = "<group>"; };
 		A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommandPool.h; sourceTree = "<group>"; };
 		B362C3A21872B37200F0BDF4 /* lua_cocos2dx_physics_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics_auto.cpp; sourceTree = "<group>"; };
 		B362C3A31872B37200F0BDF4 /* lua_cocos2dx_physics_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_physics_auto.hpp; sourceTree = "<group>"; };
@@ -3690,7 +3679,6 @@
 				1A570193180BCB590088DEC7 /* CCLabelAtlas.h */,
 				1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */,
 				1A570195180BCB590088DEC7 /* CCLabelBMFont.h */,
-				1A570196180BCB590088DEC7 /* CCLabelTextFormatProtocol.h */,
 				1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */,
 				1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */,
 				1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */,
@@ -5142,10 +5130,10 @@
 		46A16A5A1807B038005B8026 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				A0CA06CF188F4DDD00CB5504 /* desktop */,
-				46A16A8E1807B038005B8026 /* apple */,
 				46A16AA31807B038005B8026 /* ios */,
 				46A16AC71807B038005B8026 /* mac */,
+				A04583EF189053B500E32FE8 /* desktop */,
+				46A16A8E1807B038005B8026 /* apple */,
 				46A16A941807B038005B8026 /* CCApplicationProtocol.h */,
 				46A16A951807B038005B8026 /* CCCommon.h */,
 				46A16A961807B038005B8026 /* CCDevice.h */,
@@ -5218,14 +5206,10 @@
 				46A16ACB1807B038005B8026 /* CCDevice.cpp */,
 				46A16ACC1807B038005B8026 /* CCDirectorCaller.h */,
 				46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */,
-				46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */,
-				46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */,
 				1A0DB7351823828F0025743D /* CCGL.h */,
 				46A16AD31807B038005B8026 /* CCImage.mm */,
 				46A16AD41807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AD51807B038005B8026 /* CCStdC.h */,
-				1A0DB7361823828F0025743D /* EAGLView.h */,
-				46A16AD91807B038005B8026 /* EAGLView.mm */,
 			);
 			path = mac;
 			sourceTree = "<group>";
@@ -5378,11 +5362,11 @@
 			path = renderer;
 			sourceTree = "<group>";
 		};
-		A0CA06CF188F4DDD00CB5504 /* desktop */ = {
+		A04583EF189053B500E32FE8 /* desktop */ = {
 			isa = PBXGroup;
 			children = (
-				A0CA06D0188F4DDD00CB5504 /* CCEGLView.cpp */,
-				A0CA06D1188F4DDD00CB5504 /* CCEGLView.h */,
+				A04583F0189053B500E32FE8 /* CCEGLView.cpp */,
+				A04583F1189053B500E32FE8 /* CCEGLView.h */,
 			);
 			path = desktop;
 			sourceTree = "<group>";
@@ -5431,7 +5415,6 @@
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				1AA2063F1848437900053418 /* CCMap.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
-				46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */,
@@ -5456,7 +5439,6 @@
 				46A170AF1807CEA3005B8026 /* mat4.h in Headers */,
 				46A170AB1807CEA3005B8026 /* mat4stack.h in Headers */,
 				46A170E91807CECA005B8026 /* CCPhysicsContact.h in Headers */,
-				A0CA06D3188F4DDD00CB5504 /* CCEGLView.h in Headers */,
 				46A170B41807CEA3005B8026 /* utility.h in Headers */,
 				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
@@ -5507,6 +5489,7 @@
 				1A5700F5180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
 				1A5700FB180BC6060088DEC7 /* CCSet.h in Headers */,
+				A04583F3189053B500E32FE8 /* CCEGLView.h in Headers */,
 				1A5700FF180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570103180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570107180BC6060088DEC7 /* s3tc.h in Headers */,
@@ -5518,7 +5501,6 @@
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
 				1A570144180BC9460088DEC7 /* CCEventCustom.h in Headers */,
-				1A0DB7391823828F0025743D /* EAGLView.h in Headers */,
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				1A57014C180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
 				1A570150180BC9460088DEC7 /* CCEventListener.h in Headers */,
@@ -5536,7 +5518,6 @@
 				1A5701BB180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				1A5701BF180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
 				1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
-				1A5701C5180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */,
 				1A5701C9180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				1A5701CD180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */,
@@ -6116,7 +6097,6 @@
 				1A5701BC180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
 				1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
-				1A5701C6180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
@@ -6810,7 +6790,6 @@
 				46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */,
 				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
 				460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */,
-				46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */,
 				46A170CA1807CEBB005B8026 /* plane.c in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
@@ -6827,7 +6806,6 @@
 				46A170D01807CEBB005B8026 /* vec4.c in Sources */,
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
 				46A170CE1807CEBB005B8026 /* vec2.c in Sources */,
-				46A170601807CC1C005B8026 /* EAGLView.mm in Sources */,
 				46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */,
 				460E44F01807DED6000CDD6D /* matrix.c in Sources */,
 				06CAAACB186AD7F20012A414 /* TriggerMng.cpp in Sources */,
@@ -6835,6 +6813,7 @@
 				46A1701B1807CBFC005B8026 /* CCEGLViewProtocol.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
+				A04583F2189053B500E32FE8 /* CCEGLView.cpp in Sources */,
 				46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */,
 				46A170CF1807CEBB005B8026 /* vec3.c in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
@@ -7013,7 +6992,6 @@
 				1AAF584F180E40B9000584C8 /* LocalStorage.cpp in Sources */,
 				1AAF5853180E40B9000584C8 /* LocalStorageAndroid.cpp in Sources */,
 				5069133E185016C1009BBDD7 /* CCConsole.cpp in Sources */,
-				A0CA06D2188F4DDD00CB5504 /* CCEGLView.cpp in Sources */,
 				1A9DCA15180E6955007A3AD4 /* CCConfiguration.cpp in Sources */,
 				1A9DCA1D180E6955007A3AD4 /* CCDirector.cpp in Sources */,
 				1A9DCA23180E6955007A3AD4 /* ccFPSImages.c in Sources */,
@@ -7963,7 +7941,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/2d/platform/desktop";
 			};
 			name = Debug;
 		};
@@ -7989,7 +7967,7 @@
 					"\"$(SRCROOT)/../external/freetype2/prebuilt/mac\"",
 					"\"$(SRCROOT)/../external/websockets/prebuilt/mac\"",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../cocos/2d/platform/mac $(SRCROOT)/../cocos/2d/platform/desktop";
 			};
 			name = Release;
 		};
