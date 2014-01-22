@@ -206,7 +206,7 @@ Director::~Director(void)
 }
 
 void Director::setDefaultValues(void)
-{
+{	
 	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
