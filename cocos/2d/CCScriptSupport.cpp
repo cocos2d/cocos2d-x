@@ -155,4 +155,9 @@ void ScriptEngineManager::destroyInstance()
     }
 }
 
+bool ScriptEngineManager::isInstance()
+{
+	return s_pSharedScriptEngineManager != nullptr;
+}	
+
 NS_CC_END

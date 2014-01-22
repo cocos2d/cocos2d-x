@@ -49,11 +49,14 @@ Object::~Object()
     }
     else
     {
-        ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-        if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
-        {
-            pEngine->removeScriptObjectByObject(this);
-        }
+		if (ScriptEngineManager::isInstance())
+		{
+			ScriptEngineProtocol* pEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+			if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
+			{
+				pEngine->removeScriptObjectByObject(this);
+			}
+			}
     }
 }
 

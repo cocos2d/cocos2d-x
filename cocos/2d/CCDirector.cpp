@@ -202,7 +202,7 @@ Director::~Director(void)
 }
 
 void Director::setDefaultValues(void)
-{
+{	
 	Configuration *conf = Configuration::getInstance();
 
 	// default FPS
@@ -759,7 +759,7 @@ void Director::purgeDirector()
     SpriteFrameCache::destroyInstance();
     ShaderCache::destroyInstance();
     FileUtils::destroyInstance();
-    Configuration::destroyInstance();
+    Configuration::destroyInstance();	
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

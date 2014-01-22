@@ -43,6 +43,11 @@ GroupCommandManager *GroupCommandManager::getInstance()
     return s_instance;
 }
 
+void GroupCommandManager::destroyInstance()
+{
+	CC_SAFE_DELETE(s_instance);
+}
+
 GroupCommandManager::GroupCommandManager()
 {
 
@@ -50,7 +55,7 @@ GroupCommandManager::GroupCommandManager()
 
 GroupCommandManager::~GroupCommandManager()
 {
-    CC_SAFE_RELEASE_NULL(s_instance);
+   	_groupMapping.clear();
 }
 
 bool GroupCommandManager::init()

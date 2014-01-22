@@ -354,13 +354,13 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     {
         _asyncStructQueue = new std::queue<AsyncStruct *>();
         _dataQueue = new std::queue<DataInfo *>();
-
+		
 		// create a new thread to load images
 		_loadingThread = new std::thread(&DataReaderHelper::loadData, this);
 
         need_quit = false;
     }
-
+	
     if (0 == _asyncRefCount)
     {
 		Director::getInstance()->getScheduler()->scheduleSelector(schedule_selector(DataReaderHelper::addDataAsyncCallBack), this, 0, false);
@@ -460,7 +460,7 @@ void DataReaderHelper::addDataAsyncCallBack(float dt)
         }
 
 
-        delete pAsyncStruct;
+        delete pAsyncStruct;		
         delete pDataInfo;
 
         if (0 == _asyncRefCount)

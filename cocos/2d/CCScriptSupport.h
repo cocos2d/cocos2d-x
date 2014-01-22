@@ -487,6 +487,8 @@ public:
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
+	
+	static bool isInstance();
     
 private:
     ScriptEngineManager(void)
