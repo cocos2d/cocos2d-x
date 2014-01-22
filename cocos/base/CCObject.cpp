@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 Object::Object()
 : _luaID(0)
-, _reference(1) // when the object is created, the reference count of it is 1
+, _referenceCount(1) // when the object is created, the reference count of it is 1
 {
     static unsigned int uObjectCount = 0;
 
@@ -65,12 +65,12 @@ Object* Object::autorelease()
 
 bool Object::isSingleReference() const
 {
-    return _reference == 1;
+    return _referenceCount == 1;
 }
 
-unsigned int Object::retainCount() const
+unsigned int Object::getReferenceCount() const
 {
-    return _reference;
+    return _referenceCount;
 }
 
 bool Object::isEqual(const Object *object)
