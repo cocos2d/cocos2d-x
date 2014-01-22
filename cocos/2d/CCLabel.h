@@ -123,7 +123,7 @@ public:
     
     // font related stuff
     virtual int getCommonLineHeight() const override;
-    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const override;
+    virtual int getKerningInString(int hintPositionInString) const override;
     virtual int getXOffsetForChar(unsigned short c) const override;
     virtual int getYOffsetForChar(unsigned short c) const override;
     virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
@@ -170,7 +170,7 @@ private:
     
     void alignText();   
     
-    bool computeAdvancesForString(unsigned short int *stringToRender);
+    bool computeHorizontalKernings(unsigned short int *stringToRender);
     bool setCurrentString(unsigned short *stringToSet);
     bool setOriginalString(unsigned short *stringToSet);
     void resetCurrentString();
@@ -189,7 +189,7 @@ private:
     TextHAlignment _alignment;
     unsigned short int * _currentUTF16String;
     unsigned short int * _originalUTF16String;
-    Size * _advances;
+    int * _horizontalKernings;
     FontAtlas * _fontAtlas;
     bool _isOpacityModifyRGB;
 
