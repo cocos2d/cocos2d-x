@@ -48,6 +48,25 @@ public:
     virtual std::string title() const override;
 };
 
+class Issue2572 : public ParallaxDemo
+{
+protected:
+    ParallaxNode* _paraNode;
+    float _moveTimer;
+    float _addTimer;
+    Vector<Sprite*> _childList;
+    int _preListSize;
+    int _printCount;
+    
+    virtual void update(float dt) override;
+    
+public:
+    Issue2572();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class ParallaxTestScene : public TestScene
 {
 public:

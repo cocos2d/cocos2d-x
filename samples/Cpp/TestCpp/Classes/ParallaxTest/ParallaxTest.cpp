@@ -150,13 +150,92 @@ std::string Parallax2::title() const
 
 //------------------------------------------------------------------
 //
+// Issue2572
+//
+//------------------------------------------------------------------
+Issue2572::Issue2572()
+: _preListSize(0)
+, _printCount(0)
+, _moveTimer(0.0f)
+, _addTimer(0.0f)
+{
+    // create a parallax node, a parent node
+    _paraNode = ParallaxNode::create();
+    addChild(_paraNode, 0, kTagNode);
+
+    this->scheduleUpdate();
+}
+
+const static float _addChildStep = 1.0f;
+const static float _wholeMoveTime = 3.0f;
+const static Point _wholeMoveSize = Point(-300, 0);
+void Issue2572::update(float dt)
+{
+    _addTimer += dt;
+    _moveTimer += dt;
+    if (_moveTimer >= _wholeMoveTime) {
+        this->unscheduleUpdate();
+        return;
+    }
+
+    _paraNode->setPosition(_paraNode->getPosition() + _wholeMoveSize * dt / _wholeMoveTime);
+    
+    if (_addTimer >= _addChildStep) {
+        _addTimer = 0.0f;
+        
+        auto child = Sprite::create("Images/Icon.png");
+        Size viewSize = Director::getInstance()->getVisibleSize();
+        Point offset = Point(viewSize.width / 2, viewSize.height/2);
+        _paraNode->addChild(child, 1, Point( 1, 0 ), offset );
+        
+        _childList.pushBack(child);
+    }
+
+    // After a child added, output the position of the children 3 times.
+    // Bug : The first output is much different with the second one & the third one.
+    if (_childList.size() != _preListSize) {
+        switch (_printCount) {
+            case 0:
+            case 1:
+            case 2:
+                log( "--child count-- %zd", _childList.size());
+                for (auto obj : _childList)
+                {
+                    Sprite* obstacle = dynamic_cast<Sprite*>( obj );
+                    log("child size : (%.2f, %.2f)", obstacle->getPositionX(), obstacle->getPositionY());
+                }
+                log("-------------------");
+                _printCount++;
+                break;
+            case 3:
+                _preListSize = _childList.size();
+                _printCount = 0;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+std::string Issue2572::title() const
+{
+    return "Issue 2572";
+}
+
+std::string Issue2572::subtitle() const
+{
+    return "Look at the output in console";
+}
+
+//------------------------------------------------------------------
+//
 // ParallaxDemo
 //
 //------------------------------------------------------------------
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    2
+#define MAX_LAYER    3
 
 Layer* createParallaxTestLayer(int nIndex)
 {
@@ -164,6 +243,7 @@ Layer* createParallaxTestLayer(int nIndex)
     {
         case 0: return new Parallax1();
         case 1: return new Parallax2();
+        case 2: return new Issue2572();
     }
 
     return NULL;
