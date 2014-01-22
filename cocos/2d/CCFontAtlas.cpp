@@ -133,7 +133,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
             tempDef.anchorX = 0.0f;
             tempDef.anchorY = 1.0f;
 
-            if (!fontTTf->getBBOXFotChar(utf16String[i], tempRect))
+            if (!fontTTf->getBBOXFotChar(utf16String[i], tempRect,tempDef.xAdvance))
             {
                 tempDef.validDefinition = false;
                 tempDef.letteCharUTF16   = utf16String[i];
@@ -145,6 +145,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.offsetX          = 0;
                 tempDef.offsetY          = 0;
                 tempDef.textureID        = 0;
+                tempDef.xAdvance         = 0;
             }
             else
             {
@@ -155,7 +156,6 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.offsetX          = tempRect.origin.x;
                 tempDef.offsetY          = tempRect.origin.y;
                 tempDef.commonLineHeight = _currentPageLineHeight;
-                        
             } 
             fontDefs[utf16String[i]] = tempDef;
         }       
