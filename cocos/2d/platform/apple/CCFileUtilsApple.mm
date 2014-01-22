@@ -289,6 +289,15 @@ bool FileUtilsApple::isFileExist(const std::string& filePath) const
     return ret;
 }
 
+std::string FileUtilsApple::getResourcePath() const
+{
+    NSString *bundlePath = [[NSBundle mainBundle] resourcePath];
+    if (bundlePath != nil) {
+        return [bundlePath UTF8String];
+    }
+    return "";
+}
+
 std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
 {
     if (directory[0] != '/')

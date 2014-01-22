@@ -283,6 +283,12 @@ public:
     virtual std::string getWritablePath() const = 0;
     
     /**
+     *  Gets the Resource path.
+     *  @return  The path that can be write/read a file in
+     */
+    virtual std::string getResourcePath() const = 0;
+    
+    /**
      *  Checks whether a file exists.
      *
      *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.
