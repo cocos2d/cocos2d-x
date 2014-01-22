@@ -778,12 +778,12 @@ int Label::getStringNumLines() const
 {
     int quantityOfLines = 1;
     
-    unsigned int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
-    if (stringLen == 0)
-        return (-1);
+    int stringLen = _currentUTF16String ? cc_wcslen(_currentUTF16String) : -1;
+    if (stringLen == -1)
+        return -1;
     
     // count number of lines
-    for (unsigned int i = 0; i < stringLen - 1; ++i)
+    for (int i = 0; i < stringLen - 1; ++i)
     {
         unsigned short c = _currentUTF16String[i];
         if (c == '\n')
