@@ -73,6 +73,7 @@ struct {
 	{ "ParticleTest", [](){return new ParticleTestScene(); } },
 	{ "PerformanceTest", []() { return new PerformanceTestScene(); } },
 	{ "PhysicsTest", []() { return new PhysicsTestScene(); } },
+    { "ReleasePoolTest", [](){ return new ReleasePoolTestScene(); } },
 	{ "RenderTextureTest", [](){return new RenderTextureScene(); } },
 	{ "RotateWorldTest", [](){return new RotateWorldTestScene(); } },
 	{ "SceneTest", [](){return new SceneTestScene();} },
