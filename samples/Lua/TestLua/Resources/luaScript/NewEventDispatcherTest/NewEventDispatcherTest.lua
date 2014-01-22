@@ -210,9 +210,9 @@ function TouchableSpriteTest:onEnter()
         print("sprite onTouchesEnded..")
         target:setOpacity(255)
         if target == sprite2 then
-            sprite1:setZOrder(100)
+            sprite1:setLocalZOrder(100)
         elseif target == sprite1 then
-            sprite1:setZOrder(0)
+            sprite1:setLocalZOrder(0)
         end
     end
 

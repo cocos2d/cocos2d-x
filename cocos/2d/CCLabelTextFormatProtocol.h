@@ -61,7 +61,7 @@ public:
     
     // font related stuff
     virtual int getCommonLineHeight()  const = 0;
-    virtual int getKerningForCharsPair(unsigned short first, unsigned short second) const = 0;
+    virtual int getKerningInString(int hintPositionInString) const = 0;
     virtual int getXOffsetForChar(unsigned short c) const = 0;
     virtual int getYOffsetForChar(unsigned short c) const = 0;
     virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const = 0;

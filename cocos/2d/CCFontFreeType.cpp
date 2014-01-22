@@ -143,7 +143,7 @@ FontAtlas * FontFreeType::createFontAtlas()
     return atlas;
 }
 
-bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
+bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect, int &xAdvance) const
 {
     if (!_fontRef)
         return false;
@@ -164,10 +164,12 @@ bool FontFreeType::getBBOXFotChar(unsigned short theChar, Rect &outRect) const
     outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
     outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
     
+    xAdvance = (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
+
     return true;
 }
 
-Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontFreeType::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
     if (!text)
         return 0;
@@ -177,62 +179,19 @@ Size * FontFreeType::getAdvancesForTextUTF16(unsigned short *text, int &outNumLe
     if (!outNumLetters)
         return 0;
     
-    Size *sizes = new Size[outNumLetters];
+    int *sizes = new int[outNumLetters];
     if (!sizes)
         return 0;
     
     for (int c = 0; c < outNumLetters; ++c)
     {
-        int advance = 0;
-        int kerning = 0;
-        
-        advance = getAdvanceForChar(text[c]);
-        
         if (c < (outNumLetters-1))
-            kerning = getHorizontalKerningForChars(text[c], text[c+1]);
-        
-        sizes[c].width = (advance + kerning);
+            sizes[c] = getHorizontalKerningForChars(text[c], text[c+1]);
+        else
+            sizes[c] = 0;
     }
     
     return sizes;
-}
-
-int FontFreeType::getAdvanceForChar(unsigned short theChar) const
-{
-    if (!_fontRef)
-        return 0;
-    
-    // get the ID to the char we need
-    int glyph_index = FT_Get_Char_Index(_fontRef, theChar);
-    
-    if (!glyph_index)
-        return 0;
-    
-    // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyph_index, FT_LOAD_DEFAULT))
-        return 0;
-    
-    // get to the advance for this glyph
-    return (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
-}
-
-int FontFreeType::getBearingXForChar(unsigned short theChar) const
-{
-    
-    if (!_fontRef)
-        return 0;
-    
-    // get the ID to the char we need
-    int glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-    
-    if (!glyphIndex)
-        return 0;
-    
-    // load glyph infos
-    if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_DEFAULT))
-        return 0;
-    
-    return (static_cast<int>(_fontRef->glyph->metrics.horiBearingX >>6));
 }
 
 int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const

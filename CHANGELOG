@@ -10,11 +10,14 @@ cocos2d-x-3.0beta2 ?.? ?
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
      [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
      
+     [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since we only need binary(libclang.so/dll).
+     [FIX]          Removes unused files for MAC platform after using glfw3 to create opengl context.
      [FIX]          Wrong arithmetic of child's position in ParallaxNode::addChild()
      [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.
      [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
      [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
      [FIX]          Label: Crash when using unknown characters.
+     [FIX]          Label: Missing line breaks and wrong alignment.
      [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
      [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.

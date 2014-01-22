@@ -50,13 +50,13 @@ public:
     bool     renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize); 
 
     virtual FontAtlas   * createFontAtlas() override;
-    virtual Size        * getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual int         * getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     
     unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const override;
     virtual int           getFontMaxHeight() const override;
     virtual int           getLetterPadding() const override;
     
-    bool getBBOXFotChar(unsigned short theChar, Rect &outRect) const; 
+    bool getBBOXFotChar(unsigned short theChar, Rect &outRect,int &xAdvance) const; 
 
 protected:
     
@@ -69,8 +69,6 @@ private:
     bool initFreeType();
     FT_Library getFTLibrary();
     
-    int  getAdvanceForChar(unsigned short theChar) const;
-    int  getBearingXForChar(unsigned short theChar) const;
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     
     static FT_Library _FTlibrary;

@@ -43,19 +43,15 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform);
 
     void execute();
 
 protected:
+    //Material
     int32_t _materialID;
-
-    //Maternal
     GLuint _textureID;
-
     GLProgram* _shader;
-//    GLuint _shaderID;
-
     BlendFunc _blendType;
 
     TextureAtlas *_textureAtlas;

@@ -27,7 +27,6 @@ THE SOFTWARE.
 
 #include <unordered_map>
 
-#include "EAGLView.h"
 #include "CCDirector.h"
 #include "CCSet.h"
 #include "CCTouch.h"

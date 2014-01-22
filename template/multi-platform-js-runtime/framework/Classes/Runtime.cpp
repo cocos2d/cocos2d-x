@@ -323,15 +323,11 @@ void Runtime::setSearchPath()
 	_searchPath += getPackageNameJNI();
 	FileUtils::getInstance()->addSearchPath(_searchPath.c_str());
 #endif
-
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC )
-    
-   // _searchPath = FileUtils::getInstance()->getResPath();
-#endif
    
 }
 void Runtime::updateConnect(float delta)
 {
+    FileUtils::getInstance()->purgeCachedEntries();
 	if (!FileUtils::getInstance()->isFileExist(_dotwaitFile.c_str()))
 	{
 		_scheduler->unscheduleSelector(SEL_SCHEDULE(&Runtime::updateConnect),this);
@@ -360,13 +356,12 @@ void Runtime::waitDebugConnect()
 	_dotwaitFile += "/.wait";
 #endif	
 
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC )
-    
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC || CC_TARGET_PLATFORM==CC_PLATFORM_IOS )
+    extern std::string getResourcePath();
+    _dotwaitFile = getResourcePath();
+    _dotwaitFile += "/.wait";
 #endif
     
-#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS )
-    
-#endif
     
 	if (!FileUtils::getInstance()->isFileExist(_dotwaitFile.c_str()))
 	{

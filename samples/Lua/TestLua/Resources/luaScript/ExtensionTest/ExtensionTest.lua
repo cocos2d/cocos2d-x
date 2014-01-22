@@ -1201,7 +1201,7 @@ local function ExtensionsMainLayer()
 	
 	local function menuCallback(tag, pMenuItem)
 		local scene = nil
-    	local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+    	local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
 		local ExtensionsTestScene = CreateExtensionsTestScene(nIdx)
     	if nil ~= ExtensionsTestScene then
          	cc.Director:getInstance():replaceScene(ExtensionsTestScene)

@@ -41,7 +41,7 @@ class CC_DLL Font : public Object
 public:
     virtual  FontAtlas *createFontAtlas() = 0;
 
-    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
+    virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
     virtual const char* getCurrentGlyphCollection() const;
     
     virtual int getLetterPadding() const { return 0; }

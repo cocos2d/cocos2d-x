@@ -99,7 +99,7 @@ FontCharMap::~FontCharMap()
 
 }
 
-Size * FontCharMap::getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const
+int * FontCharMap::getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const
 {
     if (!text)
         return 0;
@@ -109,14 +109,13 @@ Size * FontCharMap::getAdvancesForTextUTF16(unsigned short *text, int &outNumLet
     if (!outNumLetters)
         return 0;
     
-    Size *sizes = new Size[outNumLetters];
+    int *sizes = new int[outNumLetters];
     if (!sizes)
         return 0;
     
-    int advance = _itemWidth * CC_CONTENT_SCALE_FACTOR();
     for (int c = 0; c < outNumLetters; ++c)
     {
-        sizes[c].width = advance;
+        sizes[c] = 0;
     }
     
     return sizes;
@@ -149,10 +148,9 @@ FontAtlas * FontCharMap::createFontAtlas()
     tempDefinition.validDefinition = true;
     tempDefinition.width    = _itemWidth;
     tempDefinition.height   = _itemHeight;
+    tempDefinition.xAdvance = _itemWidth * CC_CONTENT_SCALE_FACTOR();
 
     int charId = _mapStartChar;
-    float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
-    float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
     for (int row = 0; row < itemsPerColumn; ++row)
     {
         for (int col = 0; col < itemsPerRow; ++col)
