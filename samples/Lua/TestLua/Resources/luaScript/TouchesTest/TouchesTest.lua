@@ -48,17 +48,6 @@ local function doStep(delta)
     m_ball:draw();
 end
 
-local function onTouch(event, x, y)
-
-    for _,paddle in ipairs(m_paddles) do
-        if paddle:containsTouchLocation(x,y) == true then
-            return paddle:onTouch(event, x, y)
-        end
-    end
-
-    return true
-end
-
 local function CreateTouchesLayer()
     layer = cc.Layer:create()
 
@@ -106,9 +95,6 @@ local function CreateTouchesLayer()
 
     -- schedule
     layer:scheduleUpdateWithPriorityLua(doStep, 0)
-	layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouch)
-
     return layer
 end
 
