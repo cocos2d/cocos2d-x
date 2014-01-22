@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __AUTORELEASEPOOL_H__
 
 #include <stack>
-#include <set>
+#include <vector>
 #include <string>
 #include "CCObject.h"
 
@@ -100,7 +100,7 @@ private:
      * be destructed properly by calling Object::release() even if the object
      * is in the pool.
      */
-    std::set<Object*> _managedObjectArray;
+    std::vector<Object*> _managedObjectArray;
     std::string _name;
 };
 
