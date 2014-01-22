@@ -10,7 +10,7 @@ Paddle.__index = Paddle
 local kPaddleStateGrabbed = 0
 local kPaddleStateUngrabbed = 1
 
-Paddle.m_state = kPaddleStateGrabbed
+Paddle._state = kPaddleStateGrabbed
 
 
 function Paddle:rect()
@@ -26,37 +26,45 @@ function Paddle:containsTouchLocation(x,y)
     return b
 end
 
-function Paddle:ccTouchBegan(x, y)
-    if (self.m_state ~= kPaddleStateUngrabbed) then 
-        return false
-    end
-    
-    self.m_state = kPaddleStateGrabbed;
-    return true;
-end
-
-function Paddle:ccTouchMoved(x, y)
-    self:setPosition( cc.p(x,y) );
-end
-
-function Paddle:ccTouchEnded(x, y)
-    self.m_state = kPaddleStateUngrabbed;
-end
-
-function Paddle:onTouch(eventType, x, y)
-	if eventType == "began" then
-		return self:ccTouchBegan(x,y)
-    elseif eventType == "moved" then
-        return self:ccTouchMoved(x,y)
-    elseif eventType == "ended" then
-        return self:ccTouchEnded(x, y)
-    end
-end
-
 function Paddle:paddleWithTexture(aTexture)
-    local pPaddle = Paddle.new(aTexture);
-    self.m_state = kPaddleStateUngrabbed;
-    return pPaddle;
+    local pPaddle = Paddle.new(aTexture)
+    pPaddle._state = kPaddleStateUngrabbed
+    pPaddle:registerScriptHandler(function(tag)
+    if "enter" == tag then
+        pPaddle:onEnter()
+    elseif "exit" == tag then
+    end
+end)
+    return pPaddle
 end
 
+function Paddle:onEnter()
+    local  listenner = cc.EventListenerTouchOneByOne:create()
+    listenner:setSwallowTouches(true)
+    listenner:registerScriptHandler(function(touch, event)
+            print(string.format("Paddle::onTouchBegan id = %d, x = %f, y = %f", touch:getId(), touch:getLocation().x, touch:getLocation().y))
+            if (self._state ~= kPaddleStateUngrabbed) then 
+                return false
+            end
 
+            if not self:containsTouchLocation(touch:getLocation().x,touch:getLocation().y) then
+                return false
+            end
+
+            self._state = kPaddleStateGrabbed
+            return true
+        end,cc.Handler.EVENT_TOUCH_BEGAN )
+    listenner:registerScriptHandler(function(touch, event)
+            print(string.format("Paddle::onTouchMoved id = %d, x = %f, y = %f", touch:getId(), touch:getLocation().x, touch:getLocation().y))
+            assert(self._state == kPaddleStateGrabbed, "Paddle - Unexpected state!")
+            local touchPoint = touch:getLocation()
+            local curPosX,curPosY = self:getPosition()
+            self:setPosition(cc.p(touchPoint.x,curPosY))
+        end,cc.Handler.EVENT_TOUCH_MOVED )
+    listenner:registerScriptHandler(function(touch, event)
+            assert(self._state == kPaddleStateGrabbed, "Paddle - Unexpected state!")
+            self._state = kPaddleStateUngrabbed
+        end,cc.Handler.EVENT_TOUCH_ENDED )
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listenner, self)
+end
