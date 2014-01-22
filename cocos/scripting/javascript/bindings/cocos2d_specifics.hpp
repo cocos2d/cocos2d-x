@@ -216,13 +216,13 @@ public:
     
     cocos2d::SAXParser* getParser();
     
-    std::string parse(std::string path);
+    std::string parse(const std::string& path);
     
-    bool preloadPlist(std::string path) {
+    bool preloadPlist(const std::string& path) {
         return true;
     }
     
-    std::string getList(std::string path) {
+    std::string getList(const std::string& path) {
         return path;
     }
     
