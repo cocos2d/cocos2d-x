@@ -631,6 +631,58 @@ local function NodeNonOpaqueTest()
 	return layer
 end
 
+-----------------------------------
+--  NodeGlobalZValueTest
+-----------------------------------
+local function NodeGlobalZValueTest()
+    local layer = getBaseLayer()
+    Helper.titleLabel:setString("Global Z Value")
+    Helper.subtitleLabel:setString("Center Sprite should change go from foreground to background")
+
+
+    local s = cc.Director:getInstance():getWinSize()
+    local zOrderSprite = nil
+    for i = 1,9 do
+        local parent = cc.Node:create()
+        local sprite = nil
+        if i == 5 then
+            sprite = cc.Sprite:create("Images/grossinis_sister2.png")
+            sprite:setGlobalZOrder(-1)
+            zOrderSprite = sprite
+        else
+            sprite = cc.Sprite:create("Images/grossinis_sister1.png")
+        end
+        parent:addChild(sprite)
+        layer:addChild(parent)
+
+        local w = sprite:getContentSize().width
+        sprite:setPosition(s.width/2 - w*0.7*(i - 6),s.height / 2)
+    end
+
+    local accum = 0
+
+    local function update(dt)
+        accum = accum + dt
+        if accum > 1 then
+            local z = zOrderSprite:getGlobalZOrder()
+            zOrderSprite:setGlobalZOrder(-z)
+            accum = 0
+        end
+    end
+
+    local function onNodeEvent(tag)
+        if tag == "exit" then
+            layer:unscheduleUpdate()
+        end
+    end
+    layer:scheduleUpdateWithPriorityLua(update,0)
+    layer:registerScriptHandler(onNodeEvent)
+
+    return layer
+end
+
+
+
 function CocosNodeTest()
 	local scene = cc.Scene:create()
 
@@ -647,7 +699,8 @@ function CocosNodeTest()
         CameraZoomTest,
         ConvertToNode,
         NodeOpaqueTest,
-        NodeNonOpaqueTest
+        NodeNonOpaqueTest,
+        NodeGlobalZValueTest,
     }
 
 	scene:addChild(CameraCenterTest())

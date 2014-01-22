@@ -501,7 +501,7 @@ local function runParticleTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - ParticleTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - ParticleTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
@@ -1178,7 +1178,7 @@ local function runSpriteTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - SpriteTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - SpriteTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
@@ -1661,7 +1661,7 @@ local function CreatePerformancesTestScene(nPerformanceNo)
 end
 local function menuCallback(tag, pMenuItem)
 	local scene = nil
-    local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+    local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
          cc.Director:getInstance():replaceScene(PerformanceTestScene)
