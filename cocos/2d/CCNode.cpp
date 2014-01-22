@@ -64,29 +64,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    Object *p1 = static_cast<Object*>(pp1);
-    Object *p2 = static_cast<Object*>(pp2);
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
+           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
            );
 }
-#else
-bool nodeComparisonLess(Object* p1, Object* p2)
-{
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#endif
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
@@ -230,6 +213,15 @@ void Node::setLocalZOrder(int z)
     }
 
     _eventDispatcher->setDirtyForNode(this);
+}
+
+void Node::setGlobalZOrder(float globalZOrder)
+{
+    if (_globalZOrder != globalZOrder)
+    {
+        _globalZOrder = globalZOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
 }
 
 /// vertexZ getter

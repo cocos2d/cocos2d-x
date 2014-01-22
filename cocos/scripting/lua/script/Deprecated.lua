@@ -1112,3 +1112,19 @@ end
 rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
 --functions of CCEGLView will be deprecated end
 
+--functions of cc.Node will be deprecated begin
+local NodeDeprecated = { }
+function NodeDeprecated.setZOrder(self,zOrder)
+    deprecatedTip("cc.Node:setZOrder","cc.Node:setLocalZOrder")
+    return self:setLocalZOrder(zOrder)
+end
+rawset(cc.Node,"setZOrder",NodeDeprecated.setZOrder)
+
+function NodeDeprecated.getZOrder(self)
+    deprecatedTip("cc.Node:getZOrder","cc.Node:getLocalZOrder")
+    return self:getLocalZOrder()
+end
+rawset(cc.Node,"getZOrder",NodeDeprecated.getZOrder)
+--functions of cc.Node will be deprecated end
+
+
