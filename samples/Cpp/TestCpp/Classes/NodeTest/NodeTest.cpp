@@ -996,8 +996,8 @@ void MySprite::onDraw()
     GL::bindTexture2D( _texture->getName() );
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
-#define kQuadSize sizeof(_quad.bl)
-    long offset = (long)&_quad;
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
