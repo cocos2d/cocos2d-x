@@ -47,7 +47,7 @@ public:
     virtual std::string getWritablePath() const override;
     virtual bool isFileExist(const std::string& filePath) const override;
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) override;
-    virtual std::string getResourcePath() const override;
+    
     virtual ValueMap getValueMapFromFile(const std::string& filename) override;
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath) override;
     
