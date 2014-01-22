@@ -7,10 +7,10 @@ local originCreateLayer = createTestLayer
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
     Helper.titleLabel:setTag(kTagLabel)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     local col = cc.LayerColor:create(cc.c4b(128,128,128,255))
     ret:addChild(col, -10)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 --------------------------------------------------------------------
@@ -26,7 +26,7 @@ local function TextureTIFF()
     local img = cc.Sprite:create("Images/test_image.tiff")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -43,7 +43,7 @@ local function TexturePNG()
     local img = cc.Sprite:create("Images/test_image.png")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -59,7 +59,7 @@ local function TextureJPEG()
     local img = cc.Sprite:create("Images/test_image.jpeg")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -75,7 +75,7 @@ local function TextureWEBP()
     local img = cc.Sprite:create("Images/test_image.webp")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -115,7 +115,7 @@ local function TextureMipMap()
 
     img0:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
     img1:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -154,7 +154,7 @@ local function TexturePVRMipMap()
         imgMipMap:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
         img:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -188,7 +188,7 @@ local function TexturePVRMipMap2()
     imgMipMap:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
     img:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -211,7 +211,7 @@ local function TexturePVR2BPP()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -234,7 +234,7 @@ local function TexturePVR()
     else
         cclog("This test is not supported.")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -258,7 +258,7 @@ local function TexturePVR4BPP()
     else
         cclog("This test is not supported in cocos2d-mac")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -277,7 +277,7 @@ local function TexturePVRRGBA8888()
     local img = cc.Sprite:create("Images/test_image_rgba8888.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -300,7 +300,7 @@ local function TexturePVRBGRA8888()
     else
         cclog("BGRA8888 images are not supported")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -318,7 +318,7 @@ local function TexturePVRRGBA5551()
     local img = cc.Sprite:create("Images/test_image_rgba5551.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -336,7 +336,7 @@ local function TexturePVRRGBA4444()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -355,7 +355,7 @@ local function TexturePVRRGBA4444GZ()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -374,7 +374,7 @@ local function TexturePVRRGBA4444CCZ()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr.ccz")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -392,7 +392,7 @@ local function TexturePVRRGB565()
     local img = cc.Sprite:create("Images/test_image_rgb565.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -408,7 +408,7 @@ local function TexturePVRRGB888()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -426,7 +426,7 @@ local function TexturePVRA8()
     local img = cc.Sprite:create("Images/test_image_a8.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -444,7 +444,7 @@ local function TexturePVRI8()
     local img = cc.Sprite:create("Images/test_image_i8.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -463,7 +463,7 @@ local function TexturePVRAI88()
     local img = cc.Sprite:create("Images/test_image_ai88.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -478,7 +478,7 @@ local function TexturePVR2BPPv3()
         img:setPosition(cc.p(s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -494,7 +494,7 @@ local function TexturePVRII2BPPv3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -512,7 +512,7 @@ local function TexturePVR4BPPv3()
         cclog("This test is not supported")
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -534,7 +534,7 @@ local function TexturePVRII4BPPv3()
     else
         cclog("This test is not supported")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -551,7 +551,7 @@ local function TexturePVRRGBA8888v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -571,7 +571,7 @@ local function TexturePVRBGRA8888v3()
         cclog("BGRA images are not supported")
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -587,7 +587,7 @@ local function TexturePVRRGBA5551v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -604,7 +604,7 @@ local function TexturePVRRGBA4444v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -621,7 +621,7 @@ local function TexturePVRRGB565v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -638,7 +638,7 @@ local function TexturePVRRGB888v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -655,7 +655,7 @@ local function TexturePVRA8v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -672,7 +672,7 @@ local function TexturePVRI8v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -689,7 +689,7 @@ local function TexturePVRAI88v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -726,7 +726,7 @@ local function TexturePVRNonSquare()
     local img = cc.Sprite:create("Images/grossini_128x256_mipmap.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -745,7 +745,7 @@ local function TexturePVRNPOT4444()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -764,7 +764,7 @@ local function TexturePVRNPOT8888()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -809,7 +809,7 @@ local function TextureAlias()
 
     sprite2:runAction(scaleforever)
     sprite:runAction(scaleToo)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
@@ -908,7 +908,7 @@ local function TexturePixelFormat()
 
     -- restore default
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_DEFAULT)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    cc.TextureCache:getInstance():getCachedTextureInfo()
     return ret
 end
 
