@@ -293,7 +293,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
     for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
     {
         SpriteFrame* spriteFrame = iter->second;
-        if( spriteFrame->retainCount() == 1 ) 
+        if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());

@@ -798,6 +798,8 @@
 		1ADCE7A0186BCF19001B78A4 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F2186819DB00828878 /* UISliderTest.cpp */; };
 		1ADCE7A1186BCF19001B78A4 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F5186819DB00828878 /* UITextFieldTest.cpp */; };
 		1ADCE7A2186BCF19001B78A4 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F8186819DB00828878 /* UIWidgetAddNodeTest.cpp */; };
+		1ADD146D188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */; };
+		1ADD146E188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */; };
 		1AFB0DE31885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
 		1AFB0DE41885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
 		37A61460186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
@@ -2517,6 +2519,8 @@
 		1AAF5283180E2C31000584C8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
+		1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceEventDispatcherTest.cpp; sourceTree = "<group>"; };
+		1ADD146C188D25270034D5EF /* PerformanceEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceEventDispatcherTest.h; sourceTree = "<group>"; };
 		1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
 		1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4557,16 +4561,20 @@
 		1AAF50FC180E2C1A000584C8 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */,
-				1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */,
 				1AAF50FD180E2C1A000584C8 /* PerformanceAllocTest.cpp */,
 				1AAF50FE180E2C1A000584C8 /* PerformanceAllocTest.h */,
+				1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */,
+				1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */,
+				1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */,
+				1ADD146C188D25270034D5EF /* PerformanceEventDispatcherTest.h */,
 				1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */,
 				1A087AED1860418300196EF5 /* PerformanceLabelTest.h */,
 				1AAF50FF180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp */,
 				1AAF5100180E2C1A000584C8 /* PerformanceNodeChildrenTest.h */,
 				1AAF5101180E2C1A000584C8 /* PerformanceParticleTest.cpp */,
 				1AAF5102180E2C1A000584C8 /* PerformanceParticleTest.h */,
+				ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */,
+				ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */,
 				1AAF5103180E2C1A000584C8 /* PerformanceSpriteTest.cpp */,
 				1AAF5104180E2C1A000584C8 /* PerformanceSpriteTest.h */,
 				1AAF5105180E2C1A000584C8 /* PerformanceTest.cpp */,
@@ -4575,8 +4583,6 @@
 				1AAF5108180E2C1A000584C8 /* PerformanceTextureTest.h */,
 				1AAF5109180E2C1A000584C8 /* PerformanceTouchesTest.cpp */,
 				1AAF510A180E2C1A000584C8 /* PerformanceTouchesTest.h */,
-				ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */,
-				ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */,
 			);
 			path = PerformanceTest;
 			sourceTree = "<group>";
@@ -6409,6 +6415,7 @@
 				1AAF516A180E2C1A000584C8 /* Bug-458.cpp in Sources */,
 				50691336184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,
 				1ADCE79F186BCF19001B78A4 /* UIScrollViewTest.cpp in Sources */,
+				1ADD146D188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1ADCE79C186BCB21001B78A4 /* UIListViewTest.cpp in Sources */,
 				1AAF516C180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516E180E2C1A000584C8 /* Bug-624.cpp in Sources */,
@@ -6701,6 +6708,7 @@
 				50D36102186819DB00828878 /* UIListViewTest.cpp in Sources */,
 				1AAF516D180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516F180E2C1A000584C8 /* Bug-624.cpp in Sources */,
+				1ADD146E188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */,
 				50D36103186819DB00828878 /* UILoadingBarTest.cpp in Sources */,
 				1AAF5171180E2C1A000584C8 /* Bug-886.cpp in Sources */,
 				1AAF5173180E2C1A000584C8 /* Bug-899.cpp in Sources */,
