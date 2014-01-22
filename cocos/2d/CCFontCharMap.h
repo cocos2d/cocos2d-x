@@ -26,7 +26,6 @@
 #ifndef _CCFontCharMap_h_
 #define _CCFontCharMap_h_
 
-#include "cocos2d.h"
 #include "CCFont.h"
 
 NS_CC_BEGIN

@@ -633,7 +633,7 @@ function TestChangeZorder:onEnter()
 
     local function changeZorder(dt)
         local node = self:getChildByTag(self.currentTag)
-        node:setZOrder(math.random(0,1) * 3)
+        node:setLocalZOrder(math.random(0,1) * 3)
         self.currentTag = (self.currentTag + 1) % 3
     end
 
@@ -828,7 +828,7 @@ function TestParticleDisplay:onEnter()
     bone:addDisplay(p1, 0)
     bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a3")
 
@@ -836,7 +836,7 @@ function TestParticleDisplay:onEnter()
     bone:addDisplay(p2, 0)
     bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a30")
 
