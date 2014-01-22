@@ -673,9 +673,9 @@ void Label::draw()
 
 ///// PROTOCOL STUFF
 
-Sprite * Label::getLetter(int ID)
+Sprite * Label::getLetterAtIndex(int ID)
 {
-    if (ID < getStringLenght())
+    if (ID < getStringLength())
     {       
         if(_lettersInfo[ID].def.validDefinition == false)
             return nullptr;
@@ -789,7 +789,7 @@ int Label::getStringNumLines() const
     return quantityOfLines;
 }
 
-int Label::getStringLenght() const
+int Label::getStringLength() const
 {
     return _currentUTF16String ? cc_wcslen(_currentUTF16String) : 0;
 }

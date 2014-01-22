@@ -57,7 +57,7 @@ public:
     virtual float getLetterPosXLeft(int index)  const = 0;
     virtual float getLetterPosXRight(int index) const = 0;
     // sprite related stuff
-    virtual Sprite *getLetter(int ID) = 0;
+    virtual Sprite *getLetterAtIndex(int ID) = 0;
     
     // font related stuff
     virtual int getCommonLineHeight()  const = 0;
@@ -69,7 +69,7 @@ public:
     
     // string related stuff
     virtual int getStringNumLines() const = 0;
-    virtual int getStringLenght() const = 0;
+    virtual int getStringLength() const = 0;
     virtual unsigned short getCharAtStringPosition(int position) const = 0;
     virtual unsigned short * getUTF8String() const = 0;
     virtual void assignNewUTF8String(unsigned short *newString) = 0;

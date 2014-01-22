@@ -119,7 +119,7 @@ public:
     virtual float getLetterPosXLeft( int index ) const override;
     virtual float getLetterPosXRight( int index ) const override;
 
-    virtual Sprite * getLetter(int ID) override;
+    virtual Sprite * getLetterAtIndex(int ID) override;
     
     // font related stuff
     virtual int getCommonLineHeight() const override;
@@ -131,7 +131,7 @@ public:
     
     // string related stuff
     virtual int getStringNumLines() const override;
-    virtual int getStringLenght() const override;
+    virtual int getStringLength() const override;
     virtual unsigned short getCharAtStringPosition(int position) const override;
     virtual unsigned short * getUTF8String() const override;
     virtual void assignNewUTF8String(unsigned short *newString) override;
