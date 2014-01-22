@@ -164,7 +164,7 @@ class BuildRuntime:
             if extention == '.app':
                 filename = os.path.join(macFolder, filename)
                 if ' ' in name:
-                    newname = os.path.join(macFolder, name[:name.find(' ')-1]+extention)
+                    newname = os.path.join(macFolder, name[:name.find(' ')]+extention)
                     os.rename(filename, newname)
     
     def iosRuntime(self):
@@ -247,7 +247,7 @@ class BuildRuntime:
                 os.remove(filename)
             if extention == '.app':
                 filename = os.path.join(iosFolder, filename)
-                newname = os.path.join(iosFolder, name[:name.find(' ')-1]+extention)
+                newname = os.path.join(iosFolder, name[:name.find(' ')]+extention)
                 os.rename(filename, newname)
 
     def androidRuntime(self):
