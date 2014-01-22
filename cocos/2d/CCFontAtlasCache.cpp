@@ -171,7 +171,7 @@ bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
         {
             if ( item.second == atlas )
             {
-                if( atlas->isSingleReference() )
+                if (atlas->getReferenceCount() == 1)
                 {
                   _atlasMap.erase(item.first);
                 }
