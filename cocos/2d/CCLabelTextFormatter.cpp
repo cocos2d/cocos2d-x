@@ -274,8 +274,8 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     int quantityOfLines         = theLabel->getStringNumLines();
     int commonLineHeight        = theLabel->getCommonLineHeight();
     
-    totalHeight                 =     commonLineHeight * quantityOfLines;
-    nextFontPositionY           = 0 - (commonLineHeight - totalHeight);
+    totalHeight                 = commonLineHeight * quantityOfLines;
+    nextFontPositionY           = totalHeight;
     
     Rect charRect;
     int charXOffset = 0;
@@ -312,11 +312,8 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             continue;
         }
         
-        // See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
-        int yOffset = commonLineHeight - charYOffset;
-        
         Point fontPos = Point((float)nextFontPositionX + charXOffset + kernings[i],
-            (float)nextFontPositionY + yOffset);
+            (float)nextFontPositionY - charYOffset);
                
         if( theLabel->recordLetterInfo(CC_POINT_PIXELS_TO_POINTS(fontPos),c,i) == false)
         {
