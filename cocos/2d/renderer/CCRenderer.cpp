@@ -305,7 +305,7 @@ void Renderer::render()
                     _batchedQuadCommands.push_back(cmd);
                     
                     memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
-                    convertToWorldCoordiantes(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
+                    convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
 
                     _numQuads += cmd->getQuadCount();
                 }
@@ -375,7 +375,7 @@ void Renderer::render()
     _lastMaterialID = 0;
 }
 
-void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
+void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
