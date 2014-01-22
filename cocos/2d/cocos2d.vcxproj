@@ -440,7 +440,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="CCLabel.h" />
     <ClInclude Include="CCLabelAtlas.h" />
     <ClInclude Include="CCLabelBMFont.h" />
-    <ClInclude Include="CCLabelTextFormatProtocol.h" />
     <ClInclude Include="CCLabelTextFormatter.h" />
     <ClInclude Include="CCLabelTTF.h" />
     <ClInclude Include="CCLayer.h" />

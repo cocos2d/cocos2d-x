@@ -54,7 +54,6 @@ public:
     
     unsigned char       * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const override;
     virtual int           getFontMaxHeight() const override;
-    virtual int           getLetterPadding() const override;
     
     bool getBBOXFotChar(unsigned short theChar, Rect &outRect,int &xAdvance) const; 
 
@@ -74,7 +73,6 @@ private:
     static FT_Library _FTlibrary;
     static bool       _FTInitialized;
     FT_Face           _fontRef;
-    int               _letterPadding;
     std::string       _fontName;
     Data              _ttfData;
     bool              _distanceFieldEnabled;

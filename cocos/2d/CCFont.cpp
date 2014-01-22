@@ -141,11 +141,6 @@ unsigned short int  * Font::trimUTF16Text(unsigned short int *text, int newBegin
     return trimmedString;
 }
 
-Rect Font::getRectForChar(unsigned short theChar) const
-{
-    return Rect::ZERO;
-}
-
 NS_CC_END
 
 
