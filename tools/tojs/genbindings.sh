@@ -37,7 +37,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # paths with defaults hardcoded to relative paths
 
 if [ -z "${COCOS2DX_ROOT+aaa}" ]; then
-    COCOS2DX_ROOT="$DIR/../../"
+    COCOS2DX_ROOT="$DIR/../.."
 fi
 
 if [ -z "${CXX_GENERATOR_ROOT+aaa}" ]; then
