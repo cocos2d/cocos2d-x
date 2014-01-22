@@ -2,8 +2,11 @@
 # coding=utf-8
 # filename=build_runtime.py
 
-import platform
 import os
+import re
+import sys
+import shutil
+import platform
 import subprocess
 
 if platform.system() == 'Windows':
@@ -65,9 +68,9 @@ class BuildRuntime:
         elif platform == 'android':
             self.projectPath = os.path.join(scriptPath, "proj.android")
         elif platform == 'ios':
-            self.projectPath = os.path.join(scriptPath, "proj.ios")
+            self.projectPath = os.path.join(scriptPath, "proj.ios_mac")
         elif platform == 'mac':
-            self.projectPath = os.path.join(scriptPath, "proj.mac")
+            self.projectPath = os.path.join(scriptPath, "proj.ios_mac")
         
     def buildRuntime(self):
         if self.runtimePlatform == 'win32':
@@ -80,24 +83,209 @@ class BuildRuntime:
             self.macRuntime()
             
     def macRuntime(self):
-        pass
-    
-    def iosRuntime(self):
-        pass
-    
-    def androidRuntime(self):
-        buildNative = os.path.join(self.projectPath, "build_native.py")
         commands = [
-            "python",
-            buildNative,
-            "-p",
-            "16",
+            "xcodebuild",
+            "-version"
+        ]
+        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
+
+        xcodeVersion = None
+        for line in child.stdout:
+            if 'Xcode' in line:
+                xcodeVersion = line
+
+        child.wait()
+
+        if xcodeVersion == None:
+            print ("Xcode wasn't installed")
+            return False
+
+        res = self.checkFileByExtention(".xcodeproj")
+        if not res:
+            print ("Can't find the \".xcodeproj\" file")
+            return False
+
+        projectPath = os.path.join(self.projectPath, self.projectName)
+        pbxprojectPath = os.path.join(projectPath, "project.pbxproj")
+        print(pbxprojectPath)
+
+        f = file(pbxprojectPath)
+        contents = f.read()
+
+        section = re.search(
+            r"Begin PBXProject section.*End PBXProject section",
+            contents,
+            re.S
+        )
+
+        if section == None:
+            print ("Can't find Mac target")
+            return False
+
+        targets = re.search(r"targets = (.*);", section.group(), re.S)
+        if targets == None:
+            print ("Can't find Mac target")
+            return False
+
+        targetName = None
+        names = re.split("\*", targets.group())
+        for name in names:
+            if "Mac" in name:
+                targetName = str.strip(name)
+
+        if targetName == None:
+            print ("Can't find Mac target")
+            return False
+
+        macFolder = os.path.join(self.projectPath, "..", "..", "runtime", "mac")
+        if os.path.isdir(macFolder):
+            shutil.rmtree(macFolder)
+
+        commands = [
+            "xcodebuild",
+            "-project",
+            projectPath,
+            "-target",
+            targetName,
+            "CONFIGURATION_BUILD_DIR=%s" % (macFolder)
         ]
         child = subprocess.Popen(commands, stdout=subprocess.PIPE)
         for line in child.stdout:
-            print line
-            
+            print (line)
+
         child.wait()
+
+        filelist = os.listdir(macFolder)
+        for filename in filelist:
+            name, extention = os.path.splitext(filename)
+            if extention == '.a':
+                filename = os.path.join(macFolder, filename)
+                os.remove(filename)
+            if extention == '.app':
+                filename = os.path.join(macFolder, filename)
+                if ' ' in name:
+                    newname = os.path.join(macFolder, name[:name.find(' ')]+extention)
+                    os.rename(filename, newname)
+    
+    def iosRuntime(self):
+        commands = [
+            "xcodebuild",
+            "-version"
+        ]
+        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
+
+        xcodeVersion = None
+        for line in child.stdout:
+            if 'Xcode' in line:
+                xcodeVersion = line
+
+        child.wait()
+
+        if xcodeVersion == None:
+            print ("Xcode wasn't installed")
+            return False
+
+        res = self.checkFileByExtention(".xcodeproj")
+        if not res:
+            print ("Can't find the \".xcodeproj\" file")
+            return False
+
+        projectPath = os.path.join(self.projectPath, self.projectName)
+        pbxprojectPath = os.path.join(projectPath, "project.pbxproj")
+        print(pbxprojectPath)
+
+        f = file(pbxprojectPath)
+        contents = f.read()
+
+        section = re.search(r"Begin PBXProject section.*End PBXProject section", contents, re.S)
+
+        if section == None:
+            print ("Can't find iOS target")
+            return False
+
+        targets = re.search(r"targets = (.*);", section.group(), re.S)
+        if targets == None:
+            print ("Can't find iOS target")
+            return False
+
+        targetName = None
+        names = re.split("\*", targets.group())
+        for name in names:
+            if "iOS" in name:
+                targetName = str.strip(name)
+
+        if targetName == None:
+            print ("Can't find iOS target")
+            return False
+
+        iosFolder = os.path.join(self.projectPath, "..", "..", "runtime", "ios")
+        if os.path.isdir(iosFolder):
+            shutil.rmtree(iosFolder)
+
+        commands = [
+            "xcodebuild",
+            "-project",
+            projectPath,
+            "-target",
+            targetName,
+            "-sdk",
+            "iphonesimulator",
+            "CONFIGURATION_BUILD_DIR=%s" % (iosFolder)
+        ]
+        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
+        for line in child.stdout:
+            print (line)
+
+        child.wait()
+
+        filelist = os.listdir(iosFolder)
+
+        for filename in filelist:
+            name, extention = os.path.splitext(filename)
+            if extention == '.a':
+                filename = os.path.join(iosFolder, filename)
+                os.remove(filename)
+            if extention == '.app':
+                filename = os.path.join(iosFolder, filename)
+                newname = os.path.join(iosFolder, name[:name.find(' ')]+extention)
+                os.rename(filename, newname)
+
+    def androidRuntime(self):
+        try:
+            SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+        except Exception:
+            print "ANDROID_SDK_ROOT not defined.\
+             Please define ANDROID_SDK_ROOT in your environment"
+            return False
+        
+        try:
+            NDK_ROOT = os.environ['NDK_ROOT']
+        except Exception:
+            print "NDK_ROOT not defined.\
+             Please define NDK_ROOT in your environment"
+            return False
+        
+        platformsPath = os.path.join(SDK_ROOT,"platforms")
+        if not os.path.isdir(platformsPath):
+            print ("Can't find android platforms")
+            return False
+        
+        platforms = os.listdir(platformsPath)
+        versions = []
+        for platform in platforms:
+            version = platform[platform.find('-')+1:]
+            versions.append(version)
+            
+        maxVersion = max(map(float, versions))
+        
+        buildNative = os.path.join(self.projectPath, "build_native.py")
+        if not os.path.isdir(self.projectPath) or not os.path.isfile(buildNative):
+            print ("Can't find the build_native.py")
+            return False
+        
+        sys.path.append(self.projectPath)
+        from build_native import build
+        build(None, str(int(maxVersion)), None)
         
     def win32Runtime(self):
         try:
@@ -179,18 +367,20 @@ class BuildRuntime:
 
         return True
         
-    def checkFileByExtention(self, ext):
-        files = os.listdir(self.projectPath)
-        for file in files:
+    def checkFileByExtention(self, ext, path=None):
+        filelist = ""
+        if path == None:
+            filelist = os.listdir(self.projectPath)
+        else:
+            filelist = os.listdir(path)
+
+        for file in filelist:
             name, extention = os.path.splitext(file)
             if extention == ext:
-                self.projectName = name
+                self.projectName = file
                 return True
         return False
                 
-        
-
-    
 if __name__ == '__main__':
     platform = checkParams();
     buildRuntime = BuildRuntime(platform)
