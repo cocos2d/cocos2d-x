@@ -31,7 +31,7 @@ rawset(cc.TextureCache,"destroyInstance",TextureCacheDeprecated.destroyInstance)
 
 function TextureCacheDeprecated.dumpCachedTextureInfo(self)
     deprecatedTip("self:dumpCachedTextureInfo","self:getCachedTextureInfo")
-    return self:getCachedTextureInfo()
+    return print(self:getCachedTextureInfo())
 end
 rawset(cc.TextureCache,"dumpCachedTextureInfo",TextureCacheDeprecated.dumpCachedTextureInfo)
 

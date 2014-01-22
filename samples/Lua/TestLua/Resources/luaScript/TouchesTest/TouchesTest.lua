@@ -52,7 +52,7 @@ local function CreateTouchesLayer()
     layer = cc.Layer:create()
 
     m_ballStartingVelocity = cc.p(20.0, -100.0);
-    local mgr = cc.TextureCache:getInstance()
+    local mgr = cc.Director:getInstance():getTextureCache()
     local texture = mgr:addImage(s_Ball)
     m_ball = Ball.ballWithTexture(texture);
 
@@ -61,7 +61,7 @@ local function CreateTouchesLayer()
     layer:addChild( m_ball );
     m_ball:retain();
     
-    local paddleTexture = cc.TextureCache:getInstance():addImage(s_Paddle);
+    local paddleTexture = cc.Director:getInstance():getTextureCache():addImage(s_Paddle);
     
     local paddlesM = {}
     
