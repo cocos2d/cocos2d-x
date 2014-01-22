@@ -58,6 +58,10 @@ protected:
     int _preListSize;
     int _printCount;
     
+    float _addChildStep;
+    float _wholeMoveTime;
+    Point _wholeMoveSize;
+
     virtual void update(float dt) override;
     
 public:
