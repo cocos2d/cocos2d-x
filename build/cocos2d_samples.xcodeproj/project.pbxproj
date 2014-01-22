@@ -8402,7 +8402,7 @@
 		A07A517D1783A1CC0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
@@ -8411,7 +8411,7 @@
 		A07A517E1783A1CC0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
