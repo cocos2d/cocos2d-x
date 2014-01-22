@@ -28,9 +28,14 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "CCEditBox.h"
-#import "EAGLView.h"
+#define GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_COCOA
+#include "glfw3native.h"
+
 
 #define getEditBoxImplMac() ((cocos2d::extension::EditBoxImplMac*)editBox_)
+
+
 
 @implementation CCCustomNSTextField
 
@@ -58,6 +63,10 @@
 @synthesize editState = editState_;
 @synthesize editBox = editBox_;
 
+- (id) getNSWindow {
+    return glfwGetCocoaWindow(cocos2d::EGLView::getInstance()->getWindow());
+}
+
 - (void)dealloc
 {
     [textField_ resignFirstResponder];
@@ -84,7 +93,7 @@
         [textField_ setDelegate:self];
         self.editBox = editBox;
         
-        [[CCEAGLView sharedEGLView] addSubview:textField_];
+        [[[self getNSWindow] contentView] addSubview:textField_];
         
         return self;
     }while(0);
@@ -94,8 +103,7 @@
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
-    id eglView = [CCEAGLView sharedEGLView];
-    [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+    [[[self getNSWindow] contentView] doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
 -(void) setPosition:(NSPoint) pos
