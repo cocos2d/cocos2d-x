@@ -15,7 +15,7 @@ local function IntervalLayer()
     local s = cc.Director:getInstance():getWinSize()
     -- sun
     local  sun = cc.ParticleSun:create()
-    sun:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    sun:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
     sun:setPosition( cc.p(VisibleRect:rightTop().x-32,VisibleRect:rightTop().y-32) )
 
     sun:setTotalParticles(130)

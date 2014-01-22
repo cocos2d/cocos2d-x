@@ -45,10 +45,8 @@ struct FontLetterDefinition
     float offsetX;
     float offsetY;
     int textureID;
-    float commonLineHeight;
-    float anchorX;
-    float anchorY;
     bool validDefinition;
+    int xAdvance;
 };
 
 class CC_DLL FontAtlas : public Object
