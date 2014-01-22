@@ -30,14 +30,12 @@ NS_CC_BEGIN
 AutoreleasePool::AutoreleasePool()
 :_name("")
 {
-    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
 AutoreleasePool::AutoreleasePool(const std::string &name)
 :_name(name)
 {
-    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
@@ -51,17 +49,17 @@ AutoreleasePool::~AutoreleasePool()
 
 void AutoreleasePool::addObject(Object* object)
 {
-    _managedObjectArray.pushBack(object);
-
-    CCASSERT(object->_reference > 1, "reference count should be greater than 1");
+    // only have one copy of Object*
+    _managedObjectArray.insert(object);
 }
 
 void AutoreleasePool::clear()
 {
-    if (!_managedObjectArray.empty())
+    for (const auto obj : _managedObjectArray)
     {
-        _managedObjectArray.clear();
+        obj->release();
     }
+    _managedObjectArray.clear();
 }
 
 void AutoreleasePool::dump()
