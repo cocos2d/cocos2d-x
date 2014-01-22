@@ -4,6 +4,7 @@
 
 import os
 import re
+import sys
 import shutil
 import platform
 import subprocess
@@ -148,7 +149,6 @@ class BuildRuntime:
             targetName,
             "CONFIGURATION_BUILD_DIR=%s" % (macFolder)
         ]
-        #print commands
         child = subprocess.Popen(commands, stdout=subprocess.PIPE)
         for line in child.stdout:
             print (line)
@@ -232,7 +232,6 @@ class BuildRuntime:
             "iphonesimulator",
             "CONFIGURATION_BUILD_DIR=%s" % (iosFolder)
         ]
-        #print commands
         child = subprocess.Popen(commands, stdout=subprocess.PIPE)
         for line in child.stdout:
             print (line)
@@ -252,18 +251,41 @@ class BuildRuntime:
                 os.rename(filename, newname)
 
     def androidRuntime(self):
-        buildNative = os.path.join(self.projectPath, "build_native.py")
-        commands = [
-            "python",
-            buildNative,
-            "-p",
-            "17",
-        ]
-        child = subprocess.Popen(commands, stdout=subprocess.PIPE)
-        for line in child.stdout:
-            print line
+        try:
+            SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+        except Exception:
+            print "ANDROID_SDK_ROOT not defined.\
+             Please define ANDROID_SDK_ROOT in your environment"
+            return False
+        
+        try:
+            NDK_ROOT = os.environ['NDK_ROOT']
+        except Exception:
+            print "NDK_ROOT not defined.\
+             Please define NDK_ROOT in your environment"
+            return False
+        
+        platformsPath = os.path.join(SDK_ROOT,"platforms")
+        if not os.path.isdir(platformsPath):
+            print ("Can't find android platforms")
+            return False
+        
+        platforms = os.listdir(platformsPath)
+        versions = []
+        for platform in platforms:
+            version = platform[platform.find('-')+1:]
+            versions.append(version)
             
-        child.wait()
+        maxVersion = max(map(float, versions))
+        
+        buildNative = os.path.join(self.projectPath, "build_native.py")
+        if not os.path.isdir(self.projectPath) or not os.path.isfile(buildNative):
+            print ("Can't find the build_native.py")
+            return False
+        
+        sys.path.append(self.projectPath)
+        from build_native import build
+        build(None, str(int(maxVersion)), None)
         
     def win32Runtime(self):
         try:
@@ -359,9 +381,6 @@ class BuildRuntime:
                 return True
         return False
                 
-        
-
-    
 if __name__ == '__main__':
     platform = checkParams();
     buildRuntime = BuildRuntime(platform)
