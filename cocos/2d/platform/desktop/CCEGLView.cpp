@@ -405,38 +405,38 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
         MessageBox(strComplain, "OpenGL version too old");
         return false;
     }
-//    
-//    GLenum GlewInitResult = glewInit();
-//    if (GLEW_OK != GlewInitResult)
-//    {
-//        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
-//        return false;
-//    }
-//    
-//    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
-//    {
-//        log("Ready for GLSL");
-//    }
-//    else
-//    {
-//        log("Not totally ready :(");
-//    }
-//    
-//    if (glewIsSupported("GL_VERSION_2_0"))
-//    {
-//        log("Ready for OpenGL 2.0");
-//    }
-//    else
-//    {
-//        log("OpenGL 2.0 not supported");
-//    }
-//    
+
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult)
+    {
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        return false;
+    }
+
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        log("Ready for GLSL");
+    }
+    else
+    {
+        log("Not totally ready :(");
+    }
+
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+        log("Ready for OpenGL 2.0");
+    }
+    else
+    {
+        log("OpenGL 2.0 not supported");
+    }
+
 //    if(glew_dynamic_binding() == false)
 //    {
 //        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
 //        return false;
 //    }
-//    
+
     // Enable point size by default on windows.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     
