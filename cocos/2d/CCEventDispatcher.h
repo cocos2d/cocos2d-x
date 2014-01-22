@@ -216,7 +216,7 @@ protected:
     void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
-    void visitTarget(Node* node);
+    void visitTarget(Node* node, bool isRootNode);
     
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listeners;
@@ -229,6 +229,9 @@ protected:
     
     /** The map of node and its event priority */
     std::unordered_map<Node*, int> _nodePriorityMap;
+    
+    /** key: Global Z Order, value: Sorted Nodes */
+    std::unordered_map<float, std::vector<Node*>> _globalZOrderNodeMap;
     
     /** The listeners to be added after dispatching event */
     std::vector<EventListener*> _toAddedListeners;
