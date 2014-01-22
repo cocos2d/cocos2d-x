@@ -111,7 +111,6 @@ THE SOFTWARE.
 
 -(int) getWidth;
 -(int) getHeight;
--(void) swapBuffers;
 
 @end
 #endif // __EAGLVIEW_MAC_H__
