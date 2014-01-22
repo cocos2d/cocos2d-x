@@ -182,7 +182,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 	#include "platform/mac/CCApplication.h"
-	#include "platform/mac/CCEGLView.h"
+	#include "platform/desktop/CCEGLView.h"
 	#include "platform/mac/CCGL.h"
 	#include "platform/mac/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

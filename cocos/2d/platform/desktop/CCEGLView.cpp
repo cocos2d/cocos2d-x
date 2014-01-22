@@ -359,14 +359,19 @@ EGLView::~EGLView()
 
 bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
 {
-    if(nullptr != _mainWindow) return true;
+    if(_mainWindow != nullptr)
+        return true;
     
     setViewName(viewName);
     setFrameSize(width, height);
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor,
+                                   _screenSize.height * _frameZoomFactor,
+                                   _viewName.c_str(),
+                                   NULL, // glfwGetPrimaryMonitor() for fullscreen mode
+                                   NULL);
     glfwMakeContextCurrent(_mainWindow);
     
     int w, h;
