@@ -34,7 +34,6 @@ NS_CC_BEGIN
 Object::Object()
 : _luaID(0)
 , _reference(1) // when the object is created, the reference count of it is 1
-, _autoReleaseCount(0)
 {
     static unsigned int uObjectCount = 0;
 
@@ -43,13 +42,6 @@ Object::Object()
 
 Object::~Object()
 {
-    // if the object is managed, we should remove it
-    // from pool manager
-    if (_autoReleaseCount > 0)
-    {
-        PoolManager::sharedPoolManager()->removeObject(this);
-    }
-
     // if the object is referenced by Lua engine, remove it
     if (_luaID)
     {
@@ -70,7 +62,7 @@ Object::~Object()
 
 Object* Object::autorelease()
 {
-    PoolManager::sharedPoolManager()->addObject(this);
+    PoolManager::getInstance()->getCurrentPool()->addObject(this);
     return this;
 }
 

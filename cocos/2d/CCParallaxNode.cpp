@@ -101,8 +101,8 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
     ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
 
     Point pos = _position;
-    pos.x = pos.x * ratio.x + offset.x;
-    pos.y = pos.y * ratio.y + offset.y;
+    pos.x = -pos.x + pos.x * ratio.x + offset.x;
+    pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
 
     Node::addChild(child, z, child->getTag());

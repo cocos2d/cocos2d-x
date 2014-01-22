@@ -33,27 +33,12 @@
 NS_CC_BEGIN
 
 // fwd
-class GlyphDef;
 class FontAtlas;
 
 
 class CC_DLL Font : public Object
 {
 public:
-    static const int DistanceMapSpread;
-    // create the font
-    static   Font* createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
-    static   Font* createWithFNT(const std::string& fntFilePath);
-
-    static Font * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
-    static Font * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
-    static Font * createWithCharMap(const std::string& plistFile);
-    
-    static   unsigned char * makeDistanceMap(unsigned char *img, unsigned int width, unsigned int height);
-    void     setDistanceFieldEnabled(bool distanceFieldEnabled);
-    bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
-    bool     renderCharAt(unsigned short int charToRender, int posX, int posY, unsigned char *destMemory, int destSize);
-
     virtual  FontAtlas *createFontAtlas() = 0;
 
     virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
@@ -61,7 +46,7 @@ public:
     
     virtual int getLetterPadding() const { return 0; }
     virtual unsigned char * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const { return 0; }
-    virtual GlyphDef* getGlyphDefintionsForText(const char *text, int &outNumGlyphs, bool UTF16text = false) const { return 0; }
+    
     virtual int getFontMaxHeight() const { return 0; }
     virtual Rect getRectForChar(unsigned short theChar) const;
     
@@ -85,7 +70,6 @@ protected:
     char              * _customGlyphs;
     static const char * _glyphASCII;
     static const char * _glyphNEHE;
-    bool                _distanceFieldEnabled;
 
 };
 

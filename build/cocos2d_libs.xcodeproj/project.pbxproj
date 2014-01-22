@@ -480,14 +480,6 @@
 		1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570186180BCB590088DEC7 /* CCFontAtlasCache.cpp */; };
 		1A5701A7180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570187180BCB590088DEC7 /* CCFontAtlasCache.h */; };
 		1A5701A8180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570187180BCB590088DEC7 /* CCFontAtlasCache.h */; };
-		1A5701A9180BCB590088DEC7 /* CCFontAtlasFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570188180BCB590088DEC7 /* CCFontAtlasFactory.cpp */; };
-		1A5701AA180BCB590088DEC7 /* CCFontAtlasFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570188180BCB590088DEC7 /* CCFontAtlasFactory.cpp */; };
-		1A5701AB180BCB590088DEC7 /* CCFontAtlasFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570189180BCB590088DEC7 /* CCFontAtlasFactory.h */; };
-		1A5701AC180BCB590088DEC7 /* CCFontAtlasFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570189180BCB590088DEC7 /* CCFontAtlasFactory.h */; };
-		1A5701AD180BCB590088DEC7 /* CCFontDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57018A180BCB590088DEC7 /* CCFontDefinition.cpp */; };
-		1A5701AE180BCB590088DEC7 /* CCFontDefinition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57018A180BCB590088DEC7 /* CCFontDefinition.cpp */; };
-		1A5701AF180BCB590088DEC7 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57018B180BCB590088DEC7 /* CCFontDefinition.h */; };
-		1A5701B0180BCB590088DEC7 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57018B180BCB590088DEC7 /* CCFontDefinition.h */; };
 		1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57018C180BCB590088DEC7 /* CCFontFNT.cpp */; };
 		1A5701B2180BCB590088DEC7 /* CCFontFNT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57018C180BCB590088DEC7 /* CCFontFNT.cpp */; };
 		1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57018D180BCB590088DEC7 /* CCFontFNT.h */; };
@@ -518,10 +510,6 @@
 		1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */; };
 		1A5701CD180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019A180BCB590088DEC7 /* CCLabelTTF.h */; };
 		1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019A180BCB590088DEC7 /* CCLabelTTF.h */; };
-		1A5701CF180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57019B180BCB590088DEC7 /* CCTextImage.cpp */; };
-		1A5701D0180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57019B180BCB590088DEC7 /* CCTextImage.cpp */; };
-		1A5701D1180BCB5A0088DEC7 /* CCTextImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019C180BCB590088DEC7 /* CCTextImage.h */; };
-		1A5701D2180BCB5A0088DEC7 /* CCTextImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019C180BCB590088DEC7 /* CCTextImage.h */; };
 		1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701D4180BCB8C0088DEC7 /* CCLayer.cpp */; };
 		1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701D4180BCB8C0088DEC7 /* CCLayer.cpp */; };
 		1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5701D5180BCB8C0088DEC7 /* CCLayer.h */; };
@@ -1672,17 +1660,15 @@
 		46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AC81807B038005B8026 /* CCApplication.h */; };
 		46A170501807CC1C005B8026 /* CCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AC91807B038005B8026 /* CCApplication.mm */; };
 		46A170511807CC1C005B8026 /* CCCommon.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACA1807B038005B8026 /* CCCommon.mm */; };
-		46A170521807CC1C005B8026 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACB1807B038005B8026 /* CCDevice.mm */; };
+		46A170521807CC1C005B8026 /* CCDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACB1807B038005B8026 /* CCDevice.cpp */; };
 		46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16ACC1807B038005B8026 /* CCDirectorCaller.h */; };
 		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
-		46A170561807CC1C005B8026 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACF1807B038005B8026 /* CCEGLView.mm */; };
+		46A170561807CC1C005B8026 /* CCEGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACF1807B038005B8026 /* CCEGLView.cpp */; };
 		46A170571807CC1C005B8026 /* CCEventDispatcherMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */; };
 		46A170581807CC1C005B8026 /* CCEventDispatcherMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */; };
 		46A1705A1807CC1C005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD31807B038005B8026 /* CCImage.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
-		46A1705D1807CC1C005B8026 /* CCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD61807B038005B8026 /* CCWindow.h */; };
-		46A1705E1807CC1C005B8026 /* CCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD71807B038005B8026 /* CCWindow.m */; };
 		46A170601807CC1C005B8026 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AD91807B038005B8026 /* EAGLView.mm */; };
 		46A170A91807CE9D005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
 		46A170AA1807CE9E005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
@@ -2305,10 +2291,6 @@
 		1A570185180BCB590088DEC7 /* CCFontAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontAtlas.h; sourceTree = "<group>"; };
 		1A570186180BCB590088DEC7 /* CCFontAtlasCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontAtlasCache.cpp; sourceTree = "<group>"; };
 		1A570187180BCB590088DEC7 /* CCFontAtlasCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontAtlasCache.h; sourceTree = "<group>"; };
-		1A570188180BCB590088DEC7 /* CCFontAtlasFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontAtlasFactory.cpp; sourceTree = "<group>"; };
-		1A570189180BCB590088DEC7 /* CCFontAtlasFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontAtlasFactory.h; sourceTree = "<group>"; };
-		1A57018A180BCB590088DEC7 /* CCFontDefinition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontDefinition.cpp; sourceTree = "<group>"; };
-		1A57018B180BCB590088DEC7 /* CCFontDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontDefinition.h; sourceTree = "<group>"; };
 		1A57018C180BCB590088DEC7 /* CCFontFNT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontFNT.cpp; sourceTree = "<group>"; };
 		1A57018D180BCB590088DEC7 /* CCFontFNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontFNT.h; sourceTree = "<group>"; };
 		1A57018E180BCB590088DEC7 /* CCFontFreeType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFontFreeType.cpp; sourceTree = "<group>"; };
@@ -2324,8 +2306,6 @@
 		1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatter.h; sourceTree = "<group>"; };
 		1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTF.cpp; sourceTree = "<group>"; };
 		1A57019A180BCB590088DEC7 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
-		1A57019B180BCB590088DEC7 /* CCTextImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextImage.cpp; sourceTree = "<group>"; };
-		1A57019C180BCB590088DEC7 /* CCTextImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextImage.h; sourceTree = "<group>"; };
 		1A5701D4180BCB8C0088DEC7 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCLayer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1A5701D5180BCB8C0088DEC7 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayer.h; sourceTree = "<group>"; };
 		1A5701D6180BCB8C0088DEC7 /* CCScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScene.cpp; sourceTree = "<group>"; };
@@ -3003,17 +2983,15 @@
 		46A16AC81807B038005B8026 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		46A16AC91807B038005B8026 /* CCApplication.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCApplication.mm; sourceTree = "<group>"; };
 		46A16ACA1807B038005B8026 /* CCCommon.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCCommon.mm; sourceTree = "<group>"; };
-		46A16ACB1807B038005B8026 /* CCDevice.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
+		46A16ACB1807B038005B8026 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
 		46A16ACC1807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
 		46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
-		46A16ACF1807B038005B8026 /* CCEGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEGLView.mm; sourceTree = "<group>"; };
+		46A16ACF1807B038005B8026 /* CCEGLView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCEGLView.cpp; sourceTree = "<group>"; };
 		46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcherMac.h; sourceTree = "<group>"; };
 		46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEventDispatcherMac.mm; sourceTree = "<group>"; };
 		46A16AD31807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AD41807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AD51807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		46A16AD61807B038005B8026 /* CCWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCWindow.h; sourceTree = "<group>"; };
-		46A16AD71807B038005B8026 /* CCWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCWindow.m; sourceTree = "<group>"; };
 		46A16AD91807B038005B8026 /* EAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
 		46A16E1B1807C948005B8026 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos/2d/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		46A16E1C1807C948005B8026 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../cocos/2d/platform/third_party/ios/libraries/libfreetype.a; sourceTree = "<group>"; };
@@ -3700,12 +3678,8 @@
 				1A570185180BCB590088DEC7 /* CCFontAtlas.h */,
 				1A570186180BCB590088DEC7 /* CCFontAtlasCache.cpp */,
 				1A570187180BCB590088DEC7 /* CCFontAtlasCache.h */,
-				1A570188180BCB590088DEC7 /* CCFontAtlasFactory.cpp */,
-				1A570189180BCB590088DEC7 /* CCFontAtlasFactory.h */,
 				1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */,
 				1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */,
-				1A57018A180BCB590088DEC7 /* CCFontDefinition.cpp */,
-				1A57018B180BCB590088DEC7 /* CCFontDefinition.h */,
 				1A57018C180BCB590088DEC7 /* CCFontFNT.cpp */,
 				1A57018D180BCB590088DEC7 /* CCFontFNT.h */,
 				1A57018E180BCB590088DEC7 /* CCFontFreeType.cpp */,
@@ -3721,8 +3695,6 @@
 				1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */,
 				1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */,
 				1A57019A180BCB590088DEC7 /* CCLabelTTF.h */,
-				1A57019B180BCB590088DEC7 /* CCTextImage.cpp */,
-				1A57019C180BCB590088DEC7 /* CCTextImage.h */,
 			);
 			name = "label-nodes";
 			sourceTree = "<group>";
@@ -5242,19 +5214,17 @@
 				46A16AC81807B038005B8026 /* CCApplication.h */,
 				46A16AC91807B038005B8026 /* CCApplication.mm */,
 				46A16ACA1807B038005B8026 /* CCCommon.mm */,
-				46A16ACB1807B038005B8026 /* CCDevice.mm */,
+				46A16ACB1807B038005B8026 /* CCDevice.cpp */,
 				46A16ACC1807B038005B8026 /* CCDirectorCaller.h */,
 				46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */,
 				1A0DB7341823828F0025743D /* CCEGLView.h */,
-				46A16ACF1807B038005B8026 /* CCEGLView.mm */,
+				46A16ACF1807B038005B8026 /* CCEGLView.cpp */,
 				46A16AD01807B038005B8026 /* CCEventDispatcherMac.h */,
 				46A16AD11807B038005B8026 /* CCEventDispatcherMac.mm */,
 				1A0DB7351823828F0025743D /* CCGL.h */,
 				46A16AD31807B038005B8026 /* CCImage.mm */,
 				46A16AD41807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AD51807B038005B8026 /* CCStdC.h */,
-				46A16AD61807B038005B8026 /* CCWindow.h */,
-				46A16AD71807B038005B8026 /* CCWindow.m */,
 				1A0DB7361823828F0025743D /* EAGLView.h */,
 				46A16AD91807B038005B8026 /* EAGLView.mm */,
 			);
@@ -5459,7 +5429,6 @@
 				46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */,
 				46A170B71807CEA3005B8026 /* vec4.h in Headers */,
 				46A170B61807CEA3005B8026 /* vec3.h in Headers */,
-				46A1705D1807CC1C005B8026 /* CCWindow.h in Headers */,
 				50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */,
 				46A170241807CBFC005B8026 /* CCSAXParser.h in Headers */,
 				46A1701A1807CBFC005B8026 /* CCDevice.h in Headers */,
@@ -5554,8 +5523,6 @@
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
 				1A5701A3180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				1A5701A7180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
-				1A5701AB180BCB590088DEC7 /* CCFontAtlasFactory.h in Headers */,
-				1A5701AF180BCB590088DEC7 /* CCFontDefinition.h in Headers */,
 				1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				1A5701B7180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
 				1A5701BB180BCB5A0088DEC7 /* CCLabel.h in Headers */,
@@ -5564,7 +5531,6 @@
 				1A5701C5180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */,
 				1A5701C9180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				1A5701CD180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
-				1A5701D1180BCB5A0088DEC7 /* CCTextImage.h in Headers */,
 				1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E4180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */,
@@ -6136,8 +6102,6 @@
 				1A5701A0180BCB590088DEC7 /* CCFont.h in Headers */,
 				1A5701A4180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
 				1A5701A8180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
-				1A5701AC180BCB590088DEC7 /* CCFontAtlasFactory.h in Headers */,
-				1A5701B0180BCB590088DEC7 /* CCFontDefinition.h in Headers */,
 				1A5701B4180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				593BDCF5184D0A6E00C21E48 /* CCCustomCommand.h in Headers */,
 				1A5701B8180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
@@ -6147,7 +6111,6 @@
 				1A5701C6180BCB5A0088DEC7 /* CCLabelTextFormatProtocol.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */,
-				1A5701D2180BCB5A0088DEC7 /* CCTextImage.h in Headers */,
 				1A5701E1180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E5180BCB8C0088DEC7 /* CCScene.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
@@ -6846,11 +6809,10 @@
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
 				46A170C71807CEBB005B8026 /* mat3.c in Sources */,
-				46A170521807CC1C005B8026 /* CCDevice.mm in Sources */,
+				46A170521807CC1C005B8026 /* CCDevice.cpp in Sources */,
 				46A170231807CBFC005B8026 /* CCSAXParser.cpp in Sources */,
 				46A170ED1807CECA005B8026 /* CCPhysicsShape.cpp in Sources */,
 				46A170C51807CEB0005B8026 /* aabb.c in Sources */,
-				46A1705E1807CC1C005B8026 /* CCWindow.m in Sources */,
 				46A170171807CBFC005B8026 /* CCThread.mm in Sources */,
 				46A170C81807CEBB005B8026 /* mat4.c in Sources */,
 				46A170CB1807CEBB005B8026 /* quaternion.c in Sources */,
@@ -6870,7 +6832,7 @@
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
 				46A170CD1807CEBB005B8026 /* utility.c in Sources */,
 				46A170251807CBFC005B8026 /* CCThread.cpp in Sources */,
-				46A170561807CC1C005B8026 /* CCEGLView.mm in Sources */,
+				46A170561807CC1C005B8026 /* CCEGLView.cpp in Sources */,
 				1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
@@ -6923,8 +6885,6 @@
 				1A57019D180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				1A5701A1180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				1A5701A5180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
-				1A5701A9180BCB590088DEC7 /* CCFontAtlasFactory.cpp in Sources */,
-				1A5701AD180BCB590088DEC7 /* CCFontDefinition.cpp in Sources */,
 				1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
@@ -6934,7 +6894,6 @@
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
-				1A5701CF180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				1A5701E6180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
@@ -7458,8 +7417,6 @@
 				1A57019E180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				1A5701A2180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
-				1A5701AA180BCB590088DEC7 /* CCFontAtlasFactory.cpp in Sources */,
-				1A5701AE180BCB590088DEC7 /* CCFontDefinition.cpp in Sources */,
 				1A5701B2180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
@@ -7470,7 +7427,6 @@
 				B375107E1823ACA100B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
-				1A5701D0180BCB5A0088DEC7 /* CCTextImage.cpp in Sources */,
 				1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				1A5701E3180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				1A5701E7180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
