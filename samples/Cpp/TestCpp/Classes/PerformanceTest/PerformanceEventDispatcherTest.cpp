@@ -1,8 +1,8 @@
 //
-//  PerformanceEventDispatcher.cpp
+//  PerformanceEventDispatcherTest.cpp
 //
 
-#include "PerformanceEventDispatcher.h"
+#include "PerformanceEventDispatcherTest.h"
 
 #include <algorithm>
 

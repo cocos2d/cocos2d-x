@@ -1,5 +1,5 @@
 //
-//  PerformanceEventDispatcher.h
+//  PerformanceEventDispatcherTest.h
 
 #ifndef __PERFORMANCE_EVENTDISPATCHER_TEST_H__
 #define __PERFORMANCE_EVENTDISPATCHER_TEST_H__
