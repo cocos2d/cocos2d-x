@@ -494,7 +494,7 @@ EGLView* EGLView::sharedOpenGLView()
 }
 
 // helper
-void EGLView::initGlew()
+bool EGLView::initGlew()
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
     GLenum GlewInitResult = glewInit();
@@ -529,6 +529,8 @@ void EGLView::initGlew()
 //    }
 
 #endif // Linux
+
+    return true;
 }
 
 NS_CC_END // end of namespace cocos2d;
