@@ -117,11 +117,6 @@ int * FontCharMap::getHorizontalKerningForTextUTF16(unsigned short *text, int &o
     return sizes;
 }
 
-Rect FontCharMap::getRectForChar(unsigned short theChar) const
-{
-    return _charRect;
-}
-
 FontAtlas * FontCharMap::createFontAtlas()
 {
     FontAtlas *tempAtlas = new FontAtlas(*this);
@@ -137,8 +132,6 @@ FontAtlas * FontCharMap::createFontAtlas()
     
     FontLetterDefinition tempDefinition;
     tempDefinition.textureID = 0;
-    tempDefinition.anchorX = 0.5f;
-    tempDefinition.anchorY = 0.5f;
     tempDefinition.offsetX  = 0.0f;
     tempDefinition.offsetY  = 0.0f;
     tempDefinition.validDefinition = true;
