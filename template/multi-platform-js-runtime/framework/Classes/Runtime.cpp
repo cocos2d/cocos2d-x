@@ -357,8 +357,8 @@ void Runtime::waitDebugConnect()
 #endif	
 
 #if (CC_TARGET_PLATFORM==CC_PLATFORM_MAC || CC_TARGET_PLATFORM==CC_PLATFORM_IOS )
-    _dotwaitFile = FileUtils::getInstance()->getResourcePath();
-    //FileUtils::getInstance()->getWritablePath();
+    extern std::string getResourcePath();
+    _dotwaitFile = getResourcePath();
     _dotwaitFile += "/.wait";
 #endif
     
