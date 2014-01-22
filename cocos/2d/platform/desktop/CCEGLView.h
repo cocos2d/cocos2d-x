@@ -84,7 +84,7 @@ protected:
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float zoomFactor);
-    void initGlew();
+    bool initGlew();
     inline bool isRetina() { return _isRetina; };
 
     bool _captured;
