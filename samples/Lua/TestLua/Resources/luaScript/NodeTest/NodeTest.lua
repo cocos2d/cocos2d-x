@@ -261,10 +261,10 @@ local function Test6()
     local rot = cc.RotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever1 = cc.RepeatForever:create(cc.Sequence:create(rot, rot_back))
-    local forever11 = tolua.cast(forever1:clone(), "RepeatForever")
+    local forever11 = tolua.cast(forever1:clone(), "cc.RepeatForever")
 
-    local forever2 = tolua.cast(forever1:clone(), "RepeatForever")
-    local forever21 = tolua.cast(forever1:clone(), "RepeatForever")
+    local forever2 = tolua.cast(forever1:clone(), "cc.RepeatForever")
+    local forever21 = tolua.cast(forever1:clone(), "cc.RepeatForever")
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -370,10 +370,10 @@ local function StressTest2()
 
     local fire = cc.ParticleFire:create()
     fire:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
-	fire = tolua.cast(fire, "Node")
+	fire = tolua.cast(fire, "cc.Node")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = tolua.cast(seq3:clone(), "Sequence")
+    local copy_seq3 = tolua.cast(seq3:clone(), "cc.Sequence")
     fire:runAction(cc.RepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
@@ -564,7 +564,7 @@ local function ConvertToNode()
 
         point:setPosition(sprite:getPosition())
 
-        local copy = tolua.cast(action:clone(), "RepeatForever")
+        local copy = tolua.cast(action:clone(), "cc.RepeatForever")
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end
@@ -631,6 +631,58 @@ local function NodeNonOpaqueTest()
 	return layer
 end
 
+-----------------------------------
+--  NodeGlobalZValueTest
+-----------------------------------
+local function NodeGlobalZValueTest()
+    local layer = getBaseLayer()
+    Helper.titleLabel:setString("Global Z Value")
+    Helper.subtitleLabel:setString("Center Sprite should change go from foreground to background")
+
+
+    local s = cc.Director:getInstance():getWinSize()
+    local zOrderSprite = nil
+    for i = 1,9 do
+        local parent = cc.Node:create()
+        local sprite = nil
+        if i == 5 then
+            sprite = cc.Sprite:create("Images/grossinis_sister2.png")
+            sprite:setGlobalZOrder(-1)
+            zOrderSprite = sprite
+        else
+            sprite = cc.Sprite:create("Images/grossinis_sister1.png")
+        end
+        parent:addChild(sprite)
+        layer:addChild(parent)
+
+        local w = sprite:getContentSize().width
+        sprite:setPosition(s.width/2 - w*0.7*(i - 6),s.height / 2)
+    end
+
+    local accum = 0
+
+    local function update(dt)
+        accum = accum + dt
+        if accum > 1 then
+            local z = zOrderSprite:getGlobalZOrder()
+            zOrderSprite:setGlobalZOrder(-z)
+            accum = 0
+        end
+    end
+
+    local function onNodeEvent(tag)
+        if tag == "exit" then
+            layer:unscheduleUpdate()
+        end
+    end
+    layer:scheduleUpdateWithPriorityLua(update,0)
+    layer:registerScriptHandler(onNodeEvent)
+
+    return layer
+end
+
+
+
 function CocosNodeTest()
 	local scene = cc.Scene:create()
 
@@ -647,7 +699,8 @@ function CocosNodeTest()
         CameraZoomTest,
         ConvertToNode,
         NodeOpaqueTest,
-        NodeNonOpaqueTest
+        NodeNonOpaqueTest,
+        NodeGlobalZValueTest,
     }
 
 	scene:addChild(CameraCenterTest())

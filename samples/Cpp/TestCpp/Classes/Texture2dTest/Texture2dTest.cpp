@@ -1794,7 +1794,7 @@ void TextureDrawAtPoint::draw()
 {
     TextureDemo::draw();
     
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 
@@ -1835,7 +1835,7 @@ void TextureDrawInRect::draw()
 {
     TextureDemo::draw();
 
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 

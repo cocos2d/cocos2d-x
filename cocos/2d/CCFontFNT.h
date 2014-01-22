@@ -26,10 +26,11 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
-#include "cocos2d.h"
 #include "CCFont.h"
 
 NS_CC_BEGIN
+
+class CCBMFontConfiguration;
 
 class FontFNT : public Font
 {
@@ -38,7 +39,7 @@ public:
     
     static FontFNT * create(const std::string& fntFilePath);
     
-    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
+    virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     virtual Rect  getRectForChar(unsigned short theChar) const override;
     virtual FontAtlas *createFontAtlas() override;
     
@@ -54,7 +55,6 @@ protected:
     
 private:
     
-    int  getAdvanceForChar(unsigned short theChar) const;
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     Rect getRectForCharInternal(unsigned short theChar) const;
     

@@ -67,7 +67,7 @@ function CocoStudioTestLayer.extend(target)
 end
 
 function CocoStudioTestLayer.onMenuCallback(tag,sender)
-    local index = sender:getZOrder() - ITEM_TAG_BASIC
+    local index = sender:getLocalZOrder() - ITEM_TAG_BASIC
     cocoStudioTestItemNames[index].testScene()
 end
 

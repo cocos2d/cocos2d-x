@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __ActionNODE_H__
 #define __ActionNODE_H__
 
-#include "cocos2d.h"
 #include "cocostudio/CCActionFrame.h"
 #include "cocostudio/DictionaryHelper.h"
 

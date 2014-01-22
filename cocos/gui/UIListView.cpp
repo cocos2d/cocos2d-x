@@ -378,7 +378,7 @@ void ListView::refreshView()
     for (int i=0; i<length; i++)
     {
         Widget* item = _items.at(i);
-        item->setZOrder(i);
+        item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();

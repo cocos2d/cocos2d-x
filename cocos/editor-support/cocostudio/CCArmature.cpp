@@ -28,9 +28,12 @@ THE SOFTWARE.
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCSkin.h"
+
 #include "renderer/CCQuadCommand.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "CCShaderCache.h"
+#include "CCDrawingPrimitives.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
 #include "Box2D/Box2D.h"
@@ -570,7 +573,7 @@ void CCArmature::drawContour()
             }
             DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
-            delete points;
+            delete []points;
         }
     }
 }

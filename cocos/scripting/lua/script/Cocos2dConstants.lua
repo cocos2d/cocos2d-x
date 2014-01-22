@@ -359,3 +359,11 @@ cc.GLYPHCOLLECTION_NEHE    = 1
 cc.GLYPHCOLLECTION_ASCII   = 2
 cc.GLYPHCOLLECTION_CUSTOM  = 3
 
+cc.LabelEffect = 
+{
+    NORMAL  = 0,
+    OUTLINE = 1,
+    SHADOW  = 2,
+    GLOW    = 3,
+}
+

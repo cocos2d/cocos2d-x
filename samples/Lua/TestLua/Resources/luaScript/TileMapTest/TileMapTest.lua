@@ -90,7 +90,7 @@ local function TileMapEditTest()
         --   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
         --   The value 0 not rendered so don't assign or change a tile with value 0
 
-        local  tilemap = tolua.cast(layer:getChildByTag(kTagTileMap), "TileMapAtlas")
+        local  tilemap = tolua.cast(layer:getChildByTag(kTagTileMap), "cc.TileMapAtlas")
 
         --
         -- For example you can iterate over all the tiles
@@ -165,7 +165,7 @@ local function TMXOrthoTest()
     local len = table.getn(pChildrenArray)
     for i = 0, len-1, 1 do
         pObject = pChildrenArray[i + 1]
-        child = tolua.cast(pObject, "SpriteBatchNode")
+        child = tolua.cast(pObject, "cc.SpriteBatchNode")
 
         if child == nil then
             break
@@ -219,7 +219,7 @@ local function TMXOrthoTest2()
     local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "cc.SpriteBatchNode")
 
         if child == nil then
             break
@@ -251,7 +251,7 @@ local function TMXOrthoTest3()
     local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "cc.SpriteBatchNode")
 
         if child == nil then
             break
@@ -285,7 +285,7 @@ local function TMXOrthoTest4()
     local  len            = table.getn(pChildrenArray)
 
     for i = 0, len-1, 1 do
-        child = tolua.cast(pChildrenArray[i + 1], "SpriteBatchNode")
+        child = tolua.cast(pChildrenArray[i + 1], "cc.SpriteBatchNode")
 
         if child == nil then
             break
@@ -312,7 +312,7 @@ local function TMXOrthoTest4()
     local function removeSprite(dt)
         scheduler:unscheduleScriptEntry(schedulerEntry)
         schedulerEntry = nil
-        local map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
+        local map = tolua.cast(ret:getChildByTag(kTagTileMap), "cc.TMXTiledMap")
         local  layer0 = map:getLayer("Layer 0")
         local s = layer0:getLayerSize()
 
@@ -376,7 +376,7 @@ local function TMXReadWriteTest()
 
     local function removeSprite(sender)
         --------cclog("removing tile: %x", sender)
-        local node = tolua.cast(sender, "Node")
+        local node = tolua.cast(sender, "cc.Node")
         if nil == node then
             print("Errro node is nil")
         end
@@ -390,9 +390,9 @@ local function TMXReadWriteTest()
 
     local finish = cc.CallFunc:create(removeSprite)
     local  seq0 = cc.Sequence:create(move, rotate, scale, opacity, fadein, scaleback, finish)
-    local  seq1 = tolua.cast(seq0:clone(), "Action")
-    local  seq2 = tolua.cast(seq0:clone(), "Action")
-    local  seq3 = tolua.cast(seq0:clone(), "Action")
+    local  seq1 = tolua.cast(seq0:clone(), "cc.Action")
+    local  seq2 = tolua.cast(seq0:clone(), "cc.Action")
+    local  seq3 = tolua.cast(seq0:clone(), "cc.Action")
 
     tile0:runAction(seq0)
     tile1:runAction(seq1)
@@ -408,8 +408,8 @@ local function TMXReadWriteTest()
 
     local function updateCol(dt)
 
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "cc.TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "cc.TMXLayer")
 
         --------cclog("++++atlas quantity: %d", layer:textureAtlas():getTotalQuads())
         --------cclog("++++children: %d", layer:getChildren():count() )
@@ -426,8 +426,8 @@ local function TMXReadWriteTest()
 
     local function repaintWithGID(dt)
         --    unschedule:_cmd)
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "cc.TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "cc.TMXLayer")
 
         local s = layer:getLayerSize()
         local x = 0
@@ -441,8 +441,8 @@ local function TMXReadWriteTest()
     local function removeTiles(dt)
         scheduler:unscheduleScriptEntry(removeTilesScheduler)
         removeTilesScheduler = nil
-        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "TMXTiledMap")
-        local layer = tolua.cast(map:getChildByTag(0), "TMXLayer")
+        local  map = tolua.cast(ret:getChildByTag(kTagTileMap), "cc.TMXTiledMap")
+        local layer = tolua.cast(map:getChildByTag(0), "cc.TMXLayer")
         local s = layer:getLayerSize()
         local y = 0
         for y=0, s.height-1, 1 do
@@ -588,7 +588,7 @@ local function TMXUncompressedTest()
     local i = 0
     local len = table.getn(pChildrenArray)
     for i = 0, len-1, 1 do
-        layer = tolua.cast(pChildrenArray[i + 1], "TMXLayer")
+        layer = tolua.cast(pChildrenArray[i + 1], "cc.TMXLayer")
         if layer == nil then
             break
         end
@@ -659,7 +659,7 @@ end
 
 local function draw()
 
-    local  map = tolua.cast(getChildByTag(kTagTileMap), "TMXTiledMap")
+    local  map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
     local  group = map:getObjectGroup("Object Group 1")
 
     local  objects = group:getObjects()
@@ -716,7 +716,7 @@ local function TMXIsoObjectsTest()
     local  i = 0
     local  len = table.getn(objects)
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects[i + 1], "Dictionary")
+        dict = tolua.cast(objects[i + 1], "cc.Dictionary")
 
         if dict == nil then
             break
@@ -728,7 +728,7 @@ end
 
 local function draw()
 
-    local map = tolua.cast(getChildByTag(kTagTileMap), "TMXTiledMap")
+    local map = tolua.cast(getChildByTag(kTagTileMap), "cc.TMXTiledMap")
     local group = map:getObjectGroup("Object Group 1")
 
     local  objects = group:getObjects()
@@ -736,20 +736,20 @@ local function draw()
     local  i = 0
     local  len = table.getn(objects)
     for i = 0, len-1, 1 do
-        dict = tolua.cast(objects[i + 1], "Dictionary")
+        dict = tolua.cast(objects[i + 1], "cc.Dictionary")
 
         if dict == nil then
             break
         end
 
         local key = "x"
-        local x = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
+        local x = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("x")):getNumber()
         key = "y"
-        local y = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
+        local y = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("y")):getNumber()
         key = "width"
-        local width = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
+        local width = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("width")):getNumber()
         key = "height"
-        local height = (tolua.cast(dict:objectForKey(key), "String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
+        local height = (tolua.cast(dict:objectForKey(key), "cc.String")):intValue()--dynamic_cast<NSNumber*>(dict:objectForKey("height")):getNumber()
 
         glLineWidth(3)
 
@@ -1081,7 +1081,7 @@ local function TMXOrthoFlipTest()
 
     local i = 0
     for i = 0, table.getn(map:getChildren())-1, 1 do
-        local  child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
+        local  child = tolua.cast(map:getChildren()[i + 1], "cc.SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
@@ -1106,7 +1106,7 @@ local function TMXOrthoFlipRunTimeTest()
 
     local i = 0
     for i = 0, table.getn(map:getChildren())-1, 1 do
-        local child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
+        local child = tolua.cast(map:getChildren()[i + 1], "cc.SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
@@ -1186,7 +1186,7 @@ local function TMXOrthoFromXMLTest()
     local i = 0
     local len = table.getn(map:getChildren())
     for i = 0, len-1, 1 do
-        local  child = tolua.cast(map:getChildren()[i + 1], "SpriteBatchNode")
+        local  child = tolua.cast(map:getChildren()[i + 1], "cc.SpriteBatchNode")
         child:getTexture():setAntiAliasTexParameters()
     end
 
@@ -1214,7 +1214,7 @@ local function TMXBug987()
     local len = table.getn(childs)
     local pNode = nil
     for i = 0, len-1, 1 do
-        pNode = tolua.cast(childs[i + 1], "TMXLayer")
+        pNode = tolua.cast(childs[i + 1], "cc.TMXLayer")
         if pNode == nil then
             break
         end

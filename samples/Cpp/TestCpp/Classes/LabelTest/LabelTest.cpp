@@ -210,7 +210,7 @@ void Atlas1::draw()
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
     
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
@@ -526,7 +526,7 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -1612,7 +1612,7 @@ std::string LabelBMFontBounds::subtitle() const
 
 void LabelBMFontBounds::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

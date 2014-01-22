@@ -66,7 +66,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFUnicodeNew),
     CL(LabelBMFontTestNew),
     CL(LabelTTFDistanceField),
-    CL(LabelTTFDistanceFieldEffect)
+    CL(LabelTTFDistanceFieldEffect),
+    CL(LabelCharMapTest),
+    CL(LabelCrashTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -300,7 +302,7 @@ LabelFNTSpriteActions::LabelFNTSpriteActions()
 
 void LabelFNTSpriteActions::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTSpriteActions::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
     
@@ -910,7 +912,7 @@ std::string LabelFNTBounds::subtitle() const
 
 void LabelFNTBounds::draw()
 {
-    _renderCmd.init(0, _vertexZ);
+    _renderCmd.init(_globalZOrder);
     _renderCmd.func = CC_CALLBACK_0(LabelFNTBounds::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
@@ -1241,4 +1243,72 @@ std::string LabelTTFDistanceFieldEffect::title() const
 std::string LabelTTFDistanceFieldEffect::subtitle() const
 {
     return "Testing effect base on DistanceField";
+}
+
+LabelCharMapTest::LabelCharMapTest()
+{
+    _time = 0.0f;
+
+    auto label1 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
+    addChild(label1, 0, kTagSprite1);
+    label1->setPosition( Point(10,100) );
+    label1->setOpacity( 200 );
+
+    auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
+    addChild(label2, 0, kTagSprite2);
+    label2->setPosition( Point(10,160) );
+    label2->setOpacity( 32 );
+
+    auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    label3->setString("123 Test");
+    addChild(label3, 0, kTagSprite3);
+    label3->setPosition( Point(10,220) );
+
+    schedule(schedule_selector(LabelCharMapTest::step)); 
+}
+
+void LabelCharMapTest::step(float dt)
+{
+    _time += dt;
+    char string[12] = {0};
+    sprintf(string, "%2.2f Test", _time);
+
+    auto label1 = (Label*)getChildByTag(kTagSprite1);
+    label1->setString(string);
+
+    auto label2 = (Label*)getChildByTag(kTagSprite2);
+    sprintf(string, "%d", (int)_time);
+    label2->setString(string);
+}
+
+std::string LabelCharMapTest::title() const
+{
+    return "New Label + char map file";
+}
+
+std::string LabelCharMapTest::subtitle() const
+{
+    return "Updating label should be fast.";
+}
+
+LabelCrashTest::LabelCrashTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 80, GlyphCollection::DYNAMIC,nullptr,true);
+
+    auto label1 = Label::createWithTTF(ttfConfig,"Test崩溃123", TextHAlignment::CENTER, size.width);
+    label1->setPosition( Point(size.width/2, size.height/2) );
+    label1->setAnchorPoint(Point(0.5, 0.5));
+    addChild(label1);
+}
+
+std::string LabelCrashTest::title() const
+{
+    return "New Label Crash Test";
+}
+
+std::string LabelCrashTest::subtitle() const
+{
+    return "Not crash and show [Test123] when using unknown character.";
 }

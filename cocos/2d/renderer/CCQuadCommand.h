@@ -41,22 +41,16 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    void init(int viewport, int32_t depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
+    void init(float depth, GLuint texutreID, GLProgram* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const kmMat4& mv);
 
-    // +----------+----------+-----+-----------------------------------+
-    // |          |          |     |                |                  |
-    // | ViewPort | Transluc |     |      Depth     |  Material ID     |
-    // |   3 bits |    1 bit |     |    24 bits     |      24 bit2     |
-    // +----------+----------+-----+----------------+------------------+
-    virtual int64_t generateID();
-
-    void useMaterial();
+    void useMaterial() const;
 
     //TODO use material to decide if it is translucent
     inline bool isTranslucent() const { return true; }
 
-    inline int32_t getMaterialID() const { return _materialID; }
+    void generateMaterialID();
+    inline uint32_t getMaterialID() const { return _materialID; }
 
     inline GLuint getTextureID() const { return _textureID; }
 
@@ -71,13 +65,7 @@ public:
     inline const kmMat4& getModelView() const { return _mv; }
     
 protected:
-    int32_t _materialID;
-
-    //Key Data
-    int _viewport;          /// Which view port it belongs to
-
-    //TODO use material to determine if it's translucent
-    int32_t _depth;
+    uint32_t _materialID;
 
     //Maternal
     GLuint _textureID;

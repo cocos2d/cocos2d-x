@@ -391,7 +391,7 @@ void Console::commandTextures(int fd, const char *command)
 {
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [&](){
-        mydprintf(fd, "%s", TextureCache::getInstance()->getCachedTextureInfo().c_str());
+        mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
     }
                                         );
 }

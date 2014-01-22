@@ -116,7 +116,7 @@ DrawPrimitivesTest::DrawPrimitivesTest()
 
 void DrawPrimitivesTest::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawPrimitivesTest::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

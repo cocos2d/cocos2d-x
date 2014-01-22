@@ -44,7 +44,7 @@
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "renderer/CCQuadCommand.h"
-#include "CCRenderer.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -197,7 +197,7 @@ int ParticleBatchNode::addChildHelper(ParticleSystem* child, int z, int aTag)
     _children.insert(pos, child);
 
     child->setTag(aTag);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 
     child->setParent(this);
 
@@ -218,7 +218,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
-    if( zOrder == child->getZOrder() )
+    if( zOrder == child->getLocalZOrder() )
     {
         return;
     }
@@ -264,7 +264,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
         }
     }
 
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z)
@@ -280,7 +280,7 @@ void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* chil
         Node* pNode = _children.at(i);
 
         // new index
-        if( pNode->getZOrder() > z &&  ! foundNewIdx )
+        if( pNode->getLocalZOrder() > z &&  ! foundNewIdx )
         {
             *newIndex = i;
             foundNewIdx = true;
@@ -325,7 +325,7 @@ int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
     for( int i=0; i < count; i++ )
     {
         Node *child = _children.at(i);
-        if (child->getZOrder() > z)
+        if (child->getLocalZOrder() > z)
         {
             return i;
         }
@@ -382,9 +382,8 @@ void ParticleBatchNode::draw(void)
         return;
     }
 
-    _batchCommand.init(0,
-                       _vertexZ,
-                       _textureAtlas->getTexture()->getName(),
+    _batchCommand.init(
+                       _globalZOrder,
                        _shaderProgram,
                        _blendFunc,
                        _textureAtlas,
