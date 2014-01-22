@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #include "lua_cocos2dx_gui_manual.hpp"
 
 #ifdef __cplusplus
@@ -71,7 +94,7 @@ static int lua_cocos2dx_Widget_addTouchEventListener(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"Widget",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Widget*>(tolua_tousertype(L,1,0));
@@ -122,7 +145,7 @@ tolua_lerror:
 
 static void extendWidget(lua_State* L)
 {
-    lua_pushstring(L, "Widget");
+    lua_pushstring(L, "ccui.Widget");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -141,7 +164,7 @@ static int lua_cocos2dx_CheckBox_addEventListenerCheckBox(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"CheckBox",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.CheckBox",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<CheckBox*>(tolua_tousertype(L,1,0));
@@ -191,7 +214,7 @@ tolua_lerror:
 
 static void extendCheckBox(lua_State* L)
 {
-    lua_pushstring(L, "CheckBox");
+    lua_pushstring(L, "ccui.CheckBox");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -210,7 +233,7 @@ static int lua_cocos2dx_Slider_addEventListenerSlider(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"Slider",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.Slider",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<Slider*>(tolua_tousertype(L,1,0));
@@ -260,7 +283,7 @@ tolua_lerror:
 
 static void extendSlider(lua_State* L)
 {
-    lua_pushstring(L, "Slider");
+    lua_pushstring(L, "ccui.Slider");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -279,7 +302,7 @@ static int lua_cocos2dx_TextField_addEventListenerTextField(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"TextField",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.TextField",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<TextField*>(tolua_tousertype(L,1,0));
@@ -329,7 +352,7 @@ tolua_lerror:
 
 static void extendTextField(lua_State* L)
 {
-    lua_pushstring(L, "TextField");
+    lua_pushstring(L, "ccui.TextField");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -348,7 +371,7 @@ static int lua_cocos2dx_PageView_addEventListenerPageView(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"PageView",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<PageView*>(tolua_tousertype(L,1,0));
@@ -398,7 +421,7 @@ tolua_lerror:
 
 static void extendPageView(lua_State* L)
 {
-    lua_pushstring(L, "PageView");
+    lua_pushstring(L, "ccui.PageView");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -417,7 +440,7 @@ static int lua_cocos2dx_ListView_addEventListenerListView(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"ListView",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<ListView*>(tolua_tousertype(L,1,0));
@@ -467,7 +490,7 @@ tolua_lerror:
 
 static void extendListView(lua_State* L)
 {
-    lua_pushstring(L, "ListView");
+    lua_pushstring(L, "ccui.ListView");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {
@@ -486,7 +509,7 @@ static int lua_cocos2dx_LayoutParameter_setMargin(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"LayoutParameter",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<LayoutParameter*>(tolua_tousertype(L,1,0));
@@ -554,7 +577,7 @@ static int lua_cocos2dx_LayoutParameter_getMargin(lua_State* L)
     
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-	if (!tolua_isusertype(L,1,"LayoutParameter",0,&tolua_err)) goto tolua_lerror;
+	if (!tolua_isusertype(L,1,"ccui.LayoutParameter",0,&tolua_err)) goto tolua_lerror;
 #endif
     
     self = static_cast<LayoutParameter*>(tolua_tousertype(L,1,0));
@@ -605,7 +628,7 @@ tolua_lerror:
 
 static void extendLayoutParameter(lua_State* L)
 {
-    lua_pushstring(L, "LayoutParameter");
+    lua_pushstring(L, "ccui.LayoutParameter");
     lua_rawget(L, LUA_REGISTRYINDEX);
     if (lua_istable(L,-1))
     {

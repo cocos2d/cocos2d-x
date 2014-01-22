@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +23,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCInputDelegate.h"
+#include "CCDirector.h"
+#include "platform/CCDevice.h"
+#include "CCEventListenerTouch.h"
+#include "CCEventListenerAcceleration.h"
+#include "CCEventListenerKeyboard.h"
 
 using namespace cocos2d;
 

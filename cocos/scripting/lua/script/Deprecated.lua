@@ -706,6 +706,21 @@ end
 rawset(CCEGLView,"sharedOpenGLView",CCEGLViewDeprecated.sharedOpenGLView)
 --functions of CCFileUtils will be deprecated end
 
+--Enums of CCTableView will be deprecated begin
+rawset(CCTableView, "kTableViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCTableView,"kTableViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+rawset(CCTableView,"kTableCellTouched",cc.TABLECELL_TOUCHED)
+rawset(CCTableView,"kTableCellSizeForIndex",cc.TABLECELL_SIZE_FOR_INDEX)
+rawset(CCTableView,"kTableCellSizeAtIndex",cc.TABLECELL_SIZE_AT_INDEX)
+rawset(CCTableView,"kNumberOfCellsInTableView",cc.NUMBER_OF_CELLS_IN_TABLEVIEW)
+--Enums of CCTableView will be deprecated end
+
+--Enums of CCScrollView will be deprecated begin
+rawset(CCScrollView, "kScrollViewScroll",cc.SCROLLVIEW_SCRIPT_SCROLL)
+rawset(CCScrollView,"kScrollViewZoom",cc.SCROLLVIEW_SCRIPT_ZOOM)
+--Enums of CCScrollView will be deprecated end
+
+
 
 --functions of CCApplication will be deprecated end
 local CCApplicationDeprecated = { }

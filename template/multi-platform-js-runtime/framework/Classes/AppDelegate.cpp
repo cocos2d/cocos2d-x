@@ -17,7 +17,7 @@ using namespace CocosDenshion;
 #define ISRUNTIME 1
 
 #ifdef ISRUNTIME
-#include "RuntimeConfig.h"
+#include "Runtime.h"
 #endif // ISRUNTIME
 
 
@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(jsb_register_chipmunk);
     
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->setSearchPath();
+	Runtime::getInstance().setSearchPath();
 #endif
 	
 	sc->start();
@@ -63,9 +63,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->enableDebugger();
 #endif
   
-	
 #ifdef ISRUNTIME
-	RuntimeConfig::getInstance()->waitConnect();
+	Runtime::getInstance().waitDebugConnect();
 	return true;
 #endif
 
@@ -73,26 +72,6 @@ bool AppDelegate::applicationDidFinishLaunching()
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
 	ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
     return true;
-}
-
-void handle_signal(int signal) {
-    static int internal_state = 0;
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    // should start everything back
-    Director* director = Director::getInstance();
-    if (director->getRunningScene()) {
-        director->popToRootScene();
-    } else {
-        PoolManager::sharedPoolManager()->finalize();
-        if (internal_state == 0) {
-            //sc->dumpRoot(NULL, 0, NULL);
-            sc->start();
-            internal_state = 1;
-        } else {
-            sc->runScript("hello.js");
-            internal_state = 0;
-        }
-    }
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too

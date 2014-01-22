@@ -68,5 +68,6 @@
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
+#include "ReleasePoolTest/ReleasePoolTest.h"
 
 #endif

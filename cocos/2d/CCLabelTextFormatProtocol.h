@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,11 +25,16 @@
 
 #ifndef _CCLabelTextFormatProtocol_h_
 #define _CCLabelTextFormatProtocol_h_
-#include "CCFontAtlas.h"
+
 #include <vector>
+
+#include "CCFontAtlas.h"
+#include "CCGeometry.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 
+class Sprite;
 
 struct LetterInfo
 {
@@ -45,13 +51,13 @@ public:
 
     virtual ~LabelTextFormatProtocol() {}
 
-    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) = 0;
+    virtual bool recordLetterInfo(const Point& point,unsigned short int theChar, int spriteIndex) = 0;
     virtual bool recordPlaceholderInfo(int spriteIndex) = 0;
     virtual std::vector<LetterInfo>  *getLettersInfo() = 0;
     virtual float getLetterPosXLeft(int index)  const = 0;
     virtual float getLetterPosXRight(int index) const = 0;
     // sprite related stuff
-    virtual cocos2d::Sprite *getLetter(int ID) = 0;
+    virtual Sprite *getLetter(int ID) = 0;
     
     // font related stuff
     virtual int getCommonLineHeight()  const = 0;
@@ -59,7 +65,7 @@ public:
     virtual int getXOffsetForChar(unsigned short c) const = 0;
     virtual int getYOffsetForChar(unsigned short c) const = 0;
     virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const = 0;
-    virtual cocos2d::Rect getRectForChar(unsigned short c) const = 0;
+    virtual Rect getRectForChar(unsigned short c) const = 0;
     
     // string related stuff
     virtual int getStringNumLines() const = 0;
@@ -67,7 +73,7 @@ public:
     virtual unsigned short getCharAtStringPosition(int position) const = 0;
     virtual unsigned short * getUTF8String() const = 0;
     virtual void assignNewUTF8String(unsigned short *newString) = 0;
-    virtual TextHAlignment   getTextAlignment() const = 0;
+    virtual TextHAlignment getTextAlignment() const = 0;
     
     // label related stuff
     virtual float getMaxLineWidth() const = 0;

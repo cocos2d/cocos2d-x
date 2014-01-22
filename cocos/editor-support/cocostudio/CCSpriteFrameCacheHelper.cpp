@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
+
+#include "CCSpriteFrameCache.h"
 
 using namespace cocos2d;
 
@@ -49,7 +51,7 @@ void SpriteFrameCacheHelper::purge()
 
 void SpriteFrameCacheHelper::addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath)
 {
-    CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(plistPath, imagePath);
 }
 
 SpriteFrameCacheHelper::SpriteFrameCacheHelper()

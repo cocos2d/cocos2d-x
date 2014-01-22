@@ -21,11 +21,13 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_studio_auto.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_gui_auto.cpp \
           ../../auto-generated/lua-bindings/lua_cocos2dx_spine_auto.cpp \
+          ../../auto-generated/lua-bindings/lua_cocos2dx_physics_auto.cpp \
           lua_cocos2dx_manual.cpp \
           lua_cocos2dx_extension_manual.cpp \
           lua_cocos2dx_coco_studio_manual.cpp \
           lua_cocos2dx_gui_manual.cpp \
           lua_cocos2dx_spine_manual.cpp \
+          lua_cocos2dx_physics_manual.cpp \
           lua_cocos2dx_deprecated.cpp \
           lua_xml_http_request.cpp \
           platform/android/CCLuaJavaBridge.cpp \

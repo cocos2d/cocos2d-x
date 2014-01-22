@@ -19,13 +19,10 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\RuntimeConfig.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="SimulatorConfig.cpp">
+    <ClCompile Include="SimulatorWindow.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\BrowseDir.cpp">
+    <ClCompile Include="..\Classes\Runtime.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,15 +33,11 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\RuntimeConfig.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SimulatorConfig.h">
+    <ClInclude Include="SimulatorWindow.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\Classes\BrowseDir.h">
+    <ClInclude Include="..\Classes\Runtime.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

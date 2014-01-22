@@ -9,7 +9,6 @@
                              "PROJECT_NAME.vcxproj.filters",
                              "PROJECT_NAME.vcxproj.user",
                              "PROJECT_NAME.sln",
-                             "game.rc",
                              "main.cpp",
 							 "../Classes/RuntimeConfig.cpp"]
 }

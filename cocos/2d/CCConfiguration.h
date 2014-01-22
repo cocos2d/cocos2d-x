@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -121,8 +122,8 @@ public:
 	/** sets a new key/value pair  in the configuration dictionary */
 	void setValue(const std::string& key, const Value& value);
 
-	/** dumps the current configuration on the console */
-	void dumpInfo() const;
+    /** returns the Configuration info */
+    std::string getInfo() const;
 
 	/** gathers OpenGL / GPU information */
 	void gatherGPUInfo();

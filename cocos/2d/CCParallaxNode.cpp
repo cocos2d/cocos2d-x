@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -100,8 +101,8 @@ void ParallaxNode::addChild(Node *child, int z, const Point& ratio, const Point&
     ccArrayAppendObjectWithResize(_parallaxArray, (Object*)obj);
 
     Point pos = _position;
-    pos.x = pos.x * ratio.x + offset.x;
-    pos.y = pos.y * ratio.y + offset.y;
+    pos.x = -pos.x + pos.x * ratio.x + offset.x;
+    pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
 
     Node::addChild(child, z, child->getTag());

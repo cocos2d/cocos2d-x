@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -58,6 +59,8 @@ extern "C" {
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_spine_auto.hpp"
 #include "lua_cocos2dx_spine_manual.hpp"
+#include "lua_cocos2dx_physics_auto.hpp"
+#include "lua_cocos2dx_physics_manual.hpp"
 #include "lua_cocos2dx_gui_auto.hpp"
 #include "lua_cocos2dx_gui_manual.hpp"
 
@@ -148,7 +151,6 @@ bool LuaStack::init(void)
     register_all_cocos2dx_extension(_state);
     register_all_cocos2dx_deprecated(_state);
     register_cocos2dx_extension_CCBProxy(_state);
-    register_cocos2dx_event_releated(_state);
     tolua_opengl_open(_state);
     register_all_cocos2dx_gui(_state);
     register_all_cocos2dx_studio(_state);
@@ -160,6 +162,10 @@ bool LuaStack::init(void)
     register_all_cocos2dx_spine(_state);
     register_all_cocos2dx_spine_manual(_state);
     register_glnode_manual(_state);
+#if CC_USE_PHYSICS
+    register_all_cocos2dx_physics(_state);
+    register_all_cocos2dx_physics_manual(_state);
+#endif
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif

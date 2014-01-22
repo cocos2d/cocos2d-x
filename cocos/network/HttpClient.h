@@ -1,6 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 greathqy
+ Copyright (c) 2012      greathqy
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,8 +26,6 @@
 
 #ifndef __CCHTTPREQUEST_H__
 #define __CCHTTPREQUEST_H__
-
-#include "cocos2d.h"
 
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"

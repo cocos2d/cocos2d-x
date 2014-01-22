@@ -503,7 +503,7 @@ void TestChangeZorder::changeZorder(float dt)
 
     Node *node = getChildByTag(currentTag);
 
-    node->setZOrder(CCRANDOM_0_1() * 3);
+    node->setLocalZOrder(CCRANDOM_0_1() * 3);
 
     currentTag ++;
     currentTag = currentTag % 3;
@@ -637,7 +637,7 @@ void TestParticleDisplay::onEnter()
     bone->addDisplay(p1, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
-    bone->setZOrder(100);
+    bone->setLocalZOrder(100);
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a3");
 
@@ -645,7 +645,7 @@ void TestParticleDisplay::onEnter()
     bone->addDisplay(p2, 0);
     bone->changeDisplayWithIndex(0, true);
     bone->setIgnoreMovementBoneData(true);
-    bone->setZOrder(100);
+    bone->setLocalZOrder(100);
     bone->setScale(1.2f);
     armature->addBone(bone, "bady-a30");
 }
@@ -1023,7 +1023,7 @@ void TestColliderDetector::update(float delta)
     // This code is just telling how to get the vertex.
     // For a more accurate collider detection, you need to implemente yourself.
     const Map<std::string, Bone*>& map = armature2->getBoneDic();
-    for(auto element : map)
+    for(const auto& element : map)
     {
         Bone *bone = element.second;
         ColliderDetector *detector = bone->getColliderDetector();
@@ -1033,12 +1033,12 @@ void TestColliderDetector::update(float delta)
 
         const cocos2d::Vector<ColliderBody*>& bodyList = detector->getColliderBodyList();
 
-        for (auto object : bodyList)
+        for (const auto& object : bodyList)
         {
             ColliderBody *body = static_cast<ColliderBody*>(object);
             const std::vector<Point> &vertexList = body->getCalculatedVertexList();
 
-            float minx, miny, maxx, maxy = 0;
+            float minx = 0, miny = 0, maxx = 0, maxy = 0;
             int length = vertexList.size();
             for (int i = 0; i<length; i++)
             {
@@ -1067,8 +1067,22 @@ void TestColliderDetector::update(float delta)
 }
 void TestColliderDetector::draw()
 {
-    armature2->drawContour();
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(TestColliderDetector::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
+
+void TestColliderDetector::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    armature2->drawContour();
+    
+    kmGLLoadMatrix(&oldMat);
+}
+
 #endif
 
 
@@ -1094,7 +1108,7 @@ std::string TestBoundingBox::title() const
 }
 void TestBoundingBox::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TestBoundingBox::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
@@ -1264,7 +1278,7 @@ void TestArmatureNesting2::onEnter()
     touchedMenu = false;
 
     LabelTTF* label = CCLabelTTF::create("Change Mount", "Arial", 20);
-    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::ChangeMountCallback, this));
+    MenuItemLabel* pMenuItem = CCMenuItemLabel::create(label, CC_CALLBACK_1(TestArmatureNesting2::changeMountCallback, this));
 
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
 
@@ -1321,7 +1335,7 @@ void TestArmatureNesting2::onTouchesEnded(const std::vector<Touch*>& touches, Ev
     armature->runAction(Sequence::create(move, nullptr));
 }
 
-void TestArmatureNesting2::ChangeMountCallback(Object* pSender)
+void TestArmatureNesting2::changeMountCallback(Object* pSender)
 {
     hero->stopAllActions();
 

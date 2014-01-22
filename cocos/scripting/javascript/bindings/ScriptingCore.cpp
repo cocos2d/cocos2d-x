@@ -200,12 +200,12 @@ void js_log(const char *format, ...) {
 
     if (_js_log_buf == NULL)
     {
-        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
-        _js_log_buf[kMaxLogLen] = '\0';
+        _js_log_buf = (char *)calloc(sizeof(char), MAX_LOG_LENGTH+1);
+        _js_log_buf[MAX_LOG_LENGTH] = '\0';
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
+    int len = vsnprintf(_js_log_buf, MAX_LOG_LENGTH, format, vl);
     va_end(vl);
     if (len > 0)
     {

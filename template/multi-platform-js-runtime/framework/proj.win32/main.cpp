@@ -1,6 +1,6 @@
 #include "main.h"
 #include "AppDelegate.h"
-#include "SimulatorConfig.h"
+#include "SimulatorWindow.h"
 
 USING_NS_CC;
 
@@ -24,7 +24,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-	SimulatorConfig::getInstance()->createSimulator("TestCPP",960,640);
+	createSimulator("TestCPP",960,640);
     int ret = Application::getInstance()->run();
 
 #ifdef USE_WIN32_CONSOLE
@@ -34,7 +34,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     return ret;
 }
 
-std::string GetCurAppPath(void)
+std::string getCurAppPath(void)
 {
 	TCHAR szAppDir[MAX_PATH]={0};
 	if (!GetModuleFileName(NULL,szAppDir,MAX_PATH))

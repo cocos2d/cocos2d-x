@@ -19,10 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
 #include "CCPhysicsSprite.h"
 
-#if defined(CC_ENABLE_CHIPMUNK_INTEGRATION) && defined(CC_ENABLE_BOX2D_INTEGRATION)
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION && CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
 #endif
 
@@ -406,3 +407,4 @@ const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 }
 
 NS_CC_EXT_END
+#endif //(CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)

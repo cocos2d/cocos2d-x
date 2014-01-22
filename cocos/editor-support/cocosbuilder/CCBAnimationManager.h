@@ -1,7 +1,11 @@
 #ifndef __CCB_CCBANIMATION_MANAGER_H__
 #define __CCB_CCBANIMATION_MANAGER_H__
 
-#include "cocos2d.h"
+#include "CCMap.h"
+#include "CCActionInterval.h"
+#include "CCActionInstant.h"
+#include "CCActionEase.h"
+
 #include "extensions/ExtensionMacros.h"
 #include "CCBSequence.h"
 #include "CCBSequenceProperty.h"

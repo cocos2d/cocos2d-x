@@ -1,6 +1,7 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 greathqy
+ Copyright (c) 2012      greathqy
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,9 +25,16 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
+
 #include <thread>
 #include <queue>
+#include <condition_variable>
+
 #include <errno.h>
+
+#include "CCVector.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 
 #include "curl/curl.h"
 

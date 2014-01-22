@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMBASE_H__
 #define __CC_EXTENTIONS_CCCOMBASE_H__
 
-#include "cocos2d.h"
 #include "ObjectFactory.h"
 #include "DictionaryHelper.h"
 #include <string>

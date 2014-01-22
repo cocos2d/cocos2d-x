@@ -175,19 +175,17 @@ xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\HelloJava
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\BrowseDir.cpp" />
-    <ClCompile Include="..\Classes\RuntimeConfig.cpp" />
+    <ClCompile Include="..\Classes\Runtime.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="SimulatorConfig.cpp" />
+    <ClCompile Include="SimulatorWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Classes\BrowseDir.h" />
-    <ClInclude Include="..\Classes\RuntimeConfig.h" />
+    <ClInclude Include="..\Classes\Runtime.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SimulatorConfig.h" />
+    <ClInclude Include="SimulatorWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
