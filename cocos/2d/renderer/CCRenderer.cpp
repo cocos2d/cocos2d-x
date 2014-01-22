@@ -244,23 +244,25 @@ void Renderer::render()
                 if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
                     QuadCommand* cmd = static_cast<QuadCommand*>(command);
-                    ssize_t cmdQuadCount = cmd->getQuadCount();
+                    CCASSERT(nullptr!= cmd, "Illegal command for RenderCommand Taged as QUAD_COMMAND");
                     
                     //Batch quads
-                    if(_numQuads + cmdQuadCount > VBO_SIZE)
+                    if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
                     {
-                        CCASSERT(cmdQuadCount < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
                         _lastCommand --;
                         drawBatchedQuads();
                         _lastCommand ++;
                     }
+                    
+                    _batchedQuadCommands.push_back(cmd);
+                    
+                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                    convertToWorldCoordiantes(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
 
-                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
-                    convertToWorldCoordiantes(_quads + _numQuads, cmdQuadCount, cmd->getModelView());
-
-                    _numQuads += cmdQuadCount;
+                    _numQuads += cmd->getQuadCount();
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
@@ -355,7 +357,7 @@ void Renderer::drawBatchedQuads()
     int startQuad = 0;
 
     //Upload buffer to VBO
-    if(_numQuads <= 0)
+    if(_numQuads <= 0 || 0 == _batchedQuadCommands.size())
     {
         _firstCommand = _lastCommand;
         return;
@@ -398,12 +400,13 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    //for(size_t i = _firstCommand; i <= _lastCommand; i++)
+    for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
     {
-        RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
-        if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
+        //RenderCommand* command = _renderGroups[_renderStack.top().renderQueueID][i];
+        //if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
         {
-            QuadCommand* cmd = static_cast<QuadCommand*>(command);
+            QuadCommand* cmd = *i;
             if(_lastMaterialID != cmd->getMaterialID())
             {
                 //Draw quads
@@ -443,7 +446,7 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    
+    _batchedQuadCommands.clear();
     _firstCommand = _lastCommand + 1;
     _numQuads = 0;
 }
