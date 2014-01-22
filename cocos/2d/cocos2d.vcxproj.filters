@@ -840,9 +840,6 @@
     <ClInclude Include="CCLabelBMFont.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCLabelTextFormatProtocol.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="CCLabelTextFormatter.h">
       <Filter>label_nodes</Filter>
     </ClInclude>

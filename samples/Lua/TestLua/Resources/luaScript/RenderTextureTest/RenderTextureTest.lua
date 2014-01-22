@@ -25,7 +25,7 @@ local function RenderTextureSave()
 
         local pImage = m_pTarget:newImage()
 
-        local tex = cc.TextureCache:getInstance():addUIImage(pImage, png)
+        local tex = cc.Director:getInstance():getTextureCache():addUIImage(pImage, png)
 
         pImage:release()
 
@@ -44,7 +44,7 @@ local function RenderTextureSave()
         if event == "exit" then
             m_pBrush:release()
             m_pTarget:release()
-            cc.TextureCache:getInstance():removeUnusedTextures()
+            cc.Director:getInstance():getTextureCache():removeUnusedTextures()
         end
     end
 

@@ -80,7 +80,7 @@ local function initWithSubTest(nSubTest, p)
 	parent = p
 	batchNode = nil
 
-	local mgr = cc.TextureCache:getInstance()
+	local mgr = cc.Director:getInstance():getTextureCache()
 	-- remove all texture
 	mgr:removeTexture(mgr:addImage("Images/grossinis_sister1.png"))
     mgr:removeTexture(mgr:addImage("Images/grossini_dance_atlas.png"))
