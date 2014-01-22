@@ -44,24 +44,23 @@ AutoreleasePool::AutoreleasePool(const std::string &name)
 AutoreleasePool::~AutoreleasePool()
 {
     CCLOGINFO("deallocing AutoreleasePool: %p", this);
-    _managedObjectArray.clear();
+    clear();
     
     PoolManager::getInstance()->pop();
 }
 
 void AutoreleasePool::addObject(Object* object)
 {
-    _managedObjectArray.pushBack(object);
-
-    CCASSERT(object->_reference > 1, "reference count should be greater than 1");
+    _managedObjectArray.push_back(object);
 }
 
 void AutoreleasePool::clear()
 {
-    if (!_managedObjectArray.empty())
+    for (const auto &obj : _managedObjectArray)
     {
-        _managedObjectArray.clear();
+        obj->release();
     }
+    _managedObjectArray.clear();
 }
 
 void AutoreleasePool::dump()

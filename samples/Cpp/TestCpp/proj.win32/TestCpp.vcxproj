@@ -187,6 +187,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
@@ -336,6 +337,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
