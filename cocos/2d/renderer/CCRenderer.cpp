@@ -112,6 +112,7 @@ Renderer::Renderer()
     _renderGroups.push_back(defaultRenderQueue);
     RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(elelment);
+    _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
 Renderer::~Renderer()
@@ -406,7 +407,7 @@ void Renderer::drawBatchedQuads()
     int startQuad = 0;
 
     //Upload buffer to VBO
-    if(_numQuads <= 0 || 0 == _batchedQuadCommands.size())
+    if(_numQuads <= 0 || _batchedQuadCommands.empty())
     {
         return;
     }
@@ -455,9 +456,9 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
+    //for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
+    for(const auto& cmd : _batchedQuadCommands)
     {
-        QuadCommand* cmd = *i;
         if(_lastMaterialID != cmd->getMaterialID())
         {
             //Draw quads
