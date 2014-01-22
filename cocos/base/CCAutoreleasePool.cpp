@@ -30,27 +30,28 @@ NS_CC_BEGIN
 AutoreleasePool::AutoreleasePool()
 :_name("")
 {
+    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
 AutoreleasePool::AutoreleasePool(const std::string &name)
 :_name(name)
 {
+    _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
 }
 
 AutoreleasePool::~AutoreleasePool()
 {
     CCLOGINFO("deallocing AutoreleasePool: %p", this);
-    _managedObjectArray.clear();
+    clear();
     
     PoolManager::getInstance()->pop();
 }
 
 void AutoreleasePool::addObject(Object* object)
 {
-    // only have one copy of Object*
-    _managedObjectArray.insert(object);
+    _managedObjectArray.push_back(object);
 }
 
 void AutoreleasePool::clear()

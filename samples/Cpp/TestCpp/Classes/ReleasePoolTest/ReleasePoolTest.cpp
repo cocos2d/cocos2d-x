@@ -31,40 +31,50 @@ void ReleasePoolTestScene::runThisTest()
     
     // reference count should be added when added into auto release pool
     
-    TestObject *obj = new TestObject("my test object");
+    TestObject *obj = new TestObject("testobj");
     obj->autorelease();
     assert(obj->retainCount() == 1);
     
-    // can invoke autorelease more than once
+    // should retain first before invoking autorelease
+    obj->retain();
     obj->autorelease();
-    assert(obj->retainCount() == 1);
+    assert(obj->retainCount() == 2);
     
     // create an autorelease pool in stack
     
     {
         AutoreleasePool pool1;
         
+        // can invoke autorelease more than once
+        obj->retain();
         obj->autorelease();
-        assert(obj->retainCount() == 1);
+        assert(obj->retainCount() == 3);
+        obj->retain();
+        obj->autorelease();
+        assert(obj->retainCount() == 4);
         
         // retain, release can work together with autorelease pool
         obj->retain();
-        assert(obj->retainCount() == 2);
+        assert(obj->retainCount() == 5);
         obj->release();
-        assert(obj->retainCount() == 1);
+        assert(obj->retainCount() == 4);
     }
     
-    // pool is destroyed, so the release count is minused by one, should print that the "obj" is released
+    assert(obj->retainCount() == 2);
     
+    // example of using temple autorelease pool
     {
         AutoreleasePool pool2;
+        char name[20];
         for (int i = 0; i < 100; ++i)
         {
-            TestObject *tmpObj = new TestObject();
+            snprintf(name, 20, "object%d", i);
+            TestObject *tmpObj = new TestObject(name);
             tmpObj->autorelease();
         }
-        pool2.dump();
     }
+    
+    // object in pool2 should be released
     
     Director::getInstance()->replaceScene(this);
 }
