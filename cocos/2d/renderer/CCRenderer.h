@@ -32,10 +32,12 @@
 #include "CCGL.h"
 #include <vector>
 #include <stack>
+#include <list>
 
 NS_CC_BEGIN
 
 class EventListenerCustom;
+class QuadCommand;
 
 typedef std::vector<RenderCommand*> RenderQueue;
 
@@ -90,6 +92,8 @@ protected:
 
     size_t _firstCommand;
     size_t _lastCommand;
+
+    std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];
