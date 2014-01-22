@@ -109,7 +109,6 @@ protected:
 
     uint32_t _lastMaterialID;
 
-    ssize_t _firstCommand;
     ssize_t _lastCommand;
 
     std::vector<QuadCommand*> _batchedQuadCommands;
