@@ -109,8 +109,6 @@ protected:
 
     uint32_t _lastMaterialID;
 
-    ssize_t _lastCommand;
-
     std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
