@@ -100,7 +100,6 @@ void RenderQueue::clear()
 
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_lastCommand(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -281,13 +280,10 @@ void Renderer::render()
             RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
             size_t len = currRenderQueue.size();
             
-            //Refresh the batch command index in case the renderStack has changed.
-            _lastCommand = _renderStack.top().currentIndex;
-            
             //Process RenderQueue
             for(size_t i = _renderStack.top().currentIndex; i < len; i++)
             {
-                _renderStack.top().currentIndex = _lastCommand = i;
+                _renderStack.top().currentIndex = i;
                 auto command = currRenderQueue[i];
 
                 auto commandType = command->getType();
@@ -303,9 +299,7 @@ void Renderer::render()
                         CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
-                        _lastCommand --;
                         drawBatchedQuads();
-                        _lastCommand ++;
                     }
                     
                     _batchedQuadCommands.push_back(cmd);
@@ -378,7 +372,6 @@ void Renderer::render()
     }
     RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(element);
-    _lastCommand = 0;
     _lastMaterialID = 0;
 }
 
