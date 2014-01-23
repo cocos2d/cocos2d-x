@@ -15,8 +15,9 @@ USING_NS_CC_EXT;
 
 EditBoxTest::EditBoxTest()
 {
-    auto visibleOrigin = EGLView::getInstance()->getVisibleOrigin();
-    auto visibleSize = EGLView::getInstance()->getVisibleSize();
+    auto glview = Director::getInstance()->getOpenGLView();
+    auto visibleOrigin = glview->getVisibleOrigin();
+    auto visibleSize = glview->getVisibleSize();
     
     auto pBg = Sprite::create("Images/HelloWorld.png");
     pBg->setPosition(Point(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));

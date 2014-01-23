@@ -30,8 +30,6 @@ USING_NS_CC;
 int main(int argc, char *argv[])
 {
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("WatermelonWithMe",900,640);
     return Application::getInstance()->run();
 }
 

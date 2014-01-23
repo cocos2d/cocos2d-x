@@ -20,16 +20,18 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    auto pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    auto director = Director::getInstance();
+    auto glview = EGLView::createWithSize("Test Lua", Size(900,640));
+
+    director->setOpenGLView(glview);
 
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
     
-    auto screenSize = EGLView::getInstance()->getFrameSize();
+    auto screenSize = glview->getFrameSize();
     
     auto designSize = Size(480, 320);
     
@@ -41,10 +43,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         std::vector<std::string> searchPaths;
         searchPaths.push_back("hd");
         pFileUtils->setSearchPaths(searchPaths);
-        pDirector->setContentScaleFactor(resourceSize.height/designSize.height);
+        director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
     
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::FIXED_HEIGHT);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::FIXED_HEIGHT);
     
     // register lua engine
     LuaEngine* pEngine = LuaEngine::getInstance();

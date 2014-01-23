@@ -29,15 +29,18 @@
 #define kLabelZOrder  9999
 
 #include "CCEditBox.h"
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 
 #define getEditBoxImplIOS() ((cocos2d::extension::EditBoxImplIOS*)editBox_)
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
 @implementation CCCustomUITextField
-- (CGRect)textRectForBounds:(CGRect)bounds {
-    float padding = CC_EDIT_BOX_PADDING * cocos2d::EGLView::getInstance()->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+
+    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -281,9 +284,9 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
 {
     do 
     {
-        EGLViewProtocol* eglView = EGLView::getInstance();
+        auto glview = cocos2d::Director::getInstance()->getOpenGLView();
 
-        CGRect rect = CGRectMake(0, 0, size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
+        CGRect rect = CGRectMake(0, 0, size.width * glview->getScaleX(),size.height * glview->getScaleY());
 
         if (_inRetinaMode)
         {
@@ -358,7 +361,10 @@ void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
 	NSString * fntName = [NSString stringWithUTF8String:pFontName];
-    float scaleFactor = EGLView::getInstance()->getScaleX();
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+
+    float scaleFactor = glview->getScaleX();
     UIFont *textFont = nil;
     if (isValidFontName) {
         textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
@@ -528,11 +534,11 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 
 static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
-    EGLViewProtocol* eglView = EGLView::getInstance();
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
     
-    Point visiblePos = Point(designCoord.x * eglView->getScaleX(), designCoord.y * eglView->getScaleY());
-    Point screenGLPos = visiblePos + eglView->getViewPortRect().origin;
+    Point visiblePos = Point(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
+    Point screenGLPos = visiblePos + glview->getViewPortRect().origin;
     
     CGPoint screenPos = CGPointMake(screenGLPos.x, viewH - screenGLPos.y);
     
@@ -561,8 +567,8 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     _contentSize = size;
     CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
-    EGLViewProtocol* eglView = EGLView::getInstance();
-    CGSize controlSize = CGSizeMake(size.width * eglView->getScaleX(),size.height * eglView->getScaleY());
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
     
     if (_inRetinaMode)
     {

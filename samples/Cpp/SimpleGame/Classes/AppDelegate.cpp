@@ -15,10 +15,11 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
+    auto glview = EGLView::createWithSize("Simple Game", Size(900,640));
+
+    director->setOpenGLView(glview);
     
-    director->setOpenGLView(EGLView::getInstance());
-    
-    auto screenSize = EGLView::getInstance()->getFrameSize();
+    auto screenSize = glview->getFrameSize();
     auto designSize = Size(480, 320);
     std::vector<std::string> searchPaths;
     
@@ -36,7 +37,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     FileUtils::getInstance()->setSearchPaths(searchPaths);
     
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
     director->setDisplayStats(true);

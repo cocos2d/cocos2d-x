@@ -131,9 +131,10 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
     _resolutionPolicy = resolutionPolicy;
     
 	// reset director's member variables to fit visible rect
-    Director::getInstance()->_winSizeInPoints = getDesignResolutionSize();
-    Director::getInstance()->createStatsLabel();
-    Director::getInstance()->setGLDefaultValues();
+    auto director = Director::getInstance();
+    director->_winSizeInPoints = getDesignResolutionSize();
+    director->createStatsLabel();
+    director->setGLDefaultValues();
 }
 
 const Size& EGLViewProtocol::getDesignResolutionSize() const 

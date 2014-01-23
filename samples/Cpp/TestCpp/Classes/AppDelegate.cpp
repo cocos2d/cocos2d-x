@@ -26,14 +26,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 	// XXX: but at this point, the director is already initialized
 	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
+    auto glview = EGLView::create("Test Cpp");
+
     // initialize director
     auto director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
+    director->setOpenGLView(glview);
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
 
-    auto screenSize = EGLView::getInstance()->getFrameSize();
+    auto screenSize = glview->getFrameSize();
 
     auto designSize = Size(480, 320);
 
@@ -73,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 	pFileUtils->setSearchPaths(searchPaths);
 
-    EGLView::getInstance()->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
+    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
     auto scene = Scene::create();
     auto layer = new TestController();
