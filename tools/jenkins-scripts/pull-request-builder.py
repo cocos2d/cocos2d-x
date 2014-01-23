@@ -54,7 +54,11 @@ def main():
     branch = pr['base']['ref']
 
     #set commit status to pending
-    target_url = os.environ['BUILD_URL']
+    #target_url = os.environ['BUILD_URL']
+    jenkins_url = os.environ['JENKINS_URL']
+    job_name = os.environ['JOB_NAME'].split('/')[0]
+    build_number = os.environ['BUILD_NUMBER']
+    target_url = jenkins_url + 'job/' + job_name + '/' + build_number
 
     set_description(pr_desc, target_url)
     
@@ -141,21 +145,13 @@ def main():
 
     #get build result
     print "build finished and return " + str(ret)
+    
     exit_code = 1
     if ret == 0:
         exit_code = 0
-        data['state'] = "success"
-        
     else:
         exit_code = 1
-        data['state'] = "failure"
-
-    #set commit status
-    try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-    except:
-        traceback.print_exc()
-
+    
     #clean workspace
     os.system("cd " + os.environ['WORKSPACE']);
     os.system("git checkout develop")
