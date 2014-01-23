@@ -12,26 +12,18 @@ local function createTileDemoLayer(title, subtitle)
     Helper.titleLabel:setString(titleStr)
     Helper.subtitleLabel:setString(subTitleStr)
 
-    local prev = {x = 0, y = 0}
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            prev.x = x
-            prev.y = y
-            return true
-        elseif  eventType == "moved" then
-            local node  = layer:getChildByTag(kTagTileMap)
-            local newX  = node:getPositionX()
-            local newY  = node:getPositionY()
-            local diffX = x - prev.x
-            local diffY = y - prev.y
-
-            node:setPosition( cc.pAdd(cc.p(newX, newY), cc.p(diffX, diffY)) )
-            prev.x = x
-            prev.y = y
-        end
+    local function onTouchesMoved(touches, event )
+        local diff = touches[1]:getDelta()
+        local node = layer:getChildByTag(kTagTileMap)
+        local currentPosX, currentPosY= node:getPosition()
+        node:setPosition(cc.p(currentPosX + diff.x, currentPosY + diff.y))
     end
-    layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouchEvent)
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
     return layer
 end
 --------------------------------------------------------------------

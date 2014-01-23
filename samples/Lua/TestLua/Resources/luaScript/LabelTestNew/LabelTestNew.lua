@@ -596,9 +596,6 @@ local LabelFNTMultiLineAlignment = {
 function LabelFNTMultiLineAlignment.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
-
-    layer:setTouchEnabled(true)
-
     -- ask director the the window size
     local size = cc.Director:getInstance():getWinSize()
 
@@ -674,7 +671,46 @@ function LabelFNTMultiLineAlignment.create()
     layer:addChild(stringMenu)
     layer:addChild(alignmentMenu)
     layer:registerScriptHandler(LabelFNTMultiLineAlignment.onNodeEvent)
-    layer:registerScriptTouchHandler(LabelFNTMultiLineAlignment.onTouchEvent)
+
+    local function onTouchesBegan(touches, event)
+        local location = touches[1]:getLocationInView()
+        if cc.rectContainsPoint(LabelFNTMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), cc.p(location.x, location.y)) then
+            LabelFNTMultiLineAlignment._drag = true
+            LabelFNTMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
+        end
+    end
+
+    local function onTouchesMoved(touches, event)
+       if LabelFNTMultiLineAlignment._drag == false then
+            return
+        end
+
+        local winSize = cc.Director:getInstance():getWinSize()
+        local location = touches[1]:getLocationInView()
+
+        LabelFNTMultiLineAlignment._pArrowsShouldRetain:setPosition(
+            math.max(math.min(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+            LabelFNTMultiLineAlignment._pArrowsShouldRetain:getPositionY())
+
+        local labelWidth = math.abs(LabelFNTMultiLineAlignment._pArrowsShouldRetain:getPositionX() - LabelFNTMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
+
+        LabelFNTMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
+    end
+
+    local  function onTouchesEnded(touch, event)
+        LabelFNTMultiLineAlignment._drag = false
+        LabelFNTMultiLineAlignment.snapArrowsToEdge()
+        LabelFNTMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
     return layer
 end
 
@@ -722,35 +758,6 @@ function LabelFNTMultiLineAlignment.alignmentChanged(tag, sender)
     end
 
     LabelFNTMultiLineAlignment.snapArrowsToEdge()
-end
-
-function LabelFNTMultiLineAlignment.onTouchEvent(eventType, x, y)
-    -- cclog("type:"..eventType.."["..x..","..y.."]")
-    if eventType == "began" then
-        if cc.rectContainsPoint(LabelFNTMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), cc.p(x, y)) then
-            LabelFNTMultiLineAlignment._drag = true
-            LabelFNTMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
-            return true
-        end
-    elseif eventType == "ended" then
-        LabelFNTMultiLineAlignment._drag = false
-        LabelFNTMultiLineAlignment.snapArrowsToEdge()
-        LabelFNTMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
-    elseif eventType == "moved" then
-        if LabelFNTMultiLineAlignment._drag == false then
-            return
-        end
-
-        local winSize = cc.Director:getInstance():getWinSize()
-        LabelFNTMultiLineAlignment._pArrowsShouldRetain:setPosition(
-            math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-            LabelFNTMultiLineAlignment._pArrowsShouldRetain:getPositionY())
-
-        local labelWidth = math.abs(LabelFNTMultiLineAlignment._pArrowsShouldRetain:getPositionX() - LabelFNTMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
-
-        LabelFNTMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
-        
-    end
 end
 
 function LabelFNTMultiLineAlignment.snapArrowsToEdge()

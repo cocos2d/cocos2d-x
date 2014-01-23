@@ -22,8 +22,6 @@ local function MenuLayerMainMenu()
     local m_disabledItem = nil
 
     local ret = cc.Layer:create()
-    ret:setTouchEnabled(true)
-    ret:setTouchMode(cc.TOUCHES_ONE_BY_ONE )
 
     -- Font Item
     local  spriteNormal = cc.Sprite:create(s_MenuItem, cc.rect(0,23*2,115,23))
@@ -542,32 +540,32 @@ local function RemoveMenuItemWhenMove()
 
     menu:setPosition(cc.p(s.width/2, s.height/2))
 
-    ret:setTouchEnabled(true)
---[[
+    local function onTouchBegan(touch, event)
+        return true
+    end
+
+    local function onTouchMoved(touch, event)
+        if item ~= nil then
+            item:removeFromParent(true)
+            --item:release()
+            --item = nil
+        end
+    end
+
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(listener, -129)
+
     local function onNodeEvent(event)
-        if event == "enter" then
-            cc.Director:getInstance():getTouchDispatcher():addTargetedDelegate(ret, -129, false)
-        elseif event == "exit" then
-           -- item:release()
+        if event == "exit" then
+           ret:getEventDispatcher():removeEventListener(listener)
         end
     end
 
     ret:registerScriptHandler(onNodeEvent)
-    ]]--
 
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            return true
-        elseif  eventType == "moved" then
-            if item ~= nil then
-                item:removeFromParent(true)
-                --item:release()
-                --item = nil
-            end
-        end
-    end
-
-    ret:registerScriptTouchHandler(onTouchEvent,false,-129,false)
     return ret
 end
 

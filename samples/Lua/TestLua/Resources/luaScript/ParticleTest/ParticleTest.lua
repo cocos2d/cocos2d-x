@@ -147,28 +147,34 @@ local function getBaseLayer()
     local seq = cc.Sequence:create(move, move_back)
     background:runAction(cc.RepeatForever:create(seq))
 
-	local function onTouchEnded(x, y)
-		local pos = cc.p(0, 0)
-		if background ~= nil then
-			pos = background:convertToWorldSpace(cc.p(0, 0))
-		end
+    local function onTouchesEnded(touches, event)
+        local location = touches[1]:getLocation()
+        local pos = cc.p(0, 0)
+        if background ~= nil then
+            pos = background:convertToWorldSpace(cc.p(0, 0))
+        end
 
-		if emitter ~= nil then
-			local newPos = cc.pSub(cc.p(x, y), pos)
-			emitter:setPosition(newPos.x, newPos.y)
-		end
-	end
-
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return true
-        else
-            return onTouchEnded(x, y)
+        if emitter ~= nil then
+            local newPos = cc.pSub(location, pos)
+            emitter:setPosition(newPos.x, newPos.y)
         end
     end
 
-	layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouch)
+    local function onTouchesBegan(touches, event)
+         onTouchesEnded(touches, event);
+    end
+
+    local function onTouchesMoved(touches, event)
+         onTouchesEnded(touches, event);
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
 	layer:registerScriptHandler(baseLayer_onEnterOrExit)
 
 	return layer
