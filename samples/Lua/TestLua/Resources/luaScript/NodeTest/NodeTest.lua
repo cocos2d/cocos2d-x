@@ -299,7 +299,7 @@ local function shouldNotCrash(dt)
 
     -- if the node has timers, it crashes
     local explosion = cc.ParticleSun:create()
-    explosion:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    explosion:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
 
     explosion:setPosition(s.width / 2, s.height / 2)
 
@@ -369,7 +369,7 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = cc.ParticleFire:create()
-    fire:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    fire:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
 	fire = tolua.cast(fire, "cc.Node")
     fire:setPosition(80, s.height / 2 - 50)
 

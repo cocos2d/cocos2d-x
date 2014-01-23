@@ -23,23 +23,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_WIN32_H__
-#define __CC_EGLVIEW_WIN32_H__
+#ifndef __CC_EGLVIEW_DESKTOP_H__
+#define __CC_EGLVIEW_DESKTOP_H__
 
-#include "CCStdC.h"
 #include "platform/CCCommon.h"
-#include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
-
 #include "glfw3.h"
 
 NS_CC_BEGIN
 
-class EGL;
-
 class CC_DLL EGLView : public EGLViewProtocol
 {
 public:
+    // static function
+    /**
+     @brief    get the shared main open gl window
+     */
+    static EGLView* getInstance();
+
+    /** @deprecated Use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+
     /**
      * @js ctor
      */
@@ -49,7 +53,7 @@ public:
      * @lua NA
      */
     virtual ~EGLView();
-
+    
     /* override functions */
     virtual bool isOpenGLReady();
     virtual void end();
@@ -59,49 +63,41 @@ public:
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
-    bool init(const char* viewName, float width, float height, float frameZoomFactor = 1.0f);
-public:
+    bool init(const std::string& viewName, float width, float height, float frameZoomFactor = 1.0f);
 
     //void resize(int width, int height);
+ 
 	float getFrameZoomFactor();
     //void centerWindow();
 
-    typedef void (*LPFN_ACCELEROMETER_KEYHOOK)( UINT message,WPARAM wParam, LPARAM lParam );
-    void setAccelerometerKeyHook( LPFN_ACCELEROMETER_KEYHOOK lpfnAccelerometerKeyHook );
-
+    
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
-    
-    // static function
-    /**
-    @brief    get the shared main open gl window
-    */
-    static EGLView* getInstance();
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
-protected:
-    /* 
-     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
-     */
-    void setFrameZoomFactor(float fZoomFactor);
-private:
-    bool _captured;
-    LPFN_ACCELEROMETER_KEYHOOK _lpfnAccelerometerKeyHook;
-    bool _supportTouch;
 
-    int _frameBufferSize[2];
-    float _frameZoomFactor;
-    static EGLView* s_pEglView;
-public:
     bool windowShouldClose();
-
     void pollEvents();
     GLFWwindow* getWindow() const { return _mainWindow; }
-private:
+
+protected:
+    /*
+     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     */
+    void setFrameZoomFactor(float zoomFactor);
+    bool initGlew();
+    inline bool isRetina() { return _isRetina; };
+
+    bool _captured;
+    bool _supportTouch;
+    bool _isRetina;
+
+    float _frameZoomFactor;
+    static EGLView* s_pEglView;
+
     GLFWwindow* _mainWindow;
+    friend class EGLViewEventHandler;
 };
 
-NS_CC_END
+NS_CC_END   // end of namespace   cocos2d
 
-#endif    // end of __CC_EGLVIEW_WIN32_H__
+#endif	// end of __CC_EGLVIEW_DESKTOP_H__

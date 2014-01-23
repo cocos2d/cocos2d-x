@@ -33,12 +33,12 @@ void ReleasePoolTestScene::runThisTest()
     
     TestObject *obj = new TestObject("testobj");
     obj->autorelease();
-    assert(obj->retainCount() == 1);
+    assert(obj->getReferenceCount() == 1);
     
     // should retain first before invoking autorelease
     obj->retain();
     obj->autorelease();
-    assert(obj->retainCount() == 2);
+    assert(obj->getReferenceCount() == 2);
     
     // create an autorelease pool in stack
     
@@ -48,19 +48,19 @@ void ReleasePoolTestScene::runThisTest()
         // can invoke autorelease more than once
         obj->retain();
         obj->autorelease();
-        assert(obj->retainCount() == 3);
+        assert(obj->getReferenceCount() == 3);
         obj->retain();
         obj->autorelease();
-        assert(obj->retainCount() == 4);
+        assert(obj->getReferenceCount() == 4);
         
         // retain, release can work together with autorelease pool
         obj->retain();
-        assert(obj->retainCount() == 5);
+        assert(obj->getReferenceCount() == 5);
         obj->release();
-        assert(obj->retainCount() == 4);
+        assert(obj->getReferenceCount() == 4);
     }
     
-    assert(obj->retainCount() == 2);
+    assert(obj->getReferenceCount() == 2);
     
     // example of using temple autorelease pool
     {
