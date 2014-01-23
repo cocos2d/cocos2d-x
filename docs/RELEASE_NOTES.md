@@ -45,11 +45,13 @@
 	- [`ccTypes.h`](#cctypesh)
 	- [deprecated functions and  global variables](#deprecated-functions-and--global-variables)
 	- [Changes in the Lua bindings](#changes-in-the-lua-bindings)
-		- [Use bindings-generator tool for Lua binding](#use-bindings-generator-tool-for-lua-binding)
+		- [Use bindings-generator tool for lua binding](#use-bindings-generator-tool-for-lua-binding)
+		- [Bind the classes with namespace to lua](#bind-the-classes-with-namespace-to-lua)
 		- [Use ScriptHandlerMgr to manage the register and unregister of lua function](#use-scripthandlermgr-to-manage-the-register-and-unregister-of-lua-function)
 		- [Use "cc" and "ccs" as module name](#use-cc-and-ccs-as-module-name)
 		- [Deprecated funtions, tables and classes](#deprecated-funtions-tables-and-classes)
 		- [Use the lua table instead of the some structs and classes binding](#use-the-lua-table-instead-of-the-some-structs-and-classes-binding)
+		- [Integrate more modules into lua](#integrate-more-modules-into-lua)
 	- [Known issues](#known-issues)
 
 # Misc Information
@@ -633,9 +635,22 @@ color3B = Color3B::WHITE;
 
 ## Changes in the Lua bindings
 
-### Use bindings-generator tool for Lua binding
+### Use bindings-generator tool for lua binding
 
-Only configurating the *.ini files in the tools/tolua folder,not to write a lot of *.pkg files
+Only configurate the *.ini files in the tools/tolua folder,not to write a lot of *.pkg files
+
+### Bind the classes with namespace to lua
+With v2.x mechanism,Bind the classes which have same name but different namespace to lua would lead to confusion,for example:
+when the cocos2d::extension::ScrollView and the gui::ScrollView are bound to lua,the ScrollView metatable only represent the map of the gui::ScrollView.It will lead to unknow errors.
+The main difference is as follows:
+
+	|           v2.x                   |                  v3.0             |
+	| tolua_usertype(tolua_S,"CCNode") | tolua_usertype(tolua_S,"cc.Node") |
+	| tolua_isusertable(tolua_S,1,"CCNode",0,&tolua_err 		| tolua_isusertable(tolua_S,1,"cc.Node",0,&tolua_err  |
+	| tolua_isusertype(tolua_S,1,"CCNode",0,&tolua_err) 		| tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)  |
+	| toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCNode") 		| toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"cc.Node")  |
+	| tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCFileUtils") 		| tolua_pushusertype(tolua_S,(void*)tolua_ret,"cc.FileUtils")  |
+	| tolua.cast(pChildren[i + 1], "CCNode") 			| tolua.cast(pChildren[i + 1], "cc.Node") |
 
 ### Use ScriptHandlerMgr to manage the register and unregister of Lua function
 
@@ -656,20 +671,24 @@ In v3.0 version, we only need to add the `HandlerType` enum in the `ScriptHandle
 ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HANDLERTYPE_MENU_CLICKED)
 ```
 
-### Use "cc" and "ccs" as module name
+### Use "cc"、"ccs" and "ccui" as module name
 
 ```lua
 // v2.x
 CCSprite:create(s_pPathGrossini)
 CCEaseIn:create(createSimpleMoveBy(), 2.5)
 
-UILayout:create()
+CCArmature:create("bear")
+
+ImageView:create()
 
 // v3.0
 cc.Director:getInstance():getWinSize()
 cc.EaseIn:create(createSimpleMoveBy(), 2.5)
 
-ccs.UILayer:create()
+ccs.Armature:create("bear")
+
+ccui.ImageView:create()
 ```
 
 ### Deprecated funtions, tables and classes
@@ -704,6 +723,24 @@ local color4B = cc.c4b(0,0,0,0)
 ```
 
 Through the funtions of the LuaBasicConversion file,they can be converted the Lua table when they are as a parameter in the bindings generator.
+
+### Integrate more modules into lua
+In the version 3.0,more modules were integrated into lua,specific as follows:
+
+```
+1.physics
+2.spine
+3.XMLHttpRequest
+``` 
+The XMLHttpRequest and physics are in the "cc" module,and the spine is in the "sp" module.
+The related test cases located in:
+
+```
+physics   ---> TestLua/PhysicsTest
+spine     ---> TestLua/SpineTest
+XMLHttpRequest ---> TestLua/XMLHttpRequestTest
+```  
+
 
 
 ## Known issues
