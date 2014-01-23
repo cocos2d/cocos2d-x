@@ -78,7 +78,7 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
     	  if os.system(command) != 0:
     	  	  raise Exception("update project [ " + app_android_root + " ] fails!")
     	  buildfile_path = os.path.join(app_android_root, "build.xml")
-    	  command = '%s/ant/bin/ant clean %s -f %s -Dsdk.dir=%s' % (app_android_root,build_mode,buildfile_path,sdk_root)
+    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
     	  os.system(command)
 
 def copy_files(src, dst):
