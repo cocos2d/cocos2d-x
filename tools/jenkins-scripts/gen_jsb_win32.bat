@@ -17,6 +17,7 @@
 ::  * $CLANG_ROOT
 ::  * $NDK_ROOT
 ::
+echo "[test]start generate js binding..."
 set COCOS2DX_ROOT=%cd%/../..
 set "COCOS2DX_ROOT=%COCOS2DX_ROOT:\=/%"
 set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
@@ -25,12 +26,10 @@ set GENERATED_WORKTREE=%COCOS2DX_ROOT%/cocos/scripting/auto-generated
 set "GENERATED_WORKTREE=%GENERATED_WORKTREE:/=\%"
 
 :: Run to_js genbindings
-cd %TO_JS_ROOT%
-genbindings-win32.bat
+call %TO_JS_ROOT%/genbindings-win32.bat
 
 :: Run to_lua genbindings
-cd %TO_LUA_ROOT%
-genbindings-win32.bat
+call %TO_LUA_ROOT%/genbindings-win32.bat
 
 echo
 echo Bindings generated successfully
