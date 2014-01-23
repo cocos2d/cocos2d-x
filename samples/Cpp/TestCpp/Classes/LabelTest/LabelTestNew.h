@@ -374,6 +374,22 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelTTFOldNew : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFOldNew);
+
+    LabelTTFOldNew();
+
+    virtual void draw() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    CustomCommand _renderCmd;
+    void onDraw();
+};
+
 // we don't support linebreak mode
 
 #endif
