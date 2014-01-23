@@ -159,8 +159,10 @@ static void _log(const char *format, va_list args)
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     OutputDebugStringA("\n");
+
     WideCharToMultiByte(CP_ACP, 0, wszBuf, sizeof(wszBuf), buf, sizeof(buf), NULL, FALSE);
     printf("%s\n", buf);
+
 #else
     // Linux, Mac, iOS, etc
     fprintf(stdout, "cocos2d: %s", buf);
