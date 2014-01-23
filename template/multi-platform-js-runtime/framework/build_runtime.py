@@ -230,7 +230,11 @@ class BuildRuntime:
 
         iosFolder = os.path.join(self.projectPath, "..", "..", "runtime", "ios")
         if os.path.isdir(iosFolder):
-            shutil.rmtree(iosFolder)
+            filelist = os.listdir(iosFolder)
+            for filename in filelist:
+                if ".app" in filename:
+                    f = os.path.join(iosFolder, filename)
+                    shutil.rmtree(f)
 
         commands = [
             "xcodebuild",
