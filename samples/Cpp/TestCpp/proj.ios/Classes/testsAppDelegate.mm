@@ -8,7 +8,7 @@
 
 #import "testsAppDelegate.h"
 
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"

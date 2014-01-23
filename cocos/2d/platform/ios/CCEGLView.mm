@@ -22,13 +22,46 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "EAGLView.h"
+#include "CCEAGLView.h"
 #include "CCDirectorCaller.h"
 #include "CCEGLView.h"
 #include "CCSet.h"
 #include "CCTouch.h"
 
 NS_CC_BEGIN
+
+EGLView* EGLView::create(const std::string& viewName)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, Size(0,0), 1)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::createWithFullScreen(const std::string& viewName)
+{
+    auto ret = new EGLView();
+    if(ret && ret->initWithFullScreen(viewName)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
 
 EGLView::EGLView()
 {
@@ -41,19 +74,29 @@ EGLView::~EGLView()
 
 }
 
+bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    return true;
+}
+
+bool EGLView::initWithFullScreen(const std::string& viewName)
+{
+    return true;
+}
+
 bool EGLView::isOpenGLReady()
 {
     return [CCEAGLView sharedEGLView] != nullptr;
 }
-    
+
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
 {
     assert(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
-	
-	_scaleX = _scaleY = contentScaleFactor;
-	[[CCEAGLView sharedEGLView] setNeedsLayout];
-        
-	return true;
+
+    _scaleX = _scaleY = contentScaleFactor;
+    [[CCEAGLView sharedEGLView] setNeedsLayout];
+
+    return true;
 }
 
 void EGLView::end()
@@ -82,17 +125,6 @@ void EGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-EGLView* EGLView::getInstance()
-{
-    static EGLView instance;
-    return &instance;
-}
-
-// XXX: deprecated
-EGLView* EGLView::sharedOpenGLView()
-{
-    return EGLView::getInstance();
-}
 
 NS_CC_END
 

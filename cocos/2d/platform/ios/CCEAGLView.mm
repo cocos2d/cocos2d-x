@@ -63,7 +63,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import <QuartzCore/QuartzCore.h>
 #import "CCEGLView.h"
-#import "EAGLView.h"
+#import "CCEAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
 #import "CCSet.h"
@@ -413,7 +413,9 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesBegin(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -433,7 +435,9 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesMove(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -454,7 +458,9 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesEnd(i, (int*)ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -475,7 +481,9 @@ static CCEAGLView *__view = 0;
         ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesCancel(i, (int*)ids, xs, ys);
 }
 
 #pragma mark - UIView - Responder
@@ -794,9 +802,10 @@ static CCEAGLView *__view = 0;
         default:
             break;
     }
-    
-    float scaleX = cocos2d::EGLView::getInstance()->getScaleX();
-	float scaleY = cocos2d::EGLView::getInstance()->getScaleY();
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleX = glview->getScaleX();
+	float scaleY = glview->getScaleY();
     
     
     if (self.contentScaleFactor == 2.0f)
@@ -807,7 +816,7 @@ static CCEAGLView *__view = 0;
         end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
     }
     
-    float offestY = cocos2d::EGLView::getInstance()->getViewPortRect().origin.y;
+    float offestY = glview->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
@@ -870,7 +879,8 @@ static CCEAGLView *__view = 0;
     
     if (dis < 0.0f) dis = 0.0f;
 
-	dis *= cocos2d::EGLView::getInstance()->getScaleY();
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+	dis *= glview->getScaleY();
     
     if (self.contentScaleFactor == 2.0f)
     {

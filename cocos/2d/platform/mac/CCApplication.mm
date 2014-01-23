@@ -54,12 +54,12 @@ int Application::run()
     {
         return 0;
     }
-    EGLView* pMainWnd = EGLView::getInstance();
+    EGLView* glview = Director::getInstance()->getOpenGLView();
     
-    while (!pMainWnd->windowShouldClose())
+    while (!glview->windowShouldClose())
     {
         Director::getInstance()->mainLoop();
-        pMainWnd->pollEvents();
+        glview->pollEvents();
     }
 
     /* Only work on Desktop

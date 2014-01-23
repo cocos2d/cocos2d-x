@@ -102,7 +102,7 @@
 		1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A087AE71860400400196EF5 /* edtaa3func.h */; };
 		1A087AEB1860400400196EF5 /* edtaa3func.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A087AE71860400400196EF5 /* edtaa3func.h */; };
 		1A0DB7321823827C0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7301823827C0025743D /* CCGL.h */; };
-		1A0DB7331823827C0025743D /* EAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* EAGLView.h */; };
+		1A0DB7331823827C0025743D /* CCEAGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7311823827C0025743D /* CCEAGLView.h */; };
 		1A0DB7381823828F0025743D /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0DB7351823828F0025743D /* CCGL.h */; };
 		1A2C7872181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
 		1A2C7874181A11EC004E5527 /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */; };
@@ -1649,7 +1649,7 @@
 		46A170471807CC07005B8026 /* CCImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB01807B038005B8026 /* CCImage.mm */; };
 		46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB11807B038005B8026 /* CCPlatformDefine.h */; };
 		46A170491807CC07005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB21807B038005B8026 /* CCStdC.h */; };
-		46A1704B1807CC07005B8026 /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB41807B038005B8026 /* EAGLView.mm */; };
+		46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB41807B038005B8026 /* CCEAGLView.mm */; };
 		46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB51807B038005B8026 /* OpenGL_Internal.h */; };
 		46A1704D1807CC11005B8026 /* AccelerometerSimulation.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AB71807B038005B8026 /* AccelerometerSimulation.h */; };
 		46A1704E1807CC11005B8026 /* AccelerometerSimulation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AB81807B038005B8026 /* AccelerometerSimulation.m */; };
@@ -2092,7 +2092,7 @@
 		1A087AE61860400400196EF5 /* edtaa3func.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edtaa3func.cpp; sourceTree = "<group>"; };
 		1A087AE71860400400196EF5 /* edtaa3func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edtaa3func.h; sourceTree = "<group>"; };
 		1A0DB7301823827C0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
-		1A0DB7311823827C0025743D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		1A0DB7311823827C0025743D /* CCEAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEAGLView.h; sourceTree = "<group>"; };
 		1A0DB7351823828F0025743D /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		1A119791178526AA00D62A44 /* libluabindings iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libluabindings iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A2C785E181A11EC004E5527 /* jsb_cocos2dx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_auto.cpp; sourceTree = "<group>"; };
@@ -2967,7 +2967,7 @@
 		46A16AB01807B038005B8026 /* CCImage.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCImage.mm; sourceTree = "<group>"; };
 		46A16AB11807B038005B8026 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
 		46A16AB21807B038005B8026 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
-		46A16AB41807B038005B8026 /* EAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
+		46A16AB41807B038005B8026 /* CCEAGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCEAGLView.mm; sourceTree = "<group>"; };
 		46A16AB51807B038005B8026 /* OpenGL_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		46A16AB71807B038005B8026 /* AccelerometerSimulation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AccelerometerSimulation.h; sourceTree = "<group>"; };
 		46A16AB81807B038005B8026 /* AccelerometerSimulation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AccelerometerSimulation.m; sourceTree = "<group>"; };
@@ -5180,8 +5180,8 @@
 				46A16AB01807B038005B8026 /* CCImage.mm */,
 				46A16AB11807B038005B8026 /* CCPlatformDefine.h */,
 				46A16AB21807B038005B8026 /* CCStdC.h */,
-				1A0DB7311823827C0025743D /* EAGLView.h */,
-				46A16AB41807B038005B8026 /* EAGLView.mm */,
+				1A0DB7311823827C0025743D /* CCEAGLView.h */,
+				46A16AB41807B038005B8026 /* CCEAGLView.mm */,
 				46A16AB51807B038005B8026 /* OpenGL_Internal.h */,
 				46A16AB61807B038005B8026 /* Simulation */,
 			);
@@ -6048,7 +6048,7 @@
 				1A57008C180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				1A570090180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				1A570094180BC5A10088DEC7 /* CCActionTween.h in Headers */,
-				1A0DB7331823827C0025743D /* EAGLView.h in Headers */,
+				1A0DB7331823827C0025743D /* CCEAGLView.h in Headers */,
 				1A57009B180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
 				1A5700A1180BC5D20088DEC7 /* CCNode.h in Headers */,
 				1A5700C8180BC6060088DEC7 /* atitc.h in Headers */,
@@ -7320,7 +7320,7 @@
 				46A170D61807CEBC005B8026 /* ray2.c in Sources */,
 				460E44F11807DED7000CDD6D /* mat4stack.c in Sources */,
 				46A170D41807CEBC005B8026 /* plane.c in Sources */,
-				46A1704B1807CC07005B8026 /* EAGLView.mm in Sources */,
+				46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */,
 				46A171001807CECB005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */,
 				46A170281807CBFE005B8026 /* CCFileUtilsApple.mm in Sources */,

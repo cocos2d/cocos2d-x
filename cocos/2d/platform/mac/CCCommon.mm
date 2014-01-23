@@ -23,7 +23,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
+
+#include "CCDirector.h"
 #include "CCEGLView.h"
+
 #define GLFW_EXPOSE_NATIVE_NSGL
 #define GLFW_EXPOSE_NATIVE_COCOA
 #include "glfw3native.h"
@@ -51,7 +54,8 @@ void MessageBox(const char * msg, const char * title)
 	[alert setInformativeText:tmpTitle];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-    id window = glfwGetCocoaWindow(EGLView::getInstance()->getWindow());
+    EGLView* glview = Director::getInstance()->getOpenGLView();
+    id window = glfwGetCocoaWindow(glview->getWindow());
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil

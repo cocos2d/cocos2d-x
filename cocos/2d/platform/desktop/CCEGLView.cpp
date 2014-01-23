@@ -205,7 +205,7 @@ void EGLViewEventHandler::onGLFWError(int errorID, const char* errorDesc)
 
 void EGLViewEventHandler::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
 {
-    EGLView* eglView = EGLView::getInstance();
+    EGLView* eglView = Director::getInstance()->getOpenGLView();
     if(nullptr == eglView) return;
     if(GLFW_MOUSE_BUTTON_LEFT == button)
     {
@@ -249,7 +249,7 @@ void EGLViewEventHandler::onGLFWMouseCallBack(GLFWwindow* window, int button, in
 
 void EGLViewEventHandler::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
 {
-    EGLView* eglView = EGLView::getInstance();
+    EGLView* eglView = Director::getInstance()->getOpenGLView();
     if(nullptr == eglView) return;
     
     if (eglView->isRetina()) {
@@ -280,7 +280,7 @@ void EGLViewEventHandler::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, 
 
 void EGLViewEventHandler::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
 {
-    EGLView* eglView = EGLView::getInstance();
+    EGLView* eglView = Director::getInstance()->getOpenGLView();
     if(nullptr == eglView) return;
     
     EventMouse event(EventMouse::MouseEventType::MOUSE_SCROLL);
@@ -312,7 +312,7 @@ void EGLViewEventHandler::onGLFWWindowPosCallback(GLFWwindow *windows, int x, in
 
 void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 {
-    auto view = EGLView::getInstance();
+    auto view = Director::getInstance()->getOpenGLView();
 
     float frameSizeW = view->getFrameSize().width;
     float frameSizeH = view->getFrameSize().height;
@@ -341,7 +341,39 @@ void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h
 // implement EGLView
 //////////////////////////////////////////////////////////////////////////
 
-EGLView* EGLView::s_pEglView = nullptr;
+
+EGLView* EGLView::create(const std::string& viewName)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, Size(960, 640), 1)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::createWithFullScreen(const std::string& viewName)
+{
+    auto ret = new EGLView();
+    if(ret && ret->initWithFullScreen(viewName)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
 
 EGLView::EGLView()
 : _captured(false)
@@ -351,9 +383,7 @@ EGLView::EGLView()
 , _mainWindow(nullptr)
 , _primaryMonitor(nullptr)
 {
-    CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     _viewName = "cocos2dx";
-    s_pEglView = this;
     g_keyCodeMap.clear();
     for (auto& item : g_keyCodeStructArray)
     {
@@ -367,16 +397,12 @@ EGLView::~EGLView()
 {
     CCLOGINFO("deallocing EGLView: %p", this);
     glfwTerminate();
-    s_pEglView = nullptr;
 }
 
-bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
+bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
 {
-    if(_mainWindow != nullptr)
-        return true;
-    
     setViewName(viewName);
-    setFrameSize(width, height);
+    setFrameSize(size.width, size.height);
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
@@ -397,7 +423,7 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
     {
         _isRetina = true;
         setFrameZoomFactor(frameZoomFactor * 2);
-        glfwSetWindowSize(_mainWindow, width/2 * _frameZoomFactor, height/2 * _frameZoomFactor);
+        glfwSetWindowSize(_mainWindow, size.width/2 * _frameZoomFactor, size.height/2 * _frameZoomFactor);
     }
     
     glfwSetMouseButtonCallback(_mainWindow,EGLViewEventHandler::onGLFWMouseCallBack);
@@ -435,7 +461,7 @@ bool EGLView::initWithFullScreen(const std::string& viewName)
         return false;
     
     const GLFWvidmode* videoMode = glfwGetVideoMode(_primaryMonitor);
-    return init(viewName, videoMode->width, videoMode->height, 1.0f);
+    return initWithSize(viewName, Size(videoMode->width, videoMode->height), 1.0f);
 }
 
 bool EGLView::isOpenGLReady()
@@ -503,18 +529,6 @@ void EGLView::setScissorInPoints(float x , float y , float w , float h)
                (GLint)(y * _scaleY  * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor),
                (GLsizei)(w * _scaleX * _frameZoomFactor),
                (GLsizei)(h * _scaleY * _frameZoomFactor));
-}
-
-EGLView* EGLView::getInstance()
-{
-    CCASSERT(nullptr != s_pEglView, "EGL singleton should not be null");
-    return s_pEglView;
-}
-
-// XXX: deprecated
-EGLView* EGLView::sharedOpenGLView()
-{
-    return EGLView::getInstance();
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

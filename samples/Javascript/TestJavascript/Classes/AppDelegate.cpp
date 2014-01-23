@@ -37,16 +37,18 @@ AppDelegate::~AppDelegate()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
-    auto pDirector = Director::getInstance();
-    pDirector->setOpenGLView(EGLView::getInstance());
+    auto director = Director::getInstance();
+    auto glview = EGLView::createWithSize("Test JavaScript", Size(900,640));
+
+    director->setOpenGLView(glview);
 
     // JS-Test in Html5 uses 800x450 as design resolution
-    EGLView::getInstance()->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
+    glview->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    pDirector->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0 / 60);
 
     auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;

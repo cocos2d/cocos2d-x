@@ -48,6 +48,39 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
+EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::create(const std::string& viewName)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithSize(viewName, Size(0,0), 0)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+EGLView* EGLView::createWithFullScreen(const std::string& viewName)
+{
+    auto ret = new EGLView();
+    if(ret && ret->initWithFullScreen(viewName)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
 EGLView::EGLView()
 {
     initExtensions();
@@ -57,6 +90,17 @@ EGLView::~EGLView()
 {
 
 }
+
+bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    return true;
+}
+
+bool EGLView::initWithFullScreen(const std::string& viewName)
+{
+    return true;
+}
+
 
 bool EGLView::isOpenGLReady()
 {
@@ -70,18 +114,6 @@ void EGLView::end()
 
 void EGLView::swapBuffers()
 {
-}
-
-EGLView* EGLView::getInstance()
-{
-    static EGLView instance;
-    return &instance;
-}
-
-// XXX: deprecated
-EGLView* EGLView::sharedOpenGLView()
-{
-    return EGLView::getInstance();
 }
 
 void EGLView::setIMEKeyboardState(bool bOpen)

@@ -26,52 +26,29 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_DESKTOP_H__
 #define __CC_EGLVIEW_DESKTOP_H__
 
+#include "CCObject.h"
 #include "platform/CCCommon.h"
 #include "platform/CCEGLViewProtocol.h"
 #include "glfw3.h"
 
 NS_CC_BEGIN
 
-class CC_DLL EGLView : public EGLViewProtocol
+class CC_DLL EGLView : public Object, public EGLViewProtocol
 {
 public:
-    // static function
-    /**
-     @brief    get the shared main open gl window
-     */
-    static EGLView* getInstance();
+    static EGLView* create(const std::string& viewName);
+    static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
+    static EGLView* createWithFullScreen(const std::string& viewName);
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
-
-    /**
-     * @js ctor
-     */
-    EGLView();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~EGLView();
-    
-    /* override functions */
-    virtual bool isOpenGLReady();
-    virtual void end();
-    virtual void swapBuffers();
-    virtual void setFrameSize(float width, float height);
-    virtual void setIMEKeyboardState(bool bOpen);
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
-    bool init(const std::string& viewName, float width, float height, float frameZoomFactor = 1.0f);
-    bool initWithFullScreen(const std::string& viewName);
 
     //void resize(int width, int height);
  
-	float getFrameZoomFactor();
+    float getFrameZoomFactor();
     //void centerWindow();
 
-    
     virtual void setViewPortInPoints(float x , float y , float w , float h);
     virtual void setScissorInPoints(float x , float y , float w , float h);
 
@@ -80,7 +57,20 @@ public:
     void pollEvents();
     GLFWwindow* getWindow() const { return _mainWindow; }
 
+    /* override functions */
+    virtual bool isOpenGLReady() override;
+    virtual void end() override;
+    virtual void swapBuffers() override;
+    virtual void setFrameSize(float width, float height) override;
+    virtual void setIMEKeyboardState(bool bOpen) override;
+
 protected:
+    EGLView();
+    virtual ~EGLView();
+
+    bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
+    bool initWithFullScreen(const std::string& viewName);
+
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
@@ -93,11 +83,13 @@ protected:
     bool _isRetina;
 
     float _frameZoomFactor;
-    static EGLView* s_pEglView;
 
     GLFWwindow* _mainWindow;
     GLFWmonitor* _primaryMonitor;
     friend class EGLViewEventHandler;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(EGLView);
 };
 
 NS_CC_END   // end of namespace   cocos2d
