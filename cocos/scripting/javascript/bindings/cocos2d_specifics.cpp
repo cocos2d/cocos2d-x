@@ -3891,7 +3891,6 @@ JSBool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
         do {
             if(argv[0].isNull()) { arg0 = nullptr; break;}
             if (!argv[0].isObject()) { ok = JS_FALSE; break; }
-            js_proxy_t *proxy;
             JSObject *tmpObj = JSVAL_TO_OBJECT(argv[0]);
             proxy = jsb_get_js_proxy(tmpObj);
             arg0 = (cocos2d::GridBase*)(proxy ? proxy->ptr : NULL);
@@ -3905,6 +3904,174 @@ JSBool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
 
     JS_ReportError(cx, "js_cocos2dx_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
     return JS_FALSE;
+}
+
+// cc.SAXParser.getInstance()
+JSBool js_SAXParser_getInstance(JSContext *cx, unsigned argc, JS::Value *vp) {
+    __JSSAXDelegator* delegator = __JSSAXDelegator::getInstance();
+    SAXParser* parser = delegator->getParser();
+    
+    jsval jsret;
+    if (parser) {
+        js_proxy_t *p = jsb_get_native_proxy(parser);
+        if (p) {
+            jsret = OBJECT_TO_JSVAL(p->obj);
+        } else {
+            // create a new js obj of that class
+            js_proxy_t *proxy = js_get_or_create_proxy<SAXParser>(cx, parser);
+            jsret = OBJECT_TO_JSVAL(proxy->obj);
+        }
+    } else {
+        jsret = JSVAL_NULL;
+    }
+    JS_SET_RVAL(cx, vp, jsret);
+    
+    return JS_TRUE;
+}
+// cc.SAXParser.getInstance().parse(filepath)
+JSBool js_SAXParser_parse(JSContext *cx, unsigned argc, JS::Value *vp) {
+    __JSSAXDelegator* delegator = __JSSAXDelegator::getInstance();
+    
+    JSBool ok = JS_TRUE;
+    jsval *argv = JS_ARGV(cx, vp);
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
+        std::string parsedStr = delegator->parse(arg0);
+        jsval strVal = std_string_to_jsval(cx, parsedStr);
+        // create a new js obj of the parsed string
+        JS::RootedValue outVal(cx);
+        ok = JS_ParseJSON(cx, JS_GetStringCharsZ(cx, JSVAL_TO_STRING(strVal)), static_cast<uint32_t>(parsedStr.size()), &outVal);
+        
+        if (ok)
+            JS_SET_RVAL(cx, vp, outVal);
+        else {
+            JS_SET_RVAL(cx, vp, JSVAL_NULL);
+            JS_ReportError(cx, "js_SAXParser_parse : parse error");
+        }
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "js_SAXParser_parse : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+// cc.SAXParser.getInstance().preloadPlist(filepath)
+JSBool js_SAXParser_preloadPlist(JSContext *cx, unsigned argc, JS::Value *vp) {
+    __JSSAXDelegator* delegator = __JSSAXDelegator::getInstance();
+    
+    JSBool ok = JS_TRUE;
+    jsval *argv = JS_ARGV(cx, vp);
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
+        ok &= delegator->preloadPlist(arg0);
+        if(!ok)
+            JS_ReportError(cx, "js_SAXParser_preloadPlist : file not found %d", &arg0, 1);
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "js_SAXParser_parse : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+// cc.SAXParser.getInstance().unloadPlist(filepath)
+JSBool js_SAXParser_unloadPlist(JSContext *cx, unsigned argc, JS::Value *vp) {
+    return JS_TRUE;
+}
+// cc.SAXParser.getInstance().getList(key)
+JSBool js_SAXParser_getList(JSContext *cx, unsigned argc, JS::Value *vp) {
+    __JSSAXDelegator* delegator = __JSSAXDelegator::getInstance();
+    
+    JSBool ok = JS_TRUE;
+    jsval *argv = JS_ARGV(cx, vp);
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, argv[0], &arg0);
+        JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+        
+        std::string value = delegator->getList(arg0);
+        jsval ret = std_string_to_jsval(cx, value);
+        JS_SET_RVAL(cx, vp, ret);
+        
+        return JS_TRUE;
+    }
+    JS_ReportError(cx, "js_SAXParser_parse : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return JS_FALSE;
+}
+
+cocos2d::SAXParser* __JSSAXDelegator::getParser() {
+    return &_parser;
+}
+
+std::string __JSSAXDelegator::parse(const std::string& path) {
+    _result.clear();
+    
+    SAXParser parser;
+    if (false != parser.init("UTF-8") )
+    {
+        parser.setDelegator(this);
+        parser.parse(FileUtils::getInstance()->fullPathForFilename(path).c_str());
+    }
+    
+    return _result;
+}
+
+__JSSAXDelegator::~__JSSAXDelegator(){
+    CCLOGINFO("deallocing __JSSAXDelegator: %p", this);
+}
+
+void __JSSAXDelegator::startElement(void *ctx, const char *name, const char **atts) {
+    _isStoringCharacters = true;
+    _currentValue.clear();
+    
+    std::string elementName = (char*)name;
+    
+    int end = (int)_result.size() - 1;
+    if(end >= 0 && _result[end] != '{' && _result[end] != '[' && _result[end] != ':') {
+        _result += ",";
+    }
+    
+    if (elementName == "dict") {
+        _result += "{";
+    }
+    else if (elementName == "array") {
+        _result += "[";
+    }
+}
+
+void __JSSAXDelegator::endElement(void *ctx, const char *name) {
+    _isStoringCharacters = false;
+    std::string elementName = (char*)name;
+    
+    if (elementName == "dict") {
+        _result += "}";
+    }
+    else if (elementName == "array") {
+        _result += "]";
+    }
+    else if (elementName == "key") {
+        _result += "\"" + _currentValue + "\":";
+    }
+    else if (elementName == "string") {
+        _result += "\"" + _currentValue + "\"";
+    }
+    else if (elementName == "false" || elementName == "true") {
+        _result += elementName;
+    }
+    else if (elementName == "real" || elementName == "integer") {
+        _result += _currentValue;
+    }
+}
+
+void __JSSAXDelegator::textHandler(void *ctx, const char *ch, int len) {
+    CC_UNUSED_PARAM(ctx);
+    std::string text((char*)ch, 0, len);
+    
+    if (_isStoringCharacters)
+    {
+        _currentValue += text;
+    }
 }
 
 JSBool jsval_to_TTFConfig(JSContext *cx, jsval v, TTFConfig* ret) {
@@ -4188,6 +4355,14 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.CallFunc; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_callFunc, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.SAXParser; })()"));
+	JS_DefineFunction(cx, tmpObj, "getInstance", js_SAXParser_getInstance, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+    tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.SAXParser.getInstance(); })()"));
+	JS_DefineFunction(cx, tmpObj, "parse", js_SAXParser_parse, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "preloadPlist", js_SAXParser_preloadPlist, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unloadPlist", js_SAXParser_unloadPlist, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "getList", js_SAXParser_getList, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     
 	tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.GLProgram; })()"));
