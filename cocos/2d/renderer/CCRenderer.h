@@ -36,6 +36,7 @@
 NS_CC_BEGIN
 
 class EventListenerCustom;
+class QuadCommand;
 
 /** Class that knows how to sort the Commands.
  Since the commands that have z==0 are "pushed back" in
@@ -68,6 +69,7 @@ class Renderer
 {
 public:
     static const int VBO_SIZE = 65536 / 6;
+    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
 
     Renderer();
     ~Renderer();
@@ -98,7 +100,7 @@ protected:
     //Draw the previews queued quads and flush previous context
     void flush();
 
-    void convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
+    void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
@@ -107,8 +109,7 @@ protected:
 
     uint32_t _lastMaterialID;
 
-    ssize_t _firstCommand;
-    ssize_t _lastCommand;
+    std::vector<QuadCommand*> _batchedQuadCommands;
 
     V3F_C4B_T2F_Quad _quads[VBO_SIZE];
     GLushort _indices[6 * VBO_SIZE];

@@ -28,9 +28,9 @@
 #define _COCOS2D_CCLABEL_H_
 
 #include "CCSpriteBatchNode.h"
-#include "CCLabelTextFormatProtocol.h"
 #include "ccTypes.h"
 #include "renderer/CCCustomCommand.h"
+#include "CCFontAtlas.h"
 
 NS_CC_BEGIN
 
@@ -50,9 +50,13 @@ enum class LabelEffect {
     GLOW
 };
 
-//fwd
-struct FontLetterDefinition;
-class FontAtlas;
+struct LetterInfo
+{
+    FontLetterDefinition def;
+
+    Point position;
+    Size  contentSize;
+};
 
 typedef struct _ttfConfig
 {
@@ -72,7 +76,7 @@ typedef struct _ttfConfig
     {}
 }TTFConfig;
 
-class CC_DLL Label : public SpriteBatchNode, public LabelTextFormatProtocol
+class CC_DLL Label : public SpriteBatchNode
 {
 public:
     static Label* create();
@@ -113,35 +117,26 @@ public:
     virtual void setColor(const Color3B& color) override;
     
      // CCLabelTextFormat protocol implementation
-    virtual std::vector<LetterInfo>     *getLettersInfo() override { return &_lettersInfo; };
-    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex) override;
-    virtual bool recordPlaceholderInfo(int spriteIndex) override;
-    virtual float getLetterPosXLeft( int index ) const override;
-    virtual float getLetterPosXRight( int index ) const override;
+    virtual std::vector<LetterInfo>     *getLettersInfo() { return &_lettersInfo; };
+    virtual bool recordLetterInfo(const cocos2d::Point& point,unsigned short int theChar, int spriteIndex);
+    virtual bool recordPlaceholderInfo(int spriteIndex);
 
-    virtual Sprite * getLetter(int ID) override;
+    virtual Sprite * getLetter(int ID);
     
     // font related stuff
-    virtual int getCommonLineHeight() const override;
-    virtual int getKerningInString(int hintPositionInString) const override;
-    virtual int getXOffsetForChar(unsigned short c) const override;
-    virtual int getYOffsetForChar(unsigned short c) const override;
-    virtual int getAdvanceForChar(unsigned short c, int hintPositionInString) const override;
-    virtual Rect getRectForChar(unsigned short c) const override;
+    virtual int getCommonLineHeight() const;
+    virtual int* getKernings() const { return _horizontalKernings;}
     
     // string related stuff
-    virtual int getStringNumLines() const override;
-    virtual int getStringLenght() const override;
-    virtual unsigned short getCharAtStringPosition(int position) const override;
-    virtual unsigned short * getUTF8String() const override;
-    virtual void assignNewUTF8String(unsigned short *newString) override;
-    virtual TextHAlignment getTextAlignment() const override;
+    virtual int getStringNumLines() const;
+    virtual int getStringLenght() const;
+    virtual unsigned short * getUTF16String() const;
+    virtual void assignNewUTF16String(unsigned short *newString);
+    virtual TextHAlignment getTextAlignment() const;
     
     // label related stuff
-    virtual float getMaxLineWidth() const override;
-    virtual bool breakLineWithoutSpace() const override;
-    virtual Size getLabelContentSize() const override;
-    virtual void setLabelContentSize(const Size &newSize) override;
+    virtual float getMaxLineWidth() const;
+    virtual bool breakLineWithoutSpace() const;
     
     // carloX
     virtual const std::string& getString() const { static std::string _ret("not implemented"); return _ret; }
@@ -150,6 +145,8 @@ public:
     virtual std::string getDescription() const override;
     virtual void draw(void) override;
     virtual void onDraw();
+
+    virtual FontAtlas* getFontAtlas() const {return _fontAtlas;}
 
 private:
     /**

@@ -307,13 +307,43 @@ void setTexParameters(const ccTexParams& texParams);
 
 ## New Renderer
 
-_Feature added in v3.0-beta_
+_Feature added in v3.0-beta and improved in v3.0-beta2_
 
 The renderer functionality has been decoupled from the Scene graph / Node logic. A new object called `Renderer` is responsible for rendering the object.
 
-Auto-batching and auto-culling support has been added.
+Auto-batching ~~and auto-culling~~ support has been added.
 
-Please, see this document for detail information about its internal funcitonality: https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit
+Please, see this document for detail information about its internal funcitonality: [Renderer Specification document](https://docs.google.com/document/d/17zjC55vbP_PYTftTZEuvqXuMb9PbYNxRFu0EGTULPK8/edit)
+
+### Renderer features
+
+#### Auto-batching
+
+TODO
+
+#### Auto-culling
+
+TODO
+
+#### Global Z order
+
+A new method called `setGlobalZOrder()` / `getGlobalZOrder()` was added to `Node`, and the old  methods `setZOrder()` / `getZOrder()` were renamed to `setLocalZOrder()` / `getLocalZOrder()`.
+
+`globalZOrder` receives a `float` (and not an `int`) as argument. And this value is used to sort the Nodes in the Renderer. Lower values have higher priority over higher values. That means that a Node with a `globalZOrder` of `-10` is going to be drawn BEFORE a Node with `globalZOrder` of `10`.
+
+Nodes that have a `globalZOrder` of `0` (default value) will be drawn according to the Scene Graph order.
+
+So, if the `globalZOrder` is not changed, cocos2d-x v3.0 will behave exaclty as cocos2d-x v2.2. 
+
+__`globalZOrder()` vs. `localZOrder()`__:
+
+* `globalZOrder` is used to sort the "draw commands" in the Renderer
+* `localZOrder` is used to sort the Node in its parent's children Array
+
+__Exceptions__:
+
+TODO
+
 
 ## Improved LabelTTF / LabelBMFont
 
