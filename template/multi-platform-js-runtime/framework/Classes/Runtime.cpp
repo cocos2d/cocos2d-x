@@ -81,17 +81,30 @@ bool wildcardMatches(const char *wildcard, const char *str)
 {
 	while (1) {
 		if (*wildcard == '\0')
+		{
 			return *str == '\0';
-		if (*wildcard == '?') {
+		}
+		if (*wildcard == '?') 
+		{
 			++wildcard; ++str;
-		} else if (*wildcard == '*') {
+		} 
+		else if (*wildcard == '*') 
+		{
 			for (++wildcard; *str; ++str)
+			{
 				if (wildcardMatches(wildcard, str))
+				{
 					return true;
+				}
+			}
 			return *wildcard == '\0';
-		} else {
+		} 
+		else 
+		{
 			if (*wildcard != *str)
+			{
 				return false;
+			}
 			++wildcard; ++str;
 		}
 	}
@@ -108,10 +121,14 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 	struct dirent *entry=NULL;
 	struct stat statbuf;
 	if((dp = opendir(dir)) == NULL) 
+	{
 		return false;
+	}
 
 	if (chdir(dir) != 0)
+	{
 		return false;
+	}
 
 	while((entry = readdir(dp)) != NULL) 
 	{
@@ -119,10 +136,14 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 		if(S_ISDIR(statbuf.st_mode)) 
 		{
 			if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
+			{
 				continue;
+			}
 
 			if (find(filterArray.begin(),filterArray.end(),entry->d_name) != filterArray.end())
+			{
 				continue;
+			}
 
 			char subdir[_MAX_PATH_]={0};
 			sprintf(subdir,"%s%s/",dir,entry->d_name);
@@ -136,7 +157,9 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 		{
 
 			if (!wildcardMatches(filespec,entry->d_name))
+			{
 				continue;
+			}
 
 			char *pszexten=strrchr(entry->d_name,'.');
 			char szextension[_MAX_PATH_]={0};
@@ -145,12 +168,16 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 				strcpy(szextension,"*");
 				strcat(szextension,pszexten);
 				if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+				{
 					continue;
+				}
 			}
 
 			strcpy(szextension,entry->d_name);
 			if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+			{
 				continue;
+			}
 
 			char fullFileName[_MAX_PATH_] ={0};
 			sprintf(fullFileName,"%s%s",dir,entry->d_name);
@@ -176,20 +203,24 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 *********************************/
 vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const char *filterfile=NULL)
 {
-	char fuldir[_MAX_PATH_]={0};
+	char fulldir[_MAX_PATH_]={0};
 	vector<string> _filterArray;
 	vector<std::string> _lfileList;
 	_filterArray = splitFilter(filterfile);
 
-	if (realpath(dir.c_str(), fuldir)== NULL)
+	if (realpath(dir.c_str(), fulldir)== NULL)
+	{
 		return _lfileList;
+	}
 
-	int len=strlen(fuldir);
-	if (fuldir[len-1] != '/')
-		strcat(fuldir,"/");
+	int len=strlen(fulldir);
+	if (fulldir[len-1] != '/')
+	{
+		strcat(fulldir,"/");
+	}
 
-	browseDir(fuldir,filespec,_filterArray,_lfileList);
-	dir =fuldir;
+	browseDir(fulldir,filespec,_filterArray,_lfileList);
+	dir =fulldir;
 	return _lfileList;
 }
 
@@ -234,14 +265,16 @@ public:
 		}
 
 		if (_scheduler)
+		{
 			_scheduler->scheduleSelector(SEL_SCHEDULE(&ConnectWaiter::updateConnect), this,0.5f, false);
+		}
 	}
 private:
 	ConnectWaiter()
 	{
 		_scheduler = CCDirector::sharedDirector()->getScheduler();
 	}
-private:
+
 	cocos2d::Scheduler *_scheduler;
 	string _dotwaitFile;
 	string _jsSearchPath;

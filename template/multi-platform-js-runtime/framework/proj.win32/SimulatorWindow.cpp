@@ -34,11 +34,11 @@ using namespace std;
 using namespace cocos2d;
 
 
-WNDPROC g_pOldProc=NULL;
+WNDPROC g_oldProc=NULL;
 bool g_landscape=false;
 CCSize g_screenSize;
 EGLView* g_eglView=NULL;
-
+INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 typedef struct _SimulatorScreenSize {
 	string title;
@@ -171,7 +171,6 @@ void onViewChangeFrameSize(int viewMenuID)
 	}
 }
 
-INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 void onHelpAbout()
 {
 	DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG_ABOUT), glfwGetWin32Window(g_eglView->getWindow()), AboutDialogCallback);
@@ -212,7 +211,7 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 		}
 		break;
 	}
-	return g_pOldProc(hWnd, message, wParam, lParam);
+	return g_oldProc(hWnd, message, wParam, lParam);
 }
 
 /*@brief AboutDialog Callback*/
@@ -238,7 +237,9 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
 void createSimulator(const char* viewName, float width, float height, float frameZoomFactor)
 {
 	if (g_eglView)
+	{
 		return;
+	}
 
 	g_eglView = new EGLView();
 	g_landscape = false;
@@ -257,8 +258,8 @@ void createSimulator(const char* viewName, float width, float height, float fram
 	createViewMenu();
 	updateMenu();
 
-	g_pOldProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)SNewWndProc); 
-	if (g_pOldProc==0) 
+	g_oldProc = (WNDPROC)SetWindowLong(hWnd, GWL_WNDPROC, (LONG)SNewWndProc); 
+	if (g_oldProc==0) 
 	{
 		printf("SetWindowLong NewWndProc Error:%d\n",GetLastError()); 
 	}

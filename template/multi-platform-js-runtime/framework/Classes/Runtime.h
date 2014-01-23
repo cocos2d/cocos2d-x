@@ -25,12 +25,7 @@ THE SOFTWARE.
 #ifndef  _RUNTIME__H_
 #define  _RUNTIME__H_
 
-#include <stdlib.h>
-#ifdef _WIN32
-#define _MAX_PATH_ _MAX_PATH
-#else
-#define _MAX_PATH_ PATH_MAX
-#endif
+#define _MAX_PATH_ 512
 
 void StartRuntime();
 

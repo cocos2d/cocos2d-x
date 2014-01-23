@@ -12,7 +12,9 @@ using namespace std;
 bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<string> &fileList)
 {
 	if (chdir(dir) != 0)
+	{
 		return false;
+	}
 
 	long hFile;
 	_finddata_t fileinfo;
@@ -21,7 +23,9 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 		do
 		{
 			if ((fileinfo.attrib & _A_SUBDIR))
+			{
 				continue;
+			}
 
 			char *pszexten=strrchr(fileinfo.name,'.');
 			char szextension[_MAX_PATH_]={0};
@@ -30,12 +34,16 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 				strcpy(szextension,"*");
 				strcat(szextension,pszexten);
 				if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+				{
 					continue;
+				}
 			}
 
 			strcpy(szextension,fileinfo.name);
 			if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+			{
 				continue;
+			}
 
 			char fullFileName[_MAX_PATH_] ={0};
 			sprintf(fullFileName,"%s%s",dir,fileinfo.name);
@@ -45,20 +53,28 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 	}
 
 	if (chdir(dir) != 0)
+	{
 		return false;
+	}
 
 	if ((hFile=_findfirst("*.*",&fileinfo)) != -1)
 	{
 		do
 		{
 			if(!(fileinfo.attrib & _A_SUBDIR))
+			{
 				continue;
+			}
 
 			if (strcmp(fileinfo.name,".") == 0 || strcmp(fileinfo.name,"..") == 0)
+			{
 				continue;
+			}
 
 			if (find(filterArray.begin(),filterArray.end(),fileinfo.name) != filterArray.end())
+			{
 				continue;
+			}
 
 			char subdir[_MAX_PATH_]={0};
 			sprintf(subdir,"%s%s/",dir,fileinfo.name);
