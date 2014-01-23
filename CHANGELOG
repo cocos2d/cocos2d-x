@@ -1,5 +1,6 @@
 cocos2d-x-3.0beta2 ?.? ?
 [All]
+     [NEW]          Full screen support for desktop platforms.
      [NEW]          Adds performance test for EventDispatcher.
      [NEW]          Adds performance test for Containers(Vector<>, Array, Map<K,V>, Dictionary).
      [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
