@@ -195,10 +195,6 @@ class BuildRuntime:
             print ("Update xcode please")
             return False
 
-        if xcodeVersion is None:
-            print ("Xcode wasn't installed")
-            return False
-
         res = self.checkFileByExtention(".xcodeproj")
         if not res:
             print ("Can't find the \".xcodeproj\" file")
