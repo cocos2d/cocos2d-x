@@ -1319,17 +1319,17 @@ LabelTTFOldNew::LabelTTFOldNew()
     auto s = Director::getInstance()->getWinSize();
     float delta = s.height/4;
 
-    auto label1 = CCLabelTTF::create("Cocos2d-x Label Test", "arial", 24);
+    auto label1 = LabelTTF::create("Cocos2d-x Label Test", "arial", 24);
     addChild(label1, 0, kTagBitmapAtlas1);
-    label1->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    label1->setPosition(CCPoint(s.width/2, delta * 2));
+    label1->setAnchorPoint(Point(0.5f, 0.5f));
+    label1->setPosition(Point(s.width/2, delta * 2));
     label1->setColor(Color3B::RED);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 48);
     auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
-    label2->setAnchorPoint(CCPoint(0.5f, 0.5f));
-    label2->setPosition(CCPoint(s.width/2, delta * 2));
+    label2->setAnchorPoint(Point(0.5f, 0.5f));
+    label2->setPosition(Point(s.width/2, delta * 2));
 }
 
 void LabelTTFOldNew::onDraw()
