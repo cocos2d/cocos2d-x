@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLVIEW_MAC_H__
-#define __CC_EGLVIEW_MAC_H__
+#ifndef __CC_EGLVIEW_DESKTOP_H__
+#define __CC_EGLVIEW_DESKTOP_H__
 
 #include "platform/CCCommon.h"
 #include "platform/CCEGLViewProtocol.h"
@@ -100,4 +100,4 @@ protected:
 
 NS_CC_END   // end of namespace   cocos2d
 
-#endif	// end of __CC_EGLVIEW_MAC_H__
+#endif	// end of __CC_EGLVIEW_DESKTOP_H__

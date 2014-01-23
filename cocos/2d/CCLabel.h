@@ -76,15 +76,15 @@ typedef struct _ttfConfig
     {}
 }TTFConfig;
 
-class CC_DLL Label : public SpriteBatchNode
+class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
     static Label* create();
 
-    CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::CENTER, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
-    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    CC_DEPRECATED_ATTRIBUTE static Label* createWithTTF(const std::string& label, const std::string& fontFilePath, int fontSize, int lineSize = 0, TextHAlignment alignment = TextHAlignment::LEFT, GlyphCollection glyphs = GlyphCollection::NEHE, const char *customGlyphs = 0, bool useDistanceField = false);
+    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment = TextHAlignment::LEFT, int lineWidth = 0);
     
-    static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::CENTER, int lineWidth = 0);
+    static Label* createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment = TextHAlignment::LEFT, int lineWidth = 0);
     
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
@@ -98,7 +98,7 @@ public:
     bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     bool setCharMap(const std::string& plistFile);
 
-    bool setString(const std::string& text, const TextHAlignment& alignment = TextHAlignment::CENTER, float lineWidth = -1, bool lineBreakWithoutSpaces = false);
+    virtual void setString(const std::string& text) override;
 
     //only support for TTF
     void setLabelEffect(LabelEffect effect,const Color3B& effectColor);
@@ -139,7 +139,7 @@ public:
     virtual bool breakLineWithoutSpace() const;
     
     // carloX
-    virtual const std::string& getString() const { static std::string _ret("not implemented"); return _ret; }
+    virtual const std::string& getString() const override {  return _originalUTF8String; }
     void addChild(Node * child, int zOrder=0, int tag=0) override;
 
     virtual std::string getDescription() const override;
@@ -152,7 +152,7 @@ private:
     /**
      * @js NA
      */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::CENTER, bool useDistanceField = false,bool useA8Shader = false);
+    Label(FontAtlas *atlas = nullptr, TextHAlignment alignment = TextHAlignment::LEFT, bool useDistanceField = false,bool useA8Shader = false);
     /**
      * @js NA
      * @lua NA
@@ -186,6 +186,7 @@ private:
     TextHAlignment _alignment;
     unsigned short int * _currentUTF16String;
     unsigned short int * _originalUTF16String;
+    std::string          _originalUTF8String;
     int * _horizontalKernings;
     FontAtlas * _fontAtlas;
     bool _isOpacityModifyRGB;
