@@ -89,15 +89,20 @@ class BuildRuntime:
         ]
         child = subprocess.Popen(commands, stdout=subprocess.PIPE)
 
-        xcodeVersion = None
+        xcode = None
+        version = None
         for line in child.stdout:
             if 'Xcode' in line:
-                xcodeVersion = line
+                xcode, version = str.split(line, ' ')
 
         child.wait()
 
-        if xcodeVersion == None:
+        if xcode is None:
             print ("Xcode wasn't installed")
+            return False
+
+        if float(version) <= 4.5:
+            print ("Update xcode please")
             return False
 
         res = self.checkFileByExtention(".xcodeproj")
@@ -118,12 +123,12 @@ class BuildRuntime:
             re.S
         )
 
-        if section == None:
+        if section is None:
             print ("Can't find Mac target")
             return False
 
         targets = re.search(r"targets = (.*);", section.group(), re.S)
-        if targets == None:
+        if targets is None:
             print ("Can't find Mac target")
             return False
 
@@ -133,7 +138,7 @@ class BuildRuntime:
             if "Mac" in name:
                 targetName = str.strip(name)
 
-        if targetName == None:
+        if targetName is None:
             print ("Can't find Mac target")
             return False
 
@@ -174,15 +179,20 @@ class BuildRuntime:
         ]
         child = subprocess.Popen(commands, stdout=subprocess.PIPE)
 
-        xcodeVersion = None
+        xcode = None
+        version = None
         for line in child.stdout:
             if 'Xcode' in line:
-                xcodeVersion = line
+                xcode, version = str.split(line, ' ')
 
         child.wait()
 
-        if xcodeVersion == None:
+        if xcode is None:
             print ("Xcode wasn't installed")
+            return False
+
+        if float(version) <= 4.5:
+            print ("Update xcode please")
             return False
 
         res = self.checkFileByExtention(".xcodeproj")
@@ -199,12 +209,12 @@ class BuildRuntime:
 
         section = re.search(r"Begin PBXProject section.*End PBXProject section", contents, re.S)
 
-        if section == None:
+        if section is None:
             print ("Can't find iOS target")
             return False
 
         targets = re.search(r"targets = (.*);", section.group(), re.S)
-        if targets == None:
+        if targets is None:
             print ("Can't find iOS target")
             return False
 
@@ -214,13 +224,17 @@ class BuildRuntime:
             if "iOS" in name:
                 targetName = str.strip(name)
 
-        if targetName == None:
+        if targetName is None:
             print ("Can't find iOS target")
             return False
 
         iosFolder = os.path.join(self.projectPath, "..", "..", "runtime", "ios")
         if os.path.isdir(iosFolder):
-            shutil.rmtree(iosFolder)
+            filelist = os.listdir(iosFolder)
+            for filename in filelist:
+                if ".app" in filename:
+                    f = os.path.join(iosFolder, filename)
+                    shutil.rmtree(f)
 
         commands = [
             "xcodebuild",
@@ -273,10 +287,14 @@ class BuildRuntime:
         platforms = os.listdir(platformsPath)
         versions = []
         for platform in platforms:
-            version = platform[platform.find('-')+1:]
-            versions.append(version)
+            if "android-" in platform:
+                version = platform[platform.find('-')+1:]
+                versions.append(version)
             
         maxVersion = max(map(float, versions))
+        if maxVersion <= 10.0:
+            print ("Update android sdk please")
+            return False
         
         buildNative = os.path.join(self.projectPath, "build_native.py")
         if not os.path.isdir(self.projectPath) or not os.path.isfile(buildNative):
@@ -307,18 +325,18 @@ class BuildRuntime:
         i = 0
         try:
             while True:
-                version = _winreg.EnumKey(vs,i)
+                version = _winreg.EnumKey(vs, i)
                 try:
                     if float(version) >= 11.0:
                         key = _winreg.OpenKey(vs, r"SxS\VS7")
-                        vsPath, type = _winreg.QueryValueEx(key, version)
+                        vsPath,type = _winreg.QueryValueEx(key, version)
                 except:
                     pass
                 i += 1
         except WindowsError:
             pass
 
-        if vsPath == None:
+        if vsPath is None:
             print("Can't find the Visual Studio's path in the regedit")
             return False
 
@@ -340,7 +358,7 @@ class BuildRuntime:
         except WindowsError:
             pass
 
-        if msbuildPath == None:
+        if msbuildPath is None:
             print ("Can't find the MSBuildTools' path in the regedit")
             return False
 
@@ -369,7 +387,7 @@ class BuildRuntime:
         
     def checkFileByExtention(self, ext, path=None):
         filelist = ""
-        if path == None:
+        if path is None:
             filelist = os.listdir(self.projectPath)
         else:
             filelist = os.listdir(path)
