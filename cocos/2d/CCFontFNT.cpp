@@ -104,28 +104,6 @@ int  FontFNT::getHorizontalKerningForChars(unsigned short firstChar, unsigned sh
     return ret;
 }
 
-Rect FontFNT::getRectForCharInternal(unsigned short theChar) const
-{
-    Rect retRect;
-    ccBMFontDef fontDef;
-    tFontDefHashElement *element = nullptr;
-    unsigned int key = theChar;
-    
-    HASH_FIND_INT(_configuration->_fontDefDictionary, &key, element);
-    
-    if (element)
-    {
-        retRect = element->fontDef.rect;
-    }
-    
-    return retRect;
-}
-
-Rect FontFNT::getRectForChar(unsigned short theChar) const
-{
-    return getRectForCharInternal(theChar);
-}
-
 FontAtlas * FontFNT::createFontAtlas()
 {
     FontAtlas *tempAtlas = new FontAtlas(*this);

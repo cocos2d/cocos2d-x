@@ -40,7 +40,6 @@ public:
     static FontFNT * create(const std::string& fntFilePath);
     
     virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
-    virtual Rect  getRectForChar(unsigned short theChar) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:
@@ -56,7 +55,6 @@ protected:
 private:
     
     int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    Rect getRectForCharInternal(unsigned short theChar) const;
     
     CCBMFontConfiguration * _configuration;
     

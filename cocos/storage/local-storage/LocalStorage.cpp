@@ -124,17 +124,19 @@ std::string localStorageGetItem( const std::string& key )
 {
 	assert( _initialized );
 
+	std::string ret;
 	int ok = sqlite3_reset(_stmt_select);
 
 	ok |= sqlite3_bind_text(_stmt_select, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	ok |= sqlite3_step(_stmt_select);
-	const unsigned char *ret = sqlite3_column_text(_stmt_select, 0);
-	
+	const unsigned char *text = sqlite3_column_text(_stmt_select, 0);
+	if (text)
+		ret = (const char*)text;
 
 	if( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
 		printf("Error in localStorage.getItem()\n");
 
-	return (const char*)ret;
+	return ret;
 }
 
 /** removes an item from the LS */
