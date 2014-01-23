@@ -1317,16 +1317,16 @@ std::string LabelCrashTest::subtitle() const
 LabelTTFOldNew::LabelTTFOldNew()
 {
     auto s = Director::getInstance()->getWinSize();
-	float delta = s.height/4;
+    float delta = s.height/4;
 
-	auto label1 = CCLabelTTF::create("Cocos2d-x Label Test", "arial", 24);
-	addChild(label1, 0, kTagBitmapAtlas1);
+    auto label1 = CCLabelTTF::create("Cocos2d-x Label Test", "arial", 24);
+    addChild(label1, 0, kTagBitmapAtlas1);
     label1->setAnchorPoint(CCPoint(0.5f, 0.5f));
     label1->setPosition(CCPoint(s.width/2, delta * 2));
-	label1->setColor(Color3B::RED);
+    label1->setColor(Color3B::RED);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 48);
-	auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
+    auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(CCPoint(0.5f, 0.5f));
     label2->setPosition(CCPoint(s.width/2, delta * 2));
