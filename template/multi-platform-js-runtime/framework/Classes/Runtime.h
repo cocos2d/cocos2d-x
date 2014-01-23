@@ -32,7 +32,7 @@ THE SOFTWARE.
 #define _MAX_PATH_ PATH_MAX
 #endif
 
-void RuntimeInit();
+void StartRuntime();
 
 
 #endif // _RUNTIME__H_

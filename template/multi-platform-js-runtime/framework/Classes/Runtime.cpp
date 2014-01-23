@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
+#include "CCScheduler.h"
 
 #ifndef _WIN32
 #include <unistd.h>
@@ -42,9 +43,6 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #include <stdio.h>
 #endif
-
-#include "CCScheduler.h"
-
 #include <vector>
 #include <string>
 
@@ -168,8 +166,7 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 *Like this:
 *    searchFileList("/home","*.*",".svn|.jpg|");  
 *********************************/
-vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const char *filterfile=NULL);
-vector<std::string> searchFileList(string &dir,const char *filespec,const char *filterfile)
+vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const char *filterfile=NULL)
 {
 	char fuldir[_MAX_PATH_]={0};
 	vector<string> _filterArray;
@@ -193,7 +190,7 @@ vector<std::string> searchFileList(string &dir,const char *filespec,const char *
 	return _lfileList;
 }
 
-void resetRuntime()
+void startScript()
 {
 	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
 	ScriptEngineManager::getInstance()->setScriptEngine(engine);
@@ -214,7 +211,7 @@ public:
 		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile))
 		{
 			_scheduler->unscheduleSelector(SEL_SCHEDULE(&ConnectWaiter::updateConnect),this);
-			resetRuntime();	
+			startScript();	
 		}
 	}
 	void waitDebugConnect(void)
@@ -231,7 +228,7 @@ public:
 
 		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile))
 		{
-			resetRuntime();
+			startScript();
 			return;
 		}
 
@@ -249,7 +246,7 @@ string _dotwaitFile;
 string _jsSearchPath;
 };
 
-void RuntimeInit()
+void StartRuntime()
 {
 #ifdef COCOS2D_DEBUG
 	vector<string> searchPathArray;
@@ -264,7 +261,7 @@ void RuntimeInit()
 	ConnectWaiter::getInstance().waitDebugConnect();
 #else
 	ScriptingCore::getInstance()->start();
-	resetRuntime();
+	startScript();
 #endif
 }
 
