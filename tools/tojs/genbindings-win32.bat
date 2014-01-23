@@ -30,7 +30,7 @@ set "COCOS2DX_ROOT=%COCOS2DX_ROOT:\=/%"
 set CXX_GENERATOR_ROOT=%COCOS2DX_ROOT%/tools/bindings-generator
 set TO_JS_ROOT=%COCOS2DX_ROOT%/tools/tojs
 set "CXX_GENERATOR_ROOT=%CXX_GENERATOR_ROOT:\=/%"
-set OUTPUT_DIR=%COCOS2DX_ROOT%/scripting/auto-generated/js-bindings
+set OUTPUT_DIR=%COCOS2DX_ROOT%/cocos/scripting/auto-generated/js-bindings
 set "OUTPUT_DIR=%OUTPUT_DIR:/=\%"
 
 set PATH=%PATH%;%CXX_GENERATOR_ROOT%/libclang;%CXX_GENERATOR_ROOT%/tools/win32;%PYTHON_ROOT%
