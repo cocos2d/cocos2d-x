@@ -726,6 +726,9 @@ Developers:
         
     liang8305
         Use multiple processes according the number of cores to build android project
+        
+    pandamicro
+        Exposed SAXParser to JS, it is used for parsing XML in JS.
     
 Retired Core Developers:
     WenSheng Yang
