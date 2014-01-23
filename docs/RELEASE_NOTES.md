@@ -667,12 +667,11 @@ color3B = Color3B::WHITE;
 
 ### Use bindings-generator tool for lua binding
 
-Only configurate the *.ini files in the tools/tolua folder,not to write a lot of *.pkg files
+Only have to write an ini file for a module, don't have to write a lot of .pkg files
 
 ### Bind the classes with namespace to lua
-With v2.x mechanism,Bind the classes which have same name but different namespace to lua would lead to confusion,for example:
-when the cocos2d::extension::ScrollView and the gui::ScrollView are bound to lua,the ScrollView metatable only represent the map of the gui::ScrollView.It will lead to unknow errors.
-The main difference is as follows:
+
+In previous, the lua binding can not bind classes that have the same class name but different namespaces. In order to resolve this issue, now the metatable name of a class is changed. For example, it will changed from CCNode to cc.Node. This modification will affect somewhere as follows:
 
 	|           v2.x                   |                  v3.0             |
 	| tolua_usertype(tolua_S,"CCNode") | tolua_usertype(tolua_S,"cc.Node") |
@@ -701,8 +700,13 @@ In v3.0 version, we only need to add the `HandlerType` enum in the `ScriptHandle
 ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HANDLERTYPE_MENU_CLICKED)
 ```
 
-### Use "cc"、"ccs" and "ccui" as module name
+### Use "cc"、"ccs"、"ccui" and "sp" as module name
+The classes in the cocos2d、cocos2d::extension、CocosDenshion and cocosbuilder namespace were bound to lua in the "cc" module;
+The classes in the cocos2d::gui namespace were bound to lua in the "ccui" module;
+The classes in the spine namespace were bound to lua in the "sp" module;
+The classes in the cocostudio namespace were bound to lua in the "ccs" module.
 
+The main differences in the script are as follows:
 ```lua
 // v2.x
 CCSprite:create(s_pPathGrossini)
@@ -755,7 +759,7 @@ local color4B = cc.c4b(0,0,0,0)
 Through the funtions of the LuaBasicConversion file,they can be converted the Lua table when they are as a parameter in the bindings generator.
 
 ### Integrate more modules into lua
-In the version 3.0,more modules were integrated into lua,specific as follows:
+In the version 3.0,more modules were bound to lua,specific as follows:
 
 ```
 1.physics
