@@ -112,7 +112,7 @@ def main():
       os.system("tools/jenkins-scripts/gen_jsb.sh")
     elif(platform.system() == 'Windows'):
       os.chdir("tools/jenkins-scripts")
-      os.system("tools/jenkins-scripts/gen_jsb_win32.bat")
+      os.system("gen_jsb_win32.bat")
       os.chdir("../..)
 
     #make temp dir
