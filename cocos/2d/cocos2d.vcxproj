@@ -308,10 +308,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClCompile Include="platform\CCFileUtils.cpp" />
     <ClCompile Include="platform\CCSAXParser.cpp" />
     <ClCompile Include="platform\CCThread.cpp" />
+    <ClCompile Include="platform\desktop\CCEGLView.cpp" />
     <ClCompile Include="platform\win32\CCApplication.cpp" />
     <ClCompile Include="platform\win32\CCCommon.cpp" />
     <ClCompile Include="platform\win32\CCDevice.cpp" />
-    <ClCompile Include="platform\win32\CCEGLView.cpp" />
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="platform\win32\CCImage.cpp" />
     <ClCompile Include="platform\win32\CCStdC.cpp" />
@@ -511,8 +511,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(Ou
     <ClInclude Include="platform\CCImageCommon_cpp.h" />
     <ClInclude Include="platform\CCSAXParser.h" />
     <ClInclude Include="platform\CCThread.h" />
+    <ClInclude Include="platform\desktop\CCEGLView.h" />
     <ClInclude Include="platform\win32\CCApplication.h" />
-    <ClInclude Include="platform\win32\CCEGLView.h" />
     <ClInclude Include="platform\win32\CCFileUtilsWin32.h" />
     <ClInclude Include="platform\win32\CCGL.h" />
     <ClInclude Include="platform\win32\CCPlatformDefine.h" />
