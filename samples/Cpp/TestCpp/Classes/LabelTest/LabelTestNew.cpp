@@ -68,7 +68,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelTTFDistanceField),
     CL(LabelTTFDistanceFieldEffect),
     CL(LabelCharMapTest),
-    CL(LabelCrashTest)
+    CL(LabelCrashTest),
+    CL(LabelTTFOldNew)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1311,4 +1312,32 @@ std::string LabelCrashTest::title() const
 std::string LabelCrashTest::subtitle() const
 {
     return "Not crash and show [Test123] when using unknown character.";
+}
+
+LabelTTFOldNew::LabelTTFOldNew()
+{
+    auto s = Director::getInstance()->getWinSize();
+	float delta = s.height/4;
+
+	auto label1 = CCLabelTTF::create("Cocos2d-x Old", "arial", 24);
+	addChild(label1, 0, kTagBitmapAtlas1);
+    label1->setAnchorPoint(CCPoint(0.5f, 0.5f));
+    label1->setPosition(CCPoint(s.width/2, delta * 2));
+	label1->setColor(Color3B::RED);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 48);
+	auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Old");
+    addChild(label2, 0, kTagBitmapAtlas2);
+    label2->setAnchorPoint(CCPoint(0.5f, 0.5f));
+    label2->setPosition(CCPoint(s.width/2, delta * 2));
+}
+
+std::string LabelTTFOldNew::title() const
+{
+    return "New / Old TTF";
+}
+
+std::string LabelTTFOldNew::subtitle() const
+{
+    return "Comparison between old(red) and new(white) TTF label";
 }
