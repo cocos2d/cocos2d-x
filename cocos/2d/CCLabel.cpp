@@ -52,7 +52,7 @@ Label* Label::create()
 
 Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
 {
-    Label *ret = new Label();
+    Label *ret = new Label(nullptr,alignment);
 
     if (!ret)
         return nullptr;
@@ -61,7 +61,8 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     {
         if(ttfConfig.distanceFieldEnabled)
             ret->setFontSize(ttfConfig.fontSize);
-        ret->setString(text,alignment,lineSize);
+        ret->setWidth(lineSize);
+        ret->setString(text);
         ret->autorelease();
         return ret;
     }
@@ -80,14 +81,15 @@ Label* Label::createWithTTF(const std::string& text, const std::string& fontFile
 
 Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& alignment /* = TextHAlignment::CENTER */, int lineSize /* = 0 */)
 {
-    Label *ret = new Label();
+    Label *ret = new Label(nullptr,alignment);
 
     if (!ret)
         return nullptr;
 
     if (ret->setBMFontFilePath(bmfontFilePath))
     {
-        ret->setString(text,alignment,lineSize);
+        ret->setWidth(lineSize);
+        ret->setString(text);
         ret->autorelease();
         return ret;
     }
@@ -271,8 +273,9 @@ bool Label::initWithFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = fa
     if (_fontAtlas)
     {
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
-        if (_currentUTF16String)
-        {      
+        if(_currentUTF16String)
+        {
+            resetCurrentString();
             alignText();
         }
     }
@@ -304,34 +307,20 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath)
     return initWithFontAtlas(newAtlas);
 }
 
-bool Label::setString(const std::string& text, const TextHAlignment& alignment /* = TextHAlignment::CENTER */, float lineWidth /* = -1 */, bool lineBreakWithoutSpaces /* = false */)
+void Label::setString(const std::string& text)
 {
     if (!_fontAtlas || _commonLineHeight <= 0)
-        return false;
-    
-    // carloX
-    // reset the string
-    resetCurrentString();
-    
-    if(lineWidth >= 0)
-    {
-        _width                  = lineWidth;
-    }   
-    _alignment              = alignment;
-    _lineBreakWithoutSpaces = lineBreakWithoutSpaces;
+        return ;
     
     unsigned short* utf16String = cc_utf8_to_utf16(text.c_str());
     if(!utf16String)
-        return false;
-    
+        return ;
+    _originalUTF8String = text;
     setCurrentString(utf16String);
     setOriginalString(utf16String);
     
     // align text
     alignText();
-    
-    // done here
-    return true;
 }
 
 void Label::setAlignment(TextHAlignment alignment)
@@ -342,11 +331,14 @@ void Label::setAlignment(TextHAlignment alignment)
         // store
         _alignment = alignment;
         
-        // reset the string
-        resetCurrentString();
-        
-        // need to align text again
-        alignText();
+        if (_currentUTF16String)
+        {
+            // reset the string
+            resetCurrentString();
+
+            // need to align text again
+            alignText();
+        }
     }
 }
 
@@ -357,12 +349,14 @@ void Label::setWidth(float width)
         // store
         _width = width;
         
-        
-        // reset the string
-        resetCurrentString();
-        
-        // need to align text again
-        alignText();
+        if (_currentUTF16String)
+        {
+            // reset the string
+            resetCurrentString();
+
+            // need to align text again
+            alignText();
+        }
     }
 }
 
@@ -374,7 +368,11 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
         _lineBreakWithoutSpaces = breakWithoutSpace;
         
         // need to align text again
-        alignText();
+        if(_currentUTF16String)
+        {
+            resetCurrentString();
+            alignText();
+        }
     }
 }
 
@@ -430,7 +428,7 @@ float Label::getScaleX() const
 }
 
 void Label::alignText()
-{      
+{
     if(_textureAtlas)
         _textureAtlas->removeAllQuads();  
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
