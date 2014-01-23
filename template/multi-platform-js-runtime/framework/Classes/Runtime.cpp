@@ -241,14 +241,13 @@ private:
 		_scheduler = CCDirector::sharedDirector()->getScheduler();
 	}
 private:
-cocos2d::Scheduler *_scheduler;
-string _dotwaitFile;
-string _jsSearchPath;
+	cocos2d::Scheduler *_scheduler;
+	string _dotwaitFile;
+	string _jsSearchPath;
 };
 
 void StartRuntime()
-{
-#ifdef COCOS2D_DEBUG
+{	
 	vector<string> searchPathArray;
 	extern vector<string> getSearchPath();
 	searchPathArray = getSearchPath();
@@ -256,6 +255,7 @@ void StartRuntime()
 	{
 		FileUtils::getInstance()->addSearchPath(searchPathArray[i]);
 	}
+#ifdef COCOS2D_DEBUG
 	ScriptingCore::getInstance()->start();
 	ScriptingCore::getInstance()->enableDebugger();
 	ConnectWaiter::getInstance().waitDebugConnect();
