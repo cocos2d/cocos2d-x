@@ -110,6 +110,8 @@ def main():
     # Generate binding glue codes
     if(platform.system() == 'Darwin'):
       os.system("tools/jenkins-scripts/gen_jsb.sh")
+    elif(platform.system() == 'Windows'):
+      os.system("tools/jenkins-scripts/gen_jsb_win32.bat")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
