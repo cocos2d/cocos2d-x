@@ -33,7 +33,6 @@
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "CCFont.h"
-#include "CCDrawingPrimitives.h"
 
 #define DISTANCEFIELD_ATLAS_FONTSIZE 50
 
