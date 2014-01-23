@@ -55,7 +55,7 @@ using namespace cocos2d;
 
 char g_initDir[_MAX_PATH_]={0};
 /*@brief   use "|" splite string  */
-vector<string> &splitFilter(const char *str)
+vector<string> splitFilter(const char *str)
 {
 	vector<string> filterArray;
 	if (str)
