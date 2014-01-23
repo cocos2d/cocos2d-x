@@ -37,8 +37,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct keyCodeItem
+{
+    int glfwKeyCode;
+    EventKeyboard::KeyCode keyCode;
+};
 
-static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
+static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap;
+
+static keyCodeItem g_keyCodeStructArray[] = {
     /* The unknown key */
     { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
     
@@ -331,7 +338,7 @@ void EGLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h
 
 
 //////////////////////////////////////////////////////////////////////////
-// impliment EGLView
+// implement EGLView
 //////////////////////////////////////////////////////////////////////////
 
 EGLView* EGLView::s_pEglView = nullptr;
@@ -346,6 +353,11 @@ EGLView::EGLView()
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     _viewName = "cocos2dx";
     s_pEglView = this;
+    g_keyCodeMap.clear();
+    for (auto& item : g_keyCodeStructArray)
+    {
+        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+    }
     glfwSetErrorCallback(EGLViewEventHandler::onGLFWError);
     glfwInit();
 }
@@ -359,14 +371,19 @@ EGLView::~EGLView()
 
 bool EGLView::init(const std::string& viewName, float width, float height, float frameZoomFactor)
 {
-    if(nullptr != _mainWindow) return true;
+    if(_mainWindow != nullptr)
+        return true;
     
     setViewName(viewName);
     setFrameSize(width, height);
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
-    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor, _screenSize.height * _frameZoomFactor, _viewName.c_str(), nullptr, nullptr);
+    _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor,
+                                   _screenSize.height * _frameZoomFactor,
+                                   _viewName.c_str(),
+                                   NULL, // glfwGetPrimaryMonitor() for fullscreen mode
+                                   NULL);
     glfwMakeContextCurrent(_mainWindow);
     
     int w, h;
@@ -400,38 +417,9 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
         MessageBox(strComplain, "OpenGL version too old");
         return false;
     }
-//    
-//    GLenum GlewInitResult = glewInit();
-//    if (GLEW_OK != GlewInitResult)
-//    {
-//        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
-//        return false;
-//    }
-//    
-//    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
-//    {
-//        log("Ready for GLSL");
-//    }
-//    else
-//    {
-//        log("Not totally ready :(");
-//    }
-//    
-//    if (glewIsSupported("GL_VERSION_2_0"))
-//    {
-//        log("Ready for OpenGL 2.0");
-//    }
-//    else
-//    {
-//        log("OpenGL 2.0 not supported");
-//    }
-//    
-//    if(glew_dynamic_binding() == false)
-//    {
-//        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
-//        return false;
-//    }
-//    
+
+    initGlew();
+
     // Enable point size by default on windows.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     
@@ -515,6 +503,115 @@ EGLView* EGLView::getInstance()
 EGLView* EGLView::sharedOpenGLView()
 {
     return EGLView::getInstance();
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+static bool glew_dynamic_binding()
+{
+	const char *gl_extensions = (const char*)glGetString(GL_EXTENSIONS);
+
+	// If the current opengl driver doesn't have framebuffers methods, check if an extension exists
+	if (glGenFramebuffers == NULL)
+	{
+		log("OpenGL: glGenFramebuffers is NULL, try to detect an extension");
+		if (strstr(gl_extensions, "ARB_framebuffer_object"))
+		{
+			log("OpenGL: ARB_framebuffer_object is supported");
+
+			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbuffer");
+			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbuffer");
+			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffers");
+			glGenRenderbuffers = (PFNGLGENRENDERBUFFERSPROC) wglGetProcAddress("glGenRenderbuffers");
+			glRenderbufferStorage = (PFNGLRENDERBUFFERSTORAGEPROC) wglGetProcAddress("glRenderbufferStorage");
+			glGetRenderbufferParameteriv = (PFNGLGETRENDERBUFFERPARAMETERIVPROC) wglGetProcAddress("glGetRenderbufferParameteriv");
+			glIsFramebuffer = (PFNGLISFRAMEBUFFERPROC) wglGetProcAddress("glIsFramebuffer");
+			glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC) wglGetProcAddress("glBindFramebuffer");
+			glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC) wglGetProcAddress("glDeleteFramebuffers");
+			glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC) wglGetProcAddress("glGenFramebuffers");
+			glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC) wglGetProcAddress("glCheckFramebufferStatus");
+			glFramebufferTexture1D = (PFNGLFRAMEBUFFERTEXTURE1DPROC) wglGetProcAddress("glFramebufferTexture1D");
+			glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC) wglGetProcAddress("glFramebufferTexture2D");
+			glFramebufferTexture3D = (PFNGLFRAMEBUFFERTEXTURE3DPROC) wglGetProcAddress("glFramebufferTexture3D");
+			glFramebufferRenderbuffer = (PFNGLFRAMEBUFFERRENDERBUFFERPROC) wglGetProcAddress("glFramebufferRenderbuffer");
+			glGetFramebufferAttachmentParameteriv = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC) wglGetProcAddress("glGetFramebufferAttachmentParameteriv");
+			glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC) wglGetProcAddress("glGenerateMipmap");
+		}
+		else
+		if (strstr(gl_extensions, "EXT_framebuffer_object"))
+		{
+			log("OpenGL: EXT_framebuffer_object is supported");
+			glIsRenderbuffer = (PFNGLISRENDERBUFFERPROC) wglGetProcAddress("glIsRenderbufferEXT");
+			glBindRenderbuffer = (PFNGLBINDRENDERBUFFERPROC) wglGetProcAddress("glBindRenderbufferEXT");
+			glDeleteRenderbuffers = (PFNGLDELETERENDERBUFFERSPROC) wglGetProcAddress("glDeleteRenderbuffersEXT");
+			glGenRenderbuffers = (PFNGLGENRENDERBUFFERSPROC) wglGetProcAddress("glGenRenderbuffersEXT");
+			glRenderbufferStorage = (PFNGLRENDERBUFFERSTORAGEPROC) wglGetProcAddress("glRenderbufferStorageEXT");
+			glGetRenderbufferParameteriv = (PFNGLGETRENDERBUFFERPARAMETERIVPROC) wglGetProcAddress("glGetRenderbufferParameterivEXT");
+			glIsFramebuffer = (PFNGLISFRAMEBUFFERPROC) wglGetProcAddress("glIsFramebufferEXT");
+			glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC) wglGetProcAddress("glBindFramebufferEXT");
+			glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC) wglGetProcAddress("glDeleteFramebuffersEXT");
+			glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC) wglGetProcAddress("glGenFramebuffersEXT");
+			glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC) wglGetProcAddress("glCheckFramebufferStatusEXT");
+			glFramebufferTexture1D = (PFNGLFRAMEBUFFERTEXTURE1DPROC) wglGetProcAddress("glFramebufferTexture1DEXT");
+			glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC) wglGetProcAddress("glFramebufferTexture2DEXT");
+			glFramebufferTexture3D = (PFNGLFRAMEBUFFERTEXTURE3DPROC) wglGetProcAddress("glFramebufferTexture3DEXT");
+			glFramebufferRenderbuffer = (PFNGLFRAMEBUFFERRENDERBUFFERPROC) wglGetProcAddress("glFramebufferRenderbufferEXT");
+			glGetFramebufferAttachmentParameteriv = (PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVPROC) wglGetProcAddress("glGetFramebufferAttachmentParameterivEXT");
+			glGenerateMipmap = (PFNGLGENERATEMIPMAPPROC) wglGetProcAddress("glGenerateMipmapEXT");
+		}
+		else
+		{
+			log("OpenGL: No framebuffers extension is supported");
+			log("OpenGL: Any call to Fbo will crash!");
+			return false;
+		}
+	}
+	return true;
+}
+#endif
+
+// helper
+bool EGLView::initGlew()
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult)
+    {
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        return false;
+    }
+
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        log("Ready for GLSL");
+    }
+    else
+    {
+        log("Not totally ready :(");
+    }
+
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+        log("Ready for OpenGL 2.0");
+    }
+    else
+    {
+        log("OpenGL 2.0 not supported");
+    }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    if(glew_dynamic_binding() == false)
+    {
+        MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
+        return false;
+	}
+
+	// Enable point size by default on windows.
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+#endif
+
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+
+    return true;
 }
 
 NS_CC_END // end of namespace cocos2d;
