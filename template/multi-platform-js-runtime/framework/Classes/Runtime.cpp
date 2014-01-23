@@ -35,7 +35,9 @@ THE SOFTWARE.
 #include "jsb_opengl_registration.h"
 #include "CCScheduler.h"
 
-#ifndef _WIN32
+#ifdef _WIN32
+#define realpath(dir,fuldir) _fullpath(fuldir,dir,_MAX_PATH_)
+#else
 #include <unistd.h>
 #include <limits.h>
 #include <dirent.h>
@@ -43,11 +45,17 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #include <stdio.h>
 #endif
+
 #include <vector>
 #include <string>
 
 using namespace std;
 using namespace cocos2d;
+
+extern string getDotWaitFilePath();
+extern string getJsSearchPath();
+extern vector<string> getSearchPath();
+extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 
 /*@brief   use "|" splite string  */
 vector<string> splitFilter(const char *str)
@@ -89,39 +97,43 @@ bool wildcardMatches(const char *wildcard, const char *str)
 	}
 }
 
+
+#ifndef _WIN32
 /*
 *@brief iterator directory and process file.
 */
-#ifndef _WIN32
 bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList)
 {
-	DIR *dp;
-	struct dirent *entry;
+	DIR *dp=NULL;
+	struct dirent *entry=NULL;
 	struct stat statbuf;
-	if((dp = opendir(dir)) == NULL) {
+	if((dp = opendir(dir)) == NULL) 
 		return false;
-	}
+
 	if (chdir(dir) != 0)
 		return false;
-	while((entry = readdir(dp)) != NULL) {
-		lstat(entry->d_name,&statbuf);
-		if(S_ISDIR(statbuf.st_mode)) {
 
-			if(strcmp(".",entry->d_name) == 0 ||
-				strcmp("..",entry->d_name) == 0)
+	while((entry = readdir(dp)) != NULL) 
+	{
+		lstat(entry->d_name,&statbuf);
+		if(S_ISDIR(statbuf.st_mode)) 
+		{
+			if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
 				continue;
+
 			if (find(filterArray.begin(),filterArray.end(),entry->d_name) != filterArray.end())
-			{
 				continue;
-			}
-			char subdir[_MAX_PATH_];
+
+			char subdir[_MAX_PATH_]={0};
 			sprintf(subdir,"%s%s/",dir,entry->d_name);
 			if (!browseDir(subdir,filespec,filterArray,fileList))
 			{
 				closedir(dp);
 				return false;
 			}
-		} else {
+		} 
+		else 
+		{
 
 			if (!wildcardMatches(filespec,entry->d_name))
 				continue;
@@ -133,16 +145,12 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 				strcpy(szextension,"*");
 				strcat(szextension,pszexten);
 				if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-				{
 					continue;
-				}
 			}
 
 			strcpy(szextension,entry->d_name);
 			if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
-			{
 				continue;
-			}
 
 			char fullFileName[_MAX_PATH_] ={0};
 			sprintf(fullFileName,"%s%s",dir,entry->d_name);
@@ -173,18 +181,13 @@ vector<std::string> searchFileList(string &dir,const char *filespec="*.*",const 
 	vector<std::string> _lfileList;
 	_filterArray = splitFilter(filterfile);
 
-#ifdef WIN32
-	if (_fullpath(fuldir,dir.c_str(),_MAX_PATH_) == NULL)
-		return _lfileList;
-#else
 	if (realpath(dir.c_str(), fuldir)== NULL)
 		return _lfileList;
-#endif
+
 	int len=strlen(fuldir);
 	if (fuldir[len-1] != '/')
 		strcat(fuldir,"/");
 
-	extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 	browseDir(fuldir,filespec,_filterArray,_lfileList);
 	dir =fuldir;
 	return _lfileList;
@@ -216,9 +219,7 @@ public:
 	}
 	void waitDebugConnect(void)
 	{
-		extern string getDotWaitFilePath();
 		_dotwaitFile = getDotWaitFilePath();
-		extern string getJsSearchPath();
 		_jsSearchPath = getJsSearchPath();
 		vector<std::string> fileInfoList = searchFileList(_jsSearchPath,"*.js","runtime|framework|");
 		for (unsigned i = 0; i < fileInfoList.size(); i++)
@@ -249,7 +250,6 @@ private:
 void StartRuntime()
 {	
 	vector<string> searchPathArray;
-	extern vector<string> getSearchPath();
 	searchPathArray = getSearchPath();
 	for (unsigned i = 0; i < searchPathArray.size(); i++)
 	{

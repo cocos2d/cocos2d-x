@@ -9,13 +9,10 @@
 #include "localstorage/js_bindings_system_registration.h"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "jsb_opengl_registration.h"
-
+#include "Runtime.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
-
-
-#include "Runtime.h"
 
 AppDelegate::AppDelegate()
 {

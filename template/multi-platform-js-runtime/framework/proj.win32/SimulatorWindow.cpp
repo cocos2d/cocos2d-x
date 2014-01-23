@@ -191,15 +191,16 @@ LRESULT CALLBACK SNewWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 			switch (wmId)
 			{
 			case ID_FILE_EXIT:
-				printf("TRESET");
 				break;
 
 			case ID_VIEW_PORTRAIT:
 			case ID_VIEW_LANDSCAPE:
 				onViewChangeOrientation(wmId);
 				break;
+
 			case ID_HELP_ABOUT:
 				onHelpAbout();
+
 			default:
 				if (wmId >= ID_VIEW_SIZE && wmId <= ID_VIEW_SIZE + _screenSizeArray.size() - 1)
 				{
