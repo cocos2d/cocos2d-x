@@ -37,7 +37,7 @@ NS_CC_BEGIN
 const char* PHYSICSCONTACT_EVENT_NAME = "PhysicsContactEvent";
 
 PhysicsContact::PhysicsContact()
-: Event(Event::Type::CUSTOM)
+: EventCustom(PHYSICSCONTACT_EVENT_NAME)
 , _world(nullptr)
 , _shapeA(nullptr)
 , _shapeB(nullptr)
