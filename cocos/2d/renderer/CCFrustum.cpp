@@ -27,9 +27,6 @@
 
 #include <stdlib.h>
 
-#undef far
-#undef near
-
 NS_CC_BEGIN
 
 ViewTransform::ViewTransform()

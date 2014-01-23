@@ -321,6 +321,8 @@ void Label::setString(const std::string& text)
     
     // align text
     alignText();
+
+    updateColor();
 }
 
 void Label::setAlignment(TextHAlignment alignment)
