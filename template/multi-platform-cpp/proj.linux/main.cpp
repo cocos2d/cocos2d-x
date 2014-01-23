@@ -1,6 +1,4 @@
 #include "../Classes/AppDelegate.h"
-#include "cocos2d.h"
-#include "CCEGLView.h"
 
 #include <stdlib.h>
 #include <stdio.h>
