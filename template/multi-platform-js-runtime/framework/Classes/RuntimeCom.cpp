@@ -148,8 +148,7 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 
 			char fullFileName[_MAX_PATH_] ={0};
 			sprintf(fullFileName,"%s%s",dir,entry->d_name);
-			fileList.push_back(fullFileName); 
-			closedir(dp);
+			fileList.push_back(fullFileName);
 		}
 	}
 	chdir("..");
@@ -212,7 +211,7 @@ public:
 	void updateConnect(float delta)
 	{
 		FileUtils::getInstance()->purgeCachedEntries();
-		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile.c_str()))
+		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile))
 		{
 			_scheduler->unscheduleSelector(SEL_SCHEDULE(&ConnectWaiter::updateConnect),this);
 			resetRuntime();	
@@ -230,7 +229,7 @@ public:
 			ScriptingCore::getInstance()->compileScript(fileInfoList[i].substr(_jsSearchPath.length(),-1).c_str());
 		}
 
-		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile.c_str()))
+		if (!FileUtils::getInstance()->isFileExist(_dotwaitFile))
 		{
 			resetRuntime();
 			return;
