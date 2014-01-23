@@ -175,7 +175,7 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #include "platform/win32/CCApplication.h"
-    #include "platform/win32/CCEGLView.h"
+    #include "platform/desktop/CCEGLView.h"
     #include "platform/win32/CCGL.h"
     #include "platform/win32/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

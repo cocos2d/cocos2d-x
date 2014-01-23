@@ -54,6 +54,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/2d
   ${COCOS2D_ROOT}/cocos/2d/renderer
   ${COCOS2D_ROOT}/cocos/2d/platform
+  ${COCOS2D_ROOT}/cocos/2d/platform/desktop
   ${COCOS2D_ROOT}/cocos/2d/platform/linux
   ${COCOS2D_ROOT}/cocos/base
   ${COCOS2D_ROOT}/cocos/physics
