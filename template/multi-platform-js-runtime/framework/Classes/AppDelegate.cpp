@@ -14,12 +14,8 @@
 USING_NS_CC;
 using namespace CocosDenshion;
 
-#define ISRUNTIME 1
 
-#ifdef ISRUNTIME
 #include "Runtime.h"
-#endif // ISRUNTIME
-
 
 AppDelegate::AppDelegate()
 {
@@ -54,23 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(JSB_register_opengl);
     sc->addRegisterCallback(jsb_register_chipmunk);
     
-#ifdef ISRUNTIME
-	Runtime::getInstance().setSearchPath();
-#endif
-	
-	sc->start();
-#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-    sc->enableDebugger();
-#endif
-  
-#ifdef ISRUNTIME
-	Runtime::getInstance().waitDebugConnect();
-	return true;
-#endif
-
-	ScriptEngineProtocol *engine = ScriptingCore::getInstance();
-	ScriptEngineManager::getInstance()->setScriptEngine(engine);
-	ScriptingCore::getInstance()->runScript("cocos2d-jsb.js");
+	RuntimeInit();
     return true;
 }
 

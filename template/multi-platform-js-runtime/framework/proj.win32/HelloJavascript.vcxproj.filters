@@ -22,7 +22,10 @@
     <ClCompile Include="SimulatorWindow.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Runtime.cpp">
+    <ClCompile Include="Runtime.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RuntimeCom.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>

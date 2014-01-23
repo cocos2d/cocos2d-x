@@ -25,59 +25,15 @@ THE SOFTWARE.
 #ifndef  _RUNTIME__H_
 #define  _RUNTIME__H_
 
-#include "CCScheduler.h"
+#include <stdlib.h>
+#ifdef _WIN32
+#define _MAX_PATH_ _MAX_PATH
+#else
+#define _MAX_PATH_ PATH_MAX
+#endif
 
-#include <vector>
-#include <string>
+void RuntimeInit();
 
-/************************
-* Get file list from specified directory. 
-*
-*@param dir		    search directory
-*@param filespec    search specified type file
-*@param filterfile  filter file or folder
-*
-*Like this:
-*    searchFileList("/home","*.*",".svn|.jpg|");  
-*********************************/
-typedef std::vector<std::string> StringList;
-StringList searchFileList(const char *dir,const char *filespec="*.*",const char *filterfile=NULL);
-
-
-/**
-@brief Runtime.
-*/
-class  Runtime:public cocos2d::Object 
-{
-public:
-	/** returns a shared instance of the Runtime */
-	static Runtime& getInstance();
-	
-	/** reset runtime when change resolution*/
-	void resetRuntime();
-
-	/** Set runtime search js path. */
-	void setSearchPath();
-
-	/** wait debug connect. */
-	void waitDebugConnect();
-
-private:
-
-	/** update wait debug connenct */
-	void updateConnect(float delta);
-    
-	Runtime();
-    virtual ~Runtime();
-
-	cocos2d::Scheduler *_scheduler;
-
-	/* ".wait" file path*/
-	std::string _dotwaitFile;
-
-	 /* resource search path*/
-	std::string _searchPath;
-};
 
 #endif // _RUNTIME__H_
 

@@ -10,5 +10,5 @@
                              "PROJECT_NAME.vcxproj.user",
                              "PROJECT_NAME.sln",
                              "main.cpp",
-							 "../Classes/Runtime.cpp"]
+							 "Runtime.cpp"]
 }

@@ -23,8 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "SimulatorWindow.h"
-#include "Runtime.h"
-
 
 #include "cocos2d.h"
 #include "glfw3native.h"
@@ -146,7 +144,6 @@ void updateView()
 		glfwSetWindowSize(g_eglView->getWindow(),g_screenSize.height,g_screenSize.width);
 	}
 	updateMenu();
-	Runtime::getInstance().resetRuntime();
 }
 
 void onViewChangeOrientation(int viewMenuID)

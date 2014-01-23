@@ -1,9 +1,9 @@
 
 #include <string>
 #include <vector>
+using namespace std;
 
-
-std::string getResourcePath()
+string getJsSearchPath()
 {
     NSString *bundlePath = [[NSBundle mainBundle] resourcePath];
     if (bundlePath != nil) {
@@ -11,3 +11,17 @@ std::string getResourcePath()
     }
     return "";
 }
+
+vector<string> getSearchPath()
+{
+	vector<string> searchPathArray;
+	return searchPathArray;
+}
+
+string getDotWaitFilePath()
+{
+	string dotwaitFile;
+    dotwaitFile = getJsSearchPath();
+    dotwaitFile += "/.wait";
+}
+

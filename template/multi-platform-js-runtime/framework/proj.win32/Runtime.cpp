@@ -1,0 +1,105 @@
+
+#include "Runtime.h"
+
+#include <io.h>
+#include <direct.h>
+#include <stdio.h>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<string> &fileList)
+{
+	if (chdir(dir) != 0)
+		return false;
+	long hFile;
+	_finddata_t fileinfo;
+	if ((hFile=_findfirst(filespec,&fileinfo)) != -1)
+	{
+		do
+		{
+			if (!(fileinfo.attrib & _A_SUBDIR))
+			{
+				char *pszexten=strrchr(fileinfo.name,'.');
+				char szextension[_MAX_PATH_]={0};
+				if (pszexten)
+				{
+					strcpy(szextension,"*");
+					strcat(szextension,pszexten);
+					if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+					{
+						continue;
+					}	
+				}
+
+				strcpy(szextension,fileinfo.name);
+				if (find(filterArray.begin(),filterArray.end(),szextension) != filterArray.end())
+				{
+					continue;
+				}
+				char fullFileName[_MAX_PATH_] ={0};
+				sprintf(fullFileName,"%s%s",dir,fileinfo.name);
+				fileList.push_back(fullFileName);   
+			}
+		} while (_findnext(hFile,&fileinfo) == 0);
+		_findclose(hFile);
+	}
+
+	if (chdir(dir) != 0)
+		return false;
+	if ((hFile=_findfirst("*.*",&fileinfo)) != -1)
+	{
+		do
+		{
+			if ((fileinfo.attrib & _A_SUBDIR))
+			{
+				if (strcmp(fileinfo.name,".") != 0 && strcmp
+					(fileinfo.name,"..") != 0)
+				{
+					if (find(filterArray.begin(),filterArray.end(),fileinfo.name) != filterArray.end())
+					{
+						continue;
+					}
+
+					char subdir[_MAX_PATH_];
+					sprintf(subdir,"%s%s/",dir,fileinfo.name);
+					if (!browseDir(subdir,filespec,filterArray,fileList))
+					{
+						_findclose(hFile);
+						return false;
+					}
+				}
+			}
+		} while (_findnext(hFile,&fileinfo) == 0);
+		_findclose(hFile);
+	}
+	return true;
+}
+
+string getJsSearchPath()
+{
+	extern std::string getCurAppPath(void);
+	string searchPath = getCurAppPath();
+	searchPath += "/../..";
+	return searchPath;
+}
+
+vector<string> getSearchPath()
+{
+	extern std::string getCurAppPath(void);
+	vector<string> searchPathArray;
+	string searchPathRes = getCurAppPath();
+	searchPathRes += "/HelloJavascriptRes";
+	searchPathArray.push_back(getJsSearchPath());
+	searchPathArray.push_back(searchPathRes);
+	return searchPathArray;
+}
+
+string getDotWaitFilePath()
+{
+	extern std::string getCurAppPath(void);
+	string dotwaitFile = getCurAppPath();
+	dotwaitFile += "/.wait";
+	return dotwaitFile;
+}

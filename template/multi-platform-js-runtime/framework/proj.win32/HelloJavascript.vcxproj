@@ -175,9 +175,10 @@ xcopy "$(EngineRoot)cocos\scripting\javascript\script\*.js" "$(OutDir)\HelloJava
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Classes\Runtime.cpp" />
+    <ClCompile Include="..\Classes\RuntimeCom.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="Runtime.cpp" />
     <ClCompile Include="SimulatorWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
