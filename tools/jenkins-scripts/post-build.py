@@ -27,6 +27,6 @@ result = J[os.environ['JOB_NAME']].get_build(build_number).get_status()
 if(result == STATUS_SUCCESS):
     data['state'] = "success"
 else:
-	data['state'] = "failure"
+    data['state'] = "failure"
 
 requests.post(statuses_url, data=json.dumps(data), headers=Headers)
