@@ -10,5 +10,5 @@
                              "PROJECT_NAME.vcxproj.user",
                              "PROJECT_NAME.sln",
                              "main.cpp",
-							 "Runtime.cpp"]
+							 "Runtime_win32.cpp"]
 }
