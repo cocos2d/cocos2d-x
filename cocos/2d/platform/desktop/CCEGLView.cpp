@@ -349,6 +349,7 @@ EGLView::EGLView()
 , _supportTouch(false)
 , _isRetina(false)
 , _mainWindow(nullptr)
+, _primaryMonitor(nullptr)
 {
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     _viewName = "cocos2dx";
@@ -379,10 +380,11 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    
     _mainWindow = glfwCreateWindow(_screenSize.width * _frameZoomFactor,
                                    _screenSize.height * _frameZoomFactor,
                                    _viewName.c_str(),
-                                   NULL, // glfwGetPrimaryMonitor() for fullscreen mode
+                                   _primaryMonitor,
                                    NULL);
     glfwMakeContextCurrent(_mainWindow);
     
@@ -417,13 +419,23 @@ bool EGLView::init(const std::string& viewName, float width, float height, float
         MessageBox(strComplain, "OpenGL version too old");
         return false;
     }
-
+    
     initGlew();
 
-    // Enable point size by default on windows.
+    // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     
     return true;
+}
+
+bool EGLView::initWithFullScreen(const std::string& viewName)
+{
+    _primaryMonitor = glfwGetPrimaryMonitor();
+    if (nullptr == _primaryMonitor)
+        return false;
+    
+    const GLFWvidmode* videoMode = glfwGetVideoMode(_primaryMonitor);
+    return init(viewName, videoMode->width, videoMode->height, 1.0f);
 }
 
 bool EGLView::isOpenGLReady()
@@ -604,9 +616,6 @@ bool EGLView::initGlew()
         MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
         return false;
 	}
-
-	// Enable point size by default on windows.
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 #endif
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
