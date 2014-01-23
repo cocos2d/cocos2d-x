@@ -33,6 +33,7 @@
 #include "CCDirector.h"
 #include "renderer/CCRenderer.h"
 #include "CCFont.h"
+#include "CCDrawingPrimitives.h"
 
 #define DISTANCEFIELD_ATLAS_FONTSIZE 50
 
@@ -321,8 +322,6 @@ void Label::setString(const std::string& text)
     
     // align text
     alignText();
-
-    updateColor();
 }
 
 void Label::setAlignment(TextHAlignment alignment)
@@ -473,6 +472,8 @@ void Label::alignText()
             insertQuadFromSprite(_reusedLetter,vaildIndex++);
         }     
     }
+
+    updateColor();
 }
 
 bool Label::computeHorizontalKernings(unsigned short int *stringToRender)
