@@ -37,8 +37,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+struct keyCodeItem
+{
+    int glfwKeyCode;
+    EventKeyboard::KeyCode keyCode;
+};
 
-static std::unordered_map<int, EventKeyboard::KeyCode> g_keyCodeMap = {
+static std::map<int, EventKeyboard::KeyCode> g_keyCodeMap;
+
+static keyCodeItem g_keyCodeStructArray[] = {
     /* The unknown key */
     { GLFW_KEY_UNKNOWN         , EventKeyboard::KeyCode::KEY_NONE          },
     
@@ -346,6 +353,11 @@ EGLView::EGLView()
     CCASSERT(nullptr == s_pEglView, "EGLView is singleton, Should be inited only one time\n");
     _viewName = "cocos2dx";
     s_pEglView = this;
+    g_keyCodeMap.clear();
+    for (auto& item : g_keyCodeStructArray)
+    {
+        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+    }
     glfwSetErrorCallback(EGLViewEventHandler::onGLFWError);
     glfwInit();
 }
