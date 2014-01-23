@@ -569,27 +569,25 @@ local function ConvertToNode()
         ConvertToNode_layer:addChild(sprite, i)
     end
 
-	local function onTouchEnded(x, y)
-		for i = 0, 2 do
-            local node = ConvertToNode_layer:getChildByTag(100 + i)
-            local p1, p2
-            p1 = node:convertToNodeSpaceAR(cc.p(x, y))
-            p2 = node:convertToNodeSpace(cc.p(x, y))
+    local function onTouchesEnded(touches, event)
+        local count = table.getn(touches)
+        for i = 1, count do
+            local location = touches[i]:getLocation()
+            for j = 1,3 do
+                local node = ConvertToNode_layer:getChildByTag(100 + i - 1)
+                local p1, p2
+                p1 = node:convertToNodeSpaceAR(location)
+                p2 = node:convertToNodeSpace(location)
 
-            cclog("AR: x=" .. p1.x .. ", y=" .. p1.y .. " -- Not AR: x=" .. p2.x .. ", y=" .. p2.y)
+                cclog("AR: x=" .. p1.x .. ", y=" .. p1.y .. " -- Not AR: x=" .. p2.x .. ", y=" .. p2.y)
+            end
         end
     end
 
-    local function onTouch(eventType, x, y)
-		if eventType == "began" then
-			return true
-        elseif eventType == "ended" then
-            return onTouchEnded(x, y)
-        end
-    end
-
-	ConvertToNode_layer:setTouchEnabled(true)
-    ConvertToNode_layer:registerScriptTouchHandler(onTouch)
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = ConvertToNode_layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ConvertToNode_layer)
 
 	Helper.titleLabel:setString("Convert To Node Space")
 	Helper.subtitleLabel:setString("testing convertToNodeSpace / AR. Touch and see console")

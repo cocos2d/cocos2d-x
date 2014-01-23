@@ -302,8 +302,6 @@ end
 local function LayerTest1()
     local ret = createLayerDemoLayer("ColorLayer resize (tap & move)")
 
-    ret:setTouchEnabled(true)
-
     local s = cc.Director:getInstance():getWinSize()
     local  layer = cc.LayerColor:create( cc.c4b(0xFF, 0x00, 0x00, 0x80), 200, 200)
 
@@ -321,15 +319,23 @@ local function LayerTest1()
         l:setContentSize( newSize )
     end
 
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            updateSize(x, y)
-            return true
-        else
-            updateSize(x, y)
-        end
+    local function onTouchesMoved(touches, event)
+        local touchLocation = touches[1]:getLocation()
+
+        updateSize(touchLocation.x, touchLocation.y)
     end
-    ret:registerScriptTouchHandler(onTouchEvent)
+
+    local function onTouchesBegan(touches, event)
+        onTouchesMoved(touches, event)
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
+
     return ret
 end
 
@@ -430,8 +436,6 @@ local function LayerGradient()
     local  layer1 = cc.LayerGradient:create(cc.c4b(255,0,0,255), cc.c4b(0,255,0,255), cc.p(0.9, 0.9))
     ret:addChild(layer1, 0, kTagLayer)
 
-    ret:setTouchEnabled(true)
-
     local label1 = cc.LabelTTF:create("Compressed Interpolation: Enabled", "Marker Felt", 26)
     local label2 = cc.LabelTTF:create("Compressed Interpolation: Disabled", "Marker Felt", 26)
     local item1 = cc.MenuItemLabel:create(label1)
@@ -452,22 +456,23 @@ local function LayerGradient()
     local s = cc.Director:getInstance():getWinSize()
     menu:setPosition(cc.p(s.width / 2, 100))
 
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            return true
-        elseif eventType == "moved" then
-            local s = cc.Director:getInstance():getWinSize()
-            local start = cc.p(x, y)
-            local movingPos = cc.p(s.width/2,s.height/2)
-            local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
-            diff = cc.pNormalize(diff)
+    local function onTouchesMoved(touches, event)
+        local s = cc.Director:getInstance():getWinSize()
+        local start = touches[1]:getLocation()
+        local movingPos = cc.p(s.width/2,s.height/2)
+        local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
+        diff = cc.pNormalize(diff)
 
-            local gradient = tolua.cast(ret:getChildByTag(1), "cc.LayerGradient")
-            gradient:setVector(diff)
-        end
+        local gradient = tolua.cast(ret:getChildByTag(1), "cc.LayerGradient")
+        gradient:setVector(diff)
     end
 
-    ret:registerScriptTouchHandler(onTouchEvent)
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
+
     return ret
 end
 

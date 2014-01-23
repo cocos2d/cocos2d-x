@@ -83,7 +83,6 @@ end
 
 local function Parallax2()
     local ret = createParallaxLayer("Parallax: drag screen")
-    ret:setTouchEnabled( true )
 
     -- Top Layer, a simple image
     local  cocosImage = cc.Sprite:create(s_Power)
@@ -126,25 +125,19 @@ local function Parallax2()
     -- top image is moved at a ratio of 3.0x, 2.5y
     voidNode:addChild( cocosImage, 2, cc.p(3.0,2.5), cc.p(200,1000) )
     ret:addChild(voidNode, 0, kTagNode)
-    local prev = {x = 0, y = 0}
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            prev.x = x
-            prev.y = y
-            return true
-        elseif  eventType == "moved" then
-            local node  = ret:getChildByTag(kTagNode)
-            local newX  = node:getPositionX()
-            local newY  = node:getPositionY()
-            local diffX = x - prev.x
-            local diffY = y - prev.y
 
-            node:setPosition( cc.pAdd(cc.p(newX, newY), cc.p(diffX, diffY)) )
-            prev.x = x
-            prev.y = y
-        end
+    local function onTouchesMoved(touches, event)
+        local diff = touches[1]:getDelta()
+    
+        local node = ret:getChildByTag(kTagNode)
+        local currentPosX, currentPosY = node:getPosition()
+        node:setPosition(cc.p(currentPosX + diff.x, currentPosY + diff.y))
     end
-    ret:registerScriptTouchHandler(onTouchEvent)
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
 
     return ret
 end
