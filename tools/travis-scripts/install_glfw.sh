@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GLFW_VERSION="3.0.2"
+GLFW_VERSION="3.0.4"
 GLFW_SOURCE="https://codeload.github.com/glfw/glfw/tar.gz/${GLFW_VERSION}"
 GLFW_ZIP="glfw${GLFW_VERSION}.tar.gz"
 GLFW_INSTALL="glfw_install"
