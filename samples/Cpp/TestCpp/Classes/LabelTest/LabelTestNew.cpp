@@ -1319,17 +1319,49 @@ LabelTTFOldNew::LabelTTFOldNew()
     auto s = Director::getInstance()->getWinSize();
 	float delta = s.height/4;
 
-	auto label1 = CCLabelTTF::create("Cocos2d-x Old", "arial", 24);
+	auto label1 = CCLabelTTF::create("Cocos2d-x Label Test", "arial", 24);
 	addChild(label1, 0, kTagBitmapAtlas1);
     label1->setAnchorPoint(CCPoint(0.5f, 0.5f));
     label1->setPosition(CCPoint(s.width/2, delta * 2));
 	label1->setColor(Color3B::RED);
 
     TTFConfig ttfConfig("fonts/arial.ttf", 48);
-	auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Old");
+	auto label2 = Label::createWithTTF(ttfConfig, "Cocos2d-x Label Test");
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setAnchorPoint(CCPoint(0.5f, 0.5f));
     label2->setPosition(CCPoint(s.width/2, delta * 2));
+}
+
+void LabelTTFOldNew::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    auto label1 = (Label*)getChildByTag(kTagBitmapAtlas2);
+    auto labelSize = label1->getContentSize();
+    auto origin    = Director::getInstance()->getWinSize();
+    
+    origin.width = origin.width   / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+    
+    Point vertices[4]=
+    {
+        Point(origin.width, origin.height),
+        Point(labelSize.width + origin.width, origin.height),
+        Point(labelSize.width + origin.width, labelSize.height + origin.height),
+        Point(origin.width, labelSize.height + origin.height)
+    };
+    DrawPrimitives::drawPoly(vertices, 4, true);
+    
+    kmGLLoadMatrix(&oldMat);
+}
+
+void LabelTTFOldNew::draw()
+{
+    _renderCmd.init(_globalZOrder);
+    _renderCmd.func = CC_CALLBACK_0(LabelTTFOldNew::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmd);
 }
 
 std::string LabelTTFOldNew::title() const
