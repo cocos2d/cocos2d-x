@@ -139,7 +139,8 @@ typedef struct cocos_dimensions {
     int h;
 } cocos_dimensions;
 
-static void cocos_init(cocos_dimensions d, struct android_app* app) {
+static void cocos_init(cocos_dimensions d, struct android_app* app)
+{
     LOGI("cocos_init(...)");
     pthread_t thisthread = pthread_self();
     LOGI("pthread_self() = %X", thisthread);
@@ -150,9 +151,9 @@ static void cocos_init(cocos_dimensions d, struct android_app* app) {
     auto glview = director->getOpenGLView();
     if (!glview)
     {
-        glview = cocos2d::EGLView::create("android app");
-        director->setOpenGLView(glview);
+        glview = cocos2d::EGLView::create("Android app");
         glview->setFrameSize(d.w, d.h);
+        director->setOpenGLView(glview);
 
         cocos_android_app_init(app);
 
@@ -248,6 +249,7 @@ static cocos_dimensions engine_init_display(struct engine* engine)
     r.w = w;
     r.h = h;
 
+
     return r;
 }
 
@@ -278,7 +280,8 @@ static void dispatch_pending_runnables() {
 /**
  * Just the current frame in the display.
  */
-static void engine_draw_frame(struct engine* engine) {
+static void engine_draw_frame(struct engine* engine)
+{
     LOG_RENDER_DEBUG("engine_draw_frame(...)");
     pthread_t thisthread = pthread_self();
     LOG_RENDER_DEBUG("pthread_self() = %X", thisthread);
@@ -311,7 +314,8 @@ static void engine_draw_frame(struct engine* engine) {
 /**
  * Tear down the EGL context currently associated with the display.
  */
-static void engine_term_display(struct engine* engine) {
+static void engine_term_display(struct engine* engine)
+{
     if (engine->display != EGL_NO_DISPLAY) {
         eglMakeCurrent(engine->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         if (engine->context != EGL_NO_CONTEXT) {
@@ -536,7 +540,8 @@ void setAccelerometerIntervalJni(float interval) {
 /**
  * Process the next main command.
  */
-static void engine_handle_cmd(struct android_app* app, int32_t cmd) {
+static void engine_handle_cmd(struct android_app* app, int32_t cmd)
+{ 
     struct engine* engine = (struct engine*)app->userData;
     switch (cmd) {
         case APP_CMD_SAVE_STATE:
@@ -601,7 +606,8 @@ static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
     isContentRectChanged = true;
 }
 
-static void process_input(struct android_app* app, struct android_poll_source* source) {
+static void process_input(struct android_app* app, struct android_poll_source* source)
+{
     AInputEvent* event = NULL;
     int processed = 0;
     while (AInputQueue_hasEvents( app->inputQueue ) && AInputQueue_getEvent(app->inputQueue, &event) >= 0) {
