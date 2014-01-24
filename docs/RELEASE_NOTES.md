@@ -671,7 +671,7 @@ Only have to write an ini file for a module, don't have to write a lot of .pkg f
 
 ### Bind the classes with namespace to lua
 
-In previous, the lua binding can not bind classes that have the same class name but different namespaces. In order to resolve this issue, now the metatable name of a class is changed. For example, it will changed from CCNode to cc.Node. This modification will affect somewhere as follows:
+In previous, the lua binding can not bind classes that have the same class name but different namespaces. In order to resolve this issue, now the metatable name of a class is changed. For example, `CCNode` will be changed to `cc.Node`. This modification will affect some APIs as follows:
 
 	|           v2.x                   |                  v3.0             |
 	| tolua_usertype(tolua_S,"CCNode") | tolua_usertype(tolua_S,"cc.Node") |
@@ -701,10 +701,10 @@ ScriptHandlerMgr:getInstance():registerScriptHandler(menuItem, luafunction,cc.HA
 ```
 
 ### Use "cc"、"ccs"、"ccui" and "sp" as module name
-The classes in the cocos2d、cocos2d::extension、CocosDenshion and cocosbuilder namespace were bound to lua in the "cc" module;
-The classes in the cocos2d::gui namespace were bound to lua in the "ccui" module;
-The classes in the spine namespace were bound to lua in the "sp" module;
-The classes in the cocostudio namespace were bound to lua in the "ccs" module.
+The classes in the `cocos2d`、`cocos2d::extension`、`CocosDenshion` and `cocosbuilder` namespace were bound to lua in the `cc` module;
+The classes in the `cocos2d::gui` namespace were bound to lua in the `ccui` module;
+The classes in the `spine` namespace were bound to lua in the `sp` module;
+The classes in the `cocostudio` namespace were bound to lua in the `ccs` module.
 
 The main differences in the script are as follows:
 ```lua
