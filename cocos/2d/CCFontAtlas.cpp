@@ -152,7 +152,7 @@ bool FontAtlas::prepareLetterDefinitions(unsigned short *utf16String)
                 tempDef.width            = tempRect.size.width + _letterPadding;
                 tempDef.height           = tempRect.size.height + _letterPadding;
                 tempDef.offsetX          = tempRect.origin.x + offsetAdjust;
-                tempDef.offsetY          = tempRect.origin.y - offsetAdjust;
+                tempDef.offsetY          = _commonLineHeight + tempRect.origin.y - offsetAdjust;
             } 
             fontDefs[utf16String[i]] = tempDef;
         }       
