@@ -160,7 +160,7 @@ void SchedulerPauseResume::onEnter()
 
     schedule(schedule_selector(SchedulerPauseResume::tick1), 0.5f);
     schedule(schedule_selector(SchedulerPauseResume::tick2), 0.5f);
-    schedule(schedule_selector(SchedulerPauseResume::pause), 0.5f);
+    schedule(schedule_selector(SchedulerPauseResume::pause), 3.0f);
 }
 
 void SchedulerPauseResume::tick1(float dt)
