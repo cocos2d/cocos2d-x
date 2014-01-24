@@ -58,7 +58,7 @@ def main():
     jenkins_url = os.environ['JENKINS_URL']
     job_name = os.environ['JOB_NAME'].split('/')[0]
     build_number = os.environ['BUILD_NUMBER']
-    target_url = jenkins_url + 'job/' + job_name + '/' + build_number
+    target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
     
