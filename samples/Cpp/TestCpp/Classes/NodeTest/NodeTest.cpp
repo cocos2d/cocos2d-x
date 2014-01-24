@@ -63,7 +63,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
-    CL(CameraZoomTest),
+    //Camera has been removed from CCNode
+    //todo add new feature to support it
+    //CL(CameraZoomTest),
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
     CL(NodeNonOpaqueTest),

@@ -106,28 +106,17 @@ local function MotionStreakTest2()
 
     streak:setPosition(cc.p(s.width / 2, s.height / 2))
 
-	local function onTouchMoved(x, y)
-		if firstTick == true then
-			firstTick = false
-			return
-		end
-
-		streak:setPosition(cc.p(x, y))
+    local function onTouchesMoved(touches, event)
+        streak:setPosition( touches[1]:getLocation() )
     end
 
-    local function onTouch(eventType, x, y)
-		if eventType == "began" then
-			return true
-        elseif eventType == "moved" then
-            return onTouchMoved(x, y)
-        end
-    end
-
-	firstTick = true
-	layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouch)
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
 	Helper.titleLabel:setString("MotionStreak test")
+
 	return layer
 end
 
