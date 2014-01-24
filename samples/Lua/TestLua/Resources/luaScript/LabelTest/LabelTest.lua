@@ -992,8 +992,6 @@ function BitmapFontMultiLineAlignment.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    layer:setTouchEnabled(true)
-
     -- ask director the the window size
     local size = cc.Director:getInstance():getWinSize()
 
@@ -1068,7 +1066,44 @@ function BitmapFontMultiLineAlignment.create()
     layer:addChild(stringMenu)
     layer:addChild(alignmentMenu)
     layer:registerScriptHandler(BitmapFontMultiLineAlignment.onNodeEvent)
-    layer:registerScriptTouchHandler(BitmapFontMultiLineAlignment.onTouchEvent)
+
+    local function onTouchesBegan(touches, event)
+        local location = touches[1]:getLocationInView()
+        if cc.rectContainsPoint(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), location) then
+            BitmapFontMultiLineAlignment._drag = true
+            BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
+        end
+    end
+
+    local function onTouchesMoved(touches, event)
+        if BitmapFontMultiLine._drag == false then
+            return
+        end
+        local location = touches[1]:getLocationInView()
+        local winSize = cc.Director:getInstance():getWinSize()
+        BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
+            math.max(math.min(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+            BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
+
+        local labelWidth = math.abs(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionX() - BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
+
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth) 
+    end
+
+    local  function onTouchesEnded(touch, event)
+        BitmapFontMultiLineAlignment._drag = false
+        BitmapFontMultiLineAlignment.snapArrowsToEdge()
+        BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
     return layer
 end
 
@@ -1116,35 +1151,6 @@ function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     end
 
     BitmapFontMultiLineAlignment.snapArrowsToEdge()
-end
-
-function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
-    -- cclog("type:"..eventType.."["..x..","..y.."]")
-    if eventType == "began" then
-        if cc.rectContainsPoint(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), cc.p(x, y)) then
-            BitmapFontMultiLineAlignment._drag = true
-            BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
-            return true
-        end
-    elseif eventType == "ended" then
-        BitmapFontMultiLineAlignment._drag = false
-        BitmapFontMultiLineAlignment.snapArrowsToEdge()
-        BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
-    elseif eventType == "moved" then
-        if BitmapFontMultiLine._drag == false then
-            return
-        end
-
-        local winSize = cc.Director:getInstance():getWinSize()
-        BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
-            math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-            BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
-
-        local labelWidth = math.abs(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionX() - BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
-
-        BitmapFontMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
-        
-    end
 end
 
 function BitmapFontMultiLineAlignment.snapArrowsToEdge()

@@ -471,6 +471,8 @@ void Label::alignText()
             insertQuadFromSprite(_reusedLetter,vaildIndex++);
         }     
     }
+
+    updateColor();
 }
 
 bool Label::computeHorizontalKernings(unsigned short int *stringToRender)
