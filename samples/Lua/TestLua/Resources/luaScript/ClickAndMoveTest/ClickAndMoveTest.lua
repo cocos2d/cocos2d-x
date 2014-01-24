@@ -17,13 +17,20 @@ local function initWithLayer()
                                                  cc.FadeIn:create(1),
                                                  cc.FadeOut:create(1))))
 
-    local function onTouchEnded(x, y)
+    local function onTouchBegan(touch, event)
+        return true
+    end
+
+    local function onTouchEnded(touch, event)
+        
+        local location = touch:getLocation()
+
         local s = layer:getChildByTag(kTagSprite)
         s:stopAllActions()
-        s:runAction(cc.MoveTo:create(1, cc.p(x, y)))
+        s:runAction(cc.MoveTo:create(1, cc.p(location.x, location.y)))
         local posX, posY = s:getPosition()
-        local o = x - posX
-        local a = y - posY
+        local o = location.x - posX
+        local a = location.y - posY
         local at = math.atan(o / a) / math.pi * 180.0
 
         if a < 0 then
@@ -36,16 +43,11 @@ local function initWithLayer()
         s:runAction(cc.RotateTo:create(1, at))
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return true
-        elseif eventType == "ended" then
-            return onTouchEnded(x, y)
-        end
-    end
-
-    layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouch)
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
     return layer
 end
