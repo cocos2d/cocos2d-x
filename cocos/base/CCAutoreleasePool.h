@@ -82,6 +82,11 @@ public:
     void clear();
     
     /**
+     * Checks whether the pool contains the specified object.
+     */
+    bool contains(Object* object) const;
+    
+    /**
      * Dump the objects that are put into autorelease pool. It is used for debugging.
      *
      * The result will look like:
@@ -102,6 +107,11 @@ private:
      */
     std::vector<Object*> _managedObjectArray;
     std::string _name;
+    
+    /**
+     *  The flag for checking whether Object::release() is invoked in AutoreleasePool::clear().
+     */
+    bool _isInClear;
 };
 
 class CC_DLL PoolManager
@@ -127,6 +137,7 @@ public:
      */
     AutoreleasePool *getCurrentPool() const;
 
+    bool isObjectInPools(Object* obj) const;
     /**
      * @js NA
      * @lua NA
@@ -142,7 +153,7 @@ private:
     
     static PoolManager* s_singleInstance;
     
-    std::stack<AutoreleasePool*> _releasePoolStack;
+    std::deque<AutoreleasePool*> _releasePoolStack;
     AutoreleasePool *_curReleasePool;
 };
 
