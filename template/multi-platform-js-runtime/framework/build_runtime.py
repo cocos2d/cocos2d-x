@@ -160,6 +160,8 @@ class BuildRuntime:
             "xcodebuild",
             "-project",
             projectPath,
+            "-configuration",
+            "Debug",
             "-target",
             targetName,
             "CONFIGURATION_BUILD_DIR=%s" % (macFolder)
@@ -250,6 +252,8 @@ class BuildRuntime:
             "xcodebuild",
             "-project",
             projectPath,
+            "-configuration",
+            "Debug",
             "-target",
             targetName,
             "-sdk",
