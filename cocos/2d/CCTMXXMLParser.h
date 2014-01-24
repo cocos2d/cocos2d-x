@@ -252,7 +252,7 @@ public:
     /// properties
     inline const ValueMap& getProperties() const { return _properties; }
     inline ValueMap& getProperties() { return _properties; }
-    inline void setProperties(ValueMap properties) {
+    inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
