@@ -37,7 +37,25 @@ LOCAL_SRC_FILES := CCLuaBridge.cpp \
           ../../../../external/lua/tolua/tolua_map.c \
           ../../../../external/lua/tolua/tolua_push.c \
           ../../../../external/lua/tolua/tolua_to.c \
-          tolua_fix.c
+          tolua_fix.c \
+          socket/auxiliar.c \
+          socket/luasocket_buffer.c \
+          socket/except.c \
+          socket/inet.c \
+          socket/luasocket_io.c \
+          socket/luasocket.c \
+          socket/mime.c \
+          socket/options.c \
+          socket/select.c \
+          socket/serial.c \
+          socket/socket_scripts.c \
+          socket/tcp.c \
+          socket/timeout.c \
+          socket/udp.c \
+          socket/unix.c \
+          socket/usocket.c \
+          lua_extensions.c
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../auto-generated/lua-bindings \

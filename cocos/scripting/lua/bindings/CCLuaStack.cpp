@@ -31,6 +31,9 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 #include "tolua_fix.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "lua_extensions.h"
+#endif
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -146,6 +149,9 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    luaopen_lua_extensions(_state);
+#endif
     g_luaType.clear();
     register_all_cocos2dx(_state);
     register_all_cocos2dx_extension(_state);
