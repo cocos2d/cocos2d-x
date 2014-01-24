@@ -34,7 +34,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    director->setOpenGLView(EGLView::getInstance());
+    auto glview = EGLView::create("Assets Manager");
+    director->setOpenGLView(glview);
 
     // turn on display FPS
     //director->setDisplayStats(true);
@@ -45,17 +46,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_cocos2dx_js_extensions);
-    
-    
+
+
     sc->start();
-    
+
     auto scene = Scene::create();
     auto updateLayer = new UpdateLayer();
     scene->addChild(updateLayer);
     updateLayer->release();
-    
+
     director->runWithScene(scene);
-    
+
     return true;
 }
 
