@@ -86,12 +86,13 @@ public:
      * Whether the pool is doing `clear` operation.
      */
     bool isClearing() const { return _isClearing; };
+#endif
     
     /**
      * Checks whether the pool contains the specified object.
      */
     bool contains(Object* object) const;
-#endif
+
     /**
      * Dump the objects that are put into autorelease pool. It is used for debugging.
      *
@@ -146,6 +147,7 @@ public:
     AutoreleasePool *getCurrentPool() const;
 
     bool isObjectInPools(Object* obj) const;
+
     /**
      * @js NA
      * @lua NA

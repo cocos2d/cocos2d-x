@@ -75,8 +75,6 @@ void AutoreleasePool::clear()
 #endif
 }
 
-#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-
 bool AutoreleasePool::contains(Object* object) const
 {
     for (const auto& obj : _managedObjectArray)
@@ -86,8 +84,6 @@ bool AutoreleasePool::contains(Object* object) const
     }
     return false;
 }
-
-#endif
 
 void AutoreleasePool::dump()
 {
