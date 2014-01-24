@@ -1548,48 +1548,37 @@ local function runTouchesTest()
     end
     
     -- handling touch events   
-    local function onTouchBegan(tableArray)
-		if 0 == nCurCase then
-			nNumberOfTouchesB = nNumberOfTouchesB + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchMoved(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesM = nNumberOfTouchesM + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesM  = nNumberOfTouchesM + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchEnded(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesE = nNumberOfTouchesE + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchCancelled(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesC = nNumberOfTouchesC + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesC  = nNumberOfTouchesC + table.getn(tableArray)
-		end
+    local function onTouchEnded(touch, event)
+        nNumberOfTouchesE = nNumberOfTouchesE + 1
     end
 
-   	local function onTouch(eventType,tableArray)
-        if eventType == "began" then
-            return onTouchBegan(tableArray)
-        elseif eventType == "moved" then
-            return onTouchMoved(tableArray)
-        elseif eventType == "ended" then
-        	return onTouchEnded(tableArray)	
-        elseif eventType == "cancelled" then
-        	return onTouchCancelled(tableArray)	
-        end
+    local function onTouchBegan(touch, event)
+        nNumberOfTouchesB = nNumberOfTouchesB + 1
+    end
+
+    local function onTouchMoved(touch, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + 1
+    end
+
+    local function onTouchCancelled(touch, event)
+        nNumberOfTouchesC = nNumberOfTouchesC + 1
+    end
+
+
+    local function onTouchesEnded(touches, event)
+        nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(touches)
+    end
+
+    local function onTouchesBegan(touches, event)
+        nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(touches)
+    end
+
+    local function onTouchesMoved(touches, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + table.getn(touches)
+    end
+
+    local function onTouchesCancelled(touches, event)
+        nNumberOfTouchesC= nNumberOfTouchesC + table.getn(touches)
     end
     
     local function InitLayer()
@@ -1617,9 +1606,24 @@ local function runTouchesTest()
     	nNumberOfTouchesM = 0
     	nNumberOfTouchesE = 0
     	nNumberOfTouchesC = 0   
-    	pLayer:setTouchEnabled(true)
-    	
-    	pLayer:registerScriptTouchHandler(onTouch,true) 
+
+        if 0 == nCurCase then
+            local listener = cc.EventListenerTouchOneByOne:create()
+            listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+            listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+            listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+            listener:registerScriptHandler(onTouchCancelled,cc.Handler.EVENT_TOUCH_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        elseif 1 == nCurCase then
+            local listener = cc.EventListenerTouchAllAtOnce:create()
+            listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+            listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+            listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+            listener:registerScriptHandler(onTouchesCancelled,cc.Handler.EVENT_TOUCHES_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        end
     end
     
     function ShowCurrentTest()
