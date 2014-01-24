@@ -29,7 +29,9 @@ NS_CC_BEGIN
 
 AutoreleasePool::AutoreleasePool()
 : _name("")
-, _isInClear(false)
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+, _isClearing(false)
+#endif
 {
     _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
@@ -37,7 +39,9 @@ AutoreleasePool::AutoreleasePool()
 
 AutoreleasePool::AutoreleasePool(const std::string &name)
 : _name(name)
-, _isInClear(false)
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+, _isClearing(false)
+#endif
 {
     _managedObjectArray.reserve(150);
     PoolManager::getInstance()->push(this);
@@ -58,20 +62,23 @@ void AutoreleasePool::addObject(Object* object)
 
 void AutoreleasePool::clear()
 {
-    _isInClear = true;
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    _isClearing = true;
+#endif
     for (const auto &obj : _managedObjectArray)
     {
         obj->release();
     }
     _managedObjectArray.clear();
-    _isInClear = false;
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    _isClearing = false;
+#endif
 }
+
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
 
 bool AutoreleasePool::contains(Object* object) const
 {
-    if (_isInClear)
-        return false;
-    
     for (const auto& obj : _managedObjectArray)
     {
         if (obj == object)
@@ -79,6 +86,8 @@ bool AutoreleasePool::contains(Object* object) const
     }
     return false;
 }
+
+#endif
 
 void AutoreleasePool::dump()
 {

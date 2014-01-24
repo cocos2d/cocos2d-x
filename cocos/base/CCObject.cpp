@@ -72,7 +72,8 @@ void Object::release()
     
     if (_referenceCount == 0)
     {
-        if (PoolManager::getInstance()->isObjectInPools(this))
+        auto poolManager = PoolManager::getInstance();
+        if (!poolManager->getCurrentPool()->isClearing() && poolManager->isObjectInPools(this))
         {
             // Trigger an assert if the reference count is 0 but the object is still in autorelease pool.
             // This happens when 'autorelease/release' were not used in pairs with 'new/retain'.
