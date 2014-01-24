@@ -16,21 +16,23 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
 //    SimpleAudioEngine::end();
-	cocostudio::ArmatureDataManager::destroyInstance();
+    cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-	// As an example, load config file
-	// XXX: This should be loaded before the Director is initialized,
-	// XXX: but at this point, the director is already initialized
-	Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
-
-    auto glview = EGLView::create("Test Cpp");
+    // As an example, load config file
+    // XXX: This should be loaded before the Director is initialized,
+    // XXX: but at this point, the director is already initialized
+    Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
 
     // initialize director
     auto director = Director::getInstance();
-    director->setOpenGLView(glview);
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = EGLView::create("Test Cpp");
+        director->setOpenGLView(glview);
+    }
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 60);
@@ -40,40 +42,40 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto designSize = Size(480, 320);
 
     auto pFileUtils = FileUtils::getInstance();
-	std::vector<std::string> searchPaths;
+    std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
     {
         auto resourceSize = Size(960, 640);
         searchPaths.push_back("hd");
-		searchPaths.push_back("hd/scenetest");
+        searchPaths.push_back("hd/scenetest");
         searchPaths.push_back("hd/scenetest/ArmatureComponentTest");
-		searchPaths.push_back("hd/scenetest/AttributeComponentTest");
-		searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
-		searchPaths.push_back("hd/scenetest/EffectComponentTest");
-		searchPaths.push_back("hd/scenetest/LoadSceneEdtiorFileTest");
-		searchPaths.push_back("hd/scenetest/ParticleComponentTest");
-		searchPaths.push_back("hd/scenetest/SpriteComponentTest");
-		searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
-		searchPaths.push_back("hd/scenetest/UIComponentTest");
-		searchPaths.push_back("hd/scenetest/TriggerTest");
+        searchPaths.push_back("hd/scenetest/AttributeComponentTest");
+        searchPaths.push_back("hd/scenetest/BackgroundComponentTest");
+        searchPaths.push_back("hd/scenetest/EffectComponentTest");
+        searchPaths.push_back("hd/scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.push_back("hd/scenetest/ParticleComponentTest");
+        searchPaths.push_back("hd/scenetest/SpriteComponentTest");
+        searchPaths.push_back("hd/scenetest/TmxMapComponentTest");
+        searchPaths.push_back("hd/scenetest/UIComponentTest");
+        searchPaths.push_back("hd/scenetest/TriggerTest");
         director->setContentScaleFactor(resourceSize.height/designSize.height);
     }
-	else
-	{
-		searchPaths.push_back("scenetest/ArmatureComponentTest");
-		searchPaths.push_back("scenetest/AttributeComponentTest");
-		searchPaths.push_back("scenetest/BackgroundComponentTest");
-		searchPaths.push_back("scenetest/EffectComponentTest");
-		searchPaths.push_back("scenetest/LoadSceneEdtiorFileTest");
-		searchPaths.push_back("scenetest/ParticleComponentTest");
-		searchPaths.push_back("scenetest/SpriteComponentTest");
-		searchPaths.push_back("scenetest/TmxMapComponentTest");
-		searchPaths.push_back("scenetest/UIComponentTest");
-		searchPaths.push_back("scenetest/TriggerTest");
-	}
+    else
+    {
+        searchPaths.push_back("scenetest/ArmatureComponentTest");
+        searchPaths.push_back("scenetest/AttributeComponentTest");
+        searchPaths.push_back("scenetest/BackgroundComponentTest");
+        searchPaths.push_back("scenetest/EffectComponentTest");
+        searchPaths.push_back("scenetest/LoadSceneEdtiorFileTest");
+        searchPaths.push_back("scenetest/ParticleComponentTest");
+        searchPaths.push_back("scenetest/SpriteComponentTest");
+        searchPaths.push_back("scenetest/TmxMapComponentTest");
+        searchPaths.push_back("scenetest/UIComponentTest");
+        searchPaths.push_back("scenetest/TriggerTest");
+    }
     
-	pFileUtils->setSearchPaths(searchPaths);
+    pFileUtils->setSearchPaths(searchPaths);
 
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 
