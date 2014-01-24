@@ -47,20 +47,30 @@ def checkParams():
             help="Set build runtime's platform"
         )
 
+    parser.add_option(
+        "-u",
+        "--pure",
+        dest="pure",
+        action="store_true",
+        help="parameter for copy resource"
+    )
+
     # parse the params
     (opts, args) = parser.parse_args()
     if not opts.platform:
         parser.error("-p or --platform is not specified")
-
-    return opts.platform
+    if not opts.pure:
+        return opts.platform, None
+    return opts.platform, opts.pure
 
 
 class BuildRuntime:
     
-    def __init__(self, platform):
+    def __init__(self, platform, pure):
         self.projectPath = None
         self.projectName = None
         self.runtimePlatform = platform
+        self.pure = pure
         
         scriptPath = os.path.abspath(os.path.dirname(__file__))
         if platform == 'win32':
@@ -268,15 +278,15 @@ class BuildRuntime:
         try:
             SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
         except Exception:
-            print "ANDROID_SDK_ROOT not defined.\
-             Please define ANDROID_SDK_ROOT in your environment"
+            print ("ANDROID_SDK_ROOT not defined.\
+             Please define ANDROID_SDK_ROOT in your environment")
             return False
         
         try:
             NDK_ROOT = os.environ['NDK_ROOT']
         except Exception:
-            print "NDK_ROOT not defined.\
-             Please define NDK_ROOT in your environment"
+            print ("NDK_ROOT not defined.\
+             Please define NDK_ROOT in your environment")
             return False
         
         platformsPath = os.path.join(SDK_ROOT,"platforms")
@@ -303,7 +313,7 @@ class BuildRuntime:
         
         sys.path.append(self.projectPath)
         from build_native import build
-        build(None, str(int(maxVersion)), None)
+        build(None, str(int(maxVersion)), None, self.pure)
         
     def win32Runtime(self):
         try:
@@ -400,6 +410,6 @@ class BuildRuntime:
         return False
                 
 if __name__ == '__main__':
-    platform = checkParams();
-    buildRuntime = BuildRuntime(platform)
+    platform, pure = checkParams();
+    buildRuntime = BuildRuntime(platform, pure)
     buildRuntime.buildRuntime()

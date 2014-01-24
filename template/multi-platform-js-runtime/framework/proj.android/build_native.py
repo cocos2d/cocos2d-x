@@ -93,7 +93,7 @@ def copy_files(src, dst):
             os.makedirs(new_dst)
             copy_files(path, new_dst)
 
-def copy_resources(app_android_root, build_mode):
+def copy_resources(app_android_root, build_mode, pure):
 
     # remove app_android_root/assets if it exists
     assets_dir = os.path.join(app_android_root, "assets")
@@ -102,11 +102,11 @@ def copy_resources(app_android_root, build_mode):
 
     #"""
     os.makedirs(assets_dir)
-    if build_mode == "release":
+    if pure is None:
         jsResource = os.path.join(app_android_root, "../../")
         dirlist = os.listdir(jsResource)
         for line in dirlist:
-            if line == "framework" or line == "runtime":
+            if line == "framework" or line == "runtime" or line == ".project":
                 continue
             fullpath = os.path.join(jsResource, line)
             if os.path.isfile(fullpath):
@@ -128,7 +128,7 @@ def copy_resources(app_android_root, build_mode):
     resources_dir = os.path.join(app_android_root, "../cocos2d/cocos/scripting/javascript/script")
     copy_files(resources_dir, assets_dir)
 
-def build(ndk_build_param,android_platform,build_mode):
+def build(ndk_build_param,android_platform,build_mode,pure):
 
     ndk_root = check_environment_variables()
     sdk_root = None
@@ -138,7 +138,7 @@ def build(ndk_build_param,android_platform,build_mode):
     cocos_root = os.path.join(current_dir, "../cocos2d")
 
     app_android_root = current_dir
-    copy_resources(app_android_root, build_mode)
+    copy_resources(app_android_root, build_mode, pure)
 
     if android_platform is not None:
 				sdk_root = check_environment_variables_sdk()
@@ -164,6 +164,7 @@ if __name__ == '__main__':
     help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
     parser.add_option("-b", "--build", dest="build_mode",
     help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    parser.add_option("-u", "--pure", dest="pure", help='parameter for copy resource')
     (opts, args) = parser.parse_args()
 
-    build(opts.ndk_build_param,opts.android_platform,opts.build_mode)
+    build(opts.ndk_build_param,opts.android_platform,opts.build_mode,opts.pure)
