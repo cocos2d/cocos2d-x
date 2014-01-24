@@ -628,42 +628,47 @@ JSBool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *
 
 JSBool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 1) {
+	if (argc == 1 || argc == 2)
+    {
 		jsval *argv = JS_ARGV(cx, vp);
         JSObject* jsobj = NULL;
-
+        
         JSTouchDelegate *touch = new JSTouchDelegate();
-        touch->autorelease();
-        if(argc > 1)
-            touch->registerStandardDelegate(JSVAL_TO_INT(argv[1]));
-        else
-            touch->registerStandardDelegate(0);
-        jsobj = (argc == 1 ? JSVAL_TO_OBJECT(argv[0]) : JSVAL_TO_OBJECT(JSVAL_VOID));
+        
+        int priority = 0;
+        if (argc == 2)
+        {
+            priority = JSVAL_TO_INT(argv[1]);
+        }
+        
+        touch->registerStandardDelegate(priority);
+        
+        jsobj = JSVAL_TO_OBJECT(argv[0]);
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
 		return JS_TRUE;
 	}
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting >= 1", argc);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
 
 JSBool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if (argc >= 1) {
+	if (argc == 3)
+    {
 		jsval *argv = JS_ARGV(cx, vp);
         JSObject* jsobj = NULL;
-
-        JSTouchDelegate *touch = new JSTouchDelegate();
-        touch->autorelease();
-        touch->registerTargetedDelegate((argc >= 1 ? JSVAL_TO_INT(argv[0]) : 0), (argc >= 2 ? JSVAL_TO_BOOLEAN(argv[1]) : true));
         
-        jsobj = (argc == 3 ? JSVAL_TO_OBJECT(argv[2]) : JSVAL_TO_OBJECT(JSVAL_VOID));
+        JSTouchDelegate *touch = new JSTouchDelegate();
+        touch->registerTargetedDelegate(JSVAL_TO_INT(argv[0]), JSVAL_TO_BOOLEAN(argv[1]));
+        
+        jsobj = JSVAL_TO_OBJECT(argv[2]);
         touch->setJSObject(jsobj);
         JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
-
+        
 		return JS_TRUE;
 	}
-    JS_ReportError(cx, "wrong number of arguments: %d, was expecting >=1", argc);
+    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
 	return JS_FALSE;
 }
 

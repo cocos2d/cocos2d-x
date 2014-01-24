@@ -700,14 +700,22 @@ cc.Class.extend = function (prop) {
     return Class;
 };
 
-cc.Node.extend = cc.Class.extend;
-cc.Layer.extend = cc.Class.extend;
-cc.LayerGradient.extend = cc.Class.extend;
-cc.LayerColor.extend = cc.Class.extend;
-cc.Sprite.extend = cc.Class.extend;
-cc.MenuItemFont.extend = cc.Class.extend;
-cc.Scene.extend = cc.Class.extend;
-cc.DrawNode.extend = cc.Class.extend;
+var extend_class_arr = [
+    cc.Node,
+    cc.Layer,
+    cc.LayerGradient,
+    cc.LayerColor,
+    cc.Sprite,
+    cc.MenuItemFont,
+    cc.Scene,
+    cc.DrawNode,
+    cc.ParallaxNode
+];
+
+for (var i = 0; i < extend_class_arr.length; ++i)
+{
+    extend_class_arr[i].extend = cc.Class.extend;
+}
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
