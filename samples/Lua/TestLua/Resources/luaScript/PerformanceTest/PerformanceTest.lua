@@ -1353,6 +1353,9 @@ local function runTextureTest()
 		  local time
 		  local pTexture = nil
     	  local pCache = cc.Director:getInstance():getTextureCache()
+
+          local pDefaultFormat = cc.Texture2D:getDefaultAlphaPixelFormat();
+
     	  print("RGBA 8888")
     	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     	  pTexture = pCache:addImage(strFileName) 		  
@@ -1397,6 +1400,8 @@ local function runTextureTest()
        	    print(" ERROR")
        	 end
     	 pCache:removeTexture(pTexture)   	  
+
+         cc.Texture2D:setDefaultAlphaPixelFormat(pDefaultFormat)
 	end
 	local function PerformTests()
 		  print("--------")
