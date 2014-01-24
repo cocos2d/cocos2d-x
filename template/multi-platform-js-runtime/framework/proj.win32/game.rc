@@ -60,6 +60,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Custom",                     ID_VIEW_CUSTOM
     END
+    MENUITEM "&Reset",                      0
     POPUP "&Help"
     BEGIN
         MENUITEM "&About ...",                  ID_HELP_ABOUT

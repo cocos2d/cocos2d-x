@@ -48,12 +48,13 @@ else:
 class ThreadedTask(threading.Thread):
     """Create cocos project thread.
     """
-    def __init__(self, queue, projectName, packageName, language, projectPath):
+    def __init__(self, queue, projectName, packageName, language, runtime, projectPath):
         threading.Thread.__init__(self)
         self.queue = queue
         self.projectName = projectName
         self.packageName = packageName
         self.language = language
+        self.runtime = runtime
         self.projectPath = projectPath
 
     def run(self):
@@ -82,6 +83,7 @@ class ThreadedTask(threading.Thread):
             self.projectName,
             self.packageName,
             self.language,
+            self.runtime,
             self.projectPath,
             self.newProjectCallBack
         )
@@ -260,7 +262,7 @@ class TkCocosDialog(Frame):
         #create a new thread to deal with create new project.
         self.btnCreate['state'] = DISABLED
         self.queue = Queue()
-        ThreadedTask(self.queue, projectName, packageName, language, projectPath).start()
+        ThreadedTask(self.queue, projectName, packageName, language,None, projectPath).start()
         self.parent.after(100, self.process_queue)
 
     def pathCallback(self):
