@@ -111,7 +111,7 @@ class BuildRuntime:
             print ("Xcode wasn't installed")
             return False
 
-        if float(version) <= 4.5:
+        if version <= '5':
             print ("Update xcode please")
             return False
 
@@ -201,7 +201,7 @@ class BuildRuntime:
             print ("Xcode wasn't installed")
             return False
 
-        if float(version) <= 4.5:
+        if version <= '5':
             print ("Update xcode please")
             return False
 
