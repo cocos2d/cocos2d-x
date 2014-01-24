@@ -72,16 +72,17 @@ int Application::run()
         return 0;
     }
 
-    EGLView* pMainWnd = EGLView::getInstance();
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
 
-    while(!pMainWnd->windowShouldClose())
+    while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
             nLast.QuadPart = nNow.QuadPart;
-            Director::getInstance()->mainLoop();
-            pMainWnd->pollEvents();
+            director->mainLoop();
+            glview->pollEvents();
         }
         else
         {
@@ -94,8 +95,8 @@ int Application::run()
     *  when we want to close the window, we should call Director::end();
     *  then call Director::mainLoop to do release of internal resources
     */
-    Director::getInstance()->end();
-    Director::getInstance()->mainLoop();
+    director->end();
+    director->mainLoop();
     return true;
 }
 
