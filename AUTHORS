@@ -730,6 +730,9 @@ Developers:
         
     pandamicro
         Exposed SAXParser to JS, it is used for parsing XML in JS.
+        
+    hanjukim
+        Fixed a bug that color and opacity settings were not applied when invoking Label::alignText.
     
 Retired Core Developers:
     WenSheng Yang
