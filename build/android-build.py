@@ -16,11 +16,18 @@ def get_num_of_cpu():
 	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
 	'''
 	try:
-		from numpy.distutils import cpuinfo
-		return cpuinfo.cpu._getNCPUs()
+		platform = sys.platform
+		if platform == 'win32':
+			if 'NUMBER_OF_PROCESSORS' in os.environ:
+				return int(os.environ['NUMBER_OF_PROCESSORS'])
+			else:
+				return 1
+		else:
+			from numpy.distutils import cpuinfo
+			return cpuinfo.cpu._getNCPUs()
 	except Exception:
 		print "Can't know cpuinfo, use default 1 cpu"
-        return 1
+		return 1
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
