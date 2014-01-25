@@ -171,6 +171,10 @@ LanguageType Application::getCurrentLanguage()
 	{
 		ret = LanguageType::SPANISH;
 	}
+	else if (0 == strcmp("nl", pLanguageName))
+	{
+		ret = LanguageType::DUTCH;
+	}
 	else if (0 == strcmp("ru", pLanguageName))
 	{
 		ret = LanguageType::RUSSIAN;
