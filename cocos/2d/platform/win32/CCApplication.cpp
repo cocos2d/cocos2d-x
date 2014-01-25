@@ -148,6 +148,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_SPANISH:
             ret = LanguageType::SPANISH;
             break;
+        case LANG_DUTCH:
+            ret = LanguageType::DUTCH;
+            break;
         case LANG_RUSSIAN:
             ret = LanguageType::RUSSIAN;
             break;
