@@ -26,8 +26,6 @@
 
 #include "HttpClient.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) //only temperary until curl is fully supported on rt. May take a week or so
-
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
 #else
@@ -533,4 +531,3 @@ void CCHttpClient::dispatchResponseCallbacks(float delta)
 
 NS_CC_EXT_END
 
-#endif // end of temp #define to protect winrt until release

@@ -64,16 +64,9 @@ THE SOFTWARE.
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-//#include "winrtsock.h" //this will replace windows include and timeval struct below
-#include <Windows.h>
-#undef timeval
-struct timeval
-{
-         long tv_sec;                // seconds
-         long tv_usec;    // microSeconds
-};
+#include "winrtsock.h"
 #else
-#include <WinSock2.h>
+#include <winsock2.h>
 #endif
 
 struct timezone
