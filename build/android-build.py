@@ -260,19 +260,40 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 if __name__ == '__main__':
 
     #parse the params
-    usage = """usage: %prog [options] target
+    usage = """
+    This script is mainy used for building samples built-in with cocos2d-x.
     
-  Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+    Usage: %prog [options] target
 
-  You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely."""
+    Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]. You can combine them arbitrarily with a whitespace among two valid targets.
+
+    You can use [all|cpp|lua|jsb], to build all the samples, or all the c++ samples, or all the lua samples, or all the jsb samples respectevely.
+
+    cpp  = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
+    lua = ['hellolua', 'testlua']
+    jsb = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
+    all  = cpp + lua + jsb  // be careful with the all target, it may took a very long time to compile all the projects, do it under your own risk.
+
+    If you are new to cocos2d-x, I recommend you start with hellocpp,hellolua or testjavascript.
+
+    You can combine these targets like this:
+
+    //1. to build simplegame and assetsmanager 
+    python android-build.py -p 10 simplegame assetsmanager
+
+    //2. to build hellolua and all the jsb samples
+    python android-build.py -p 19 hellolua jsb
+
+    Note: You should install ant to generate apk while building the andriod samples. But it is optional. You can generate apk with eclipse.
+    """
 
     parser = OptionParser(usage=usage)
     parser.add_option("-n", "--ndk", dest="ndk_build_param", 
-    help='parameter for ndk-build')
+    help='Parameter for ndk-build')
     parser.add_option("-p", "--platform", dest="android_platform", 
-    help='parameter for android-update.Without the parameter,the script just build dynamic library for project. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    help='Parameter for android-update. Without the parameter,the script just build dynamic library for the projects. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
     parser.add_option("-b", "--build", dest="build_mode", 
-    help='the build mode for java project,debug[default] or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    help='The build mode for java project,debug[default] or release. Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
