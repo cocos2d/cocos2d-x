@@ -1631,23 +1631,23 @@ void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
 }
 
-void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData& data)
+void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
 {
-    if (NULL  == L)
+    if (nullptr  == L || nullptr == data)
         return;
     
     lua_newtable(L);                                    /* L: table */
     
     lua_pushstring(L, "points");
-    points_to_luaval(L, data.points, data.count);
+    points_to_luaval(L, data->points, data->count);
     lua_rawset(L, -3);
     
     lua_pushstring(L, "normal");
-    point_to_luaval(L, data.normal);
+    point_to_luaval(L, data->normal);
     lua_rawset(L, -3);
     
     lua_pushstring(L, "POINT_MAX");
-    lua_pushnumber(L, data.POINT_MAX);
+    lua_pushnumber(L, data->POINT_MAX);
     lua_rawset(L, -3);
 }
 

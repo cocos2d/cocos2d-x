@@ -1107,7 +1107,7 @@ void PhysicsDemoOneWayPlatform::onEnter()
 
 bool PhysicsDemoOneWayPlatform::onContactBegin(EventCustom* event, const PhysicsContact& contact)
 {
-    return contact.getContactData().normal.y < 0;
+    return contact.getContactData()->normal.y < 0;
 }
 
 std::string PhysicsDemoOneWayPlatform::title() const

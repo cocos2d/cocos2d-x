@@ -76,7 +76,7 @@ public:
     /** get contact shape B. */
     inline PhysicsShape* getShapeB() const { return _shapeB; }
     /** get contact data */
-    inline const PhysicsContactData& getContactData() const { return *_contactData; }
+    inline const PhysicsContactData* getContactData() const { return _contactData; }
     /** get data. */
     inline void* getData() const { return _data; }
     /**
