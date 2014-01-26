@@ -12,7 +12,6 @@ public:
     ~TestController();
 
     void menuCallback(Object * sender);
-    void closeCallback(Object * sender);
 
     bool onTouchBegan(Touch* touches, Event  *event);
     void onTouchMoved(Touch* touches, Event  *event);
