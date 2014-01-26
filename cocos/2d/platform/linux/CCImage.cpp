@@ -459,7 +459,7 @@ bool Image::initWithString(
 {
 	bool bRet = false;
 	do
-	{
+    {
 		CC_BREAK_IF(! pText);
 
 		BitmapDC &dc = sharedBitmapDC();

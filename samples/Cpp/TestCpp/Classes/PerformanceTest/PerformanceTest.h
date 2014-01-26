@@ -7,6 +7,14 @@ class PerformanceMainLayer : public Layer
 {
 public:
     virtual void onEnter();
+    
+    bool onTouchBegan(Touch* touches, Event  *event);
+    void onTouchMoved(Touch* touches, Event  *event);
+    
+    void onMouseScroll(Event *event);
+protected:
+    Point _beginPos;
+    Menu* _itemMenu;
 };
 
 class PerformBasicLayer : public Layer

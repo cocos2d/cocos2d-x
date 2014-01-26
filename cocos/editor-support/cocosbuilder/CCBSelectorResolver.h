@@ -1,7 +1,6 @@
 #ifndef _CCB_CCBSELECTORRESOLVER_H_
 #define _CCB_CCBSELECTORRESOLVER_H_
 
-#include "cocos2d.h"
 #include "extensions//GUI/CCControlExtension/CCInvocation.h"
 
 

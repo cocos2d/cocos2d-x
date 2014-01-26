@@ -1,6 +1,9 @@
 #ifndef _CCB_CCLABELTTFLOADER_H_
 #define _CCB_CCLABELTTFLOADER_H_
 
+#include "CCObject.h"
+#include "CCLabelTTF.h"
+
 #include "CCNodeLoader.h"
 
 namespace cocosbuilder {

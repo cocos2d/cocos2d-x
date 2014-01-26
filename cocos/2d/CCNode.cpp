@@ -64,29 +64,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2)
+bool nodeComparisonLess(Node* n1, Node* n2)
 {
-    Object *p1 = static_cast<Object*>(pp1);
-    Object *p2 = static_cast<Object*>(pp2);
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
+    return( n1->getLocalZOrder() < n2->getLocalZOrder() ||
+           ( n1->getLocalZOrder() == n2->getLocalZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
            );
 }
-#else
-bool nodeComparisonLess(Object* p1, Object* p2)
-{
-    Node *n1 = static_cast<Node*>(p1);
-    Node *n2 = static_cast<Node*>(p2);
-
-    return( n1->getZOrder() < n2->getZOrder() ||
-           ( n1->getZOrder() == n2->getZOrder() && n1->getOrderOfArrival() < n2->getOrderOfArrival() )
-           );
-}
-#endif
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static int s_globalOrderOfArrival = 1;
@@ -103,12 +86,13 @@ Node::Node(void)
 , _anchorPointInPoints(Point::ZERO)
 , _anchorPoint(Point::ZERO)
 , _contentSize(Size::ZERO)
-, _additionalTransformDirty(false)
+, _useAdditionalTransform(false)
 , _transformDirty(true)
 , _inverseDirty(true)
 // children (lazy allocs)
 // lazy alloc
-, _ZOrder(0)
+, _localZOrder(0)
+, _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
@@ -212,30 +196,32 @@ void Node::setSkewY(float newSkewY)
     _transformDirty = _inverseDirty = true;
 }
 
-/// zOrder getter
-int Node::getZOrder() const
-{
-    return _ZOrder;
-}
 
 /// zOrder setter : private method
 /// used internally to alter the zOrder variable. DON'T call this method manually 
-void Node::_setZOrder(int z)
+void Node::_setLocalZOrder(int z)
 {
-    _ZOrder = z;
+    _localZOrder = z;
 }
 
-void Node::setZOrder(int z)
+void Node::setLocalZOrder(int z)
 {
+    _localZOrder = z;
     if (_parent)
     {
         _parent->reorderChild(this, z);
     }
-    // should set "_ZOrder" after reorderChild, because the implementation of reorderChild subclass of Node, such as Sprite,
-    // will return when _ZOrder value is not changed
-    _setZOrder(z);
-    
+
     _eventDispatcher->setDirtyForNode(this);
+}
+
+void Node::setGlobalZOrder(float globalZOrder)
+{
+    if (_globalZOrder != globalZOrder)
+    {
+        _globalZOrder = globalZOrder;
+        _eventDispatcher->setDirtyForNode(this);
+    }
 }
 
 /// vertexZ getter
@@ -246,9 +232,10 @@ float Node::getVertexZ() const
 
 
 /// vertexZ setter
-void Node::setVertexZ(float var)
+void Node::setVertexZ(float zOrder)
 {
-    _vertexZ = var;
+    _vertexZ = zOrder;
+    setGlobalZOrder(zOrder);
 }
 
 
@@ -650,7 +637,7 @@ void Node::addChild(Node *child, int zOrder)
 void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
-    this->addChild(child, child->_ZOrder, child->_tag);
+    this->addChild(child, child->_localZOrder, child->_tag);
 }
 
 void Node::removeFromParent()
@@ -767,7 +754,7 @@ void Node::insertChild(Node* child, int z)
 {
     _reorderChildDirty = true;
     _children.pushBack(child);
-    child->_setZOrder(z);
+    child->_setLocalZOrder(z);
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -775,7 +762,7 @@ void Node::reorderChild(Node *child, int zOrder)
     CCASSERT( child != nullptr, "Child must be non-nil");
     _reorderChildDirty = true;
     child->setOrderOfArrival(s_globalOrderOfArrival++);
-    child->_setZOrder(zOrder);
+    child->_setLocalZOrder(zOrder);
 }
 
 void Node::sortAllChildren()
@@ -816,7 +803,7 @@ void Node::visit()
         {
             auto node = _children.at(i);
 
-            if ( node && node->_ZOrder < 0 )
+            if ( node && node->_localZOrder < 0 )
                 node->visit();
             else
                 break;
@@ -1189,10 +1176,9 @@ const kmMat4& Node::getNodeToParentTransform() const
         // vertex Z
         _transform.mat[14] = _vertexZ;
 
-        if (_additionalTransformDirty)
+        if (_useAdditionalTransform)
         {
             kmMat4Multiply(&_transform, &_transform, &_additionalTransform);
-            _additionalTransformDirty = false;
         }
 
         _transformDirty = false;
@@ -1211,14 +1197,14 @@ void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
 {
     CGAffineToGL(additionalTransform, _additionalTransform.mat);
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 void Node::setAdditionalTransform(const kmMat4& additionalTransform)
 {
     _additionalTransform = additionalTransform;
     _transformDirty = true;
-    _additionalTransformDirty = true;
+    _useAdditionalTransform = true;
 }
 
 

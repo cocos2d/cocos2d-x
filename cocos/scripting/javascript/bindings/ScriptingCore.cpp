@@ -46,7 +46,7 @@
 
 #include "js_bindings_config.h"
 
-#if DEBUG
+#if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else
 #define TRACE_DEBUGGER_SERVER(...)
@@ -200,12 +200,12 @@ void js_log(const char *format, ...) {
 
     if (_js_log_buf == NULL)
     {
-        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
-        _js_log_buf[kMaxLogLen] = '\0';
+        _js_log_buf = (char *)calloc(sizeof(char), MAX_LOG_LENGTH+1);
+        _js_log_buf[MAX_LOG_LENGTH] = '\0';
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
+    int len = vsnprintf(_js_log_buf, MAX_LOG_LENGTH, format, vl);
     va_end(vl);
     if (len > 0)
     {
@@ -568,7 +568,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (script) {
         jsval rval;
         filename_script[path] = script;
-        JSAutoCompartment ac(cx, global);
+
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             cocos2d::log("(evaluatedOK == JS_FALSE)");
@@ -704,7 +704,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
-#if DEBUG
+#if COCOS2D_DEBUG
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
@@ -1408,6 +1408,9 @@ void ScriptingCore::enableDebugger()
         JS_SetDebugMode(_cx, JS_TRUE);
         
         _debugGlobal = NewGlobalObject(_cx, true);
+        // Adds the debugger object to root, otherwise it may be collected by GC.
+        JS_AddObjectRoot(_cx, &_debugGlobal);
+        
         JS_WrapObject(_cx, &_debugGlobal);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program

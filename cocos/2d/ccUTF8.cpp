@@ -25,6 +25,7 @@
 
 #include "ccUTF8.h"
 #include "platform/CCCommon.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
@@ -278,9 +279,9 @@ cc_utf8_get_char (const char * p)
 
 unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int* rUtf16Size/* = nullptr */)
 {
-    unsigned short len = cc_utf8_strlen(str_old, length);
+    long len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != nullptr) {
-        *rUtf16Size = len;
+        *rUtf16Size = static_cast<int>(len);
     }
     
     unsigned short* str_new = new unsigned short[len + 1];

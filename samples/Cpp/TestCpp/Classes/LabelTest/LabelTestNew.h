@@ -347,6 +347,65 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelCharMapTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelCharMapTest);
+
+    LabelCharMapTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void step(float dt);
+
+private:
+    float _time; 
+};
+
+class LabelCharMapColorTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelCharMapColorTest);
+
+    LabelCharMapColorTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void step(float dt);
+    void actionFinishCallback();
+
+private:
+    float _time; 
+};
+
+class LabelCrashTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelCrashTest);
+
+    LabelCrashTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelTTFOldNew : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelTTFOldNew);
+
+    LabelTTFOldNew();
+
+    virtual void draw() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    CustomCommand _renderCmd;
+    void onDraw();
+};
 
 // we don't support linebreak mode
 

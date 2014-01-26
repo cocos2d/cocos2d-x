@@ -129,6 +129,12 @@ void CC_DLL deleteTexture(GLuint textureId);
  */
 void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
 
+/** Select active texture unit.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
+ @since v3.0
+ */
+void CC_DLL activeTexture(GLenum texture);
+
 /** If the vertex array is not already bound, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.
  @since v2.0.0

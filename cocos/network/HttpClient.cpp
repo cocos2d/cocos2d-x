@@ -25,9 +25,16 @@
  ****************************************************************************/
 
 #include "HttpClient.h"
+
 #include <thread>
 #include <queue>
+#include <condition_variable>
+
 #include <errno.h>
+
+#include "CCVector.h"
+#include "CCDirector.h"
+#include "CCScheduler.h"
 
 #include "curl/curl.h"
 

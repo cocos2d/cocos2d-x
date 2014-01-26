@@ -33,7 +33,7 @@ local function CocosDenshionTest()
     }
 
     local function menuCallback(tag, pMenuItem)
-        local nIdx = pMenuItem:getZOrder() - 10000
+        local nIdx = pMenuItem:getLocalZOrder() - 10000
         -- play background music
         if nIdx ==  0 then
             AudioEngine.playMusic(MUSIC_FILE, true)
@@ -108,7 +108,6 @@ local function CocosDenshionTest()
     m_pItmeMenu:setContentSize(cc.size(VisibleRect:getVisibleRect().width, (m_nTestCount + 1) * LINE_SPACE))
     m_pItmeMenu:setPosition(cc.p(0, 0))
     ret:addChild(m_pItmeMenu)
-    ret:setTouchEnabled(true)
 
     -- preload background music and effect
     AudioEngine.preloadMusic( MUSIC_FILE )
@@ -159,7 +158,46 @@ local function CocosDenshionTest()
         end
     end
 
-    ret:registerScriptTouchHandler(onTouchEvent)
+    local function onTouchBegan(touch, event)
+        local location = touch:getLocation()
+        prev.x = location.x
+        prev.y = location.y
+        m_tBeginPos = location
+        return true
+    end
+
+    local function onTouchMoved(touch, event)
+        local location = touch:getLocation()
+        local touchLocation = location
+        local nMoveY = touchLocation.y - m_tBeginPos.y
+        local curPosX, curPosY = m_pItmeMenu:getPosition()
+        local curPos = cc.p(curPosX, curPosY)
+        local nextPos = cc.p(curPos.x, curPos.y + nMoveY)
+
+        if nextPos.y < 0.0 then
+            m_pItmeMenu:setPosition(cc.p(0, 0))
+        end
+
+        if nextPos.y > ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().height) then
+            m_pItmeMenu:setPosition(cc.p(0, ((m_nTestCount + 1)* LINE_SPACE - VisibleRect:getVisibleRect().height)))
+        end
+
+        m_pItmeMenu:setPosition(nextPos)
+        m_tBeginPos.x = touchLocation.x
+        m_tBeginPos.y = touchLocation.y
+
+        prev.x = location.x
+        prev.y = location.y
+    end
+
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:setSwallowTouches(true)
+
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
+
     return ret
 end
 

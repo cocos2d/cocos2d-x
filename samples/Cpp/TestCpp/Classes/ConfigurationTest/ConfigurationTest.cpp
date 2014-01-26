@@ -103,7 +103,8 @@ void ConfigurationLoadConfig::onEnter()
     ConfigurationBase::onEnter();
 
 	Configuration::getInstance()->loadConfigFile("configs/config-test-ok.plist");
-	Configuration::getInstance()->dumpInfo();
+    std::string config = Configuration::getInstance()->getInfo();
+    log("%s\n", config.c_str());
 
 }
 
@@ -196,7 +197,8 @@ void ConfigurationSet::onEnter()
 	conf->setValue("this.is.a.bool.value", Value(true) );
 	conf->setValue("this.is.a.string.value", Value("hello world") );
 
-	conf->dumpInfo();
+	auto str = conf->getInfo();
+    log("%s\n", str.c_str());
 }
 
 std::string ConfigurationSet::subtitle() const

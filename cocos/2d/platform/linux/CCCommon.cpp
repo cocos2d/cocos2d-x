@@ -24,60 +24,18 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
 #include "CCStdC.h"
+#include "CCConsole.h"
 
 NS_CC_BEGIN
 
-#define MAX_LEN         (cocos2d::kMaxLogLen + 1)
-
-// XXX deprecated
-void CCLog(const char * pszFormat, ...)
+void MessageBox(const char * msg, const char * title)
 {
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    // Strip any trailing newlines from log message.
-    size_t len = strlen(szBuf);
-    while (len && szBuf[len-1] == '\n')
-    {
-      szBuf[len-1] = '\0';
-      len--;
-    }
-
-    fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
+    log("%s: %s", title, msg);
 }
 
-void log(const char * pszFormat, ...)
+void LuaLog(const char * format)
 {
-    char szBuf[MAX_LEN];
-
-    va_list ap;
-    va_start(ap, pszFormat);
-    vsnprintf(szBuf, MAX_LEN, pszFormat, ap);
-    va_end(ap);
-
-    // Strip any trailing newlines from log message.
-    size_t len = strlen(szBuf);
-    while (len && szBuf[len-1] == '\n')
-    {
-      szBuf[len-1] = '\0';
-      len--;
-    }
-
-    fprintf(stderr, "cocos2d-x debug info [%s]\n",  szBuf);
-}
-
-void MessageBox(const char * pszMsg, const char * pszTitle)
-{
-    log("%s: %s", pszTitle, pszMsg);
-}
-
-void LuaLog(const char * pszFormat)
-{
-    puts(pszFormat);
+    puts(format);
 }
 
 NS_CC_END

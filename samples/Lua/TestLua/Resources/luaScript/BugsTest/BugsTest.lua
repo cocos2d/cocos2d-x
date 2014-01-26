@@ -1,8 +1,8 @@
-local    MAX_COUNT = 9;
-local    LINE_SPACE = 40;
-local    kItemTagBasic = 5432;
+local    MAX_COUNT = 9
+local    LINE_SPACE = 40
+local    kItemTagBasic = 5432
 
-local Winsize = cc.Director:getInstance():getWinSize();
+local Winsize = cc.Director:getInstance():getWinSize()
 
 local testNames = {
     "Bug-350",
@@ -18,8 +18,8 @@ local testNames = {
 
 local function CreateBugsTestBackMenuItem(pLayer)
     cc.MenuItemFont:setFontName("Arial")
-    cc.MenuItemFont:setFontSize(24);
-    local pMenuItemFont = cc.MenuItemFont:create("Back");
+    cc.MenuItemFont:setFontSize(24)
+    local pMenuItemFont = cc.MenuItemFont:create("Back")
     pMenuItemFont:setPosition(cc.p(VisibleRect:rightBottom().x - 50, VisibleRect:rightBottom().y + 25))
     local function menuCallback()
         local pScene = BugsTestMain()
@@ -37,9 +37,9 @@ end
 --BugTest350
 local function BugTest350()
     local pLayer = cc.Layer:create()
-    local pBackground = cc.Sprite:create("Hello.png");
-    pBackground:setPosition(cc.p(Winsize.width/2, Winsize.height/2));
-    pLayer:addChild(pBackground);
+    local pBackground = cc.Sprite:create("Hello.png")
+    pBackground:setPosition(cc.p(Winsize.width/2, Winsize.height/2))
+    pLayer:addChild(pBackground)
     return pLayer
 end
 
@@ -55,7 +55,7 @@ local function BugTest422()
            print(strLog)
         end
 
-        pResetLayer:removeChild(pNode, false);
+        pResetLayer:removeChild(pNode, false)
         
         local function menuCallback(tag,pMenuItem)
             if nil ~= pMenuItem then
@@ -64,7 +64,7 @@ local function BugTest422()
             end
         end
         cc.MenuItemFont:setFontName("Arial")
-        cc.MenuItemFont:setFontSize(24);
+        cc.MenuItemFont:setFontSize(24)
         local pMenuItem1 = cc.MenuItemFont:create("One")
         pMenuItem1:registerScriptTapHandler(menuCallback)
         local pMenuItem2 = cc.MenuItemFont:create("Two")
@@ -90,15 +90,15 @@ local function BugTest458()
     
     local function InitQuestionContainerSprite(pSprite)
         --Add label
-        local pLabel = cc.LabelTTF:create("Answer 1", "Arial", 12);
-        pLabel:setTag(100);
+        local pLabel = cc.LabelTTF:create("Answer 1", "Arial", 12)
+        pLabel:setTag(100)
         
         --Add the background
-        local pCorner = cc.Sprite:create("Images/bugs/corner.png");
-        local nWidth = Winsize.width * 0.9 - (pCorner:getContentSize().width * 2);
-        local nHeight = Winsize.height * 0.15  - (pCorner:getContentSize().height * 2);
-        local pColorLayer = cc.LayerColor:create(cc.c4b(255, 255, 255, 255 * .75), nWidth, nHeight);
-        pColorLayer:setPosition(cc.p(-nWidth / 2, -nHeight / 2));
+        local pCorner = cc.Sprite:create("Images/bugs/corner.png")
+        local nWidth = Winsize.width * 0.9 - (pCorner:getContentSize().width * 2)
+        local nHeight = Winsize.height * 0.15  - (pCorner:getContentSize().height * 2)
+        local pColorLayer = cc.LayerColor:create(cc.c4b(255, 255, 255, 255 * .75), nWidth, nHeight)
+        pColorLayer:setPosition(cc.p(-nWidth / 2, -nHeight / 2))
         --First button is blue,Second is red,Used for testing - change later
         if (0 == nColorFlag) then
             pLabel:setColor(cc.c3b(0,0,255))
@@ -106,53 +106,53 @@ local function BugTest458()
             print("Color changed")
             pLabel:setColor(cc.c3b(255,0,0))
         end
-        nColorFlag = nColorFlag + 1;
-        pSprite:addChild(pColorLayer);
+        nColorFlag = nColorFlag + 1
+        pSprite:addChild(pColorLayer)
         
-        pCorner:setPosition(cc.p(-(nWidth / 2 + pCorner:getContentSize().width / 2), -(nHeight / 2 + pCorner:getContentSize().height / 2)));
-        pSprite:addChild(pCorner);
+        pCorner:setPosition(cc.p(-(nWidth / 2 + pCorner:getContentSize().width / 2), -(nHeight / 2 + pCorner:getContentSize().height / 2)))
+        pSprite:addChild(pCorner)
 		
 		local nX,nY = pCorner:getPosition()
-        local pCorner2 = cc.Sprite:create("Images/bugs/corner.png");
-        pCorner2:setPosition(cc.p(-nX, nY));
-        pCorner2:setFlipX(true);
-        pSprite:addChild(pCorner2);
+        local pCorner2 = cc.Sprite:create("Images/bugs/corner.png")
+        pCorner2:setPosition(cc.p(-nX, nY))
+        pCorner2:setFlipX(true)
+        pSprite:addChild(pCorner2)
 
-        local pCorner3 = cc.Sprite:create("Images/bugs/corner.png");
-        pCorner3:setPosition(cc.p(nX, -nY));
-        pCorner3:setFlipY(true);
-        pSprite:addChild(pCorner3);
+        local pCorner3 = cc.Sprite:create("Images/bugs/corner.png")
+        pCorner3:setPosition(cc.p(nX, -nY))
+        pCorner3:setFlipY(true)
+        pSprite:addChild(pCorner3)
 
-        local pCorner4 = cc.Sprite:create("Images/bugs/corner.png");
-        pCorner4:setPosition(cc.p(-nX, -nY));
-        pCorner4:setFlipX(true);
-        pCorner4:setFlipY(true);
-        pSprite:addChild(pCorner4);
+        local pCorner4 = cc.Sprite:create("Images/bugs/corner.png")
+        pCorner4:setPosition(cc.p(-nX, -nY))
+        pCorner4:setFlipX(true)
+        pCorner4:setFlipY(true)
+        pSprite:addChild(pCorner4)
 
-        local pEdge = cc.Sprite:create("Images/bugs/edge.png");
-        pEdge:setScaleX(nWidth);
-        pEdge:setPosition(cc.p(nX + (pCorner:getContentSize().width / 2) + (nWidth / 2), nY));
-        pSprite:addChild(pEdge);
+        local pEdge = cc.Sprite:create("Images/bugs/edge.png")
+        pEdge:setScaleX(nWidth)
+        pEdge:setPosition(cc.p(nX + (pCorner:getContentSize().width / 2) + (nWidth / 2), nY))
+        pSprite:addChild(pEdge)
         
-        local pEdge2 = cc.Sprite:create("Images/bugs/edge.png");
-        pEdge2:setScaleX(nWidth);
-        pEdge2:setPosition(cc.p(nX + (pCorner:getContentSize().width / 2) + (nWidth / 2), -nY));
-        pEdge2:setFlipY(true);
-        pSprite:addChild(pEdge2);
+        local pEdge2 = cc.Sprite:create("Images/bugs/edge.png")
+        pEdge2:setScaleX(nWidth)
+        pEdge2:setPosition(cc.p(nX + (pCorner:getContentSize().width / 2) + (nWidth / 2), -nY))
+        pEdge2:setFlipY(true)
+        pSprite:addChild(pEdge2)
 
-        local pEdge3 = cc.Sprite:create("Images/bugs/edge.png");
-        pEdge3:setRotation(90);
-        pEdge3:setScaleX(nHeight);
-        pEdge3:setPosition(cc.p(nX, nY + (pCorner:getContentSize().height / 2) + (nHeight / 2)));
-        pSprite:addChild(pEdge3);
+        local pEdge3 = cc.Sprite:create("Images/bugs/edge.png")
+        pEdge3:setRotation(90)
+        pEdge3:setScaleX(nHeight)
+        pEdge3:setPosition(cc.p(nX, nY + (pCorner:getContentSize().height / 2) + (nHeight / 2)))
+        pSprite:addChild(pEdge3)
 
-        local pEdge4 = cc.Sprite:create("Images/bugs/edge.png");
-        pEdge4:setRotation(270);
-        pEdge4:setScaleX(nHeight);
-        pEdge4:setPosition(cc.p(-nX, nY + (pCorner:getContentSize().height / 2) + (nHeight / 2)));
-        pSprite:addChild(pEdge4);
+        local pEdge4 = cc.Sprite:create("Images/bugs/edge.png")
+        pEdge4:setRotation(270)
+        pEdge4:setScaleX(nHeight)
+        pEdge4:setPosition(cc.p(-nX, nY + (pCorner:getContentSize().height / 2) + (nHeight / 2)))
+        pSprite:addChild(pEdge4)
 
-        pSprite:addChild(pLabel);
+        pSprite:addChild(pLabel)
     end
     
     local pQuestion1 = cc.Sprite:create()
@@ -165,19 +165,19 @@ local function BugTest458()
     end
     local pMenuItemSprite = cc.MenuItemSprite:create(pQuestion1,pQuestion2)
     pMenuItemSprite:registerScriptTapHandler(menuCallback)
-    local pLayerColor1 = cc.LayerColor:create(cc.c4b(0,0,255,255), 100, 100);
---  question->release();
---  question2->release();
+    local pLayerColor1 = cc.LayerColor:create(cc.c4b(0,0,255,255), 100, 100)
+--  question->release()
+--  question2->release()
 
-    local pLayerColor2 = cc.LayerColor:create(cc.c4b(255,0,0,255), 100, 100);
-    local pMenuItemSprite2 = cc.MenuItemSprite:create(pLayerColor1, pLayerColor2);   
+    local pLayerColor2 = cc.LayerColor:create(cc.c4b(255,0,0,255), 100, 100)
+    local pMenuItemSprite2 = cc.MenuItemSprite:create(pLayerColor1, pLayerColor2)   
     pMenuItemSprite2:registerScriptTapHandler(menuCallback) 
     local pMenu = cc.Menu:create(pMenuItemSprite, pMenuItemSprite2)
-    pMenu:alignItemsVerticallyWithPadding(100);
-    pMenu:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2));
+    pMenu:alignItemsVerticallyWithPadding(100)
+    pMenu:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2))
 
     -- add the label as a child to this Layer
-    pLayer:addChild(pMenu);
+    pLayer:addChild(pMenu)
 
     return pLayer
 end
@@ -189,21 +189,21 @@ local BugTest624_2_entry = nil
 local function BugTest624()
     local pLayer = cc.Layer:create()
     
-    local pLabel = cc.LabelTTF:create("Layer1", "Marker Felt", 36);
-    pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2));
-    pLayer:addChild(pLabel);
-    pLayer:setAccelerometerEnabled(true);
---  schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
+    local pLabel = cc.LabelTTF:create("Layer1", "Marker Felt", 36)
+    pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2))
+    pLayer:addChild(pLabel)
+    pLayer:setAccelerometerEnabled(true)
+--  schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f)
 	
 	local function BugTest624_SwitchLayer()
 		local scheduler = cc.Director:getInstance():getScheduler()
 		scheduler:unscheduleScriptEntry(BugTest624_entry)
 			
-		local pScene = cc.Scene:create(); 
+		local pScene = cc.Scene:create() 
 		local pNewPlayer = BugTest624_2()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
-        pScene:addChild(pNewPlayer);   
-        cc.Director:getInstance():replaceScene(cc.TransitionFade:create(2.0, pScene, cc.c3b(255,255,255))); 
+        pScene:addChild(pNewPlayer)   
+        cc.Director:getInstance():replaceScene(cc.TransitionFade:create(2.0, pScene, cc.c3b(255,255,255))) 
 	end
 	
 	
@@ -228,20 +228,20 @@ end
 function BugTest624_2()
 	local pLayer = cc.Layer:create()
 	
-	local pLabel = cc.LabelTTF:create("Layer2", "Marker Felt", 36);
-	pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2));
-    pLayer:addChild(pLabel);
-    pLayer:setAccelerometerEnabled(true);
+	local pLabel = cc.LabelTTF:create("Layer2", "Marker Felt", 36)
+	pLabel:setPosition(cc.p(Winsize.width / 2, Winsize.height / 2))
+    pLayer:addChild(pLabel)
+    pLayer:setAccelerometerEnabled(true)
     
     local function BugTest624_2_SwitchLayer()
 		local scheduler = cc.Director:getInstance():getScheduler()
 		scheduler:unscheduleScriptEntry(BugTest624_2_entry)
 			
-		local pScene = cc.Scene:create(); 
+		local pScene = cc.Scene:create() 
 		local pNewPlayer = BugTest624()
 		CreateBugsTestBackMenuItem(pNewPlayer)   
-        pScene:addChild(pNewPlayer);
-        cc.Director:getInstance():replaceScene(cc.TransitionFade:create(2.0, pScene, cc.c3b(255,0,0))); 
+        pScene:addChild(pNewPlayer)
+        cc.Director:getInstance():replaceScene(cc.TransitionFade:create(2.0, pScene, cc.c3b(255,0,0))) 
 	end
 	
 	local function BugTest624_2_OnEnterOrExit(tag)
@@ -294,65 +294,58 @@ end
 
 --BugTest914
 local function BugTest914()
-    local pLayer = cc.Layer:create()
+    local layer = cc.Layer:create()
     
-    pLayer:setTouchEnabled(true);
-    
-    local pLayerColor = nil
+    local layerColor = nil
     
     for i = 0, 4 do
-       pLayerColor = cc.LayerColor:create(cc.c4b(i*20, i*20, i*20,255))
-       pLayerColor:setContentSize(cc.size(i*100, i*100));
-       pLayerColor:setPosition(cc.p(Winsize.width/2, Winsize.height/2))
-       pLayerColor:setAnchorPoint(cc.p(0.5, 0.5));
-       pLayerColor:ignoreAnchorPointForPosition(false);
-       pLayer:addChild(pLayerColor, -1-i);
+       layerColor = cc.LayerColor:create(cc.c4b(i*20, i*20, i*20,255))
+       layerColor:setContentSize(cc.size(i*100, i*100))
+       layerColor:setPosition(cc.p(Winsize.width/2, Winsize.height/2))
+       layerColor:setAnchorPoint(cc.p(0.5, 0.5))
+       layerColor:ignoreAnchorPointForPosition(false)
+       layer:addChild(layerColor, -1-i)
     end
     
     --create and initialize a Label
     local function restart()
-       local pScene = cc.Scene:create()
-       local pLayer = BugTest914()
-       CreateBugsTestBackMenuItem(pLayer)
-       pScene:addChild(pLayer);
-       cc.Director:getInstance():replaceScene(pScene)
+       local scene = cc.Scene:create()
+       local newLayer = BugTest914()
+       CreateBugsTestBackMenuItem(newLayer)
+       scene:addChild(newLayer)
+       cc.Director:getInstance():replaceScene(scene)
 	end
 
     local label = cc.LabelTTF:create("Hello World", "Marker Felt", 64)
     --position the label on the center of the screen
-    label:setPosition(cc.p( Winsize.width /2 , Winsize.height/2 ));
-    pLayer:addChild(label);
+    label:setPosition(cc.p( Winsize.width /2 , Winsize.height/2 ))
+    layer:addChild(label)
     
     local item1 = cc.MenuItemFont:create("restart")
     item1:registerScriptTapHandler(restart)
-    --Bug914Layer::restart));
     
     local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:alignItemsVertically()
     menu:setPosition(cc.p(Winsize.width/2, 100))
-    pLayer:addChild(menu)
+    layer:addChild(menu)
     
     -- handling touch events   
-    local function onTouchMoved(tableArray)		
-		local nCount = table.getn(tableArray)	
-		nCount = math.floor(nCount / 3)
-		print(nCount)
+    local function onTouchMoved(touches, event)		
+		local count = table.getn(touches)	
+		print("Number of touches: ",count)
     end
-    local function onTouchBegan(tableArray)
-		onTouchMoved(tableArray)
+    local function onTouchBegan(touches, event)
+		onTouchMoved(touches, event)
     end
-    
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCHES_MOVED )
 
-    local function onTouch(eventType,tableArray)
-        if eventType == "began" then
-            return onTouchBegan(tableArray)
-        elseif eventType == "moved" then
-            return onTouchMoved(tableArray)
-        end
-    end
-    pLayer:registerScriptTouchHandler(onTouch,true)
-    return pLayer
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
+    return layer
 end
 
 --BugTest1159
@@ -372,25 +365,25 @@ local function BugTest1159()
     local seq = cc.Sequence:create(cc.MoveTo:create(1.0, cc.p(1024.0, 384.0)), cc.MoveTo:create(1.0, cc.p(0.0, 384.0)))     
     sprite_a:runAction(cc.RepeatForever:create(seq))
 
-    local sprite_b = cc.LayerColor:create(cc.c4b(0, 0, 255, 255), 400, 400);
+    local sprite_b = cc.LayerColor:create(cc.c4b(0, 0, 255, 255), 400, 400)
     sprite_b:setAnchorPoint(cc.p(0.5, 0.5))
-    sprite_b:ignoreAnchorPointForPosition(false);
-    sprite_b:setPosition(cc.p(Winsize.width/2, Winsize.height/2));
-    pLayer:addChild(sprite_b);
+    sprite_b:ignoreAnchorPointForPosition(false)
+    sprite_b:setPosition(cc.p(Winsize.width/2, Winsize.height/2))
+    pLayer:addChild(sprite_b)
 
 	local function menuCallback()
 	   local pScene = cc.Scene:create()
        local pLayer = BugTest1159()
        CreateBugsTestBackMenuItem(pLayer)
-       pScene:addChild(pLayer);
+       pScene:addChild(pLayer)
        cc.Director:getInstance():replaceScene(cc.TransitionPageTurn:create(1.0, pScene, false))
 	end
-    local label = cc.MenuItemLabel:create(cc.LabelTTF:create("Flip Me", "Helvetica", 24));
+    local label = cc.MenuItemLabel:create(cc.LabelTTF:create("Flip Me", "Helvetica", 24))
     label:registerScriptTapHandler(menuCallback)
-    local menu = cc.Menu:create();
+    local menu = cc.Menu:create()
     menu:addChild(label)
-    menu:setPosition(cc.p(Winsize.width - 200.0, 50.0));
-    pLayer:addChild(menu);
+    menu:setPosition(cc.p(Winsize.width - 200.0, 50.0))
+    pLayer:addChild(menu)
     
     local function onNodeEvent(event)
         if event == "exit" then
@@ -436,7 +429,7 @@ local function BugTest1174()
     local bRet = false
     
     print("Test1 - Start")
-    local i = 0;
+    local i = 0
     for i = 0, 9999 do
         --[[
         A|b
@@ -490,12 +483,12 @@ local function BugTest1174()
     --------
     print("Test2 - Start")
         
-    p1 = cc.p(220,480);
-    p2 = cc.p(304,325);
-    p3 = cc.p(264,416);
-    p4 = cc.p(186,416);
-    s  = 0.0;
-    t  = 0.0;
+    p1 = cc.p(220,480)
+    p2 = cc.p(304,325)
+    p3 = cc.p(264,416)
+    p4 = cc.p(186,416)
+    s  = 0.0
+    t  = 0.0
     bRet,s,t = cc.pIsLineIntersect( p1, p2, p3, p4, s, t)
     if true == bRet then
     	check_for_error(p1, p2, p3, p4, s, t)
@@ -515,7 +508,7 @@ local function BugTest1174()
         -- c | d
         local ax = math.random() * -500
         local ay = math.random() * 500
-        p1 = cc.p(ax,ay);
+        p1 = cc.p(ax,ay)
         -- a | b
         -- -----
         -- c | D
@@ -579,11 +572,11 @@ end
 
 
 local function BugsTestMainLayer()
-	local ret = cc.Layer:create(); 
+	local ret = cc.Layer:create() 
     
     --menu callback
     local function menuCallback(tag, pMenuItem)
-        local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+        local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
         local BugTestScene = CreateBugsTestScene(nIdx)
         if nil ~= testScene then
             cc.Director:getInstance():replaceScene(testScene)
@@ -591,8 +584,8 @@ local function BugsTestMainLayer()
     end
 	
 	-- add menu items for tests
-    local pItemMenu = cc.Menu:create();
-    local nTestCount = table.getn(testNames);
+    local pItemMenu = cc.Menu:create()
+    local nTestCount = table.getn(testNames)
     
     local i = 1
     for  i = 1, nTestCount do
@@ -605,19 +598,15 @@ local function BugsTestMainLayer()
     
     pItemMenu:setPosition(cc.p(0, 0))   
     ret:addChild(pItemMenu)
-    ret:setTouchEnabled(true)
     
     -- handling touch events
     local ptBeginPos = {x = 0, y = 0}
     local ptCurPos  = {x = 0, y = 0}
-    local function onTouchBegan(x, y)
-        ptBeginPos = {x = x, y = y}
-        -- cc.TOUCHBEGAN event must return true
-        return true
-    end
-    
-    local function onTouchMoved(x, y)
-        local nMoveY = y - ptBeginPos.y
+
+    -- handling touch events   
+    local function onTouchMoved(touches, event) 
+        local touchLocation = touches[1]:getLocation()   
+        local nMoveY = touchLocation.y - ptBeginPos.y
         local curPosx, curPosy = pItemMenu:getPosition()
         local nextPosy = curPosy + nMoveY
         if nextPosy < 0 then
@@ -631,26 +620,25 @@ local function BugsTestMainLayer()
         end
 
         pItemMenu:setPosition(curPosx, nextPosy)
-        ptBeginPos = {x = x, y = y}
+        ptBeginPos = touchLocation
         ptCurPos = {x = curPosx, y = nextPosy}
     end
-    
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x, y)
-        elseif eventType == "moved" then
-            return onTouchMoved(x, y)
-        end
+    local function onTouchBegan(touches, event)
+        ptBeginPos = touches[1]:getLocation()
     end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCHES_MOVED )
 
-    ret:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret) 
     
     return ret
 end
 function BugsTestMain()
-	cclog("BugsTestMain");
-	local scene = cc.Scene:create();
-	scene:addChild(BugsTestMainLayer());
-	scene:addChild(CreateBackMenuItem());
-	return scene;
+	cclog("BugsTestMain")
+	local scene = cc.Scene:create()
+	scene:addChild(BugsTestMainLayer())
+	scene:addChild(CreateBackMenuItem())
+	return scene
 end

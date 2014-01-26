@@ -26,7 +26,12 @@
  */
 
 #include "CCControlSwitch.h"
-#include "cocos2d.h"
+#include "CCSprite.h"
+#include "CCActionTween.h"
+#include "CCLabelTTF.h"
+#include "CCClippingNode.h"
+#include "ccShaders.h"
+#include "CCRenderTexture.h"
 
 NS_CC_EXT_BEGIN
 // ControlSwitchSprite

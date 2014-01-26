@@ -82,6 +82,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     scene->addChild(layer);
     director->runWithScene(scene);
 
+    // Enable Remote Console
+    auto console = director->getConsole();
+    console->listenOnTCP(5678);
+
     return true;
 }
 

@@ -1,10 +1,50 @@
-cocos2d-x-3.0final ?.? ?
+cocos2d-x-3.0beta2 ?.? ?
 [All]
-     [FIX]          Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [NEW]          Full screen support for desktop platforms.
+     [NEW]          Adds performance test for EventDispatcher.
+     [NEW]          Adds performance test for Containers(Vector<>, Array, Map<K,V>, Dictionary).
+     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [NEW]          Console: added the 'textures', 'fileutils dump' and 'config' commands
+     [NEW]          GLCache: glActiveTexture() is cached with GL::activeTexture(). All code MUST call the cached version in order to work correctly
+     [NEW]          Label: Uses a struct of TTF configuration for Label::createWithTTF to reduce parameters and make this interface more easily to use.
+     [NEW]          Label: Integrates LabelAtlas into new Label.
+     [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
+     [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
+     [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
+     
+     [FIX]          JSB: Crash when running JSB projects on iOS device in DEBUG mode.
+     [FIX]          JSB: Crash when Firefox connects to JSB application on Mac platform.
+     [FIX]          Uses EventDispatcher to access event in LUA testcase.
+     [FIX]          Exposes SAXParser class to JS, it is used for parsing XML in JS.
+     [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
+     [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since we only need binary(libclang.so/dll).
+     [FIX]          Removes unused files for MAC platform after using glfw3 to create opengl context.
+     [FIX]          Wrong arithmetic of child's position in ParallaxNode::addChild()
+     [FIX]          CocoStudio: TestColliderDetector in ArmatureTest can't work.
+     [FIX]          CocoStudio: The order of transform calculation in Skin::getNodeToWorldTransform() is incorrect.
+     [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
+     [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
+     [FIX]          Label: Crash when using unknown characters.
+     [FIX]          Label: Missing line breaks and wrong alignment.
+     [FIX]          Label: Color and opacity settings aren't applied when invoking Label::alignText.
+     [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
+     [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
      [FIX]          ControlButton doesn't support to set scale ratio of touchdown state.
+     [FIX]          Particles: Crash was triggered if there is not `textureFileName`section in particle plist file.
+     [FIX]          Renderer: Uses a float as key with only the depth. Viewport, opaque are not needed now
+     [FIX]          Renderer Performance Fix: QuadCommand::init() does not copy the Quads, it only store a reference making the code faster
+     [FIX]          Renderer Performance Fix: Sprite and SpriteBatchNode (and subclasses) has much better performance
+     [FIX]          Renderer Performance Fix: When note using VAO, call glBufferData() instead of glBufferSubData().
+     [FIX]          Renderer Performance Fix: Doesn't sort z=0 elements. It also uses sort() instead of stable_sort() for z!=0.
+     [FIX]          Sprite: removed _hasChildren optimization. It uses !_children.empty() now which is super fast as well
+     [FIX]          Tests: TestCpp works with CMake on Windows.
+     [FIX]          Tests: Sprites Performance Test has 4 new tests
+     [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
+     [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
      [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
-     [NEW]          DrawNode supports to draw triangle, quad bezier, cubic bezier.
+     [FIX]          Windows: There will be some compilation errors when using x64 target on Windows.
+
 cocos2d-x-3.0beta Jan.7 2014
 [All]
      [NEW]          New label: shadow, outline, glow support

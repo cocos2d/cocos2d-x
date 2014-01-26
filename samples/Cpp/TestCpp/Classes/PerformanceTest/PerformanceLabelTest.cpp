@@ -86,6 +86,7 @@ void LabelMainScene::initWithSubTest(int nodes)
 
     _lastRenderedCount = 0;
     _quantityNodes = 0;
+    _accumulativeTime = 0.0f;
 
     _labelContainer = Layer::create();
     addChild(_labelContainer);
@@ -212,15 +213,18 @@ void LabelMainScene::onIncrease(Object* sender)
         }
         break;
     case kCaseLabelUpdate:
-        for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = Label::createWithTTF("Label", "fonts/arial.ttf", 60, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr,true);
-            label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
-            _labelContainer->addChild(label, 1, _quantityNodes);
+            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC, nullptr, true);
+            for( int i=0;i< kNodesIncrease;i++)
+            {
+                auto label = Label::createWithTTF(ttfConfig, "Label", TextHAlignment::CENTER, size.width);
+                label->setPosition(Point((size.width/2 + rand() % 50), ((int)size.height/2 + rand() % 50)));
+                _labelContainer->addChild(label, 1, _quantityNodes);
 
-            _quantityNodes++;
-        }
-        break;
+                _quantityNodes++;
+            }
+            break;
+        }        
     case kCaseLabelBMFontBigLabels:
         for( int i=0;i< kNodesIncrease;i++)
         {
@@ -232,15 +236,18 @@ void LabelMainScene::onIncrease(Object* sender)
         }
         break;
     case kCaseLabelBigLabels:
-        for( int i=0;i< kNodesIncrease;i++)
         {
-            auto label = Label::createWithTTF(LongSentencesExample, "fonts/arial.ttf", 60, size.width, TextHAlignment::CENTER, GlyphCollection::DYNAMIC,nullptr);
-            label->setPosition(Point((rand() % 50), rand()%((int)size.height/3)));
-            _labelContainer->addChild(label, 1, _quantityNodes);
+            TTFConfig ttfConfig("fonts/arial.ttf", 60, GlyphCollection::DYNAMIC);
+            for( int i=0;i< kNodesIncrease;i++)
+            {
+                auto label = Label::createWithTTF(ttfConfig, LongSentencesExample, TextHAlignment::CENTER, size.width);
+                label->setPosition(Point((rand() % 50), rand()%((int)size.height/3)));
+                _labelContainer->addChild(label, 1, _quantityNodes);
 
-            _quantityNodes++;
-        }
-        break;
+                _quantityNodes++;
+            }
+            break;
+        }        
     default:
         break;
     }
@@ -330,7 +337,7 @@ void LabelMainScene::updateText(float dt)
     case kCaseLabelUpdate:
         for(const auto &child : children) {
             Label* label = (Label*)child;
-            label->setString(text,false);
+            label->setString(text);
         }
         break;
     default:

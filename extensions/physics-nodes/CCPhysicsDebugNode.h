@@ -23,10 +23,11 @@
 #ifndef __PHYSICSNODES_DEBUGNODE_H__
 #define __PHYSICSNODES_DEBUGNODE_H__
 
-#include "cocos2d.h"
 #include "extensions/ExtensionMacros.h"
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
+
+#include "CCDrawNode.h"
 
 #include "chipmunk.h"
 

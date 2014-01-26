@@ -32,6 +32,8 @@ extern "C" {
 }
 #endif
 
+#include <map>
+#include <sstream>
 
 #include "network/HttpClient.h"
 

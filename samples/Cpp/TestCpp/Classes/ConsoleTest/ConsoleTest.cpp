@@ -133,13 +133,11 @@ void ConsoleTestScene::runThisTest()
 
 ConsoleTCP::ConsoleTCP()
 {
-    _console = Console::create();
-    _console->retain();
+    _console = Director::getInstance()->getConsole();
 }
 
 ConsoleTCP::~ConsoleTCP()
 {
-    _console->release();
 }
 
 void ConsoleTCP::onEnter()
@@ -167,8 +165,7 @@ std::string ConsoleTCP::subtitle() const
 
 ConsoleCustomCommand::ConsoleCustomCommand()
 {
-    _console = Console::create();
-    _console->retain();
+    _console = Director::getInstance()->getConsole();
 
     static struct Console::Command commands[] = {
         {"hello", [](int fd, const char* command) {
@@ -183,7 +180,6 @@ ConsoleCustomCommand::ConsoleCustomCommand()
 
 ConsoleCustomCommand::~ConsoleCustomCommand()
 {
-    _console->release();
 }
 
 void ConsoleCustomCommand::onEnter()

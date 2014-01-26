@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -577,7 +578,7 @@ void SpriteZOrder::reorderSprite(float dt)
 {
     auto sprite = static_cast<Sprite*>( getChildByTag(kTagSprite1) );
     
-    int z = sprite->getZOrder();
+    int z = sprite->getLocalZOrder();
     
     if( z < -1 )
         _dir = 1;
@@ -646,7 +647,7 @@ void SpriteBatchNodeZOrder::reorderSprite(float dt)
     auto batch= static_cast<SpriteBatchNode*>( getChildByTag( kTagSpriteBatchNode ));
     auto sprite = static_cast<Sprite*>(batch->getChildByTag(kTagSprite1));
     
-    int z = sprite->getZOrder();
+    int z = sprite->getLocalZOrder();
     
     if( z < -1 )
         _dir = 1;
@@ -902,7 +903,7 @@ void SpriteBatchNodeReorderIssue767::reorderSprites(float dt)
 
     int newZLeft = 1;
 
-    if( left->getZOrder() == 1 )
+    if( left->getLocalZOrder() == 1 )
         newZLeft = -1;
 
     father->reorderChild(left, newZLeft);
@@ -4289,7 +4290,7 @@ void NodeSort::reorderSprite(float dt)
     auto& children = _node->getChildren();
     
     for(const auto &child : children) {
-        log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+        log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
     }
     //z-4
     _node->reorderChild( _node->getChildren().at(0), -6);
@@ -4298,7 +4299,7 @@ void NodeSort::reorderSprite(float dt)
     
     log("After reorder--");
     for(const auto &child : children) {
-        log("tag %i z %i",(int)child->getTag(),(int)child->getZOrder());
+        log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
     }
 }
 

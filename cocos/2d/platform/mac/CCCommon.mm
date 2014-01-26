@@ -22,46 +22,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include <Cocoa/Cocoa.h>
-
 #include "platform/CCCommon.h"
+#include "CCEGLView.h"
+#define GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_COCOA
+#include "glfw3native.h"
 
 #include <stdarg.h>
 #include <stdio.h>
-#import "EAGLView.h"
-
+#include <Cocoa/Cocoa.h>
 
 NS_CC_BEGIN
-
-// XXX deprecated
-void CCLog(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-    fflush(stdout);
-}
-
-void log(const char * format, ...)
-{
-    printf("Cocos2d: ");
-    char buf[kMaxLogLen];
-
-    va_list ap;
-    va_start(ap, format);
-    vsnprintf(buf, kMaxLogLen, format, ap);
-    va_end(ap);
-    printf("%s", buf);
-    printf("\n");
-    fflush(stdout);
-}
-
 
 void LuaLog(const char * format)
 {
@@ -80,7 +51,7 @@ void MessageBox(const char * msg, const char * title)
 	[alert setInformativeText:tmpTitle];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
-	NSWindow *window = [[CCEAGLView sharedEGLView] window];
+    id window = glfwGetCocoaWindow(EGLView::getInstance()->getWindow());
 	[alert beginSheetModalForWindow:window
 					  modalDelegate:[window delegate]
 					 didEndSelector:nil

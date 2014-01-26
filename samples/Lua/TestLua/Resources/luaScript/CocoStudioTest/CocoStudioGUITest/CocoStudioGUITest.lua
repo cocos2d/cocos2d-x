@@ -516,7 +516,7 @@ function UISliderTest:initExtend()
 
     local function percentChangedEvent(sender,eventType)
         if eventType == ccui.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"Slider")
+            local slider = tolua.cast(sender,"ccui.Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end
@@ -578,7 +578,7 @@ function UISliderScale9Test:initExtend()
 
     local function percentChangedEvent(sender,eventType)
         if eventType == ccui.SliderEventType.percent_changed then
-            local slider = tolua.cast(sender,"Slider")
+            local slider = tolua.cast(sender,"ccui.Slider")
             local percent = "Percent " .. slider:getPercent()
             self._displayValueLabel:setText(percent)
         end
@@ -742,7 +742,7 @@ function UILoadingBarLeftTest:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "ccui.LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -873,7 +873,7 @@ function UILoadingBarRightTest:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "ccui.LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -1006,7 +1006,7 @@ function UILoadingBarLeftScale9Test:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "ccui.LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -1140,7 +1140,7 @@ function UILoadingBarRightScale9Test:initExtend()
         end
 
         if self._uiLayer ~= nil then
-            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "LoadingBar")
+            local loadingBar = tolua.cast(self._uiLayer:getChildByTag(0), "ccui.LoadingBar")
             loadingBar:setPercent(self._count)
         end
     end
@@ -1420,12 +1420,12 @@ function UITextFieldTest:initExtend()
 
     local function textFieldEvent(sender, eventType)
         if eventType == ccui.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             self._displayValueLabel:setText("attach with IME")
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME")
@@ -1490,23 +1490,23 @@ function UITextFieldMaxLengthTest:initExtend()
 
     local function textFieldEvent(sender, eventType)
         if eventType == ccui.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
             local info = string.format("attach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             local info = string.format("detach with IME max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         elseif eventType == ccui.TextFiledEventType.insert_text then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local info = string.format("insert words max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         elseif eventType == ccui.TextFiledEventType.delete_backward then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local info = string.format("delete word max length %d",textField:getMaxLength())
             self._displayValueLabel:setText(info)
         end
@@ -1568,12 +1568,12 @@ function UITextFieldPasswordTest:initExtend()
 
     local function textFieldEvent(sender, eventType)
         if eventType == ccui.TextFiledEventType.attach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
-            local textField = tolua.cast(sender,"TextField")
+            local textField = tolua.cast(sender,"ccui.TextField")
             local screenSize = cc.Director:getInstance():getWinSize()
             textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
             self._displayValueLabel:setText("detach with IME password")
@@ -2378,7 +2378,7 @@ function UIPageViewTest:initExtend()
 
     local function pageViewEvent(sender, eventType)
         if eventType == ccui.PageViewEventType.turning then
-            local pageView = tolua.cast(sender, "PageView")
+            local pageView = tolua.cast(sender, "ccui.PageView")
             local pageInfo = string.format("page %d " , pageView:getCurPageIndex() + 1)
             self._displayValueLabel:setText(pageInfo)
         end

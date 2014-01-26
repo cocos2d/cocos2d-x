@@ -210,7 +210,7 @@ void Atlas1::draw()
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
     
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     
@@ -419,7 +419,11 @@ Atlas3::Atlas3()
     label2->setAnchorPoint( Point(0.5f, 0.5f) );
     label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
-    label2->runAction( repeat->clone() );
+    auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
+        TintTo::create(1, 0, 255, 0),
+        TintTo::create(1, 0, 0, 255),
+        NULL);
+    label2->runAction( RepeatForever::create(tint) );
     
     auto label3 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
@@ -526,7 +530,7 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -1612,7 +1616,7 @@ std::string LabelBMFontBounds::subtitle() const
 
 void LabelBMFontBounds::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

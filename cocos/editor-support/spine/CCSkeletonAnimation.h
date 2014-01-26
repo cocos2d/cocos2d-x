@@ -36,7 +36,6 @@
 
 #include <spine/spine.h>
 #include <spine/CCSkeleton.h>
-#include "cocos2d.h"
 
 namespace spine {
 

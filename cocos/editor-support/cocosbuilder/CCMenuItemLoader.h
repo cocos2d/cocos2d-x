@@ -1,6 +1,9 @@
 #ifndef _CCB_CCMENUITEMLOADER_H_
 #define _CCB_CCMENUITEMLOADER_H_
 
+#include "CCObject.h"
+#include "CCMenuItem.h"
+
 #include "CCLayerLoader.h"
 
 namespace cocosbuilder {

@@ -26,9 +26,9 @@
 #include "CCGL.h"
 #include "CCEventType.h"
 #include "CCConfiguration.h"
-#include "CCCustomCommand.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderer.h"
 #include "CCDirector.h"
-#include "CCRenderer.h"
 #include "CCEventListenerCustom.h"
 #include "CCEventDispatcher.h"
 
@@ -241,7 +241,7 @@ void DrawNode::render()
 
 void DrawNode::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DrawNode::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }

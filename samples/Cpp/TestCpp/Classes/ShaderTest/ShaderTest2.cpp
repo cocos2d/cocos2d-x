@@ -178,7 +178,7 @@ void ShaderSprite::initShader()
 
 void ShaderSprite::draw()
 {
-    _renderCommand.init(0, _vertexZ);
+    _renderCommand.init(_globalZOrder);
     _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
     
@@ -197,8 +197,8 @@ void ShaderSprite::onDraw()
     //
     // Attributes
     //
-#define kQuadSize sizeof(_quad.bl)
-    long offset = (long)&_quad;
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
     
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);

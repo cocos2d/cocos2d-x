@@ -397,15 +397,9 @@ void CallFuncsSpriteSheetForEach::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
-#if CC_USE_ARRAY_VECTOR
-    std::for_each(std::begin(children), std::end(children), [](const RCPtr<Object>& obj) {
-        static_cast<Node*>( static_cast<Object*>(obj) )->getPosition();
-    });
-#else
     std::for_each(std::begin(children), std::end(children), [](Node* obj) {
         obj->getPosition();
     });
-#endif
 
     CC_PROFILER_STOP(this->profilerName());
 }

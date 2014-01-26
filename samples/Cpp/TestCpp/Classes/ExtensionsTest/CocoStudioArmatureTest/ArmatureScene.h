@@ -271,6 +271,7 @@ public:
     virtual std::string title() const override;
     virtual void update(float delta);
     virtual void draw();
+    void onDraw();
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -278,6 +279,7 @@ public:
     cocostudio::Armature *armature;
     cocostudio::Armature *armature2;
     
+    CustomCommand _customCommand; //new render needed this for drawing primitives
     cocos2d::Sprite *bullet;
 };
 #endif

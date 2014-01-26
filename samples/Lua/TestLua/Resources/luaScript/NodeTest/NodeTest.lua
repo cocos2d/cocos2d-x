@@ -261,10 +261,10 @@ local function Test6()
     local rot = cc.RotateBy:create(2, 360)
     local rot_back = rot:reverse()
     local forever1 = cc.RepeatForever:create(cc.Sequence:create(rot, rot_back))
-    local forever11 = tolua.cast(forever1:clone(), "RepeatForever")
+    local forever11 = tolua.cast(forever1:clone(), "cc.RepeatForever")
 
-    local forever2 = tolua.cast(forever1:clone(), "RepeatForever")
-    local forever21 = tolua.cast(forever1:clone(), "RepeatForever")
+    local forever2 = tolua.cast(forever1:clone(), "cc.RepeatForever")
+    local forever21 = tolua.cast(forever1:clone(), "cc.RepeatForever")
 
     Test6_layer:addChild(sp1, 0, kTagSprite1)
     sp1:addChild(sp11)
@@ -299,7 +299,7 @@ local function shouldNotCrash(dt)
 
     -- if the node has timers, it crashes
     local explosion = cc.ParticleSun:create()
-    explosion:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    explosion:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
 
     explosion:setPosition(s.width / 2, s.height / 2)
 
@@ -369,11 +369,11 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = cc.ParticleFire:create()
-    fire:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
-	fire = tolua.cast(fire, "Node")
+    fire:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
+	fire = tolua.cast(fire, "cc.Node")
     fire:setPosition(80, s.height / 2 - 50)
 
-    local copy_seq3 = tolua.cast(seq3:clone(), "Sequence")
+    local copy_seq3 = tolua.cast(seq3:clone(), "cc.Sequence")
     fire:runAction(cc.RepeatForever:create(copy_seq3))
     sublayer:addChild(fire, 2)
 
@@ -564,32 +564,30 @@ local function ConvertToNode()
 
         point:setPosition(sprite:getPosition())
 
-        local copy = tolua.cast(action:clone(), "RepeatForever")
+        local copy = tolua.cast(action:clone(), "cc.RepeatForever")
         sprite:runAction(copy)
         ConvertToNode_layer:addChild(sprite, i)
     end
 
-	local function onTouchEnded(x, y)
-		for i = 0, 2 do
-            local node = ConvertToNode_layer:getChildByTag(100 + i)
-            local p1, p2
-            p1 = node:convertToNodeSpaceAR(cc.p(x, y))
-            p2 = node:convertToNodeSpace(cc.p(x, y))
+    local function onTouchesEnded(touches, event)
+        local count = table.getn(touches)
+        for i = 1, count do
+            local location = touches[i]:getLocation()
+            for j = 1,3 do
+                local node = ConvertToNode_layer:getChildByTag(100 + i - 1)
+                local p1, p2
+                p1 = node:convertToNodeSpaceAR(location)
+                p2 = node:convertToNodeSpace(location)
 
-            cclog("AR: x=" .. p1.x .. ", y=" .. p1.y .. " -- Not AR: x=" .. p2.x .. ", y=" .. p2.y)
+                cclog("AR: x=" .. p1.x .. ", y=" .. p1.y .. " -- Not AR: x=" .. p2.x .. ", y=" .. p2.y)
+            end
         end
     end
 
-    local function onTouch(eventType, x, y)
-		if eventType == "began" then
-			return true
-        elseif eventType == "ended" then
-            return onTouchEnded(x, y)
-        end
-    end
-
-	ConvertToNode_layer:setTouchEnabled(true)
-    ConvertToNode_layer:registerScriptTouchHandler(onTouch)
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = ConvertToNode_layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ConvertToNode_layer)
 
 	Helper.titleLabel:setString("Convert To Node Space")
 	Helper.subtitleLabel:setString("testing convertToNodeSpace / AR. Touch and see console")
@@ -631,6 +629,58 @@ local function NodeNonOpaqueTest()
 	return layer
 end
 
+-----------------------------------
+--  NodeGlobalZValueTest
+-----------------------------------
+local function NodeGlobalZValueTest()
+    local layer = getBaseLayer()
+    Helper.titleLabel:setString("Global Z Value")
+    Helper.subtitleLabel:setString("Center Sprite should change go from foreground to background")
+
+
+    local s = cc.Director:getInstance():getWinSize()
+    local zOrderSprite = nil
+    for i = 1,9 do
+        local parent = cc.Node:create()
+        local sprite = nil
+        if i == 5 then
+            sprite = cc.Sprite:create("Images/grossinis_sister2.png")
+            sprite:setGlobalZOrder(-1)
+            zOrderSprite = sprite
+        else
+            sprite = cc.Sprite:create("Images/grossinis_sister1.png")
+        end
+        parent:addChild(sprite)
+        layer:addChild(parent)
+
+        local w = sprite:getContentSize().width
+        sprite:setPosition(s.width/2 - w*0.7*(i - 6),s.height / 2)
+    end
+
+    local accum = 0
+
+    local function update(dt)
+        accum = accum + dt
+        if accum > 1 then
+            local z = zOrderSprite:getGlobalZOrder()
+            zOrderSprite:setGlobalZOrder(-z)
+            accum = 0
+        end
+    end
+
+    local function onNodeEvent(tag)
+        if tag == "exit" then
+            layer:unscheduleUpdate()
+        end
+    end
+    layer:scheduleUpdateWithPriorityLua(update,0)
+    layer:registerScriptHandler(onNodeEvent)
+
+    return layer
+end
+
+
+
 function CocosNodeTest()
 	local scene = cc.Scene:create()
 
@@ -647,7 +697,8 @@ function CocosNodeTest()
         CameraZoomTest,
         ConvertToNode,
         NodeOpaqueTest,
-        NodeNonOpaqueTest
+        NodeNonOpaqueTest,
+        NodeGlobalZValueTest,
     }
 
 	scene:addChild(CameraCenterTest())

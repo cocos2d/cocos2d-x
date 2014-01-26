@@ -31,9 +31,10 @@
 #include "CCShaderCache.h"
 #include "CCDirector.h"
 #include "CCDrawingPrimitives.h"
-#include "CCRenderer.h"
-#include "CCGroupCommand.h"
-#include "CCCustomCommand.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -209,12 +210,12 @@ void ClippingNode::visit()
     
     Renderer* renderer = Director::getInstance()->getRenderer();
     
-    _groupCommand.init(0,_vertexZ);
+    _groupCommand.init(_globalZOrder);
     renderer->addCommand(&_groupCommand);
 
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beforeVisitCmd.init(0,_vertexZ);
+    _beforeVisitCmd.init(_globalZOrder);
     _beforeVisitCmd.func = CC_CALLBACK_0(ClippingNode::onBeforeVisit, this);
     renderer->addCommand(&_beforeVisitCmd);
     if (_alphaThreshold < 1)
@@ -237,7 +238,7 @@ void ClippingNode::visit()
     }
     _stencil->visit();
 
-    _afterDrawStencilCmd.init(0,_vertexZ);
+    _afterDrawStencilCmd.init(_globalZOrder);
     _afterDrawStencilCmd.func = CC_CALLBACK_0(ClippingNode::onAfterDrawStencil, this);
     renderer->addCommand(&_afterDrawStencilCmd);
 
@@ -251,7 +252,7 @@ void ClippingNode::visit()
         {
             auto node = _children.at(i);
             
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;
@@ -267,7 +268,7 @@ void ClippingNode::visit()
         this->draw();
     }
 
-    _afterVisitCmd.init(0,_vertexZ);
+    _afterVisitCmd.init(_globalZOrder);
     _afterVisitCmd.func = CC_CALLBACK_0(ClippingNode::onAfterVisit, this);
     renderer->addCommand(&_afterVisitCmd);
 

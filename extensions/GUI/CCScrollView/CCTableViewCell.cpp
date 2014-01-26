@@ -33,7 +33,7 @@ void TableViewCell::reset()
     _idx = CC_INVALID_INDEX;
 }
 
-ssize_t TableViewCell::getIdx()
+ssize_t TableViewCell::getIdx() const
 {
     return _idx;
 }

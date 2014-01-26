@@ -83,9 +83,9 @@
     toMainMenu:setPosition(cc.p(0, 0))
     layer:addChild(toMainMenu,10)
 
-    wsSendText   = WebSocket:create("ws://echo.websocket.org")
-    wsSendBinary = WebSocket:create("ws://echo.websocket.org")
-    wsError      = WebSocket:create("ws://invalid.url.com")
+    wsSendText   = cc.WebSocket:create("ws://echo.websocket.org")
+    wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org")
+    wsError      = cc.WebSocket:create("ws://invalid.url.com")
 
     local function wsSendTextOpen(strData)
         sendTextStatus:setString("Send Text WS was opened.")

@@ -56,7 +56,7 @@ bool UIImageViewTest::init()
         _uiLayer->addChild(sprite);
          */
         
-//        imageView->setZOrder(20);
+//        imageView->setLocalZOrder(20);
         
         return true;
     }

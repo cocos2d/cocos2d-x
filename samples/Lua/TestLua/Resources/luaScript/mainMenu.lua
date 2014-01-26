@@ -170,14 +170,15 @@ function CreateTestMenu()
     menuLayer:addChild(MainMenu)
 
     -- handling touch events
-    local function onTouchBegan(x, y)
-        BeginPos = {x = x, y = y}
+    local function onTouchBegan(touch, event)
+        BeginPos = touch:getLocation()
         -- CCTOUCHBEGAN event must return true
         return true
     end
 
-    local function onTouchMoved(x, y)
-        local nMoveY = y - BeginPos.y
+    local function onTouchMoved(touch, event)
+        local location = touch:getLocation()
+        local nMoveY = location.y - BeginPos.y
         local curPosx, curPosy = MainMenu:getPosition()
         local nextPosy = curPosy + nMoveY
         local winSize = cc.Director:getInstance():getWinSize()
@@ -192,20 +193,15 @@ function CreateTestMenu()
         end
 
         MainMenu:setPosition(curPosx, nextPosy)
-        BeginPos = {x = x, y = y}
+        BeginPos = {x = location.x, y = location.y}
         CurPos = {x = curPosx, y = nextPosy}
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x, y)
-        elseif eventType == "moved" then
-            return onTouchMoved(x, y)
-        end
-    end
-
-    menuLayer:setTouchEnabled(true)
-    menuLayer:registerScriptTouchHandler(onTouch)
+    local listener = cc.EventListenerTouchOneByOne:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+    local eventDispatcher = menuLayer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, menuLayer)
 
     return menuLayer
 end

@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __ActionMANAGER_H__
 #define __ActionMANAGER_H__
 
-#include "cocos2d.h"
 #include "cocostudio/CCActionObject.h"
 #include "cocostudio/DictionaryHelper.h"
 

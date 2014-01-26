@@ -275,8 +275,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseBinaryConfigFile(unsigned ch
 
     unsigned long remains = size;
 
-    unsigned char version = pData[3];
-    CCASSERT(version == 3, "Only version 3 is supported");
+    CCASSERT(pData[3] == 3, "Only version 3 is supported");
 
     pData += 4; remains -= 4;
 
@@ -343,8 +342,7 @@ std::set<unsigned int>* CCBMFontConfiguration::parseBinaryConfigFile(unsigned ch
              */
 
             const char *value = (const char *)pData;
-            size_t len = strlen(value);
-            CCASSERT(len < blockSize, "Block size should be less then string");
+            CCASSERT(strlen(value) < blockSize, "Block size should be less then string");
 
             _atlasName = FileUtils::getInstance()->fullPathFromRelativeFile(value, controlFile);
         }

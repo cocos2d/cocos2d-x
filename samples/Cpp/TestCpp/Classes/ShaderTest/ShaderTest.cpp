@@ -193,7 +193,7 @@ void ShaderNode::setPosition(const Point &newPosition)
 
 void ShaderNode::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -526,7 +526,7 @@ void SpriteBlur::initProgram()
 
 void SpriteBlur::draw()
 {
-    _customCommand.init(0, _vertexZ);
+    _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(SpriteBlur::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
@@ -547,8 +547,8 @@ void SpriteBlur::onDraw()
     //
     // Attributes
     //
-#define kQuadSize sizeof(_quad.bl)
-    long offset = (long)&_quad;
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
     
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);

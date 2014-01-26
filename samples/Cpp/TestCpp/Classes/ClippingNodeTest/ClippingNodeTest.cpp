@@ -611,7 +611,7 @@ void RawStencilBufferTest::draw()
     
     auto iter = _renderCmds.begin();
     
-    iter->init(0, _vertexZ);
+    iter->init(_globalZOrder);
     iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
     renderer->addCommand(&(*iter));
     ++iter;
@@ -628,7 +628,7 @@ void RawStencilBufferTest::draw()
         spritePoint.y = 0;
         _sprites.at(i)->setPosition( spritePoint );
         
-        iter->init(0, _vertexZ);
+        iter->init(_globalZOrder);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
         renderer->addCommand(&(*iter));
         ++iter;
@@ -638,7 +638,7 @@ void RawStencilBufferTest::draw()
         _sprites.at(i)->visit();
         kmGLPopMatrix();
         
-        iter->init(0, _vertexZ);
+        iter->init(_globalZOrder);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
         renderer->addCommand(&(*iter));
         ++iter;
@@ -649,7 +649,7 @@ void RawStencilBufferTest::draw()
         kmGLPopMatrix();
     }
     
-    iter->init(0, _vertexZ);
+    iter->init(_globalZOrder);
     iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
     renderer->addCommand(&(*iter));
 

@@ -38,6 +38,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(NewClippingNodeTest),
     CL(NewDrawNodeTest),
     CL(NewCullingTest),
+    CL(VBOFullTest),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -485,3 +486,32 @@ std::string NewCullingTest::subtitle() const
     return "Culling";
 }
 
+VBOFullTest::VBOFullTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Node* parent = Node::create();
+    parent->setPosition(s.width/2, s.height/2);
+    addChild(parent);
+    
+    for (int i=0; i<Renderer::VBO_SIZE * 2; ++i)
+    {
+        Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
+        sprite->setPosition(Point(0,0));
+        parent->addChild(sprite);
+    }
+}
+
+VBOFullTest::~VBOFullTest()
+{
+    
+}
+
+std::string VBOFullTest::title() const
+{
+    return "New Renderer";
+}
+
+std::string VBOFullTest::subtitle() const
+{
+    return "VBO full Test, everthing should render normally";
+}

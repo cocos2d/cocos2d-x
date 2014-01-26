@@ -35,6 +35,7 @@ extern "C" {
 using namespace cocos2d;
 
 extern std::unordered_map<std::string, std::string>  g_luaType;
+extern std::unordered_map<std::string, std::string>  g_typeCast;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err);
@@ -87,7 +88,7 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
         {
             tolua_Error err;
             //Undo check
-            if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
+            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
             {
                 ok = false;
                 break;

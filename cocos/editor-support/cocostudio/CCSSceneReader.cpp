@@ -144,10 +144,10 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 				{
 					gb->addComponent(com);
 				}
-				else
-				{
-					CC_SAFE_RELEASE_NULL(com);
-				}
+                else
+                {
+                    com = nullptr;
+                }
 			}
             if(_fnSelector != nullptr)
             {
@@ -203,7 +203,7 @@ void SceneReader::setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d:
     node->setTag(nTag);
     
     int nZorder = DICTOOL->getIntValue_json(root, "zorder");
-    node->setZOrder(nZorder);
+    node->setLocalZOrder(nZorder);
     
     float fScaleX = DICTOOL->getFloatValue_json(root, "scalex", 1.0);
     float fScaleY = DICTOOL->getFloatValue_json(root, "scaley", 1.0);

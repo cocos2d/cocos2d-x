@@ -118,4 +118,16 @@ protected:
     virtual ~NewCullingTest();
 };
 
+class VBOFullTest : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(VBOFullTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    VBOFullTest();
+    virtual ~VBOFullTest();
+};
+
 #endif //__NewRendererTest_H_

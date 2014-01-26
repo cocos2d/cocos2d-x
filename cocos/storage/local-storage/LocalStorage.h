@@ -30,22 +30,21 @@ THE SOFTWARE.
 #ifndef __JSB_LOCALSTORAGE_H
 #define __JSB_LOCALSTORAGE_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <string>
 
 /** Initializes the database. If path is null, it will create an in-memory DB */
-void localStorageInit( const char *fullpath);
+void localStorageInit( const std::string& fullpath = "");
 
 /** Frees the allocated resources */
 void localStorageFree();
 
 /** sets an item in the LS */
-void localStorageSetItem( const char *key, const char *value);
+void localStorageSetItem( const std::string& key, const std::string& value);
 
 /** gets an item from the LS */
-const char* localStorageGetItem( const char *key );
+std::string localStorageGetItem( const std::string& key );
 
 /** removes an item from the LS */
-void localStorageRemoveItem( const char *key );
+void localStorageRemoveItem( const std::string& key );
 
 #endif // __JSB_LOCALSTORAGE_H
