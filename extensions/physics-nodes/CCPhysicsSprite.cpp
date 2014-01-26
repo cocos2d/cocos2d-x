@@ -384,9 +384,14 @@ const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 	}
 
 	// Rot, Translate Matrix
-	_transform = AffineTransformMake( c * _scaleX,	s * _scaleX,
-                                     -s * _scaleY,	c * _scaleY,
-                                     x,	y );
+    
+    kmScalar mat[] = {  (kmScalar)c * _scaleX, (kmScalar)s * _scaleX, 0,  0,
+        (kmScalar)-s * _scaleY, (kmScalar)c * _scaleY,  0,  0,
+        0,  0,  1,  0,
+        x,	y,  0,  1};
+    
+    
+    kmMat4Fill(&_transform, mat);
 
 	return _transform;
 #endif
