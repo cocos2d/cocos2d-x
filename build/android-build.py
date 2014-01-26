@@ -265,7 +265,7 @@ if __name__ == '__main__':
     
     Usage: %prog [options] target
 
-    Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]
+    Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]. You can combine them arbitrarily with a whitespace among two valid targets.
 
     You can use [all|cpp|lua|jsb], to build all the samples, or all the c++ samples, or all the lua samples, or all the jsb samples respectevely.
 
