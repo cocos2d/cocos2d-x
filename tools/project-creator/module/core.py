@@ -94,8 +94,8 @@ class CocosProject:
                             type="choice",
                             choices=["cpp", "lua", "javascript"],
                             help="Major programming language you want to use, should be [cpp | lua | javascript ]")
-        parser.add_option("-r", "--runtime",action="store_true", help="create runtime project")
         parser.add_option("-p", "--path", metavar="PROJECT_PATH",help="Set generate project path for project")
+        parser.add_option("-r", "--runtime",action="store_true", help="create runtime project")
 
         # parse the params
         (opts, args) = parser.parse_args()
@@ -146,10 +146,16 @@ class CocosProject:
             self.context["src_project_name"] = "HelloCpp"
             self.context["src_package_name"] = "org.cocos2dx.hellocpp"
             self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-cpp")
+            if runtime:
+                print("cpp language no runtime model")
+                return False
         elif ("lua" == self.context["language"]):
             self.context["src_project_name"] = "HelloLua"
             self.context["src_package_name"] = "org.cocos2dx.hellolua"
             self.context["src_project_path"] = os.path.join(template_dir, "multi-platform-lua")
+            if runtime:
+                print("lua language no runtime model")
+                return False
         elif ("javascript" == self.context["language"]):
             self.context["src_project_name"] = "HelloJavascript"
             self.context["src_package_name"] = "org.cocos2dx.hellojavascript"
