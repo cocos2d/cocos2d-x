@@ -17,6 +17,13 @@ local function main()
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 
+    --support debug
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
+       (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
+       (cc.PLATFORM_OS_MAC == targetPlatform) then
+        require('mobdebug').start()
+    end
     require "hello2"
     cclog("result is " .. myadd(1, 1))
 
@@ -103,43 +110,39 @@ local function main()
 
         -- handing touch events
         local touchBeginPoint = nil
-
-        local function onTouchBegan(x, y)
-            cclog("onTouchBegan: %0.2f, %0.2f", x, y)
-            touchBeginPoint = {x = x, y = y}
+        local function onTouchBegan(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchBegan: %0.2f, %0.2f", location.x, location.y)
+            touchBeginPoint = {x = location.x, y = location.y}
             spriteDog.isPaused = true
             -- CCTOUCHBEGAN event must return true
             return true
         end
 
-        local function onTouchMoved(x, y)
-            cclog("onTouchMoved: %0.2f, %0.2f", x, y)
+        local function onTouchMoved(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchMoved: %0.2f, %0.2f", location.x, location.y)
             if touchBeginPoint then
                 local cx, cy = layerFarm:getPosition()
-                layerFarm:setPosition(cx + x - touchBeginPoint.x,
-                                      cy + y - touchBeginPoint.y)
-                touchBeginPoint = {x = x, y = y}
+                layerFarm:setPosition(cx + location.x - touchBeginPoint.x,
+                                      cy + location.y - touchBeginPoint.y)
+                touchBeginPoint = {x = location.x, y = location.y}
             end
         end
 
-        local function onTouchEnded(x, y)
-            cclog("onTouchEnded: %0.2f, %0.2f", x, y)
+        local function onTouchEnded(touch, event)
+            local location = touch:getLocation()
+            cclog("onTouchEnded: %0.2f, %0.2f", location.x, location.y)
             touchBeginPoint = nil
             spriteDog.isPaused = false
         end
 
-        local function onTouch(eventType, x, y)
-            if eventType == "began" then   
-                return onTouchBegan(x, y)
-            elseif eventType == "moved" then
-                return onTouchMoved(x, y)
-            else
-                return onTouchEnded(x, y)
-            end
-        end
-
-        layerFarm:registerScriptTouchHandler(onTouch)
-        layerFarm:setTouchEnabled(true)
+        local listener = cc.EventListenerTouchOneByOne:create()
+        listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+        listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+        listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+        local eventDispatcher = layerFarm:getEventDispatcher()
+        eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layerFarm)
 
         return layerFarm
     end
