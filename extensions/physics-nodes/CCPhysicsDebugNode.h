@@ -24,12 +24,9 @@
 #define __PHYSICSNODES_DEBUGNODE_H__
 
 #include "extensions/ExtensionMacros.h"
-
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-
 #include "CCDrawNode.h"
 
-#include "chipmunk.h"
+struct cpSpace;
 
 NS_CC_EXT_BEGIN
 
@@ -72,7 +69,5 @@ protected:
 };
 
 NS_CC_EXT_END
-
-#endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 
 #endif // __PHYSICSNODES_DEBUGNODE_H__
