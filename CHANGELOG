@@ -12,6 +12,10 @@ cocos2d-x-3.0beta2 ?.? ?
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
      [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
      
+     [FIX]          JSB: Pure JS class which is inherited from cc.Class will trigger an irrelevant log.
+     [FIX]          JSB: Mac and iOS Simulator should also use SpiderMonkey which was built in RELEASE mode.
+     [FIX]          JSB: Crash when running JSB projects on iOS device in DEBUG mode.
+     [FIX]          JSB: Crash when Firefox connects to JSB application on Mac platform.
      [FIX]          Uses EventDispatcher to access event in LUA testcase.
      [FIX]          Exposes SAXParser class to JS, it is used for parsing XML in JS.
      [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
