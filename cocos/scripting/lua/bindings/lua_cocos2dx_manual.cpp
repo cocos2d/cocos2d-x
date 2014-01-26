@@ -4669,8 +4669,8 @@ static int lua_cocos2dx_Label_createWithTTF01(lua_State* L)
         std::string fontFilePath = tolua_tostring(L, 3, "");
         int fontSize = (int)tolua_tonumber(L, 4, 0);
         int lineSize = (int)tolua_tonumber(L, 5, 0);
-        TextHAlignment alignment = static_cast<TextHAlignment>(tolua_tonumber(L, 6, 1));
-        GlyphCollection glyphs   = static_cast<GlyphCollection>(tolua_tonumber(L, 7, 1));
+        TextHAlignment alignment = static_cast<TextHAlignment>((int)tolua_tonumber(L, 6, 1));
+        GlyphCollection glyphs   = static_cast<GlyphCollection>((int)tolua_tonumber(L, 7, 1));
         const char* customGlyphs = tolua_tostring(L, 8, "");
         bool useDistanceField = tolua_toboolean(L, 9, false);
         
