@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -22,68 +22,33 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#ifndef __CCPLATFORMDEFINE_H__
+#define __CCPLATFORMDEFINE_H__
 
-#ifndef __CC_STD_C_H__
-#define __CC_STD_C_H__
-
-#include "platform/CCPlatformMacros.h"
-#include <float.h>
-
-// for math.h on win32 platform
-
-#if !defined(_USE_MATH_DEFINES)
-    #define _USE_MATH_DEFINES       // make M_PI can be use
+#if defined(_USRDLL)
+    #define CC_DLL     __declspec(dllexport)
+#else         /* use a DLL library */
+    #define CC_DLL		__declspec(dllimport)
 #endif
 
-#if !defined(isnan)
-    #define isnan   _isnan
-#endif
+#include <assert.h>
 
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-// for MIN MAX and sys/time.h on win32 platform
-
-#define MIN     min
-#define MAX     max
-
-#if _MSC_VER >= 1600
-    #include <stdint.h>
+#if CC_DISABLE_ASSERT > 0
+#define CC_ASSERT(cond)
 #else
-    #include "./compat/stdint.h"
+#define CC_ASSERT(cond)    assert(cond)
+#endif
+#define CC_UNUSED_PARAM(unusedparam) (void)unusedparam
+
+/* Define NULL pointer value */
+#ifndef NULL
+#ifdef __cplusplus
+#define NULL    0
+#else
+#define NULL    ((void *)0)
+#endif
 #endif
 
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include <WinSock2.h>
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include <Windows.h>
-//#include <WinSock2.h>
 
-#undef timeval
-struct timeval
-{
-	long tv_sec;		// seconds
-	long tv_usec;    // microSeconds
-};
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
-struct timezone
-{
-    int tz_minuteswest;
-    int tz_dsttime;
-};
-
-int CC_DLL gettimeofday(struct timeval *, struct timezone *);
-
-#endif  // __CC_STD_C_H__
-
+#endif /* __CCPLATFORMDEFINE_H__*/
