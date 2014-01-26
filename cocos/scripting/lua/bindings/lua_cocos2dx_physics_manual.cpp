@@ -1146,7 +1146,7 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
     EventListenerPhysicsContact* self = nullptr;
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "EventListenerPhysicsContact", 0, &tolua_err))  goto tolua_lerror;
+    if (!tolua_isusertype(tolua_S, 1, "cc.EventListenerPhysicsContact", 0, &tolua_err))  goto tolua_lerror;
 #endif
     
     self = static_cast<EventListenerPhysicsContact*>(tolua_tousertype(tolua_S,1,0));
@@ -1177,8 +1177,8 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
                 
                 self->onContactBegin = [handler](EventCustom* event, const PhysicsContact& contact) -> bool{
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    stack->pushObject(event, "cc.EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
                     bool ret = stack->executeFunctionByHandler(handler, 2);
                     stack->clean();
                     
@@ -1192,9 +1192,9 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
                 
                 self->onContactPreSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve) -> bool{
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
-                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPreSolve*>(&solve), "PhysicsContactPreSolve");
+                    stack->pushObject(event, "cc.EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
+                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPreSolve*>(&solve), "cc.PhysicsContactPreSolve");
                     bool ret = stack->executeFunctionByHandler(handler, 3);
                     stack->clean();
                     
@@ -1208,9 +1208,9 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
                 
                 self->onContactPostSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPostSolve& solve){
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
-                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPostSolve*>(&solve), "PhysicsContactPostSolve");
+                    stack->pushObject(event, "cc.EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
+                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPostSolve*>(&solve), "cc.PhysicsContactPostSolve");
                     stack->executeFunctionByHandler(handler, 3);
                     stack->clean();
                 };
@@ -1222,8 +1222,8 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
                 
                 self->onContactSeperate = [handler](EventCustom* event, const PhysicsContact& contact){
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                    stack->pushObject(event, "EventCustom");
-                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    stack->pushObject(event, "cc.EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "cc.PhysicsContact");
                     stack->executeFunctionByHandler(handler, 2);
                     stack->clean();
                 };
@@ -1363,7 +1363,7 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
     
-    lua_pushstring(tolua_S, "EventListenerPhysicsContact");
+    lua_pushstring(tolua_S, "cc.EventListenerPhysicsContact");
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
