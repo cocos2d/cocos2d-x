@@ -117,7 +117,7 @@ bool GridBase::initWithSize(const Size& gridSize)
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
 
-    auto dataLen = static_cast<int>(s.width) * static_cast<int>(s.height) * 4;
+    int dataLen = static_cast<int>(s.width) * static_cast<int>(s.height) * 4;
     void *data = calloc(dataLen, 1);
     if (! data)
     {
