@@ -209,6 +209,8 @@ PhysicsDebugNode* PhysicsDebugNode::create(cpSpace *space)
         node->init();
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
         node->_spacePtr = space;
+#else
+        CCASSERT(false, "CC_ENABLE_CHIPMUNK_INTEGRATION was not enabled!");
 #endif
         node->autorelease();
     }
