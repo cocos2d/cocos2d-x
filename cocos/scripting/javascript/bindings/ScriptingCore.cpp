@@ -46,7 +46,7 @@
 
 #include "js_bindings_config.h"
 
-#if DEBUG
+#if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else
 #define TRACE_DEBUGGER_SERVER(...)
@@ -568,7 +568,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (script) {
         jsval rval;
         filename_script[path] = script;
-        JSAutoCompartment ac(cx, global);
+
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             cocos2d::log("(evaluatedOK == JS_FALSE)");
@@ -704,7 +704,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
-#if DEBUG
+#if COCOS2D_DEBUG
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
