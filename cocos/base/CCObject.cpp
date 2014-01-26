@@ -64,7 +64,7 @@ Object* Object::autorelease()
 }
 
 
-#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+
 void Object::release()
 {
     CCASSERT(_referenceCount > 0, "reference count should greater than 0");
@@ -72,6 +72,7 @@ void Object::release()
     
     if (_referenceCount == 0)
     {
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         auto poolManager = PoolManager::getInstance();
         if (!poolManager->getCurrentPool()->isClearing() && poolManager->isObjectInPools(this))
         {
@@ -104,10 +105,10 @@ void Object::release()
             // obj->release();   // This `release` is the pair of `retain` of previous line.
             CCASSERT(false, "The reference shouldn't be 0 because it is still in autorelease pool.");
         }
+#endif
         delete this;
     }
 }
-#endif
 
 bool Object::isSingleReference() const
 {
