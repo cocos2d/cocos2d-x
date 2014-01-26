@@ -204,7 +204,7 @@ extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
 extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
 extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
 extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info);
-extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData& data);
+extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
 extern void array_to_luaval(lua_State* L,Array* inValue);
