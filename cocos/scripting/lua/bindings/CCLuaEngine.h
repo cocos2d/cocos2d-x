@@ -108,7 +108,7 @@ public:
     virtual int executeNotificationEvent(NotificationCenter* pNotificationCenter, const char* pszName);
     virtual int executeCallFuncActionEvent(CallFunc* pAction, Object* pTarget = NULL);
     virtual int executeSchedule(int nHandler, float dt, Node* pNode = NULL);
-    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, Set *pTouches);
+    virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, const std::vector<Touch *> &pTouches);
     virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
     virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
     /** execute a accelerometer event */

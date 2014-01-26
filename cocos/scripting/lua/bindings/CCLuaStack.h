@@ -116,7 +116,7 @@ public:
     virtual int executeFunction(int numArgs);
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
-    virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray);
+    virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,std::vector<Object *>& result);
     virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
     virtual bool handleAssert(const char *msg);

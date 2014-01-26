@@ -508,7 +508,7 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 }
 
-int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray)
+int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,std::vector<Object *>& result)
 {
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {
@@ -562,21 +562,20 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
                 if (lua_type(_state, -1) == LUA_TBOOLEAN) {
                     
                     bool value = lua_toboolean(_state, -1);
-                    resultArray.addObject(Bool::create(value)) ;
+                    result.push_back(Bool::create(value));
                     
-                }else if (lua_type(_state, -1) == LUA_TNUMBER) {
+                } else if (lua_type(_state, -1) == LUA_TNUMBER) {
                     
                     double value = lua_tonumber(_state, -1);
-                    resultArray.addObject(Double::create(value));
+                    result.push_back(Double::create(value));
                     
-                }else if (lua_type(_state, -1) == LUA_TSTRING) {
+                } else if (lua_type(_state, -1) == LUA_TSTRING) {
                     
                     const char* value = lua_tostring(_state, -1);
-                    resultArray.addObject(String::create(value));
+                    result.push_back(String::create(value));
                     
-                }else{
-                    
-                    resultArray.addObject(static_cast<Object*>(tolua_tousertype(_state, -1, NULL)));
+                } else {
+                    result.push_back(static_cast<Object *>(tolua_tousertype(_state, -1, NULL)));
                 }
                 // remove return value from stack
                 lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/
