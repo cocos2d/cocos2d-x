@@ -649,6 +649,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="..\..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
@@ -908,6 +912,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_phone.vcxproj">
       <Project>{0592f9c3-d727-4d41-bc9e-e43b269ad877}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\..\cocos2dx\platform\third_party\winrt\libcurl\proj.wp8\libcurl.vcxproj">
+      <Project>{bf4854e9-c02b-49fe-b9dd-d6373d3bb0ef}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>

@@ -46,8 +46,12 @@ int pthread_mutex_unlock(pthread_mutex_t* m);
 void pthread_mutex_destroy(pthread_mutex_t* m);
 
 #define pthread_cond_destroy(x)
+#define pthread_exit(x)
 #define pthread_cond_signal(x)
 #define pthread_cond_init(x, y)
+
+#define pthread_create(w,x,y,z)
+#define pthread_detach(x)
 
 
 

@@ -298,6 +298,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest">
       <UniqueIdentifier>{122093ba-ec3d-4992-89ad-f3e28c42292f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{de7642dd-484e-42fc-a6d2-78232cdb331e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -658,6 +661,12 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1200,6 +1209,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h">
       <Filter>Classes\ExtensionsTest\CocoStudioGUITest\UIWidgetAddNodeTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
+      <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

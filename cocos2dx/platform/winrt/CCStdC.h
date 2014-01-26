@@ -1,5 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+
+Copyright (c) 2010-2014 cocos2d-x.org
+Copyright (c) 2013-2014 Martell Malone < martell malone at gmail dot com >
 Copyright (c) Microsoft Open Technologies, Inc.
 
 http://www.cocos2d-x.org
@@ -61,17 +63,11 @@ THE SOFTWARE.
     #include "./compat/stdint.h"
 #endif
 
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#include <Windows.h>
-//#include <WinSock2.h>
-
-#undef timeval
-struct timeval
-{
- 	long tv_sec;		// seconds
- 	long tv_usec;    // microSeconds
-};
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "winrtsock.h"
+#else
+#include <winsock2.h>
+#endif
 
 struct timezone
 {
