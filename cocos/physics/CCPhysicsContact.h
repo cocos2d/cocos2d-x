@@ -58,7 +58,7 @@ typedef struct PhysicsContactData
 /**
  * @brief Contact infomation. it will created automatically when two shape contact with each other. and it will destoried automatically when two shape separated.
  */
-class PhysicsContact : Event
+class PhysicsContact : public Event
 {
 public:
     
