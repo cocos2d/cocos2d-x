@@ -23,67 +23,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_STD_C_H__
-#define __CC_STD_C_H__
+#ifndef __CCGL_ANGLE_H__
+#define __CCGL_ANGLE_H__
 
-#include "platform/CCPlatformMacros.h"
-#include <float.h>
+#include "../third_party/winrt/angleproject/include/GLES2/gl2.h"
+#include "../third_party/winrt/angleproject/include/GLES2/gl2ext.h"
+#include "../third_party/winrt/angleproject/src/common/winrtangle.h"
 
-// for math.h on win32 platform
+#define GL_BGRA						GL_BGRA_EXT
 
-#if !defined(_USE_MATH_DEFINES)
-    #define _USE_MATH_DEFINES       // make M_PI can be use
-#endif
+#define	glClearDepth				glClearDepthf
+#define glDeleteVertexArrays		glDeleteVertexArraysOES
+#define glGenVertexArrays			glGenVertexArraysOES
+#define glBindVertexArray			glBindVertexArrayOES
+#define glMapBuffer					glMapBufferOES
+#define glUnmapBuffer				glUnmapBufferOES
 
-#if !defined(isnan)
-    #define isnan   _isnan
-#endif
+#define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
+#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-// for MIN MAX and sys/time.h on win32 platform
-
-#define MIN     min
-#define MAX     max
-
-#if _MSC_VER >= 1600
-    #include <stdint.h>
-#else
-    #include "./compat/stdint.h"
-#endif
-
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include <WinSock2.h>
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include <Windows.h>
-//#include <WinSock2.h>
-
-#undef timeval
-struct timeval
-{
-	long tv_sec;		// seconds
-	long tv_usec;    // microSeconds
-};
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-
-struct timezone
-{
-    int tz_minuteswest;
-    int tz_dsttime;
-};
-
-int CC_DLL gettimeofday(struct timeval *, struct timezone *);
-
-#endif  // __CC_STD_C_H__
-
+#endif // __CCGL_ANGLE_H__

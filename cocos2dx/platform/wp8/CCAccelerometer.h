@@ -23,67 +23,27 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_STD_C_H__
-#define __CC_STD_C_H__
+#ifndef __PLATFORM_WINRT_UIACCELEROMETER_H__
+#define __PLATFORM_WINRT_UIACCELEROMETER_H__
 
-#include "platform/CCPlatformMacros.h"
-#include <float.h>
+#include "platform/CCAccelerometerDelegate.h"
 
-// for math.h on win32 platform
+NS_CC_BEGIN
 
-#if !defined(_USE_MATH_DEFINES)
-    #define _USE_MATH_DEFINES       // make M_PI can be use
-#endif
-
-#if !defined(isnan)
-    #define isnan   _isnan
-#endif
-
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#include <math.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-// for MIN MAX and sys/time.h on win32 platform
-
-#define MIN     min
-#define MAX     max
-
-#if _MSC_VER >= 1600
-    #include <stdint.h>
-#else
-    #include "./compat/stdint.h"
-#endif
-
-#define _WINSOCKAPI_
-// Structure timeval has define in winsock.h, include windows.h for it.
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include <WinSock2.h>
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-#include <Windows.h>
-//#include <WinSock2.h>
-
-#undef timeval
-struct timeval
+class CC_DLL CCAccelerometer
 {
-	long tv_sec;		// seconds
-	long tv_usec;    // microSeconds
-};
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+public:
+    CCAccelerometer();
+    ~CCAccelerometer();
 
-struct timezone
-{
-    int tz_minuteswest;
-    int tz_dsttime;
+    void setDelegate(CCAccelerometerDelegate* pDelegate);
+    void setAccelerometerInterval(float interval);
+private:
+    CCAcceleration m_obAccelerationValue;
+    CCAccelerometerDelegate* m_pAccelDelegate;
+	Windows::Devices::Sensors::Accelerometer^ m_accelerometer;
 };
 
-int CC_DLL gettimeofday(struct timeval *, struct timezone *);
+NS_CC_END
 
-#endif  // __CC_STD_C_H__
-
+#endif
