@@ -89,12 +89,14 @@ bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,
 	return true;
 }
 
-string getJsSearchPath()
+string getProSearchPath()
 {
 	extern std::string getCurAppPath(void);
 	string searchPath = getCurAppPath();
 	searchPath += "/../..";
-	return searchPath;
+	char fuldir[_MAX_PATH_]={0};
+	_fullpath(fuldir,searchPath.c_str(),_MAX_PATH_);
+	return fuldir;
 }
 
 vector<string> getSearchPath()
@@ -103,7 +105,7 @@ vector<string> getSearchPath()
 	vector<string> searchPathArray;
 	string searchPathRes = getCurAppPath();
 	searchPathRes += "/HelloJavascriptRes";
-	searchPathArray.push_back(getJsSearchPath());
+	searchPathArray.push_back(getProSearchPath());
 	searchPathArray.push_back(searchPathRes);
 	return searchPathArray;
 }

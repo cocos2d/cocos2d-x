@@ -53,5 +53,7 @@ std::string getCurAppPath(void)
 	std::string strPath = chRtn;
 	delete [] chRtn;
 	chRtn=NULL;
-	return strPath;    
+	char fuldir[MAX_PATH]={0};
+	_fullpath(fuldir,strPath.c_str(),MAX_PATH);
+	return fuldir;    
 }
