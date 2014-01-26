@@ -103,16 +103,8 @@ public:
      * @see retain, autorelease
      * @js NA
      */
-#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     void release();
-#else
-    inline void release()
-    {
-        --_referenceCount;
-        if (_referenceCount == 0)
-            delete this;
-    }
-#endif
+
     /**
      * Retains the ownership.
      *

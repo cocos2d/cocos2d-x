@@ -85,15 +85,16 @@ void ChipmunkTestLayer::toggleDebugCallback(Object* sender)
 
 ChipmunkTestLayer::~ChipmunkTestLayer()
 {
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
     // manually Free rogue shapes
     for( int i=0;i<4;i++) {
         cpShapeFree( _walls[i] );
     }
 
     cpSpaceFree( _space );
-    
-    Device::setAccelerometerEnabled(false);
 
+    Device::setAccelerometerEnabled(false);
+#endif
 }
 
 void ChipmunkTestLayer::initPhysics()
