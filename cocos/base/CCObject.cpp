@@ -97,7 +97,7 @@ void Object::release()
             // obj->retain();
             // obj->autorelease();  // This `autorelease` is the pair of `retain` of previous line.
             //
-            // Corrent usage (2):
+            // Correct usage (2):
             //
             // auto obj = Node::create();
             // obj->retain();
