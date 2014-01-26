@@ -136,7 +136,9 @@ FontAtlas * FontFreeType::createFontAtlas()
     FontAtlas *atlas = new FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
-        atlas->prepareLetterDefinitions(cc_utf8_to_utf16(getCurrentGlyphCollection()));
+        unsigned short* utf16 = cc_utf8_to_utf16(getCurrentGlyphCollection());
+        atlas->prepareLetterDefinitions(utf16);
+        CC_SAFE_DELETE_ARRAY(utf16);
     }
     this->release();
     return atlas;
