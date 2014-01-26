@@ -900,7 +900,6 @@ int lua_cocos2dx_physics_PhysicsShape_getPolyonCenter(lua_State* tolua_S)
             if (nullptr == arg0){
                 LUA_PRECONDITION( arg0, "Invalid Native Object");
             }} while (0);
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1);
         if(!ok)
         {
             CC_SAFE_FREE(arg0);
@@ -1138,6 +1137,114 @@ tolua_lerror:
     return 0;
 }
 
+static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_State* tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+    
+    int argc = 0;
+    EventListenerPhysicsContact* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "EventListenerPhysicsContact", 0, &tolua_err))  goto tolua_lerror;
+#endif
+    
+    self = static_cast<EventListenerPhysicsContact*>(tolua_tousertype(tolua_S,1,0));
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+		tolua_error(tolua_S,"invalid 'self' in function 'tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler'\n", nullptr);
+		return 0;
+	}
+#endif
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 2)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(tolua_S,2,"LUA_FUNCTION",0,&tolua_err) ||
+            !tolua_isnumber(tolua_S, 3, 0, &tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
+        ScriptHandlerMgr::HandlerType type        = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
+        switch (type)
+        {
+            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_BEGIN:
+            {
+                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                
+                self->onContactBegin = [handler](EventCustom* event, const PhysicsContact& contact) -> bool{
+                    LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                    stack->pushObject(event, "EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    bool ret = stack->executeFunctionByHandler(handler, 2);
+                    stack->clean();
+                    
+                    return ret;
+                };
+            }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_PRESOLVE:
+            {
+                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                
+                self->onContactPreSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPreSolve& solve) -> bool{
+                    LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                    stack->pushObject(event, "EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPreSolve*>(&solve), "PhysicsContactPreSolve");
+                    bool ret = stack->executeFunctionByHandler(handler, 3);
+                    stack->clean();
+                    
+                    return ret;
+                };
+            }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_POSTSOLVE:
+            {
+                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                
+                self->onContactPostSolve = [handler](EventCustom* event, const PhysicsContact& contact, const PhysicsContactPostSolve& solve){
+                    LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                    stack->pushObject(event, "EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    tolua_pushusertype(stack->getLuaState(), const_cast<PhysicsContactPostSolve*>(&solve), "PhysicsContactPostSolve");
+                    stack->executeFunctionByHandler(handler, 3);
+                    stack->clean();
+                };
+            }
+                break;
+            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_SEPERATE:
+            {
+                ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
+                
+                self->onContactSeperate = [handler](EventCustom* event, const PhysicsContact& contact){
+                    LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+                    stack->pushObject(event, "EventCustom");
+                    stack->pushObject(const_cast<PhysicsContact*>(&contact), "PhysicsContact");
+                    stack->executeFunctionByHandler(handler, 2);
+                    stack->clean();
+                };
+            }
+                break;
+            default:
+                break;
+        }
+        return 0;
+    }
+    
+    CCLOG("'registerScriptHandler' has wrong number of arguments: %d, was expecting %d\n", argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'registerScriptHandler'.",&tolua_err);
+    return 0;
+#endif
+}
+
 int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.PhysicsBody");
@@ -1254,9 +1361,16 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
         lua_pushnumber(tolua_S, PhysicsWorld::DEBUGDRAW_ALL);
         lua_rawset(tolua_S,-3);
     }
-    
     lua_pop(tolua_S, 1);
     
+    lua_pushstring(tolua_S, "EventListenerPhysicsContact");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "registerScriptHandler", tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler);
+    }
+    lua_pop(tolua_S, 1);
+
     tolua_constant(tolua_S, "PHYSICS_INFINITY", PHYSICS_INFINITY);
     
     return 0;
