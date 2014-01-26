@@ -99,7 +99,7 @@ const char * Font::getCurrentGlyphCollection() const
     }
 }
 
-unsigned short int  * Font::getUTF16Text(const char *text, int &outNumLetters) const
+unsigned short* Font::getUTF16Text(const char *text, int &outNumLetters) const
 {
     unsigned short* utf16String = cc_utf8_to_utf16(text);
     
