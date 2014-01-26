@@ -109,12 +109,13 @@ def main():
     os.system(git_update_submodule)
 
     # Generate binding glue codes
-    if(platform.system() == 'Darwin'):
-      os.system("tools/jenkins-scripts/gen_jsb.sh")
-    elif(platform.system() == 'Windows'):
-      os.chdir("tools/jenkins-scripts")
-      os.system("gen_jsb_win32.bat")
-      os.chdir("../..")
+    if(branch == 'develop'):
+      if(platform.system() == 'Darwin'):
+        os.system("tools/jenkins-scripts/gen_jsb.sh")
+      elif(platform.system() == 'Windows'):
+        os.chdir("tools/jenkins-scripts")
+        os.system("gen_jsb_win32.bat")
+        os.chdir("../..")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
@@ -150,7 +151,10 @@ def main():
       elif(node_name == 'win32_win7'):
         ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
     elif(branch == 'master'):
-      ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
+      if(platform.system() == 'Darwin'):
+        ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
+      else:
+        ret = 0
 
     #get build result
     print "build finished and return " + str(ret)
