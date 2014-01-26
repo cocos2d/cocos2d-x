@@ -39,6 +39,10 @@ void TestLua::Initialize(CoreApplicationView^ applicationView)
 
 void TestLua::SetWindow(CoreWindow^ window)
 {
+	// Specify the orientation of your application here
+	// The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape
+	DisplayProperties::AutoRotationPreferences = Windows::Graphics::Display::DisplayOrientations::Landscape;
+
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &TestLua::OnVisibilityChanged);
 
