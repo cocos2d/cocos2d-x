@@ -31,7 +31,7 @@ extern "C" {
 #include "lualib.h"
 #include "lauxlib.h"
 #include "tolua_fix.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "lua_extensions.h"
 #endif
 }
@@ -149,7 +149,7 @@ bool LuaStack::init(void)
         {NULL, NULL}
     };
     luaL_register(_state, "_G", global_functions);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_PLATFORM_MAC == CC_TARGET_PLATFORM)
     luaopen_lua_extensions(_state);
 #endif
     g_luaType.clear();
