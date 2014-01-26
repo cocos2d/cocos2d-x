@@ -186,6 +186,9 @@ xcopy "$(ProjectDir)..\..\..\..\scripting\lua\script" "$(ProjectDir)..\..\TestLu
     <ProjectReference Include="..\..\..\..\extensions\proj.wp8\libExtensions.vcxproj">
       <Project>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\scripting\lua\proj.wp8\libcocoslua.vcxproj">
+      <Project>{3d436128-83d2-4dad-a682-1c0ed697d5de}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\scripting\lua\proj.wp8\liblua.vcxproj">
       <Project>{4abd2f07-356f-427c-9c84-e353fd5995bf}</Project>
     </ProjectReference>
