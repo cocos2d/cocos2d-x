@@ -296,6 +296,9 @@
     <Filter Include="Classes\ExtensionsTest\CocoStudioGUITest\UILayoutTest">
       <UniqueIdentifier>{fcdb0f59-7655-478d-9748-cea71263b602}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CurlTest">
+      <UniqueIdentifier>{89cae3e0-ffcf-4135-8de1-6f786c98b7dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ApplicationIcon.png">
@@ -678,6 +681,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp">
+      <Filter>Classes\CurlTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1254,6 +1260,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h">
       <Filter>Classes\ExtensionsTest\NetworkTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CurlTest\CurlTest.h">
+      <Filter>Classes\CurlTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,11 +23,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-//only temperary until curl is fully supported on rt. May take a week or so
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 
-#include "curl/curl.h"
 #include "HttpClient.h"
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) //only temperary until curl is fully supported on rt. May take a week or so
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
@@ -40,6 +39,7 @@ using namespace concurrency;
 
 #include <queue>
 #include <errno.h>
+#include "curl/curl.h"
 
 NS_CC_EXT_BEGIN
 
@@ -180,32 +180,6 @@ static void sendRequest(CCHttpRequest * request)
         // resume dispatcher selector
         CCDirector::sharedDirector()->getScheduler()->resumeTarget(CCHttpClient::getInstance());
     
-	#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    // cleanup: if worker thread received quit signal, clean up un-completed request queue
-    pthread_mutex_lock(&s_requestQueueMutex);
-    s_requestQueue->removeAllObjects();
-    pthread_mutex_unlock(&s_requestQueueMutex);
-    s_asyncRequestCount -= s_requestQueue->count();
-    
-    if (s_requestQueue != NULL) {
-        
-        pthread_mutex_destroy(&s_requestQueueMutex);
-        pthread_mutex_destroy(&s_responseQueueMutex);
-        
-        pthread_mutex_destroy(&s_SleepMutex);
-        pthread_cond_destroy(&s_SleepCondition);
-
-        s_requestQueue->release();
-        s_requestQueue = NULL;
-        s_responseQueue->release();
-        s_responseQueue = NULL;
-    }
-
-    pthread_exit(NULL);
-    
-    return 0;
-	
-	#endif
 }
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
@@ -242,6 +216,30 @@ static void* networkThread(void *data)
 		}
 		sendRequest(request);
 	}
+
+	// cleanup: if worker thread received quit signal, clean up un-completed request queue
+	pthread_mutex_lock(&s_requestQueueMutex);
+	s_requestQueue->removeAllObjects();
+	pthread_mutex_unlock(&s_requestQueueMutex);
+	s_asyncRequestCount -= s_requestQueue->count();
+
+	if (s_requestQueue != NULL) {
+
+		pthread_mutex_destroy(&s_requestQueueMutex);
+		pthread_mutex_destroy(&s_responseQueueMutex);
+
+		pthread_mutex_destroy(&s_SleepMutex);
+		pthread_cond_destroy(&s_SleepCondition);
+
+		s_requestQueue->release();
+		s_requestQueue = NULL;
+		s_responseQueue->release();
+		s_responseQueue = NULL;
+	}
+
+	pthread_exit(NULL);
+
+	return 0;
 
 }
 #endif
