@@ -19,7 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
 #include "CCPhysicsSprite.h"
 
@@ -37,8 +36,8 @@ NS_CC_EXT_BEGIN
 
 PhysicsSprite::PhysicsSprite()
 : _ignoreBodyRotation(false)
-, _CPBody(NULL)
-, _pB2Body(NULL)
+, _CPBody(nullptr)
+, _pB2Body(nullptr)
 , _PTMRatio(0.0f)
 {}
 
@@ -195,77 +194,64 @@ float PhysicsSprite::getPositionY() const
 // Chipmunk only
 //
 
+
+
+cpBody* PhysicsSprite::getCPBody() const
+{
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-
-cpBody* PhysicsSprite::getCPBody() const
-{
     return _CPBody;
-}
-
-void PhysicsSprite::setCPBody(cpBody *pBody)
-{
-    _CPBody = pBody;
-}
-
-b2Body* PhysicsSprite::getB2Body() const
-{
-    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
-    return NULL;
-}
-
-void PhysicsSprite::setB2Body(b2Body *pBody)
-{
-    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
-}
-
-float PhysicsSprite::getPTMRatio() const
-{
-    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
-    return 0;
-}
-
-void PhysicsSprite::setPTMRatio(float fRatio)
-{
-    CCASSERT(false, "Can't call box2d methods when Chipmunk is enabled");
-}
-
-//
-// Box2d only
-//
-#elif CC_ENABLE_BOX2D_INTEGRATION
-
-b2Body* PhysicsSprite::getB2Body() const
-{
-    return _pB2Body;
-}
-
-void PhysicsSprite::setB2Body(b2Body *pBody)
-{
-    _pB2Body = pBody;
-}
-
-float PhysicsSprite::getPTMRatio() const
-{
-    return _PTMRatio;
-}
-
-void PhysicsSprite::setPTMRatio(float fRatio)
-{
-    _PTMRatio = fRatio;
-}
-
-cpBody* PhysicsSprite::getCPBody() const
-{
-    CCASSERT(false, "Can't call Chipmunk methods when Box2d is enabled");
-    return NULL;
-}
-
-void PhysicsSprite::setCPBody(cpBody *pBody)
-{
-    CCASSERT(false, "Can't call Chipmunk methods when Box2d is enabled");
-}
-
+#else
+    CCASSERT(false, "Can't call chipmunk methods when Chipmunk is disabled");
+    return nullptr;
 #endif
+}
+
+void PhysicsSprite::setCPBody(cpBody *pBody)
+{
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+    _CPBody = pBody;
+#else
+    CCASSERT(false, "Can't call chipmunk methods when Chipmunk is disabled");
+#endif
+}
+
+b2Body* PhysicsSprite::getB2Body() const
+{
+#if CC_ENABLE_BOX2D_INTEGRATION
+    return _pB2Body;
+#else
+    CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
+    return nullptr;
+#endif
+}
+
+void PhysicsSprite::setB2Body(b2Body *pBody)
+{
+#if CC_ENABLE_BOX2D_INTEGRATION
+    _pB2Body = pBody;
+#else
+    CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
+#endif
+}
+
+float PhysicsSprite::getPTMRatio() const
+{
+#if CC_ENABLE_BOX2D_INTEGRATION
+    return _PTMRatio;
+#else
+    CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
+    return 0;
+#endif
+}
+
+void PhysicsSprite::setPTMRatio(float fRatio)
+{
+#if CC_ENABLE_BOX2D_INTEGRATION
+     _PTMRatio = fRatio;
+#else
+    CCASSERT(false, "Can't call box2d methods when Box2d is disabled");
+#endif
+}
 
 //
 // Common to Box2d and Chipmunk
@@ -407,4 +393,3 @@ const kmMat4& PhysicsSprite::getNodeToParentTransform() const
 }
 
 NS_CC_EXT_END
-#endif //(CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
