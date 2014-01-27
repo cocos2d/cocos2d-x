@@ -17,9 +17,12 @@ Box2DTestLayer::Box2DTestLayer()
 , world(NULL)
 {
 #if CC_ENABLE_BOX2D_INTEGRATION
-    setTouchEnabled( true );
-    setAccelerometerEnabled( true );
-
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTestLayer::onTouchesEnded, this);
+    dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
     // init physics
     this->initPhysics();
     // create reset button

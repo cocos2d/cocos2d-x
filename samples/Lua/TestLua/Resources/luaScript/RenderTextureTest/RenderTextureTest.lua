@@ -8,24 +8,23 @@ local function RenderTextureSave()
     local ret = createTestLayer("Touch the screen",
                                 "Press 'Save Image' to create an snapshot of the render texture")
     local s = cc.Director:getInstance():getWinSize()
-    local m_pTarget = nil
-    local m_pBrush = nil
-    local m_pTarget = nil
+    local target = nil
     local counter = 0
+    local brushes = {}
     local function clearImage(tag, pSender)
-        m_pTarget:clear(math.random(), math.random(), math.random(), math.random())
+        target:clear(math.random(), math.random(), math.random(), math.random())
     end
 
     local function saveImage(tag, pSender)
         local png = string.format("image-%d.png", counter)
         local jpg = string.format("image-%d.jpg", counter)
 
-        m_pTarget:saveToFile(png, cc.IMAGE_FORMAT_PNG)
-        m_pTarget:saveToFile(jpg, cc.IMAGE_FORMAT_JPEG)
+        target:saveToFile(png, cc.IMAGE_FORMAT_PNG)
+        target:saveToFile(jpg, cc.IMAGE_FORMAT_JPEG)
 
-        local pImage = m_pTarget:newImage()
+        local pImage = target:newImage()
 
-        local tex = cc.TextureCache:getInstance():addUIImage(pImage, png)
+        local tex = cc.Director:getInstance():getTextureCache():addUIImage(pImage, png)
 
         pImage:release()
 
@@ -42,78 +41,66 @@ local function RenderTextureSave()
 
     local function onNodeEvent(event)
         if event == "exit" then
-            m_pBrush:release()
-            m_pTarget:release()
-            cc.TextureCache:getInstance():removeUnusedTextures()
+            target:release()
+            cc.Director:getInstance():getTextureCache():removeUnusedTextures()
         end
     end
 
     ret:registerScriptHandler(onNodeEvent)
 
     -- create a render texture, this is what we are going to draw into
-    m_pTarget = cc.RenderTexture:create(s.width, s.height, cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
-    m_pTarget:retain()
-    m_pTarget:setPosition(cc.p(s.width / 2, s.height / 2))
+    target = cc.RenderTexture:create(s.width, s.height, cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
+    target:retain()
+    target:setPosition(cc.p(s.width / 2, s.height / 2))
 
     -- note that the render texture is a cc.Node, and contains a sprite of its texture for convience,
     -- so we can just parent it to the scene like any other cc.Node
-    ret:addChild(m_pTarget, -1)
+    ret:addChild(target, -1)
 
-    -- create a brush image to draw into the texture with
-    m_pBrush = cc.Sprite:create("Images/fire.png")
-    m_pBrush:retain()
-    m_pBrush:setColor(cc.c3b(255, 0, 0))
-    m_pBrush:setOpacity(20)
+    local function onTouchesMoved(touches, event)
+        local start = touches[1]:getLocation()
+        local ended = touches[1]:getPreviousLocation()
 
+        target:begin()
 
-    local prev = {x = 0, y = 0}
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            prev.x = x
-            prev.y = y
-            return true
-        elseif  eventType == "moved" then
-            local diffX = x - prev.x
-            local diffY = y - prev.y
+        local distance = cc.pGetDistance(start, ended)
+        if distance > 1 then
+            brushes = {}
+            local d = distance
+            local i = 0
 
-            local startP = cc.p(x, y)
-            local endP = cc.p(prev.x, prev.y)
-
-            -- begin drawing to the render texture
-            m_pTarget:begin()
-
-            -- for extra points, we'll draw this smoothly from the last position and vary the sprite's
-            -- scale/rotation/offset
-            local distance = cc.pGetDistance(startP, endP)
-            if distance > 1 then
-                local d = distance
-                local i = 0
-                for i = 0, d-1 do
-                    local difx = endP.x - startP.x
-                    local dify = endP.y - startP.y
-                    local delta = i / distance
-                    m_pBrush:setPosition(cc.p(startP.x + (difx * delta), startP.y + (dify * delta)))
-                    m_pBrush:setRotation(math.random(0, 359))
-                    local r = math.random(0, 49) / 50.0 + 0.25
-                    m_pBrush:setScale(r)
-
-                    -- Use cc.RANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-                    m_pBrush:setColor(cc.c3b(math.random(0, 126) + 128, 255, 255))
-                    -- Call visit to draw the brush, don't call draw..
-                    m_pBrush:visit()
-                end
+            for i = 0,d -1 do
+                -- create a brush image to draw into the texture with
+                local sprite = cc.Sprite:create("Images/fire.png")
+                sprite:setColor(cc.c3b(255, 0, 0))
+                sprite:setOpacity(20)
+                brushes[i + 1] = sprite
             end
 
-            -- finish drawing and return context back to the screen
-            m_pTarget:endToLua()
+            for i = 0,d -1 do
+                local difx = ended.x - start.x
+                local dify = ended.y - start.y
+                local delta = i / distance
+                brushes[i + 1]:setPosition(cc.p(start.x + (difx * delta), start.y + (dify * delta)))
+                brushes[i + 1]:setRotation(math.random(0, 359))
+                local r = math.random(0, 49) / 50.0 + 0.25
+                brushes[i + 1]:setScale(r)
+
+                -- Use cc.RANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
+                brushes[i + 1]:setColor(cc.c3b(math.random(0, 126) + 128, 255, 255))
+                -- Call visit to draw the brush, don't call draw..
+                brushes[i + 1]:visit()
+            end
         end
 
-            prev.x = x
-            prev.y = y
+        -- finish drawing and return context back to the screen
+        target:endToLua()
     end
 
-    ret:setTouchEnabled(true)
-    ret:registerScriptTouchHandler(onTouchEvent)
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
     -- Save Image menu
     cc.MenuItemFont:setFontSize(16)
     local item1 = cc.MenuItemFont:create("Save Image")

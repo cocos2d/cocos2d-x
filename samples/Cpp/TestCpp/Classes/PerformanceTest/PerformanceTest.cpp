@@ -9,6 +9,7 @@
 #include "PerformanceLabelTest.h"
 #include "PerformanceRendererTest.h"
 #include "PerformanceContainerTest.h"
+#include "PerformanceEventDispatcherTest.h"
 
 enum
 {
@@ -29,7 +30,8 @@ struct {
 	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
     { "Label Perf Test",[](Object*sender){runLabelTest();} },
     { "Renderer Perf Test",[](Object*sender){runRendererTest();} },
-    { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } }
+    { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } },
+    { "EventDispatcher Perf Test", [](Object* sender ) { runEventDispatcherPerformanceTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);

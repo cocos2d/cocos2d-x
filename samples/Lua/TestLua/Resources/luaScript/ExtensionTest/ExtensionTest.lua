@@ -1239,14 +1239,15 @@ local function ExtensionsMainLayer()
     layer:addChild(menu)
 
     -- handling touch events
-    local beginPos = {x = 0, y = 0}
-    local function onTouchBegan(x, y)
-        beginPos = {x = x, y = y}
-        return true
+    local beginPos = {x = 0, y = 0} 
+    local function onTouchesBegan(touches, event)     
+         beginPos = touches[1]:getLocation()
     end
 
-    local function onTouchMoved(x, y)
-        local nMoveY = y - beginPos.y
+    local function onTouchesMoved(touches, event)
+        local location = touches[1]:getLocation()
+
+        local nMoveY = location.y - beginPos.y
         local curPosx, curPosy = menu:getPosition()
         local nextPosy = curPosy + nMoveY
         local winSize = cc.Director:getInstance():getWinSize()
@@ -1261,20 +1262,15 @@ local function ExtensionsMainLayer()
         end
 
         menu:setPosition(curPosx, nextPosy)
-        beginPos = {x = x, y = y}
+        beginPos = {x = location.x, y = location.y}
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x, y)
-        elseif eventType == "moved" then
-            return onTouchMoved(x, y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCH_MOVED )
 
-    layer:setTouchEnabled(true)
-
-    layer:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
 	return layer
 end

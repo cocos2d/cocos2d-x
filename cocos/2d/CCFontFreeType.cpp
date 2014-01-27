@@ -85,8 +85,7 @@ FT_Library FontFreeType::getFTLibrary()
 }
 
 FontFreeType::FontFreeType()
-: _fontRef(nullptr),
-_letterPadding(5)
+: _fontRef(nullptr)
 ,_distanceFieldEnabled(false)
 {
 }
@@ -137,7 +136,9 @@ FontAtlas * FontFreeType::createFontAtlas()
     FontAtlas *atlas = new FontAtlas(*this);
     if (_usedGlyphs != GlyphCollection::DYNAMIC)
     {
-        atlas->prepareLetterDefinitions(cc_utf8_to_utf16(getCurrentGlyphCollection()));
+        unsigned short* utf16 = cc_utf8_to_utf16(getCurrentGlyphCollection());
+        atlas->prepareLetterDefinitions(utf16);
+        CC_SAFE_DELETE_ARRAY(utf16);
     }
     this->release();
     return atlas;
@@ -252,11 +253,6 @@ unsigned char * FontFreeType::getGlyphBitmap(unsigned short theChar, int &outWid
     return _fontRef->glyph->bitmap.buffer;
 }
 
-int FontFreeType::getLetterPadding() const
-{
-    return _letterPadding;
-}
-
 unsigned char * makeDistanceMap( unsigned char *img, unsigned int width, unsigned int height)
 {
     unsigned int pixelAmount = (width + 2 * FontFreeType::DistanceMapSpread) * (height + 2 * FontFreeType::DistanceMapSpread);
@@ -340,8 +336,6 @@ unsigned char * makeDistanceMap( unsigned char *img, unsigned int width, unsigne
 
 void FontFreeType::setDistanceFieldEnabled(bool distanceFieldEnabled)
 {
-    if(distanceFieldEnabled)
-        _letterPadding += 2 * DistanceMapSpread;
     _distanceFieldEnabled = distanceFieldEnabled;
 }
 

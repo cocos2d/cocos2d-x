@@ -147,28 +147,34 @@ local function getBaseLayer()
     local seq = cc.Sequence:create(move, move_back)
     background:runAction(cc.RepeatForever:create(seq))
 
-	local function onTouchEnded(x, y)
-		local pos = cc.p(0, 0)
-		if background ~= nil then
-			pos = background:convertToWorldSpace(cc.p(0, 0))
-		end
+    local function onTouchesEnded(touches, event)
+        local location = touches[1]:getLocation()
+        local pos = cc.p(0, 0)
+        if background ~= nil then
+            pos = background:convertToWorldSpace(cc.p(0, 0))
+        end
 
-		if emitter ~= nil then
-			local newPos = cc.pSub(cc.p(x, y), pos)
-			emitter:setPosition(newPos.x, newPos.y)
-		end
-	end
-
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return true
-        else
-            return onTouchEnded(x, y)
+        if emitter ~= nil then
+            local newPos = cc.pSub(location, pos)
+            emitter:setPosition(newPos.x, newPos.y)
         end
     end
 
-	layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(onTouch)
+    local function onTouchesBegan(touches, event)
+         onTouchesEnded(touches, event);
+    end
+
+    local function onTouchesMoved(touches, event)
+         onTouchesEnded(touches, event);
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
 	layer:registerScriptHandler(baseLayer_onEnterOrExit)
 
 	return layer
@@ -378,7 +384,7 @@ local function DemoFlower()
 	emitter = cc.ParticleFlower:create()
 	-- emitter:retain()
     background:addChild(emitter, 10)
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
 
     setEmitterPosition()
 
@@ -396,7 +402,7 @@ local function DemoGalaxy()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -414,7 +420,7 @@ local function DemoFirework()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
 
     setEmitterPosition()
 
@@ -432,7 +438,7 @@ local function DemoSpiral()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -450,7 +456,7 @@ local function DemoSun()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -468,7 +474,7 @@ local function DemoMeteor()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -486,7 +492,7 @@ local function DemoFire()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
 
@@ -503,7 +509,7 @@ local function DemoSmoke()
 	emitter = cc.ParticleSmoke:create()
     -- emitter:retain()
     background:addChild(emitter, 10)
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, 100)
 
@@ -523,7 +529,7 @@ local function DemoExplosion()
     -- emitter:retain()
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
 
     emitter:setAutoRemoveOnFinish(true)
 
@@ -566,7 +572,7 @@ local function DemoSnow()
 
     emitter:setEmissionRate(emitter:getTotalParticles() / emitter:getLife())
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_snow))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_snow))
 
     setEmitterPosition()
 
@@ -587,7 +593,7 @@ local function DemoRain()
     emitter:setPosition(pos_x, pos_y - 100)
     emitter:setLife(4)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     setEmitterPosition()
 
@@ -605,7 +611,7 @@ local function DemoBigFlower()
 
     background:addChild(emitter, 10)
     ----emitter:release()    -- win32 :  use this line or remove this line and use autorelease()
-    emitter:setTexture( cc.TextureCache:getInstance():addImage(s_stars1) )
+    emitter:setTexture( cc.Director:getInstance():getTextureCache():addImage(s_stars1) )
     emitter:setDuration(-1)
 
     -- gravity
@@ -674,7 +680,7 @@ local function DemoRotFlower()
 
     background:addChild(emitter, 10)
     ----emitter:release()    -- win32 : Remove this line
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_stars2))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars2))
 
     -- duration
     emitter:setDuration(-1)
@@ -792,7 +798,7 @@ local function DemoModernArt()
     emitter:setEndSizeVar(8.0)
 
     -- texture
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     -- additive
     emitter:setBlendAdditive(false)
@@ -814,7 +820,7 @@ local function DemoRing()
 
     background:addChild(emitter, 10)
 
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_stars1))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
     emitter:setLifeVar(0)
     emitter:setLife(10)
     emitter:setSpeed(100)
@@ -847,14 +853,14 @@ local function ParallaxParticle()
 
     emitter = cc.ParticleFlower:create()
     -- emitter:retain()
-    emitter:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     p1:addChild(emitter, 10)
     emitter:setPosition(250, 200)
 
     local par = cc.ParticleSun:create()
     p2:addChild(par, 10)
-    par:setTexture(cc.TextureCache:getInstance():addImage(s_fire))
+    par:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     local move = cc.MoveBy:create(4, cc.p(300,0))
     local move_back = move:reverse()
@@ -897,7 +903,7 @@ local function RadiusMode1()
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(200)
     layer:addChild(emitter, 10)
-    emitter:setTexture(cc.TextureCache:getInstance():addImage("Images/stars-grayscale.png"))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/stars-grayscale.png"))
 
     -- duration
     emitter:setDuration(cc.PARTICLE_DURATION_INFINITY)
@@ -967,7 +973,7 @@ local function RadiusMode2()
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(200)
     layer:addChild(emitter, 10)
-    emitter:setTexture(cc.TextureCache:getInstance():addImage("Images/stars-grayscale.png"))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/stars-grayscale.png"))
 
     -- duration
     emitter:setDuration(cc.PARTICLE_DURATION_INFINITY )
@@ -1036,7 +1042,7 @@ local function Issue704()
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(100)
     layer:addChild(emitter, 10)
-    emitter:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
 
     -- duration
     emitter:setDuration(cc.PARTICLE_DURATION_INFINITY)
@@ -1129,7 +1135,7 @@ local function Issue870()
     background = nil
 
     local system = cc.ParticleSystemQuad:create("Particles/SpinningPeas.plist")
-    system:setTextureWithRect(cc.TextureCache:getInstance():addImage("Images/particles.png"), cc.rect(0,0,32,32))
+    system:setTextureWithRect(cc.Director:getInstance():getTextureCache():addImage("Images/particles.png"), cc.rect(0,0,32,32))
     layer:addChild(system, 10)
     emitter = system
 
@@ -1151,7 +1157,7 @@ local function MultipleParticleSystems()
     layer:removeChild(background, true)
     background = nil
 
-    cc.TextureCache:getInstance():addImage("Images/particles.png")
+    cc.Director:getInstance():getTextureCache():addImage("Images/particles.png")
 
     for i = 0, 4 do
         local particleSystem = cc.ParticleSystemQuad:create("Particles/SpinningPeas.plist")
