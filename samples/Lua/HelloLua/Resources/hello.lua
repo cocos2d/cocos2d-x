@@ -23,6 +23,8 @@ local function main()
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
         require('mobdebug').start()
+        --for on-device debugging,the up call should change as follow:
+        --require('mobdebug').start('192.168.2.80')  --'192.168.2.80' is your PC's IP
     end
     require "hello2"
     cclog("result is " .. myadd(1, 1))
