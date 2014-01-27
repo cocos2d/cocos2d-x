@@ -18,6 +18,7 @@ end
 
 -- bit operation
 
+bit = bit or {}
 bit.data32 = {}
 for i=1,32 do
     bit.data32[i]=2^(32-i)
