@@ -55,24 +55,7 @@ public:
         {
             DeleteDC(_DC);
         }
-        HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
-        if (hDefFont != _font)
-        {
-            DeleteObject(_font);
-            _font = hDefFont;
-        }
-		// release temp font resource	
-		if (_curFontPath.size() > 0)
-		{
-			wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-			if (pwszBuffer)
-			{
-				RemoveFontResource(pwszBuffer);
-				SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-				delete [] pwszBuffer;
-				pwszBuffer = NULL;
-			}
-		}
+		removeCustomFont();
     }
 
 	wchar_t * utf8ToUtf16(std::string nString)
@@ -139,43 +122,24 @@ public:
             }
 
             // delete old font
-            if (_font != hDefFont)
-            {
-                DeleteObject(_font);
-				// release old font register
-				if (_curFontPath.size() > 0)
+			removeCustomFont();
+			
+
+			// register temp font
+			if (fontPath.size() > 0)
+			{
+				_curFontPath = fontPath;
+				wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+				if (pwszBuffer)
 				{
-					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-					if (pwszBuffer)
+					if(AddFontResource(pwszBuffer))
 					{
-						if(RemoveFontResource(pwszBuffer))
-						{
-							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
+						SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
+					}						
+					delete [] pwszBuffer;
+					pwszBuffer = NULL;
 				}
-				if (fontPath.size() > 0)
-					_curFontPath = fontPath;
-				else
-					_curFontPath.clear();
-				// register temp font
-				if (_curFontPath.size() > 0)
-				{
-					wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-					if (pwszBuffer)
-					{
-						if(AddFontResource(pwszBuffer))
-						{
-							SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-						}						
-						delete [] pwszBuffer;
-						pwszBuffer = NULL;
-					}
-				}
-            }
-            _font = NULL;
+			}
 
             // disable Cleartype
             tNewFont.lfQuality = ANTIALIASED_QUALITY;
@@ -358,6 +322,30 @@ public:
     CC_SYNTHESIZE_READONLY(HDC, _DC, DC);
     CC_SYNTHESIZE_READONLY(HBITMAP, _bmp, Bitmap);
 private:
+
+	void removeCustomFont() 
+	{
+        HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+        if (hDefFont != _font)
+        {
+            DeleteObject(_font);
+            _font = hDefFont;
+        }
+		// release temp font resource	
+		if (_curFontPath.size() > 0)
+		{
+			wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+			if (pwszBuffer)
+			{
+				RemoveFontResource(pwszBuffer);
+				SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
+				delete [] pwszBuffer;
+				pwszBuffer = NULL;
+			}
+			_curFontPath.clear();
+		}	
+	}
+	
     friend class Image;
     HFONT   _font;
     HWND    _wnd;
