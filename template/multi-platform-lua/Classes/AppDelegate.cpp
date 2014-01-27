@@ -33,9 +33,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     
-    std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
-    engine->executeScriptFile(path.c_str());
-
+    //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
+    //engine->executeScriptFile("hello.lua");
+    engine->executeString("require 'hello.lua'");
+    
     return true;
 }
 
