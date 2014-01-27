@@ -1,8 +1,11 @@
+#include "cocos2d.h"
+
 #include "CCNodeLoader.h"
 #include "CCBSelectorResolver.h"
 #include "CCBMemberVariableAssigner.h"
 #include "CCBAnimationManager.h"
 #include "CCNode+CCBRelativePositioning.h"
+
 
 using namespace std;
 using namespace cocos2d;
@@ -929,19 +932,16 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
     
     // Load sub file
     std::string path = FileUtils::getInstance()->fullPathForFilename(ccbFileName.c_str());
-    ssize_t size = 0;
-    unsigned char * pBytes = FileUtils::getInstance()->getFileData(path.c_str(), "rb", &size);
 
+    auto dataPtr = std::make_shared<Data>(FileUtils::getInstance()->getDataFromFile(path));
+    
     CCBReader * reader = new CCBReader(pCCBReader);
     reader->autorelease();
     reader->getAnimationManager()->setRootContainerSize(pParent->getContentSize());
     
-    Data *data = new Data(pBytes, size);
-    free(pBytes);
-
-    data->retain();
-    reader->_data = data;
-    reader->_bytes = data->getBytes();
+    
+    reader->_data = dataPtr;
+    reader->_bytes = dataPtr->getBytes();
     reader->_currentByte = 0;
     reader->_currentBit = 0;
     CC_SAFE_RETAIN(pCCBReader->_owner);
@@ -957,7 +957,6 @@ Node * NodeLoader::parsePropTypeCCBFile(Node * pNode, Node * pParent, CCBReader 
 //     reader->_ownerCallbackNodes = pCCBReader->_ownerCallbackNodes;
 //     reader->_ownerCallbackNodes->retain();
 
-    data->release();
     
     Node * ccbFileNode = reader->readFileWithCleanUp(false, pCCBReader->getAnimationManagers());
     

@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,7 +29,7 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #ifndef SPINE_SKELETONJSON_H_
 #define SPINE_SKELETONJSON_H_
@@ -32,21 +40,34 @@
 #include <spine/Atlas.h>
 #include <spine/Animation.h>
 
-namespace spine {
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct {
 	float scale;
-	AttachmentLoader* attachmentLoader;
+	spAttachmentLoader* attachmentLoader;
 	const char* const error;
-} SkeletonJson;
+} spSkeletonJson;
 
-SkeletonJson* SkeletonJson_createWithLoader (AttachmentLoader* attachmentLoader);
-SkeletonJson* SkeletonJson_create (Atlas* atlas);
-void SkeletonJson_dispose (SkeletonJson* self);
+spSkeletonJson* spSkeletonJson_createWithLoader (spAttachmentLoader* attachmentLoader);
+spSkeletonJson* spSkeletonJson_create (spAtlas* atlas);
+void spSkeletonJson_dispose (spSkeletonJson* self);
 
-SkeletonData* SkeletonJson_readSkeletonData (SkeletonJson* self, const char* json);
-SkeletonData* SkeletonJson_readSkeletonDataFile (SkeletonJson* self, const char* path);
+spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const char* json);
+spSkeletonData* spSkeletonJson_readSkeletonDataFile (spSkeletonJson* self, const char* path);
 
-} // namespace spine {
+#ifdef SPINE_SHORT_NAMES
+typedef spSkeletonJson SkeletonJson;
+#define SkeletonJson_createWithLoader(...) spSkeletonJson_createWithLoader(__VA_ARGS__)
+#define SkeletonJson_create(...) spSkeletonJson_create(__VA_ARGS__)
+#define SkeletonJson_dispose(...) spSkeletonJson_dispose(__VA_ARGS__)
+#define SkeletonJson_readSkeletonData(...) spSkeletonJson_readSkeletonData(__VA_ARGS__)
+#define SkeletonJson_readSkeletonDataFile(...) spSkeletonJson_readSkeletonDataFile(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPINE_SKELETONJSON_H_ */

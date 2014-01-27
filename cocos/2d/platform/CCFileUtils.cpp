@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCFileUtils.h"
+#include "CCData.h"
 #include "ccMacros.h"
 #include "CCDirector.h"
 #include "CCSAXParser.h"
@@ -82,7 +84,7 @@ public:
     {
     }
 
-    ValueMap dictionaryWithContentsOfFile(const char *pFileName)
+    ValueMap dictionaryWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -90,11 +92,11 @@ public:
         CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
         parser.setDelegator(this);
 
-        parser.parse(pFileName);
+        parser.parse(fileName);
 		return _rootDict;
     }
 
-    ValueVector arrayWithContentsOfFile(const char* pFileName)
+    ValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -102,7 +104,7 @@ public:
         CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
         parser.setDelegator(this);
 
-        parser.parse(pFileName);
+        parser.parse(fileName);
 		return _rootArray;
     }
 
@@ -321,8 +323,8 @@ ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml2::XMLDocument *pDoc);
-static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XMLDocument *pDoc);
+static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, tinyxml2::XMLDocument *doc);
+static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxml2::XMLDocument *doc);
 
 /*
  * Use tinyxml2 to write plist files
@@ -330,54 +332,54 @@ static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XM
 bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
     //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
-    tinyxml2::XMLDocument *pDoc = new tinyxml2::XMLDocument();
-    if (nullptr == pDoc)
+    tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument();
+    if (nullptr == doc)
         return false;
     
-    tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
-    if (nullptr == pDeclaration)
+    tinyxml2::XMLDeclaration *declaration = doc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
+    if (nullptr == declaration)
     {
-        delete pDoc;
+        delete doc;
         return false;
     }
     
-    pDoc->LinkEndChild(pDeclaration);
-    tinyxml2::XMLElement *docType = pDoc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
-    pDoc->LinkEndChild(docType);
+    doc->LinkEndChild(declaration);
+    tinyxml2::XMLElement *docType = doc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
+    doc->LinkEndChild(docType);
     
-    tinyxml2::XMLElement *pRootEle = pDoc->NewElement("plist");
-    pRootEle->SetAttribute("version", "1.0");
-    if (nullptr == pRootEle)
+    tinyxml2::XMLElement *rootEle = doc->NewElement("plist");
+    rootEle->SetAttribute("version", "1.0");
+    if (nullptr == rootEle)
     {
-        delete pDoc;
+        delete doc;
         return false;
     }
-    pDoc->LinkEndChild(pRootEle);
+    doc->LinkEndChild(rootEle);
     
-    tinyxml2::XMLElement *innerDict = generateElementForDict(dict, pDoc);
+    tinyxml2::XMLElement *innerDict = generateElementForDict(dict, doc);
     if (nullptr == innerDict )
     {
-        delete pDoc;
+        delete doc;
         return false;
     }
-    pRootEle->LinkEndChild(innerDict);
+    rootEle->LinkEndChild(innerDict);
     
-    bool bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(fullPath.c_str());
+    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(fullPath.c_str());
     
-    delete pDoc;
-    return bRet;
+    delete doc;
+    return ret;
 }
 
 /*
  * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxml2::XMLDocument *doc)
 {
     // object is String
     if (value.getType() == Value::Type::STRING)
     {
-        tinyxml2::XMLElement* node = pDoc->NewElement("string");
-        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
+        tinyxml2::XMLElement* node = doc->NewElement("string");
+        tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
         node->LinkEndChild(content);
         return node;
     }
@@ -385,8 +387,8 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
     // object is integer
     if (value.getType() == Value::Type::INTEGER)
     {
-        tinyxml2::XMLElement* node = pDoc->NewElement("integer");
-        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
+        tinyxml2::XMLElement* node = doc->NewElement("integer");
+        tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
         node->LinkEndChild(content);
         return node;
     }
@@ -394,8 +396,8 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
     // object is real
     if (value.getType() == Value::Type::FLOAT || value.getType() == Value::Type::DOUBLE)
     {
-        tinyxml2::XMLElement* node = pDoc->NewElement("real");
-        tinyxml2::XMLText* content = pDoc->NewText(value.asString().c_str());
+        tinyxml2::XMLElement* node = doc->NewElement("real");
+        tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
         node->LinkEndChild(content);
         return node;
     }
@@ -404,11 +406,11 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
 
     // object is Array
     if (value.getType() == Value::Type::VECTOR)
-        return generateElementForArray(value.asValueVector(), pDoc);
+        return generateElementForArray(value.asValueVector(), doc);
     
     // object is Dictionary
     if (value.getType() == Value::Type::MAP)
-        return generateElementForDict(value.asValueMap(), pDoc);
+        return generateElementForDict(value.asValueMap(), doc);
     
     CCLOG("This type cannot appear in property list");
     return nullptr;
@@ -417,18 +419,18 @@ static tinyxml2::XMLElement* generateElementForObject(Value& value, tinyxml2::XM
 /*
  * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxml2::XMLDocument *doc)
 {
-    tinyxml2::XMLElement* rootNode = pDoc->NewElement("dict");
+    tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
     
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
-        tinyxml2::XMLElement* tmpNode = pDoc->NewElement("key");
+        tinyxml2::XMLElement* tmpNode = doc->NewElement("key");
         rootNode->LinkEndChild(tmpNode);
-        tinyxml2::XMLText* content = pDoc->NewText(iter->first.c_str());
+        tinyxml2::XMLText* content = doc->NewText(iter->first.c_str());
         tmpNode->LinkEndChild(content);
         
-        tinyxml2::XMLElement *element = generateElementForObject(iter->second, pDoc);
+        tinyxml2::XMLElement *element = generateElementForObject(iter->second, doc);
         if (element)
             rootNode->LinkEndChild(element);
     }
@@ -438,16 +440,15 @@ static tinyxml2::XMLElement* generateElementForDict(ValueMap& dict, tinyxml2::XM
 /*
  * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(ValueVector& array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
-    
-    std::for_each(array.begin(), array.end(), [=](Value& value){
+
+    for(const auto &value : array) {
         tinyxml2::XMLElement *element = generateElementForObject(value, pDoc);
         if (element)
             rootNode->LinkEndChild(element);
-
-    });
+    }
     return rootNode;
 }
 
@@ -492,10 +493,75 @@ void FileUtils::purgeCachedEntries()
     _fullPathCache.clear();
 }
 
-unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ssize_t *size)
+static Data getData(const std::string& filename, bool forString)
+{
+    CCASSERT(!filename.empty(), "Invalid filename!");
+    
+    Data ret;
+    unsigned char* buffer = nullptr;
+    ssize_t size = 0;
+    const char* mode = nullptr;
+    if (forString)
+        mode = "rt";
+    else
+        mode = "rb";
+    
+    do
+    {
+        // Read the file from hardware
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
+        FILE *fp = fopen(fullPath.c_str(), mode);
+        CC_BREAK_IF(!fp);
+        fseek(fp,0,SEEK_END);
+        size = ftell(fp);
+        fseek(fp,0,SEEK_SET);
+        
+        if (forString)
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
+            buffer[size] = '\0';
+        }
+        else
+        {
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
+        }
+        
+        size = fread(buffer, sizeof(unsigned char), size, fp);
+        fclose(fp);
+    } while (0);
+    
+    if (nullptr == buffer || 0 == size)
+    {
+        std::string msg = "Get data from file(";
+        msg.append(filename).append(") failed!");
+        CCLOG("%s", msg.c_str());
+    }
+    else
+    {
+        ret.fastSet(buffer, size);
+    }
+    
+    return ret;
+}
+
+std::string FileUtils::getStringFromFile(const std::string& filename)
+{
+    Data data = getData(filename, true);
+    if (data.isNull())
+    	return "";
+    std::string ret((const char*)data.getBytes());
+    return ret;
+}
+
+Data FileUtils::getDataFromFile(const std::string& filename)
+{
+    return getData(filename, false);
+}
+
+unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
-    CCASSERT(filename != nullptr && size != nullptr && mode != nullptr, "Invalid parameters.");
+    CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -522,42 +588,41 @@ unsigned char* FileUtils::getFileData(const char* filename, const char* mode, ss
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const char* zipFilePath, const char* filename, ssize_t *size)
+unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size)
 {
     unsigned char * buffer = nullptr;
-    unzFile pFile = nullptr;
+    unzFile file = nullptr;
     *size = 0;
 
     do 
     {
-        CC_BREAK_IF(!zipFilePath || !filename);
-        CC_BREAK_IF(strlen(zipFilePath) == 0);
+        CC_BREAK_IF(zipFilePath.empty());
 
-        pFile = unzOpen(zipFilePath);
-        CC_BREAK_IF(!pFile);
+        file = unzOpen(zipFilePath.c_str());
+        CC_BREAK_IF(!file);
 
-        int nRet = unzLocateFile(pFile, filename, 1);
-        CC_BREAK_IF(UNZ_OK != nRet);
+        int ret = unzLocateFile(file, filename.c_str(), 1);
+        CC_BREAK_IF(UNZ_OK != ret);
 
-        char szFilePathA[260];
-        unz_file_info FileInfo;
-        nRet = unzGetCurrentFileInfo(pFile, &FileInfo, szFilePathA, sizeof(szFilePathA), nullptr, 0, nullptr, 0);
-        CC_BREAK_IF(UNZ_OK != nRet);
+        char filePathA[260];
+        unz_file_info fileInfo;
+        ret = unzGetCurrentFileInfo(file, &fileInfo, filePathA, sizeof(filePathA), nullptr, 0, nullptr, 0);
+        CC_BREAK_IF(UNZ_OK != ret);
 
-        nRet = unzOpenCurrentFile(pFile);
-        CC_BREAK_IF(UNZ_OK != nRet);
+        ret = unzOpenCurrentFile(file);
+        CC_BREAK_IF(UNZ_OK != ret);
 
-        buffer = (unsigned char*)malloc(FileInfo.uncompressed_size);
-        int CC_UNUSED nSize = unzReadCurrentFile(pFile, buffer, static_cast<unsigned>(FileInfo.uncompressed_size));
-        CCASSERT(nSize == 0 || nSize == (int)FileInfo.uncompressed_size, "the file size is wrong");
+        buffer = (unsigned char*)malloc(fileInfo.uncompressed_size);
+        int CC_UNUSED readedSize = unzReadCurrentFile(file, buffer, static_cast<unsigned>(fileInfo.uncompressed_size));
+        CCASSERT(readedSize == 0 || readedSize == (int)fileInfo.uncompressed_size, "the file size is wrong");
 
-        *size = FileInfo.uncompressed_size;
-        unzCloseCurrentFile(pFile);
+        *size = fileInfo.uncompressed_size;
+        unzCloseCurrentFile(file);
     } while (0);
 
-    if (pFile)
+    if (file)
     {
-        unzClose(pFile);
+        unzClose(file);
     }
 
     return buffer;
@@ -698,14 +763,14 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     _searchPathArray.clear();
     for (auto iter = searchPaths.begin(); iter != searchPaths.end(); ++iter)
     {
-        std::string strPrefix;
+        std::string prefix;
         std::string path;
         
         if (!isAbsolutePath(*iter))
         { // Not an absolute path
-            strPrefix = _defaultResRootPath;
+            prefix = _defaultResRootPath;
         }
-        path = strPrefix + (*iter);
+        path = prefix + (*iter);
         if (path.length() > 0 && path[path.length()-1] != '/')
         {
             path += "/";
@@ -726,11 +791,11 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 
 void FileUtils::addSearchPath(const std::string &searchpath)
 {
-    std::string strPrefix;
+    std::string prefix;
     if (!isAbsolutePath(searchpath))
-        strPrefix = _defaultResRootPath;
+        prefix = _defaultResRootPath;
 
-    std::string path = strPrefix + searchpath;
+    std::string path = prefix + searchpath;
     if (path.length() > 0 && path[path.length()-1] != '/')
     {
         path += "/";
@@ -764,14 +829,14 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     }
 }
 
-std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
 {
     // get directory+filename, safely adding '/' as necessary 
-    std::string ret = strDirectory;
-    if (strDirectory.size() && strDirectory[strDirectory.size()-1] != '/'){
+    std::string ret = directory;
+    if (directory.size() && directory[directory.size()-1] != '/'){
         ret += '/';
     }
-    ret += strFilename;
+    ret += filename;
     
     // if the file doesn't exist, return an empty string
     if (!isFileExist(ret)) {
@@ -780,9 +845,9 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& str
     return ret;
 }
 
-bool FileUtils::isAbsolutePath(const std::string& strPath) const
+bool FileUtils::isAbsolutePath(const std::string& path) const
 {
-    return (strPath[0] == '/');
+    return (path[0] == '/');
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,7 +109,22 @@ NS_CC_END
 
 #else
 
-#include <winsock.h>
+#undef _WINSOCKAPI_
+#include <winsock2.h>
+
+// Conflicted with math.h isnan
+#include <cmath>
+using std::isnan;
+
+inline int vsnprintf_s(char *buffer, size_t sizeOfBuffer, size_t count,
+                 const char *format, va_list argptr) {
+  return vsnprintf(buffer, sizeOfBuffer, format, argptr);
+}
+inline errno_t strcpy_s(char *strDestination, size_t numberOfElements,
+        const char *strSource) {
+    strcpy(strDestination, strSource);
+    return 0;
+}
 
 #endif // __MINGW32__
 
@@ -131,6 +147,9 @@ NS_CC_END
 #ifdef DELETE
 #undef DELETE
 #endif
+
+#undef min
+#undef max
 
 #endif  // __CC_STD_C_H__
 

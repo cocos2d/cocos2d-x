@@ -15,6 +15,9 @@ public:
     Menu* _itemMenu;
 
 	int _testcount;
+    
+protected:
+    void onMouseScroll(Event* event);
 };
 
 class ExtensionsTestScene : public TestScene

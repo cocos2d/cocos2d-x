@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,43 +23,65 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCFontAtlasCache.h"
-#include "CCFontAtlasFactory.h"
+#include <sstream>
 
+#include "CCFontAtlasCache.h"
+
+#include "CCFontFNT.h"
+#include "CCFontFreeType.h"
+#include "CCFontCharMap.h"
 
 NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
-FontAtlas * FontAtlasCache::getFontAtlasTTF(const char *fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs)
+FontAtlas * FontAtlasCache::getFontAtlasTTF(const std::string& fontFileName, int size, GlyphCollection glyphs, const char *customGlyphs, bool useDistanceField)
 {
-    std::string atlasName = generateFontName(fontFileName, size, glyphs);
+    std::string atlasName = generateFontName(fontFileName, size, glyphs, useDistanceField);
     FontAtlas  *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
-        tempAtlas = FontAtlasFactory::createAtlasFromTTF(fontFileName, size, glyphs, customGlyphs);
-        if (tempAtlas)
-            _atlasMap[atlasName] = tempAtlas;
+        FontFreeType *font = FontFreeType::create(fontFileName, size, glyphs, customGlyphs);
+        if (font)
+        {
+            font->setDistanceFieldEnabled(useDistanceField);
+            tempAtlas = font->createFontAtlas();
+            if (tempAtlas)
+                _atlasMap[atlasName] = tempAtlas;
+        }
+        else
+        {
+            return nullptr;
+        }
     }
     else
     {
         tempAtlas->retain();
     }
-    
+
     return tempAtlas;
 }
 
-FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
+FontAtlas * FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName)
 {
-    std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM);
+    std::string atlasName = generateFontName(fontFileName, 0, GlyphCollection::CUSTOM,false);
     FontAtlas *tempAtlas = _atlasMap[atlasName];
     
     if ( !tempAtlas )
     {
-        tempAtlas = FontAtlasFactory::createAtlasFromFNT(fontFileName);
-        if (tempAtlas)
-            _atlasMap[atlasName] = tempAtlas;
+        Font *font = FontFNT::create(fontFileName);
+
+        if(font)
+        {
+            tempAtlas = font->createFontAtlas();
+            if (tempAtlas)
+                _atlasMap[atlasName] = tempAtlas;
+        }
+        else
+        {
+            return nullptr;
+        }
     }
     else
     {
@@ -68,7 +91,93 @@ FontAtlas * FontAtlasCache::getFontAtlasFNT(const char *fontFileName)
     return tempAtlas;
 }
 
-std::string FontAtlasCache::generateFontName(const char *fontFileName, int size, GlyphCollection theGlyphs)
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
+{
+    std::string atlasName = generateFontName(plistFile, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        Font *font = FontCharMap::create(plistFile);
+
+        if(font)
+        {
+            tempAtlas = font->createFontAtlas();
+            if (tempAtlas)
+                _atlasMap[atlasName] = tempAtlas;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
+{
+    char tmp[30];
+    sprintf(tmp,"name:%u_%d_%d_%d",texture->getName(),itemWidth,itemHeight,startCharMap);
+    std::string atlasName = generateFontName(tmp, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        Font *font = FontCharMap::create(texture,itemWidth,itemHeight,startCharMap);
+
+        if(font)
+        {
+            tempAtlas = font->createFontAtlas();
+            if (tempAtlas)
+                _atlasMap[atlasName] = tempAtlas;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
+FontAtlas * FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
+{
+    std::string atlasName = generateFontName(charMapFile, 0, GlyphCollection::CUSTOM,false);
+    FontAtlas *tempAtlas = _atlasMap[atlasName];
+
+    if ( !tempAtlas )
+    {
+        Font *font = FontCharMap::create(charMapFile,itemWidth,itemHeight,startCharMap);
+
+        if(font)
+        {
+            tempAtlas = font->createFontAtlas();
+            if (tempAtlas)
+                _atlasMap[atlasName] = tempAtlas;
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+    else
+    {
+        tempAtlas->retain();
+    }
+
+    return tempAtlas;
+}
+
+std::string FontAtlasCache::generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField)
 {
     std::string tempName(fontFileName);
     
@@ -93,7 +202,8 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
         default:
             break;
     }
-    
+    if(useDistanceField)
+        tempName.append("df");
     // std::to_string is not supported on android, using std::stringstream instead.
     std::stringstream ss;
     ss << size;
@@ -102,20 +212,18 @@ std::string FontAtlasCache::generateFontName(const char *fontFileName, int size,
 
 bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
 {
-    if (atlas)
+    if (nullptr != atlas)
     {
         for( auto &item: _atlasMap )
         {
             if ( item.second == atlas )
             {
-                bool removeFromList = false;
-                if(item.second->isSingleReference())
-                    removeFromList = true;
+                if (atlas->getReferenceCount() == 1)
+                {
+                  _atlasMap.erase(item.first);
+                }
                 
-                item.second->release();
-                
-                if (removeFromList)
-                    _atlasMap.erase(item.first);
+                atlas->release();
                 
                 return true;
             }

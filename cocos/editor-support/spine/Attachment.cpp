@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,36 +29,31 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/Attachment.h>
 #include <spine/extension.h>
 #include <spine/Slot.h>
 
-namespace spine {
+typedef struct _spAttachmentVtable {
+	void (*dispose) (spAttachment* self);
+} _spAttachmentVtable;
 
-typedef struct _AttachmentVtable {
-	void (*dispose) (Attachment* self);
-} _AttachmentVtable;
+void _spAttachment_init (spAttachment* self, const char* name, spAttachmentType type, /**/
+		void (*dispose) (spAttachment* self)) {
 
-void _Attachment_init (Attachment* self, const char* name, AttachmentType type, /**/
-		void (*dispose) (Attachment* self)) {
-
-	CONST_CAST(_AttachmentVtable*, self->vtable) = NEW(_AttachmentVtable);
-	VTABLE(Attachment, self) ->dispose = dispose;
+	CONST_CAST(_spAttachmentVtable*, self->vtable) = NEW(_spAttachmentVtable);
+	VTABLE(spAttachment, self) ->dispose = dispose;
 
 	MALLOC_STR(self->name, name);
 	self->type = type;
 }
 
-void _Attachment_deinit (Attachment* self) {
+void _spAttachment_deinit (spAttachment* self) {
 	FREE(self->vtable);
 	FREE(self->name);
 }
 
-void Attachment_dispose (Attachment* self) {
-	VTABLE(Attachment, self) ->dispose(self);
-	FREE(self);
+void spAttachment_dispose (spAttachment* self) {
+	VTABLE(spAttachment, self) ->dispose(self);
 }
-
-} // namespace spine {

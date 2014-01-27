@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,9 +29,9 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ComponentContainer::ComponentContainer(Node *pNode)
+ComponentContainer::ComponentContainer(Node *node)
 : _components(nullptr)
-, _owner(pNode)
+, _owner(node)
 {
 }
 
@@ -40,24 +40,22 @@ ComponentContainer::~ComponentContainer(void)
     CC_SAFE_DELETE(_components);
 }
 
-Component* ComponentContainer::get(const char *pName) const
+Component* ComponentContainer::get(const std::string& name) const
 {
-    Component* pRet = NULL;
-    CCASSERT(pName != NULL, "Argument must be non-nil");
+    Component* ret = nullptr;
     do {
-        CC_BREAK_IF(NULL == pName);
-        CC_BREAK_IF(NULL == _components);
-        pRet = _components->at(pName);
+        CC_BREAK_IF(nullptr == _components);
+        ret = _components->at(name);
         
     } while (0);
-    return pRet;
+    return ret;
 }
 
-bool ComponentContainer::add(Component *pCom)
+bool ComponentContainer::add(Component *com)
 {
-    bool bRet = false;
-    CCASSERT(pCom != NULL, "Argument must be non-nil");
-    CCASSERT(pCom->getOwner() == NULL, "Component already added. It can't be added again");
+    bool ret = false;
+    CCASSERT(com != nullptr, "Argument must be non-nil");
+    CCASSERT(com->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
         if (_components == nullptr)
@@ -65,38 +63,37 @@ bool ComponentContainer::add(Component *pCom)
             _components = new Map<std::string, Component*>();
             _owner->scheduleUpdate();
         }
-        Component *pComponent = _components->at(pCom->getName());
+        Component *component = _components->at(com->getName());
         
-        CCASSERT(pComponent == NULL, "Component already added. It can't be added again");
-        CC_BREAK_IF(pComponent);
-        pCom->setOwner(_owner);
-        _components->insert(pCom->getName(), pCom);
-        pCom->onEnter();
-        bRet = true;
+        CCASSERT(component == nullptr, "Component already added. It can't be added again");
+        CC_BREAK_IF(component);
+        com->setOwner(_owner);
+        _components->insert(com->getName(), com);
+        com->onEnter();
+        ret = true;
     } while(0);
-    return bRet;
+    return ret;
 }
 
-bool ComponentContainer::remove(const char *pName)
+bool ComponentContainer::remove(const std::string& name)
 {
-    bool bRet = false;
-    CCASSERT(pName != NULL, "Argument must be non-nil");
+    bool ret = false;
     do 
     {        
         CC_BREAK_IF(!_components);
         
-        auto iter = _components->find(pName);
+        auto iter = _components->find(name);
         CC_BREAK_IF(iter == _components->end());
         
         auto com = iter->second;
         com->onExit();
-        com->setOwner(NULL);
+        com->setOwner(nullptr);
         
         _components->erase(iter);
         
-        bRet = true;
+        ret = true;
     } while(0);
-    return bRet;
+    return ret;
  }
 
 void ComponentContainer::removeAll()
@@ -106,7 +103,7 @@ void ComponentContainer::removeAll()
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
             iter->second->onExit();
-            iter->second->setOwner(NULL);
+            iter->second->setOwner(nullptr);
         }
         
         _components->clear();
@@ -121,13 +118,13 @@ void ComponentContainer::alloc(void)
     _components = new Map<std::string, Component*>();
 }
 
-void ComponentContainer::visit(float fDelta)
+void ComponentContainer::visit(float delta)
 {
     if (_components != nullptr)
     {
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            iter->second->update(fDelta);
+            iter->second->update(delta);
         }
     }
 }

@@ -38,12 +38,12 @@ MouseTest::~MouseTest()
     _labelPosition->release();
 }
 
-template <typename T> string tostr(const T& t) { ostringstream os; os<<t; return os.str(); }
+template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
 
 void MouseTest::onMouseDown(Event *event)
 {
     EventMouse* e = (EventMouse*)event;
-    string str = "Mouse Down detected, Key: ";
+    std::string str = "Mouse Down detected, Key: ";
     str += tostr(e->getMouseButton());
     _labelAction->setString(str.c_str());
 }
@@ -51,7 +51,7 @@ void MouseTest::onMouseDown(Event *event)
 void MouseTest::onMouseUp(Event *event)
 {
     EventMouse* e = (EventMouse*)event;
-    string str = "Mouse Up detected, Key: ";
+    std::string str = "Mouse Up detected, Key: ";
     str += tostr(e->getMouseButton());
     _labelAction->setString(str.c_str());
 }
@@ -59,7 +59,7 @@ void MouseTest::onMouseUp(Event *event)
 void MouseTest::onMouseMove(Event *event)
 {
     EventMouse* e = (EventMouse*)event;
-    string str = "MousePosition X:";
+    std::string str = "MousePosition X:";
     str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
     _labelPosition->setString(str.c_str());
 }
@@ -67,7 +67,7 @@ void MouseTest::onMouseMove(Event *event)
 void MouseTest::onMouseScroll(Event *event)
 {
     EventMouse* e = (EventMouse*)event;
-    string str = "Mouse Scroll detected, X: ";
+    std::string str = "Mouse Scroll detected, X: ";
     str = str + tostr(e->getScrollX()) + " Y: " + tostr(e->getScrollY());
     _labelAction->setString(str.c_str());
 }

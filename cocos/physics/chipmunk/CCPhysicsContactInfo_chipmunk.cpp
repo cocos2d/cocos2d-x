@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsContactInfo_chipmunk.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 NS_CC_BEGIN
 
 PhysicsContactInfo::PhysicsContactInfo(PhysicsContact* contact)

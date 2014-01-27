@@ -58,75 +58,75 @@ const char* CCBProxy::getNodeTypeName(Node* pNode)
     }
     
     if (NULL != dynamic_cast<LabelTTF*>(pNode)) {
-        return "LabelTTF";
+        return "cc.LabelTTF";
     }
 
     if (NULL != dynamic_cast<LabelBMFont*>(pNode)) {
-        return "LabelBMFont";
+        return "cc.LabelBMFont";
     }
 
     if (NULL != dynamic_cast<Sprite*>(pNode)) {
-        return "Sprite";
+        return "cc.Sprite";
     }
     
     if (NULL != dynamic_cast<ControlButton*>(pNode)) {
-        return "ControlButton";
+        return "cc.ControlButton";
     }
     
     if (NULL != dynamic_cast<LayerGradient*>(pNode)) {
-        return "LayerGradient";
+        return "cc.LayerGradient";
     }
     
     if (NULL != dynamic_cast<LayerColor*>(pNode)) {
-        return "LayerColor";
+        return "cc.LayerColor";
     }
     
     if (NULL != dynamic_cast<Scale9Sprite*>(pNode)) {
-        return "LayerGradient";
+        return "cc.LayerGradient";
     }
     
     if (NULL != dynamic_cast<Menu*>(pNode)) {
-        return "Menu";
+        return "cc.Menu";
     }
     
     if (NULL != dynamic_cast<MenuItemAtlasFont*>(pNode)) {
-        return "MenuItemAtlasFont";
+        return "cc.MenuItemAtlasFont";
     }
     
     if (NULL != dynamic_cast<MenuItemFont*>(pNode)) {
-        return "MenuItemFont";
+        return "cc.MenuItemFont";
     }
     
     if (NULL != dynamic_cast<MenuItemLabel*>(pNode)) {
-        return "MenuItemLabel";
+        return "cc.MenuItemLabel";
     }
     
     if (NULL != dynamic_cast<MenuItemImage*>(pNode)) {
-        return "MenuItemImage";
+        return "cc.MenuItemImage";
     }
     
     if (NULL != dynamic_cast<MenuItemToggle*>(pNode)) {
-        return "MenuItemToggle";
+        return "cc.MenuItemToggle";
     }
     
     if (NULL != dynamic_cast<MenuItemSprite*>(pNode)) {
-        return "MenuItemSprite";
+        return "cc.MenuItemSprite";
     }
 
     if (NULL != dynamic_cast<MenuItem*>(pNode)) {
-        return "MenuItem";
+        return "cc.MenuItem";
     }
 
     if (NULL != dynamic_cast<Layer*>(pNode)) {
-        return "Layer";
+        return "cc.Layer";
     }
 
     if (NULL != dynamic_cast<String*>(pNode)) {
-        return "String";
+        return "cc.String";
     }
     
     if (NULL != dynamic_cast<ParticleSystemQuad*>(pNode)) {
-        return "ParticleSystemQuad";
+        return "cc.ParticleSystemQuad";
     }
 
     return "No Support";

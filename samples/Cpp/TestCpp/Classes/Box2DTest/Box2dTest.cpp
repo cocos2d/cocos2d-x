@@ -1,6 +1,9 @@
 #include "Box2dTest.h"
 #include "../testResource.h"
 #include "extensions/cocos-ext.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+
 USING_NS_CC_EXT;
 
 #define PTM_RATIO 32
@@ -14,9 +17,12 @@ Box2DTestLayer::Box2DTestLayer()
 , world(NULL)
 {
 #if CC_ENABLE_BOX2D_INTEGRATION
-    setTouchEnabled( true );
-    setAccelerometerEnabled( true );
-
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    
+    auto touchListener = EventListenerTouchAllAtOnce::create();
+    touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTestLayer::onTouchesEnded, this);
+    dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+    
     // init physics
     this->initPhysics();
     // create reset button
@@ -144,12 +150,26 @@ void Box2DTestLayer::draw()
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
 
     kmGLPushMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV);
 
-    world->DrawDebugData();
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
     kmGLPopMatrix();
 #endif
 }
+
+#if CC_ENABLE_BOX2D_INTEGRATION
+void Box2DTestLayer::onDraw()
+{
+    kmMat4 oldMV;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMV);
+    kmGLLoadMatrix(&_modelViewMV);
+    world->DrawDebugData();
+    kmGLLoadMatrix(&oldMV);
+}
+#endif
 
 void Box2DTestLayer::addNewSpriteAtPosition(Point p)
 {

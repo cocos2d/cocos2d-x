@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,22 +36,22 @@ using namespace std;
 
 NS_CC_BEGIN
 
-AnimationCache* AnimationCache::s_pSharedAnimationCache = NULL;
+AnimationCache* AnimationCache::s_sharedAnimationCache = nullptr;
 
 AnimationCache* AnimationCache::getInstance()
 {
-    if (! s_pSharedAnimationCache)
+    if (! s_sharedAnimationCache)
     {
-        s_pSharedAnimationCache = new AnimationCache();
-        s_pSharedAnimationCache->init();
+        s_sharedAnimationCache = new AnimationCache();
+        s_sharedAnimationCache->init();
     }
 
-    return s_pSharedAnimationCache;
+    return s_sharedAnimationCache;
 }
 
 void AnimationCache::destroyInstance()
 {
-    CC_SAFE_RELEASE_NULL(s_pSharedAnimationCache);
+    CC_SAFE_RELEASE_NULL(s_sharedAnimationCache);
 }
 
 bool AnimationCache::init()
@@ -102,7 +103,8 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             continue;
         }
 
-        Vector<AnimationFrame*> frames(static_cast<int>(frameNames.size()));
+        ssize_t frameNameSize = frameNames.size();
+        Vector<AnimationFrame*> frames(frameNameSize);
 
         for (auto& frameName : frameNames)
         {
@@ -118,12 +120,12 @@ void AnimationCache::parseVersion1(const ValueMap& animations)
             frames.pushBack(animFrame);
         }
 
-        if ( frames.size() == 0 )
+        if ( frames.empty() )
         {
             CCLOG("cocos2d: AnimationCache: None of the frames for animation '%s' were found in the SpriteFrameCache. Animation is not being added to the Animation Cache.", iter->first.c_str());
             continue;
         }
-        else if ( frames.size() != frameNames.size() )
+        else if ( frames.size() != frameNameSize )
         {
             CCLOG("cocos2d: AnimationCache: An animation in your dictionary refers to a frame which is not in the SpriteFrameCache. Some or all of the frames for the animation '%s' may be missing.", iter->first.c_str());
         }
@@ -186,7 +188,7 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
     }
 }
 
-void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
+void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist)
 {
     if ( dictionary.find("animations") == dictionary.end() )
     {
@@ -203,9 +205,10 @@ void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary)
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
-        std::for_each(spritesheets.cbegin(), spritesheets.cend(), [](const Value& value){
-            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(value.asString());
-        });
+        for(const auto &value : spritesheets) {
+            std::string path = FileUtils::getInstance()->fullPathFromRelativeFile(value.asString(),plist);
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(path);
+        }
     }
 
     switch (version) {
@@ -230,7 +233,7 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 
-    addAnimationsWithDictionary(dict);
+    addAnimationsWithDictionary(dict,plist);
 }
 
 

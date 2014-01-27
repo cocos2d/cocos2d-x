@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,6 +38,8 @@ THE SOFTWARE.
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
 #include "CCPhysicsBody.h"
+#include "renderer/CCQuadCommand.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
@@ -77,7 +80,7 @@ struct transformValues_;
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
-class CC_DLL Sprite : public NodeRGBA, public TextureProtocol
+class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
 
@@ -169,7 +172,7 @@ public:
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
      *
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
-     *         NULL if the sprite isn't used batch node.
+     *         nullptr if the sprite isn't used batch node.
      */
     virtual SpriteBatchNode* getBatchNode(void);
     /**
@@ -228,8 +231,8 @@ public:
     /**
      * Sets a new SpriteFrame to the Sprite.
      */
-    virtual void setSpriteFrame(SpriteFrame* newFrame);
     virtual void setSpriteFrame(const std::string &spriteFrameName);
+    virtual void setSpriteFrame(SpriteFrame* newFrame);
 
     /** @deprecated Use `setSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
@@ -403,6 +406,7 @@ public:
     * @lua NA
     */
     virtual void setPosition(const Point& pos) override;
+    virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationX(float rotationX) override;
     virtual void setRotationY(float rotationY) override;
@@ -411,10 +415,7 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void reorderChild(Node *child, int zOrder) override;
-    // Should also override addChild(Node*) and addChild(Node*, int), or binding generator will only
-    // bind addChild(Node*, int, int);
-    virtual void addChild(Node* child) override;
-    virtual void addChild(Node* child, int zOrder) override;
+    using Node::addChild;
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
@@ -422,17 +423,10 @@ public:
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
+    virtual void updateQuadVertices();
     virtual void draw(void) override;
-    /// @}
-
-    /// @{
-    /// @name Functions inherited from NodeRGBA
-    virtual void setColor(const Color3B& color3) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual void setOpacity(GLubyte opacity) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
     /// @}
 
 protected:
@@ -533,6 +527,8 @@ protected:
     virtual void setReorderChildDirtyRecursively(void);
     virtual void setDirtyRecursively(bool bValue);
 
+    bool culling() const;
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -542,15 +538,15 @@ protected:
 
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
-    bool                _hasChildren;       /// Whether the sprite contains children
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    AffineTransform     _transformToBatch;
+    kmMat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered
     //
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
+    QuadCommand      _quadCommand;          /// quad command
 
     //
     // Shared data

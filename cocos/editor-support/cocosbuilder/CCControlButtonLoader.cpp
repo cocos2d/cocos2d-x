@@ -34,11 +34,11 @@ void ControlButtonLoader::onHandlePropTypeCheck(Node * pNode, Node * pParent, co
 
 void ControlButtonLoader::onHandlePropTypeString(Node * pNode, Node * pParent, const char * pPropertyName, const char * pString, CCBReader * ccbReader) {
     if(strcmp(pPropertyName, PROPERTY_TITLE_NORMAL) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::NORMAL);
+        ((ControlButton *)pNode)->setTitleForState(pString, Control::State::NORMAL);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_HIGHLIGHTED) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::HIGH_LIGHTED);
+        ((ControlButton *)pNode)->setTitleForState(pString, Control::State::HIGH_LIGHTED);
     } else if(strcmp(pPropertyName, PROPERTY_TITLE_DISABLED) == 0) {
-        ((ControlButton *)pNode)->setTitleForState(String::create(pString), Control::State::DISABLED);
+        ((ControlButton *)pNode)->setTitleForState(pString, Control::State::DISABLED);
     } else {
         ControlLoader::onHandlePropTypeString(pNode, pParent, pPropertyName, pString, ccbReader);
     }

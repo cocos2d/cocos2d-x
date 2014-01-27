@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -122,7 +123,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const char *layerName) const { return getLayer(layerName); };
+    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
@@ -130,7 +131,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const char *groupName) const { return getObjectGroup(groupName); };
+    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -204,7 +205,7 @@ protected:
     ValueMap _properties;
     
     //! tile properties
-    IntValueMap _tileProperties;
+    ValueMapIntKey _tileProperties;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TMXTiledMap);

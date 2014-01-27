@@ -1,32 +1,34 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #ifndef __UISCROLLVIEW_H__
 #define __UISCROLLVIEW_H__
 
 #include "gui/UILayout.h"
 #include "gui/UIScrollInterface.h"
+
+NS_CC_BEGIN
 
 namespace gui {
 
@@ -51,30 +53,27 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_RIGHT
 }ScrollviewEventType;
 
-typedef void (cocos2d::CCObject::*SEL_ScrollViewEvent)(cocos2d::Object*, ScrollviewEventType);
+typedef void (Object::*SEL_ScrollViewEvent)(Object*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 
-class UIScrollView : public UILayout , public UIScrollInterface
+class ScrollView : public Layout , public UIScrollInterface
 {
 public:
     /**
      * Default constructor
-     * @js ctor
      */
-    UIScrollView();
+    ScrollView();
     
     /**
      * Default destructor
-     * @lua NA
-     * @js NA
      */
-    virtual ~UIScrollView();
+    virtual ~ScrollView();
     
     /**
      * Allocates and initializes.
      */
-    static UIScrollView* create();
+    static ScrollView* create();
     
     /**
      * Changes scroll direction of scrollview.
@@ -101,7 +100,7 @@ public:
      *
      * @return inner container.
      */
-    UILayout* getInnerContainer();
+    Layout* getInnerContainer();
     
     /**
      * Scroll inner container to bottom boundary of scrollview.
@@ -156,7 +155,7 @@ public:
     /**
      * Scroll inner container to both direction percent position of scrollview.
      */
-    void scrollToPercentBothDirection(const cocos2d::Point& percent, float time, bool attenuated);
+    void scrollToPercentBothDirection(const Point& percent, float time, bool attenuated);
     
     /**
      * Move inner container to bottom boundary of scrollview.
@@ -211,7 +210,7 @@ public:
     /**
      * Move inner container to both direction percent position of scrollview.
      */
-    void jumpToPercentBothDirection(const cocos2d::Point& percent);
+    void jumpToPercentBothDirection(const Point& percent);
     
     /**
      * Changes inner container size of scrollview.
@@ -220,7 +219,7 @@ public:
      *
      * @param inner container size.
      */
-    void setInnerContainerSize(const cocos2d::Size &size);
+    void setInnerContainerSize(const Size &size);
     
     /**
      * Gets inner container size of scrollview.
@@ -229,39 +228,56 @@ public:
      *
      * @return inner container size.
      */
-	const cocos2d::Size& getInnerContainerSize() const;
+	const Size& getInnerContainerSize() const;
     
     /**
      * Add call back function called scrollview event triggered
      */
-    void addEventListenerScrollView(cocos2d::Object* target, SEL_ScrollViewEvent selector);
+    void addEventListenerScrollView(Object* target, SEL_ScrollViewEvent selector);
         
-    //override "addChild" method of widget.
-    virtual bool addChild(UIWidget* widget) override;
+    virtual void addChild(Node * child) override;
+    /**
+     * Adds a child to the container with a z-order
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
+     */
+    virtual void addChild(Node * child, int zOrder) override;
+    /**
+     * Adds a child to the container with z order and tag
+     *
+     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     *
+     * @param child     A child node
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     */
+    virtual void addChild(Node* child, int zOrder, int tag) override;
     
     //override "removeAllChildrenAndCleanUp" method of widget.
     virtual void removeAllChildren() override;
     
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    
     //override "removeChild" method of widget.
-	virtual bool removeChild(UIWidget* child) override;
+	virtual void removeChild(Node* child, bool cleaup = true) override;
     
     //override "getChildren" method of widget.
-    virtual cocos2d::Array* getChildren() override;
+    virtual Vector<Node*>& getChildren() override;
+    virtual const Vector<Node*>& getChildren() const override;
     
-    //override "onTouchBegan" method of widget.
-    virtual bool onTouchBegan(const cocos2d::Point &touchPoint) override;
+    virtual ssize_t getChildrenCount() const override;
     
-    //override "onTouchMoved" method of widget.
-    virtual void onTouchMoved(const cocos2d::Point &touchPoint) override;
+    virtual Node * getChildByTag(int tag) override;
     
-    //override "onTouchEnded" method of widget.
-    virtual void onTouchEnded(const cocos2d::Point &touchPoint) override;
+    virtual Widget* getChildByName(const char* name) override;
     
-    //override "onTouchCancelled" method of widget.
-    virtual void onTouchCancelled(const cocos2d::Point &touchPoint) override;
-    
-    //override "onTouchLongClicked" method of widget.
-    virtual void onTouchLongClicked(const cocos2d::Point &touchPoint) override;
+    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
+    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
     virtual void update(float dt) override;
     
@@ -291,12 +307,12 @@ public:
      */
     virtual LayoutType getLayoutType() const override;
     
-    virtual void doLayout() override;
-    
     /**
      * Returns the "class name" of widget.
      */
-    virtual const char* getDescription() const override;
+    virtual std::string getDescription() const override;
+    
+    virtual void onEnter() override;
 protected:
     virtual bool init() override;
     virtual void initRenderer() override;
@@ -305,9 +321,9 @@ protected:
     void bounceChildren(float dt);
     void checkBounceBoundary();
     bool checkNeedBounce();
-    void startAutoScrollChildrenWithOriginalSpeed(const cocos2d::Point& dir, float v, bool attenuated, float acceleration);
-    void startAutoScrollChildrenWithDestination(const cocos2d::Point& des, float time, bool attenuated);
-    void jumpToDestination(const cocos2d::Point& des);
+    void startAutoScrollChildrenWithOriginalSpeed(const Point& dir, float v, bool attenuated, float acceleration);
+    void startAutoScrollChildrenWithDestination(const Point& des, float time, bool attenuated);
+    void jumpToDestination(const Point& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
@@ -316,11 +332,11 @@ protected:
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
-    virtual void handlePressLogic(const cocos2d::Point &touchPoint) override;
-    virtual void handleMoveLogic(const cocos2d::Point &touchPoint) override;
-    virtual void handleReleaseLogic(const cocos2d::Point &touchPoint) override;
-    virtual void interceptTouchEvent(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
-    virtual void checkChildInfo(int handleState,UIWidget* sender,const cocos2d::Point &touchPoint) override;
+    virtual void handlePressLogic(const Point &touchPoint) override;
+    virtual void handleMoveLogic(const Point &touchPoint) override;
+    virtual void handleReleaseLogic(const Point &touchPoint) override;
+    virtual void interceptTouchEvent(int handleState,Widget* sender,const Point &touchPoint) override;
+    virtual void checkChildInfo(int handleState,Widget* sender,const Point &touchPoint) override;
     void recordSlidTime(float dt);
     void scrollToTopEvent();
     void scrollToBottomEvent();
@@ -332,20 +348,21 @@ protected:
     void bounceLeftEvent();
     void bounceRightEvent();
     virtual void onSizeChanged() override;
-    virtual UIWidget* createCloneInstance() override;
-    virtual void copySpecialProperties(UIWidget* model) override;
-    virtual void copyClonedWidgetChildren(UIWidget* model) override;
-    virtual void setClippingEnabled(bool able) override{UILayout::setClippingEnabled(able);};
+    virtual Widget* createCloneInstance() override;
+    virtual void copySpecialProperties(Widget* model) override;
+    virtual void copyClonedWidgetChildren(Widget* model) override;
+    virtual void setClippingEnabled(bool able) override{Layout::setClippingEnabled(able);};
+    virtual void doLayout() override;
 protected:
-    UILayout* _innerContainer;
+    Layout* _innerContainer;
     
     SCROLLVIEW_DIR _direction;
 
-    cocos2d::Point _touchBeganPoint;
-    cocos2d::Point _touchMovedPoint;
-    cocos2d::Point _touchEndedPoint;
-    cocos2d::Point _touchMovingPoint;
-    cocos2d::Point _autoScrollDir;
+    Point _touchBeganPoint;
+    Point _touchMovedPoint;
+    Point _touchEndedPoint;
+    Point _touchMovingPoint;
+    Point _autoScrollDir;
     
     float _topBoundary;
     float _bottomBoundary;
@@ -365,11 +382,11 @@ protected:
     float _autoScrollAcceleration;
     bool _isAutoScrollSpeedAttenuated;
     bool _needCheckAutoScrollDestination;
-    cocos2d::Point _autoScrollDestination;
+    Point _autoScrollDestination;
     
     bool _bePressed;
     float _slidTime;
-    cocos2d::Point _moveChildPoint;
+    Point _moveChildPoint;
     float _childFocusCancelOffset;
     
     bool _leftBounceNeeded;
@@ -379,16 +396,16 @@ protected:
     
     bool _bounceEnabled;
     bool _bouncing;
-    cocos2d::Point _bounceDir;
+    Point _bounceDir;
     float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
 
 
     
-    cocos2d::Object* _scrollViewEventListener;
+    Object* _scrollViewEventListener;
     SEL_ScrollViewEvent _scrollViewEventSelector;
 };
 
 }
-
-#endif /* defined(__CocoGUI__UIScrollView__) */
+NS_CC_END
+#endif /* defined(__CocoGUI__ScrollView__) */

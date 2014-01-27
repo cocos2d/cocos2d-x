@@ -17,8 +17,8 @@ public:
 
     void onAcceleration(Acceleration* acc, Event* event);
 
-    virtual std::string title();
-    virtual void onEnter();
+    virtual std::string title() const;
+    virtual void onEnter() override;
 };
 
 class AccelerometerTestScene : public TestScene

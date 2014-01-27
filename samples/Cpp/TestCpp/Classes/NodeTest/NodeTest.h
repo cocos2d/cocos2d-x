@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #ifndef _NODE_TEST_H_
 #define _NODE_TEST_H_
 
@@ -8,142 +33,234 @@
 class TestCocosNodeDemo : public BaseTest
 {
 public:
-    TestCocosNodeDemo(void);
-    ~TestCocosNodeDemo(void);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onEnter();
 
     void restartCallback(Object* sender);
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
+
+protected:
+    TestCocosNodeDemo();
+    virtual ~TestCocosNodeDemo();
 };
 
 class Test2 : public TestCocosNodeDemo
 {
 public:
+    CREATE_FUNC(Test2);
     virtual void onEnter();
-    virtual std::string title();
+    virtual std::string title() const override;
 };
 
 class Test4 : public TestCocosNodeDemo
 {
 public:
-    Test4();
+    CREATE_FUNC(Test4);
     void delay2(float dt);
     void delay4(float dt);
 
-    virtual std::string title();
+    virtual std::string title() const override;
+
+protected:
+    Test4();
 };
 
 class Test5 : public TestCocosNodeDemo
 {
 public:
-    Test5();
-    void addAndRemove(float dt);
+    CREATE_FUNC(Test5);
 
-    virtual std::string title();
+    void addAndRemove(float dt);
+    virtual std::string title() const override;
+
+protected:
+    Test5();
 };
 
 class Test6 : public TestCocosNodeDemo
 {
 public:
-    Test6();
+    CREATE_FUNC(Test6);
     void addAndRemove(float dt);
+    virtual std::string title() const override;
 
-    virtual std::string title();
+protected:
+    Test6();
 };
 
 class StressTest1 : public TestCocosNodeDemo
 {
+public:
+    CREATE_FUNC(StressTest1);
     void shouldNotCrash(float dt);
     void removeMe(Node* node);
-public:
-    StressTest1();
+    virtual std::string title() const override;
 
-    virtual std::string title();
+protected:
+    StressTest1();
 };
 
 class StressTest2 : public TestCocosNodeDemo
 {
-    void shouldNotLeak(float dt);
 public:
-    StressTest2();
+    CREATE_FUNC(StressTest2);
+    void shouldNotLeak(float dt);
+    virtual std::string title() const override;
 
-    virtual std::string title();
+protected:
+    StressTest2();
 };
 
 class SchedulerTest1 : public TestCocosNodeDemo
 {
 public:
-    SchedulerTest1();
+    CREATE_FUNC(SchedulerTest1);
     void doSomething(float dt);
+    virtual std::string title() const override;
 
-    virtual std::string title();
+protected:
+    SchedulerTest1();
 };
 
 class NodeToWorld : public TestCocosNodeDemo
 {
 public:
+    CREATE_FUNC(NodeToWorld);
+    virtual std::string title() const override;
+
+protected:
     NodeToWorld();
-    virtual std::string title();
+};
+
+class NodeToWorld3D : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeToWorld3D);
+    virtual std::string title() const override;
+
+protected:
+    NodeToWorld3D();
 };
 
 class CameraOrbitTest : public TestCocosNodeDemo
 {
 public:
-    CameraOrbitTest();
+    CREATE_FUNC(CameraOrbitTest);
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
 
-    virtual void onEnter();
-    virtual void onExit();
-    virtual std::string title();
+protected:
+    CameraOrbitTest();
 };
 
 class CameraZoomTest : public TestCocosNodeDemo
 {
-    float    _z;
 public:
-    CameraZoomTest();
+    CREATE_FUNC(CameraZoomTest);
     void update(float dt);
 
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
 
-    virtual std::string title();
+protected:
+    CameraZoomTest();
+    float    _z;
 };
 
 class CameraCenterTest : public TestCocosNodeDemo
 {
 public:
+    CREATE_FUNC(CameraCenterTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
     CameraCenterTest();
-    virtual std::string title();
-    virtual std::string subtitle();
+};
+
+class CameraTest1 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(CameraTest1);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    CameraTest1();
+
+    Sprite *_sprite1;
+    Sprite *_sprite2;
+};
+
+class CameraTest2 : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(CameraTest2);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+protected:
+    CameraTest2();
+
+    Sprite *_sprite1;
+    Sprite *_sprite2;
 };
 
 class ConvertToNode : public TestCocosNodeDemo
 {
 public:
-    ConvertToNode();
+    CREATE_FUNC(ConvertToNode);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event *event);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    ConvertToNode();
 };
 
 class NodeOpaqueTest : public TestCocosNodeDemo
 {
 public:
+    CREATE_FUNC(NodeOpaqueTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
     NodeOpaqueTest();
-    virtual std::string title();
-    virtual std::string subtitle();
 };
 
 class NodeNonOpaqueTest : public TestCocosNodeDemo
 {
 public:
+    CREATE_FUNC(NodeNonOpaqueTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
     NodeNonOpaqueTest();
-    virtual std::string title();
-    virtual std::string subtitle();
+};
+
+class NodeGlobalZValueTest : public TestCocosNodeDemo
+{
+public:
+    CREATE_FUNC(NodeGlobalZValueTest);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    virtual void update(float dt) override;
+
+protected:
+    NodeGlobalZValueTest();
+    Sprite *_sprite;
 };
 
 class CocosNodeTestScene : public TestScene

@@ -1,5 +1,4 @@
 #include "cocos2d.h"
-#include "CCEGLView.h"
 #include "AppDelegate.h"
 #include "CCLuaEngine.h"
 #include "SimpleAudioEngine.h"
@@ -61,11 +60,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     searchPaths.insert(searchPaths.begin(), "cocosbuilderRes");
     if (screenSize.height > 320)
     {
-        searchPaths.insert(searchPaths.begin(), "hd/scenetest");
+        searchPaths.insert(searchPaths.begin(), "hd/scenetest/LoadSceneEdtiorFileTest");
     }
     else
     {
-        searchPaths.insert(searchPaths.begin(), "scenetest");
+        searchPaths.insert(searchPaths.begin(), "scenetest/LoadSceneEdtiorFileTest");
     }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY

@@ -55,12 +55,10 @@ function Sprite1.addNewSpriteWithCoords(layer, point)
     sprite:runAction( cc.RepeatForever:create(seq) )
 end
 
-function Sprite1.onTouch(event, x, y)
-    if event == "began" then
-        return true
-    elseif event == "ended" then
-        Sprite1.addNewSpriteWithCoords(Helper.currentLayer, cc.p(x,y))
-        return true
+function Sprite1.onTouchesEnd(touches, event)
+    for i = 1,table.getn(touches) do
+        local location = touches[i]:getLocation()
+        Sprite1.addNewSpriteWithCoords(Helper.currentLayer, location)
     end
 end
 
@@ -69,8 +67,11 @@ function Sprite1.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Sprite1.addNewSpriteWithCoords(layer, cc.p(size.width/2, size.height/2))
-    layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(Sprite1.onTouch)
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(Sprite1.onTouchesEnd,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
     Helper.titleLabel:setString("Sprite (tap screen)")
 
@@ -115,12 +116,10 @@ function SpriteBatchNode1.addNewSpriteWithCoords(layer, point)
     sprite:runAction( cc.RepeatForever:create(seq) )
 end
 
-function SpriteBatchNode1.onTouch(event, x, y)
-    if event == "began" then
-        return true
-    elseif event == "ended" then
-        SpriteBatchNode1.addNewSpriteWithCoords(Helper.currentLayer, cc.p(x,y))
-        return true
+function SpriteBatchNode1.onTouchesEnd(touches,event)
+    for i = 1,table.getn(touches) do
+        local location = touches[i]:getLocation()
+        SpriteBatchNode1.addNewSpriteWithCoords(Helper.currentLayer, location)
     end
 end
 
@@ -132,8 +131,10 @@ function SpriteBatchNode1.create()
 
     SpriteBatchNode1.addNewSpriteWithCoords(layer, cc.p(size.width/2, size.height/2))
 
-    layer:setTouchEnabled(true)
-    layer:registerScriptTouchHandler(SpriteBatchNode1.onTouch)
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(Sprite1.onTouchesEnd,cc.Handler.EVENT_TOUCHES_ENDED )
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
 
     Helper.titleLabel:setString("SpriteBatchNode (tap screen)")
 
@@ -445,7 +446,7 @@ function SpriteAnchorPoint.initLayer(layer)
         end
         point:setPosition( sprite:getPosition() )
         
-        local copy = tolua.cast(action:clone(), "Action")
+        local copy = tolua.cast(action:clone(), "cc.Action")
         sprite:runAction(copy)
         layer:addChild(sprite, i)
     end        
@@ -498,7 +499,7 @@ function SpriteBatchNodeAnchorPoint.initLayer(layer)
 
         point:setPosition( cc.p(sprite:getPosition()) )
 
-        local copy = tolua.cast(action:clone(), "Action")
+        local copy = tolua.cast(action:clone(), "cc.Action")
         sprite:runAction(copy)
         batch:addChild(sprite, i)
     end

@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -182,7 +183,7 @@ protected:
     virtual bool canDetachWithIME() override;
     virtual void insertText(const char * text, int len) override;
     virtual void deleteBackward() override;
-    virtual const char * getContentText() override;
+    virtual const std::string& getContentText() override;
 private:
     class LengthStack;
     LengthStack * _lens;

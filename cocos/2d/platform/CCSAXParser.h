@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010 cocos2d-x.org  http://cocos2d-x.org
+ Copyright (c) 2010 cocos2d-x.org
  Copyright (c) 2010 Максим Аксенов
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,7 +26,7 @@
 
 #include "CCPlatformConfig.h"
 #include "platform/CCCommon.h"
-#include "string.h"  // for size_t
+#include <string>
 
 NS_CC_BEGIN
 
@@ -77,22 +77,22 @@ public:
      * @js NA
      * @lua NA
      */
-    bool init(const char *pszEncoding);
+    bool init(const char *encoding);
     /**
      * @js NA
      * @lua NA
      */
-    bool parse(const char* pXMLData, size_t uDataLength);
+    bool parse(const char* xmlData, size_t dataLength);
     /**
      * @js NA
      * @lua NA
      */
-    bool parse(const char *pszFile);
+    bool parse(const std::string& filename);
     /**
      * @js NA
      * @lua NA
      */
-    void setDelegator(SAXDelegator* pDelegator);
+    void setDelegator(SAXDelegator* delegator);
     /**
      * @js NA
      * @lua NA

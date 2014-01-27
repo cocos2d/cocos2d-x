@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -31,7 +31,6 @@
 #include "CCArray.h"
 #include "CCDictionary.h"
 #include "CCSet.h"
-#include "CCData.h"
 
 NS_CC_BEGIN
 
@@ -71,11 +70,6 @@ void DataVisitor::visit(const __Dictionary *value)
 }
 
 void DataVisitor::visit(const __Set *value)
-{
-    visitObject(value);
-}
-
-void DataVisitor::visit(const Data *value)
 {
     visitObject(value);
 }
@@ -220,12 +214,6 @@ void PrettyPrinter::visit(const __Set *p)
     _result += "\n";
     _result += _indentStr;
     _result += "</set>\n";
-}
-
-void PrettyPrinter::visit(const Data *p)
-{
-	//TODO Implement
-	DataVisitor::visit(p);
 }
 
 void PrettyPrinter::setIndentLevel(int indentLevel)

@@ -1,4 +1,4 @@
-require "luaScript/extern"
+require "extern"
 require "Cocos2d"
 
 VisibleRect = class("VisibleRect")

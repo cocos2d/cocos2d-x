@@ -6,8 +6,6 @@
 
 USING_NS_CC;
 
-using namespace std;
-
 class TestScene : public Scene
 {
 public: 
@@ -20,5 +18,6 @@ public:
 // C++ 11
 
 #define CL(__className__) [](){ return __className__::create();}
+#define CLN(__className__) [](){ auto obj = new __className__(); obj->autorelease(); return obj; }
 
 #endif

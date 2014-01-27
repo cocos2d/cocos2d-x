@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,7 +44,7 @@ struct _ccArray;
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
 */
-class CC_DLL ParallaxNode : public Node 
+class CC_DLL ParallaxNode : public Node
 {
 public:
     // Create a Parallax node

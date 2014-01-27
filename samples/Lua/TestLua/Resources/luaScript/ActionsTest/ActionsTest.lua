@@ -551,7 +551,7 @@ local function ActionAnimate()
 
 	local animation3 = animation2:clone()
 	-- problem
-    tolua.cast(animation3,"Animation"):setLoops(4)
+    tolua.cast(animation3,"cc.Animation"):setLoops(4)
 
     local action3 = cc.Animate:create(animation3)
     kathia:runAction(action3)
@@ -740,7 +740,7 @@ local function ActionRotateToRepeat()
     local act2 = cc.RotateTo:create(1, 0)
     local seq  = cc.Sequence:create(act1, act2)
     local rep1 = cc.RepeatForever:create(seq)
-    local rep2 = cc.Repeat:create(tolua.cast(seq:clone(), "Sequence"), 10)
+    local rep2 = cc.Repeat:create(tolua.cast(seq:clone(), "cc.Sequence"), 10)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -931,8 +931,8 @@ local function ActionOrbit()
     local seq = cc.Sequence:create(move, move_back)
     local rfe = cc.RepeatForever:create(seq)
     kathia:runAction(rfe)
-    tamara:runAction(tolua.cast(rfe:clone(), "ActionInterval"))
-    grossini:runAction(tolua.cast(rfe:clone(), "ActionInterval"))
+    tamara:runAction(tolua.cast(rfe:clone(), "cc.ActionInterval"))
+    grossini:runAction(tolua.cast(rfe:clone(), "cc.ActionInterval"))
 
 
 	Helper.subtitleLabel:setString("OrbitCamera action")
@@ -1019,7 +1019,6 @@ local function ActionPause(dt)
 
 	local director = cc.Director:getInstance()
     pausedTargets = director:getActionManager():pauseAllRunningActions()
-    pausedTargets:retain()
 end
 
 local function ActionResume(dt)
@@ -1032,7 +1031,6 @@ local function ActionResume(dt)
 	if pausedTargets ~= nil then
 		-- problem: will crash here. Try fixing me!
 		director:getActionManager():resumeTargets(pausedTargets)
-        pausedTargets:release()
 	end
 end
 

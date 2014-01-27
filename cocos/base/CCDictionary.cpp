@@ -1,6 +1,7 @@
 /****************************************************************************
- Copyright (c) 2012 - 2013 cocos2d-x.org
- 
+ Copyright (c) 2012      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
  http://www.cocos2d-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,7 +27,12 @@
 #include "CCString.h"
 #include "CCInteger.h"
 #include "platform/CCFileUtils.h"
-#include <algorithm>    // std::for_each
+#include "CCString.h"
+#include "CCBool.h"
+#include "CCInteger.h"
+#include "CCFloat.h"
+#include "CCDouble.h"
+#include "CCArray.h"
 
 using namespace std;
 
@@ -415,8 +421,8 @@ static __Array* visitArray(const ValueVector& array)
 {
     __Array* ret = new __Array();
     ret->init();
-    
-    std::for_each(array.begin(), array.end(), [&ret](const Value& value){
+
+    for(const auto &value : array) {
         if (value.getType() == Value::Type::MAP)
         {
             const ValueMap& subDict = value.asValueMap();
@@ -437,7 +443,7 @@ static __Array* visitArray(const ValueVector& array)
             ret->addObject(str);
             str->release();
         }
-    });
+    }
     
     return ret;
 }
@@ -462,15 +468,97 @@ __Dictionary* __Dictionary::createWithContentsOfFile(const char *pFileName)
     return ret;
 }
 
+static ValueMap ccdictionary_to_valuemap(__Dictionary* dict);
+
+static ValueVector ccarray_to_valuevector(__Array* arr)
+{
+    ValueVector ret;
+    
+    Object* obj;
+    CCARRAY_FOREACH(arr, obj)
+    {
+        Value arrElement;
+
+        __String* strVal = nullptr;
+        __Dictionary* dictVal = nullptr;
+        __Array* arrVal = nullptr;
+        __Double* doubleVal = nullptr;
+        __Bool* boolVal = nullptr;
+        __Float* floatVal = nullptr;
+        __Integer* intVal = nullptr;
+        
+        if ((strVal = dynamic_cast<__String *>(obj))) {
+            arrElement = Value(strVal->getCString());
+        } else if ((dictVal = dynamic_cast<__Dictionary*>(obj))) {
+            arrElement = ccdictionary_to_valuemap(dictVal);
+        } else if ((arrVal = dynamic_cast<__Array*>(obj))) {
+            arrElement = ccarray_to_valuevector(arrVal);
+        } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
+            arrElement = Value(doubleVal->getValue());
+        } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
+            arrElement = Value(floatVal->getValue());
+        } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
+            arrElement = Value(intVal->getValue());
+        }  else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
+            arrElement = boolVal->getValue() ? Value(true) : Value(false);
+        } else {
+            CCASSERT(false, "the type isn't suppored.");
+        }
+
+        ret.push_back(arrElement);
+    }
+    return ret;
+}
+
+static ValueMap ccdictionary_to_valuemap(__Dictionary* dict)
+{
+    ValueMap ret;
+    DictElement* pElement = nullptr;
+    CCDICT_FOREACH(dict, pElement)
+    {
+        Object* obj = pElement->getObject();
+        
+        __String* strVal = nullptr;
+        __Dictionary* dictVal = nullptr;
+        __Array* arrVal = nullptr;
+        __Double* doubleVal = nullptr;
+        __Bool* boolVal = nullptr;
+        __Float* floatVal = nullptr;
+        __Integer* intVal = nullptr;
+        
+        Value dictElement;
+        
+        if ((strVal = dynamic_cast<__String *>(obj))) {
+            dictElement = Value(strVal->getCString());
+        } else if ((dictVal = dynamic_cast<__Dictionary*>(obj))) {
+            dictElement = ccdictionary_to_valuemap(dictVal);
+        } else if ((arrVal = dynamic_cast<__Array*>(obj))) {
+            dictElement = ccarray_to_valuevector(arrVal);
+        } else if ((doubleVal = dynamic_cast<__Double*>(obj))) {
+            dictElement = Value(doubleVal->getValue());
+        } else if ((floatVal = dynamic_cast<__Float*>(obj))) {
+            dictElement = Value(floatVal->getValue());
+        } else if ((intVal = dynamic_cast<__Integer*>(obj))) {
+            dictElement = Value(intVal->getValue());
+        } else if ((boolVal = dynamic_cast<__Bool*>(obj))) {
+            dictElement = boolVal->getValue() ? Value(true) : Value(false);
+        } else {
+            CCASSERT(false, "the type isn't suppored.");
+        }
+
+        const char* key = pElement->getStrKey();
+        if (key && strlen(key) > 0)
+        {
+            ret[key] = dictElement;
+        }
+    }
+    return ret;
+}
+
+
 bool __Dictionary::writeToFile(const char *fullPath)
 {
-    ValueMap dict;
-    DictElement* element = nullptr;
-    CCDICT_FOREACH(this, element)
-    {
-        dict[element->getStrKey()] = Value(static_cast<__String*>(element->getObject())->getCString());
-    }
-    
+    ValueMap dict = ccdictionary_to_valuemap(this);
     return FileUtils::getInstance()->writeToFile(dict, fullPath);
 }
 

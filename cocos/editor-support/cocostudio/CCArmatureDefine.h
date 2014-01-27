@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,8 +26,6 @@ THE SOFTWARE.
 #define __CCARMATUREDEFINE_H__
 
 
-#include "cocos2d.h"
-
 #define VERSION_COMBINED 0.30f
 #define VERSION_CHANGE_ROTATION_RANGE 1.0f
 #define VERSION_COLOR_READING 1.1f
@@ -42,11 +40,11 @@ THE SOFTWARE.
 #endif
 
 #ifndef ENABLE_PHYSICS_CHIPMUNK_DETECT
-#define ENABLE_PHYSICS_CHIPMUNK_DETECT 1
+#define ENABLE_PHYSICS_CHIPMUNK_DETECT 0
 #endif
 
 #ifndef ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 
-#define ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 0
+#define ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX 1
 #endif
 
 #define CS_RETURN_IF(cond) if (cond) return

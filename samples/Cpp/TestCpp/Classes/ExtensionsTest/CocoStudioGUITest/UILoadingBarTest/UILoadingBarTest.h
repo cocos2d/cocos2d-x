@@ -35,13 +35,13 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Object* sender, TouchEventType type);
-	virtual void restartCallback(Object* sender, TouchEventType type);
-	virtual void nextCallback(Object* sender, TouchEventType type);
+	virtual void previousCallback(Object* sender, TouchEventType type) override;
+	virtual void restartCallback(Object* sender, TouchEventType type) override;
+	virtual void nextCallback(Object* sender, TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
-    int m_nCount;
+    int _count;
 };
 
 class UILoadingBarTest_Right : public UIScene
@@ -52,13 +52,13 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Object* sender, TouchEventType type);
-	virtual void restartCallback(Object* sender, TouchEventType type);
-	virtual void nextCallback(Object* sender, TouchEventType type);
+	virtual void previousCallback(Object* sender, TouchEventType type) override;
+	virtual void restartCallback(Object* sender, TouchEventType type) override;
+	virtual void nextCallback(Object* sender, TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
-    int m_nCount;
+    int _count;
 };
 
 class UILoadingBarTest_Left_Scale9 : public UIScene
@@ -69,13 +69,13 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Object* sender, TouchEventType type);
-	virtual void restartCallback(Object* sender, TouchEventType type);
-	virtual void nextCallback(Object* sender, TouchEventType type);
+	virtual void previousCallback(Object* sender, TouchEventType type) override;
+	virtual void restartCallback(Object* sender, TouchEventType type) override;
+	virtual void nextCallback(Object* sender, TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
-    int m_nCount;
+    int _count;
 };
 
 class UILoadingBarTest_Right_Scale9 : public UIScene
@@ -86,13 +86,13 @@ public:
     bool init();
     void update(float delta);
 
-	virtual void previousCallback(Object* sender, TouchEventType type);
-	virtual void restartCallback(Object* sender, TouchEventType type);
-	virtual void nextCallback(Object* sender, TouchEventType type);
+	virtual void previousCallback(Object* sender, TouchEventType type) override;
+	virtual void restartCallback(Object* sender, TouchEventType type) override;
+	virtual void nextCallback(Object* sender, TouchEventType type) override;
     
 protected:
     UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
-    int m_nCount;
+    int _count;
 };
 
 #endif /* defined(__TestCpp__UILoadingBarTest__) */

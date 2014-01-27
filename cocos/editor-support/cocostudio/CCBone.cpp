@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,7 +47,7 @@ Bone *Bone::create()
 
 }
 
-Bone *Bone::create(const char *name)
+Bone *Bone::create(const std::string& name)
 {
 
     Bone *pBone = new Bone();
@@ -71,9 +71,11 @@ Bone::Bone()
     _tween = nullptr;
     _displayManager = nullptr;
     _ignoreMovementBoneData = false;
-    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+//    _worldTransform = AffineTransformMake(1, 0, 0, 1, 0, 0);
+    kmMat4Identity(&_worldTransform);
     _boneTransformDirty = true;
-    _blendType = BLEND_NORMAL;
+    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    _blendDirty = false;
     _worldInfo = nullptr;
 
     _armatureParentBone = nullptr;
@@ -99,16 +101,13 @@ bool Bone::init()
 }
 
 
-bool Bone::init(const char *name)
+bool Bone::init(const std::string& name)
 {
     bool bRet = false;
     do
     {
 
-        if(nullptr != name)
-        {
-            _name = name;
-        }
+        _name = name;
 
         CC_SAFE_DELETE(_tweenData);
         _tweenData = new FrameData();
@@ -146,7 +145,7 @@ void Bone::setBoneData(BoneData *boneData)
     }
 
     _name = _boneData->name;
-    _ZOrder = _boneData->zOrder;
+    _localZOrder = _boneData->zOrder;
 
     _displayManager->initDisplayList(boneData);
 }
@@ -221,16 +220,16 @@ void Bone::update(float delta)
 
         if (_armatureParentBone)
         {
-            _worldTransform = AffineTransformConcat(_worldTransform, _armature->getNodeToParentTransform());
+            _worldTransform = TransformConcat(_worldTransform, _armature->getNodeToParentTransform());
         }
     }
 
     DisplayFactory::updateDisplay(this, delta, _boneTransformDirty || _armature->getArmatureTransformDirty());
 
-    _children.forEach([&delta](Node* obj){
+    for(const auto &obj: _children) {
         Bone *childBone = static_cast<Bone*>(obj);
         childBone->update(delta);
-    });
+    }
 
     _boneTransformDirty = false;
 }
@@ -239,8 +238,8 @@ void Bone::applyParentTransform(Bone *parent)
 {
     float x = _worldInfo->x;
     float y = _worldInfo->y;
-    _worldInfo->x = x * parent->_worldTransform.a + y * parent->_worldTransform.c + parent->_worldInfo->x;
-    _worldInfo->y = x * parent->_worldTransform.b + y * parent->_worldTransform.d + parent->_worldInfo->y;
+    _worldInfo->x = x * parent->_worldTransform.mat[0] + y * parent->_worldTransform.mat[4] + parent->_worldInfo->x;
+    _worldInfo->y = x * parent->_worldTransform.mat[1] + y * parent->_worldTransform.mat[5] + parent->_worldInfo->y;
     _worldInfo->scaleX = _worldInfo->scaleX * parent->_worldInfo->scaleX;
     _worldInfo->scaleY = _worldInfo->scaleY * parent->_worldInfo->scaleY;
     _worldInfo->skewX = _worldInfo->skewX + parent->_worldInfo->skewX;
@@ -248,40 +247,34 @@ void Bone::applyParentTransform(Bone *parent)
 }
 
 
+void CCBone::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc.src != blendFunc.src && _blendFunc.dst != blendFunc.dst)
+    {
+        _blendFunc = blendFunc;
+        _blendDirty = true;
+    }
+}
+
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
     _realColor = Color3B(255, 255, 255);
-    NodeRGBA::updateDisplayedColor(parentColor);
-    updateColor();
+    Node::updateDisplayedColor(parentColor);
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
     _realOpacity = 255;
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
-    updateColor();
-}
-
-void Bone::setColor(const Color3B& color)
-{
-    NodeRGBA::setColor(color);
-    updateColor();
-}
-
-void Bone::setOpacity(GLubyte opacity)
-{
-    NodeRGBA::setOpacity(opacity);
-    updateColor();
+    Node::updateDisplayedOpacity(parentOpacity);
 }
 
 void Bone::updateColor()
 {
     Node *display = _displayManager->getDisplayRenderNode();
-    RGBAProtocol *protocol = dynamic_cast<RGBAProtocol *>(display);
-    if(protocol != nullptr)
+    if(display != nullptr)
     {
-        protocol->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
-        protocol->setOpacity(_displayedOpacity * _tweenData->a / 255);
+        display->setColor(Color3B(_displayedColor.r * _tweenData->r / 255, _displayedColor.g * _tweenData->g / 255, _displayedColor.b * _tweenData->b / 255));
+        display->setOpacity(_displayedOpacity * _tweenData->a / 255);
     }
 }
 
@@ -290,11 +283,11 @@ void Bone::updateZOrder()
     if (_dataVersion >= VERSION_COMBINED)
     {
         int zorder = _tweenData->zOrder + _boneData->zOrder;
-        setZOrder(zorder);
+        setLocalZOrder(zorder);
     }
     else
     {
-        setZOrder(_tweenData->zOrder);
+        setLocalZOrder(_tweenData->zOrder);
     }
 }
 
@@ -381,20 +374,20 @@ Tween *Bone::getTween()
     return _tween;
 }
 
-void Bone::setZOrder(int zOrder)
+void Bone::setLocalZOrder(int zOrder)
 {
-    if (_ZOrder != zOrder)
-        Node::setZOrder(zOrder);
+    if (_localZOrder != zOrder)
+        Node::setLocalZOrder(zOrder);
 }
 
-AffineTransform Bone::getNodeToArmatureTransform() const
+kmMat4 Bone::getNodeToArmatureTransform() const
 {
     return _worldTransform;
 }
 
-AffineTransform Bone::getNodeToWorldTransform() const
+kmMat4 Bone::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
+    return TransformConcat(_worldTransform, _armature->getNodeToWorldTransform());
 }
 
 Node *Bone::getDisplayRenderNode()
@@ -425,28 +418,43 @@ void Bone::removeDisplay(int index)
 
 void Bone::changeDisplayByIndex(int index, bool force)
 {
-    _displayManager->changeDisplayByIndex(index, force);
+    changeDisplayWithIndex(index, force);
 }
 
-Array *Bone::getColliderBodyList()
+void Bone::changeDisplayByName(const std::string &name, bool force)
+{
+    changeDisplayWithName(name, force);
+}
+
+void Bone::changeDisplayWithIndex(int index, bool force)
+{
+    _displayManager->changeDisplayWithIndex(index, force);
+}
+
+void Bone::changeDisplayWithName(const std::string& name, bool force)
+{
+    _displayManager->changeDisplayWithName(name, force);
+}
+
+ColliderDetector* Bone::getColliderDetector() const
 {
     if (DecorativeDisplay *decoDisplay = _displayManager->getCurrentDecorativeDisplay())
     {
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
         {
-            return detector->getColliderBodyList();
+            return detector;
         }
     }
     return nullptr;
 }
 
 
-
+#if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
 void Bone::setColliderFilter(ColliderFilter *filter)
 {
-    Array *array = _displayManager->getDecorativeDisplayList();
+    auto array = _displayManager->getDecorativeDisplayList();
 
-    for(auto object : *array)
+    for(auto& object : array)
     {
         DecorativeDisplay *decoDisplay = static_cast<DecorativeDisplay *>(object);
         if (ColliderDetector *detector = decoDisplay->getColliderDetector())
@@ -466,6 +474,6 @@ ColliderFilter *Bone::getColliderFilter()
     }
     return nullptr;
 }
-
+#endif
 
 }

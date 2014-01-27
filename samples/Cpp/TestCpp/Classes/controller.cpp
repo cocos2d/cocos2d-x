@@ -19,6 +19,8 @@ struct {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
+    { "AUnitTest", []() { return new UnitTestScene(); }},
+    { "ANewRenderTest", []() { return new NewRendererTestScene(); } },
 	{ "Accelerometer", []() { return new AccelerometerTestScene(); } },
 	{ "ActionManagerTest", [](){return new ActionManagerTestScene(); } },
 	{ "ActionsEaseTest", [](){return new ActionsEaseTestScene();} },
@@ -71,6 +73,7 @@ struct {
 	{ "ParticleTest", [](){return new ParticleTestScene(); } },
 	{ "PerformanceTest", []() { return new PerformanceTestScene(); } },
 	{ "PhysicsTest", []() { return new PhysicsTestScene(); } },
+    { "ReleasePoolTest", [](){ return new ReleasePoolTestScene(); } },
 	{ "RenderTextureTest", [](){return new RenderTextureScene(); } },
 	{ "RotateWorldTest", [](){return new RotateWorldTestScene(); } },
 	{ "SceneTest", [](){return new SceneTestScene();} },
@@ -149,12 +152,11 @@ TestController::~TestController()
 
 void TestController::menuCallback(Object * sender)
 {
-
 	Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
     auto menuItem = static_cast<MenuItem *>(sender);
-    int idx = menuItem->getZOrder() - 10000;
+    int idx = menuItem->getLocalZOrder() - 10000;
 
     // create the test scene and run it
     auto scene = g_aTestNames[idx].callback();

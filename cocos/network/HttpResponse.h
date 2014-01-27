@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,8 +26,9 @@
 #ifndef __HTTP_RESPONSE__
 #define __HTTP_RESPONSE__
 
-#include "cocos2d.h"
 #include "network/HttpRequest.h"
+
+NS_CC_BEGIN
 
 namespace network {
 
@@ -178,5 +180,7 @@ protected:
 };
 
 }
+
+NS_CC_END
 
 #endif //__HTTP_RESPONSE_H__

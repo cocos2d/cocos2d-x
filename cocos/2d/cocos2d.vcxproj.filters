@@ -109,6 +109,12 @@
     <Filter Include="base">
       <UniqueIdentifier>{aec8225f-81a7-4213-b97b-7004d5535398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{cba0f362-878c-438b-ad0f-43d287516357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\desktop">
+      <UniqueIdentifier>{32373f63-2c2d-4eab-bc4a-21745ba0b3fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -315,12 +321,6 @@
     <ClCompile Include="CCFontAtlasCache.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCFontAtlasFactory.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFontDefinition.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="CCFontFNT.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
@@ -342,9 +342,6 @@
     <ClCompile Include="CCLabelTTF.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCTextImage.cpp">
-      <Filter>label_nodes</Filter>
-    </ClCompile>
     <ClCompile Include="..\base\etc1.cpp">
       <Filter>platform\etc</Filter>
     </ClCompile>
@@ -355,9 +352,6 @@
       <Filter>platform\win32</Filter>
     </ClCompile>
     <ClCompile Include="platform\win32\CCDevice.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="platform\win32\CCEGLView.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
     <ClCompile Include="platform\win32\CCFileUtilsWin32.cpp">
@@ -450,7 +444,6 @@
     <ClCompile Include="CCParallaxNode.cpp">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCConfiguration.cpp" />
     <ClCompile Include="CCDeprecated.cpp" />
     <ClCompile Include="CCDirector.cpp" />
@@ -565,6 +558,45 @@
     </ClCompile>
     <ClCompile Include="..\base\CCValue.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="CCNodeGrid.cpp">
+      <Filter>misc_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCCustomCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCFrustum.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCGroupCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCMaterialManager.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCQuadCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCRenderMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\CCBatchCommand.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="CCFontCharMap.cpp">
+      <Filter>label_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="platform\desktop\CCEGLView.cpp">
+      <Filter>platform\desktop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -796,12 +828,6 @@
     <ClInclude Include="CCFontAtlasCache.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCFontAtlasFactory.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
-    <ClInclude Include="CCFontDefinition.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="CCFontFNT.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
@@ -817,25 +843,16 @@
     <ClInclude Include="CCLabelBMFont.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCLabelTextFormatProtocol.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="CCLabelTextFormatter.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelTTF.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCTextImage.h">
-      <Filter>label_nodes</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\etc1.h">
       <Filter>platform\etc</Filter>
     </ClInclude>
     <ClInclude Include="platform\win32\CCApplication.h">
-      <Filter>platform\win32</Filter>
-    </ClInclude>
-    <ClInclude Include="platform\win32\CCEGLView.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="platform\win32\CCFileUtilsWin32.h">
@@ -1003,7 +1020,6 @@
     <ClInclude Include="CCParallaxNode.h">
       <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCConfiguration.h" />
     <ClInclude Include="CCDirector.h" />
     <ClInclude Include="ccFPSImages.h" />
@@ -1142,6 +1158,48 @@
     </ClInclude>
     <ClInclude Include="..\base\CCVector.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCNodeGrid.h">
+      <Filter>misc_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCCustomCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCFrustum.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCGroupCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCMaterialManager.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCQuadCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderCommandPool.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCRenderMaterial.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\CCBatchCommand.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="CCFontCharMap.h">
+      <Filter>label_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="platform\desktop\CCEGLView.h">
+      <Filter>platform\desktop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

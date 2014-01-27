@@ -275,26 +275,26 @@
 /* Begin PBXFileReference section */
 		15FD5C5F183A60FE005CFF55 /* cocos2d-jsb.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cocos2d-jsb.js"; path = "../Resources/cocos2d-jsb.js"; sourceTree = "<group>"; };
 		15FD5C67183A6112005CFF55 /* cocos2d-jsb.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = "cocos2d-jsb.js"; path = "../Resources/cocos2d-jsb.js"; sourceTree = "<group>"; };
-		15FD5C69183A6170005CFF55 /* jsb_cocos2d_gui.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_gui.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_gui.js; sourceTree = "<group>"; };
-		15FD5C6A183A6170005CFF55 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_studio.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_studio.js; sourceTree = "<group>"; };
-		15FD5C6D183A6189005CFF55 /* jsb_cocos2d_gui.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_gui.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_gui.js; sourceTree = "<group>"; };
-		15FD5C6E183A6189005CFF55 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_studio.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_studio.js; sourceTree = "<group>"; };
-		1A6767ED180E9B160076BC67 /* debugger */ = {isa = PBXFileReference; lastKnownFileType = folder; name = debugger; path = ../../../cocos/scripting/javascript/script/debugger; sourceTree = "<group>"; };
-		1A6767EE180E9B160076BC67 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk_constants.js; path = ../../../cocos/scripting/javascript/script/jsb_chipmunk_constants.js; sourceTree = "<group>"; };
-		1A6767EF180E9B160076BC67 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk.js; path = ../../../cocos/scripting/javascript/script/jsb_chipmunk.js; sourceTree = "<group>"; };
-		1A6767F0180E9B160076BC67 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_constants.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_constants.js; sourceTree = "<group>"; };
-		1A6767F1180E9B160076BC67 /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_extension.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d_extension.js; sourceTree = "<group>"; };
-		1A6767F2180E9B160076BC67 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d.js; path = ../../../cocos/scripting/javascript/script/jsb_cocos2d.js; sourceTree = "<group>"; };
-		1A6767F3180E9B160076BC67 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocosbuilder.js; path = ../../../cocos/scripting/javascript/script/jsb_cocosbuilder.js; sourceTree = "<group>"; };
-		1A6767F4180E9B160076BC67 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_debugger.js; path = ../../../cocos/scripting/javascript/script/jsb_debugger.js; sourceTree = "<group>"; };
-		1A6767F5180E9B160076BC67 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_deprecated.js; path = ../../../cocos/scripting/javascript/script/jsb_deprecated.js; sourceTree = "<group>"; };
-		1A6767F6180E9B160076BC67 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_opengl_constants.js; path = ../../../cocos/scripting/javascript/script/jsb_opengl_constants.js; sourceTree = "<group>"; };
-		1A6767F7180E9B160076BC67 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_opengl.js; path = ../../../cocos/scripting/javascript/script/jsb_opengl.js; sourceTree = "<group>"; };
-		1A6767F8180E9B160076BC67 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_sys.js; path = ../../../cocos/scripting/javascript/script/jsb_sys.js; sourceTree = "<group>"; };
-		1A6767F9180E9B160076BC67 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb.js; path = ../../../cocos/scripting/javascript/script/jsb.js; sourceTree = "<group>"; };
+		15FD5C69183A6170005CFF55 /* jsb_cocos2d_gui.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_gui.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_gui.js; sourceTree = "<group>"; };
+		15FD5C6A183A6170005CFF55 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_studio.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		15FD5C6D183A6189005CFF55 /* jsb_cocos2d_gui.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_gui.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_gui.js; sourceTree = "<group>"; };
+		15FD5C6E183A6189005CFF55 /* jsb_cocos2d_studio.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_studio.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_studio.js; sourceTree = "<group>"; };
+		1A6767ED180E9B160076BC67 /* debugger */ = {isa = PBXFileReference; lastKnownFileType = folder; name = debugger; path = ../cocos2d/cocos/scripting/javascript/script/debugger; sourceTree = "<group>"; };
+		1A6767EE180E9B160076BC67 /* jsb_chipmunk_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk_constants.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_chipmunk_constants.js; sourceTree = "<group>"; };
+		1A6767EF180E9B160076BC67 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_chipmunk.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_chipmunk.js; sourceTree = "<group>"; };
+		1A6767F0180E9B160076BC67 /* jsb_cocos2d_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_constants.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_constants.js; sourceTree = "<group>"; };
+		1A6767F1180E9B160076BC67 /* jsb_cocos2d_extension.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d_extension.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d_extension.js; sourceTree = "<group>"; };
+		1A6767F2180E9B160076BC67 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocos2d.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocos2d.js; sourceTree = "<group>"; };
+		1A6767F3180E9B160076BC67 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_cocosbuilder.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_cocosbuilder.js; sourceTree = "<group>"; };
+		1A6767F4180E9B160076BC67 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_debugger.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_debugger.js; sourceTree = "<group>"; };
+		1A6767F5180E9B160076BC67 /* jsb_deprecated.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_deprecated.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_deprecated.js; sourceTree = "<group>"; };
+		1A6767F6180E9B160076BC67 /* jsb_opengl_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_opengl_constants.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_opengl_constants.js; sourceTree = "<group>"; };
+		1A6767F7180E9B160076BC67 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_opengl.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_opengl.js; sourceTree = "<group>"; };
+		1A6767F8180E9B160076BC67 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb_sys.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb_sys.js; sourceTree = "<group>"; };
+		1A6767F9180E9B160076BC67 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = jsb.js; path = ../cocos2d/cocos/scripting/javascript/script/jsb.js; sourceTree = "<group>"; };
 		1A82F5FA169AC92500C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		1A96A4F2174A3432008653A9 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
-		1AC6FB34180E9ACB004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		1A96A4F2174A3432008653A9 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../cocos2d/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		1AC6FB34180E9ACB004C840B /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../cocos2d/build/cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1AE4B40016D1FECD003C6D1C /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = ../Resources/main.js; sourceTree = "<group>"; };
 		1AE4B40116D1FECD003C6D1C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../Resources/res; sourceTree = "<group>"; };
 		1AE4B40216D1FECD003C6D1C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../Resources/src; sourceTree = "<group>"; };
@@ -905,9 +905,9 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../cocos/2d/platform/mac",
-					"$(SRCROOT)/../../../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../../../external/glfw3/include/mac",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/mac",
+					"$(SRCROOT)/../cocos2d/external/spidermonkey/include/mac",
+					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -930,9 +930,9 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../cocos/2d/platform/mac",
-					"$(SRCROOT)/../../../external/spidermonkey/include/mac",
-					"$(SRCROOT)/../../../external/glfw3/include/mac",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/mac",
+					"$(SRCROOT)/../cocos2d/external/spidermonkey/include/mac",
+					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -960,21 +960,21 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../..",
-					"$(SRCROOT)/../../../cocos",
-					"$(SRCROOT)/../../../cocos/base",
-					"$(SRCROOT)/../../../cocos/physics",
-					"$(SRCROOT)/../../../cocos/math/kazmath/include",
-					"$(SRCROOT)/../../../cocos/2d",
-					"$(SRCROOT)/../../../cocos/gui",
-					"$(SRCROOT)/../../../cocos/network",
-					"$(SRCROOT)/../../../cocos/audio/include",
-					"$(SRCROOT)/../../../cocos/editor-support",
-					"$(SRCROOT)/../../../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../../../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../../../extensions",
-					"$(SRCROOT)/../../../external",
-					"$(SRCROOT)/../../../external/chipmunk/include/chipmunk",
+					"$(SRCROOT)/../cocos2d",
+					"$(SRCROOT)/../cocos2d/cocos",
+					"$(SRCROOT)/../cocos2d/cocos/base",
+					"$(SRCROOT)/../cocos2d/cocos/physics",
+					"$(SRCROOT)/../cocos2d/cocos/math/kazmath/include",
+					"$(SRCROOT)/../cocos2d/cocos/2d",
+					"$(SRCROOT)/../cocos2d/cocos/gui",
+					"$(SRCROOT)/../cocos2d/cocos/network",
+					"$(SRCROOT)/../cocos2d/cocos/audio/include",
+					"$(SRCROOT)/../cocos2d/cocos/editor-support",
+					"$(SRCROOT)/../cocos2d/cocos/scripting/javascript/bindings",
+					"$(SRCROOT)/../cocos2d/cocos/scripting/auto-generated/js-bindings",
+					"$(SRCROOT)/../cocos2d/extensions",
+					"$(SRCROOT)/../cocos2d/external",
+					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
@@ -997,21 +997,21 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../..",
-					"$(SRCROOT)/../../../cocos",
-					"$(SRCROOT)/../../../cocos/base",
-					"$(SRCROOT)/../../../cocos/physics",
-					"$(SRCROOT)/../../../cocos/math/kazmath/include",
-					"$(SRCROOT)/../../../cocos/2d",
-					"$(SRCROOT)/../../../cocos/gui",
-					"$(SRCROOT)/../../../cocos/network",
-					"$(SRCROOT)/../../../cocos/audio/include",
-					"$(SRCROOT)/../../../cocos/editor-support",
-					"$(SRCROOT)/../../../cocos/scripting/javascript/bindings",
-					"$(SRCROOT)/../../../cocos/scripting/auto-generated/js-bindings",
-					"$(SRCROOT)/../../../extensions",
-					"$(SRCROOT)/../../../external",
-					"$(SRCROOT)/../../../external/chipmunk/include/chipmunk",
+					"$(SRCROOT)/../cocos2d",
+					"$(SRCROOT)/../cocos2d/cocos",
+					"$(SRCROOT)/../cocos2d/cocos/base",
+					"$(SRCROOT)/../cocos2d/cocos/physics",
+					"$(SRCROOT)/../cocos2d/cocos/math/kazmath/include",
+					"$(SRCROOT)/../cocos2d/cocos/2d",
+					"$(SRCROOT)/../cocos2d/cocos/gui",
+					"$(SRCROOT)/../cocos2d/cocos/network",
+					"$(SRCROOT)/../cocos2d/cocos/audio/include",
+					"$(SRCROOT)/../cocos2d/cocos/editor-support",
+					"$(SRCROOT)/../cocos2d/cocos/scripting/javascript/bindings",
+					"$(SRCROOT)/../cocos2d/cocos/scripting/auto-generated/js-bindings",
+					"$(SRCROOT)/../cocos2d/extensions",
+					"$(SRCROOT)/../cocos2d/external",
+					"$(SRCROOT)/../cocos2d/external/chipmunk/include/chipmunk",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1035,9 +1035,9 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../cocos/2d/platform/ios",
-					"$(SRCROOT)/../../../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../../../external/spidermonkey/include/ios",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/ios",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/ios/Simulation",
+					"$(SRCROOT)/../cocos2d/external/spidermonkey/include/ios",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1062,9 +1062,9 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../../../cocos/2d/platform/ios",
-					"$(SRCROOT)/../../../cocos/2d/platform/ios/Simulation",
-					"$(SRCROOT)/../../../external/spidermonkey/include/ios",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/ios",
+					"$(SRCROOT)/../cocos2d/cocos/2d/platform/ios/Simulation",
+					"$(SRCROOT)/../cocos2d/external/spidermonkey/include/ios",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

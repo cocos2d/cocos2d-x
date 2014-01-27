@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -32,7 +32,8 @@ extern "C" {
 }
 #endif
 
-std::map<long, std::string>  g_luaType;
+std::unordered_map<std::string, std::string>  g_luaType;
+std::unordered_map<std::string, std::string>  g_typeCast;
 
 #if COCOS2D_DEBUG >=1
 void luaval_to_native_err(lua_State* L,const char* msg,tolua_Error* err)
@@ -80,6 +81,30 @@ bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def)
         return true;
     
     return false;
+}
+
+bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L,lo,0,&tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        *outValue = (unsigned short)tolua_tonumber(L, lo, 0);
+    }
+    
+    return ok;
 }
 
 
@@ -281,6 +306,48 @@ bool luaval_to_point(lua_State* L,int lo,Point* outValue)
         lua_pop(L, 1);
     }
     return ok;
+}
+
+bool luaval_to_physics_material(lua_State* L,int lo,PhysicsMaterial* outValue)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    
+    if (ok)
+    {
+        lua_pushstring(L, "density");
+        lua_gettable(L, lo);
+        outValue->density = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "restitution");
+        lua_gettable(L, lo);
+        outValue->restitution = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "friction");
+        lua_gettable(L, lo);
+        outValue->friction = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
+bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue)
+{
+    return luaval_to_long(L, lo, reinterpret_cast<long*>(outValue));
 }
 
 bool luaval_to_long(lua_State* L,int lo, long* outValue)
@@ -1004,7 +1071,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
         else if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
+            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
             {
 #if COCOS2D_DEBUG >=1
                 luaval_to_native_err(L,"#ferror:",&err);
@@ -1224,7 +1291,7 @@ bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret)
     
     return ok;
 }
-bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret)
+bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret)
 {
     if (nullptr == L || nullptr == ret)
         return false;
@@ -1245,7 +1312,7 @@ bool luaval_to_ccintvaluemap(lua_State* L, int lo, cocos2d::IntValueMap* ret)
         std::string stringValue = "";
         int intKey = 0;
         bool boolVal = false;
-        IntValueMap& dict = *ret;
+        ValueMapIntKey& dict = *ret;
         lua_pushnil(L);                                             /* first key L: lotable ..... nil */
         while ( 0 != lua_next(L, lo ) )                             /* L: lotable ..... key value */
         {
@@ -1394,6 +1461,97 @@ bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret)
     return ok;
 }
 
+bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        std::string value = "";
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isstring(L, -1))
+            {
+                ok = luaval_to_std_string(L, -1, &value);
+                if(ok)
+                    ret->push_back(value);
+            }
+            else
+            {
+                CCASSERT(false, "string type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        for (int i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if(lua_isnumber(L, -1))
+            {
+                ret->push_back((int)tolua_tonumber(L, -1, 0));
+            }
+            else
+            {
+                CCASSERT(false, "int type is needed");
+            }
+            
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
+void points_to_luaval(lua_State* L,const Point* pt, int count)
+{
+    if (NULL  == L)
+        return;
+    lua_newtable(L);
+    for (int i = 1; i <= count; ++i)
+    {
+        lua_pushnumber(L, i);
+        point_to_luaval(L, pt[i-1]);
+        lua_rawset(L, -3);
+    }
+}
 
 void point_to_luaval(lua_State* L,const Point& pt)
 {
@@ -1406,6 +1564,92 @@ void point_to_luaval(lua_State* L,const Point& pt)
     lua_pushstring(L, "y");                             /* L: table key */
     lua_pushnumber(L, (lua_Number) pt.y);               /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm)
+{
+    if (NULL  == L)
+        return;
+    lua_newtable(L);                                    /* L: table */
+    lua_pushstring(L, "density");                       /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.density);         /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "restitution");                   /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.restitution);     /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    lua_pushstring(L, "friction");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) pm.friction);        /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
+{
+    if (NULL  == L)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    
+    lua_pushstring(L, "shape");                       /* L: table key */
+    PhysicsShape* shape = info.shape;
+    if (shape == nullptr)
+    {
+        lua_pushnil(L);
+    }else
+    {
+        std::string hashName = typeid(*shape).name();
+        auto iter = g_luaType.find(hashName);
+        std::string className = "";
+        if(iter != g_luaType.end()){
+            className = iter->second.c_str();
+        } else {
+            className = "PhysicsShape";
+        }
+        
+        int ID =  (int)(shape->_ID);
+        int* luaID = &(shape->_luaID);
+        toluafix_pushusertype_ccobject(L, ID, luaID, (void*)shape,className.c_str());
+    }
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "start");                   /* L: table key */
+    point_to_luaval(L, info.start);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "ended");                   /* L: table key */
+    point_to_luaval(L, info.end);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "contact");                   /* L: table key */
+    point_to_luaval(L, info.contact);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "normal");                   /* L: table key */
+    point_to_luaval(L, info.normal);
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+    
+    lua_pushstring(L, "fraction");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) info.fraction);        /* L: table key value*/
+    lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
+{
+    if (nullptr  == L || nullptr == data)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    
+    lua_pushstring(L, "points");
+    points_to_luaval(L, data->points, data->count);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "normal");
+    point_to_luaval(L, data->normal);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "POINT_MAX");
+    lua_pushnumber(L, data->POINT_MAX);
+    lua_rawset(L, -3);
 }
 
 void size_to_luaval(lua_State* L,const Size& sz)
@@ -1600,8 +1844,8 @@ void array_to_luaval(lua_State* L,Array* inValue)
         if (nullptr == obj)
             continue;
         
-        long typeId = typeid(*obj).hash_code();
-        auto iter = g_luaType.find(typeId);
+        std::string typeName = typeid(*obj).name();
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;
@@ -1689,9 +1933,9 @@ void dictionary_to_luaval(lua_State* L, Dictionary* dict)
         if (NULL == element)
             continue;
         
-        long typeId = typeid(element->getObject()).hash_code();
+        std::string typeName = typeid(element->getObject()).name();
         
-        auto iter = g_luaType.find(typeId);
+        auto iter = g_luaType.find(typeName);
         if (g_luaType.end() != iter)
         {
             className = iter->second;
@@ -1775,7 +2019,7 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue)
             ccvaluemap_to_luaval(L, obj.asValueMap());
             break;
         case Value::Type::INT_KEY_MAP:
-            ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+            ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
             break;
         default:
             break;
@@ -1840,7 +2084,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushstring(L, key.c_str());
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                 }
                 break;
@@ -1849,7 +2093,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue)
         }
     }
 }
-void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue)
+void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue)
 {
     lua_newtable(L);
     
@@ -1912,7 +2156,7 @@ void ccintvaluemap_to_luaval(lua_State* L, const cocos2d::IntValueMap& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushstring(L, key.c_str());
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                 }
                 break;
@@ -1985,7 +2229,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue)
             case Value::Type::INT_KEY_MAP:
                 {
                     lua_pushnumber(L, (lua_Number)index);
-                    ccintvaluemap_to_luaval(L, obj.asIntKeyMap());
+                    ccvaluemapintkey_to_luaval(L, obj.asIntKeyMap());
                     lua_rawset(L, -3);
                     ++index;
                 }

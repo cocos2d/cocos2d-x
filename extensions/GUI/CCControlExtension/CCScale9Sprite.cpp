@@ -26,6 +26,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "CCScale9Sprite.h"
+#include "CCPlatformMacros.h"
+#include "CCSprite.h"
+#include "CCSpriteFrameCache.h"
 
 NS_CC_EXT_BEGIN
 
@@ -700,13 +703,9 @@ void Scale9Sprite::setOpacityModifyRGB(bool var)
     }
     _opacityModifyRGB = var;
     
-    _scale9Image->getChildren().forEach([this](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacityModifyRGB(_opacityModifyRGB);
-        }
-    });
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacityModifyRGB(_opacityModifyRGB);
+    }
 }
 
 bool Scale9Sprite::isOpacityModifyRGB() const
@@ -787,20 +786,11 @@ void Scale9Sprite::setColor(const Color3B& color)
         return;
     }
     
-    NodeRGBA::setColor(color);
+    Node::setColor(color);
     
-    _scale9Image->getChildren().forEach([&color](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setColor(color);
-        }
-    });
-}
-
-const Color3B& Scale9Sprite::getColor() const
-{
-	return _realColor;
+    for(auto child : _scale9Image->getChildren()){
+        child->setColor(color);
+    }
 }
 
 void Scale9Sprite::setOpacity(GLubyte opacity)
@@ -809,20 +799,11 @@ void Scale9Sprite::setOpacity(GLubyte opacity)
     {
         return;
     }
-    NodeRGBA::setOpacity(opacity);
+    Node::setOpacity(opacity);
     
-    _scale9Image->getChildren().forEach([&opacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->setOpacity(opacity);
-        }
-    });
-}
-
-GLubyte Scale9Sprite::getOpacity() const
-{
-	return _realOpacity;
+    for(auto child : _scale9Image->getChildren()){
+        child->setOpacity(opacity);
+    }
 }
 
 void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
@@ -831,15 +812,11 @@ void Scale9Sprite::updateDisplayedColor(const cocos2d::Color3B &parentColor)
     {
         return;
     }
-    NodeRGBA::updateDisplayedColor(parentColor);
-    
-    _scale9Image->getChildren().forEach([&parentColor](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedColor(parentColor);
-        }
-    });
+    Node::updateDisplayedColor(parentColor);
+
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedColor(parentColor);
+    }
 }
 
 void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -848,15 +825,11 @@ void Scale9Sprite::updateDisplayedOpacity(GLubyte parentOpacity)
     {
         return;
     }
-    NodeRGBA::updateDisplayedOpacity(parentOpacity);
+    Node::updateDisplayedOpacity(parentOpacity);
     
-    _scale9Image->getChildren().forEach([&parentOpacity](Node* child){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(child);
-        if (rgba)
-        {
-            rgba->updateDisplayedOpacity(parentOpacity);
-        }
-    });
+    for(auto child : _scale9Image->getChildren()){
+        child->updateDisplayedOpacity(parentOpacity);
+    }
 }
 
 NS_CC_EXT_END

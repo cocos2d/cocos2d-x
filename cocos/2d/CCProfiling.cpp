@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Stuart Carnie
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +38,7 @@ bool kProfilerCategoryBatchSprite = false;
 bool kProfilerCategoryParticles = false;
 
 
-static Profiler* g_sSharedProfiler = NULL;
+static Profiler* g_sSharedProfiler = nullptr;
 
 Profiler* Profiler::getInstance()
 {

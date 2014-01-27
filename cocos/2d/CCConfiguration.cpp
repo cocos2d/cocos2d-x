@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,13 +31,13 @@ THE SOFTWARE.
 #include "CCDictionary.h"
 #include "CCInteger.h"
 #include "CCBool.h"
-#include "cocos2d.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
+extern const char* cocos2dVersion();
 
 Configuration* Configuration::s_sharedConfiguration = nullptr;
 
@@ -74,7 +75,7 @@ bool Configuration::init()
     _valueDict["cocos2d.x.compiled_with_gl_state_cache"] = Value(true);
 #endif
 
-#ifdef DEBUG
+#if COCOS2D_DEBUG
 	_valueDict["cocos2d.x.build_type"] = Value("DEBUG");
 #else
     _valueDict["cocos2d.x.build_type"] = Value("RELEASE");
@@ -87,24 +88,20 @@ Configuration::~Configuration()
 {
 }
 
-void Configuration::dumpInfo() const
+std::string Configuration::getInfo() const
 {
-	// Dump
-    Value forDump = Value(_valueDict);
-    CCLOG("%s", forDump.getDescription().c_str());
-
 	// And Dump some warnings as well
 #if CC_ENABLE_PROFILERS
-    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.h)");
-    printf("\n");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.h)\n");
 #endif
 
 #if CC_ENABLE_GL_STATE_CACHE == 0
-    CCLOG("");
-    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it (from ccConfig.h)");
-    printf("\n");
+    CCLOG("cocos2d: **** WARNING **** CC_ENABLE_GL_STATE_CACHE is disabled. To improve performance, enable it (from ccConfig.h)\n");
 #endif
 
+    // Dump
+    Value forDump = Value(_valueDict);
+    return forDump.getDescription();
 }
 
 void Configuration::gatherGPUInfo()
@@ -149,7 +146,7 @@ void Configuration::gatherGPUInfo()
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
 	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
-    
+
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -284,7 +281,7 @@ void Configuration::setValue(const std::string& key, const Value& value)
 //
 // load file
 //
-void Configuration::loadConfigFile(const char *filename)
+void Configuration::loadConfigFile(const std::string& filename)
 {
 	ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(filename);
 	CCASSERT(!dict.empty(), "cannot create dictionary");
@@ -312,14 +309,14 @@ void Configuration::loadConfigFile(const char *filename)
 
 	if (! validMetadata)
     {
-		CCLOG("Invalid config format for file: %s", filename);
+		CCLOG("Invalid config format for file: %s", filename.c_str());
 		return;
 	}
 
 	auto dataIter = dict.find("data");
 	if (dataIter == dict.end() || dataIter->second.getType() != Value::Type::MAP)
     {
-		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename);
+		CCLOG("Expected 'data' dict, but not found. Config file: %s", filename.c_str());
 		return;
 	}
 

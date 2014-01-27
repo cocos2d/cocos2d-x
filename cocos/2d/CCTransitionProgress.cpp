@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009      Lam Pham
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2009 Lam Pham
-Copyright (c) 2012 Ricardo Quesada
+Copyright (c) 2012      Ricardo Quesada
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,21 +43,21 @@ enum {
 TransitionProgress::TransitionProgress()
 : _to(0.0f)
 , _from(0.0f)
-, _sceneToBeModified(NULL)
+, _sceneToBeModified(nullptr)
 {
 
 }
 
 TransitionProgress* TransitionProgress::create(float t, Scene* scene)
 {
-    TransitionProgress* pScene = new TransitionProgress();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgress* newScene = new TransitionProgress();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 // TransitionProgress
@@ -77,8 +78,7 @@ void TransitionProgress::onEnter()
     texture->setAnchorPoint(Point(0.5f,0.5f));
 
     // render outScene to its texturebuffer
-    texture->clear(0, 0, 0, 1);
-    texture->begin();
+    texture->beginWithClear(0, 0, 0, 1);
     _sceneToBeModified->visit();
     texture->end();
 
@@ -89,18 +89,18 @@ void TransitionProgress::onEnter()
         hideOutShowIn();
     }
     //    We need the texture in RenderTexture.
-    ProgressTimer *pNode = progressTimerNodeWithRenderTexture(texture);
+    ProgressTimer *node = progressTimerNodeWithRenderTexture(texture);
 
     // create the blend action
     ActionInterval* layerAction = (ActionInterval*)Sequence::create(
         ProgressFromTo::create(_duration, _from, _to),
         CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
-        NULL);
+        nullptr);
     // run the blend action
-    pNode->runAction(layerAction);
+    node->runAction(layerAction);
 
     // add the layer (which contains our two rendertextures) to the scene
-    addChild(pNode, 2, kSceneRadial);
+    addChild(node, 2, kSceneRadial);
 }
 
 // clean up on exit
@@ -126,7 +126,7 @@ void TransitionProgress::setupTransition()
 ProgressTimer* TransitionProgress::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
     CCASSERT(false, "override me - abstract class");
-    return NULL;
+    return nullptr;
 }
 
 
@@ -136,143 +136,143 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
 {
     Size size = Director::getInstance()->getWinSize();
 
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
 
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType(ProgressTimer::Type::RADIAL);
+    node->getSprite()->setFlippedY(true);
+    node->setType(ProgressTimer::Type::RADIAL);
 
     //    Return the radial type that we want to use
-    pNode->setReverseDirection(false);
-    pNode->setPercentage(100);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setReverseDirection(false);
+    node->setPercentage(100);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
     
-    return pNode;
+    return node;
 }
 
 TransitionProgressRadialCCW* TransitionProgressRadialCCW::create(float t, Scene* scene)
 {
-    TransitionProgressRadialCCW* pScene = new TransitionProgressRadialCCW();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressRadialCCW* newScene = new TransitionProgressRadialCCW();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 // TransitionProgressRadialCW
 TransitionProgressRadialCW* TransitionProgressRadialCW::create(float t, Scene* scene)
 {
-    TransitionProgressRadialCW* pScene = new TransitionProgressRadialCW();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressRadialCW* newScene = new TransitionProgressRadialCW();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {
     Size size = Director::getInstance()->getWinSize();
     
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType( ProgressTimer::Type::RADIAL );
+    node->getSprite()->setFlippedY(true);
+    node->setType( ProgressTimer::Type::RADIAL );
     
     //    Return the radial type that we want to use
-    pNode->setReverseDirection(true);
-    pNode->setPercentage(100);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setReverseDirection(true);
+    node->setPercentage(100);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
     
-    return pNode;
+    return node;
 }
 
 // TransitionProgressHorizontal
 TransitionProgressHorizontal* TransitionProgressHorizontal::create(float t, Scene* scene)
 {
-    TransitionProgressHorizontal* pScene = new TransitionProgressHorizontal();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressHorizontal* newScene = new TransitionProgressHorizontal();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
     Size size = Director::getInstance()->getWinSize();
 
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType( ProgressTimer::Type::BAR);
+    node->getSprite()->setFlippedY(true);
+    node->setType( ProgressTimer::Type::BAR);
     
-    pNode->setMidpoint(Point(1, 0));
-    pNode->setBarChangeRate(Point(1,0));
+    node->setMidpoint(Point(1, 0));
+    node->setBarChangeRate(Point(1,0));
     
-    pNode->setPercentage(100);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setPercentage(100);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
 
-    return pNode;
+    return node;
 }
 
 // TransitionProgressVertical
 TransitionProgressVertical* TransitionProgressVertical::create(float t, Scene* scene)
 {
-    TransitionProgressVertical* pScene = new TransitionProgressVertical();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressVertical* newScene = new TransitionProgressVertical();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
     Size size = Director::getInstance()->getWinSize();
     
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType(ProgressTimer::Type::BAR);
+    node->getSprite()->setFlippedY(true);
+    node->setType(ProgressTimer::Type::BAR);
     
-    pNode->setMidpoint(Point(0, 0));
-    pNode->setBarChangeRate(Point(0,1));
+    node->setMidpoint(Point(0, 0));
+    node->setBarChangeRate(Point(0,1));
     
-    pNode->setPercentage(100);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setPercentage(100);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
     
-    return pNode;
+    return node;
 }
 
 
 // TransitionProgressInOut
 TransitionProgressInOut* TransitionProgressInOut::create(float t, Scene* scene)
 {
-    TransitionProgressInOut* pScene = new TransitionProgressInOut();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressInOut* newScene = new TransitionProgressInOut();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 void TransitionProgressInOut::sceneOrder()
@@ -291,54 +291,54 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
 {    
     Size size = Director::getInstance()->getWinSize();
     
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType( ProgressTimer::Type::BAR);
+    node->getSprite()->setFlippedY(true);
+    node->setType( ProgressTimer::Type::BAR);
     
-    pNode->setMidpoint(Point(0.5f, 0.5f));
-    pNode->setBarChangeRate(Point(1, 1));
+    node->setMidpoint(Point(0.5f, 0.5f));
+    node->setBarChangeRate(Point(1, 1));
     
-    pNode->setPercentage(0);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setPercentage(0);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
     
-    return pNode;
+    return node;
 }
 
 
 // TransitionProgressOutIn
 TransitionProgressOutIn* TransitionProgressOutIn::create(float t, Scene* scene)
 {
-    TransitionProgressOutIn* pScene = new TransitionProgressOutIn();
-    if(pScene && pScene->initWithDuration(t, scene))
+    TransitionProgressOutIn* newScene = new TransitionProgressOutIn();
+    if(newScene && newScene->initWithDuration(t, scene))
     {
-        pScene->autorelease();
-        return pScene;
+        newScene->autorelease();
+        return newScene;
     }
-    CC_SAFE_DELETE(pScene);
-    return NULL;
+    CC_SAFE_DELETE(newScene);
+    return nullptr;
 }
 
 ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(RenderTexture* texture)
 {    
     Size size = Director::getInstance()->getWinSize();
     
-    ProgressTimer* pNode = ProgressTimer::create(texture->getSprite());
+    ProgressTimer* node = ProgressTimer::create(texture->getSprite());
     
     // but it is flipped upside down so we flip the sprite
-    pNode->getSprite()->setFlippedY(true);
-    pNode->setType( ProgressTimer::Type::BAR );
+    node->getSprite()->setFlippedY(true);
+    node->setType( ProgressTimer::Type::BAR );
     
-    pNode->setMidpoint(Point(0.5f, 0.5f));
-    pNode->setBarChangeRate(Point(1, 1));
+    node->setMidpoint(Point(0.5f, 0.5f));
+    node->setBarChangeRate(Point(1, 1));
     
-    pNode->setPercentage(100);
-    pNode->setPosition(Point(size.width/2, size.height/2));
-    pNode->setAnchorPoint(Point(0.5f,0.5f));
+    node->setPercentage(100);
+    node->setPosition(Point(size.width/2, size.height/2));
+    node->setAnchorPoint(Point(0.5f,0.5f));
     
-    return pNode;
+    return node;
 }
 
 NS_CC_END

@@ -38,13 +38,14 @@ public:
 
 class SpineTestLayer: public cocos2d::Layer {
 private:
-	spine::CCSkeletonAnimation* skeletonNode;
+	spine::SkeletonAnimation* skeletonNode;
 
 public:
 
 	virtual bool init ();
 	virtual void update (float deltaTime);
-
+    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+    
 	CREATE_FUNC (SpineTestLayer);
 };
 

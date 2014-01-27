@@ -1,5 +1,7 @@
-    #include "LabelTest.h"
+#include "LabelTest.h"
 #include "../testResource.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 enum {
     kTagTileMap = 1,
@@ -72,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     // should be moved to another test
     CL(Atlas1),
     CL(LabelBMFontCrashTest),
+	CL(LabelBMFontBinaryFormat),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -111,12 +114,12 @@ AtlasDemo::~AtlasDemo(void)
 {
 }
 
-std::string AtlasDemo::title()
+std::string AtlasDemo::title() const
 {
     return "No title";
 }
 
-std::string AtlasDemo::subtitle()
+std::string AtlasDemo::subtitle() const
 {
     return "";
 }
@@ -206,19 +209,26 @@ void Atlas1::draw()
 {
     // GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
     // GL_TEXTURE_2D
-
-    _textureAtlas->drawQuads();
-
+    
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(Atlas1::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    
 //    [textureAtlas drawNumberOfQuads:3];
     
 }
 
-std::string Atlas1::title()
+void Atlas1::onDraw()
+{
+    _textureAtlas->drawQuads();
+}
+
+std::string Atlas1::title() const
 {
     return "CCTextureAtlas";
 }
 
-std::string Atlas1::subtitle()
+std::string Atlas1::subtitle() const
 {
     return "Manual creation of TextureAtlas";
 }
@@ -263,12 +273,12 @@ void LabelAtlasTest::step(float dt)
     label2->setString(string);
 }
 
-std::string LabelAtlasTest::title()
+std::string LabelAtlasTest::title() const
 {
     return "LabelAtlas";
 }
 
-std::string LabelAtlasTest::subtitle()
+std::string LabelAtlasTest::subtitle() const
 {
     return "Updating label should be fast";
 }
@@ -321,12 +331,12 @@ void LabelAtlasColorTest::step(float dt)
     label2->setString( string );    
 }
 
-std::string LabelAtlasColorTest::title()
+std::string LabelAtlasColorTest::title() const
 {
     return "CCLabelAtlas";
 }
 
-std::string LabelAtlasColorTest::subtitle()
+std::string LabelAtlasColorTest::subtitle() const
 {
     return "Opacity + Color should work at the same time";
 }
@@ -361,12 +371,12 @@ LabelTTFAlignment::LabelTTFAlignment()
     this->addChild(ttf2);
 }
 
-std::string LabelTTFAlignment::title()
+std::string LabelTTFAlignment::title() const
 {
     return "CCLabelTTF alignment";
 }
 
-std::string LabelTTFAlignment::subtitle()
+std::string LabelTTFAlignment::subtitle() const
 {
     return "Tests alignment values";
 }
@@ -409,7 +419,11 @@ Atlas3::Atlas3()
     label2->setAnchorPoint( Point(0.5f, 0.5f) );
     label2->setColor( Color3B::RED );
     addChild(label2, 0, kTagBitmapAtlas2);
-    label2->runAction( repeat->clone() );
+    auto tint = Sequence::create(TintTo::create(1, 255, 0, 0),
+        TintTo::create(1, 0, 255, 0),
+        TintTo::create(1, 0, 0, 255),
+        NULL);
+    label2->runAction( RepeatForever::create(tint) );
     
     auto label3 = LabelBMFont::create("Test", "fonts/bitmapFontTest2.fnt");
     // testing anchors
@@ -441,12 +455,12 @@ void Atlas3::step(float dt)
     label3->setString(string);
 }
 
-std::string Atlas3::title()
+std::string Atlas3::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string Atlas3::subtitle()
+std::string Atlas3::subtitle() const
 {
     return "Testing alignment. Testing opacity + tint";
 }
@@ -516,6 +530,13 @@ Atlas4::Atlas4()
 
 void Atlas4::draw()
 {
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(Atlas4::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void Atlas4::onDraw()
+{
     auto s = Director::getInstance()->getWinSize();
     DrawPrimitives::drawLine( Point(0, s.height/2), Point(s.width, s.height/2) );
     DrawPrimitives::drawLine( Point(s.width/2, 0), Point(s.width/2, s.height) );
@@ -533,12 +554,12 @@ void Atlas4::step(float dt)
     label1->setString(string);
 }
 
-std::string Atlas4::title()
+std::string Atlas4::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string Atlas4::subtitle()
+std::string Atlas4::subtitle() const
 {
     return "Using fonts as Sprite objects. Some characters should rotate.";
 }
@@ -566,12 +587,12 @@ Atlas5::Atlas5()
     label->setAnchorPoint( Point(0.5f, 0.5f) );
 }
 
-std::string Atlas5::title()
+std::string Atlas5::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string Atlas5::subtitle()
+std::string Atlas5::subtitle() const
 {
     return "Testing padding";
 }
@@ -608,12 +629,12 @@ Atlas6::Atlas6()
     label->setAnchorPoint( Point(0.5f, 0.5f) ); 
 }
 
-std::string Atlas6::title()
+std::string Atlas6::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string Atlas6::subtitle()
+std::string Atlas6::subtitle() const
 {
     return "Rendering should be OK. Testing offset";
 }
@@ -654,12 +675,12 @@ AtlasBitmapColor::AtlasBitmapColor()
     label->setString("Green");
 }
 
-std::string AtlasBitmapColor::title()
+std::string AtlasBitmapColor::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string AtlasBitmapColor::subtitle()
+std::string AtlasBitmapColor::subtitle() const
 {
     return "Testing color";
 }
@@ -694,12 +715,12 @@ AtlasFastBitmap::AtlasFastBitmap()
         }
 }
 
-std::string AtlasFastBitmap::title()
+std::string AtlasFastBitmap::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string AtlasFastBitmap::subtitle()
+std::string AtlasFastBitmap::subtitle() const
 {
     return "Creating several LabelBMFont with the same .fnt file should be fast";
 }
@@ -749,12 +770,12 @@ BitmapFontMultiLine::BitmapFontMultiLine()
     label3->setPosition(VisibleRect::rightTop());
 }
 
-std::string BitmapFontMultiLine::title()
+std::string BitmapFontMultiLine::title() const
 {
     return "CCLabelBMFont";
 }
 
-std::string BitmapFontMultiLine::subtitle()
+std::string BitmapFontMultiLine::subtitle() const
 {
     return "Multiline + anchor point";
 }
@@ -812,12 +833,12 @@ void LabelsEmpty::updateStrings(float dt)
     }
 }
 
-std::string LabelsEmpty::title()
+std::string LabelsEmpty::title() const
 {
     return "Testing empty labels";
 }
 
-std::string LabelsEmpty::subtitle()
+std::string LabelsEmpty::subtitle() const
 {
     return "3 empty labels: LabelAtlas, LabelTTF and LabelBMFont";
 }
@@ -837,12 +858,12 @@ LabelBMFontHD::LabelBMFontHD()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-std::string LabelBMFontHD::title()
+std::string LabelBMFontHD::title() const
 {
     return "Testing Retina Display BMFont";
 }
 
-std::string LabelBMFontHD::subtitle()
+std::string LabelBMFontHD::subtitle() const
 {
     return "loading arista16 or arista16-hd";
 }
@@ -864,12 +885,12 @@ LabelAtlasHD::LabelAtlasHD()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-std::string LabelAtlasHD::title()
+std::string LabelAtlasHD::title() const
 {
     return "LabelAtlas with Retina Display";
 }
 
-std::string LabelAtlasHD::subtitle()
+std::string LabelAtlasHD::subtitle() const
 {
     return "loading larabie-16 / larabie-16-hd";
 }
@@ -892,12 +913,12 @@ LabelGlyphDesigner::LabelGlyphDesigner()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-std::string LabelGlyphDesigner::title()
+std::string LabelGlyphDesigner::title() const
 {
     return "Testing Glyph Designer";
 }
 
-std::string LabelGlyphDesigner::subtitle()
+std::string LabelGlyphDesigner::subtitle() const
 {
     return "You should see a font with shawdows and outline";
 }
@@ -1046,12 +1067,12 @@ const char* LabelTTFTest::getCurrentAlignment()
     return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
 }
 
-string LabelTTFTest::title()
+std::string LabelTTFTest::title() const
 {
     return "Testing LabelTTF";
 }
 
-string LabelTTFTest::subtitle()
+std::string LabelTTFTest::subtitle() const
 {
     return "Select the buttons on the sides to change alignment";
 }
@@ -1072,12 +1093,12 @@ LabelTTFMultiline::LabelTTFMultiline()
     addChild(center);
 }
 
-string LabelTTFMultiline::title()
+std::string LabelTTFMultiline::title() const
 {
     return "Testing LabelTTF Word Wrap";
 }
 
-string LabelTTFMultiline::subtitle()
+std::string LabelTTFMultiline::subtitle() const
 {
     return "Word wrap using LabelTTF and a custom TTF font";
 }
@@ -1090,7 +1111,7 @@ LabelTTFChinese::LabelTTFChinese()
     this->addChild(label);
 }
 
-string LabelTTFChinese::title()
+std::string LabelTTFChinese::title() const
 {
     return "Testing LabelTTF with Chinese character";
 }
@@ -1103,7 +1124,7 @@ LabelBMFontChinese::LabelBMFontChinese()
     this->addChild(label);
 }
 
-string LabelBMFontChinese::title()
+std::string LabelBMFontChinese::title() const
 {
     return "Testing LabelBMFont with Chinese character";
 }
@@ -1203,12 +1224,12 @@ BitmapFontMultiLineAlignment::~BitmapFontMultiLineAlignment()
     this->_arrowsShouldRetain->release();
 }
 
-std::string BitmapFontMultiLineAlignment::title()
+std::string BitmapFontMultiLineAlignment::title() const
 {
     return "";
 }
 
-std::string BitmapFontMultiLineAlignment::subtitle()
+std::string BitmapFontMultiLineAlignment::subtitle() const
 {
     return "";
 }
@@ -1332,12 +1353,12 @@ LabelTTFA8Test::LabelTTFA8Test()
     label1->runAction(forever);
 }
 
-std::string LabelTTFA8Test::title()
+std::string LabelTTFA8Test::title() const
 {
     return "Testing A8 Format";
 }
 
-std::string LabelTTFA8Test::subtitle()
+std::string LabelTTFA8Test::subtitle() const
 {
     return "RED label, fading In and Out in the center of the screen";
 }
@@ -1356,12 +1377,12 @@ BMFontOneAtlas::BMFontOneAtlas()
     label2->setPosition(Point(s.width/2, s.height/3*1));
 }
 
-std::string BMFontOneAtlas::title()
+std::string BMFontOneAtlas::title() const
 {
     return "CCLabelBMFont with one texture";
 }
 
-std::string BMFontOneAtlas::subtitle()
+std::string BMFontOneAtlas::subtitle() const
 {
     return "Using 2 .fnt definitions that share the same texture atlas.";
 }
@@ -1369,12 +1390,11 @@ std::string BMFontOneAtlas::subtitle()
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    auto strings = Dictionary::createWithContentsOfFile("fonts/strings.xml");
-
-    const char *chinese  = static_cast<String*>(strings->objectForKey("chinese1"))->_string.c_str();
-    const char *japanese = static_cast<String*>(strings->objectForKey("japanese"))->_string.c_str();
-    const char *russian  = static_cast<String*>(strings->objectForKey("russian"))->_string.c_str();
-    const char *spanish  = static_cast<String*>(strings->objectForKey("spanish"))->_string.c_str();
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    std::string chinese  = strings["chinese1"].asString();
+    std::string russian  = strings["russian"].asString();
+    std::string spanish  = strings["spanish"].asString();
+    std::string japanese = strings["japanese"].asString();
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -1395,12 +1415,12 @@ BMFontUnicode::BMFontUnicode()
     label4->setPosition(Point(s.width/2, s.height/5*1));
 }
 
-std::string BMFontUnicode::title()
+std::string BMFontUnicode::title() const
 {
     return "CCLabelBMFont with Unicode support";
 }
 
-std::string BMFontUnicode::subtitle()
+std::string BMFontUnicode::subtitle() const
 {
     return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
 }
@@ -1419,12 +1439,12 @@ BMFontInit::BMFontInit()
     bmFont->setPosition(Point(s.width/2,s.height/4*2));
 }
 
-std::string BMFontInit::title()
+std::string BMFontInit::title() const
 {
     return "LabelBMFont create()";
 }
 
-std::string BMFontInit::subtitle()
+std::string BMFontInit::subtitle() const
 {
     return "Testing LabelBMFont::create() wihtout params";
 }
@@ -1444,12 +1464,12 @@ TTFFontInit::TTFFontInit()
     font->setPosition(Point(s.width/2,s.height/4*2));
 }
 
-std::string TTFFontInit::title()
+std::string TTFFontInit::title() const
 {
     return "LabelTTF create()";
 }
 
-std::string TTFFontInit::subtitle()
+std::string TTFFontInit::subtitle() const
 {
     return "Testing LabelTTF::create() wihtout params";
 }
@@ -1532,12 +1552,12 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     fontStrokeAndShadow->setPosition(Point(s.width/2,s.height/4*1.1));
 }
 
-std::string TTFFontShadowAndStroke::title()
+std::string TTFFontShadowAndStroke::title() const
 {
     return "CCLabelTTF  shadows + stroke";
 }
 
-std::string TTFFontShadowAndStroke::subtitle()
+std::string TTFFontShadowAndStroke::subtitle() const
 {
     return "Test for support of TTF label with stroke and shadow";
 }
@@ -1560,12 +1580,12 @@ Issue1343::Issue1343()
     bmFont->setPosition(Point(s.width/2,s.height/4*2));
 }
 
-std::string Issue1343::title()
+std::string Issue1343::title() const
 {
     return "Issue 1343";
 }
 
-std::string Issue1343::subtitle()
+std::string Issue1343::subtitle() const
 {
     return "You should see: ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz.,'";
 }
@@ -1584,17 +1604,24 @@ LabelBMFontBounds::LabelBMFontBounds()
     label1->setPosition(Point(s.width/2, s.height/2));
 }
 
-string LabelBMFontBounds::title()
+std::string LabelBMFontBounds::title() const
 {
     return "Testing LabelBMFont Bounds";
 }
 
-string LabelBMFontBounds::subtitle()
+std::string LabelBMFontBounds::subtitle() const
 {
     return "You should see string enclosed by a box";
 }
 
 void LabelBMFontBounds::draw()
+{
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(LabelBMFontBounds::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void LabelBMFontBounds::onDraw()
 {
     auto labelSize = label1->getContentSize();
     auto origin = Director::getInstance()->getWinSize();
@@ -1635,12 +1662,35 @@ void LabelBMFontCrashTest::onEnter()
     this->addChild(label2);
 }
 
-std::string LabelBMFontCrashTest::title()
+std::string LabelBMFontCrashTest::title() const
 {
     return "LabelBMFont Crash Test";
 }
 
-std::string LabelBMFontCrashTest::subtitle()
+std::string LabelBMFontCrashTest::subtitle() const
 {
     return "Should not crash.";
+}
+
+// LabelBMFontBinaryFormat
+LabelBMFontBinaryFormat::LabelBMFontBinaryFormat()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto bmFont = LabelBMFont::create();
+
+    bmFont->setFntFile("fonts/Roboto.bmf.fnt");
+    bmFont->setString("It is working!");
+    this->addChild(bmFont);
+    bmFont->setPosition(Point(s.width/2,s.height/4*2));
+}
+
+std::string LabelBMFontBinaryFormat::title() const
+{
+    return "LabelBMFont Binary FNT File";
+}
+
+std::string LabelBMFontBinaryFormat::subtitle() const
+{
+    return "This label uses font file in AngelCode binary format";
 }

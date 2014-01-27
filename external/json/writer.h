@@ -1,174 +1,241 @@
-#ifndef JSON_WRITER_H_INCLUDED
-# define JSON_WRITER_H_INCLUDED
+#ifndef RAPIDJSON_WRITER_H_
+#define RAPIDJSON_WRITER_H_
 
-# include "value.h"
-# include <vector>
-# include <string>
-# include <iostream>
+#include "rapidjson.h"
+#include "internal/stack.h"
+#include "internal/strfunc.h"
+#include <cstdio>	// snprintf() or _sprintf_s()
+#include <new>		// placement new
 
-namespace Json {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4127) // conditional expression is constant
+#endif
 
-   class Value;
+namespace rapidjson {
 
-   /** \brief Abstract class for writers.
-    */
-   class JSON_API Writer
-   {
-   public:
-      virtual ~Writer();
+//! JSON writer
+/*! Writer implements the concept Handler.
+	It generates JSON text by events to an output stream.
 
-      virtual std::string write( const Value &root ) = 0;
-   };
+	User may programmatically calls the functions of a writer to generate JSON text.
 
-   /** \brief Outputs a Value in <a HREF="http://www.json.org">JSON</a> format without formatting (not human friendly).
-    *
-    * The JSON document is written in a single line. It is not intended for 'human' consumption,
-    * but may be usefull to support feature such as RPC where bandwith is limited.
-    * \sa Reader, Value
-    */
-   class JSON_API FastWriter : public Writer
-   {
-   public:
-      FastWriter();
-      virtual ~FastWriter(){}
+	On the other side, a writer can also be passed to objects that generates events, 
 
-      void enableYAMLCompatibility();
+	for example Reader::Parse() and Document::Accept().
 
-   public: // overridden from Writer
-      virtual std::string write( const Value &root );
+	\tparam Stream Type of ouptut stream.
+	\tparam Encoding Encoding of both source strings and output.
+	\implements Handler
+*/
+template<typename Stream, typename Encoding = UTF8<>, typename Allocator = MemoryPoolAllocator<> >
+class Writer {
+public:
+	typedef typename Encoding::Ch Ch;
 
-   private:
-      void writeValue( const Value &value );
+	Writer(Stream& stream, Allocator* allocator = 0, size_t levelDepth = kDefaultLevelDepth) : 
+		stream_(stream), level_stack_(allocator, levelDepth * sizeof(Level)) {}
 
-      std::string document_;
-      bool yamlCompatiblityEnabled_;
-   };
+	//@name Implementation of Handler
+	//@{
+	Writer& Null()					{ Prefix(kNullType);   WriteNull();			return *this; }
+	Writer& Bool(bool b)			{ Prefix(b ? kTrueType : kFalseType); WriteBool(b); return *this; }
+	Writer& Int(int i)				{ Prefix(kNumberType); WriteInt(i);			return *this; }
+	Writer& Uint(unsigned u)		{ Prefix(kNumberType); WriteUint(u);		return *this; }
+	Writer& Int64(int64_t i64)		{ Prefix(kNumberType); WriteInt64(i64);		return *this; }
+	Writer& Uint64(uint64_t u64)	{ Prefix(kNumberType); WriteUint64(u64);	return *this; }
+	Writer& Double(double d)		{ Prefix(kNumberType); WriteDouble(d);		return *this; }
 
-   /** \brief Writes a Value in <a HREF="http://www.json.org">JSON</a> format in a human friendly way.
-    *
-    * The rules for line break and indent are as follow:
-    * - Object value:
-    *     - if empty then print {} without indent and line break
-    *     - if not empty the print '{', line break & indent, print one value per line
-    *       and then unindent and line break and print '}'.
-    * - Array value:
-    *     - if empty then print [] without indent and line break
-    *     - if the array contains no object value, empty array or some other value types,
-    *       and all the values fit on one lines, then print the array on a single line.
-    *     - otherwise, it the values do not fit on one line, or the array contains
-    *       object or non empty array, then print one value per line.
-    *
-    * If the Value have comments then they are outputed according to their #CommentPlacement.
-    *
-    * \sa Reader, Value, Value::setComment()
-    */
-   class JSON_API StyledWriter: public Writer
-   {
-   public:
-      StyledWriter();
-      virtual ~StyledWriter(){}
+	Writer& String(const Ch* str, SizeType length, bool copy = false) {
+		(void)copy;
+		Prefix(kStringType);
+		WriteString(str, length);
+		return *this;
+	}
 
-   public: // overridden from Writer
-      /** \brief Serialize a Value in <a HREF="http://www.json.org">JSON</a> format.
-       * \param root Value to serialize.
-       * \return String containing the JSON document that represents the root value.
-       */
-      virtual std::string write( const Value &root );
+	Writer& StartObject() {
+		Prefix(kObjectType);
+		new (level_stack_.template Push<Level>()) Level(false);
+		WriteStartObject();
+		return *this;
+	}
 
-   private:
-      void writeValue( const Value &value );
-      void writeArrayValue( const Value &value );
-      bool isMultineArray( const Value &value );
-      void pushValue( const std::string &value );
-      void writeIndent();
-      void writeWithIndent( const std::string &value );
-      void indent();
-      void unindent();
-      void writeCommentBeforeValue( const Value &root );
-      void writeCommentAfterValueOnSameLine( const Value &root );
-      bool hasCommentForValue( const Value &value );
-      static std::string normalizeEOL( const std::string &text );
+	Writer& EndObject(SizeType memberCount = 0) {
+		(void)memberCount;
+		RAPIDJSON_ASSERT(level_stack_.GetSize() >= sizeof(Level));
+		RAPIDJSON_ASSERT(!level_stack_.template Top<Level>()->inArray);
+		level_stack_.template Pop<Level>(1);
+		WriteEndObject();
+		return *this;
+	}
 
-      typedef std::vector<std::string> ChildValues;
+	Writer& StartArray() {
+		Prefix(kArrayType);
+		new (level_stack_.template Push<Level>()) Level(true);
+		WriteStartArray();
+		return *this;
+	}
 
-      ChildValues childValues_;
-      std::string document_;
-      std::string indentString_;
-      int rightMargin_;
-      int indentSize_;
-      bool addChildValues_;
-   };
+	Writer& EndArray(SizeType elementCount = 0) {
+		(void)elementCount;
+		RAPIDJSON_ASSERT(level_stack_.GetSize() >= sizeof(Level));
+		RAPIDJSON_ASSERT(level_stack_.template Top<Level>()->inArray);
+		level_stack_.template Pop<Level>(1);
+		WriteEndArray();
+		return *this;
+	}
+	//@}
 
-   /** \brief Writes a Value in <a HREF="http://www.json.org">JSON</a> format in a human friendly way,
-        to a stream rather than to a string.
-    *
-    * The rules for line break and indent are as follow:
-    * - Object value:
-    *     - if empty then print {} without indent and line break
-    *     - if not empty the print '{', line break & indent, print one value per line
-    *       and then unindent and line break and print '}'.
-    * - Array value:
-    *     - if empty then print [] without indent and line break
-    *     - if the array contains no object value, empty array or some other value types,
-    *       and all the values fit on one lines, then print the array on a single line.
-    *     - otherwise, it the values do not fit on one line, or the array contains
-    *       object or non empty array, then print one value per line.
-    *
-    * If the Value have comments then they are outputed according to their #CommentPlacement.
-    *
-    * \param indentation Each level will be indented by this amount extra.
-    * \sa Reader, Value, Value::setComment()
-    */
-   class JSON_API StyledStreamWriter
-   {
-   public:
-      StyledStreamWriter( std::string indentation="\t" );
-      ~StyledStreamWriter(){}
+	//! Simpler but slower overload.
+	Writer& String(const Ch* str) { return String(str, internal::StrLen(str)); }
 
-   public:
-      /** \brief Serialize a Value in <a HREF="http://www.json.org">JSON</a> format.
-       * \param out Stream to write to. (Can be ostringstream, e.g.)
-       * \param root Value to serialize.
-       * \note There is no point in deriving from Writer, since write() should not return a value.
-       */
-      void write( std::ostream &out, const Value &root );
+protected:
+	//! Information for each nested level
+	struct Level {
+		Level(bool inArray_) : inArray(inArray_), valueCount(0) {}
+		bool inArray;		//!< true if in array, otherwise in object
+		size_t valueCount;	//!< number of values in this level
+	};
 
-   private:
-      void writeValue( const Value &value );
-      void writeArrayValue( const Value &value );
-      bool isMultineArray( const Value &value );
-      void pushValue( const std::string &value );
-      void writeIndent();
-      void writeWithIndent( const std::string &value );
-      void indent();
-      void unindent();
-      void writeCommentBeforeValue( const Value &root );
-      void writeCommentAfterValueOnSameLine( const Value &root );
-      bool hasCommentForValue( const Value &value );
-      static std::string normalizeEOL( const std::string &text );
+	static const size_t kDefaultLevelDepth = 32;
 
-      typedef std::vector<std::string> ChildValues;
+	void WriteNull()  {
+		stream_.Put('n'); stream_.Put('u'); stream_.Put('l'); stream_.Put('l');
+	}
 
-      ChildValues childValues_;
-      std::ostream* document_;
-      std::string indentString_;
-      int rightMargin_;
-      std::string indentation_;
-      bool addChildValues_;
-   };
+	void WriteBool(bool b)  {
+		if (b) {
+			stream_.Put('t'); stream_.Put('r'); stream_.Put('u'); stream_.Put('e');
+		}
+		else {
+			stream_.Put('f'); stream_.Put('a'); stream_.Put('l'); stream_.Put('s'); stream_.Put('e');
+		}
+	}
 
-   std::string JSON_API valueToString( Int value );
-   std::string JSON_API valueToString( UInt value );
-   std::string JSON_API valueToString( double value );
-   std::string JSON_API valueToString( bool value );
-   std::string JSON_API valueToQuotedString( const char *value );
+	void WriteInt(int i) {
+		if (i < 0) {
+			stream_.Put('-');
+			i = -i;
+		}
+		WriteUint((unsigned)i);
+	}
 
-   /// \brief Output using the StyledStreamWriter.
-   /// \see Json::operator>>()
-   std::ostream& operator<<( std::ostream&, const Value &root );
+	void WriteUint(unsigned u) {
+		char buffer[10];
+		char *p = buffer;
+		do {
+			*p++ = (u % 10) + '0';
+			u /= 10;
+		} while (u > 0);
 
-} // namespace Json
+		do {
+			--p;
+			stream_.Put(*p);
+		} while (p != buffer);
+	}
 
+	void WriteInt64(int64_t i64) {
+		if (i64 < 0) {
+			stream_.Put('-');
+			i64 = -i64;
+		}
+		WriteUint64((uint64_t)i64);
+	}
 
+	void WriteUint64(uint64_t u64) {
+		char buffer[20];
+		char *p = buffer;
+		do {
+			*p++ = char(u64 % 10) + '0';
+			u64 /= 10;
+		} while (u64 > 0);
 
-#endif // JSON_WRITER_H_INCLUDED
+		do {
+			--p;
+			stream_.Put(*p);
+		} while (p != buffer);
+	}
+
+	//! \todo Optimization with custom double-to-string converter.
+	void WriteDouble(double d) {
+		char buffer[100];
+#if _MSC_VER
+		int ret = sprintf_s(buffer, sizeof(buffer), "%g", d);
+#else
+		int ret = snprintf(buffer, sizeof(buffer), "%g", d);
+#endif
+		RAPIDJSON_ASSERT(ret >= 1);
+		for (int i = 0; i < ret; i++)
+			stream_.Put(buffer[i]);
+	}
+
+	void WriteString(const Ch* str, SizeType length)  {
+		static const char hexDigits[] = "0123456789ABCDEF";
+		static const char escape[256] = {
+#define Z16 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+			//0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+			'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'b', 't', 'n', 'u', 'f', 'r', 'u', 'u', // 00
+			'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', // 10
+			  0,   0, '"',   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 20
+			Z16, Z16,																		// 30~4F
+			  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,'\\',   0,   0,   0, // 50
+			Z16, Z16, Z16, Z16, Z16, Z16, Z16, Z16, Z16, Z16								// 60~FF
+#undef Z16
+		};
+
+		stream_.Put('\"');
+		for (const Ch* p = str; p != str + length; ++p) {
+			if ((sizeof(Ch) == 1 || *p < 256) && escape[(unsigned char)*p])  {
+				stream_.Put('\\');
+				stream_.Put(escape[(unsigned char)*p]);
+				if (escape[(unsigned char)*p] == 'u') {
+					stream_.Put('0');
+					stream_.Put('0');
+					stream_.Put(hexDigits[(*p) >> 4]);
+					stream_.Put(hexDigits[(*p) & 0xF]);
+				}
+			}
+			else
+				stream_.Put(*p);
+		}
+		stream_.Put('\"');
+	}
+
+	void WriteStartObject()	{ stream_.Put('{'); }
+	void WriteEndObject()	{ stream_.Put('}'); }
+	void WriteStartArray()	{ stream_.Put('['); }
+	void WriteEndArray()	{ stream_.Put(']'); }
+
+	void Prefix(Type type) {
+		(void)type;
+		if (level_stack_.GetSize() != 0) { // this value is not at root
+			Level* level = level_stack_.template Top<Level>();
+			if (level->valueCount > 0) {
+				if (level->inArray) 
+					stream_.Put(','); // add comma if it is not the first element in array
+				else  // in object
+					stream_.Put((level->valueCount % 2 == 0) ? ',' : ':');
+			}
+			if (!level->inArray && level->valueCount % 2 == 0)
+				RAPIDJSON_ASSERT(type == kStringType);  // if it's in object, then even number should be a name
+			level->valueCount++;
+		}
+		else
+			RAPIDJSON_ASSERT(type == kObjectType || type == kArrayType);
+	}
+
+	Stream& stream_;
+	internal::Stack<Allocator> level_stack_;
+
+private:
+	// Prohibit assignment for VC C4512 warning
+	Writer& operator=(const Writer& w);
+};
+
+} // namespace rapidjson
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
+#endif // RAPIDJSON_RAPIDJSON_H_

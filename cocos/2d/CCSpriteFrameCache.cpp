@@ -1,9 +1,10 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -44,7 +45,7 @@ using namespace std;
 
 NS_CC_BEGIN
 
-static SpriteFrameCache *_sharedSpriteFrameCache = NULL;
+static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
 SpriteFrameCache* SpriteFrameCache::getInstance()
 {
@@ -172,7 +173,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // get aliases
             ValueVector& aliases = frameDict["aliases"].asValueVector();
 
-            std::for_each(aliases.cbegin(), aliases.cend(), [this, &spriteFrameName](const Value& value){
+            for(const auto &value : aliases) {
                 std::string oneAlias = value.asString();
                 if (_spriteFramesAliases.find(oneAlias) != _spriteFramesAliases.end())
                 {
@@ -180,7 +181,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 }
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
-            });
+            }
             
             // create frame
             spriteFrame = new SpriteFrame();
@@ -222,7 +223,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 {
-    CCASSERT(pszPlist.size()>0, "plist filename should not be NULL");
+    CCASSERT(pszPlist.size()>0, "plist filename should not be nullptr");
 
     if (_loadedFileNames->find(pszPlist) == _loadedFileNames->end())
     {
@@ -286,24 +287,24 @@ void SpriteFrameCache::removeSpriteFrames()
 
 void SpriteFrameCache::removeUnusedSpriteFrames()
 {
-    bool bRemoved = false;
+    bool removed = false;
     std::vector<std::string> toRemoveFrames;
     
     for (auto iter = _spriteFrames.begin(); iter != _spriteFrames.end(); ++iter)
     {
         SpriteFrame* spriteFrame = iter->second;
-        if( spriteFrame->retainCount() == 1 ) 
+        if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
-            bRemoved = true;
+            removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
     
     // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-    if( bRemoved )
+    if( removed )
     {
         _loadedFileNames->clear();
     }

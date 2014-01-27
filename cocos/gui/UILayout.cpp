@@ -1,65 +1,114 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "gui/UILayout.h"
-#include "gui/UILayer.h"
 #include "gui/UIHelper.h"
 #include "extensions/GUI/CCControlExtension/CCScale9Sprite.h"
+#include "kazmath/GL/matrix.h"
+#include "CCGLProgram.h"
+#include "CCShaderCache.h"
+#include "CCDirector.h"
+#include "CCDrawingPrimitives.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
+
+NS_CC_BEGIN
 
 namespace gui {
+    
+static const int BACKGROUNDIMAGE_Z = (-1);
+static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
 
+static GLint g_sStencilBits = -1;
+static GLint s_layer = -1;
 
-#define DYNAMIC_CAST_CLIPPINGLAYER dynamic_cast<UIRectClippingNode*>(_renderer)
-
-UILayout::UILayout():
+Layout::Layout():
 _clippingEnabled(false),
 _backGroundScale9Enabled(false),
 _backGroundImage(nullptr),
 _backGroundImageFileName(""),
-_backGroundImageCapInsets(cocos2d::Rect::ZERO),
+_backGroundImageCapInsets(Rect::ZERO),
 _colorType(LAYOUT_COLOR_NONE),
 _bgImageTexType(UI_TEX_TYPE_LOCAL),
 _colorRender(nullptr),
 _gradientRender(nullptr),
-_cColor(cocos2d::Color3B::WHITE),
-_gStartColor(cocos2d::Color3B::WHITE),
-_gEndColor(cocos2d::Color3B::WHITE),
-_alongVector(cocos2d::Point(0.0f, -1.0f)),
+_cColor(Color3B::WHITE),
+_gStartColor(Color3B::WHITE),
+_gEndColor(Color3B::WHITE),
+_alongVector(Point(0.0f, -1.0f)),
 _cOpacity(255),
-_backGroundImageTextureSize(cocos2d::Size::ZERO),
-_layoutType(LAYOUT_ABSOLUTE)
+_backGroundImageTextureSize(Size::ZERO),
+_layoutType(LAYOUT_ABSOLUTE),
+_clippingType(LAYOUT_CLIPPING_STENCIL),
+_clippingStencil(nullptr),
+_scissorRectDirty(false),
+_clippingRect(Rect::ZERO),
+_clippingParent(nullptr),
+_doLayoutDirty(true),
+_currentStencilEnabled(GL_FALSE),
+_currentStencilWriteMask(~0),
+_currentStencilFunc(GL_ALWAYS),
+_currentStencilRef(0),
+_currentStencilValueMask(~0),
+_currentStencilFail(GL_KEEP),
+_currentStencilPassDepthFail(GL_KEEP),
+_currentStencilPassDepthPass(GL_KEEP),
+_currentDepthWriteMask(GL_TRUE),
+_currentAlphaTestEnabled(GL_FALSE),
+_currentAlphaTestFunc(GL_ALWAYS),
+_currentAlphaTestRef(1)
 {
     _widgetType = WidgetTypeContainer;
 }
 
-UILayout::~UILayout()
+Layout::~Layout()
 {
+    CC_SAFE_RELEASE(_clippingStencil);
+}
+    
+void Layout::onEnter()
+{
+    Widget::onEnter();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onEnter();
+    }
+}
+    
+void Layout::onExit()
+{
+    Widget::onExit();
+    if (_clippingStencil)
+    {
+        _clippingStencil->onExit();
+    }
 }
 
-UILayout* UILayout::create()
+Layout* Layout::create()
 {
-    UILayout* layout = new UILayout();
+    Layout* layout = new Layout();
     if (layout && layout->init())
     {
         layout->autorelease();
@@ -69,83 +118,398 @@ UILayout* UILayout::create()
     return nullptr;
 }
 
-bool UILayout::init()
+bool Layout::init()
 {
-    _children = cocos2d::Array::create();
-    _children->retain();
-    _layoutParameterDictionary = cocos2d::Dictionary::create();
-    CC_SAFE_RETAIN(_layoutParameterDictionary);
-    initRenderer();
-    _renderer->retain();
-    _renderer->setZOrder(_widgetZOrder);
-    cocos2d::RGBAProtocol* renderRGBA = dynamic_cast<cocos2d::RGBAProtocol*>(_renderer);
-    if (renderRGBA)
+    if (Node::init())
     {
-        renderRGBA->setCascadeColorEnabled(false);
-        renderRGBA->setCascadeOpacityEnabled(false);
+        initRenderer();
+        setCascadeColorEnabled(true);
+        setCascadeOpacityEnabled(true);
+        setBright(true);
+        ignoreContentAdaptWithSize(false);
+        setSize(Size::ZERO);
+        setAnchorPoint(Point::ZERO);
+        return true;
     }
-    ignoreContentAdaptWithSize(false);
-    setSize(cocos2d::Size::ZERO);
-    setBright(true);
-    setAnchorPoint(cocos2d::Point(0, 0));
-    _scheduler = cocos2d::Director::getInstance()->getScheduler();
-    CC_SAFE_RETAIN(_scheduler);
-    return true;
+    return false;
 }
-
-void UILayout::initRenderer()
+    
+void Layout::addChild(Node *child)
 {
-    _renderer = UIRectClippingNode::create();
+    Widget::addChild(child);
 }
 
-bool UILayout::addChild(UIWidget *child)
+void Layout::addChild(Node * child, int zOrder)
 {
-    supplyTheLayoutParameterLackToChild(child);
-    return UIWidget::addChild(child);
+    Widget::addChild(child, zOrder);
 }
 
-bool UILayout::isClippingEnabled()
+void Layout::addChild(Node *child, int zOrder, int tag)
+{
+    supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+    Widget::addChild(child, zOrder, tag);
+    _doLayoutDirty = true;
+}
+
+bool Layout::isClippingEnabled()
 {
     return _clippingEnabled;
 }
-
-bool UILayout::hitTest(const cocos2d::Point &pt)
+    
+bool Layout::hitTest(const Point &pt)
 {
-    cocos2d::Point nsp = _renderer->convertToNodeSpace(pt);
-    cocos2d::Rect bb = cocos2d::Rect(0.0f, 0.0f, _size.width, _size.height);
+    Point nsp = convertToNodeSpace(pt);
+    Rect bb = Rect(0.0f, 0.0f, _size.width, _size.height);
     if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
     {
         return true;
     }
     return false;
 }
-
-void UILayout::setClippingEnabled(bool able)
+    
+void Layout::visit()
 {
-    _clippingEnabled = able;
-    DYNAMIC_CAST_CLIPPINGLAYER->setClippingEnabled(able);
+    if (!_enabled)
+    {
+        return;
+    }
+    if (_clippingEnabled)
+    {
+        switch (_clippingType)
+        {
+            case LAYOUT_CLIPPING_STENCIL:
+                stencilClippingVisit();
+                break;
+            case LAYOUT_CLIPPING_SCISSOR:
+                scissorClippingVisit();
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        Node::visit();
+    }
+}
+    
+void Layout::sortAllChildren()
+{
+    Widget::sortAllChildren();
+    doLayout();
+}
+    
+void Layout::stencilClippingVisit()
+{
+    if(!_visible)
+        return;
+    
+    kmGLPushMatrix();
+    transform();
+    //Add group command
+    
+    Renderer* renderer = Director::getInstance()->getRenderer();
+    
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+    
+    _beforeVisitCmdStencil.init(_globalZOrder);
+    _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
+    renderer->addCommand(&_beforeVisitCmdStencil);
+    
+    _clippingStencil->visit();
+    
+    _afterDrawStencilCmd.init(_globalZOrder);
+    _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
+    renderer->addCommand(&_afterDrawStencilCmd);
+    
+    int i = 0;
+    
+    if(!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
+        {
+            auto node = _children.at(i);
+            
+            if ( node && node->getLocalZOrder() < 0 )
+                node->visit();
+            else
+                break;
+        }
+        // self draw
+        this->draw();
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit();
+    }
+    else
+    {
+        this->draw();
+    }
+    
+    _afterVisitCmdStencil.init(_globalZOrder);
+    _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
+    renderer->addCommand(&_afterVisitCmdStencil);
+    
+    renderer->popGroup();
+    
+    kmGLPopMatrix();
+}
+    
+void Layout::onBeforeVisitStencil()
+{
+    s_layer++;
+    GLint mask_layer = 0x1 << s_layer;
+    GLint mask_layer_l = mask_layer - 1;
+    _mask_layer_le = mask_layer | mask_layer_l;
+    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
+    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
+    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
+    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
+    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
+    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
+    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
+    
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+    glStencilMask(mask_layer);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
+    glDepthMask(GL_FALSE);
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
+    DrawPrimitives::drawSolidRect(Point(-1,-1), Point(1,1), Color4F(1, 1, 1, 1));
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
 
-void UILayout::onSizeChanged()
+void Layout::onAfterDrawStencil()
 {
-    DYNAMIC_CAST_CLIPPINGLAYER->setClippingSize(_size);
-    if (strcmp(getDescription(), "Layout") == 0)
+    glDepthMask(_currentDepthWriteMask);
+    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+}
+
+
+void Layout::onAfterVisitStencil()
+{
+    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
+    glStencilMask(_currentStencilWriteMask);
+    if (!_currentStencilEnabled)
     {
-        cocos2d::ccArray* arrayChildren = _children->data;
-        int length = arrayChildren->num;
-        for (int i=0; i<length; ++i)
-        {
-            UIWidget* child = (UIWidget*)arrayChildren->arr[i];
-            child->updateSizeAndPosition();
-        }
-        doLayout();
+        glDisable(GL_STENCIL_TEST);
     }
+    s_layer--;
+}
+    
+void Layout::onBeforeVisitScissor()
+{
+    Rect clippingRect = getClippingRect();
+    glEnable(GL_SCISSOR_TEST);
+    EGLView::getInstance()->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+}
+
+void Layout::onAfterVisitScissor()
+{
+    glDisable(GL_SCISSOR_TEST);
+}
+    
+void Layout::scissorClippingVisit()
+{
+    Renderer* renderer = Director::getInstance()->getRenderer();
+
+    _beforeVisitCmdScissor.init(_globalZOrder);
+    _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
+    renderer->addCommand(&_beforeVisitCmdScissor);
+
+    Node::visit();
+    
+    _afterVisitCmdScissor.init(_globalZOrder);
+    _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
+    renderer->addCommand(&_afterVisitCmdScissor);
+}
+
+void Layout::setClippingEnabled(bool able)
+{
+    if (able == _clippingEnabled)
+    {
+        return;
+    }
+    _clippingEnabled = able;
+    switch (_clippingType)
+    {
+        case LAYOUT_CLIPPING_STENCIL:
+            if (able)
+            {
+                static bool once = true;
+                if (once)
+                {
+                    glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
+                    if (g_sStencilBits <= 0)
+                    {
+                        CCLOG("Stencil buffer is not enabled.");
+                    }
+                    once = false;
+                }
+                _clippingStencil = DrawNode::create();
+                if (_running)
+                {
+                    _clippingStencil->onEnter();
+                }
+                _clippingStencil->retain();
+                setStencilClippingSize(_size);
+            }
+            else
+            {
+                if (_running)
+                {
+                    _clippingStencil->onExit();
+                }
+                _clippingStencil->release();
+                _clippingStencil = nullptr;
+            }
+            break;
+        default:
+            break;
+    }
+}
+    
+void Layout::setClippingType(LayoutClippingType type)
+{
+    if (type == _clippingType)
+    {
+        return;
+    }
+    bool clippingEnabled = isClippingEnabled();
+    setClippingEnabled(false);
+    _clippingType = type;
+    setClippingEnabled(clippingEnabled);
+}
+    
+void Layout::setStencilClippingSize(const Size &size)
+{
+    if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
+    {
+        Point rect[4];
+        rect[0] = Point::ZERO;
+        rect[1] = Point(_size.width, 0);
+        rect[2] = Point(_size.width, _size.height);
+        rect[3] = Point(0, _size.height);
+        Color4F green(0, 1, 0, 1);
+        _clippingStencil->clear();
+        _clippingStencil->drawPolygon(rect, 4, green, 0, green);
+    }
+}
+    
+const Rect& Layout::getClippingRect()
+{
+    Point worldPos = convertToWorldSpace(Point::ZERO);
+    AffineTransform t = getNodeToWorldAffineTransform();
+    float scissorWidth = _size.width*t.a;
+    float scissorHeight = _size.height*t.d;
+    Rect parentClippingRect;
+    Layout* parent = this;
+    bool firstClippingParentFounded = false;
+    while (parent)
+    {
+        parent = dynamic_cast<Layout*>(parent->getParent());
+        if(parent)
+        {
+            if (parent->isClippingEnabled())
+            {
+                if (!firstClippingParentFounded)
+                {
+                    _clippingParent = parent;
+                    firstClippingParentFounded = true;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (_clippingParent)
+    {
+        parentClippingRect = _clippingParent->getClippingRect();
+        float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
+        float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
+        float finalWidth = scissorWidth;
+        float finalHeight = scissorHeight;
+        
+        float leftOffset = worldPos.x - parentClippingRect.origin.x;
+        if (leftOffset < 0.0f)
+        {
+            finalX = parentClippingRect.origin.x;
+            finalWidth += leftOffset;
+        }
+        float rightOffset = (worldPos.x + scissorWidth) - (parentClippingRect.origin.x + parentClippingRect.size.width);
+        if (rightOffset > 0.0f)
+        {
+            finalWidth -= rightOffset;
+        }
+        float topOffset = (worldPos.y + scissorHeight) - (parentClippingRect.origin.y + parentClippingRect.size.height);
+        if (topOffset > 0.0f)
+        {
+            finalHeight -= topOffset;
+        }
+        float bottomOffset = worldPos.y - parentClippingRect.origin.y;
+        if (bottomOffset < 0.0f)
+        {
+            finalY = parentClippingRect.origin.x;
+            finalHeight += bottomOffset;
+        }
+        if (finalWidth < 0.0f)
+        {
+            finalWidth = 0.0f;
+        }
+        if (finalHeight < 0.0f)
+        {
+            finalHeight = 0.0f;
+        }
+        _clippingRect.origin.x = finalX;
+        _clippingRect.origin.y = finalY;
+        _clippingRect.size.width = finalWidth;
+        _clippingRect.size.height = finalHeight;
+    }
+    else
+    {
+        _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
+        _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+        _clippingRect.size.width = scissorWidth;
+        _clippingRect.size.height = scissorHeight;
+    }
+    return _clippingRect;
+}
+
+void Layout::onSizeChanged()
+{
+    Widget::onSizeChanged();
+    setContentSize(_size);
+    setStencilClippingSize(_size);
+    _doLayoutDirty = true;
     if (_backGroundImage)
     {
-        _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
+        _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
         if (_backGroundScale9Enabled && _backGroundImage)
         {
-            dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+            static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
         }
     }
     if (_colorRender)
@@ -158,31 +522,30 @@ void UILayout::onSizeChanged()
     }
 }
 
-void UILayout::setBackGroundImageScale9Enabled(bool able)
+void Layout::setBackGroundImageScale9Enabled(bool able)
 {
     if (_backGroundScale9Enabled == able)
     {
         return;
     }
-    _renderer->removeChild(_backGroundImage, true);
+    Node::removeChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundScale9Enabled = able;
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = cocos2d::extension::Scale9Sprite::create();
-        _renderer->addChild(_backGroundImage);
+        _backGroundImage = extension::Scale9Sprite::create();
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
     else
     {
-        _backGroundImage = cocos2d::Sprite::create();
-        _renderer->addChild(_backGroundImage);
+        _backGroundImage = Sprite::create();
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
-    _backGroundImage->setZOrder(-1);
-    setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);    
+    setBackGroundImage(_backGroundImageFileName.c_str(),_bgImageTexType);
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
 
-void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
+void Layout::setBackGroundImage(const char* fileName,TextureResType texType)
 {
     if (!fileName || strcmp(fileName, "") == 0)
     {
@@ -196,28 +559,29 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
     _bgImageTexType = texType;
     if (_backGroundScale9Enabled)
     {
+        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->initWithFile(fileName);
+                bgiScale9->initWithFile(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->initWithSpriteFrameName(fileName);
+                bgiScale9->initWithSpriteFrameName(fileName);
                 break;
             default:
                 break;
         }
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        bgiScale9->setPreferredSize(_size);
     }
     else
     {
         switch (_bgImageTexType)
         {
             case UI_TEX_TYPE_LOCAL:
-                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setTexture(fileName);
+                static_cast<Sprite*>(_backGroundImage)->setTexture(fileName);
                 break;
             case UI_TEX_TYPE_PLIST:
-                dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
+                static_cast<Sprite*>(_backGroundImage)->setSpriteFrame(fileName);
                 break;
             default:
                 break;
@@ -225,28 +589,30 @@ void UILayout::setBackGroundImage(const char* fileName,TextureResType texType)
     }
     if (_backGroundScale9Enabled)
     {
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setColor(getColor());
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setOpacity(getOpacity());
+        extension::Scale9Sprite* bgiScale9 = static_cast<extension::Scale9Sprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
     else
     {
-        dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setColor(getColor());
-        dynamic_cast<cocos2d::Sprite*>(_backGroundImage)->setOpacity(getOpacity());
+        Sprite* bgiScale9 = static_cast<Sprite*>(_backGroundImage);
+        bgiScale9->setColor(getColor());
+        bgiScale9->setOpacity(getOpacity());
     }
     _backGroundImageTextureSize = _backGroundImage->getContentSize();
-    _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
 
-void UILayout::setBackGroundImageCapInsets(const cocos2d::Rect &capInsets)
+void Layout::setBackGroundImageCapInsets(const Rect &capInsets)
 {
     _backGroundImageCapInsets = capInsets;
     if (_backGroundScale9Enabled && _backGroundImage)
     {
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
+        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setCapInsets(capInsets);
     }
 }
 
-void UILayout::supplyTheLayoutParameterLackToChild(UIWidget *child)
+void Layout::supplyTheLayoutParameterLackToChild(Widget *child)
 {
     if (!child)
     {
@@ -259,19 +625,19 @@ void UILayout::supplyTheLayoutParameterLackToChild(UIWidget *child)
         case LAYOUT_LINEAR_HORIZONTAL:
         case LAYOUT_LINEAR_VERTICAL:
         {
-            UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+            LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(UILinearLayoutParameter::create());
+                child->setLayoutParameter(LinearLayoutParameter::create());
             }
             break;
         }
         case LAYOUT_RELATIVE:
         {
-            UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+            RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
             if (!layoutParameter)
             {
-                child->setLayoutParameter(UIRelativeLayoutParameter::create());
+                child->setLayoutParameter(RelativeLayoutParameter::create());
             }
             break;
         }
@@ -280,37 +646,37 @@ void UILayout::supplyTheLayoutParameterLackToChild(UIWidget *child)
     }
 }
 
-void UILayout::addBackGroundImage()
+void Layout::addBackGroundImage()
 {
     if (_backGroundScale9Enabled)
     {
-        _backGroundImage = cocos2d::extension::Scale9Sprite::create();
-        _backGroundImage->setZOrder(-1);
-        _renderer->addChild(_backGroundImage);
-        dynamic_cast<cocos2d::extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
+        _backGroundImage = extension::Scale9Sprite::create();
+        _backGroundImage->setLocalZOrder(-1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
+        static_cast<extension::Scale9Sprite*>(_backGroundImage)->setPreferredSize(_size);
     }
     else
     {
-        _backGroundImage = cocos2d::Sprite::create();
-        _backGroundImage->setZOrder(-1);
-        _renderer->addChild(_backGroundImage);
+        _backGroundImage = Sprite::create();
+        _backGroundImage->setLocalZOrder(-1);
+        Node::addChild(_backGroundImage, BACKGROUNDIMAGE_Z, -1);
     }
-    _backGroundImage->setPosition(cocos2d::Point(_size.width/2.0f, _size.height/2.0f));
+    _backGroundImage->setPosition(Point(_size.width/2.0f, _size.height/2.0f));
 }
 
-void UILayout::removeBackGroundImage()
+void Layout::removeBackGroundImage()
 {
     if (!_backGroundImage)
     {
         return;
     }
-    _renderer->removeChild(_backGroundImage,  true);
+    Node::removeChild(_backGroundImage);
     _backGroundImage = nullptr;
     _backGroundImageFileName = "";
-    _backGroundImageTextureSize = cocos2d::Size::ZERO;
+    _backGroundImageTextureSize = Size::ZERO;
 }
 
-void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
+void Layout::setBackGroundColorType(LayoutBackGroundColorType type)
 {
     if (_colorType == type)
     {
@@ -321,26 +687,26 @@ void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             if (_colorRender)
             {
-                _renderer->removeChild(_colorRender, true);
+                Node::removeChild(_colorRender);
                 _colorRender = nullptr;
             }
             if (_gradientRender)
             {
-                _renderer->removeChild(_gradientRender, true);
+                Node::removeChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_SOLID:
             if (_colorRender)
             {
-                _renderer->removeChild(_colorRender, true);
+                Node::removeChild(_colorRender);
                 _colorRender = nullptr;
             }
             break;
         case LAYOUT_COLOR_GRADIENT:
             if (_gradientRender)
             {
-                _renderer->removeChild(_gradientRender, true);
+                Node::removeChild(_gradientRender);
                 _gradientRender = nullptr;
             }
             break;
@@ -353,27 +719,27 @@ void UILayout::setBackGroundColorType(LayoutBackGroundColorType type)
         case LAYOUT_COLOR_NONE:
             break;
         case LAYOUT_COLOR_SOLID:
-            _colorRender = cocos2d::LayerColor::create();
+            _colorRender = LayerColor::create();
             _colorRender->setContentSize(_size);
             _colorRender->setOpacity(_cOpacity);
             _colorRender->setColor(_cColor);
-            _renderer->addChild(_colorRender,-2);
+            Node::addChild(_colorRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         case LAYOUT_COLOR_GRADIENT:
-            _gradientRender = cocos2d::LayerGradient::create();
+            _gradientRender = LayerGradient::create();
             _gradientRender->setContentSize(_size);
             _gradientRender->setOpacity(_cOpacity);
             _gradientRender->setStartColor(_gStartColor);
             _gradientRender->setEndColor(_gEndColor);
             _gradientRender->setVector(_alongVector);
-            _renderer->addChild(_gradientRender,-2);
+            Node::addChild(_gradientRender, BCAKGROUNDCOLORRENDERER_Z, -1);
             break;
         default:
             break;
     }
 }
 
-void UILayout::setBackGroundColor(const cocos2d::Color3B &color)
+void Layout::setBackGroundColor(const Color3B &color)
 {
     _cColor = color;
     if (_colorRender)
@@ -382,7 +748,7 @@ void UILayout::setBackGroundColor(const cocos2d::Color3B &color)
     }
 }
 
-void UILayout::setBackGroundColor(const cocos2d::Color3B &startColor, const cocos2d::Color3B &endColor)
+void Layout::setBackGroundColor(const Color3B &startColor, const Color3B &endColor)
 {
     _gStartColor = startColor;
     if (_gradientRender)
@@ -396,7 +762,7 @@ void UILayout::setBackGroundColor(const cocos2d::Color3B &startColor, const coco
     }
 }
 
-void UILayout::setBackGroundColorOpacity(int opacity)
+void Layout::setBackGroundColorOpacity(int opacity)
 {
     _cOpacity = opacity;
     switch (_colorType)
@@ -414,7 +780,7 @@ void UILayout::setBackGroundColorOpacity(int opacity)
     }
 }
 
-void UILayout::setBackGroundColorVector(const cocos2d::Point &vector)
+void Layout::setBackGroundColorVector(const Point &vector)
 {
     _alongVector = vector;
     if (_gradientRender)
@@ -423,82 +789,59 @@ void UILayout::setBackGroundColorVector(const cocos2d::Point &vector)
     }
 }
 
-void UILayout::setColor(const cocos2d::Color3B &color)
-{
-    UIWidget::setColor(color);
-    if (_backGroundImage)
-    {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setColor(color);
-        }
-    }
-}
-
-void UILayout::setOpacity(int opacity)
-{
-    UIWidget::setOpacity(opacity);
-    if (_backGroundImage)
-    {
-        cocos2d::RGBAProtocol* rgbap = dynamic_cast<cocos2d::RGBAProtocol*>(_backGroundImage);
-        if (rgbap)
-        {
-            rgbap->setOpacity(opacity);
-        }
-    }
-}
-
-const cocos2d::Size& UILayout::getBackGroundImageTextureSize() const
+const Size& Layout::getBackGroundImageTextureSize() const
 {
     return _backGroundImageTextureSize;
 }
 
-const cocos2d::Size& UILayout::getContentSize() const
-{
-    return _renderer->getContentSize();
-}
-
-void UILayout::setLayoutType(LayoutType type)
+void Layout::setLayoutType(LayoutType type)
 {
     _layoutType = type;
-
-    cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-    int length = layoutChildrenArray->num;
-    for (int i=0; i<length; i++)
+    for (auto& child : _widgetChildren)
     {
-        UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-        supplyTheLayoutParameterLackToChild(child);
+        if (child)
+        {
+            supplyTheLayoutParameterLackToChild(static_cast<Widget*>(child));
+        }
     }
+    _doLayoutDirty = true;
 }
 
-LayoutType UILayout::getLayoutType() const
+LayoutType Layout::getLayoutType() const
 {
     return _layoutType;
 }
-
-void UILayout::doLayout()
+    
+void Layout::requestDoLayout()
 {
+    _doLayoutDirty = true;
+}
+
+void Layout::doLayout()
+{
+    if (!_doLayoutDirty)
+    {
+        return;
+    }
     switch (_layoutType)
     {
         case LAYOUT_ABSOLUTE:
             break;
         case LAYOUT_LINEAR_VERTICAL:
         {
-            cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            cocos2d::Size layoutSize = getSize();
+            Size layoutSize = getSize();
             float topBoundary = layoutSize.height;
-            for (int i=0; i<length; ++i)
+            
+            for (auto& subWidget : _widgetChildren)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                Widget* child = static_cast<Widget*>(subWidget);
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
-                    UILinearGravity childGravity = layoutParameter->getGravity();
-                    cocos2d::Point ap = child->getAnchorPoint();
-                    cocos2d::Size cs = child->getSize();
+                    LinearGravity childGravity = layoutParameter->getGravity();
+                    Point ap = child->getAnchorPoint();
+                    Size cs = child->getSize();
                     float finalPosX = ap.x * cs.width;
                     float finalPosY = topBoundary - ((1.0f-ap.y) * cs.height);
                     switch (childGravity)
@@ -515,10 +858,10 @@ void UILayout::doLayout()
                         default:
                             break;
                     }
-                    UIMargin mg = layoutParameter->getMargin();
+                    Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
-                    child->setPosition(cocos2d::Point(finalPosX, finalPosY));
+                    child->setPosition(Point(finalPosX, finalPosY));
                     topBoundary = child->getBottomInParent() - mg.bottom;
                 }
             }
@@ -526,20 +869,18 @@ void UILayout::doLayout()
         }
         case LAYOUT_LINEAR_HORIZONTAL:
         {
-            cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            cocos2d::Size layoutSize = getSize();
+            Size layoutSize = getSize();
             float leftBoundary = 0.0f;
-            for (int i=0; i<length; ++i)
+            for (auto& subWidget : _widgetChildren)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UILinearLayoutParameter* layoutParameter = dynamic_cast<UILinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
+                Widget* child = static_cast<Widget*>(subWidget);
+                LinearLayoutParameter* layoutParameter = dynamic_cast<LinearLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_LINEAR));
                 
                 if (layoutParameter)
                 {
-                    UILinearGravity childGravity = layoutParameter->getGravity();
-                    cocos2d::Point ap = child->getAnchorPoint();
-                    cocos2d::Size cs = child->getSize();
+                    LinearGravity childGravity = layoutParameter->getGravity();
+                    Point ap = child->getAnchorPoint();
+                    Size cs = child->getSize();
                     float finalPosX = leftBoundary + (ap.x * cs.width);
                     float finalPosY = layoutSize.height - (1.0f - ap.y) * cs.height;
                     switch (childGravity)
@@ -556,10 +897,10 @@ void UILayout::doLayout()
                         default:
                             break;
                     }
-                    UIMargin mg = layoutParameter->getMargin();
+                    Margin mg = layoutParameter->getMargin();
                     finalPosX += mg.left;
                     finalPosY -= mg.top;
-                    child->setPosition(cocos2d::Point(finalPosX, finalPosY));
+                    child->setPosition(Point(finalPosX, finalPosY));
                     leftBoundary = child->getRightInParent() + mg.right;
                 }
             }
@@ -567,24 +908,20 @@ void UILayout::doLayout()
         }
         case LAYOUT_RELATIVE:
         {
-            cocos2d::ccArray* layoutChildrenArray = getChildren()->data;
-            int length = layoutChildrenArray->num;
-            int unlayoutChildCount = length;
-            cocos2d::Size layoutSize = getSize();
-            
-            for (int i=0; i<length; i++)
+            ssize_t unlayoutChildCount = _widgetChildren.size();
+            Size layoutSize = getSize();
+            for (auto& subWidget : _widgetChildren)
             {
-                UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                Widget* child = static_cast<Widget*>(subWidget);
+                RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                 layoutParameter->_put = false;
             }
-            
             while (unlayoutChildCount > 0)
             {
-                for (int i=0; i<length; i++)
+                for (auto& subWidget : _widgetChildren)
                 {
-                    UIWidget* child = dynamic_cast<UIWidget*>(layoutChildrenArray->arr[i]);
-                    UIRelativeLayoutParameter* layoutParameter = dynamic_cast<UIRelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                    Widget* child = static_cast<Widget*>(subWidget);
+                    RelativeLayoutParameter* layoutParameter = dynamic_cast<RelativeLayoutParameter*>(child->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                     
                     if (layoutParameter)
                     {
@@ -592,20 +929,20 @@ void UILayout::doLayout()
                         {
                             continue;
                         }
-                        cocos2d::Point ap = child->getAnchorPoint();
-                        cocos2d::Size cs = child->getSize();
-                        UIRelativeAlign align = layoutParameter->getAlign();
+                        Point ap = child->getAnchorPoint();
+                        Size cs = child->getSize();
+                        RelativeAlign align = layoutParameter->getAlign();
                         const char* relativeName = layoutParameter->getRelativeToWidgetName();
-                        UIWidget* relativeWidget = nullptr;
-                        UIRelativeLayoutParameter* relativeWidgetLP = nullptr;
+                        Widget* relativeWidget = nullptr;
+                        RelativeLayoutParameter* relativeWidgetLP = nullptr;
                         float finalPosX = 0.0f;
                         float finalPosY = 0.0f;
                         if (relativeName && strcmp(relativeName, ""))
                         {
-                            relativeWidget = UIHelper::seekWidgetByRelativeName(this, relativeName);
+                            relativeWidget = Helper::seekWidgetByRelativeName(this, relativeName);
                             if (relativeWidget)
                             {
-                                relativeWidgetLP = dynamic_cast<UIRelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
+                                relativeWidgetLP = dynamic_cast<RelativeLayoutParameter*>(relativeWidget->getLayoutParameter(LAYOUT_PARAMETER_RELATIVE));
                             }
                         }
                         switch (align)
@@ -668,7 +1005,7 @@ void UILayout::doLayout()
                                     {
                                         continue;
                                     }
-                                    cocos2d::Size rbs = relativeWidget->getSize();
+                                    Size rbs = relativeWidget->getSize();
                                     float locationBottom = relativeWidget->getTopInParent();
                                     
                                     finalPosY = locationBottom + ap.y * cs.height;
@@ -708,7 +1045,7 @@ void UILayout::doLayout()
                                     {
                                         continue;
                                     }
-                                    cocos2d::Size rbs = relativeWidget->getSize();
+                                    Size rbs = relativeWidget->getSize();
                                     float locationRight = relativeWidget->getLeftInParent();
                                     finalPosX = locationRight - (1.0f - ap.x) * cs.width;
                                     
@@ -748,7 +1085,7 @@ void UILayout::doLayout()
                                     {
                                         continue;
                                     }
-                                    cocos2d::Size rbs = relativeWidget->getSize();
+                                    Size rbs = relativeWidget->getSize();
                                     float locationLeft = relativeWidget->getRightInParent();
                                     finalPosX = locationLeft + ap.x * cs.width;
                                     
@@ -788,7 +1125,7 @@ void UILayout::doLayout()
                                     {
                                         continue;
                                     }
-                                    cocos2d::Size rbs = relativeWidget->getSize();
+                                    Size rbs = relativeWidget->getSize();
                                     float locationTop = relativeWidget->getBottomInParent();
                                     
                                     finalPosY = locationTop - (1.0f - ap.y) * cs.height;
@@ -811,8 +1148,8 @@ void UILayout::doLayout()
                             default:
                                 break;
                         }
-                        UIMargin relativeWidgetMargin;
-                        UIMargin mg = layoutParameter->getMargin();
+                        Margin relativeWidgetMargin;
+                        Margin mg = layoutParameter->getMargin();
                         if (relativeWidgetLP)
                         {
                             relativeWidgetMargin = relativeWidgetLP->getMargin();
@@ -980,7 +1317,7 @@ void UILayout::doLayout()
                             default:
                                 break;
                         }
-                        child->setPosition(cocos2d::Point(finalPosX, finalPosY));
+                        child->setPosition(Point(finalPosX, finalPosY));
                         layoutParameter->_put = true;
                         unlayoutChildCount--;
                     }
@@ -991,27 +1328,27 @@ void UILayout::doLayout()
         default:
             break;
     }
+    _doLayoutDirty = false;
 }
 
-const char* UILayout::getDescription() const
+std::string Layout::getDescription() const
 {
     return "Layout";
 }
 
-UIWidget* UILayout::createCloneInstance()
+Widget* Layout::createCloneInstance()
 {
-    return UILayout::create();
+    return Layout::create();
 }
 
-void UILayout::copyClonedWidgetChildren(UIWidget* model)
+void Layout::copyClonedWidgetChildren(Widget* model)
 {
-    UIWidget::copyClonedWidgetChildren(model);
-    doLayout();
+    Widget::copyClonedWidgetChildren(model);
 }
 
-void UILayout::copySpecialProperties(UIWidget *widget)
+void Layout::copySpecialProperties(Widget *widget)
 {
-    UILayout* layout = dynamic_cast<UILayout*>(widget);
+    Layout* layout = dynamic_cast<Layout*>(widget);
     if (layout)
     {
         setBackGroundImageScale9Enabled(layout->_backGroundScale9Enabled);
@@ -1024,98 +1361,8 @@ void UILayout::copySpecialProperties(UIWidget *widget)
         setBackGroundColorVector(layout->_alongVector);
         setLayoutType(layout->_layoutType);
         setClippingEnabled(layout->_clippingEnabled);
+        setClippingType(layout->_clippingType);
     }
 }
-
-UIRectClippingNode::UIRectClippingNode():
-_innerStencil(nullptr),
-_enabled(true),
-_clippingSize(cocos2d::Size(50.0f, 50.0f)),
-_clippingEnabled(false)
-{
-    
 }
-
-UIRectClippingNode::~UIRectClippingNode()
-{
-    
-}
-
-UIRectClippingNode* UIRectClippingNode::create()
-{
-    UIRectClippingNode *pRet = new UIRectClippingNode();
-    if (pRet && pRet->init())
-    {
-        pRet->autorelease();
-    }
-    else
-    {
-        CC_SAFE_DELETE(pRet);
-    }
-    
-    return pRet;
-}
-
-bool UIRectClippingNode::init()
-{
-    _innerStencil = cocos2d::DrawNode::create();
-    rect[0] = cocos2d::Point(0, 0);
-    rect[1] = cocos2d::Point(_clippingSize.width, 0);
-    rect[2] = cocos2d::Point(_clippingSize.width, _clippingSize.height);
-    rect[3] = cocos2d::Point(0, _clippingSize.height);
-    
-    cocos2d::Color4F green(0, 1, 0, 1);
-    _innerStencil->drawPolygon(rect, 4, green, 0, green);
-    if (cocos2d::ClippingNode::init(_innerStencil))
-    {
-        return true;
-    }
-    return false;
-}
-
-
-void UIRectClippingNode::setClippingSize(const cocos2d::Size &size)
-{
-    setContentSize(size);
-    _clippingSize = size;
-    rect[0] = cocos2d::Point(0, 0);
-    rect[1] = cocos2d::Point(_clippingSize.width, 0);
-    rect[2] = cocos2d::Point(_clippingSize.width, _clippingSize.height);
-    rect[3] = cocos2d::Point(0, _clippingSize.height);
-    cocos2d::Color4F green(0, 1, 0, 1);
-    _innerStencil->clear();
-    _innerStencil->drawPolygon(rect, 4, green, 0, green);
-}
-
-void UIRectClippingNode::setClippingEnabled(bool enabled)
-{
-    _clippingEnabled = enabled;
-}
-
-void UIRectClippingNode::visit()
-{
-    if (!_enabled)
-    {
-        return;
-    }
-    if (_clippingEnabled)
-    {
-        cocos2d::ClippingNode::visit();
-    }
-    else
-    {
-        cocos2d::Node::visit();
-    }
-}
-
-void UIRectClippingNode::setEnabled(bool enabled)
-{
-    _enabled = enabled;
-}
-
-bool UIRectClippingNode::isEnabled() const
-{
-    return _enabled;
-}
-
-}
+NS_CC_END

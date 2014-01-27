@@ -8,23 +8,33 @@ local originCreateLayer = createTestLayer
 
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
-    local bg = cc.Sprite:create("Images/background3.png")
-    ret:addChild(bg, 0, kTagBackground)
-    bg:setPosition( VisibleRect:center() )
+    local bgNode = cc.NodeGrid:create()
+    bgNode:setAnchorPoint(cc.p(0.5,0.5))
+    ret:addChild(bgNode,0,kTagBackground)
 
+    local bg = cc.Sprite:create("Images/background3.png")
+    bg:setPosition( VisibleRect:center())
+    bgNode:addChild(bg)
+
+    local target1 = cc.NodeGrid:create()
+    target1:setAnchorPoint(cc.p(0.5,0.5))
     local  grossini = cc.Sprite:create("Images/grossinis_sister2.png")
-    bg:addChild(grossini, 1, kTagSprite1)
-    grossini:setPosition( cc.p(VisibleRect:left().x+VisibleRect:getVisibleRect().width/3.0, VisibleRect:bottom().y+ 200) )
+    target1:addChild(grossini)
+    bgNode:addChild(target1,1,kTagSprite1)
+    target1:setPosition(cc.p(VisibleRect:left().x+VisibleRect:getVisibleRect().width/3.0, VisibleRect:bottom().y+ 200) )
     local  sc = cc.ScaleBy:create(2, 5)
     local  sc_back = sc:reverse()
-    grossini:runAction( cc.RepeatForever:create(cc.Sequence:create(sc, sc_back)))
+    target1:runAction( cc.RepeatForever:create(cc.Sequence:create(sc, sc_back)))
 
+    local  target2 = cc.NodeGrid:create()
+    target2:setAnchorPoint(cc.p(0.5,0.5))
     local  tamara = cc.Sprite:create("Images/grossinis_sister1.png")
-    bg:addChild(tamara, 1, kTagSprite2)
-    tamara:setPosition( cc.p(VisibleRect:left().x+2*VisibleRect:getVisibleRect().width/3.0,VisibleRect:bottom().y+200) )
+    target2:addChild(tamara)
+    bgNode:addChild(target2,1,kTagSprite2)
+    target2:setPosition( cc.p(VisibleRect:left().x+2*VisibleRect:getVisibleRect().width/3.0,VisibleRect:bottom().y+200) )
     local  sc2 = cc.ScaleBy:create(2, 5)
     local  sc2_back = sc2:reverse()
-    tamara:runAction( cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)))
+    target2:runAction( cc.RepeatForever:create(cc.Sequence:create(sc2, sc2_back)))
 
     return ret
 end
@@ -51,9 +61,9 @@ local function Effect1()
     local  reuse = cc.ReuseGrid:create(1)
     local  delay = cc.DelayTime:create(8)
 
-    local  orbit = cc.OrbitCamera:create(5, 1, 2, 0, 180, 0, -90)
-    local  orbit_back = orbit:reverse()
-    target:runAction( cc.RepeatForever:create( cc.Sequence:create(orbit, orbit_back)))
+    -- local  orbit = cc.OrbitCamera:create(5, 1, 2, 0, 180, 0, -90)
+    -- local  orbit_back = orbit:reverse()
+    -- target:runAction( cc.RepeatForever:create( cc.Sequence:create(orbit, orbit_back)))
     target:runAction( cc.Sequence:create(lens, delay, reuse, waves))
     return ret
 end
@@ -85,7 +95,7 @@ local function Effect2()
 
     local  delay = cc.DelayTime:create(1)
 
-    target:runAction(cc.Sequence:create(shaky, delay ,reuse, shuffle, tolua.cast(delay:clone(), "Action"), turnoff, turnon))
+    target:runAction(cc.Sequence:create(shaky, delay ,reuse, shuffle, tolua.cast(delay:clone(), "cc.Action"), turnoff, turnon))
     return ret
 end
 
@@ -165,7 +175,8 @@ local function Effect4()
     -- ret:addChild(pTarget)
 
     -- director:getActionManager():addAction(seq, pTarget, false)
-    ret:runAction( lens )
+    local  bg = ret:getChildByTag(kTagBackground)
+    bg:runAction( lens )
     return ret
 end
 
@@ -216,6 +227,7 @@ local function Issue631()
     layer:addChild(sprite, 10)
 
     -- foreground
+    local  layer2BaseGrid = cc.NodeGrid:create()
     local  layer2 = cc.LayerColor:create(cc.c4b( 0, 255,0,255 ) )
     local  fog = cc.Sprite:create("Images/Fog.png")
 
@@ -225,9 +237,10 @@ local function Issue631()
 
     fog:setBlendFunc(gl.SRC_ALPHA , gl.ONE_MINUS_SRC_ALPHA )
     layer2:addChild(fog, 1)
-    ret:addChild(layer2, 1)
+    ret:addChild(layer2BaseGrid, 1)
+    layer2BaseGrid:addChild(layer2)
 
-    layer2:runAction( cc.RepeatForever:create(effect) )
+    layer2BaseGrid:runAction( cc.RepeatForever:create(effect) )
     return ret
 end
 

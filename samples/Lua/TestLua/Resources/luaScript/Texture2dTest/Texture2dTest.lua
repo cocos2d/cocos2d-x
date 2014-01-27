@@ -7,10 +7,10 @@ local originCreateLayer = createTestLayer
 local function createTestLayer(title, subtitle)
     local ret = originCreateLayer(title, subtitle)
     Helper.titleLabel:setTag(kTagLabel)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     local col = cc.LayerColor:create(cc.c4b(128,128,128,255))
     ret:addChild(col, -10)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 --------------------------------------------------------------------
@@ -26,7 +26,7 @@ local function TextureTIFF()
     local img = cc.Sprite:create("Images/test_image.tiff")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -43,7 +43,7 @@ local function TexturePNG()
     local img = cc.Sprite:create("Images/test_image.png")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -59,7 +59,7 @@ local function TextureJPEG()
     local img = cc.Sprite:create("Images/test_image.jpeg")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -75,7 +75,7 @@ local function TextureWEBP()
     local img = cc.Sprite:create("Images/test_image.webp")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -89,12 +89,12 @@ local function TextureMipMap()
                                 "Left image uses mipmap. Right image doesn't")
     local s = cc.Director:getInstance():getWinSize()
 
-    local texture0 = cc.TextureCache:getInstance():addImage(
+    local texture0 = cc.Director:getInstance():getTextureCache():addImage(
         "Images/grossini_dance_atlas.png")
     texture0:generateMipmap()
     texture0:setTexParameters(gl.LINEAR_MIPMAP_LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE)
 
-    local texture1 = cc.TextureCache:getInstance():addImage(
+    local texture1 = cc.Director:getInstance():getTextureCache():addImage(
         "Images/grossini_dance_atlas_nomipmap.png")
 
     local img0 = cc.Sprite:createWithTexture(texture0)
@@ -110,12 +110,12 @@ local function TextureMipMap()
     local  scale1 = cc.EaseOut:create(cc.ScaleBy:create(4, 0.01), 3)
     local  sc_back = scale1:reverse()
 
-    local  scale2 = tolua.cast(scale1:clone(), "EaseOut")
+    local  scale2 = tolua.cast(scale1:clone(), "cc.EaseOut")
     local  sc_back2 = scale2:reverse()
 
     img0:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
     img1:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -148,13 +148,13 @@ local function TexturePVRMipMap()
         local  scale1 = cc.EaseOut:create(cc.ScaleBy:create(4, 0.01), 3)
         local  sc_back = scale1:reverse()
 
-        local  scale2 = tolua.cast(scale1:clone(), "EaseOut")
+        local  scale2 = tolua.cast(scale1:clone(), "cc.EaseOut")
         local  sc_back2 = scale2:reverse()
 
         imgMipMap:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
         img:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -182,13 +182,13 @@ local function TexturePVRMipMap2()
     local  scale1 = cc.EaseOut:create(cc.ScaleBy:create(4, 0.01), 3)
     local  sc_back = scale1:reverse()
 
-    local  scale2 = tolua.cast(scale1:clone(), "EaseOut")
+    local  scale2 = tolua.cast(scale1:clone(), "cc.EaseOut")
     local  sc_back2 = scale2:reverse()
 
     imgMipMap:runAction(cc.RepeatForever:create(cc.Sequence:create(scale1, sc_back)))
     img:runAction(cc.RepeatForever:create(cc.Sequence:create(scale2, sc_back2)))
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -211,7 +211,7 @@ local function TexturePVR2BPP()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -234,7 +234,7 @@ local function TexturePVR()
     else
         cclog("This test is not supported.")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -258,7 +258,7 @@ local function TexturePVR4BPP()
     else
         cclog("This test is not supported in cocos2d-mac")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -277,7 +277,7 @@ local function TexturePVRRGBA8888()
     local img = cc.Sprite:create("Images/test_image_rgba8888.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -300,7 +300,7 @@ local function TexturePVRBGRA8888()
     else
         cclog("BGRA8888 images are not supported")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -318,7 +318,7 @@ local function TexturePVRRGBA5551()
     local img = cc.Sprite:create("Images/test_image_rgba5551.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -336,7 +336,7 @@ local function TexturePVRRGBA4444()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -355,7 +355,7 @@ local function TexturePVRRGBA4444GZ()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -374,7 +374,7 @@ local function TexturePVRRGBA4444CCZ()
     local img = cc.Sprite:create("Images/test_image_rgba4444.pvr.ccz")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -392,7 +392,7 @@ local function TexturePVRRGB565()
     local img = cc.Sprite:create("Images/test_image_rgb565.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -408,7 +408,7 @@ local function TexturePVRRGB888()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -426,7 +426,7 @@ local function TexturePVRA8()
     local img = cc.Sprite:create("Images/test_image_a8.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -444,7 +444,7 @@ local function TexturePVRI8()
     local img = cc.Sprite:create("Images/test_image_i8.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -463,7 +463,7 @@ local function TexturePVRAI88()
     local img = cc.Sprite:create("Images/test_image_ai88.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -478,7 +478,7 @@ local function TexturePVR2BPPv3()
         img:setPosition(cc.p(s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -494,7 +494,7 @@ local function TexturePVRII2BPPv3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -512,7 +512,7 @@ local function TexturePVR4BPPv3()
         cclog("This test is not supported")
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -534,7 +534,7 @@ local function TexturePVRII4BPPv3()
     else
         cclog("This test is not supported")
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -551,7 +551,7 @@ local function TexturePVRRGBA8888v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -571,7 +571,7 @@ local function TexturePVRBGRA8888v3()
         cclog("BGRA images are not supported")
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -587,7 +587,7 @@ local function TexturePVRRGBA5551v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -604,7 +604,7 @@ local function TexturePVRRGBA4444v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -621,7 +621,7 @@ local function TexturePVRRGB565v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -638,7 +638,7 @@ local function TexturePVRRGB888v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -655,7 +655,7 @@ local function TexturePVRA8v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -672,7 +672,7 @@ local function TexturePVRI8v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -689,7 +689,7 @@ local function TexturePVRAI88v3()
         ret:addChild(img)
     end
 
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -726,7 +726,7 @@ local function TexturePVRNonSquare()
     local img = cc.Sprite:create("Images/grossini_128x256_mipmap.pvr")
     img:setPosition(cc.p( s.width/2.0, s.height/2.0))
     ret:addChild(img)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -745,7 +745,7 @@ local function TexturePVRNPOT4444()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -764,7 +764,7 @@ local function TexturePVRNPOT8888()
         img:setPosition(cc.p( s.width/2.0, s.height/2.0))
         ret:addChild(img)
     end
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -803,13 +803,13 @@ local function TextureAlias()
 
     -- scale them to show
     local  sc = cc.ScaleBy:create(3, 8.0)
-    local  sc_back = tolua.cast(sc:reverse(), "ScaleBy")
+    local  sc_back = tolua.cast(sc:reverse(), "cc.ScaleBy")
     local  scaleforever = cc.RepeatForever:create(cc.Sequence:create(sc, sc_back))
-    local  scaleToo = tolua.cast(scaleforever:clone(), "RepeatForever")
+    local  scaleToo = tolua.cast(scaleforever:clone(), "cc.RepeatForever")
 
     sprite2:runAction(scaleforever)
     sprite:runAction(scaleToo)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -829,7 +829,7 @@ local function TexturePixelFormat()
     -- 3- 16-bit RGB5A1
     -- 4- 16-bit RGB565
 
-    local label = tolua.cast(ret:getChildByTag(kTagLabel), "LabelTTF")
+    local label = tolua.cast(ret:getChildByTag(kTagLabel), "cc.LabelTTF")
     label:setColor(cc.c3b(16,16,255))
 
     local s = cc.Director:getInstance():getWinSize()
@@ -844,7 +844,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite1, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite1:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite1:getTexture())
 
     -- RGBA 4444 image (16-bit)
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A4444)
@@ -853,7 +853,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite2, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite2:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite2:getTexture())
 
     -- RGB5A1 image (16-bit)
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB5_A1)
@@ -862,7 +862,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite3, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite3:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite3:getTexture())
 
     -- RGB888 image
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RG_B888 )
@@ -871,7 +871,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite4, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite4:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite4:getTexture())
 
     -- RGB565 image (16-bit)
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RG_B565)
@@ -880,7 +880,7 @@ local function TexturePixelFormat()
     ret:addChild(sprite5, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite5:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite5:getTexture())
 
     -- A8 image (8-bit)
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_A8 )
@@ -889,16 +889,16 @@ local function TexturePixelFormat()
     ret:addChild(sprite6, 0)
 
     -- remove texture from texture manager
-    cc.TextureCache:getInstance():removeTexture(sprite6:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite6:getTexture())
 
     local  fadeout = cc.FadeOut:create(2)
     local  fadein  = cc.FadeIn:create(2)
     local  seq = cc.Sequence:create(cc.DelayTime:create(2), fadeout, fadein)
     local  seq_4ever = cc.RepeatForever:create(seq)
-    local  seq_4ever2 = tolua.cast(seq_4ever:clone(), "RepeatForever")
-    local  seq_4ever3 = tolua.cast(seq_4ever:clone(), "RepeatForever")
-    local  seq_4ever4 = tolua.cast(seq_4ever:clone(), "RepeatForever")
-    local  seq_4ever5 = tolua.cast(seq_4ever:clone(), "RepeatForever")
+    local  seq_4ever2 = tolua.cast(seq_4ever:clone(), "cc.RepeatForever")
+    local  seq_4ever3 = tolua.cast(seq_4ever:clone(), "cc.RepeatForever")
+    local  seq_4ever4 = tolua.cast(seq_4ever:clone(), "cc.RepeatForever")
+    local  seq_4ever5 = tolua.cast(seq_4ever:clone(), "cc.RepeatForever")
 
     sprite1:runAction(seq_4ever)
     sprite2:runAction(seq_4ever2)
@@ -908,7 +908,7 @@ local function TexturePixelFormat()
 
     -- restore default
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_DEFAULT)
-    cc.TextureCache:getInstance():dumpCachedTextureInfo()
+    print(cc.Director:getInstance():getTextureCache():getCachedTextureInfo())
     return ret
 end
 
@@ -964,12 +964,12 @@ local function TextureAsync()
     ret:addChild(label, 10)
 
     local  scale = cc.ScaleBy:create(0.3, 2)
-    local  scale_back = tolua.cast(scale:reverse(), "ScaleBy")
+    local  scale_back = tolua.cast(scale:reverse(), "cc.ScaleBy")
     local  seq = cc.Sequence:create(scale, scale_back)
     label:runAction(cc.RepeatForever:create(seq))
 
     local function imageLoaded(pObj)
-        local  tex = tolua.cast(pObj, "Texture2D")
+        local  tex = tolua.cast(pObj, "cc.Texture2D")
         local director = cc.Director:getInstance()
 
         --cc.ASSERT( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread")
@@ -997,16 +997,16 @@ local function TextureAsync()
             for j=0, 7 do
                 local szSpriteName = string.format(
                     "Images/sprites_test/sprite-%d-%d.png", i, j)
-                cc.TextureCache:getInstance():addImageAsync(
+                cc.Director:getInstance():getTextureCache():addImageAsync(
                     szSpriteName, imageLoaded)
             end
         end
 
-        cc.TextureCache:getInstance():addImageAsync("Images/background1.jpg", imageLoaded)
-        cc.TextureCache:getInstance():addImageAsync("Images/background2.jpg", imageLoaded)
-        cc.TextureCache:getInstance():addImageAsync("Images/background.png", imageLoaded)
-        cc.TextureCache:getInstance():addImageAsync("Images/atlastest.png", imageLoaded)
-        cc.TextureCache:getInstance():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
+        cc.Director:getInstance():getTextureCache():addImageAsync("Images/background1.jpg", imageLoaded)
+        cc.Director:getInstance():getTextureCache():addImageAsync("Images/background2.jpg", imageLoaded)
+        cc.Director:getInstance():getTextureCache():addImageAsync("Images/background.png", imageLoaded)
+        cc.Director:getInstance():getTextureCache():addImageAsync("Images/atlastest.png", imageLoaded)
+        cc.Director:getInstance():getTextureCache():addImageAsync("Images/grossini_dance_atlas.png",imageLoaded)
     end
 
     local schedulerEntry = nil
@@ -1015,7 +1015,7 @@ local function TextureAsync()
             schedulerEntry = scheduler:scheduleScriptFunc(loadImages, 1.0, false)
         elseif event == "exit" then
             scheduler:unscheduleScriptEntry(schedulerEntry)
-            cc.TextureCache:getInstance():removeAllTextures()
+            cc.Director:getInstance():getTextureCache():removeAllTextures()
         end
     end
 
@@ -1043,12 +1043,12 @@ local function TextureGlClamp()
     local  rotate = cc.RotateBy:create(4, 360)
     sprite:runAction(rotate)
     local  scale = cc.ScaleBy:create(2, 0.04)
-    local  scaleBack = tolua.cast(scale:reverse(), "ScaleBy")
+    local  scaleBack = tolua.cast(scale:reverse(), "cc.ScaleBy")
     local  seq = cc.Sequence:create(scale, scaleBack)
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            cc.TextureCache:getInstance():removeUnusedTextures()
+            cc.Director:getInstance():getTextureCache():removeUnusedTextures()
         end
     end
 
@@ -1077,12 +1077,12 @@ local function TextureGlRepeat()
     local  rotate = cc.RotateBy:create(4, 360)
     sprite:runAction(rotate)
     local  scale = cc.ScaleBy:create(2, 0.04)
-    local  scaleBack = tolua.cast(scale:reverse(), "ScaleBy")
+    local  scaleBack = tolua.cast(scale:reverse(), "cc.ScaleBy")
     local  seq = cc.Sequence:create(scale, scaleBack)
     sprite:runAction(seq)
     local function onNodeEvent(event)
         if event == "exit" then
-            cc.TextureCache:getInstance():removeUnusedTextures()
+            cc.Director:getInstance():getTextureCache():removeUnusedTextures()
         end
     end
 
@@ -1150,7 +1150,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    cc.TextureCache:getInstance():removeTexture(sprite:getTexture())
+    cc.Director:getInstance():getTextureCache():removeTexture(sprite:getTexture())
 
     sprite = cc.Sprite:create("Images/grossinis_sister1.png")
     sprite:setPosition(cc.p(s.width/5*2, s.height/2))
@@ -1166,7 +1166,7 @@ local function TextureCache1()
     sprite:setScale(2)
     ret:addChild(sprite)
 
-    cc.TextureCache:getInstance():removeTextureForKey("Images/grossinis_sister2.png")
+    cc.Director:getInstance():getTextureCache():removeTextureForKey("Images/grossinis_sister2.png")
 
     sprite = cc.Sprite:create("Images/grossinis_sister2.png")
     sprite:setPosition(cc.p(s.width/5*4, s.height/2))
@@ -1192,8 +1192,8 @@ local function TextureDrawAtPoint()
         m_pTex2F:drawAtPoint(cc.p(s.width/2+50, s.height/2 - 50))
     end
 
-    m_pTex1 = cc.TextureCache:getInstance():addImage("Images/grossinis_sister1.png")
-    m_pTex2F = cc.TextureCache:getInstance():addImage("Images/grossinis_sister2.png")
+    m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
+    m_pTex2F = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1226,8 +1226,8 @@ local function TextureDrawInRect()
         m_pTex2F:drawInRect(rect2)
     end
 
-    local m_pTex1 = cc.TextureCache:getInstance():addImage("Images/grossinis_sister1.png")
-    local m_pTex2F = cc.TextureCache:getInstance():addImage("Images/grossinis_sister2.png")
+    local m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
+    local m_pTex2F = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
@@ -1260,7 +1260,7 @@ local function TextureMemoryAlloc()
             cclog("updateImage"..tag)
             m_pBackground:removeFromParent(true)
         end
-        cc.TextureCache:getInstance():removeUnusedTextures()
+        cc.Director:getInstance():getTextureCache():removeUnusedTextures()
 
         local file = ""
         if tag == 0 then
@@ -1338,7 +1338,7 @@ local function TexturePVRv3Premult()
     local function transformSprite(sprite)
         local fade = cc.FadeOut:create(2)
         local dl = cc.DelayTime:create(2)
-        local fadein = tolua.cast(fade:reverse(), "FadeOut")
+        local fadein = tolua.cast(fade:reverse(), "cc.FadeOut")
         local seq = cc.Sequence:create(fade, fadein, dl)
         local repeatAction = cc.RepeatForever:create(seq)
         sprite:runAction(repeatAction)
@@ -1364,7 +1364,7 @@ local function TexturePVRv3Premult()
 
     -- PNG
     cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
-    cc.TextureCache:getInstance():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
+    cc.Director:getInstance():getTextureCache():removeTextureForKey("Images/grossinis_sister1-testalpha.png")
     local png = cc.Sprite:create("Images/grossinis_sister1-testalpha.png")
     ret:addChild(png, 0)
     png:setPosition(cc.p(size.width/4*3, size.height/2))

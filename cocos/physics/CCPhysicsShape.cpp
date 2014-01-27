@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysicsShape.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 
@@ -229,7 +229,7 @@ void PhysicsShape::setFriction(float friction)
 }
 
 
-Point* PhysicsShape::recenterPoints(Point* points, int count, const Point& center)
+void PhysicsShape::recenterPoints(Point* points, int count, const Point& center)
 {
     cpVect* cpvs = new cpVect[count];
     cpRecenterPoly(count, PhysicsHelper::points2cpvs(points, cpvs, count));
@@ -243,8 +243,6 @@ Point* PhysicsShape::recenterPoints(Point* points, int count, const Point& cente
             points[i] += center;
         }
     }
-    
-    return points;
 }
 
 Point PhysicsShape::getPolyonCenter(const Point* points, int count)
@@ -306,7 +304,7 @@ bool PhysicsShapeCircle::init(float radius, const PhysicsMaterial& material/* = 
         
         _info->add(shape);
         
-        _area = calculateDefaultArea();
+        _area = calculateArea();
         _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         
@@ -331,7 +329,7 @@ float PhysicsShapeCircle::calculateMoment(float mass, float radius, const Point&
                                                      PhysicsHelper::point2cpv(offset)));
 }
 
-float PhysicsShapeCircle::calculateDefaultArea()
+float PhysicsShapeCircle::calculateArea()
 {
     return PhysicsHelper::cpfloat2float(cpAreaForCircle(0, cpCircleShapeGetRadius(_info->getShapes().front())));
 }
@@ -447,7 +445,7 @@ bool PhysicsShapeBox::init(const Size& size, const PhysicsMaterial& material/* =
         _info->add(shape);
         
         _offset = offset;
-        _area = calculateDefaultArea();
+        _area = calculateArea();
         _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         
@@ -484,7 +482,7 @@ float PhysicsShapeBox::calculateMoment(float mass, const Size& size, const Point
                                                    PhysicsHelper::point2cpv(offset)));
 }
 
-float PhysicsShapeBox::calculateDefaultArea()
+float PhysicsShapeBox::calculateArea()
 {
     cpShape* shape = _info->getShapes().front();
     return PhysicsHelper::cpfloat2float(cpAreaForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
@@ -539,7 +537,7 @@ bool PhysicsShapePolygon::init(const Point* points, int count, const PhysicsMate
         
         _info->add(shape);
         
-        _area = calculateDefaultArea();
+        _area = calculateArea();
         _mass = material.density == PHYSICS_INFINITY ? PHYSICS_INFINITY : material.density * _area;
         _moment = calculateDefaultMoment();
         _center = PhysicsHelper::cpv2point(cpCentroidForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
@@ -573,7 +571,7 @@ float PhysicsShapePolygon::calculateMoment(float mass, const Point* points, int 
     return moment;
 }
 
-float PhysicsShapePolygon::calculateDefaultArea()
+float PhysicsShapePolygon::calculateArea()
 {
     cpShape* shape = _info->getShapes().front();
     return PhysicsHelper::cpfloat2float(cpAreaForPoly(((cpPolyShape*)shape)->numVerts, ((cpPolyShape*)shape)->verts));
@@ -655,6 +653,15 @@ bool PhysicsShapeEdgeBox::init(const Size& size, const PhysicsMaterial& material
     return false;
 }
 
+void PhysicsShapeEdgeBox::getPoints(cocos2d::Point *outPoints) const
+{
+    int i = 0;
+    for(auto shape : _info->getShapes())
+    {
+        outPoints[i++] = PhysicsHelper::cpv2point(((cpSegmentShape*)shape)->a);
+    }
+}
+
 // PhysicsShapeEdgeBox
 PhysicsShapeEdgePolygon* PhysicsShapeEdgePolygon::create(const Point* points, int count, const PhysicsMaterial& material/* = MaterialDefault*/, float border/* = 1*/)
 {
@@ -710,6 +717,15 @@ bool PhysicsShapeEdgePolygon::init(const Point* points, int count, const Physics
 Point PhysicsShapeEdgePolygon::getCenter()
 {
     return _center;
+}
+
+void PhysicsShapeEdgePolygon::getPoints(cocos2d::Point *outPoints) const
+{
+    int i = 0;
+    for(auto shape : _info->getShapes())
+    {
+        outPoints[i++] = PhysicsHelper::cpv2point(((cpSegmentShape*)shape)->a);
+    }
 }
 
 int PhysicsShapeEdgePolygon::getPointsCount() const
@@ -771,6 +787,17 @@ bool PhysicsShapeEdgeChain::init(const Point* points, int count, const PhysicsMa
 Point PhysicsShapeEdgeChain::getCenter()
 {
     return _center;
+}
+
+void PhysicsShapeEdgeChain::getPoints(Point* outPoints) const
+{
+    int i = 0;
+    for(auto shape : _info->getShapes())
+    {
+        outPoints[i++] = PhysicsHelper::cpv2point(((cpSegmentShape*)shape)->a);
+    }
+    
+    outPoints[i++] = PhysicsHelper::cpv2point(((cpSegmentShape*)_info->getShapes().back())->a);
 }
 
 int PhysicsShapeEdgeChain::getPointsCount() const

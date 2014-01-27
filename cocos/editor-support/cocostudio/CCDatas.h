@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,12 @@ THE SOFTWARE.
 #ifndef __CCARMATURE_DATAS_H__
 #define __CCARMATURE_DATAS_H__
 
+#include "CCObject.h"
+#include "ccTypes.h"
+#include "CCVector.h"
+#include "CCMap.h"
+#include "CCAffineTransform.h"
+#include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCTweenFunction.h"
 
@@ -136,7 +142,7 @@ class  DisplayData : public cocos2d::Object
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
-    static const char *changeDisplayToTexture(const char *displayName);
+    static const std::string changeDisplayToTexture(const std::string& displayName);
 public:
 	/**
      * @js ctor
@@ -146,9 +152,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~DisplayData(void);
+    virtual ~DisplayData(void) {}
+
+    virtual void copy(DisplayData *displayData);
 
     DisplayType displayType;	//! mark which type your display is
+    std::string displayName;
 };
 
 
@@ -169,21 +178,10 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~SpriteDisplayData();
+    virtual ~SpriteDisplayData() {};
 
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    
-    void copy(SpriteDisplayData *displayData);
+    void copy(DisplayData *displayData);
 public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
-    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
-    * then Bone will create a Armature.
-    */
-    std::string displayName;
-
     BaseData skinData;
 };
 
@@ -204,20 +202,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual ~ArmatureDisplayData();
-
-    void setParam(const char *pszDisplayName) { this->displayName = pszDisplayName; }
-    void copy(ArmatureDisplayData *displayData);
-public:
-    /**
-    * If DisplayType is CS_DISPLAY_SPRITE, then Bone will use this image name to create a Sprite from CCSpriteFrameCache.
-    * It should note that when use this name to create Sprite from CCSpriteFrameCache, you should use _displayName + ".png", because when use Texture Packer to pack single image file, the name have ".png".
-    *
-    * If DisplayType is CS_DISPLAY_ARMATURE, the name is the Armature's name. When Bone init display and type is CS_DISPLAY_ARMATURE,
-    * then Bone will create a Armature.
-    */
-    std::string displayName;
-
+    virtual ~ArmatureDisplayData() {}
 };
 
 /**
@@ -238,12 +223,6 @@ public:
      * @lua NA
      */
     virtual ~ParticleDisplayData() {};
-
-    void setParam(const char *pszPlistName) { this->plist = pszPlistName; }
-
-    void copy(ParticleDisplayData *displayData);
-public:
-    std::string plist;
 };
 
 
@@ -277,7 +256,7 @@ public:
 public:
     std::string name;                //! the bone's name
     std::string parentName;     //! the bone parent's name
-    cocos2d::Array displayDataList;    //! save DisplayData informations for the Bone
+    cocos2d::Vector<DisplayData*> displayDataList;    //! save DisplayData informations for the Bone
     cocos2d::AffineTransform boneDataTransform;
 };
 
@@ -306,10 +285,10 @@ public:
 
     bool init();
     void addBoneData(BoneData *boneData);
-    BoneData *getBoneData(const char *boneName);
+    BoneData *getBoneData(const std::string& boneName);
 public:
     std::string name;
-    cocos2d::Dictionary boneDataDic;
+    cocos2d::Map<std::string, BoneData*> boneDataDic;
     float dataVersion;
 };
 
@@ -354,7 +333,11 @@ public:
 public:
     int frameID;
     int duration;                //! The frame will last duration frames
+
     TweenType tweenEasing;     //! Every frame's tween easing effect
+    int easingParamNumber;
+    float *easingParams;
+
     bool isTween;                //! Whether it's a tween key frame
 
     /**
@@ -363,7 +346,7 @@ public:
     */
     int displayIndex;
 
-    BlendType blendType;
+    cocos2d::BlendFunc blendFunc;
 
     std::string strEvent;
     /**
@@ -403,7 +386,7 @@ public:
     float duration;        //! this Bone in this movement will last m_iDuration frames
     std::string name;    //! bone name
 
-    cocos2d::Array frameList;
+    cocos2d::Vector<FrameData*> frameList;
 };
 
 /**
@@ -426,7 +409,7 @@ public:
     ~MovementData(void);
 
     void addMovementBoneData(MovementBoneData *movBoneData);
-    MovementBoneData *getMovementBoneData(const char *boneName);
+    MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
     std::string name;
     int duration;        //! the frames this movement will last
@@ -458,10 +441,10 @@ public:
 
     /**
     * @brief	save movment bone data
-    * @key	const char *
+    * @key	const std::string& 
     * @value	MovementBoneData *
     */
-    cocos2d::Dictionary movBoneDataDic;
+    cocos2d::Map<std::string, MovementBoneData*> movBoneDataDic;
 };
 
 
@@ -488,26 +471,15 @@ public:
     ~AnimationData(void);
 
     void addMovement(MovementData *movData);
-    MovementData *getMovement(const char *movementName);
-    int getMovementCount();
+    MovementData *getMovement(const std::string& movementName);
+    ssize_t getMovementCount();
 public:
     std::string name;
-    cocos2d::Dictionary movementDataDic;
+    cocos2d::Map<std::string, MovementData*> movementDataDic;
     std::vector<std::string> movementNames;
 };
 
 
-struct ContourVertex2 : public cocos2d::Object
-{
-    ContourVertex2(float xx, float yy)
-    {
-        this->x = xx;
-        this->y = yy;
-    }
-
-    float x;
-    float y;
-};
 
 /*
 * ContourData include a contour vertex information
@@ -530,9 +502,9 @@ public:
     ~ContourData(void);
 
     virtual bool init();
-    virtual void addVertex(cocos2d::Point *vertex);
+    virtual void addVertex(cocos2d::Point &vertex);
 public:
-    cocos2d::Array vertexList;	//! Save contour vertex info, vertex saved in a Point
+    std::vector<cocos2d::Point> vertexList;	//! Save contour vertex info, vertex saved in a Point
 };
 
 
@@ -572,7 +544,7 @@ public:
 
     std::string name;	//! The texture's name
 
-    cocos2d::Array contourDataList;
+    cocos2d::Vector<ContourData*> contourDataList;
 };
 
 

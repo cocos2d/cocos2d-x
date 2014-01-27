@@ -33,7 +33,7 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(ScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view) override
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -42,7 +42,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "scrollViewDidScroll", 1, &arg, NULL);
     }
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view) override
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -119,32 +119,32 @@ public:
         }
     }
     
-    virtual void scrollViewDidScroll(ScrollView* view)
+    virtual void scrollViewDidScroll(ScrollView* view) override
     {
         callJSDelegate(view, "scrollViewDidScroll");
     }
     
-    virtual void scrollViewDidZoom(ScrollView* view)
+    virtual void scrollViewDidZoom(ScrollView* view) override
     {
         callJSDelegate(view, "scrollViewDidZoom");
     }
     
-    virtual void tableCellTouched(TableView* table, TableViewCell* cell)
+    virtual void tableCellTouched(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellTouched");
     }
     
-    virtual void tableCellHighlight(TableView* table, TableViewCell* cell)
+    virtual void tableCellHighlight(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellHighlight");
     }
     
-    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell)
+    virtual void tableCellUnhighlight(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellUnhighlight");
     }
     
-    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell)
+    virtual void tableCellWillRecycle(TableView* table, TableViewCell* cell) override
     {
         callJSDelegate(table, cell, "tableCellWillRecycle");
     }
@@ -248,7 +248,7 @@ public:
         }
     }
     
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx)
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellSizeForIndex", ret);
@@ -268,7 +268,7 @@ public:
         
     }
     
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx)
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, idx, "tableCellAtIndex", ret);
@@ -288,15 +288,15 @@ public:
         return NULL;
     }
     
-    virtual long numberOfCellsInTableView(TableView *table)
+    virtual ssize_t numberOfCellsInTableView(TableView *table) override
     {
         jsval ret;
         bool ok = callJSDelegate(table, "numberOfCellsInTableView", ret);
         if (ok)
         {
             JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            long count = 0;
-            JSBool isSucceed = jsval_to_long(cx, ret, &count);
+            ssize_t count = 0;
+            JSBool isSucceed = jsval_to_ssize(cx, ret, &count);
             if (isSucceed) return count;
         }
         return 0;
@@ -350,7 +350,7 @@ private:
         return false;
     }
     
-    bool callJSDelegate(TableView* table, long idx, std::string jsFunctionName, jsval& retVal)
+    bool callJSDelegate(TableView* table, ssize_t idx, std::string jsFunctionName, jsval& retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -360,7 +360,7 @@ private:
         JS::RootedValue temp_retval(cx);
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        dataVal[1] = long_to_jsval(cx,idx);
+        dataVal[1] = ssize_to_jsval(cx,idx);
         
         JSObject* obj = _JSTableViewDataSource;
         JSAutoCompartment ac(cx, obj);
@@ -377,9 +377,9 @@ private:
                 return false;
             }
 
-            JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
+            JSBool ret = JS_CallFunctionName(cx, obj, jsFunctionName.c_str(),
                                 2, dataVal, &retVal);
-            return true;
+            return ret == JS_TRUE ? true : false;
         }
         return false;
     }
@@ -508,7 +508,7 @@ public:
         }
     }
     
-    virtual void editBoxEditingDidBegin(EditBox* editBox)
+    virtual void editBoxEditingDidBegin(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -517,7 +517,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidBegin", 1, &arg, NULL);
     }
     
-    virtual void editBoxEditingDidEnd(EditBox* editBox)
+    virtual void editBoxEditingDidEnd(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -526,7 +526,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxEditingDidEnd", 1, &arg, NULL);
     }
     
-    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text)
+    virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -539,7 +539,7 @@ public:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "editBoxTextChanged", 2, dataVal, NULL);
     }
     
-    virtual void editBoxReturn(EditBox* editBox)
+    virtual void editBoxReturn(EditBox* editBox) override
     {
         js_proxy_t * p = jsb_get_native_proxy(editBox);
         if (!p) return;
@@ -781,19 +781,19 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
     return JS_FALSE;
 }
 
-extern JSObject* jsb_ScrollView_prototype;
-extern JSObject* jsb_TableView_prototype;
-extern JSObject* jsb_EditBox_prototype;
-extern JSObject* jsb_Control_prototype;
+extern JSObject* jsb_cocos2d_extension_ScrollView_prototype;
+extern JSObject* jsb_cocos2d_extension_TableView_prototype;
+extern JSObject* jsb_cocos2d_extension_EditBox_prototype;
+extern JSObject* jsb_cocos2d_extension_Control_prototype;
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
-    JS_DefineFunction(cx, jsb_ScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_TableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_TableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_Control_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, jsb_Control_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_ScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_TableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_EditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsb_cocos2d_extension_Control_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);

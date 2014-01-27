@@ -4,73 +4,73 @@
 // This helper file should be required after jsb_cocos2d.js
 //
 
-var ccs = ccs || {};
+var ccui = ccui || {};
 
-ccs.BrightStyle = {
+ccui.BrightStyle = {
     none: -1,
     normal: 0,
     highlight: 1
 };
 
-ccs.WidgetType = {
+ccui.WidgetType = {
     widget: 0, //control
     container: 1 //container
 };
 
-ccs.TextureResType = {
+ccui.TextureResType = {
     local: 0,
     plist: 1
 };
 
-ccs.TouchEventType = {
+ccui.TouchEventType = {
     began: 0,
     moved: 1,
     ended: 2,
     canceled: 3
 };
 
-ccs.SizeType = {
+ccui.SizeType = {
     absolute: 0,
     percent: 1
 };
 
-ccs.PositionType = {
+ccui.PositionType = {
     absolute: 0,
     percent: 1
 };
 
-ccs.CheckBoxEventType = {
+ccui.CheckBoxEventType = {
     selected: 0,
     unselected: 1
 };
 
-ccs.TextFiledEventType = {
+ccui.TextFiledEventType = {
     attach_with_me: 0,
     detach_with_ime: 1,
     insert_text: 2,
     delete_backward: 3
 };
 
-ccs.LayoutBackGroundColorType = {
+ccui.LayoutBackGroundColorType = {
     none: 0,
     solid: 1,
     gradient: 2
 };
 
-ccs.LayoutType = {
+ccui.LayoutType = {
     absolute: 0,
     linearVertical: 1,
     linearHorizontal: 2,
     relative: 3
 };
 
-ccs.UILayoutParameterType = {
+ccui.LayoutParameterType = {
     none: 0,
     linear: 1,
     relative: 2
 };
 
-ccs.UILinearGravity = {
+ccui.LinearGravity = {
     none: 0,
     left: 1,
     top: 2,
@@ -80,7 +80,7 @@ ccs.UILinearGravity = {
     centerHorizontal: 6
 };
 
-ccs.UIRelativeAlign = {
+ccui.RelativeAlign = {
     alignNone: 0,
     alignParentTopLeft: 1,
     alignParentTopCenterHorizontal: 2,
@@ -105,18 +105,18 @@ ccs.UIRelativeAlign = {
     locationBelowRightAlign: 21
 };
 
-ccs.SliderEventType = {percent_changed: 0};
+ccui.SliderEventType = {percent_changed: 0};
 
-ccs.LoadingBarType = { left: 0, right: 1};
+ccui.LoadingBarType = { left: 0, right: 1};
 
-ccs.ScrollViewDir = {
+ccui.ScrollViewDir = {
     none: 0,
     vertical: 1,
     horizontal: 2,
     both: 3
 };
 
-ccs.ScrollviewEventType = {
+ccui.ScrollviewEventType = {
     scrollToTop: 0,
     scrollToBottom: 1,
     scrollToLeft: 2,
@@ -128,30 +128,30 @@ ccs.ScrollviewEventType = {
     bounceRight: 8
 };
 
-ccs.ListViewEventType = {
+ccui.ListViewEventType = {
     init_child: 0,
     update_child: 1
 };
 
-ccs.PageViewEventType = {
+ccui.ListViewGravity = {
+    left: 0,
+    right: 1,
+    centerHorizontal: 2,
+    top: 3,
+    bottom: 4,
+    centerVertical: 5
+};
+
+ccui.PageViewEventType = {
     turning: 0
 };
 
-ccs.PVTouchDir = {
+ccui.PVTouchDir = {
     touchLeft: 0,
     touchRight: 1
 };
 
-ccs.UIPanel = ccs.UILayout;
-ccs.UITextArea = ccs.UILabel;
-ccs.UIContainerWidget = ccs.UILayout;
-ccs.UITextButton = ccs.UIButton;
-ccs.UINodeContainer = ccs.UIWidget;
-ccs.PanelColorType = ccs.LayoutBackGroundColorType;
-
-ccs.UILayout = ccs.Layout;
-
-ccs.UIMargin = cc.Class.extend({
+ccui.Margin = cc.Class.extend({
     left: 0,
     top: 0,
     right: 0,

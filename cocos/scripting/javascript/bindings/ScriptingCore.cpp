@@ -46,13 +46,15 @@
 
 #include "js_bindings_config.h"
 
-#if DEBUG
+#if COCOS2D_DEBUG
 #define TRACE_DEBUGGER_SERVER(...) CCLOG(__VA_ARGS__)
 #else
 #define TRACE_DEBUGGER_SERVER(...)
 #endif // #if DEBUG
 
 #define BYTE_CODE_FILE_EXT ".jsc"
+
+using namespace cocos2d;
 
 static std::string inData;
 static std::string outData;
@@ -67,7 +69,7 @@ static void serverEntryPoint(void);
 
 js_proxy_t *_native_js_global_ht = NULL;
 js_proxy_t *_js_native_global_ht = NULL;
-std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 static char *_js_log_buf = NULL;
 
@@ -198,12 +200,12 @@ void js_log(const char *format, ...) {
 
     if (_js_log_buf == NULL)
     {
-        _js_log_buf = (char *)calloc(sizeof(char), kMaxLogLen+1);
-        _js_log_buf[kMaxLogLen] = '\0';
+        _js_log_buf = (char *)calloc(sizeof(char), MAX_LOG_LENGTH+1);
+        _js_log_buf[MAX_LOG_LENGTH] = '\0';
     }
     va_list vl;
     va_start(vl, format);
-    int len = vsnprintf(_js_log_buf, kMaxLogLen, format, vl);
+    int len = vsnprintf(_js_log_buf, MAX_LOG_LENGTH, format, vl);
     va_end(vl);
     if (len > 0)
     {
@@ -533,18 +535,17 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     
     // a) check jsc file first
     std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-    ssize_t length = 0;
-    unsigned char* data = futil->getFileData(byteCodePath.c_str(),
-                                    "rb",
-                                    &length);
+
+    Data data = futil->getDataFromFile(byteCodePath);
     
-    if (data) {
-        script = JS_DecodeScript(cx, data, length, NULL, NULL);
-        free(data);
+    if (!data.isNull())
+    {
+        script = JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr, nullptr);
     }
     
     // b) no jsc file, check js file
-    if (!script) {
+    if (!script)
+    {
         /* Clear any pending exception from previous failed decoding.  */
         ReportException(cx);
         
@@ -553,12 +554,10 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
         options.setUTF8(true).setFileAndLine(fullPath.c_str(), 1);
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        String* content = String::createWithContentsOfFile(path);
-        if (content) {
-            // Not supported in SpiderMonkey 19.0
-            //JSScript* script = JS_CompileScript(cx, global, (char*)content, contentSize, path, 1);
-            const char* contentCStr = content->getCString();
-            script = JS::Compile(cx, obj, options, contentCStr, strlen(contentCStr));
+        std::string jsFileContent = futil->getStringFromFile(fullPath);
+        if (!jsFileContent.empty())
+        {
+            script = JS::Compile(cx, obj, options, jsFileContent.c_str(), jsFileContent.size());
         }
 #else
         script = JS::Compile(cx, obj, options, fullPath.c_str());
@@ -569,7 +568,7 @@ JSBool ScriptingCore::runScript(const char *path, JSObject* global, JSContext* c
     if (script) {
         jsval rval;
         filename_script[path] = script;
-        JSAutoCompartment ac(cx, global);
+
         evaluatedOK = JS_ExecuteScript(cx, global, script, &rval);
         if (JS_FALSE == evaluatedOK) {
             cocos2d::log("(evaluatedOK == JS_FALSE)");
@@ -705,7 +704,7 @@ JSBool ScriptingCore::dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
     // JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
     // Mac and Simulator versions were compiled with DEBUG.
-#if DEBUG
+#if COCOS2D_DEBUG
 //    JSContext *_cx = ScriptingCore::getInstance()->getGlobalContext();
 //    JSRuntime *rt = JS_GetRuntime(_cx);
 //    JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
@@ -1163,6 +1162,14 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
     return 0;
 }
 
+bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
+{
+    jsval args[2];
+    args[0] = int32_to_jsval(_cx, static_cast<int>(type));
+    args[1] = std_string_to_jsval(_cx, str);
+    return (JS_TRUE == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global), "__onParseConfig", 2, args));
+}
+
 #pragma mark - Debug
 
 void SimpleRunLoop::update(float dt)
@@ -1401,6 +1408,9 @@ void ScriptingCore::enableDebugger()
         JS_SetDebugMode(_cx, JS_TRUE);
         
         _debugGlobal = NewGlobalObject(_cx, true);
+        // Adds the debugger object to root, otherwise it may be collected by GC.
+        JS_AddObjectRoot(_cx, &_debugGlobal);
+        
         JS_WrapObject(_cx, &_debugGlobal);
         JSAutoCompartment ac(_cx, _debugGlobal);
         // these are used in the debug program
@@ -1504,58 +1514,4 @@ void jsb_remove_proxy(js_proxy_t* nativeProxy, js_proxy_t* jsProxy)
     JS_REMOVE_PROXY(nativeProxy, jsProxy);
 }
 
-// JSStringWrapper
-JSStringWrapper::JSStringWrapper()
-: _buffer(nullptr)
-{
-}
-
-JSStringWrapper::JSStringWrapper(JSString* str, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(str, cx);
-}
-
-JSStringWrapper::JSStringWrapper(jsval val, JSContext* cx/* = NULL*/)
-: _buffer(nullptr)
-{
-    set(val, cx);
-}
-
-JSStringWrapper::~JSStringWrapper()
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-}
-
-void JSStringWrapper::set(jsval val, JSContext* cx)
-{
-    if (val.isString())
-    {
-        this->set(val.toString(), cx);
-    }
-    else
-    {
-        CC_SAFE_DELETE_ARRAY(_buffer);
-    }
-}
-
-void JSStringWrapper::set(JSString* str, JSContext* cx)
-{
-    CC_SAFE_DELETE_ARRAY(_buffer);
-    
-    if (!cx)
-    {
-        cx = ScriptingCore::getInstance()->getGlobalContext();
-    }
-    // JS_EncodeString isn't supported in SpiderMonkey ff19.0.
-    //buffer = JS_EncodeString(cx, string);
-    unsigned short* pStrUTF16 = (unsigned short*)JS_GetStringCharsZ(cx, str);
-    
-    _buffer = cc_utf16_to_utf8(pStrUTF16, -1, NULL, NULL);
-}
-
-const char* JSStringWrapper::get()
-{
-    return _buffer ? _buffer : "";
-}
 

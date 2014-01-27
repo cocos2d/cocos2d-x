@@ -1,6 +1,8 @@
 #include "CCConfiguration.h"
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
 
 // Test #1 by Jason Booth (slipster216)
 // Test #3 by David Deaco (ddeaco)
@@ -74,12 +76,12 @@ void RenderTextureTest::backCallback(Object* sender)
     s->release();
 } 
 
-std::string RenderTextureTest::title()
+std::string RenderTextureTest::title() const
 {
     return "No title";
 }
 
-std::string RenderTextureTest::subtitle()
+std::string RenderTextureTest::subtitle() const
 {
     return "";
 }
@@ -99,12 +101,6 @@ RenderTextureSave::RenderTextureSave()
     // note that the render texture is a Node, and contains a sprite of its texture for convience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
-
-    // create a brush image to draw into the texture with
-    _brush = Sprite::create("Images/fire.png");
-    _brush->retain();
-    _brush->setColor(Color3B::RED);
-    _brush->setOpacity(20);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
@@ -120,12 +116,12 @@ RenderTextureSave::RenderTextureSave()
     menu->setPosition(Point(VisibleRect::rightTop().x - 80, VisibleRect::rightTop().y - 30));
 }
 
-string RenderTextureSave::title()
+std::string RenderTextureSave::title() const
 {
     return "Touch the screen";
 }
 
-string RenderTextureSave::subtitle()
+std::string RenderTextureSave::subtitle() const
 {
     return "Press 'Save Image' to create an snapshot of the render texture";
 }
@@ -168,7 +164,6 @@ void RenderTextureSave::saveImage(cocos2d::Object *sender)
 
 RenderTextureSave::~RenderTextureSave()
 {
-    _brush->release();
     _target->release();
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
 }
@@ -188,20 +183,28 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
     if (distance > 1)
     {
         int d = (int)distance;
+        _brushs.clear();
+        for(int i = 0; i < d; ++i)
+        {
+            Sprite * sprite = Sprite::create("Images/fire.png");
+            sprite->setColor(Color3B::RED);
+            sprite->setOpacity(20);
+            _brushs.pushBack(sprite);
+        }
         for (int i = 0; i < d; i++)
         {
             float difx = end.x - start.x;
             float dify = end.y - start.y;
             float delta = (float)i / distance;
-            _brush->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
-            _brush->setRotation(rand() % 360);
+            _brushs.at(i)->setPosition(Point(start.x + (difx * delta), start.y + (dify * delta)));
+            _brushs.at(i)->setRotation(rand() % 360);
             float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            _brush->setScale(r);
+            _brushs.at(i)->setScale(r);
             /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brush->setColor(Color3B(rand() % 127 + 128, 255, 255));
+            _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            _brush->visit();
+            _brushs.at(i)->visit();
         }
     }
 
@@ -269,12 +272,12 @@ RenderTextureIssue937::RenderTextureIssue937()
     addChild(rend);
 }
 
-std::string RenderTextureIssue937::title()
+std::string RenderTextureIssue937::title() const
 {
     return "Testing issue #937";
 }
 
-std::string RenderTextureIssue937::subtitle()
+std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
 }
@@ -353,12 +356,12 @@ RenderTextureZbuffer::RenderTextureZbuffer()
     sp9->setColor(Color3B::YELLOW);
 }
 
-string RenderTextureZbuffer::title()
+std::string RenderTextureZbuffer::title() const
 {
     return "Testing Z Buffer in Render Texture";
 }
 
-string RenderTextureZbuffer::subtitle()
+std::string RenderTextureZbuffer::subtitle() const
 {
     return "Touch screen. It should be green";
 }
@@ -440,40 +443,88 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto sprite = Sprite::create("Images/fire.png");
-    sprite->setPosition(Point(s.width * 0.25f, 0));
-    sprite->setScale(10);
-    auto rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _spriteDS = Sprite::create("Images/fire.png");
+    _spriteDS->retain();
+    _spriteDS->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDS->setScale(10);
+    
+    _spriteDraw = Sprite::create("Images/fire.png");
+    _spriteDraw->retain();
+    _spriteDraw->setPosition(Point(s.width * 0.25f, 0));
+    _spriteDraw->setScale(10);
+    //! move sprite half width and height, and draw only where not marked
+    _spriteDraw->setPosition(_spriteDraw->getPosition() + Point(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
+    
+    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
 
+    _rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
+
+    this->addChild(_rend);
+}
+
+RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
+{
+    CC_SAFE_RELEASE(_spriteDraw);
+    CC_SAFE_RELEASE(_spriteDS);
+}
+
+void RenderTextureTestDepthStencil::draw()
+{
+    _renderCmds[0].init(_globalZOrder);
+    _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[0]);
+    
+    _rend->beginWithClear(0, 0, 0, 0, 0, 0);
+    
+    _renderCmds[1].init(_globalZOrder);
+    _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[1]);
+    
+    _spriteDS->visit();
+    
+    _renderCmds[2].init(_globalZOrder);
+    _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[2]);
+    
+    _spriteDraw->visit();
+    
+    _rend->end();
+    
+    _renderCmds[3].init(_globalZOrder);
+    _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCmds[3]);
+
+}
+
+void RenderTextureTestDepthStencil::onBeforeClear()
+{
     glStencilMask(0xFF);
-    rend->beginWithClear(0, 0, 0, 0, 0, 0);
+}
 
+void RenderTextureTestDepthStencil::onBeforeStencil()
+{
     //! mark sprite quad into stencil buffer
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-    sprite->visit();
-
-    //! move sprite half width and height, and draw only where not marked
-    sprite->setPosition(sprite->getPosition() + Point(sprite->getContentSize().width * sprite->getScale() * 0.5, sprite->getContentSize().height * sprite->getScale() * 0.5));
-    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-    sprite->visit();
-
-    rend->end();
-
-    glDisable(GL_STENCIL_TEST);
-
-    rend->setPosition(Point(s.width * 0.5f, s.height * 0.5f));
-
-    this->addChild(rend);
 }
 
-std::string RenderTextureTestDepthStencil::title()
+void RenderTextureTestDepthStencil::onBeforDraw()
+{
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+}
+
+void RenderTextureTestDepthStencil::onAfterDraw()
+{
+    glDisable(GL_STENCIL_TEST);
+}
+
+std::string RenderTextureTestDepthStencil::title() const
 {
     return "Testing depthStencil attachment";
 }
 
-std::string RenderTextureTestDepthStencil::subtitle()
+std::string RenderTextureTestDepthStencil::subtitle() const
 {
     return "Circle should be missing 1/4 of its region";
 }
@@ -556,12 +607,12 @@ void RenderTextureTargetNode::update(float dt)
     time += dt;
 }
 
-string RenderTextureTargetNode::title()
+std::string RenderTextureTargetNode::title() const
 {
     return "Testing Render Target Node";
 }
 
-string RenderTextureTargetNode::subtitle()
+std::string RenderTextureTargetNode::subtitle() const
 {
     return "Sprites should be equal and move with each frame";
 }
@@ -587,6 +638,16 @@ SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::crea
 
 void SpriteRenderTextureBug::SimpleSprite::draw()
 {
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(SpriteRenderTextureBug::SimpleSprite::onBeforeDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    
+    Sprite::draw();
+    
+}
+
+void SpriteRenderTextureBug::SimpleSprite::onBeforeDraw()
+{
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
@@ -595,36 +656,6 @@ void SpriteRenderTextureBug::SimpleSprite::draw()
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
 	_rt->end();
-    
-	CC_NODE_DRAW_SETUP();
-    
-	BlendFunc blend = getBlendFunc();
-    GL::blendFunc(blend.src, blend.dst);
-    
-    GL::bindTexture2D(getTexture()->getName());
-    
-	//
-	// Attributes
-	//
-    
-    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-    
-#define kQuadSize sizeof(_quad.bl)
-	long offset = (long)&_quad;
-    
-	// vertex
-	int diff = offsetof( V3F_C4B_T2F, vertices);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-    
-	// texCoods
-	diff = offsetof( V3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-    
-	// color
-	diff = offsetof( V3F_C4B_T2F, colors);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-    
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 SpriteRenderTextureBug::SpriteRenderTextureBug()
@@ -681,12 +712,12 @@ void SpriteRenderTextureBug::onTouchesEnded(const std::vector<Touch*>& touches, 
     }
 }
 
-std::string SpriteRenderTextureBug::title()
+std::string SpriteRenderTextureBug::title() const
 {
     return "SpriteRenderTextureBug";
 }
 
-std::string SpriteRenderTextureBug::subtitle()
+std::string SpriteRenderTextureBug::subtitle() const
 {
     return "Touch the screen. Sprite should appear on under the touch";
 }

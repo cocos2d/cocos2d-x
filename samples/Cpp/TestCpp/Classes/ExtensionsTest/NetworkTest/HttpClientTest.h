@@ -20,7 +20,7 @@ public:
     void onMenuDeleteTestClicked(cocos2d::Object *sender);
     
     //Http Response Callback
-    void onHttpRequestCompleted(network::HttpClient *sender, network::HttpResponse *response);
+    void onHttpRequestCompleted(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
 private:
     cocos2d::LabelTTF* _labelStatusCode;

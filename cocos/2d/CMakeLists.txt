@@ -21,7 +21,7 @@ set(PLATFORM_SRC
   platform/linux/CCFileUtilsLinux.cpp
   platform/linux/CCCommon.cpp
   platform/linux/CCApplication.cpp
-  platform/linux/CCEGLView.cpp
+  platform/desktop/CCEGLView.cpp
   platform/linux/CCImage.cpp
   platform/linux/CCDevice.cpp
 )
@@ -63,19 +63,18 @@ set(COCOS2D_SRC
   CCDrawNode.cpp
   CCGrabber.cpp
   CCGrid.cpp
+  CCNodeGrid.cpp
   CCFont.cpp
   CCFontAtlas.cpp
   CCFontAtlasCache.cpp
-  CCFontAtlasFactory.cpp
-  CCFontDefinition.cpp
   CCFontFNT.cpp
   CCFontFreeType.cpp
+  CCFontCharMap.cpp
   CCLabel.cpp
   CCLabelAtlas.cpp
   CCLabelBMFont.cpp
   CCLabelTTF.cpp
   CCLabelTextFormatter.cpp
-  CCTextImage.cpp
   CCLayer.cpp
   CCScene.cpp
   CCTransition.cpp
@@ -126,7 +125,6 @@ set(COCOS2D_SRC
   ccGLStateCache.cpp
   CCShaderCache.cpp
   ccShaders.cpp
-  CCCamera.cpp
   CCConfiguration.cpp
   CCDirector.cpp
   CCScheduler.cpp
@@ -138,6 +136,16 @@ set(COCOS2D_SRC
   platform/CCThread.cpp
   platform/CCEGLViewProtocol.cpp
   platform/CCFileUtils.cpp
+  ../../external/edtaa3func/edtaa3func.cpp
+  renderer/CCCustomCommand.cpp
+  renderer/CCFrustum.cpp
+  renderer/CCGroupCommand.cpp
+  renderer/CCMaterialManager.cpp
+  renderer/CCQuadCommand.cpp
+  renderer/CCBatchCommand.cpp
+  renderer/CCRenderCommand.cpp
+  renderer/CCRenderer.cpp
+  renderer/CCRenderMaterial.cpp
 )
 
 include(../physics/CMakeLists.txt)
@@ -215,7 +223,7 @@ target_link_libraries(cocos2d
 
 set_target_properties(cocos2d
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 

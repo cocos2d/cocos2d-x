@@ -1,6 +1,7 @@
 #include "Box2dView.h"
 #include "GLES-Render.h"
 #include "Test.h"
+#include "renderer/CCRenderer.h"
 
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
@@ -196,7 +197,7 @@ bool Box2DView::initWithEntryID(int entryId)
     return true;
 }
 
-std::string Box2DView::title()
+std::string Box2DView::title() const
 {
     return std::string(m_entry->name);
 }
@@ -210,15 +211,21 @@ void Box2DView::draw()
 {
     Layer::draw();
 
+    _customCmd.init(_globalZOrder);
+    _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCmd);
+}
+
+void Box2DView::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewTransform);
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
-
-    kmGLPushMatrix();
-
     m_test->m_world->DrawDebugData();
-
-    kmGLPopMatrix();
-
     CHECK_GL_ERROR_DEBUG();
+    
+    kmGLLoadMatrix(&oldMat);
 }
 
 Box2DView::~Box2DView()

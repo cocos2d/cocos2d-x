@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,35 +29,49 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #ifndef SPINE_SKIN_H_
 #define SPINE_SKIN_H_
 
 #include <spine/Attachment.h>
 
-namespace spine {
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-struct Skeleton;
+struct spSkeleton;
 
 typedef struct {
 	const char* const name;
-} Skin;
+} spSkin;
 
-Skin* Skin_create (const char* name);
-void Skin_dispose (Skin* self);
+spSkin* spSkin_create (const char* name);
+void spSkin_dispose (spSkin* self);
 
 /* The Skin owns the attachment. */
-void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment);
+void spSkin_addAttachment (spSkin* self, int slotIndex, const char* name, spAttachment* attachment);
 /* Returns 0 if the attachment was not found. */
-Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name);
+spAttachment* spSkin_getAttachment (const spSkin* self, int slotIndex, const char* name);
 
 /* Returns 0 if the slot or attachment was not found. */
-const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachmentIndex);
+const char* spSkin_getAttachmentName (const spSkin* self, int slotIndex, int attachmentIndex);
 
 /** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
-void Skin_attachAll (const Skin* self, struct Skeleton* skeleton, const Skin* oldSkin);
+void spSkin_attachAll (const spSkin* self, struct spSkeleton* skeleton, const spSkin* oldspSkin);
 
-} // namespace spine {
+#ifdef SPINE_SHORT_NAMES
+typedef spSkin Skin;
+#define Skin_create(...) spSkin_create(__VA_ARGS__)
+#define Skin_dispose(...) spSkin_dispose(__VA_ARGS__)
+#define Skin_addAttachment(...) spSkin_addAttachment(__VA_ARGS__)
+#define Skin_getAttachment(...) spSkin_getAttachment(__VA_ARGS__)
+#define Skin_getAttachmentName(...) spSkin_getAttachmentName(__VA_ARGS__)
+#define Skin_attachAll(...) spSkin_attachAll(__VA_ARGS__)
+#endif
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SPINE_SKIN_H_ */

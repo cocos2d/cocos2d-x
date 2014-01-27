@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,7 +25,12 @@ THE SOFTWARE.
 #ifndef __CCBATCHNODE_H__
 #define __CCBATCHNODE_H__
 
+#include "CCNode.h"
 #include "cocostudio/CCArmatureDefine.h"
+
+namespace cocos2d {
+    class GroupCommand;
+}
 
 namespace cocostudio {
 
@@ -60,11 +65,11 @@ public:
      *  @js NA
      */
     void draw() override;
-
-    virtual cocos2d::TextureAtlas *getTexureAtlasWithTexture(cocos2d::Texture2D *texture) const;
+    
 protected:
-    cocos2d::TextureAtlas *_atlas;
-    cocos2d::Dictionary *_textureAtlasDic;
+    void generateGroupCommand();
+
+    cocos2d::GroupCommand* _groupCommand;
 };
 
 }

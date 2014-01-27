@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,21 +29,19 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/AnimationStateData.h>
 #include <spine/extension.h>
 
-namespace spine {
-
 typedef struct _ToEntry _ToEntry;
 struct _ToEntry {
-	Animation* animation;
+	spAnimation* animation;
 	float duration;
 	_ToEntry* next;
 };
 
-_ToEntry* _ToEntry_create (Animation* to, float duration) {
+_ToEntry* _ToEntry_create (spAnimation* to, float duration) {
 	_ToEntry* self = NEW(_ToEntry);
 	self->animation = to;
 	self->duration = duration;
@@ -50,12 +56,12 @@ void _ToEntry_dispose (_ToEntry* self) {
 
 typedef struct _FromEntry _FromEntry;
 struct _FromEntry {
-	Animation* animation;
+	spAnimation* animation;
 	_ToEntry* toEntries;
 	_FromEntry* next;
 };
 
-_FromEntry* _FromEntry_create (Animation* from) {
+_FromEntry* _FromEntry_create (spAnimation* from) {
 	_FromEntry* self = NEW(_FromEntry);
 	self->animation = from;
 	return self;
@@ -67,13 +73,13 @@ void _FromEntry_dispose (_FromEntry* self) {
 
 /**/
 
-AnimationStateData* AnimationStateData_create (SkeletonData* skeletonData) {
-	AnimationStateData* self = NEW(AnimationStateData);
-	CONST_CAST(SkeletonData*, self->skeletonData) = skeletonData;
+spAnimationStateData* spAnimationStateData_create (spSkeletonData* skeletonData) {
+	spAnimationStateData* self = NEW(spAnimationStateData);
+	CONST_CAST(spSkeletonData*, self->skeletonData) = skeletonData;
 	return self;
 }
 
-void AnimationStateData_dispose (AnimationStateData* self) {
+void spAnimationStateData_dispose (spAnimationStateData* self) {
 	_ToEntry* toEntry;
 	_ToEntry* nextToEntry;
 	_FromEntry* nextFromEntry;
@@ -94,16 +100,16 @@ void AnimationStateData_dispose (AnimationStateData* self) {
 	FREE(self);
 }
 
-void AnimationStateData_setMixByName (AnimationStateData* self, const char* fromName, const char* toName, float duration) {
-	Animation* to;
-	Animation* from = SkeletonData_findAnimation(self->skeletonData, fromName);
+void spAnimationStateData_setMixByName (spAnimationStateData* self, const char* fromName, const char* toName, float duration) {
+	spAnimation* to;
+	spAnimation* from = spSkeletonData_findAnimation(self->skeletonData, fromName);
 	if (!from) return;
-	to = SkeletonData_findAnimation(self->skeletonData, toName);
+	to = spSkeletonData_findAnimation(self->skeletonData, toName);
 	if (!to) return;
-	AnimationStateData_setMix(self, from, to, duration);
+	spAnimationStateData_setMix(self, from, to, duration);
 }
 
-void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Animation* to, float duration) {
+void spAnimationStateData_setMix (spAnimationStateData* self, spAnimation* from, spAnimation* to, float duration) {
 	/* Find existing FromEntry. */
 	_ToEntry* toEntry;
 	_FromEntry* fromEntry = (_FromEntry*)self->entries;
@@ -132,7 +138,7 @@ void AnimationStateData_setMix (AnimationStateData* self, Animation* from, Anima
 	fromEntry->toEntries = toEntry;
 }
 
-float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Animation* to) {
+float spAnimationStateData_getMix (spAnimationStateData* self, spAnimation* from, spAnimation* to) {
 	_FromEntry* fromEntry = (_FromEntry*)self->entries;
 	while (fromEntry) {
 		if (fromEntry->animation == from) {
@@ -144,7 +150,5 @@ float AnimationStateData_getMix (AnimationStateData* self, Animation* from, Anim
 		}
 		fromEntry = fromEntry->next;
 	}
-	return 0;
+	return self->defaultMix;
 }
-
-} // namespace spine {

@@ -74,8 +74,8 @@ local function ZwoptexGenericTest()
 
             local str1 = string.format("grossini_dance_%02d.png", spriteFrameIndex)
             local str2 = string.format("grossini_dance_generic_%02d.png", spriteFrameIndex)
-            sprite1:setDisplayFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame(str1))
-            sprite2:setDisplayFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame(str2))
+            sprite1:setSpriteFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame(str1))
+            sprite2:setSpriteFrame(cc.SpriteFrameCache:getInstance():getSpriteFrame(str2))
         end
 
         sprite1:retain()

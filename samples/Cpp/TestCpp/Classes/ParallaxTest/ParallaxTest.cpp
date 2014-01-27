@@ -74,7 +74,7 @@ Parallax1::Parallax1()
     addChild( voidNode );
 }
 
-std::string Parallax1::title()
+std::string Parallax1::title() const
 {
     return "Parallax: parent and 3 children";
 }
@@ -143,9 +143,89 @@ void Parallax2::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event
     node->setPosition(currentPos + diff);
 }
 
-std::string Parallax2::title()
+std::string Parallax2::title() const
 {
     return "Parallax: drag screen";
+}
+
+//------------------------------------------------------------------
+//
+// Issue2572
+//
+//------------------------------------------------------------------
+Issue2572::Issue2572()
+: _preListSize(0)
+, _printCount(0)
+, _moveTimer(0.0f)
+, _addTimer(0.0f)
+{
+    _addChildStep = 1.0f;
+    _wholeMoveTime = 3.0f;
+    _wholeMoveSize = Point(-300, 0);
+    
+    // create a parallax node, a parent node
+    _paraNode = ParallaxNode::create();
+    addChild(_paraNode, 0, kTagNode);
+
+    this->scheduleUpdate();
+}
+
+void Issue2572::update(float dt)
+{
+    _addTimer += dt;
+    _moveTimer += dt;
+    if (_moveTimer >= _wholeMoveTime) {
+        this->unscheduleUpdate();
+        return;
+    }
+
+    _paraNode->setPosition(_paraNode->getPosition() + _wholeMoveSize * dt / _wholeMoveTime);
+    
+    if (_addTimer >= _addChildStep) {
+        _addTimer = 0.0f;
+        
+        auto child = Sprite::create("Images/Icon.png");
+        Size viewSize = Director::getInstance()->getVisibleSize();
+        Point offset = Point(viewSize.width / 2, viewSize.height/2);
+        _paraNode->addChild(child, 1, Point( 1, 0 ), offset );
+        
+        _childList.pushBack(child);
+    }
+
+    // After a child added, output the position of the children 3 times.
+    // Bug : The first output is much different with the second one & the third one.
+    if (_childList.size() != _preListSize) {
+        switch (_printCount) {
+            case 0:
+            case 1:
+            case 2:
+                log( "--child count-- %zd", _childList.size());
+                for (const auto& obj : _childList)
+                {
+                    Sprite* obstacle = dynamic_cast<Sprite*>( obj );
+                    log("child position : (%.2f, %.2f)", obstacle->getPositionX(), obstacle->getPositionY());
+                }
+                log("-------------------");
+                _printCount++;
+                break;
+            case 3:
+                _preListSize = _childList.size();
+                _printCount = 0;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+std::string Issue2572::title() const
+{
+    return "Issue 2572";
+}
+
+std::string Issue2572::subtitle() const
+{
+    return "Look at the output in console";
 }
 
 //------------------------------------------------------------------
@@ -156,7 +236,7 @@ std::string Parallax2::title()
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    2
+#define MAX_LAYER    3
 
 Layer* createParallaxTestLayer(int nIndex)
 {
@@ -164,6 +244,7 @@ Layer* createParallaxTestLayer(int nIndex)
     {
         case 0: return new Parallax1();
         case 1: return new Parallax2();
+        case 2: return new Issue2572();
     }
 
     return NULL;
@@ -210,7 +291,7 @@ ParallaxDemo::~ParallaxDemo(void)
 {
 }
 
-std::string ParallaxDemo::title()
+std::string ParallaxDemo::title() const
 {
     return "No title";
 }

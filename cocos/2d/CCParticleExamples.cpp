@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -36,54 +37,54 @@ NS_CC_BEGIN
 
 static Texture2D* getDefaultTexture()
 {
-    Texture2D* texture = NULL;
-    Image* pImage = NULL;
+    Texture2D* texture = nullptr;
+    Image* image = nullptr;
     do 
     {
-        bool bRet = false;
-        const char* key = "/__firePngData";
+        bool ret = false;
+        const std::string key = "/__firePngData";
         texture = Director::getInstance()->getTextureCache()->getTextureForKey(key);
-        CC_BREAK_IF(texture != NULL);
+        CC_BREAK_IF(texture != nullptr);
 
-        pImage = new Image();
-        CC_BREAK_IF(NULL == pImage);
-        bRet = pImage->initWithImageData(__firePngData, sizeof(__firePngData));
-        CC_BREAK_IF(!bRet);
+        image = new Image();
+        CC_BREAK_IF(nullptr == image);
+        ret = image->initWithImageData(__firePngData, sizeof(__firePngData));
+        CC_BREAK_IF(!ret);
 
-        texture = Director::getInstance()->getTextureCache()->addImage(pImage, key);
+        texture = Director::getInstance()->getTextureCache()->addImage(image, key);
     } while (0);
 
-    CC_SAFE_RELEASE(pImage);
+    CC_SAFE_RELEASE(image);
 
     return texture;
 }
 
 ParticleFire* ParticleFire::create()
 {
-    ParticleFire* pRet = new ParticleFire();
-    if (pRet && pRet->init())
+    ParticleFire* ret = new ParticleFire();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleFire* ParticleFire::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleFire* pRet = new ParticleFire();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleFire* ret = new ParticleFire();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleFire::initWithTotalParticles(int numberOfParticles)
@@ -148,7 +149,7 @@ bool ParticleFire::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -165,30 +166,30 @@ bool ParticleFire::initWithTotalParticles(int numberOfParticles)
 
 ParticleFireworks* ParticleFireworks::create()
 {
-    ParticleFireworks* pRet = new ParticleFireworks();
-    if (pRet && pRet->init())
+    ParticleFireworks* ret = new ParticleFireworks();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleFireworks* ParticleFireworks::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleFireworks* pRet = new ParticleFireworks();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleFireworks* ret = new ParticleFireworks();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
@@ -251,7 +252,7 @@ bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
         _endSize = START_SIZE_EQUAL_TO_END_SIZE;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -266,30 +267,30 @@ bool ParticleFireworks::initWithTotalParticles(int numberOfParticles)
 //
 ParticleSun* ParticleSun::create()
 {
-    ParticleSun* pRet = new ParticleSun();
-    if (pRet && pRet->init())
+    ParticleSun* ret = new ParticleSun();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleSun* ParticleSun::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSun* pRet = new ParticleSun();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleSun* ret = new ParticleSun();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleSun::initWithTotalParticles(int numberOfParticles)
@@ -357,7 +358,7 @@ bool ParticleSun::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -373,30 +374,30 @@ bool ParticleSun::initWithTotalParticles(int numberOfParticles)
 
 ParticleGalaxy* ParticleGalaxy::create()
 {
-    ParticleGalaxy* pRet = new ParticleGalaxy();
-    if (pRet && pRet->init())
+    ParticleGalaxy* ret = new ParticleGalaxy();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleGalaxy* ParticleGalaxy::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleGalaxy* pRet = new ParticleGalaxy();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleGalaxy* ret = new ParticleGalaxy();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
@@ -464,7 +465,7 @@ bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -482,30 +483,30 @@ bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
 
 ParticleFlower* ParticleFlower::create()
 {
-    ParticleFlower* pRet = new ParticleFlower();
-    if (pRet && pRet->init())
+    ParticleFlower* ret = new ParticleFlower();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleFlower* ParticleFlower::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleFlower* pRet = new ParticleFlower();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleFlower* ret = new ParticleFlower();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
@@ -573,7 +574,7 @@ bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -590,30 +591,30 @@ bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
 
 ParticleMeteor * ParticleMeteor::create()
 {
-    ParticleMeteor *pRet = new ParticleMeteor();
-    if (pRet && pRet->init())
+    ParticleMeteor *ret = new ParticleMeteor();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleMeteor* ParticleMeteor::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleMeteor* pRet = new ParticleMeteor();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleMeteor* ret = new ParticleMeteor();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
@@ -681,7 +682,7 @@ bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -699,30 +700,30 @@ bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
 
 ParticleSpiral* ParticleSpiral::create()
 {
-    ParticleSpiral* pRet = new ParticleSpiral();
-    if (pRet && pRet->init())
+    ParticleSpiral* ret = new ParticleSpiral();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleSpiral* ParticleSpiral::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSpiral* pRet = new ParticleSpiral();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleSpiral* ret = new ParticleSpiral();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
@@ -790,7 +791,7 @@ bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -808,30 +809,30 @@ bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
 
 ParticleExplosion* ParticleExplosion::create()
 {
-    ParticleExplosion* pRet = new ParticleExplosion();
-    if (pRet && pRet->init())
+    ParticleExplosion* ret = new ParticleExplosion();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleExplosion* ParticleExplosion::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleExplosion* pRet = new ParticleExplosion();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleExplosion* ret = new ParticleExplosion();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
@@ -898,7 +899,7 @@ bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -916,30 +917,30 @@ bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
 
 ParticleSmoke* ParticleSmoke::create()
 {
-    ParticleSmoke* pRet = new ParticleSmoke();
-    if (pRet && pRet->init())
+    ParticleSmoke* ret = new ParticleSmoke();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleSmoke* ParticleSmoke::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSmoke* pRet = new ParticleSmoke();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleSmoke* ret = new ParticleSmoke();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
@@ -1003,7 +1004,7 @@ bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -1021,30 +1022,30 @@ bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
 
 ParticleSnow* ParticleSnow::create()
 {
-    ParticleSnow* pRet = new ParticleSnow();
-    if (pRet && pRet->init())
+    ParticleSnow* ret = new ParticleSnow();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleSnow* ParticleSnow::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSnow* pRet = new ParticleSnow();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleSnow* ret = new ParticleSnow();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
@@ -1112,7 +1113,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }
@@ -1129,30 +1130,30 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
 
 ParticleRain* ParticleRain::create()
 {
-    ParticleRain* pRet = new ParticleRain();
-    if (pRet && pRet->init())
+    ParticleRain* ret = new ParticleRain();
+    if (ret && ret->init())
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 ParticleRain* ParticleRain::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleRain* pRet = new ParticleRain();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleRain* ret = new ParticleRain();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
+        ret->autorelease();
     }
     else
     {
-        CC_SAFE_DELETE(pRet);
+        CC_SAFE_DELETE(ret);
     }
-    return pRet;
+    return ret;
 }
 
 bool ParticleRain::initWithTotalParticles(int numberOfParticles)
@@ -1220,7 +1221,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
         _endColorVar.a = 0.0f;
 
         Texture2D* texture = getDefaultTexture();
-        if (texture != NULL)
+        if (texture != nullptr)
         {
             setTexture(texture);
         }

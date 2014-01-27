@@ -147,7 +147,7 @@ local function runNodeChildrenTest()
    local function updateQuantityLabel()
     	 if nQuantityOfNodes ~= nLastRenderedCount then	
  --     	local pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
- 			local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "LabelTTF")
+ 			local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
        		local strNode = nQuantityOfNodes.." nodes"
         	pInfoLabel:setString(strNode)
         	nLastRenderedCount = nQuantityOfNodes
@@ -166,7 +166,7 @@ local function runNodeChildrenTest()
     		local i = 0
     		local len = table.getn(pChildren)
     		for i = 0, len - 1, 1 do
-        		local  child = tolua.cast(pChildren[i + 1], "Sprite")
+        		local  child = tolua.cast(pChildren[i + 1], "cc.Sprite")
         		child:setVisible(false)
     		end
     end
@@ -189,7 +189,7 @@ local function runNodeChildrenTest()
     		end
     		
     		for i = 0 , nTotalToAdd - 1 do
-    			local pChild = tolua.cast(pSprites[i + 1],"Node")
+    			local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
     			pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i)
     		end
     		
@@ -216,7 +216,7 @@ local function runNodeChildrenTest()
         	end
        		-- add them with random Z (very important!)
         	for i=0, nTotalToAdd - 1  do
-        		local pChild = tolua.cast(pSprites[i + 1],"Node")
+        		local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
         		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)
             end
                     
@@ -244,7 +244,7 @@ local function runNodeChildrenTest()
 
         	--dd them with random Z (very important!)
         	for i = 0, nTotalToAdd - 1 do 
-        		local pChild = tolua.cast(pSprites[i + 1] ,"Node")
+        		local pChild = tolua.cast(pSprites[i + 1] ,"cc.Node")
         		pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)         	
        		end
 
@@ -252,7 +252,7 @@ local function runNodeChildrenTest()
 
         	-- reorder them
       		for i = 0, nTotalToAdd - 1 do    	
-        		local pNode =  tolua.cast(pSprites[i + 1],"Node")
+        		local pNode =  tolua.cast(pSprites[i + 1],"cc.Node")
             	pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50)
         	end	      
         	pBatchNode:sortAllChildren()
@@ -501,14 +501,14 @@ local function runParticleTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - ParticleTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - ParticleTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
     
     local function UpdateQuantityLabel()
     	if nQuantityParticles ~= nLastRenderedCount then
-    		local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "LabelTTF")
+    		local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "cc.LabelTTF")
     		local  strInfo    = string.format("%u particles", nQuantityParticles)
     		pInfoLabel:setString(strInfo)
     		
@@ -518,7 +518,7 @@ local function runParticleTest()
     
     local function doTest()
    		local s = cc.Director:getInstance():getWinSize()
-   		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"ParticleSystem")
+   		local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
    		if nil == pParticleSystem then
    			return
    		end
@@ -731,9 +731,9 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = cc.TextureCache:getInstance():addImage("Images/fire.png")
-    		cc.TextureCache:getInstance():removeTexture(pTexture)
-    		local pParticleSystem = cc.ParticleSystemQuad:new()
+    		local pTexture = cc.Director:getInstance():getTextureCache():addImage("Images/fire.png")
+    		cc.Director:getInstance():getTextureCache():removeTexture(pTexture)
+    		local pParticleSystem = cc.ParticleSystemQuad:createWithTotalParticles(nQuantityParticles)
     		if 1 == nSubtestNumber then
     		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     		elseif 2 == nSubtestNumber then
@@ -752,8 +752,7 @@ local function runParticleTest()
     		end
     		
     		if nil ~= pParticleSystem then
-    			pParticleSystem:initWithTotalParticles(nQuantityParticles)
-        		pParticleSystem:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
@@ -764,8 +763,8 @@ local function runParticleTest()
 	end
 	
 	local function step(t)
-		  local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"LabelAtlas")
-    	  local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"ParticleSystem")
+		  local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"cc.LabelAtlas")
+    	  local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
     	  local strInfo = string.format("%4d",pEmitter:getParticleCount())
     	  pAtlas:setString(strInfo)
 	end
@@ -990,7 +989,7 @@ local function runSpriteTest()
     
     local function UpdateNodes()
     	  if  nQuantityNodes ~= nLastRenderedCount then   		
-        	 local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "LabelTTF")
+        	 local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "cc.LabelTTF")
         	 local strInfo = string.format("%u nodes", nQuantityNodes)
         	 pInfoLabel:setString(strInfo)
         	 nLastRenderedCount = nQuantityNodes
@@ -1179,7 +1178,7 @@ local function runSpriteTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - SpriteTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - SpriteTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
@@ -1204,7 +1203,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = cc.TextureCache:getInstance()
+    	local pMgr = cc.Director:getInstance():getTextureCache()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1353,7 +1352,10 @@ local function runTextureTest()
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = cc.TextureCache:getInstance()
+    	  local pCache = cc.Director:getInstance():getTextureCache()
+
+          local pDefaultFormat = cc.Texture2D:getDefaultAlphaPixelFormat();
+
     	  print("RGBA 8888")
     	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     	  pTexture = pCache:addImage(strFileName) 		  
@@ -1398,6 +1400,8 @@ local function runTextureTest()
        	    print(" ERROR")
        	 end
     	 pCache:removeTexture(pTexture)   	  
+
+         cc.Texture2D:setDefaultAlphaPixelFormat(pDefaultFormat)
 	end
 	local function PerformTests()
 		  print("--------")
@@ -1549,48 +1553,37 @@ local function runTouchesTest()
     end
     
     -- handling touch events   
-    local function onTouchBegan(tableArray)
-		if 0 == nCurCase then
-			nNumberOfTouchesB = nNumberOfTouchesB + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchMoved(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesM = nNumberOfTouchesM + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesM  = nNumberOfTouchesM + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchEnded(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesE = nNumberOfTouchesE + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchCancelled(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesC = nNumberOfTouchesC + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesC  = nNumberOfTouchesC + table.getn(tableArray)
-		end
+    local function onTouchEnded(touch, event)
+        nNumberOfTouchesE = nNumberOfTouchesE + 1
     end
 
-   	local function onTouch(eventType,tableArray)
-        if eventType == "began" then
-            return onTouchBegan(tableArray)
-        elseif eventType == "moved" then
-            return onTouchMoved(tableArray)
-        elseif eventType == "ended" then
-        	return onTouchEnded(tableArray)	
-        elseif eventType == "cancelled" then
-        	return onTouchCancelled(tableArray)	
-        end
+    local function onTouchBegan(touch, event)
+        nNumberOfTouchesB = nNumberOfTouchesB + 1
+    end
+
+    local function onTouchMoved(touch, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + 1
+    end
+
+    local function onTouchCancelled(touch, event)
+        nNumberOfTouchesC = nNumberOfTouchesC + 1
+    end
+
+
+    local function onTouchesEnded(touches, event)
+        nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(touches)
+    end
+
+    local function onTouchesBegan(touches, event)
+        nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(touches)
+    end
+
+    local function onTouchesMoved(touches, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + table.getn(touches)
+    end
+
+    local function onTouchesCancelled(touches, event)
+        nNumberOfTouchesC= nNumberOfTouchesC + table.getn(touches)
     end
     
     local function InitLayer()
@@ -1618,9 +1611,24 @@ local function runTouchesTest()
     	nNumberOfTouchesM = 0
     	nNumberOfTouchesE = 0
     	nNumberOfTouchesC = 0   
-    	pLayer:setTouchEnabled(true)
-    	
-    	pLayer:registerScriptTouchHandler(onTouch,true) 
+
+        if 0 == nCurCase then
+            local listener = cc.EventListenerTouchOneByOne:create()
+            listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+            listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+            listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+            listener:registerScriptHandler(onTouchCancelled,cc.Handler.EVENT_TOUCH_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        elseif 1 == nCurCase then
+            local listener = cc.EventListenerTouchAllAtOnce:create()
+            listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+            listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+            listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+            listener:registerScriptHandler(onTouchesCancelled,cc.Handler.EVENT_TOUCHES_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        end
     end
     
     function ShowCurrentTest()
@@ -1662,7 +1670,7 @@ local function CreatePerformancesTestScene(nPerformanceNo)
 end
 local function menuCallback(tag, pMenuItem)
 	local scene = nil
-    local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+    local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
          cc.Director:getInstance():replaceScene(PerformanceTestScene)

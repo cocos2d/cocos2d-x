@@ -1,9 +1,9 @@
-// enable log
-#define COCOS2D_DEBUG 1
-
 #include "UserDefaultTest.h"
 #include "stdio.h"
 #include "stdlib.h"
+
+// enable log
+#define COCOS2D_DEBUG 1
 
 UserDefaultTest::UserDefaultTest()
 {
@@ -29,7 +29,7 @@ void UserDefaultTest::doTest()
 
     // print value
 
-    string ret = UserDefault::getInstance()->getStringForKey("string");
+    std::string ret = UserDefault::getInstance()->getStringForKey("string");
     CCLOG("string is %s", ret.c_str());
 
     double d = UserDefault::getInstance()->getDoubleForKey("double");

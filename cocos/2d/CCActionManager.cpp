@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -49,8 +50,8 @@ typedef struct _hashElement
 } tHashElement;
 
 ActionManager::ActionManager(void)
-: _targets(NULL), 
-  _currentTarget(NULL),
+: _targets(nullptr),
+  _currentTarget(nullptr),
   _currentTargetSalvaged(false)
 {
 
@@ -76,7 +77,7 @@ void ActionManager::deleteHashElement(tHashElement *element)
 void ActionManager::actionAllocWithHashElement(tHashElement *element)
 {
     // 4 actions per Node by default
-    if (element->actions == NULL)
+    if (element->actions == nullptr)
     {
         element->actions = ccArrayNew(4);
     }else 
@@ -122,7 +123,7 @@ void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 
 void ActionManager::pauseTarget(Node *target)
 {
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
@@ -132,7 +133,7 @@ void ActionManager::pauseTarget(Node *target)
 
 void ActionManager::resumeTarget(Node *target)
 {
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
@@ -144,7 +145,7 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 {
     Vector<Node*> idsWithActions;
     
-    for (tHashElement *element=_targets; element != NULL; element = (tHashElement *)element->hh.next) 
+    for (tHashElement *element=_targets; element != nullptr; element = (tHashElement *)element->hh.next) 
     {
         if (! element->paused) 
         {
@@ -158,19 +159,19 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 {
-    targetsToResume.forEach([this](Node* node){
+    for(const auto &node : targetsToResume) {
         this->resumeTarget(node);
-    });
+    }
 }
 
 // run
 
 void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
-    CCASSERT(action != NULL, "");
-    CCASSERT(target != NULL, "");
+    CCASSERT(action != nullptr, "");
+    CCASSERT(target != nullptr, "");
 
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     // we should convert it to Object*, because we save it as Object*
     Object *tmp = target;
     HASH_FIND_PTR(_targets, &tmp, element);
@@ -195,7 +196,7 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 
 void ActionManager::removeAllActions()
 {
-    for (tHashElement *element = _targets; element != NULL; )
+    for (tHashElement *element = _targets; element != nullptr; )
     {
         auto target = element->target;
         element = (tHashElement*)element->hh.next;
@@ -206,12 +207,12 @@ void ActionManager::removeAllActions()
 void ActionManager::removeAllActionsFromTarget(Node *target)
 {
     // explicit null handling
-    if (target == NULL)
+    if (target == nullptr)
     {
         return;
     }
 
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
@@ -240,12 +241,12 @@ void ActionManager::removeAllActionsFromTarget(Node *target)
 void ActionManager::removeAction(Action *action)
 {
     // explicit null handling
-    if (action == NULL)
+    if (action == nullptr)
     {
         return;
     }
 
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     Object *target = action->getOriginalTarget();
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
@@ -265,9 +266,9 @@ void ActionManager::removeAction(Action *action)
 void ActionManager::removeActionByTag(int tag, Node *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
-    CCASSERT(target != NULL, "");
+    CCASSERT(target != nullptr, "");
 
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
 
     if (element)
@@ -294,12 +295,12 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
 
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
 
     if (element)
     {
-        if (element->actions != NULL)
+        if (element->actions != nullptr)
         {
             auto limit = element->actions->num;
             for (int i = 0; i < limit; ++i)
@@ -319,14 +320,14 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
         // CCLOG("cocos2d : getActionByTag: Target not found");
     }
 
-    return NULL;
+    return nullptr;
 }
 
 // XXX: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
 // and, it is not possible to get the address of a reference
 ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
 {
-    tHashElement *element = NULL;
+    tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
     if (element)
     {
@@ -339,7 +340,7 @@ ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) con
 // main loop
 void ActionManager::update(float dt)
 {
-    for (tHashElement *elt = _targets; elt != NULL; )
+    for (tHashElement *elt = _targets; elt != nullptr; )
     {
         _currentTarget = elt;
         _currentTargetSalvaged = false;
@@ -351,7 +352,7 @@ void ActionManager::update(float dt)
                 _currentTarget->actionIndex++)
             {
                 _currentTarget->currentAction = (Action*)_currentTarget->actions->arr[_currentTarget->actionIndex];
-                if (_currentTarget->currentAction == NULL)
+                if (_currentTarget->currentAction == nullptr)
                 {
                     continue;
                 }
@@ -373,11 +374,11 @@ void ActionManager::update(float dt)
 
                     Action *action = _currentTarget->currentAction;
                     // Make currentAction nil to prevent removeAction from salvaging it.
-                    _currentTarget->currentAction = NULL;
+                    _currentTarget->currentAction = nullptr;
                     removeAction(action);
                 }
 
-                _currentTarget->currentAction = NULL;
+                _currentTarget->currentAction = nullptr;
             }
         }
 
@@ -393,7 +394,7 @@ void ActionManager::update(float dt)
     }
 
     // issue #635
-    _currentTarget = NULL;
+    _currentTarget = nullptr;
 }
 
 NS_CC_END

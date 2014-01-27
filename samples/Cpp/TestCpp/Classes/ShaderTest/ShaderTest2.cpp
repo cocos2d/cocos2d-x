@@ -2,6 +2,8 @@
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/CCRenderCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 namespace ShaderTest2
 {
@@ -118,6 +120,10 @@ protected:
     virtual void setCustomUniforms() = 0;
 protected:
     std::string _fragSourceFile;
+    
+protected:
+    CustomCommand _renderCommand;
+    void onDraw();
 
 };
 
@@ -127,21 +133,17 @@ ShaderSprite::ShaderSprite()
 
 ShaderSprite::~ShaderSprite()
 {
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
-}
-
-void ShaderSprite::listenBackToForeground(Object *obj)
-{
-    setShaderProgram(NULL);
-    initShader();
 }
 
 void ShaderSprite::setBackgroundNotification()
 {
-    NotificationCenter::getInstance()->addObserver(this,
-                                               callfuncO_selector(ShaderSprite::listenBackToForeground),
-                                               EVNET_COME_TO_FOREGROUND,
-                                               NULL);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+            this->setShaderProgram(nullptr);
+            this->initShader();
+        });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
 }
 
 void ShaderSprite::initShader()
@@ -176,10 +178,18 @@ void ShaderSprite::initShader()
 
 void ShaderSprite::draw()
 {
+    _renderCommand.init(_globalZOrder);
+    _renderCommand.func = CC_CALLBACK_0(ShaderSprite::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_renderCommand);
+    
+}
+
+void ShaderSprite::onDraw()
+{
     CC_NODE_DRAW_SETUP();
-
+    
     setCustomUniforms();
-
+    
     GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     GL::bindTexture2D( getTexture()->getName());
@@ -187,8 +197,8 @@ void ShaderSprite::draw()
     //
     // Attributes
     //
-#define kQuadSize sizeof(_quad.bl)
-    long offset = (long)&_quad;
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
     
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
@@ -204,8 +214,6 @@ void ShaderSprite::draw()
     
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWS(1);
 }
 
 class NormalSprite : public ShaderSprite, public ShaderSpriteCreator<NormalSprite>

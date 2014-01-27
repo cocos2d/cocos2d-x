@@ -34,13 +34,13 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos\2d\cocos2dx.props" />
-    <Import Project="..\..\..\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\cocos\2d\cocos2dx.props" />
-    <Import Project="..\..\..\cocos\2d\cocos2d_headers.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2dx.props" />
+    <Import Project="..\cocos2d\cocos\2d\cocos2d_headers.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -184,31 +184,31 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\HelloJavascriptRes\" /e /Y</Command
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\cocos\2d\cocos2d.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\2d\cocos2d.vcxproj">
       <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\audio\proj.win32\CocosDenshion.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\audio\proj.win32\CocosDenshion.vcxproj">
       <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\scripting\javascript\bindings\chipmunk\libJSBindingForChipmunk.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\scripting\javascript\bindings\chipmunk\libJSBindingForChipmunk.vcxproj">
       <Project>{21070e58-eec6-4e16-8b4f-6d083df55790}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\scripting\javascript\bindings\extension\libJSBindingForExtension.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\scripting\javascript\bindings\extension\libJSBindingForExtension.vcxproj">
       <Project>{625f7391-9a91-48a1-8cfc-79508c822637}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\scripting\javascript\bindings\localstorage\libJSBindingForLocalStorage.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\scripting\javascript\bindings\localstorage\libJSBindingForLocalStorage.vcxproj">
       <Project>{68f5f371-bd7b-4c30-ae5b-0b08f22e0cde}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\scripting\javascript\bindings\proj.win32\libJSBinding.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\scripting\javascript\bindings\proj.win32\libJSBinding.vcxproj">
       <Project>{39379840-825a-45a0-b363-c09ffef864bd}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
+    <ProjectReference Include="..\cocos2d\cocos\storage\local-storage\proj.win32\libLocalStorage.vcxproj">
       <Project>{632a8f38-d0f0-4d22-86b3-d69f5e6bf63a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\extensions\proj.win32\libExtensions.vcxproj">
+    <ProjectReference Include="..\cocos2d\extensions\proj.win32\libExtensions.vcxproj">
       <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">
+    <ProjectReference Include="..\cocos2d\external\chipmunk\proj.win32\chipmunk.vcxproj">
       <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
     </ProjectReference>
   </ItemGroup>

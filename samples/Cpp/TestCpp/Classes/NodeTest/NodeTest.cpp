@@ -1,3 +1,28 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "NodeTest.h"
 #include "../testResource.h"
 
@@ -22,40 +47,39 @@ Layer* restartCocosNodeAction();
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    14
 
-Layer* createCocosNodeLayer(int nIndex)
+static std::function<Layer*()> createFunctions[] =
 {
-    switch(nIndex)
-    {
-        case 0: return new CameraCenterTest();
-        case 1: return new Test2();
-        case 2: return new Test4();
-        case 3: return new Test5();
-        case 4: return new Test6();
-        case 5: return new StressTest1();
-        case 6: return new StressTest2();
-        case 7: return new NodeToWorld();
-        case 8: return new SchedulerTest1();
-        case 9: return new CameraOrbitTest();
-        case 10: return new CameraZoomTest();
-        case 11: return new ConvertToNode();
-        case 12: return new NodeOpaqueTest();
-        case 13: return new NodeNonOpaqueTest();
-    }
+    CL(CameraTest1),
+    CL(CameraTest2),
+    CL(CameraCenterTest),
+    CL(Test2),
+    CL(Test4),
+    CL(Test5),
+    CL(Test6),
+    CL(StressTest1),
+    CL(StressTest2),
+    CL(NodeToWorld),
+    CL(NodeToWorld3D),
+    CL(SchedulerTest1),
+    CL(CameraOrbitTest),
+    //Camera has been removed from CCNode
+    //todo add new feature to support it
+    //CL(CameraZoomTest),
+    CL(ConvertToNode),
+    CL(NodeOpaqueTest),
+    CL(NodeNonOpaqueTest),
+    CL(NodeGlobalZValueTest),
+};
 
-    return NULL;
-}
+#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
 Layer* nextCocosNodeAction()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
 
-    auto layer = createCocosNodeLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createFunctions[sceneIdx]();
 }
 
 Layer* backCocosNodeAction()
@@ -65,18 +89,12 @@ Layer* backCocosNodeAction()
     if( sceneIdx < 0 )
         sceneIdx += total;    
     
-    auto layer = createCocosNodeLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createFunctions[sceneIdx]();
 }
 
 Layer* restartCocosNodeAction()
 {
-    auto layer = createCocosNodeLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    return createFunctions[sceneIdx]();
 } 
 
 
@@ -88,12 +106,12 @@ TestCocosNodeDemo::~TestCocosNodeDemo(void)
 {
 }
 
-std::string TestCocosNodeDemo::title()
+std::string TestCocosNodeDemo::title() const
 {
     return "No title";
 }
 
-std::string TestCocosNodeDemo::subtitle()
+std::string TestCocosNodeDemo::subtitle() const
 {
     return "";
 }
@@ -173,7 +191,7 @@ void Test2::onEnter()
     sp2->runAction(action2);
 }
 
-std::string Test2::title()
+std::string Test2::title() const
 {
     return "anchorPoint and children";
 }
@@ -215,7 +233,7 @@ void Test4::delay4(float dt)
     removeChildByTag(3, false);
 }
 
-std::string Test4::title()
+std::string Test4::title() const
 {
     return "tags";
 }
@@ -268,7 +286,7 @@ void Test5::addAndRemove(float dt)
     sp2->release();
 }
 
-std::string Test5::title()
+std::string Test5::title() const
 {
     return "remove and cleanup";
 }
@@ -329,7 +347,7 @@ void Test6::addAndRemove(float dt)
 
 }
 
-std::string Test6::title()
+std::string Test6::title() const
 {
     return "remove/cleanup with children";
 }
@@ -382,7 +400,7 @@ void StressTest1::removeMe(Node* node)
 }
 
 
-std::string StressTest1::title()
+std::string StressTest1::title() const
 {
     return "stress test #1: no crashes";
 }
@@ -429,7 +447,7 @@ void StressTest2::shouldNotLeak(float dt)
     sublayer->removeAllChildrenWithCleanup(true); 
 }
 
-std::string StressTest2::title()
+std::string StressTest2::title() const
 {
     return "stress test #2: no leaks";
 }
@@ -443,16 +461,16 @@ std::string StressTest2::title()
 SchedulerTest1::SchedulerTest1()
 {
     auto layer = Layer::create();
-    //CCLOG("retain count after init is %d", layer->retainCount());                // 1
+    //CCLOG("retain count after init is %d", layer->getReferenceCount());                // 1
     
     addChild(layer, 0);
-    //CCLOG("retain count after addChild is %d", layer->retainCount());      // 2
+    //CCLOG("retain count after addChild is %d", layer->getReferenceCount());      // 2
     
     layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
-    //CCLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
+    //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
     
     layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
-    //CCLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
+    //CCLOG("retain count after unschedule is %d", layer->getReferenceCount());        // STILL 3!  (win32 is '2')
 }
 
 void SchedulerTest1::doSomething(float dt)
@@ -460,7 +478,7 @@ void SchedulerTest1::doSomething(float dt)
 
 }
 
-std::string SchedulerTest1::title()
+std::string SchedulerTest1::title() const
 {
     return "cocosnode scheduler test #1";
 }
@@ -499,10 +517,60 @@ NodeToWorld::NodeToWorld()
     back->runAction(fe2);
 }
 
-std::string NodeToWorld::title()
+std::string NodeToWorld::title() const
 {
     return "nodeToParent transform";
 }
+
+//------------------------------------------------------------------
+//
+// NodeToWorld3D
+//
+//------------------------------------------------------------------
+NodeToWorld3D::NodeToWorld3D()
+{
+    //
+    // This code tests that nodeToParent works OK:
+    //  - It tests different anchor Points
+    //  - It tests different children anchor points
+
+    Size s = Director::getInstance()->getWinSize();
+    auto parent = Node::create();
+    parent->setContentSize(s);
+    parent->setAnchorPoint(Point(0.5, 0.5));
+    parent->setPosition(s.width/2, s.height/2);
+    this->addChild(parent);
+
+    auto back = Sprite::create(s_back3);
+    parent->addChild( back, -10);
+    back->setAnchorPoint( Point(0,0) );
+    auto backSize = back->getContentSize();
+
+    auto item = MenuItemImage::create(s_PlayNormal, s_PlaySelect);
+    auto menu = Menu::create(item, NULL);
+    menu->alignItemsVertically();
+    menu->setPosition( Point(backSize.width/2, backSize.height/2));
+    back->addChild(menu);
+
+    auto rot = RotateBy::create(5, 360);
+    auto fe = RepeatForever::create( rot);
+    item->runAction( fe );
+
+    auto move = MoveBy::create(3, Point(200,0));
+    auto move_back = move->reverse();
+    auto seq = Sequence::create( move, move_back, NULL);
+    auto fe2 = RepeatForever::create(seq);
+    back->runAction(fe2);
+
+    auto orbit = OrbitCamera::create(10, 0, 1, 0, 360, 0, 90);
+    parent->runAction(orbit);
+}
+
+std::string NodeToWorld3D::title() const
+{
+    return "nodeToParent transform in 3D";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -569,7 +637,7 @@ CameraOrbitTest::CameraOrbitTest()
     setScale( 1 );
 }
 
-std::string CameraOrbitTest::title()
+std::string CameraOrbitTest::title() const
 {
     return "Camera Orbit test";
 }
@@ -598,16 +666,16 @@ CameraZoomTest::CameraZoomTest()
     auto s = Director::getInstance()->getWinSize();
     
     Sprite *sprite;
-    Camera *cam;
+//    Camera *cam;
     
     // LEFT
     sprite = Sprite::create(s_pathGrossini);
     addChild( sprite, 0);        
     sprite->setPosition( Point(s.width/4*1, s.height/2) );
-    cam = sprite->getCamera();
-    cam->setEye(0, 0, 415/2);
-    cam->setCenter(0, 0, 0);
-    
+//    cam = sprite->getCamera();
+//    cam->setEye(0, 0, 415/2);
+//    cam->setCenter(0, 0, 0);
+
     // CENTER
     sprite = Sprite::create(s_pathGrossini);
     addChild( sprite, 0, 40);
@@ -625,20 +693,20 @@ CameraZoomTest::CameraZoomTest()
 void CameraZoomTest::update(float dt)
 {
     Node *sprite;
-    Camera *cam;
-    
+//    Camera *cam;
+
     _z += dt * 100;
     
     sprite = getChildByTag(20);
-    cam = sprite->getCamera();
-    cam->setEye(0, 0, _z);
-    
+//    cam = sprite->getCamera();
+//    cam->setEye(0, 0, _z);
+
     sprite = getChildByTag(40);
-    cam = sprite->getCamera();
-    cam->setEye(0, 0, -_z);    
+//    cam = sprite->getCamera();
+//    cam->setEye(0, 0, -_z);    
 }
 
-std::string CameraZoomTest::title()
+std::string CameraZoomTest::title() const
 {
     return "Camera Zoom test";
 }
@@ -706,12 +774,12 @@ CameraCenterTest::CameraCenterTest()
     sprite->runAction(RepeatForever::create( orbit ) );
 }
 
-std::string CameraCenterTest::title()
+std::string CameraCenterTest::title() const
 {
     return "Camera Center test";
 }
 
-std::string CameraCenterTest::subtitle()
+std::string CameraCenterTest::subtitle() const
 {
     return "Sprites should rotate at the same speed";
 }
@@ -780,12 +848,12 @@ void ConvertToNode::onTouchesEnded(const std::vector<Touch*>& touches, Event *ev
     }    
 }
 
-std::string ConvertToNode::title()
+std::string ConvertToNode::title() const
 {
     return "Convert To Node Space";
 }
 
-std::string ConvertToNode::subtitle()
+std::string ConvertToNode::subtitle() const
 {
     return "testing convertToNodeSpace / AR. Touch and see console";
 }
@@ -805,12 +873,12 @@ NodeOpaqueTest::NodeOpaqueTest()
     }
 }
 
-std::string NodeOpaqueTest::title()
+std::string NodeOpaqueTest::title() const
 {
     return "Node Opaque Test";
 }
 
-std::string NodeOpaqueTest::subtitle()
+std::string NodeOpaqueTest::subtitle() const
 {
     return "Node rendered with GL_BLEND disabled";
 }
@@ -830,16 +898,233 @@ NodeNonOpaqueTest::NodeNonOpaqueTest()
     }
 }
 
-std::string NodeNonOpaqueTest::title()
+std::string NodeNonOpaqueTest::title() const
 {
     return "Node Non Opaque Test";
 }
 
-std::string NodeNonOpaqueTest::subtitle()
+std::string NodeNonOpaqueTest::subtitle() const
 {
     return "Node rendered with GL_BLEND enabled";
 }
 
+/// NodeGlobalZValueTest
+
+NodeGlobalZValueTest::NodeGlobalZValueTest()
+{
+    Size s = Director::getInstance()->getWinSize();
+    for (int i = 0; i < 9; i++)
+    {
+        Sprite *sprite;
+        auto parent = Node::create();
+        if(i==4) {
+            sprite = Sprite::create("Images/grossinis_sister2.png");
+            _sprite = sprite;
+            _sprite->setGlobalZOrder(-1);
+        }
+        else
+            sprite = Sprite::create("Images/grossinis_sister1.png");
+
+        parent->addChild(sprite);
+        this->addChild(parent);
+
+        float w = sprite->getContentSize().width;
+        sprite->setPosition(s.width/2 - w*0.7*(i-5), s.height/2);
+    }
+
+    this->scheduleUpdate();
+}
+
+void NodeGlobalZValueTest::update(float dt)
+{
+    static float accum = 0;
+
+    accum += dt;
+    if( accum > 1) {
+        float z = _sprite->getGlobalZOrder();
+        _sprite->setGlobalZOrder(-z);
+        accum = 0;
+    }
+}
+
+std::string NodeGlobalZValueTest::title() const
+{
+    return "Global Z Value";
+}
+
+std::string NodeGlobalZValueTest::subtitle() const
+{
+    return "Center Sprite should change go from foreground to background";
+}
+
+
+//
+// MySprite: Used by CameraTest1 and CameraTest2
+//
+class MySprite : public Sprite
+{
+public:
+    static MySprite* create(const std::string &spritefilename)
+    {
+        auto sprite = new MySprite;
+        sprite->initWithFile(spritefilename);
+        sprite->autorelease();
+
+        auto shader = CCShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+        sprite->setShaderProgram(shader);
+        return sprite;
+    }
+    virtual void draw() override;
+    void onDraw();
+
+protected:
+    CustomCommand _customCommand;
+
+};
+
+void MySprite::draw()
+{
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(MySprite::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
+
+void MySprite::onDraw()
+{
+    CC_NODE_DRAW_SETUP();
+
+    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+
+    GL::bindTexture2D( _texture->getName() );
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    CHECK_GL_ERROR_DEBUG();
+    CC_INCREMENT_GL_DRAWS(1);
+}
+//------------------------------------------------------------------
+//
+// CameraTest1
+//
+//------------------------------------------------------------------
+
+void CameraTest1::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setDepthTest(true);
+}
+
+void CameraTest1::onExit()
+{
+    Director::getInstance()->setProjection(Director::Projection::_2D);
+    TestCocosNodeDemo::onExit();
+}
+
+CameraTest1::CameraTest1()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    _sprite1 = MySprite::create(s_back3);
+    addChild( _sprite1 );
+    _sprite1->setPosition( Point(1*s.width/4, s.height/2) );
+    _sprite1->setScale(0.5);
+
+    _sprite2 = Sprite::create(s_back3);
+    addChild( _sprite2 );
+    _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
+    _sprite2->setScale(0.5);
+
+    auto camera = OrbitCamera::create(10, 0, 1, 0, 360, 0, 0);
+    _sprite1->runAction( camera );
+    _sprite2->runAction( camera->clone() );
+}
+
+std::string CameraTest1::title() const
+{
+    return "Camera Test 1";
+}
+
+std::string CameraTest1::subtitle() const
+{
+    return "Both images should rotate with a 3D effect";
+}
+//------------------------------------------------------------------
+//
+// CameraTest2
+//
+//------------------------------------------------------------------
+void CameraTest2::onEnter()
+{
+    TestCocosNodeDemo::onEnter();
+    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setDepthTest(true);
+}
+
+void CameraTest2::onExit()
+{
+    Director::getInstance()->setProjection(Director::Projection::_2D);
+    TestCocosNodeDemo::onExit();
+}
+
+CameraTest2::CameraTest2()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    _sprite1 = MySprite::create(s_back3);
+    addChild( _sprite1 );
+    _sprite1->setPosition( Point(1*s.width/4, s.height/2) );
+    _sprite1->setScale(0.5);
+
+    _sprite2 = Sprite::create(s_back3);
+    addChild( _sprite2 );
+    _sprite2->setPosition( Point(3*s.width/4, s.height/2) );
+    _sprite2->setScale(0.5);
+
+    kmVec3 eye, center, up;
+
+    kmVec3Fill(&eye, 150, 0, 200);
+    kmVec3Fill(&center, 0, 0, 0);
+    kmVec3Fill(&up, 0, 1, 0);
+
+    kmMat4 lookupMatrix;
+    kmMat4LookAt(&lookupMatrix, &eye, &center, &up);
+
+    _sprite1->setAdditionalTransform(lookupMatrix);
+    _sprite2->setAdditionalTransform(lookupMatrix);
+
+}
+
+std::string CameraTest2::title() const
+{
+    return "Camera Test 2";
+}
+
+std::string CameraTest2::subtitle() const
+{
+    return "Both images should look the same";
+}
+
+///
+/// main
+///
 void CocosNodeTestScene::runThisTest()
 {
     auto layer = nextCocosNodeAction();

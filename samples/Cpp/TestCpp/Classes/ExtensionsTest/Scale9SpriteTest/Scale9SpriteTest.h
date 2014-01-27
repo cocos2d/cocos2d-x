@@ -54,8 +54,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheet
@@ -67,8 +67,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotated
@@ -80,8 +80,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9BatchNodeScaledNoInsets
@@ -93,8 +93,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetScaledNoInsets
@@ -106,8 +106,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedScaledNoInsets
@@ -119,8 +119,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 
@@ -133,8 +133,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetInsets
@@ -146,8 +146,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetInsetsScaled
@@ -159,8 +159,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsets
@@ -172,8 +172,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9_TexturePacker
@@ -185,8 +185,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsetsScaled
@@ -198,8 +198,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9FrameNameSpriteSheetRotatedInsetsScaled
@@ -211,8 +211,8 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 // S9CascadeOpacityAndColor
@@ -224,6 +224,6 @@ public:
 
     virtual void onEnter();
     
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };

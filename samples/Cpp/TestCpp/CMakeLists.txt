@@ -1,5 +1,18 @@
 set(APP_NAME testcpp)
 
+if(WIN32)
+  set(PLATFORM_SRC
+    Classes/ExtensionsTest/EditBoxTest/EditBoxTest.cpp
+    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+    proj.win32/main.cpp
+  )
+else()
+  set(PLATFORM_SRC
+    proj.linux/main.cpp
+  )
+endif()
+
 set(SAMPLE_SRC
   Classes/AccelerometerTest/AccelerometerTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
@@ -59,27 +72,27 @@ set(SAMPLE_SRC
   Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp
   Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp
   Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp
+  Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScene.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISceneManager.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UIDragPanelTest/UIDragPanelTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILabelAtlasTest/UILabelAtlasTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILabelBMFontTest/UILabelBMFontTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILabelTest/UILabelTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UINodeContainerTest/UINodeContainerTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UIPanelTest/UIPanelTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UITextAreaTest/UITextAreaTest.cpp
-  Classes/ExtensionsTest/CocoStudioGUITest/UITextButtonTest/UITextButtonTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
+  Classes/ExtensionsTest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
   Classes/ExtensionsTest/CocoStudioGUITest/CocosGUIScene.cpp
   Classes/ExtensionsTest/Scale9SpriteTest/Scale9SpriteTest.cpp
+  Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/FontTest/FontTest.cpp
   Classes/IntervalTest/IntervalTest.cpp
@@ -102,7 +115,12 @@ set(SAMPLE_SRC
   Classes/PerformanceTest/PerformanceTest.cpp
   Classes/PerformanceTest/PerformanceTextureTest.cpp
   Classes/PerformanceTest/PerformanceTouchesTest.cpp
+  Classes/PerformanceTest/PerformanceLabelTest.cpp
+  Classes/PerformanceTest/PerformanceRendererTest.cpp
+  Classes/PerformanceTest/PerformanceContainerTest.cpp
+  Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
+  Classes/ReleasePoolTest/ReleasePoolTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp
   Classes/RotateWorldTest/RotateWorldTest.cpp
   Classes/SceneTest/SceneTest.cpp
@@ -126,12 +144,13 @@ set(SAMPLE_SRC
   Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
+  Classes/UnitTest/UnitTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp
   Classes/AppDelegate.cpp
   Classes/BaseTest.cpp
   Classes/VisibleRect.cpp
-  proj.linux/main.cpp
+  ${PLATFORM_SRC}
 )
 
 include_directories(
@@ -155,7 +174,7 @@ target_link_libraries(${APP_NAME}
   box2d
 )
 
-set(APP_BIN_DIR "${CMAKE_SOURCE_DIR}/bin/${APP_NAME}")
+set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
@@ -164,4 +183,3 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
   )
-

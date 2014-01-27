@@ -8,6 +8,7 @@
 #include "jsb_cocos2dx_builder_auto.hpp"
 #include "jsb_cocos2dx_studio_auto.hpp"
 #include "jsb_cocos2dx_gui_auto.hpp"
+#include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
 #include "gui/jsb_cocos2dx_gui_manual.h"
@@ -47,10 +48,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    FileUtils::getInstance()->addSearchPath("res");
-    FileUtils::getInstance()->addSearchPath("script");
-    FileUtils::getInstance()->addSearchPath("res/scenetest");
+    auto fileUtils = FileUtils::getInstance();
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("script");
     
+    const char* paths[] = {
+        "res",
+        "res/scenetest",
+        "res/scenetest/ArmatureComponentTest",
+        "res/scenetest/AttributeComponentTest",
+        "res/scenetest/BackgroundComponentTest",
+        "res/scenetest/EffectComponentTest",
+        "res/scenetest/LoadSceneEdtiorFileTest",
+        "res/scenetest/ParticleComponentTest",
+        "res/scenetest/SpriteComponentTest",
+        "res/scenetest/TmxMapComponentTest",
+        "res/scenetest/UIComponentTest",
+        "res/scenetest/TriggerTest",
+    };
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    std::string testFolder = "tests/";
+    searchPaths.push_back(testFolder);
+    
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(testFolder + path);
+    }
+#else
+    for (const auto& path : paths)
+    {
+        searchPaths.push_back(path);
+    }
+#endif
+    
+    fileUtils->setSearchPaths(searchPaths);
+
     ScriptingCore* sc = ScriptingCore::getInstance();
     sc->addRegisterCallback(register_all_cocos2dx);
     sc->addRegisterCallback(register_all_cocos2dx_extension);
@@ -70,6 +103,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_studio);
     sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
     
+    sc->addRegisterCallback(register_all_cocos2dx_spine);
+    
     sc->start();
     
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
@@ -84,26 +119,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptingCore::getInstance()->runScript("tests-boot-jsb.js");
 #endif
     return true;
-}
-
-void handle_signal(int signal) {
-    static int internal_state = 0;
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    // should start everything back
-    auto director = Director::getInstance();
-    if (director->getRunningScene()) {
-        director->popToRootScene();
-    } else {
-        PoolManager::sharedPoolManager()->finalize();
-        if (internal_state == 0) {
-            //sc->dumpRoot(NULL, 0, NULL);
-            sc->start();
-            internal_state = 1;
-        } else {
-            sc->runScript("hello.js");
-            internal_state = 0;
-        }
-    }
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too

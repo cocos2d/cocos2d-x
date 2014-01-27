@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,23 +29,28 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/RegionAttachment.h>
-#include <math.h>
 #include <spine/extension.h>
 
-namespace spine {
+void _spRegionAttachment_dispose (spAttachment* attachment) {
+	spRegionAttachment* self = SUB_CAST(spRegionAttachment, attachment);
 
-RegionAttachment* RegionAttachment_create (const char* name) {
-	RegionAttachment* self = NEW(RegionAttachment);
+	_spAttachment_deinit(attachment);
+
+	FREE(self);
+}
+
+spRegionAttachment* spRegionAttachment_create (const char* name) {
+	spRegionAttachment* self = NEW(spRegionAttachment);
 	self->scaleX = 1;
 	self->scaleY = 1;
-	_Attachment_init(SUPER(self), name, ATTACHMENT_REGION, _Attachment_deinit);
+	_spAttachment_init(SUPER(self), name, ATTACHMENT_REGION, _spRegionAttachment_dispose);
 	return self;
 }
 
-void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate) {
+void spRegionAttachment_setUVs (spRegionAttachment* self, float u, float v, float u2, float v2, int/*bool*/rotate) {
 	if (rotate) {
 		self->uvs[VERTEX_X2] = u;
 		self->uvs[VERTEX_Y2] = v2;
@@ -59,7 +72,7 @@ void RegionAttachment_setUVs (RegionAttachment* self, float u, float v, float u2
 	}
 }
 
-void RegionAttachment_updateOffset (RegionAttachment* self) {
+void spRegionAttachment_updateOffset (spRegionAttachment* self) {
 	float regionScaleX = self->width / self->regionOriginalWidth * self->scaleX;
 	float regionScaleY = self->height / self->regionOriginalHeight * self->scaleY;
 	float localX = -self->width / 2 * self->scaleX + self->regionOffsetX * regionScaleX;
@@ -92,7 +105,7 @@ void RegionAttachment_updateOffset (RegionAttachment* self) {
 	self->offset[VERTEX_Y4] = localYCos + localX2Sin;
 }
 
-void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y, Bone* bone, float* vertices) {
+void spRegionAttachment_computeWorldVertices (spRegionAttachment* self, float x, float y, spBone* bone, float* vertices) {
 	float* offset = self->offset;
 	x += bone->worldX;
 	y += bone->worldY;
@@ -105,5 +118,3 @@ void RegionAttachment_computeVertices (RegionAttachment* self, float x, float y,
 	vertices[VERTEX_X4] = offset[VERTEX_X4] * bone->m00 + offset[VERTEX_Y4] * bone->m01 + x;
 	vertices[VERTEX_Y4] = offset[VERTEX_X4] * bone->m10 + offset[VERTEX_Y4] * bone->m11 + y;
 }
-
-} // namespace spine {

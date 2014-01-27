@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008      Apple Inc. All Rights Reserved.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -427,7 +428,7 @@ Texture2D::Texture2D()
 , _maxT(0.0)
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
-, _shaderProgram(NULL)
+, _shaderProgram(nullptr)
 {
 }
 
@@ -505,11 +506,11 @@ GLProgram* Texture2D::getShaderProgram() const
     return _shaderProgram;
 }
 
-void Texture2D::setShaderProgram(GLProgram* pShaderProgram)
+void Texture2D::setShaderProgram(GLProgram* shaderProgram)
 {
-    CC_SAFE_RETAIN(pShaderProgram);
+    CC_SAFE_RETAIN(shaderProgram);
     CC_SAFE_RELEASE(_shaderProgram);
-    _shaderProgram = pShaderProgram;
+    _shaderProgram = shaderProgram;
 }
 
 void Texture2D::releaseData(void *data)
@@ -543,7 +544,6 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     _contentSize = contentSize;
     _maxS = contentSize.width / (float)(pixelsWide);
     _maxT = contentSize.height / (float)(pixelsHigh);
-
 }
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
@@ -673,7 +673,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 std::string Texture2D::getDescription() const
 {
-    return String::createWithFormat("<Texture2D | Name = %u | Dimensions = %ld x %ld | Coordinates = (%.2f, %.2f)>", _name, (long)_pixelsWide, (long)_pixelsHigh, _maxS, _maxT)->getCString();
+    return StringUtils::format("<Texture2D | Name = %u | Dimensions = %ld x %ld | Coordinates = (%.2f, %.2f)>", _name, (long)_pixelsWide, (long)_pixelsHigh, _maxS, _maxT);
 }
 
 // implementation Texture2D (Image)
@@ -684,7 +684,7 @@ bool Texture2D::initWithImage(Image *image)
 
 bool Texture2D::initWithImage(Image *image, PixelFormat format)
 {
-    if (image == NULL)
+    if (image == nullptr)
     {
         CCLOG("cocos2d: Texture2D. Can't create Texture. UIImage is nil");
         return false;
@@ -741,7 +741,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             pixelFormat = g_defaultAlphaPixelFormat;
         }
 
-        unsigned char* outTempData = NULL;
+        unsigned char* outTempData = nullptr;
         ssize_t outTempDataLen = 0;
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
@@ -749,7 +749,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
 
 
-        if (outTempData != NULL && outTempData != tempData)
+        if (outTempData != nullptr && outTempData != tempData)
         {
 
             delete [] outTempData;
@@ -1044,22 +1044,22 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     VolatileTextureMgr::addStringTexture(this, text, textDefinition);
 #endif
 
-    bool bRet = false;
-    Image::TextAlign eAlign;
+    bool ret = false;
+    Image::TextAlign align;
     
     if (TextVAlignment::TOP == textDefinition._vertAlignment)
     {
-        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::TOP
+        align = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::TOP
         : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::TOP_LEFT : Image::TextAlign::TOP_RIGHT;
     }
     else if (TextVAlignment::CENTER == textDefinition._vertAlignment)
     {
-        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::CENTER
+        align = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::CENTER
         : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::LEFT : Image::TextAlign::RIGHT;
     }
     else if (TextVAlignment::BOTTOM == textDefinition._vertAlignment)
     {
-        eAlign = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::BOTTOM
+        align = (TextHAlignment::CENTER == textDefinition._alignment) ? Image::TextAlign::BOTTOM
         : (TextHAlignment::LEFT == textDefinition._alignment) ? Image::TextAlign::BOTTOM_LEFT : Image::TextAlign::BOTTOM_RIGHT;
     }
     else
@@ -1102,15 +1102,15 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
         strokeSize   = textDefinition._stroke._strokeSize;
     }
     
-    Image* pImage = new Image();
+    Image* image = new Image();
     do
     {
-        CC_BREAK_IF(NULL == pImage);
+        CC_BREAK_IF(nullptr == image);
         
-        bRet = pImage->initWithStringShadowStroke(text,
+        ret = image->initWithStringShadowStroke(text,
                                                   (int)textDefinition._dimensions.width,
                                                   (int)textDefinition._dimensions.height,
-                                                  eAlign,
+                                                  align,
                                                   textDefinition._fontName.c_str(),
                                                   textDefinition._fontSize,
                                                   textDefinition._fontFillColor.r / 255.0f,
@@ -1128,32 +1128,32 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
                                                   strokeSize);
         
         
-        CC_BREAK_IF(!bRet);
-        bRet = initWithImage(pImage);
+        CC_BREAK_IF(!ret);
+        ret = initWithImage(image);
         
     } while (0);
     
-    CC_SAFE_RELEASE(pImage);
+    CC_SAFE_RELEASE(image);
     
-    return bRet;
+    return ret;
 
 #else
     bool requestUnsupported = textDefinition._shadow._shadowEnabled || textDefinition._stroke._strokeEnabled;
 
     CCASSERT(requestUnsupported == false, "Currently shadow and stroke only supported on iOS and Android!");
 
-    Image* pImage = new Image();
+    Image* image = new Image();
     do
     {
-        CC_BREAK_IF(NULL == pImage);
-        bRet = pImage->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, eAlign, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
-        CC_BREAK_IF(!bRet);
-        bRet = initWithImage(pImage);
+        CC_BREAK_IF(nullptr == image);
+        ret = image->initWithString(text, (int)textDefinition._dimensions.width, (int)textDefinition._dimensions.height, align, textDefinition._fontName.c_str(), (int)textDefinition._fontSize);
+        CC_BREAK_IF(!ret);
+        ret = initWithImage(image);
     } while (0);
     
-    CC_SAFE_RELEASE(pImage);
+    CC_SAFE_RELEASE(image);
 
-    return bRet;    
+    return ret;
 #endif
 }
 
@@ -1351,7 +1351,7 @@ const char* Texture2D::getStringForFormat() const
 			break;
 	}
 
-	return  NULL;
+	return  nullptr;
 }
 
 //

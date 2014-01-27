@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-
+Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,23 +52,11 @@ A more flexible class is LabelBMFont. It supports variable width characters and 
 class CC_DLL LabelAtlas : public AtlasNode, public LabelProtocol
 {
 public:
-    /**
-     * @js ctor
-     */
-    LabelAtlas()
-        :_string("")
-    {}
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LabelAtlas()
-    { 
-        _string.clear(); 
-    }
-
+    /** creates an empty LabelAtlas, user need to call initWithString(...) later to make this object work properly **/
+    static LabelAtlas* create();
+    
     /** creates the LabelAtlas with a string, a char map file(the atlas), the width and height of each element and the starting char of the atlas */
-    static LabelAtlas * create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
+    static LabelAtlas* create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
     
     /** creates the LabelAtlas with a string and a configuration file
      @since v2.0
@@ -97,6 +86,15 @@ public:
 #endif
 
 protected:
+    LabelAtlas()
+    :_string("")
+    {}
+
+    virtual ~LabelAtlas()
+    {
+        _string.clear();
+    }
+    
     // string to render
     std::string _string;
     // the first char in the charmap

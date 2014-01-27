@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009      On-Core
+Copyright (c) 2010-2012 cocos2d-x.org
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -39,7 +40,7 @@ class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 {
 public:
     /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-    static ShakyTiles3D* create(float duration, const Size& gridSize, int nRange, bool bShakeZ);
+    static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Override
 	virtual ShakyTiles3D* clone() const override;
@@ -49,7 +50,7 @@ protected:
     ShakyTiles3D() {}
     virtual ~ShakyTiles3D() {}
     /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-    bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShakeZ);
+    bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
     int _randrange;
     bool _shakeZ;
@@ -63,7 +64,7 @@ class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 {
 public:
     /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
-    static ShatteredTiles3D* create(float duration, const Size& gridSize, int nRange, bool bShatterZ);
+    static ShatteredTiles3D* create(float duration, const Size& gridSize, int range, bool shatterZ);
 
     // Override
 	virtual ShatteredTiles3D* clone() const override;
@@ -73,7 +74,7 @@ protected:
     ShatteredTiles3D() {}
     virtual ~ShatteredTiles3D() {}
     /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
-    bool initWithDuration(float duration, const Size& gridSize, int nRange, bool bShatterZ);
+    bool initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ);
 
     int _randrange;
     bool _once;
@@ -93,7 +94,7 @@ public:
     /** creates the action with a random seed, the grid size and the duration */
     static ShuffleTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
-    void shuffle(unsigned int *array, unsigned int nLen);
+    void shuffle(unsigned int *array, unsigned int len);
     Size getDelta(const Size& pos) const;
     void placeTile(const Point& pos, Tile *t);
 
@@ -219,7 +220,7 @@ public:
     /** creates the action with a random seed, the grid size and the duration */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
-    void shuffle(unsigned int *pArray, unsigned int nLen);
+    void shuffle(unsigned int *array, unsigned int len);
     void turnOnTile(const Point& pos);
     void turnOffTile(const Point& pos);
 
@@ -251,11 +252,11 @@ public:
 
     /** waves amplitude */
     inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** waves amplitude rate */
     inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
 	virtual WavesTiles3D* clone() const override;
@@ -286,11 +287,11 @@ public:
 
     /** amplitude of the sin*/
     inline float getAmplitude(void) const { return _amplitude; }
-    inline void setAmplitude(float fAmplitude) { _amplitude = fAmplitude; }
+    inline void setAmplitude(float amplitude) { _amplitude = amplitude; }
 
     /** amplitude rate */
     inline float getAmplitudeRate(void) const { return _amplitudeRate; }
-    inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
+    inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
     // Override
 	virtual JumpTiles3D* clone() const override;
@@ -315,7 +316,7 @@ class CC_DLL SplitRows : public TiledGrid3DAction
 {
 public :
     /** creates the action with the number of rows to split and the duration */
-    static SplitRows* create(float duration, unsigned int nRows);
+    static SplitRows* create(float duration, unsigned int rows);
 
     // Overrides
 	virtual SplitRows* clone() const override;
@@ -326,7 +327,7 @@ protected:
     SplitRows() {}
     virtual ~SplitRows() {}
     /** initializes the action with the number of rows to split and the duration */
-    bool initWithDuration(float duration, unsigned int nRows);
+    bool initWithDuration(float duration, unsigned int rows);
 
     unsigned int _rows;
     Size _winSize;
@@ -340,7 +341,7 @@ class CC_DLL SplitCols : public TiledGrid3DAction
 {
 public:
     /** creates the action with the number of columns to split and the duration */
-    static SplitCols* create(float duration, unsigned int nCols);
+    static SplitCols* create(float duration, unsigned int cols);
 
     // Overrides
 	virtual SplitCols* clone() const override;
@@ -351,7 +352,7 @@ protected:
     SplitCols() {}
     virtual ~SplitCols() {}
     /** initializes the action with the number of columns to split and the duration */
-    bool initWithDuration(float duration, unsigned int nCols);
+    bool initWithDuration(float duration, unsigned int cols);
 
     unsigned int _cols;
     Size _winSize;

@@ -32,26 +32,23 @@ bool ControlButtonTest_HelloVariableSize::init()
         auto screenSize = Director::getInstance()->getWinSize();
         
         // Defines an array of title to create buttons dynamically
-        auto stringArray = Array::create(
-            ccs("Hello"),
-            ccs("Variable"),
-            ccs("Size"),
-            ccs("!"),
-            NULL);
+        std::vector<std::string> vec;
+        vec.push_back("Hello");
+        vec.push_back("Variable");
+        vec.push_back("Size");
+        vec.push_back("!");
         
         auto layer = Node::create();
         addChild(layer, 1);
         
         double total_width = 0, height = 0;
         
-        // For each title in the array
-        Object* pObj = NULL;
         int i = 0;
-        CCARRAY_FOREACH(stringArray, pObj)
+        
+        for (auto& title : vec)
         {
-            auto title = static_cast<String*>(pObj);
             // Creates a button with this string as title
-            ControlButton *button = standardButtonWithTitle(title->getCString());
+            ControlButton *button = standardButtonWithTitle(title.c_str());
             if (i == 0)
             {
                 button->setOpacity(50);

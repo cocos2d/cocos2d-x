@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,6 +36,8 @@ THE SOFTWARE.
 #endif // EMSCRIPTEN
 
 #include "CCEventKeyboard.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -195,45 +198,38 @@ private:
  - RGB colors
  @since 2.1
  */
-class CC_DLL LayerRGBA : public Layer, public RGBAProtocol
+class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
 public:
-    CREATE_FUNC(LayerRGBA);
-
-
+    CREATE_FUNC(__LayerRGBA);
+    
+    
     //
     // Overrides
     //
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
-    
-    virtual const Color3B& getColor() const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
-    virtual std::string getDescription() const override;
+    virtual GLubyte getOpacity() const override { return Layer::getOpacity(); }
+    virtual GLubyte getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
+    virtual void setOpacity(GLubyte opacity) override { return Layer::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Layer::updateDisplayedOpacity(parentOpacity); }
+    virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB() const override { return false; }
+    virtual const Color3B& getColor() const override { return Layer::getColor(); }
+    virtual const Color3B& getDisplayedColor() const override { return Layer::getDisplayedColor(); }
+    virtual void setColor(const Color3B& color) override { return Layer::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Layer::updateDisplayedColor(parentColor); }
+    virtual bool isCascadeColorEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Layer::setCascadeColorEnabled(cascadeColorEnabled); }
 
+    virtual void setOpacityModifyRGB(bool bValue) override { return Layer::setOpacityModifyRGB(bValue); }
+    virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
 
 protected:
-    LayerRGBA();
-    virtual ~LayerRGBA();
-    virtual bool init();
-
-	GLubyte		_displayedOpacity, _realOpacity;
-	Color3B	    _displayedColor, _realColor;
-	bool		_cascadeOpacityEnabled, _cascadeColorEnabled;
+    __LayerRGBA();
+    virtual ~__LayerRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(LayerRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__LayerRGBA);
 };
 
 //
@@ -245,7 +241,7 @@ All features from Layer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
-class CC_DLL LayerColor : public LayerRGBA, public BlendProtocol
+class CC_DLL LayerColor : public Layer, public BlendProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN
@@ -271,8 +267,8 @@ public:
     // Overrides
     //
     virtual void draw() override;
-    virtual void setColor(const Color3B &color) override;
-    virtual void setOpacity(GLubyte opacity) override;
+    virtual void onDraw();
+    
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
@@ -298,12 +294,13 @@ protected:
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 
-    virtual void updateColor();
+    virtual void updateColor() override;
 
     BlendFunc _blendFunc;
     Vertex2F _squareVertices[4];
     Color4F  _squareColors[4];
-
+    CustomCommand _customCommand;
+    Vertex3F _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -359,7 +356,7 @@ public:
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
      */
-    void setCompressedInterpolation(bool bCompressedInterpolation);
+    void setCompressedInterpolation(bool compressedInterpolation);
     bool isCompressedInterpolation() const;
 
     /** Sets the start color of the gradient */

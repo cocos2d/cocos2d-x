@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -57,7 +57,7 @@ public:
         CUSTOM
     };
     
-    typedef std::size_t ListenerID;
+    typedef std::string ListenerID;
     
 protected:
     /** Constructor */
@@ -83,7 +83,7 @@ protected:
     inline bool isRegistered() const { return _isRegistered; };
     
     inline Type getType() const { return _type; };
-    inline ListenerID getListenerID() const { return _listenerID; };
+    inline const ListenerID& getListenerID() const { return _listenerID; };
     
     inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
     inline int getFixedPriority() const { return _fixedPriority; };

@@ -21,9 +21,15 @@ add_library(cocosbase STATIC
   ${COCOS_BASE_SRC}
 )
 
+if(WIN32)
+target_link_libraries(cocosbase
+  Ws2_32
+)
+endif()
+
 set_target_properties(cocosbase
     PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 

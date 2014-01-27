@@ -47,6 +47,15 @@
     <ClInclude Include="..\BoneData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\BoundingBoxAttachment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EventData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\CCSkeleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -68,6 +77,9 @@
     <ClInclude Include="..\SkeletonData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\SkeletonBounds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\SkeletonJson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -80,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Skeleton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonBounds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\SkeletonData.cpp">
@@ -124,7 +139,13 @@
     <ClCompile Include="..\Bone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\BoneData.cpp">
+    <ClCompile Include="..\BoundingBoxAttachment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EventData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\CCSkeleton.cpp">

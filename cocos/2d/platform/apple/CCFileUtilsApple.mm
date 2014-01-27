@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -38,7 +39,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static void addValueToDict(id nsKey, id nsValue, ValueMap& dict);
-static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict);
+static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict);
 
 static void addItemToArray(id item, ValueVector& array)
 {
@@ -83,43 +84,44 @@ static void addItemToArray(id item, ValueVector& array)
     }
 }
 
-static void addObjectToNSArray(Value& value, NSMutableArray *array)
+static void addObjectToNSArray(const Value& value, NSMutableArray *array)
 {
     // add string into array
     if (value.getType() == Value::Type::STRING)
     {
-        NSString *strElement = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
-        [array addObject:strElement];
+        NSString *element = [NSString stringWithCString:value.asString().c_str() encoding:NSUTF8StringEncoding];
+        [array addObject:element];
         return;
     }
     
     // add array into array
     if (value.getType() == Value::Type::VECTOR)
     {
-        NSMutableArray *arrElement = [NSMutableArray array];
+        NSMutableArray *element = [NSMutableArray array];
         
         ValueVector valueArray = value.asValueVector();
         
-        std::for_each(valueArray.begin(), valueArray.end(), [=](Value& e){
-            addObjectToNSArray(e, arrElement);
-        });
+        for (const auto &e : valueArray)
+        {
+            addObjectToNSArray(e, element);
+        }
         
-        [array addObject:arrElement];
+        [array addObject:element];
         return;
     }
     
     // add dictionary value into array
     if (value.getType() == Value::Type::MAP)
     {
-        NSMutableDictionary *dictElement = [NSMutableDictionary dictionary];
+        NSMutableDictionary *element = [NSMutableDictionary dictionary];
 
         auto valueDict = value.asValueMap();
         for (auto iter = valueDict.begin(); iter != valueDict.end(); ++iter)
         {
-            addObjectToNSDict(iter->first, iter->second, dictElement);
+            addObjectToNSDict(iter->first, iter->second, element);
         }
         
-        [array addObject:dictElement];
+        [array addObject:element];
     }
 }
 
@@ -171,7 +173,7 @@ static void addValueToDict(id nsKey, id nsValue, ValueMap& dict)
     }
 }
 
-static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDictionary *dict)
+static void addObjectToNSDict(const std::string& key, const Value& value, NSMutableDictionary *dict)
 {
     NSString *NSkey = [NSString stringWithCString:key.c_str() encoding:NSUTF8StringEncoding];
     
@@ -204,9 +206,10 @@ static void addObjectToNSDict(const std::string& key, Value& value, NSMutableDic
         
         ValueVector array = value.asValueVector();
         
-        std::for_each(array.begin(), array.end(), [=](Value& v){
+        for(const auto& v : array)
+        {
             addObjectToNSArray(v, arrElement);
-        });
+        }
 
         [dict setObject:arrElement forKey:NSkey];
         return;
@@ -220,13 +223,13 @@ static NSFileManager* s_fileManager = [NSFileManager defaultManager];
 
 FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
         s_sharedFileUtils = new FileUtilsApple();
         if(!s_sharedFileUtils->init())
         {
           delete s_sharedFileUtils;
-          s_sharedFileUtils = NULL;
+          s_sharedFileUtils = nullptr;
           CCLOG("ERROR: Could not init CCFileUtilsApple");
         }
     }
@@ -244,62 +247,62 @@ std::string FileUtilsApple::getWritablePath() const
     return strRet;
 }
 
-bool FileUtilsApple::isFileExist(const std::string& strFilePath) const
+bool FileUtilsApple::isFileExist(const std::string& filePath) const
 {
-    if(strFilePath.length() == 0)
+    if(filePath.length() == 0)
     {
         return false;
     }
 
-    bool bRet = false;
+    bool ret = false;
     
-    if (strFilePath[0] != '/')
+    if (filePath[0] != '/')
     {
         std::string path;
         std::string file;
-        size_t pos = strFilePath.find_last_of("/");
+        size_t pos = filePath.find_last_of("/");
         if (pos != std::string::npos)
         {
-            file = strFilePath.substr(pos+1);
-            path = strFilePath.substr(0, pos+1);
+            file = filePath.substr(pos+1);
+            path = filePath.substr(0, pos+1);
         }
         else
         {
-            file = strFilePath;
+            file = filePath;
         }
         
         NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:file.c_str()]
                                                              ofType:nil
                                                         inDirectory:[NSString stringWithUTF8String:path.c_str()]];
         if (fullpath != nil) {
-            bRet = true;
+            ret = true;
         }
     }
     else
     {
         // Search path is an absolute path.
-        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:strFilePath.c_str()]]) {
-            bRet = true;
+        if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:filePath.c_str()]]) {
+            ret = true;
         }
     }
     
-    return bRet;
+    return ret;
 }
 
-std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
 {
-    if (strDirectory[0] != '/')
+    if (directory[0] != '/')
     {
-        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:strFilename.c_str()]
+        NSString* fullpath = [[NSBundle mainBundle] pathForResource:[NSString stringWithUTF8String:filename.c_str()]
                                                              ofType:nil
-                                                        inDirectory:[NSString stringWithUTF8String:strDirectory.c_str()]];
+                                                        inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {
             return [fullpath UTF8String];
         }
     }
     else
     {
-        std::string fullPath = strDirectory+strFilename;
+        std::string fullPath = directory+filename;
         // Search path is an absolute path.
         if ([s_fileManager fileExistsAtPath:[NSString stringWithUTF8String:fullPath.c_str()]]) {
             return fullPath;

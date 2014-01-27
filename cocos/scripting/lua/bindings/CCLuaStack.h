@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2011 cocos2d-x.org
+ Copyright (c) 2011-2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -116,6 +117,7 @@ public:
     
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,Array& resultArray);
+    virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
 
     virtual bool handleAssert(const char *msg);
     

@@ -149,7 +149,7 @@ void FontTest::nextCallback(Object* sender)
     showFont(nextAction());
 }
 
-std::string FontTest::title()
+std::string FontTest::title() const
 {
     return "Font test";
 }

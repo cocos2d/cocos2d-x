@@ -10,15 +10,14 @@ local ArmatureTestIndex =
     TEST_COCOSTUDIO_WITH_SKELETON = 3,
     TEST_DRAGON_BONES_2_0 = 4,
     TEST_PERFORMANCE = 5,
-    TEST_PERFORMANCE_BATCHNODE = 6,
-    TEST_CHANGE_ZORDER = 7,
-    TEST_ANIMATION_EVENT = 8,
-    TEST_FRAME_EVENT     = 9,
-    TEST_PARTICLE_DISPLAY = 10,
-    TEST_USE_DIFFERENT_PICTURE = 11,
-    TEST_ANCHORPOINT = 12,
-    TEST_ARMATURE_NESTING = 13,
-    TEST_ARMATURE_NESTING_2 = 14,
+    TEST_CHANGE_ZORDER = 6,
+    TEST_ANIMATION_EVENT = 7,
+    TEST_FRAME_EVENT     = 8,
+    TEST_PARTICLE_DISPLAY = 9,
+    TEST_USE_DIFFERENT_PICTURE = 10,
+    TEST_ANCHORPOINT = 11,
+    TEST_ARMATURE_NESTING = 12,
+    TEST_ARMATURE_NESTING_2 = 13,
 }
 local armatureSceneIdx   = ArmatureTestIndex.TEST_ASYNCHRONOUS_LOADING
 
@@ -80,8 +79,6 @@ function ArmatureTestLayer.title(idx)
         return "Test Export From DragonBones version 2.0"
     elseif ArmatureTestIndex.TEST_PERFORMANCE == idx then
         return "Test Performance"
-    elseif ArmatureTestIndex.TEST_PERFORMANCE_BATCHNODE == idx then
-        return "Test Performance of using BatchNode"
     elseif ArmatureTestIndex.TEST_CHANGE_ZORDER == idx then
         return "Test Change ZOrder Of Different Armature"
     elseif ArmatureTestIndex.TEST_ANIMATION_EVENT == idx then
@@ -106,8 +103,6 @@ function ArmatureTestLayer.subTitle(idx)
         return "current percent :"
     elseif ArmatureTestIndex.TEST_PERFORMANCE == idx then
         return "Current Armature Count : "
-    elseif ArmatureTestIndex.TEST_PERFORMANCE_BATCHNODE == idx then
-        return "Current Armature Count : "
     elseif ArmatureTestIndex.TEST_PARTICLE_DISPLAY == idx then
         return "Touch to change animation"
     elseif ArmatureTestIndex.TEST_USE_DIFFERENT_PICTURE == idx then
@@ -125,7 +120,12 @@ function ArmatureTestLayer.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
         layer:creatTitleAndSubTitle(armatureSceneIdx)
     end
 
@@ -174,7 +174,7 @@ function ArmatureTestLayer:createMenu()
 end
 
 function ArmatureTestLayer.toExtensionMenu()
-    ccs.ArmatureDataManager:destoryInstance()
+    ccs.ArmatureDataManager:destroyInstance()
     local scene = CocoStudioTestMain()
     if scene ~= nil then
         cc.Director:getInstance():replaceScene(scene)
@@ -278,7 +278,12 @@ function TestAsynchronousLoading.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -301,7 +306,7 @@ function TestDirectLoading:onEnter()
     ccs.ArmatureDataManager:getInstance():removeArmatureFileInfo("armature/bear.ExportJson")
     ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("armature/bear.ExportJson")
     local armature = ccs.Armature:create("bear")
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setPosition(cc.p(VisibleRect:center()))
     self:addChild(armature)
 end
@@ -311,7 +316,13 @@ function TestDirectLoading.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+
         layer:creatTitleAndSubTitle(armatureSceneIdx)
     end
     return layer
@@ -333,7 +344,7 @@ end
 
 function TestCSWithSkeleton:onEnter()
     local armature = ccs.Armature:create("Cowboy")
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setScale(0.2)
     armature:setAnchorPoint(cc.p(0.5, 0.5))
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2))
@@ -346,7 +357,12 @@ function TestCSWithSkeleton.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
         layer:creatTitleAndSubTitle(armatureSceneIdx)
     end
 
@@ -368,7 +384,7 @@ end
 
 function TestDragonBones20:onEnter()
     local armature = ccs.Armature:create("Dragon")
-    armature:getAnimation():playByIndex(1)
+    armature:getAnimation():playWithIndex(1)
     armature:getAnimation():setSpeedScale(0.4)
     armature:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y * 0.3))
     armature:setScale(0.6)
@@ -381,7 +397,12 @@ function TestDragonBones20.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
         layer:creatTitleAndSubTitle(armatureSceneIdx)
     end
     return layer
@@ -407,7 +428,7 @@ end
 
 function TestPerformance:refreshTitle()
     local subTitleInfo = ArmatureTestLayer.subTitle(5) .. self._armatureCount
-    local label        = tolua.cast(self:getChildByTag(10001),"LabelTTF")
+    local label        = tolua.cast(self:getChildByTag(10001),"cc.LabelTTF")
     label:setString(subTitleInfo)
 end
 
@@ -423,7 +444,7 @@ function TestPerformance:addArmature(num)
     for i = 1, num do
         self._armatureCount = self._armatureCount + 1
         local armature = ccs.Armature:create("Knight_f/Knight")
-        armature:getAnimation():playByIndex(0)
+        armature:getAnimation():playWithIndex(0)
         armature:setPosition(50 + self._armatureCount * 2, 150)
         armature:setScale(0.6)
         self:addArmatureToParent(armature)
@@ -480,7 +501,12 @@ function TestPerformance.create()
         layer:createMenu()
         layer:createToExtensionMenu()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
     return layer
 end
@@ -557,7 +583,12 @@ function TestPerformanceBatchNode.create()
         layer:createMenu()
         layer:createToExtensionMenu()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
     return layer
 end
@@ -580,21 +611,21 @@ function TestChangeZorder:onEnter()
     self.currentTag = -1
 
     local armature = ccs.Armature:create("Knight_f/Knight")
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100 ))
     armature:setScale(0.6)
     self.currentTag = self.currentTag + 1
     self:addChild(armature, self.currentTag, self.currentTag)
 
     armature = ccs.Armature:create("Cowboy")
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setScale(0.24)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100))
     self.currentTag = self.currentTag + 1
     self:addChild(armature, self.currentTag, self.currentTag)
 
     armature = ccs.Armature:create("Dragon")
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setPosition(cc.p(winSize.width / 2, winSize.height / 2 - 100))
     armature:setScale(0.6)
     self.currentTag = self.currentTag + 1
@@ -602,7 +633,7 @@ function TestChangeZorder:onEnter()
 
     local function changeZorder(dt)
         local node = self:getChildByTag(self.currentTag)
-        node:setZOrder(math.random(0,1) * 3)
+        node:setLocalZOrder(math.random(0,1) * 3)
         self.currentTag = (self.currentTag + 1) % 3
     end
 
@@ -615,8 +646,13 @@ function TestChangeZorder.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
     return layer
 end
@@ -654,7 +690,7 @@ function TestAnimationEvent:onEnter()
 
     local function animationEvent(armatureBack,movementType,movementID)
         local id = movementID
-        if movementType == ccs.MovementEventType.LOOP_COMPLETE then
+        if movementType == ccs.MovementEventType.loopComplete then
             if id == "Fire" then
                 local actionToRight = cc.MoveTo:create(2, cc.p(VisibleRect:right().x - 50, VisibleRect:right().y))
                 armatureBack:stopAllActions()
@@ -680,8 +716,13 @@ function TestAnimationEvent.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
     return layer
 end
@@ -700,27 +741,32 @@ function TestFrameEvent.extend(target)
 end
 
 function TestFrameEvent:onEnter()
+    
+    local gridNode = cc.NodeGrid:create()
+
     local armature = ccs.Armature:create("HeroAnimation")
     armature:getAnimation():play("attack")
     armature:getAnimation():setSpeedScale(0.5)
     armature:setPosition(cc.p(VisibleRect:center().x - 50, VisibleRect:center().y -100))
 
     local function onFrameEvent( bone,evt,originFrameIndex,currentFrameIndex)
-        if (not self:getActionByTag(frameEventActionTag)) or (not self:getActionByTag(frameEventActionTag):isDone()) then
-            self:stopAllActions()
+        if (not gridNode:getActionByTag(frameEventActionTag)) or (not gridNode:getActionByTag(frameEventActionTag):isDone()) then
+            gridNode:stopAllActions()
+
             local action =  cc.ShatteredTiles3D:create(0.2, cc.size(16,12), 5, false)
             action:setTag(frameEventActionTag)
-            self:runAction(action)
+            gridNode:runAction(action)
         end
     end
 
     armature:getAnimation():setFrameEventCallFunc(onFrameEvent)
+    gridNode:addChild(armature)
 
-    self:addChild(armature)
+    self:addChild(gridNode)
 
     local function checkAction(dt)
-        if self:getNumberOfRunningActions() == 0 and self:getGrid() ~= nil then
-            self:setGrid(nil)
+        if gridNode:getNumberOfRunningActions() == 0 and gridNode:getGrid() ~= nil then
+            gridNode:setGrid(nil)
         end
     end
 
@@ -740,7 +786,12 @@ function TestFrameEvent.create()
         layer:createMenu()
         layer:createToExtensionMenu()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
     return layer
 end
@@ -761,11 +812,10 @@ function TestParticleDisplay.extend(target)
 end
 
 function TestParticleDisplay:onEnter()
-    self:setTouchEnabled(true)
     self.animationID = 0
 
     self.armature = ccs.Armature:create("robot")
-    self.armature:getAnimation():playByIndex(0)
+    self.armature:getAnimation():playWithIndex(0)
     self.armature:setPosition(VisibleRect:center())
     self.armature:setScale(0.48)
     self:addChild(self.armature)
@@ -775,33 +825,31 @@ function TestParticleDisplay:onEnter()
 
     local bone  = ccs.Bone:create("p1")
     bone:addDisplay(p1, 0)
-    bone:changeDisplayByIndex(0, true)
+    bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a3")
 
     bone  = ccs.Bone:create("p2")
     bone:addDisplay(p2, 0)
-    bone:changeDisplayByIndex(0, true)
+    bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a30")
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.animationID = (self.animationID + 1) % self.armature:getAnimation():getMovementCount()
-        self.armature:getAnimation():playByIndex(self.animationID)
-        return false
+        self.armature:getAnimation():playWithIndex(self.animationID)
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestParticleDisplay.create()
@@ -810,8 +858,13 @@ function TestParticleDisplay.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -833,11 +886,10 @@ function TestUseMutiplePicture.extend(target)
 end
 
 function TestUseMutiplePicture:onEnter()
-    self:setTouchEnabled(true)
     self.displayIndex = 1
 
     self.armature = ccs.Armature:create("Knight_f/Knight")
-    self.armature:getAnimation():playByIndex(0)
+    self.armature:getAnimation():playWithIndex(0)
     self.armature:setPosition(cc.p(VisibleRect:left().x + 70, VisibleRect:left().y))
     self.armature:setScale(1.2)
     self:addChild(self.armature)
@@ -859,19 +911,17 @@ function TestUseMutiplePicture:onEnter()
         self.armature:getBone("weapon"):addDisplay(skin, i - 1)
     end
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.displayIndex = (self.displayIndex + 1) % (table.getn(weapon) - 1)
-        self.armature:getBone("weapon"):changeDisplayByIndex(self.displayIndex, true)
-        return false
+        self.armature:getBone("weapon"):changeDisplayWithIndex(self.displayIndex, true)
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestUseMutiplePicture.create()
@@ -880,8 +930,13 @@ function TestUseMutiplePicture.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -904,7 +959,7 @@ function TestAnchorPoint:onEnter()
     local i = 1
     for  i = 1 , 5 do
         local armature = ccs.Armature:create("Cowboy")
-        armature:getAnimation():playByIndex(0)
+        armature:getAnimation():playWithIndex(0)
         armature:setPosition(VisibleRect:center())
         armature:setScale(0.2)
         self:addChild(armature, 0, i - 1)
@@ -923,8 +978,13 @@ function TestAnchorPoint.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -946,30 +1006,27 @@ function TestArmatureNesting.extend(target)
 end
 
 function TestArmatureNesting:onEnter()
-    self:setTouchEnabled(true)
     self.weaponIndex = 0
 
     self.armature = ccs.Armature:create("cyborg")
-    self.armature:getAnimation():playByIndex(1)
+    self.armature:getAnimation():playWithIndex(1)
     self.armature:setPosition(VisibleRect:center())
     self.armature:setScale(1.2)
     self.armature:getAnimation():setSpeedScale(0.4)
     self:addChild(self.armature)
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.weaponIndex = (self.weaponIndex + 1) % 4
-        self.armature:getBone("armInside"):getChildArmature():getAnimation():playByIndex(self.weaponIndex)
-        self.armature:getBone("armOutside"):getChildArmature():getAnimation():playByIndex(self.weaponIndex)
-        return false
+        self.armature:getBone("armInside"):getChildArmature():getAnimation():playWithIndex(self.weaponIndex)
+        self.armature:getBone("armOutside"):getChildArmature():getAnimation():playWithIndex(self.weaponIndex)
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestArmatureNesting.create()
@@ -978,8 +1035,13 @@ function TestArmatureNesting.create()
     if nil ~= layer then
         layer:createMenu()
         layer:createToExtensionMenu()
-        layer:onEnter()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -1005,7 +1067,7 @@ function Hero:changeMount(armature)
         --note
         self:retain()
 
-        self:playByIndex(0)
+        self:playWithIndex(0)
         self._mount:getBone("hero"):removeDisplay(0)
         self._mount:stopAllActions()
         self:setPosition(self._mount:getPosition())
@@ -1015,22 +1077,22 @@ function Hero:changeMount(armature)
     else
         self._mount = armature
         self:retain()
-        self:removeFromParentAndCleanup(false)
+        self:removeFromParent(false)
         local bone = armature:getBone("hero")
         bone:addDisplay(self, 0)
-        bone:changeDisplayByIndex(0, true)
+        bone:changeDisplayWithIndex(0, true)
         bone:setIgnoreMovementBoneData(true)
         self:setPosition(cc.p(0,0))
-        self:playByIndex(1)
+        self:playWithIndex(1)
         self:setScale(1)
         self:release()
     end
 end
 
-function Hero:playByIndex(index)
-    self:getAnimation():playByIndex(index)
+function Hero:playWithIndex(index)
+    self:getAnimation():playWithIndex(index)
     if nil ~= self._mount then
-        self._mount:getAnimation():playByIndex(index)
+        self._mount:getAnimation():playWithIndex(index)
     end
 end
 
@@ -1060,30 +1122,26 @@ function TestArmatureNesting2.extend(target)
 end
 
 function TestArmatureNesting2:onEnter()
-
-    self:setTouchEnabled(true)
-
-    local function onTouchesEnded(tableArray)
-        local x,y = tableArray[1],tableArray[2]
+    -- handling touch events   
+    local function onTouchEnded(touches, event)
+        local location = touches[1]:getLocation()  
         local armature = self._hero._mount and self._hero._mount  or self._hero
-        if x < armature:getPositionX() then
+        if location.x < armature:getPositionX() then
             armature:setScaleX(-1)
         else
             armature:setScaleX(1)
         end
 
-        local move = cc.MoveTo:create(2, cc.p(x,y))
+        local move = cc.MoveTo:create(2, location)
         armature:stopAllActions()
         armature:runAction(cc.Sequence:create(move))
     end
 
-    local function onTouch(eventType, tableArray)
-        if eventType == "ended" then
-            return onTouchesEnded(tableArray)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch,true)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 
     local function changeMountCallback(sender)
         self._hero:stopAllActions()
@@ -1112,7 +1170,7 @@ function TestArmatureNesting2:onEnter()
 
     self._hero = Hero.create("hero")
     self._hero._layer = self
-    self._hero:playByIndex(0)
+    self._hero:playWithIndex(0)
     self._hero:setPosition(cc.p(VisibleRect:left().x + 20, VisibleRect:left().y))
     self:addChild(self._hero)
 
@@ -1126,7 +1184,7 @@ end
 
 function TestArmatureNesting2:createMount(name,pt)
     local armature = ccs.Armature:create(name)
-    armature:getAnimation():playByIndex(0)
+    armature:getAnimation():playWithIndex(0)
     armature:setPosition(pt)
     self:addChild(armature)
     return armature
@@ -1139,7 +1197,12 @@ function TestArmatureNesting2.create()
         layer:createMenu()
         layer:createToExtensionMenu()
         layer:creatTitleAndSubTitle(armatureSceneIdx)
-        layer:onEnter()
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
     end
 
     return layer
@@ -1153,7 +1216,7 @@ local armatureSceneArr =
     TestCSWithSkeleton.create,
     TestDragonBones20.create,
     TestPerformance.create,
-    TestPerformanceBatchNode.create,
+    --TestPerformanceBatchNode.create,
     TestChangeZorder.create,
     TestAnimationEvent.create,
     TestFrameEvent.create,

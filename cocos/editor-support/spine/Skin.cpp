@@ -1,15 +1,23 @@
-/*******************************************************************************
+/******************************************************************************
+ * Spine Runtime Software License - Version 1.1
+ * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms in whole or in part, with
+ * or without modification, are permitted provided that the following conditions
+ * are met:
  * 
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
+ * 1. A Spine Essential, Professional, Enterprise, or Education License must
+ *    be purchased from Esoteric Software and the license must remain valid:
+ *    http://esotericsoftware.com/
+ * 2. Redistributions of source code must retain this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer.
+ * 3. Redistributions in binary form must reproduce this license, which is the
+ *    above copyright notice, this declaration of conditions and the following
+ *    disclaimer, in the documentation and/or other materials provided with the
+ *    distribution.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -21,22 +29,20 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
+ *****************************************************************************/
 
 #include <spine/Skin.h>
 #include <spine/extension.h>
-
-namespace spine {
 
 typedef struct _Entry _Entry;
 struct _Entry {
 	int slotIndex;
 	const char* name;
-	Attachment* attachment;
+	spAttachment* attachment;
 	_Entry* next;
 };
 
-_Entry* _Entry_create (int slotIndex, const char* name, Attachment* attachment) {
+_Entry* _Entry_create (int slotIndex, const char* name, spAttachment* attachment) {
 	_Entry* self = NEW(_Entry);
 	self->slotIndex = slotIndex;
 	MALLOC_STR(self->name, name);
@@ -45,7 +51,7 @@ _Entry* _Entry_create (int slotIndex, const char* name, Attachment* attachment) 
 }
 
 void _Entry_dispose (_Entry* self) {
-	Attachment_dispose(self->attachment);
+	spAttachment_dispose(self->attachment);
 	FREE(self->name);
 	FREE(self);
 }
@@ -53,18 +59,18 @@ void _Entry_dispose (_Entry* self) {
 /**/
 
 typedef struct {
-	Skin super;
+	spSkin super;
 	_Entry* entries;
-} _Internal;
+} _spSkin;
 
-Skin* Skin_create (const char* name) {
-	Skin* self = SUPER(NEW(_Internal));
+spSkin* spSkin_create (const char* name) {
+	spSkin* self = SUPER(NEW(_spSkin));
 	MALLOC_STR(self->name, name);
 	return self;
 }
 
-void Skin_dispose (Skin* self) {
-	_Entry* entry = SUB_CAST(_Internal, self) ->entries;
+void spSkin_dispose (spSkin* self) {
+	_Entry* entry = SUB_CAST(_spSkin, self)->entries;
 	while (entry) {
 		_Entry* nextEntry = entry->next;
 		_Entry_dispose(entry);
@@ -75,14 +81,14 @@ void Skin_dispose (Skin* self) {
 	FREE(self);
 }
 
-void Skin_addAttachment (Skin* self, int slotIndex, const char* name, Attachment* attachment) {
+void spSkin_addAttachment (spSkin* self, int slotIndex, const char* name, spAttachment* attachment) {
 	_Entry* newEntry = _Entry_create(slotIndex, name, attachment);
-	newEntry->next = SUB_CAST(_Internal, self) ->entries;
-	SUB_CAST(_Internal, self) ->entries = newEntry;
+	newEntry->next = SUB_CAST(_spSkin, self)->entries;
+	SUB_CAST(_spSkin, self)->entries = newEntry;
 }
 
-Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* name) {
-	const _Entry* entry = SUB_CAST(_Internal, self) ->entries;
+spAttachment* spSkin_getAttachment (const spSkin* self, int slotIndex, const char* name) {
+	const _Entry* entry = SUB_CAST(_spSkin, self)->entries;
 	while (entry) {
 		if (entry->slotIndex == slotIndex && strcmp(entry->name, name) == 0) return entry->attachment;
 		entry = entry->next;
@@ -90,8 +96,8 @@ Attachment* Skin_getAttachment (const Skin* self, int slotIndex, const char* nam
 	return 0;
 }
 
-const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachmentIndex) {
-	const _Entry* entry = SUB_CAST(_Internal, self) ->entries;
+const char* spSkin_getAttachmentName (const spSkin* self, int slotIndex, int attachmentIndex) {
+	const _Entry* entry = SUB_CAST(_spSkin, self)->entries;
 	int i = 0;
 	while (entry) {
 		if (entry->slotIndex == slotIndex) {
@@ -103,16 +109,14 @@ const char* Skin_getAttachmentName (const Skin* self, int slotIndex, int attachm
 	return 0;
 }
 
-void Skin_attachAll (const Skin* self, Skeleton* skeleton, const Skin* oldSkin) {
-	const _Entry *entry = SUB_CAST(_Internal, oldSkin) ->entries;
+void spSkin_attachAll (const spSkin* self, spSkeleton* skeleton, const spSkin* oldSkin) {
+	const _Entry *entry = SUB_CAST(_spSkin, oldSkin)->entries;
 	while (entry) {
-		Slot *slot = skeleton->slots[entry->slotIndex];
+		spSlot *slot = skeleton->slots[entry->slotIndex];
 		if (slot->attachment == entry->attachment) {
-			Attachment *attachment = Skin_getAttachment(self, entry->slotIndex, entry->name);
-			if (attachment) Slot_setAttachment(slot, attachment);
+			spAttachment *attachment = spSkin_getAttachment(self, entry->slotIndex, entry->name);
+			if (attachment) spSlot_setAttachment(slot, attachment);
 		}
 		entry = entry->next;
 	}
 }
-
-} // namespace spine {

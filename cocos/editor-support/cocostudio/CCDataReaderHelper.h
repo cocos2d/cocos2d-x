@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,13 +28,14 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
 #include "cocostudio/CCArmature.h"
-#include "cocostudio/CSContentJsonDictionary.h"
+#include "cocostudio/DictionaryHelper.h"
 
 #include <string>
 #include <queue>
 #include <list>
 #include <mutex>
 #include <thread>
+#include <condition_variable>
 
 namespace tinyxml2
 {
@@ -108,12 +109,12 @@ public:
      */
     ~DataReaderHelper();
 
-    void addDataFromFile(const char *filePath);
-    void addDataFromFileAsync(const char *imagePath, const char *plistPath, const char *filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
+    void addDataFromFile(const std::string& filePath);
+    void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Object *target, cocos2d::SEL_SCHEDULE selector);
 
     void addDataAsyncCallBack(float dt);
 
-    void removeConfigFile(const char *configFile);
+    void removeConfigFile(const std::string& configFile);
 public:
 
     /**
@@ -122,7 +123,7 @@ public:
      *
      * @param xmlPath The cache of the xml
      */
-    static void addDataFromCache(const char *pFileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
 
 
@@ -154,22 +155,22 @@ public:
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:
-    static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = nullptr);
+    static void addDataFromJsonCache(const std::string& fileContent, DataInfo *dataInfo = nullptr);
 
-    static ArmatureData *decodeArmature(JsonDictionary &json, DataInfo *dataInfo);
-    static BoneData *decodeBone(JsonDictionary &json, DataInfo *dataInfo);
-    static DisplayData *decodeBoneDisplay(JsonDictionary &json, DataInfo *dataInfo);
+    static ArmatureData *decodeArmature(const rapidjson::Value& json, DataInfo *dataInfo);
+    static BoneData *decodeBone(const rapidjson::Value& json, DataInfo *dataInfo);
+    static DisplayData *decodeBoneDisplay(const rapidjson::Value& json, DataInfo *dataInfo);
 
-    static AnimationData *decodeAnimation(JsonDictionary &json, DataInfo *dataInfo);
-    static MovementData *decodeMovement(JsonDictionary &json, DataInfo *dataInfo);
-    static MovementBoneData *decodeMovementBone(JsonDictionary &json, DataInfo *dataInfo);
-    static FrameData *decodeFrame(JsonDictionary &json, DataInfo *dataInfo);
+    static AnimationData *decodeAnimation(const rapidjson::Value& json, DataInfo *dataInfo);
+    static MovementData *decodeMovement(const rapidjson::Value& json, DataInfo *dataInfo);
+    static MovementBoneData *decodeMovementBone(const rapidjson::Value& json, DataInfo *dataInfo);
+    static FrameData *decodeFrame(const rapidjson::Value& json, DataInfo *dataInfo);
 
-    static TextureData *decodeTexture(JsonDictionary &json);
+    static TextureData *decodeTexture(const rapidjson::Value& json);
 
-    static ContourData *decodeContour(JsonDictionary &json);
+    static ContourData *decodeContour(const rapidjson::Value& json);
 
-    static void decodeNode(BaseData *node, JsonDictionary &json, DataInfo *dataInfo);
+    static void decodeNode(BaseData *node, const rapidjson::Value& json, DataInfo *dataInfo);
 
 protected:
 	void loadData();

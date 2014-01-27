@@ -8,8 +8,8 @@
 class TextureAtlasEncryptionDemo : public Layer
 {
 public:
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
     virtual void onEnter();
 
 protected:

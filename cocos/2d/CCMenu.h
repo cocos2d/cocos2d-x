@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -48,7 +49,7 @@ NS_CC_BEGIN
 *  - You can add MenuItem objects in runtime using addChild:
 *  - But the only accepted children are MenuItem objects
 */
-class CC_DLL Menu : public LayerRGBA
+class CC_DLL Menu : public Layer
 {
 public:
     enum class State
@@ -125,7 +126,7 @@ protected:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(NULL) {}
+    Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
     /** initializes an empty Menu */

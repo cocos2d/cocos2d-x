@@ -153,7 +153,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     schedule(schedule_selector(ParticleMainScene::step));
 }
 
-std::string ParticleMainScene::title()
+std::string ParticleMainScene::title() const
 {
     return "No title";
 }
@@ -196,24 +196,21 @@ void ParticleMainScene::createParticleSystem()
 //     }
 //     else
     {
-        particleSystem = ParticleSystemQuad::create();
+        particleSystem = ParticleSystemQuad::createWithTotalParticles(quantityParticles);
     }
     
     switch( subtestNumber)
     {
     case 1:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;
     case 2:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;            
     case 3:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;                        
 //     case 4:
@@ -223,21 +220,17 @@ void ParticleMainScene::createParticleSystem()
 //         break;
     case 4:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;
     case 5:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;            
     case 6:
         Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::A8);
-        particleSystem->initWithTotalParticles(quantityParticles);
         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
         break;                        
 //     case 8:
-//         particleSystem->initWithTotalParticles(quantityParticles);
 //         ////---- particleSystem.texture = [[TextureCache sharedTextureCache] addImage:@"fire.pvr"];
 //         particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
 //         break;
@@ -247,7 +240,6 @@ void ParticleMainScene::createParticleSystem()
         break;
     }
     addChild(particleSystem, 0, kTagParticleSystem);
-    particleSystem->release();
 
     doTest();
 
@@ -281,7 +273,7 @@ void ParticleMainScene::updateQuantityLabel()
 // ParticlePerformTest1
 //
 ////////////////////////////////////////////////////////
-std::string ParticlePerformTest1::title()
+std::string ParticlePerformTest1::title() const
 {
     char str[20] = {0};
     sprintf(str, "A (%d) size=4", subtestNumber);
@@ -351,7 +343,7 @@ void ParticlePerformTest1::doTest()
 // ParticlePerformTest2
 //
 ////////////////////////////////////////////////////////
-std::string ParticlePerformTest2::title()
+std::string ParticlePerformTest2::title() const
 {
     char str[20] = {0};
     sprintf(str, "B (%d) size=8", subtestNumber);
@@ -421,7 +413,7 @@ void ParticlePerformTest2::doTest()
 // ParticlePerformTest3
 //
 ////////////////////////////////////////////////////////
-std::string ParticlePerformTest3::title()
+std::string ParticlePerformTest3::title() const
 {
     char str[20] = {0};
     sprintf(str, "C (%d) size=32", subtestNumber);
@@ -491,7 +483,7 @@ void ParticlePerformTest3::doTest()
 // ParticlePerformTest4
 //
 ////////////////////////////////////////////////////////
-std::string ParticlePerformTest4::title()
+std::string ParticlePerformTest4::title() const
 {
     char str[20] = {0};
     sprintf(str, "D (%d) size=64", subtestNumber);

@@ -62,9 +62,9 @@ end
 
 -- LayerTestCascadingOpacityA
 local function LayerTestCascadingOpacityA()
-    local ret = createLayerDemoLayer("LayerRGBA: cascading opacity")
+    local ret = createLayerDemoLayer("Layer: cascading opacity")
     local s = cc.Director:getInstance():getWinSize()
-    local  layer1 = cc.LayerRGBA:create()
+    local  layer1 = cc.Layer:create()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
@@ -165,10 +165,10 @@ end
 
 -- LayerTestCascadingColorA
 local function LayerTestCascadingColorA()
-    local ret = createLayerDemoLayer("LayerRGBA: cascading color")
+    local ret = createLayerDemoLayer("Layer: cascading color")
 
     local s = cc.Director:getInstance():getWinSize()
-    local  layer1 = cc.LayerRGBA:create()
+    local  layer1 = cc.Layer:create()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
@@ -302,8 +302,6 @@ end
 local function LayerTest1()
     local ret = createLayerDemoLayer("ColorLayer resize (tap & move)")
 
-    ret:setTouchEnabled(true)
-
     local s = cc.Director:getInstance():getWinSize()
     local  layer = cc.LayerColor:create( cc.c4b(0xFF, 0x00, 0x00, 0x80), 200, 200)
 
@@ -316,20 +314,28 @@ local function LayerTest1()
 
         local newSize = cc.size( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
 
-        local  l = tolua.cast(ret:getChildByTag(kTagLayer), "LayerColor")
+        local  l = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
 
         l:setContentSize( newSize )
     end
 
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            updateSize(x, y)
-            return true
-        else
-            updateSize(x, y)
-        end
+    local function onTouchesMoved(touches, event)
+        local touchLocation = touches[1]:getLocation()
+
+        updateSize(touchLocation.x, touchLocation.y)
     end
-    ret:registerScriptTouchHandler(onTouchEvent)
+
+    local function onTouchesBegan(touches, event)
+        onTouchesMoved(touches, event)
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
+
     return ret
 end
 
@@ -389,7 +395,7 @@ local function LayerTestBlend()
     local blend = true
 
     local function newBlend(dt)
-        local layer = tolua.cast(ret:getChildByTag(kTagLayer), "LayerColor")
+        local layer = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
 
         local src = 0
         local dst = 0
@@ -430,8 +436,6 @@ local function LayerGradient()
     local  layer1 = cc.LayerGradient:create(cc.c4b(255,0,0,255), cc.c4b(0,255,0,255), cc.p(0.9, 0.9))
     ret:addChild(layer1, 0, kTagLayer)
 
-    ret:setTouchEnabled(true)
-
     local label1 = cc.LabelTTF:create("Compressed Interpolation: Enabled", "Marker Felt", 26)
     local label2 = cc.LabelTTF:create("Compressed Interpolation: Disabled", "Marker Felt", 26)
     local item1 = cc.MenuItemLabel:create(label1)
@@ -441,7 +445,7 @@ local function LayerGradient()
 
     local function toggleItem(sender)
         -- cclog("toggleItem")
-        local gradient = tolua.cast(ret:getChildByTag(kTagLayer), "LayerGradient")
+        local gradient = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerGradient")
         gradient:setCompressedInterpolation(not gradient:isCompressedInterpolation())
     end
 
@@ -452,22 +456,23 @@ local function LayerGradient()
     local s = cc.Director:getInstance():getWinSize()
     menu:setPosition(cc.p(s.width / 2, 100))
 
-    local function onTouchEvent(eventType, x, y)
-        if eventType == "began" then
-            return true
-        elseif eventType == "moved" then
-            local s = cc.Director:getInstance():getWinSize()
-            local start = cc.p(x, y)
-            local movingPos = cc.p(s.width/2,s.height/2)
-            local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
-            diff = cc.pNormalize(diff)
+    local function onTouchesMoved(touches, event)
+        local s = cc.Director:getInstance():getWinSize()
+        local start = touches[1]:getLocation()
+        local movingPos = cc.p(s.width/2,s.height/2)
+        local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
+        diff = cc.pNormalize(diff)
 
-            local gradient = tolua.cast(ret:getChildByTag(1), "LayerGradient")
-            gradient:setVector(diff)
-        end
+        local gradient = tolua.cast(ret:getChildByTag(1), "cc.LayerGradient")
+        gradient:setVector(diff)
     end
 
-    ret:registerScriptTouchHandler(onTouchEvent)
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+
+    local eventDispatcher = ret:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, ret)
+
     return ret
 end
 
@@ -487,7 +492,7 @@ local function LayerIgnoreAnchorPointPos()
     l:setPosition(cc.p( s.width/2, s.height/2))
 
     local move = cc.MoveBy:create(2, cc.p(100,2))
-    local  back = tolua.cast(move:reverse(), "MoveBy")
+    local  back = tolua.cast(move:reverse(), "cc.MoveBy")
     local seq = cc.Sequence:create(move, back)
     l:runAction(cc.RepeatForever:create(seq))
     ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
@@ -564,7 +569,7 @@ local function LayerIgnoreAnchorPointScale()
 
 
     local scale = cc.ScaleBy:create(2, 2)
-    local  back = tolua.cast(scale:reverse(), "ScaleBy")
+    local  back = tolua.cast(scale:reverse(), "cc.ScaleBy")
     local seq = cc.Sequence:create(scale, back)
 
     l:runAction(cc.RepeatForever:create(seq))

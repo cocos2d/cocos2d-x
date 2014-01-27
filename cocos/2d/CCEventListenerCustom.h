@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -70,6 +70,8 @@ protected:
     bool init(ListenerID listenerId, std::function<void(EventCustom*)> callback);
     
     std::function<void(EventCustom*)> _onCustomEvent;
+    
+    friend class LuaEventListenerCustom;
 };
 
 NS_CC_END

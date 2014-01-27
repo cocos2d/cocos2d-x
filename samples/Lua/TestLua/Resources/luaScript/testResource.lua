@@ -35,3 +35,7 @@ s_AtlasTest           = "Images/atlastest.png"
 -- tilemaps resource
 s_TilesPng            = "TileMaps/tiles.png"
 s_LevelMapTga         = "TileMaps/levelmap.tga"
+
+-- spine test resource
+s_pPathSpineBoyJson       = "spine/spineboy.json"
+s_pPathSpineBoyAtlas       = "spine/spineboy.atlas"

@@ -12,17 +12,22 @@ LUA_SAMPLES = ['hellolua', 'testlua']
 JSB_SAMPLES = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
-
-def usage():
-
-    print """%s [-n ndk-build-parameter] [-p android-platform] [-b build-mode] target.
-
-Valid android-platform are:[10|11|12|13|14|15|16|17]
-Valid build-mode are:[debug|release]
-Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon
-                   |crystalcraze|moonwarriors|testjavascript|watermelonwithme]
-
-You can use [all|cpp|lua|jsb], to build all, or all the C++, or all the Lua, or all the JavaScript samples respectevely.""" % sys.argv[0]
+def get_num_of_cpu():
+	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
+	'''
+	try:
+		platform = sys.platform
+		if platform == 'win32':
+			if 'NUMBER_OF_PROCESSORS' in os.environ:
+				return int(os.environ['NUMBER_OF_PROCESSORS'])
+			else:
+				return 1
+		else:
+			from numpy.distutils import cpuinfo
+			return cpuinfo.cpu._getNCPUs()
+	except Exception:
+		print "Can't know cpuinfo, use default 1 cpu"
+		return 1
 
 def check_environment_variables():
     ''' Checking the environment NDK_ROOT, which will be used for building
@@ -106,10 +111,12 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
     else:
         ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
 
+    num_of_cpu = get_num_of_cpu()
     if ndk_build_param == None:
-        command = '%s -C %s %s' % (ndk_path, app_android_root, ndk_module_path)
+        command = '%s -j%d -C %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_module_path)
     else:
-        command = '%s -C %s %s %s' % (ndk_path, app_android_root, ndk_build_param, ndk_module_path)
+        command = '%s -j%d -C %s %s %s' % (ndk_path, num_of_cpu, app_android_root, ndk_build_param, ndk_module_path)
+    print command
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
@@ -253,14 +260,44 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 if __name__ == '__main__':
 
     #parse the params
-    parser = OptionParser()
-    parser.add_option("-n", "--ndk", dest="ndk_build_param", help='parameter for ndk-build')
-    parser.add_option("-p", "--platform", dest="android_platform", help='parameter for android-update')
-    parser.add_option("-b", "--build", dest="build_mode", help='the build mode for java project,debug or release.Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
+    usage = """
+    This script is mainy used for building samples built-in with cocos2d-x.
+    
+    Usage: %prog [options] target
+
+    Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]. You can combine them arbitrarily with a whitespace among two valid targets.
+
+    You can use [all|cpp|lua|jsb], to build all the samples, or all the c++ samples, or all the lua samples, or all the jsb samples respectevely.
+
+    cpp  = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
+    lua = ['hellolua', 'testlua']
+    jsb = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
+    all  = cpp + lua + jsb  // be careful with the all target, it may took a very long time to compile all the projects, do it under your own risk.
+
+    If you are new to cocos2d-x, I recommend you start with hellocpp,hellolua or testjavascript.
+
+    You can combine these targets like this:
+
+    //1. to build simplegame and assetsmanager 
+    python android-build.py -p 10 simplegame assetsmanager
+
+    //2. to build hellolua and all the jsb samples
+    python android-build.py -p 19 hellolua jsb
+
+    Note: You should install ant to generate apk while building the andriod samples. But it is optional. You can generate apk with eclipse.
+    """
+
+    parser = OptionParser(usage=usage)
+    parser.add_option("-n", "--ndk", dest="ndk_build_param", 
+    help='Parameter for ndk-build')
+    parser.add_option("-p", "--platform", dest="android_platform", 
+    help='Parameter for android-update. Without the parameter,the script just build dynamic library for the projects. Valid android-platform are:[10|11|12|13|14|15|16|17|18|19]')
+    parser.add_option("-b", "--build", dest="build_mode", 
+    help='The build mode for java project,debug[default] or release. Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
 
     if len(args) == 0:
-        usage()
+        parser.print_help()
     else:
         try:
             build_samples(args, opts.ndk_build_param,opts.android_platform,opts.build_mode)

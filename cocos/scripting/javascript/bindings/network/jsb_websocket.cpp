@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "ScriptingCore.h"
 #include "cocos2d_specifics.hpp"
 
-using namespace network;
+using namespace cocos2d::network;
 
 /*
  [Constructor(in DOMString url, in optional DOMString protocols)]

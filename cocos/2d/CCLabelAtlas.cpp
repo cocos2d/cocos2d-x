@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,16 +43,31 @@ NS_CC_BEGIN
 
 //CCLabelAtlas - Creation & Init
 
+LabelAtlas* LabelAtlas::create()
+{
+    LabelAtlas* ret = new LabelAtlas();
+    if (ret)
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(ret);
+    }
+    
+    return ret;
+}
+
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    LabelAtlas *pRet = new LabelAtlas();
-    if(pRet && pRet->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
+    LabelAtlas* ret = new LabelAtlas();
+    if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
@@ -113,7 +129,7 @@ bool LabelAtlas::initWithString(const std::string& theString, const std::string&
 //CCLabelAtlas - Atlas generation
 void LabelAtlas::updateAtlasValues()
 {
-    auto n = _string.length();
+    ssize_t n = _string.length();
 
     const unsigned char *s = (unsigned char*)_string.c_str();
 
@@ -130,7 +146,7 @@ void LabelAtlas::updateAtlasValues()
 
     CCASSERT(n <= _textureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     V3F_C4B_T2F_Quad* quads = _textureAtlas->getQuads();
-    for(int i = 0; i < n; i++) {
+    for(ssize_t i = 0; i < n; i++) {
 
         unsigned char a = s[i] - _mapStartChar;
         float row = (float) (a % _itemsPerRow);
@@ -178,7 +194,7 @@ void LabelAtlas::updateAtlasValues()
     }
     if (n > 0 ){
         _textureAtlas->setDirty(true);
-        auto totalQuads = _textureAtlas->getTotalQuads();
+        ssize_t totalQuads = _textureAtlas->getTotalQuads();
         if (n > totalQuads) {
             _textureAtlas->increaseTotalQuadsWith(static_cast<int>(n - totalQuads));
         }
@@ -188,10 +204,10 @@ void LabelAtlas::updateAtlasValues()
 //CCLabelAtlas - LabelProtocol
 void LabelAtlas::setString(const std::string &label)
 {
-    auto len = label.size();
+    ssize_t len = label.size();
     if (len > _textureAtlas->getTotalQuads())
     {
-        _textureAtlas->resizeCapacity(static_cast<int>(len));
+        _textureAtlas->resizeCapacity(len);
     }
     _string.clear();
     _string = label;
@@ -201,7 +217,7 @@ void LabelAtlas::setString(const std::string &label)
 
     this->setContentSize(s);
 
-    _quadsToDraw = static_cast<int>(len);
+    _quadsToDraw = len;
 }
 
 const std::string& LabelAtlas::getString(void) const

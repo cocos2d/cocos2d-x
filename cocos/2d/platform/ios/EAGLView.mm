@@ -251,7 +251,7 @@ static CCEAGLView *__view = 0;
 - (void) dealloc
 {
     [renderer_ release];
-    self.keyboardShowNotification = NULL; // implicit release
+    self.keyboardShowNotification = nullptr; // implicit release
     [super dealloc];
 }
 
@@ -861,7 +861,7 @@ static CCEAGLView *__view = 0;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
-    [UIView beginAnimations:nil context:NULL];
+    [UIView beginAnimations:nil context:nullptr];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];

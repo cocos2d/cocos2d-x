@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,9 @@ THE SOFTWARE.
 #ifndef __CCSKIN_H__
 #define __CCSKIN_H__
 
+#include "CCSprite.h"
+#include "renderer/CCQuadCommand.h"
+
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCBone.h"
 
@@ -34,8 +37,8 @@ class Skin : public cocos2d::Sprite
 {
 public:
     static Skin *create();
-    static Skin *createWithSpriteFrameName(const char *pszSpriteFrameName);
-    static Skin *create(const char *pszFileName);
+    static Skin *createWithSpriteFrameName(const std::string& pszSpriteFrameName);
+    static Skin *create(const std::string& pszFileName);
 public:
     /**
      *  @js ctor
@@ -48,8 +51,11 @@ public:
     void updateArmatureTransform();
     void updateTransform() override;
 
-    cocos2d::AffineTransform getNodeToWorldTransform() const override;
-    cocos2d::AffineTransform getNodeToWorldTransformAR() const;
+    kmMat4 getNodeToWorldTransform() const override;
+    kmMat4 getNodeToWorldTransformAR() const;
+    
+    virtual void draw() override;
+    
     /**
      *  @js NA
      *  @lua NA
@@ -69,8 +75,9 @@ protected:
     BaseData _skinData;
     Bone *_bone;
     Armature *_armature;
-    cocos2d::AffineTransform _skinTransform;
+    kmMat4 _skinTransform;
     std::string _displayName;
+    cocos2d::QuadCommand _quadCommand;     // quad command
 };
 
 }

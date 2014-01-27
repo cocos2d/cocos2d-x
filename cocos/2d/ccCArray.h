@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2007      Scott Lembcke
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -108,7 +109,7 @@ void ccArrayRemoveAllObjects(ccArray *arr);
 
 /** Removes object at specified index and pushes back all subsequent objects.
  Behavior undefined if index outside [0, num-1]. */
-void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool bReleaseObj = true);
+void ccArrayRemoveObjectAtIndex(ccArray *arr, ssize_t index, bool releaseObj = true);
 
 /** Removes object at specified index and fills the gap with the last object,
  thereby avoiding the need to push back subsequent objects.
@@ -119,7 +120,7 @@ void ccArrayFastRemoveObject(ccArray *arr, Object* object);
 
 /** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
-void ccArrayRemoveObject(ccArray *arr, Object* object, bool bReleaseObj = true);
+void ccArrayRemoveObject(ccArray *arr, Object* object, bool releaseObj = true);
 
 /** Removes from arr all objects in minusArr. For each object in minusArr, the
  first matching instance in arr will be removed. */

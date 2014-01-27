@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,9 +26,10 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
+IMPLEMENT_CLASS_COMPONENT_INFO(ComController)
 ComController::ComController(void)
 {
-    _name = "Constoller";
+    _name = "CCComController";
 }
 
 ComController::~ComController(void)

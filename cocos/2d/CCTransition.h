@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,6 +44,7 @@ NS_CC_BEGIN
 
 class ActionInterval;
 class Node;
+class NodeGrid;
 
 /** @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
@@ -643,13 +645,16 @@ public :
      * @lua NA
      */
     virtual void onEnter() override;
+    virtual void onExit() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
+    virtual void draw() override;
 
 protected:
     TransitionTurnOffTiles();
     virtual ~TransitionTurnOffTiles();
 
     virtual void sceneOrder() override;
+    NodeGrid* _outSceneProxy;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionTurnOffTiles);
@@ -674,11 +679,13 @@ public:
      */
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
-
+    virtual void onExit() override;
+    virtual void draw() override;
 protected:
     TransitionSplitCols();
     virtual ~TransitionSplitCols();
-
+    void switchTargetToInscene();
+    NodeGrid* _gridProxy;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSplitCols);
 };
@@ -723,12 +730,15 @@ public:
      */
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
-
+    virtual void onExit() override;
+    virtual void draw() override;
 protected:
     TransitionFadeTR();
     virtual ~TransitionFadeTR();
 
     virtual void sceneOrder();
+
+    NodeGrid* _outSceneProxy;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFadeTR);

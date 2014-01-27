@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -47,7 +48,7 @@ AnimationFrame* AnimationFrame::create(SpriteFrame* spriteFrame, float delayUnit
 }
 
 AnimationFrame::AnimationFrame()
-: _spriteFrame(NULL)
+: _spriteFrame(nullptr)
 , _delayUnits(0.0f)
 {
 
@@ -85,28 +86,28 @@ AnimationFrame* AnimationFrame::clone() const
 
 Animation* Animation::create(void)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->init();
-    pAnimation->autorelease();
+    Animation *animation = new Animation();
+    animation->init();
+    animation->autorelease();
 
-    return pAnimation;
+    return animation;
 } 
 
 Animation* Animation::createWithSpriteFrames(const Vector<SpriteFrame*>& frames, float delay/* = 0.0f*/)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->initWithSpriteFrames(frames, delay);
-    pAnimation->autorelease();
+    Animation *animation = new Animation();
+    animation->initWithSpriteFrames(frames, delay);
+    animation->autorelease();
 
-    return pAnimation;
+    return animation;
 }
 
 Animation* Animation::create(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops /* = 1 */)
 {
-    Animation *pAnimation = new Animation();
-    pAnimation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
-    pAnimation->autorelease();
-    return pAnimation;
+    Animation *animation = new Animation();
+    animation->initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
+    animation->autorelease();
+    return animation;
 }
 
 bool Animation::init()
@@ -175,14 +176,14 @@ void Animation::addSpriteFrameWithFile(const std::string& filename)
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     Rect rect = Rect::ZERO;
     rect.size = texture->getContentSize();
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(texture, rect);
-    addSpriteFrame(pFrame);
+    SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+    addSpriteFrame(frame);
 }
 
 void Animation::addSpriteFrameWithTexture(Texture2D *pobTexture, const Rect& rect)
 {
-    SpriteFrame *pFrame = SpriteFrame::createWithTexture(pobTexture, rect);
-    addSpriteFrame(pFrame);
+    SpriteFrame *frame = SpriteFrame::createWithTexture(pobTexture, rect);
+    addSpriteFrame(frame);
 }
 
 float Animation::getDuration(void) const

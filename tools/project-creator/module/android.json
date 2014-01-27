@@ -1,0 +1,18 @@
+{
+    "rename":               [],
+    "remove":               ["assets",
+                             "bin",
+                             "libs",
+                             "gen",
+                             "obj",
+                             "wsocket.c",
+                             "wsocket.h"],
+    "replace_package_name": ["AndroidManifest.xml"],
+    "replace_project_name": [".project",
+                             ".cproject",
+                             "AndroidManifest.xml",
+                             "build.xml",
+                             "build_native.sh",
+                             "build_native.cmd",
+                             "res/values/strings.xml"]
+}

@@ -19,8 +19,8 @@ class PerformceAllocScene : public Scene
 {
 public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
     virtual void updateQuantityOfNodes() = 0;
 
     const char* profilerName();
@@ -56,8 +56,8 @@ public:
     virtual void update(float dt);
     virtual const char* testName();
 
-    std::string title();
-    std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class NodeDeallocTest : public PerformceAllocScene
@@ -70,8 +70,8 @@ public:
     virtual void update(float dt);
     virtual const char* testName();
 
-    std::string title();
-    std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class SpriteCreateEmptyTest : public PerformceAllocScene
@@ -84,8 +84,8 @@ public:
     virtual void update(float dt);
     virtual const char* testName();
 
-    std::string title();
-    std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class SpriteCreateTest : public PerformceAllocScene
@@ -98,8 +98,8 @@ public:
     virtual void update(float dt);
     virtual const char* testName();
 
-    std::string title();
-    std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class SpriteDeallocTest : public PerformceAllocScene
@@ -112,8 +112,8 @@ public:
     virtual void update(float dt);
     virtual const char* testName();
 
-    std::string title();
-    std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 

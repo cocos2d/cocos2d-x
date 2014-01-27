@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2012 		cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -50,6 +51,9 @@ extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
 extern CC_DLL const GLchar * ccPositionTextureColor_frag;
 extern CC_DLL const GLchar * ccPositionTextureColor_vert;
 
+extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_frag;
+extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_vert;
+
 extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
 
 extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
@@ -57,6 +61,18 @@ extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
 
 extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
 extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
+
+extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_frag;
+extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_vert;
+
+extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;
+extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_vert;
+
+extern CC_DLL const GLchar * ccLabelDistanceFieldOutline_frag;
+extern CC_DLL const GLchar * ccLabelDistanceFieldOutline_vert;
+
+extern CC_DLL const GLchar * ccLabelDistanceFieldShadow_frag;
+extern CC_DLL const GLchar * ccLabelDistanceFieldShadow_vert;
 
 extern CC_DLL const GLchar * ccExSwitchMask_frag;
 

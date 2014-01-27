@@ -33,6 +33,7 @@
 #include "CCControl.h"
 #include "CCInvocation.h"
 #include "CCScale9Sprite.h"
+#include "CCMap.h"
 
 NS_CC_EXT_BEGIN
 
@@ -74,7 +75,7 @@ public:
      *
      * @return The title for the specified state.
      */
-    virtual String* getTitleForState(State state);
+    virtual std::string getTitleForState(State state);
 
     /**
      * Sets the title string to use for the specified state.
@@ -85,7 +86,7 @@ public:
      * @param state The state that uses the specified title. The values are described
      * in "CCControlState".
      */
-    virtual void setTitleForState(String* title, State state);
+    virtual void setTitleForState(const std::string& title, State state);
 
     /**
      * Returns the title color used for a state.
@@ -186,6 +187,9 @@ public:
 	virtual void setColor(const Color3B&) override;
 
 
+    const std::string& getCurrentTitle() const { return _currentTitle; };
+    std::string getCurrentTitle() { return _currentTitle; };
+    
 protected:
     /**
      * @js ctor
@@ -207,7 +211,7 @@ protected:
     bool _doesAdjustBackgroundImage;
 
     /** The current title that is displayed on the button. */
-    CC_SYNTHESIZE_READONLY(String*, _currentTitle, CurrentTitle);
+    std::string _currentTitle;
 
     /** The current color used to display the title. */
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(Color3B, _currentTitleColor, CurrentTitleColor);
@@ -223,17 +227,16 @@ protected:
 
     /** Adjust the button zooming on touchdown. Default value is YES. */
     CC_PROPERTY(bool, _zoomOnTouchDown, ZoomOnTouchDown);
+    /** Scale ratio button on touchdown. Default value 1.1f */
+    CC_SYNTHESIZE(float, _scaleRatio, ScaleRatio);
 
     CC_PROPERTY_PASS_BY_REF(Point, _labelAnchorPoint, LabelAnchorPoint);
 
-    // <ControlState, String*>
-    CC_SYNTHESIZE_RETAIN(Dictionary*, _titleDispatchTable, TitleDispatchTable);
-    // <ControlState, Color3bObject*>
-    CC_SYNTHESIZE_RETAIN(Dictionary*, _titleColorDispatchTable, TitleColorDispatchTable);
-    // <ControlState, Node*>
-    CC_SYNTHESIZE_RETAIN(Dictionary*, _titleLabelDispatchTable, TitleLabelDispatchTable);
-    // <ControlState, Scale9Sprite*>
-    CC_SYNTHESIZE_RETAIN(Dictionary*, _backgroundSpriteDispatchTable, BackgroundSpriteDispatchTable);
+    std::unordered_map<int, std::string> _titleDispatchTable;
+    std::unordered_map<int, Color3B> _titleColorDispatchTable;
+
+    Map<int, Node*> _titleLabelDispatchTable;
+    Map<int, Scale9Sprite*> _backgroundSpriteDispatchTable;
 
     /* Define the button margin for Top/Bottom edge */
     CC_SYNTHESIZE_READONLY(int, _marginV, VerticalMargin);

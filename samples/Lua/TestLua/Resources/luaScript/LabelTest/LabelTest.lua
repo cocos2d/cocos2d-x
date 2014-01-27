@@ -32,11 +32,11 @@ function LabelAtlasTest.step(dt)
     local string = string.format("%2.2f Test", m_time)
 
     local label1_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "LabelAtlas")
+    local label1 = tolua.cast(label1_origin, "cc.LabelAtlas")
     label1:setString(string)	--
 
     local label2_origin = LabelAtlasTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "LabelAtlas")
+    local label2 = tolua.cast(label2_origin, "cc.LabelAtlas")
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -88,11 +88,11 @@ function LabelAtlasColorTest.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test", m_time)
     local label1_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite1)
-    local label1 = tolua.cast(label1_origin, "LabelAtlas")
+    local label1 = tolua.cast(label1_origin, "cc.LabelAtlas")
     label1:setString(string)
 
     local label2_origin = LabelAtlasColorTest.layer:getChildByTag(kTagSprite2)
-    local label2 = tolua.cast(label2_origin, "LabelAtlas")
+    local label2 = tolua.cast(label2_origin, "cc.LabelAtlas")
     string = string.format("%d", m_time)
 
     label2:setString(string)
@@ -199,7 +199,7 @@ function Atlas3.create()
     label2:setColor(cc.c3b(255, 0, 0 ))
     layer:addChild(label2, 0, kTagBitmapAtlas2)
 
-    label2:runAction( tolua.cast(repeatAction:clone(), "Action") )
+    label2:runAction( tolua.cast(repeatAction:clone(), "cc.Action") )
 
     local label3 = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest2.fnt")
     -- testing anchors
@@ -223,13 +223,13 @@ function Atlas3.step(dt)
     m_time = m_time + dt
     local string = string.format("%2.2f Test j", m_time)
 
-    local label1 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas1), "LabelBMFont")
+    local label1 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas1), "cc.LabelBMFont")
     label1:setString(string)
 
-    local label2 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas2), "LabelBMFont")
+    local label2 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelBMFont")
     label2:setString(string)
 
-    local label3 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas3), "LabelBMFont")
+    local label3 = tolua.cast(Atlas3.layer:getChildByTag(kTagBitmapAtlas3), "cc.LabelBMFont")
     label3:setString(string)
 end
 
@@ -309,7 +309,7 @@ function Atlas4.create()
     label2:setPosition( cc.p(s.width/2.0, 80) )
 
     local lastChar = label2:getChildByTag(3)
-    lastChar:runAction(tolua.cast( rot_4ever:clone(), "Action" ))
+    lastChar:runAction(tolua.cast( rot_4ever:clone(), "cc.Action" ))
 
     layer:registerScriptHandler(Atlas4.onNodeEvent)
 
@@ -329,7 +329,7 @@ function Atlas4.step(dt)
 
     local string = string.format("%04.1f", m_time)
 
-    local label1 = tolua.cast(Atlas4.layer:getChildByTag(kTagBitmapAtlas2), "LabelBMFont")
+    local label1 = tolua.cast(Atlas4.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelBMFont")
     label1:setString(string)
 end
 
@@ -592,9 +592,9 @@ function LabelsEmpty.create()
 end
 
 function LabelsEmpty.updateStrings(dt)
-    local label1 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1), "LabelBMFont")
-    local label2 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2), "LabelTTF")
-    local label3 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3), "LabelAtlas")
+    local label1 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas1), "cc.LabelBMFont")
+    local label2 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas2), "cc.LabelTTF")
+    local label3 = tolua.cast(LabelsEmpty.layer:getChildByTag(kTagBitmapAtlas3), "cc.LabelAtlas")
 
     if( LabelsEmpty.setEmpty == false) then
         label1:setString("not empty")
@@ -992,8 +992,6 @@ function BitmapFontMultiLineAlignment.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
 
-    layer:setTouchEnabled(true)
-
     -- ask director the the window size
     local size = cc.Director:getInstance():getWinSize()
 
@@ -1068,7 +1066,44 @@ function BitmapFontMultiLineAlignment.create()
     layer:addChild(stringMenu)
     layer:addChild(alignmentMenu)
     layer:registerScriptHandler(BitmapFontMultiLineAlignment.onNodeEvent)
-    layer:registerScriptTouchHandler(BitmapFontMultiLineAlignment.onTouchEvent)
+
+    local function onTouchesBegan(touches, event)
+        local location = touches[1]:getLocationInView()
+        if cc.rectContainsPoint(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), location) then
+            BitmapFontMultiLineAlignment._drag = true
+            BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
+        end
+    end
+
+    local function onTouchesMoved(touches, event)
+        if BitmapFontMultiLine._drag == false then
+            return
+        end
+        local location = touches[1]:getLocationInView()
+        local winSize = cc.Director:getInstance():getWinSize()
+        BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
+            math.max(math.min(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+            BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
+
+        local labelWidth = math.abs(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionX() - BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
+
+        BitmapFontMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth) 
+    end
+
+    local  function onTouchesEnded(touch, event)
+        BitmapFontMultiLineAlignment._drag = false
+        BitmapFontMultiLineAlignment.snapArrowsToEdge()
+        BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
+    end
+
+    local listener = cc.EventListenerTouchAllAtOnce:create()    
+    listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+    listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+    listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+
+    local eventDispatcher = layer:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
+
     return layer
 end
 
@@ -1083,7 +1118,7 @@ end
 
 
 function BitmapFontMultiLineAlignment.stringChanged(tag, sender)
-    local item = tolua.cast(sender, "MenuItemFont")
+    local item = tolua.cast(sender, "cc.MenuItemFont")
     item:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
@@ -1101,7 +1136,7 @@ end
 
 function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     -- cclog("BitmapFontMultiLineAlignment.alignmentChanged, tag:"..tag)
-    local item = tolua.cast(sender, "MenuItemFont")
+    local item = tolua.cast(sender, "cc.MenuItemFont")
     item:setColor(cc.c3b(255, 0, 0))
     BitmapFontMultiLineAlignment._pLastAlignmentItem:setColor(cc.c3b(255, 255, 255))
     BitmapFontMultiLineAlignment._pLastAlignmentItem = item
@@ -1116,35 +1151,6 @@ function BitmapFontMultiLineAlignment.alignmentChanged(tag, sender)
     end
 
     BitmapFontMultiLineAlignment.snapArrowsToEdge()
-end
-
-function BitmapFontMultiLineAlignment.onTouchEvent(eventType, x, y)
-    -- cclog("type:"..eventType.."["..x..","..y.."]")
-    if eventType == "began" then
-        if cc.rectContainsPoint(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getBoundingBox(), cc.p(x, y)) then
-            BitmapFontMultiLineAlignment._drag = true
-            BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(true)
-            return true
-        end
-    elseif eventType == "ended" then
-        BitmapFontMultiLineAlignment._drag = false
-        BitmapFontMultiLineAlignment.snapArrowsToEdge()
-        BitmapFontMultiLineAlignment._pArrowsBarShouldRetain:setVisible(false)
-    elseif eventType == "moved" then
-        if BitmapFontMultiLine._drag == false then
-            return
-        end
-
-        local winSize = cc.Director:getInstance():getWinSize()
-        BitmapFontMultiLineAlignment._pArrowsShouldRetain:setPosition(
-            math.max(math.min(x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-            BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionY())
-
-        local labelWidth = math.abs(BitmapFontMultiLineAlignment._pArrowsShouldRetain:getPositionX() - BitmapFontMultiLineAlignment._pLabelShouldRetain:getPositionX()) * 2
-
-        BitmapFontMultiLineAlignment._pLabelShouldRetain:setWidth(labelWidth)
-        
-    end
 end
 
 function BitmapFontMultiLineAlignment.snapArrowsToEdge()

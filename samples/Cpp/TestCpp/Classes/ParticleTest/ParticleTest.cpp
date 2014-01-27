@@ -27,7 +27,7 @@ void DemoFirework::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFirework::title()
+std::string DemoFirework::title() const
 {
     return "ParticleFireworks";
 }
@@ -53,7 +53,7 @@ void DemoFire::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFire::title()
+std::string DemoFire::title() const
 {
     return "ParticleFire";
 }
@@ -76,7 +76,7 @@ void DemoSun::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSun::title()
+std::string DemoSun::title() const
 {
     return "ParticleSun";
 }
@@ -99,7 +99,7 @@ void DemoGalaxy::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoGalaxy::title()
+std::string DemoGalaxy::title() const
 {
     return "ParticleGalaxy";
 }
@@ -121,7 +121,7 @@ void DemoFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoFlower::title()
+std::string DemoFlower::title() const
 {
     return "ParticleFlower";
 }
@@ -204,7 +204,7 @@ void DemoBigFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoBigFlower::title()
+std::string DemoBigFlower::title() const
 {
     return "ParticleBigFlower";
 }
@@ -288,7 +288,7 @@ void DemoRotFlower::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRotFlower::title()
+std::string DemoRotFlower::title() const
 {
     return "ParticleRotFlower";
 }
@@ -311,7 +311,7 @@ void DemoMeteor::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoMeteor::title()
+std::string DemoMeteor::title() const
 {
     return "ParticleMeteor";
 }
@@ -334,7 +334,7 @@ void DemoSpiral::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSpiral::title()
+std::string DemoSpiral::title() const
 {
     return "ParticleSpiral";
 }
@@ -359,7 +359,7 @@ void DemoExplosion::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoExplosion::title()
+std::string DemoExplosion::title() const
 {
     return "ParticleExplosion";
 }
@@ -384,7 +384,7 @@ void DemoSmoke::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSmoke::title()
+std::string DemoSmoke::title() const
 {
     return "ParticleSmoke";
 }
@@ -432,7 +432,7 @@ void DemoSnow::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoSnow::title()
+std::string DemoSnow::title() const
 {
     return "ParticleSnow";
 }
@@ -459,7 +459,7 @@ void DemoRain::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRain::title()
+std::string DemoRain::title() const
 {
     return "ParticleRain";
 }
@@ -544,7 +544,7 @@ void DemoModernArt::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoModernArt::title()
+std::string DemoModernArt::title() const
 {
     return "Varying size";
 }
@@ -573,7 +573,7 @@ void DemoRing::onEnter()
     setEmitterPosition();
 }
 
-std::string DemoRing::title()
+std::string DemoRing::title() const
 {
     return "Ring Demo";
 }
@@ -616,7 +616,7 @@ void ParallaxParticle::onEnter()
     p->runAction(RepeatForever::create(seq));
 }
 
-std::string ParallaxParticle::title()
+std::string ParallaxParticle::title() const
 {
     return "Parallax + Particles";
 }
@@ -700,7 +700,7 @@ void RadiusMode1::onEnter()
     _emitter->setBlendAdditive(false);
 }
 
-std::string RadiusMode1::title()
+std::string RadiusMode1::title() const
 {
     return "Radius Mode: Spiral";
 }
@@ -784,7 +784,7 @@ void RadiusMode2::onEnter()
     _emitter->setBlendAdditive(false);
 }
 
-std::string RadiusMode2::title()
+std::string RadiusMode2::title() const
 {
     return "Radius Mode: Semi Circle";
 }
@@ -871,12 +871,12 @@ void Issue704::onEnter()
     _emitter->runAction(RepeatForever::create(rot));
 }
 
-std::string Issue704::title()
+std::string Issue704::title() const
 {
     return "Issue 704. Free + Rot";
 }
 
-std::string Issue704::subtitle()
+std::string Issue704::subtitle() const
 {
     return "Emitted particles should not rotate";
 }
@@ -911,12 +911,12 @@ void Issue870::updateQuads(float dt)
     system->setTextureWithRect(_emitter->getTexture(), rect);
 }
 
-std::string Issue870::title()
+std::string Issue870::title() const
 {
     return "Issue 870. SubRect";
 }
 
-std::string Issue870::subtitle()
+std::string Issue870::subtitle() const
 {
     return "Every 2 seconds the particle should change";
 }
@@ -1103,12 +1103,12 @@ void ParticleDemo::onEnter(void)
     scheduleUpdate();
 }
 
-std::string ParticleDemo::title()
+std::string ParticleDemo::title() const
 {
     return "No title";
 }
 
-std::string ParticleDemo::subtitle()
+std::string ParticleDemo::subtitle() const
 {
     return "No title";
 }
@@ -1236,12 +1236,12 @@ void ParticleBatchHybrid::switchRender(float dt)
      log("Particle: Using new parent: %s", usingBatch ? "CCNode" : "CCParticleBatchNode");
 }
 
-std::string ParticleBatchHybrid::title()
+std::string ParticleBatchHybrid::title() const
 {
     return "Particle Batch";
 }
 
-std::string ParticleBatchHybrid::subtitle()
+std::string ParticleBatchHybrid::subtitle() const
 {
     return "Hybrid: batched and non batched every 2 seconds";
 }
@@ -1278,12 +1278,12 @@ void ParticleBatchMultipleEmitters::onEnter()
     addChild(batch, 10);
 }
 
-std::string ParticleBatchMultipleEmitters::title()
+std::string ParticleBatchMultipleEmitters::title() const
 {
     return "Particle Batch";
 }
 
-std::string ParticleBatchMultipleEmitters::subtitle()
+std::string ParticleBatchMultipleEmitters::subtitle() const
 {
     return "Multiple emitters. One Batch";
 }
@@ -1336,12 +1336,12 @@ void ParticleReorder::onEnter()
     schedule(schedule_selector(ParticleReorder::reorderParticles), 1.0f);
 }
 
-std::string ParticleReorder::title()
+std::string ParticleReorder::title() const
 {
     return "Reordering particles";
 }
 
-std::string ParticleReorder::subtitle()
+std::string ParticleReorder::subtitle() const
 {
     return "Reordering particles with and without batches batches";
 }
@@ -1481,12 +1481,12 @@ void Issue1201::onEnter()
     _emitter = particle;
 }
 
-std::string Issue1201::title()
+std::string Issue1201::title() const
 {
     return "Issue 1201. Unfinished";
 }
 
-std::string Issue1201::subtitle()
+std::string Issue1201::subtitle() const
 {
     return "Unfinished test. Ignore it";
 }
@@ -1514,12 +1514,12 @@ void MultipleParticleSystems::onEnter()
 
 }
 
-std::string MultipleParticleSystems::title()
+std::string MultipleParticleSystems::title() const
 {
     return "Multiple particle systems";
 }
 
-std::string MultipleParticleSystems::subtitle()
+std::string MultipleParticleSystems::subtitle() const
 {
     return "v1.1 test: FPS should be lower than next test";
 }
@@ -1530,13 +1530,13 @@ void MultipleParticleSystems::update(float dt)
 
     unsigned int count = 0; 
     
-    getChildren().forEach([&count](Node* child){
+    for(const auto &child : _children) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[100] = {0};
     sprintf(str, "%4d", count);
@@ -1553,8 +1553,7 @@ void MultipleParticleSystemsBatched::onEnter()
     removeChild(_background, true);
     _background = NULL;
 
-    auto batchNode = new ParticleBatchNode();
-    batchNode->initWithTexture(NULL, 3000);
+    ParticleBatchNode *batchNode = ParticleBatchNode::createWithTexture(nullptr, 3000);
 
     addChild(batchNode, 1, 2);
 
@@ -1569,8 +1568,6 @@ void MultipleParticleSystemsBatched::onEnter()
         batchNode->addChild(particleSystem);
     }
 
-    batchNode->release();
-
     _emitter = NULL;
 }
 
@@ -1578,29 +1575,28 @@ void MultipleParticleSystemsBatched::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-    
-    batchNode->getChildren().forEach([&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[50] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
 }
 
-std::string MultipleParticleSystemsBatched::title()
+std::string MultipleParticleSystemsBatched::title() const
 {
     return "Multiple particle systems batched";
 }
 
-std::string MultipleParticleSystemsBatched::subtitle()
+std::string MultipleParticleSystemsBatched::subtitle() const
 {
     return "v1.1 test: should perform better than previous test";
 }
@@ -1667,29 +1663,28 @@ void AddAndDeleteParticleSystems::update(float dt)
 {
     auto atlas = (LabelAtlas*) getChildByTag(kTagParticleCount);
 
-    unsigned int count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-    
-    batchNode->getChildren().forEach([&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != NULL)
         {
             count += item->getParticleCount();
         }
-    });
+    }
 
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
 }
 
-std::string AddAndDeleteParticleSystems::title()
+std::string AddAndDeleteParticleSystems::title() const
 {
     return "Add and remove Particle System";
 }
 
-std::string AddAndDeleteParticleSystems::subtitle()
+std::string AddAndDeleteParticleSystems::subtitle() const
 {
     return "v1.1 test: every 2 sec 1 system disappear, 1 appears";
 }
@@ -1795,7 +1790,7 @@ void ReorderParticleSystems::onEnter()
 void ReorderParticleSystems::reorderSystem(float time)
 {
     auto system = static_cast<ParticleSystem*>(_batchNode->getChildren().at(1));
-    _batchNode->reorderChild(system, system->getZOrder() - 1);     
+    _batchNode->reorderChild(system, system->getLocalZOrder() - 1);     
 }
 
 
@@ -1803,40 +1798,39 @@ void ReorderParticleSystems::update(float dt)
 {
     auto atlas = static_cast<LabelAtlas*>(getChildByTag(kTagParticleCount));
 
-    unsigned int count = 0;
+    int count = 0;
 
     auto batchNode = getChildByTag(2);
-
-    batchNode->getChildren().forEach([&count](Node* child){
+    for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
         if (item != nullptr)
         {
             count += item->getParticleCount();
         }
-    });
+    }
     char str[100] = {0};
     sprintf(str, "%4d", count);
     atlas->setString(str);
 }
 
-std::string ReorderParticleSystems::title()
+std::string ReorderParticleSystems::title() const
 {
     return "reorder systems";
 }
 
-std::string ReorderParticleSystems::subtitle()
+std::string ReorderParticleSystems::subtitle() const
 {
     return "changes every 2 seconds";
 }
 
 // PremultipliedAlphaTest
 
-std::string PremultipliedAlphaTest::title()
+std::string PremultipliedAlphaTest::title() const
 {
     return "premultiplied alpha";
 }
 
-std::string PremultipliedAlphaTest::subtitle()
+std::string PremultipliedAlphaTest::subtitle() const
 {
     return "no black halo, particles should fade out";
 }
@@ -1885,12 +1879,12 @@ void PremultipliedAlphaTest2::onEnter()
     this->addChild(_emitter ,10);
 }
 
-std::string PremultipliedAlphaTest2::title()
+std::string PremultipliedAlphaTest2::title() const
 {
     return "premultiplied alpha 2";
 }
 
-std::string PremultipliedAlphaTest2::subtitle()
+std::string PremultipliedAlphaTest2::subtitle() const
 {
     return "Arrows should be faded";
 }

@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2010      Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -102,9 +103,10 @@ public:
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the SpriteFrameCache.
+     @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
      @since v1.1
      */
-    void addAnimationsWithDictionary(const ValueMap& dictionary);
+    void addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist);
 
     /** Adds an animation from a plist file.
      Make sure that the frames were previously loaded in the SpriteFrameCache.
@@ -120,7 +122,7 @@ private:
 
 private:
     Map<std::string, Animation*> _animations;
-    static AnimationCache* s_pSharedAnimationCache;
+    static AnimationCache* s_sharedAnimationCache;
 };
 
 // end of sprite_nodes group

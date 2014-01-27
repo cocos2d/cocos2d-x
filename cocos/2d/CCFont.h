@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,38 +28,29 @@
 
 #include <string>
 
-#include "cocos2d.h"
 #include "CCLabel.h"
 
 NS_CC_BEGIN
 
 // fwd
-class GlyphDef;
 class FontAtlas;
 
 
 class CC_DLL Font : public Object
 {
 public:
-
-    // create the font
-    static   Font* createWithTTF(const std::string& fntName, int fontSize, GlyphCollection glyphs, const char *customGlyphs);
-    static   Font* createWithFNT(const std::string& fntFilePath);
-    
     virtual  FontAtlas *createFontAtlas() = 0;
 
-    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
+    virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const = 0;
     virtual const char* getCurrentGlyphCollection() const;
     
-    virtual int getLetterPadding() const { return 0; }
     virtual unsigned char * getGlyphBitmap(unsigned short theChar, int &outWidth, int &outHeight) const { return 0; }
-    virtual GlyphDef* getGlyphDefintionsForText(const char *text, int &outNumGlyphs, bool UTF16text = false) const { return 0; }
+    
     virtual int getFontMaxHeight() const { return 0; }
-    virtual Rect getRectForChar(unsigned short theChar) const;
     
     virtual int getUTF16TextLenght(unsigned short int *text) const;
-    virtual unsigned short int  * getUTF16Text(const char *text, int &outNumLetters) const;
-    virtual unsigned short int  * trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const;
+    virtual unsigned short * getUTF16Text(const char *text, int &outNumLetters) const;
+    virtual unsigned short * trimUTF16Text(unsigned short int *text, int newBegin, int newEnd) const;
     
 protected:
     
@@ -76,7 +68,7 @@ protected:
     char              * _customGlyphs;
     static const char * _glyphASCII;
     static const char * _glyphNEHE;
-    
+
 };
 
 NS_CC_END

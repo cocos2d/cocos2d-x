@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010      ForzeField Studios S.L. http://forzefield.com
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -261,7 +262,7 @@ public:
      @return  The Array pointer generated from the file
      * @js NA
      */
-    static __Array* createWithContentsOfFile(const char* pFileName);
+    static __Array* createWithContentsOfFile(const std::string& pFileName);
     
     /*
      @brief The same meaning as arrayWithContentsOfFile(), but it doesn't call autorelease, so the
@@ -269,7 +270,7 @@ public:
      * @js NA
      * @lua NA
      */
-    static __Array* createWithContentsOfFileThreadSafe(const char* pFileName);
+    static __Array* createWithContentsOfFileThreadSafe(const std::string& pFileName);
     /**
      * @js NA
      * @lua NA

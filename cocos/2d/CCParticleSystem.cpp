@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -138,26 +139,26 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem * ParticleSystem::create(const std::string& plistFile)
 {
-    ParticleSystem *pRet = new ParticleSystem();
-    if (pRet && pRet->initWithFile(plistFile))
+    ParticleSystem *ret = new ParticleSystem();
+    if (ret && ret->initWithFile(plistFile))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
 ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSystem *pRet = new ParticleSystem();
-    if (pRet && pRet->initWithTotalParticles(numberOfParticles))
+    ParticleSystem *ret = new ParticleSystem();
+    if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return pRet;
+    CC_SAFE_DELETE(ret);
+    return ret;
 }
 
 bool ParticleSystem::init()
@@ -167,7 +168,7 @@ bool ParticleSystem::init()
 
 bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
-    bool bRet = false;
+    bool ret = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
 
@@ -178,14 +179,14 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
     if (listFilePath.find('/') != string::npos)
     {
         listFilePath = listFilePath.substr(0, listFilePath.rfind('/') + 1);
-        bRet = this->initWithDictionary(dict, listFilePath.c_str());
+        ret = this->initWithDictionary(dict, listFilePath.c_str());
     }
     else
     {
-        bRet = this->initWithDictionary(dict, "");
+        ret = this->initWithDictionary(dict, "");
     }
     
-    return bRet;
+    return ret;
 }
 
 bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
@@ -195,7 +196,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary)
 
 bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string& dirname)
 {
-    bool bRet = false;
+    bool ret = false;
     unsigned char *buffer = nullptr;
     unsigned char *deflated = nullptr;
     Image *image = nullptr;
@@ -350,30 +351,27 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 {
                     string textureDir = textureName.substr(0, rPos + 1);
                     
-                    if (dirname.size()>0 && textureDir != dirname)
+                    if (!dirname.empty() && textureDir != dirname)
                     {
                         textureName = textureName.substr(rPos+1);
                         textureName = dirname + textureName;
                     }
                 }
-                else
+                else if (!dirname.empty() && !textureName.empty())
                 {
-                    if (dirname.size()>0)
-                    {
-                        textureName = dirname + textureName;
-                    }
+                	textureName = dirname + textureName;
                 }
                 
-                Texture2D *tex = NULL;
+                Texture2D *tex = nullptr;
                 
                 if (textureName.length() > 0)
                 {
                     // set not pop-up message box when load image failed
-                    bool bNotify = FileUtils::getInstance()->isPopupNotify();
+                    bool notify = FileUtils::getInstance()->isPopupNotify();
                     FileUtils::getInstance()->setPopupNotify(false);
-                    tex = Director::getInstance()->getTextureCache()->addImage(textureName.c_str());
+                    tex = Director::getInstance()->getTextureCache()->addImage(textureName);
                     // reset the value of UIImage notify
-                    FileUtils::getInstance()->setPopupNotify(bNotify);
+                    FileUtils::getInstance()->setPopupNotify(notify);
                 }
                 
                 if (tex)
@@ -408,18 +406,20 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         image->release();
                     }
                 }
-                if (_configName.length()>0)
+                
+                if (!_configName.empty())
                 {
-                  _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
+                    _yCoordFlipped = dictionary["yCoordFlipped"].asInt();
                 }
-                CCASSERT( this->_texture != NULL, "CCParticleSystem: error loading the texture");
+                
+                CCASSERT( this->_texture != nullptr, "CCParticleSystem: error loading the texture");
             }
-            bRet = true;
+            ret = true;
         }
     } while (0);
     free(buffer);
     free(deflated);
-    return bRet;
+    return ret;
 }
 
 bool ParticleSystem::initWithTotalParticles(int numberOfParticles)

@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2011 Ricardo Quesada
-Copyright (c) 2011 Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +33,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCSpriteFrame.h"
 #include "CCAnimation.h"
-#include <CCVector.h>
+#include "CCVector.h"
 #include <vector>
 
 NS_CC_BEGIN
@@ -57,7 +58,7 @@ then running it again in Reverse mode.
 
 Example:
 
-Action *pingPongAction = Sequence::actions(action, action->reverse(), NULL);
+Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
 */
 class CC_DLL ActionInterval : public FiniteTimeAction
 {
@@ -92,7 +93,7 @@ class CC_DLL Sequence : public ActionInterval
 {
 public:
     /** helper constructor to create an array of sequenceable actions */
-    static Sequence* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
+    static Sequence* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
     /** helper constructor to create an array of sequenceable actions given an array
      * @code
      * When this funtion bound to the js or lua,the input params changed
@@ -102,9 +103,9 @@ public:
      */
     static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
     /** helper constructor to create an array of sequence-able actions */
-    static Sequence* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
+    static Sequence* createWithVariableList(FiniteTimeAction *action1, va_list args);
     /** creates the action */
-    static Sequence* createWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
+    static Sequence* createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo);
 
     //
     // Overrides
@@ -136,15 +137,15 @@ class CC_DLL Repeat : public ActionInterval
 {
 public:
     /** creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
-    static Repeat* create(FiniteTimeAction *pAction, unsigned int times);
+    static Repeat* create(FiniteTimeAction *action, unsigned int times);
 
-    inline void setInnerAction(FiniteTimeAction *pAction)
+    inline void setInnerAction(FiniteTimeAction *action)
     {
-        if (_innerAction != pAction)
+        if (_innerAction != action)
         {
-            CC_SAFE_RETAIN(pAction);
+            CC_SAFE_RETAIN(action);
             CC_SAFE_RELEASE(_innerAction);
-            _innerAction = pAction;
+            _innerAction = action;
         }
     }
 
@@ -188,14 +189,14 @@ class CC_DLL RepeatForever : public ActionInterval
 {
 public:
     /** creates the action */
-    static RepeatForever* create(ActionInterval *pAction);
+    static RepeatForever* create(ActionInterval *action);
 
-    inline void setInnerAction(ActionInterval *pAction)
+    inline void setInnerAction(ActionInterval *action)
     {
-        if (_innerAction != pAction)
+        if (_innerAction != action)
         {
             CC_SAFE_RELEASE(_innerAction);
-            _innerAction = pAction;
+            _innerAction = action;
             CC_SAFE_RETAIN(_innerAction);
         }
     }
@@ -220,7 +221,7 @@ protected:
     {}
     virtual ~RepeatForever();
     /** initializes the action */
-    bool initWithAction(ActionInterval *pAction);
+    bool initWithAction(ActionInterval *action);
 
     /** Inner action */
     ActionInterval *_innerAction;
@@ -241,16 +242,16 @@ public:
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      */
-    static Spawn* create(FiniteTimeAction *pAction1, ...) CC_REQUIRES_NULL_TERMINATION;
+    static Spawn* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
 
     /** helper constructor to create an array of spawned actions */
-    static Spawn* createWithVariableList(FiniteTimeAction *pAction1, va_list args);
+    static Spawn* createWithVariableList(FiniteTimeAction *action1, va_list args);
 
     /** helper constructor to create an array of spawned actions given an array */
     static Spawn* create(const Vector<FiniteTimeAction*>& arrayOfActions);
 
     /** creates the Spawn action */
-    static Spawn* createWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);
+    static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
     //
     // Overrides
@@ -265,7 +266,7 @@ protected:
     Spawn() {}
     virtual ~Spawn();
     /** initializes the Spawn action with the 2 actions to spawn */
-    bool initWithTwoActions(FiniteTimeAction *pAction1, FiniteTimeAction *pAction2);
+    bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
     FiniteTimeAction *_one;
     FiniteTimeAction *_two;
@@ -282,10 +283,10 @@ class CC_DLL RotateTo : public ActionInterval
 {
 public:
     /** creates the action with separate rotation angles */
-    static RotateTo* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    static RotateTo* create(float duration, float deltaAngleX, float deltaAngleY);
 
     /** creates the action */
-    static RotateTo* create(float fDuration, float fDeltaAngle);
+    static RotateTo* create(float duration, float deltaAngle);
 
     //
     // Overrides
@@ -299,8 +300,8 @@ protected:
     RotateTo() {}
     virtual ~RotateTo() {}
     /** initializes the action */
-    bool initWithDuration(float fDuration, float fDeltaAngle);
-    bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    bool initWithDuration(float duration, float deltaAngle);
+    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
 
     float _dstAngleX;
     float _startAngleX;
@@ -320,8 +321,8 @@ class CC_DLL RotateBy : public ActionInterval
 {
 public:
     /** creates the action */
-    static RotateBy* create(float fDuration, float fDeltaAngle);
-    static RotateBy* create(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    static RotateBy* create(float duration, float deltaAngle);
+    static RotateBy* create(float duration, float deltaAngleX, float deltaAngleY);
 
     //
     // Override
@@ -335,8 +336,8 @@ protected:
     RotateBy() {}
     virtual ~RotateBy() {}
     /** initializes the action */
-    bool initWithDuration(float fDuration, float fDeltaAngle);
-    bool initWithDuration(float fDuration, float fDeltaAngleX, float fDeltaAngleY);
+    bool initWithDuration(float duration, float deltaAngle);
+    bool initWithDuration(float duration, float deltaAngleX, float deltaAngleY);
 
     float _angleX;
     float _startAngleX;
@@ -878,7 +879,7 @@ class CC_DLL ReverseTime : public ActionInterval
 {
 public:
     /** creates the action */
-    static ReverseTime* create(FiniteTimeAction *pAction);
+    static ReverseTime* create(FiniteTimeAction *action);
 
     //
     // Overrides
@@ -893,7 +894,7 @@ protected:
     ReverseTime();
     virtual ~ReverseTime(void);
     /** initializes the action */
-    bool initWithAction(FiniteTimeAction *pAction);
+    bool initWithAction(FiniteTimeAction *action);
 
     FiniteTimeAction *_other;
 
@@ -907,7 +908,7 @@ class CC_DLL Animate : public ActionInterval
 {
 public:
     /** creates the action with an Animation and will restore the original frame when the animation is over */
-    static Animate* create(Animation *pAnimation);
+    static Animate* create(Animation *animation);
 
     /** sets the Animation object to be animated */
     void setAnimation( Animation* animation );
@@ -928,7 +929,7 @@ protected:
     Animate();
     virtual ~Animate();
     /** initializes the action with an Animation and will restore the original frame when the animation is over */
-    bool initWithAnimation(Animation *pAnimation);
+    bool initWithAnimation(Animation *animation);
 
     std::vector<float>* _splitTimes;
     int             _nextFrame;
@@ -947,7 +948,7 @@ class CC_DLL TargetedAction : public ActionInterval
 {
 public:
     /** Create an action with the specified action and forced target */
-    static TargetedAction* create(Node* target, FiniteTimeAction* pAction);
+    static TargetedAction* create(Node* target, FiniteTimeAction* action);
 
     /** Sets the target that the action will be forced to run with */
     void setForcedTarget(Node* forcedTarget);
@@ -968,7 +969,7 @@ protected:
     TargetedAction();
     virtual ~TargetedAction();
     /** Init an action with the specified action and forced target */
-    bool initWithTarget(Node* target, FiniteTimeAction* pAction);
+    bool initWithTarget(Node* target, FiniteTimeAction* action);
 
     FiniteTimeAction* _action;
     Node* _forcedTarget;

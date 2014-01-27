@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+CopyRight (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -157,7 +158,7 @@ public:
     /** Adds a SpriteFrame to a Animation.
      The frame will be added with one "delay unit".
      */
-    void addSpriteFrame(SpriteFrame *pFrame);
+    void addSpriteFrame(SpriteFrame *frame);
 
     /** Adds a frame with an image filename. Internally it will create a SpriteFrame and it will add it.
      The frame will be added with one "delay unit".

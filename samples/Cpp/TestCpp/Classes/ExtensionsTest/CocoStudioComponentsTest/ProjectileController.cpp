@@ -26,7 +26,7 @@ void ProjectileController::onEnter()
     _owner->setPosition( Point(origin.x+20, origin.y+winSize.height/2) );
 	_owner->setTag(3);
     auto com = _owner->getParent()->getComponent("SceneController");
-    ((SceneController*)com)->getProjectiles()->addObject(_owner);
+    static_cast<SceneController*>(com)->getProjectiles().pushBack(_owner);
 }
 
 void ProjectileController::onExit()
@@ -46,12 +46,12 @@ void ProjectileController::update(float delta)
 			projectile->getContentSize().width,
 			projectile->getContentSize().height);
 
-    auto targetsToDelete = Array::createWithCapacity(20);
-    Object* jt = NULL;
-    CCARRAY_FOREACH(_targets, jt)
+    std::vector<Node*> targetsToDelete;
+    targetsToDelete.reserve(20);
+    
+    for (const auto& target : _targets)
     {
-        auto target = dynamic_cast<Sprite*>(jt);
-        auto targetRect = Rect(
+        Rect targetRect = Rect(
             target->getPosition().x - (target->getContentSize().width/2),
             target->getPosition().y - (target->getContentSize().height/2),
             target->getContentSize().width,
@@ -60,19 +60,16 @@ void ProjectileController::update(float delta)
         // if (Rect::RectIntersectsRect(projectileRect, targetRect))
         if (projectileRect.intersectsRect(targetRect))
         {
-            targetsToDelete->addObject(target);
+            targetsToDelete.push_back(target);
         }
     }
     
-    CCARRAY_FOREACH(targetsToDelete, jt)
+    for (const auto& t : targetsToDelete)
     {
-        auto target = dynamic_cast<Sprite*>(jt);
-        static_cast<EnemyController*>(target->getComponent("EnemyController"))->die();
+        static_cast<EnemyController*>(t->getComponent("EnemyController"))->die();
     }
     
-    bool isDied = targetsToDelete->count() > 0;
-   
-    if (isDied)
+    if (!targetsToDelete.empty())
     {
         die();
     }
@@ -142,7 +139,7 @@ void ProjectileController::move(float flocationX, float flocationY)
 void ProjectileController::die()
 {
     auto com = _owner->getParent()->getComponent("SceneController");
-    auto _projectiles = static_cast<SceneController*>(com)->getProjectiles();
-    _projectiles->removeObject(_owner);
+    auto& _projectiles = static_cast<SceneController*>(com)->getProjectiles();
+    _projectiles.eraseObject(_owner);
     _owner->removeFromParentAndCleanup(true);
 }

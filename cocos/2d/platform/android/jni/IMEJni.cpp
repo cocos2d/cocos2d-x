@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2011-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -74,7 +75,7 @@ extern "C" {
         if (JniHelper::getJavaVM()->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK || ! env) {
             return 0;
         }
-        const char * text = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(text);
+        const std::string& text = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
+        return env->NewStringUTF(text.c_str());
     }
 }

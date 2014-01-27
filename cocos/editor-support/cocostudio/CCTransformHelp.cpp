@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -118,6 +118,33 @@ void TransformHelp::nodeToMatrix(const BaseData &node, AffineTransform &matrix)
     matrix.ty = node.y;
 }
 
+void TransformHelp::nodeToMatrix(const BaseData &node, kmMat4 &matrix)
+{
+    kmMat4Identity(&matrix);
+
+    if (node.skewX == -node.skewY)
+    {
+        double sine   = sin(node.skewX);
+        double cosine = cos(node.skewX);
+
+        matrix.mat[0] = node.scaleX * cosine;
+        matrix.mat[1] = node.scaleX * -sine;
+        matrix.mat[4] = node.scaleY * sine;
+        matrix.mat[5] = node.scaleY * cosine;
+    }
+    else
+    {
+        matrix.mat[0] = node.scaleX * cos(node.skewY);
+        matrix.mat[1] = node.scaleX * sin(node.skewY);
+        matrix.mat[4] = node.scaleY * sin(node.skewX);
+        matrix.mat[5] = node.scaleY * cos(node.skewX);
+    }
+    
+    matrix.mat[12] = node.x;
+    matrix.mat[13] = node.y;
+}
+
+
 void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
 {
     /*
@@ -143,6 +170,33 @@ void TransformHelp::matrixToNode(const AffineTransform &matrix, BaseData &node)
     node.x = matrix.tx;
     node.y = matrix.ty;
 }
+
+void TransformHelp::matrixToNode(const kmMat4 &matrix, BaseData &node)
+{
+    /*
+     *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform
+     *  but not used the tx, ty value. we simulate the function here
+     */
+    helpPoint1.x = 0;
+    helpPoint1.y = 1;
+    helpPoint1 = PointApplyTransform(helpPoint1, matrix);
+    helpPoint1.x -= matrix.mat[12];
+    helpPoint1.y -= matrix.mat[13];
+
+    helpPoint2.x = 1;
+    helpPoint2.y = 0;
+    helpPoint2 = PointApplyTransform(helpPoint2, matrix);
+    helpPoint2.x -= matrix.mat[12];
+    helpPoint2.y -= matrix.mat[13];
+
+    node.skewX = -(atan2f(helpPoint1.y, helpPoint1.x) - 1.5707964f);
+    node.skewY = atan2f(helpPoint2.y, helpPoint2.x);
+    node.scaleX = sqrt(matrix.mat[0] * matrix.mat[0] + matrix.mat[1] * matrix.mat[1]);
+    node.scaleY = sqrt(matrix.mat[4] * matrix.mat[4] + matrix.mat[5] * matrix.mat[5]);
+    node.x = matrix.mat[12];
+    node.y = matrix.mat[13];
+}
+
 
 void TransformHelp::nodeConcat(BaseData &target, BaseData &source)
 {

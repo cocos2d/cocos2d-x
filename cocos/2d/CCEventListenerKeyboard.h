@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -36,6 +36,8 @@ class Event;
 class EventListenerKeyboard : public EventListener
 {
 public:
+    static const std::string LISTENER_ID;
+    
     static EventListenerKeyboard* create();
     
     /// Overrides

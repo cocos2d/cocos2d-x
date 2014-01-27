@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCPhysicsBody.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 
 #include <climits>
 #include <algorithm>
@@ -555,7 +555,7 @@ void PhysicsBody::setVelocity(const Point& velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set velocity for a static body.");
+        CCLOG("physics warning: your can't set velocity for a static body.");
         return;
     }
     
@@ -581,7 +581,7 @@ void PhysicsBody::setAngularVelocity(float velocity)
 {
     if (!_dynamic)
     {
-        CCLOG("physics warning: your cann't set angular velocity for a static body.");
+        CCLOG("physics warning: your can't set angular velocity for a static body.");
         return;
     }
     
@@ -739,7 +739,7 @@ bool PhysicsBody::isResting() const
 void PhysicsBody::update(float delta)
 {
     // damping compute
-    if (_dynamic)
+    if (_dynamic && !isResting())
     {
         _info->getBody()->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
         _info->getBody()->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);

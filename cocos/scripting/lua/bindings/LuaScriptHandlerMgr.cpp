@@ -1,3 +1,26 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -161,7 +184,7 @@ void ScriptHandlerMgr::removeObjectHandler(void* object,ScriptHandlerMgr::Handle
     
     auto iterVec = iterMap->second.begin();
     bool exist  = false;
-    for (; iterVec != iterMap->second.end(); iterVec++)
+    for (; iterVec != iterMap->second.end(); ++iterVec)
     {
         if (iterVec->first == handlerType)
         {
@@ -172,6 +195,7 @@ void ScriptHandlerMgr::removeObjectHandler(void* object,ScriptHandlerMgr::Handle
     
     if (exist)
     {
+        LuaEngine::getInstance()->removeScriptHandler(iterVec->second);
         iterMap->second.erase(iterVec);
     }
 
@@ -206,7 +230,15 @@ void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
     
     if (_mapObjectHandlers.end() != iter)
     {
-        (iter->second).clear();
+        if (!iter->second.empty())
+        {
+            auto iterVec = iter->second.begin();
+            for (; iterVec != iter->second.end(); ++iterVec)
+            {
+                LuaEngine::getInstance()->removeScriptHandler(iterVec->second);
+            }
+            (iter->second).clear();
+        }
         _mapObjectHandlers.erase(iter);
     }
 }
@@ -250,7 +282,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_registerScriptHandler00(lua_State* tol
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
         !toluafix_isfunction(tolua_S, 3, "LUA_FUNCTION", 0, &tolua_err) ||
         !tolua_isnumber(tolua_S, 4, 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,5,&tolua_err) )
@@ -267,7 +299,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_registerScriptHandler00(lua_State* tol
         }
 #endif
         LUA_FUNCTION handler =  toluafix_ref_function(tolua_S,3,0);
-        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)tolua_tonumber(tolua_S, 4, 0);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)(int)tolua_tonumber(tolua_S, 4, 0);
         scriptHanlderMgr->addObjectHandler(tolua_tousertype(tolua_S, 2, 0), handler,handlerType);
     }
     return 1;
@@ -284,7 +316,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_unregisterScriptHandler00(lua_State* t
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
         !tolua_isnumber(tolua_S, 3, 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,4,&tolua_err) )
         goto tolua_lerror;
@@ -299,7 +331,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_unregisterScriptHandler00(lua_State* t
             return 0;
         }
 #endif
-        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)tolua_tonumber(tolua_S, 3, 0);
+        ScriptHandlerMgr::HandlerType handlerType = (ScriptHandlerMgr::HandlerType)(int)tolua_tonumber(tolua_S, 3, 0);
         scriptHanlderMgr->removeObjectHandler(tolua_tousertype(tolua_S, 2, 0), handlerType);
     }
     return 1;
@@ -316,7 +348,7 @@ static int tolua_Cocos2d_ScriptHandlerMgr_removeObjectAllHandlers00(lua_State* t
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
     if (!tolua_isusertype(tolua_S,1,"ScriptHandlerMgr",0,&tolua_err) ||
-        !tolua_isusertype(tolua_S, 2, "Object", 0, &tolua_err) ||
+        !tolua_isusertype(tolua_S, 2, "cc.Object", 0, &tolua_err) ||
         !tolua_isnoobj(tolua_S,3,&tolua_err) )
         goto tolua_lerror;
     else

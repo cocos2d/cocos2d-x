@@ -183,6 +183,7 @@ end
 _G["CCTableViewCell"] = DeprecatedClass.CCTableViewCell()
 --CCTableViewCell class will be Deprecated,end
 
+
 --CCEaseBackOut class will be Deprecated,begin
 function DeprecatedClass.CCEaseBackOut()
     deprecatedTip("CCEaseBackOut","cc.EaseBackOut")
@@ -273,11 +274,19 @@ _G["CCFadeIn"] = DeprecatedClass.CCFadeIn()
 
 --CCNodeRGBA class will be Deprecated,begin
 function DeprecatedClass.CCNodeRGBA()
-    deprecatedTip("CCNodeRGBA","cc.NodeRGBA")
-    return cc.NodeRGBA
+    deprecatedTip("CCNodeRGBA","cc.Node")
+    return cc.Node
 end
 _G["CCNodeRGBA"] = DeprecatedClass.CCNodeRGBA()
 --CCNodeRGBA class will be Deprecated,end
+
+--NodeRGBA class will be Deprecated,begin
+function DeprecatedClass.NodeRGBA()
+    deprecatedTip("cc.NodeRGBA","cc.Node")
+    return cc.Node
+end
+_G["cc"]["NodeRGBA"] = DeprecatedClass.NodeRGBA()
+--NodeRGBA class will be Deprecated,end
 
 --CCAnimationCache class will be Deprecated,begin
 function DeprecatedClass.CCAnimationCache()
@@ -727,6 +736,7 @@ end
 _G["CCScrollView"] = DeprecatedClass.CCScrollView()
 --CCScrollView class will be Deprecated,end
 
+
 --CCGLProgram class will be Deprecated,begin
 function DeprecatedClass.CCGLProgram()
     deprecatedTip("CCGLProgram","cc.GLProgram")
@@ -814,6 +824,7 @@ function DeprecatedClass.CCTableView()
 end
 _G["CCTableView"] = DeprecatedClass.CCTableView()
 --CCTableView class will be Deprecated,end
+
 
 --CCParticleSmoke class will be Deprecated,begin
 function DeprecatedClass.CCParticleSmoke()
@@ -1305,11 +1316,19 @@ _G["CCCamera"] = DeprecatedClass.CCCamera()
 
 --CCLayerRGBA class will be Deprecated,begin
 function DeprecatedClass.CCLayerRGBA()
-    deprecatedTip("CCLayerRGBA","cc.LayerRGBA")
-    return cc.LayerRGBA
+    deprecatedTip("CCLayerRGBA","cc.Layer")
+    return cc.Layer
 end
 _G["CCLayerRGBA"] = DeprecatedClass.CCLayerRGBA()
 --CCLayerRGBA class will be Deprecated,end
+
+--LayerRGBA class will be Deprecated,begin
+function DeprecatedClass.LayerRGBA()
+    deprecatedTip("cc.LayerRGBA","cc.Layer")
+    return cc.Layer
+end
+_G["cc"]["LayerRGBA"] = DeprecatedClass.LayerRGBA()
+--LayerRGBA class will be Deprecated,end
 
 --CCBezierTo class will be Deprecated,begin
 function DeprecatedClass.CCBezierTo()
@@ -2134,5 +2153,21 @@ function DeprecatedClass.CCBProxy()
 end
 _G["CCBProxy"] = DeprecatedClass.CCBProxy()
 --CCBProxy class will be Deprecated,end
+
+--WebSocket class will be Deprecated,begin
+function DeprecatedClass.WebSocket()
+    deprecatedTip("WebSocket","cc.WebSocket")
+    return cc.WebSocket
+end
+_G["WebSocket"] = DeprecatedClass.WebSocket()
+--WebSocket class will be Deprecated,end
+
+--XMLHttpRequest class will be Deprecated,begin
+function DeprecatedClass.XMLHttpRequest()
+    deprecatedTip("XMLHttpRequest","cc.XMLHttpRequest")
+    return cc.XMLHttpRequest
+end
+_G["XMLHttpRequest"] = DeprecatedClass.XMLHttpRequest()
+--XMLHttpRequest class will be Deprecated,end
 
 

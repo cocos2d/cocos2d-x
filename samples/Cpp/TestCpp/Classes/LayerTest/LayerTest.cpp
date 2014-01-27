@@ -22,7 +22,10 @@ static std::function<Layer*()> createFunctions[] = {
     CL(LayerIgnoreAnchorPointPos),
     CL(LayerIgnoreAnchorPointRot),
     CL(LayerIgnoreAnchorPointScale),
-    CL(LayerExtendedBlendOpacityTest)
+    CL(LayerExtendedBlendOpacityTest),
+    CL(LayerBug3162A),
+    CL(LayerBug3162B),
+    CL(LayerColorOccludeBug),
 };
 
 static int sceneIdx=-1;
@@ -68,12 +71,12 @@ LayerTest::~LayerTest(void)
 {
 }
 
-string LayerTest::subtitle()
+std::string LayerTest::subtitle() const
 {
     return "";
 }
 
-std::string LayerTest::title()
+std::string LayerTest::title() const
 {
     return "No title";
 }
@@ -112,16 +115,13 @@ void LayerTest::backCallback(Object* sender)
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
-    auto rgba = dynamic_cast<RGBAProtocol*>(node);
-    if (rgba)
-    {
-        rgba->setCascadeColorEnabled(enable);
-        rgba->setCascadeOpacityEnabled(enable);
-    }
+    node->setCascadeColorEnabled(enable);
+    node->setCascadeOpacityEnabled(enable);
     
-    node->getChildren().forEach([enable](Node* child){
+    auto& children = node->getChildren();
+    for(const auto &child : children) {
         setEnableRecursiveCascading(child, enable);
-    });
+    }
 }
 
 // LayerTestCascadingOpacityA
@@ -130,7 +130,7 @@ void LayerTestCascadingOpacityA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -167,9 +167,9 @@ void LayerTestCascadingOpacityA::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityA::title()
+std::string LayerTestCascadingOpacityA::title() const
 {
-    return "LayerRGBA: cascading opacity";
+    return "Layer: cascading opacity";
 }
 
 
@@ -219,7 +219,7 @@ void LayerTestCascadingOpacityB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingOpacityB::title()
+std::string LayerTestCascadingOpacityB::title() const
 {
     return "CCLayerColor: cascading opacity";
 }
@@ -269,7 +269,7 @@ void LayerTestCascadingOpacityC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingOpacityC::title()
+std::string LayerTestCascadingOpacityC::title() const
 {
     return "CCLayerColor: non-cascading opacity";
 }
@@ -283,7 +283,7 @@ void LayerTestCascadingColorA::onEnter()
     LayerTest::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    auto layer1 = LayerRGBA::create();
+    auto layer1 = Layer::create();
     
     auto sister1 = Sprite::create("Images/grossinis_sister1.png");
     auto sister2 = Sprite::create("Images/grossinis_sister2.png");
@@ -323,9 +323,9 @@ void LayerTestCascadingColorA::onEnter()
      
 }
 
-std::string LayerTestCascadingColorA::title()
+std::string LayerTestCascadingColorA::title() const
 {
-    return "LayerRGBA: cascading color";
+    return "Layer: cascading color";
 }
 
 
@@ -375,7 +375,7 @@ void LayerTestCascadingColorB::onEnter()
     setEnableRecursiveCascading(this, true);
 }
 
-std::string LayerTestCascadingColorB::title()
+std::string LayerTestCascadingColorB::title() const
 {
     return "CCLayerColor: cascading color";
 }
@@ -424,7 +424,7 @@ void LayerTestCascadingColorC::onEnter()
        NULL)));
 }
 
-std::string LayerTestCascadingColorC::title()
+std::string LayerTestCascadingColorC::title() const
 {
     return "CCLayerColor: non-cascading color";
 }
@@ -481,7 +481,7 @@ void LayerTest1::onTouchesEnded(const std::vector<Touch*>& touches, Event  *even
     onTouchesMoved(touches, event);
 }
 
-std::string LayerTest1::title()
+std::string LayerTest1::title() const
 {
     return "ColorLayer resize (tap & move)";
 }
@@ -517,7 +517,7 @@ void LayerTest2::onEnter()
     layer2->runAction(seq2);
 }
 
-std::string LayerTest2::title()
+std::string LayerTest2::title() const
 {
     return "ColorLayer: fade and tint";
 }
@@ -569,7 +569,7 @@ void LayerTestBlend::newBlend(float dt)
 }
 
 
-std::string LayerTestBlend::title()
+std::string LayerTestBlend::title() const
 {
     return "ColorLayer: blend";
 }
@@ -620,12 +620,12 @@ void LayerGradientTest::onTouchesMoved(const std::vector<Touch*>& touches, Event
     gradient->setVector(diff);
 }
 
-std::string LayerGradientTest::title()
+std::string LayerGradientTest::title() const
 {
     return "LayerGradientTest";
 }
 
-string LayerGradientTest::subtitle()
+std::string LayerGradientTest::subtitle() const
 {
     return "Touch the screen and move your finger";
 }
@@ -643,12 +643,12 @@ LayerGradientTest2::LayerGradientTest2()
     addChild(layer);
 }
 
-std::string LayerGradientTest2::title()
+std::string LayerGradientTest2::title() const
 {
     return "LayerGradientTest 2";
 }
 
-string LayerGradientTest2::subtitle()
+std::string LayerGradientTest2::subtitle() const
 {
     return "You should see a gradient";
 }
@@ -665,12 +665,12 @@ LayerGradientTest3::LayerGradientTest3()
     addChild(layer1);
 }
 
-std::string LayerGradientTest3::title()
+std::string LayerGradientTest3::title() const
 {
     return "LayerGradientTest 3";
 }
 
-string LayerGradientTest3::subtitle()
+std::string LayerGradientTest3::subtitle() const
 {
     return "You should see a gradient";
 }
@@ -716,12 +716,12 @@ void LayerIgnoreAnchorPointPos::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointPos::title()
+std::string LayerIgnoreAnchorPointPos::title() const
 {
     return "IgnoreAnchorPoint - Position";
 }
 
-std::string LayerIgnoreAnchorPointPos::subtitle()
+std::string LayerIgnoreAnchorPointPos::subtitle() const
 {
     return "Ignoring Anchor Point for position";
 }
@@ -764,12 +764,12 @@ void LayerIgnoreAnchorPointRot::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointRot::title()
+std::string LayerIgnoreAnchorPointRot::title() const
 {
     return "IgnoreAnchorPoint - Rotation";
 }
 
-std::string LayerIgnoreAnchorPointRot::subtitle()
+std::string LayerIgnoreAnchorPointRot::subtitle() const
 {
     return "Ignoring Anchor Point for rotations";
 }
@@ -815,12 +815,12 @@ void LayerIgnoreAnchorPointScale::onToggle(Object* pObject)
     layer->ignoreAnchorPointForPosition(! ignore);
 }
 
-std::string LayerIgnoreAnchorPointScale::title()
+std::string LayerIgnoreAnchorPointScale::title() const
 {
     return "IgnoreAnchorPoint - Scale";
 }
 
-std::string LayerIgnoreAnchorPointScale::subtitle()
+std::string LayerIgnoreAnchorPointScale::subtitle() const
 {
     return "Ignoring Anchor Point for scale";
 }
@@ -857,13 +857,125 @@ LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
     addChild(layer3);
 }
 
-string LayerExtendedBlendOpacityTest::title()
+std::string LayerExtendedBlendOpacityTest::title() const
 {
     return "Extended Blend & Opacity";
 }
 
-string LayerExtendedBlendOpacityTest::subtitle()
+std::string LayerExtendedBlendOpacityTest::subtitle() const
 {
     return "You should see 3 layers";
 }
 
+// LayerBug3162A
+void LayerBug3162A::onEnter()
+{
+    LayerTest::onEnter();
+    
+    Size size = VisibleRect::getVisibleRect().size;
+    size.width = size.width / 2;
+    size.height = size.height / 3;
+    Color4B color[3] = {Color4B(255, 0, 0, 255), Color4B(0, 255, 0, 255), Color4B(0, 0, 255, 255)};
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        _layer[i] = LayerColor::create(color[i]);
+        _layer[i]->setContentSize(size);
+        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        _layer[i]->setOpacity(150);
+        _layer[i]->setCascadeOpacityEnabled(true);
+        if (i > 0)
+        {
+            _layer[i-1]->addChild(_layer[i]);
+        }
+    }
+    
+    this->addChild(_layer[0]);
+    
+    schedule(schedule_selector(LayerBug3162A::step), 0.5, kRepeatForever, 0);
+}
+
+void LayerBug3162A::step(float dt)
+{
+    _layer[0]->setCascadeOpacityEnabled(!_layer[0]->isCascadeOpacityEnabled());
+}
+
+std::string LayerBug3162A::title() const
+{
+    return "Bug 3162 red layer cascade opacity eable/disable";
+}
+
+std::string LayerBug3162A::subtitle() const
+{
+    return "g and b layer opacity is effected/diseffected with r layer";
+}
+
+// LayerBug3162B
+void LayerBug3162B::onEnter()
+{
+    LayerTest::onEnter();
+    
+    Size size = VisibleRect::getVisibleRect().size;
+    size.width = size.width / 2;
+    size.height = size.height / 3;
+    Color4B color[3] = {Color4B(200, 0, 0, 255), Color4B(150, 0, 0, 255), Color4B(100, 0, 0, 255)};
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        _layer[i] = LayerColor::create(color[i]);
+        _layer[i]->setContentSize(size);
+        _layer[i]->setPosition(Point(size.width/2, size.height/2) - Point(20, 20));
+        //_layer[i]->setOpacity(150);
+        if (i > 0)
+        {
+            _layer[i-1]->addChild(_layer[i]);
+        }
+    }
+    
+    this->addChild(_layer[0]);
+    
+    _layer[0]->setCascadeColorEnabled(true);
+    _layer[1]->setCascadeColorEnabled(true);
+    _layer[2]->setCascadeColorEnabled(true);
+    
+    schedule(schedule_selector(LayerBug3162B::step), 0.5, kRepeatForever, 0);
+}
+
+void LayerBug3162B::step(float dt)
+{
+    _layer[0]->setCascadeColorEnabled(!_layer[0]->isCascadeColorEnabled());
+}
+
+std::string LayerBug3162B::title() const
+{
+    return "Bug 3162 bottom layer cascade color eable/disable";
+}
+
+std::string LayerBug3162B::subtitle() const
+{
+    return "u and m layer color is effected/diseffected with b layer";
+}
+
+std::string LayerColorOccludeBug::title() const
+{
+    return "Layer Color Occlude Bug Test";
+}
+
+std::string LayerColorOccludeBug::subtitle() const
+{
+    return  "Layer Color Should not occlude titles and any sprites";
+}
+
+void LayerColorOccludeBug::onEnter()
+{
+    LayerTest::onEnter();
+    Director::getInstance()->setDepthTest(true);
+    _layer = LayerColor::create(Color4B(0, 80, 95, 255));
+    addChild(_layer);
+}
+
+void LayerColorOccludeBug::onExit()
+{
+    LayerTest::onExit();
+    Director::getInstance()->setDepthTest(false);
+}

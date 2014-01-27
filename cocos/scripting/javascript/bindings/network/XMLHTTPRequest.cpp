@@ -167,22 +167,20 @@ void MinXmlHttpRequest::_setHttpRequestHeader()
  *  @param sender   Object which initialized callback
  *  @param respone  Response object
  */
-void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, network::HttpResponse *response)
+void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response)
 {
     if (0 != strlen(response->getHttpRequest()->getTag()))
     {
         CCLOG("%s completed", response->getHttpRequest()->getTag());
     }
     
-    int statusCode = response->getResponseCode();
-    char statusString[64] = {};
-    sprintf(statusString, "HTTP Status Code: %d, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    long statusCode = response->getResponseCode();
+    char statusString[64] = {0};
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
     
     if (!response->isSucceed())
     {
-        CCLOG("response failed");
-        CCLOG("error buffer: %s", response->getErrorBuffer());
-        return;
+        CCLOG("Response failed, error buffer: %s", response->getErrorBuffer());
     }
     
     // set header
@@ -207,7 +205,7 @@ void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, netw
         _status = 200;
         _readyState = DONE;
         
-        _dataSize = buffer->size();
+        _dataSize = static_cast<uint32_t>(buffer->size());
         CC_SAFE_FREE(_data);
         _data = (char*) malloc(_dataSize + 1);
         _data[_dataSize] = '\0';
@@ -247,7 +245,7 @@ void MinXmlHttpRequest::handle_requestResponse(network::HttpClient *sender, netw
 void MinXmlHttpRequest::_sendRequest(JSContext *cx)
 {
     _httpRequest->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
-    network::HttpClient::getInstance()->send(_httpRequest);
+    cocos2d::network::HttpClient::getInstance()->send(_httpRequest);
     _httpRequest->release();
 }
 
@@ -264,7 +262,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
     _requestHeader.clear();
     _withCredentialsValue = true;
     _cx = ScriptingCore::getInstance()->getGlobalContext();
-    _httpRequest = new network::HttpRequest();
+    _httpRequest = new cocos2d::network::HttpRequest();
 }
 
 /**
@@ -546,17 +544,23 @@ JS_BINDED_PROP_SET_IMPL(MinXmlHttpRequest, withCredentials)
  */
 JS_BINDED_PROP_GET_IMPL(MinXmlHttpRequest, responseText)
 {
-    jsval strVal = std_string_to_jsval(cx, _data);
-
-    if (strVal != JSVAL_NULL)
+    if (_data)
     {
-        vp.set(strVal);
-        //JS_ReportError(cx, "Result: %s", data.str().c_str());
-        return JS_TRUE;
-    } else {
-        JS_ReportError(cx, "Error trying to create JSString from data");
-        return JS_FALSE;
+        jsval strVal = std_string_to_jsval(cx, _data);
+
+        if (strVal != JSVAL_NULL)
+        {
+            vp.set(strVal);
+            return JS_TRUE;
+        }
     }
+
+    CCLOGERROR("ResponseText was empty, probably there is a network error!");
+    
+    // Return an empty string
+    vp.set(std_string_to_jsval(cx, ""));
+
+    return JS_TRUE;
 }
 
 /**
@@ -627,11 +631,11 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
 
         if (_meth.compare("post") == 0 || _meth.compare("POST") == 0)
         {
-            _httpRequest->setRequestType(network::HttpRequest::Type::POST);
+            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::POST);
         }
         else
         {
-            _httpRequest->setRequestType(network::HttpRequest::Type::GET);
+            _httpRequest->setRequestType(cocos2d::network::HttpRequest::Type::GET);
         }
         
         _httpRequest->setUrl(_url.c_str());

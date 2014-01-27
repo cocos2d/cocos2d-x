@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,7 +38,6 @@ THE SOFTWARE.
 #include "CCArray.h"
 #include "CCScheduler.h"
 #include "ccMacros.h"
-#include "CCNotificationCenter.h"
 #include "CCTransition.h"
 #include "CCTextureCache.h"
 #include "CCSpriteFrameCache.h"
@@ -45,11 +45,9 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "CCApplication.h"
 #include "CCLabelBMFont.h"
-#include "CCLabelAtlas.h"
 #include "CCActionManager.h"
 #include "CCAnimationCache.h"
 #include "CCTouch.h"
-#include "CCEventDispatcher.h"
 #include "CCUserDefault.h"
 #include "ccGLStateCache.h"
 #include "CCShaderCache.h"
@@ -60,7 +58,11 @@ THE SOFTWARE.
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
+#include "CCEventCustom.h"
 #include "CCFontFreeType.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCFrustum.h"
+#include "CCConsole.h"
 
 /**
  Position of the FPS
@@ -84,6 +86,11 @@ static DisplayLinkDirector *s_SharedDirector = nullptr;
 #define kDefaultFPS        60  // 60 frames per second
 extern const char* cocos2dVersion(void);
 
+const char *Director::EVENT_PROJECTION_CHANGED = "director_projection_changed";
+const char *Director::EVENT_AFTER_DRAW = "director_after_draw";
+const char *Director::EVENT_AFTER_VISIT = "director_after_visit";
+const char *Director::EVENT_AFTER_UPDATE = "director_after_udpate";
+
 Director* Director::getInstance()
 {
     if (!s_SharedDirector)
@@ -95,9 +102,8 @@ Director* Director::getInstance()
     return s_SharedDirector;
 }
 
-Director::Director(void)
+Director::Director()
 {
-
 }
 
 bool Director::init(void)
@@ -112,9 +118,6 @@ bool Director::init(void)
 
     _scenesStack.reserve(15);
 
-    // projection delegate if "Custom" projection is used
-    _projectionDelegate = nullptr;
-
     // FPS
     _accumDt = 0.0f;
     _frameRate = 0.0f;
@@ -127,13 +130,15 @@ bool Director::init(void)
 
     // paused ?
     _paused = false;
-   
-    // purge ?
-    _purgeDirecotorInNextLoop = false;
 
-    _winSizeInPoints = Size::ZERO;    
+    // purge ?
+    _purgeDirectorInNextLoop = false;
+
+    _winSizeInPoints = Size::ZERO;
 
     _openGLView = nullptr;
+
+    _cullingFrustum = new Frustum();
 
     _contentScaleFactor = 1.0f;
 
@@ -144,15 +149,25 @@ bool Director::init(void)
     _scheduler->scheduleUpdateForTarget(_actionManager, Scheduler::PRIORITY_SYSTEM, false);
 
     _eventDispatcher = new EventDispatcher();
+    _eventAfterDraw = new EventCustom(EVENT_AFTER_DRAW);
+    _eventAfterDraw->setUserData(this);
+    _eventAfterVisit = new EventCustom(EVENT_AFTER_VISIT);
+    _eventAfterVisit->setUserData(this);
+    _eventAfterUpdate = new EventCustom(EVENT_AFTER_UPDATE);
+    _eventAfterUpdate->setUserData(this);
+    _eventProjectionChanged = new EventCustom(EVENT_PROJECTION_CHANGED);
+    _eventProjectionChanged->setUserData(this);
+
+
     //init TextureCache
     initTextureCache();
-    
-    // create autorelease pool
-    PoolManager::sharedPoolManager()->push();
+
+    _renderer = new Renderer;
+    _console = new Console;
 
     return true;
 }
-    
+
 Director::~Director(void)
 {
     CCLOGINFO("deallocing Director: %p", this);
@@ -160,16 +175,23 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_FPSLabel);
     CC_SAFE_RELEASE(_SPFLabel);
     CC_SAFE_RELEASE(_drawsLabel);
-    
+
     CC_SAFE_RELEASE(_runningScene);
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_eventDispatcher);
-    
-    // pop the autorelease pool
-    PoolManager::sharedPoolManager()->pop();
-    PoolManager::purgePoolManager();
+
+    delete _eventAfterUpdate;
+    delete _eventAfterDraw;
+    delete _eventAfterVisit;
+    delete _eventProjectionChanged;
+
+    delete _renderer;
+    delete _console;
+
+    // clean auto release pool
+    PoolManager::destroyInstance();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
@@ -245,6 +267,7 @@ void Director::drawScene()
     if (! _paused)
     {
         _scheduler->update(_deltaTime);
+        _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -258,10 +281,21 @@ void Director::drawScene()
 
     kmGLPushMatrix();
 
+    //construct the frustum
+    {
+        kmMat4 view;
+        kmMat4 projection;
+        kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+        kmGLGetMatrix(KM_GL_MODELVIEW, &view);
+
+        _cullingFrustum->setupFromMatrix(view, projection);
+    }
+
     // draw the scene
     if (_runningScene)
     {
         _runningScene->visit();
+        _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
 
     // draw the notifications node
@@ -269,11 +303,14 @@ void Director::drawScene()
     {
         _notificationNode->visit();
     }
-    
+
     if (_displayStats)
     {
         showStats();
     }
+
+    _renderer->render();
+    _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
     kmGLPopMatrix();
 
@@ -284,7 +321,7 @@ void Director::drawScene()
     {
         _openGLView->swapBuffers();
     }
-    
+
     if (_displayStats)
     {
         calculateMPF();
@@ -314,7 +351,7 @@ void Director::calculateDeltaTime()
         _deltaTime = MAX(0, _deltaTime);
     }
 
-#ifdef DEBUG
+#if COCOS2D_DEBUG
     // If we are debugging our code, prevent big delta time
     if (_deltaTime > 0.2f)
     {
@@ -337,7 +374,7 @@ void Director::setOpenGLView(EGLView *openGLView)
 		// Configuration. Gather GPU info
 		Configuration *conf = Configuration::getInstance();
 		conf->gatherGPUInfo();
-		conf->dumpInfo();
+        CCLOG("%s\n",conf->getInfo().c_str());
 
         // EAGLView is not a Object
         delete _openGLView; // [openGLView_ release]
@@ -345,14 +382,16 @@ void Director::setOpenGLView(EGLView *openGLView)
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
-        
+
         createStatsLabel();
-        
+
         if (_openGLView)
         {
             setGLDefaultValues();
-        }  
-        
+        }
+
+        _renderer->initGLView();
+
         CHECK_GL_ERROR_DEBUG();
 
 //        _touchDispatcher->setDispatchEvents(true);
@@ -438,13 +477,12 @@ void Director::setProjection(Projection projection)
             kmGLMultMatrix(&matrixLookup);
             break;
         }
-            
+
         case Projection::CUSTOM:
-            if (_projectionDelegate)
-                _projectionDelegate->updateProjection();
-            
+            // Projection Delegate is no longer needed
+            // since the event "PROJECTION CHANGED" is emitted
             break;
-            
+
         default:
             CCLOG("cocos2d: Director: unrecognized projection");
             break;
@@ -452,6 +490,8 @@ void Director::setProjection(Projection projection)
 
     _projection = projection;
     GL::setProjectionMatrixDirty();
+
+    _eventDispatcher->dispatchEvent(_eventProjectionChanged);
 }
 
 void Director::purgeCachedData(void)
@@ -504,10 +544,10 @@ static void GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
+
 	kmMat4 modelview;
 	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
+
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
@@ -515,19 +555,19 @@ Point Director::convertToGL(const Point& uiPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-	
+
 	kmMat4 transformInv;
 	kmMat4Inverse(&transformInv, &transform);
-	
+
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	kmScalar zClip = transform.mat[14]/transform.mat[15];
-	
+
     Size glSize = _openGLView->getDesignResolutionSize();
 	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
-	
+
 	kmVec3 glCoord;
 	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
+
 	return Point(glCoord.x, glCoord.y);
 }
 
@@ -535,12 +575,12 @@ Point Director::convertToUI(const Point& glPoint)
 {
     kmMat4 transform;
 	GLToClipTransform(&transform);
-    
+
 	kmVec3 clipCoord;
 	// Need to calculate the zero depth from the transform.
 	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
 	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
-	
+
 	Size glSize = _openGLView->getDesignResolutionSize();
 	return Point(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
@@ -561,7 +601,7 @@ Size Director::getVisibleSize() const
     {
         return _openGLView->getVisibleSize();
     }
-    else 
+    else
     {
         return Size::ZERO;
     }
@@ -573,7 +613,7 @@ Point Director::getVisibleOrigin() const
     {
         return _openGLView->getVisibleOrigin();
     }
-    else 
+    else
     {
         return Point::ZERO;
     }
@@ -674,7 +714,7 @@ void Director::popToSceneStackLevel(int level)
 
 void Director::end()
 {
-    _purgeDirecotorInNextLoop = true;
+    _purgeDirectorInNextLoop = true;
 }
 
 void Director::purgeDirector()
@@ -706,6 +746,7 @@ void Director::purgeDirector()
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_SPFLabel);
     CC_SAFE_RELEASE_NULL(_drawsLabel);
+    CC_SAFE_DELETE(_cullingFrustum);
 
     // purge bitmap cache
     LabelBMFont::purgeCachedData();
@@ -722,7 +763,6 @@ void Director::purgeDirector()
 
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    NotificationCenter::destroyInstance();
     
     GL::invalidateStateCache();
     
@@ -801,13 +841,10 @@ void Director::resume()
 
     setAnimationInterval(_oldAnimationInterval);
 
-    if (gettimeofday(_lastUpdate, nullptr) != 0)
-    {
-        CCLOG("cocos2d: Director: Error in gettimeofday");
-    }
-
     _paused = false;
     _deltaTime = 0;
+    // fix issue #3509, skip one fps to avoid incorrect time calculation.
+    setNextDeltaTimeZero(true);
 }
 
 // display the FPS using a LabelAtlas
@@ -906,17 +943,20 @@ void Director::createStatsLabel()
      */
     float factor = EGLView::getInstance()->getDesignResolutionSize().height / 320.0f;
 
-    _FPSLabel = new LabelAtlas();
+    _FPSLabel = LabelAtlas::create();
+    _FPSLabel->retain();
     _FPSLabel->setIgnoreContentScaleFactor(true);
     _FPSLabel->initWithString("00.0", texture, 12, 32 , '.');
     _FPSLabel->setScale(factor);
 
-    _SPFLabel = new LabelAtlas();
+    _SPFLabel = LabelAtlas::create();
+    _SPFLabel->retain();
     _SPFLabel->setIgnoreContentScaleFactor(true);
     _SPFLabel->initWithString("0.000", texture, 12, 32, '.');
     _SPFLabel->setScale(factor);
 
-    _drawsLabel = new LabelAtlas();
+    _drawsLabel = LabelAtlas::create();
+    _drawsLabel->retain();
     _drawsLabel->setIgnoreContentScaleFactor(true);
     _drawsLabel->initWithString("000", texture, 12, 32, '.');
     _drawsLabel->setScale(factor);
@@ -928,11 +968,6 @@ void Director::createStatsLabel()
     _FPSLabel->setPosition(CC_DIRECTOR_STATS_POSITION);
 }
 
-float Director::getContentScaleFactor() const
-{
-    return _contentScaleFactor;
-}
-
 void Director::setContentScaleFactor(float scaleFactor)
 {
     if (scaleFactor != _contentScaleFactor)
@@ -942,26 +977,11 @@ void Director::setContentScaleFactor(float scaleFactor)
     }
 }
 
-Node* Director::getNotificationNode() 
-{ 
-    return _notificationNode; 
-}
-
 void Director::setNotificationNode(Node *node)
 {
     CC_SAFE_RELEASE(_notificationNode);
     _notificationNode = node;
     CC_SAFE_RETAIN(_notificationNode);
-}
-
-DirectorDelegate* Director::getDelegate() const
-{
-    return _projectionDelegate;
-}
-
-void Director::setDelegate(DirectorDelegate* delegate)
-{
-    _projectionDelegate = delegate;
 }
 
 void Director::setScheduler(Scheduler* scheduler)
@@ -974,11 +994,6 @@ void Director::setScheduler(Scheduler* scheduler)
     }
 }
 
-Scheduler* Director::getScheduler() const
-{
-    return _scheduler;
-}
-
 void Director::setActionManager(ActionManager* actionManager)
 {
     if (_actionManager != actionManager)
@@ -987,16 +1002,6 @@ void Director::setActionManager(ActionManager* actionManager)
         CC_SAFE_RELEASE(_actionManager);
         _actionManager = actionManager;
     }    
-}
-
-ActionManager* Director::getActionManager() const
-{
-    return _actionManager;
-}
-
-EventDispatcher* Director::getEventDispatcher() const
-{
-    return _eventDispatcher;
 }
 
 void Director::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1024,13 +1029,15 @@ void DisplayLinkDirector::startAnimation()
     }
 
     _invalid = false;
+
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 }
 
 void DisplayLinkDirector::mainLoop()
 {
-    if (_purgeDirecotorInNextLoop)
+    if (_purgeDirectorInNextLoop)
     {
-        _purgeDirecotorInNextLoop = false;
+        _purgeDirectorInNextLoop = false;
         purgeDirector();
     }
     else if (! _invalid)
@@ -1038,7 +1045,7 @@ void DisplayLinkDirector::mainLoop()
         drawScene();
      
         // release the objects
-        PoolManager::sharedPoolManager()->pop();        
+        PoolManager::getInstance()->getCurrentPool()->clear();
     }
 }
 

@@ -127,7 +127,7 @@ local function LuaBridgeLayer()
 
     local function menuCallback(tag, pMenuItem)
         local scene = nil
-        local nIdx = pMenuItem:getZOrder() - itemTagBasic
+        local nIdx = pMenuItem:getLocalZOrder() - itemTagBasic
         local newScene = newLuaBridgeScene(nIdx)
         if nil ~= newScene then
             newScene:addChild(createMenuToBridgeScene(),10)

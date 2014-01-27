@@ -1,7 +1,8 @@
-// enable log
-#define COCOS2D_DEBUG 1
 
 #include "TextureCacheTest.h"
+
+// enable log
+#define COCOS2D_DEBUG 1
 
 USING_NS_CC;
 
@@ -21,29 +22,29 @@ TextureCacheTest::TextureCacheTest()
     this->addChild(_labelPercent);
 
     // load textrues
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/HelloWorld.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_01.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_02.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_03.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_04.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_05.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_06.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_07.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_08.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_09.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_10.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_11.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_12.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_13.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_14.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background3.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/blocks.png", this, callfuncO_selector(TextureCacheTest::loadingCallBack));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/HelloWorld.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_01.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_02.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_03.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_04.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_05.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_06.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_07.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_08.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_09.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_10.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_11.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_12.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_13.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_14.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/background3.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
+    Director::getInstance()->getTextureCache()->addImageAsync("Images/blocks.png", CC_CALLBACK_1(TextureCacheTest::loadingCallBack, this));
 }
 
-void TextureCacheTest::loadingCallBack(Object *obj)
+void TextureCacheTest::loadingCallBack(cocos2d::Texture2D *texture)
 {
     ++_numberOfLoadedSprites;
     char tmp[10];

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,7 +35,7 @@ EventListenerCustom::EventListenerCustom()
 EventListenerCustom* EventListenerCustom::create(const std::string& eventName, std::function<void(EventCustom*)> callback)
 {
     EventListenerCustom* ret = new EventListenerCustom();
-    if (ret && ret->init(std::hash<std::string>()(eventName), callback))
+    if (ret && ret->init(eventName, callback))
     {
         ret->autorelease();
     }

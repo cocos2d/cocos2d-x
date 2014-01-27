@@ -23,12 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "cocos2d.h"
 #include "CCTableView.h"
 #include "CCTableViewCell.h"
 
 NS_CC_EXT_BEGIN
 
+TableView* TableView::create()
+{
+    return TableView::create(nullptr, Size::ZERO);
+}
 
 TableView* TableView::create(TableViewDataSource* dataSource, Size size)
 {
@@ -51,6 +54,7 @@ bool TableView::initWithViewSize(Size size, Node* container/* = NULL*/)
 {
     if (ScrollView::initWithViewSize(size,container))
     {
+        CC_SAFE_DELETE(_indices);
         _indices        = new std::set<ssize_t>();
         _vordering      = VerticalFillOrder::BOTTOM_UP;
         this->setDirection(Direction::VERTICAL);
@@ -98,7 +102,7 @@ void TableView::reloadData()
 {
     _oldDirection = Direction::NONE;
 
-    _cellsUsed.forEach([this](TableViewCell* cell){
+    for(const auto &cell : _cellsUsed) {
         if(_tableViewDelegate != NULL) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }
@@ -110,7 +114,7 @@ void TableView::reloadData()
         {
             this->getContainer()->removeChild(cell, true);
         }
-    });
+    }
 
     _indices->clear();
     _cellsUsed.clear();
@@ -455,7 +459,7 @@ void TableView::scrollViewDidScroll(ScrollView* view)
     if (_isUsedCellsDirty)
     {
         _isUsedCellsDirty = false;
-        _cellsUsed.sort([](TableViewCell *a, TableViewCell *b) -> bool{
+        std::sort(_cellsUsed.begin(), _cellsUsed.end(), [](TableViewCell *a, TableViewCell *b) -> bool{
             return a->getIdx() < b->getIdx();
         });
     }

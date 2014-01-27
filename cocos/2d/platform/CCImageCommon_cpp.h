@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +25,7 @@ THE SOFTWARE.
 
 
 #include "CCImage.h"
+#include "CCData.h"
 
 #include <string>
 #include <ctype.h>
@@ -374,7 +376,7 @@ namespace
 //////////////////////////////////////////////////////////////////////////
 
 Image::Image()
-: _data(0)
+: _data(nullptr)
 , _dataLen(0)
 , _width(0)
 , _height(0)
@@ -389,16 +391,13 @@ Image::Image()
 
 Image::~Image()
 {
-    if (_data != nullptr)
-    {
-        free(_data);
-    }
+    CC_SAFE_FREE(_data);
 }
 
-bool Image::initWithImageFile(const char * strPath)
+bool Image::initWithImageFile(const std::string& path)
 {
-    bool bRet = false;
-    _filePath = FileUtils::getInstance()->fullPathForFilename(strPath);
+    bool ret = false;
+    _filePath = FileUtils::getInstance()->fullPathForFilename(path);
 
 #ifdef EMSCRIPTEN
     // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
@@ -408,7 +407,7 @@ bool Image::initWithImageFile(const char * strPath)
     SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
 
     int size = 4 * (iSurf->w * iSurf->h);
-    bRet = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
+    ret = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
 
     unsigned int *tmp = (unsigned int *)_data;
     int nrPixels = iSurf->w * iSurf->h;
@@ -420,36 +419,29 @@ bool Image::initWithImageFile(const char * strPath)
 
     SDL_FreeSurface(iSurf);
 #else
-    ssize_t bufferLen = 0;
-    unsigned char* buffer = FileUtils::getInstance()->getFileData(_filePath.c_str(), "rb", &bufferLen);
+    Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
 
-    if (buffer != nullptr && bufferLen > 0)
+    if (!data.isNull())
     {
-        bRet = initWithImageData(buffer, bufferLen);
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
-
-    free(buffer);
 #endif // EMSCRIPTEN
 
-    return bRet;
+    return ret;
 }
 
-bool Image::initWithImageFileThreadSafe(const char *fullpath)
+bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
 {
     bool ret = false;
-    ssize_t dataLen = 0;
     _filePath = fullpath;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    FileUtilsAndroid *fileUitls = (FileUtilsAndroid*)FileUtils::getInstance();
-    unsigned char *buffer = fileUitls->getFileDataForAsync(fullpath, "rb", &dataLen);
-#else
-    unsigned char *buffer = FileUtils::getInstance()->getFileData(fullpath, "rb", &dataLen);
-#endif
-    if (buffer != NULL && dataLen > 0)
+
+    Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+
+    if (!data.isNull())
     {
-        ret = initWithImageData(buffer, dataLen);
+        ret = initWithImageData(data.getBytes(), data.getSize());
     }
-    free(buffer);
+
     return ret;
 }
 
@@ -1206,7 +1198,8 @@ bool Image::initWithPVRv2Data(const unsigned char * data, ssize_t dataLen)
     }
     
     if (! configuration->supportsNPOT() &&
-        (header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height)))
+        (static_cast<int>(header->width) != ccNextPOT(header->width)
+            || static_cast<int>(header->height) != ccNextPOT(header->height)))
     {
         CCLOG("cocos2d: ERROR: Loading an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
         return false;
@@ -1543,7 +1536,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         
     }while(false);
     
-    if (!ret)
+    if (ret)
     {
         const unsigned char tgaSuffix[] = ".tga";
         for(int i = 0; i < 4; ++i)
@@ -1560,6 +1553,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         if (tgaData->imageData != nullptr)
         {
             free(tgaData->imageData);
+            _data = nullptr;
         }
     }
     

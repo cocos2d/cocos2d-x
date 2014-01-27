@@ -1,6 +1,8 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#include "UnitTest/UnitTest.h"
+#include "NewRendererTest/NewRendererTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "NewEventDispatcherTest/NewEventDispatcherTest.h"
 #include "ActionsTest/ActionsTest.h"
@@ -66,5 +68,6 @@
 #include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
+#include "ReleasePoolTest/ReleasePoolTest.h"
 
 #endif

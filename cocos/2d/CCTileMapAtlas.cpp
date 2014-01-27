@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -39,14 +40,14 @@ NS_CC_BEGIN
 
 TileMapAtlas * TileMapAtlas::create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
 {
-    TileMapAtlas *pRet = new TileMapAtlas();
-    if (pRet->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
+    TileMapAtlas *ret = new TileMapAtlas();
+    if (ret->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
-        pRet->autorelease();
-        return pRet;
+        ret->autorelease();
+        return ret;
     }
-    CC_SAFE_DELETE(pRet);
-    return NULL;
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool TileMapAtlas::initWithTileFile(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
@@ -65,9 +66,8 @@ bool TileMapAtlas::initWithTileFile(const std::string& tile, const std::string& 
 }
 
 TileMapAtlas::TileMapAtlas()
- : _posToAtlasIndex(NULL)
- , _itemsToRender(0)
- , _TGAInfo(NULL)
+ : _itemsToRender(0)
+ , _TGAInfo(nullptr)
 {
 }
 
@@ -85,12 +85,12 @@ void TileMapAtlas::releaseMap()
     {
         tgaDestroy(_TGAInfo);
     }
-    _TGAInfo = NULL;
+    _TGAInfo = nullptr;
 }
 
 void TileMapAtlas::calculateItemsToRender()
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must be non-nil");
 
     _itemsToRender = 0;
     for(int x=0;x < _TGAInfo->width; x++ ) 
@@ -128,7 +128,7 @@ void TileMapAtlas::loadTGAfile(const std::string& file)
 // TileMapAtlas - Atlas generation / updates
 void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 {
-    CCASSERT(_TGAInfo != NULL, "tgaInfo must not be nil");
+    CCASSERT(_TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT(position.x < _TGAInfo->width, "Invalid position.x");
     CCASSERT(position.y < _TGAInfo->height, "Invalid position.x");
     CCASSERT(tile.r != 0, "R component must be non 0");
@@ -154,7 +154,7 @@ void TileMapAtlas::setTile(const Color3B& tile, const Point& position)
 
 Color3B TileMapAtlas::getTileAt(const Point& position) const
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must not be nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT( position.x < _TGAInfo->width, "Invalid position.x");
     CCASSERT( position.y < _TGAInfo->height, "Invalid position.y");
 
@@ -230,7 +230,7 @@ void TileMapAtlas::updateAtlasValueAt(const Point& pos, const Color3B& value, in
 
 void TileMapAtlas::updateAtlasValues()
 {
-    CCASSERT( _TGAInfo != NULL, "tgaInfo must be non-nil");
+    CCASSERT( _TGAInfo != nullptr, "tgaInfo must be non-nil");
 
     int total = 0;
 

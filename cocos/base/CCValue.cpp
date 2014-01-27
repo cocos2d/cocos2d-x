@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -32,7 +32,7 @@ const Value Value::Null;
 Value::Value()
 : _vectorData(new ValueVector())
 , _mapData(new ValueMap())
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::NONE)
 {
     
@@ -137,19 +137,19 @@ Value::Value(ValueMap&& v)
     *_mapData = std::move(v);
 }
 
-Value::Value(const IntValueMap& v)
+Value::Value(const ValueMapIntKey& v)
 : _vectorData(nullptr)
 , _mapData(nullptr)
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::INT_KEY_MAP)
 {
     *_intKeyMapData = v;
 }
 
-Value::Value(IntValueMap&& v)
+Value::Value(ValueMapIntKey&& v)
 : _vectorData(nullptr)
 , _mapData(nullptr)
-, _intKeyMapData(new IntValueMap())
+, _intKeyMapData(new ValueMapIntKey())
 , _type(Type::INT_KEY_MAP)
 {
     *_intKeyMapData = std::move(v);
@@ -178,89 +178,93 @@ Value::~Value()
 
 Value& Value::operator= (const Value& other)
 {
-    switch (other._type) {
-        case Type::BYTE:
-            _baseData.byteVal = other._baseData.byteVal;
-            break;
-        case Type::INTEGER:
-            _baseData.intVal = other._baseData.intVal;
-            break;
-        case Type::FLOAT:
-            _baseData.floatVal = other._baseData.floatVal;
-            break;
-        case Type::DOUBLE:
-            _baseData.doubleVal = other._baseData.doubleVal;
-            break;
-        case Type::BOOLEAN:
-            _baseData.boolVal = other._baseData.boolVal;
-            break;
-        case Type::STRING:
-            _strData = other._strData;
-            break;
-        case Type::VECTOR:
-            if (_vectorData == nullptr)
-                _vectorData = new ValueVector();
-            *_vectorData = *other._vectorData;
-            break;
-        case Type::MAP:
-            if (_mapData == nullptr)
-                _mapData = new ValueMap();
-            *_mapData = *other._mapData;
-            break;
-        case Type::INT_KEY_MAP:
-            if (_intKeyMapData == nullptr)
-                _intKeyMapData = new IntValueMap();
-            *_intKeyMapData = *other._intKeyMapData;
-            break;
-        default:
-            break;
+    if (this != &other) {
+        switch (other._type) {
+            case Type::BYTE:
+                _baseData.byteVal = other._baseData.byteVal;
+                break;
+            case Type::INTEGER:
+                _baseData.intVal = other._baseData.intVal;
+                break;
+            case Type::FLOAT:
+                _baseData.floatVal = other._baseData.floatVal;
+                break;
+            case Type::DOUBLE:
+                _baseData.doubleVal = other._baseData.doubleVal;
+                break;
+            case Type::BOOLEAN:
+                _baseData.boolVal = other._baseData.boolVal;
+                break;
+            case Type::STRING:
+                _strData = other._strData;
+                break;
+            case Type::VECTOR:
+                if (_vectorData == nullptr)
+                    _vectorData = new ValueVector();
+                *_vectorData = *other._vectorData;
+                break;
+            case Type::MAP:
+                if (_mapData == nullptr)
+                    _mapData = new ValueMap();
+                *_mapData = *other._mapData;
+                break;
+            case Type::INT_KEY_MAP:
+                if (_intKeyMapData == nullptr)
+                    _intKeyMapData = new ValueMapIntKey();
+                *_intKeyMapData = *other._intKeyMapData;
+                break;
+            default:
+                break;
+        }
+        _type = other._type;
     }
-    _type = other._type;
     return *this;
 }
 
 Value& Value::operator= (Value&& other)
 {
-    switch (other._type) {
-        case Type::BYTE:
-            _baseData.byteVal = other._baseData.byteVal;
-            break;
-        case Type::INTEGER:
-            _baseData.intVal = other._baseData.intVal;
-            break;
-        case Type::FLOAT:
-            _baseData.floatVal = other._baseData.floatVal;
-            break;
-        case Type::DOUBLE:
-            _baseData.doubleVal = other._baseData.doubleVal;
-            break;
-        case Type::BOOLEAN:
-            _baseData.boolVal = other._baseData.boolVal;
-            break;
-        case Type::STRING:
-            _strData = other._strData;
-            break;
-        case Type::VECTOR:
-            CC_SAFE_DELETE(_vectorData);
-            _vectorData = other._vectorData;
-            break;
-        case Type::MAP:
-            CC_SAFE_DELETE(_mapData);
-            _mapData = other._mapData;
-            break;
-        case Type::INT_KEY_MAP:
-            CC_SAFE_DELETE(_intKeyMapData);
-            _intKeyMapData = other._intKeyMapData;
-            break;
-        default:
-            break;
+    if (this != &other) {
+        switch (other._type) {
+            case Type::BYTE:
+                _baseData.byteVal = other._baseData.byteVal;
+                break;
+            case Type::INTEGER:
+                _baseData.intVal = other._baseData.intVal;
+                break;
+            case Type::FLOAT:
+                _baseData.floatVal = other._baseData.floatVal;
+                break;
+            case Type::DOUBLE:
+                _baseData.doubleVal = other._baseData.doubleVal;
+                break;
+            case Type::BOOLEAN:
+                _baseData.boolVal = other._baseData.boolVal;
+                break;
+            case Type::STRING:
+                _strData = other._strData;
+                break;
+            case Type::VECTOR:
+                CC_SAFE_DELETE(_vectorData);
+                _vectorData = other._vectorData;
+                break;
+            case Type::MAP:
+                CC_SAFE_DELETE(_mapData);
+                _mapData = other._mapData;
+                break;
+            case Type::INT_KEY_MAP:
+                CC_SAFE_DELETE(_intKeyMapData);
+                _intKeyMapData = other._intKeyMapData;
+                break;
+            default:
+                break;
+        }
+        _type = other._type;
+        
+        other._vectorData = nullptr;
+        other._mapData = nullptr;
+        other._intKeyMapData = nullptr;
+        other._type = Type::NONE;
     }
-    _type = other._type;
-    
-    other._vectorData = nullptr;
-    other._mapData = nullptr;
-    other._intKeyMapData = nullptr;
-    other._type = Type::NONE;
     
     return *this;
 }
@@ -357,20 +361,20 @@ Value& Value::operator= (ValueMap&& v)
     return *this;
 }
 
-Value& Value::operator= (const IntValueMap& v)
+Value& Value::operator= (const ValueMapIntKey& v)
 {
     clear();
     _type = Type::INT_KEY_MAP;
-    _intKeyMapData = new IntValueMap();
+    _intKeyMapData = new ValueMapIntKey();
     *_intKeyMapData = v;
     return *this;
 }
 
-Value& Value::operator= (IntValueMap&& v)
+Value& Value::operator= (ValueMapIntKey&& v)
 {
     clear();
     _type = Type::INT_KEY_MAP;
-    _intKeyMapData = new IntValueMap();
+    _intKeyMapData = new ValueMapIntKey();
     *_intKeyMapData = std::move(v);
     return *this;
 }
@@ -590,6 +594,51 @@ std::string Value::asString() const
     return ret.str();
 }
 
+ValueVector& Value::asValueVector()
+{
+	if (nullptr == _vectorData)
+		_vectorData = new ValueVector();
+	return *_vectorData;
+}
+
+const ValueVector& Value::asValueVector() const
+{
+	static const ValueVector EMPTY_VALUEVECTOR;
+	if (nullptr == _vectorData)
+		return EMPTY_VALUEVECTOR;
+	return *_vectorData; 
+}
+
+ValueMap& Value::asValueMap()
+{
+	if (nullptr == _mapData)
+		_mapData = new ValueMap();
+	return *_mapData;
+}
+
+const ValueMap& Value::asValueMap() const
+{
+	static const ValueMap EMPTY_VALUEMAP;
+	if (nullptr == _mapData)
+		return EMPTY_VALUEMAP;
+	return *_mapData;
+}
+
+ValueMapIntKey& Value::asIntKeyMap()
+{
+	if (nullptr == _intKeyMapData)
+		_intKeyMapData = new ValueMapIntKey();
+	return *_intKeyMapData;
+}
+
+const ValueMapIntKey& Value::asIntKeyMap() const
+{
+	static const ValueMapIntKey EMPTY_VALUEMAP_INT_KEY;
+	if (nullptr == _intKeyMapData)
+		return EMPTY_VALUEMAP_INT_KEY;
+	return *_intKeyMapData;
+}
+
 static std::string getTabs(int depth)
 {
     std::string tabWidth;
@@ -625,7 +674,8 @@ static std::string visitVector(const ValueVector& v, int depth)
     return ret.str();
 }
 
-static std::string visitMap(const ValueMap& v, int depth)
+template <class T>
+static std::string visitMap(const T& v, int depth)
 {
     std::stringstream ret;
     
@@ -651,6 +701,7 @@ static std::string visit(const Value& v, int depth)
 
     switch (v.getType())
     {
+        case Value::Type::NONE:
         case Value::Type::BYTE:
         case Value::Type::INTEGER:
         case Value::Type::FLOAT:
@@ -666,8 +717,10 @@ static std::string visit(const Value& v, int depth)
             ret << visitMap(v.asValueMap(), depth);
             break;
         case Value::Type::INT_KEY_MAP:
+            ret << visitMap(v.asIntKeyMap(), depth);
             break;
         default:
+            CCASSERT(false, "Invalid type!");
             break;
     }
     

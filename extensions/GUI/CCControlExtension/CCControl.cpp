@@ -42,7 +42,6 @@ Control::Control()
 , _selected(false)
 , _highlighted(false)
 , _hasVisibleParents(false)
-, _dispatchTable(NULL)
 , _isOpacityModifyRGB(false)
 , _state(State::NORMAL)
 {
@@ -111,10 +110,10 @@ void Control::sendActionsForControlEvents(EventType controlEvents)
         {
             // Call invocations
             const auto& invocationList = this->dispatchListforControlEvent((Control::EventType)(1<<i));
-            
-            invocationList.forEach([this](Invocation* invocation){
+
+            for(const auto &invocation : invocationList) {
                 invocation->invoke(this);
-            });
+            }
 
             //Call ScriptFunc
             if (kScriptTypeLua == _scriptType)
@@ -193,8 +192,10 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
     } 
     else
     {
-            //normally we would use a predicate, but this won't work here. Have to do it manually
-        eventInvocationList.forEach([&](Invocation* invocation){
+        std::vector<Invocation*> tobeRemovedInvocations;
+        
+        //normally we would use a predicate, but this won't work here. Have to do it manually
+        for(const auto &invocation : eventInvocationList) {
             bool shouldBeRemoved=true;
             if (target)
             {
@@ -207,9 +208,13 @@ void Control::removeTargetWithActionForControlEvent(Object* target, Handler acti
             // Remove the corresponding invocation object
             if (shouldBeRemoved)
             {
-                eventInvocationList.eraseObject(invocation, bDeleteObjects);
+                tobeRemovedInvocations.push_back(invocation);
             }
-        });
+        }
+
+        for(const auto &invocation : tobeRemovedInvocations) {
+            eventInvocationList.eraseObject(invocation, bDeleteObjects);
+        }
     }
 }
 
@@ -219,13 +224,9 @@ void Control::setOpacityModifyRGB(bool bOpacityModifyRGB)
 {
     _isOpacityModifyRGB=bOpacityModifyRGB;
     
-    _children.forEach([&](Node* obj){
-        RGBAProtocol* rgba = dynamic_cast<RGBAProtocol*>(obj);
-        if (rgba)
-        {
-            rgba->setOpacityModifyRGB(bOpacityModifyRGB);
-        }
-    });
+    for(auto child : _children){
+        child->setOpacityModifyRGB(bOpacityModifyRGB);
+    }
 }
 
 bool Control::isOpacityModifyRGB() const

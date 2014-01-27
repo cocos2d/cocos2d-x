@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -30,7 +31,6 @@ THE SOFTWARE.
 #include "ccMacros.h"
 #include "CCGLProgram.h"
 #include "ccGLStateCache.h"
-#include "CCNotificationCenter.h"
 #include "CCEventType.h"
 #include "CCDirector.h"
 #include "CCGL.h"
@@ -39,6 +39,8 @@ THE SOFTWARE.
 #include "CCTexture2D.h"
 #include "CCString.h"
 #include <stdlib.h>
+#include "CCEventDispatcher.h"
+#include "CCEventListenerCustom.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -47,10 +49,13 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 TextureAtlas::TextureAtlas()
-    :_indices(NULL)
+    :_indices(nullptr)
     ,_dirty(false)
-    ,_texture(NULL)
-    ,_quads(NULL)
+    ,_texture(nullptr)
+    ,_quads(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    ,_backToForegroundlistener(nullptr)
+#endif
 {}
 
 TextureAtlas::~TextureAtlas()
@@ -70,7 +75,7 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    NotificationCenter::getInstance()->removeObserver(this, EVNET_COME_TO_FOREGROUND);
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 }
 
@@ -110,7 +115,7 @@ void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 
 // TextureAtlas - alloc & init
 
-TextureAtlas * TextureAtlas::create(const char* file, ssize_t capacity)
+TextureAtlas * TextureAtlas::create(const std::string& file, ssize_t capacity)
 {
     TextureAtlas * textureAtlas = new TextureAtlas();
     if(textureAtlas && textureAtlas->initWithFile(file, capacity))
@@ -119,7 +124,7 @@ TextureAtlas * TextureAtlas::create(const char* file, ssize_t capacity)
         return textureAtlas;
     }
     CC_SAFE_DELETE(textureAtlas);
-    return NULL;
+    return nullptr;
 }
 
 TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capacity)
@@ -131,10 +136,10 @@ TextureAtlas * TextureAtlas::createWithTexture(Texture2D *texture, ssize_t capac
         return textureAtlas;
     }
     CC_SAFE_DELETE(textureAtlas);
-    return NULL;
+    return nullptr;
 }
 
-bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
+bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
 {
     // retained in property
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
@@ -145,7 +150,7 @@ bool TextureAtlas::initWithFile(const char * file, ssize_t capacity)
     }
     else
     {
-        CCLOG("cocos2d: Could not open file: %s", file);
+        CCLOG("cocos2d: Could not open file: %s", file.c_str());
         return false;
     }
 }
@@ -154,7 +159,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
-//    CCASSERT(texture != NULL, "texture should not be null");
+//    CCASSERT(texture != nullptr, "texture should not be null");
     _capacity = capacity;
     _totalQuads = 0;
 
@@ -163,7 +168,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     CC_SAFE_RETAIN(_texture);
 
     // Re-initialization is not allowed
-    CCASSERT(_quads == NULL && _indices == NULL, "");
+    CCASSERT(_quads == nullptr && _indices == nullptr, "");
 
     _quads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(V3F_C4B_T2F_Quad) );
     _indices = (GLushort *)malloc( _capacity * 6 * sizeof(GLushort) );
@@ -185,10 +190,8 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event when app go to background
-    NotificationCenter::getInstance()->addObserver(this,
-                                                           callfuncO_selector(TextureAtlas::listenBackToForeground),
-                                                           EVNET_COME_TO_FOREGROUND,
-                                                           NULL);
+    _backToForegroundlistener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(TextureAtlas::listenBackToForeground, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
 #endif
     
     this->setupIndices();
@@ -207,7 +210,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     return true;
 }
 
-void TextureAtlas::listenBackToForeground(Object *obj)
+void TextureAtlas::listenBackToForeground(EventCustom* event)
 {  
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -224,7 +227,7 @@ void TextureAtlas::listenBackToForeground(Object *obj)
 
 std::string TextureAtlas::getDescription() const
 {
-    return String::createWithFormat("<TextureAtlas | totalQuads = %zd>", _totalQuads)->getCString();
+    return StringUtils::format("<TextureAtlas | totalQuads = %d>", static_cast<int>(_totalQuads));
 }
 
 
@@ -467,15 +470,15 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     _totalQuads = MIN(_totalQuads, newCapacity);
     _capacity = newCapacity;
 
-    V3F_C4B_T2F_Quad* tmpQuads = NULL;
-    GLushort* tmpIndices = NULL;
+    V3F_C4B_T2F_Quad* tmpQuads = nullptr;
+    GLushort* tmpIndices = nullptr;
     
-    // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return NULL,
-    // so here must judge whether _quads and _indices is NULL.
-    if (_quads == NULL)
+    // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return nullptr,
+    // so here must judge whether _quads and _indices is nullptr.
+    if (_quads == nullptr)
     {
         tmpQuads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(_quads[0]) );
-        if (tmpQuads != NULL)
+        if (tmpQuads != nullptr)
         {
             memset(tmpQuads, 0, _capacity * sizeof(_quads[0]) );
         }
@@ -483,16 +486,16 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     else
     {
         tmpQuads = (V3F_C4B_T2F_Quad*)realloc( _quads, sizeof(_quads[0]) * _capacity );
-        if (tmpQuads != NULL && _capacity > oldCapactiy)
+        if (tmpQuads != nullptr && _capacity > oldCapactiy)
         {
             memset(tmpQuads+oldCapactiy, 0, (_capacity - oldCapactiy)*sizeof(_quads[0]) );
         }
     }
 
-    if (_indices == NULL)
+    if (_indices == nullptr)
     {    
         tmpIndices = (GLushort*)malloc( _capacity * 6 * sizeof(_indices[0]) );
-        if (tmpIndices != NULL)
+        if (tmpIndices != nullptr)
         {
             memset( tmpIndices, 0, _capacity * 6 * sizeof(_indices[0]) );
         }
@@ -501,7 +504,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     else
     {
         tmpIndices = (GLushort*)realloc( _indices, sizeof(_indices[0]) * _capacity * 6 );
-        if (tmpIndices != NULL && _capacity > oldCapactiy)
+        if (tmpIndices != nullptr && _capacity > oldCapactiy)
         {
             memset( tmpIndices+oldCapactiy, 0, (_capacity-oldCapactiy) * 6 * sizeof(_indices[0]) );
         }
@@ -621,13 +624,13 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
             // option 1: subdata
-            //glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-            
+//            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+
             // option 2: data
-            //      glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-            
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+
             // option 3: orphaning + glMapBuffer
-            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), NULL, GL_DYNAMIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (numberOfQuads-start), nullptr, GL_DYNAMIC_DRAW);
             void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
             memcpy(buf, _quads, sizeof(_quads[0])* (numberOfQuads-start));
             glUnmapBuffer(GL_ARRAY_BUFFER);

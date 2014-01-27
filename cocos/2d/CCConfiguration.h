@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -121,14 +122,14 @@ public:
 	/** sets a new key/value pair  in the configuration dictionary */
 	void setValue(const std::string& key, const Value& value);
 
-	/** dumps the current configuration on the console */
-	void dumpInfo() const;
+    /** returns the Configuration info */
+    std::string getInfo() const;
 
 	/** gathers OpenGL / GPU information */
 	void gatherGPUInfo();
 
 	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added. */
-	void loadConfigFile(const char *filename);
+	void loadConfigFile(const std::string& filename);
 
 private:
     Configuration(void);

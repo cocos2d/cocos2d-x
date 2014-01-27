@@ -33,11 +33,11 @@ public:
     UISliderTest();
     ~UISliderTest();
     bool init();
-    void percentChangedEvent(Object* pSender, SliderEventType type);
+    void sliderEvent(Object* pSender, SliderEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest)
-    UILabel* m_pDisplayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 class UISliderTest_Scale9 : public UIScene
@@ -46,11 +46,11 @@ public:
     UISliderTest_Scale9();
     ~UISliderTest_Scale9();
     bool init();
-    void percentChangedEvent(Object* pSender, SliderEventType type);
+    void sliderEvent(Object* pSender, SliderEventType type);
     
 protected:
     UI_SCENE_CREATE_FUNC(UISliderTest_Scale9)
-    UILabel* m_pDisplayValueLabel;
+    gui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UISliderTest__) */

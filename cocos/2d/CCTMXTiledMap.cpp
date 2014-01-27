@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -122,12 +123,12 @@ TMXTilesetInfo * TMXTiledMap::tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInf
             tileset = *iter;
             if (tileset)
             {
-                for( unsigned int y=0; y < size.height; y++ )
+                for( int y=0; y < size.height; y++ )
                 {
-                    for( unsigned int x=0; x < size.width; x++ ) 
+                    for( int x=0; x < size.width; x++ )
                     {
-                        unsigned int pos = (unsigned int)(x + size.width * y);
-                        unsigned int gid = layerInfo->_tiles[ pos ];
+                        int pos = static_cast<int>(x + size.width * y);
+                        int gid = layerInfo->_tiles[ pos ];
 
                         // gid are stored in little endian.
                         // if host is big endian, then swap
@@ -168,11 +169,12 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
 
     int idx=0;
 
-    mapInfo->getLayers().forEach([&idx, this, &mapInfo](TMXLayerInfo* layerInfo){
-        if (layerInfo && layerInfo->_visible)
+    auto& layers = mapInfo->getLayers();
+    for(const auto &layerInfo : layers) {
+        if (layerInfo->_visible)
         {
             TMXLayer *child = parseLayer(layerInfo, mapInfo);
-            addChild((Node*)child, idx, idx);
+            addChild(child, idx, idx);
             
             // update content size with the max size
             const Size& childSize = child->getContentSize();
@@ -183,7 +185,7 @@ void TMXTiledMap::buildWithMapInfo(TMXMapInfo* mapInfo)
             
             idx++;
         }
-    });
+    }
 }
 
 // public
@@ -246,7 +248,7 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
 
 std::string TMXTiledMap::getDescription() const
 {
-    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %zd", _tag, _children.size());
+    return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
 }
 
 

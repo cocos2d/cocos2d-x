@@ -1,6 +1,35 @@
+/****************************************************************************
+ Copyright (c) 2012 cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "ActionsTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
 
 static std::function<Layer*()> createFunctions[] = {
 
@@ -92,12 +121,12 @@ void ActionsTestScene::runThisTest()
 }
 
 
-std::string ActionsDemo::title()
+std::string ActionsDemo::title() const
 {
     return "ActionsTest";
 }
 
-std::string ActionsDemo::subtitle()
+std::string ActionsDemo::subtitle() const
 {
     return "";
 }
@@ -236,7 +265,7 @@ void ActionManual::onEnter()
     _kathia->setColor( Color3B::BLUE);
 }
 
-std::string ActionManual::subtitle()
+std::string ActionManual::subtitle() const
 {
     return "Manual Transformation";
 }
@@ -263,7 +292,7 @@ void ActionMove::onEnter()
     _kathia->runAction(MoveTo::create(1, Point(40,40)));
 }
 
-std::string ActionMove::subtitle()
+std::string ActionMove::subtitle() const
 {
     return "MoveTo / MoveBy";
 }
@@ -288,7 +317,7 @@ void ActionScale::onEnter()
     _kathia->runAction( Sequence::create(actionBy2, actionBy2->reverse(), NULL));
 }
 
-std::string ActionScale::subtitle()
+std::string ActionScale::subtitle() const
 {
     return "ScaleTo / ScaleBy";
 }
@@ -316,7 +345,7 @@ void ActionSkew::onEnter()
     _kathia->runAction(Sequence::create(actionBy2, actionBy2->reverse(), NULL));
 }
 
-string ActionSkew::subtitle()
+std::string ActionSkew::subtitle() const
 {
     return "SkewTo / SkewBy";
 }
@@ -328,19 +357,20 @@ void ActionRotationalSkew::onEnter()
 
     this->centerSprites(3);
 
-    auto actionTo = RotateTo::create(2, 37.2f, -37.2f);
+    auto actionTo = RotateTo::create(2, 180, 180);
     auto actionToBack = RotateTo::create(2, 0, 0);
-    auto actionBy = RotateBy::create(2, 0.0f, -90.0f);
-    auto actionBy2 = RotateBy::create(2, 45.0f, 45.0f);
+    auto actionBy = RotateBy::create(2, 0.0f, 360);
     auto actionByBack = actionBy->reverse();
 
-    _tamara->runAction( Sequence::create(actionTo, actionToBack, NULL) );
-    _grossini->runAction( Sequence::create(actionBy, actionByBack, NULL) );
+    auto actionBy2 = RotateBy::create(2, 360, 0);
+    auto actionBy2Back = actionBy2->reverse();
 
-    _kathia->runAction( Sequence::create(actionBy2, actionBy2->reverse(), NULL) );
+    _tamara->runAction( Sequence::create(actionBy, actionByBack, NULL) );
+    _grossini->runAction( Sequence::create(actionTo, actionToBack, NULL) );
+    _kathia->runAction( Sequence::create(actionBy2, actionBy2Back, NULL) );
 }
 
-std::string ActionRotationalSkew::subtitle()
+std::string ActionRotationalSkew::subtitle() const
 {
     return "RotationalSkewTo / RotationalSkewBy";
 }
@@ -390,7 +420,7 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     auto actionToBack2 = RotateBy::create(2, -360, 0);
     box->runAction(Sequence::create(actionTo2, actionToBack2, NULL));
 }
-std::string ActionRotationalSkewVSStandardSkew::subtitle()
+std::string ActionRotationalSkewVSStandardSkew::subtitle() const
 {
     return "Skew Comparison";
 }
@@ -438,7 +468,7 @@ void ActionSkewRotateScale::onEnter()
     box->runAction(Sequence::create(actionScaleTo, actionScaleToBack, NULL));
 }
 
-string ActionSkewRotateScale::subtitle()
+std::string ActionSkewRotateScale::subtitle() const
 {
     return "Skew + Rotate + Scale";
 }
@@ -466,7 +496,7 @@ void ActionRotate::onEnter()
     _kathia->runAction( Sequence::create(actionTo2, actionTo0->clone(), NULL));
 }
 
-std::string ActionRotate::subtitle()
+std::string ActionRotate::subtitle() const
 {
     return "RotateTo / RotateBy";
 }
@@ -491,7 +521,7 @@ void ActionJump::onEnter()
     _grossini->runAction( Sequence::create(actionBy, actionByBack, NULL));
     _kathia->runAction( RepeatForever::create(actionUp));
 }
-std::string ActionJump::subtitle()
+std::string ActionJump::subtitle() const
 {
     return "JumpTo / JumpBy";
 }
@@ -544,7 +574,7 @@ void ActionBezier::onEnter()
 
 }
 
-std::string ActionBezier::subtitle()
+std::string ActionBezier::subtitle() const
 {
     return "BezierBy / BezierTo";
 }
@@ -567,7 +597,7 @@ void ActionBlink::onEnter()
     _kathia->runAction(action2);
 }
 
-std::string  ActionBlink::subtitle()
+std::string  ActionBlink::subtitle() const
 {
     return "Blink";
 }
@@ -594,7 +624,7 @@ void ActionFade::onEnter()
     _kathia->runAction( Sequence::create( action2, action2Back, NULL));
 }
 
-std::string  ActionFade::subtitle()
+std::string  ActionFade::subtitle() const
 {
     return "FadeIn / FadeOut";
 }
@@ -619,7 +649,7 @@ void ActionTint::onEnter()
     _kathia->runAction( Sequence::create( action2, action2Back, NULL));
 }
 
-std::string  ActionTint::subtitle()
+std::string  ActionTint::subtitle() const
 {
     return "TintTo / TintBy";
 }
@@ -689,12 +719,12 @@ void ActionAnimate::onExit()
     //TODO:[[NSNotificationCenter defaultCenter] removeObserver:observer_);
 }
 
-std::string ActionAnimate::title()
+std::string ActionAnimate::title() const
 {
     return "Animation";
 }
 
-std::string ActionAnimate::subtitle()
+std::string ActionAnimate::subtitle() const
 {
     return "Center: Manual animation. Border: using file format animation";
 }
@@ -718,7 +748,7 @@ void ActionSequence::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionSequence::subtitle()
+std::string ActionSequence::subtitle() const
 {
     return "Sequence: Move + Rotate";
 }
@@ -775,7 +805,7 @@ void ActionSequence2::callback3(Node* sender, long data)
     addChild(label);
 }
 
-std::string ActionSequence2::subtitle()
+std::string ActionSequence2::subtitle() const
 {
     return "Sequence of InstantActions";
 }
@@ -799,12 +829,12 @@ void ActionCallFuncN::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionCallFuncN::title()
+std::string ActionCallFuncN::title() const
 {
     return "CallFuncN";
 }
 
-std::string ActionCallFuncN::subtitle()
+std::string ActionCallFuncN::subtitle() const
 {
     return "Grossini should jump after moving";
 }
@@ -834,12 +864,12 @@ void ActionCallFuncND::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionCallFuncND::title()
+std::string ActionCallFuncND::title() const
 {
     return "CallFuncND + auto remove";
 }
 
-std::string ActionCallFuncND::subtitle()
+std::string ActionCallFuncND::subtitle() const
 {
     return "simulates CallFuncND with std::bind()";
 }
@@ -868,12 +898,12 @@ void ActionCallFuncO::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionCallFuncO::title()
+std::string ActionCallFuncO::title() const
 {
     return "CallFuncO + autoremove";
 }
 
-std::string ActionCallFuncO::subtitle()
+std::string ActionCallFuncO::subtitle() const
 {
     return "simulates CallFuncO with std::bind()";
 }
@@ -956,7 +986,7 @@ void ActionCallFunction::callback3(Node* sender, long data)
 	CCLOG("target is: %p, data is: %ld", sender, data);
 }
 
-std::string ActionCallFunction::subtitle()
+std::string ActionCallFunction::subtitle() const
 {
     return "Callbacks: CallFunc with std::function()";
 }
@@ -980,7 +1010,7 @@ void ActionSpawn::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionSpawn::subtitle()
+std::string ActionSpawn::subtitle() const
 {
     return "Spawn: Jump + Rotate";
 }
@@ -1012,7 +1042,7 @@ void ActionRepeatForever::repeatForever(Node* sender)
     sender->runAction(repeat);
 }
 
-std::string ActionRepeatForever::subtitle()
+std::string ActionRepeatForever::subtitle() const
 {
     return "CallFuncN + RepeatForever";
 }
@@ -1039,7 +1069,7 @@ void ActionRotateToRepeat::onEnter()
     _kathia->runAction(rep2);
 }
 
-std::string ActionRotateToRepeat ::subtitle()
+std::string ActionRotateToRepeat ::subtitle() const
 {
     return "Repeat/RepeatForever + RotateTo";
 }
@@ -1068,7 +1098,7 @@ void ActionRotateJerk::onEnter()
     _kathia->runAction(rep2);
 }
 
-std::string ActionRotateJerk::subtitle()
+std::string ActionRotateJerk::subtitle() const
 {
     return "RepeatForever / Repeat + Rotate";
 }
@@ -1090,7 +1120,7 @@ void ActionReverse::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionReverse::subtitle()
+std::string ActionReverse::subtitle() const
 {
     return "Reverse an action";
 }
@@ -1113,7 +1143,7 @@ void ActionDelayTime::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionDelayTime::subtitle()
+std::string ActionDelayTime::subtitle() const
 {
     return "DelayTime: m + delay + m";
 }
@@ -1138,7 +1168,7 @@ void ActionReverseSequence::onEnter()
     _grossini->runAction(action);
 }
 
-std::string ActionReverseSequence::subtitle()
+std::string ActionReverseSequence::subtitle() const
 {
     return "Reverse a sequence";
 }
@@ -1177,7 +1207,7 @@ void ActionReverseSequence2::onEnter()
 	auto seq_back = seq_tamara->reverse();
     _tamara->runAction( Sequence::create( seq_tamara, seq_back, NULL));
 }
-std::string ActionReverseSequence2::subtitle()
+std::string ActionReverseSequence2::subtitle() const
 {
     return "Reverse sequence 2";
 }
@@ -1206,7 +1236,7 @@ void ActionRepeat::onEnter()
     _tamara->runAction(action2);
 }
 
-std::string ActionRepeat::subtitle()
+std::string ActionRepeat::subtitle() const
 {
     return "Repeat / RepeatForever actions";
 }
@@ -1220,25 +1250,26 @@ void ActionOrbit::onEnter()
 {
     ActionsDemo::onEnter();
 
+    Director::getInstance()->setProjection(Director::Projection::_2D);
     centerSprites(3);
 
     auto orbit1 = OrbitCamera::create(2,1, 0, 0, 180, 0, 0);
-    auto  action1 = Sequence::create(
+    auto action1 = Sequence::create(
         orbit1,
         orbit1->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit2 = OrbitCamera::create(2,1, 0, 0, 180, -45, 0);
-    auto  action2 = Sequence::create(
+    auto action2 = Sequence::create(
         orbit2,
         orbit2->reverse(),
-        NULL);
+        nullptr);
 
     auto orbit3 = OrbitCamera::create(2,1, 0, 0, 180, 90, 0);
-    auto  action3 = Sequence::create(
+    auto action3 = Sequence::create(
         orbit3,
         orbit3->reverse(),
-        NULL);
+        nullptr);
 
     _kathia->runAction(RepeatForever::create(action1));
     _tamara->runAction(RepeatForever::create(action2));
@@ -1253,7 +1284,7 @@ void ActionOrbit::onEnter()
     _grossini->runAction( rfe->clone() );
 }
 
-std::string ActionOrbit::subtitle()
+std::string ActionOrbit::subtitle() const
 {
     return "OrbitCamera action";
 }
@@ -1283,16 +1314,24 @@ void ActionFollow::onEnter()
 
 void ActionFollow::draw()
 {
-    auto winSize = Director::getInstance()->getWinSize();
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ActionFollow::onDraw, this);
     
-	float x = winSize.width*2 - 100;
-	float y = winSize.height;
-    
-	Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
-	DrawPrimitives::drawPoly(vertices, 4, true);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-std::string ActionFollow::subtitle()
+void ActionFollow::onDraw()
+{
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    float x = winSize.width*2 - 100;
+    float y = winSize.height;
+    
+    Point vertices[] = { Point(5,5), Point(x-5,5), Point(x-5,y-5), Point(5,y-5) };
+    DrawPrimitives::drawPoly(vertices, 4, true);
+}
+
+std::string ActionFollow::subtitle() const
 {
     return "Follow action";
 }
@@ -1317,12 +1356,12 @@ void ActionTargeted::onEnter()
     _tamara->runAction(always);
 }
 
-std::string ActionTargeted::title()
+std::string ActionTargeted::title() const
 {
     return "ActionTargeted";
 }
 
-std::string ActionTargeted::subtitle()
+std::string ActionTargeted::subtitle() const
 {
     return "Action that runs on another target. Useful for sequences";
 }
@@ -1348,12 +1387,12 @@ void ActionTargetedReverse::onEnter()
     _tamara->runAction(always);
 }
 
-std::string ActionTargetedReverse::title()
+std::string ActionTargetedReverse::title() const
 {
     return "ActionTargetedReverse";
 }
 
-std::string ActionTargetedReverse::subtitle()
+std::string ActionTargetedReverse::subtitle() const
 {
     return "Action that runs reversely on another target. Useful for sequences";
 }
@@ -1402,12 +1441,12 @@ void ActionStacked::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
     }
 }
 
-std::string ActionStacked::title()
+std::string ActionStacked::title() const
 {
     return "Override me";
 }
 
-std::string ActionStacked::subtitle()
+std::string ActionStacked::subtitle() const
 {
     return "Tap screen";
 }
@@ -1434,7 +1473,7 @@ void ActionMoveStacked::runActionsInSprite(Sprite *sprite)
 }
 
 
-std::string ActionMoveStacked::title()
+std::string ActionMoveStacked::title() const
 {
     return "Stacked MoveBy/To actions";
 }
@@ -1459,7 +1498,7 @@ void ActionMoveJumpStacked::runActionsInSprite(Sprite *sprite)
           ));
 }
 
-std::string ActionMoveJumpStacked::title()
+std::string ActionMoveJumpStacked::title() const
 {
     return "tacked Move + Jump actions";
 }
@@ -1490,7 +1529,7 @@ void ActionMoveBezierStacked::runActionsInSprite(Sprite *sprite)
        NULL)));
 }
 
-std::string ActionMoveBezierStacked::title()
+std::string ActionMoveBezierStacked::title() const
 {
     return "Stacked Move + Bezier actions";
 }
@@ -1587,18 +1626,32 @@ void ActionCatmullRomStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     
-    DrawPrimitives::drawCatmullRom(_array2,50);
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRomStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-std::string ActionCatmullRomStacked::title()
+void ActionCatmullRomStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1,50);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
+}
+
+std::string ActionCatmullRomStacked::title() const
 {
     return "Stacked MoveBy + CatmullRom actions";
 }
 
-std::string ActionCatmullRomStacked::subtitle()
+std::string ActionCatmullRomStacked::subtitle() const
 {
     return "MoveBy + CatmullRom at the same time in the same sprite";
 }
@@ -1682,23 +1735,38 @@ void ActionCardinalSplineStacked::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSplineStacked::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-std::string ActionCardinalSplineStacked::title()
+void ActionCardinalSplineStacked::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
+}
+
+std::string ActionCardinalSplineStacked::title() const
 {
     return "Stacked MoveBy + CardinalSpline actions";
 }
 
-std::string ActionCardinalSplineStacked::subtitle()
+std::string ActionCardinalSplineStacked::subtitle() const
 {
     return "CCMoveBy + CardinalSplineBy/To at the same time";
 }
@@ -1740,12 +1808,12 @@ void Issue1305::addSprite(float dt)
     addChild(_spriteTmp);
 }
 
-std::string Issue1305::title()
+std::string Issue1305::title() const
 {
     return "Issue 1305";
 }
 
-std::string Issue1305::subtitle()
+std::string Issue1305::subtitle() const
 {
     return "In two seconds you should see a message on the console. NOT BEFORE.";
 }
@@ -1813,12 +1881,12 @@ void Issue1305_2::printLog4()
     log("4th block");
 }
 
-std::string Issue1305_2::title()
+std::string Issue1305_2::title() const
 {
     return "Issue 1305 #2";
 }
 
-std::string Issue1305_2::subtitle()
+std::string Issue1305_2::subtitle() const
 {
     return "See console. You should only see one message for each block";
 }
@@ -1840,12 +1908,12 @@ void Issue1288::onEnter()
     spr->runAction(act4);
 }
 
-std::string Issue1288::title()
+std::string Issue1288::title() const
 {
     return "Issue 1288";
 }
 
-std::string Issue1288::subtitle()
+std::string Issue1288::subtitle() const
 {
     return "Sprite should end at the position where it started.";
 }
@@ -1863,12 +1931,12 @@ void Issue1288_2::onEnter()
     spr->runAction(Repeat::create(act1, 1));
 }
 
-std::string Issue1288_2::title()
+std::string Issue1288_2::title() const
 {
     return "Issue 1288 #2";
 }
 
-std::string Issue1288_2::subtitle()
+std::string Issue1288_2::subtitle() const
 {
     return "Sprite should move 100 pixels, and stay there";
 }
@@ -1897,12 +1965,12 @@ void Issue1327::onEnter()
     spr->runAction(actF);
 }
 
-std::string Issue1327::title()
+std::string Issue1327::title() const
 {
     return "Issue 1327";
 }
 
-std::string Issue1327::subtitle()
+std::string Issue1327::subtitle() const
 {
     return "See console: You should see: 0, 45, 90, 135, 180";
 }
@@ -1946,12 +2014,12 @@ void Issue1398::incrementIntegerCallback(void* data)
     log("%s", (char*)data);
 }
 
-std::string Issue1398::subtitle()
+std::string Issue1398::subtitle() const
 {
     return "See console: You should see an 8";
 }
 
-std::string Issue1398::title()
+std::string Issue1398::title() const
 {
     return "Issue 1398";
 }
@@ -2034,18 +2102,35 @@ void ActionCatmullRom::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
+
     kmGLPopMatrix();
-    
-    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
+
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ActionCatmullRom::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-string ActionCatmullRom::title()
+
+void ActionCatmullRom::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCatmullRom(_array1, 50);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCatmullRom(_array2,50);
+    kmGLLoadMatrix(&oldMat);
+}
+
+
+std::string ActionCatmullRom::title() const
 {
     return "CatmullRomBy / CatmullRomTo";
 }
 
-string ActionCatmullRom::subtitle()
+std::string ActionCatmullRom::subtitle() const
 {
     return "Catmull Rom spline paths. Testing reverse too";
 }
@@ -2112,23 +2197,38 @@ void ActionCardinalSpline::draw()
     // move to 50,50 since the "by" path will start at 50,50
     kmGLPushMatrix();
     kmGLTranslatef(50, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV1);
     kmGLPopMatrix();
     
     auto s = Director::getInstance()->getWinSize();
     
     kmGLPushMatrix();
     kmGLTranslatef(s.width/2, 50, 0);
-    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLGetMatrix(KM_GL_MODELVIEW, &_modelViewMV2);
     kmGLPopMatrix();
+    
+    _customCommand.init(_globalZOrder);
+    _customCommand.func = CC_CALLBACK_0(ActionCardinalSpline::onDraw, this);
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-string ActionCardinalSpline::title()
+void ActionCardinalSpline::onDraw()
+{
+    kmMat4 oldMat;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &oldMat);
+    kmGLLoadMatrix(&_modelViewMV1);
+    DrawPrimitives::drawCardinalSpline(_array, 0, 100);
+    kmGLLoadMatrix(&_modelViewMV2);
+    DrawPrimitives::drawCardinalSpline(_array, 1, 100);
+    kmGLLoadMatrix(&oldMat);
+}
+
+std::string ActionCardinalSpline::title() const
 {
     return "CardinalSplineBy / CardinalSplineTo";
 }
 
-string ActionCardinalSpline::subtitle()
+std::string ActionCardinalSpline::subtitle() const
 {
     return "Cardinal Spline paths. Testing different tensions for one array";
 }
@@ -2160,12 +2260,12 @@ void PauseResumeActions::onEnter()
     this->schedule(schedule_selector(PauseResumeActions::resume), 5, false, 0);
 }
 
-string PauseResumeActions::title()
+std::string PauseResumeActions::title() const
 {
     return "PauseResumeActions";
 }
 
-string PauseResumeActions::subtitle()
+std::string PauseResumeActions::subtitle() const
 {
     return "All actions pause at 3s and resume at 5s";
 }
@@ -2207,7 +2307,7 @@ void ActionRemoveSelf::onEnter()
 	_grossini->runAction(action);
 }
 
-std::string ActionRemoveSelf::subtitle()
+std::string ActionRemoveSelf::subtitle() const
 {
 	return "Sequence: Move + Rotate + Scale + RemoveSelf";
 }

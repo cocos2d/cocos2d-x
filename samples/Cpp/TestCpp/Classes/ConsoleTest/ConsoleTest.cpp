@@ -82,7 +82,7 @@ BaseTestConsole::~BaseTestConsole(void)
 {
 }
 
-std::string BaseTestConsole::title()
+std::string BaseTestConsole::title() const
 {
     return "No title";
 }
@@ -133,13 +133,11 @@ void ConsoleTestScene::runThisTest()
 
 ConsoleTCP::ConsoleTCP()
 {
-    _console = Console::create();
-    _console->retain();
+    _console = Director::getInstance()->getConsole();
 }
 
 ConsoleTCP::~ConsoleTCP()
 {
-    _console->release();
 }
 
 void ConsoleTCP::onEnter()
@@ -148,10 +146,16 @@ void ConsoleTCP::onEnter()
     _console->listenOnTCP(5678);
 }
 
-std::string ConsoleTCP::title()
+std::string ConsoleTCP::title() const
 {
     return "Console TCP";
 }
+
+std::string ConsoleTCP::subtitle() const
+{
+    return "telnet localhost 5678";
+}
+
 
 //------------------------------------------------------------------
 //
@@ -161,8 +165,7 @@ std::string ConsoleTCP::title()
 
 ConsoleCustomCommand::ConsoleCustomCommand()
 {
-    _console = Console::create();
-    _console->retain();
+    _console = Director::getInstance()->getConsole();
 
     static struct Console::Command commands[] = {
         {"hello", [](int fd, const char* command) {
@@ -177,7 +180,6 @@ ConsoleCustomCommand::ConsoleCustomCommand()
 
 ConsoleCustomCommand::~ConsoleCustomCommand()
 {
-    _console->release();
 }
 
 void ConsoleCustomCommand::onEnter()
@@ -186,7 +188,12 @@ void ConsoleCustomCommand::onEnter()
     _console->listenOnTCP(5678);
 }
 
-std::string ConsoleCustomCommand::title()
+std::string ConsoleCustomCommand::title() const
 {
     return "Console Custom Commands";
+}
+
+std::string ConsoleCustomCommand::subtitle() const
+{
+    return "telnet localhost 5678";
 }

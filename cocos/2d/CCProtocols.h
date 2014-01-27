@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -35,11 +36,11 @@ NS_CC_BEGIN
 /**
  * RGBA protocol that affects Node's color and opacity
  */
-class CC_DLL RGBAProtocol
+class CC_DLL __RGBAProtocol
 {
 public:
-    virtual ~RGBAProtocol() {}
-
+    virtual ~__RGBAProtocol() {}
+    
     /**
      * Changes the color with R,G,B bytes
      *
@@ -48,7 +49,7 @@ public:
      * @lua NA
      */
     virtual void setColor(const Color3B& color) = 0;
-
+    
     /**
      * Returns color that is currently used.
      *
@@ -86,7 +87,7 @@ public:
      * @lua NA
      */
     virtual GLubyte getOpacity() const = 0;
-
+    
     /**
      * Changes the opacity.
      *
@@ -95,11 +96,11 @@ public:
      * @lua NA
      */
     virtual void setOpacity(GLubyte opacity) = 0;
-
+    
     // optional
-
+    
     /**
-     * Changes the OpacityModifyRGB property. 
+     * Changes the OpacityModifyRGB property.
      * If thie property is set to true, then the rendered color will be affected by opacity.
      * Normally, r = r * opacity/255, g = g * opacity/255, b = b * opacity/255.
      *
@@ -109,9 +110,9 @@ public:
      * @lua NA
      */
     virtual void setOpacityModifyRGB(bool value) = 0;
-
+    
     /**
-     * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) 
+     * Returns whether or not the opacity will be applied using glColor(R,G,B,opacity)
      * or glColor(opacity, opacity, opacity, opacity)
      *
      * @return  Returns opacity modify flag.
@@ -127,19 +128,19 @@ public:
      */
     virtual bool isCascadeColorEnabled() const = 0;
     /**
-    * @js NA
-    * @lua NA
-    */
+     * @js NA
+     * @lua NA
+     */
     virtual void setCascadeColorEnabled(bool cascadeColorEnabled) = 0;
     
-    /** 
-     *  recursive method that updates display color 
+    /**
+     *  recursive method that updates display color
      * @js NA
      * @lua NA
      */
     virtual void updateDisplayedColor(const Color3B& color) = 0;
     
-    /** 
+    /**
      *  whether or not opacity should be propagated to its children.
      * @js NA
      * @lua NA

@@ -1,7 +1,8 @@
 /****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2008-2011 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -56,7 +57,7 @@ class SpriteFrame;
  *
  *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  */
-class CC_DLL MenuItem : public NodeRGBA
+class CC_DLL MenuItem : public Node
 {
 public:
     /** Creates a MenuItem with no target/selector */
@@ -105,7 +106,7 @@ protected:
     : _selected(false)
     , _enabled(false)
 	, _callback(nullptr)
-    , _target(NULL)
+    , _target(nullptr)
     {}
     /**
      * @js NA
@@ -181,7 +182,7 @@ protected:
      */
     MenuItemLabel()
     : _originalScale(0.0)
-    , _label(NULL)
+    , _label(nullptr)
     {}
     /**
      * @js NA
@@ -217,7 +218,7 @@ public:
     /** creates a menu item from a string and atlas with a target/selector */
     static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const char* value, const char* charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
@@ -233,7 +234,7 @@ protected:
     virtual ~MenuItemAtlasFont(){}
 
     /** initializes a menu item from a string and atlas with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, const char *charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string and atlas with a target/selector */
     bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
@@ -251,7 +252,7 @@ public:
     /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
     static MenuItemFont * create(const std::string& value = "");
     /** creates a menu item from a string with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const char *value, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const std::string& value, Object* target, SEL_MenuHandler selector);
     /** creates a menu item from a string with a target/selector */
     static MenuItemFont * create(const std::string& value, const ccMenuCallback& callback);
 
@@ -306,7 +307,7 @@ protected:
     virtual ~MenuItemFont();
 
     /** initializes a menu item from a string with a target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithString(const char *value, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item from a string with a target/selector */
     bool initWithString(const std::string& value, const ccMenuCallback& callback);
 
@@ -332,7 +333,7 @@ class CC_DLL MenuItemSprite : public MenuItem
 {
 public:
     /** creates a menu item with a normal, selected and disabled image*/
-    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = NULL);
+    static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = nullptr);
     /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
@@ -369,9 +370,9 @@ public:
     
 protected:
     MenuItemSprite()
-    :_normalImage(NULL)
-    ,_selectedImage(NULL)
-    ,_disabledImage(NULL)
+    :_normalImage(nullptr)
+    ,_selectedImage(nullptr)
+    ,_disabledImage(nullptr)
     {}
 
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
@@ -411,12 +412,12 @@ public:
     /** creates a menu item with a normal,selected  and disabled image*/
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage);
     /** creates a menu item with a normal and selected image with target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal and selected image with a callable object */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const ccMenuCallback& callback);
 
     /** creates a menu item with a normal,selected  and disabled image with target/selector */
-    CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Object* target, SEL_MenuHandler selector);
     /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const std::string&disabledImage, const ccMenuCallback& callback);
 
@@ -440,7 +441,7 @@ protected:
 
     bool init();
     /** initializes a menu item with a normal, selected  and disabled image with target/selector */
-    CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const char *normalImage, const char *selectedImage, const char *disabledImage, Object* target, SEL_MenuHandler selector);
+    CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Object* target, SEL_MenuHandler selector);
     /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 

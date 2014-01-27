@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,10 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#include "CCSpriteFrame.h"
+#include "CCSpriteFrameCache.h"
+#include "CCDirector.h"
+#include "renderer/CCRenderer.h"
+
 #include "cocostudio/CCSkin.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmature.h"
+
 
 using namespace cocos2d;
 
@@ -51,7 +57,7 @@ Skin *Skin::create()
     return nullptr;
 }
 
-Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
+Skin *Skin::createWithSpriteFrameName(const std::string& pszSpriteFrameName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithSpriteFrameName(pszSpriteFrameName))
@@ -63,7 +69,7 @@ Skin *Skin::createWithSpriteFrameName(const char *pszSpriteFrameName)
     return nullptr;
 }
 
-Skin *Skin::create(const char *pszFileName)
+Skin *Skin::create(const std::string& pszFileName)
 {
     Skin *skin = new Skin();
     if(skin && skin->initWithFile(pszFileName))
@@ -80,7 +86,7 @@ Skin::Skin()
     , _armature(nullptr)
     , _displayName("")
 {
-    _skinTransform = AffineTransformIdentity;
+    kmMat4Identity(&_skinTransform);
 }
 
 bool Skin::initWithSpriteFrameName(const std::string& spriteFrameName)
@@ -135,11 +141,11 @@ const BaseData &Skin::getSkinData() const
 
 void Skin::updateArmatureTransform()
 {
-    _transform = AffineTransformConcat(_skinTransform, _bone->getNodeToArmatureTransform());
-    if(_armature && _armature->getBatchNode())
-    {
-        _transform = AffineTransformConcat(_transform, _armature->getNodeToParentTransform());
-    }
+    _transform = TransformConcat(_bone->getNodeToArmatureTransform(), _skinTransform);
+//    if(_armature && _armature->getBatchNode())
+//    {
+//        _transform = TransformConcat(_transform, _armature->getNodeToParentTransform());
+//    }
 }
 
 void Skin::updateTransform()
@@ -163,13 +169,13 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
-        float x = _transform.tx;
-        float y = _transform.ty;
+        float x = _transform.mat[12];
+        float y = _transform.mat[13];
 
-        float cr = _transform.a;
-        float sr = _transform.b;
-        float cr2 = _transform.d;
-        float sr2 = -_transform.c;
+        float cr = _transform.mat[0];
+        float sr = _transform.mat[1];
+        float cr2 = _transform.mat[5];
+        float sr2 = -_transform.mat[4];
         float ax = x1 * cr - y1 * sr2 + x;
         float ay = x1 * sr + y1 * cr2 + y;
 
@@ -195,22 +201,32 @@ void Skin::updateTransform()
     }
 }
 
-AffineTransform Skin::getNodeToWorldTransform() const
+kmMat4 Skin::getNodeToWorldTransform() const
 {
-    return AffineTransformConcat(_transform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(), _transform);
 }
 
-AffineTransform Skin::getNodeToWorldTransformAR() const
+kmMat4 Skin::getNodeToWorldTransformAR() const
 {
-    AffineTransform displayTransform = _transform;
+    kmMat4 displayTransform = _transform;
     Point anchorPoint =  _anchorPointInPoints;
 
-    anchorPoint = PointApplyAffineTransform(anchorPoint, displayTransform);
+    anchorPoint = PointApplyTransform(anchorPoint, displayTransform);
 
-    displayTransform.tx = anchorPoint.x;
-    displayTransform.ty = anchorPoint.y;
+    displayTransform.mat[12] = anchorPoint.x;
+    displayTransform.mat[13] = anchorPoint.y;
 
-    return AffineTransformConcat(displayTransform, _bone->getArmature()->getNodeToWorldTransform());
+    return TransformConcat( _bone->getArmature()->getNodeToWorldTransform(),displayTransform);
+}
+
+void Skin::draw()
+{
+    kmMat4 mv;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &mv);
+
+    //TODO implement z order
+    _quadCommand.init(_globalZOrder, _texture->getName(), _shaderProgram, _blendFunc, &_quad, 1, mv);
+    Director::getInstance()->getRenderer()->addCommand(&_quadCommand);
 }
 
 void Skin::setBone(Bone *bone)
@@ -219,8 +235,6 @@ void Skin::setBone(Bone *bone)
     if(Armature *armature = _bone->getArmature())
     {
         _armature = armature;
-        TextureAtlas *atlas = armature->getTexureAtlasWithTexture(_texture);
-        setTextureAtlas(atlas);
     }
 }
 

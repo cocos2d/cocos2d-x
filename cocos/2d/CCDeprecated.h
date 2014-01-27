@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013      cocos2d-x.org
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -545,7 +546,8 @@ CC_DEPRECATED_ATTRIBUTE typedef IMEDelegate CCIMEDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef IMEKeyboardNotificationInfo CCIMEKeyboardNotificationInfo;
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldDelegate CCTextFieldDelegate;
 CC_DEPRECATED_ATTRIBUTE typedef TextFieldTTF CCTextFieldTTF;
-CC_DEPRECATED_ATTRIBUTE typedef NotificationCenter CCNotificationCenter;
+CC_DEPRECATED_ATTRIBUTE typedef __NotificationCenter CCNotificationCenter;
+CC_DEPRECATED_ATTRIBUTE typedef __NotificationCenter NotificationCenter;
 //CC_DEPRECATED_ATTRIBUTE typedef TargetedTouchDelegate CCTargetedTouchDelegate;
 //CC_DEPRECATED_ATTRIBUTE typedef StandardTouchDelegate CCStandardTouchDelegate;
 //CC_DEPRECATED_ATTRIBUTE typedef TouchDelegate CCTouchDelegate;
@@ -560,8 +562,8 @@ CC_DEPRECATED_ATTRIBUTE typedef GLProgram CCGLProgram;
 CC_DEPRECATED_ATTRIBUTE typedef Touch CCTouch;
 CC_DEPRECATED_ATTRIBUTE typedef Texture2D CCTexture2D;
 CC_DEPRECATED_ATTRIBUTE typedef Node CCNode;
-CC_DEPRECATED_ATTRIBUTE typedef NodeRGBA CCNodeRGBA;
-CC_DEPRECATED_ATTRIBUTE typedef RGBAProtocol CCRGBAProtocol;
+CC_DEPRECATED_ATTRIBUTE typedef Node CCNodeRGBA;
+CC_DEPRECATED_ATTRIBUTE typedef Node CCRGBAProtocol;
 CC_DEPRECATED_ATTRIBUTE typedef SpriteFrame CCSpriteFrame;
 CC_DEPRECATED_ATTRIBUTE typedef AnimationFrame CCAnimationFrame;
 CC_DEPRECATED_ATTRIBUTE typedef Animation CCAnimation;
@@ -678,7 +680,7 @@ CC_DEPRECATED_ATTRIBUTE typedef SpriteBatchNode CCSpriteBatchNode;
 CC_DEPRECATED_ATTRIBUTE typedef LabelBMFont CCLabelBMFont;
 CC_DEPRECATED_ATTRIBUTE typedef Layer CCLayer;
 //CC_DEPRECATED_ATTRIBUTE typedef KeypadDelegate CCKeypadDelegate;
-CC_DEPRECATED_ATTRIBUTE typedef LayerRGBA CCLayerRGBA;
+CC_DEPRECATED_ATTRIBUTE typedef Layer CCLayerRGBA;
 CC_DEPRECATED_ATTRIBUTE typedef LayerColor CCLayerColor;
 CC_DEPRECATED_ATTRIBUTE typedef LayerGradient CCLayerGradient;
 CC_DEPRECATED_ATTRIBUTE typedef LayerMultiplex CCLayerMultiplex;
@@ -1038,7 +1040,11 @@ CC_DEPRECATED_ATTRIBUTE typedef __Integer CCInteger;
 CC_DEPRECATED_ATTRIBUTE typedef __Bool Bool;
 CC_DEPRECATED_ATTRIBUTE typedef __Bool CCBool;
 CC_DEPRECATED_ATTRIBUTE typedef __String CCString;
-//CC_DEPRECATED_ATTRIBUTE typedef __String String;
+CC_DEPRECATED_ATTRIBUTE typedef __String String;
+
+CC_DEPRECATED_ATTRIBUTE typedef __RGBAProtocol RGBAProtocol;
+CC_DEPRECATED_ATTRIBUTE typedef __NodeRGBA NodeRGBA;
+CC_DEPRECATED_ATTRIBUTE typedef __LayerRGBA LayerRGBA;
 
 NS_CC_END
 

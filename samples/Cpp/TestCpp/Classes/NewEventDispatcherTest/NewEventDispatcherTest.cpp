@@ -20,7 +20,10 @@ std::function<Layer*()> createFunctions[] =
     CL(LabelKeyboardEventTest),
     CL(SpriteAccelerationEventTest),
     CL(RemoveAndRetainNodeTest),
-    CL(RemoveListenerAfterAddingTest)
+    CL(RemoveListenerAfterAddingTest),
+    CL(DirectorEventTest),
+    CL(GlobalZTouchTest),
+    CL(StopPropagationTest),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -104,12 +107,12 @@ void EventDispatcherTestDemo::restartCallback(Object* sender)
     scene->release();
 }
 
-string EventDispatcherTestDemo::title()
+std::string EventDispatcherTestDemo::title() const
 {
     return "No title";
 }
 
-string EventDispatcherTestDemo::subtitle()
+std::string EventDispatcherTestDemo::subtitle() const
 {
     return "";
 }
@@ -165,11 +168,11 @@ void TouchableSpriteTest::onEnter()
         target->setOpacity(255);
         if (target == sprite2)
         {
-            sprite1->setZOrder(100);
+            sprite1->setLocalZOrder(100);
         }
         else if(target == sprite1)
         {
-            sprite1->setZOrder(0);
+            sprite1->setLocalZOrder(0);
         }
     };
     
@@ -206,12 +209,12 @@ void TouchableSpriteTest::onEnter()
     addChild(menu);
 }
 
-std::string TouchableSpriteTest::title()
+std::string TouchableSpriteTest::title() const
 {
     return "Touchable Sprite Test";
 }
 
-std::string TouchableSpriteTest::subtitle()
+std::string TouchableSpriteTest::subtitle() const
 {
     return "Please drag the blocks";
 }
@@ -314,12 +317,12 @@ void FixedPriorityTest::onEnter()
 
 }
 
-std::string FixedPriorityTest::title()
+std::string FixedPriorityTest::title() const
 {
     return "Fixed priority test";
 }
 
-std::string FixedPriorityTest::subtitle()
+std::string FixedPriorityTest::subtitle() const
 {
     return "Fixed Priority, Blue: 30, Red: 20, Yellow: 10\n The lower value the higher priority will be.";
 }
@@ -391,12 +394,12 @@ void RemoveListenerWhenDispatching::onEnter()
     addChild(menu, -1);
 }
 
-std::string RemoveListenerWhenDispatching::title()
+std::string RemoveListenerWhenDispatching::title() const
 {
     return "Add and remove listener\n when dispatching event";
 }
 
-std::string RemoveListenerWhenDispatching::subtitle()
+std::string RemoveListenerWhenDispatching::subtitle() const
 {
     return "";
 }
@@ -476,12 +479,12 @@ void CustomEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string CustomEventTest::title()
+std::string CustomEventTest::title() const
 {
     return "Send custom event";
 }
 
-std::string CustomEventTest::subtitle()
+std::string CustomEventTest::subtitle() const
 {
     return "";
 }
@@ -516,12 +519,12 @@ void LabelKeyboardEventTest::onEnter()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, statusLabel);
 }
 
-std::string LabelKeyboardEventTest::title()
+std::string LabelKeyboardEventTest::title() const
 {
     return "Label Receives Keyboard Event";
 }
 
-std::string LabelKeyboardEventTest::subtitle()
+std::string LabelKeyboardEventTest::subtitle() const
 {
     return "Please click keyboard\n(Only available on Desktop and Android)";
 }
@@ -570,12 +573,12 @@ void SpriteAccelerationEventTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string SpriteAccelerationEventTest::title()
+std::string SpriteAccelerationEventTest::title() const
 {
     return "Sprite Receives Acceleration Event";
 }
 
-std::string SpriteAccelerationEventTest::subtitle()
+std::string SpriteAccelerationEventTest::subtitle() const
 {
     return "Please move your device\n(Only available on mobile)";
 }
@@ -652,12 +655,12 @@ void RemoveAndRetainNodeTest::onExit()
     }
 }
 
-std::string RemoveAndRetainNodeTest::title()
+std::string RemoveAndRetainNodeTest::title() const
 {
     return "RemoveAndRetainNodeTest";
 }
 
-std::string RemoveAndRetainNodeTest::subtitle()
+std::string RemoveAndRetainNodeTest::subtitle() const
 {
     return "Sprite should be removed after 5s, add to scene again after 5s";
 }
@@ -734,14 +737,354 @@ void RemoveListenerAfterAddingTest::onExit()
     EventDispatcherTestDemo::onExit();
 }
 
-std::string RemoveListenerAfterAddingTest::title()
+std::string RemoveListenerAfterAddingTest::title() const
 {
     return "RemoveListenerAfterAddingTest";
 }
 
-std::string RemoveListenerAfterAddingTest::subtitle()
+std::string RemoveListenerAfterAddingTest::subtitle() const
 {
     return "Should not crash!";
 }
 
 
+//
+//DirectorEventTest
+//
+DirectorEventTest::DirectorEventTest()
+:_count1(0)
+,_count2(0)
+,_count3(0)
+,_count4(0)
+{
+
+}
+
+void DirectorEventTest::onEnter()
+{
+    EventDispatcherTestDemo::onEnter();
+
+    Size s = Director::getInstance()->getWinSize();
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+
+    _label1 = Label::createWithTTF(ttfConfig, "Update: 0");
+    _label1->setPosition(30,s.height/2 + 60);
+    this->addChild(_label1);
+
+    _label2 = Label::createWithTTF(ttfConfig, "Visit: 0");
+    _label2->setPosition(30,s.height/2 + 20);
+    this->addChild(_label2);
+
+    _label3 = Label::createWithTTF(ttfConfig, "Draw: 0");
+    _label3->setPosition(30,30);
+    _label3->setPosition(30,s.height/2 - 20);
+    this->addChild(_label3);
+
+    _label4 = Label::createWithTTF(ttfConfig, "Projection: 0");
+    _label4->setPosition(30,30);
+    _label4->setPosition(30,s.height/2 - 60);
+    this->addChild(_label4);
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+
+    _event1 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&DirectorEventTest::onEvent1, this, std::placeholders::_1));
+    _event2 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_VISIT, std::bind(&DirectorEventTest::onEvent2, this, std::placeholders::_1));
+    _event3 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Draw: %d", _count3++);
+        _label3->setString(buf);
+    });
+    _event4 = dispatcher->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, [&](EventCustom *event) {
+        char buf[20];
+        snprintf(buf, sizeof(buf)-1, "Projection: %d", _count4++);
+        _label4->setString(buf);
+    });
+
+    _event1->retain();
+    _event2->retain();
+    _event3->retain();
+    _event4->retain();
+
+    scheduleUpdate();
+}
+
+void DirectorEventTest::update(float dt)
+{
+    static float time = 0;
+
+    time += dt;
+    if(time > 0.5) {
+        Director::getInstance()->setProjection(Director::Projection::_2D);
+        time = 0;
+    }
+}
+
+void DirectorEventTest::onExit()
+{
+    EventDispatcherTestDemo::onExit();
+
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->removeEventListener(_event1);
+    dispatcher->removeEventListener(_event2);
+    dispatcher->removeEventListener(_event3);
+    dispatcher->removeEventListener(_event4);
+
+    _event1->release();
+    _event2->release();
+    _event3->release();
+    _event4->release();
+}
+
+void DirectorEventTest::onEvent1(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Update: %d", _count1++);
+    _label1->setString(buf);
+}
+
+void DirectorEventTest::onEvent2(EventCustom *event)
+{
+    char buf[20];
+    snprintf(buf, sizeof(buf)-1, "Visit: %d", _count2++);
+    _label2->setString(buf);
+}
+
+
+std::string DirectorEventTest::title() const
+{
+    return "Testing Director Events";
+}
+
+std::string DirectorEventTest::subtitle() const
+{
+    return "after visit, after draw, after update, projection changed";
+}
+
+// GlobalZTouchTest
+GlobalZTouchTest::GlobalZTouchTest()
+: _sprite(nullptr)
+, _accum(0)
+{
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
+    
+    listener->onTouchBegan = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        
+        Point locationInNode = target->convertToNodeSpace(touch->getLocation());
+        Size s = target->getContentSize();
+        Rect rect = Rect(0, 0, s.width, s.height);
+        
+        if (rect.containsPoint(locationInNode))
+        {
+            log("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y);
+            target->setOpacity(180);
+            return true;
+        }
+        return false;
+    };
+    
+    listener->onTouchMoved = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setPosition(target->getPosition() + touch->getDelta());
+    };
+    
+    listener->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        log("sprite onTouchesEnded.. ");
+        target->setOpacity(255);
+    };
+    
+    const int SPRITE_COUNT = 8;
+    
+    for (int i = 0; i < SPRITE_COUNT; i++)
+    {
+        Sprite *sprite;
+        if(i==4)
+        {
+            sprite = Sprite::create("Images/CyanSquare.png");
+            _sprite = sprite;
+            _sprite->setGlobalZOrder(-1);
+        }
+        else
+        {
+            sprite = Sprite::create("Images/YellowSquare.png");
+        }
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), sprite);
+        
+        this->addChild(sprite);
+        
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        sprite->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y);
+    }
+    
+    this->scheduleUpdate();
+}
+
+void GlobalZTouchTest::update(float dt)
+{
+    _accum += dt;
+    if( _accum > 2.0f) {
+        float z = _sprite->getGlobalZOrder();
+        _sprite->setGlobalZOrder(-z);
+        _accum = 0;
+    }
+}
+
+std::string GlobalZTouchTest::title() const
+{
+    return "Global Z Value, Try touch blue sprite";
+}
+
+std::string GlobalZTouchTest::subtitle() const
+{
+    return "Blue Sprite should change go from foreground to background";
+}
+
+StopPropagationTest::StopPropagationTest()
+{
+    static const int TAG_BLUE_SPRITE = 101;
+    static const int TAG_BLUE_SPRITE2 = 102;
+
+    auto touchOneByOneListener = EventListenerTouchOneByOne::create();
+    touchOneByOneListener->setSwallowTouches(true);
+    
+    touchOneByOneListener->onTouchBegan = [=](Touch* touch, Event* event){
+        // Skip if don't touch top half screen.
+        if (!this->isPointInTopHalfAreaOfScreen(touch->getLocation()))
+            return false;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touch->getLocation(), target))
+        {
+            target->setOpacity(180);
+            return true;
+        }
+        
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+        return false;
+    };
+    
+    touchOneByOneListener->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setOpacity(255);
+    };
+    
+    auto touchAllAtOnceListener = EventListenerTouchAllAtOnce::create();
+    touchAllAtOnceListener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
+        // Skip if don't touch top half screen.
+        if (this->isPointInTopHalfAreaOfScreen(touches[0]->getLocation()))
+            return;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touches[0]->getLocation(), target))
+        {
+            target->setOpacity(180);
+        }
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    touchAllAtOnceListener->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
+        // Skip if don't touch top half screen.
+        if (this->isPointInTopHalfAreaOfScreen(touches[0]->getLocation()))
+            return;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touches[0]->getLocation(), target))
+        {
+            target->setOpacity(255);
+        }
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    auto keyboardEventListener = EventListenerKeyboard::create();
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    const int SPRITE_COUNT = 8;
+    
+    for (int i = 0; i < SPRITE_COUNT; i++)
+    {
+        Sprite* sprite;
+        Sprite* sprite2;
+        
+        if(i==4)
+        {
+            sprite = Sprite::create("Images/CyanSquare.png");
+            sprite->setTag(TAG_BLUE_SPRITE);
+            addChild(sprite, 100);
+            
+            sprite2 = Sprite::create("Images/CyanSquare.png");
+            sprite2->setTag(TAG_BLUE_SPRITE2);
+            addChild(sprite2, 100);
+        }
+        else
+        {
+            sprite = Sprite::create("Images/YellowSquare.png");
+            addChild(sprite, 0);
+            sprite2 = Sprite::create("Images/YellowSquare.png");
+            addChild(sprite2, 0);
+        }
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOneByOneListener->clone(), sprite);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardEventListener->clone(), sprite);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchAllAtOnceListener->clone(), sprite2);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardEventListener->clone(), sprite2);
+
+        
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        sprite->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y + sprite2->getContentSize().height/2 +10);
+        sprite2->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y - sprite2->getContentSize().height/2-10);
+    }
+}
+
+bool StopPropagationTest::isPointInNode(Point pt, Node* node)
+{
+    Point locationInNode = node->convertToNodeSpace(pt);
+    Size s = node->getContentSize();
+    Rect rect = Rect(0, 0, s.width, s.height);
+    
+    if (rect.containsPoint(locationInNode))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool StopPropagationTest::isPointInTopHalfAreaOfScreen(Point pt)
+{
+    Size winSize = Director::getInstance()->getWinSize();
+    
+    if (pt.y >= winSize.height/2) {
+        return true;
+    }
+    
+    return false;
+}
+
+std::string StopPropagationTest::title() const
+{
+    return "Stop Propagation Test";
+}
+
+std::string StopPropagationTest::subtitle() const
+{
+    return "Shouldn't crash and only blue block could be clicked";
+}

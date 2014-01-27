@@ -13,8 +13,8 @@ public:
     void nextCallback(Object* sender);
     void backCallback(Object* sender);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class ZwoptexGenericTest : public ZwoptexTest
@@ -25,8 +25,8 @@ public:
     void flipSprites(float dt);
     void startIn05Secs(float dt);
 
-    virtual std::string title();
-    virtual std::string subtitle();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
 protected:
     Sprite * sprite1;

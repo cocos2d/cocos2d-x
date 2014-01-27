@@ -41,13 +41,11 @@ add_executable(${APP_NAME}
   ${SAMPLE_SRC}
 )
 
-#get our resources
-add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${CMAKE_CURRENT_BINARY_DIR})
-
 if(WIN32 AND MSVC)
-
+  #get our resources
+  add_custom_command(TARGET ${APP_NAME} PRE_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                         ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${CMAKE_CURRENT_BINARY_DIR})
   #get our dlls
   add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy
@@ -62,6 +60,16 @@ if(WIN32 AND MSVC)
   #Visual Studio Defaults to wrong type
   set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
   set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+else()
+  set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+
+  set_target_properties(${APP_NAME} PROPERTIES
+       RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+
+  pre_build(${APP_NAME}
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
+    )
 endif()
 
 target_link_libraries(${APP_NAME} audio cocos2d)

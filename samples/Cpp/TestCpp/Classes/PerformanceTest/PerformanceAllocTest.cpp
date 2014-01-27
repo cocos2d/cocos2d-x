@@ -80,7 +80,6 @@ void AllocBasicLayer::showCurrentTest()
         scene->initWithQuantityOfNodes(nodes);
 
         Director::getInstance()->replaceScene(scene);
-        scene->release();
     }
 }
 
@@ -159,12 +158,12 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     srand(0);
 }
 
-std::string PerformceAllocScene::title()
+std::string PerformceAllocScene::title() const
 {
     return "No title";
 }
 
-std::string PerformceAllocScene::subtitle()
+std::string PerformceAllocScene::subtitle() const
 {
     return "";
 }
@@ -251,12 +250,12 @@ void NodeCreateTest::update(float dt)
     delete [] nodes;
 }
 
-std::string NodeCreateTest::title()
+std::string NodeCreateTest::title() const
 {
     return "Node Create Perf test.";
 }
 
-std::string NodeCreateTest::subtitle()
+std::string NodeCreateTest::subtitle() const
 {
     return "Node Create Perf test. See console";
 }
@@ -293,6 +292,7 @@ void NodeDeallocTest::update(float dt)
 
     for( int i=0; i<quantityOfNodes; ++i) {
         nodes[i] = Node::create();
+        nodes[i]->retain();
     }
 
     CC_PROFILER_START(this->profilerName());
@@ -303,12 +303,12 @@ void NodeDeallocTest::update(float dt)
     delete [] nodes;
 }
 
-std::string NodeDeallocTest::title()
+std::string NodeDeallocTest::title() const
 {
     return "Node Dealloc Perf test.";
 }
 
-std::string NodeDeallocTest::subtitle()
+std::string NodeDeallocTest::subtitle() const
 {
     return "Node Dealloc Perf test. See console";
 }
@@ -353,12 +353,12 @@ void SpriteCreateEmptyTest::update(float dt)
     delete [] sprites;
 }
 
-std::string SpriteCreateEmptyTest::title()
+std::string SpriteCreateEmptyTest::title() const
 {
     return "Create Empty Sprite";
 }
 
-std::string SpriteCreateEmptyTest::subtitle()
+std::string SpriteCreateEmptyTest::subtitle() const
 {
     return "Create Empty Sprite Perf test. See console";
 }
@@ -403,12 +403,12 @@ void SpriteCreateTest::update(float dt)
     delete [] sprites;
 }
 
-std::string SpriteCreateTest::title()
+std::string SpriteCreateTest::title() const
 {
     return "Create Sprite";
 }
 
-std::string SpriteCreateTest::subtitle()
+std::string SpriteCreateTest::subtitle() const
 {
     return "Create Empty Sprite. See console";
 }
@@ -456,12 +456,12 @@ void SpriteDeallocTest::update(float dt)
     delete [] sprites;
 }
 
-std::string SpriteDeallocTest::title()
+std::string SpriteDeallocTest::title() const
 {
     return "Sprite Dealloc Perf test.";
 }
 
-std::string SpriteDeallocTest::subtitle()
+std::string SpriteDeallocTest::subtitle() const
 {
     return "Sprite Dealloc Perf test. See console";
 }
@@ -478,5 +478,4 @@ void runAllocPerformanceTest()
     scene->initWithQuantityOfNodes(kNodesIncrease);
     
     Director::getInstance()->replaceScene(scene);
-    scene->release();
 }

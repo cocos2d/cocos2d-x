@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2010      Lam Pham
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,6 +27,7 @@ THE SOFTWARE.
 #define __MISC_NODE_CCPROGRESS_TIMER_H__
 
 #include "CCSprite.h"
+#include "renderer/CCCustomCommand.h"
 #ifdef EMSCRIPTEN
 #include "CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -43,7 +45,7 @@ NS_CC_BEGIN
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-class CC_DLL ProgressTimer : public NodeRGBA
+class CC_DLL ProgressTimer : public Node
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
 #endif // EMSCRIPTEN
@@ -72,8 +74,8 @@ public:
     /** The image to show the progress percentage, retain */
     inline Sprite* getSprite() const { return _sprite; }
 
-    void setPercentage(float fPercentage);
-    void setSprite(Sprite *pSprite);
+    void setPercentage(float percentage);
+    void setSprite(Sprite *sprite);
     void setType(Type type);
     /**
      * @js setReverseDirection
@@ -109,12 +111,12 @@ public:
     inline Point getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw(void) override;
-    void setAnchorPoint(const Point& anchorPoint) override;
-    virtual void setColor(const Color3B& color) override;
+    virtual void draw() override;
+    virtual void setAnchorPoint(const Point& anchorPoint) override;
+    virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
-    virtual GLubyte getOpacity() const override;
     virtual void setOpacity(GLubyte opacity) override;
+    virtual GLubyte getOpacity() const override;
     
 protected:
     /**
@@ -130,12 +132,14 @@ protected:
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
 
+    void onDraw();
+    
     Tex2F textureCoordFromAlphaPoint(Point alpha);
     Vertex2F vertexFromAlphaPoint(Point alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
-    void updateColor(void);
+    virtual void updateColor(void) override;
     Point boundaryTexCoord(char index);
 
     Type _type;
@@ -145,6 +149,8 @@ protected:
     Sprite *_sprite;
     int _vertexDataCount;
     V2F_C4B_T2F *_vertexData;
+    
+    CustomCommand _customCommand;
 
     bool _reverseDirection;
 

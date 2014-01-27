@@ -1,8 +1,9 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2009      Valentin Milea
+ Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -39,22 +40,22 @@
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
 #include "CCVector.h"
+#include "kazmath/kazmath.h"
 
 NS_CC_BEGIN
 
-class Camera;
 class GridBase;
 class Point;
 class Touch;
 class Action;
-class RGBAProtocol;
 class LabelProtocol;
 class Scheduler;
 class ActionManager;
 class Component;
 class ComponentContainer;
 class EventDispatcher;
-#ifdef CC_USE_PHYSICS
+class Scene;
+#if CC_USE_PHYSICS
 class PhysicsBody;
 #endif
 
@@ -71,11 +72,7 @@ enum {
     kNodeOnCleanup
 };
 
-#if CC_USE_ARRAY_VECTOR
-bool nodeComparisonLess(const RCPtr<Object>& pp1, const RCPtr<Object>& pp2);
-#else
-bool nodeComparisonLess(Object* p1, Object* p2);
-#endif
+bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
@@ -98,7 +95,6 @@ class EventListener;
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - Camera (an interface to gluLookAt )
  - GridBase (to do mesh transformations)
  - anchor point
  - size
@@ -120,18 +116,14 @@ class EventListener;
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
- -# The node will be moved according to the camera values (camera)
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be scaled (scale)
  -# The grid will capture the screen
- -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
 
- Camera:
- - Each node has a camera. By default it points to the center of the Node.
  */
 
 class CC_DLL Node : public Object
@@ -165,43 +157,72 @@ public:
     /// @name Setters & Getters for Graphic Peroperties
 
     /**
-     * Sets the Z order which stands for the drawing order, and reorder this node in its parent's children array.
-     *
-     * The Z order of node is relative to its siblings.
-     * It is not related to the OpenGL's z property. This one only affects the draw order of itself and its siblings.
-     * Lower Z order number are drawn before higher numbers.
-     * Please refer to `setVertexZ(float)` for the difference.
-     *
-     * @param zOrder   Z order of this node.
+     LocalZOrder is the 'key' used to sort the node relative to its siblings.
+
+     The Node's parent will sort all its children based ont the LocalZOrder value.
+     If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
+     
+     Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
+     And Nodes that have LocalZOder values < 0 are the "left" subtree
+     While Nodes with LocalZOder >=0 are the "right" subtree.
+     
+     @see `setGlobalZOrder`
+     @see `setVertexZ`
      */
-    virtual void setZOrder(int zOrder);
-    /*
-     * Sets the z order which stands for the drawing order
-     *
-     * This is an internal method. Don't call it outside the framework.
-     * The difference between setZOrder(int) and _setOrder(int) is:
-     * - _setZOrder(int) is a pure setter for _ZOrder memeber variable
-     * - setZOrder(int) firstly changes _ZOrder, then recorder this node in its parent's chilren array.
+    virtual void setLocalZOrder(int localZOrder);
+
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      */
-    virtual void _setZOrder(int z);
+    virtual void _setLocalZOrder(int z);
     /**
-     * Gets the Z order of this node.
+     * Gets the local Z order of this node.
      *
-     * @see `setZOrder(int)`
+     * @see `setLocalZOrder(int)`
      *
-     * @return The Z order.
+     * @return The local (relative to its siblings) Z order.
      */
-    virtual int getZOrder() const;
+    virtual int getLocalZOrder() const { return _localZOrder; }
+    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
 
     /**
-     * Sets the real OpenGL Z vertex.
+     Defines the oder in which the nodes are renderer.
+     Nodes that have a Global Z Order lower, are renderer first.
+     
+     In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
+     The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+     
+     By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+     
+     Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+     
+     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
+     And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
+
+     @see `setLocalZOrder()`
+     @see `setVertexZ()`
+
+     @since v3.0
+     */
+    virtual void setGlobalZOrder(float globalZOrder);
+    /**
+     * Returns the Node's Global Z Order.
      *
-     * Differences between openGL Z vertex and cocos2d Z order:
-     * - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
-     * - OpenGL Z might require to set 2D projection
-     * - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: `vertexZ = 0`
+     * @see `setGlobalZOrder(int)`
      *
-     * @warning Use it at your own risk since it might break the cocos2d parent-children z order
+     * @return The node's global Z order
+     */
+    virtual float getGlobalZOrder() const { return _globalZOrder; }
+
+    /**
+     * Sets the 'z' value in the OpenGL Depth Buffer.
+     *
+     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on 
+     * in order to use this property correctly.
+     *
+     * `setVertexZ()` also sets the `setGlobalZValue()` with the vertexZ value.
+     *
+     * @see `setGlobalZValue()`
      *
      * @param vertexZ  OpenGL Z vertex of this node.
      */
@@ -510,11 +531,11 @@ public:
      * A node which called addChild subsequently will take a larger arrival order,
      * If two children have the same Z order, the child with larger arrival order will be drawn later.
      *
-     * @warning This method is used internally for zOrder sorting, don't change this manually
+     * @warning This method is used internally for localZOrder sorting, don't change this manually
      *
      * @param orderOfArrival   The arrival order.
      */
-    virtual void setOrderOfArrival(int orderOfArrival);
+    void setOrderOfArrival(int orderOfArrival);
     /**
      * Returns the arrival order, indecates which children is added previously.
      *
@@ -522,7 +543,7 @@ public:
      *
      * @return The arrival order.
      */
-    virtual int getOrderOfArrival() const;
+    int getOrderOfArrival() const;
 
 
     /** @deprecated No longer needed
@@ -570,24 +591,24 @@ public:
      */
     virtual void addChild(Node * child);
     /**
-     * Adds a child to the container with a z-order
+     * Adds a child to the container with a local z-order
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      */
-    virtual void addChild(Node * child, int zOrder);
+    virtual void addChild(Node * child, int localZOrder);
     /**
      * Adds a child to the container with z order and tag
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag);
+    virtual void addChild(Node* child, int localZOrder, int tag);
     /**
      * Gets a child from the container with its tag
      *
@@ -595,14 +616,14 @@ public:
      *
      * @return a Node object whose tag equals to the input parameter
      */
-    Node * getChildByTag(int tag);
+    virtual Node * getChildByTag(int tag);
     /**
      * Return an array of children
      *
      * Composing a "tree" structure is a very important feature of Node
      * Here's a sample code of traversing children array:
      @code
-     Node* node = NULL;
+     Node* node = nullptr;
      CCARRAY_FOREACH(parent->getChildren(), node)
      {
         node->setPosition(0,0);
@@ -620,7 +641,7 @@ public:
      *
      * @return The amount of children.
      */
-    ssize_t getChildrenCount() const;
+    virtual ssize_t getChildrenCount() const;
 
     /**
      * Sets the parent node
@@ -690,9 +711,9 @@ public:
      * Reorders a child according to a new z value.
      *
      * @param child     An already added child node. It MUST be already added.
-     * @param zOrder    Z order for drawing priority. Please refer to setZOrder(int)
+     * @param localZOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
-    virtual void reorderChild(Node * child, int zOrder);
+    virtual void reorderChild(Node * child, int localZOrder);
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
@@ -702,34 +723,7 @@ public:
     virtual void sortAllChildren();
 
     /// @} end of Children and Parent
-
-
-
-    /// @{
-    /// @name Grid object for effects
-
-    /**
-     * Returns a grid object that is used when applying effects
-     *
-     * @return A Grid object that is used when applying effects
-     * @js NA
-     */
-    virtual GridBase* getGrid() { return _grid; }
-    /**
-    * @js NA
-    */
-    virtual const GridBase* getGrid() const { return _grid; }
-
-    /**
-     * Changes a grid object that is used when applying effects
-     *
-     * @param grid  A Grid object that is used when applying effects
-     */
-    virtual void setGrid(GridBase *grid);
-
-    /// @} end of Grid
-
-
+    
     /// @{
     /// @name Tag & User data
 
@@ -749,7 +743,7 @@ public:
      parent->addChild(node2);
      parent->addChild(node3);
      // identify by tags
-     Node* node = NULL;
+     Node* node = nullptr;
      CCARRAY_FOREACH(parent->getChildren(), node)
      {
          switch(node->getTag())
@@ -862,19 +856,6 @@ public:
 
 
     /**
-     * Returns a camera object that lets you move the node using a gluLookAt
-     *
-     @code
-     Camera* camera = node->getCamera();
-     camera->setEye(0, 0, 415/2);
-     camera->setCenter(0, 0, 0);
-     @endcode
-     *
-     * @return A Camera object that lets you move the node using a gluLookAt
-     */
-    virtual Camera* getCamera();
-
-    /**
      * Returns whether or not the node accepts event callbacks.
      *
      * Running means the node accept event callbacks like onEnter(), onExit(), update()
@@ -956,6 +937,11 @@ public:
      */
     virtual void visit();
 
+    /** Returns the Scene that contains the Node.
+     It returns `nullptr` if the node doesn't belong to any Scene.
+     This function recursively calls parent->getScene() until parent is a Scene object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     */
+    virtual Scene* getScene();
 
     /**
      * Returns a "local" axis aligned bounding box of the node.
@@ -1226,35 +1212,45 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getNodeToParentTransform() const;
+    virtual const kmMat4& getNodeToParentTransform() const;
+    virtual AffineTransform getNodeToParentAffineTransform() const;
+
+    /** 
+     * Sets the Transformation matrix manually.
+     */
+    virtual void setNodeToParentTransform(const kmMat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
 
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual const AffineTransform& getParentToNodeTransform() const;
+    virtual const kmMat4& getParentToNodeTransform() const;
+    virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getNodeToWorldTransform() const;
+    virtual kmMat4 getNodeToWorldTransform() const;
+    virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
 
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      */
-    virtual AffineTransform getWorldToNodeTransform() const;
+    virtual kmMat4 getWorldToNodeTransform() const;
+    virtual AffineTransform getWorldToNodeAffineTransform() const;
+
 
     /** @deprecated Use worldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeTransform(); }
+    CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 
@@ -1295,7 +1291,9 @@ public:
     Point convertTouchToNodeSpaceAR(Touch * touch) const;
 
 	/**
-     *  Sets the additional transform.
+     *  Sets an additional transform matrix to the node.
+     *
+     *  In order to remove it, set the Identity Matrix to the additional transform.
      *
      *  @note The additional transform will be concatenated at the end of getNodeToParentTransform.
      *        It could be used to simulate `parent-child` relationship between two nodes (e.g. one is in BatchNode, another isn't).
@@ -1318,7 +1316,7 @@ public:
      spriteA->setPosition(Point(200, 200));
 
      // Gets the spriteA's transform.
-     AffineTransform t = spriteA->getNodeToParentTransform();
+     auto t = spriteA->getNodeToParentTransform();
 
      // Sets the additional transform to spriteB, spriteB's postion will based on its pseudo parent i.e. spriteA.
      spriteB->setAdditionalTransform(t);
@@ -1343,6 +1341,7 @@ public:
      @endcode
      */
     void setAdditionalTransform(const AffineTransform& additionalTransform);
+    void setAdditionalTransform(const kmMat4& additionalTransform);
 
     /// @} end of Coordinate Converters
 
@@ -1351,7 +1350,7 @@ public:
     /**
      *   gets a component by its name
      */
-    Component* getComponent(const char *pName);
+    Component* getComponent(const std::string& pName);
 
     /**
      *   adds a component
@@ -1361,7 +1360,7 @@ public:
     /**
      *   removes a component by its name
      */
-    virtual bool removeComponent(const char *pName);
+    virtual bool removeComponent(const std::string& pName);
 
     /**
      *   removes all components
@@ -1370,7 +1369,7 @@ public:
     /// @} end of component functions
 
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     /**
      *   set the PhysicsBody that let the sprite effect with physics
      */
@@ -1387,6 +1386,24 @@ public:
     virtual bool updatePhysicsTransform();
 
 #endif
+    
+    // overrides
+    virtual GLubyte getOpacity() const;
+    virtual GLubyte getDisplayedOpacity() const;
+    virtual void setOpacity(GLubyte opacity);
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual bool isCascadeOpacityEnabled() const;
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    
+    virtual const Color3B& getColor(void) const;
+    virtual const Color3B& getDisplayedColor() const;
+    virtual void setColor(const Color3B& color);
+    virtual void updateDisplayedColor(const Color3B& parentColor);
+    virtual bool isCascadeColorEnabled() const;
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    
+    virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
+    virtual bool isOpacityModifyRGB() const { return false; };
 
 protected:
     // Nodes should be created using create();
@@ -1405,6 +1422,12 @@ protected:
 
     /// Convert cocos2d coordinates to UI windows coordinate.
     Point convertToWindowSpace(const Point& nodePoint) const;
+    
+    virtual void updateCascadeOpacity();
+    virtual void disableCascadeOpacity();
+    virtual void updateCascadeColor();
+    virtual void disableCascadeColor();
+    virtual void updateColor() {}
 
 
     float _rotationX;                 ///< rotation angle on x-axis
@@ -1413,7 +1436,6 @@ protected:
     float _scaleX;                    ///< scaling factor on x-axis
     float _scaleY;                    ///< scaling factor on y-axis
 
-    float _vertexZ;                   ///< OpenGL real Z vertex
 
     Point _position;               ///< position of the node
 
@@ -1425,20 +1447,22 @@ protected:
 
     Size _contentSize;             ///< untransformed size of the node
 
+    kmMat4  _modelViewTransform;    ///< ModelView transform of the Node.
+
     // "cache" variables are allowed to be mutable
-    mutable AffineTransform _additionalTransform; ///< transform
-    mutable AffineTransform _transform;     ///< transform
-    mutable AffineTransform _inverse;       ///< inverse transform
-    mutable bool _additionalTransformDirty;   ///< The flag to check whether the additional transform is dirty
+    mutable kmMat4 _additionalTransform; ///< transform
+    mutable kmMat4 _transform;     ///< transform
+    mutable kmMat4 _inverse;       ///< inverse transform
+    bool _useAdditionalTransform;   ///< The flag to check whether the additional transform is dirty
     mutable bool _transformDirty;             ///< transform dirty flag
     mutable bool _inverseDirty;               ///< inverse transform dirty flag
 
-    Camera *_camera;                ///< a camera
 
-    GridBase *_grid;                ///< a grid
+    int _localZOrder;                   ///< Local order (relative to its siblings) used to sort the node
+    float _globalZOrder;                ///< Global order used to sort the node
+    float _vertexZ;                     ///< OpenGL real Z vertex
 
-    int _ZOrder;                      ///< z-order value that affects the draw order
-    
+
     Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
 
@@ -1449,7 +1473,7 @@ protected:
 
     GLProgram *_shaderProgram;      ///< OpenGL shader
 
-    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same zOrder
+    int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
@@ -1473,9 +1497,17 @@ protected:
 
     ComponentContainer *_componentContainer;        ///< Dictionary of components
 
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
 #endif
+    
+    // opacity controls
+    GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+    Color3B	    _displayedColor;
+    Color3B     _realColor;
+    bool		_cascadeColorEnabled;
+    bool        _cascadeOpacityEnabled;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
@@ -1484,49 +1516,41 @@ private:
 //#pragma mark - NodeRGBA
 
 /** NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
-
+ 
  All features from Node are valid, plus the following new features:
  - opacity
  - RGB colors
-
+ 
  Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
  @since v2.1
  */
-class CC_DLL NodeRGBA : public Node, public RGBAProtocol
+class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
 {
 public:
     // overrides
-    virtual GLubyte getOpacity() const override;
-    virtual GLubyte getDisplayedOpacity() const  override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
-    virtual bool isCascadeOpacityEnabled() const  override;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override;
+    virtual GLubyte getOpacity() const override { return Node::getOpacity(); }
+    virtual GLubyte getDisplayedOpacity() const  override { return Node::getDisplayedOpacity(); }
+    virtual void setOpacity(GLubyte opacity) override { return Node::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Node::updateDisplayedOpacity(parentOpacity); }
+    virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
-    virtual const Color3B& getColor(void) const override;
-    virtual const Color3B& getDisplayedColor() const override;
-    virtual void setColor(const Color3B& color) override;
-    virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual bool isCascadeColorEnabled() const override;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override;
+    virtual const Color3B& getColor(void) const override { return Node::getColor(); }
+    virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
+    virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
+    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }
+    virtual bool isCascadeColorEnabled() const override { return Node::isCascadeColorEnabled(); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabled(cascadeColorEnabled); }
 
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);};
-    virtual bool isOpacityModifyRGB() const override { return false; };
+    virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
+    virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
 
 protected:
-    NodeRGBA();
-    virtual ~NodeRGBA();
-    virtual bool init();
-
-	GLubyte		_displayedOpacity;
-    GLubyte     _realOpacity;
-	Color3B	    _displayedColor;
-    Color3B     _realColor;
-	bool		_cascadeColorEnabled;
-    bool        _cascadeOpacityEnabled;
+    __NodeRGBA();
+    virtual ~__NodeRGBA() {}
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(NodeRGBA);
+    CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
 };
 
 // end of base_node group

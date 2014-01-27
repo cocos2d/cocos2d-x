@@ -11,7 +11,6 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace network;
 
 WebSocketTestLayer::WebSocketTestLayer()
 : _wsiSendText(NULL)
@@ -74,9 +73,9 @@ WebSocketTestLayer::WebSocketTestLayer()
     menuBack->setPosition(Point::ZERO);
     addChild(menuBack);
     
-    _wsiSendText = new WebSocket();
-    _wsiSendBinary = new WebSocket();
-    _wsiError = new WebSocket();
+    _wsiSendText = new network::WebSocket();
+    _wsiSendBinary = new network::WebSocket();
+    _wsiError = new network::WebSocket();
     
     if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
     {
@@ -202,7 +201,7 @@ void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Object *sender)
 // Menu Callbacks
 void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendText->getReadyState() == WebSocket::State::OPEN)
+    if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN)
     {
         _sendTextStatus->setString("Send Text WS is waiting...");
         _wsiSendText->send("Hello WebSocket, I'm a text message.");
@@ -217,7 +216,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Object *sender)
 
 void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Object *sender)
 {
-    if (_wsiSendBinary->getReadyState() == WebSocket::State::OPEN)
+    if (_wsiSendBinary->getReadyState() == network::WebSocket::State::OPEN)
     {
         _sendBinaryStatus->setString("Send Binary WS is waiting...");
         char buf[] = "Hello WebSocket,\0 I'm\0 a\0 binary\0 message\0.";

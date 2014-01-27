@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "CCPhysicsContact.h"
-#ifdef CC_USE_PHYSICS
+#if CC_USE_PHYSICS
 #include "chipmunk.h"
 
 #include "CCPhysicsBody.h"
@@ -195,7 +195,7 @@ bool EventListenerPhysicsContact::init()
         onEvent(event);
     };
     
-    return EventListenerCustom::init(std::hash<std::string>()(PHYSICSCONTACT_EVENT_NAME), func);
+    return EventListenerCustom::init(PHYSICSCONTACT_EVENT_NAME, func);
 }
 
 void EventListenerPhysicsContact::onEvent(EventCustom* event)

@@ -1,8 +1,9 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2009-2010 Ricardo Quesada
-Copyright (C) 2009      Matt Oswald
+Copyright (c) 2009      Matt Oswald
+Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,6 +35,7 @@ THE SOFTWARE.
 #include "CCProtocols.h"
 #include "CCTextureAtlas.h"
 #include "ccMacros.h"
+#include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 
@@ -74,7 +76,7 @@ public:
      The capacity will be increased in 33% in runtime if it run out of space.
      The file will be loaded using the TextureMgr.
      */
-    static SpriteBatchNode* create(const char* fileImage, ssize_t capacity = DEFAULT_CAPACITY);
+    static SpriteBatchNode* create(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
     /**
      * @js ctor
      */
@@ -95,7 +97,7 @@ public:
      * @js init
      * @lua init
      */
-    bool initWithFile(const char* fileImage, ssize_t capacity);
+    bool initWithFile(const std::string& fileImage, ssize_t capacity);
     bool init();
 
     /** returns the TextureAtlas object */
@@ -154,8 +156,8 @@ public:
     virtual const BlendFunc& getBlendFunc() const override;
 
     virtual void visit() override;
-    virtual void addChild(Node* child) override{ Node::addChild(child);}
-    virtual void addChild(Node * child, int zOrder) override { Node::addChild(child, zOrder);}
+    
+    using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
     virtual void reorderChild(Node *child, int zOrder) override;
         
@@ -187,6 +189,7 @@ protected:
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;
+    BatchCommand _batchCommand;     // render command
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

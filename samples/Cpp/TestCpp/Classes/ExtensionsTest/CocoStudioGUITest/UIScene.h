@@ -52,25 +52,6 @@ static Scene* sceneWithTitle(const char * title) \
     return pScene; \
 }
 
-//#define UI_SCENE_CREATE_FUNC(UIScene) \
-//public: \
-//static CCScene* sceneWithTitle(const char * title) \
-//{ \
-//    CCScene* pScene = CCScene::create(); \
-//    UIScene* uiLayer = new UIScene(); \
-//    if (uiLayer && uiLayer->init()) \
-//    { \
-//        uiLayer->autorelease(); \
-//        uiLayer->getSceneTitleLabel()->setString(title); \
-//        pScene->addChild(uiLayer); \
-//    } \
-//    else \
-//    { \
-//        CC_SAFE_DELETE(uiLayer); \
-//    } \
-//    return pScene; \
-//}
-
 class UIScene : public Layer
 {
 public:
@@ -78,14 +59,13 @@ public:
     ~UIScene();
     bool init();
     // Menu Callbacks
+    void toCocosGUITestScene(Object* sender, TouchEventType type);
     virtual void previousCallback(Object* sender, TouchEventType type);
     virtual void restartCallback(Object* sender, TouchEventType type);
     virtual void nextCallback(Object* sender, TouchEventType type);
     
-    /** Title label of the scene. */
-//    CC_SYNTHESIZE_RETAIN(CCLabelTTF*, m_pSceneTitleLabel, SceneTitleLabel)
-    
-    CC_SYNTHESIZE_READONLY(UILabel*, m_pSceneTitle, SceneTitle)
+    /** Title label of the scene. */    
+    CC_SYNTHESIZE_READONLY(gui::Text*, _sceneTitle, SceneTitle)
     
     UI_SCENE_CREATE_FUNC(UIScene);
     
@@ -94,8 +74,8 @@ protected:
     void menuCloseCallback(Object* pSender, TouchEventType type);
     
 protected:
-    UILayer *m_pUiLayer;
-    UILayout *m_pWidget;
+    Layer* _uiLayer;
+    Layout* _widget;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

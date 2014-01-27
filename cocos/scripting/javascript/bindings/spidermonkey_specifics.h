@@ -20,26 +20,12 @@ typedef struct js_type_class {
 	JSObject *parentProto;
 } js_type_class_t;
 
-extern std::unordered_map<long, js_type_class_t*> _js_global_type_map;
+extern std::unordered_map<std::string, js_type_class_t*> _js_global_type_map;
 
 template< typename DERIVED >
 class TypeTest
 {
-	public:
-	static long s_id()
-	{
-		// return id unique for DERIVED
-		// NOT SURE IT WILL BE REALLY UNIQUE FOR EACH CLASS!!
-		/* Commented by James Chen
-		Using 'getHashCodeByString(typeid(*native_obj).name())' instead of 'reinterpret_cast<long>(typeid(*native_obj).name());'.
-		Since on win32 platform, 'reinterpret_cast<long>(typeid(*native_obj).name());' invoking in cocos2d.dll and outside cocos2d.dll(in TestJavascript.exe) will return different address.
-		But the return string from typeid(*native_obj).name() is the same string, so we must convert the string to hash id to make sure we can get unique id.
-		*/
-		// static const long id = reinterpret_cast<long>(typeid( DERIVED ).name());
-        static const long id = typeid( DERIVED ).hash_code();
-		return id;
-	}
-
+public:
 	static const char* s_name()
 	{
 		// return id unique for DERIVED

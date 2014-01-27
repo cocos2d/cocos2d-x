@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010 cocos2d-x.org
+Copyright (C) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +26,11 @@ THE SOFTWARE.
 #ifndef __CC_IME_DELEGATE_H__
 #define __CC_IME_DELEGATE_H__
 
+#include <string>
 #include "CCGeometry.h"
 
 NS_CC_BEGIN
+extern const std::string STD_STRING_EMPTY;
 
 /**
  * @addtogroup input
@@ -114,7 +117,7 @@ protected:
     * @js NA
     * @lua NA
     */
-    virtual const char * getContentText() { return 0; }
+    virtual const std::string& getContentText() { return STD_STRING_EMPTY; }
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
