@@ -10,6 +10,7 @@ import requests
 import sys
 import traceback
 import platform
+import subprocess
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description 
@@ -54,7 +55,11 @@ def main():
     branch = pr['base']['ref']
 
     #set commit status to pending
-    target_url = os.environ['BUILD_URL']
+    #target_url = os.environ['BUILD_URL']
+    jenkins_url = os.environ['JENKINS_URL']
+    job_name = os.environ['JOB_NAME'].split('/')[0]
+    build_number = os.environ['BUILD_NUMBER']
+    target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
     set_description(pr_desc, target_url)
     
@@ -104,8 +109,13 @@ def main():
     os.system(git_update_submodule)
 
     # Generate binding glue codes
-    if(platform.system() == 'Darwin'):
-      os.system("tools/jenkins-scripts/gen_jsb.sh")
+    if(branch == 'develop'):
+      if(platform.system() == 'Darwin'):
+        os.system("tools/jenkins-scripts/gen_jsb.sh")
+      elif(platform.system() == 'Windows'):
+        os.chdir("tools/jenkins-scripts")
+        os.system("gen_jsb_win32.bat")
+        os.chdir("../..")
 
     #make temp dir
     print "current dir is" + os.environ['WORKSPACE']
@@ -134,28 +144,27 @@ def main():
     #TODO: add ios build
     #TODO: add mac build
     #TODO: add win32 build
+    node_name = os.environ['NODE_NAME']
     if(branch == 'develop'):
-      ret = os.system("python build/android-build.py -n -j10 all")
+      if(node_name == 'android_mac') or (node_name == 'android_win7'):
+        ret = os.system("python build/android-build.py -n -j10 all")
+      elif(node_name == 'win32_win7'):
+        ret = subprocess.call('"%VS110COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
     elif(branch == 'master'):
-      ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
+      if(platform.system() == 'Darwin'):
+        ret = os.system("samples/Cpp/TestCpp/proj.android/build_native.sh")
+      else:
+        ret = 0
 
     #get build result
     print "build finished and return " + str(ret)
+    
     exit_code = 1
     if ret == 0:
         exit_code = 0
-        data['state'] = "success"
-        
     else:
         exit_code = 1
-        data['state'] = "failure"
-
-    #set commit status
-    try:
-        requests.post(statuses_url, data=json.dumps(data), headers=Headers)
-    except:
-        traceback.print_exc()
-
+    
     #clean workspace
     os.system("cd " + os.environ['WORKSPACE']);
     os.system("git checkout develop")

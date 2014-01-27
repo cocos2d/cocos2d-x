@@ -26,7 +26,6 @@
 #ifndef _CCFontCharMap_h_
 #define _CCFontCharMap_h_
 
-#include "cocos2d.h"
 #include "CCFont.h"
 
 NS_CC_BEGIN
@@ -38,8 +37,7 @@ public:
     static FontCharMap * create(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     static FontCharMap * create(const std::string& plistFile);
     
-    virtual Size* getAdvancesForTextUTF16(unsigned short *text, int &outNumLetters) const override;
-    virtual Rect  getRectForChar(unsigned short theChar) const override;
+    virtual int* getHorizontalKerningForTextUTF16(unsigned short *text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
     
 protected:    
@@ -48,7 +46,6 @@ protected:
         ,_mapStartChar(startCharMap)
         ,_itemWidth(itemWidth)
         ,_itemHeight(itemHeight)
-        ,_charRect(0,0,itemWidth,itemHeight)
     {}
     /**
      * @js NA
@@ -62,7 +59,6 @@ private:
     int _itemWidth;
     int _itemHeight;
 
-    Rect _charRect;
 };
 
 NS_CC_END

@@ -218,7 +218,7 @@ void ParticleBatchNode::reorderChild(Node * aChild, int zOrder)
 
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
 
-    if( zOrder == child->getZOrder() )
+    if( zOrder == child->getLocalZOrder() )
     {
         return;
     }
@@ -280,7 +280,7 @@ void ParticleBatchNode::getCurrentIndex(int* oldIndex, int* newIndex, Node* chil
         Node* pNode = _children.at(i);
 
         // new index
-        if( pNode->getZOrder() > z &&  ! foundNewIdx )
+        if( pNode->getLocalZOrder() > z &&  ! foundNewIdx )
         {
             *newIndex = i;
             foundNewIdx = true;
@@ -325,7 +325,7 @@ int ParticleBatchNode::searchNewPositionInChildrenForZ(int z)
     for( int i=0; i < count; i++ )
     {
         Node *child = _children.at(i);
-        if (child->getZOrder() > z)
+        if (child->getLocalZOrder() > z)
         {
             return i;
         }
@@ -384,7 +384,6 @@ void ParticleBatchNode::draw(void)
 
     _batchCommand.init(
                        _globalZOrder,
-                       _textureAtlas->getTexture()->getName(),
                        _shaderProgram,
                        _blendFunc,
                        _textureAtlas,

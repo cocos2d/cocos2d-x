@@ -281,7 +281,7 @@ unsigned short* cc_utf8_to_utf16(const char* str_old, int length/* = -1 */, int*
 {
     long len = cc_utf8_strlen(str_old, length);
     if (rUtf16Size != nullptr) {
-        *rUtf16Size = len;
+        *rUtf16Size = static_cast<int>(len);
     }
     
     unsigned short* str_new = new unsigned short[len + 1];

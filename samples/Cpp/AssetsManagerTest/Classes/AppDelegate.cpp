@@ -141,6 +141,8 @@ bool UpdateLayer::init()
 {
     Layer::init();
     
+    createDownloadedDir();
+
     /** Creates assets manager */
     pAssetsManager = new AssetsManager("https://raw.github.com/minggo/AssetsManagerTest/master/package.zip",
                                        "https://raw.github.com/minggo/AssetsManagerTest/master/version",
@@ -149,8 +151,6 @@ bool UpdateLayer::init()
     pAssetsManager->setConnectionTimeout(3);
     addChild(pAssetsManager);
     pAssetsManager->release();
-    
-    createDownloadedDir();
     
     auto size = Director::getInstance()->getWinSize();
 

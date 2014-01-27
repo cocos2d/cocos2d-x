@@ -26,6 +26,7 @@
 #include "renderer/CCBatchCommand.h"
 #include "ccGLStateCache.h"
 #include "CCTextureAtlas.h"
+#include "CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -38,10 +39,13 @@ BatchCommand::BatchCommand()
     _shader = nullptr;
 }
 
-void BatchCommand::init(float globalOrder, GLuint textureID, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const kmMat4& modelViewTransform)
 {
+    CCASSERT(shader, "shader cannot be nill");
+    CCASSERT(textureAtlas, "textureAtlas cannot be nill");
+    
     _globalOrder = globalOrder;
-    _textureID = textureID;
+    _textureID = textureAtlas->getTexture()->getName();
     _blendType = blendType;
     _shader = shader;
 

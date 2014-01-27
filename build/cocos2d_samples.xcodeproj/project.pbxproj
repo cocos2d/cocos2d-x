@@ -62,6 +62,8 @@
 		1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		15982CE2187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
 		15982CE4187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
+		15A71DB71894AE6200F30AC0 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A71DB61894AE6200F30AC0 /* mobdebug.lua */; };
+		15A71DB81894AE6200F30AC0 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A71DB61894AE6200F30AC0 /* mobdebug.lua */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -798,6 +800,8 @@
 		1ADCE7A0186BCF19001B78A4 /* UISliderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F2186819DB00828878 /* UISliderTest.cpp */; };
 		1ADCE7A1186BCF19001B78A4 /* UITextFieldTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F5186819DB00828878 /* UITextFieldTest.cpp */; };
 		1ADCE7A2186BCF19001B78A4 /* UIWidgetAddNodeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D360F8186819DB00828878 /* UIWidgetAddNodeTest.cpp */; };
+		1ADD146D188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */; };
+		1ADD146E188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */; };
 		1AFB0DE31885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
 		1AFB0DE41885357A003B2FF3 /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */; };
 		37A61460186B21F6007A4638 /* acts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37A6145B186B21F6007A4638 /* acts.cpp */; };
@@ -886,6 +890,8 @@
 		460E45DC180801C9000CDD6D /* sd in Resources */ = {isa = PBXBuildFile; fileRef = 460E45DA180801C9000CDD6D /* sd */; };
 		460E45DF18080238000CDD6D /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		460E45E018080238000CDD6D /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		4662EB5F188E426300B02E8F /* ReleasePoolTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */; };
+		4662EB60188E426300B02E8F /* ReleasePoolTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */; };
 		468588DA180805F100AC387D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 460E45391807E712000CDD6D /* main.m */; };
 		46A174E71807D95B005B8026 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174851807D934005B8026 /* AppDelegate.cpp */; };
 		46A174E81807D96A005B8026 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A174881807D934005B8026 /* HelloWorldScene.cpp */; };
@@ -1954,6 +1960,7 @@
 		1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
 		1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
 		15982CE1187656CD00625972 /* GuiConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GuiConstants.lua; path = ../cocos/scripting/lua/script/GuiConstants.lua; sourceTree = "<group>"; };
+		15A71DB61894AE6200F30AC0 /* mobdebug.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mobdebug.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -2515,6 +2522,8 @@
 		1AAF5283180E2C31000584C8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AAF5284180E2C31000584C8 /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		1AAF5285180E2C31000584C8 /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
+		1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceEventDispatcherTest.cpp; sourceTree = "<group>"; };
+		1ADD146C188D25270034D5EF /* PerformanceEventDispatcherTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceEventDispatcherTest.h; sourceTree = "<group>"; };
 		1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
 		1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2581,6 +2590,8 @@
 		460E45AB180801A4000CDD6D /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pew-pew-lei.wav"; sourceTree = "<group>"; };
 		460E45D7180801C1000CDD6D /* hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = hd; sourceTree = "<group>"; };
 		460E45DA180801C9000CDD6D /* sd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sd; sourceTree = "<group>"; };
+		4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReleasePoolTest.cpp; sourceTree = "<group>"; };
+		4662EB63188E472A00B02E8F /* ReleasePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleasePoolTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		46A174851807D934005B8026 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46A174861807D934005B8026 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3524,6 +3535,7 @@
 		1A8C5566180E8B5100EF57C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15A71DB61894AE6200F30AC0 /* mobdebug.lua */,
 				1A8C5567180E8B5100EF57C3 /* .gitignore */,
 				1A8C5569180E8B5100EF57C3 /* background.mp3 */,
 				1A8C556A180E8B5100EF57C3 /* background.ogg */,
@@ -3809,6 +3821,7 @@
 				1AAF50F9180E2C1A000584C8 /* ParticleTest */,
 				1AAF50FC180E2C1A000584C8 /* PerformanceTest */,
 				1AAF510B180E2C1A000584C8 /* PhysicsTest */,
+				4662EB5C188E426300B02E8F /* ReleasePoolTest */,
 				1AAF510E180E2C1A000584C8 /* RenderTextureTest */,
 				1AAF5111180E2C1A000584C8 /* RotateWorldTest */,
 				1AAF5114180E2C1A000584C8 /* SceneTest */,
@@ -4552,16 +4565,20 @@
 		1AAF50FC180E2C1A000584C8 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
-				1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */,
-				1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */,
 				1AAF50FD180E2C1A000584C8 /* PerformanceAllocTest.cpp */,
 				1AAF50FE180E2C1A000584C8 /* PerformanceAllocTest.h */,
+				1AFB0DE11885357A003B2FF3 /* PerformanceContainerTest.cpp */,
+				1AFB0DE21885357A003B2FF3 /* PerformanceContainerTest.h */,
+				1ADD146B188D25270034D5EF /* PerformanceEventDispatcherTest.cpp */,
+				1ADD146C188D25270034D5EF /* PerformanceEventDispatcherTest.h */,
 				1A087AEC1860418300196EF5 /* PerformanceLabelTest.cpp */,
 				1A087AED1860418300196EF5 /* PerformanceLabelTest.h */,
 				1AAF50FF180E2C1A000584C8 /* PerformanceNodeChildrenTest.cpp */,
 				1AAF5100180E2C1A000584C8 /* PerformanceNodeChildrenTest.h */,
 				1AAF5101180E2C1A000584C8 /* PerformanceParticleTest.cpp */,
 				1AAF5102180E2C1A000584C8 /* PerformanceParticleTest.h */,
+				ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */,
+				ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */,
 				1AAF5103180E2C1A000584C8 /* PerformanceSpriteTest.cpp */,
 				1AAF5104180E2C1A000584C8 /* PerformanceSpriteTest.h */,
 				1AAF5105180E2C1A000584C8 /* PerformanceTest.cpp */,
@@ -4570,8 +4587,6 @@
 				1AAF5108180E2C1A000584C8 /* PerformanceTextureTest.h */,
 				1AAF5109180E2C1A000584C8 /* PerformanceTouchesTest.cpp */,
 				1AAF510A180E2C1A000584C8 /* PerformanceTouchesTest.h */,
-				ED3674B3187FA6BF0038ECFC /* PerformanceRendererTest.h */,
-				ED3674B8187FA7020038ECFC /* PerformanceRendererTest.cpp */,
 			);
 			path = PerformanceTest;
 			sourceTree = "<group>";
@@ -4942,6 +4957,15 @@
 				460E45A4180801A4000CDD6D /* Marker Felt.ttf */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		4662EB5C188E426300B02E8F /* ReleasePoolTest */ = {
+			isa = PBXGroup;
+			children = (
+				4662EB63188E472A00B02E8F /* ReleasePoolTest.h */,
+				4662EB5D188E426300B02E8F /* ReleasePoolTest.cpp */,
+			);
+			path = ReleasePoolTest;
 			sourceTree = "<group>";
 		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
@@ -5786,6 +5810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A8C554B180E8B3D00EF57C3 /* Default-568h@2x.png in Resources */,
+				15A71DB81894AE6200F30AC0 /* mobdebug.lua in Resources */,
 				1A8C554C180E8B3D00EF57C3 /* Default.png in Resources */,
 				1A8C554D180E8B3D00EF57C3 /* Default@2x.png in Resources */,
 				1A8C554E180E8B3D00EF57C3 /* Icon-114.png in Resources */,
@@ -5918,6 +5943,7 @@
 				1A8C55B2180E8B8400EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C55B4180E8B8400EF57C3 /* luaj.lua in Resources */,
 				1A8C55B6180E8B8400EF57C3 /* Opengl.lua in Resources */,
+				15A71DB71894AE6200F30AC0 /* mobdebug.lua in Resources */,
 				1A8C55B8180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82918751B590082884F /* extern.lua in Resources */,
 				15F4C847187551340082884F /* CocoStudio.lua in Resources */,
@@ -6395,6 +6421,7 @@
 				1AAF516A180E2C1A000584C8 /* Bug-458.cpp in Sources */,
 				50691336184EB453009BBDD7 /* ConsoleTest.cpp in Sources */,
 				1ADCE79F186BCF19001B78A4 /* UIScrollViewTest.cpp in Sources */,
+				1ADD146D188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1ADCE79C186BCB21001B78A4 /* UIListViewTest.cpp in Sources */,
 				1AAF516C180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516E180E2C1A000584C8 /* Bug-624.cpp in Sources */,
@@ -6421,6 +6448,7 @@
 				1AAF5192180E2C1A000584C8 /* ButtonTestLayer.cpp in Sources */,
 				1AAF5194180E2C1A000584C8 /* CocosBuilderTest.cpp in Sources */,
 				1AAF5196180E2C1A000584C8 /* HelloCocosBuilderLayer.cpp in Sources */,
+				4662EB5F188E426300B02E8F /* ReleasePoolTest.cpp in Sources */,
 				1AAF5198180E2C1A000584C8 /* MenuTestLayer.cpp in Sources */,
 				1AAF519A180E2C1A000584C8 /* TestHeaderLayer.cpp in Sources */,
 				1AAF519C180E2C1A000584C8 /* TimelineCallbackTestLayer.cpp in Sources */,
@@ -6663,6 +6691,7 @@
 			files = (
 				1AAF514B180E2C1A000584C8 /* AccelerometerTest.cpp in Sources */,
 				1AAF514D180E2C1A000584C8 /* ActionManagerTest.cpp in Sources */,
+				4662EB60188E426300B02E8F /* ReleasePoolTest.cpp in Sources */,
 				1AAF514F180E2C1A000584C8 /* ActionsEaseTest.cpp in Sources */,
 				1AAF5151180E2C1A000584C8 /* ActionsProgressTest.cpp in Sources */,
 				1AAF5153180E2C1A000584C8 /* ActionsTest.cpp in Sources */,
@@ -6685,6 +6714,7 @@
 				50D36102186819DB00828878 /* UIListViewTest.cpp in Sources */,
 				1AAF516D180E2C1A000584C8 /* QuestionContainerSprite.cpp in Sources */,
 				1AAF516F180E2C1A000584C8 /* Bug-624.cpp in Sources */,
+				1ADD146E188D25270034D5EF /* PerformanceEventDispatcherTest.cpp in Sources */,
 				50D36103186819DB00828878 /* UILoadingBarTest.cpp in Sources */,
 				1AAF5171180E2C1A000584C8 /* Bug-886.cpp in Sources */,
 				1AAF5173180E2C1A000584C8 /* Bug-899.cpp in Sources */,
@@ -8378,7 +8408,7 @@
 		A07A517D1783A1CC0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
@@ -8387,7 +8417,7 @@
 		A07A517E1783A1CC0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				COMPRESS_PNG_FILES = NO;
 				SDKROOT = iphoneos;
 			};
@@ -8507,7 +8537,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",

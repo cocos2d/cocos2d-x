@@ -63,7 +63,9 @@ static std::function<Layer*()> createFunctions[] =
     CL(NodeToWorld3D),
     CL(SchedulerTest1),
     CL(CameraOrbitTest),
-    CL(CameraZoomTest),
+    //Camera has been removed from CCNode
+    //todo add new feature to support it
+    //CL(CameraZoomTest),
     CL(ConvertToNode),
     CL(NodeOpaqueTest),
     CL(NodeNonOpaqueTest),
@@ -459,16 +461,16 @@ std::string StressTest2::title() const
 SchedulerTest1::SchedulerTest1()
 {
     auto layer = Layer::create();
-    //CCLOG("retain count after init is %d", layer->retainCount());                // 1
+    //CCLOG("retain count after init is %d", layer->getReferenceCount());                // 1
     
     addChild(layer, 0);
-    //CCLOG("retain count after addChild is %d", layer->retainCount());      // 2
+    //CCLOG("retain count after addChild is %d", layer->getReferenceCount());      // 2
     
     layer->schedule( schedule_selector(SchedulerTest1::doSomething) );
-    //CCLOG("retain count after schedule is %d", layer->retainCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
+    //CCLOG("retain count after schedule is %d", layer->getReferenceCount());      // 3 : (object-c viersion), but win32 version is still 2, because Timer class don't save target.
     
     layer->unschedule(schedule_selector(SchedulerTest1::doSomething));
-    //CCLOG("retain count after unschedule is %d", layer->retainCount());        // STILL 3!  (win32 is '2')
+    //CCLOG("retain count after unschedule is %d", layer->getReferenceCount());        // STILL 3!  (win32 is '2')
 }
 
 void SchedulerTest1::doSomething(float dt)
@@ -996,8 +998,8 @@ void MySprite::onDraw()
     GL::bindTexture2D( _texture->getName() );
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
-#define kQuadSize sizeof(_quad.bl)
-    long offset = (long)&_quad;
+    #define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);

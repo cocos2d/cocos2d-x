@@ -22,7 +22,7 @@ public:
 class EventDispatcherTestDemo : public BaseTest
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void backCallback(Object* sender);
@@ -133,6 +133,36 @@ protected:
     int _count1, _count2, _count3, _count4;
     Label *_label1, *_label2, *_label3, *_label4;
     EventListenerCustom *_event1, *_event2, *_event3, *_event4;
+};
+
+class GlobalZTouchTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(GlobalZTouchTest);
+    GlobalZTouchTest();
+    
+    virtual void update(float dt) override;
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    Sprite* _sprite;
+    float _accum;
+};
+
+class StopPropagationTest : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(StopPropagationTest);
+    StopPropagationTest();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    bool isPointInNode(Point pt, Node* node);
+    bool isPointInTopHalfAreaOfScreen(Point pt);
 };
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */

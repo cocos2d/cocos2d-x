@@ -450,23 +450,21 @@ static BitmapDC& sharedBitmapDC()
 }
 
 bool Image::initWithString(
-		const char * pText,
-		int nWidth/* = 0*/,
-		int nHeight/* = 0*/,
-		TextAlign eAlignMask/* = kAlignCenter*/,
-		const char * pFontName/* = nil*/,
-		int nSize/* = 0*/)
+		const char * text,
+		int width/* = 0*/,
+		int height/* = 0*/,
+		TextAlign alignMask/* = kAlignCenter*/,
+		const char * fontName/* = nil*/,
+		int size/* = 0*/)
 {
-	bool bRet = false;
+	bool ret = false;
 	do
     {
-		CC_BREAK_IF(! pText);
+		CC_BREAK_IF(!text || 0 == strlen(text));
 
 		BitmapDC &dc = sharedBitmapDC();
 
-		//const char* pFullFontName = FileUtils::getInstance()->fullPathFromRelativePath(pFontName);
-
-		CC_BREAK_IF(! dc.getBitmap(pText, nWidth, nHeight, eAlignMask, pFontName, nSize));
+		CC_BREAK_IF(! dc.getBitmap(text, width, height, alignMask, fontName, size));
 
 		// assign the dc._data to _data in order to save time
 		_data = dc._data;
@@ -478,13 +476,13 @@ bool Image::initWithString(
 		_preMulti = true;
         _dataLen = _width * _height * 4;
 
-		bRet = true;
+		ret = true;
 
 		dc.reset();
 	}while (0);
 
 	//do nothing
-	return bRet;
+	return ret;
 }
 
 NS_CC_END

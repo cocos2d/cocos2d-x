@@ -822,8 +822,8 @@ void Sprite::sortAllChildren()
             auto tempJ = static_cast<Node*>( _children->getObjectAtIndex(j) );
 
             //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-            while(j>=0 && ( tempI->getZOrder() < tempJ->getZOrder() ||
-                           ( tempI->getZOrder() == tempJ->getZOrder() &&
+            while(j>=0 && ( tempI->getLocalZOrder() < tempJ->getLocalZOrder() ||
+                           ( tempI->getLocalZOrder() == tempJ->getLocalZOrder() &&
                             tempI->getOrderOfArrival() < tempJ->getOrderOfArrival() ) ) )
             {
                 _children->fastSetObject( tempJ, j+1 );
