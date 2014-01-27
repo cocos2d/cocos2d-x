@@ -67,6 +67,17 @@ def select_toolchain_version():
         print "Couldn't find the gcc toolchain."
         exit(1)
 
+def check_ant_variables():
+    ''' Checking the environment ANT, which will be used for package
+    '''
+    try:
+        ANT_PATH = os.environ['ANT']
+    except Exception:
+        print "ANT_PATH not defined. Please define ANT_PATH in your environment"
+        sys.exit(1)
+
+    return ANT_PATH
+
 def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,android_platform,build_mode):
 
     ndk_path = os.path.join(ndk_root, "ndk-build")
@@ -94,8 +105,10 @@ def do_build(cocos_root, ndk_root, app_android_root,ndk_build_param,sdk_root,and
     	  command = '%s update project -t %s -p %s -s' % (sdk_tool_path,android_platform,app_android_root)
     	  if os.system(command) != 0:
     	  	  raise Exception("update project [ " + app_android_root + " ] fails!")
+          ant_path=check_ant_variables()
+          ant_path = os.path.join(ant_path, "ant")
     	  buildfile_path = os.path.join(app_android_root, "build.xml")
-    	  command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
+    	  command = '%s clean %s -f %s -Dsdk.dir=%s' % (ant_path,build_mode,buildfile_path,sdk_root)
     	  os.system(command)
 
 def copy_files(src, dst):
