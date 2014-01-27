@@ -22,9 +22,8 @@ local function main()
     if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
-        require('mobdebug').start()
-        --for on-device debugging,the up call should change as follow:
-        --require('mobdebug').start('192.168.2.80')  --'192.168.2.80' is your PC's IP
+        local host = 'localhost' -- please change localhost to your PC's IP for on-device debugging
+        require('mobdebug').start(host)
     end
     require "hello2"
     cclog("result is " .. myadd(1, 1))
