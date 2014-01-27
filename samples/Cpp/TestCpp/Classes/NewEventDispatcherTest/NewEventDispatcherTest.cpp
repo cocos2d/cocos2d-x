@@ -949,13 +949,10 @@ StopPropagationTest::StopPropagationTest()
     static const int TAG_BLUE_SPRITE = 101;
     static const int TAG_BLUE_SPRITE2 = 102;
 
-
-    
     auto touchOneByOneListener = EventListenerTouchOneByOne::create();
     touchOneByOneListener->setSwallowTouches(true);
     
     touchOneByOneListener->onTouchBegan = [=](Touch* touch, Event* event){
-        
         // Skip if don't touch top half screen.
         if (!this->isPointInTopHalfAreaOfScreen(touch->getLocation()))
             return false;
@@ -981,7 +978,6 @@ StopPropagationTest::StopPropagationTest()
     
     auto touchAllAtOnceListener = EventListenerTouchAllAtOnce::create();
     touchAllAtOnceListener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
-        
         // Skip if don't touch top half screen.
         if (this->isPointInTopHalfAreaOfScreen(touches[0]->getLocation()))
             return;
