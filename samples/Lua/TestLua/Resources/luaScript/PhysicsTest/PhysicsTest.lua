@@ -95,7 +95,7 @@ end
 
 bit.band = bit.band or bit._and
 bit.rshift = bit.rshift or bit._rshift
-bit.bnot = bit.bnot or bot._not
+bit.bnot = bit.bnot or bit._not
 
 -- bit operation end
 
