@@ -23,6 +23,7 @@ std::function<Layer*()> createFunctions[] =
     CL(RemoveListenerAfterAddingTest),
     CL(DirectorEventTest),
     CL(GlobalZTouchTest),
+    CL(StopPropagationTest),
 };
 
 unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
@@ -866,10 +867,10 @@ GlobalZTouchTest::GlobalZTouchTest()
 , _accum(0)
 {
     
-    auto listener1 = EventListenerTouchOneByOne::create();
-    listener1->setSwallowTouches(true);
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->setSwallowTouches(true);
     
-    listener1->onTouchBegan = [](Touch* touch, Event* event){
+    listener->onTouchBegan = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         
         Point locationInNode = target->convertToNodeSpace(touch->getLocation());
@@ -885,12 +886,12 @@ GlobalZTouchTest::GlobalZTouchTest()
         return false;
     };
     
-    listener1->onTouchMoved = [](Touch* touch, Event* event){
+    listener->onTouchMoved = [](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         target->setPosition(target->getPosition() + touch->getDelta());
     };
     
-    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+    listener->onTouchEnded = [=](Touch* touch, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
         log("sprite onTouchesEnded.. ");
         target->setOpacity(255);
@@ -901,7 +902,6 @@ GlobalZTouchTest::GlobalZTouchTest()
     for (int i = 0; i < SPRITE_COUNT; i++)
     {
         Sprite *sprite;
-        auto parent = Node::create();
         if(i==4)
         {
             sprite = Sprite::create("Images/CyanSquare.png");
@@ -913,10 +913,9 @@ GlobalZTouchTest::GlobalZTouchTest()
             sprite = Sprite::create("Images/YellowSquare.png");
         }
         
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), sprite);
         
-        parent->addChild(sprite);
-        this->addChild(parent);
+        this->addChild(sprite);
         
         Size visibleSize = Director::getInstance()->getVisibleSize();
         sprite->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y);
@@ -945,3 +944,151 @@ std::string GlobalZTouchTest::subtitle() const
     return "Blue Sprite should change go from foreground to background";
 }
 
+StopPropagationTest::StopPropagationTest()
+{
+    static const int TAG_BLUE_SPRITE = 101;
+    static const int TAG_BLUE_SPRITE2 = 102;
+
+
+    
+    auto touchOneByOneListener = EventListenerTouchOneByOne::create();
+    touchOneByOneListener->setSwallowTouches(true);
+    
+    touchOneByOneListener->onTouchBegan = [=](Touch* touch, Event* event){
+        
+        // Skip if don't touch top half screen.
+        if (!this->isPointInTopHalfAreaOfScreen(touch->getLocation()))
+            return false;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touch->getLocation(), target))
+        {
+            target->setOpacity(180);
+            return true;
+        }
+        
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+        return false;
+    };
+    
+    touchOneByOneListener->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        target->setOpacity(255);
+    };
+    
+    auto touchAllAtOnceListener = EventListenerTouchAllAtOnce::create();
+    touchAllAtOnceListener->onTouchesBegan = [=](const std::vector<Touch*>& touches, Event* event){
+        
+        // Skip if don't touch top half screen.
+        if (this->isPointInTopHalfAreaOfScreen(touches[0]->getLocation()))
+            return;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touches[0]->getLocation(), target))
+        {
+            target->setOpacity(180);
+        }
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    touchAllAtOnceListener->onTouchesEnded = [=](const std::vector<Touch*>& touches, Event* event){
+        // Skip if don't touch top half screen.
+        if (this->isPointInTopHalfAreaOfScreen(touches[0]->getLocation()))
+            return;
+        
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        
+        if (this->isPointInNode(touches[0]->getLocation(), target))
+        {
+            target->setOpacity(255);
+        }
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    auto keyboardEventListener = EventListenerKeyboard::create();
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+        auto target = static_cast<Sprite*>(event->getCurrentTarget());
+        CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
+        // Stop propagation, so yellow blocks will not be able to receive event.
+        event->stopPropagation();
+    };
+    
+    const int SPRITE_COUNT = 8;
+    
+    for (int i = 0; i < SPRITE_COUNT; i++)
+    {
+        Sprite* sprite;
+        Sprite* sprite2;
+        
+        if(i==4)
+        {
+            sprite = Sprite::create("Images/CyanSquare.png");
+            sprite->setTag(TAG_BLUE_SPRITE);
+            addChild(sprite, 100);
+            
+            sprite2 = Sprite::create("Images/CyanSquare.png");
+            sprite2->setTag(TAG_BLUE_SPRITE2);
+            addChild(sprite2, 100);
+        }
+        else
+        {
+            sprite = Sprite::create("Images/YellowSquare.png");
+            addChild(sprite, 0);
+            sprite2 = Sprite::create("Images/YellowSquare.png");
+            addChild(sprite2, 0);
+        }
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOneByOneListener->clone(), sprite);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardEventListener->clone(), sprite);
+        
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(touchAllAtOnceListener->clone(), sprite2);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardEventListener->clone(), sprite2);
+
+        
+        Size visibleSize = Director::getInstance()->getVisibleSize();
+        sprite->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y + sprite2->getContentSize().height/2 +10);
+        sprite2->setPosition(VisibleRect::left().x + visibleSize.width / (SPRITE_COUNT - 1) * i, VisibleRect::center().y - sprite2->getContentSize().height/2-10);
+    }
+}
+
+bool StopPropagationTest::isPointInNode(Point pt, Node* node)
+{
+    Point locationInNode = node->convertToNodeSpace(pt);
+    Size s = node->getContentSize();
+    Rect rect = Rect(0, 0, s.width, s.height);
+    
+    if (rect.containsPoint(locationInNode))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool StopPropagationTest::isPointInTopHalfAreaOfScreen(Point pt)
+{
+    Size winSize = Director::getInstance()->getWinSize();
+    
+    if (pt.y >= winSize.height/2) {
+        return true;
+    }
+    
+    return false;
+}
+
+std::string StopPropagationTest::title() const
+{
+    return "Stop Propagation Test";
+}
+
+std::string StopPropagationTest::subtitle() const
+{
+    return "Shouldn't crash and only blue block could be clicked";
+}
