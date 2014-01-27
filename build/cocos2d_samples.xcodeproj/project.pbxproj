@@ -62,6 +62,8 @@
 		1585AB4C1823A55400000FB5 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */; };
 		15982CE2187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
 		15982CE4187656CD00625972 /* GuiConstants.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15982CE1187656CD00625972 /* GuiConstants.lua */; };
+		15A71DB71894AE6200F30AC0 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A71DB61894AE6200F30AC0 /* mobdebug.lua */; };
+		15A71DB81894AE6200F30AC0 /* mobdebug.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15A71DB61894AE6200F30AC0 /* mobdebug.lua */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -1958,6 +1960,7 @@
 		1585AB491823A55400000FB5 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
 		1585AB4A1823A55400000FB5 /* lua_assetsmanager_test_sample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_assetsmanager_test_sample.h; sourceTree = "<group>"; };
 		15982CE1187656CD00625972 /* GuiConstants.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = GuiConstants.lua; path = ../cocos/scripting/lua/script/GuiConstants.lua; sourceTree = "<group>"; };
+		15A71DB61894AE6200F30AC0 /* mobdebug.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mobdebug.lua; sourceTree = "<group>"; };
 		15C64822165F391E007D4F18 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		15C64824165F3934007D4F18 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		15C64826165F394E007D4F18 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -3532,6 +3535,7 @@
 		1A8C5566180E8B5100EF57C3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				15A71DB61894AE6200F30AC0 /* mobdebug.lua */,
 				1A8C5567180E8B5100EF57C3 /* .gitignore */,
 				1A8C5569180E8B5100EF57C3 /* background.mp3 */,
 				1A8C556A180E8B5100EF57C3 /* background.ogg */,
@@ -5806,6 +5810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A8C554B180E8B3D00EF57C3 /* Default-568h@2x.png in Resources */,
+				15A71DB81894AE6200F30AC0 /* mobdebug.lua in Resources */,
 				1A8C554C180E8B3D00EF57C3 /* Default.png in Resources */,
 				1A8C554D180E8B3D00EF57C3 /* Default@2x.png in Resources */,
 				1A8C554E180E8B3D00EF57C3 /* Icon-114.png in Resources */,
@@ -5938,6 +5943,7 @@
 				1A8C55B2180E8B8400EF57C3 /* DrawPrimitives.lua in Resources */,
 				1A8C55B4180E8B8400EF57C3 /* luaj.lua in Resources */,
 				1A8C55B6180E8B8400EF57C3 /* Opengl.lua in Resources */,
+				15A71DB71894AE6200F30AC0 /* mobdebug.lua in Resources */,
 				1A8C55B8180E8B8400EF57C3 /* OpenglConstants.lua in Resources */,
 				15F4C82918751B590082884F /* extern.lua in Resources */,
 				15F4C847187551340082884F /* CocoStudio.lua in Resources */,
@@ -8531,7 +8537,6 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
