@@ -45,9 +45,6 @@ NS_CC_BEGIN
 
 struct _hashUniformEntry;
 
-typedef void (*GLInfoFunction)(GLuint program, GLenum pname, GLint* params);
-typedef void (*GLLogFunction) (GLuint program, GLsizei bufsize, GLsizei* length, GLchar* infolog);
-
 /** GLProgram
  Class that implements a glProgram
  
@@ -241,7 +238,7 @@ private:
     virtual std::string getDescription() const;
 
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    std::string logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const;
+    std::string logForOpenGLShader(GLuint object) const;
 
 private:
     GLuint            _program;

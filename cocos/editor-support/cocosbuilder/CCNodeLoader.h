@@ -105,7 +105,7 @@ class NodeLoader : public cocos2d::Object {
         virtual BlockData * parsePropTypeBlock(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
         virtual BlockControlData * parsePropTypeBlockControl(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
         virtual cocos2d::Node * parsePropTypeCCBFile(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
-        virtual float * parsePropTypeFloatXY(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader);
+		virtual float * parsePropTypeFloatXY(cocos2d::Node * pNode, cocos2d::Node * pParent, CCBReader * ccbReader, const char *pPropertyName);
 
 
         virtual void onHandlePropTypePosition(cocos2d::Node * pNode,cocos2d:: Node * pParent, const char* pPropertyName, cocos2d::Point pPosition, CCBReader * ccbReader);

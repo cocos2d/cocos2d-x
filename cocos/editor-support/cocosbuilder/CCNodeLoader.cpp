@@ -164,7 +164,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             }
             case CCBReader::PropertyType::FLOAT_XY:
             {
-                float * xy =  this->parsePropTypeFloatXY(pNode, pParent, ccbReader);
+                float * xy =  this->parsePropTypeFloatXY(pNode, pParent, ccbReader, propertyName.c_str());
                 if(setProp)
                 {
                     this->onHandlePropTypeFloatXY(pNode, pParent, propertyName.c_str(), xy, ccbReader);
@@ -462,17 +462,23 @@ Size NodeLoader::parsePropTypeSize(Node * pNode, Node * pParent, CCBReader * ccb
     return Size(width, height);
 }
 
+float * NodeLoader::parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader * ccbReader, const char *pPropertyName){
+	float x = ccbReader->readFloat();
+	float y = ccbReader->readFloat();
 
+	if (ccbReader->getAnimatedProperties()->find(pPropertyName) != ccbReader->getAnimatedProperties()->end())
+	{
+		ValueVector baseValue;
+		baseValue.push_back(Value(x));
+		baseValue.push_back(Value(y));
+		ccbReader->getAnimationManager()->setBaseValue(Value(baseValue), pNode, pPropertyName);
+	}
 
-float * NodeLoader::parsePropTypeFloatXY(Node * pNode, Node * pParent, CCBReader * ccbReader) {
-    float x = ccbReader->readFloat();
-    float y = ccbReader->readFloat();
+	float * floatXY = new float[2];
+	floatXY[0] = x;
+	floatXY[1] = y;
 
-    float * floatXY = new float[2];
-    floatXY[0] = x;
-    floatXY[1] = y;
-
-    return floatXY;
+	return floatXY;
 }
 
 float * NodeLoader::parsePropTypeScaleLock(Node * pNode, Node * pParent, CCBReader * ccbReader, const char *pPropertyName) {
