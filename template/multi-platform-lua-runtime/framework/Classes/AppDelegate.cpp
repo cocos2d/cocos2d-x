@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	//engine->executeString("require('debugger')('192.168.16.209')");
 	engine->executeString("require('debugger')()");
 
-    std::string path = FileUtils::getInstance()->fullPathForFilename("runtime.lua");
+    std::string path = FileUtils::getInstance()->fullPathForFilename("cocos2d-lua.lua");
     engine->executeScriptFile(path.c_str());
 
     return true;
