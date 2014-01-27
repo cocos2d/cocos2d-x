@@ -170,7 +170,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldEndEditing...");
     editState_ = NO;
-    getEditBoxImplIOS()->setText(getEditBoxImplIOS()->getText());
+    getEditBoxImplIOS()->refreshInactiveText();
     
     cocos2d::extension::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
@@ -396,25 +396,13 @@ void EditBoxImplIOS::setPlaceholderFontColor(const Color3B& color)
 
 void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
 {
-    // FIX ME: this is a temporary fix for issue #2920: IPA packed by Xcode5 may crash on iOS7 when switching to voice recognition input method.
-    // This temporary fix is only for ios version aboves 7.0.
-    // I don't know how to fix it, so I changed the keyboard type to hide the dictation button to avoid crash.
-    // Issue #2920 url: http://www.cocos2d-x.org/issues/2920
-    Boolean above7 = NO;
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    
-    if ([currSysVer compare:@"7" options:NSNumericSearch range:NSMakeRange(0, 1)] == 0)
-    {
-        above7 = YES;
-    }
-    
     switch (inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
             break;
         case EditBox::InputMode::NUMERIC:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeDecimalPad : UIKeyboardTypeNumberPad);
+            _systemControl.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             break;
         case EditBox::InputMode::PHONE_NUMBER:
             _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
@@ -426,10 +414,10 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
             break;
         case EditBox::InputMode::SINGLE_LINE:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
         default:
-            _systemControl.textField.keyboardType = (above7 ? UIKeyboardTypeEmailAddress : UIKeyboardTypeDefault);
+            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
             break;
     }
 }
@@ -497,12 +485,11 @@ bool EditBoxImplIOS::isEditing()
     return [_systemControl isEditState] ? true : false;
 }
 
-void EditBoxImplIOS::setText(const char* pText)
-{
-    _systemControl.textField.text = [NSString stringWithUTF8String:pText];
-	if(_systemControl.textField.hidden == YES) {
-		setInactiveText(pText);
-		if(strlen(pText) == 0)
+void EditBoxImplIOS::refreshInactiveText(){
+    const char* text = getText();
+    if(_systemControl.textField.hidden == YES) {
+		setInactiveText(text);
+		if(strlen(text) == 0)
 		{
 			_label->setVisible(false);
 			_labelPlaceHolder->setVisible(true);
@@ -515,9 +502,24 @@ void EditBoxImplIOS::setText(const char* pText)
 	}
 }
 
+void EditBoxImplIOS::setText(const char* text)
+{
+    NSString* nsText =[NSString stringWithUTF8String:text];
+    if ([nsText compare:_systemControl.textField.text] != NSOrderedSame) {
+        _systemControl.textField.text = nsText;
+    }
+    
+    refreshInactiveText();
+}
+
+NSString* removeSiriString(NSString* str){
+    NSString* siriString = @"\xef\xbf\xbc";
+    return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
+}
+
 const char*  EditBoxImplIOS::getText(void)
 {
-    return [_systemControl.textField.text UTF8String];
+    return [removeSiriString(_systemControl.textField.text) UTF8String];
 }
 
 void EditBoxImplIOS::setPlaceHolder(const char* pText)
