@@ -53,6 +53,7 @@ cocos2d-x-3.0beta2 Jan.24 2014
      [FIX]          Keyboard pressed events are being repeatedly fired before keyboard is released
 [Android]
      [FIX]          Background music can't be resumed when back from foreground
+     [FIX]          ANR (Application Not Responding) appears on android 2.3 when pressing hardware button.
 [lua binding]
      [NEW]          Can bind classes that have the same class names but different namesapces
      [FIX]          Use EventDispatcher to update some test cases
