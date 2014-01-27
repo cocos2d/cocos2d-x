@@ -85,6 +85,7 @@ void Font::setCurrentGlyphCollection(GlyphCollection glyphs, const char *customG
             
             break;
     }
+    _usedGlyphs = glyphs;
 }
 
 const char * Font::getCurrentGlyphCollection() const
