@@ -12,13 +12,15 @@ AppDelegate::~AppDelegate()
 {
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
-    // initialize director
+bool AppDelegate::applicationDidFinishLaunching()
+{
     auto director = Director::getInstance();
-    auto glview = EGLView::createWithSize("Simple Game", Size(900,640));
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = EGLView::createWithSize("Simple Game", Size(900,640));
+        director->setOpenGLView(glview);
+    }
 
-    director->setOpenGLView(glview);
-    
     auto screenSize = glview->getFrameSize();
     auto designSize = Size(480, 320);
     std::vector<std::string> searchPaths;
