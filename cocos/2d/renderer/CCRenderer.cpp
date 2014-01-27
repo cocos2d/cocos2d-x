@@ -100,8 +100,6 @@ void RenderQueue::clear()
 
 Renderer::Renderer()
 :_lastMaterialID(0)
-,_firstCommand(0)
-,_lastCommand(0)
 ,_numQuads(0)
 ,_glViewAssigned(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -114,6 +112,7 @@ Renderer::Renderer()
     _renderGroups.push_back(defaultRenderQueue);
     RenderStackElement elelment = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(elelment);
+    _batchedQuadCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
 }
 
 Renderer::~Renderer()
@@ -282,13 +281,10 @@ void Renderer::render()
             RenderQueue currRenderQueue = _renderGroups[_renderStack.top().renderQueueID];
             size_t len = currRenderQueue.size();
             
-            //Refresh the batch command index in case the renderStack has changed.
-            _firstCommand = _lastCommand = _renderStack.top().currentIndex;
-            
             //Process RenderQueue
             for(size_t i = _renderStack.top().currentIndex; i < len; i++)
             {
-                _renderStack.top().currentIndex = _lastCommand = i;
+                _renderStack.top().currentIndex = i;
                 auto command = currRenderQueue[i];
 
                 auto commandType = command->getType();
@@ -296,23 +292,23 @@ void Renderer::render()
                 if(commandType == RenderCommand::Type::QUAD_COMMAND)
                 {
                     auto cmd = static_cast<QuadCommand*>(command);
-                    ssize_t cmdQuadCount = cmd->getQuadCount();
+                    CCASSERT(nullptr!= cmd, "Illegal command for RenderCommand Taged as QUAD_COMMAND");
                     
                     //Batch quads
-                    if(_numQuads + cmdQuadCount > VBO_SIZE)
+                    if(_numQuads + cmd->getQuadCount() > VBO_SIZE)
                     {
-                        CCASSERT(cmdQuadCount>=0 && cmdQuadCount<VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
+                        CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() < VBO_SIZE, "VBO is not big enough for quad data, please break the quad data down or use customized render command");
 
                         //Draw batched quads if VBO is full
-                        _lastCommand --;
                         drawBatchedQuads();
-                        _lastCommand ++;
                     }
+                    
+                    _batchedQuadCommands.push_back(cmd);
+                    
+                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmd->getQuadCount());
+                    convertToWorldCoordinates(_quads + _numQuads, cmd->getQuadCount(), cmd->getModelView());
 
-                    memcpy(_quads + _numQuads, cmd->getQuads(), sizeof(V3F_C4B_T2F_Quad) * cmdQuadCount);
-                    convertToWorldCoordiantes(_quads + _numQuads, cmdQuadCount, cmd->getModelView());
-
-                    _numQuads += cmdQuadCount;
+                    _numQuads += cmd->getQuadCount();
                 }
                 else if(commandType == RenderCommand::Type::CUSTOM_COMMAND)
                 {
@@ -377,11 +373,10 @@ void Renderer::render()
     }
     RenderStackElement element = {DEFAULT_RENDER_QUEUE, 0};
     _renderStack.push(element);
-    _firstCommand = _lastCommand = 0;
     _lastMaterialID = 0;
 }
 
-void Renderer::convertToWorldCoordiantes(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
+void Renderer::convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView)
 {
 //    kmMat4 matrixP, mvp;
 //    kmGLGetMatrix(KM_GL_PROJECTION, &matrixP);
@@ -412,9 +407,8 @@ void Renderer::drawBatchedQuads()
     int startQuad = 0;
 
     //Upload buffer to VBO
-    if(_numQuads <= 0)
+    if(_numQuads <= 0 || _batchedQuadCommands.empty())
     {
-        _firstCommand = _lastCommand;
         return;
     }
 
@@ -462,31 +456,27 @@ void Renderer::drawBatchedQuads()
     }
 
     //Start drawing verties in batch
-    for(ssize_t i = _firstCommand; i <= _lastCommand; i++)
+    //for(auto i = _batchedQuadCommands.begin(); i != _batchedQuadCommands.end(); ++i)
+    for(const auto& cmd : _batchedQuadCommands)
     {
-        auto command = _renderGroups[_renderStack.top().renderQueueID][i];
-        if (command->getType() == RenderCommand::Type::QUAD_COMMAND)
+        if(_lastMaterialID != cmd->getMaterialID())
         {
-            auto cmd = static_cast<QuadCommand*>(command);
-            if(_lastMaterialID != cmd->getMaterialID())
+            //Draw quads
+            if(quadsToDraw > 0)
             {
-                //Draw quads
-                if(quadsToDraw > 0)
-                {
-                    glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
-                    CC_INCREMENT_GL_DRAWS(1);
+                glDrawElements(GL_TRIANGLES, (GLsizei) quadsToDraw*6, GL_UNSIGNED_SHORT, (GLvoid*) (startQuad*6*sizeof(_indices[0])) );
+                CC_INCREMENT_GL_DRAWS(1);
 
-                    startQuad += quadsToDraw;
-                    quadsToDraw = 0;
-                }
-
-                //Use new material
-                cmd->useMaterial();
-                _lastMaterialID = cmd->getMaterialID();
+                startQuad += quadsToDraw;
+                quadsToDraw = 0;
             }
 
-            quadsToDraw += cmd->getQuadCount();
+            //Use new material
+            cmd->useMaterial();
+            _lastMaterialID = cmd->getMaterialID();
         }
+
+        quadsToDraw += cmd->getQuadCount();
     }
 
     //Draw any remaining quad
@@ -507,8 +497,7 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    
-    _firstCommand = _lastCommand + 1;
+    _batchedQuadCommands.clear();
     _numQuads = 0;
 }
 

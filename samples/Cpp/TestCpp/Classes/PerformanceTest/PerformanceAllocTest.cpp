@@ -292,6 +292,7 @@ void NodeDeallocTest::update(float dt)
 
     for( int i=0; i<quantityOfNodes; ++i) {
         nodes[i] = Node::create();
+        nodes[i]->retain();
     }
 
     CC_PROFILER_START(this->profilerName());

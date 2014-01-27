@@ -1151,7 +1151,6 @@ bool PhysicsDemoSlice::slice(PhysicsWorld &world, const PhysicsRayCastInfo& info
         Point normal = info.end - info.start;
         normal = normal.getPerp().normalize();
         float dist = info.start.dot(normal);
-        dist = dist;
         
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), normal, dist);
         clipPoly(dynamic_cast<PhysicsShapePolygon*>(info.shape), -normal, -dist);

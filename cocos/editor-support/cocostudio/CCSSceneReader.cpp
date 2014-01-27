@@ -144,10 +144,10 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
 				{
 					gb->addComponent(com);
 				}
-				else
-				{
-					CC_SAFE_RELEASE_NULL(com);
-				}
+                else
+                {
+                    com = nullptr;
+                }
 			}
             if(_fnSelector != nullptr)
             {

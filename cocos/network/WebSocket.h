@@ -30,8 +30,11 @@
 #ifndef __CC_WEBSOCKET_H__
 #define __CC_WEBSOCKET_H__
 
-#include "cocos2d.h"
+#include "CCPlatformMacros.h"
+#include "CCStdC.h"
 #include <list>
+#include <string>
+#include <vector>
 
 struct libwebsocket;
 struct libwebsocket_context;
@@ -153,8 +156,8 @@ private:
     unsigned int _port;
     std::string  _path;
     
-    size_t _pendingFrameDataLen;
-    unsigned int _currentDataLen;
+    ssize_t _pendingFrameDataLen;
+    ssize_t _currentDataLen;
     char *_currentData;
 
     friend class WsThreadHelper;

@@ -255,7 +255,7 @@ Widget* Widget::getChildByName(const char *name)
     
 void Widget::addNode(Node* node)
 {
-    addNode(node, node->getZOrder(), node->getTag());
+    addNode(node, node->getLocalZOrder(), node->getTag());
 }
 
 void Widget::addNode(Node * node, int zOrder)

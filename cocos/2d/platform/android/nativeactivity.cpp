@@ -600,8 +600,7 @@ static void onContentRectChanged(ANativeActivity* activity, const ARect* rect) {
 
 static void process_input(struct android_app* app, struct android_poll_source* source) {
     AInputEvent* event = NULL;
-    int processed = 0;
-    while (AInputQueue_hasEvents( app->inputQueue ) && AInputQueue_getEvent(app->inputQueue, &event) >= 0) {
+    while (AInputQueue_getEvent(app->inputQueue, &event) >= 0) {
         LOGV("New input event: type=%d\n", AInputEvent_getType(event));
         if (AInputQueue_preDispatchEvent(app->inputQueue, event)) {
             continue;
@@ -609,10 +608,6 @@ static void process_input(struct android_app* app, struct android_poll_source* s
         int32_t handled = 0;
         if (app->onInputEvent != NULL) handled = app->onInputEvent(app, event);
         AInputQueue_finishEvent(app->inputQueue, event, handled);
-        processed = 1;
-    }
-    if (processed == 0) {
-        LOGE("Failure reading next input event: %s\n", strerror(errno));
     }
 }
 /**

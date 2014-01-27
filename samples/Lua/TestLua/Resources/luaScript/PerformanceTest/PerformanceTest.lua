@@ -501,7 +501,7 @@ local function runParticleTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - ParticleTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - ParticleTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
@@ -731,8 +731,8 @@ local function runParticleTest()
     		pNewScene:removeChildByTag(ParticleTestParam.kTagParticleSystem, true)
     		
     		--remove the "fire.png" from the TextureCache cache. 
-    		local pTexture = cc.TextureCache:getInstance():addImage("Images/fire.png")
-    		cc.TextureCache:getInstance():removeTexture(pTexture)
+    		local pTexture = cc.Director:getInstance():getTextureCache():addImage("Images/fire.png")
+    		cc.Director:getInstance():getTextureCache():removeTexture(pTexture)
     		local pParticleSystem = cc.ParticleSystemQuad:createWithTotalParticles(nQuantityParticles)
     		if 1 == nSubtestNumber then
     		    cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
@@ -752,7 +752,7 @@ local function runParticleTest()
     		end
     		
     		if nil ~= pParticleSystem then
-        		pParticleSystem:setTexture(cc.TextureCache:getInstance():addImage("Images/fire.png"))
+        		pParticleSystem:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
     		end
     		
     		pNewScene:addChild(pParticleSystem, 0, ParticleTestParam.kTagParticleSystem)
@@ -1178,7 +1178,7 @@ local function runSpriteTest()
     end
     
     local function TestNCallback(tag,pMenuItem)
-		local nIndex = pMenuItem:getZOrder() - SpriteTestParam.kSubMenuBasicZOrder
+		local nIndex = pMenuItem:getLocalZOrder() - SpriteTestParam.kSubMenuBasicZOrder
 		nSubtestNumber = nIndex
 		ShowCurrentTest()
     end
@@ -1203,7 +1203,7 @@ local function runSpriteTest()
     	*12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
     	]]--
     	--purge textures
-    	local pMgr = cc.TextureCache:getInstance()
+    	local pMgr = cc.Director:getInstance():getTextureCache()
     	--[mgr removeAllTextures]
     	pMgr:removeTexture(pMgr:addImage("Images/grossinis_sister1.png"))
     	pMgr:removeTexture(pMgr:addImage("Images/grossini_dance_atlas.png"))
@@ -1352,7 +1352,10 @@ local function runTextureTest()
 	local function PerformTestsPNG(strFileName)
 		  local time
 		  local pTexture = nil
-    	  local pCache = cc.TextureCache:getInstance()
+    	  local pCache = cc.Director:getInstance():getTextureCache()
+
+          local pDefaultFormat = cc.Texture2D:getDefaultAlphaPixelFormat();
+
     	  print("RGBA 8888")
     	  cc.Texture2D:setDefaultAlphaPixelFormat(cc.TEXTURE2_D_PIXEL_FORMAT_RGB_A8888)
     	  pTexture = pCache:addImage(strFileName) 		  
@@ -1397,6 +1400,8 @@ local function runTextureTest()
        	    print(" ERROR")
        	 end
     	 pCache:removeTexture(pTexture)   	  
+
+         cc.Texture2D:setDefaultAlphaPixelFormat(pDefaultFormat)
 	end
 	local function PerformTests()
 		  print("--------")
@@ -1548,48 +1553,37 @@ local function runTouchesTest()
     end
     
     -- handling touch events   
-    local function onTouchBegan(tableArray)
-		if 0 == nCurCase then
-			nNumberOfTouchesB = nNumberOfTouchesB + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchMoved(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesM = nNumberOfTouchesM + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesM  = nNumberOfTouchesM + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchEnded(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesE = nNumberOfTouchesE + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(tableArray)
-		end
-    end
-    
-    local function onTouchCancelled(tableArray)			
-		if 0 == nCurCase then
-			nNumberOfTouchesC = nNumberOfTouchesC + 1
-		elseif 1 == nCurCase then
-			nNumberOfTouchesC  = nNumberOfTouchesC + table.getn(tableArray)
-		end
+    local function onTouchEnded(touch, event)
+        nNumberOfTouchesE = nNumberOfTouchesE + 1
     end
 
-   	local function onTouch(eventType,tableArray)
-        if eventType == "began" then
-            return onTouchBegan(tableArray)
-        elseif eventType == "moved" then
-            return onTouchMoved(tableArray)
-        elseif eventType == "ended" then
-        	return onTouchEnded(tableArray)	
-        elseif eventType == "cancelled" then
-        	return onTouchCancelled(tableArray)	
-        end
+    local function onTouchBegan(touch, event)
+        nNumberOfTouchesB = nNumberOfTouchesB + 1
+    end
+
+    local function onTouchMoved(touch, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + 1
+    end
+
+    local function onTouchCancelled(touch, event)
+        nNumberOfTouchesC = nNumberOfTouchesC + 1
+    end
+
+
+    local function onTouchesEnded(touches, event)
+        nNumberOfTouchesE  = nNumberOfTouchesE + table.getn(touches)
+    end
+
+    local function onTouchesBegan(touches, event)
+        nNumberOfTouchesB  = nNumberOfTouchesB + table.getn(touches)
+    end
+
+    local function onTouchesMoved(touches, event)
+        nNumberOfTouchesM = nNumberOfTouchesM + table.getn(touches)
+    end
+
+    local function onTouchesCancelled(touches, event)
+        nNumberOfTouchesC= nNumberOfTouchesC + table.getn(touches)
     end
     
     local function InitLayer()
@@ -1617,9 +1611,24 @@ local function runTouchesTest()
     	nNumberOfTouchesM = 0
     	nNumberOfTouchesE = 0
     	nNumberOfTouchesC = 0   
-    	pLayer:setTouchEnabled(true)
-    	
-    	pLayer:registerScriptTouchHandler(onTouch,true) 
+
+        if 0 == nCurCase then
+            local listener = cc.EventListenerTouchOneByOne:create()
+            listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
+            listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
+            listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
+            listener:registerScriptHandler(onTouchCancelled,cc.Handler.EVENT_TOUCH_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        elseif 1 == nCurCase then
+            local listener = cc.EventListenerTouchAllAtOnce:create()
+            listener:registerScriptHandler(onTouchesBegan,cc.Handler.EVENT_TOUCHES_BEGAN )
+            listener:registerScriptHandler(onTouchesMoved,cc.Handler.EVENT_TOUCHES_MOVED )
+            listener:registerScriptHandler(onTouchesEnded,cc.Handler.EVENT_TOUCHES_ENDED )
+            listener:registerScriptHandler(onTouchesCancelled,cc.Handler.EVENT_TOUCHES_CANCELLED )
+            local eventDispatcher = pLayer:getEventDispatcher()
+            eventDispatcher:addEventListenerWithSceneGraphPriority(listener, pLayer)
+        end
     end
     
     function ShowCurrentTest()
@@ -1661,7 +1670,7 @@ local function CreatePerformancesTestScene(nPerformanceNo)
 end
 local function menuCallback(tag, pMenuItem)
 	local scene = nil
-    local nIdx = pMenuItem:getZOrder() - kItemTagBasic
+    local nIdx = pMenuItem:getLocalZOrder() - kItemTagBasic
 	local PerformanceTestScene = CreatePerformancesTestScene(nIdx)
     if nil ~= PerformanceTestScene then
          cc.Director:getInstance():replaceScene(PerformanceTestScene)

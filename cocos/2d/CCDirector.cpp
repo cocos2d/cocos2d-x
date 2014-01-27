@@ -165,9 +165,6 @@ bool Director::init(void)
     _renderer = new Renderer;
     _console = new Console;
 
-    // create autorelease pool
-    PoolManager::sharedPoolManager()->push();
-
     return true;
 }
 
@@ -193,9 +190,8 @@ Director::~Director(void)
     delete _renderer;
     delete _console;
 
-    // pop the autorelease pool
-    PoolManager::sharedPoolManager()->pop();
-    PoolManager::purgePoolManager();
+    // clean auto release pool
+    PoolManager::destroyInstance();
 
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
@@ -355,7 +351,7 @@ void Director::calculateDeltaTime()
         _deltaTime = MAX(0, _deltaTime);
     }
 
-#ifdef DEBUG
+#if COCOS2D_DEBUG
     // If we are debugging our code, prevent big delta time
     if (_deltaTime > 0.2f)
     {
@@ -1049,7 +1045,7 @@ void DisplayLinkDirector::mainLoop()
         drawScene();
      
         // release the objects
-        PoolManager::sharedPoolManager()->pop();        
+        PoolManager::getInstance()->getCurrentPool()->clear();
     }
 }
 

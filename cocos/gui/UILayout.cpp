@@ -235,7 +235,7 @@ void Layout::stencilClippingVisit()
         {
             auto node = _children.at(i);
             
-            if ( node && node->getZOrder() < 0 )
+            if ( node && node->getLocalZOrder() < 0 )
                 node->visit();
             else
                 break;

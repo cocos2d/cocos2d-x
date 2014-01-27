@@ -1071,7 +1071,7 @@ bool luavals_variadic_to_array(lua_State* L,int argc, Array** ret)
         else if (lua_isuserdata(L, i + 2))
         {
             tolua_Error err;
-            if (!tolua_isusertype(L, i + 2, "Object", 0, &err))
+            if (!tolua_isusertype(L, i + 2, "cc.Object", 0, &err))
             {
 #if COCOS2D_DEBUG >=1
                 luaval_to_native_err(L,"#ferror:",&err);
@@ -1615,7 +1615,7 @@ void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
     point_to_luaval(L, info.start);
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     
-    lua_pushstring(L, "end");                   /* L: table key */
+    lua_pushstring(L, "ended");                   /* L: table key */
     point_to_luaval(L, info.end);
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     
@@ -1630,6 +1630,26 @@ void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info)
     lua_pushstring(L, "fraction");                      /* L: table key */
     lua_pushnumber(L, (lua_Number) info.fraction);        /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
+}
+
+void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data)
+{
+    if (nullptr  == L || nullptr == data)
+        return;
+    
+    lua_newtable(L);                                    /* L: table */
+    
+    lua_pushstring(L, "points");
+    points_to_luaval(L, data->points, data->count);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "normal");
+    point_to_luaval(L, data->normal);
+    lua_rawset(L, -3);
+    
+    lua_pushstring(L, "POINT_MAX");
+    lua_pushnumber(L, data->POINT_MAX);
+    lua_rawset(L, -3);
 }
 
 void size_to_luaval(lua_State* L,const Size& sz)

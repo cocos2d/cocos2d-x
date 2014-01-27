@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #ifndef _ACTIONS__PROGRESS_TEST_H_
-#define _ACTIONS_PROGRESS_TEST_H_
+#define _ACTIONS__PROGRESS_TEST_H_
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
@@ -99,4 +99,4 @@ public:
     virtual void runThisTest();
 };
 
-#endif
+#endif // _ACTIONS__PROGRESS_TEST_H_

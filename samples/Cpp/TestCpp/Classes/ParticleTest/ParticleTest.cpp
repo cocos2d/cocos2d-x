@@ -1790,7 +1790,7 @@ void ReorderParticleSystems::onEnter()
 void ReorderParticleSystems::reorderSystem(float time)
 {
     auto system = static_cast<ParticleSystem*>(_batchNode->getChildren().at(1));
-    _batchNode->reorderChild(system, system->getZOrder() - 1);     
+    _batchNode->reorderChild(system, system->getLocalZOrder() - 1);     
 }
 
 

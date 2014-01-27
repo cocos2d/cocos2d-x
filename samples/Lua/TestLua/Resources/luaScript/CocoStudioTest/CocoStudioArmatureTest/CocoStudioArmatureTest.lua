@@ -633,7 +633,7 @@ function TestChangeZorder:onEnter()
 
     local function changeZorder(dt)
         local node = self:getChildByTag(self.currentTag)
-        node:setZOrder(math.random(0,1) * 3)
+        node:setLocalZOrder(math.random(0,1) * 3)
         self.currentTag = (self.currentTag + 1) % 3
     end
 
@@ -812,7 +812,6 @@ function TestParticleDisplay.extend(target)
 end
 
 function TestParticleDisplay:onEnter()
-    self:setTouchEnabled(true)
     self.animationID = 0
 
     self.armature = ccs.Armature:create("robot")
@@ -828,7 +827,7 @@ function TestParticleDisplay:onEnter()
     bone:addDisplay(p1, 0)
     bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a3")
 
@@ -836,23 +835,21 @@ function TestParticleDisplay:onEnter()
     bone:addDisplay(p2, 0)
     bone:changeDisplayWithIndex(0, true)
     bone:setIgnoreMovementBoneData(true)
-    bone:setZOrder(100)
+    bone:setLocalZOrder(100)
     bone:setScale(1.2)
     self.armature:addBone(bone, "bady-a30")
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.animationID = (self.animationID + 1) % self.armature:getAnimation():getMovementCount()
         self.armature:getAnimation():playWithIndex(self.animationID)
-        return false
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestParticleDisplay.create()
@@ -889,7 +886,6 @@ function TestUseMutiplePicture.extend(target)
 end
 
 function TestUseMutiplePicture:onEnter()
-    self:setTouchEnabled(true)
     self.displayIndex = 1
 
     self.armature = ccs.Armature:create("Knight_f/Knight")
@@ -915,19 +911,17 @@ function TestUseMutiplePicture:onEnter()
         self.armature:getBone("weapon"):addDisplay(skin, i - 1)
     end
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.displayIndex = (self.displayIndex + 1) % (table.getn(weapon) - 1)
         self.armature:getBone("weapon"):changeDisplayWithIndex(self.displayIndex, true)
-        return false
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestUseMutiplePicture.create()
@@ -1012,7 +1006,6 @@ function TestArmatureNesting.extend(target)
 end
 
 function TestArmatureNesting:onEnter()
-    self:setTouchEnabled(true)
     self.weaponIndex = 0
 
     self.armature = ccs.Armature:create("cyborg")
@@ -1022,20 +1015,18 @@ function TestArmatureNesting:onEnter()
     self.armature:getAnimation():setSpeedScale(0.4)
     self:addChild(self.armature)
 
-    local function onTouchBegan(x, y)
+    -- handling touch events   
+    local function onTouchEnded(touches, event)     
         self.weaponIndex = (self.weaponIndex + 1) % 4
         self.armature:getBone("armInside"):getChildArmature():getAnimation():playWithIndex(self.weaponIndex)
         self.armature:getBone("armOutside"):getChildArmature():getAnimation():playWithIndex(self.weaponIndex)
-        return false
     end
 
-    local function onTouch(eventType, x, y)
-        if eventType == "began" then
-            return onTouchBegan(x,y)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 end
 
 function TestArmatureNesting.create()
@@ -1131,30 +1122,26 @@ function TestArmatureNesting2.extend(target)
 end
 
 function TestArmatureNesting2:onEnter()
-
-    self:setTouchEnabled(true)
-
-    local function onTouchesEnded(tableArray)
-        local x,y = tableArray[1],tableArray[2]
+    -- handling touch events   
+    local function onTouchEnded(touches, event)
+        local location = touches[1]:getLocation()  
         local armature = self._hero._mount and self._hero._mount  or self._hero
-        if x < armature:getPositionX() then
+        if location.x < armature:getPositionX() then
             armature:setScaleX(-1)
         else
             armature:setScaleX(1)
         end
 
-        local move = cc.MoveTo:create(2, cc.p(x,y))
+        local move = cc.MoveTo:create(2, location)
         armature:stopAllActions()
         armature:runAction(cc.Sequence:create(move))
     end
 
-    local function onTouch(eventType, tableArray)
-        if eventType == "ended" then
-            return onTouchesEnded(tableArray)
-        end
-    end
+    local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCHES_ENDED )
 
-    self:registerScriptTouchHandler(onTouch,true)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
 
     local function changeMountCallback(sender)
         self._hero:stopAllActions()
