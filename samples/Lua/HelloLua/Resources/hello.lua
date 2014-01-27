@@ -23,7 +23,7 @@ local function main()
        (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
        (cc.PLATFORM_OS_MAC == targetPlatform) then
         --require('mobdebug').start()
-		require('ldt_debugger')()
+		--require('ldt_debugger')()
     end
     require "hello2"
     cclog("result is " .. myadd(1, 1))

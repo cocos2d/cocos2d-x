@@ -43,7 +43,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     
-    std::string path = FileUtils::getInstance()->fullPathForFilename("cocos2d.lua");
+    std::string path = FileUtils::getInstance()->fullPathForFilename("runtime.lua");
     engine->executeScriptFile(path.c_str());
 
     return true;

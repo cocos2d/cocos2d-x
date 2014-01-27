@@ -1,6 +1,6 @@
 require "Cocos2dConstants.lua"
 require "OpenglConstants.lua"
-require "StudioConstants.lua"
+require "GuiConstants.lua"
 --Enums will be deprecated,begin
 _G.kCCTextAlignmentLeft              = cc.TEXT_ALIGNMENT_LEFT
 _G.kCCTextAlignmentRight             = cc.TEXT_ALIGNMENT_RIGHT
@@ -397,88 +397,88 @@ _G.kStateOpen                     = cc.WEBSOCKET_STATE_OPEN
 _G.kStateClosing                  = cc.WEBSOCKET_STATE_CLOSING
 _G.kStateClosed                   = cc.WEBSOCKET_STATE_CLOSED
 
-_G.LAYOUT_COLOR_NONE              = ccs.LayoutBackGroundColorType.none
-_G.LAYOUT_COLOR_SOLID             = ccs.LayoutBackGroundColorType.solid
-_G.LAYOUT_COLOR_GRADIENT          = ccs.LayoutBackGroundColorType.gradient
+_G.LAYOUT_COLOR_NONE              = ccui.LayoutBackGroundColorType.none
+_G.LAYOUT_COLOR_SOLID             = ccui.LayoutBackGroundColorType.solid
+_G.LAYOUT_COLOR_GRADIENT          = ccui.LayoutBackGroundColorType.gradient
 
-_G.LAYOUT_ABSOLUTE                = ccs.LayoutType.absolute
-_G.LAYOUT_LINEAR_VERTICAL         = ccs.LayoutType.linearVertical
-_G.LAYOUT_LINEAR_HORIZONTAL       = ccs.LayoutType.linearHorizontal
-_G.LAYOUT_RELATIVE                = ccs.LayoutType.relative
+_G.LAYOUT_ABSOLUTE                = ccui.LayoutType.absolute
+_G.LAYOUT_LINEAR_VERTICAL         = ccui.LayoutType.linearVertical
+_G.LAYOUT_LINEAR_HORIZONTAL       = ccui.LayoutType.linearHorizontal
+_G.LAYOUT_RELATIVE                = ccui.LayoutType.relative
 
-_G.BRIGHT_NONE               = ccs.BrightStyle.none
-_G.BRIGHT_NORMAL             = ccs.BrightStyle.normal
-_G.BRIGHT_HIGHLIGHT          = ccs.BrightStyle.highlight
+_G.BRIGHT_NONE               = ccui.BrightStyle.none
+_G.BRIGHT_NORMAL             = ccui.BrightStyle.normal
+_G.BRIGHT_HIGHLIGHT          = ccui.BrightStyle.highlight
 
-_G.WidgetTypeWidget                = ccs.WidgetType.widget
-_G.WidgetTypeContainer             = ccs.WidgetType.container
+_G.WidgetTypeWidget                = ccui.WidgetType.widget
+_G.WidgetTypeContainer             = ccui.WidgetType.container
 
-_G.UI_TEX_TYPE_LOCAL               = ccs.TextureResType.UI_TEX_TYPE_LOCAL
-_G.UI_TEX_TYPE_PLIST               = ccs.TextureResType.UI_TEX_TYPE_PLIST
+_G.UI_TEX_TYPE_LOCAL               = ccui.TextureResType.UI_TEX_TYPE_LOCAL
+_G.UI_TEX_TYPE_PLIST               = ccui.TextureResType.UI_TEX_TYPE_PLIST
 
-_G.TOUCH_EVENT_BEGAN                = ccs.TouchEventType.began
-_G.TOUCH_EVENT_MOVED                = ccs.TouchEventType.moved
-_G.TOUCH_EVENT_ENDED                = ccs.TouchEventType.ended
-_G.TOUCH_EVENT_CANCELED             = ccs.TouchEventType.canceled
+_G.TOUCH_EVENT_BEGAN                = ccui.TouchEventType.began
+_G.TOUCH_EVENT_MOVED                = ccui.TouchEventType.moved
+_G.TOUCH_EVENT_ENDED                = ccui.TouchEventType.ended
+_G.TOUCH_EVENT_CANCELED             = ccui.TouchEventType.canceled
  
-_G.SIZE_ABSOLUTE                = ccs.SizeType.absolute
-_G.SIZE_PERCENT                 = ccs.SizeType.percent
+_G.SIZE_ABSOLUTE                = ccui.SizeType.absolute
+_G.SIZE_PERCENT                 = ccui.SizeType.percent
 
-_G.POSITION_ABSOLUTE                = ccs.PositionType.absolute
-_G.POSITION_PERCENT                 = ccs.PositionType.percent
+_G.POSITION_ABSOLUTE                = ccui.PositionType.absolute
+_G.POSITION_PERCENT                 = ccui.PositionType.percent
 
-_G.CHECKBOX_STATE_EVENT_SELECTED     = ccs.CheckBoxEventType.selected
-_G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccs.CheckBoxEventType.unselected
+_G.CHECKBOX_STATE_EVENT_SELECTED     = ccui.CheckBoxEventType.selected
+_G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccui.CheckBoxEventType.unselected
 
-_G.CHECKBOX_STATE_EVENT_SELECTED     = ccs.CheckBoxEventType.selected
-_G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccs.CheckBoxEventType.unselected
+_G.CHECKBOX_STATE_EVENT_SELECTED     = ccui.CheckBoxEventType.selected
+_G.CHECKBOX_STATE_EVENT_UNSELECTED   = ccui.CheckBoxEventType.unselected
 
-_G.LoadingBarTypeLeft     = ccs.LoadingBarType.left
-_G.LoadingBarTypeRight   = ccs.LoadingBarType.right
+_G.LoadingBarTypeLeft     = ccui.LoadingBarType.left
+_G.LoadingBarTypeRight   = ccui.LoadingBarType.right
 
-_G.LoadingBarTypeRight   = ccs.SliderEventType.percent_changed
+_G.LoadingBarTypeRight   = ccui.SliderEventType.percent_changed
 
-_G.TEXTFIELD_EVENT_ATTACH_WITH_IME                = ccs.TextFiledEventType.attach_with_ime
-_G.TEXTFIELD_EVENT_DETACH_WITH_IME                = ccs.TextFiledEventType.detach_with_ime
-_G.TEXTFIELD_EVENT_INSERT_TEXT                 = ccs.TextFiledEventType.insert_text
-_G.TEXTFIELD_EVENT_DELETE_BACKWARD             = ccs.TextFiledEventType.delete_backward
+_G.TEXTFIELD_EVENT_ATTACH_WITH_IME                = ccui.TextFiledEventType.attach_with_ime
+_G.TEXTFIELD_EVENT_DETACH_WITH_IME                = ccui.TextFiledEventType.detach_with_ime
+_G.TEXTFIELD_EVENT_INSERT_TEXT                 = ccui.TextFiledEventType.insert_text
+_G.TEXTFIELD_EVENT_DELETE_BACKWARD             = ccui.TextFiledEventType.delete_backward
 
-_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccs.SCROLLVIEW_DIR.none
-_G.SCROLLVIEW_DIR_VERTICAL                = ccs.SCROLLVIEW_DIR.vertical
-_G.SCROLLVIEW_DIR_HORIZONTAL                 = ccs.SCROLLVIEW_DIR.horizontal
-_G.SCROLLVIEW_DIR_BOTH             = ccs.SCROLLVIEW_DIR.both
+_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccui.ScrollViewDir.none
+_G.SCROLLVIEW_DIR_VERTICAL                = ccui.ScrollViewDir.vertical
+_G.SCROLLVIEW_DIR_HORIZONTAL                 = ccui.ScrollViewDir.horizontal
+_G.SCROLLVIEW_DIR_BOTH             = ccui.ScrollViewDir.both
 
-_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccs.ScrollviewEventType.SCROLL_TO_TOP
-_G.SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM             = ccs.ScrollviewEventType.SCROLL_TO_BOTTOM
-_G.SCROLLVIEW_EVENT_SCROLL_TO_LEFT               = ccs.ScrollviewEventType.SCROLL_TO_LEFT
-_G.SCROLLVIEW_EVENT_SCROLL_TO_RIGHT              = ccs.ScrollviewEventType.SCROLL_TO_RIGHT
-_G.SCROLLVIEW_EVENT_SCROLLING                    = ccs.ScrollviewEventType.SCROLLING
-_G.SCROLLVIEW_EVENT_BOUNCE_TOP                   = ccs.ScrollviewEventType.BOUNCE_TOP
-_G.SCROLLVIEW_EVENT_BOUNCE_BOTTOM                = ccs.ScrollviewEventType.BOUNCE_BOTTOM
-_G.SCROLLVIEW_EVENT_BOUNCE_LEFT                  = ccs.ScrollviewEventType.BOUNCE_LEFT
-_G.SCROLLVIEW_EVENT_BOUNCE_RIGHT                 = ccs.ScrollviewEventType.BOUNCE_RIGHT
+_G.SCROLLVIEW_EVENT_SCROLL_TO_TOP                = ccui.ScrollviewEventType.SCROLL_TO_TOP
+_G.SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM             = ccui.ScrollviewEventType.SCROLL_TO_BOTTOM
+_G.SCROLLVIEW_EVENT_SCROLL_TO_LEFT               = ccui.ScrollviewEventType.SCROLL_TO_LEFT
+_G.SCROLLVIEW_EVENT_SCROLL_TO_RIGHT              = ccui.ScrollviewEventType.SCROLL_TO_RIGHT
+_G.SCROLLVIEW_EVENT_SCROLLING                    = ccui.ScrollviewEventType.SCROLLING
+_G.SCROLLVIEW_EVENT_BOUNCE_TOP                   = ccui.ScrollviewEventType.BOUNCE_TOP
+_G.SCROLLVIEW_EVENT_BOUNCE_BOTTOM                = ccui.ScrollviewEventType.BOUNCE_BOTTOM
+_G.SCROLLVIEW_EVENT_BOUNCE_LEFT                  = ccui.ScrollviewEventType.BOUNCE_LEFT
+_G.SCROLLVIEW_EVENT_BOUNCE_RIGHT                 = ccui.ScrollviewEventType.BOUNCE_RIGHT
 
-_G.PAGEVIEW_EVENT_TURNING                 = ccs.PageViewEventType.turning
+_G.PAGEVIEW_EVENT_TURNING                 = ccui.PageViewEventType.turning
 
-_G.PAGEVIEW_TOUCHLEFT                  = ccs.PVTouchDir.touch_left
-_G.PAGEVIEW_TOUCHRIGHT                 = ccs.PVTouchDir.touch_right
+_G.PAGEVIEW_TOUCHLEFT                  = ccui.PVTouchDir.touch_left
+_G.PAGEVIEW_TOUCHRIGHT                 = ccui.PVTouchDir.touch_right
 
-_G.LISTVIEW_DIR_NONE                      = ccs.ListViewDirection.none
-_G.LISTVIEW_DIR_VERTICAL                  = ccs.ListViewDirection.vertical
-_G.LISTVIEW_DIR_HORIZONTAL                = ccs.ListViewDirection.horizontal
+_G.LISTVIEW_DIR_NONE                      = ccui.ListViewDirection.none
+_G.LISTVIEW_DIR_VERTICAL                  = ccui.ListViewDirection.vertical
+_G.LISTVIEW_DIR_HORIZONTAL                = ccui.ListViewDirection.horizontal
 
-_G.LISTVIEW_MOVE_DIR_NONE                = ccs.ListViewMoveDirection.none
-_G.LISTVIEW_MOVE_DIR_UP                  = ccs.ListViewMoveDirection.up
-_G.LISTVIEW_MOVE_DIR_DOWN                = ccs.ListViewMoveDirection.down
-_G.LISTVIEW_MOVE_DIR_LEFT                = ccs.ListViewMoveDirection.left
-_G.LISTVIEW_MOVE_DIR_RIGHT               = ccs.ListViewMoveDirection.right
+_G.LISTVIEW_MOVE_DIR_NONE                = ccui.ListViewMoveDirection.none
+_G.LISTVIEW_MOVE_DIR_UP                  = ccui.ListViewMoveDirection.up
+_G.LISTVIEW_MOVE_DIR_DOWN                = ccui.ListViewMoveDirection.down
+_G.LISTVIEW_MOVE_DIR_LEFT                = ccui.ListViewMoveDirection.left
+_G.LISTVIEW_MOVE_DIR_RIGHT               = ccui.ListViewMoveDirection.right
 
-_G.LISTVIEW_EVENT_INIT_CHILD                 = ccs.ListViewEventType.init_child
-_G.LISTVIEW_EVENT_UPDATE_CHILD               = ccs.ListViewEventType.update_child
+_G.LISTVIEW_EVENT_INIT_CHILD                 = ccui.ListViewEventType.init_child
+_G.LISTVIEW_EVENT_UPDATE_CHILD               = ccui.ListViewEventType.update_child
 
-_G.LAYOUT_PARAMETER_NONE                   = ccs.UILayoutParameterType.none
-_G.LAYOUT_PARAMETER_LINEAR                 = ccs.UILayoutParameterType.linear
-_G.LAYOUT_PARAMETER_RELATIVE               = ccs.UILayoutParameterType.relative
+_G.LAYOUT_PARAMETER_NONE                   = ccui.LayoutParameterType.none
+_G.LAYOUT_PARAMETER_LINEAR                 = ccui.LayoutParameterType.linear
+_G.LAYOUT_PARAMETER_RELATIVE               = ccui.LayoutParameterType.relative
 
 _G.kCCScrollViewDirectionHorizontal        = cc.SCROLLVIEW_DIRECTION_HORIZONTAL
 _G.kCCScrollViewDirectionVertical          = cc.SCROLLVIEW_DIRECTION_VERTICAL

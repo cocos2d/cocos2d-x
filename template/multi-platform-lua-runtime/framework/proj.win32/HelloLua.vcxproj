@@ -107,13 +107,14 @@
       <Command>if not exist "$(OutDir)" mkdir "$(Configuration).win32"
 if exist "$(OutDir)\Resources" rd /s /q "$(OutDir)\Resources"
 mkdir "$(OutDir)\Resources"
-xcopy /Y /Q "$(EngineRoot)\cocos\scripting\lua\script\*.*" "$(OutDir)\Resources\"
-xcopy /Y /Q "$(Configuration).win32\*.dll" "$(OutDir)"</Command>
+xcopy /Y /Q "$(EngineRoot)\cocos\scripting\lua\script\*.*" "$(OutDir)\Resources\"</Command>
       <Message>
       </Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(Configuration).win32" xcopy /Y /Q "$(ProjectDir)..\cocos2d\external\websockets\prebuilt\win32\*.*" "$(Configuration).win32" xcopy /Y /Q "$(Configuration).win32\*.dll" "$(OutDir)"</Command>
+      <Command>if not exist "$(OutDir)" mkdir "$(Configuration).win32" 
+xcopy /Y /Q "$(EngineRoot)\external\websockets\prebuilt\win32\*.*" "$(Configuration).win32"
+xcopy /Y /Q "$(Configuration).win32\*.dll" "$(OutDir)"</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
