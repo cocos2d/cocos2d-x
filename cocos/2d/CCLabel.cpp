@@ -197,7 +197,7 @@ Label::Label(FontAtlas *atlas, TextHAlignment alignment, bool useDistanceField,b
 , _originalUTF16String(nullptr)
 , _horizontalKernings(nullptr)
 , _fontAtlas(atlas)
-, _isOpacityModifyRGB(true)
+, _isOpacityModifyRGB(false)
 , _useDistanceField(useDistanceField)
 , _useA8Shader(useA8Shader)
 , _fontSize(0)

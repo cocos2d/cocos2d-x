@@ -1,4 +1,4 @@
-cocos2d-x-3.0beta2 ?.? ?
+cocos2d-x-3.0beta2 Jan.24 2014
 [All]
      [NEW]          Full screen support for desktop platforms.
      [NEW]          Adds performance test for EventDispatcher.
@@ -10,12 +10,7 @@ cocos2d-x-3.0beta2 ?.? ?
      [NEW]          Label: Integrates LabelAtlas into new Label.
      [NEW]          Node: Added `setGlobalZOrder()`. Useful to change the Node's render order. Node::setZOrder() -> Node::setLocalZOrder()
      [NEW]          Renderer: Added BatchCommand. This command is not "batchable" with other commands, but improves performance in about 10%
-     [NEW]          LuaBindings: Bindings-generator supports to bind namespace for lua.
      
-     [FIX]          JSB: Pure JS class which is inherited from cc.Class will trigger an irrelevant log.
-     [FIX]          JSB: Mac and iOS Simulator should also use SpiderMonkey which was built in RELEASE mode.
-     [FIX]          JSB: Crash when running JSB projects on iOS device in DEBUG mode.
-     [FIX]          JSB: Crash when Firefox connects to JSB application on Mac platform.
      [FIX]          Uses EventDispatcher to access event in LUA testcase.
      [FIX]          Exposes SAXParser class to JS, it is used for parsing XML in JS.
      [FIX]          Uses unified `desktop/CCEGLView.h/cpp` for desktop platforms (windows, mac, linux).
@@ -26,9 +21,12 @@ cocos2d-x-3.0beta2 ?.? ?
      [FIX]          CocoStudio: The order of transform calculation in Skin::getNodeToWorldTransform() is incorrect.
      [FIX]          Crash if file doesn't exist when using FileUtils::getStringFromFile.
      [FIX]          If setting a shorter string than before while using LabelAtlas, the effect will be wrong.
+     [FIX]          Label: Memory leak in FontFreeType::createFontAtlas().
      [FIX]          Label: Crash when using unknown characters.
      [FIX]          Label: Missing line breaks and wrong alignment.
-     [FIX]          Label: Color and opacity settings aren't applied when invoking Label::alignText.
+     [FIX]          Label: Corrupt looking characters and incorrect spacing between characters
+     [FIX]          Label: Label:color and opacity settings are invalid afeter these these properties changed: 1)text content changed 2)align style changed 3)max line width limited
+     [FIX]          Label: Crash when using unknown characters
      [FIX]          Console: log(format, va_args) is private to prevent possible resolution errors
      [FIX]          Configuration: dumpInfo() -> getInfo()
      [FIX]          ControlSlider doesn't support to set selected thumb sprite.
@@ -40,12 +38,42 @@ cocos2d-x-3.0beta2 ?.? ?
      [FIX]          Renderer Performance Fix: When note using VAO, call glBufferData() instead of glBufferSubData().
      [FIX]          Renderer Performance Fix: Doesn't sort z=0 elements. It also uses sort() instead of stable_sort() for z!=0.
      [FIX]          Sprite: removed _hasChildren optimization. It uses !_children.empty() now which is super fast as well
-     [FIX]          Tests: TestCpp works with CMake on Windows.
      [FIX]          Tests: Sprites Performance Test has 4 new tests
      [FIX]          TextureCache: getTextureForKey and removeTextureForKey work as expected
      [FIX]          TextureCache: dumpCachedTextureInfo() -> getCachedTextureInfo()
      [FIX]          Websocket doesn't support send/receive data which larger than 4096 bytes.
-     [FIX]          Windows: There will be some compilation errors when using x64 target on Windows.
+     [FIX]          Object: Remove _retainCount
+     [FIX]          ParallaxNode: Coordinate of Sprite may be wrong after being added into ParallaxNode
+     [FIX]          Crash if there is not `textureFileName`section in particle plist file
+     [FIX]          Websocket cannot send/receive more than 4096 bytes data
+     [FIX]          TextureCache::addImageAsync can't load first image
+     [FIX]          ControlSlider: Can not set "selected thumb sprite"
+     [FIX]          ControlSlider: Can not set "scale ratio"
+     [FIX]          Crash when loading tga format image
+     [FIX]          Keyboard pressed events are being repeatedly fired before keyboard is released
+[Android]
+     [FIX]          Background music can't be resumed when back from foreground
+     [FIX]          ANR (Application Not Responding) appears on android 2.3 when pressing hardware button.
+[lua binding]
+     [NEW]          Can bind classes that have the same class names but different namesapces
+     [FIX]          Use EventDispatcher to update some test cases
+     [FIX]          sp.SkeletonAnimation:registerScriptHandler should not override cc.Node:registerScriptHandler
+[javascript binding]
+     [NEW]          Bind SAXParser
+     [FIX]          Pure JS class that wants to inherite from cc.Class will trigger an irrelevant log
+     [FIX]          Mac and iOS Simulator should also use SpiderMonkey which was built in RELEASE mode
+     [FIX]          Crash when running JSB projects on iOS device in DEBUG mode
+     [FIX]          Crash when Firefox connects to JSB application on Mac platform.
+[Desktop]
+     [NEW]          Support fullscreen
+[Linux]
+     [FIX]          "Testing empty labels" in LabelTest crashes.
+[Mac]
+     [FIX]          Removes unused files after using glfw3 to create opengl context
+[Win32]
+     [FIX]          Compiling error when using x64 target
+     [FIX]          Tests: TestCpp works with CMake
+     [FIX]          Bindings-generator supports Windows again and remove dependency of LLVM since it only needs binary of libclang
 
 cocos2d-x-3.0beta Jan.7 2014
 [All]

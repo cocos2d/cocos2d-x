@@ -26,7 +26,7 @@ SpineTestLayer1 = function()
       spineboy:addAnimation(0, 'walk', true)
       spineboy:addAnimation(0, 'jump', true, 4)
       
-      spineboy:registerScriptHandler(function(event)
+      spineboy:registerSpineEventHandler(function(event)
         if event.type == 'start' then
           print(string.format("[spine] %d start: %s", 
                               event.trackIndex,
