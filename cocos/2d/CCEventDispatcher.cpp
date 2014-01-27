@@ -815,7 +815,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             if (event->isStopped())
             {
                 updateListeners(event);
-                return false;
+                return true;
             }
             
             return false;
