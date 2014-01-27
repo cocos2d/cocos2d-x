@@ -33,8 +33,12 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    auto glview = EGLView::createWithSize("CocosDragon JS", Size(480, 720));
-    director->setOpenGLView(glview);
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        auto glview = EGLView::createWithSize("CocosDragon JS", Size(480, 720));
+        director->setOpenGLView(glview);
+    }
+
     director->setProjection(Director::Projection::_2D);
 
 

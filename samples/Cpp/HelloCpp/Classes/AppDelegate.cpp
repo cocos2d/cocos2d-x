@@ -17,12 +17,15 @@ AppDelegate::~AppDelegate()
 {
 }
 
-bool AppDelegate::applicationDidFinishLaunching() {
+bool AppDelegate::applicationDidFinishLaunching()
+{
     // initialize director
     auto director = Director::getInstance();
-    auto glview = EGLView::createWithSize("Hello Cpp", Size(900,640));
-
-    director->setOpenGLView(glview);
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        auto glview = EGLView::createWithSize("Hello Cpp", Size(480, 720));
+        director->setOpenGLView(glview);
+    }
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);

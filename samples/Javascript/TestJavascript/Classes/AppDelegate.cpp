@@ -38,9 +38,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    auto glview = EGLView::createWithSize("Test JavaScript", Size(900,640));
-
-    director->setOpenGLView(glview);
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = EGLView::createWithSize("Test JavaScript", Size(900,640));
+        director->setOpenGLView(glview);
+    }
 
     // JS-Test in Html5 uses 800x450 as design resolution
     glview->setDesignResolutionSize(800, 450, ResolutionPolicy::FIXED_HEIGHT);

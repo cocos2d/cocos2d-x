@@ -24,9 +24,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 {
     // initialize director
     auto director = Director::getInstance();
-    auto glview = EGLView::createWithSize("Hello Lua", Size(900,640));
-
-    director->setOpenGLView(glview);
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        auto glview = EGLView::createWithSize("Hello Lua", Size(900,640));
+        director->setOpenGLView(glview);
+    }
 
     glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
