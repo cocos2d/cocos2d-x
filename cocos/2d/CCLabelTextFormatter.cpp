@@ -335,7 +335,14 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
     // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
     // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
     // box
-    tmpSize.width = longestLine - charAdvance + lastCharWidth;
+    if(charAdvance < lastCharWidth)
+    {
+        tmpSize.width = longestLine - charAdvance + lastCharWidth;
+    }
+    else
+    {
+        tmpSize.width = longestLine;
+    }
     
     tmpSize.height = totalHeight;
     theLabel->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));

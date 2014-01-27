@@ -5,54 +5,60 @@ local function AccelerometerMainLayer()
     end
     local layer = cc.Layer:create()
 
-    layer:setAccelerometerEnabled(true)
+    local function onEnter()
+        layer:setAccelerometerEnabled(true)
 
-    local label = cc.LabelTTF:create(title(), "Arial", 32)
-    layer:addChild(label, 1)
-    label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 50) )
+        local label = cc.LabelTTF:create(title(), "Arial", 32)
+        layer:addChild(label, 1)
+        label:setPosition( cc.p(VisibleRect:center().x, VisibleRect:top().y - 50) )
 
-    local ball = cc.Sprite:create("Images/ball.png")
-    ball:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
-    layer:addChild(ball)
+        local ball = cc.Sprite:create("Images/ball.png")
+        ball:setPosition(cc.p(VisibleRect:center().x, VisibleRect:center().y))
+        layer:addChild(ball)
 
-    ball:retain()
-    
-    local function didAccelerate(x,y,z,timestamp)
+        local function accelerometerListener(event,x,y,z,timestamp)
+            local target  = event:getCurrentTarget()
+            local ballSize = target:getContentSize()
+            local ptNowX,ptNowY    = target:getPosition()
+            ptNowX = ptNowX + x * 9.81
+            ptNowY = ptNowY + y * 9.81
 
-      if nil == ball then
-        return
-      end
-
-      local director = cc.Director:getInstance()
-      local szBall  = ball:getContentSize()
-      local ptNowX,ptNowY = ball:getPosition()
-      local ptTemp = director:convertToUI(cc.p(ptNowX,ptNowY)) 
-
-      ptTemp.x  = ptTemp.x + x * 9.81 
-      ptTemp.y  = ptTemp.y - y * 9.81
-
-      local ptNext = director:convertToGL(cc.p(ptTemp.x,ptTemp.y))
-
-      local minX  = math.floor(VisibleRect:left().x + szBall.width / 2.0)
-      local maxX  = math.floor(VisibleRect:right().x - szBall.width / 2.0)
-      if ptNext.x <   minX then
-        ptNext.x = minX
-      elseif ptNext.x > maxX then
-        ptNext.x = maxX
-      end
+            local minX  = math.floor(VisibleRect:left().x + ballSize.width / 2.0)
+            local maxX  = math.floor(VisibleRect:right().x - ballSize.width / 2.0)
+            if ptNowX <   minX then
+                ptNowX = minX
+            elseif ptNowX > maxX then
+                ptNowX = maxX
+            end
       
-      local minY  = math.floor(VisibleRect:bottom().y + szBall.height / 2.0)
-      local maxY  = math.floor(VisibleRect:top().y   - szBall.height / 2.0)
-      if ptNext.y <   minY then
-        ptNext.y = minY
-      elseif ptNext.y > maxY then
-        ptNext.y = maxY
-      end
-      
-      ball:setPosition(cc.p(ptNext.x , ptNext.y))
+            local minY  = math.floor(VisibleRect:bottom().y + ballSize.height / 2.0)
+            local maxY  = math.floor(VisibleRect:top().y   - ballSize.height / 2.0)
+            if ptNowY <   minY then
+                ptNowY = minY
+            elseif ptNowY > maxY then
+                ptNowY = maxY
+            end
+
+            target:setPosition(cc.p(ptNowX , ptNowY))
+        end
+
+        local listerner  = cc.EventListenerAcceleration:create(accelerometerListener)
+        layer:getEventDispatcher():addEventListenerWithSceneGraphPriority(listerner,ball)
     end
-    
-    layer:registerScriptAccelerateHandler(didAccelerate)   
+
+    local function onExit()
+        layer:setAccelerometerEnabled(false)
+    end
+
+    local function onNodeEvent(event)
+        if "enter" == event then
+            onEnter()
+        elseif "exit" == event then
+            onExit()
+        end
+    end
+
+    layer:registerScriptHandler(onNodeEvent)
     
     return layer
 end

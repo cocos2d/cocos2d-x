@@ -27,7 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto glview = EGLView::createWithSize("Hello Lua", Size(900,640));
 
     director->setOpenGLView(glview);
-    
+
     glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
 
     // turn on display FPS
@@ -37,11 +37,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     // register lua engine
-    LuaEngine* pEngine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
-    std::string path = FileUtils::getInstance()->fullPathForFilename("hello.lua");
-    pEngine->executeScriptFile(path.c_str());
+    LuaEngine* engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    
+    //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
+    //engine->executeScriptFile("hello.lua");
+    engine->executeString("require 'hello.lua'");
 
     return true;
 }
