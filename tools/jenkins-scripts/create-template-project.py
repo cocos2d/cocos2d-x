@@ -1,12 +1,12 @@
 import os
 
-language = ['cpp','lua','javascript']
+languages = ['cpp','lua','javascript']
 base_path = 'tools/project-creator/'
 create_project = base_path + 'create_project.py'
 template_root = base_path + 'templateTest'
 
 # create project
-for item in language:
+for item in languages:
     ret = os.system('python ' + create_project
                     + ' -n ' + 'template' + item
                     + ' -k ' + 'com.test.template.' + item
