@@ -323,7 +323,8 @@ void EditBoxImplIOS::initInactiveLabels(const Size& size)
     setPlaceholderFont(pDefaultFontName, size.height*2/3);
 }
 
-void EditBoxImplIOS::placeInactiveLabels() {
+void EditBoxImplIOS::placeInactiveLabels()
+{
     _label->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
     _labelPlaceHolder->setPosition(Point(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f));
 }
@@ -343,7 +344,8 @@ void EditBoxImplIOS::setInactiveText(const char* pText)
 	// Clip the text width to fit to the text box
 	float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
 	Rect clippingRect = _label->getTextureRect();
-	if(clippingRect.size.width > fMaxWidth) {
+	if(clippingRect.size.width > fMaxWidth)
+    {
 		clippingRect.size.width = fMaxWidth;
 		_label->setTextureRect(clippingRect);
 	}
@@ -485,9 +487,11 @@ bool EditBoxImplIOS::isEditing()
     return [_systemControl isEditState] ? true : false;
 }
 
-void EditBoxImplIOS::refreshInactiveText(){
+void EditBoxImplIOS::refreshInactiveText()
+{
     const char* text = getText();
-    if(_systemControl.textField.hidden == YES) {
+    if(_systemControl.textField.hidden == YES)
+    {
 		setInactiveText(text);
 		if(strlen(text) == 0)
 		{
@@ -505,14 +509,16 @@ void EditBoxImplIOS::refreshInactiveText(){
 void EditBoxImplIOS::setText(const char* text)
 {
     NSString* nsText =[NSString stringWithUTF8String:text];
-    if ([nsText compare:_systemControl.textField.text] != NSOrderedSame) {
+    if ([nsText compare:_systemControl.textField.text] != NSOrderedSame)
+    {
         _systemControl.textField.text = nsText;
     }
     
     refreshInactiveText();
 }
 
-NSString* removeSiriString(NSString* str){
+NSString* removeSiriString(NSString* str)
+{
     NSString* siriString = @"\xef\xbf\xbc";
     return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
 }
