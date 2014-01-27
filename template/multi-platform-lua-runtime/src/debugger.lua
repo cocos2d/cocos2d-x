@@ -3208,11 +3208,12 @@ local function init(host, port, idekey, transport, executionplatform, workingdir
 
     -- try to connect several times: if IDE launches both process and server at same time, first connect attempts may fail
     local ok, err
-    for i=1, 5 do
+    for i=1, 2 do
         ok, err = skt:connect(host, port)
         if ok then break end
-        transport.sleep(0.5)
+        transport.sleep(0.1)
     end
+	if err then return end
     if err then error(string.format("Cannot connect to %s:%d : %s", host, port, err)) end
 
     -- get the debugger and transport layer URI
