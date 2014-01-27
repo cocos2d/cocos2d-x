@@ -65,8 +65,10 @@ cocos2d-x-3.0beta2 Jan.24 2014
      [FIX]          Crash when Firefox connects to JSB application on Mac platform.
 [Desktop]
      [NEW]          Support fullscreen
+[Linux]
+     [FIX]          "Testing empty labels" in LabelTest crashes.
 [Mac]
-      [FIX]         Removes unused files after using glfw3 to create opengl context
+     [FIX]          Removes unused files after using glfw3 to create opengl context
 [Win32]
      [FIX]          Compiling error when using x64 target
      [FIX]          Tests: TestCpp works with CMake
