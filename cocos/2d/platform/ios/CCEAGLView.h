@@ -61,6 +61,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -155,3 +158,5 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float) duration distance:(float) dis;
 -(void) doAnimationWhenAnotherEditBeClicked;
 @end
+
+#endif // CC_PLATFORM_IOS

@@ -61,6 +61,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #import <QuartzCore/QuartzCore.h>
 #import "CCEGLView.h"
 #import "CCEAGLView.h"
@@ -922,3 +925,5 @@ static CCEAGLView *__view = 0;
 }
 
 @end
+
+#endif // CC_PLATFORM_IOS
