@@ -4,8 +4,8 @@
 [submodule "cocos/scripting/auto-generated"]
 	path = cocos/scripting/auto-generated
 	url = git://github.com/cocos2d-x/bindings-auto-generated.git
-[submodule "samples/TestJavascript/tests"]
-	path = samples/TestJavascript/tests
+[submodule "samples/test-javascript/tests"]
+	path = samples/test-javascript/tests
 	url = git://github.com/cocos2d/cocos2d-js-tests.git
 [submodule "tools/cocos2d-console"]
 	path = tools/cocos2d-console
