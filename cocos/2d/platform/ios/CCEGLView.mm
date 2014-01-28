@@ -70,20 +70,20 @@ EGLView* EGLView::createWithFullScreen(const std::string& viewName)
 
 EGLView::EGLView()
 {
-    CGRect r = CGRectMake(0,0,300,300);
-    CCEAGLView *glView = [CCEAGLView viewWithFrame:r
-                                         pixelFormat: kEAGLColorFormatRGB565
-                                         depthFormat: GL_DEPTH24_STENCIL8_OES
-                                  preserveBackbuffer: NO
-                                          sharegroup: nil
-                                       multiSampling: NO
-                                     numberOfSamples: 0];
-    [__glView setMultipleTouchEnabled:YES];
-
-    _screenSize.width = _designResolutionSize.width = [glview getWidth];
-    _screenSize.height = _designResolutionSize.height = [glview getHeight];
-
-    _glview = glview;
+//    CGRect r = CGRectMake(0,0,300,300);
+//    CCEAGLView *glView = [CCEAGLView viewWithFrame:r
+//                                         pixelFormat: kEAGLColorFormatRGB565
+//                                         depthFormat: GL_DEPTH24_STENCIL8_OES
+//                                  preserveBackbuffer: NO
+//                                          sharegroup: nil
+//                                       multiSampling: NO
+//                                     numberOfSamples: 0];
+//    [__glView setMultipleTouchEnabled:YES];
+//
+//    _screenSize.width = _designResolutionSize.width = [glview getWidth];
+//    _screenSize.height = _designResolutionSize.height = [glview getHeight];
+//
+//    _glview = glview;
 }
 
 EGLView::~EGLView()
