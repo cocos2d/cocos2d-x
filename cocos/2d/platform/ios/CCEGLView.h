@@ -26,6 +26,9 @@
 #ifndef __CC_EGLVIEW_IPHONE_H__
 #define __CC_EGLVIEW_IPHONE_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #include "CCObject.h"
 #include "platform/CCCommon.h"
 #include "platform/CCEGLViewProtocol.h"
@@ -58,5 +61,7 @@ protected:
 };
 
 NS_CC_END
+
+#endif // CC_PLATFORM_IOS
 
 #endif    // end of __CC_EGLVIEW_IPHONE_H__

@@ -22,6 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #include "CCEAGLView.h"
 #include "CCDirectorCaller.h"
 #include "CCEGLView.h"
@@ -125,6 +130,7 @@ void EGLView::setIMEKeyboardState(bool bOpen)
     }
 }
 
-
 NS_CC_END
+
+#endif // CC_PLATFOR_IOS
 
