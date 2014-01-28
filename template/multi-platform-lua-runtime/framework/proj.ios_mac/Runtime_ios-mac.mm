@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-string getJsSearchPath()
+string getResourceSearchPath()
 {
     NSString *bundlePath = [[NSBundle mainBundle] resourcePath];
     if (bundlePath != nil) {
@@ -15,7 +15,7 @@ string getJsSearchPath()
 vector<string> getSearchPath()
 {
 	vector<string> searchPathArray;
-    searchPathArray.push_back(getJsSearchPath());
+    searchPathArray.push_back(getResourceSearchPath());
 	return searchPathArray;
 }
 
