@@ -12,9 +12,9 @@ LOCAL_SRC_FILES += testlua/main.cpp \
 
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../Classes \
-                    $(LOCAL_PATH)/../../../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../../../extensions \
-                    $(LOCAL_PATH)/../../../../../cocos/scripting/lua/bindings
+                    $(LOCAL_PATH)/../../../../external/lua/tolua \
+                    $(LOCAL_PATH)/../../../../extensions \
+                    $(LOCAL_PATH)/../../../../cocos/scripting/lua/bindings
 
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt

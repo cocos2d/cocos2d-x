@@ -163,7 +163,7 @@ def copy_resources(target, app_android_root):
         copy_files(resources_dir, assets_dir)
 
         if target == "testjavascript":
-            resources_dir = os.path.join(app_android_root, "../../tests/")
+            resources_dir = os.path.join(app_android_root, "../tests/")
 
         copy_files(resources_dir, assets_dir)
 
@@ -189,12 +189,12 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
     cocos_root = os.path.join(current_dir, "..")
     
     if android_platform is not None:
-				sdk_root = check_environment_variables_sdk()
-				if android_platform.isdigit():
-						android_platform = 'android-'+android_platform
-				else:
-						print 'please use vaild android platform'
-						exit(1)
+		sdk_root = check_environment_variables_sdk()
+		if android_platform.isdigit():
+			android_platform = 'android-'+android_platform
+		else:
+			print 'please use vaild android platform'
+			exit(1)
     	  
     if build_mode is None:
     	  build_mode = 'debug'
