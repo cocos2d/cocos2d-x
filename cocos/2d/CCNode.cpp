@@ -164,7 +164,13 @@ Node::~Node()
     CC_SAFE_DELETE(_componentContainer);
     
 #if CC_USE_PHYSICS
-    CC_SAFE_RELEASE(_physicsBody);
+    if (_physicsBody != nullptr)
+    {
+        if(_physicsBody->getWorld() != nullptr)
+            _physicsBody->removeFromWorld();
+        _physicsBody->_node = nullptr;
+    }
+    CC_SAFE_RELEASE_NULL(_physicsBody);
 #endif
 }
 
@@ -345,7 +351,10 @@ void Node::setPosition(const Point& newPosition)
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {
-        _physicsBody->setPosition(newPosition);
+        if(getParent() != nullptr)
+            _physicsBody->setPosition(getParent()->convertToWorldSpace(newPosition));
+        else
+            _physicsBody->setPosition(newPosition);
     }
 #endif
 }
@@ -1317,13 +1326,31 @@ bool Node::updatePhysicsTransform()
 {
     if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
     {
-        _position = _physicsBody->getPosition();
+        if(getParent())
+            _position = getParent()->convertToNodeSpace(_physicsBody->getPosition());
+        
         _rotationX = _rotationY = _physicsBody->getRotation();
         _transformDirty = _inverseDirty = true;
         return true;
     }
     
     return false;
+}
+
+void Node::updatePhysicsPosition()
+{
+    if(_physicsBody)
+    {
+        if(getParent())
+            _physicsBody->setPosition(getParent()->convertToWorldSpace(getPosition()));
+        else
+            _physicsBody->setPosition(getPosition());
+    }
+    
+    for(auto& child : _children)
+    {
+        child->updatePhysicsPosition();
+    }
 }
 #endif
 
@@ -1374,7 +1401,10 @@ void Node::setPhysicsBody(PhysicsBody* body)
     _physicsBody = body;
     _physicsBody->_node = this;
     _physicsBody->retain();
-    _physicsBody->setPosition(getPosition());
+    if(getParent() != nullptr)
+        _physicsBody->setPosition(getParent()->convertToWorldSpace(getPosition()));
+    else
+        _physicsBody->setPosition(getPosition());
     _physicsBody->setRotation(getRotation());
 }
 

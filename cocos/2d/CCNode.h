@@ -1384,6 +1384,11 @@ public:
      *   update rotation and position from physics body
      */
     virtual bool updatePhysicsTransform();
+    
+    /**
+     *   upadte PhysicsBody Position
+     */
+    virtual void updatePhysicsPosition();
 
 #endif
     

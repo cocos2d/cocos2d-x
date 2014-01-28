@@ -438,6 +438,14 @@ Point ControlSwitch::locationFromTouch(Touch* pTouch)
 
 bool ControlSwitch::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible())
     {
         return false;

@@ -590,6 +590,14 @@ void ControlButton::needsLayout()
 
 bool ControlButton::onTouchBegan(Touch *pTouch, Event *pEvent)
 {
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+
     if (!isTouchInside(pTouch) || !isEnabled() || !isVisible() || !hasVisibleParents() )
     {
         return false;

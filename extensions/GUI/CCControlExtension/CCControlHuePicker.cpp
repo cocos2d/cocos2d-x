@@ -165,6 +165,14 @@ bool ControlHuePicker::checkSliderPosition(Point location)
 
 bool ControlHuePicker::onTouchBegan(Touch* touch, Event* event)
 {
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     if (!isEnabled() || !isVisible())
     {
         return false;
