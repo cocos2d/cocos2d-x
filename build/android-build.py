@@ -7,9 +7,9 @@ import os, os.path
 import shutil
 from optparse import OptionParser
 
-CPP_SAMPLES = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
-LUA_SAMPLES = ['hellolua', 'testlua']
-JSB_SAMPLES = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
+CPP_SAMPLES = ['testcpp']
+LUA_SAMPLES = ['testlua']
+JSB_SAMPLES = ['testjavascript']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
 
 def get_num_of_cpu():
@@ -159,47 +159,23 @@ def copy_resources(target, app_android_root):
 
     # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
     if target in JSB_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
+        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
 
-        if target == "cocosdragon":
-            resources_dir = os.path.join(app_android_root, "../../Shared/games/CocosDragonJS/Published files Android")
-        if target == "crystalcraze":
-            resources_dir = os.path.join(app_android_root, "../../Shared/games/CrystalCraze/Published-Android")
         if target == "testjavascript":
-            resources_dir = os.path.join(app_android_root, "../../Shared/tests/")
-        if target == "watermelonwithme":
-            resources_dir = os.path.join(app_android_root, "../../Shared/games/WatermelonWithMe")
-        if target != "moonwarriors":
-            copy_files(resources_dir, assets_dir)
-        else:
-        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/res")
-        	  dst_dir = os.path.join(assets_dir, "res")
-        	  os.mkdir(dst_dir)
-        	  copy_files(resources_dir, dst_dir)
-        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors/src")
-        	  dst_dir = os.path.join(assets_dir, "src")
-        	  os.mkdir(dst_dir)
-        	  copy_files(resources_dir, dst_dir)
-        	  resources_dir = os.path.join(app_android_root, "../../Shared/games/MoonWarriors")
-        	  for item in os.listdir(resources_dir):
-        	  	  path = os.path.join(resources_dir, item)
-        	  	  if item.endswith('.js') and os.path.isfile(path):
-        	  	  	  shutil.copy(path, assets_dir)
+            resources_dir = os.path.join(app_android_root, "../../tests/")
 
-    # AssetsManager test should also copy javascript files
-    if target == "assetsmanager":
-        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/javascript/script")
         copy_files(resources_dir, assets_dir)
+
 
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua/script")
+        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/lua/script")
         copy_files(resources_dir, assets_dir)
 
         # TestLua shared resources with TestCpp
         if target == "testlua":
-            resources_dir = os.path.join(app_android_root, "../../../Cpp/TestCpp/Resources")
+            resources_dir = os.path.join(app_android_root, "../../test-cpp/Resources")
             copy_files(resources_dir, assets_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
@@ -227,28 +203,12 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
        
     app_android_root = ''
     for target in build_targets:
-        if target == 'hellocpp':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/HelloCpp/proj.android')
         elif target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/TestCpp/proj.android')
-        elif target == 'simplegame':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/SimpleGame/proj.android')
-        elif target == 'assetsmanager':
-            app_android_root = os.path.join(cocos_root, 'samples/Cpp/AssetsManagerTest/proj.android')
-        elif target == 'hellolua':
-            app_android_root = os.path.join(cocos_root, 'samples/Lua/HelloLua/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/test-cpp/proj.android')
         elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'samples/Lua/TestLua/proj.android')
-        elif target == 'cocosdragon':
-            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CocosDragonJS/proj.android')
-        elif target == 'crystalcraze':
-            app_android_root = os.path.join(cocos_root, 'samples/Javascript/CrystalCraze/proj.android')
-        elif target == 'moonwarriors':
-            app_android_root = os.path.join(cocos_root, 'samples/Javascript/MoonWarriors/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/test-lua/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/Javascript/TestJavascript/proj.android')
-        elif target == 'watermelonwithme':
-            app_android_root = os.path.join(cocos_root, 'samples/Javascript/WatermelonWithMe/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/test-javascript/proj.android')
         else:
             print 'unknown target: %s' % target
             continue
@@ -265,24 +225,24 @@ if __name__ == '__main__':
     
     Usage: %prog [options] target
 
-    Valid targets are: [hellocpp|testcpp|simplegame|assetsmanager|hellolua|testlua|cocosdragon|crystalcraze|moonwarriors|testjavascript|watermelonwithme]. You can combine them arbitrarily with a whitespace among two valid targets.
+    Valid targets are: [testcpp|testlua|testjavascript]. You can combine them arbitrarily with a whitespace among two valid targets.
 
     You can use [all|cpp|lua|jsb], to build all the samples, or all the c++ samples, or all the lua samples, or all the jsb samples respectevely.
 
-    cpp  = ['hellocpp', 'testcpp', 'simplegame', 'assetsmanager']
-    lua = ['hellolua', 'testlua']
-    jsb = ['cocosdragon', 'crystalcraze', 'moonwarriors', 'testjavascript', 'watermelonwithme']
+    cpp = ['testcpp']
+    lua = ['testlua']
+    jsb = ['testjavascript']
     all  = cpp + lua + jsb  // be careful with the all target, it may took a very long time to compile all the projects, do it under your own risk.
 
-    If you are new to cocos2d-x, I recommend you start with hellocpp,hellolua or testjavascript.
+    If you are new to cocos2d-x, I recommend you start with testcpp, testlua or testjavascript.
 
     You can combine these targets like this:
 
     //1. to build simplegame and assetsmanager 
-    python android-build.py -p 10 simplegame assetsmanager
+    python android-build.py -p 10 testcpp testlua
 
-    //2. to build hellolua and all the jsb samples
-    python android-build.py -p 19 hellolua jsb
+    //2. to build testlua and all the jsb samples
+    python android-build.py -p 19 testlua jsb
 
     Note: You should install ant to generate apk while building the andriod samples. But it is optional. You can generate apk with eclipse.
     """
