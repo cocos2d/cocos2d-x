@@ -53,7 +53,7 @@ using namespace std;
 using namespace cocos2d;
 
 extern string getDotWaitFilePath();
-extern string getJsSearchPath();
+extern string getProjSearchPath();
 extern vector<string> getSearchPath();
 extern bool browseDir(const char *dir,const char *filespec,vector<string> &filterArray,vector<std::string> &fileList);
 
@@ -251,7 +251,7 @@ public:
 	void waitDebugConnect(void)
 	{
 		_dotwaitFile = getDotWaitFilePath();
-		_jsSearchPath = getJsSearchPath();
+		_jsSearchPath = getProjSearchPath();
 		vector<std::string> fileInfoList = searchFileList(_jsSearchPath,"*.js","runtime|framework|");
 		for (unsigned i = 0; i < fileInfoList.size(); i++)
 		{

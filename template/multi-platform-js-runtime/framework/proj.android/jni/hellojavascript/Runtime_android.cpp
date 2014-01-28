@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-string getJsSearchPath()
+string getProjSearchPath()
 {
 	extern std::string getPackageNameJNI();
 	string searchPath = "/mnt/sdcard/";
@@ -14,7 +14,7 @@ vector<string> getSearchPath()
 {
 	extern std::string getPackageNameJNI();
 	vector<string> searchPathArray;
-	searchPathArray.push_back(getJsSearchPath());
+	searchPathArray.push_back(getProjSearchPath());
 	return searchPathArray;
 }
 

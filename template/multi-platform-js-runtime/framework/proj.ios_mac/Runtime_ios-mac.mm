@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-string getJsSearchPath()
+string getProjSearchPath()
 {
     NSString *bundlePath = [[NSBundle mainBundle] resourcePath];
     if (bundlePath != nil) {
@@ -21,7 +21,7 @@ vector<string> getSearchPath()
 string getDotWaitFilePath()
 {
 	string dotwaitFile;
-    dotwaitFile = getJsSearchPath();
+    dotwaitFile = getProjSearchPath();
     dotwaitFile += "/.wait";
 }
 
