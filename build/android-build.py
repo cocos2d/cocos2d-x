@@ -203,7 +203,7 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
        
     app_android_root = ''
     for target in build_targets:
-        elif target == 'testcpp':
+        if target == 'testcpp':
             app_android_root = os.path.join(cocos_root, 'samples/test-cpp/proj.android')
         elif target == 'testlua':
             app_android_root = os.path.join(cocos_root, 'samples/test-lua/proj.android')
