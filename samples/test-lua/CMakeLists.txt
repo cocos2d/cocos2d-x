@@ -7,9 +7,9 @@ set(SAMPLE_SRC
 
 include_directories(
   Classes
-  ../../../cocos/scripting/lua/bindings
-  ../../../external/lua/lua
-  ../../../external/lua/tolua
+  ../../cocos/scripting/lua/bindings
+  ../../external/lua/lua
+  ../../external/lua/tolua
 )
 
 # add the executable
@@ -37,6 +37,6 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua/script ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/samples/Cpp/TestCpp/Resources ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/samples/test-cpp/Resources ${APP_BIN_DIR}/Resources
   )
 
