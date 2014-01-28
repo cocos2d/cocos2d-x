@@ -78,8 +78,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define IOS_MAX_TOUCHES_COUNT     10
 
-static CCEAGLView *__view = 0;
-
 @interface CCEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
@@ -118,11 +116,6 @@ static CCEAGLView *__view = 0;
     return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
-+ (id) sharedEGLView
-{
-    return __view;
-}
-
 - (id) initWithFrame:(CGRect)frame
 {
     return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
@@ -149,15 +142,13 @@ static CCEAGLView *__view = 0;
             return nil;
         }
 
-        
-        __view = self;
-        
+
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
 		
-		if ([__view respondsToSelector:@selector(setContentScaleFactor:)])
+		if ([self respondsToSelector:@selector(setContentScaleFactor:)])
 		{
-			__view.contentScaleFactor = [[UIScreen mainScreen] scale];
+			self.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
     }
         
@@ -183,7 +174,6 @@ static CCEAGLView *__view = 0;
         }
     }
     
-    __view = self;
     return self;
 }
 
@@ -412,8 +402,8 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
 
@@ -434,8 +424,8 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
 
@@ -457,8 +447,8 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
 
@@ -480,8 +470,8 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
 

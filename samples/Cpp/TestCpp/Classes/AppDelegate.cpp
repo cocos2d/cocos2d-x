@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto designSize = Size(480, 320);
 
-    auto pFileUtils = FileUtils::getInstance();
+    auto fileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths;
     
     if (screenSize.height > 320)
@@ -75,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("scenetest/TriggerTest");
     }
     
-    pFileUtils->setSearchPaths(searchPaths);
+    fileUtils->setSearchPaths(searchPaths);
 
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
 

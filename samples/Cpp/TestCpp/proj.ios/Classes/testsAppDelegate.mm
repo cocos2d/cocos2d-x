@@ -21,8 +21,11 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+
+    cocos2d::Application *app = cocos2d::Application::getInstance();
+
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
@@ -59,7 +62,7 @@ static AppDelegate s_sharedApplication;
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
-    cocos2d::Application::getInstance()->run();
+    app->run();
 
     return YES;
 }

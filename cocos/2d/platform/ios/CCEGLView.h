@@ -40,6 +40,7 @@ NS_CC_BEGIN
 class CC_DLL EGLView : public Object, public EGLViewProtocol
 {
 public:
+    static EGLView* createWithEAGLView(void* eaglview);
     static EGLView* create(const std::string& viewName);
     static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
     static EGLView* createWithFullScreen(const std::string& viewName);
@@ -58,6 +59,8 @@ protected:
 
     bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
+
+    void *_glview;
 };
 
 NS_CC_END
