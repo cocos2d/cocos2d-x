@@ -45,9 +45,7 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
-option(BUILD_HelloCpp "Only build HelloCpp sample" ON)
 option(BUILD_TestCpp "Only build TestCpp sample" ON)
-option(BUILD_HelloLua "Only build HelloLua sample" OFF)
 option(BUILD_TestLua "Only build TestLua sample" OFF)
 
 else()#temp
@@ -63,10 +61,7 @@ option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
-
-option(BUILD_HelloCpp "Only build HelloCpp sample" ON)
 option(BUILD_TestCpp "Only build TestCpp sample" ON)
-option(BUILD_HelloLua "Only build HelloLua sample" ON)
 option(BUILD_TestLua "Only build TestLua sample" ON)
 
 endif()#temp
@@ -285,19 +280,12 @@ add_subdirectory(cocos/scripting)
 endif(BUILD_LIBS_LUA)
 
 # build samples
-if(BUILD_HelloCpp)
-add_subdirectory(samples/Cpp/HelloCpp)
-endif(BUILD_HelloCpp)
 
 if(BUILD_TestCpp)
-add_subdirectory(samples/Cpp/TestCpp)
+add_subdirectory(samples/test-cpp)
 endif(BUILD_TestCpp)
 
-if(BUILD_HelloLua)
-add_subdirectory(samples/Lua/HelloLua)
-endif(BUILD_HelloLua)
-
 if(BUILD_TestLua)
-add_subdirectory(samples/Lua/TestLua)
+add_subdirectory(samples/test-lua)
 endif(BUILD_TestLua)
 
