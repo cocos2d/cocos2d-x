@@ -282,10 +282,10 @@ endif(BUILD_LIBS_LUA)
 # build samples
 
 if(BUILD_TestCpp)
-add_subdirectory(samples/Cpp/TestCpp)
+add_subdirectory(samples/test-cpp)
 endif(BUILD_TestCpp)
 
 if(BUILD_TestLua)
-add_subdirectory(samples/Lua/TestLua)
+add_subdirectory(samples/test-lua)
 endif(BUILD_TestLua)
 
