@@ -110,6 +110,9 @@ LanguageType Application::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"es"]){
         ret = LanguageType::SPANISH;
     }
+    else if ([languageCode isEqualToString:@"nl"]){
+        ret = LanguageType::DUTCH;
+    }
     else if ([languageCode isEqualToString:@"ru"]){
         ret = LanguageType::RUSSIAN;
     }
