@@ -1,6 +1,15 @@
 require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
-local MUSIC_FILE  = "background.mp3"
+local targetPlatform = CCApplication:sharedApplication():getTargetPlatform()
+local MUSIC_FILE = nil
+if (kTargetBlackBerry == targetPlatform) then
+	MUSIC_FILE = "background.ogg"
+elseif (kTargetWinRT == targetPlatform) then
+	MUSIC_FILE = "background.wav"
+else 
+	MUSIC_FILE  = "background.mp3"
+end
+-- local MUSIC_FILE  = "background.mp3"
 -- uncomment for BlackBerry
 -- local MUSIC_FILE = "background.ogg"
 
