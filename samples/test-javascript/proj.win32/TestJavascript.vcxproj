@@ -98,8 +98,8 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
@@ -154,8 +154,8 @@ xcopy "$(ProjectDir)..\tests" "$(OutDir)\TestJavascriptRes\" /e /Y</Command>
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
