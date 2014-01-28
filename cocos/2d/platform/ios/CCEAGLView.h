@@ -122,9 +122,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** creates an initializes an CCEAGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 
-// get the view object
-+(id) sharedEGLView;
-
 /** Initializes an CCEAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 /** Initializes an CCEAGLView with a frame, a color buffer format, and 0-bit depth buffer */

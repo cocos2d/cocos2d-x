@@ -70,13 +70,26 @@ EGLView* EGLView::createWithFullScreen(const std::string& viewName)
 
 EGLView::EGLView()
 {
-    _screenSize.width = _designResolutionSize.width = [[CCEAGLView sharedEGLView] getWidth];
-    _screenSize.height = _designResolutionSize.height = [[CCEAGLView sharedEGLView] getHeight];
+    CGRect r = CGRectMake(0,0,300,300);
+    CCEAGLView *glView = [CCEAGLView viewWithFrame:r
+                                         pixelFormat: kEAGLColorFormatRGB565
+                                         depthFormat: GL_DEPTH24_STENCIL8_OES
+                                  preserveBackbuffer: NO
+                                          sharegroup: nil
+                                       multiSampling: NO
+                                     numberOfSamples: 0];
+    [__glView setMultipleTouchEnabled:YES];
+
+    _screenSize.width = _designResolutionSize.width = [glview getWidth];
+    _screenSize.height = _designResolutionSize.height = [glview getHeight];
+
+    _glview = glview;
 }
 
 EGLView::~EGLView()
 {
-
+    CCEAGLView *glview = (CCEAGLView*) _glview;
+    [glview release];
 }
 
 bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
@@ -91,15 +104,16 @@ bool EGLView::initWithFullScreen(const std::string& viewName)
 
 bool EGLView::isOpenGLReady()
 {
-    return [CCEAGLView sharedEGLView] != nullptr;
+    return _glview != nullptr;
 }
 
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
 {
-    assert(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
-
+    CC_ASSERT(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
     _scaleX = _scaleY = contentScaleFactor;
-    [[CCEAGLView sharedEGLView] setNeedsLayout];
+
+    CCEAGLView *glview = (CCEAGLView*) _glview;
+    [glview setNeedsLayout];
 
     return true;
 }
@@ -109,24 +123,30 @@ void EGLView::end()
     [CCDirectorCaller destroy];
     
     // destroy EAGLView
-    [[CCEAGLView sharedEGLView] removeFromSuperview];
+    CCEAGLView *glview = (CCEAGLView*) _glview;
+
+    [glview removeFromSuperview];
+    [glview release];
 }
 
 
 void EGLView::swapBuffers()
 {
-    [[CCEAGLView sharedEGLView] swapBuffers];
+    CCEAGLView *glview = (CCEAGLView*) _glview;
+    [glview swapBuffers];
 }
 
-void EGLView::setIMEKeyboardState(bool bOpen)
+void EGLView::setIMEKeyboardState(bool open)
 {
-    if (bOpen)
+    CCEAGLView *glview = (CCEAGLView*) _glview;
+
+    if (open)
     {
-        [[CCEAGLView sharedEGLView] becomeFirstResponder];
+        [glview becomeFirstResponder];
     }
     else
     {
-        [[CCEAGLView sharedEGLView] resignFirstResponder];
+        [glview resignFirstResponder];
     }
 }
 
