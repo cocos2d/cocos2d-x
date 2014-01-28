@@ -42,7 +42,7 @@ elif [ "$PLATFORM"x = "android"x ]; then
     # Create a directory for temporary objects
     mkdir android_build_objs
 
-    PROJECTS=("Cpp/HelloCpp" "Cpp/TestCpp" "Cpp/SimpleGame" "Cpp/AssetsManagerTest" "Javascript/TestJavascript" "Javascript/CocosDragonJS" "Javascript/CrystalCraze" "Javascript/MoonWarriors" "Javascript/WatermelonWithMe" "Lua/HelloLua" "Lua/TestLua")
+    PROJECTS=("test-cpp" "test-javascript" "test-Lua")
     for i in ${PROJECTS[*]}; do
         ln -s $COCOS2DX_ROOT/android_build_objs $COCOS2DX_ROOT/samples/$i/proj.android/obj
     done
