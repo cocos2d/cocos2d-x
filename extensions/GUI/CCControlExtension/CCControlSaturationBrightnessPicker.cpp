@@ -182,6 +182,14 @@ bool ControlSaturationBrightnessPicker::checkSliderPosition(Point location)
 
 bool ControlSaturationBrightnessPicker::onTouchBegan(Touch* touch, Event* event)
 {
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+    
     if (!isEnabled() || !isVisible())
     {
         return false;

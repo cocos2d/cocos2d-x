@@ -248,6 +248,14 @@ Point ControlSlider::locationFromTouch(Touch* touch)
 
 bool ControlSlider::onTouchBegan(Touch* touch, Event* pEvent)
 {
+    for (Node *c = this->_parent; c != nullptr; c = c->getParent())
+    {
+        if (c->isVisible() == false)
+        {
+            return false;
+        }
+    }
+
     if (!isTouchInside(touch) || !isEnabled() || !isVisible())
     {
         return false;
