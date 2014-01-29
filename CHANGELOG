@@ -1,3 +1,9 @@
+cocos2d-x-3.0final ?.? ?
+[All]
+     [NEW]          Adds Dutch Language support.
+     
+     [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
+
 cocos2d-x-3.0beta2 Jan.24 2014
 [All]
      [NEW]          Full screen support for desktop platforms.
