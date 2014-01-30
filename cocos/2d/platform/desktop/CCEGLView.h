@@ -33,12 +33,12 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL EGLView : public Object, public EGLViewProtocol
+class CC_DLL GLView : public Object, public GLViewProtocol
 {
 public:
-    static EGLView* create(const std::string& viewName);
-    static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
-    static EGLView* createWithFullScreen(const std::string& viewName);
+    static GLView* create(const std::string& viewName);
+    static GLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
+    static GLView* createWithFullScreen(const std::string& viewName);
 
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -65,8 +65,8 @@ public:
     virtual void setIMEKeyboardState(bool bOpen) override;
 
 protected:
-    EGLView();
-    virtual ~EGLView();
+    GLView();
+    virtual ~GLView();
 
     bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
@@ -86,10 +86,10 @@ protected:
 
     GLFWwindow* _mainWindow;
     GLFWmonitor* _primaryMonitor;
-    friend class EGLViewEventHandler;
+    friend class GLViewEventHandler;
 
 private:
-    CC_DISALLOW_COPY_AND_ASSIGN(EGLView);
+    CC_DISALLOW_COPY_AND_ASSIGN(GLView);
 };
 
 NS_CC_END   // end of namespace   cocos2d

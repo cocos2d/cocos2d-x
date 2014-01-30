@@ -80,8 +80,8 @@ static AppDelegate s_sharedApplication;
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
 
-
-    cocos2d::EGLView *glview = cocos2d::EGLView::createWithEAGLView(eaglView);
+    // IMPORTANT: Setting the GLView should be done after creating the RootViewController
+    cocos2d::GLView *glview = cocos2d::GLView::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
 
     app->run();

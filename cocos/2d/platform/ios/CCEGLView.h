@@ -36,19 +36,33 @@
 NS_CC_BEGIN
 
 
-
-class CC_DLL EGLView : public Object, public EGLViewProtocol
+/** Class that represent the OpenGL View
+ */
+class CC_DLL GLView : public Object, public GLViewProtocol
 {
 public:
-    static EGLView* createWithEAGLView(void* eaglview);
-    static EGLView* create(const std::string& viewName);
-    static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
-    static EGLView* createWithFullScreen(const std::string& viewName);
+    /** creates a GLView with a objective-c CCEAGLView instance */
+    static GLView* createWithEAGLView(void* eaglview);
 
+    /** creates a GLView with a title name in fullscreen mode */
+    static GLView* create(const std::string& viewName);
+
+    /** creates a GLView with a title name, a rect and the zoom factor */
+    static GLView* createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor = 1.0f);
+
+    /** creates a GLView with a name in fullscreen mode */
+    static GLView* createWithFullScreen(const std::string& viewName);
+
+    /** sets the content scale factor */
     bool setContentScaleFactor(float contentScaleFactor);
+
+    /** returns the content scale factor */
     float getContentScaleFactor() const;
+
+    /** returns whether or not the view is in Retina Display mode */
     bool isRetinaDisplay() const { return getContentScaleFactor() == 2.0; }
 
+    /** returns the objective-c CCEAGLView instance */
     void* getEAGLView() const { return _eaglview; }
 
     // overrides
@@ -58,13 +72,14 @@ public:
     virtual void setIMEKeyboardState(bool bOpen) override;
 
 protected:
-    EGLView();
-    virtual ~EGLView();
+    GLView();
+    virtual ~GLView();
 
     bool initWithEAGLView(void* eaglview);
-    bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
+    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
 
+    // the objective-c CCEAGLView instance
     void *_eaglview;
 };
 
