@@ -868,7 +868,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::EGLView::getInstance()->getScaleY());
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::GLView::getInstance()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 

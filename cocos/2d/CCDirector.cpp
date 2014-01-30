@@ -365,7 +365,7 @@ float Director::getDeltaTime() const
 {
 	return _deltaTime;
 }
-void Director::setOpenGLView(EGLView *openGLView)
+void Director::setOpenGLView(GLView *openGLView)
 {
     CCASSERT(openGLView, "opengl view should not be null");
 

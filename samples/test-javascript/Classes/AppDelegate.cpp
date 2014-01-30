@@ -40,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = EGLView::createWithSize("Test JavaScript", Size(900,640));
+        glview = GLView::createWithSize("Test JavaScript", Size(900,640));
         director->setOpenGLView(glview);
     }
 

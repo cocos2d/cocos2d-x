@@ -764,7 +764,7 @@ CC_DEPRECATED_ATTRIBUTE typedef TMXTiledMap CCTMXTiledMap;
 CC_DEPRECATED_ATTRIBUTE typedef TileMapAtlas CCTileMapAtlas;
 CC_DEPRECATED_ATTRIBUTE typedef Timer CCTimer;
 CC_DEPRECATED_ATTRIBUTE typedef Scheduler CCScheduler;
-CC_DEPRECATED_ATTRIBUTE typedef EGLView CCEGLView;
+CC_DEPRECATED_ATTRIBUTE typedef GLView CCEGLView;
 
 CC_DEPRECATED_ATTRIBUTE typedef Component CCComponent;
 CC_DEPRECATED_ATTRIBUTE typedef AffineTransform CCAffineTransform;

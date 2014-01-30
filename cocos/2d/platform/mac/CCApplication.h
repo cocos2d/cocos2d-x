@@ -52,7 +52,7 @@ public:
     virtual void setAnimationInterval(double interval);
         
     /**
-    @brief	Get status bar rectangle in EGLView window.
+    @brief	Get status bar rectangle in GLView window.
     */
         
     /**

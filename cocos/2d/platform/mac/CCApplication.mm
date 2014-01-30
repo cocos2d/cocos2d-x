@@ -54,7 +54,7 @@ int Application::run()
     {
         return 0;
     }
-    EGLView* glview = Director::getInstance()->getOpenGLView();
+    GLView* glview = Director::getInstance()->getOpenGLView();
     
     while (!glview->windowShouldClose())
     {

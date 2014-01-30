@@ -37,9 +37,9 @@
 
 NS_CC_BEGIN
 
-EGLView* EGLView::createWithEAGLView(void *eaglview)
+GLView* GLView::createWithEAGLView(void *eaglview)
 {
-    auto ret = new EGLView;
+    auto ret = new GLView;
     if(ret && ret->initWithEAGLView(eaglview)) {
         ret->autorelease();
         return ret;
@@ -48,31 +48,9 @@ EGLView* EGLView::createWithEAGLView(void *eaglview)
     return nullptr;
 }
 
-EGLView* EGLView::create(const std::string& viewName)
+GLView* GLView::create(const std::string& viewName)
 {
-    auto ret = new EGLView;
-    if(ret && ret->initWithSize(viewName, Size(0,0), 1)) {
-        ret->autorelease();
-        return ret;
-    }
-
-    return nullptr;
-}
-
-EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
-{
-    auto ret = new EGLView;
-    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
-        ret->autorelease();
-        return ret;
-    }
-
-    return nullptr;
-}
-
-EGLView* EGLView::createWithFullScreen(const std::string& viewName)
-{
-    auto ret = new EGLView();
+    auto ret = new GLView;
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -81,17 +59,39 @@ EGLView* EGLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-EGLView::EGLView()
+GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+{
+    auto ret = new GLView;
+    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+GLView* GLView::createWithFullScreen(const std::string& viewName)
+{
+    auto ret = new GLView();
+    if(ret && ret->initWithFullScreen(viewName)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+GLView::GLView()
 {
 }
 
-EGLView::~EGLView()
+GLView::~GLView()
 {
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
     [glview release];
 }
 
-bool EGLView::initWithEAGLView(void *eaglview)
+bool GLView::initWithEAGLView(void *eaglview)
 {
     _eaglview = eaglview;
     CCEAGLView *glview = (CCEAGLView*) _eaglview;
@@ -103,9 +103,9 @@ bool EGLView::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
-    CGRect r = CGRectMake(0,0,size.width, size.height);
+    CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
                                        pixelFormat: kEAGLColorFormatRGB565
                                        depthFormat: GL_DEPTH24_STENCIL8_OES
@@ -124,22 +124,24 @@ bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZo
     return true;
 }
 
-bool EGLView::initWithFullScreen(const std::string& viewName)
+bool GLView::initWithFullScreen(const std::string& viewName)
 {
     CGRect rect = [[UIScreen mainScreen] bounds];
-    Size size;
-    size.width = rect.size.width;
-    size.height = rect.size.height;
+    Rect r;
+    r.origin.x = rect.origin.x;
+    r.origin.y = rect.origin.y;
+    r.size.width = rect.size.width;
+    r.size.height = rect.size.height;
 
-    return initWithSize(viewName, size, 1);
+    return initWithRect(viewName, r, 1);
 }
 
-bool EGLView::isOpenGLReady()
+bool GLView::isOpenGLReady()
 {
     return _eaglview != nullptr;
 }
 
-bool EGLView::setContentScaleFactor(float contentScaleFactor)
+bool GLView::setContentScaleFactor(float contentScaleFactor)
 {
     CC_ASSERT(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
     _scaleX = _scaleY = contentScaleFactor;
@@ -150,18 +152,18 @@ bool EGLView::setContentScaleFactor(float contentScaleFactor)
     return true;
 }
 
-float EGLView::getContentScaleFactor() const
+float GLView::getContentScaleFactor() const
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     float scaleFactor = [eaglview contentScaleFactor];
 
-//    CCASSERT(scaleFactor == _scaleX == _scaleY, "Logic error in EGLView::getContentScaleFactor");
+//    CCASSERT(scaleFactor == _scaleX == _scaleY, "Logic error in GLView::getContentScaleFactor");
 
     return scaleFactor;
 }
 
-void EGLView::end()
+void GLView::end()
 {
     [CCDirectorCaller destroy];
     
@@ -173,13 +175,13 @@ void EGLView::end()
 }
 
 
-void EGLView::swapBuffers()
+void GLView::swapBuffers()
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
     [eaglview swapBuffers];
 }
 
-void EGLView::setIMEKeyboardState(bool open)
+void GLView::setIMEKeyboardState(bool open)
 {
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
