@@ -40,7 +40,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
 
-    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / [[CCEAGLView sharedEGLView] contentScaleFactor ];
+    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
@@ -95,8 +95,10 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
-    id eglView = [CCEAGLView sharedEGLView];
-    [eglView doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+
+    [eaglview doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
 -(void) setPosition:(CGPoint) pos
@@ -120,7 +122,10 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void) openKeyboard
 {
-    [[CCEAGLView sharedEGLView] addSubview:textField_];
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+
+    [eaglview addSubview:textField_];
     [textField_ becomeFirstResponder];
 }
 
@@ -140,16 +145,21 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 -(void)animationSelector
 {
-    id eglView = [CCEAGLView sharedEGLView];
-    [eglView doAnimationWhenAnotherEditBeClicked];
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+
+    [eaglview doAnimationWhenAnotherEditBeClicked];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
     CCLOG("textFieldShouldBeginEditing...");
     editState_ = YES;
-    id eglView = [CCEAGLView sharedEGLView];
-    if ([eglView isKeyboardShown])
+
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+
+    if ([eaglview isKeyboardShown])
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
@@ -264,7 +274,9 @@ EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 , _systemControl(NULL)
 , _maxTextLength(-1)
 {
-    _inRetinaMode = [[CCEAGLView sharedEGLView] contentScaleFactor] == 2.0f ? true : false;
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+
+    _inRetinaMode = view->isRetinaDisplay();
 }
 
 EditBoxImplIOS::~EditBoxImplIOS()
@@ -535,7 +547,9 @@ void EditBoxImplIOS::setPlaceHolder(const char* pText)
 static CGPoint convertDesignCoordToScreenCoord(const Point& designCoord, bool bInRetinaMode)
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    float viewH = (float)[[CCEAGLView sharedEGLView] getHeight];
+    CCEAGLView *eaglview = (CCEAGLView *) glview->getEAGLView();
+
+    float viewH = (float)[eaglview getHeight];
     
     Point visiblePos = Point(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
     Point screenGLPos = visiblePos + glview->getViewPortRect().origin;
