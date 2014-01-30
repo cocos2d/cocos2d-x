@@ -107,17 +107,17 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
         _scaleX = _scaleY = MAX(_scaleX, _scaleY);
     }
     
-    if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
+    else if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
         _scaleX = _scaleY = MIN(_scaleX, _scaleY);
     }
 
-    if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
+    else if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
     	_scaleX = _scaleY;
     	_designResolutionSize.width = ceilf(_screenSize.width/_scaleX);
     }
 
-    if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
+    else if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
     	_scaleY = _scaleX;
     	_designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
     }
