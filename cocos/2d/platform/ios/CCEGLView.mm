@@ -27,6 +27,8 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
+#import <UIKit/UIKit.h>
+
 #include "CCEAGLView.h"
 #include "CCDirectorCaller.h"
 #include "CCEGLView.h"
@@ -34,6 +36,17 @@
 #include "CCTouch.h"
 
 NS_CC_BEGIN
+
+EGLView* EGLView::createWithEAGLView(void *eaglview)
+{
+    auto ret = new EGLView;
+    if(ret && ret->initWithEAGLView(eaglview)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
 
 EGLView* EGLView::create(const std::string& viewName)
 {
@@ -70,41 +83,60 @@ EGLView* EGLView::createWithFullScreen(const std::string& viewName)
 
 EGLView::EGLView()
 {
-//    CGRect r = CGRectMake(0,0,300,300);
-//    CCEAGLView *glView = [CCEAGLView viewWithFrame:r
-//                                         pixelFormat: kEAGLColorFormatRGB565
-//                                         depthFormat: GL_DEPTH24_STENCIL8_OES
-//                                  preserveBackbuffer: NO
-//                                          sharegroup: nil
-//                                       multiSampling: NO
-//                                     numberOfSamples: 0];
-//    [__glView setMultipleTouchEnabled:YES];
-//
-//    _screenSize.width = _designResolutionSize.width = [glview getWidth];
-//    _screenSize.height = _designResolutionSize.height = [glview getHeight];
-//
-//    _glview = glview;
 }
 
 EGLView::~EGLView()
 {
-    CCEAGLView *glview = (CCEAGLView*) _glview;
+    CCEAGLView *glview = (CCEAGLView*) _eaglview;
     [glview release];
+}
+
+bool EGLView::initWithEAGLView(void *eaglview)
+{
+    _eaglview = eaglview;
+    CCEAGLView *glview = (CCEAGLView*) _eaglview;
+
+    _screenSize.width = _designResolutionSize.width = [glview getWidth];
+    _screenSize.height = _designResolutionSize.height = [glview getHeight];
+//    _scaleX = _scaleY = [glview contentScaleFactor];
+
+    return true;
 }
 
 bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
 {
+    CGRect r = CGRectMake(0,0,size.width, size.height);
+    CCEAGLView *eaglview = [CCEAGLView viewWithFrame: r
+                                       pixelFormat: kEAGLColorFormatRGB565
+                                       depthFormat: GL_DEPTH24_STENCIL8_OES
+                                preserveBackbuffer: NO
+                                        sharegroup: nil
+                                     multiSampling: NO
+                                   numberOfSamples: 0];
+    [eaglview setMultipleTouchEnabled:YES];
+
+    _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
+    _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
+//    _scaleX = _scaleY = [eaglview contentScaleFactor];
+
+    _eaglview = eaglview;
+
     return true;
 }
 
 bool EGLView::initWithFullScreen(const std::string& viewName)
 {
-    return true;
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    Size size;
+    size.width = rect.size.width;
+    size.height = rect.size.height;
+
+    return initWithSize(viewName, size, 1);
 }
 
 bool EGLView::isOpenGLReady()
 {
-    return _glview != nullptr;
+    return _eaglview != nullptr;
 }
 
 bool EGLView::setContentScaleFactor(float contentScaleFactor)
@@ -112,10 +144,21 @@ bool EGLView::setContentScaleFactor(float contentScaleFactor)
     CC_ASSERT(_resolutionPolicy == ResolutionPolicy::UNKNOWN); // cannot enable retina mode
     _scaleX = _scaleY = contentScaleFactor;
 
-    CCEAGLView *glview = (CCEAGLView*) _glview;
-    [glview setNeedsLayout];
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
+    [eaglview setNeedsLayout];
 
     return true;
+}
+
+float EGLView::getContentScaleFactor() const
+{
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
+
+    float scaleFactor = [eaglview contentScaleFactor];
+
+//    CCASSERT(scaleFactor == _scaleX == _scaleY, "Logic error in EGLView::getContentScaleFactor");
+
+    return scaleFactor;
 }
 
 void EGLView::end()
@@ -123,30 +166,30 @@ void EGLView::end()
     [CCDirectorCaller destroy];
     
     // destroy EAGLView
-    CCEAGLView *glview = (CCEAGLView*) _glview;
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
-    [glview removeFromSuperview];
-    [glview release];
+    [eaglview removeFromSuperview];
+    [eaglview release];
 }
 
 
 void EGLView::swapBuffers()
 {
-    CCEAGLView *glview = (CCEAGLView*) _glview;
-    [glview swapBuffers];
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
+    [eaglview swapBuffers];
 }
 
 void EGLView::setIMEKeyboardState(bool open)
 {
-    CCEAGLView *glview = (CCEAGLView*) _glview;
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     if (open)
     {
-        [glview becomeFirstResponder];
+        [eaglview becomeFirstResponder];
     }
     else
     {
-        [glview resignFirstResponder];
+        [eaglview resignFirstResponder];
     }
 }
 

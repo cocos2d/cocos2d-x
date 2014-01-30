@@ -45,7 +45,11 @@ public:
     static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
     static EGLView* createWithFullScreen(const std::string& viewName);
 
-    virtual bool setContentScaleFactor(float contentScaleFactor);
+    bool setContentScaleFactor(float contentScaleFactor);
+    float getContentScaleFactor() const;
+    bool isRetinaDisplay() const { return getContentScaleFactor() == 2.0; }
+
+    void* getEAGLView() const { return _eaglview; }
 
     // overrides
     virtual bool isOpenGLReady() override;
@@ -57,10 +61,11 @@ protected:
     EGLView();
     virtual ~EGLView();
 
+    bool initWithEAGLView(void* eaglview);
     bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
 
-    void *_glview;
+    void *_eaglview;
 };
 
 NS_CC_END
