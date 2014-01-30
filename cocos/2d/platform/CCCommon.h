@@ -56,6 +56,7 @@ enum class LanguageType
     ITALIAN,
     GERMAN,
     SPANISH,
+    DUTCH,
     RUSSIAN,
     KOREAN,
     JAPANESE,
