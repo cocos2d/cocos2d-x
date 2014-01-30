@@ -79,16 +79,16 @@ public:
     virtual ~EGLViewProtocol();
 
     /** Force destroying EGL view, subclass must implement this method. */
-    virtual void    end() = 0;
+    virtual void end() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. */
-    virtual bool    isOpenGLReady() = 0;
+    virtual bool isOpenGLReady() = 0;
 
     /** Exchanges the front and back buffers, subclass must implement this method. */
-    virtual void    swapBuffers() = 0;
+    virtual void swapBuffers() = 0;
 
     /** Open or close IME keyboard , subclass must implement this method. */
-    virtual void    setIMEKeyboardState(bool open) = 0;
+    virtual void setIMEKeyboardState(bool open) = 0;
 
     /**
      * Polls input events. Subclass must implement methods if platform
@@ -195,8 +195,8 @@ protected:
     // the view name
     std::string _viewName;
 
-    float  _scaleX;
-    float  _scaleY;
+    float _scaleX;
+    float _scaleY;
     ResolutionPolicy _resolutionPolicy;
 };
 
