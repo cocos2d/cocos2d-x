@@ -25,3 +25,6 @@
 [submodule "cocos2dx/platform/third_party/winrt/winrtsock"]
 	path = cocos2dx/platform/third_party/winrt/winrtsock
 	url = https://github.com/martell/winrtsock.git
+[submodule "cocos2dx/platform/third_party/winrt/libwebsockets"]
+	path = cocos2dx/platform/third_party/winrt/libwebsockets
+	url = https://github.com/martell/libwebsockets.git
