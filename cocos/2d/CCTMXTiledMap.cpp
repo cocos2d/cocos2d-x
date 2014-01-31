@@ -246,6 +246,16 @@ Value TMXTiledMap::getPropertiesForGID(int GID) const
     return Value();
 }
 
+bool TMXTiledMap::getPropertiesForGID(int GID, Value** value)
+{
+    if (_tileProperties.find(GID) != _tileProperties.end()) {
+        *value = &_tileProperties.at(GID);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 std::string TMXTiledMap::getDescription() const
 {
     return StringUtils::format("<TMXTiledMap | Tag = %d, Layers = %d", _tag, static_cast<int>(_children.size()));
