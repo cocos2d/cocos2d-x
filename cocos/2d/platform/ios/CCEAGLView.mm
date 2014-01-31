@@ -65,7 +65,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
-#import "CCEGLView.h"
+#import "CCGLView.h"
 #import "CCEAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
@@ -73,7 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
-#import "CCEGLView.h"
+#import "CCGLView.h"
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10

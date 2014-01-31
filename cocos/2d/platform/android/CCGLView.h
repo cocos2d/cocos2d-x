@@ -26,20 +26,23 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_ANDROID_H__
 #define __CC_EGLVIEW_ANDROID_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "CCObject.h"
 #include "CCGeometry.h"
 #include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN
 
-class CC_DLL EGLView : public Object, public EGLViewProtocol
+class CC_DLL GLView : public Object, public GLViewProtocol
 {
 public:
 
     // static function
-    static EGLView* create(const std::string &viewname);
-    static EGLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
-    static EGLView* createWithFullScreen(const std::string& viewName);
+    static GLView* create(const std::string &viewname);
+    static GLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
+    static GLView* createWithFullScreen(const std::string& viewName);
 
     bool isOpenGLReady() override;
     void end() override;
@@ -47,8 +50,8 @@ public:
     void setIMEKeyboardState(bool bOpen) override;
 
 protected:
-    EGLView();
-    virtual ~EGLView();
+    GLView();
+    virtual ~GLView();
 
     bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
@@ -56,4 +59,7 @@ protected:
 
 NS_CC_END
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #endif    // end of __CC_EGLVIEW_ANDROID_H__
+

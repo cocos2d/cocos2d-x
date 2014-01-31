@@ -1679,8 +1679,8 @@
 		46A170181807CBFC005B8026 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A941807B038005B8026 /* CCApplicationProtocol.h */; };
 		46A170191807CBFC005B8026 /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A951807B038005B8026 /* CCCommon.h */; };
 		46A1701A1807CBFC005B8026 /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A961807B038005B8026 /* CCDevice.h */; };
-		46A1701B1807CBFC005B8026 /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A971807B038005B8026 /* CCEGLViewProtocol.cpp */; };
-		46A1701C1807CBFC005B8026 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A981807B038005B8026 /* CCEGLViewProtocol.h */; };
+		46A1701B1807CBFC005B8026 /* CCGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A971807B038005B8026 /* CCGLViewProtocol.cpp */; };
+		46A1701C1807CBFC005B8026 /* CCGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A981807B038005B8026 /* CCGLViewProtocol.h */; };
 		46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A991807B038005B8026 /* CCFileUtils.cpp */; };
 		46A1701E1807CBFC005B8026 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A9A1807B038005B8026 /* CCFileUtils.h */; };
 		46A1701F1807CBFC005B8026 /* CCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A9B1807B038005B8026 /* CCImage.h */; };
@@ -1696,8 +1696,8 @@
 		46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A941807B038005B8026 /* CCApplicationProtocol.h */; };
 		46A1702D1807CBFE005B8026 /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A951807B038005B8026 /* CCCommon.h */; };
 		46A1702E1807CBFE005B8026 /* CCDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A961807B038005B8026 /* CCDevice.h */; };
-		46A1702F1807CBFE005B8026 /* CCEGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A971807B038005B8026 /* CCEGLViewProtocol.cpp */; };
-		46A170301807CBFE005B8026 /* CCEGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A981807B038005B8026 /* CCEGLViewProtocol.h */; };
+		46A1702F1807CBFE005B8026 /* CCGLViewProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A971807B038005B8026 /* CCGLViewProtocol.cpp */; };
+		46A170301807CBFE005B8026 /* CCGLViewProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A981807B038005B8026 /* CCGLViewProtocol.h */; };
 		46A170311807CBFE005B8026 /* CCFileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A16A991807B038005B8026 /* CCFileUtils.cpp */; };
 		46A170321807CBFE005B8026 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A9A1807B038005B8026 /* CCFileUtils.h */; };
 		46A170331807CBFE005B8026 /* CCImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16A9B1807B038005B8026 /* CCImage.h */; };
@@ -1711,8 +1711,8 @@
 		46A1703E1807CC07005B8026 /* CCDevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AA71807B038005B8026 /* CCDevice.mm */; };
 		46A1703F1807CC07005B8026 /* CCDirectorCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AA81807B038005B8026 /* CCDirectorCaller.h */; };
 		46A170401807CC07005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AA91807B038005B8026 /* CCDirectorCaller.mm */; };
-		46A170411807CC07005B8026 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAA1807B038005B8026 /* CCEGLView.h */; };
-		46A170421807CC07005B8026 /* CCEGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AAB1807B038005B8026 /* CCEGLView.mm */; };
+		46A170411807CC07005B8026 /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAA1807B038005B8026 /* CCGLView.h */; };
+		46A170421807CC07005B8026 /* CCGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AAB1807B038005B8026 /* CCGLView.mm */; };
 		46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAC1807B038005B8026 /* CCES2Renderer.h */; };
 		46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A16AAD1807B038005B8026 /* CCES2Renderer.m */; };
 		46A170451807CC07005B8026 /* CCESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AAE1807B038005B8026 /* CCESRenderer.h */; };
@@ -1968,8 +1968,8 @@
 		A023FA35185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */; };
 		A023FA36185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
 		A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */; };
-		A04583F2189053B500E32FE8 /* CCEGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A04583F0189053B500E32FE8 /* CCEGLView.cpp */; };
-		A04583F3189053B500E32FE8 /* CCEGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = A04583F1189053B500E32FE8 /* CCEGLView.h */; };
+		A04583F2189053B500E32FE8 /* CCGLView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A04583F0189053B500E32FE8 /* CCGLView.cpp */; };
+		A04583F3189053B500E32FE8 /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = A04583F1189053B500E32FE8 /* CCGLView.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		A0E6B28018613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
 		A0E6B28118613EA5009C5D17 /* CCRenderCommandPool.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E6B27F18613EA5009C5D17 /* CCRenderCommandPool.h */; };
@@ -3049,8 +3049,8 @@
 		46A16A941807B038005B8026 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
 		46A16A951807B038005B8026 /* CCCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
 		46A16A961807B038005B8026 /* CCDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
-		46A16A971807B038005B8026 /* CCEGLViewProtocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCEGLViewProtocol.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		46A16A981807B038005B8026 /* CCEGLViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCEGLViewProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		46A16A971807B038005B8026 /* CCGLViewProtocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCGLViewProtocol.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		46A16A981807B038005B8026 /* CCGLViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCGLViewProtocol.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16A991807B038005B8026 /* CCFileUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtils.cpp; sourceTree = "<group>"; };
 		46A16A9A1807B038005B8026 /* CCFileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		46A16A9B1807B038005B8026 /* CCImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCImage.h; sourceTree = "<group>"; };
@@ -3064,8 +3064,8 @@
 		46A16AA71807B038005B8026 /* CCDevice.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDevice.mm; sourceTree = "<group>"; };
 		46A16AA81807B038005B8026 /* CCDirectorCaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCDirectorCaller.h; sourceTree = "<group>"; };
 		46A16AA91807B038005B8026 /* CCDirectorCaller.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CCDirectorCaller.mm; sourceTree = "<group>"; };
-		46A16AAA1807B038005B8026 /* CCEGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCEGLView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		46A16AAB1807B038005B8026 /* CCEGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCEGLView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		46A16AAA1807B038005B8026 /* CCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCGLView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		46A16AAB1807B038005B8026 /* CCGLView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = CCGLView.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		46A16AAC1807B038005B8026 /* CCES2Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCES2Renderer.h; sourceTree = "<group>"; };
 		46A16AAD1807B038005B8026 /* CCES2Renderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCES2Renderer.m; sourceTree = "<group>"; };
 		46A16AAE1807B038005B8026 /* CCESRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCESRenderer.h; sourceTree = "<group>"; };
@@ -3172,8 +3172,8 @@
 		A03F2ED617814268006731B9 /* libCocosDenshion Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCocosDenshion Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F2FD617814595006731B9 /* libcocos2dx-extensions Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A03F31FD1781479B006731B9 /* libjsbindings Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjsbindings Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A04583F0189053B500E32FE8 /* CCEGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCEGLView.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		A04583F1189053B500E32FE8 /* CCEGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCEGLView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A04583F0189053B500E32FE8 /* CCGLView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCGLView.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		A04583F1189053B500E32FE8 /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCGLView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A07A4D641783777C0073F6A7 /* libcocos2dx iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4EFC1783867C0073F6A7 /* libcocos2dx-extensions iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2dx-extensions iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A4F3B178387670073F6A7 /* libchipmunk iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5285,8 +5285,8 @@
 				46A16A941807B038005B8026 /* CCApplicationProtocol.h */,
 				46A16A951807B038005B8026 /* CCCommon.h */,
 				46A16A961807B038005B8026 /* CCDevice.h */,
-				46A16A971807B038005B8026 /* CCEGLViewProtocol.cpp */,
-				46A16A981807B038005B8026 /* CCEGLViewProtocol.h */,
+				46A16A971807B038005B8026 /* CCGLViewProtocol.cpp */,
+				46A16A981807B038005B8026 /* CCGLViewProtocol.h */,
 				46A16A991807B038005B8026 /* CCFileUtils.cpp */,
 				46A16A9A1807B038005B8026 /* CCFileUtils.h */,
 				46A16A9B1807B038005B8026 /* CCImage.h */,
@@ -5319,8 +5319,8 @@
 				46A16AA71807B038005B8026 /* CCDevice.mm */,
 				46A16AA81807B038005B8026 /* CCDirectorCaller.h */,
 				46A16AA91807B038005B8026 /* CCDirectorCaller.mm */,
-				46A16AAA1807B038005B8026 /* CCEGLView.h */,
-				46A16AAB1807B038005B8026 /* CCEGLView.mm */,
+				46A16AAA1807B038005B8026 /* CCGLView.h */,
+				46A16AAB1807B038005B8026 /* CCGLView.mm */,
 				46A16AAC1807B038005B8026 /* CCES2Renderer.h */,
 				46A16AAD1807B038005B8026 /* CCES2Renderer.m */,
 				46A16AAE1807B038005B8026 /* CCESRenderer.h */,
@@ -5513,8 +5513,8 @@
 		A04583EF189053B500E32FE8 /* desktop */ = {
 			isa = PBXGroup;
 			children = (
-				A04583F0189053B500E32FE8 /* CCEGLView.cpp */,
-				A04583F1189053B500E32FE8 /* CCEGLView.h */,
+				A04583F0189053B500E32FE8 /* CCGLView.cpp */,
+				A04583F1189053B500E32FE8 /* CCGLView.h */,
 			);
 			path = desktop;
 			sourceTree = "<group>";
@@ -5575,7 +5575,7 @@
 				46A170B31807CEA3005B8026 /* ray2.h in Headers */,
 				46A170B51807CEA3005B8026 /* vec2.h in Headers */,
 				46A170B21807CEA3005B8026 /* quaternion.h in Headers */,
-				46A1701C1807CBFC005B8026 /* CCEGLViewProtocol.h in Headers */,
+				46A1701C1807CBFC005B8026 /* CCGLViewProtocol.h in Headers */,
 				46A1701E1807CBFC005B8026 /* CCFileUtils.h in Headers */,
 				46A170B11807CEA3005B8026 /* plane.h in Headers */,
 				B37510771823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
@@ -5637,7 +5637,7 @@
 				1A5700F5180BC6060088DEC7 /* CCPlatformConfig.h in Headers */,
 				1A5700F7180BC6060088DEC7 /* CCPlatformMacros.h in Headers */,
 				1A5700FB180BC6060088DEC7 /* CCSet.h in Headers */,
-				A04583F3189053B500E32FE8 /* CCEGLView.h in Headers */,
+				A04583F3189053B500E32FE8 /* CCGLView.h in Headers */,
 				1A5700FF180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570103180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570107180BC6060088DEC7 /* s3tc.h in Headers */,
@@ -6193,10 +6193,10 @@
 				46A170C01807CEA4005B8026 /* ray2.h in Headers */,
 				46A170BC1807CEA4005B8026 /* mat4.h in Headers */,
 				50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */,
-				46A170411807CC07005B8026 /* CCEGLView.h in Headers */,
+				46A170411807CC07005B8026 /* CCGLView.h in Headers */,
 				A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
 				46A170C21807CEA4005B8026 /* vec2.h in Headers */,
-				46A170301807CBFE005B8026 /* CCEGLViewProtocol.h in Headers */,
+				46A170301807CBFE005B8026 /* CCGLViewProtocol.h in Headers */,
 				46A170321807CBFE005B8026 /* CCFileUtils.h in Headers */,
 				46A170BB1807CEA4005B8026 /* mat3.h in Headers */,
 				46A1703A1807CBFE005B8026 /* CCThread.h in Headers */,
@@ -6994,10 +6994,10 @@
 				460E44F01807DED6000CDD6D /* matrix.c in Sources */,
 				06CAAACB186AD7F20012A414 /* TriggerMng.cpp in Sources */,
 				46A170511807CC1C005B8026 /* CCCommon.mm in Sources */,
-				46A1701B1807CBFC005B8026 /* CCEGLViewProtocol.cpp in Sources */,
+				46A1701B1807CBFC005B8026 /* CCGLViewProtocol.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
-				A04583F2189053B500E32FE8 /* CCEGLView.cpp in Sources */,
+				A04583F2189053B500E32FE8 /* CCGLView.cpp in Sources */,
 				46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */,
 				46A170CF1807CEBB005B8026 /* vec3.c in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
@@ -7560,7 +7560,7 @@
 				460E44F21807DED8000CDD6D /* matrix.c in Sources */,
 				06CAAACC186AD7F50012A414 /* TriggerMng.cpp in Sources */,
 				46A1703D1807CC07005B8026 /* CCCommon.mm in Sources */,
-				46A1702F1807CBFE005B8026 /* CCEGLViewProtocol.cpp in Sources */,
+				46A1702F1807CBFE005B8026 /* CCGLViewProtocol.cpp in Sources */,
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,
 				46A170291807CBFE005B8026 /* CCLock.cpp in Sources */,
 				46A170D31807CEBC005B8026 /* neon_matrix_impl.c in Sources */,
@@ -7568,7 +7568,7 @@
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
 				46A170D71807CEBC005B8026 /* utility.c in Sources */,
 				46A170391807CBFE005B8026 /* CCThread.cpp in Sources */,
-				46A170421807CC07005B8026 /* CCEGLView.mm in Sources */,
+				46A170421807CC07005B8026 /* CCGLView.mm in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
