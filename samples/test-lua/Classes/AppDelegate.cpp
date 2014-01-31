@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::createWithSize("Test Lua", Size(900,640));
+        glview = GLView::createWithRect("Test Lua", Rect(0,0,900,640));
         director->setOpenGLView(glview);
     }
 
