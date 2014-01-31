@@ -363,7 +363,7 @@
     <ClCompile Include="platform\win32\CCStdC.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
-    <ClCompile Include="platform\CCEGLViewProtocol.cpp">
+    <ClCompile Include="platform\CCGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="platform\CCFileUtils.cpp">
@@ -595,7 +595,7 @@
     <ClCompile Include="CCFontCharMap.cpp">
       <Filter>label_nodes</Filter>
     </ClCompile>
-    <ClCompile Include="platform\desktop\CCEGLView.cpp">
+    <ClCompile Include="platform\desktop\CCGLView.cpp">
       <Filter>platform\desktop</Filter>
     </ClCompile>
   </ItemGroup>
@@ -876,7 +876,7 @@
     <ClInclude Include="platform\CCDevice.h">
       <Filter>platform</Filter>
     </ClInclude>
-    <ClInclude Include="platform\CCEGLViewProtocol.h">
+    <ClInclude Include="platform\CCGLViewProtocol.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="platform\CCFileUtils.h">
@@ -1198,7 +1198,7 @@
     <ClInclude Include="CCFontCharMap.h">
       <Filter>label_nodes</Filter>
     </ClInclude>
-    <ClInclude Include="platform\desktop\CCEGLView.h">
+    <ClInclude Include="platform\desktop\CCGLView.h">
       <Filter>platform\desktop</Filter>
     </ClInclude>
   </ItemGroup>
