@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # android-build.py
-# Build android samples
+# Build android 
 
 import sys
 import os, os.path
@@ -74,9 +74,9 @@ def select_toolchain_version():
 
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
-    'cpp' for short of all cpp samples
-    'lua' for short of all lua smpleas
-    'jsb' for short of all javascript samples
+    'cpp' for short of all cpp tests
+    'lua' for short of all lua tests 
+    'jsb' for short of all javascript tests
     '''
 
     if 'all' in args:
@@ -204,11 +204,11 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
     app_android_root = ''
     for target in build_targets:
         if target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'samples/test-cpp/proj.android')
+            app_android_root = os.path.join(cocos_root, 'tests/test-cpp/proj.android')
         elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'samples/test-lua/proj.android')
+            app_android_root = os.path.join(cocos_root, 'tests/test-lua/proj.android')
         elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'samples/test-javascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'tests/test-javascript/proj.android')
         else:
             print 'unknown target: %s' % target
             continue
@@ -221,13 +221,13 @@ if __name__ == '__main__':
 
     #parse the params
     usage = """
-    This script is mainy used for building samples built-in with cocos2d-x.
+    This script is mainy used for building tests built-in with cocos2d-x.
     
     Usage: %prog [options] target
 
     Valid targets are: [testcpp|testlua|testjavascript]. You can combine them arbitrarily with a whitespace among two valid targets.
 
-    You can use [all|cpp|lua|jsb], to build all the samples, or all the c++ samples, or all the lua samples, or all the jsb samples respectevely.
+    You can use [all|cpp|lua|jsb], to build all the tests, or all the c++ tests, or all the Lua tests, or all the JavaScript tests respectevely.
 
     cpp = ['testcpp']
     lua = ['testlua']
@@ -241,10 +241,10 @@ if __name__ == '__main__':
     //1. to build simplegame and assetsmanager 
     python android-build.py -p 10 testcpp testlua
 
-    //2. to build testlua and all the jsb samples
+    //2. to build testlua and all the jsb tests 
     python android-build.py -p 19 testlua jsb
 
-    Note: You should install ant to generate apk while building the andriod samples. But it is optional. You can generate apk with eclipse.
+    Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
     """
 
     parser = OptionParser(usage=usage)
