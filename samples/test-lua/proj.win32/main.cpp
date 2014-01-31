@@ -24,8 +24,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     // create the application instance
     AppDelegate app;
-    EGLView eglView;
-    eglView.init("TestLua",900,640);
 
     int ret = Application::getInstance()->run();
 
