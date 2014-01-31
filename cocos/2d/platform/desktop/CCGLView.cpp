@@ -345,7 +345,7 @@ void GLViewEventHandler::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 GLView* GLView::create(const std::string& viewName)
 {
     auto ret = new GLView;
-    if(ret && ret->initWithSize(viewName, Size(960, 640), 1)) {
+    if(ret && ret->initWithRect(viewName, Rect(0, 0, 960, 640), 1)) {
         ret->autorelease();
         return ret;
     }
@@ -353,10 +353,10 @@ GLView* GLView::create(const std::string& viewName)
     return nullptr;
 }
 
-GLView* GLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     auto ret = new GLView;
-    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
     }
@@ -399,10 +399,10 @@ GLView::~GLView()
     glfwTerminate();
 }
 
-bool GLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
-    setFrameSize(size.width, size.height);
+    setFrameSize(rect.size.width, rect.size.height);
     setFrameZoomFactor(frameZoomFactor);
     
     glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
@@ -423,7 +423,7 @@ bool GLView::initWithSize(const std::string& viewName, Size size, float frameZoo
     {
         _isRetina = true;
         setFrameZoomFactor(frameZoomFactor * 2);
-        glfwSetWindowSize(_mainWindow, size.width/2 * _frameZoomFactor, size.height/2 * _frameZoomFactor);
+        glfwSetWindowSize(_mainWindow, rect.size.width/2 * _frameZoomFactor, rect.size.height/2 * _frameZoomFactor);
     }
     
     glfwSetMouseButtonCallback(_mainWindow, GLViewEventHandler::onGLFWMouseCallBack);
@@ -461,7 +461,7 @@ bool GLView::initWithFullScreen(const std::string& viewName)
         return false;
     
     const GLFWvidmode* videoMode = glfwGetVideoMode(_primaryMonitor);
-    return initWithSize(viewName, Size(videoMode->width, videoMode->height), 1.0f);
+    return initWithRect(viewName, Rect(0, 0, videoMode->width, videoMode->height), 1.0f);
 }
 
 bool GLView::isOpenGLReady()
