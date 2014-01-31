@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCEGLVIEWPROTOCOL_H__
-#define __CCEGLVIEWPROTOCOL_H__
+#ifndef __CCGLVIEWPROTOCOL_H__
+#define __CCGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
 #include "CCEventTouch.h"
@@ -205,4 +205,4 @@ protected:
 
 NS_CC_END
 
-#endif /* __CCEGLVIEWPROTOCOL_H__ */
+#endif /* __CCGLVIEWPROTOCOL_H__ */

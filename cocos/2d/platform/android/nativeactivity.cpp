@@ -155,7 +155,7 @@ static void cocos_init(cocos_dimensions d, struct android_app* app)
     auto glview = director->getOpenGLView();
     if (!glview)
     {
-        glview = cocos2d::EGLView::create("Android app");
+        glview = cocos2d::GLView::create("Android app");
         glview->setFrameSize(d.w, d.h);
         director->setOpenGLView(glview);
 

@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <string>
 #include "CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 
 NS_CC_BEGIN
 
