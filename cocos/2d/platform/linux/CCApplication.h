@@ -26,6 +26,9 @@ THE SOFTWARE.
 #ifndef CCAPLICATION_H_
 #define CCAPLICATION_H_
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 #include <string>
@@ -93,5 +96,7 @@ protected:
 };
 
 NS_CC_END
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #endif /* CCAPLICATION_H_ */

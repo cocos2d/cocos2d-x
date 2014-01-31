@@ -3165,6 +3165,43 @@
 		74AC8DF0EA49A124E1B11681 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		74AC8EB8FE47EED9B30B7106 /* CCRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderer.cpp; sourceTree = "<group>"; };
 		74AC8F4F7D9E52FCB522B647 /* CCRenderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderCommand.h; sourceTree = "<group>"; };
+		A0053F46189B2BEA0035A564 /* Android.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		A0053F47189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
+		A0053F48189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
+		A0053F49189B2BEA0035A564 /* CCCommon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCCommon.cpp; sourceTree = "<group>"; };
+		A0053F4A189B2BEA0035A564 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
+		A0053F4B189B2BEA0035A564 /* CCFileUtilsAndroid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsAndroid.cpp; sourceTree = "<group>"; };
+		A0053F4C189B2BEA0035A564 /* CCFileUtilsAndroid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsAndroid.h; sourceTree = "<group>"; };
+		A0053F4D189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		A0053F4E189B2BEA0035A564 /* CCGLView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLView.cpp; sourceTree = "<group>"; };
+		A0053F4F189B2BEA0035A564 /* CCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
+		A0053F50189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
+		A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
+		A0053F52189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
+		A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = nativeactivity.cpp; sourceTree = "<group>"; };
+		A0053FA6189B2BEA0035A564 /* nativeactivity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nativeactivity.h; sourceTree = "<group>"; };
+		A0053FA8189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
+		A0053FA9189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
+		A0053FAA189B2BEA0035A564 /* CCCommon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCCommon.cpp; sourceTree = "<group>"; };
+		A0053FAB189B2BEA0035A564 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
+		A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsWin32.cpp; sourceTree = "<group>"; };
+		A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsWin32.h; sourceTree = "<group>"; };
+		A0053FAE189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		A0053FAF189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
+		A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
+		A0053FB1189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
+		A0053FB2189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
+		A0053FB6189B2BEA0035A564 /* CCApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCApplication.cpp; sourceTree = "<group>"; };
+		A0053FB7189B2BEA0035A564 /* CCApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
+		A0053FB8189B2BEA0035A564 /* CCCommon.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCCommon.cpp; sourceTree = "<group>"; };
+		A0053FB9189B2BEA0035A564 /* CCDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCDevice.cpp; sourceTree = "<group>"; };
+		A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCFileUtilsLinux.cpp; sourceTree = "<group>"; };
+		A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsLinux.h; sourceTree = "<group>"; };
+		A0053FBC189B2BEA0035A564 /* CCGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
+		A0053FBD189B2BEA0035A564 /* CCImage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCImage.cpp; sourceTree = "<group>"; };
+		A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPlatformDefine.h; sourceTree = "<group>"; };
+		A0053FBF189B2BEA0035A564 /* CCStdC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCStdC.cpp; sourceTree = "<group>"; };
+		A0053FC0189B2BEA0035A564 /* CCStdC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
 		A023FA32185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_frag.h; sourceTree = "<group>"; };
 		A023FA33185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColor_noMVP_vert.h; sourceTree = "<group>"; };
 		A03F2CB81780BD04006731B9 /* libchipmunk Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchipmunk Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5278,6 +5315,9 @@
 		46A16A5A1807B038005B8026 /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				A0053F45189B2BEA0035A564 /* android */,
+				A0053FA7189B2BEA0035A564 /* win32 */,
+				A0053FB5189B2BEA0035A564 /* linux */,
 				46A16AA31807B038005B8026 /* ios */,
 				46A16AC71807B038005B8026 /* mac */,
 				A04583EF189053B500E32FE8 /* desktop */,
@@ -5508,6 +5548,64 @@
 				74AC8CC6504014E3A59C55B2 /* CCRenderMaterial.h */,
 			);
 			path = renderer;
+			sourceTree = "<group>";
+		};
+		A0053F45189B2BEA0035A564 /* android */ = {
+			isa = PBXGroup;
+			children = (
+				A0053F46189B2BEA0035A564 /* Android.mk */,
+				A0053F47189B2BEA0035A564 /* CCApplication.cpp */,
+				A0053F48189B2BEA0035A564 /* CCApplication.h */,
+				A0053F49189B2BEA0035A564 /* CCCommon.cpp */,
+				A0053F4A189B2BEA0035A564 /* CCDevice.cpp */,
+				A0053F4B189B2BEA0035A564 /* CCFileUtilsAndroid.cpp */,
+				A0053F4C189B2BEA0035A564 /* CCFileUtilsAndroid.h */,
+				A0053F4D189B2BEA0035A564 /* CCGL.h */,
+				A0053F4E189B2BEA0035A564 /* CCGLView.cpp */,
+				A0053F4F189B2BEA0035A564 /* CCGLView.h */,
+				A0053F50189B2BEA0035A564 /* CCImage.cpp */,
+				A0053F51189B2BEA0035A564 /* CCPlatformDefine.h */,
+				A0053F52189B2BEA0035A564 /* CCStdC.h */,
+				A0053FA5189B2BEA0035A564 /* nativeactivity.cpp */,
+				A0053FA6189B2BEA0035A564 /* nativeactivity.h */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		A0053FA7189B2BEA0035A564 /* win32 */ = {
+			isa = PBXGroup;
+			children = (
+				A0053FA8189B2BEA0035A564 /* CCApplication.cpp */,
+				A0053FA9189B2BEA0035A564 /* CCApplication.h */,
+				A0053FAA189B2BEA0035A564 /* CCCommon.cpp */,
+				A0053FAB189B2BEA0035A564 /* CCDevice.cpp */,
+				A0053FAC189B2BEA0035A564 /* CCFileUtilsWin32.cpp */,
+				A0053FAD189B2BEA0035A564 /* CCFileUtilsWin32.h */,
+				A0053FAE189B2BEA0035A564 /* CCGL.h */,
+				A0053FAF189B2BEA0035A564 /* CCImage.cpp */,
+				A0053FB0189B2BEA0035A564 /* CCPlatformDefine.h */,
+				A0053FB1189B2BEA0035A564 /* CCStdC.cpp */,
+				A0053FB2189B2BEA0035A564 /* CCStdC.h */,
+			);
+			path = win32;
+			sourceTree = "<group>";
+		};
+		A0053FB5189B2BEA0035A564 /* linux */ = {
+			isa = PBXGroup;
+			children = (
+				A0053FB6189B2BEA0035A564 /* CCApplication.cpp */,
+				A0053FB7189B2BEA0035A564 /* CCApplication.h */,
+				A0053FB8189B2BEA0035A564 /* CCCommon.cpp */,
+				A0053FB9189B2BEA0035A564 /* CCDevice.cpp */,
+				A0053FBA189B2BEA0035A564 /* CCFileUtilsLinux.cpp */,
+				A0053FBB189B2BEA0035A564 /* CCFileUtilsLinux.h */,
+				A0053FBC189B2BEA0035A564 /* CCGL.h */,
+				A0053FBD189B2BEA0035A564 /* CCImage.cpp */,
+				A0053FBE189B2BEA0035A564 /* CCPlatformDefine.h */,
+				A0053FBF189B2BEA0035A564 /* CCStdC.cpp */,
+				A0053FC0189B2BEA0035A564 /* CCStdC.h */,
+			);
+			path = linux;
 			sourceTree = "<group>";
 		};
 		A04583EF189053B500E32FE8 /* desktop */ = {
