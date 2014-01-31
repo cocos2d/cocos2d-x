@@ -52,10 +52,10 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
-GLView* GLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+GLView* GLView::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     auto ret = new GLView;
-    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+    if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
     }
@@ -66,7 +66,7 @@ GLView* GLView::createWithSize(const std::string& viewName, Size size, float fra
 GLView* GLView::create(const std::string& viewName)
 {
     auto ret = new GLView;
-    if(ret && ret->initWithSize(viewName, Size(0,0), 0)) {
+    if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
     }
@@ -95,7 +95,7 @@ GLView::~GLView()
 
 }
 
-bool GLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+bool GLView::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     return true;
 }
