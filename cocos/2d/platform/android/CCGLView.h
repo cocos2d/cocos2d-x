@@ -26,41 +26,40 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEW_ANDROID_H__
 #define __CC_EGLVIEW_ANDROID_H__
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#include "CCObject.h"
 #include "CCGeometry.h"
-#include "platform/CCEGLViewProtocol.h"
+#include "platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 
-class CC_DLL EGLView : public EGLViewProtocol
+class CC_DLL GLView : public Object, public GLViewProtocol
 {
 public:
-    /**
-     * @js ctor
-     */
-    EGLView();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~EGLView();
 
-    bool    isOpenGLReady();
-
-    // keep compatible
-    void    end();
-    void    swapBuffers();
-    void    setIMEKeyboardState(bool bOpen);
-    
     // static function
-    /**
-    @brief    get the shared main open gl window
-    */
-    static EGLView* getInstance();
+    static GLView* create(const std::string &viewname);
+    static GLView* createWithSize(const std::string& viewName, Size size, float frameZoomFactor = 1.0f);
+    static GLView* createWithFullScreen(const std::string& viewName);
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static EGLView* sharedOpenGLView();
+    bool isOpenGLReady() override;
+    void end() override;
+    void swapBuffers() override;
+    void setIMEKeyboardState(bool bOpen) override;
+
+protected:
+    GLView();
+    virtual ~GLView();
+
+    bool initWithSize(const std::string& viewName, Size size, float frameZoomFactor);
+    bool initWithFullScreen(const std::string& viewName);
 };
 
 NS_CC_END
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #endif    // end of __CC_EGLVIEW_ANDROID_H__
+

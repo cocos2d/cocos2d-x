@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCEGLViewProtocol.h"
+#include "CCGLViewProtocol.h"
 #include "CCTouch.h"
 #include "CCDirector.h"
 #include "CCSet.h"
@@ -71,7 +71,7 @@ namespace {
     
 }
 
-EGLViewProtocol::EGLViewProtocol()
+GLViewProtocol::GLViewProtocol()
 : _delegate(nullptr)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
@@ -79,16 +79,16 @@ EGLViewProtocol::EGLViewProtocol()
 {
 }
 
-EGLViewProtocol::~EGLViewProtocol()
+GLViewProtocol::~GLViewProtocol()
 {
 
 }
 
-void EGLViewProtocol::pollInputEvents()
+void GLViewProtocol::pollInputEvents()
 {
 }
 
-void EGLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
+void GLViewProtocol::setDesignResolutionSize(float width, float height, ResolutionPolicy resolutionPolicy)
 {
     CCASSERT(resolutionPolicy != ResolutionPolicy::UNKNOWN, "should set resolutionPolicy");
     
@@ -107,17 +107,17 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
         _scaleX = _scaleY = MAX(_scaleX, _scaleY);
     }
     
-    if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
+    else if (resolutionPolicy == ResolutionPolicy::SHOW_ALL)
     {
         _scaleX = _scaleY = MIN(_scaleX, _scaleY);
     }
 
-    if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
+    else if ( resolutionPolicy == ResolutionPolicy::FIXED_HEIGHT) {
     	_scaleX = _scaleY;
     	_designResolutionSize.width = ceilf(_screenSize.width/_scaleX);
     }
 
-    if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
+    else if ( resolutionPolicy == ResolutionPolicy::FIXED_WIDTH) {
     	_scaleY = _scaleX;
     	_designResolutionSize.height = ceilf(_screenSize.height/_scaleY);
     }
@@ -131,27 +131,28 @@ void EGLViewProtocol::setDesignResolutionSize(float width, float height, Resolut
     _resolutionPolicy = resolutionPolicy;
     
 	// reset director's member variables to fit visible rect
-    Director::getInstance()->_winSizeInPoints = getDesignResolutionSize();
-    Director::getInstance()->createStatsLabel();
-    Director::getInstance()->setGLDefaultValues();
+    auto director = Director::getInstance();
+    director->_winSizeInPoints = getDesignResolutionSize();
+    director->createStatsLabel();
+    director->setGLDefaultValues();
 }
 
-const Size& EGLViewProtocol::getDesignResolutionSize() const 
+const Size& GLViewProtocol::getDesignResolutionSize() const 
 {
     return _designResolutionSize;
 }
 
-const Size& EGLViewProtocol::getFrameSize() const
+const Size& GLViewProtocol::getFrameSize() const
 {
     return _screenSize;
 }
 
-void EGLViewProtocol::setFrameSize(float width, float height)
+void GLViewProtocol::setFrameSize(float width, float height)
 {
     _designResolutionSize = _screenSize = Size(width, height);
 }
 
-Size  EGLViewProtocol::getVisibleSize() const
+Size  GLViewProtocol::getVisibleSize() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
@@ -163,7 +164,7 @@ Size  EGLViewProtocol::getVisibleSize() const
     }
 }
 
-Point EGLViewProtocol::getVisibleOrigin() const
+Point GLViewProtocol::getVisibleOrigin() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
@@ -176,12 +177,12 @@ Point EGLViewProtocol::getVisibleOrigin() const
     }
 }
 
-void EGLViewProtocol::setTouchDelegate(EGLTouchDelegate * delegate)
+void GLViewProtocol::setTouchDelegate(EGLTouchDelegate * delegate)
 {
     _delegate = delegate;
 }
 
-void EGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
+void GLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
 {
     glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
                (GLint)(y * _scaleY + _viewPortRect.origin.y),
@@ -189,7 +190,7 @@ void EGLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)
                (GLsizei)(h * _scaleY));
 }
 
-void EGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
+void GLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
 {
     glScissor((GLint)(x * _scaleX + _viewPortRect.origin.x),
               (GLint)(y * _scaleY + _viewPortRect.origin.y),
@@ -197,12 +198,12 @@ void EGLViewProtocol::setScissorInPoints(float x , float y , float w , float h)
               (GLsizei)(h * _scaleY));
 }
 
-bool EGLViewProtocol::isScissorEnabled()
+bool GLViewProtocol::isScissorEnabled()
 {
 	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
-Rect EGLViewProtocol::getScissorRect() const
+Rect GLViewProtocol::getScissorRect() const
 {
 	GLfloat params[4];
 	glGetFloatv(GL_SCISSOR_BOX, params);
@@ -213,17 +214,17 @@ Rect EGLViewProtocol::getScissorRect() const
 	return Rect(x, y, w, h);
 }
 
-void EGLViewProtocol::setViewName(const std::string& viewname )
+void GLViewProtocol::setViewName(const std::string& viewname )
 {
     _viewName = viewname;
 }
 
-const std::string& EGLViewProtocol::getViewName() const
+const std::string& GLViewProtocol::getViewName() const
 {
     return _viewName;
 }
 
-void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
 {
     int id = 0;
     float x = 0.0f;
@@ -273,7 +274,7 @@ void EGLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float y
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
 {
     int id = 0;
     float x = 0.0f;
@@ -321,7 +322,7 @@ void EGLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
 {
     int id = 0;
     float x = 0.0f;
@@ -381,27 +382,27 @@ void EGLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode
     }
 }
 
-void EGLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
-void EGLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }
 
-const Rect& EGLViewProtocol::getViewPortRect() const
+const Rect& GLViewProtocol::getViewPortRect() const
 {
     return _viewPortRect;
 }
 
-float EGLViewProtocol::getScaleX() const
+float GLViewProtocol::getScaleX() const
 {
     return _scaleX;
 }
 
-float EGLViewProtocol::getScaleY() const
+float GLViewProtocol::getScaleY() const
 {
     return _scaleY;
 }
