@@ -22,8 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "CCApplication.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
@@ -72,16 +76,17 @@ int Application::run()
         return 0;
     }
 
-    EGLView* pMainWnd = EGLView::getInstance();
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
 
-    while(!pMainWnd->windowShouldClose())
+    while(!glview->windowShouldClose())
     {
         QueryPerformanceCounter(&nNow);
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
             nLast.QuadPart = nNow.QuadPart;
-            Director::getInstance()->mainLoop();
-            pMainWnd->pollEvents();
+            director->mainLoop();
+            glview->pollEvents();
         }
         else
         {
@@ -94,8 +99,8 @@ int Application::run()
     *  when we want to close the window, we should call Director::end();
     *  then call Director::mainLoop to do release of internal resources
     */
-    Director::getInstance()->end();
-    Director::getInstance()->mainLoop();
+    director->end();
+    director->mainLoop();
     return true;
 }
 
@@ -248,3 +253,5 @@ static void PVRFrameEnableControlWindow(bool bEnable)
 
     RegCloseKey(hKey);
 }
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

@@ -23,8 +23,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCEGLVIEWPROTOCOL_H__
-#define __CCEGLVIEWPROTOCOL_H__
+#ifndef __CCGLVIEWPROTOCOL_H__
+#define __CCGLVIEWPROTOCOL_H__
 
 #include "ccTypes.h"
 #include "CCEventTouch.h"
@@ -65,30 +65,30 @@ class EGLTouchDelegate;
  * @{
  */
 
-class CC_DLL EGLViewProtocol
+class CC_DLL GLViewProtocol
 {
 public:
     /**
      * @js ctor
      */
-    EGLViewProtocol();
+    GLViewProtocol();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~EGLViewProtocol();
+    virtual ~GLViewProtocol();
 
     /** Force destroying EGL view, subclass must implement this method. */
-    virtual void    end() = 0;
+    virtual void end() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. */
-    virtual bool    isOpenGLReady() = 0;
+    virtual bool isOpenGLReady() = 0;
 
     /** Exchanges the front and back buffers, subclass must implement this method. */
-    virtual void    swapBuffers() = 0;
+    virtual void swapBuffers() = 0;
 
     /** Open or close IME keyboard , subclass must implement this method. */
-    virtual void    setIMEKeyboardState(bool open) = 0;
+    virtual void setIMEKeyboardState(bool open) = 0;
 
     /**
      * Polls input events. Subclass must implement methods if platform
@@ -195,8 +195,8 @@ protected:
     // the view name
     std::string _viewName;
 
-    float  _scaleX;
-    float  _scaleY;
+    float _scaleX;
+    float _scaleY;
     ResolutionPolicy _resolutionPolicy;
 };
 
@@ -205,4 +205,4 @@ protected:
 
 NS_CC_END
 
-#endif /* __CCEGLVIEWPROTOCOL_H__ */
+#endif /* __CCGLVIEWPROTOCOL_H__ */

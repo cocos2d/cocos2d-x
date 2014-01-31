@@ -6,7 +6,7 @@ void VisibleRect::lazyInit()
 {
     if (s_visibleRect.size.width == 0.0f && s_visibleRect.size.height == 0.0f)
     {
-        auto glView = EGLView::getInstance();
+        auto glView = Director::getInstance()->getOpenGLView();
         s_visibleRect.origin = glView->getVisibleOrigin();
         s_visibleRect.size = glView->getVisibleSize();
     }

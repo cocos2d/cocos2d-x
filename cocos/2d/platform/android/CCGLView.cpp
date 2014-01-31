@@ -22,7 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCEGLView.h"
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#include "CCGLView.h"
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -48,46 +52,79 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
-EGLView::EGLView()
+GLView* GLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    auto ret = new GLView;
+    if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+GLView* GLView::create(const std::string& viewName)
+{
+    auto ret = new GLView;
+    if(ret && ret->initWithSize(viewName, Size(0,0), 0)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+GLView* GLView::createWithFullScreen(const std::string& viewName)
+{
+    auto ret = new GLView();
+    if(ret && ret->initWithFullScreen(viewName)) {
+        ret->autorelease();
+        return ret;
+    }
+
+    return nullptr;
+}
+
+GLView::GLView()
 {
     initExtensions();
 }
 
-EGLView::~EGLView()
+GLView::~GLView()
 {
 
 }
 
-bool EGLView::isOpenGLReady()
+bool GLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+{
+    return true;
+}
+
+bool GLView::initWithFullScreen(const std::string& viewName)
+{
+    return true;
+}
+
+
+bool GLView::isOpenGLReady()
 {
     return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
-void EGLView::end()
+void GLView::end()
 {
     terminateProcessJNI();
 }
 
-void EGLView::swapBuffers()
+void GLView::swapBuffers()
 {
 }
 
-EGLView* EGLView::getInstance()
-{
-    static EGLView instance;
-    return &instance;
-}
-
-// XXX: deprecated
-EGLView* EGLView::sharedOpenGLView()
-{
-    return EGLView::getInstance();
-}
-
-void EGLView::setIMEKeyboardState(bool bOpen)
+void GLView::setIMEKeyboardState(bool bOpen)
 {
     setKeyboardStateJNI((int)bOpen);
 }
 
 NS_CC_END
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

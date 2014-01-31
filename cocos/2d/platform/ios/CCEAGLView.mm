@@ -61,21 +61,22 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+
 #import <QuartzCore/QuartzCore.h>
-#import "CCEGLView.h"
-#import "EAGLView.h"
+#import "CCGLView.h"
+#import "CCEAGLView.h"
 #import "CCES2Renderer.h"
 #import "CCDirector.h"
 #import "CCSet.h"
 #import "CCTouch.h"
 #import "CCIMEDispatcher.h"
 #import "OpenGL_Internal.h"
-#import "CCEGLView.h"
+#import "CCGLView.h"
 //CLASS IMPLEMENTATIONS:
 
 #define IOS_MAX_TOUCHES_COUNT     10
-
-static CCEAGLView *__view = 0;
 
 @interface CCEAGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -115,11 +116,6 @@ static CCEAGLView *__view = 0;
     return [[[self alloc]initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
-+ (id) sharedEGLView
-{
-    return __view;
-}
-
 - (id) initWithFrame:(CGRect)frame
 {
     return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
@@ -146,15 +142,13 @@ static CCEAGLView *__view = 0;
             return nil;
         }
 
-        
-        __view = self;
-        
+
         originalRect_ = self.frame;
         self.keyboardShowNotification = nil;
 		
-		if ([__view respondsToSelector:@selector(setContentScaleFactor:)])
+		if ([self respondsToSelector:@selector(setContentScaleFactor:)])
 		{
-			__view.contentScaleFactor = [[UIScreen mainScreen] scale];
+			self.contentScaleFactor = [[UIScreen mainScreen] scale];
 		}
     }
         
@@ -180,7 +174,6 @@ static CCEAGLView *__view = 0;
         }
     }
     
-    __view = self;
     return self;
 }
 
@@ -409,11 +402,13 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesBegin(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesBegin(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -429,11 +424,13 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesMove(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesMove(i, (int*)ids, xs, ys);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -450,11 +447,13 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesEnd(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesEnd(i, (int*)ids, xs, ys);
 }
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -471,11 +470,13 @@ static CCEAGLView *__view = 0;
     int i = 0;
     for (UITouch *touch in touches) {
         ids[i] = touch;
-        xs[i] = [touch locationInView: [touch view]].x * __view.contentScaleFactor;;
-        ys[i] = [touch locationInView: [touch view]].y * __view.contentScaleFactor;;
+        xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
+        ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
-    cocos2d::EGLView::getInstance()->handleTouchesCancel(i, (int*)ids, xs, ys);
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    glview->handleTouchesCancel(i, (int*)ids, xs, ys);
 }
 
 #pragma mark - UIView - Responder
@@ -794,9 +795,10 @@ static CCEAGLView *__view = 0;
         default:
             break;
     }
-    
-    float scaleX = cocos2d::EGLView::getInstance()->getScaleX();
-	float scaleY = cocos2d::EGLView::getInstance()->getScaleY();
+
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleX = glview->getScaleX();
+	float scaleY = glview->getScaleY();
     
     
     if (self.contentScaleFactor == 2.0f)
@@ -807,7 +809,7 @@ static CCEAGLView *__view = 0;
         end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 2.0f, 2.0f));
     }
     
-    float offestY = cocos2d::EGLView::getInstance()->getViewPortRect().origin.y;
+    float offestY = glview->getViewPortRect().origin.y;
     CCLOG("offestY = %f", offestY);
     if (offestY < 0.0f)
     {
@@ -866,11 +868,12 @@ static CCEAGLView *__view = 0;
 	[UIView setAnimationDuration:duration];
 	[UIView setAnimationBeginsFromCurrentState:YES];
     
-    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::EGLView::getInstance()->getScaleY());
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::GLView::getInstance()->getScaleY());
     
     if (dis < 0.0f) dis = 0.0f;
 
-	dis *= cocos2d::EGLView::getInstance()->getScaleY();
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+	dis *= glview->getScaleY();
     
     if (self.contentScaleFactor == 2.0f)
     {
@@ -912,3 +915,5 @@ static CCEAGLView *__view = 0;
 }
 
 @end
+
+#endif // CC_PLATFORM_IOS
