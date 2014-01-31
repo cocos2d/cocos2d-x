@@ -31,7 +31,7 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "CCGeometry.h"
-#include "platform/CCEGLViewProtocol.h"
+#include "platform/CCGLViewProtocol.h"
 
 NS_CC_BEGIN
 
