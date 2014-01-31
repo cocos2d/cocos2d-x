@@ -29,6 +29,7 @@
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "CCEAGLView.h"
 
 @implementation AppController
 
