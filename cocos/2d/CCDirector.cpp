@@ -55,7 +55,7 @@ THE SOFTWARE.
 #include "kazmath/GL/matrix.h"
 #include "CCProfiling.h"
 #include "platform/CCImage.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCConfiguration.h"
 #include "CCEventDispatcher.h"
 #include "CCEventCustom.h"

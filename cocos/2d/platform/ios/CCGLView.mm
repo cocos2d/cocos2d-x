@@ -31,7 +31,7 @@
 
 #include "CCEAGLView.h"
 #include "CCDirectorCaller.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCSet.h"
 #include "CCTouch.h"
 

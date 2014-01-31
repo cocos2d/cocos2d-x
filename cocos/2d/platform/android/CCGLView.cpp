@@ -22,7 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCEGLView.h"
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#include "CCGLView.h"
 #include "CCSet.h"
 #include "CCDirector.h"
 #include "ccMacros.h"
@@ -48,9 +52,9 @@ void initExtensions() {
 
 NS_CC_BEGIN
 
-EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
+GLView* GLView::createWithSize(const std::string& viewName, Size size, float frameZoomFactor)
 {
-    auto ret = new EGLView;
+    auto ret = new GLView;
     if(ret && ret->initWithSize(viewName, size, frameZoomFactor)) {
         ret->autorelease();
         return ret;
@@ -59,9 +63,9 @@ EGLView* EGLView::createWithSize(const std::string& viewName, Size size, float f
     return nullptr;
 }
 
-EGLView* EGLView::create(const std::string& viewName)
+GLView* GLView::create(const std::string& viewName)
 {
-    auto ret = new EGLView;
+    auto ret = new GLView;
     if(ret && ret->initWithSize(viewName, Size(0,0), 0)) {
         ret->autorelease();
         return ret;
@@ -70,9 +74,9 @@ EGLView* EGLView::create(const std::string& viewName)
     return nullptr;
 }
 
-EGLView* EGLView::createWithFullScreen(const std::string& viewName)
+GLView* GLView::createWithFullScreen(const std::string& viewName)
 {
-    auto ret = new EGLView();
+    auto ret = new GLView();
     if(ret && ret->initWithFullScreen(viewName)) {
         ret->autorelease();
         return ret;
@@ -81,45 +85,46 @@ EGLView* EGLView::createWithFullScreen(const std::string& viewName)
     return nullptr;
 }
 
-EGLView::EGLView()
+GLView::GLView()
 {
     initExtensions();
 }
 
-EGLView::~EGLView()
+GLView::~GLView()
 {
 
 }
 
-bool EGLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
-{
-    return true;
-}
-
-bool EGLView::initWithFullScreen(const std::string& viewName)
+bool GLView::initWithSize(const std::string& viewName, Size size, float frameZoomFactor)
 {
     return true;
 }
 
+bool GLView::initWithFullScreen(const std::string& viewName)
+{
+    return true;
+}
 
-bool EGLView::isOpenGLReady()
+
+bool GLView::isOpenGLReady()
 {
     return (_screenSize.width != 0 && _screenSize.height != 0);
 }
 
-void EGLView::end()
+void GLView::end()
 {
     terminateProcessJNI();
 }
 
-void EGLView::swapBuffers()
+void GLView::swapBuffers()
 {
 }
 
-void EGLView::setIMEKeyboardState(bool bOpen)
+void GLView::setIMEKeyboardState(bool bOpen)
 {
     setKeyboardStateJNI((int)bOpen);
 }
 
 NS_CC_END
 
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

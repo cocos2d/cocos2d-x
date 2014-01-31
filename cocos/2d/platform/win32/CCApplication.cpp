@@ -22,8 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+
 #include "CCApplication.h"
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCDirector.h"
 #include <algorithm>
 #include "platform/CCFileUtils.h"
@@ -249,3 +253,5 @@ static void PVRFrameEnableControlWindow(bool bEnable)
 
     RegCloseKey(hKey);
 }
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32

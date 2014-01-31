@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 #include "CCObject.h"
 #include "platform/CCCommon.h"
-#include "platform/CCEGLViewProtocol.h"
+#include "platform/CCGLViewProtocol.h"
 #include "glfw3.h"
 
 NS_CC_BEGIN

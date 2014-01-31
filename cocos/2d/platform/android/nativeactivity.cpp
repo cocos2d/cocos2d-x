@@ -21,6 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
+#include "CCPlatformConfig.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
 #include "nativeactivity.h"
 
 #include <jni.h>
@@ -43,7 +47,7 @@ THE SOFTWARE.
 #include "CCFileUtilsAndroid.h"
 #include "jni/JniHelper.h"
 
-#include "CCEGLView.h"
+#include "CCGLView.h"
 #include "CCDrawingPrimitives.h"
 #include "CCShaderCache.h"
 #include "CCTextureCache.h"
@@ -755,3 +759,5 @@ void android_main(struct android_app* state) {
         }
     }
 }
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
