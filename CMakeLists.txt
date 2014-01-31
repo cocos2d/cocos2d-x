@@ -279,13 +279,13 @@ add_subdirectory(external/lua/tolua)
 add_subdirectory(cocos/scripting)
 endif(BUILD_LIBS_LUA)
 
-# build samples
+# build tests 
 
 if(BUILD_TestCpp)
-add_subdirectory(samples/test-cpp)
+add_subdirectory(tests/test-cpp)
 endif(BUILD_TestCpp)
 
 if(BUILD_TestLua)
-add_subdirectory(samples/test-lua)
+add_subdirectory(tests/test-lua)
 endif(BUILD_TestLua)
 
