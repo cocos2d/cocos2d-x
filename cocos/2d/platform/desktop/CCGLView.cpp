@@ -472,7 +472,11 @@ bool GLView::isOpenGLReady()
 void GLView::end()
 {
     if(_mainWindow)
+    {
         glfwSetWindowShouldClose(_mainWindow,1);
+        _mainWindow = nullptr;
+    }
+        
 }
 
 void GLView::swapBuffers()
