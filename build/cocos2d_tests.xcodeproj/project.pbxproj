@@ -456,7 +456,6 @@
 		1A92D73818975F6C002F2C16 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D73118975F6C002F2C16 /* MainMenu.xib */; };
 		1A92D73918975F6C002F2C16 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D73318975F6C002F2C16 /* Icon.icns */; };
 		1A92D73A18975F6C002F2C16 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A92D73418975F6C002F2C16 /* main.cpp */; };
-		1A92D73B18975F6C002F2C16 /* Test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D73518975F6C002F2C16 /* Test_Info.plist */; };
 		1A92D74918976071002F2C16 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A92D74518976070002F2C16 /* AppDelegate.cpp */; };
 		1A92D74A18976071002F2C16 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A92D74518976070002F2C16 /* AppDelegate.cpp */; };
 		1A92D74B18976071002F2C16 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A92D74718976071002F2C16 /* lua_assetsmanager_test_sample.cpp */; };
@@ -3600,7 +3599,6 @@
 				1A92D6CC18975F4F002F2C16 /* ccb in Resources */,
 				1A92D6D418975F4F002F2C16 /* components in Resources */,
 				1A92D6D818975F4F002F2C16 /* effect1.raw in Resources */,
-				1A92D73B18975F6C002F2C16 /* Test_Info.plist in Resources */,
 				1A92D6FA18975F50002F2C16 /* Shaders in Resources */,
 				1A92D6D218975F4F002F2C16 /* cocosgui in Resources */,
 				1A92D6F418975F4F002F2C16 /* Particles in Resources */,
