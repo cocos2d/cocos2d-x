@@ -72,8 +72,7 @@ namespace {
 }
 
 GLViewProtocol::GLViewProtocol()
-: _delegate(nullptr)
-, _scaleX(1.0f)
+: _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
 {
@@ -175,11 +174,6 @@ Point GLViewProtocol::getVisibleOrigin() const
     {
         return Point::ZERO;
     }
-}
-
-void GLViewProtocol::setTouchDelegate(EGLTouchDelegate * delegate)
-{
-    _delegate = delegate;
 }
 
 void GLViewProtocol::setViewPortInPoints(float x , float y , float w , float h)

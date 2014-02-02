@@ -133,9 +133,6 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
-    /** Set touch delegate */
-    virtual void setTouchDelegate(EGLTouchDelegate * delegate);
-
     /**
      * Set opengl view port rectangle with points.
      */
@@ -183,8 +180,6 @@ public:
 
 protected:
     void handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[]);
-
-    EGLTouchDelegate* _delegate;
 
     // real screen size
     Size _screenSize;
