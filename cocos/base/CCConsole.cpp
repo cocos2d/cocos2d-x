@@ -516,7 +516,7 @@ void Console::loop()
     timeout.tv_sec = 0;
 
     /* 0.016 seconds. Wake up once per frame at 60PFS */
-    timeout.tv_usec = 016000;
+    timeout.tv_usec = 16000;
 
     while(!_endThread) {
 
